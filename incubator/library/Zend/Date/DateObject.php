@@ -69,7 +69,8 @@ class Zend_Date_DateObject {
     /**
      * active timezone
      */
-    private $_timezone = false;
+    private $_timezone = 'UTC';
+    private $_offset   = 0;
 
 
     /**
@@ -81,9 +82,11 @@ class Zend_Date_DateObject {
      */
     public function __construct($timestamp = null)
     {
+        $zone = date_default_timezone_get();
+        if ($zone !== 'UTC') {
+            $this->setTimeZone($zone);
+        }
         $this->setTimestamp($timestamp);
-        // fix this object's timezone now, since date_default_timezone_set() might be called later
-        $this->_gmtDifference();
     }
 
 
@@ -138,35 +141,35 @@ class Zend_Date_DateObject {
      * @param  integer  $hour
      * @param  integer  $minute 
      * @param  integer  $second
-     * @param  integer  $month   If one of $month, $day, $year are specified, all three must be valid values
+     * @param  integer  $month
      * @param  integer  $day
      * @param  integer  $year
-     * @param  boolean  $dst     Summer/Winter time (Daylight Savings Time)
+     * @param  boolean  $dst     OPTIONAL Summer/Winter time (Daylight Savings Time)
      * @param  boolean  $gmt     OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
      * @return  integer|float  timestamp (number of seconds elapsed relative to 1970/01/01 00:00:00 GMT/UTC)
      */
-    public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, 
+    public function mktime($hour, $minute, $second, $month, $day, $year, 
                            $dst= -1, $gmt = false)
     {
-        // only time - use PHP internal
-        if ($month === false || $day === false || $year === false) {
-            if ($month !== false || $day !== false || $year !== false) {
-                throw new Zend_Date_Exception("Invalid Year/Month/Day: $year/$month/$day");
-            }
-            return ($gmt) ? @gmmktime($hour, $minute, $second)
-                          :   @mktime($hour, $minute, $second);
-        }
-
         // complete date but in 32bit timestamp - use PHP internal
         if ((1901 < $year) and ($year < 2038)) {
-            return ($gmt) ? @gmmktime($hour, $minute, $second, $month, $day, $year, $dst) 
+
+            $oldzone = @date_default_timezone_get();
+            if ($this->getTimeZone() != $oldzone) {
+                date_default_timezone_set($this->_timezone);
+            }
+
+            $result = ($gmt) ? @gmmktime($hour, $minute, $second, $month, $day, $year, $dst) 
                           :   @mktime($hour, $minute, $second, $month, $day, $year, $dst);
+            date_default_timezone_set($oldzone);
+
+            return $result;
         }
 
         // after here we are handling 64bit timestamps
         // get difference from local to gmt
         $difference = ($gmt) ? 0 
-                             : $this->_gmtDifference();
+                             : $this->getGmtOffset();
 
         // date to integer
         $day   = intval($day);
@@ -256,27 +259,6 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Returns the difference from local time to GMT.
-     *
-     * Note that changing the default timezone using date_default_timezone_set($zone)
-     * will NOT change the timezone associated with already created Zend_Date_DateObject objects.
-     * There is currently no way to set or alter the timezone associated with this object,
-     * except by calling date_default_timezone_set($zone) *before* creating the object.
-     *
-     * @return  integer  seconds difference between GMT timezone and local default timezone
-     */
-    private function _gmtDifference()
-    {
-        if ($this->_timezone !== false) {
-            return $this->_timezone;
-        }
-
-        $this->_timezone = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);
-        return $this->_timezone;
-    }
-
-
-    /**
      * Returns true if given year is a leap year.
      *
      * @param  integer  $year
@@ -315,15 +297,33 @@ class Zend_Date_DateObject {
     {
 
         if ($timestamp === false) {
-            return ($gmt) ? @gmdate($format) : @date($format);
+
+            $oldzone = @date_default_timezone_get();
+            if ($this->getTimeZone() != $oldzone) {
+                date_default_timezone_set($this->_timezone);
+            }
+
+            $result = ($gmt) ? @gmdate($format) : @date($format);
+            date_default_timezone_set($oldzone);
+
+            return $result;
         }
 
         if (abs($timestamp) <= 0x7FFFFFFF) {
-            return ($gmt) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
+
+            $oldzone = @date_default_timezone_get();
+            if ($this->getTimeZone() != $oldzone) {
+                date_default_timezone_set($this->_timezone);
+            }
+
+            $result = ($gmt) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
+            date_default_timezone_set($oldzone);
+
+            return $result;
         }
 
         if ($gmt === false) {
-            $timestamp -= $this->_gmtDifference();
+            $timestamp -= $this->getGmtOffset();
         }
         
         $date = $this->getDate($timestamp, true);
@@ -517,12 +517,12 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'O':  // difference to GMT in hours
-                    $gmtstr = ($gmt === true) ? 0 : $this->_gmtDifference();
+                    $gmtstr = ($gmt === true) ? 0 : $this->getGmtOffset();
                     $output .= sprintf('%s%04d', ($gmtstr <= 0) ? '+' : '-', abs($gmtstr) / 36);
                     break;
 
                 case 'P':  // difference to GMT with colon
-                    $gmtstr = ($gmt === true) ? 0 : $this->_gmtDifference();
+                    $gmtstr = ($gmt === true) ? 0 : $this->getGmtOffset();
                     $gmtstr = sprintf('%s%04d', ($gmtstr <= 0) ? '+' : '-', abs($gmtstr) / 36);
                     $output = $output . substr($gmtstr, 0, 3) . ':' . substr($gmtstr, 3);
                     break;
@@ -538,13 +538,13 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'Z':  // timezone offset in seconds
-                    $output .= ($gmt === true) ? 0 : -$this->_gmtDifference();
+                    $output .= ($gmt === true) ? 0 : -$this->getGmtOffset();
                     break;
 
 
                 // complete time formats
                 case 'c':  // ISO 8601 date format
-                    $difference = $this->_gmtDifference();
+                    $difference = $this->getGmtOffset();
                     $difference = sprintf('%s%04d', ($difference <= 0) ? '+' : '-', abs($difference) / 36);
                     $output .= $date['year'] . '-' . $date['mon'] . '-'
                              . (($date['mday'] < 10) ? '0' . $date['mday'] : $date['mday']) . 'T'
@@ -555,7 +555,7 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'r':  // RFC 2822 date format
-                    $difference = $this->_gmtDifference();
+                    $difference = $this->getGmtOffset();
                     $difference = sprintf('%s%04d', ($difference <= 0) ? '+' : '-', abs($difference) / 36);
                     $output .= gmdate('D', 86400 * (3 + $this->dayOfWeek($date['year'], $date['mon'], $date['mday']))) .
                                ', ' . (($date['mday'] < 10) ? '0' . $date['mday'] : $date['mday']) .
@@ -867,10 +867,10 @@ class Zend_Date_DateObject {
         if (abs($this->_unixtimestamp) <= 0x7FFFFFFF) {
             if ($rise === false) {
                 return date_sunset($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
-                                   $location['longitude'], 90 + $horizon, $this->_gmtDifference() / 3600);
+                                   $location['longitude'], 90 + $horizon, $this->getGmtOffset() / 3600);
             }
             return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
-                                $location['longitude'], 90 + $horizon, $this->_gmtDifference() / 3600);
+                                $location['longitude'], 90 + $horizon, $this->getGmtOffset() / 3600);
         }
 
         // self calculation - timestamp bigger than 32bit
@@ -951,5 +951,52 @@ class Zend_Date_DateObject {
         return $this->mktime($hour, $min, $sec, $this->date('m', $this->_unixtimestamp),
                              $this->date('j', $this->_unixtimestamp), $this->date('Y', $this->_unixtimestamp),
                              -1, true);
+    }
+
+
+    /**
+     * Sets a new timezone for gmt offset calculation
+     * If no timezone can be detected or the given timezone is wrong
+     * UTC will be set
+     * 
+     * @param  string  $zone  OPTIONAL sets a new timezone for date calculation
+     * @return  string  actual set timezone string
+     */
+    public function setTimeZone($zone = null)
+    {
+        $oldzone = date_default_timezone_get();
+        if ($zone === null) {
+            $zone = $oldzone;
+        }
+        $result = @date_default_timezone_set($zone);
+        if ($result === true) {
+            $this->_offset   = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);
+            $this->_timezone = $zone;
+        }
+        date_default_timezone_set($oldzone);
+
+        return $result;
+    }
+
+
+    /**
+     * Return the actual timezone offset
+     * 
+     * @return  string  actual set timezone string
+     */
+    public function getTimeZone()
+    {
+        return $this->_timezone;
+    }
+
+
+    /**
+     * Returns the offset
+     * 
+     * @return  integer  seconds difference between GMT timezone and local default timezone
+     */
+    public function getGmtOffset()
+    {
+        return $this->_offset;
     }
 }

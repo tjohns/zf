@@ -63,17 +63,20 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     public function testDateWithDateFragments()
     {
         // When specifying a timestamp, 0 always means 1970/01/01 00:00:00
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, true);
+        $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
+        $date->setGmt(true);
         echo "Timestamp = ", $date->get(), " new Zend_Date(0, Zend_Date::TIMESTAMP, true)\n";
         echo "Line#:", __LINE__, " ", $date->toString(), "\n";
-        echo "Timestamp (GMT) = ", $date->get(null, true), " new Zend_Date(0, null, false)\n";
+        echo "Timestamp (GMT) = ", $date->get(), " new Zend_Date(0, null, false)\n";
         echo "toString(null, GMT -i.e. true) = ", $date->toString(null, true), "\n";
 
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, false);
+        $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
+        $date->setGmt(false);
         echo "Timestamp = ", $date->get(), " new Zend_Date(0, Zend_Date::TIMESTAMP, false)\n";
         echo "Line#:", __LINE__, " ", $date->toString(), "\n";
-        echo "Timestamp (GMT) = ", $date->get(null, true), " new Zend_Date(0, null, false)\n";
-        echo "toString(null, GMT -i.e. true) = ", $date->toString(null, true), "\n";
+        $date->setGmt(true);
+        echo "Timestamp (GMT) = ", $date->get(), " new Zend_Date(0, null, false)\n";
+        echo "toString(null, GMT -i.e. true) = ", $date->toString(null), "\n";
 
         $date = new Zend_Date(0);
         echo "Timestamp = ", $date->get(), " new Zend_Date(0)\n";

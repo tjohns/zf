@@ -86,7 +86,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCreationLocale()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date('13',null,false,$locale);
+        $date = new Zend_Date('13',null,$locale);
         $this->assertTrue($date instanceof Zend_Date);
     }
 
@@ -96,7 +96,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCreationLocalePart()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date('13',Zend_Date::HOUR,false,$locale);
+        $date = new Zend_Date('13',Zend_Date::HOUR,$locale);
         $this->assertTrue($date instanceof Zend_Date);
     }
 
@@ -126,7 +126,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,Zend_Date::TIMESTAMP,false,$locale);
+        $date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
         $result = $date->setTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '10000000');
     }
@@ -152,7 +152,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
         $result = $date->addTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '10000000');
     }
@@ -178,7 +178,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
         $result = $date->subTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '-10000000');
     }
@@ -190,7 +190,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-            $date = new Zend_Date(0,null,false,$locale);
+            $date = new Zend_Date(0,null,$locale);
             $result = $date->subTimestamp('notimestamp');
             $this->Fail();
         } catch (Zend_Date_Exception $e) {
@@ -204,14 +204,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-        $date1 = new Zend_Date(0,null,false,$locale);
-        $date2 = new Zend_Date(0,null,false,$locale);
+        $date1 = new Zend_Date(0,null,$locale);
+        $date2 = new Zend_Date(0,null,$locale);
         $this->assertSame($date1->compareTimestamp($date2), 0);
 
-        $date2 = new Zend_Date(100,null,false,$locale);
+        $date2 = new Zend_Date(100,null,$locale);
         $this->assertSame($date1->compareTimestamp($date2), -1);
 
-        $date2 = new Zend_Date(-100,null,false,$locale);
+        $date2 = new Zend_Date(-100,null,$locale);
         $this->assertSame($date1->compareTimestamp($date2), 1);
     }
 
@@ -221,7 +221,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function test_ToString()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
         $this->assertSame($date->__toString(),'01.01.1970 01:00:00');
     }
 
@@ -231,12 +231,15 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testToString()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->toString(),'14.02.2009 00:31:30');
-        $this->assertSame($date->toString(null, false, 'en_US'),'Feb 14, 2009 12:31:30 AM');
-        $this->assertSame($date->toString('yyy', false, null),'2009');
-        $this->assertSame($date->toString(null, true, null),'13.02.2009 23:31:30');
-        $this->assertSame($date->toString(null, true, 'en_US'),'Feb 13, 2009 11:31:30 PM');
+        $this->assertSame($date->toString('en_US'),'Feb 14, 2009 12:31:30 AM');
+        $this->assertSame($date->toString(null, 'en_US'),'Feb 14, 2009 12:31:30 AM');
+        $this->assertSame($date->toString('yyy', null),'2009');
+        $this->assertSame($date->toString(null, null),'14.02.2009 00:31:30');
+        $date->setGmt(true);
+        $this->assertSame($date->toString(null, 'en_US'),'Feb 13, 2009 11:31:30 PM');
+        $date->setGmt();
         $this->assertSame($date->toString("xx'yy''yy'xx"),"xxyy'yyxx");
         $this->assertSame($date->toString("GGGGG"),'n.');
         $this->assertSame($date->toString("GGGG"),'n. Chr.');
@@ -303,135 +306,260 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testToValue()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->toValue(),1234567890);
         $this->assertSame($date->toValue(Zend_Date::DAY),14);
-        $this->assertSame($date->toValue(Zend_Date::DAY, true),13);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DAY),13);
+        $date->setGmt();
         //Friday, 13-Feb-09 23:31:30 UTC
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY_SHORT),false);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_SHORT, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_SHORT),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DAY_SHORT),14);
-        $this->assertSame($date->toValue(Zend_Date::DAY_SHORT, true),13);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DAY_SHORT),13);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY),false);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY_8601),6);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_8601, true),5);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_8601),5);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DAY_SUFFIX),false);
-        $this->assertSame($date->toValue(Zend_Date::DAY_SUFFIX, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DAY_SUFFIX),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY_DIGIT),6);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_DIGIT, true),5);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_DIGIT),5);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DAY_OF_YEAR),44);
-        $this->assertSame($date->toValue(Zend_Date::DAY_OF_YEAR, true),43);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DAY_OF_YEAR),43);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NARROW),false);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NARROW, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NARROW),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NAME),false);
-        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NAME, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEKDAY_NAME),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::WEEK),7);
-        $this->assertSame($date->toValue(Zend_Date::WEEK, true),7);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::WEEK),7);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH),false);
-        $this->assertSame($date->toValue(Zend_Date::MONTH, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH_SHORT),2);
-        $this->assertSame($date->toValue(Zend_Date::MONTH_SHORT, true),2);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH_SHORT),2);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH_NAME),false);
-        $this->assertSame($date->toValue(Zend_Date::MONTH_NAME, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH_NAME),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH_DIGIT),2);
-        $this->assertSame($date->toValue(Zend_Date::MONTH_DIGIT, true),2);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH_DIGIT),2);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH_DAYS),28);
-        $this->assertSame($date->toValue(Zend_Date::MONTH_DAYS, true),28);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH_DAYS),28);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MONTH_NARROW),false);
-        $this->assertSame($date->toValue(Zend_Date::MONTH_NARROW, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MONTH_NARROW),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::LEAPYEAR),0);
-        $this->assertSame($date->toValue(Zend_Date::LEAPYEAR, true),0);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::LEAPYEAR),0);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::YEAR_8601),2009);
-        $this->assertSame($date->toValue(Zend_Date::YEAR_8601, true),2009);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::YEAR_8601),2009);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::YEAR),2009);
-        $this->assertSame($date->toValue(Zend_Date::YEAR, true),2009);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::YEAR),2009);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT),9);
-        $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT, true),9);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT),9);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT_8601),9);
-        $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT_8601, true),9);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::YEAR_SHORT_8601),9);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MERIDIEM),false);
-        $this->assertSame($date->toValue(Zend_Date::MERIDIEM, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MERIDIEM),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::SWATCH),21);
-        $this->assertSame($date->toValue(Zend_Date::SWATCH, true),21);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::SWATCH),21);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT_AM),12);
-        $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT_AM, true),11);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT_AM),11);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT),0);
-        $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT, true),23);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::HOUR_SHORT),23);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::HOUR_AM),12);
-        $this->assertSame($date->toValue(Zend_Date::HOUR_AM, true),11);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::HOUR_AM),11);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::HOUR),0);
-        $this->assertSame($date->toValue(Zend_Date::HOUR, true),23);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::HOUR),23);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MINUTE),31);
-        $this->assertSame($date->toValue(Zend_Date::MINUTE, true),31);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MINUTE),31);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::SECOND),30);
-        $this->assertSame($date->toValue(Zend_Date::SECOND, true),30);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::SECOND),30);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MILLISECOND),0);
-        $this->assertSame($date->toValue(Zend_Date::MILLISECOND, true),0);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MILLISECOND),0);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::MINUTE_SHORT),31);
-        $this->assertSame($date->toValue(Zend_Date::MINUTE_SHORT, true),31);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::MINUTE_SHORT),31);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::SECOND_SHORT),30);
-        $this->assertSame($date->toValue(Zend_Date::SECOND_SHORT, true),30);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::SECOND_SHORT),30);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIMEZONE_NAME),false);
-        $this->assertSame($date->toValue(Zend_Date::TIMEZONE_NAME, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIMEZONE_NAME),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DAYLIGHT),0);
-        $this->assertSame($date->toValue(Zend_Date::DAYLIGHT, true),0);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DAYLIGHT),0);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::GMT_DIFF),100);
-        $this->assertSame($date->toValue(Zend_Date::GMT_DIFF, true),0);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::GMT_DIFF),0);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::GMT_DIFF_SEP),false);
-        $this->assertSame($date->toValue(Zend_Date::GMT_DIFF_SEP, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::GMT_DIFF_SEP),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIMEZONE),false);
-        $this->assertSame($date->toValue(Zend_Date::TIMEZONE, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIMEZONE),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIMEZONE_SECS),3600);
-        $this->assertSame($date->toValue(Zend_Date::TIMEZONE_SECS, true),0);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIMEZONE_SECS),0);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::ISO_8601),false);
-        $this->assertSame($date->toValue(Zend_Date::ISO_8601, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::ISO_8601),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_2822),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_2822, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_2822),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIMESTAMP),1234567890);
-        $this->assertSame($date->toValue(Zend_Date::TIMESTAMP, true),1234567890);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIMESTAMP),1234567890);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::ERA),false);
-        $this->assertSame($date->toValue(Zend_Date::ERA, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::ERA),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::ERA_NAME),false);
-        $this->assertSame($date->toValue(Zend_Date::ERA_NAME, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::ERA_NAME),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DATES),false);
-        $this->assertSame($date->toValue(Zend_Date::DATES, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DATES),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DATE_FULL),false);
-        $this->assertSame($date->toValue(Zend_Date::DATE_FULL, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DATE_FULL),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DATE_LONG),false);
-        $this->assertSame($date->toValue(Zend_Date::DATE_LONG, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DATE_LONG),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DATE_MEDIUM),false);
-        $this->assertSame($date->toValue(Zend_Date::DATE_MEDIUM, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DATE_MEDIUM),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::DATE_SHORT),false);
-        $this->assertSame($date->toValue(Zend_Date::DATE_SHORT, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::DATE_SHORT),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIMES),false);
-        $this->assertSame($date->toValue(Zend_Date::TIMES, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIMES),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIME_FULL),false);
-        $this->assertSame($date->toValue(Zend_Date::TIME_FULL, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIME_FULL),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIME_LONG),false);
-        $this->assertSame($date->toValue(Zend_Date::TIME_LONG, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIME_LONG),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIME_MEDIUM),false);
-        $this->assertSame($date->toValue(Zend_Date::TIME_MEDIUM, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIME_MEDIUM),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::TIME_SHORT),false);
-        $this->assertSame($date->toValue(Zend_Date::TIME_SHORT, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::TIME_SHORT),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::ATOM),false);
-        $this->assertSame($date->toValue(Zend_Date::ATOM, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::ATOM),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::COOKIE),false);
-        $this->assertSame($date->toValue(Zend_Date::COOKIE, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::COOKIE),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_822),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_822, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_822),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_850),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_850, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_850),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_1036),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_1036, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_1036),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_1123),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_1123, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_1123),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RFC_3339),false);
-        $this->assertSame($date->toValue(Zend_Date::RFC_3339, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RFC_3339),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::RSS),false);
-        $this->assertSame($date->toValue(Zend_Date::RSS, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::RSS),false);
+        $date->setGmt();
         $this->assertSame($date->toValue(Zend_Date::W3C),false);
-        $this->assertSame($date->toValue(Zend_Date::W3C, true),false);
+        $date->setGmt(true);
+        $this->assertSame($date->toValue(Zend_Date::W3C),false);
     }
 
     /**
@@ -440,169 +568,249 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGet()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->get(),1234567890);
 
         $this->assertSame($date->get(Zend_Date::DAY),'14');
-        $this->assertSame($date->get(Zend_Date::DAY, true),'13');
-        $this->assertSame($date->get(Zend_Date::DAY, true, 'es'),'13');
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DAY),'13');
+        $this->assertSame($date->get(Zend_Date::DAY, 'es'),'13');
+        $date->setGmt();
 
         $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT),'Sam');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT, true),'Fre');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT, true, 'es'),'vie');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT),'Fre');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT, 'es'),'vie');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DAY_SHORT),'14');
-        $this->assertSame($date->get(Zend_Date::DAY_SHORT, true),'13');
-        $this->assertSame($date->get(Zend_Date::DAY_SHORT, true, 'es'),'13');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DAY_SHORT),'13');
+        $this->assertSame($date->get(Zend_Date::DAY_SHORT, 'es'),'13');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEKDAY),'Samstag');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY, true),'Freitag');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY, true, 'es'),'viernes');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY),'Freitag');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY, 'es'),'viernes');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEKDAY_8601),'6');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_8601, true),'5');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_8601, true, 'es'),'5');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_8601),'5');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_8601, 'es'),'5');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DAY_SUFFIX),'th');
-        $this->assertSame($date->get(Zend_Date::DAY_SUFFIX, true),'th');
-        $this->assertSame($date->get(Zend_Date::DAY_SUFFIX, true, 'es'),'th');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DAY_SUFFIX),'th');
+        $this->assertSame($date->get(Zend_Date::DAY_SUFFIX, 'es'),'th');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT),'6');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT, true),'5');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT, true, 'es'),'5');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT),'5');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT, 'es'),'5');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR),'44');
-        $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR, true),'43');
-        $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR, true, 'es'),'43');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR),'43');
+        $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR, 'es'),'43');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW),'S');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW, true),'F');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW, true, 'es'),'v');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW),'F');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW, 'es'),'v');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME),'Sa');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME, true),'Fr');
-        $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME, true, 'es'),'vie');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME),'Fr');
+        $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME, 'es'),'vie');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::WEEK),'07');
-        $this->assertSame($date->get(Zend_Date::WEEK, true),'07');
-        $this->assertSame($date->get(Zend_Date::WEEK, true, 'es'),'07');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::WEEK),'07');
+        $this->assertSame($date->get(Zend_Date::WEEK, 'es'),'07');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH),'Februar');
-        $this->assertSame($date->get(Zend_Date::MONTH, true),'Februar');
-        $this->assertSame($date->get(Zend_Date::MONTH, true, 'es'),'febrero');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH),'Februar');
+        $this->assertSame($date->get(Zend_Date::MONTH, 'es'),'febrero');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
-        $this->assertSame($date->get(Zend_Date::MONTH_SHORT, true),'02');
-        $this->assertSame($date->get(Zend_Date::MONTH_SHORT, true, 'es'),'02');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
+        $this->assertSame($date->get(Zend_Date::MONTH_SHORT, 'es'),'02');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');
-        $this->assertSame($date->get(Zend_Date::MONTH_NAME, true),'Feb');
-        $this->assertSame($date->get(Zend_Date::MONTH_NAME, true, 'es'),'feb');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');
+        $this->assertSame($date->get(Zend_Date::MONTH_NAME, 'es'),'feb');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH_DIGIT),'2');
-        $this->assertSame($date->get(Zend_Date::MONTH_DIGIT, true),'2');
-        $this->assertSame($date->get(Zend_Date::MONTH_DIGIT, true, 'es'),'2');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH_DIGIT),'2');
+        $this->assertSame($date->get(Zend_Date::MONTH_DIGIT, 'es'),'2');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH_DAYS),'28');
-        $this->assertSame($date->get(Zend_Date::MONTH_DAYS, true),'28');
-        $this->assertSame($date->get(Zend_Date::MONTH_DAYS, true, 'es'),'28');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH_DAYS),'28');
+        $this->assertSame($date->get(Zend_Date::MONTH_DAYS, 'es'),'28');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MONTH_NARROW),'F');
-        $this->assertSame($date->get(Zend_Date::MONTH_NARROW, true),'F');
-        $this->assertSame($date->get(Zend_Date::MONTH_NARROW, true, 'es'),'f');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MONTH_NARROW),'F');
+        $this->assertSame($date->get(Zend_Date::MONTH_NARROW, 'es'),'f');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::LEAPYEAR),'0');
-        $this->assertSame($date->get(Zend_Date::LEAPYEAR, true),'0');
-        $this->assertSame($date->get(Zend_Date::LEAPYEAR, true, 'es'),'0');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::LEAPYEAR),'0');
+        $this->assertSame($date->get(Zend_Date::LEAPYEAR, 'es'),'0');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::YEAR_8601),'2009');
-        $this->assertSame($date->get(Zend_Date::YEAR_8601, true),'2009');
-        $this->assertSame($date->get(Zend_Date::YEAR_8601, true, 'es'),'2009');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::YEAR_8601),'2009');
+        $this->assertSame($date->get(Zend_Date::YEAR_8601, 'es'),'2009');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::YEAR),'2009');
-        $this->assertSame($date->get(Zend_Date::YEAR, true),'2009');
-        $this->assertSame($date->get(Zend_Date::YEAR, true, 'es'),'2009');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::YEAR),'2009');
+        $this->assertSame($date->get(Zend_Date::YEAR, 'es'),'2009');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT),'09');
-        $this->assertSame($date->get(Zend_Date::YEAR_SHORT, true),'09');
-        $this->assertSame($date->get(Zend_Date::YEAR_SHORT, true, 'es'),'09');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::YEAR_SHORT),'09');
+        $this->assertSame($date->get(Zend_Date::YEAR_SHORT, 'es'),'09');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601),'09');
-        $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601, true),'09');
-        $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601, true, 'es'),'09');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601),'09');
+        $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601, 'es'),'09');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MERIDIEM),'vorm.');
-        $this->assertSame($date->get(Zend_Date::MERIDIEM, true),'nachm.');
-        $this->assertSame($date->get(Zend_Date::MERIDIEM, true, 'es'),'PM');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MERIDIEM),'nachm.');
+        $this->assertSame($date->get(Zend_Date::MERIDIEM, 'es'),'PM');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::SWATCH),'021');
-        $this->assertSame($date->get(Zend_Date::SWATCH, true),'021');
-        $this->assertSame($date->get(Zend_Date::SWATCH, true, 'es'),'021');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::SWATCH),'021');
+        $this->assertSame($date->get(Zend_Date::SWATCH, 'es'),'021');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM),'12');
-        $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM, true),'11');
-        $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM, true, 'es'),'11');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM),'11');
+        $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM, 'es'),'11');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT),'0');
-        $this->assertSame($date->get(Zend_Date::HOUR_SHORT, true),'23');
-        $this->assertSame($date->get(Zend_Date::HOUR_SHORT, true, 'es'),'23');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::HOUR_SHORT),'23');
+        $this->assertSame($date->get(Zend_Date::HOUR_SHORT, 'es'),'23');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::HOUR_AM),'12');
-        $this->assertSame($date->get(Zend_Date::HOUR_AM, true),'11');
-        $this->assertSame($date->get(Zend_Date::HOUR_AM, true, 'es'),'11');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::HOUR_AM),'11');
+        $this->assertSame($date->get(Zend_Date::HOUR_AM, 'es'),'11');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::HOUR),'00');
-        $this->assertSame($date->get(Zend_Date::HOUR, true),'23');
-        $this->assertSame($date->get(Zend_Date::HOUR, true, 'es'),'23');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::HOUR),'23');
+        $this->assertSame($date->get(Zend_Date::HOUR, 'es'),'23');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MINUTE),'31');
-        $this->assertSame($date->get(Zend_Date::MINUTE, true),'31');
-        $this->assertSame($date->get(Zend_Date::MINUTE, true, 'es'),'31');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MINUTE),'31');
+        $this->assertSame($date->get(Zend_Date::MINUTE, 'es'),'31');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::SECOND),'30');
-        $this->assertSame($date->get(Zend_Date::SECOND, true),'30');
-        $this->assertSame($date->get(Zend_Date::SECOND, true, 'es'),'30');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::SECOND),'30');
+        $this->assertSame($date->get(Zend_Date::SECOND, 'es'),'30');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND, true),0);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND, true, 'es'),0);
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
+        $this->assertSame($date->get(Zend_Date::MILLISECOND, 'es'),0);
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::MINUTE_SHORT),'31');
-        $this->assertSame($date->get(Zend_Date::MINUTE_SHORT, true),'31');
-        $this->assertSame($date->get(Zend_Date::MINUTE_SHORT, true, 'es'),'31');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::MINUTE_SHORT),'31');
+        $this->assertSame($date->get(Zend_Date::MINUTE_SHORT, 'es'),'31');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::SECOND_SHORT),'30');
-        $this->assertSame($date->get(Zend_Date::SECOND_SHORT, true),'30');
-        $this->assertSame($date->get(Zend_Date::SECOND_SHORT, true, 'es'),'30');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::SECOND_SHORT),'30');
+        $this->assertSame($date->get(Zend_Date::SECOND_SHORT, 'es'),'30');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME),'Europe/Vienna');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME, true),'UTC');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME, true, 'es'),'UTC');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME),'UTC');
+        $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME, 'es'),'UTC');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DAYLIGHT),'0');
-        $this->assertSame($date->get(Zend_Date::DAYLIGHT, true),'0');
-        $this->assertSame($date->get(Zend_Date::DAYLIGHT, true, 'es'),'0');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DAYLIGHT),'0');
+        $this->assertSame($date->get(Zend_Date::DAYLIGHT, 'es'),'0');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::GMT_DIFF),'+0100');
-        $this->assertSame($date->get(Zend_Date::GMT_DIFF, true),'+0000');
-        $this->assertSame($date->get(Zend_Date::GMT_DIFF, true, 'es'),'+0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::GMT_DIFF),'+0000');
+        $this->assertSame($date->get(Zend_Date::GMT_DIFF, 'es'),'+0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP),'+01:00');
-        $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP, true),'+00:00');
-        $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP, true, 'es'),'+00:00');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP),'+00:00');
+        $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP, 'es'),'+00:00');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIMEZONE),'CET');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE, true),'GMT');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE, true, 'es'),'GMT');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIMEZONE),'GMT');
+        $this->assertSame($date->get(Zend_Date::TIMEZONE, 'es'),'GMT');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS),'3600');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS, true),'0');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS, true, 'es'),'0');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS),'0');
+        $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS, 'es'),'0');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-14T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::ISO_8601, true),'2009-02-13T23:31:30+00:00');
-        $this->assertSame($date->get(Zend_Date::ISO_8601, true, 'es'),'2009-02-13T23:31:30+00:00');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-13T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::ISO_8601, 'es'),'2009-02-13T23:31:30+00:00');
+        $date->setGmt();
+        
         // PHP 5.1.4 has a wrong ISO constant defined
         // or the reference page http://devzone.zend.com/manual/view/page/ref.datetime.html is wrong ??        
 //        $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-14T00:31:30+0100');
@@ -610,97 +818,143 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 //        $this->assertSame($date->get(Zend_Date::ISO_8601, true, 'es'),'2009-02-13T23:31:30+0000');
         
         $this->assertSame($date->get(Zend_Date::RFC_2822),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $this->assertSame($date->get(Zend_Date::RFC_2822, true),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $this->assertSame($date->get(Zend_Date::RFC_2822, true, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_2822),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $this->assertSame($date->get(Zend_Date::RFC_2822, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIMESTAMP),1234567890);
-        $this->assertSame($date->get(Zend_Date::TIMESTAMP, true),1234567890);
-        $this->assertSame($date->get(Zend_Date::TIMESTAMP, true, 'es'),1234567890);
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIMESTAMP),1234567890);
+        $this->assertSame($date->get(Zend_Date::TIMESTAMP, 'es'),1234567890);
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::ERA),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA, true),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA, true, 'es'),'d.C.');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::ERA),'n. Chr.');
+        $this->assertSame($date->get(Zend_Date::ERA, 'es'),'d.C.');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA_NAME, true),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA_NAME, true, 'es'),false);
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
+        $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),false);
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DATES),'14.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATES, true),'13.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATES, true, 'es'),'13-feb-09');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DATES),'13.02.2009');
+        $this->assertSame($date->get(Zend_Date::DATES, 'es'),'13-feb-09');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DATE_FULL),'Samstag, 14. Februar 2009');
-        $this->assertSame($date->get(Zend_Date::DATE_FULL, true),'Freitag, 13. Februar 2009');
-        $this->assertSame($date->get(Zend_Date::DATE_FULL, true, 'es'),'viernes 13 de febrero de 2009');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DATE_FULL),'Freitag, 13. Februar 2009');
+        $this->assertSame($date->get(Zend_Date::DATE_FULL, 'es'),'viernes 13 de febrero de 2009');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DATE_LONG),'14. Februar 2009');
-        $this->assertSame($date->get(Zend_Date::DATE_LONG, true),'13. Februar 2009');
-        $this->assertSame($date->get(Zend_Date::DATE_LONG, true, 'es'),'13 de febrero de 2009');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DATE_LONG),'13. Februar 2009');
+        $this->assertSame($date->get(Zend_Date::DATE_LONG, 'es'),'13 de febrero de 2009');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'14.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, true),'13.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, true, 'es'),'13-feb-09');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'13.02.2009');
+        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, 'es'),'13-feb-09');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::DATE_SHORT),'14.02.09');
-        $this->assertSame($date->get(Zend_Date::DATE_SHORT, true),'13.02.09');
-        $this->assertSame($date->get(Zend_Date::DATE_SHORT, true, 'es'),'13/02/09');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::DATE_SHORT),'13.02.09');
+        $this->assertSame($date->get(Zend_Date::DATE_SHORT, 'es'),'13/02/09');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIMES),'00:31:30');
-        $this->assertSame($date->get(Zend_Date::TIMES, true),'23:31:30');
-        $this->assertSame($date->get(Zend_Date::TIMES, true, 'es'),'23:31:30');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIMES),'23:31:30');
+        $this->assertSame($date->get(Zend_Date::TIMES, 'es'),'23:31:30');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIME_FULL),'00:31 Uhr CET');
-        $this->assertSame($date->get(Zend_Date::TIME_FULL, true),'23:31 Uhr GMT');
-        $this->assertSame($date->get(Zend_Date::TIME_FULL, true, 'es'),'23H3130" GMT');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIME_FULL),'23:31 Uhr GMT');
+        $this->assertSame($date->get(Zend_Date::TIME_FULL, 'es'),'23H3130" GMT');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIME_LONG),'00:31:30 CET');
-        $this->assertSame($date->get(Zend_Date::TIME_LONG, true),'23:31:30 GMT');
-        $this->assertSame($date->get(Zend_Date::TIME_LONG, true, 'es'),'23:31:30 GMT');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIME_LONG),'23:31:30 GMT');
+        $this->assertSame($date->get(Zend_Date::TIME_LONG, 'es'),'23:31:30 GMT');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIME_MEDIUM),'00:31:30');
-        $this->assertSame($date->get(Zend_Date::TIME_MEDIUM, true),'23:31:30');
-        $this->assertSame($date->get(Zend_Date::TIME_MEDIUM, true, 'es'),'23:31:30');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIME_MEDIUM),'23:31:30');
+        $this->assertSame($date->get(Zend_Date::TIME_MEDIUM, 'es'),'23:31:30');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::TIME_SHORT),'00:31');
-        $this->assertSame($date->get(Zend_Date::TIME_SHORT, true),'23:31');
-        $this->assertSame($date->get(Zend_Date::TIME_SHORT, true, 'es'),'23:31');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::TIME_SHORT),'23:31');
+        $this->assertSame($date->get(Zend_Date::TIME_SHORT, 'es'),'23:31');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::ATOM),'2009-02-14T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::ATOM, true),'2009-02-13T23:31:30+00:00');
-        $this->assertSame($date->get(Zend_Date::ATOM, true, 'es'),'2009-02-13T23:31:30+00:00');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::ATOM),'2009-02-13T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::ATOM, 'es'),'2009-02-13T23:31:30+00:00');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::COOKIE),'Saturday, 14-Feb-09 00:31:30 Europe/Vienna');
-        $this->assertSame($date->get(Zend_Date::COOKIE, true),'Friday, 13-Feb-09 23:31:30 UTC');
-        $this->assertSame($date->get(Zend_Date::COOKIE, true, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::COOKIE),'Friday, 13-Feb-09 23:31:30 UTC');
+        $this->assertSame($date->get(Zend_Date::COOKIE, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RFC_822),'Sat, 14 Feb 09 00:31:30 +0100');
-        $this->assertSame($date->get(Zend_Date::RFC_822, true),'Fri, 13 Feb 09 23:31:30 +0000');
-        $this->assertSame($date->get(Zend_Date::RFC_822, true, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_822),'Fri, 13 Feb 09 23:31:30 +0000');
+        $this->assertSame($date->get(Zend_Date::RFC_822, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RFC_850),'Saturday, 14-Feb-09 00:31:30 Europe/Vienna');
-        $this->assertSame($date->get(Zend_Date::RFC_850, true),'Friday, 13-Feb-09 23:31:30 UTC');
-        $this->assertSame($date->get(Zend_Date::RFC_850, true, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_850),'Friday, 13-Feb-09 23:31:30 UTC');
+        $this->assertSame($date->get(Zend_Date::RFC_850, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RFC_1036),'Sat, 14 Feb 09 00:31:30 +0100');
-        $this->assertSame($date->get(Zend_Date::RFC_1036, true),'Fri, 13 Feb 09 23:31:30 +0000');
-        $this->assertSame($date->get(Zend_Date::RFC_1036, true, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_1036),'Fri, 13 Feb 09 23:31:30 +0000');
+        $this->assertSame($date->get(Zend_Date::RFC_1036, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RFC_1123),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $this->assertSame($date->get(Zend_Date::RFC_1123, true),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $this->assertSame($date->get(Zend_Date::RFC_1123, true, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_1123),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $this->assertSame($date->get(Zend_Date::RFC_1123, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RFC_3339),'2009-02-14T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::RFC_3339, true),'2009-02-13T23:31:30+00:00');
-        $this->assertSame($date->get(Zend_Date::RFC_3339, true, 'es'),'2009-02-13T23:31:30+00:00');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RFC_3339),'2009-02-13T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::RFC_3339, 'es'),'2009-02-13T23:31:30+00:00');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::RSS),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $this->assertSame($date->get(Zend_Date::RSS, true),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $this->assertSame($date->get(Zend_Date::RSS, true, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::RSS),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $this->assertSame($date->get(Zend_Date::RSS, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
+        $date->setGmt();
+        
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::W3C, true),'2009-02-13T23:31:30+00:00');
-        $this->assertSame($date->get(Zend_Date::W3C, true, 'es'),'2009-02-13T23:31:30+00:00');
-
+        $date->setGmt(true);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::W3C, 'es'),'2009-02-13T23:31:30+00:00');
+        $date->setGmt();
+        
         $this->assertSame($date->get('x'),'x');
     }
 
@@ -710,7 +964,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGet2()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(-62362925370,null,false,$locale);
+        $date = new Zend_Date(-62362925370,null,$locale);
         $this->assertSame($date->get(Zend_Date::ERA),'v. Chr.');
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'v. Chr.');
     }
@@ -721,8 +975,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSet()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -743,9 +997,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-03-12T00:31:31+01:00');
         $date->set(-10, Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-18T00:31:31+01:00');
-        $date->set( 10, Zend_Date::DAY, true);
+        $date->setGmt(true);
+        $date->set( 10, Zend_Date::DAY);
+        $date->setGmt();
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T00:31:31+01:00');
-        $date->set($d2, Zend_Date::DAY, true);
+        $date->set($d2, Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-03T00:31:31+01:00');
         $date->set( 10, Zend_Date::DAY, false, 'en_US');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T00:31:31+01:00');
@@ -2051,8 +2307,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAdd()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2419,8 +2675,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSub()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2790,8 +3046,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompare()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2817,8 +3073,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCopy()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $date->set(1234567890);
         $newdate = $date->copy();
@@ -2835,8 +3091,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testEquals()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2854,8 +3110,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testIsEarlier()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2875,8 +3131,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testIsLater()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
@@ -2896,8 +3152,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetTime()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1010101010,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(1010101010,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getTime();
         $this->assertSame($result->get(Zend_Date::W3C),'1970-01-01T00:36:50+01:00');
@@ -2910,8 +3166,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->setTime();
         $this->assertTrue($result instanceof Zend_Date);
@@ -2923,7 +3179,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->setTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
 
-        $date = new Zend_Date(null,null,false,$locale);
+        $date = new Zend_Date(null,null,$locale);
         $t1 = $date->get(Zend_Date::TIMESTAMP);
         $date->setTime();
         $t2 = $date->get(Zend_Date::TIMESTAMP);
@@ -2937,22 +3193,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddTime()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->addTime();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->addTime('10:20:30');
         $this->assertSame($result->get(Zend_Date::W3C),'2009-02-14T10:52:00+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T10:52:00+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addTime('30:20:10','ss:mm:HH');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T10:52:00+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T01:03:09+01:00');
     }
@@ -2963,22 +3219,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubTime()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->subTime();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->subTime('10:20:30');
         $this->assertSame($result->get(Zend_Date::W3C),'2009-02-13T14:11:00+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T14:11:00+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subTime('30-20-10','ss:mm:HH');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T14:11:00+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:59:51+01:00');
     }
@@ -2989,10 +3245,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareTime()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         // echo "date=",$date->get(Zend_Date::RFC_822);
         // Sat, 14 Feb 09 00:31:30 +0100
         $this->assertSame($date->compareTime('10:20:30'), -1);
@@ -3008,7 +3264,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         for($i=23; $i >= 0; $i--) {
             $date->setHour($i);
@@ -3026,8 +3282,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetDate()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1010101010,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(1010101010,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getDate();
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T01:00:00+01:00');
@@ -3039,8 +3295,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetDate()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->setDate();
         $this->assertTrue($result instanceof Zend_Date);
@@ -3059,22 +3315,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddDate()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->addDate();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->addDate('02-03-05');
         $this->assertSame($result->get(Zend_Date::W3C),'2014-05-17T01:31:30+02:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2014-05-17T01:31:30+02:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addDate('05-03-02','YY-MM-dd');
         $this->assertSame($date->get(Zend_Date::W3C),'2014-05-17T01:31:30+02:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T00:31:30+01:00');
     }
@@ -3085,22 +3341,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubDate()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->subDate();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->subDate('03-05-1001');
         $this->assertSame($result->get(Zend_Date::W3C),'1007-09-08T00:31:30+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'1007-09-08T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subDate('1001-05-03','YYYY-MM-dd');
         $this->assertSame($date->get(Zend_Date::W3C),'1007-09-08T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-06T00:31:30+01:00');
     }
@@ -3111,10 +3367,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareDate()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->compareDate('10-01-2009'), 1);
         $this->assertSame($date->compareDate('14-02-2009'), 0);
         $this->assertSame($date->compareDate('15-02-2009'), -1);
@@ -3127,8 +3383,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1010101010,null,false,$locale);
-        $d2   = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(1010101010,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getIso();
         $this->assertTrue(is_string($result));
@@ -3141,8 +3397,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->setIso();
         $this->assertTrue($result instanceof Zend_Date);
@@ -3159,18 +3415,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->addIso();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->addIso('2002-01-04T00:00:00+0100');
         $this->assertSame($result->get(Zend_Date::W3C),'4011-03-21T00:31:30+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'4011-03-21T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addIso($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T01:03:09+01:00');
     }
@@ -3181,18 +3437,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->subIso();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->subIso('2002-01-04T00:00:00+0100');
         $this->assertSame($result->get(Zend_Date::W3C),'7-01-13T00:31:30+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'7-01-13T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subIso($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-05T23:59:51+01:00');
     }
@@ -3203,10 +3459,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->compareIso('2002-01-04T00:00:00+0100'), 1);
         $this->assertSame($date->compareIso('2009-02-14T00:31:30+0100'), 0);
         $this->assertSame($date->compareIso('2010-01-04T01:00:00+0100'), -1);
@@ -3219,7 +3475,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1010101010,null,false,$locale);
+        $date = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getArpa();
         $this->assertTrue(is_string($result));
@@ -3232,8 +3488,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->setArpa();
         $this->assertTrue($result instanceof Zend_Date);
@@ -3250,25 +3506,25 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->addArpa();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->addArpa('Sat, 03 May 01 00:00:00 +0100');
         $this->assertSame($result->get(Zend_Date::RFC_822),'Sun, 18 Jul 10 00:31:30 +0100');
         $this->assertSame($date->get(Zend_Date::W3C),'4010-07-18T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->addArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T01:03:09+01:00');
 
         // @todo: implementation like PHP but is not RFC 822 conform,
         // maybe needes to be reworked
         // markTestIncomplete() craches PHP with XDebug-2.0.0rc2-5.1.2
-        $this->markTestIncomplete();
+//        $this->markTestIncomplete();
         $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 GMT');
         $arpa = $result->getArpa();
         $this->assertSame($arpa->get(Zend_Date::RFC_822),'Fri, 05 Jan 07 03:35:53 GMT');
@@ -3280,18 +3536,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
         $result = $date->subArpa();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->subArpa('Sat, 03 May 01 00:00:00 +0100');
         $this->assertSame($result->get(Zend_Date::RFC_822),'Wed, 16 Sep 7 00:31:30 +0100');
         $this->assertSame($date->get(Zend_Date::W3C),'7-09-16T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $date->subArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-05T23:59:51+01:00');
     }
@@ -3302,10 +3558,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,false,$locale);
-        $d2   = new Zend_Date(1234567899,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
+        $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $date = new Zend_Date(1234567890,null,false,$locale);
+        $date = new Zend_Date(1234567890,null,$locale);
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 01:31:30 +0100'), -1);
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 00:31:30 +0100'), 0);
         $this->assertSame($date->compareArpa('Sat, 13 Feb 09 00:31:30 +0100'), 1);
@@ -3321,7 +3577,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1010101010,$locale);
 
         $date->setArpa('Sat, 03 May 01 00:00:00 +0100',$locale);
-        $this->assertSame($date->get(Zend_Date::RFC_822),'Thu, 03 May 01 01:00:00 +0200');
+        $this->assertSame($date->get(Zend_Date::RFC_822),'Thu, 03 May 01 00:00:00 +0200');
     }
 
     /**
@@ -3529,14 +3785,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         
         //Saturday [ar_EG]
 	    // The right value for AM/PM has to be set in arabic letters
-        $this->assertSame($date->getWeek(false, 'ar_EG')->toString(), '08/01/1970 1:00:00 ص');
-        $this->assertSame($date->getWeek(true, 'ar_EG')->toString(), '08/01/1970 1:00:00 ص');
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 1:00:00 ص');
+        $date->setGmt(true);
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 1:00:00 ص');
+        $date->setGmt();
         //is this one should be valid ?! [not working]
         //$this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 1:00:00 ص');
         
         //Sunday
         $date->addDay(1);
-        $this->assertSame($date->getWeek()->toString(),'15.01.1970 01:00:00');
+        $this->assertSame($date->getWeek()->toString(),'08.01.1970 01:00:00');
 
         //Monday [start of a new week]
         $date->addDay(1);
@@ -3553,13 +3811,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testWeekday()
     {
         // all tests and calculations below are in GMT (that is intention for this test)
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, true);
+        $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
+        $date->setGmt(true);
         $dw = $date->getWeekday();
-        $this->assertSame($dw->toString(null, true), '1970 1 1 00:00:00');
+        $this->assertSame($dw->toString(null), '1970 1 1 00:00:00');
         for($weekday = 1; $weekday < 31; $weekday++) {
-            $date->setWeekday($weekday, true);
+            $date->setWeekday($weekday);
             $dw = $date->getWeekday();
-            $this->assertSame($dw->toString(null, true), "1970 1 $weekday 00:00:00");
+            $this->assertSame($dw->toString(null), "1970 1 $weekday 00:00:00");
         }
     }
 

@@ -126,22 +126,6 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     /**
      * Test for mktime
      */
-    public function testMkTimeforTimeValues()
-    {
-        $date = new Zend_Date_DateObject();
-        
-        $this->assertSame($date->mktime(  0,   0,   0), mktime(  0,   0,   0));
-        $this->assertSame($date->mktime( 23,  59,  59), mktime( 23,  59,  59));
-        $this->assertSame($date->mktime(100, 100, 100), mktime(100, 100, 100));
-
-        $this->assertSame($date->mktime(  0,   0,   0, false, false, false, -1, true), gmmktime(  0,   0,   0));
-        $this->assertSame($date->mktime( 23,  59,  59, false, false, false, -1, true), gmmktime( 23,  59,  59));
-        $this->assertSame($date->mktime(100, 100, 100, false, false, false, -1, true), gmmktime(100, 100, 100));
-    }
-
-    /**
-     * Test for mktime
-     */
     public function testMkTimeforDateValuesInPHPRange()
     {
         $date = new Zend_Date_DateObject();
