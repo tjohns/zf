@@ -89,6 +89,11 @@
         &module_specs.Zend_Locale-NumberSystems;
     </chapter>
 
+    <chapter id="zend.mail">
+        <title>Zend_Mail</title>
+        &module_specs.Zend_Mail_Read;
+    </chapter>
+
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
         &module_specs.Zend_Measure-Introduction;
