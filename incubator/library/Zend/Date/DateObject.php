@@ -953,14 +953,3 @@ class Zend_Date_DateObject {
                              -1, true);
     }
 }
-
-/**
- * This breaks our coding standards, but where else should once-per request initializations like this go?
- * There is no need for creating a new function to be called once in bootstrap.  We can just do this now, here.
- *
- * Goal: Fix if no timezone was set, if all "smart" guesses fail, then UTC timezone will be set.
- * @todo document in this comment why this must be done in order to avoid problems later
- */
-$_Zend_Date_Zone = @date_default_timezone_get();
-date_default_timezone_set($_Zend_Date_Zone);
-unset($_Zend_Date_Zone);
