@@ -1,45 +1,49 @@
 <sect1 id="zend.session.introduction">
 
-    <title>Introduction</title>
+    <title>Einleitung</title>
 
     <para>
-        See
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">the most recent published
-        version of this document</ulink>
-        . Also, the Zend Framework Auth team greatly appreciates your feedback and contributions on our email list:
+        Siehe
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">die aktuellste veröffentlichte 
+        Version dieses Dokuments</ulink>
+        . Das Zend-Framework-Auth-Team freut sich außerdem über jegliches Feedback und Beiträge auf der 
+        Mailing-Liste:
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
     </para>
 
     <para>
-        With web applications written using PHP, a <emphasis role="bold">session</emphasis> represents a logical,
-        one-to-one connection between server-side, persistent state data and a particular user agent client (e.g. web
-        browser). Zend_Session helps manage and preserve session data, a logical complement of cookie data, across
-        multiple page requests by the same client. Unlike cookie data, session data is not stored on the client side,
-        and it is only shared with the client when server-side source code makes the data available via a response to a
-        request from the client. For the purposes of this component and documentation, session data refers to the
-        server-side data managed by Zend_Session.
+        Bei einer in PHP geschriebenen Web-Applikation steht eine <emphasis role="bold">Session</emphasis> für
+        eine logische Eins-Zu-Eins-Verbindung zwischen auf dem Server beständig gehaltenen Daten und einem 
+        bestimmten Client (zum Beispiel einem Web-Browser). Zend_Session hilft beim Verwalten und Aufbewahren
+        von Session-Daten, der logischen Ergänzung zu Cookie-Daten, über mehrere Seitenaufrufe eines Clients hinweg.
+        Anders als die in Cookies gespeicherten Daten werden die Session-Daten nicht client-seitig gespeichert und
+        stehen dem Client nur zur Verfügung, wenn das server-seitige Script die Daten durch eine Antwort auf eine
+        Anfrage des Clients verfügbar macht. Im Umfeld der Zend_Session-Komponente und in dieser Dokumentation
+        steht der Begriff Session-Daten für server-seitige Daten, die durch Zend_Session verwaltet werden.
     </para>
 
     <para>
-        The Zend_Session component wraps the existing PHP ext/session to provide a standardized, object-oriented
-        interface for working with sessions, including both anonymous and login sessions. Zend_Auth, the authentication
-        component of the ZF uses Zend_Session to store some information associated with login sessions. Since
-        Zend_Session uses the normal PHP session functions internally, all the usual configuration options and settings
-        apply (see
+        Die Zend_Session-Komponente ist ein Wrapper für das bestehende PHP ext/session, der eine standardisierte,
+        objektorientierte Schnittstelle für den Umgang mit anonymen und authentifizierten Sessions zur Verfügung stellt.
+        Zend_Auth, die Authentifizierungs-Komponente des Zend Frameworks, verwendet Zend_Session, um einige 
+        Informationen im Zusammenhang mit Login-Sessions (authentifizierten Sessions) zu speichern. Da Zend_Session
+        intern die normalen Session-Funktionen von PHP verwendet, sind alle regulären Konfigurations-Optionen und
+        -Einstellungen nutzbar (siehe
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Thus, a session id, stored either in a cookie or URLs, maintains the association between a client and session
-        state data.
+        ). Eine Session-Id, entweder in einem Cookie oder den URLs gespeichert, hält also die Verbindung zwischen
+        einem Client und bestehenden Session-Daten aufrecht.
     </para>
 
     <para>
-        The default
+        Der standardmäßig vorhandene 
         <ulink
       url="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session
       save handler</ulink>
-        does not solve the problem of maintaining this association, when a client may connect to any sever in a cluster
-        of servers, since session state data is saved to the local server only. A list of additional, appropriate save
-        handlers will be provided, when available.
+        Löst nicht das Problem, diese Verbindung in Szenarien aufrecht zu erhalten, in denen ein Client sich mit einem
+        beliebigen Server eines Server-Clusters verbinden kann, da die bestehenden Session-Daten nur lokal auf einem
+        Server gespeichert werden. Eine Liste zusätzlicher, geeigneter Speicher-Module wird zur Verfügung gestellt werden
+        wenn diese verfügbar sind.
     </para>
 
 </sect1>
