@@ -24,6 +24,11 @@
 require_once 'Zend/Feed.php';
 
 /**
+ * Zend_Gdata_Exception
+ */
+require_once 'Zend/Gdata/Exception.php';
+
+/**
  * Zend_Gdata_HttpException
  */
 require_once 'Zend/Gdata/HttpException.php';
@@ -146,6 +151,7 @@ class Zend_Gdata
      * @param string $xml
      * @param string $uri POST URI
      * @return Zend_Http_Response
+     * @throws Zend_Gdata_Exception
      * @throws Zend_Gdata_HttpException
      * @throws Zend_Gdata_InvalidArgumentException
      */
@@ -187,7 +193,7 @@ class Zend_Gdata
         }
         
         if (!$response->isSuccessful()) {
-            throw new Zend_Gdata_HttpException('Post to Google failed.');
+            throw new Zend_Gdata_Exception('Post to Google failed. Reason: ' . $response->getBody());
         }
         return $response;
     }
