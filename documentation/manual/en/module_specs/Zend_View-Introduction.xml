@@ -64,6 +64,38 @@ $view->books = $data;
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
+
+        <note>
+            <title>Zend_View PHP compatability</title>
+
+            <para>
+                Zend_View makes use of overloading to allow setting view script
+                variables. PHP 5.2.0 modified the behaviour of __get() so that
+                it no longer returned by reference, which broke the following
+                usage of Zend_View:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$view->foo = array();
+$view->foo[] = 42;
+]]></programlisting>
+
+            <para>
+                A patch to __get()'s functionality was provided after the 5.2.0
+                release that allows __get() to return by reference if the
+                reference operator is provided:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+public function &__get($key)
+]]></programlisting>
+
+            <para>
+                As a result, modifying arrays in place using overloading is
+                broken for PHP 5.2.0, but works for all other PHP versions
+                supported by Zend Framework.
+            </para>
+        </note>
         
     </sect2>
     

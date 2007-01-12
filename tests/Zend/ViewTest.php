@@ -286,23 +286,23 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $foo = $view->foo;
 
-        $this->assertTrue($foo instanceof ArrayObject);
-        $this->assertEquals(42, $foo[0]);
+        $this->assertTrue(is_array($foo));
+        $this->assertEquals(42, $foo[0], var_export($foo, 1));
 
         $view->assign('bar', array());
         $view->bar[] = 'life';
         $bar = $view->bar;
-        $this->assertTrue($bar instanceof ArrayObject);
-        $this->assertEquals('life', $bar[0]);
+        $this->assertTrue(is_array($bar));
+        $this->assertEquals('life', $bar[0], var_export($bar, 1));
 
         $view->assign(array(
             'baz' => array('universe'),
         ));
         $view->baz[] = 'everything';
         $baz = $view->baz;
-        $this->assertTrue($baz instanceof ArrayObject);
+        $this->assertTrue(is_array($baz));
         $this->assertEquals('universe', $baz[0]);
-        $this->assertEquals('everything', $baz[1]);
+        $this->assertEquals('everything', $baz[1], var_export($baz, 1));
     }
 
     /**
@@ -314,7 +314,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view->foo     = array();
         $view->content = 'content';
 
-        $this->assertTrue($view->foo instanceof ArrayObject);
+        $this->assertTrue(is_array($view->foo));
         $this->assertEquals('content', $view->content);
 
         $view->clearVars();

@@ -71,7 +71,7 @@ interface Zend_View_Interface
      * @param string $key The variable name.
      * @return mixed The variable value.
      */
-    public function __get($key);
+    public function &__get($key);
 
     /**
      * Allows testing with empty() and isset() to work

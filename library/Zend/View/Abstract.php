@@ -112,7 +112,6 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     public function __construct($config = array())
     {
         // set inital paths and properties 
-        // (necessary so ArrayObject doesn't appropriate them)
         $this->setScriptPath(null);
         $this->setHelperPath(null);
         $this->setFilterPath(null);
@@ -178,7 +177,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * @param string $key The variable name.
      * @return mixed The variable value.
      */
-    public function __get($key)
+    public function &__get($key)
     {
         if (isset($this->_vars[$key])) {
             return $this->_vars[$key];
@@ -201,9 +200,6 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     public function __set($key, $val)
     {
-        if (is_array($val)) {
-            $val = new ArrayObject($val);
-        }
         $this->_vars[$key] = $val;
     }
 
@@ -443,16 +439,10 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         // which strategy to use?
         if (is_string($spec)) {
             // assign by name and value
-            if (is_array($value)) {
-                $value = new ArrayObject($value);
-            }
             $this->_vars[$spec] = $value;
         } elseif (is_array($spec)) {
             // assign from associative array
             foreach ($spec as $key => $val) {
-                if (is_array($val)) {
-                    $val = new ArrayObject($val);
-                }
                 $this->_vars[$key] = $val;
             }
         } else {
@@ -471,11 +461,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     {
         $return = array();
         foreach ($this->_vars as $key => $value) {
-            if ($value instanceof ArrayObject) {
-                $return[$key] = (array) $value;
-            } else {
-                $return[$key] = $value;
-            }
+            $return[$key] = $value;
         }
 
         return $return;
