@@ -6,13 +6,13 @@
         take the standard PHP functions to a higher level.
     </para>
     <para>
-    	The simple handling of time and date is a required by each user. But in reality it is never 
-    	as simple as it seemed to be on the first glance.
+        The simple handling of time and date is a required by each user. But in reality it is never 
+        as simple as it seemed to be on the first glance.
     </para>
     <para>
-    	The background is very simple. Dates, as well as times, are written differently in each 
-    	country. Once the month is written at the first position, another time the day is written
-    	first. 
+        The background is very simple. Dates, as well as times, are written differently in each 
+        country. Once the month is written at the first position, another time the day is written
+        first. 
     </para>
     <sect2 id="zend.date.possibilities">
         <title>Zend_Date possibilities</title>
@@ -50,9 +50,9 @@
                     Unlimited timestamps
                 </para>
                 <para>
-                	Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support
-                	partly rises tp 64bit timestamps. With Zend_Date unlimited timestamp will be
-                	supported. Even very high values can be calculated.
+                    Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support
+                    partly rises tp 64bit timestamps. With Zend_Date unlimited timestamp will be
+                    supported. Even very high values can be calculated.
                 </para>
                 <para>
                     The only limit is the speed of the server and the avaiability of the BCMath extension.
@@ -65,10 +65,10 @@
                     Support for ISO_8601 date specifications
                 </para>
                 <para>
-                	ISO_8601 date specifications are supported. Whereas even partial compliant 
-                	ISO_8601 date specifications will be identified. These dates formats are
-                	particularly used within databases. For example MsSQL and MySQL dates can be
-                	mentioned here. They differ a little from each other but both are supported.
+                    ISO_8601 date specifications are supported. Whereas even partial compliant 
+                    ISO_8601 date specifications will be identified. These dates formats are
+                    particularly used within databases. For example MsSQL and MySQL dates can be
+                    mentioned here. They differ a little from each other but both are supported.
                 </para>
             </listitem>
             <listitem>
@@ -76,7 +76,7 @@
                     Calculate sunrise and sunset
                 </para>
                 <para>
-                	For any place and day the times for sunrise and sunset can be displayed.
+                    For any place and day the times for sunrise and sunset can be displayed.
                 </para>
             </listitem>
         </itemizedlist>

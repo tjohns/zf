@@ -1,12 +1,12 @@
 <sect1 id="zend.date.constants">
     <title>Constants for general date functions</title>
     <para>
-    	In order to let the general date functions know what they need to process the constants
-    	listed below exist. With them it is possible to identify which part of the date or which
-    	kind of date is meant.
+        In order to let the general date functions know what they need to process the constants
+        listed below exist. With them it is possible to identify which part of the date or which
+        kind of date is meant.
     </para>
     <para>
-    	For example, if you specify the constant Zend_Date::HOUR, the following can be achieved
+        For example, if you specify the constant Zend_Date::HOUR, the following can be achieved
     </para>
     <table>
         <title>Operation method for Zend_Date::HOUR</title>
@@ -80,9 +80,9 @@
     <sect2 id="zend.date.constants.list">
         <title>List of all constants</title>
         <para>
-        	There is a particular constant for every single part of a date to control the operation 
-        	method of the general functions. All constants which can be used in Zend_Date are 
-        	listed below.
+            There is a particular constant for every single part of a date to control the operation 
+            method of the general functions. All constants which can be used in Zend_Date are 
+            listed below.
         </para>
         <table>
             <title>Constants for the <emphasis role="strong">day</emphasis></title>
@@ -580,9 +580,9 @@
     <sect2 id="zend.date.constants.format">
         <title>List of all formats</title>
         <para>
-        	All formats which need to be self defined correspond to the ISO 8601 norm. However, not 
-        	all formats defined in the ISO norm are supported. Die format length is unlimited. Also 
-        	the multiple usage of formats is allowed.
+            All formats which need to be self defined correspond to the ISO 8601 norm. However, not 
+            all formats defined in the ISO norm are supported. Die format length is unlimited. Also 
+            the multiple usage of formats is allowed.
         </para>
         <para>
             The following example illustrates the usage:
