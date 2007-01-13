@@ -2950,7 +2950,15 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function isLeapYear($year = null)
     {
-        return (bool) parent::isLeapYearCheck($this->get(Zend_Date::YEAR));
+        if ($year === null) {
+            $year = $this->get(Zend_Date::YEAR);
+        }
+        
+        if (!is_int($year)) {
+            throw new Zend_Date_Exception("year ($year) has to be integer for isLeapYear()", $year);
+        }
+        
+        return (bool) parent::isLeapYearCheck($year);
     }
 
 
