@@ -32,13 +32,20 @@ require_once 'Zend/Date/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Date_DateObject {
+abstract class Zend_Date_DateObject {
 
 
     /**
      * UNIX Timestamp
      */
-    private $_unixtimestamp;
+    protected $_unixtimestamp;
+
+
+    /**
+     * active timezone
+     */
+    protected $_timezone = 'UTC';
+    protected $_offset   = 0;
 
 
     /**
@@ -67,30 +74,6 @@ class Zend_Date_DateObject {
 
 
     /**
-     * active timezone
-     */
-    private $_timezone = 'UTC';
-    private $_offset   = 0;
-
-
-    /**
-     * Generates the standard date object for a UNIX timestamp.
-     * 
-     * This object simulates the PHP 5.2 Date Object
-     *
-     * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
-     */
-    protected function __construct($timestamp = null)
-    {
-        $zone = date_default_timezone_get();
-        if ($zone !== 'UTC') {
-            $this->setTimeZone($zone);
-        }
-        $this->setTimestamp($timestamp);
-    }
-
-
-    /**
      * Set this object to have a new UNIX timestamp.
      *
      * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
@@ -115,6 +98,8 @@ class Zend_Date_DateObject {
 
     /**
      * Returns this object's UNIX timestamp
+     * A timestamp greater then the integer range will be returned as string
+     * This function does not return the timestamp as object. Use copy() instead. 
      *
      * @return  integer|string  timestamp
      */
@@ -194,8 +179,7 @@ class Zend_Date_DateObject {
             // go through leapyears
             // add months from letest given year
             for ($count = 1970; $count <= $year; $count++) {
-
-                $leapyear = $this->isLeapYearCheck($count);
+                $leapyear = $this->isYearLeapYear($count);
                 if ($count < $year) {
 
                     $date += 365;
@@ -225,7 +209,7 @@ class Zend_Date_DateObject {
             // add months from latest given year
             for ($count = 1969; $count >= $year; $count--) {
 
-                $leapyear = $this->isLeapYearCheck($count);
+                $leapyear = $this->isYearLeapYear($count);
                 if ($count > $year)
                 {
                     $date += 365;
@@ -264,7 +248,7 @@ class Zend_Date_DateObject {
      * @param  integer  $year
      * @return  boolean  true, if year is leap year
      */
-    protected function isLeapYearCheck($year)
+    public function isYearLeapYear($year)
     {
         // all leapyears can be divided through 4
         if (($year % 4) != 0) {
@@ -326,7 +310,7 @@ class Zend_Date_DateObject {
             $timestamp -= $this->getGmtOffset();
         }
         
-        $date = $this->getDateArray($timestamp, true);
+        $date = $this->getDateParts($timestamp, true);
         $length = strlen($format);
         $output = '';
         
@@ -410,7 +394,7 @@ class Zend_Date_DateObject {
 
                 // year formats
                 case 'L':  // is leap year ?
-                    $output .= ($this->isLeapYearCheck($date['year'])) ? '1' : '0';
+                    $output .= ($this->isYearLeapYear($date['year'])) ? '1' : '0';
                     break;
 
                 case 'o':  // ISO 8601 year number
@@ -626,7 +610,7 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal getDateArray function for handling 64bit timestamps
+     * Internal getDateParts function for handling 64bit timestamps
      *
      * Returns an array of date parts for $timestamp, relative to 1970/01/01 00:00:00 GMT/UTC.
      *
@@ -637,7 +621,7 @@ class Zend_Date_DateObject {
      * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
      * @return  array
      */
-    protected function getDateArray($timestamp = false, $fast = false)
+    protected function getDateParts($timestamp = false, $fast = false)
     {
         // actual timestamp
         if ($timestamp === false) {
@@ -683,7 +667,7 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += 31536000;
-                $leapyear = $this->isLeapYearCheck($i);
+                $leapyear = $this->isYearLeapYear($i);
                 if ($leapyear === true) {
                     $timestamp += 86400;
                 }
@@ -728,7 +712,7 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp -= 31536000;
-                $leapyear = $this->isLeapYearCheck($i);
+                $leapyear = $this->isYearLeapYear($i);
                 if ($leapyear === true) {
                     $timestamp -= 86400;
                 }
@@ -955,12 +939,12 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Sets a new timezone for gmt offset calculation
-     * If no timezone can be detected or the given timezone is wrong
-     * UTC will be set
+     * Sets a new timezone for calculation of $this object's gmt offset.
+     * For a list of supported timezones look here: http://php.net/timezones
+     * If no timezone can be detected or the given timezone is wrong UTC will be set.
      * 
-     * @param  string  $zone  OPTIONAL sets a new timezone for date calculation
-     * @return  string  actual set timezone string
+     * @param  string  $zone      OPTIONAL timezone for date calculation; defaults to date_default_timezone_get()
+     * @return string  actual set timezone string
      */
     protected function setTimeZone($zone = null)
     {
@@ -980,7 +964,8 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Return the actual timezone offset
+     * Return the timezone of $this object.
+     * The timezone is initially set when the object is instantiated.
      * 
      * @return  string  actual set timezone string
      */
@@ -991,9 +976,11 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Returns the offset
+     * Return the offset to GMT of $this object's timezone.
+     * The offset to GMT is initially set when the object is instantiated using the currently,
+     * in effect, default timezone for PHP functions.
      * 
-     * @return  integer  seconds difference between GMT timezone and local default timezone
+     * @return  integer  seconds difference between GMT timezone and timezone when object was instantiated
      */
     protected function getGmtOffset()
     {
