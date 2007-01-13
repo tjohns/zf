@@ -222,6 +222,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,$locale);
+        $date->setTimeZone(date_default_timezone_get());
         $this->assertSame($date->__toString(),'01.01.1970 01:00:00');
     }
 
@@ -232,6 +233,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(1234567890,null,$locale);
+        $date->setTimeZone(date_default_timezone_get());
         $this->assertSame($date->toString(),'14.02.2009 00:31:30');
         $this->assertSame($date->toString('en_US'),'Feb 14, 2009 12:31:30 AM');
         $this->assertSame($date->toString(null, 'en_US'),'Feb 14, 2009 12:31:30 AM');
