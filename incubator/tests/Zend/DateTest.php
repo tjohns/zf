@@ -572,248 +572,249 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(1234567890,null,$locale);
+        $date->setTimeZone('Europe/Vienna');
         $this->assertSame($date->get(),1234567890);
 
         $this->assertSame($date->get(Zend_Date::DAY),'14');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DAY),'13');
         $this->assertSame($date->get(Zend_Date::DAY, 'es'),'13');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
 
         $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT),'Sam');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT),'Fre');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_SHORT, 'es'),'vie');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DAY_SHORT),'14');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DAY_SHORT),'13');
         $this->assertSame($date->get(Zend_Date::DAY_SHORT, 'es'),'13');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::WEEKDAY),'Samstag');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY),'Freitag');
         $this->assertSame($date->get(Zend_Date::WEEKDAY, 'es'),'viernes');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         
         $this->assertSame($date->get(Zend_Date::WEEKDAY_8601),'6');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_8601),'5');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_8601, 'es'),'5');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         
         $this->assertSame($date->get(Zend_Date::DAY_SUFFIX),'th');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DAY_SUFFIX),'th');
         $this->assertSame($date->get(Zend_Date::DAY_SUFFIX, 'es'),'th');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         
         $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT),'6');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT),'5');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_DIGIT, 'es'),'5');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         
         $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR),'44');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR),'43');
         $this->assertSame($date->get(Zend_Date::DAY_OF_YEAR, 'es'),'43');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW),'S');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW),'F');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NARROW, 'es'),'v');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME),'Sa');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME),'Fr');
         $this->assertSame($date->get(Zend_Date::WEEKDAY_NAME, 'es'),'vie');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::WEEK),'07');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::WEEK),'07');
         $this->assertSame($date->get(Zend_Date::WEEK, 'es'),'07');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH),'Februar');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH),'Februar');
         $this->assertSame($date->get(Zend_Date::MONTH, 'es'),'febrero');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
         $this->assertSame($date->get(Zend_Date::MONTH_SHORT, 'es'),'02');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');
         $this->assertSame($date->get(Zend_Date::MONTH_NAME, 'es'),'feb');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH_DIGIT),'2');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH_DIGIT),'2');
         $this->assertSame($date->get(Zend_Date::MONTH_DIGIT, 'es'),'2');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH_DAYS),'28');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH_DAYS),'28');
         $this->assertSame($date->get(Zend_Date::MONTH_DAYS, 'es'),'28');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MONTH_NARROW),'F');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MONTH_NARROW),'F');
         $this->assertSame($date->get(Zend_Date::MONTH_NARROW, 'es'),'f');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::LEAPYEAR),'0');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::LEAPYEAR),'0');
         $this->assertSame($date->get(Zend_Date::LEAPYEAR, 'es'),'0');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::YEAR_8601),'2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::YEAR_8601),'2009');
         $this->assertSame($date->get(Zend_Date::YEAR_8601, 'es'),'2009');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::YEAR),'2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::YEAR),'2009');
         $this->assertSame($date->get(Zend_Date::YEAR, 'es'),'2009');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT),'09');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT),'09');
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT, 'es'),'09');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601),'09');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601),'09');
         $this->assertSame($date->get(Zend_Date::YEAR_SHORT_8601, 'es'),'09');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MERIDIEM),'vorm.');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MERIDIEM),'nachm.');
         $this->assertSame($date->get(Zend_Date::MERIDIEM, 'es'),'PM');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::SWATCH),'021');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::SWATCH),'021');
         $this->assertSame($date->get(Zend_Date::SWATCH, 'es'),'021');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM),'12');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM),'11');
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT_AM, 'es'),'11');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT),'0');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT),'23');
         $this->assertSame($date->get(Zend_Date::HOUR_SHORT, 'es'),'23');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::HOUR_AM),'12');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::HOUR_AM),'11');
         $this->assertSame($date->get(Zend_Date::HOUR_AM, 'es'),'11');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::HOUR),'00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::HOUR),'23');
         $this->assertSame($date->get(Zend_Date::HOUR, 'es'),'23');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MINUTE),'31');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MINUTE),'31');
         $this->assertSame($date->get(Zend_Date::MINUTE, 'es'),'31');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::SECOND),'30');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::SECOND),'30');
         $this->assertSame($date->get(Zend_Date::SECOND, 'es'),'30');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
         $this->assertSame($date->get(Zend_Date::MILLISECOND, 'es'),0);
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::MINUTE_SHORT),'31');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::MINUTE_SHORT),'31');
         $this->assertSame($date->get(Zend_Date::MINUTE_SHORT, 'es'),'31');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::SECOND_SHORT),'30');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::SECOND_SHORT),'30');
         $this->assertSame($date->get(Zend_Date::SECOND_SHORT, 'es'),'30');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME),'Europe/Vienna');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME),'UTC');
         $this->assertSame($date->get(Zend_Date::TIMEZONE_NAME, 'es'),'UTC');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DAYLIGHT),'0');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DAYLIGHT),'0');
         $this->assertSame($date->get(Zend_Date::DAYLIGHT, 'es'),'0');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::GMT_DIFF),'+0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::GMT_DIFF),'+0000');
         $this->assertSame($date->get(Zend_Date::GMT_DIFF, 'es'),'+0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP),'+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP),'+00:00');
         $this->assertSame($date->get(Zend_Date::GMT_DIFF_SEP, 'es'),'+00:00');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIMEZONE),'CET');
-        $date->setGmt(true);
-        $this->assertSame($date->get(Zend_Date::TIMEZONE),'GMT');
-        $this->assertSame($date->get(Zend_Date::TIMEZONE, 'es'),'GMT');
-        $date->setGmt();
-        
+        $date->setTimeZone('UTC');
+        $this->assertSame($date->get(Zend_Date::TIMEZONE),'UTC');
+        $this->assertSame($date->get(Zend_Date::TIMEZONE, 'es'),'UTC');
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS),'3600');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS),'0');
         $this->assertSame($date->get(Zend_Date::TIMEZONE_SECS, 'es'),'0');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-14T00:31:30+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-13T23:31:30+00:00');
         $this->assertSame($date->get(Zend_Date::ISO_8601, 'es'),'2009-02-13T23:31:30+00:00');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         // PHP 5.1.4 has a wrong ISO constant defined
         // or the reference page http://devzone.zend.com/manual/view/page/ref.datetime.html is wrong ??        
 //        $this->assertSame($date->get(Zend_Date::ISO_8601),'2009-02-14T00:31:30+0100');
@@ -821,143 +822,143 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 //        $this->assertSame($date->get(Zend_Date::ISO_8601, true, 'es'),'2009-02-13T23:31:30+0000');
         
         $this->assertSame($date->get(Zend_Date::RFC_2822),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_2822),'Fri, 13 Feb 2009 23:31:30 +0000');
         $this->assertSame($date->get(Zend_Date::RFC_2822, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIMESTAMP),1234567890);
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIMESTAMP),1234567890);
         $this->assertSame($date->get(Zend_Date::TIMESTAMP, 'es'),1234567890);
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::ERA),'n. Chr.');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::ERA),'n. Chr.');
         $this->assertSame($date->get(Zend_Date::ERA, 'es'),'d.C.');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
         $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),false);
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DATES),'14.02.2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DATES),'13.02.2009');
         $this->assertSame($date->get(Zend_Date::DATES, 'es'),'13-feb-09');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DATE_FULL),'Samstag, 14. Februar 2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DATE_FULL),'Freitag, 13. Februar 2009');
         $this->assertSame($date->get(Zend_Date::DATE_FULL, 'es'),'viernes 13 de febrero de 2009');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DATE_LONG),'14. Februar 2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DATE_LONG),'13. Februar 2009');
         $this->assertSame($date->get(Zend_Date::DATE_LONG, 'es'),'13 de febrero de 2009');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'14.02.2009');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'13.02.2009');
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, 'es'),'13-feb-09');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::DATE_SHORT),'14.02.09');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::DATE_SHORT),'13.02.09');
         $this->assertSame($date->get(Zend_Date::DATE_SHORT, 'es'),'13/02/09');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIMES),'00:31:30');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIMES),'23:31:30');
         $this->assertSame($date->get(Zend_Date::TIMES, 'es'),'23:31:30');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIME_FULL),'00:31 Uhr CET');
-        $date->setGmt(true);
-        $this->assertSame($date->get(Zend_Date::TIME_FULL),'23:31 Uhr GMT');
-        $this->assertSame($date->get(Zend_Date::TIME_FULL, 'es'),'23H3130" GMT');
-        $date->setGmt();
-        
+        $date->setTimeZone('UTC');
+        $this->assertSame($date->get(Zend_Date::TIME_FULL),'23:31 Uhr UTC');
+        $this->assertSame($date->get(Zend_Date::TIME_FULL, 'es'),'23H3130" UTC');
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIME_LONG),'00:31:30 CET');
-        $date->setGmt(true);
-        $this->assertSame($date->get(Zend_Date::TIME_LONG),'23:31:30 GMT');
-        $this->assertSame($date->get(Zend_Date::TIME_LONG, 'es'),'23:31:30 GMT');
-        $date->setGmt();
-        
+        $date->setTimeZone('UTC');
+        $this->assertSame($date->get(Zend_Date::TIME_LONG),'23:31:30 UTC');
+        $this->assertSame($date->get(Zend_Date::TIME_LONG, 'es'),'23:31:30 UTC');
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIME_MEDIUM),'00:31:30');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIME_MEDIUM),'23:31:30');
         $this->assertSame($date->get(Zend_Date::TIME_MEDIUM, 'es'),'23:31:30');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::TIME_SHORT),'00:31');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::TIME_SHORT),'23:31');
         $this->assertSame($date->get(Zend_Date::TIME_SHORT, 'es'),'23:31');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::ATOM),'2009-02-14T00:31:30+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::ATOM),'2009-02-13T23:31:30+00:00');
         $this->assertSame($date->get(Zend_Date::ATOM, 'es'),'2009-02-13T23:31:30+00:00');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::COOKIE),'Saturday, 14-Feb-09 00:31:30 Europe/Vienna');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::COOKIE),'Friday, 13-Feb-09 23:31:30 UTC');
         $this->assertSame($date->get(Zend_Date::COOKIE, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RFC_822),'Sat, 14 Feb 09 00:31:30 +0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_822),'Fri, 13 Feb 09 23:31:30 +0000');
         $this->assertSame($date->get(Zend_Date::RFC_822, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RFC_850),'Saturday, 14-Feb-09 00:31:30 Europe/Vienna');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_850),'Friday, 13-Feb-09 23:31:30 UTC');
         $this->assertSame($date->get(Zend_Date::RFC_850, 'es'),'Friday, 13-Feb-09 23:31:30 UTC');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RFC_1036),'Sat, 14 Feb 09 00:31:30 +0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_1036),'Fri, 13 Feb 09 23:31:30 +0000');
         $this->assertSame($date->get(Zend_Date::RFC_1036, 'es'),'Fri, 13 Feb 09 23:31:30 +0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RFC_1123),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_1123),'Fri, 13 Feb 2009 23:31:30 +0000');
         $this->assertSame($date->get(Zend_Date::RFC_1123, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RFC_3339),'2009-02-14T00:31:30+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RFC_3339),'2009-02-13T23:31:30+00:00');
         $this->assertSame($date->get(Zend_Date::RFC_3339, 'es'),'2009-02-13T23:31:30+00:00');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::RSS),'Sat, 14 Feb 2009 00:31:30 +0100');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::RSS),'Fri, 13 Feb 2009 23:31:30 +0000');
         $this->assertSame($date->get(Zend_Date::RSS, 'es'),'Fri, 13 Feb 2009 23:31:30 +0000');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:30+00:00');
         $this->assertSame($date->get(Zend_Date::W3C, 'es'),'2009-02-13T23:31:30+00:00');
-        $date->setGmt();
-        
+        $date->setTimeZone('Europe/Vienna');
+
         $this->assertSame($date->get('x'),'x');
     }
 
