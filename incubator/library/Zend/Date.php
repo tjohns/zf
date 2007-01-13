@@ -2909,7 +2909,7 @@ class Zend_Date extends Zend_Date_DateObject {
             throw new Zend_Date_Exception("year ($year) has to be integer for isLeapYear()", $year);
         }
         
-        return (bool) parent::isLeapYearCheck($year);
+        return (bool) parent::isYearLeapYear($year);
     }
 
 
