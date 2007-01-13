@@ -80,7 +80,7 @@ class Zend_Date_DateObject {
      *
      * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
      */
-    public function __construct($timestamp = null)
+    protected function __construct($timestamp = null)
     {
         $zone = date_default_timezone_get();
         if ($zone !== 'UTC') {
@@ -97,7 +97,7 @@ class Zend_Date_DateObject {
      * @return string|integer  old timestamp 
      * @throws Zend_Date_Exception
      */
-    public function setTimestamp($timestamp = null)
+    protected function setTimestamp($timestamp = null)
     {
         $old = $this->_unixtimestamp;
 
@@ -118,7 +118,7 @@ class Zend_Date_DateObject {
      *
      * @return  integer|string  timestamp
      */
-    public function getTimestamp()
+    protected function getTimestamp()
     {
         if ($this->_unixtimestamp === intval($this->_unixtimestamp)) {
             return (int) $this->_unixtimestamp;
@@ -148,7 +148,7 @@ class Zend_Date_DateObject {
      * @param  boolean  $gmt     OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
      * @return  integer|float  timestamp (number of seconds elapsed relative to 1970/01/01 00:00:00 GMT/UTC)
      */
-    public function mktime($hour, $minute, $second, $month, $day, $year, 
+    protected function mktime($hour, $minute, $second, $month, $day, $year, 
                            $dst= -1, $gmt = false)
     {
         // complete date but in 32bit timestamp - use PHP internal
@@ -195,7 +195,7 @@ class Zend_Date_DateObject {
             // add months from letest given year
             for ($count = 1970; $count <= $year; $count++) {
 
-                $leapyear = $this->isLeapYear($count);
+                $leapyear = $this->isLeapYearCheck($count);
                 if ($count < $year) {
 
                     $date += 365;
@@ -225,7 +225,7 @@ class Zend_Date_DateObject {
             // add months from latest given year
             for ($count = 1969; $count >= $year; $count--) {
 
-                $leapyear = $this->isLeapYear($count);
+                $leapyear = $this->isLeapYearCheck($count);
                 if ($count > $year)
                 {
                     $date += 365;
@@ -264,7 +264,7 @@ class Zend_Date_DateObject {
      * @param  integer  $year
      * @return  boolean  true, if year is leap year
      */
-    public function isLeapYear($year)
+    protected function isLeapYearCheck($year)
     {
         // all leapyears can be divided through 4
         if (($year % 4) != 0) {
@@ -293,7 +293,7 @@ class Zend_Date_DateObject {
      * @param  boolean  $gmt        OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
      * @return string
      */
-    public function date($format, $timestamp = false, $gmt = false)
+    protected function date($format, $timestamp = false, $gmt = false)
     {
 
         if ($timestamp === false) {
@@ -326,7 +326,7 @@ class Zend_Date_DateObject {
             $timestamp -= $this->getGmtOffset();
         }
         
-        $date = $this->getDate($timestamp, true);
+        $date = $this->getDateArray($timestamp, true);
         $length = strlen($format);
         $output = '';
         
@@ -410,7 +410,7 @@ class Zend_Date_DateObject {
 
                 // year formats
                 case 'L':  // is leap year ?
-                    $output .= ($this->isLeapYear($date['year'])) ? '1' : '0';
+                    $output .= ($this->isLeapYearCheck($date['year'])) ? '1' : '0';
                     break;
 
                 case 'o':  // ISO 8601 year number
@@ -599,7 +599,7 @@ class Zend_Date_DateObject {
      * @param  integer  $day
      * @return integer  dayOfWeek
      */
-    public function dayOfWeek($year, $month, $day)
+    protected function dayOfWeek($year, $month, $day)
     {
         if ((1901 < $year) and ($year < 2038)) {
             return (int) date('w', mktime(0, 0, 0, $month, $day, $year));
@@ -626,7 +626,7 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal getDate function for handling 64bit timestamps
+     * Internal getDateArray function for handling 64bit timestamps
      *
      * Returns an array of date parts for $timestamp, relative to 1970/01/01 00:00:00 GMT/UTC.
      *
@@ -637,7 +637,7 @@ class Zend_Date_DateObject {
      * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
      * @return  array
      */
-    public function getDate($timestamp = false, $fast = false)
+    protected function getDateArray($timestamp = false, $fast = false)
     {
         // actual timestamp
         if ($timestamp === false) {
@@ -683,7 +683,7 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += 31536000;
-                $leapyear = $this->isLeapYear($i);
+                $leapyear = $this->isLeapYearCheck($i);
                 if ($leapyear === true) {
                     $timestamp += 86400;
                 }
@@ -728,7 +728,7 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp -= 31536000;
-                $leapyear = $this->isLeapYear($i);
+                $leapyear = $this->isLeapYearCheck($i);
                 if ($leapyear === true) {
                     $timestamp -= 86400;
                 }
@@ -813,7 +813,7 @@ class Zend_Date_DateObject {
      * @param  integer  $day
      * @return integer
      */
-    public function weekNumber($year, $month, $day)
+    protected function weekNumber($year, $month, $day)
     {
         if ((1901 < $year) and ($year < 2038)) {
             return (int) date('W', mktime(0, 0, 0, $month, $day, $year));
@@ -861,7 +861,7 @@ class Zend_Date_DateObject {
      * @param  bool   $horizon   true: sunrise; false: sunset
      * @return mixed  - false: midnight sun, integer: 
      */
-    public function calcSun($location, $horizon, $rise = false)
+    protected function calcSun($location, $horizon, $rise = false)
     {
         // timestamp within 32bit
         if (abs($this->_unixtimestamp) <= 0x7FFFFFFF) {
@@ -962,7 +962,7 @@ class Zend_Date_DateObject {
      * @param  string  $zone  OPTIONAL sets a new timezone for date calculation
      * @return  string  actual set timezone string
      */
-    public function setTimeZone($zone = null)
+    protected function setTimeZone($zone = null)
     {
         $oldzone = date_default_timezone_get();
         if ($zone === null) {
@@ -984,7 +984,7 @@ class Zend_Date_DateObject {
      * 
      * @return  string  actual set timezone string
      */
-    public function getTimeZone()
+    protected function getTimeZone()
     {
         return $this->_timezone;
     }
@@ -995,7 +995,7 @@ class Zend_Date_DateObject {
      * 
      * @return  integer  seconds difference between GMT timezone and local default timezone
      */
-    public function getGmtOffset()
+    protected function getGmtOffset()
     {
         return $this->_offset;
     }
