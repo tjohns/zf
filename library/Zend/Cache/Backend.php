@@ -114,4 +114,33 @@ class Zend_Cache_Backend
         $this->_options[$name] = $value;
     }   
     
+    /**
+     * Return a system-wide tmp directory 
+     *
+     * @return string system-wide tmp directory
+     */
+    static function getTmpDir()
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // windows...
+            foreach (array($_ENV, $_SERVER) as $tab) {
+                foreach (array('TEMP', 'TMP', 'windir', 'SystemRoot') as $key) {
+                    if (isset($tab[$key])) {
+                        $result = $tab[$key];
+                        if (($key == 'windir') or ($key == 'SystemRoot')) {
+                            $result = $result . '\\temp';
+                        }
+                        return $result;
+                    }
+                }
+            }
+            return '\temp';
+        } else {
+            // unix...
+            if (isset($_ENV['TMPDIR']))    return $_ENV['TMPDIR'];
+            if (isset($_SERVER['TMPDIR'])) return $_SERVER['TMPDIR'];
+            return '/tmp';
+        }
+    }
+    
 }

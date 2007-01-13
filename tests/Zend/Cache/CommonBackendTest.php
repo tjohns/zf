@@ -21,63 +21,32 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     protected $_instance;
     protected $_className;
+    protected $_root;
     
     public function __construct($className)
     {
         $this->_className = $className;
+        $this->_root = dirname(__FILE__);
     }
     
     public function setUp()
     {
+        @mkdir($this->getTmpDir());
         $this->_instance->setDirectives(array('logging' => true));
         $this->_instance->save('bar : data to cache', 'bar', array('tag3', 'tag4'));
         $this->_instance->save('bar2 : data to cache', 'bar2', array('tag3', 'tag1')); 
         $this->_instance->save('bar3 : data to cache', 'bar3', array('tag2', 'tag3'));   
     }
     
+    public function getTmpDir()
+    {
+        return $this->_root . DIRECTORY_SEPARATOR . 'zend_cache_tmp_dir';
+    }
+    
     public function tearDown()
     {
         $this->_instance->clean();
-    }
-    
-    protected function _getTmpDirWindows()
-    {
-        if (isset($_ENV['TEMP'])) {
-            return $_ENV['TEMP'];
-        }
-        if (isset($_ENV['TMP'])) {
-            return $_ENV['TMP'];
-        }
-        if (isset($_ENV['windir'])) {
-            return $_ENV['windir'] . '\\temp';
-        }
-        if (isset($_ENV['SystemRoot'])) {
-            return $_ENV['SystemRoot'] . '\\temp';
-        }
-        if (isset($_SERVER['TEMP'])) {
-            return $_SERVER['TEMP'];
-        }
-        if (isset($_SERVER['TMP'])) {
-            return $_SERVER['TMP'];
-        }
-        if (isset($_SERVER['windir'])) {
-            return $_SERVER['windir'] . '\\temp';
-        }
-        if (isset($_SERVER['SystemRoot'])) {
-            return $_SERVER['SystemRoot'] . '\\temp';
-        }
-        return '\temp';
-    }
-    
-    protected function _getTmpDirUnix()
-    {
-        if (isset($_ENV['TMPDIR'])) {
-	        return $_ENV['TMPDIR'];
-	    }
-	    if (isset($_SERVER['TMPDIR'])) {
-	        return $_SERVER['TMPDIR'];
-	    }
-	    return '/tmp';
+        @rmdir($this->getTmpDir());
     }
        
     public function testConstructorCorrectCall()

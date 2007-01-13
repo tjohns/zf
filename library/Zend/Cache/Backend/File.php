@@ -86,7 +86,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * @var array available options
      */
     protected $_options = array(
-        'cacheDir' => '/tmp/',
+        'cacheDir' => '/tmp',
         'fileLocking' => true,
         'readControl' => true,
         'readControlType' => 'crc32',
@@ -110,6 +110,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         parent::__construct($options);
         if (isset($options['cacheDir'])) { // particular case for this option
             $this->setCacheDir($options['cacheDir']);
+        } else {
+            $this->_options['cacheDir'] = self::getTmpDir() . DIRECTORY_SEPARATOR;
         }
     }  
     

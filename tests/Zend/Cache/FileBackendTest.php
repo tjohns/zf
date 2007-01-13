@@ -37,11 +37,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function setUp()
     {        
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $this->_cacheDir = $this->_getTmpDirWindows() . DIRECTORY_SEPARATOR;
-        } else {
-            $this->_cacheDir = $this->_getTmpDirUnix() . DIRECTORY_SEPARATOR;
-        }
+        $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_File(array(
             'cacheDir' => $this->_cacheDir
         ));  

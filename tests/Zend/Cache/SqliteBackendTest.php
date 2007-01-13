@@ -35,16 +35,13 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     }
     
     public function setUp()
-    {        
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $this->_cacheDir = $this->_getTmpDirWindows() . DIRECTORY_SEPARATOR;
-        } else {
-            $this->_cacheDir = $this->_getTmpDirUnix() . DIRECTORY_SEPARATOR;
-        }
+    {          
+        @mkdir($this->getTmpDir());
+        $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
             'cacheDBCompletePath' => $this->_cacheDir . 'cache.db'
         ));
-        parent::setUp();     
+        parent::setUp();       
     }
     
     public function tearDown()
@@ -72,7 +69,7 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     public function testCleanModeAllWithVacuum()
     {
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
-        	'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
+            'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
             'automaticVacuumFactor' => 1
         ));
         parent::setUp();    
@@ -84,7 +81,7 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     public function testRemoveCorrectCallWithVacuum()
     {   
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
-        	'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
+            'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
             'automaticVacuumFactor' => 1
         ));
         parent::setUp();  
