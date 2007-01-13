@@ -3746,6 +3746,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date = new Zend_Date(1234567890,$locale);
         $d2 = new Zend_Date(1610101010,$locale);
+        $date->setTimeZone(date_default_timezone_get());
+        $d2->setTimeZone(date_default_timezone_get());
 
         $result = $date->getYear();
         $this->assertTrue($result instanceof Zend_Date);
@@ -3824,14 +3826,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testWeekday()
     {
         // all tests and calculations below are in GMT (that is intention for this test)
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
-        $date->setGmt(true);
+        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, 'de_AT');
+        $date->setTimeZone('UTC');
         $dw = $date->getWeekday();
-        $this->assertSame($dw->toString(null), '1970 1 1 00:00:00');
+        $this->assertSame($dw->toString(null), '01.01.1970 00:00:00');
         for($weekday = 1; $weekday < 31; $weekday++) {
             $date->setWeekday($weekday);
             $dw = $date->getWeekday();
-            $this->assertSame($dw->toString(null), "1970 1 $weekday 00:00:00");
+            $this->assertSame($dw->toString(null), "$weekday.01.1970 00:00:00");
         }
     }
 

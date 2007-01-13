@@ -38,14 +38,14 @@ abstract class Zend_Date_DateObject {
     /**
      * UNIX Timestamp
      */
-    protected $_unixtimestamp;
+    private $_unixtimestamp;
 
 
     /**
      * active timezone
      */
-    protected $_timezone = 'UTC';
-    protected $_offset   = 0;
+    private $_timezone = 'UTC';
+    private $_offset   = 0;
 
 
     /**

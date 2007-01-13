@@ -1101,11 +1101,12 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function copyPart($part, $locale = null)
     {
-        $this->_setGmt(false);
-        $clone = clone $this; // copy all instance variables
-        $clone->_unixtimestamp = 0; // except the timestamp
-        $clone->set($this, $part, $locale);
-        $this->_resetGmt();
+        $clone = clone $this;       // copy all instance variables
+        $clone->setTimestamp(0);    // except the timestamp
+        if ($locale != null) {
+            $clone->setLocale($locale); // set an other locale if selected
+        }
+        $clone->set($this, $part);
         return $clone;
     }
 
@@ -2279,16 +2280,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getTime($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::TIME_MEDIUM, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::TIME_MEDIUM);
-
-        return $date;
+        return $this->copyPart(Zend_Date::TIME_MEDIUM, $locale);
     }
 
 
@@ -2417,7 +2409,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getDate($locale = null)
     {
-        return $this->copyPart(Zend_Date::DATE_MEDIUM, $locale = null);
+        return $this->copyPart(Zend_Date::DATE_MEDIUM, $locale);
     }
 
 
@@ -2999,15 +2991,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getYear($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::YEAR, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::YEAR);
-        return $date;
+        return $this->copyPart(Zend_Date::YEAR, $locale);
     }
 
     /**
@@ -3126,15 +3110,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getMonth($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::MONTH_SHORT, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::MONTH_SHORT);
-        return $date;
+        return $this->copyPart(Zend_Date::MONTH_SHORT, $locale);
     }
 
 
@@ -3283,15 +3259,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getDay($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::DAY_SHORT, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::DAY_SHORT);
-        return $date;
+        return $this->copyPart(Zend_Date::DAY_SHORT, $locale);
     }
 
 
@@ -3429,15 +3397,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getWeekday($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::WEEKDAY, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::WEEKDAY);
-        return $date;
+        return $this->copyPart(Zend_Date::WEEKDAY, $locale);
     }
 
 
@@ -3578,15 +3538,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getDayOfYear($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::DAY_OF_YEAR, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::DAY_OF_YEAR);
-        return $date;
+        return $this->copyPart(Zend_Date::DAY_OF_YEAR, $locale);
     }
 
 
@@ -3697,15 +3649,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getHour($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::HOUR, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::HOUR);
-        return $date;
+        return $this->copyPart(Zend_Date::HOUR, $locale);
     }
 
 
@@ -3817,15 +3761,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getMinute($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::MINUTE, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::MINUTE);
-        return $date;
+        return $this->copyPart(Zend_Date::MINUTE, $locale);
     }
 
 
@@ -3937,15 +3873,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getSecond($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::SECOND, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::SECOND);
-        return $date;
+        return $this->copyPart(Zend_Date::SECOND, $locale);
     }
 
 
@@ -4239,15 +4167,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getWeek($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        $result = $this->get(Zend_Date::WEEK, $locale);
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
-        $date->setGmt($this->_GMT);
-        $date->set($result, Zend_Date::WEEK);
-        return $date;
+        return $this->copyPart(Zend_Date::WEEK, $locale);
     }
 
 
@@ -4435,19 +4355,14 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     private function _setGmt($gmt, $none = null)
     {
-//print "GMT:".(int) $gmt." :NONE:".(int) $none;
         if ($none === null) {
-//print ":11";
             if ((int) $this->_GMT === -1) {
-//print ":22";
                 $this->_GMTRule = true;
                 $this->_GMT     = $gmt;
             }
         } else if ((int) $gmt == -1) {
-//print ":33";
             return (int) $none;
         } else {
-//print ":44";
             return (int) $this->_GMT;
         }
     }
