@@ -20,12 +20,6 @@
 
 
 /**
- * Zend_View_Exception
- */
-require_once 'Zend/View/Exception.php';
-
-
-/**
  * Interface class for Zend_View compatible template engine implementations
  *
  * @category   Zend
@@ -64,14 +58,6 @@ interface Zend_View_Interface
      * @return void
      */
     public function __set($key, $val);
-
-    /**
-     * Retrieve an assigned variable
-     *
-     * @param string $key The variable name.
-     * @return mixed The variable value.
-     */
-    public function &__get($key);
 
     /**
      * Allows testing with empty() and isset() to work

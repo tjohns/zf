@@ -18,12 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/**
- * Zend_View_Exception
- */
-require_once 'Zend/View/Exception.php';
-
 /**
  * Zend_View_Interface
  */
@@ -99,12 +93,6 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_encoding = 'ISO-8859-1';
 
     /**
-     * Template variables
-     * @var array
-     */
-    private $_vars = array();
-
-    /**
      * Constructor.
      *
      * @param array $config Configuration key-value pairs.
@@ -161,46 +149,42 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
     /**
      * Allows testing with empty() and isset() to work inside
-     * templates -- only available on PHP 5.1
+     * templates.
      *
      * @param  string $key
      * @return boolean
      */
     public function __isset($key)
     {
-        return isset($this->_vars[$key]);
-    }
-
-    /**
-     * Retrieves an assigned variable.
-     *
-     * @param string $key The variable name.
-     * @return mixed The variable value.
-     */
-    public function &__get($key)
-    {
-        if (isset($this->_vars[$key])) {
-            return $this->_vars[$key];
+        if ('_' != substr($key, 0, 1)) {
+            return isset($this->$key);
         }
 
-        return null;
+        return false;
     }
 
     /**
      * Directly assigns a variable to the view script.
      *
-     * Due to the fact that overloading in PHP >= 5.2.0 returns values in 
-     * read-only mode, using arrays in overloading is problematic. Any array
-     * value is thus cast to an ArrayObject, since objects are always 
-     * returned by reference and thus may be implicitly modified.
+     * Checks first to ensure that the caller is not attempting to set a 
+     * protected or private member (by checking for a prefixed underscore); if 
+     * not, the public member is set; otherwise, an exception is raised.
      *
      * @param string $key The variable name.
      * @param mixed $val The variable value.
      * @return void
+     * @throws Zend_View_Exception if an attempt to set a private or protected 
+     * member is detected
      */
     public function __set($key, $val)
     {
-        $this->_vars[$key] = $val;
+        if ('_' != substr($key, 0, 1)) {
+            $this->$key = $val;
+            return;
+        }
+
+        require_once 'Zend/View/Exception.php';
+        throw new Zend_View_Exception('Setting private or public class members is not allowed');
     }
 
     /**
@@ -211,8 +195,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     public function __unset($key)
     {
-        if (isset($this->_vars[$key])) {
-            unset($this->_vars[$key]);
+        if ('_' != substr($key, 0, 1) && isset($this->$key)) {
+            unset($this->$key);
         }
     }
 
@@ -433,19 +417,35 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * as the value.
      * @return void
      * @see __set()
+     * @throws Zend_View_Exception if $spec is neither a string nor an array, 
+     * or if an attempt to set a private or protected member is detected
      */
     public function assign($spec, $value = null)
     {
         // which strategy to use?
         if (is_string($spec)) {
             // assign by name and value
-            $this->_vars[$spec] = $value;
+            if ('_' == substr($spec, 0, 1)) {
+                require_once 'Zend/View/Exception.php';
+                throw new Zend_View_Exception('Setting private or public class members is not allowed');
+            }
+            $this->$spec = $value;
         } elseif (is_array($spec)) {
             // assign from associative array
+            $error = false;
             foreach ($spec as $key => $val) {
-                $this->_vars[$key] = $val;
+                if ('_' == substr($key, 0, 1)) {
+                    $error = true;
+                    break;
+                }
+                $this->$key = $val;
+            }
+            if ($error) {
+                require_once 'Zend/View/Exception.php';
+                throw new Zend_View_Exception('Setting private or public class members is not allowed');
             }
         } else {
+            require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('assign() expects a string or array, received ' . gettype($spec));
         }
     }
@@ -453,31 +453,39 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     /**
      * Return list of all assigned variables
      *
-     * Normalizes array so that ArrayObjects are returned as arrays
+     * Returns all public properties of the object. Reflection is not used 
+     * here as testing reflection properties for visibility is buggy.
      * 
      * @return array
      */
     public function getVars()
     {
-        $return = array();
-        foreach ($this->_vars as $key => $value) {
-            $return[$key] = $value;
+        $vars   = get_object_vars($this);
+        foreach ($vars as $key => $value) {
+            if ('_' == substr($key, 0, 1)) {
+                unset($vars[$key]);
+            }
         }
 
-        return $return;
+        return $vars;
     }
 
     /**
      * Clear all assigned variables
      *
      * Clears all variables assigned to Zend_View either via {@link assign()} or 
-     * property overloading ({@link __get()}/{@link __set()}).
+     * property overloading ({@link __set()}).
      * 
      * @return void
      */
     public function clearVars()
     {
-        $this->_vars = array();
+        $vars   = get_object_vars($this);
+        foreach ($vars as $key => $value) {
+            if ('_' != substr($key, 0, 1)) {
+                unset($this->$key);
+            }
+        }
     }
 
     /**
@@ -546,6 +554,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     protected function _script($name)
     {
         if (0 == count($this->_path['script'])) {
+            require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('no view script directory set; unable to determine location for view script');
         }
 
@@ -555,6 +564,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             }
         }
 
+        require_once 'Zend/View/Exception.php';
         throw new Zend_View_Exception("script '$name' not found in path");
     }
 
@@ -697,6 +707,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             }
         }
 
+        require_once 'Zend/View/Exception.php';
         throw new Zend_View_Exception("$type '$name' not found in path");
     }
 
