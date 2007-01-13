@@ -981,7 +981,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,$locale);
         $d2   = new Zend_Date(1010101010,null,$locale);
-
+        $date->setTimeZone(date_default_timezone_get());
+        $d2->setTimeZone(date_default_timezone_get());
+        
         $retour = $date->set(1234567890);
         $this->assertSame((string)$retour,'1234567890');
         $this->assertSame((string)$date->set($d2),'1010101010');
@@ -1001,10 +1003,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-03-12T00:31:31+01:00');
         $date->set(-10, Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-18T00:31:31+01:00');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $date->set( 10, Zend_Date::DAY);
-        $date->setGmt();
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T00:31:31+01:00');
+        $date->setTimeZone('Europe/Vienna');
         $date->set($d2, Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-03T00:31:31+01:00');
         $date->set( 10, Zend_Date::DAY, false, 'en_US');
@@ -3642,7 +3644,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(1010101010,$locale);
-
+        $date->setTimeZone(date_default_timezone_get());
+        
         $result = $date->getTimeZone();
         $this->assertSame($result, 'Europe/Vienna');
 
