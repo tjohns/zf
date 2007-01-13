@@ -3593,6 +3593,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(1010101010,$locale);
+        $date->setTimeZone(date_default_timezone_get());
 
         $result = Zend_Date_Cities::City('vienna');
         $this->assertTrue(is_array($result));

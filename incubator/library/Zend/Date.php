@@ -2852,7 +2852,9 @@ class Zend_Date extends Zend_Date_DateObject {
     public function getSunRise($location)
     {
         $horizon = $this->_checkLocation($location);
-        return new Zend_Date(parent::calcSun($location, $horizon, true));
+        $result = new Zend_Date(parent::calcSun($location, $horizon, true));
+        $result->setTimeZone($this->getTimeZone());
+        return $result;
     }
 
 
@@ -2870,7 +2872,9 @@ class Zend_Date extends Zend_Date_DateObject {
     public function getSunSet($location)
     {
         $horizon = $this->_checkLocation($location);
-        return new Zend_Date(parent::calcSun($location, $horizon, false));
+        $result = new Zend_Date(parent::calcSun($location, $horizon, false));
+        $result->setTimeZone($this->getTimeZone());
+        return $result;
     }
 
 
@@ -2904,8 +2908,12 @@ class Zend_Date extends Zend_Date_DateObject {
                     break;
             }
             $horizon = $this->_checkLocation($location);
-            $suninfo['sunrise'][$location['horizon']] = new Zend_Date(parent::calcSun($location, $horizon, true));
-            $suninfo['sunset'][$location['horizon']]  = new Zend_Date(parent::calcSun($location, $horizon, false));
+            $result = new Zend_Date(parent::calcSun($location, $horizon, true));
+            $result->setTimeZone($this->getTimeZone());
+            $suninfo['sunrise'][$location['horizon']] = $result;
+            $result = new Zend_Date(parent::calcSun($location, $horizon, false));
+            $result->setTimeZone($this->getTimeZone());
+            $suninfo['sunset'][$location['horizon']]  = $result;
         }
         return $suninfo;
     }
