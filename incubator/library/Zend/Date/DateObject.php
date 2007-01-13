@@ -103,7 +103,7 @@ abstract class Zend_Date_DateObject {
      *
      * @return  integer|string  timestamp
      */
-    protected function getTimestamp()
+    public function getTimestamp()
     {
         if ($this->_unixtimestamp === intval($this->_unixtimestamp)) {
             return (int) $this->_unixtimestamp;
@@ -140,7 +140,7 @@ abstract class Zend_Date_DateObject {
         if ((1901 < $year) and ($year < 2038)) {
 
             $oldzone = @date_default_timezone_get();
-            if ($this->getTimeZone() != $oldzone) {
+            if ($this->getTimezone() != $oldzone) {
                 date_default_timezone_set($this->_timezone);
             }
 
@@ -283,7 +283,7 @@ abstract class Zend_Date_DateObject {
         if ($timestamp === false) {
 
             $oldzone = @date_default_timezone_get();
-            if ($this->getTimeZone() != $oldzone) {
+            if ($this->getTimezone() != $oldzone) {
                 date_default_timezone_set($this->_timezone);
             }
 
@@ -296,7 +296,7 @@ abstract class Zend_Date_DateObject {
         if (abs($timestamp) <= 0x7FFFFFFF) {
 
             $oldzone = @date_default_timezone_get();
-            if ($this->getTimeZone() != $oldzone) {
+            if ($this->getTimezone() != $oldzone) {
                 date_default_timezone_set($this->_timezone);
             }
 
@@ -946,7 +946,7 @@ abstract class Zend_Date_DateObject {
      * @param  string  $zone      OPTIONAL timezone for date calculation; defaults to date_default_timezone_get()
      * @return string  actual set timezone string
      */
-    protected function setTimeZone($zone = null)
+    public function setTimezone($zone = null)
     {
         $oldzone = date_default_timezone_get();
         if ($zone === null) {
@@ -969,7 +969,7 @@ abstract class Zend_Date_DateObject {
      * 
      * @return  string  actual set timezone string
      */
-    protected function getTimeZone()
+    public function getTimezone()
     {
         return $this->_timezone;
     }
