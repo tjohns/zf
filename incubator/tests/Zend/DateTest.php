@@ -3519,7 +3519,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $result = $date->setIso();
         $this->assertTrue($result instanceof Zend_Date);
-        $result = $date->setIso('2002-01-04T00:00:00+0100');
+        $result = $date->setIso('2002-01-04T00:00:00+0000');
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T00:00:00+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T00:00:00+01:00');
         $date->setIso($d2);
@@ -3532,20 +3532,25 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddIso()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,$locale);
-        $d2   = new Zend_Date(1234567899,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
+        $d2   = new Zend_Date(1234567899,$locale);
 
         $result = $date->addIso();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,$locale);
-        $result = $date->addIso('2002-01-04T00:00:00+0100');
-        $this->assertSame($result->get(Zend_Date::W3C),'4011-03-21T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::W3C),'4011-03-21T00:31:30+01:00');
+        $date = new Zend_Date(0,$locale);
 
-        $date = new Zend_Date(1234567890,null,$locale);
+        $result = $date->setIso('2002-01-04T01:00:00+0100');
+        $result = $date->addIso('0000-00-00T01:00:00+0100');
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T01:00:00+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T01:00:00+01:00');
+
+        $date->addIso('0001-01-01T01:01:01+0100');
+        $this->assertSame($date->get(Zend_Date::W3C),'2003-02-05T01:01:01+01:00');
+
+        $date = new Zend_Date(1234567890,$locale);
         $date->addIso($d2);
-        $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T01:03:09+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T00:03:09+01:00');
     }
 
     /**
@@ -3561,13 +3566,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
-        $result = $date->subIso('2002-01-04T00:00:00+0100');
-        $this->assertSame($result->get(Zend_Date::W3C),'7-01-13T00:31:30+01:00');
-        $this->assertSame($date->get(Zend_Date::W3C),'7-01-13T00:31:30+01:00');
+        $result = $date->subIso('0000-00-00T01:00:00+0100');
+        $this->assertSame($result->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
+
+        $result = $date->subIso('0001-01-01T01:01:01+0100');
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-01-14T00:30:29+01:00');
 
         $date = new Zend_Date(1234567890,null,$locale);
         $date->subIso($d2);
-        $this->assertSame($date->get(Zend_Date::W3C),'-1-12-05T23:59:51+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'-1-12-06T00:59:51+01:00');
     }
 
     /**
@@ -3605,14 +3613,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,$locale);
-        $d2   = new Zend_Date(1234567899,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
+        $d2   = new Zend_Date(1234567899,$locale);
 
         $result = $date->setArpa();
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setArpa('Sat, 03 May 01 00:00:00 +0100');
-        $this->assertSame($result->get(Zend_Date::RFC_822),'Thu, 03 May 01 01:00:00 +0200');
-        $this->assertSame($date->get(Zend_Date::W3C),'2001-05-03T01:00:00+02:00');
+        $this->assertSame($result->get(Zend_Date::RFC_822),'Thu, 03 May 01 00:00:00 +0200');
+        $this->assertSame($date->get(Zend_Date::W3C),'2001-05-03T00:00:00+02:00');
         $date->setArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:39+01:00');
     }
@@ -3623,18 +3631,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,$locale);
-        $d2   = new Zend_Date(1234567899,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
+        $d2   = new Zend_Date(1234567899,$locale);
 
         $result = $date->addArpa();
         $this->assertTrue($result instanceof Zend_Date);
 
-        $date = new Zend_Date(1234567890,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
         $result = $date->addArpa('Sat, 03 May 01 00:00:00 +0100');
         $this->assertSame($result->get(Zend_Date::RFC_822),'Sun, 18 Jul 10 00:31:30 +0100');
         $this->assertSame($date->get(Zend_Date::W3C),'4010-07-18T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
         $date->addArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T01:03:09+01:00');
 
@@ -3642,9 +3650,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         // maybe needes to be reworked
         // markTestIncomplete() craches PHP with XDebug-2.0.0rc2-5.1.2
 //        $this->markTestIncomplete();
-        $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 GMT');
-        $arpa = $result->getArpa();
-        $this->assertSame($arpa->get(Zend_Date::RFC_822),'Fri, 05 Jan 07 03:35:53 GMT');
+//        $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 GMT');
+//        $arpa = $result->getArpa();
+//        $this->assertSame($arpa->get(Zend_Date::RFC_822),'Fri, 05 Jan 07 03:35:53 GMT');
     }
 
     /**
@@ -3653,8 +3661,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,$locale);
-        $d2   = new Zend_Date(1234567899,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
+        $d2   = new Zend_Date(1234567899,$locale);
 
         $result = $date->subArpa();
         $this->assertTrue($result instanceof Zend_Date);
@@ -3664,7 +3672,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($result->get(Zend_Date::RFC_822),'Wed, 16 Sep 7 00:31:30 +0100');
         $this->assertSame($date->get(Zend_Date::W3C),'7-09-16T00:31:30+01:00');
 
-        $date = new Zend_Date(1234567890,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
         $date->subArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-05T23:59:51+01:00');
     }
@@ -3675,10 +3683,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testCompareArpa()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1234567890,null,$locale);
-        $d2   = new Zend_Date(1234567899,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
+        $d2   = new Zend_Date(1234567899,$locale);
 
-        $date = new Zend_Date(1234567890,null,$locale);
+        $date = new Zend_Date(1234567890,$locale);
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 01:31:30 +0100'), -1);
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 00:31:30 +0100'), 0);
         $this->assertSame($date->compareArpa('Sat, 13 Feb 09 00:31:30 +0100'), 1);

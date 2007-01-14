@@ -2678,16 +2678,15 @@ class Zend_Date extends Zend_Date_DateObject {
             $locale = $this->getLocale();
         }
 
-        $gmt = $this->setGmt(false);
+        $this->_setGmt(false);
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $locale);
         } else if ($arpa === null) {
             $arpa = $this->date('D\, d M y H\:m\:s O', false, $this->_GMT);
         }
-        // @todo: GMT = true
         $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, $locale);
-        $this->setGmt($gmt);
+        $this->_resetGmt();
         if ($calc != 'cmp') {
             return $this;
         }
