@@ -3928,17 +3928,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     /**
      * test setting dates to specify weekdays
      */
-    public function testWeekday()
+    public function testDay()
     {
         // all tests and calculations below are in GMT (that is intention for this test)
-        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, 'de_AT');
+        $date = new Zend_Date(0, 'de_AT');
         $date->setTimeZone('UTC');
-        $dw = $date->getWeekday();
-        $this->assertSame($dw->toString(null), '01.01.1970 00:00:00');
-        for($weekday = 1; $weekday < 31; $weekday++) {
-            $date->setWeekday($weekday);
-            $dw = $date->getWeekday();
-            $this->assertSame($dw->toString(null), "$weekday.01.1970 00:00:00");
+        $dw = $date->getDay();
+        $this->assertSame($dw->toString(), '01.01.1970 00:00:00');
+        for($day = 1; $day < 31; $day++) {
+            $date->setDay($day);
+            $dw = $date->getDay();
+            $weekday = str_pad($day, 2, '0', STR_PAD_LEFT);
+            $this->assertSame($dw->toString(), "$weekday.01.1970 00:00:00");
         }
     }
 
