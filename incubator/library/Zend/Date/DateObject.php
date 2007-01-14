@@ -248,7 +248,7 @@ abstract class Zend_Date_DateObject {
      * @param  integer  $year
      * @return  boolean  true, if year is leap year
      */
-    public function isYearLeapYear($year)
+    protected function isYearLeapYear($year)
     {
         // all leapyears can be divided through 4
         if (($year % 4) != 0) {

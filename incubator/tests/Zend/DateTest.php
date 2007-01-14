@@ -3488,9 +3488,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1234567899,null,$locale);
 
         $date = new Zend_Date(1234567890,null,$locale);
-        $this->assertSame($date->compareDate('10-01-2009'), 1);
-        $this->assertSame($date->compareDate('14-02-2009'), 0);
-        $this->assertSame($date->compareDate('15-02-2009'), -1);
+        $this->assertSame($date->compareDate('10.01.2009'), 1);
+        $this->assertSame($date->compareDate('14.02.2009'), 0);
+        $this->assertSame($date->compareDate('15.02.2009'), -1);
         $this->assertSame($date->compareDate($d2), 0);
     }
 

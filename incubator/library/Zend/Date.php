@@ -1074,7 +1074,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function compare($date, $part = null, $locale = null)
     {
-        $this->_setGmt(true);
+        $this->_setGmt(false);
         $compare = $this->_calculate('cmp', $date, $part, $locale);
         $this->_resetGmt();
 
@@ -2210,7 +2210,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function equals($date, $part = null, $locale = null)
     {
-        $this->_setGmt(true);
+        $this->_setGmt(false);
         $result = $this->compare($date, $part, $locale);
         $this->_resetGmt();
 
@@ -2234,7 +2234,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function isEarlier($date, $part = null, $locale = null)
     {
-        $this->_setGmt(true);
+        $this->_setGmt(false);
         $result = $this->compare($date, $part, $locale);
         $this->_resetGmt();
 
@@ -2259,7 +2259,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function isLater($date, $part = null, $locale = null)
     {
-        $this->_setGmt(true);
+        $this->_setGmt(false);
         $result = $this->compare($date, $part, $locale);
         $this->_resetGmt();
 
@@ -2472,7 +2472,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function setDate($date = null, $format = null, $locale = null)
     {
-        return $this->date('set', $date, $format, $locale);
+        return $this->_date('set', $date, $format, $locale);
     }
 
 
@@ -2490,7 +2490,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function addDate($date = null, $format = null, $locale = null)
     {
-        return $this->date('add', $date, $format, $locale);
+        return $this->_date('add', $date, $format, $locale);
     }
 
 
@@ -2509,7 +2509,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function subDate($date = null, $format = null, $locale = null)
     {
-        return $this->date('sub', $date, $format, $locale);
+        return $this->_date('sub', $date, $format, $locale);
     }
 
 
@@ -2528,7 +2528,8 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function compareDate($date = null, $format = null, $locale = null)
     {
-        return $this->date('cmp', $date, $format, $locale);
+
+        return $this->_date('cmp', $date, $format, $locale);
     }
 
 
