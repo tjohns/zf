@@ -208,8 +208,9 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         
                     $left_to_read = $chunksize;
                     while ($left_to_read > 0) {
-                        $chunk .= fread($this->socket, $left_to_read);
-                        $left_to_read = $chunksize - strlen($chunk);
+                        $line = fread($this->socket, $left_to_read);
+                        $chunk .= $line;
+                        $left_to_read -= strlen($line);
                     }
 
                     $chunk .= fgets($this->socket);
