@@ -62,7 +62,8 @@ Zend_Session_Core::setOptions($config->asArray());
 ; gc_probability
 ; hash_bits_per_character
 ; hash_function
-; name = ZFSESSION
+; name should be unique for each PHP application sharing the same domain name
+name = UNIQUE_NAME
 ; referer_check
 ; save_handler
 ; save_path
@@ -138,6 +139,24 @@ remember_me_seconds = 864000
                             poisoning, under some common configurations of PHP. Thus, the value for save_path should not
                             be made public knowledge, and should be altered to a secure location unique to each
                             application.
+                        </para>
+                    </note>
+                </listitem>
+                <listitem>
+                    <para>
+                        string <code>name</code> - The correct value is system dependent, and should be provided by
+                        the developer using a short value <emphasis role="strong">unique</emphasis> to the ZF
+                        application.
+                    </para>
+                    <note>
+                        <title>Security Risk</title>
+                        <para>
+                            If the <code>php.ini</code> setting for <code>session.name</code>
+                            is the same (e.g. the default "PHPSESSID"), and there are two or more PHP applications
+                            accessible through the same domain name (e.g. 
+                            <code>http://www.somewebhost.com/~youraccount/index.php</code>), then they will share
+                            the same session data for website visitors that visit both websites.  Additionally,
+                            possible corruption of session data may result.
                         </para>
                     </note>
                 </listitem>

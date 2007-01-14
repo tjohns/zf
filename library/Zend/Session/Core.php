@@ -82,7 +82,7 @@ final class Zend_Session_Core
      */
     static private $_defaultOptions = array(
         'save_path'                 => null,
-        'name'                      => 'ZFSESSION',
+        'name'                      => null, /* this should be set to a unique value for each application */
         'save_handler'              => null,
         //'auto_start'                => null, /* intentionally excluded (see manual) */
         'gc_probability'            => null,
