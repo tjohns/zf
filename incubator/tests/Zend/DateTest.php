@@ -3171,10 +3171,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compare(1234567899),-1);
 
         $date->set($d2);//03.01.2002 15:36:50
-        $this->assertSame($date->compare(3,Zend_Date::DAY),0);
-        $this->assertSame($date->compare(4,Zend_Date::DAY),-1);
+        $this->assertSame($date->compare(3,Zend_Date::DAY),1);
+        $this->assertSame($date->compare(4,Zend_Date::DAY),0);
         $this->assertSame($date->compare(5,Zend_Date::DAY),-1);
-        $this->assertSame($date->compare(2,Zend_Date::DAY),1);
 
         $this->assertSame($date->compare('Mon',Zend_Date::WEEKDAY_SHORT),1);
         $this->assertSame($date->compare('Sam',Zend_Date::WEEKDAY_SHORT),-1);
@@ -3297,7 +3296,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->setTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
 
-        $date = new Zend_Date(null,null,$locale);
+        $date = new Zend_Date($locale);
         $t1 = $date->get(Zend_Date::TIMESTAMP);
         $date->setTime();
         $t2 = $date->get(Zend_Date::TIMESTAMP);
