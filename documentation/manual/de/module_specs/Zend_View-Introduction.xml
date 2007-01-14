@@ -61,38 +61,6 @@ echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
         
-        <note>
-            <title>Zend_View PHP Kompatibilität</title>
-
-            <para>
-                Zend_View verwendet Überladung, um das Setzen von View Skript Variablen zu 
-                ermöglichen. PHP 5.2.0 hat das Verhalten von __get() geändert, so dass nicht mehr
-                länger Referenzen zurück gegeben werden, was die folgende Verwendung von Zend_View 
-                verhindert:
-            </para>
-
-            <programlisting role="php"><![CDATA[
-$view->foo = array();
-$view->foo[] = 42;
-]]></programlisting>
-
-            <para>
-                Ein Parch für die Funktionalität von __get() wurde nach dem 5.2.0 Release bereit
-                gestellt, so dass die Rückgabe einer Referenz erlaubt wird, wenn der Referenz
-                Operator angegeben wird:
-            </para>
-
-            <programlisting role="php"><![CDATA[
-public function &__get($key)
-]]></programlisting>
-
-            <para>
-                Dies hat zur Folge, dass das Verändern von Array mittels Überladung in PHP 5.2.0
-                nicht funktioniert, aber es für alle anderen PHP Versionen läuft, die vom Zend 
-                Framework unterstützt werden.
-            </para>
-        </note>
-        
     </sect2>
     
     <sect2 id="zend.view.introduction.view">
