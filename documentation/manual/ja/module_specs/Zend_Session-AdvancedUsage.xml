@@ -116,52 +116,6 @@ v            </listitem>
 
     </sect2>
 
-    <sect2 id="zend.session.limitinginstances">
-
-        <title>名前空間内での Zend_Session のインスタンスをひとつに制限する</title>
-
-        <para>
-            特定の名前空間用に Zend_Session の最初のインスタンスを作成する際に、
-            その名前空間ではこれ以上別の Zend_Session を作成しないよう指示することができます。
-            こうすると、その後同じ名前空間で Zend_Session
-            のインスタンスを作成しようとした際にエラーが発生します。
-            これはオプションの設定であり、デフォルトではありません。ひとつの名前空間に対しては
-            ひとつのインスタンスだけを使用したいという人のために残しています。
-            これは、特定のセッション名前空間を
-            コンポーネントが不意に書き換えてしまう危険性を減らします。
-            セッションへのアクセスが容易ではなくなるからです。
-            しかし、名前空間に対してひとつのインスタンスに限定してしまうと、
-            コードの量が増え、より複雑になってしまいます。なぜなら、便利は
-            <code>$session = new Zend_Session('aNamespace');</code>
-            が最初の一度しか使えなくなるからです。それ以降は、以下の例のようになります。
-        </para>
-
-        <example>
-            <title>単一のインスタンスへの制限</title>
-<programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Session.php';
-    $componentAuthState = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
-    doSomething($options, $componentAuthState); // 必要なところで、状態を渡します
-?>]]></programlisting>
-        </example>
-
-        <para>
-            上の例で Zend_Session のコンストラクタの第二パラメータで指定しているのは、
-            今後 'Zend_Auth' 名前空間で新たに Zend_Session を作成することができないということです。
-            作成しようとすると、例外がスローされます。
-            上のコードを実行した後は <code>new Zend_Session('Zend_Auth')</code> 
-            ができなくなります。そのため、
-            同一リクエスト内でその名前空間のセッションを使用するには、
-            最初に作成したインスタンス
-            (上の例では <code>$componentAuthState</code>)
-            をどこかに保存しておく必要があります。
-            たとえば静的変数にこのインスタンスを格納したり、
-            この名前空間のセッションを必要とするメソッドに直接渡したりします。
-        </para>
-
-    </sect2>
-
     <sect2 id="zend.session.locking">
 
         <title>セッション名前空間のロック</title>
@@ -275,6 +229,68 @@ else {
 }
 ?>]]></programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.limitinginstances">
+
+        <title>名前空間内での Zend_Session のインスタンスをひとつに制限する</title>
+
+        <para>
+            ここで説明する機能を使用するよりも、セッションのロック (上を参照ください)
+            を使うことを推奨します。ここで説明する機能は、
+            アクセスが必要なすべての関数およびオブジェクトに Zend_Session
+            のインスタンスを渡さなければならず、開発者への負担が大きくなります。
+        </para>
+
+        <para>
+            特定の名前空間用に Zend_Session の最初のインスタンスを作成する際に、
+            その名前空間ではこれ以上別の Zend_Session を作成しないよう指示することができます。
+            こうすると、その後同じ名前空間で Zend_Session
+            のインスタンスを作成しようとした際にエラーが発生します。
+            これはオプションの設定であり、デフォルトではありません。ひとつの名前空間に対しては
+            ひとつのインスタンスだけを使用したいという人のために残しています。
+            これは、特定のセッション名前空間を
+            コンポーネントが不意に書き換えてしまう危険性を減らします。
+            セッションへのアクセスが容易ではなくなるからです。
+            しかし、名前空間に対してひとつのインスタンスに限定してしまうと、
+            コードの量が増え、より複雑になってしまいます。なぜなら、便利は
+            <code>$session = new Zend_Session('aNamespace');</code>
+            が最初の一度しか使えなくなるからです。それ以降は、以下の例のようになります。
+        </para>
+
+        <example>
+            <title>単一のインスタンスへの制限</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Session.php';
+    $authSessionAccessor1 = new Zend_Session('Zend_Auth');
+    $authSessionAccessor2 = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
+    $authSessionAccessor1->foo = 'bar';
+    assert($authSessionAccessor2->foo, 'bar'); // 通過します
+    doSomething($options, $authSessionAccessor2); // 必要に応じてアクセサを渡します
+    .
+    .
+    .
+    $aSessionObject = new Zend_Session('Zend_Auth'); // これはエラーとなります
+?>]]></programlisting>
+        </example>
+
+        <para>
+            上の例で Zend_Session のコンストラクタの第二パラメータで指定しているのは、
+            今後 'Zend_Auth' 名前空間で新たに Zend_Session を作成することができないということです。
+            作成しようとすると、例外がスローされます。
+            上のコードを実行した後は <code>new Zend_Session('Zend_Auth')</code> 
+            ができなくなります。そのため、
+            同一リクエスト内でその名前空間のセッションを使用するには、
+            最初に作成したインスタンス
+            (上の例では <code>$componentAuthState</code>)
+            をどこかに保存しておく必要があります。
+            たとえば静的変数にこのインスタンスを格納したり、
+            この名前空間のセッションを必要とするメソッドに直接渡したりします。
+            セッションのロック (上を参照ください) のほうが、
+            名前空間へのアクセスを制限する方法としてはより便利で簡単です。
+        </para>
 
     </sect2>
 
