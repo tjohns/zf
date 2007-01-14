@@ -166,22 +166,22 @@ class Zend_Session implements IteratorAggregate
 
 
     /**
-     * unLock() - unmark a session/namespace to enable read & write
+     * unlock() - unmark a session/namespace to enable read & write
      *
      * @return void
      */
-    public function unLock()
+    public function unlock()
     {
         unset(self::$_namespaceLocks[$this->_namespace]);
     }
 
 
     /**
-     * unLockAll() - unmark all session/namespaces to enable read & write
+     * unlockAll() - unmark all session/namespaces to enable read & write
      *
      * @return void
      */
-    static public function unLockAll()
+    static public function unlockAll()
     {
         self::$_namespaceLocks = array();
     }

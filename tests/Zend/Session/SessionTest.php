@@ -61,7 +61,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue ( $old === (error_reporting( E_ALL | E_STRICT )),
             'something associated with a particular test altered error_reporting to something other than E_STRICT');
 		restore_error_handler();
-        Zend_Session::unLockAll();
+        Zend_Session::unlockAll();
         // @todo: cleanup
         if (count($this->error_list)) {
             echo "**** Errors: ";
@@ -351,7 +351,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             // session namespace 'single' already exists and is set to be the only instance of this namespace
             $this->assertRegexp('/read.only/i', $e->getMessage());
         }
-        $s->unLock();
+        $s->unlock();
         $s->o = 'orange';
         $s->p = 'papaya';
         $s->c = 'cherry';
@@ -387,13 +387,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s = new Zend_Session('somenamespace');
         $s2 = new Zend_Session('mayday');
         $s2->lock();
-        $s->unLock();
+        $s->unlock();
         $s->o = 'orange';
         $s->p = 'papaya';
         $s->c = 'cherry';
         $s = new Zend_Session('somenamespace');
         $s->lock();
-        $s2->unLock();
+        $s2->unlock();
         try {
             $s->o = 'orange';
             $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
@@ -407,18 +407,18 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      * test unlocking of the Default namespace (i.e. make namespace readonly)
      * expected no exceptions
      */
-    public function testUnLock()
+    public function testUnlock()
     {
         $s = new Zend_Session();
         try {
             $s->a = 'apple';
             $s->p = 'pear';
             $s->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'prune';
             $s->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'papaya';
             $s->c = 'cherry';
@@ -439,11 +439,11 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $s->a = 'apple';
             $s->p = 'pear';
             $s->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'prune';
             $s->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'papaya';
             $s->c = 'cherry';
@@ -458,7 +458,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
                 $this->assertRegexp('/read.only/i', $e->getMessage());
             }
         }
-        $s->unLockAll();
+        $s->unlockAll();
         foreach($sessions as $namespace) {
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->p = 'pear';
@@ -469,7 +469,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * test isLocked() unary comparison operator under various situations
-     * expect lock status remains synchronized with last call to unLock() or lock()
+     * expect lock status remains synchronized with last call to unlock() or lock()
      * expect no exceptions
      */
     public function testIsLocked()
@@ -481,13 +481,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->lock();
             $this->assertTrue($s->isLocked(), 'isLocked() returned incorrect status (unlocked)');
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'prune';
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->lock();
             $this->assertTrue($s->isLocked(), 'isLocked() returned incorrect status (unlocked)');
-            $s->unLock();
+            $s->unlock();
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->o = 'orange';
             $s->p = 'papaya';
@@ -511,11 +511,11 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $s->lock();
             $s2 = new Zend_Session('mayday');
             $s2->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'prune';
             $s->lock();
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'papaya';
             $s->c = 'cherry';
@@ -526,7 +526,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * test isLocked() unary comparison operator under various situations
-     * expect lock status remains synchronized with last call to unLock() or lock()
+     * expect lock status remains synchronized with last call to unlock() or lock()
      * expect no exceptions
      */
     public function testIsLockedNamespace()
@@ -540,14 +540,14 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $s2 = new Zend_Session('mayday');
             $s2->lock();
             $this->assertTrue($s->isLocked(), 'isLocked() returned incorrect status (unlocked)');
-            $s->unLock();
+            $s->unlock();
             $s->o = 'orange';
             $s->p = 'prune';
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->lock();
-            $s2->unLock();
+            $s2->unlock();
             $this->assertTrue($s->isLocked(), 'isLocked() returned incorrect status (unlocked)');
-            $s->unLock();
+            $s->unlock();
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->o = 'orange';
             $s->p = 'papaya';
@@ -572,7 +572,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result), "tearDown failure, found keys in default namespace: '$result'");
         $s->a = 'apple';
         $s->lock();
-        $s->unLock();
+        $s->unlock();
         $s->p = 'papaya';
         $s->c = 'cherry';
         $s = new Zend_Session();
@@ -604,7 +604,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result), "tearDown failure, found keys in default namespace: '$result'");
         $s->a = 'apple';
         $s->lock();
-        $s->unLock();
+        $s->unlock();
         $s->p = 'papaya';
         $s->c = 'cherry';
         $s = new Zend_Session();
@@ -648,7 +648,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result), "tearDown failure, found keys in default namespace: '$result'");
         $s->a = 'apple';
         $s->lock();
-        $s->unLock();
+        $s->unlock();
         $s->p = 'papaya';
         $s->c = 'cherry';
         $s = new Zend_Session('foobar');
@@ -676,7 +676,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result), "tearDown failure, found keys in 'somenamespace' namespace: '$result'");
         $s->a = 'apple';
         $s->lock();
-        $s->unLock();
+        $s->unlock();
         $s->p = 'papaya';
         $s->c = 'cherry';
         $s = new Zend_Session('somenamespace');
