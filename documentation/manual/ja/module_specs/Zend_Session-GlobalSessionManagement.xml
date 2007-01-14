@@ -67,7 +67,8 @@ Zend_Session_Core::setOptions($config->asArray());
 ; gc_probability
 ; hash_bits_per_character
 ; hash_function
-; name = ZFSESSION
+; name は、同じドメインを共有する PHP アプリケーション間で一意でなければなりません
+name = UNIQUE_NAME
 ; referer_check
 ; save_handler
 ; save_path
@@ -76,7 +77,7 @@ Zend_Session_Core::setOptions($config->asArray());
 ; use_only_cookies
 ; use_trans_sid
 
-; remember_me_seconds = <integer seconds>
+; remember_me_seconds = <整数の秒数>
 ; strict = on|off
 
 
@@ -156,6 +157,25 @@ remember_me_seconds = 864000
                             で実行可能なことがあります。
                             そのため、save_path の値は、ありがちな場所を避けるようにしなければなりません。
                             また、各アプリケーションで別々にし、安全を確保するようにしましょう。
+                        </para>
+                    </note>
+                </listitem>
+                <listitem>
+                    <para>
+                        string <code>name</code> - 
+                        正しい値はシステムに依存します。
+                        ZF アプリケーション間で <emphasis role="strong">一意</emphasis>
+                        な短い値を開発者側で指定する必要があります。
+                    </para>
+                    <note>
+                        <title>セキュリティリスク</title>
+                        <para>
+                            <code>php.ini</code> での <code>session.name</code> の設定が同じ
+                            (たとえばデフォルトの "PHPSESSID") で、同一ドメインに複数の
+                            PHP アプリケーションが存在する場合
+                            (<code>http://www.somewebhost.com/~youraccount/index.php</code> など)
+                            は、両方のウェブサイトで同じセッションデータを共有することになってしまいます。
+                            さらにその結果として、お互いのセッションデータが破壊されてしまう可能性があります。
                         </para>
                     </note>
                 </listitem>
