@@ -277,10 +277,9 @@ abstract class Zend_Date_DateObject {
      * @param  boolean  $gmt        OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
      * @return string
      */
-    protected function date($format, $timestamp = false, $gmt = false)
+    protected function date($format, $timestamp = null, $gmt = false)
     {
-
-        if ($timestamp === false) {
+        if ($timestamp === null) {
 
             $oldzone = @date_default_timezone_get();
             if ($this->getTimezone() != $oldzone) {
@@ -306,8 +305,9 @@ abstract class Zend_Date_DateObject {
             return $result;
         }
 
-        if ($gmt === false) {
-            $timestamp -= $this->getGmtOffset();
+        // check on false or null alone failes
+        if (empty($gmt)) {
+            $timestamp -= $this->_offset;
         }
         
         $date = $this->getDateParts($timestamp, true);
