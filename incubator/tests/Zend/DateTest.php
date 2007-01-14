@@ -3197,7 +3197,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $newdate = $date->copyPart(Zend_Date::DAY);
-        $this->assertSame($newdate->get(Zend_Date::W3C), '1970-01-05T00:00:00+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C), '2002-01-04T00:36:50+01:00');
+        $this->assertSame($newdate->get(Zend_Date::W3C), '1970-01-04T01:00:00+01:00');
     }
 
     /**
