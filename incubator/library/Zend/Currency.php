@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Currency
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Date.php 2683 2007-01-10 12:28:23Z thomas $
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -39,15 +39,15 @@ class Zend_Currency {
     /**
      * constants for enabling and disabling the use of currency Symbols
      */
-    const USESYMBOL = 0;
-    const NOSYMBOL  = 1;
+    const USE_SYMBOL = 0;
+    const NO_SYMBOL  = 1;
     
     
     /**
      * constants for enabling and disabling the use of currency Names
      */
-    const USENAME  = 2;
-    const NONAME   = 4;
+    const USE_NAME  = 2;
+    const NO_NAME   = 4;
 
     const STANDARD = 8;
     const RIGHT    = 16;
@@ -57,9 +57,9 @@ class Zend_Currency {
     /**
      * the locale name of the region that uses the currency
      * 
-     * @var string|Zend_Locale
+     * @var Zend_Locale
      */
-    private $_CurrencyLocale = null ;
+    private $_currencyLocale = null;
     
     
     /**
@@ -67,7 +67,38 @@ class Zend_Currency {
      * 
      * @var string
      */
-    private $_CurrencyShortName = null ;
+    private $_shortName = null;
+    
+    
+    /**
+     * the full name of the currency
+     * 
+     * @var string
+     */
+    private $_fullName = null;
+    
+    /**
+     * the symbol of the currency
+     * 
+     * @var string
+     */
+    private $_symbol = null;
+    
+    
+    /**
+     * the position of the symbol
+     * 
+     * @var const
+     */
+    private $_symbolPosition = null;
+    
+    
+    /**
+     * the locale of the symbol
+     * 
+     * @var Zend_Locale
+     */
+    private $_symbolLocale = null;
     
     
     /**
@@ -75,9 +106,15 @@ class Zend_Currency {
      * 
      * @var string
      */
-    private $_NumberScript;
+    private $_numberScript = null;
     
-    //TODO declare the other needed properties
+    
+    /**
+     * the locale for formating the output
+     *
+     * @var Zend_Locale
+     */
+    private $_formatLocale = null;
     
     
     /**
@@ -97,8 +134,7 @@ class Zend_Currency {
         $params = array(
                       1 => $currency,
                       2 => $locale,
-                      3 => $script
-                        );
+                      3 => $script);
                         
          $currency = $locale = $script = false ;
                         
@@ -143,9 +179,107 @@ class Zend_Currency {
         }
         
         
-        //TODO create another method to get the data from Zend_Locale_Data
+        //getting the data related to this currency
+        $this->_updateShortName()
+             ->_updateFullName()
+             ->_updateSymbol()
+             ->_updateFormat();
     }
 
+    
+    
+    /**
+     * gets the short name of the currency from the LDML files
+     * 
+     * @return Zend_Currency
+     * @throws Zend_Currency_Exception
+     */
+    protected function _updateShortName()
+    {
+        //getting the short name of the currency
+        $data = Zend_Locale_Data::getContent('','currencyforregion',$this->_currencyLocale->getRegion());
+        
+        $this->_shortName = $data['currency'];
+        
+        return $this;
+    }
+    
+    
+    /**
+     * gets the full name of the currency from the LDML files
+     * 
+     * @return Zend_Currency
+     * @throws Zend_Currency_Exception
+     */
+    protected function _updateFullName()
+    {
+        //getting the full name of the currency
+        $names = Zend_Locale_Data::getContent('','currencynames',$this->_currencyLocale->getRegion());
+        
+        $this->_fullName = $names[$this->_shortName];
+        
+        return $this;
+    }
+    
+    
+    /**
+     * gets the symbol of the currency from the LDML files
+     * 
+     * @return Zend_Currency
+     * @throws Zend_Currency_Exception
+     */
+    protected function _updateSymbol()
+    {
+        $formatLocale = $this->symbolLocale;
+        
+        if (!$formatLocale instanceof Zend_Locale) {
+            $formatLocale = $this->_currencyLocale;
+        }
+        
+        //getting the symbol of the currency
+        $symbols = Zend_Locale_Data::getContent($formatLocale, 'currencysymbols');
+        
+        $this->_symbol = $symbols[$this->_shortName];
+        
+        return $this;
+    }
+    
+    
+	/**
+     * gets the information required for formating the currency from the LDML files
+     * 
+     * @return Zend_Currency
+     * @throws Zend_Currency_Exception
+     */
+    protected function _updateFormat()
+    {
+        $formatLocale = $this->formatLocale;
+        
+        if (!$formatLocale instanceof Zend_Locale) {
+            $formatLocale = $this->_currencyLocale;
+        }
+        
+        //getting the format information of the currency
+        $format = Zend_Locale_Data::getContent($formatLocale, 'currencyformat');
+        $format = $format['default'];
+        
+        iconv_set_encoding('internal_encoding', 'UTF-8');
+        
+        if (iconv_strpos($format, ';')) {
+            $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
+        }
+        
+        
+        //knowing the symbol positioning information
+        if (iconv_strpos($format, '¤') == 0) {
+            $this->_symbolPosition = self::RIGHT;
+        } else if (iconv_strpos($format, '¤') == iconv_strlen($format)-1) {
+            $this->_symbolPosition = self::LEFT;
+        }
+        
+        return $this;
+    }
+    
     
     /**
      * Returns a localized currency string
@@ -240,7 +374,11 @@ class Zend_Currency {
      */ 
     public function toString()
     {
-        //TODO finish this method
+        if (!empty($this->_fullName)) {
+            return $this->_fullName;
+        } else {
+            return $this->shortName;
+        }
     }
 
 
@@ -267,7 +405,7 @@ class Zend_Currency {
         if (is_object($locale) && $locale instanceof Zend_Locale){
             $this->_CurrencyLocale = $locale ;
         } else if (is_string($locale)) {
-            $this->_CurrencyLocale = new Zend_Locale($locale);
+            $this->_currencyLocale = new Zend_Locale($locale);
         } else {
             throw new Zend_Currency_Exception('invalid locale');
         }
@@ -284,7 +422,7 @@ class Zend_Currency {
     private function _setCurrencyShortName($currency)
     {
         if (is_string($currency) && strlen($currency) == 3) {
-            $this->_CurrencyShortName = strtoupper($currency);
+            $this->_currencyShortName = strtoupper($currency);
         } else {
             throw new Zend_Currency_Exception('invalid currency short name');
         }
@@ -301,28 +439,10 @@ class Zend_Currency {
     private function _setNumberScript($script)
     {
         if (is_string($script) && strlen($script) == 4) {
-            $this->_NumberScript = $script ;
+            $this->_numberScript = $script ;
         } else {
             throw new Zend_Currency_Exception('invalid script name');
         }
     }
 }
 
-/** PROPOSER COMMENT FOR SHREEF (from Thomas):
- * 1.)
- * The serialize/unserialize functions should not be needed
- * The standard PHP useage should be enough
- * 2.)
- * All functions - script and locale are switched.
- * Standard behavior is locale rightest parameter.
- * If not set all params are parsed from right to left, like in Zend_Date
- * Script has to be use the "script" string and not the locale identifier, 
- * so duplication is not given.
- * 3.) I reworked some functions to work as the user expects them, but not complete for now
- * 4.) Please only use SPACES instead of TAB... intend 4 spaces
- * 5.) Please no ending sign after closing a function
- * 6.) Please UTF8 coding
- * 7.) Please code like described in the coding standard... I fixed some issues but not all
- * 
- * More to come after 0.7
- */
