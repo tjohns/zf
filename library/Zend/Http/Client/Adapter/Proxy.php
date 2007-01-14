@@ -48,13 +48,14 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      *
      * @var array
      */
-	protected $config = array(
-		'proxy_host' => '',
-		'proxy_port' => 8080,
-		'proxy_user' => '',
-		'proxy_pass' => '',
-		'proxy_auth' => Zend_Http_Client::AUTH_BASIC 
-	);
+    protected $config = array(
+        'ssltransport'  => 'sslv2',
+        'proxy_host'    => '',
+        'proxy_port'    => 8080,
+        'proxy_user'    => '',
+        'proxy_pass'    => '',
+        'proxy_auth'    => Zend_Http_Client::AUTH_BASIC 
+    );
 	
     /**
      * Connect to the remote server

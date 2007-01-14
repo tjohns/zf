@@ -56,7 +56,9 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      *
      * @var array
      */
-    protected $config = array();
+    protected $config = array(
+        'ssltransport' => 'sslv2'
+    );
     
     /**
      * Adapter constructor, currently empty. Config is set using setConfig()
@@ -93,7 +95,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     public function connect($host, $port = 80, $secure = false)
     {
         // If the URI should be accessed via SSL, prepend the Hostname with ssl://
-        $host = ($secure ? 'sslv2://' . $host : $host);
+        $host = ($secure ? $this->config['ssltransport'] . '://' . $host : $host);
         
         // If we are connected to the wrong host, disconnect first
         if (($this->connected_to[0] != $host || $this->connected_to[1] != $port)) {
@@ -131,7 +133,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             throw new Zend_Http_Client_Adapter_Exception('Trying to write but we are not connected');
         
         $host = $uri->getHost();
-            $host = (strtolower($uri->getScheme()) == 'https' ? 'sslv2://' . $host : $host);
+            $host = (strtolower($uri->getScheme()) == 'https' ? $this->config['ssltransport'] . '://' . $host : $host);
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
             throw new Zend_Http_Client_Adapter_Exception('Trying to write but we are connected to the wrong host');
 
