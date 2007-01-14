@@ -155,9 +155,10 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         echo "Timestamp 2 = ", $date2->get(), " ->addWeek(1,false)\n";
         echo "Line#:", __LINE__, " ", $date2->toString(), "\n";
 
-        $date3->addWeek(1,true);
+        $newDate3 = $date3->addWeek(1,true);
         echo "Timestamp 3 = ", $date3->get(), " ->addWeek(1,true)\n";
         echo "Line#:", __LINE__, " ", $date3->toString(), "\n";
+        echo "Line#:", __LINE__, " ", $newDate3->toString()," #the new retuned object \n";
 
 
         echo "\nAfter addWeek(0):\n";
@@ -434,6 +435,35 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         $date3->addMonth(4,true);
         echo "Timestamp 3 = ", $date3->get(), "->addMonth(4,true) - should be exactly start time + 4 weeks\n";
         echo "Line#:", __LINE__, " ", $date3->toString(), "\n";
+    }
+    
+    
+    public function testCompare()
+    {
+        $locale = new Zend_Locale('de_AT');
+        $date = new Zend_Date(0,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);//4 jan 2002
+
+        $retour = $date->set(1234567890);
+        echo "\nset timestamp to : 1234567890 # ".$date->toString()."\n\n";
+        
+        $this->assertSame((string)$retour,'1234567890');
+        echo "\n1234567890 to 1234567890 = " . $date->compare(1234567890);
+        echo "\n1234567890 to 1234567800 = " . $date->compare(1234567800);
+        echo "\n1234567890 to 1234567899 = " . $date->compare(1234567899);
+
+        $date->set($d2);
+        echo "\nset timestamp to : 1010101010 # ".$date->toString()."\n\n";
+        echo "\n compare DAY :\n\n";
+        echo "\n Day 3 to " .$date->toString()." = " . $date->compare(3,Zend_Date::DAY);
+        echo "\n Day 4 to " .$date->toString()." = " . $date->compare(4,Zend_Date::DAY);
+        echo "\n Day 5 to " .$date->toString()." = " . $date->compare(5,Zend_Date::DAY);
+
+        echo "\n WEEKDAY_SHORT Mon to ".$date->toString()." = " . $date->compare('Mon',Zend_Date::WEEKDAY_SHORT);
+        echo "\n WEEKDAY_SHORT Sam to ".$date->toString()." = " . $date->compare('Sam',Zend_Date::WEEKDAY_SHORT);
+
+        $date->set($d2);
+        echo "\n MILLISECOND 0 to ".$date->toString()." = " . $date->compare(0,Zend_Date::MILLISECOND);
     }
     
 }

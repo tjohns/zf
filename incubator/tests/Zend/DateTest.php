@@ -138,7 +138,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-            $date = new Zend_Date(0,null,false,$locale);
+            $date = new Zend_Date(0,null,$locale);
             $result = $date->setTimestamp('notimestamp');
             $this->Fail();
         } catch (Zend_Date_Exception $e) {
@@ -164,7 +164,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-            $date = new Zend_Date(0,null,false,$locale);
+            $date = new Zend_Date(0,null,$locale);
             $result = $date->addTimestamp('notimestamp');
             $this->Fail();
         } catch (Zend_Date_Exception $e) {
@@ -3162,23 +3162,24 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,$locale);
-        $d2   = new Zend_Date(1010101010,null,$locale);
+        $d2   = new Zend_Date(1010101010,null,$locale);//03.01.2002 15:36:50
 
-        $retour = $date->set(1234567890);
+        $retour = $date->set(1234567890); //13.02.2009 15:31:30
         $this->assertSame((string)$retour,'1234567890');
         $this->assertSame($date->compare(1234567890),0);
         $this->assertSame($date->compare(1234567800),1);
         $this->assertSame($date->compare(1234567899),-1);
 
-        $date->set($d2);
-        $this->assertSame($date->compare(3,Zend_Date::DAY),1);
-        $this->assertSame($date->compare(4,Zend_Date::DAY),0);
+        $date->set($d2);//03.01.2002 15:36:50
+        $this->assertSame($date->compare(3,Zend_Date::DAY),0);
+        $this->assertSame($date->compare(4,Zend_Date::DAY),-1);
         $this->assertSame($date->compare(5,Zend_Date::DAY),-1);
+        $this->assertSame($date->compare(2,Zend_Date::DAY),1);
 
         $this->assertSame($date->compare('Mon',Zend_Date::WEEKDAY_SHORT),1);
         $this->assertSame($date->compare('Sam',Zend_Date::WEEKDAY_SHORT),-1);
 
-        $date->set($d2);
+        $date->set($d2);//03.01.2002 15:36:50
         $this->assertSame($date->compare(0,Zend_Date::MILLISECOND),0);
     }
 
