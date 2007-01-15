@@ -432,6 +432,11 @@ class Zend_Date_DateObjectTestHelper extends Zend_Date
         return parent::mktime($hour, $minute, $second, $month, $day, $year, $dst, $gmt);
     }
 
+    public function getUnixTimestamp()
+    {
+        return parent::getUnixTimestamp();
+    }
+    
     public function setUnixTimestamp($timestamp = null)
     {
         return parent::setUnixTimestamp($timestamp);

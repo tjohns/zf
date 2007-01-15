@@ -103,7 +103,7 @@ abstract class Zend_Date_DateObject {
      *
      * @return  integer|string  timestamp
      */
-    public function getUnixTimestamp()
+    protected function getUnixTimestamp()
     {
         if ($this->_unixTimestamp === intval($this->_unixTimestamp)) {
             return (int) $this->_unixTimestamp;
@@ -622,7 +622,7 @@ abstract class Zend_Date_DateObject {
      * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
      * @return  array
      */
-    protected function getDateParts($timestamp = null, $fast = null)
+    protected function getDateParts($timestamp = null, $fast = false)
     {
         // actual timestamp
         if ($timestamp === null) {
