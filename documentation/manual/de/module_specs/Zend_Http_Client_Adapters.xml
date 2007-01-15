@@ -1,0 +1,349 @@
+<sect1 id="zend.http.client.adapters">
+    <title>Zend_Http_Client - Verbindungsadapter</title>
+
+    <sect2 id="zend.http.client.adapters.overview">
+        <title>Verbindungsadapter</title>
+        <para>
+            Zend_Http_Client basiert auf einem Design mit Verbindungsadaptern. Der 
+            Verbindungsadapter ist das Objekt, welches für die Ausführung der aktuellen Verbindung 
+            zum Server sowie für das Schreiben der Anfragen und Antworten verantwortlich ist. 
+            Dieser Verbindungsadapter kann ersetzt werden und man kann den Standard 
+            Verbindungsadapter durch seinen eigenen Adapter erweitern, um ihn mit dem selben 
+            Interface auf seine eigenen Bedürfnisse anzupassen, ohne dass man die gesamte HTTP 
+            Client Klasse erweitern oder ersetzen muss.
+        </para>
+        <para>
+            Derzeit stellt die Zend_Http_Client Klass zwei eingebaute Verbindungsadapter bereit: 
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Http_Client_Adapter_Socket</code> (Standard)
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Http_Client_Adapter_Proxy</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Http_Client_Adapter_Test</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            Der Verbindungsadapter für das Zend_Http_Client Objekt wird durch Verwendung der 
+            'adapter' Konfigurationsoption gesetzt. Beim Instanzieren des Client Objektes kann man
+            die 'adapter' Konfigurationsoption setzen mit einem String, der den Adapternamen (z.B. 
+            'Zend_Http_Client_Adapter_Socket') enthält, oder mit eine Variable, die ein 
+            Adapterobjekt (z.B. <code>new Zend_Http_Client_Adapter_test</code>) enthält. Man kann 
+            den Adapter auch danach setzen, indem man die Zend_Http_Client->setConfig() Methode 
+            verwendet.
+        </para>
+    </sect2>
+    
+    <sect2>
+        <title>The Socket Adapter</title>    
+        <para>
+            The default connection adapter is the Zend_Http_Client_Adapter_Socket
+            adapter - this adapter will be used unless you explicitly set the
+            connection adapter. The Socket adapter is based on PHP's built-in
+            fsockopen() function, and does not require any special extensions or
+            compilation flags. 
+        </para>
+        <para>
+            The Socket adapter allows one extra configuration option (passed to
+            the <code>Zend_Http_Client->setConfig()</code> or to the constructor):
+            <code>'ssltransport'</code>. This parameter, if set, is expected to
+            be a string and defaults to 'sslv2'. Changing this will override the
+            stream transport layer used for HTTPS connections. Possible values are
+            'ssl', 'sslv2', 'sslv3' and 'tls'. Generally speaking, any other stream
+            transport layer supported by your PHP installation can also be used - 
+            but the results might be unexpected, so you should only use such 
+            values if you know exactly what you are doing.
+            <footnote>
+                <para>
+                    See Appendix O in the PHP manual for a list of supported socket transports:
+                    <ulink url="http://www.php.net/manual/en/transports.php" />
+                </para>
+            </footnote>. 
+        </para>
+        <example>
+            <title>Changing the HTTPS transport layer</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // Set the configuration parameters
+    $config = array(
+        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+        'ssltransport' => 'tls'
+    );
+    
+    // Instantiate a client object
+    $client = Zend_Http_Client('https://www.example.com', $config);
+    
+    // The following request will be sent over a TLS secure connection.
+    $response = $client->request();
+?>]]></programlisting>
+        </example>
+        <para>
+            The result of the example above will be similar to opening a TCP
+            connection using the following PHP command:
+        </para>
+        <para>
+            <code>fsockopen('tls://www.example.com', 443)</code>
+        </para>
+    </sect2>
+    
+    <sect2 id="zend.http.client.adapter.proxy">
+        <title>The Proxy Adapter</title>
+        <para>
+            The Zend_Http_Client_Adapter_Proxy adapter is similar to the default
+            Socket adapter - only the connection is made through an HTTP proxy 
+            server instead of a direct connection to the target server. This 
+            allows usage of Zend_Http_Client behind proxy servers - which is 
+            sometimes needed for security or performance reasons. 
+        </para>
+        
+        <para>
+            Using the Proxy adapter requires several additional configuration 
+            parameters to be set, in addition to the default 'adapter' option:
+            <table>
+                <title>Zend_Http_Client configuration parameters</title>
+                <tgroup cols="4">
+                    <thead>
+                        <row>
+                            <entry>Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Expected Type</entry>
+                            <entry>Example Value</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>proxy_host</entry>
+                            <entry>Proxy server address</entry>
+                            <entry>string</entry>
+                            <entry>'proxy.myhost.com' or '10.1.2.3'</entry>
+                        </row>
+                        <row>
+                            <entry>proxy_port</entry>
+                            <entry>Proxy server TCP port</entry>
+                            <entry>integer</entry>
+                            <entry>8080 (default) or 81</entry>
+                        </row>
+                        <row>
+                            <entry>proxy_user</entry>
+                            <entry>Proxy user name, if required</entry>
+                            <entry>string</entry>
+                            <entry>'shahar' or '' for none (default)</entry>
+                        </row>
+                        <row>
+                            <entry>proxy_pass</entry>
+                            <entry>Proxy password, if required</entry>
+                            <entry>string</entry>
+                            <entry>'secret' or '' for none (default)</entry>
+                        </row>
+                        <row>
+                            <entry>proxy_auth</entry>
+                            <entry>Proxy HTTP authentication type</entry>
+                            <entry>string</entry>
+                            <entry>Zend_Http_Client::AUTH_BASIC (default)</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+        <para>
+            proxy_host should always be set - if it is not set, the client will
+            fall back to a direct connection using Zend_Http_Client_Adapter_Socket.
+            proxy_port defaults to '8080' - if your proxy listens on a different
+            port you must set this one as well.
+        </para>
+        <para>
+            proxy_user and proxy_pass are only required if your proxy server 
+            requires you to authenticate. Providing these will add a 'Proxy-Authentication'
+            header to the request. If your proxy does not require authentication,
+            you can leave these two options out.
+        </para>
+        <para>
+            proxy_auth sets the proxy authentication type, if your proxy server
+            requires authentication. Possibly values are similar to the ones
+            accepted by the Zend_Http_Client::setAuth() method. Currently, only
+            basic authentication (Zend_Http_Client::AUTH_BASIC) is supported.
+        </para>
+        <example>
+            <title>Using Zend_Http_Client behind a proxy server</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // Set the configuration parameters
+    $config = array(
+        'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+        'proxy_host' => 'proxy.int.zend.com',
+        'proxy_port' => 8000,
+        'proxy_user' => 'shahar.e',
+        'proxy_pass' => 'bananashaped'
+    );
+    
+    // Instantiate a client object
+    $client = Zend_Http_Client('http://www.example.com', $config);
+    
+    // Continue working...
+?>]]></programlisting>
+        </example>
+        <para>
+            As mentioned, if proxy_host is not set or is set to a blank string,
+            the connection will fall back to a regular direct connection. This 
+            allows you to easily write your application in a way that allows a 
+            proxy to be used optionally, according to a configuration parameter.
+        </para>
+    </sect2>
+    
+    <sect2 id="zend.http.client.adapter.test">
+        <title>Der Test Adapter</title>
+        <para>
+            Manchmal ist es sehr schwer Code tu testen, der von HTTP Verbindungen abhängig ist. 
+            Zum Beispiel verlangt das Testen einer Applikation, die einen RSS Feed von einem fremden
+            Server anfordert, eine Netzwerkverbindung, die nicht immer verfügbar ist.
+        </para>
+        <para>
+            Aus diesem Grund wird der Zend_Http_Client_Adapter_Test Adapter bereit gestellt. Man
+            kann seine eigenen Applikationen schreiben, um Zend_Http_Client zu verwenden, und nur
+            zu Testzwecken, z.B. in der Unit Test Suite, den Standardadapter durch den Testadapter
+            austauschen, um Tests ohne direkte Serverbindungen auszuführen.
+        </para>
+        <para>
+            Der Zend_Http_Client_Adapter_Test Adapter stellt die zusätzliche Methode setResponse() 
+            bereit. Diese Methode nimmt einen Parameter entgegen, der eine HTTP Antwort entweder als
+            Text oder als Zend_Http_Response Objekt repräsentiert. Einmal eingerichtet, wird der
+            Testadapter immer diese Antwort zurückgeben, ohne tatsächlich eine HTTP Anfrage 
+            auszuführen.         
+        </para>
+        <example>
+            <title>Code testen ohne auf ein Netzwerk zuzugreifen</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // Instanziere einen neuen Adapter und Client
+    $adapter = new Zend_Http_Client_Adapter_Test();
+    $client = Zend_Http_Client('http://www.example.com', array(
+        'adapter' => $adapter
+    ));
+    
+    // Setze die erwartete Antwort
+    $adapter->setResponse(
+        "HTTP/1.1 200 OK"        . "\r\n" .
+        "Content-type: text/xml" . "\r\n" .
+                                   "\r\n" . 
+        '<?xml version="1.0" encoding="UTF-8"?>' . 
+        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' . 
+	    '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' . 
+	    '     xmlns:dc="http://purl.org/dc/elements/1.1/">' . 
+        '  <channel>' . 
+        '    <title>Premature Optimization</title>' . 
+        // und so weiter...
+        '</rss>');
+    
+    $response = $client->request('GET');
+    // .. setze die Verarbeitung von $response fort...
+?>]]></programlisting>
+        </example>
+        <para>
+            Das obere Beispiel zeigt, wie man einen HTTP Client voreinstellen kann, damit er die
+            benötigte Antwort zurückgibt. Danach kann man mit den Testen des eigenen Codes weiter
+            machen, ohne von einer Netzwerkverbindung, der Serverantwort, etc. abhängig zu sein. In
+            diesem Fall würde der Test mit der Prüfung fortfahren, wie die Applikation das XML aus
+            der Antwort verarbeitet..
+        </para>
+    </sect2>
+
+    <sect2 id="zend.http.client.adapter.extending">
+        <title>Creating your own connection adapters</title>
+        <para>
+            You can create your own connection adapters and use them. You could, for 
+            example, create a connection adapter that uses persistent sockets,
+            or a connection adapter with caching abilities, and use them as 
+            needed in your application.
+        </para>
+        <para>
+            In order to do so, you must create your own adapter class that implements 
+            the Zend_Http_Client_Adapter_Interface interface. The following example
+            shows the skeleton of a user-implemented adapter class. All the public 
+            functions defined in this example must be defined in your adapter as well:
+        </para>
+        <example>
+            <title>Creating your own connection adapter</title>
+            <programlisting role="php">
+<![CDATA[<?php
+class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+{    
+    /**
+     * Set the configuration array for the adapter
+     *
+     * @param array $config
+     */
+    public function setConfig($config = array())
+    {
+        // This rarely changes - you should usually copy the implementation
+        // in Zend_Http_Client_Adapter_Socket.
+    }
+    
+    /**
+     * Connect to the remote server
+     *
+     * @param string  $host
+     * @param int     $port
+     * @param boolean $secure
+     */
+    public function connect($host, $port = 80, $secure = false)
+    {
+        // Set up the connection to the remote server
+    }
+    
+    /**
+     * Send request to the remote server
+     *
+     * @param string        $method
+     * @param Zend_Uri_Http $url
+     * @param string        $http_ver
+     * @param array         $headers
+     * @param string        $body
+     * @return string Request as text
+     */
+    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
+    {
+        // Send request to the remote server.
+        // This function is expected to return the full request (headers and body) as a string
+    }
+    
+    /**
+     * Read response from server
+     *
+     * @return string
+     */
+    public function read()
+    {
+        // Read response from remote server and return it as a string
+    }
+    
+    /**
+     * Close the connection to the server
+     *
+     */
+    public function close()
+    {
+        // Close the connection to the remote server - called last.
+    }
+}    
+
+// Then, you could use this adapter:
+$client = new Zend_Http_Client(array(
+    'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
+));
+]]></programlisting>
+        </example>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
