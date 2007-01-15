@@ -43,12 +43,57 @@
             new Zend_Http_Client_Adapter_test</code>). You can also set the 
             adapter later, using the Zend_Http_Client->setConfig() method.
         </para>
+    </sect2>
+
+    <sect2>
+        <title>The Socket Adapter</title>    
         <para>
             The default connection adapter is the Zend_Http_Client_Adapter_Socket
             adapter - this adapter will be used unless you explicitly set the
             connection adapter. The Socket adapter is based on PHP's built-in
             fsockopen() function, and does not require any special extensions or
             compilation flags. 
+        </para>
+        <para>
+            The Socket adapter allows one extra configuration option (passed to
+            the <code>Zend_Http_Client->setConfig()</code> or to the constructor):
+            <code>'ssltransport'</code>. This parameter, if set, is expected to
+            be a string and defaults to 'sslv2'. Changing this will override the
+            stream transport layer used for HTTPS connections. Possible values are
+            'ssl', 'sslv2', 'sslv3' and 'tls'. Generally speaking, any other stream
+            transport layer supported by your PHP installation can also be used - 
+            but the results might be unexpected, so you should only use such 
+            values if you know exactly what you are doing.
+            <footnote>
+                <para>
+                    See Appendix O in the PHP manual for a list of supported socket transports:
+                    <ulink url="http://www.php.net/manual/en/transports.php" />
+                </para>
+            </footnote>. 
+        </para>
+        <example>
+            <title>Changing the HTTPS transport layer</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // Set the configuration parameters
+    $config = array(
+        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+        'ssltransport' => 'tls'
+    );
+    
+    // Instantiate a client object
+    $client = Zend_Http_Client('https://www.example.com', $config);
+    
+    // The following request will be sent over a TLS secure connection.
+    $response = $client->request();
+?>]]></programlisting>
+        </example>
+        <para>
+            The result of the example above will be similar to opening a TCP
+            connection using the following PHP command:
+        </para>
+        <para>
+            <code>fsockopen('tls://www.example.com', 443)</code>
         </para>
     </sect2>
     
