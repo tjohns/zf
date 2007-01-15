@@ -69,6 +69,7 @@
 		&module_specs.Zend_Controller-GettingStarted;
 		&module_specs.Zend_Controller-Subclassing;
         &module_specs.Zend_Controller-ProvidedSubclasses;
+        &module_specs.Zend_Controller-ActionController;
 		&module_specs.Zend_Controller-Plugins;
         &module_specs.Zend_Controller-Migration;
 	</chapter>

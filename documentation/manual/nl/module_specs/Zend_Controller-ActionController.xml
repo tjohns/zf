@@ -1,0 +1,201 @@
+<sect1 id="zend.controller.action">
+	<title>Action Controllers</title>
+
+	<sect2 id="zend.controller.action.introduction">
+		<title>Introduction</title>
+		<para>
+            <code>Zend_Controller_Action</code> is an abstract class you may use
+            for implementing Action Controllers for use with the Front
+            Controller when building a website based on the
+            Model-View-Controller (MVC) pattern.
+		</para>
+
+		<para>
+            To use Zend_Controller_Action, you will need to subclass it in your
+            actual action controllers (or subclass it to create your own base
+            class for action controllers). The most basic operation is to
+            subclass it, and create action methods that correspond to the
+            various actions you wish the controller to handle for your site.
+            Zend_Controller's routing and dispatch handling will autodiscover
+            any methods ending in 'Action' in your class as potential
+            controller actions.
+        </para>
+
+        <para>
+            For example, let's say your class is defined as follows:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // do something
+    }
+
+    public function bazAction()
+    {
+        // do something
+    }
+}
+]]></programlisting>
+            
+        <para>
+            The above FooController class (controller 'foo') defines two
+            actions, 'bar' and 'baz'.
+        </para>
+
+        <para>
+            There's much more that can be accomplished than this, such as custom
+            initialization actions, default actions to call should no action (or
+            an invalid action) be specified, pre- and post-dispatch hooks, and a
+            variety of helper methods. This chapter serves as an overview of the
+            action controller functionality
+        </para>
+    </sect2>
+
+	<sect2 id="zend.controller.action.initialization">
+        <title>Object initialization</title>
+
+        <para>
+            While you can always override the action controller's constructor,
+            we do not recommend this. Zend_Controller_Action::__construct()
+            performs some important tasks, such as registring the request and
+            response objects, as well as any custom invocation arguments passed
+            in from the front controller. If you must override the constructor,
+            be sure to call parent::__construct($request, $response,
+            $invokeArgs).
+        </para>
+
+        <para>
+            The more appropriate way to customize instantiation is to use the
+            init() method, which is called as the last task of __construct().
+            For example, if you want to connect to a database at instantiation:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        $this->db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => 'myhost',
+            'username' => 'user',
+            'password' => 'XXXXXXX',
+            'dbname'   => 'website'
+        ));
+    }
+}
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.controller.action.prepostdispatch">
+        <title>Pre- and Post-Dispatch Hooks</title>
+
+        <para>
+            Zend_Controller_Action specifies two methods that may be called to
+            bookend a requested action, preDispatch() and postDispatch(). These
+            can be useful in a variety of ways: verifying authentication and
+            ACLs prior to running an action (by calling _forward() in
+            preDispatch(), the action will be skipped), for instance, or placing
+            generated content in a sitewide template (postDispatch()).
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.action.accessors">
+        <title>Accessors</title>
+
+        <para>
+            A number of objects and variables are registered with the object,
+            and each has accessor methods.
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Request Object</emphasis>: getRequest() may be
+                used to retrieve the request object used to call the action.
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Response Object</emphasis>: getResponse() may be
+                    used to retrieve the response object aggregating the final
+                    response. Some typical calls might look like:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$this->getResponse()->setHeader('Content-Type', 'text/xml');
+$this->getResponse()->appendBody($content);
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Invocation Arguments</emphasis>: the front
+                    controller may push parameters into the router, dispatcher,
+                    and action controller. To retrieve these, use
+                    getInvokeArg($key); alternatively, fetch the entire list
+                    using getInvokeArgs().
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Request parameters</emphasis>: The request object
+                    aggregates request parameters, such as any _GET or _POST
+                    parameters, or user parameters specified in the URL's path
+                    information. To retrieve these, use _getParam($key) or
+                    _getAllParams(). You may also set request parameters using
+                    _setParam(); this is useful when forwarding to additional
+                    actions.
+                </para>
+
+                <para>
+                    To test whether or not a parameter exists (useful for
+                    logical branching), use _hasParam($key).
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.action.utilmethods">
+        <title>Utility Methods</title>
+
+        <para>
+            Besides the accessors, Zend_Controller_Action has several utility
+            methods for performing common tasks from within your action methods
+            (or from pre-/post-dispatch).
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>_forward($controller, $action, $params = array())</emphasis>: 
+                    perform another action. If called in preDispatch(), the
+                    currently requested action will be skipped in favor of the
+                    new one. Otherwise, after the current action is processed,
+                    the action requested in _forward() will be executed.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>_redirect($url, $code = 302)</emphasis>: redirect
+                    to another location. This method takes a URL and an optional
+                    HTTP status code. The redirect is performed immediately and
+                    program execution is halted.
+                </para>
+
+                <para>
+                    If a status code is provided, it will be passed to the PHP
+                    header() command when the redirect is performed.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
