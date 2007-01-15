@@ -184,7 +184,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         }
 
         require_once 'Zend/View/Exception.php';
-        throw new Zend_View_Exception('Setting private or public class members is not allowed');
+        throw new Zend_View_Exception('Setting private or protected class members is not allowed');
     }
 
     /**
@@ -427,7 +427,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             // assign by name and value
             if ('_' == substr($spec, 0, 1)) {
                 require_once 'Zend/View/Exception.php';
-                throw new Zend_View_Exception('Setting private or public class members is not allowed');
+                throw new Zend_View_Exception('Setting private or protected class members is not allowed');
             }
             $this->$spec = $value;
         } elseif (is_array($spec)) {
@@ -442,7 +442,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             }
             if ($error) {
                 require_once 'Zend/View/Exception.php';
-                throw new Zend_View_Exception('Setting private or public class members is not allowed');
+                throw new Zend_View_Exception('Setting private or protected class members is not allowed');
             }
         } else {
             require_once 'Zend/View/Exception.php';
