@@ -42,27 +42,27 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
 {
-    public function routeStartup()
+    public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()->appendBody('1');
     }
 
-    public function routeShutdown($request)
+    public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()->appendBody('2');
     }
 
-    public function dispatchLoopStartup($request)
+    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()->appendBody('3');
     }
 
-    public function preDispatch($request)
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()->appendBody('4');
     }
 
-    public function postDispatch($request)
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()->appendBody('5');
     }
