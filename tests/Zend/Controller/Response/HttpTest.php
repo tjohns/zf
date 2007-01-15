@@ -169,4 +169,61 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $expected = array($string1, $string2, $string3);
         $this->assertEquals($expected, $this->_response->getBody(true));
     }
+
+    public function testRenderExceptions()
+    {
+        $this->assertFalse($this->_response->renderExceptions());
+        $this->assertTrue($this->_response->renderExceptions(true));
+        $this->assertTrue($this->_response->renderExceptions());
+        $this->assertFalse($this->_response->renderExceptions(false));
+        $this->assertFalse($this->_response->renderExceptions());
+    }
+
+    public function testGetException()
+    {
+        $e = new Exception('Test');
+        $this->_response->setException($e);
+
+        $test  = $this->_response->getException();
+        $found = false;
+        foreach ($test as $t) {
+            if ($t === $e) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found);
+    }
+
+    public function testSendResponseWithExceptions()
+    {
+        $e = new Exception('Test exception rendering');
+        $this->_response->setException($e);
+        $this->_response->renderExceptions(true);
+
+        ob_start();
+        $this->_response->sendResponse();
+        $string = ob_get_clean();
+        $this->assertContains('Test exception rendering', $string);
+    }
+
+    public function testSetResponseCodeThrowsExceptionWithBadCode()
+    {
+        try {
+            $this->_response->setHttpResponseCode(99);
+            $this->fail('Should not accept response codes < 100');
+        } catch (Exception $e) {
+        }
+
+        try {
+            $this->_response->setHttpResponseCode(600);
+            $this->fail('Should not accept response codes > 599');
+        } catch (Exception $e) {
+        }
+
+        try {
+            $this->_response->setHttpResponseCode('bogus');
+            $this->fail('Should not accept non-integer response codes');
+        } catch (Exception $e) {
+        }
+    }
 }

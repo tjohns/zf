@@ -22,6 +22,9 @@
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
+/** Zend_Controller_Action_RedirectException */
+require_once 'Zend/Controller/Action/RedirectException.php';
+
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
 
@@ -727,6 +730,8 @@ class Zend_Controller_Front
                  */
                 $this->_plugins->postDispatch($request);
             } while (!$request->isDispatched());
+        } catch (Zend_Controller_Action_RedirectException $e) {
+            // do nothing -- a redirect occurred
         } catch (Exception $e) {
             if ($this->throwExceptions()) {
                 throw $e;
@@ -740,6 +745,8 @@ class Zend_Controller_Front
          */
         try {
             $this->_plugins->dispatchLoopShutdown();
+        } catch (Zend_Controller_Action_RedirectException $e) {
+            // do nothing -- a redirect occurred
         } catch (Exception $e) {
             if ($this->throwExceptions()) {
                 throw $e;

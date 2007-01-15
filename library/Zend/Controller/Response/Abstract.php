@@ -193,6 +193,7 @@ abstract class Zend_Controller_Response_Abstract
     public function setHttpResponseCode($code)
     {
         if (!is_int($code) || (100 > $code) || (599 < $code)) {
+            require_once 'Zend/Controller/Response/Exception.php';
             throw new Zend_Controller_Response_Exception('Invalid HTTP response code');
         }
 

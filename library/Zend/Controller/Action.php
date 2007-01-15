@@ -22,6 +22,9 @@
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
+/** Zend_Controller_Action_RedirectException */
+require_once 'Zend/Controller/Action/RedirectException.php';
+
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -259,17 +262,21 @@ abstract class Zend_Controller_Action
             $this->setResponse($response);
         }
 
-        $this->preDispatch();
+        try {
+            $this->preDispatch();
 
-        $action = $this->getRequest()->getActionName();
-        if (null === $action) {
-            $action = 'noRoute';
+            $action = $this->getRequest()->getActionName();
+            if (null === $action) {
+                $action = 'noRoute';
+            }
+            $action = $action . 'Action';
+
+            $this->{$action}();
+
+            $this->postDispatch();
+        } catch (Zend_Controller_Action_RedirectException $e) {
+            // do nothing -- this is a redirect
         }
-        $action = $action . 'Action';
-
-        $this->{$action}();
-
-        $this->postDispatch();
 
         return $this->getResponse();
     }
@@ -360,17 +367,25 @@ abstract class Zend_Controller_Action
      * Prepends base URL as defined in request object if url is relative by 
      * default; override this behaviour by setting the third argument false.
      *
+     * _redirect() will not halt execution of the script; it merely sets the 
+     * Location header in the response object, which will send the header once 
+     * dispatch is done, and sets the request object's isDispatched flag to 
+     * true, which tells the dispatcher that there is no more work to do. You 
+     * should call 
+     * <code>
+     * return $this->_redirect($url);
+     * </code>
+     * from your action method to halt execution.
+     *
      * @param string $url
      * @param int $code HTTP response code to use in redirect; defaults to 302, 
      * Found (same as Location header redirect sent by PHP)
      * @param bool $prependBase
+     * @return void
+     * @throws Zend_Controller_Action_RedirectException in order to bubble up to front controller
      */
     protected function _redirect($url, $code = 302, $prependBase = true)
     {
-        if (headers_sent($file, $line)) {
-            throw new Zend_Controller_Exception('Cannot redirect because headers were already been sent in file ' . $file . ', line ' . $line);
-        }
-
         // prevent header injections
         $url = str_replace(array("\n", "\r"), '', $url);
 
@@ -392,10 +407,10 @@ abstract class Zend_Controller_Action
             }
         }
 
-        // Set response redirect and emit response
+        // Set response redirect
         $response = $this->getResponse();
         $response->setRedirect($url, $code);
-        $response->sendResponse();
-        exit();
+
+        throw new Zend_Controller_Action_RedirectException('Redirect');
     }
 }

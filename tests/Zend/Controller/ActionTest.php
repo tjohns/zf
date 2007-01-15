@@ -114,6 +114,55 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_controller->hasParam('foo'));
         $this->assertTrue($this->_controller->hasParam('baz'));
     }
+
+    public function testSetParam()
+    {
+        $this->_controller->setParam('foo', 'bar');
+        $params = $this->_controller->getParams();
+        $this->assertTrue(isset($params['foo']));
+        $this->assertEquals('bar', $params['foo']);
+    }
+
+    public function testGetParams()
+    {
+        $this->_controller->setParam('foo', 'bar');
+        $this->_controller->setParam('bar', 'baz');
+        $this->_controller->setParam('boo', 'bah');
+
+        $params = $this->_controller->getParams();
+        $this->assertEquals('bar', $params['foo']);
+        $this->assertEquals('baz', $params['bar']);
+        $this->assertEquals('bah', $params['boo']);
+    }
+
+    public function testRedirect()
+    {
+        try {
+            $this->_controller->redirect('/baz/foo');
+        } catch (Zend_Controller_Action_RedirectException $e) {
+        } catch (Exception $e) {
+            $this->fail('redirect failed');
+        }
+        try {
+            $this->_controller->redirect('/foo/bar');
+        } catch (Zend_Controller_Action_RedirectException $e) {
+        } catch (Exception $e) {
+            $this->fail('redirect failed');
+        }
+        $response = $this->_controller->getResponse();
+        $headers  = $response->getHeaders();
+        $found    = 0;
+        $url      = '';
+        foreach ($headers as $header) {
+            if ('Location' == $header['name']) {
+                ++$found;
+                $url = $header['value'];
+                break;
+            }
+        }
+        $this->assertEquals(1, $found);
+        $this->assertContains('/foo/bar', $url);
+    }
 }
 
 class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
@@ -173,5 +222,16 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
     public function getParams()
     {
         return $this->_getAllParams();
+    }
+
+    public function setParam($key, $value)
+    {
+        $this->_setParam($key, $value);
+        return $this;
+    }
+
+    public function redirect($url, $code = 302, $prependBase = true)
+    {
+        $this->_redirect($url, $code, $prependBase);
     }
 }
