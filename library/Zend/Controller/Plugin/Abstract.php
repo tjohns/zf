@@ -95,7 +95,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * @param Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function routeStartup(Zend_Controller_Request_ABstract $request)
+    public function routeStartup(Zend_Controller_Request_Abstract $request)
     {}
 
     /**
