@@ -610,7 +610,8 @@ abstract class Zend_Date_DateObject {
 
 
     /**
-     * Internal getDateParts function for handling 64bit timestamps
+     * Internal getDateParts function for handling 64bit timestamps, similar to:
+     * http://www.php.net/getdate
      *
      * Returns an array of date parts for $timestamp, relative to 1970/01/01 00:00:00 GMT/UTC.
      *
@@ -621,10 +622,10 @@ abstract class Zend_Date_DateObject {
      * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
      * @return  array
      */
-    protected function getDateParts($timestamp = false, $fast = false)
+    protected function getDateParts($timestamp = null, $fast = null)
     {
         // actual timestamp
-        if ($timestamp === false) {
+        if ($timestamp === null) {
             return getdate();
         }
 

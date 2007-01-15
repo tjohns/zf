@@ -269,14 +269,14 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     public function testGetDate()
     {
         $date = new Zend_Date_DateObjectTestHelper(0);
-        $this->assertTrue(is_array($date->getDate()));
-        $this->assertTrue(is_array($date->getDate(1000000)));
+        $this->assertTrue(is_array($date->getDateParts()));
+        $this->assertTrue(is_array($date->getDateParts(1000000)));
 
         $test = array(             'seconds' => 40,        'minutes' => 46,
             'hours'   => 14,       'mday'    => 12,        'wday'    => 1,
             'mon'     => 1,        'year'    => 1970,      'yday'    => 11,
             'weekday' => 'Monday', 'month'   => 'January', 0         => 1000000);
-        $result = $date->getDate(1000000);
+        $result = $date->getDateParts(1000000);
 
         $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
         $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
@@ -299,7 +299,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             'hours'   => 11,         'mday'    => 6,        'wday'    => 3,
             'mon'     => 3,          'year'    => 1748,      'yday'    => 65,
             'weekday' => 'Wednesday', 'month'   => 'February', 0        => -7000000000);
-        $result = $date->getDate(-7000000000);
+        $result = $date->getDateParts(-7000000000);
 
         $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
         $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
@@ -322,7 +322,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             'hours'   => 2,          'mday'    => 26,       'wday'    => 2,
             'mon'     => 8,          'year'    => 2188,     'yday'    => 238,
             'weekday' => 'Tuesday', 'month'   => 'July', 0      => 6900000000);
-        $result = $date->getDate(6900000000);
+        $result = $date->getDateParts(6900000000);
 
         $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
         $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
@@ -345,7 +345,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             'hours'   => 2,          'mday'    => 26,       'wday'    => 3,
             'mon'     => 8,          'year'    => 2188,     'yday'    => 238,
             'weekday' => 'Wednesday', 'month'   => 'July', 0      => 6900000000);
-        $result = $date->getDate(6900000000, true);
+        $result = $date->getDateParts(6900000000, true);
 
         $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
         $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
@@ -429,31 +429,36 @@ class Zend_Date_DateObjectTestHelper extends Zend_Date
 {
     public function mktime($hour, $minute, $second, $month, $day, $year, $dst= -1, $gmt = false)
     {
-        parent::mktime($hour, $minute, $second, $month, $day, $year, $dst, $gmt);
+        return parent::mktime($hour, $minute, $second, $month, $day, $year, $dst, $gmt);
     }
 
     public function setUnixTimestamp($timestamp = null)
     {
-        parent::setUnixTimestamp($timestamp);
+        return parent::setUnixTimestamp($timestamp);
     }
 
     public function weekNumber($year, $month, $day)
     {
-        parent::weekNumber($year, $month, $day);
+        return parent::weekNumber($year, $month, $day);
     }
 
     public function dayOfWeekHelper($y, $m, $d)
     {
-        Zend_Date_DateObject::dayOfWeek($y, $m, $d);
+        return Zend_Date_DateObject::dayOfWeek($y, $m, $d);
     }
 
     public function calcSun($location, $horizon, $rise = false)
     {
-        parent::calcSun($location, $horizon, $rise);
+        return parent::calcSun($location, $horizon, $rise);
     }
 
     public function date($format, $timestamp = null, $gmt = false)
     {
-        parent::date($format, $timestamp, $gmt);
+        return parent::date($format, $timestamp, $gmt);
+    }
+
+    public function getDateParts($timestamp = null, $fast = null)
+    {
+        return parent::getDateParts($timestamp, $fast);
     }
 }
