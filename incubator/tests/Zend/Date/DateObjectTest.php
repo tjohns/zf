@@ -25,7 +25,7 @@
 /**
  * Zend_Date
  */
-require_once 'Zend/Date/DateObject.php';
+require_once 'Zend/Date.php';
 
 /**
  * PHPUnit test case
@@ -46,21 +46,12 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for date object creation empty value
-     */
-    public function testCreation()
-    {
-        $date = new Zend_Date_DateObject();
-        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
-    }
-
-    /**
      * Test for date object creation null value
      */
     public function testCreationNull()
     {
-        $date = new Zend_Date_DateObject(0);
-        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
+        $date = new Zend_Date(0);
+        $this->assertTrue($date instanceof Zend_Date, "expected Zend_Date object");
     }
 
     /**
@@ -68,8 +59,8 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testCreationNegative()
     {
-        $date = new Zend_Date_DateObject(-1000);
-        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
+        $date = new Zend_Date(1000);
+        $this->assertTrue($date instanceof Zend_Date, "expected Zend_Date object");
     }
 
     /**
@@ -78,7 +69,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     public function testCreationFailed()
     {
         try {
-            $date = new Zend_Date_DateObject("notimestamp");
+            $date = new Zend_Date("notimestamp");
             $this->fail("exception expected");
         } catch (Zend_Date_Exception $e) {
             // success
@@ -86,27 +77,27 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for setTimestamp
+     * Test for setUnixTimestamp
      */
-    public function testSetTimestamp()
+    public function testsetUnixTimestamp()
     {
-        $date = new Zend_Date_DateObject();
-        $diff = abs(time() - $date->setTimestamp());
-        $this->assertTrue($diff < 2, "Zend_Date_DateObject->setTimestamp() returned a significantly "
+        $date = new Zend_Date_DateObjectTestHelper();
+        $diff = abs(time() - $date->getUnixTimestamp());
+        $this->assertTrue(($diff < 2), "Zend_Date->setUnixTimestamp() returned a significantly "
             . "different timestamp than expected: $diff seconds");
-        $date->setTimestamp(0);
-        $this->assertSame((string)$date->setTimestamp("12345678901234567890"), '0');
-        $this->assertSame((string)$date->setTimestamp("12345678901234567890"), "12345678901234567890");
+        $date->setUnixTimestamp(0);
+        $this->assertSame((string)$date->setUnixTimestamp("12345678901234567890"), '0');
+        $this->assertSame((string)$date->setUnixTimestamp("12345678901234567890"), "12345678901234567890");
     }
 
     /**
-     * Test for setTimestampFailed
+     * Test for setUnixTimestampFailed
      */
-    public function testSetTimestampFailed()
+    public function testsetUnixTimestampFailed()
     {
         try {
-            $date = new Zend_Date_DateObject();
-            $date->setTimestamp("notimestamp");
+            $date = new Zend_Date_DateObjectTestHelper();
+            $date->setUnixTimestamp("notimestamp");
             $this->fail("exception expected");
         } catch (Zend_Date_Exception $e) {
             // success
@@ -114,13 +105,13 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getTimestamp
+     * Test for getUnixTimestamp
      */
-    public function testGetTimestamp()
+    public function testgetUnixTimestamp()
     {
-          $date = new Zend_Date_DateObject();
-          $result = $date->getTimestamp();
-           $this->assertSame($result, time(), time()." expected");
+        $date = new Zend_Date_DateObjectTestHelper();
+        $result = $date->getUnixTimestamp();
+        $this->assertSame($result, time(), time()." expected");
     }
 
     /**
@@ -128,18 +119,18 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testMkTimeforDateValuesInPHPRange()
     {
-        $date = new Zend_Date_DateObject();
-           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, false),   mktime(0, 0, 0, 12, 30, 2037, -1));
-           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, true),  gmmktime(0, 0, 0, 12, 30, 2037, -1));
+        $date = new Zend_Date_DateObjectTestHelper();
+        $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, false),   mktime(0, 0, 0, 12, 30, 2037, -1));
+        $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, true),  gmmktime(0, 0, 0, 12, 30, 2037, -1));
 
-           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, false),   mktime(0, 0, 0,  1,  1, 2000, -1));
-           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, true),  gmmktime(0, 0, 0,  1,  1, 2000, -1));
+        $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, false),   mktime(0, 0, 0,  1,  1, 2000, -1));
+        $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, true),  gmmktime(0, 0, 0,  1,  1, 2000, -1));
 
-           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, false),   mktime(0, 0, 0,  1,  1, 1970, -1));
-           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, true),  gmmktime(0, 0, 0,  1,  1, 1970, -1));
+        $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, false),   mktime(0, 0, 0,  1,  1, 1970, -1));
+        $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, true),  gmmktime(0, 0, 0,  1,  1, 1970, -1));
 
-           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, false),   mktime(0, 0, 0, 12, 30, 1902, -1));
-           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, true),  gmmktime(0, 0, 0, 12, 30, 1902, -1));
+        $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, false),   mktime(0, 0, 0, 12, 30, 1902, -1));
+        $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, true),  gmmktime(0, 0, 0, 12, 30, 1902, -1));
     }
 
     /**
@@ -147,17 +138,17 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testMkTimeforDateValuesGreaterPHPRange()
     {
-        $date = new Zend_Date_DateObject();
-           $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, false), 2232658800);
-           $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, true),  2232662400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, false), 7258114800);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, true),  7258118400);
-           $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, false), 16749586800);
-           $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, true),  16749590400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, false), 32503676400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, true),  32503680000);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, false), 95617580400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, true),  95617584000);
+        $date = new Zend_Date_DateObjectTestHelper();
+        $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, false), 2232658800);
+        $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, true),  2232662400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, false), 7258114800);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, true),  7258118400);
+        $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, false), 16749586800);
+        $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, true),  16749590400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, false), 32503676400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, true),  32503680000);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, false), 95617580400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, true),  95617584000);
     }
 
     /**
@@ -165,31 +156,31 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testMkTimeforDateValuesSmallerPHPRange()
     {
-        $date = new Zend_Date_DateObject();
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, false), -2208985200);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, true),  -2208988800);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, false), -8520332400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, true),  -8520336000);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, false), -14830988400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, true),  -14830992000);
-           $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, false), -12219321600);
-           $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, true),  -12219321600);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, false), -30609788400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, true),  -30609792000);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, false), -62167388400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, true),  -62167392000);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, false), -125282588400);
-           $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, true),  -125282592000);
+        $date = new Zend_Date_DateObjectTestHelper();
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, false), -2208985200);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, true),  -2208988800);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, false), -8520332400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, true),  -8520336000);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, false), -14830988400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, true),  -14830992000);
+        $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, false), -12219321600);
+        $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, true),  -12219321600);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, false), -30609788400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, true),  -30609792000);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, false), -62167388400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, true),  -62167392000);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, false), -125282588400);
+        $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, true),  -125282592000);
 
-           $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, false), -2208985200);
-           $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, true),  -2208988800);
-           $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, false), -2208985200);
-           $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, true),  -2208988800);
+        $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, false), -2208985200);
+        $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, true),  -2208988800);
+        $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, false), -2208985200);
+        $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, true),  -2208988800);
     }
 
     public function testIsLeapYear()
     {
-        $date = new Zend_Date_DateObject();
+        $date = new Zend_Date_DateObjectTestHelper();
         $this->assertSame($date->isLeapYear(2000), true);
         $this->assertSame($date->isLeapYear(2002), false);
         $this->assertSame($date->isLeapYear(2004), true);
@@ -200,7 +191,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testWeekNumber()
     {
-        $date = new Zend_Date_DateObject();
+        $date = new Zend_Date_DateObjectTestHelper();
         $this->assertSame($date->weekNumber(2000, 1, 1), (int) date('W',mktime(0, 0, 0, 1, 1, 2000)));
         $this->assertSame($date->weekNumber(2020, 10, 1), (int) date('W',mktime(0, 0, 0, 10, 1, 2020)));
         $this->assertSame($date->weekNumber(2005, 5, 15), (int) date('W',mktime(0, 0, 0, 5, 15, 2005)));
@@ -213,29 +204,29 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testDayOfWeek()
     {
-        $date = new Zend_Date_DateObject();
-        $this->assertSame($date->dayOfWeek(2000, 1, 1), (int) date('w',mktime(0, 0, 0, 1, 1, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 2), (int) date('w',mktime(0, 0, 0, 1, 2, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 3), (int) date('w',mktime(0, 0, 0, 1, 3, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 4), (int) date('w',mktime(0, 0, 0, 1, 4, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 5), (int) date('w',mktime(0, 0, 0, 1, 5, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 6), (int) date('w',mktime(0, 0, 0, 1, 6, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 7), (int) date('w',mktime(0, 0, 0, 1, 7, 2000)));
-        $this->assertSame($date->dayOfWeek(2000, 1, 8), (int) date('w',mktime(0, 0, 0, 1, 8, 2000)));
-        $this->assertSame($date->dayOfWeek(2050, 1, 1), 6);
-        $this->assertSame($date->dayOfWeek(2050, 1, 2), 0);
-        $this->assertSame($date->dayOfWeek(2050, 1, 3), 1);
-        $this->assertSame($date->dayOfWeek(2050, 1, 4), 2);
-        $this->assertSame($date->dayOfWeek(2050, 1, 5), 3);
-        $this->assertSame($date->dayOfWeek(2050, 1, 6), 4);
-        $this->assertSame($date->dayOfWeek(2050, 1, 7), 5);
-        $this->assertSame($date->dayOfWeek(2050, 1, 8), 6);
-        $this->assertSame($date->dayOfWeek(1500, 1, 1), 4);
+        $date = new Zend_Date_DateObjectTestHelper();
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 1), (int) date('w',mktime(0, 0, 0, 1, 1, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 2), (int) date('w',mktime(0, 0, 0, 1, 2, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 3), (int) date('w',mktime(0, 0, 0, 1, 3, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 4), (int) date('w',mktime(0, 0, 0, 1, 4, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 5), (int) date('w',mktime(0, 0, 0, 1, 5, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 6), (int) date('w',mktime(0, 0, 0, 1, 6, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 7), (int) date('w',mktime(0, 0, 0, 1, 7, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2000, 1, 8), (int) date('w',mktime(0, 0, 0, 1, 8, 2000)));
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 1), 6);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 2), 0);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 3), 1);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 4), 2);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 5), 3);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 6), 4);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 7), 5);
+        $this->assertSame($date->dayOfWeekHelper(2050, 1, 8), 6);
+        $this->assertSame($date->dayOfWeekHelper(1500, 1, 1), 4);
     }
 
     public function testCalcSunInternal()
     {
-        $date = new Zend_Date_DateObject(10000000);
+        $date = new Zend_Date_DateObjectTestHelper(10000000);
         $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, true),  9961681);
         $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, false), 10010367);
         $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, true),  9967006);
@@ -256,7 +247,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testCalcSunExternal()
     {
-        $date = new Zend_Date_DateObject(-14830988400);
+        $date = new Zend_Date_DateObjectTestHelper(-14830988400);
         $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, true),  -14830958811);
         $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, false), -14830924484);
         $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, true),  -14830968296);
@@ -277,7 +268,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testGetDate()
     {
-        $date = new Zend_Date_DateObject(0);
+        $date = new Zend_Date_DateObjectTestHelper(0);
         $this->assertTrue(is_array($date->getDate()));
         $this->assertTrue(is_array($date->getDate(1000000)));
 
@@ -302,7 +293,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testGetDate2()
     {
-        $date = new Zend_Date_DateObject(0);
+        $date = new Zend_Date_DateObjectTestHelper(0);
 
         $test = array(               'seconds' => 20,        'minutes' => 33,
             'hours'   => 11,         'mday'    => 6,        'wday'    => 3,
@@ -325,7 +316,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testGetDate3()
     {
-        $date = new Zend_Date_DateObject(0);
+        $date = new Zend_Date_DateObjectTestHelper(0);
 
         $test = array(               'seconds' => 0,        'minutes' => 40,
             'hours'   => 2,          'mday'    => 26,       'wday'    => 2,
@@ -348,7 +339,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testGetDate4()
     {
-        $date = new Zend_Date_DateObject(0);
+        $date = new Zend_Date_DateObjectTestHelper(0);
 
         $test = array(               'seconds' => 0,        'minutes' => 40,
             'hours'   => 2,          'mday'    => 26,       'wday'    => 3,
@@ -367,7 +358,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     
     public function testDate()
     {
-        $date = new Zend_Date_DateObject(0);
+        $date = new Zend_Date_DateObjectTestHelper(0);
         $this->assertTrue($date->date('U') > 0);
         $this->assertSame($date->date('U',0),'0');
         $this->assertSame($date->date('U',0,false),'0');
@@ -431,5 +422,38 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('S',6900604800, true),'nd');
         $this->assertSame($date->date('S',6900691200, true),'rd');
         $this->assertSame($date->date('N',6900432000, true),'7');
+    }
+}
+
+class Zend_Date_DateObjectTestHelper extends Zend_Date
+{
+    public function mktime($hour, $minute, $second, $month, $day, $year, $dst= -1, $gmt = false)
+    {
+        parent::mktime($hour, $minute, $second, $month, $day, $year, $dst, $gmt);
+    }
+
+    public function setUnixTimestamp($timestamp = null)
+    {
+        parent::setUnixTimestamp($timestamp);
+    }
+
+    public function weekNumber($year, $month, $day)
+    {
+        parent::weekNumber($year, $month, $day);
+    }
+
+    public function dayOfWeekHelper($y, $m, $d)
+    {
+        Zend_Date_DateObject::dayOfWeek($y, $m, $d);
+    }
+
+    public function calcSun($location, $horizon, $rise = false)
+    {
+        parent::calcSun($location, $horizon, $rise);
+    }
+
+    public function date($format, $timestamp = null, $gmt = false)
+    {
+        parent::date($format, $timestamp, $gmt);
     }
 }
