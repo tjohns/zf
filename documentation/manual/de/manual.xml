@@ -116,9 +116,9 @@
     <chapter id="zend.http">
         <title>Zend_Http</title>
         &module_specs.Zend_Http_Client;
-        &module_specs.Zend_Http_Client_Advanced;
-        &module_specs.Zend_Http_Client_Adapters;
-        &module_specs.Zend_Http_Cookie_Handling;
+        &module_specs.Zend_Http_Client-Advanced;
+        &module_specs.Zend_Http_Client-Adapters;
+        &module_specs.Zend_Http_Cookie-Handling;
         &module_specs.Zend_Http_Response;
     </chapter>
     <chapter id="zend.json">
