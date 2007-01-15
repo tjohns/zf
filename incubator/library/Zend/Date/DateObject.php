@@ -622,7 +622,7 @@ abstract class Zend_Date_DateObject {
      * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
      * @return  array
      */
-    protected function getDateParts($timestamp = null, $fast = false)
+    protected function getDateParts($timestamp = null, $fast = null)
     {
         // actual timestamp
         if ($timestamp === null) {
