@@ -48,6 +48,19 @@ abstract class Zend_Controller_Response_Abstract
     protected $_headers = array();
 
     /**
+     * Array of raw headers. Each header is a single string, the entire header to emit
+     * @var array
+     */
+    protected $_headersRaw = array();
+
+    /**
+     * HTTP response code to use in headers
+     * 
+     * @var int
+     */
+    protected $_httpResponseCode = 200;
+
+    /**
      * Whether or not to render exceptions; off by default
      * @var boolean 
      */
@@ -86,6 +99,24 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Set redirect URL
+     *
+     * Sets Location header and response code. Forces replacement of any prior 
+     * redirects.
+     * 
+     * @param string $url 
+     * @param int $code 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function setRedirect($url, $code = 302)
+    {
+        $this->setHeader('Location', $url, true)
+             ->setHttpResponseCode($code);
+
+        return $this;
+    }
+
+    /**
      * Return array of headers; see {@link $_headers} for format
      *
      * @return array
@@ -108,23 +139,108 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
-     * Send all headers
+     * Set raw HTTP header
+     *
+     * Allows setting non key => value headers, such as status codes
      * 
-     * @return void
+     * @param string $value 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function setRawHeader($value)
+    {
+        $this->_headersRaw[] = (string) $value;
+        return $this;
+    }
+
+    /**
+     * Retrieve all {@link setRawHeader() raw HTTP headers}
+     * 
+     * @return array
+     */
+    public function getRawHeaders()
+    {
+        return $this->_headersRaw;
+    }
+
+    /**
+     * Clear all {@link setRawHeader() raw HTTP headers}
+     * 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function clearRawHeaders()
+    {
+        $this->_headersRaw = array();
+        return $this;
+    }
+
+    /**
+     * Clear all headers, normal and raw
+     * 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function clearAllHeaders()
+    {
+        return $this->clearHeaders()
+                    ->clearRawHeaders();
+    }
+
+    /**
+     * Set HTTP response code to use with headers
+     * 
+     * @param int $code 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function setHttpResponseCode($code)
+    {
+        if (!is_int($code) || (100 > $code) || (599 < $code)) {
+            throw new Zend_Controller_Response_Exception('Invalid HTTP response code');
+        }
+
+        $this->_httpResponseCode = $code;
+        return $this;
+    }
+
+    /**
+     * Retrieve HTTP response code
+     * 
+     * @return int
+     */
+    public function getHttpResponseCode()
+    {
+        return $this->_httpResponseCode;
+    }
+
+    /**
+     * Send all headers
+     *
+     * Sends any headers specified. If an {@link setHttpResponseCode() HTTP response code} 
+     * has been specified, it is sent with the first header.
+     * 
+     * @return Zend_Controller_Response_Abstract
      */
     public function sendHeaders()
     {
         if (!headers_sent()) {
-            foreach ($this->_headers as $header) {
-                if ('status' == strtolower($header['name'])) {
-                    // 'status' headers indicate an HTTP status, and need to be 
-                    // handled slightly differently
-                    header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int) $header['value']);
+            $httpCodeSent = false;
+            foreach ($this->_headersRaw as $header) {
+                if (!$httpCodeSent && $this->_httpResponseCode) {
+                    header($header, true, $this->_httpResponseCode);
+                    $httpCodeSent = true;
                 } else {
-                    header($header['name'] . ': ' . $header['value']);
+                    header($header);
+                }
+            }
+            foreach ($this->_headers as $header) {
+                if (!$httpCodeSent && $this->_httpResponseCode) {
+                    header($header['name'] . ': ' . $header['value'], false, $this->_httpResponseCode);
+                    $httpCodeSent = true;
+                } else {
+                    header($header['name'] . ': ' . $header['value'], false);
                 }
             }
         }
+
+        return $this;
     }
 
     /**
@@ -234,13 +350,12 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
-     * Magic __toString functionality
-     *
-     * Sends all headers prior to returning the string
-     *
-     * @return string
+     * Send the response, including all headers, rendering exceptions if so 
+     * requested.
+     * 
+     * @return void
      */
-    public function __toString()
+    public function sendResponse()
     {
         $this->sendHeaders();
 
@@ -249,11 +364,25 @@ abstract class Zend_Controller_Response_Abstract
             foreach ($this->getException() as $e) {
                 $exceptions .= $e->__toString() . "\n";
             }
-            return $exceptions;
+            echo $exceptions;
+            return;
         }
 
-        ob_start();
         $this->outputBody();
+    }
+
+    /**
+     * Magic __toString functionality
+     *
+     * Proxies to {@link sendResponse()} and returns response value as string 
+     * using output buffering.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        ob_start();
+        $this->sendResponse();
         return ob_get_clean();
     }
 }

@@ -44,6 +44,20 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $count);
     }
 
+    public function testNoDuplicateLocationHeader()
+    {
+        $this->_request->setRedirect('http://www.example.com/foo/bar');
+        $this->_request->setRedirect('http://www.example.com/bar/baz');
+        $headers  = $this->_request->getHeaders();
+        $location = 0;
+        foreach ($headers as $header) {
+            if ('Location' == $header['name']) {
+                ++$location;
+            }
+        }
+        $this->assertEquals(1, $location);
+    }
+
     public function testClearHeaders()
     {
         $this->_response->setHeader('Content-Type', 'text/xml');
@@ -53,6 +67,48 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->_response->clearHeaders();
         $headers = $this->_response->getHeaders();
         $this->assertEquals(0, count($headers));
+    }
+
+    public function testSetRawHeader()
+    {
+        $this->_response->setRawHeader('HTTP/1.0 404 Not Found');
+        $headers = $this->_response->getRawHeaders();
+        $this->assertContains('HTTP/1.0 404 Not Found', $headers);
+    }
+
+    public function testClearRawHeaders()
+    {
+        $this->_response->setRawHeader('HTTP/1.0 404 Not Found');
+        $headers = $this->_response->getRawHeaders();
+        $this->assertContains('HTTP/1.0 404 Not Found', $headers);
+
+        $this->_response->clearRawHeaders();
+        $this->assertTrue(empty($headers));
+    }
+
+    public function testClearAllHeaders()
+    {
+        $this->_response->setRawHeader('HTTP/1.0 404 Not Found');
+        $this->_response->setHeader('Content-Type', 'text/xml');
+
+        $headers = $this->_response->getHeaders();
+        $this->assertFalse(empty($headers));
+
+        $headers = $this->_response->getRawHeaders();
+        $this->assertFalse(empty($headers));
+
+        $this->clearAllHeaders();
+        $headers = $this->_response->getHeaders();
+        $this->assertTrue(empty($headers));
+        $headers = $this->_response->getRawHeaders();
+        $this->assertTrue(empty($headers));
+    }
+
+    public function testSetHttpResponseCode()
+    {
+        $this->assertEquals(200, $this->_response->getHttpResponseCode());
+        $this->_response->setHttpResponseCode(302);
+        $this->assertEquals(302, $this->_response->getHttpResponseCode());
     }
 
     public function testSetBody()
