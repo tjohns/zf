@@ -3273,7 +3273,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareMonth($month = false, $locale = false)
+    public function compareMonth($month = null, $locale = null)
     {
         return $this->_month('cmp', $month, $locale);
     }
