@@ -43,7 +43,7 @@ require_once 'Zend/Http/Client/Adapter/Exception.php';
  */
 class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket 
 {
-	/**
+    /**
      * Parameters array
      *
      * @var array
@@ -56,7 +56,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         'proxy_pass'    => '',
         'proxy_auth'    => Zend_Http_Client::AUTH_BASIC 
     );
-	
+    
     /**
      * Connect to the remote server
      * 
@@ -70,30 +70,35 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      */
     public function connect($host, $port = 80, $secure = false)
     {
-    	// If no proxy is set, fall back to Socket adapter
-    	if (! $this->config['proxy_host']) return parent::connect($host, $port, $secure);
-    	
-    	// Go through a proxy - the connection is actually to the proxy server
-    	$host = $this->config['proxy_host'];
-    	$port = $this->config['proxy_port'];
+        // If no proxy is set, fall back to Socket adapter
+        if (! $this->config['proxy_host']) return parent::connect($host, $port, $secure);
+        
+        // Go through a proxy - the connection is actually to the proxy server
+        $host = $this->config['proxy_host'];
+        $port = $this->config['proxy_port'];
 
-    	// If we are connected to the wrong proxy, disconnect first
-    	if (($this->connected_to[0] != $host || $this->connected_to[1] != $port)) {
-    		if (is_resource($this->socket)) $this->close();
-    	}
+        // If we are connected to the wrong proxy, disconnect first
+        if (($this->connected_to[0] != $host || $this->connected_to[1] != $port)) {
+            if (is_resource($this->socket)) $this->close();
+        }
 
-    	// Now, if we are not connected, connect
-    	if (! is_resource($this->socket) || ! $this->config['keepalive']) {
-    		$this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
-    		if (! $this->socket) {
-    			$this->close();
-    			throw new Zend_Http_Client_Adapter_Exception(
-    			'Unable to Connect to proxy server ' . $host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
-    		}
+        // Now, if we are not connected, connect
+        if (! is_resource($this->socket) || ! $this->config['keepalive']) {
+            $this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
+            if (! $this->socket) {
+                $this->close();
+                throw new Zend_Http_Client_Adapter_Exception(
+                    'Unable to Connect to proxy server ' . $host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
+            }
+           
+            // Set the stream timeout
+            if (!stream_set_timeout($this->socket, (int) $this->config['timeout'])) {
+                throw new Zend_Http_Client_Adapter_Exception('Unable to set the connection timeout');
+            }
 
-    		// Update connected_to
-    		$this->connected_to = array($host, $port);
-    	}
+            // Update connected_to
+            $this->connected_to = array($host, $port);
+        }
     }
 
     /**
@@ -108,9 +113,9 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      */
     public function write($method, $uri, $http_ver = '1.1', $headers = array(), $body = '')
     {
-    	// If no proxy is set, fall back to default Socket adapter
-    	if (! $this->config['proxy_host']) return parent::write($method, $uri, $http_ver, $headers, $body);
-    	
+        // If no proxy is set, fall back to default Socket adapter
+        if (! $this->config['proxy_host']) return parent::write($method, $uri, $http_ver, $headers, $body);
+        
         // Make sure we're properly connected
         if (! $this->socket)
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
@@ -126,9 +131,9 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         
         // Add Proxy-Authorization header
         if ($this->config['proxy_user'] && ! isset($headers['proxy-authorization']))
-        	$headers['proxy-authorization'] = Zend_Http_Client::encodeAuthHeader(
-        		$this->config['proxy_user'], $this->config['proxy_pass'], $this->config['proxy_auth']
-        	);
+            $headers['proxy-authorization'] = Zend_Http_Client::encodeAuthHeader(
+                $this->config['proxy_user'], $this->config['proxy_pass'], $this->config['proxy_auth']
+            );
         
         // Add all headers to the request string
         foreach ($headers as $k => $v) {
@@ -141,7 +146,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         
         // Send the request
         if (! fwrite($this->socket, $request)) {
-        	throw new Zend_Http_Client_Adapter_Exception("Error writing request to proxy server");
+            throw new Zend_Http_Client_Adapter_Exception("Error writing request to proxy server");
         }
         
         return $request;
