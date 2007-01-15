@@ -3435,10 +3435,12 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Returns the calculated weekday
+     * The weekday can be a number, numeric string, or Zend_Date object.
+     * Specifying a weekday integer lower then 1, or greater than 7 will result in an thrown exception.
      *
-     * @param  $calc     string                    Type of calculation to make
-     * @param  $weekday  string|integer|Zend_Date  Weekday to calculate, when null the actual weekday is calculated
-     * @param  $locale   string|Zend_Locale        Locale for parsing input
+     * @param  string                    $calc    Type of calculation to make
+     * @param  string|integer|Zend_Date  $weekday Weekday to calculate (1-7); default is localized weekday
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
@@ -3457,6 +3459,9 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if (is_numeric($weekday)) {
             $type = Zend_Date::WEEKDAY_DIGIT;
+            if ($weekday < 1 || $weekday > 7) {
+                throw new Zend_Date_Exception("invalid weekday ($weekday) operand", $weekday);
+            }
         } else {
             switch(strlen($weekday)) {
                 case 1:
@@ -3483,15 +3488,14 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Sets a new weekday
-     * The weekday can be a number or a string. Specifying a weekday integer lower then 1,
-     * or greater than 7 will result in adding or subtracting the relevant number of weekdays
-     * to the current date of $this.  If a localized weekday name is given, then it will be
+     * Adjusts the current date to have a "day" part matching $weekday, and returns the changed object.
+     * The weekday can be a number, numeric string, or Zend_Date object.
+     * Specifying a weekday integer lower then 1, or greater than 7 will result in an thrown exception.
+     * If a localized weekday name is given, then it will be
      * parsed as a date in $locale (defaults to the same locale as $this).
-     * Returned is the new date object.
      * Example: setWeekday(3); will set the wednesday of this week as day.
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to set, if null the actual weekday is set
+     * @param  string|integer|Zend_Date  $weekday OPTIONAL Weekday to calculate (1-7); default is localized weekday
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
@@ -3503,12 +3507,11 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Adds weekdays to the existing date object.
-     * The weekday can be a number or a string. Adding days lower then 1 or greater than 7
-     * will result in adding or subtracting the relevant number of weeks.
-     * If a localized dayname is given it will be parsed with the default locale or the optional
-     * set locale.
-     * Returned is the new date object
+     * Adds weekdays to the existing date object, and return the changed object.
+     * The weekday can be a number, numeric string, or Zend_Date object.
+     * Specifying a weekday integer lower then 1, or greater than 7 will result in an thrown exception.
+     * If a localized weekday name is given, then it will be
+     * parsed as a date in $locale (defaults to the same locale as $this).
      * Example: addWeekday(3); will add the difference of days from the begining of the month until 
      * wednesday.
      *
@@ -3525,12 +3528,11 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Subtracts weekdays from the existing date object.
-     * The weekday can be a number or a string. Subtracting days lower then 1 or greater than 7
-     * will result in adding or subtracting the relevant number of weeks.
-     * If a localized dayname is given it will be parsed with the default locale or the optional
-     * set locale.
-     * Returned is the new date object
+     * Subtracts weekdays from the existing date object, and returns the changed object.
+     * The weekday can be a number, numeric string, or Zend_Date object.
+     * Specifying a weekday integer lower then 1, or greater than 7 will result in an thrown exception.
+     * If a localized weekday name is given, then it will be
+     * parsed as a date in $locale (defaults to the same locale as $this).
      * Example: subWeekday(3); will subtract the difference of days from the begining of the month until 
      * wednesday.
      *
@@ -3547,6 +3549,10 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Compares the weekday with the existing date object, ignoring other date parts. 
+     * The weekday can be a number, numeric string, or Zend_Date object.
+     * Specifying a weekday integer lower then 1, or greater than 7 will result in an thrown exception.
+     * If a localized weekday name is given, then it will be
+     * parsed as a date in $locale (defaults to the same locale as $this).
      * For example: 'Monday', 'en' -> 08.Jan.2007 -> 0
      * Returns if equal, earlier or later
      *
