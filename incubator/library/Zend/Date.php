@@ -182,15 +182,18 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Returns the set timestamp
+     * Returns this object's internal UNIX timestamp (equivalent to Zend_Date::TIMESTAMP).
+     * If the timestamp is too large for integers, then the return value will be a string.
+     * This function does not return the timestamp as an object.
+     * Use clone() or copyPart() instead.
      *
-     * @return integer|string  Timestamp
+     * @return integer|string  UNIX timestamp
      */
     public function getTimestamp()
     {
         return $this->getUnixTimestamp();
     }
-    
+
 
     /**
      * Returns the calculated timestamp
@@ -1206,7 +1209,7 @@ class Zend_Date extends Zend_Date_DateObject {
         if (is_object($date)) {
             $date = $date->get($part, $locale);
         } else if ($date === null) {
-            $temp = new Zend_Date($this->date('U', null, $this->_GMT), Zend_Date::TIMESTAMP, $locale);
+            $temp = new Zend_Date(time(), Zend_Date::TIMESTAMP, $locale);
             $temp->setGmt($this->_GMT);
             $date = $temp->get($part, $locale);
         }
