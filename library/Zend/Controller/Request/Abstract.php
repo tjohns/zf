@@ -33,10 +33,22 @@ abstract class Zend_Controller_Request_Abstract
     protected $_dispatched = false;
 
     /**
+     * Controller
+     * @var string
+     */
+    protected $_controller;
+
+    /**
      * Controller key for retrieving controller from params
      * @var string 
      */
     protected $_controllerKey = 'controller';
+
+    /**
+     * Action
+     * @var string
+     */
+    protected $_action;
 
     /**
      * Action key for retrieving action from params
@@ -57,7 +69,11 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function getControllerName()
     {
-        return $this->getParam($this->getControllerKey());
+        if (null === $this->_controller) {
+            $this->_controller = $this->getParam($this->getControllerKey());
+        }
+
+        return $this->_controller;
     }
 
     /**
@@ -68,7 +84,7 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function setControllerName($value)
     {
-        $this->setParam($this->getControllerKey(), (string) $value);
+        $this->_controller = $value;
         return $this;
     }
 
@@ -79,7 +95,11 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function getActionName()
     {
-        return $this->getParam($this->getActionKey());
+        if (null === $this->_action) {
+            $this->_action = $this->getParam($this->getActionKey());
+        }
+
+        return $this->_action;
     }
 
     /**
@@ -90,7 +110,7 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function setActionName($value)
     {
-        $this->setParam($this->getActionKey(), (string) $value);
+        $this->_action = $value;
         return $this;
     }
 

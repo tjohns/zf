@@ -428,5 +428,4 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->_request->getEnv('BAR', 'foo'));
         $this->assertEquals($_ENV, $this->_request->getEnv());
     }
-
 }

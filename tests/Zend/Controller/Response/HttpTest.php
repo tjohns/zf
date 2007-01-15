@@ -46,9 +46,9 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
 
     public function testNoDuplicateLocationHeader()
     {
-        $this->_request->setRedirect('http://www.example.com/foo/bar');
-        $this->_request->setRedirect('http://www.example.com/bar/baz');
-        $headers  = $this->_request->getHeaders();
+        $this->_response->setRedirect('http://www.example.com/foo/bar');
+        $this->_response->setRedirect('http://www.example.com/bar/baz');
+        $headers  = $this->_response->getHeaders();
         $location = 0;
         foreach ($headers as $header) {
             if ('Location' == $header['name']) {
@@ -83,6 +83,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertContains('HTTP/1.0 404 Not Found', $headers);
 
         $this->_response->clearRawHeaders();
+        $headers = $this->_response->getRawHeaders();
         $this->assertTrue(empty($headers));
     }
 
@@ -97,7 +98,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $headers = $this->_response->getRawHeaders();
         $this->assertFalse(empty($headers));
 
-        $this->clearAllHeaders();
+        $this->_response->clearAllHeaders();
         $headers = $this->_response->getHeaders();
         $this->assertTrue(empty($headers));
         $headers = $this->_response->getRawHeaders();
