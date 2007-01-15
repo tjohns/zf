@@ -92,9 +92,10 @@ abstract class Zend_Controller_Plugin_Abstract
      * Called before Zend_Controller_Front begins evaluating the
      * request against its routes.
      *
+     * @param Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function routeStartup()
+    public function routeStartup(Zend_Controller_Request_ABstract $request)
     {}
 
     /**
@@ -105,7 +106,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function routeShutdown($request)
+    public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {}
 
     /**
@@ -114,7 +115,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function dispatchLoopStartup($request)
+    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
     {}
 
     /**
@@ -128,7 +129,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function preDispatch($request)
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {}
 
     /**
@@ -142,7 +143,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function postDispatch($request)
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {}
 
     /**
