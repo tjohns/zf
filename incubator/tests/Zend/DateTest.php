@@ -3884,7 +3884,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetWeek()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(1168293600, null,false,$locale);
+        $date = new Zend_Date(1168293600, $locale);
 
         //Tuesday
         $date->addDay(1);

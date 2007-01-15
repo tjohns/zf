@@ -2981,7 +2981,7 @@ class Zend_Date extends Zend_Date_DateObject {
      *
      * @return Zend_Date
      */
-    public function now()
+    public static function now()
     {
         return new Zend_Date('',$this->_Locale);
     }
