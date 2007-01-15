@@ -688,7 +688,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         $file = ucfirst($name) . '.php';
 
         // do LIFO search for helper
-        foreach (array_reverse($this->_path[$type]) as $info) {
+        foreach ($this->_path[$type] as $info) {
             $dir    = $info['dir'];
             $prefix = $info['prefix'];
 
