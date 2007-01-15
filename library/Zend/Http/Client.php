@@ -276,7 +276,6 @@ class Zend_Http_Client
         if (! defined('self::' . $method)) 
             throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
         
-        
         if ($method == self::POST && $this->enctype === null) 
             $this->setEncType(self::ENC_URLENCODED);
         
@@ -735,7 +734,11 @@ class Zend_Http_Client
                 } else {
 
                     // Split into path and query and set the query
-                    list($location, $query) = explode('?', $location, 2);
+                    if (strpos($location, '?') !== false) {
+                        list($location, $query) = explode('?', $location, 2);
+                    } else {
+                    	$query = '';
+                    }
                     $this->uri->setQueryString($query);
 
                     // Else, if we got just an absolute path, set it
