@@ -212,7 +212,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract timestamp from object
             $stamp = $stamp->get(Zend_Date::TIMESTAMP, true, $locale);
         } else if ($stamp === null) {
-            $stamp = time(); // $this->date('U', null, true);
+            $stamp = time();
         }
         // @todo: GMT = false
         if ($calc === 'set') {
@@ -1206,7 +1206,7 @@ class Zend_Date extends Zend_Date_DateObject {
         if (is_object($date)) {
             $date = $date->get($part, $locale);
         } else if ($date === null) {
-            $temp = new Zend_Date($this->date('U', false, $this->_GMT), Zend_Date::TIMESTAMP, $locale);
+            $temp = new Zend_Date($this->date('U', null, $this->_GMT), Zend_Date::TIMESTAMP, $locale);
             $temp->setGmt($this->_GMT);
             $date = $temp->get($part, $locale);
         }
@@ -2317,15 +2317,19 @@ class Zend_Date extends Zend_Date_DateObject {
             $locale = $this->getLocale();
         }
 
-        $this->_setGmt(false);
+        if (($calc == 'set') or ($calc == 'cmp')) {
+            $gmt = $this->setGmt(false);
+        } else {
+            $gmt = $this->setGmt(true);
+        }
         if (is_object($time)) {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $locale);
         } else {
             if ($time === null) {
-                $parsed['hour']   = $this->date('H', false, $this->_GMT);
-                $parsed['minute'] = $this->date('i', false, $this->_GMT);
-                $parsed['second'] = $this->date('s', false, $this->_GMT);
+                $parsed['hour']   = $this->date('H', null, $this->_GMT);
+                $parsed['minute'] = $this->date('i', null, $this->_GMT);
+                $parsed['second'] = $this->date('s', null, $this->_GMT);
             } else {
                 $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             }
@@ -2338,7 +2342,7 @@ class Zend_Date extends Zend_Date_DateObject {
         }
         // @todo: GMT = true
         $return = $this->_calcdetail($calc, $time, Zend_Date::TIME_MEDIUM, $locale);
-        $this->_resetGmt();
+        $this->setGmt($gmt);
         if ($calc != 'cmp') {
             return $this;
         }
@@ -2446,15 +2450,19 @@ class Zend_Date extends Zend_Date_DateObject {
             $locale = $this->getLocale();
         }
 
-        $this->_setGmt(false);
+        if (($calc == 'set') or ($calc == 'cmp')) {
+            $gmt = $this->setGmt(false);
+        } else {
+            $gmt = $this->setGmt(true);
+        }
         if (is_object($date)) {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         } else {
             if ($date === null) {
-                $parsed['year']  = $this->date('Y', false, $this->_GMT);
-                $parsed['month'] = $this->date('m', false, $this->_GMT);
-                $parsed['day']   = $this->date('d', false, $this->_GMT);
+                $parsed['year']  = $this->date('Y', null, $this->_GMT);
+                $parsed['month'] = $this->date('m', null, $this->_GMT);
+                $parsed['day']   = $this->date('d', null, $this->_GMT);
             } else {
                 $parsed = Zend_Locale_Format::getDate($date, $format, $locale);
             }
@@ -2467,7 +2475,7 @@ class Zend_Date extends Zend_Date_DateObject {
         }
         // @todo: GMT = true
         $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, $locale);
-        $this->_resetGmt();
+        $this->setGmt($gmt);
         if ($calc != 'cmp') {
             return $this;
         }
@@ -2585,7 +2593,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract iso from object
             $iso = $iso->get(Zend_Date::ISO_8601, $locale);
         } else if ($iso === null) {
-            $iso = $this->date('c', false, $this->_GMT);
+            $iso = $this->date('c', null, $this->_GMT);
         }
         // @todo: GMT = true
         $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, $locale);
@@ -2695,15 +2703,19 @@ class Zend_Date extends Zend_Date_DateObject {
             $locale = $this->getLocale();
         }
 
-        $this->_setGmt(false);
+        if (($calc == 'set') or ($calc == 'cmp')) {
+            $gmt = $this->setGmt(false);
+        } else {
+            $gmt = $this->setGmt(true);
+        }
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $locale);
         } else if ($arpa === null) {
-            $arpa = $this->date('D\, d M y H\:m\:s O', false, $this->_GMT);
+            $arpa = $this->date('D\, d M y H\:m\:s O', null, $this->_GMT);
         }
         $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, $locale);
-        $this->_resetGmt();
+        $this->setGmt($gmt);
         if ($calc != 'cmp') {
             return $this;
         }
@@ -3031,7 +3043,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract year from object
             $year = $year->get(Zend_Date::YEAR, $locale);
         } else if ($year === null) {
-            $year = $this->date('Y', false, $this->_GMT);
+            $year = $this->date('Y', null, $this->_GMT);
         } else if (!is_numeric($year)) {
             throw new Zend_Date_Exception("invalid year ($year) operand", $year);
         }
@@ -3152,7 +3164,7 @@ class Zend_Date extends Zend_Date_DateObject {
             $found = $month->get(Zend_Date::MONTH_DIGIT, $locale);
         } else {
             if ($month === null) {
-                $found = $this->date('m', false, $this->_GMT);
+                $found = $this->date('m', null, $this->_GMT);
             } else {
                 if (is_numeric($month)) {
                     $found = $month;
@@ -3435,7 +3447,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         $this->_setGmt(false);
         if ($weekday === null) {
-            $weekday = $this->date('w', false, $locale);
+            $weekday = $this->date('w', null, $locale);
         } else if (is_object($weekday)) {
             $weekday = $weekday->get(Zend_Date::WEEKDAY_DIGIT, $locale);
         }
@@ -4208,7 +4220,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract week from object
             $week = $week->get(Zend_Date::WEEK, $locale);
         } else if ($week === null) {
-            $week = $this->date('W', false, $this->_GMT);
+            $week = $this->date('W', null, $this->_GMT);
         } else if (!is_numeric($week)) {
             throw new Zend_Date_Exception("invalid week ($week) operand", $week);
         }
@@ -4332,7 +4344,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * 
      * @return  integer
      */
-    public function getGmt()
+    private function getGmt()
     {
         return (int) $this->_GMT;
     }
@@ -4347,7 +4359,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * @param  boolean  $gmt  OPTIONAL gmt to set, if null automatic GMT detection is set
      * @return  boolean|integer  previously set $this->_GMT value
      */
-    public function setGmt($gmt = null)
+    private function setGmt($gmt = null)
     {
         $result = $this->_GMT;
         if (($gmt === null) or ((int) $gmt == -1)) {

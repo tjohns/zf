@@ -983,7 +983,7 @@ abstract class Zend_Date_DateObject {
      * 
      * @return  integer  seconds difference between GMT timezone and timezone when object was instantiated
      */
-    protected function getGmtOffset()
+    public function getGmtOffset()
     {
         return $this->_offset;
     }

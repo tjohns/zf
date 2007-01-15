@@ -239,9 +239,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString(null, 'en_US'),'Feb 14, 2009 12:31:30 AM');
         $this->assertSame($date->toString('yyy', null),'2009');
         $this->assertSame($date->toString(null, null),'14.02.2009 00:31:30');
-        $date->setGmt(true);
+        $date->setTimeZone('UTC');
         $this->assertSame($date->toString(null, 'en_US'),'Feb 13, 2009 11:31:30 PM');
-        $date->setGmt();
+        $date->setTimeZone('Europe/Vienna');
         $this->assertSame($date->toString("xx'yy''yy'xx"),"xxyy'yyxx");
         $this->assertSame($date->toString("GGGGG"),'n.');
         $this->assertSame($date->toString("GGGG"),'n. Chr.');
@@ -3416,10 +3416,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->setDate();
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setDate('11.05.2008');
-        $this->assertSame($result->get(Zend_Date::W3C),'2008-04-11T01:31:30+02:00');
-        $this->assertSame($date->get(Zend_Date::W3C),'2008-04-11T01:31:30+02:00');
+        $this->assertSame($result->get(Zend_Date::W3C),'2008-04-11T00:31:30+02:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-04-11T00:31:30+02:00');
         $date->setDate('2008-05-11','YYYY-MM-dd');
-        $this->assertSame($date->get(Zend_Date::W3C),'2008-04-11T01:31:30+02:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-04-11T00:31:30+02:00');
         $date->setDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
     }
@@ -3620,7 +3620,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($result->get(Zend_Date::RFC_822),'Thu, 03 May 01 00:00:00 +0200');
         $this->assertSame($date->get(Zend_Date::W3C),'2001-05-03T00:00:00+02:00');
         $date->setArpa($d2);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:39+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
     }
 
     /**
