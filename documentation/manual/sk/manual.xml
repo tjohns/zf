@@ -43,6 +43,12 @@
         &module_specs.Zend-Registry;
         &module_specs.Zend-InitRegistry;
     </chapter>
+    <chapter id="zend.acl">
+        <title>Zend_Acl</title>
+        &module_specs.Zend_Acl;
+        &module_specs.Zend_Acl-Refining;
+        &module_specs.Zend_Acl-Advanced;
+    </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
         &module_specs.Zend_Cache-Introduction;

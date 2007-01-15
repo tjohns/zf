@@ -46,8 +46,8 @@
     <chapter id="zend.acl">
         <title>Zend_Acl</title>
         &module_specs.Zend_Acl;
-        &module_specs.Zend_Acl_Refining;
-        &module_specs.Zend_Acl_Advanced;
+        &module_specs.Zend_Acl-Refining;
+        &module_specs.Zend_Acl-Advanced;
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
