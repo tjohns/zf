@@ -19,8 +19,7 @@
         <example>
             <title>Serialize locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $serial = $locale->serialize();
@@ -44,8 +43,7 @@ $newlocale = unserialize($serial);
         <example>
             <title>Check for equal locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
@@ -71,8 +69,7 @@ else
         <example>
             <title>String output of locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 print $locale->toString();
@@ -86,8 +83,7 @@ print $locale->toString();
         <example>
             <title>Automatic toString for locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 print $locale;
@@ -115,8 +111,7 @@ print $locale;
         <example>
             <title>Get default locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -144,8 +139,7 @@ print_r($found2);
         <example>
             <title>Get environment locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -169,8 +163,7 @@ print_r($found);
         <example>
             <title>Get browser locales</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -193,8 +186,8 @@ print_r($found);
         <example>
             <title>clone</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
+
 $locale = new Zend_Locale('ar');
 
 // Return all browser locales
@@ -219,8 +212,7 @@ print $found . "=" . $newlocale->toString();
         <example>
             <title>setLocale</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -247,8 +239,7 @@ print $locale->toString();
         <example>
             <title>getLanguage</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -271,8 +262,7 @@ print $locale->getLanguage();
         <example>
             <title>getRegion</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -294,8 +284,7 @@ print $locale->getRegion();
         <example>
             <title>getLanguageDisplay</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 // Language
@@ -311,8 +300,7 @@ print $locale->getLanguageDisplay('de');
         <example>
             <title>All Languages written in native letters</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $list = $locale->getLanguageList();
@@ -357,8 +345,7 @@ foreach($list as $language => $content) {
         <example>
             <title>getLanguageList</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -389,8 +376,7 @@ print_r($locale->getLanguageList());
         <example>
             <title>getScriptDisplay</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -421,8 +407,7 @@ print $locale->getScriptDisplay('Latn');
         <example>
             <title>getScriptList</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -453,8 +438,7 @@ print_r($locale->getScriptList());
         <example>
             <title>getRegionDisplay</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -485,8 +469,7 @@ print $locale->getRegionDisplay('AT');
         <example>
             <title>getRegionList</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -517,8 +500,7 @@ print_r($locale->getRegionList());
         <example>
             <title>getCalendarDisplay</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -549,8 +531,7 @@ print $locale->getCalendarDisplay('chinese');
         <example>
             <title>getCalendarList</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
@@ -585,8 +566,7 @@ print_r($locale->getCalendarList());
         <example>
             <title>getCalendarList</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
