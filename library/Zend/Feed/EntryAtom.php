@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Feed
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -28,7 +28,7 @@ require_once 'Zend/Feed/EntryAbstract.php';
  *
  * @category   Zend
  * @package    Zend_Feed
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
