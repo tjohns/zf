@@ -62,7 +62,22 @@ class Zend_Locale_Format
         'Nkoo' => array( '߀', '߁', '߂', '߃', '߄', '߅', '߆', '߇', '߈', '߉')  // 07C0 - 07C9 nko
     );
 
-    public static function toNumberSystem($input, $from, $to)
+    /**
+     * Changes the numbers/digits within a given string from one script to another
+     * When a script is not supported, no action is taken, so the original input will be returned
+     * So this function works the same way like translating
+     *
+     * Examples for input:
+     *   toNumberSystem('١١٠ Tests', 'Arab'); -> returns '100 Tests'
+     * Example for not supported script
+     *   toNumberSystem('١١٠ Tests', 'Unkn'); -> returns '١١٠ Tests'
+     * 
+     * @param  string  $input   String to convert
+     * @param  string  $locale  Script to parse, see Zend_Locale->getScriptList() for details
+     * @param  string  $to      OPTIONAL Script to convert to
+     * @return string  Returns the converted input
+     */
+    public static function toNumberSystem($input, $from, $to = null)
     {
         if (isset(self::$_signs[$from])) {
             for ($X = 0; $X < 10; ++$X) {
@@ -99,19 +114,19 @@ class Zend_Locale_Format
      * '0' = 0
      * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
      * 
-     * @param $input  - string
-     * @param $locale - OPTIONAL locale 
-     * @param $precision - OPTIONAL precision of float value
-     * @return string
+     * @param  string              $input      Input string to parse for numbers
+     * @param  integer             $precision  OPTIONAL precision of a float value, not touched if null
+     * @param  string|Zend_Locale  $locale     OPTIONAL locale for parsing the number format
+     * @return integer|string  Returns the extracted number
      */
-    public static function getNumber($input, $precision = false, $locale = false)
+    public static function getNumber($input, $precision = null, $locale = null)
     {
         if (!is_string($input))
             return $input;
 
-        if (!is_int($precision) and ($locale == false)) {
+        if (($locale == null) and (Zend_Locale::isLocale($precision))) {
             $locale    = $precision;
-            $precision = false;
+            $precision = null;
         }
 
         // Get correct signs for this locale
@@ -137,7 +152,7 @@ class Zend_Locale_Format
             }
 
             $pre = substr($found, strpos($found, '.') + 1);
-            if ($precision === false) {
+            if ($precision === null) {
                 $precision = strlen($pre);
             }
 
@@ -153,16 +168,16 @@ class Zend_Locale_Format
     /**
      * Returns a locale formatted number
      * 
-     * @param $value     - number to localize
-     * @param $precision - OPTIONAL precision
-     * @param $locale    - OPTIONAL locale
-     * @return string    - locale formatted number
+     * @param  string              $value      Number to localize
+     * @param  integer             $precision  OPTIONAL Precision of a float value, not touched if null
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return string  locale formatted number
      */
-    public static function toNumber($value, $precision = false, $locale = false)
+    public static function toNumber($value, $precision = null, $locale = null)
     {
-        if (!is_int($precision) and ($locale == false)) {
+        if (($locale == null) and (Zend_Locale::isLocale($precision))) {
             $locale    = $precision;
-            $precision = false;
+            $precision = null;
         }
 
         // Get correct signs for this locale
@@ -191,7 +206,7 @@ class Zend_Locale_Format
 
         // get number parts
         if (iconv_strpos($value, '.') !== false) {
-            if ($precision === false) {
+            if ($precision === null) {
                 $precision = iconv_substr($value, iconv_strpos($value, '.') + 1);
             } else {
                 $precision = iconv_substr($value, iconv_strpos($value, '.') + 1, $precision);
@@ -265,13 +280,13 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns if a number was found
+     * Checks if the input contains a normalized or localized number
      * 
-     * @param  $input  - localized number string
-     * @param  $locale - OPTIONAL locale
-     * @return boolean
+     * @param  string              $input      Localized number string
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return boolean  Returns true if a number was found
      */
-    public static function isNumber($input, $locale = false)
+    public static function isNumber($input, $locale = null)
     {
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
@@ -289,12 +304,12 @@ class Zend_Locale_Format
     /**
      * Alias for getNumber
      * 
-     * @param $input     - string
-     * @param $locale    - OPTIONAL locale 
-     * @param $precision - OPTIONAL precision of float value
-     * @return float
+     * @param  string              $value      Number to localize
+     * @param  integer             $precision  OPTIONAL Precision of the float value, not touched if null
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return  float
      */
-    public static function getFloat($input, $precision = false, $locale = false)
+    public static function getFloat($input, $precision = null, $locale = null)
     {
         return floatval(self::getNumber($input, $precision, $locale));
     }
@@ -304,12 +319,12 @@ class Zend_Locale_Format
      * Returns a locale formatted integer number
      * Alias for toNumber()
      * 
-     * @param $value  - number to localize
-     * @param $precision - OPTIONAL precision
-     * @param $locale - OPTIONAL locale
-     * @return string - locale formatted number
+     * @param  string              $value      Number to normalize
+     * @param  integer             $precision  OPTIONAL Precision of a float value, not touched if null
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return string  Locale formatted number
      */
-    public static function toFloat($value, $precision = false, $locale = false)
+    public static function toFloat($value, $precision = null, $locale = null)
     {
         return self::toNumber($value, $precision, $locale);
     }
@@ -319,11 +334,11 @@ class Zend_Locale_Format
      * Returns if a float was found
      * Alias for isNumber()
      * 
-     * @param  $input  - localized number string
-     * @param  $locale - OPTIONAL locale
-     * @return boolean
+     * @param  string              $input      Localized number string
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return boolean  Returns true if a number was found
      */
-    public static function isFloat($value, $locale = false)
+    public static function isFloat($value, $locale = null)
     {
         return self::isNumber($value, $locale);
     }
@@ -341,11 +356,11 @@ class Zend_Locale_Format
      * '0' = 0
      * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
      * 
-     * @param $input     - string
-     * @param $locale    - OPTIONAL locale 
-     * @return float
+     * @param  string              $input      Input string to parse for numbers
+     * @param  string|Zend_Locale  $locale     OPTIONAL locale for parsing the number format
+     * @return integer  Returns the extracted number
      */
-    public static function getInteger($input, $locale = false)
+    public static function getInteger($input, $locale = null)
     {
         return intval(self::getFloat($input, 0, $locale));
     }
@@ -354,11 +369,11 @@ class Zend_Locale_Format
     /**
      * Returns a localized number
      * 
-     * @param $value  - number to localize
-     * @param $locale - OPTIONAL locale
-     * @return string - locale formatted number
+     * @param  string              $value      Number to normalize
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return string  Locale formatted number
      */
-    public static function toInteger($value, $locale = false)
+    public static function toInteger($value, $locale = null)
     {
         return self::toNumber($value, 0, $locale);
     }
@@ -367,11 +382,11 @@ class Zend_Locale_Format
     /**
      * Returns if a integer was found
      * 
-     * @param  $input  - localized number string
-     * @param  $locale - OPTIONAL locale
-     * @return boolean
+     * @param  string              $input      Localized number string
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return boolean  Returns true if a integer was found
      */
-    public static function isInteger($value, $locale = false)
+    public static function isInteger($value, $locale = null)
     {
         return self::isNumber($value, $locale);
     }
@@ -457,9 +472,7 @@ class Zend_Locale_Format
 
         // split number parts 
         $split = false;
-        // @todo - either enforce a format of no UTF8, and replace with simple loop
-        // (preg_match* is extremely slow in comparison), or use /u modifier with preg_match_all
-        // and document behavior of this function (and those that call it).
+        // @todo - document behavior of /u modifier within preg_match_all
         preg_match_all('/\d+/u', $number, $splitted);
 
         if (count($splitted[0]) == 0) {
@@ -595,10 +608,11 @@ class Zend_Locale_Format
      * The optional $locale parameter is only used to convert human readable day
      * and month names to their numeric equivalents.
      *
-     * @param string $date    date string
-     * @param string $format  Date type CLDR format to parse. Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
-     * @param Zend_Locale|string $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
-     * @return array          possible array members: day, month, year, hour, minute, second
+     * @param  string              $date    Date string
+     * @param  string              $format  Date type CLDR format to parse. 
+     *                                      Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array                        Possible array members: day, month, year, hour, minute, second
      */
     public static function getDate($date, $format = null, $locale = null)
     {
@@ -615,11 +629,12 @@ class Zend_Locale_Format
     }
 
     /**
-     * Returns is the given string is a date
+     * Returns if the given string is a date
      *
-     * @param string $date    date string
-     * @param string $format  date type CLDR format !!!
-     * @param locale $locale  OPTIONAL locale of date string
+     * @param  string              $date    Date string
+     * @param  string              $format  Date type CLDR format to parse. 
+     *                                      Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing the date string
      * @return boolean
      */
     public static function isDate($date, $format = null, $locale = null)
@@ -641,11 +656,11 @@ class Zend_Locale_Format
      * The optional $locale parameter may be used to help extract times from strings
      * containing both a time and a day or month name.
      *
-     * @param string $time    time string
-     * @param string $format  Date type CLDR format to parse. Only single-letter
-     *                        codes(H, m, s, y, M, d), and MMMM and EEEE are supported.
-     * @param Zend_Locale|string $locale - OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
-     * @return array          possible array members: day, month, year, hour, minute, second
+     * @param  string              $time    Time string
+     * @param  string              $format  Date type CLDR format to parse. Only single-letter
+     *                                      codes(H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array                        Possible array members: day, month, year, hour, minute, second
      */
     public static function getTime($time, $format = null, $locale = null)
     {
@@ -666,9 +681,9 @@ class Zend_Locale_Format
     /**
      * Returns is the given string is a time
      *
-     * @param string $time    time string
-     * @param string $format  time type CLDR format !!!
-     * @param locale $locale  OPTIONAL locale of time string
+     * @param string $time    Time string
+     * @param string $format  Time type CLDR format !!!
+     * @param locale $locale  OPTIONAL Locale of time string
      * @return boolean
      */
     public static function isTime($time, $format = null, $locale = null)
