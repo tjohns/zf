@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Cookie
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com/)
  * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -37,7 +37,7 @@ require_once "Zend/Uri.php";
  *
  * @category    Zend
  * @package     Zend_Http
- * @copyright   Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com/)
  * @license     http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_Http_Cookie 
