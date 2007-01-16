@@ -1,28 +1,29 @@
 <sect1 id="zend.controller.action">
-	<title>Action Controllers</title>
+    <title>アクションコントローラ</title>
 
-	<sect2 id="zend.controller.action.introduction">
-		<title>Introduction</title>
-		<para>
-            <code>Zend_Controller_Action</code> is an abstract class you may use
-            for implementing Action Controllers for use with the Front
-            Controller when building a website based on the
-            Model-View-Controller (MVC) pattern.
-		</para>
-
-		<para>
-            To use Zend_Controller_Action, you will need to subclass it in your
-            actual action controllers (or subclass it to create your own base
-            class for action controllers). The most basic operation is to
-            subclass it, and create action methods that correspond to the
-            various actions you wish the controller to handle for your site.
-            Zend_Controller's routing and dispatch handling will autodiscover
-            any methods ending in 'Action' in your class as potential
-            controller actions.
+    <sect2 id="zend.controller.action.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_Controller_Action</code> は、
+            モデル - ビュー - コントローラ (MVC)
+            パターンにもとづいたウェブアプリケーションを作成する際に、
+            フロントコントローラで使用するアクションコントローラを実装するための抽象クラスです。
         </para>
 
         <para>
-            For example, let's say your class is defined as follows:
+            Zend_Controller_Action を使用するには、
+            実際のアクションコントローラ内でこのクラスのサブクラスを作成する必要があります
+            (あるいは、作成したサブクラスをもとにしてアクションコントローラを作成します)。
+            基本的な使い方としては、まずサブクラスを作成し、
+            そしてあなたのサイト上で処理したいさまざまなアクションに対応する
+            アクションメソッドを作成するという流れになります。
+            Zend_Controller は、このクラス内のメソッドで 'Action'
+            という名前で終わるものを見つけると、
+            ルーティングやディスパッチの際にそれらを自動的にアクションとして扱います。
+        </para>
+
+        <para>
+            たとえば、次のようなクラスを見てみましょう。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -30,47 +31,51 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // do something
+        // 何かをします
     }
 
     public function bazAction()
     {
-        // do something
+        // 何かをします
     }
 }
 ]]></programlisting>
             
         <para>
-            The above FooController class (controller 'foo') defines two
-            actions, 'bar' and 'baz'.
+            この FooController クラス ('foo' コントローラ)
+            では、ふたつのアクション 'bar' および 'baz'
+            が定義されています。
         </para>
 
         <para>
-            There's much more that can be accomplished than this, such as custom
-            initialization actions, default actions to call should no action (or
-            an invalid action) be specified, pre- and post-dispatch hooks, and a
-            variety of helper methods. This chapter serves as an overview of the
-            action controller functionality
+            もちろんこれ以外にもたくさんの機能があります。
+            たとえば初期化アクションを独自に作成したり、
+            アクションを指定しなかった (あるいは無効なアクションを指定した)
+            際にコールされるデフォルトのアクションを指定したり、
+            ディスパッチの前後に実行されるフックを指定したり、
+            さまざまなヘルパーメソッドを使用したりといったことができます。
+            この章では、アクションコントローラの機能の概要を説明します。
         </para>
     </sect2>
 
-	<sect2 id="zend.controller.action.initialization">
-        <title>Object initialization</title>
+    <sect2 id="zend.controller.action.initialization">
+        <title>オブジェクトの初期化</title>
 
         <para>
-            While you can always override the action controller's constructor,
-            we do not recommend this. Zend_Controller_Action::__construct()
-            performs some important tasks, such as registring the request and
-            response objects, as well as any custom invocation arguments passed
-            in from the front controller. If you must override the constructor,
-            be sure to call parent::__construct($request, $response,
-            $invokeArgs).
+            アクションコントローラのコンストラクタをオーバーライドすることもできますが、
+            お勧めしません。Zend_Controller_Action::__construct()
+            は、リクエストオブジェクトやレスポンスオブジェクトを登録するなどの重要な作業を行います。
+            また、フロントコントローラから渡された起動時引数の処理も行います。
+            コンストラクタをオーバーライドする場合は、必ずその中で
+            parent::__construct($request, $response, $invokeArgs)
+            をコールするようにしましょう。
         </para>
 
         <para>
-            The more appropriate way to customize instantiation is to use the
-            init() method, which is called as the last task of __construct().
-            For example, if you want to connect to a database at instantiation:
+            初期化作業をカスタマイズするには、コンストラクタをオーバーライドするよりも
+            init() メソッドを使うほうがお勧めです。これは、__construct()
+            の中で最後にコールされます。たとえば、
+            初期化時にデータベースに接続したいなら次のようにします。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -91,37 +96,41 @@ class FooController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
-        <title>Pre- and Post-Dispatch Hooks</title>
+        <title>ディスパッチ前後のフック</title>
 
         <para>
-            Zend_Controller_Action specifies two methods that may be called to
-            bookend a requested action, preDispatch() and postDispatch(). These
-            can be useful in a variety of ways: verifying authentication and
-            ACLs prior to running an action (by calling _forward() in
-            preDispatch(), the action will be skipped), for instance, or placing
-            generated content in a sitewide template (postDispatch()).
+            Zend_Controller_Action には、
+            リクエストされたアクションの前後にコールされるふたつのメソッドがあります。それが
+            preDispatch() と postDispatch() です。
+            これらはさまざまな場面で活用できます。
+            たとえばアクションを実行する前に認証情報や ACL
+            を調べたり (preDispatch() の中で _forward() をコールすると、
+            そのアクションの処理は飛ばされます)、
+            作成したコンテンツを (postDispatch() で)
+            全サイト共通のテンプレートに配置したりといったことが考えられます。
         </para>
     </sect2>
 
     <sect2 id="zend.controller.action.accessors">
-        <title>Accessors</title>
+        <title>アクセス用メソッド</title>
 
         <para>
-            A number of objects and variables are registered with the object,
-            and each has accessor methods.
+            さまざまなオブジェクトや変数がオブジェクトに登録されており、
+            それぞれにアクセス用メソッドが用意されています。
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <emphasis>Request Object</emphasis>: getRequest() may be
-                used to retrieve the request object used to call the action.
+                <emphasis>リクエストオブジェクト</emphasis>:
+                getRequest() を使用してリクエストオブジェクトを取得し、
+                それを用いてアクションをコールします。
             </para></listitem>
 
             <listitem>
                 <para>
-                    <emphasis>Response Object</emphasis>: getResponse() may be
-                    used to retrieve the response object aggregating the final
-                    response. Some typical calls might look like:
+                    <emphasis>レスポンスオブジェクト</emphasis>:
+                    getResponse() を使用して、最終的なレスポンスの内容を取得します。
+                    典型的な使用法は、このようになります。
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -132,64 +141,71 @@ $this->getResponse()->appendBody($content);
 
             <listitem>
                 <para>
-                    <emphasis>Invocation Arguments</emphasis>: the front
-                    controller may push parameters into the router, dispatcher,
-                    and action controller. To retrieve these, use
-                    getInvokeArg($key); alternatively, fetch the entire list
-                    using getInvokeArgs().
+                    <emphasis>起動時引数</emphasis>:
+                    フロントコントローラは、パラメータを
+                    ルータやディスパッチャそしてアクションコントローラに送ります。
+                    これらのパラメータを取得するには、
+                    getInvokeArg($key) を使用します。あるいは、
+                    すべてのパラメータを取得するには
+                    getInvokeArgs() を使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis>Request parameters</emphasis>: The request object
-                    aggregates request parameters, such as any _GET or _POST
-                    parameters, or user parameters specified in the URL's path
-                    information. To retrieve these, use _getParam($key) or
-                    _getAllParams(). You may also set request parameters using
-                    _setParam(); this is useful when forwarding to additional
-                    actions.
+                    <emphasis>リクエストパラメータ</emphasis>:
+                    リクエストオブジェクトは、_GET や _POST
+                    のようなリクエストパラメータのほかに
+                    URL のパスで指定したパラメータも収集します。
+                    これらを取得するには、_getParam($key) あるいは
+                    _getAllParams() を使用します。
+                    _setParam() を使用して、リクエストパラメータを設定することもできます。
+                    これは、さらに別のアクションに転送する際などに有用です。
                 </para>
 
                 <para>
-                    To test whether or not a parameter exists (useful for
-                    logical branching), use _hasParam($key).
+                    パラメータが存在するかどうかを調べる
+                    (条件分岐の際に使用します) には、
+                    _hasParam($key) を使用します。
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.action.utilmethods">
-        <title>Utility Methods</title>
+        <title>ユーティリティメソッド</title>
 
         <para>
-            Besides the accessors, Zend_Controller_Action has several utility
-            methods for performing common tasks from within your action methods
-            (or from pre-/post-dispatch).
+            アクセス用メソッド以外にも、Zend_Controller_Action
+            にはいくつかのユーティリティメソッドが用意されています。
+            これらを使用して、アクションメソッド
+            (あるいはディスパッチ前後のフックメソッド)
+            でのさまざまな作業を行います。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <emphasis>_forward($controller, $action, $params = array())</emphasis>: 
-                    perform another action. If called in preDispatch(), the
-                    currently requested action will be skipped in favor of the
-                    new one. Otherwise, after the current action is processed,
-                    the action requested in _forward() will be executed.
+                    別のアクションを実行します。preDispatch() の中でコールすると、
+                    リクエストされていたアクションは飛ばされ、
+                    新しいアクションを実行します。それ以外の場合は、
+                    現在のアクションの処理を済ませた後で
+                    _forward() で指定したアクションを実行します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis>_redirect($url, $code = 302)</emphasis>: redirect
-                    to another location. This method takes a URL and an optional
-                    HTTP status code. The redirect is performed immediately and
-                    program execution is halted.
+                    <emphasis>_redirect($url, $code = 302)</emphasis>:
+                    別の場所にリダイレクトします。このメソッドには、URL
+                    のほかにオプションで HTTP 状態コードを指定します。
+                    リダイレクトはその場ですぐ行われ、プログラムの実行はそこで停止します。
                 </para>
 
                 <para>
-                    If a status code is provided, it will be passed to the PHP
-                    header() command when the redirect is performed.
+                    状態コードを指定した場合は、リダイレクト時に
+                    PHP の header() コマンドでコードが使用されます。
                 </para>
             </listitem>
         </itemizedlist>
