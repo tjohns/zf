@@ -87,6 +87,9 @@
         &module_specs.Zend_Locale-Functions;
         &module_specs.Zend_Locale-Parsing;
         &module_specs.Zend_Locale-NumberSystems;
+        &module_specs.Zend_Locale-AppendixLanguages;
+        &module_specs.Zend_Locale-AppendixRegions;
+        &module_specs.Zend_Locale-AppendixNumberScripts;
     </chapter>
 
     <chapter id="zend.mail">

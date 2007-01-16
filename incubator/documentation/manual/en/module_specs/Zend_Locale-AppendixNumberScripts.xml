@@ -1,98 +1,110 @@
-    <sect1 id="zend.locale.appendix.numberscripts">
-        <title>Supported number notations in Zend_Locale_Format::toNumberSystem()</title>
-        <para>
-            <code>Zend_Locale_Format::toNumberSystem()</code> 
-            can normalize, localize and convert numbers between different scripts.
-        </para>
-        <sect2 id="zend.locale.appendix.numberscripts.supported">
-            <title>List of all supported scripts</title>
-            <para>
-                <segmentedlist>
-                    <title>Supported scripts</title>
-                    <?dbhtml list-presentation="table"?>
-                    <segtitle>script</segtitle>
-                    <segtitle>notation name</segtitle>
-                    <seglistitem>
-                        <seg>Arab</seg>
-                        <seg>Arabic</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Deva</seg>
-                        <seg>Devanagari</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Beng</seg>
-                        <seg>Bengali</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Guru</seg>
-                        <seg>Gurmukhi</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Gujr</seg>
-                        <seg>Gujarati</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Orya</seg>
-                        <seg>Oriya</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Taml</seg>
-                        <seg>Tamil</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Telu</seg>
-                        <seg>Telugu</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Knda</seg>
-                        <seg>Kannada</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Mlym</seg>
-                        <seg>Malayalam</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Tale</seg>
-                        <seg>Thai</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Laoo</seg>
-                        <seg>Lao</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Tibt</seg>
-                        <seg>Tibetan</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Mymr</seg>
-                        <seg>Myanmar</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Khmr</seg>
-                        <seg>Khmer</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Mong</seg>
-                        <seg>Mongolian</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Limb</seg>
-                        <seg>Limbu</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Talu</seg>
-                        <seg>New_Tai_Lue</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Bali</seg>
-                        <seg>Balinese</seg>
-                    </seglistitem>
-                    <seglistitem>
-                        <seg>Nkoo</seg>
-                        <seg>Nko</seg>
-                    </seglistitem>
-                </segmentedlist>
-            </para>
-        </sect2>
-    </sect1>
+<sect1 id="zend.locale.appendix.numberscripts">
+
+    <title>Supported number notations in Zend_Locale_Format::toNumberSystem()</title>
+
+    <para>
+        <code>Zend_Locale_Format::toNumberSystem()</code> converts digits between different <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">numeral systems</ulink>.
+    </para>
+
+    <sect2 id="zend.locale.appendix.numberscripts.supported">
+
+    <table>
+        <title>List of all supported scripts</title>
+        <tgroup cols="2">
+            <thead>
+                <row>
+                    <entrytitle>Script</entrytitle>
+                    <entrytitle>Notation Name</entrytitle>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>Arab</entry>
+                    <entry>Arabic</entry>
+                </row>
+                <row>
+                    <entry>Deva</entry>
+                    <entry>Devanagari</entry>
+                </row>
+                <row>
+                    <entry>Beng</entry>
+                    <entry>Bengali</entry>
+                </row>
+                <row>
+                    <entry>Guru</entry>
+                    <entry>Gurmukhi</entry>
+                </row>
+                <row>
+                    <entry>Gujr</entry>
+                    <entry>Gujarati</entry>
+                </row>
+                <row>
+                    <entry>Orya</entry>
+                    <entry>Oriya</entry>
+                </row>
+                <row>
+                    <entry>Taml</entry>
+                    <entry>Tamil</entry>
+                </row>
+                <row>
+                    <entry>Telu</entry>
+                    <entry>Telugu</entry>
+                </row>
+                <row>
+                    <entry>Knda</entry>
+                    <entry>Kannada</entry>
+                </row>
+                <row>
+                    <entry>Mlym</entry>
+                    <entry>Malayalam</entry>
+                </row>
+                <row>
+                    <entry>Tale</entry>
+                    <entry>Thai</entry>
+                </row>
+                <row>
+                    <entry>Laoo</entry>
+                    <entry>Lao</entry>
+                </row>
+                <row>
+                    <entry>Tibt</entry>
+                    <entry>Tibetan</entry>
+                </row>
+                <row>
+                    <entry>Mymr</entry>
+                    <entry>Myanmar</entry>
+                </row>
+                <row>
+                    <entry>Khmr</entry>
+                    <entry>Khmer</entry>
+                </row>
+                <row>
+                    <entry>Mong</entry>
+                    <entry>Mongolian</entry>
+                </row>
+                <row>
+                    <entry>Limb</entry>
+                    <entry>Limbu</entry>
+                </row>
+                <row>
+                    <entry>Talu</entry>
+                    <entry>New_Tai_Lue</entry>
+                </row>
+                <row>
+                    <entry>Bali</entry>
+                    <entry>Balinese</entry>
+                </row>
+                <row>
+                    <entry>Nkoo</entry>
+                    <entry>Nko</entry>
+                </row>
+            <tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
