@@ -40,19 +40,21 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
     /**
      * Generates the adapter
      *
-     * @param array $options - Options for this adapter
-     * @param mixed $locale  - OPTIONAL locale to use
+     * @param array                $options  Options for this adapter
+     * @param  string|Zend_Locale  $language  OPTIONAL Language to set, identical with locale identifier,
+     *                                        see Zend_Locale for more information
      */
-    public function __construct($options, $locale = null)
+    public function __construct($options, $language = null)
     {
-        parent::__construct($options, $locale);
+        parent::__construct($options, $language);
     }
 
     /**
      * Load translation data
      *
-     * @param string $language
-     * @param mixed $data
+     * @param  string  $language  Language to add data for, identical with locale identifier,
+     *                            see Zend_Locale for more information
+     * @param  mixed   $data
      */
     protected function _loadTranslationData($language, $data)
     {

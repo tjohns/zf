@@ -38,18 +38,19 @@ require_once 'Zend/Translate/Adapter.php';
  */
 class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     // Internal variables
-    private $_bigEndian   = FALSE;
-    private $_file        = FALSE;
+    private $_bigEndian   = false;
+    private $_file        = false;
 
     /**
      * Generates the  adapter
      *
      * @param array $options - Options for this adapter
-     * @param mixed $locale  - OPTIONAL locale to use
+     * @param  string|Zend_Locale  $language  OPTIONAL Language to set, identical with locale identifier,
+     *                                        see Zend_Locale for more information
      */
-    public function __construct($options, $locale = null)
+    public function __construct($options, $language = null)
     {
-        parent::__construct($options, $locale);
+        parent::__construct($options, $language);
     }
 
 
@@ -60,7 +61,7 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
      */
     private function _readMOData($bytes)
     {
-        if ($this->_bigEndian === FALSE) {
+        if ($this->_bigEndian === false) {
             return unpack('V' . $bytes, fread($this->_file, 4 * $bytes));
         } else {
             return unpack('N' . $bytes, fread($this->_file, 4 * $bytes));
@@ -71,8 +72,9 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     /**
      * Load translation data (MO file reader)
      *
-     * @param string $language
-     * @param string $filename
+     * @param  string $language  New language to set, identical with locale identifier,
+     *                                        see Zend_Locale for more information
+     * @param  string  $filename  MO file to add, full path must be given for access
      * @throws Zend_Translation_Exception
      */
     protected function _loadTranslationData($language, $filename)

@@ -22,12 +22,6 @@
 /** Zend_Translate_Exception */
 require_once 'Zend/Translate/Exception.php';
 
-/** Zend_Translate_Adapter_Gettext */
-require_once 'Zend/Translate/Adapter/Gettext.php';
-
-/** Zend_Translate_Adapter_Array */
-require_once 'Zend/Translate/Adapter/Array.php';
-
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
