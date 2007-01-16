@@ -12,8 +12,8 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Xml
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Db_Xml
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -22,8 +22,8 @@
  * Zend_Db_Xml_XmlUtil provides a set of utility convenience methods to convert to/from various
  * XML representations and Zend_Db_Xml_XmlContent
  * 
- * @package    Xml
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Db_Xml
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
