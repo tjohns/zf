@@ -22,6 +22,12 @@
 /** Zend_Translate_Exception */
 require_once 'Zend/Translate/Exception.php';
 
+/** Zend_Translate_Adapter_Gettext */
+require_once 'Zend/Translate/Adapter/Gettext.php';
+
+/** Zend_Translate_Adapter_Array */
+require_once 'Zend/Translate/Adapter/Array.php';
+
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
@@ -76,17 +82,17 @@ class Zend_Translate {
 
         switch (strtolower($adapter)) {
             case 'array':
-                /** Zend_Translate_Adapter_Gettext */
-                require_once('Zend/Translate/Adapter/Gettext.php');
-                $this->_adapter = new Zend_Translate_Adapter_Gettext($options, $locale);
+                /** Zend_Translate_Adapter_Array */
+                require_once('Zend/Translate/Adapter/Array.php');
+                $this->_adapter = new Zend_Translate_Adapter_Array($options, $locale);
                 break;
             case 'cvs':
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             case 'gettext':
-                /** Zend_Translate_Adapter_Array */
-                require_once('Zend/Translate/Adapter/Array.php');
-                $this->_adapter = new Zend_Translate_Adapter_Array($options, $locale);
+                /** Zend_Translate_Adapter_Gettext */
+                require_once('Zend/Translate/Adapter/Gettext.php');
+                $this->_adapter = new Zend_Translate_Adapter_Gettext($options, $locale);
                 break;
             case 'qt':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -125,7 +131,11 @@ class Zend_Translate {
 
 
     /**
-     * Adds a new language to the Adapter
+     * Add translation data.
+     *
+     * It may be a new language or additional data for existing language
+     * If $clear parameter is true, then translation data for specified
+     * language is replaced and added otherwise
      *
      * @param mixed $locale  - locale/language to add to this adapter
      * @param mixed $options - option for this adapter depends on the adapter
@@ -133,9 +143,9 @@ class Zend_Translate {
      *        'gettext' - the gettext file inclusive the filename
      * @param boolean $empty - add if the language already exists
      */
-    public function addLanguage($locale, $options, $empty = false)
+    public function addTranslation($locale, $options, $clear = false)
     {
-        $this->_adapter->addLanguage($locale, $options, $empty);
+        $this->_adapter->addTranslation($locale, $options, $clear);
     }
 
 
@@ -204,7 +214,7 @@ class Zend_Translate {
      */
     public function _($translation, $locale = null)
     {
-        return $this->translate($translation, $locale);
+        return $this->_adapter->translate($translation, $locale);
     }
 
 

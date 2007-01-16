@@ -36,7 +36,7 @@ require_once 'Zend/Translate/Adapter.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Adapter_Array {
+class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
     /**
      * Generates the adapter
      *
@@ -49,30 +49,20 @@ class Zend_Translate_Adapter_Array {
     }
 
     /**
-     * Sets the translation to the translationtable
+     * Load translation data
      *
-     * @param object  $locale - for which locale is the translationtable
-     * @param array   $data   - the translationtable to set
-     * @param boolean $empty  - Empty the table or add if exists
+     * @param string $language
+     * @param mixed $data
      */
-    public function addLanguage($locale, $data, $empty = false)
+    protected function _loadTranslationData($language, $data)
     {
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-
-        if ($empty  ||  !isset($this->_translate[$locale])) {
-            $this->_translate[$locale] = array();
-        }
-
-        if (!in_array($locale, $this->_languages)) {
-            $this->_languages[] = $locale;
-        }
-        $this->_translate[$locale] = array_merge($this->_translate[$locale], $data);
+        $this->_translate[$language] = array_merge($this->_translate[$language], $data);
     }
 
     /**
      * returns the adapters name
+     *
+     * @return string
      */
     public function toString()
     {

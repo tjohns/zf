@@ -42,14 +42,14 @@ abstract class Zend_Translate_Adapter {
      *
      * @var Zend_Locale|string
      */
-    private $_locale;
+    protected $_locale;
 
     /**
      * Actual set language
      *
      * @var Zend_Locale|string
      */
-    private $_language;
+    protected $_language;
 
     /**
      * Table of all supported languages
@@ -86,7 +86,7 @@ abstract class Zend_Translate_Adapter {
     public function __construct($options, $locale = null)
     {
         $this->setLocale($locale);
-        $this->addLanguage($locale, $options);
+        $this->addTranslation($locale, $options);
     }
 
 
@@ -202,15 +202,46 @@ abstract class Zend_Translate_Adapter {
         return in_array($language, $this->_languages);
     }
 
+    /**
+     * Load translation data
+     *
+     * @param string $language
+     * @param mixed $data
+     */
+    abstract protected function _loadTranslationData($language, $data);
 
     /**
-     * Sets the translation to the translationtable
+     * Add translation data
      *
-     * @param object  $locale - for which locale is the translationtable
-     * @param array   $data   - translation data
-     * @param boolean $empty  - Empty the table or add if exists
+     * It may be a new language or additional data for existing language
+     * If $clear parameter is true, then translation data for specified
+     * language is replaced and added otherwise
+     *
+     * @param mixed   $locale - for which locale is the translationtable
+     * @param mixed   $data   - translation data
+     * @param boolean $clear  - Empty the table or add if exists
+     * @throws Zend_Translate_Exception
      */
-    abstract public function addLanguage($locale, $data, $empty = false);
+    public function addTranslation($locale, $data, $clear = false)
+    {
+        if (is_string($locale)) {
+            $language = $locale;
+        } else if ($locale instanceof Zend_Locale) {
+            $language = $locale->toString();
+        } else {
+            throw new Zend_Translate_Exception('Locale must be a string or Zend_Locale object');
+        }
+
+        if (!in_array($this->_language, $this->_languages)) {
+            $this->_languages[] = $language;
+        }
+
+        if ($clear  ||  !isset($this->_translate[$language])) {
+            $this->_translate[$language] = array();
+        }
+
+        $this->_loadTranslationData($language, $data);
+    }
 
 
     /**
