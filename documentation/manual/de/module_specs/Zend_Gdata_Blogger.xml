@@ -11,7 +11,7 @@
 
     <para>
         See
-        <ulink url="http://code.google.com/apis/gdata/blogger.html">http://code.google.com/apis/gdata/blogger.html</ulink>
+        <ulink url="http://code.google.com/apis/blogger/overview.html">http://code.google.com/apis/blogger/overview.html</ulink>
         for more information about the Google Blogger API.
     </para>
 
@@ -111,6 +111,11 @@ $feed = $gdataBlog->getBloggerFeed('blogname');
 $gdataBlog->setBlogName('blogname');
 $feed = $gdataBlog->getBloggerFeed();
 ?>]]></programlisting>
+
+        <para>
+            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+            for more information on how to use this object.
+        </para>
 
         <para>
             The <code>setPublishedMin()</code> and <code>setPublishedMax()</code>

@@ -9,7 +9,7 @@
 
     <para>
         See
-        <ulink url="http://code.google.com/apis/gdata/codesearch.html">http://code.google.com/apis/gdata/codesearch.html</ulink>
+        <ulink url="http://code.google.com/apis/codesearch/overview.html">http://code.google.com/apis/codesearch/overview.html</ulink>
         for more information about the Google CodeSearch API.
     </para>
 
@@ -26,6 +26,11 @@ $gdataCode->setQuery('malloc');
 $gdataCode->setMaxResults(20);
 $feed = $gdataCode->getCodeSearchFeed();
 ?>]]></programlisting>
+
+    <para>
+        See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+        for more information on how to use this object.
+    </para>
 
     <para>
         The <code>startIndex</code> and <code>maxResults</code> parameters

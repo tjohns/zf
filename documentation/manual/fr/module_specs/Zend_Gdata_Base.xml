@@ -29,6 +29,11 @@ $feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
+            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+            for more information on how to use this object.
+        </para>
+
+        <para>
             Google Base also supports attribute-based query terms.
             You can specify additional terms using the
             <code>addAttribute()</code> method.

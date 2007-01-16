@@ -279,6 +279,11 @@ $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
 
         <para>
+            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+            for more information on how to use this object.
+        </para>
+
+        <para>
             See later sections for special functions in each
             helper class for Google Data services.  These
             functions help you to get feeds from the URI that is
@@ -304,7 +309,7 @@ $feed = $gdata->getFeed($uri);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata($client);     // $client is authenticated
+$gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $xmlString = <<<XML
 <entry xmlns='http://www.w3.org/2005/Atom'
@@ -354,7 +359,7 @@ $gdata->post($xml->asXML(), $myCalendar);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata();
+$gdata = new Zend_Gdata($authenticatedHttpClient);
 // a Google Data feed
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
@@ -364,6 +369,23 @@ foreach ($feed as $feedEntry) {
     $gdata->delete($id);
 }
 ?>]]></programlisting>
+
+        <para>
+            You can also use the <code>delete()</code> method without
+            a feed object, if you pass a correct URI identifying an
+            entry.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$gdata = new Zend_Gdata($authenticatedHttpClient);
+$uri = 'http://www.google.com/calendar/feeds/default/private/entryID';
+$gdata->delete($uri);
+?>]]></programlisting>
+
+        <para>
+            In the above example, replace "<code>entryID</code>" with the
+            ID value for the specific entry you want to delete.
+        </para>
 
         <para>
             To delete entries, you must be using an authenticated

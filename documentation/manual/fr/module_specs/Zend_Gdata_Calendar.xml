@@ -8,7 +8,7 @@
 
     <para>
         See
-        <ulink url="http://code.google.com/apis/gdata/calendar.html">http://code.google.com/apis/gdata/calendar.html</ulink>
+        <ulink url="http://code.google.com/apis/calendar/overview.html">http://code.google.com/apis/calendar/overview.html</ulink>
         for more information about the Google Calendar API.
     </para>
 
@@ -29,6 +29,11 @@ $gdataCal = new Zend_Gdata_Calendar();
 $gdataCal->setUser('developer-calendar@google.com');
 $feed = $gdataCal->getCalendarFeed();
 ?>]]></programlisting>
+
+        <para>
+            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+            for more information on how to use this object.
+        </para>
 
         <para>
             If you do not specify a user, the default is "default".

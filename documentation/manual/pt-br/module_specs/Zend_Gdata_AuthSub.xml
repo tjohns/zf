@@ -28,6 +28,15 @@
         account credentials that are known to that user.
     </para>
 
+    <note>
+        <title>Registered applications</title>
+        <para>
+            Zend_Gdata currently does not support use of secure tokens, because
+            the AuthSub authentication does not support passing a digital certificate
+            to acquire a secure token.
+        </para>
+    </note>
+
     <sect2 id="zend.gdata.authsub.login">
         <title>Creating an AuthSub authenticated Http Client</title>
 
