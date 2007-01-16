@@ -11,7 +11,7 @@
 
     <para>
         Google Blogger API についての詳細な情報は
-        <ulink url="http://code.google.com/apis/gdata/blogger.html">http://code.google.com/apis/gdata/blogger.html</ulink>
+        <ulink url="http://code.google.com/apis/blogger/overview.html">http://code.google.com/apis/blogger/overview.html</ulink>
         を参照ください。
     </para>
 
@@ -108,6 +108,12 @@ $feed = $gdataBlog->getBloggerFeed('blogname');
 $gdataBlog->setBlogName('blogname');
 $feed = $gdataBlog->getBloggerFeed();
 ?>]]></programlisting>
+
+        <para>
+            このオブジェクトの使用法についての詳細は、
+            <link linkend="zend.feed.introduction">Zend_Feed</link>
+            のドキュメントを参照ください。
+        </para>
 
         <para>
             <code>setPublishedMin()</code> メソッドおよび <code>setPublishedMax()</code>

@@ -28,6 +28,15 @@
         つまり、認証情報をユーザが知っておく必要があります。
     </para>
 
+    <note>
+        <title>登録されたアプリケーション</title>
+        <para>
+            Zend_Gdata は、現在はセキュアなトークンの使用をサポートしていません。
+            なぜなら、デジタル証明書によるセキュアなトークンの取得を
+            AuthSub 認証がサポートしていないからです。
+        </para>
+    </note>
+
     <sect2 id="zend.gdata.authsub.login">
         <title>AuthSub 認証済みの Http クライアントの作成</title>
 

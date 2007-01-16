@@ -9,7 +9,7 @@
 
     <para>
         Google Calendar API についての詳細な情報は
-        <ulink url="http://code.google.com/apis/gdata/calendar.html">http://code.google.com/apis/gdata/calendar.html</ulink>
+        <ulink url="http://code.google.com/apis/calendar/overview.html">http://code.google.com/apis/calendar/overview.html</ulink>
         を参照ください。
     </para>
 
@@ -30,6 +30,12 @@ $gdataCal = new Zend_Gdata_Calendar();
 $gdataCal->setUser('developer-calendar@google.com');
 $feed = $gdataCal->getCalendarFeed();
 ?>]]></programlisting>
+
+        <para>
+            このオブジェクトの使用法についての詳細は、
+            <link linkend="zend.feed.introduction">Zend_Feed</link>
+            のドキュメントを参照ください。
+        </para>
 
         <para>
             ユーザを指定しなかった場合のデフォルトは "default"

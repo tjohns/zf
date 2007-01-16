@@ -30,6 +30,12 @@ $feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
+            このオブジェクトの使用法についての詳細は、
+            <link linkend="zend.feed.introduction">Zend_Feed</link>
+            のドキュメントを参照ください。
+        </para>
+
+        <para>
             Google Base では、属性をもとにした問い合わせもサポートしています。
             属性の条件を指定するには <code>addAttribute()</code> メソッドを使用します。
             このメソッドのパラメータは、

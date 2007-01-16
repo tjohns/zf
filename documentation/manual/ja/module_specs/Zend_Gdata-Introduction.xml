@@ -275,9 +275,15 @@ $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
 
         <para>
+            このオブジェクトの使用法についての詳細は、
+            <link linkend="zend.feed.introduction">Zend_Feed</link>
+            のドキュメントを参照ください。
+        </para>
+
+        <para>
             この後の節で、各 Google Data
             サービス用のヘルパークラス固有の関数について説明します。これらの関数により、
-            対応するサービスにあわせた適切なフィードを取得できるようになります。
+            対応するサービスにあわせた適切な URI からフィードを取得できるようになります。
         </para>
 
     </sect2>
@@ -298,7 +304,7 @@ $feed = $gdata->getFeed($uri);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata($client);     // $client は認証済みです
+$gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $xmlString = <<<XML
 <entry xmlns='http://www.w3.org/2005/Atom'
@@ -350,7 +356,7 @@ $gdata->post($xml->asXML(), $myCalendar);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata();
+$gdata = new Zend_Gdata($authenticatedHttpClient);
 // Google Data のフィード
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
@@ -360,6 +366,23 @@ foreach ($feed as $feedEntry) {
     $gdata->delete($id);
 }
 ?>]]></programlisting>
+
+        <para>
+            フィードオブジェクトを用いずに <code>delete()</code>
+            メソッドを使用することもできます。その場合は、
+            エントリを識別する正しい URI を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$gdata = new Zend_Gdata($authenticatedHttpClient);
+$uri = 'http://www.google.com/calendar/feeds/default/private/entryID';
+$gdata->delete($uri);
+?>]]></programlisting>
+
+        <para>
+            上の例において、"<code>entryID</code>"
+            の部分を実際に削除したいエントリの ID に変更します。
+        </para>
 
         <para>
             エントリを削除するには、認証済みの Zend_Http_Client
