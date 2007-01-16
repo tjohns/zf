@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.providedsubclasses">
-    <title>Provided Subclasses</title>
+    <title>Bereitgestellte Unterklassen</title>
 
     <sect2 id="zend.controller.providedsubclasses.introduction">
         <title>Einführung</title>
@@ -319,7 +319,7 @@ $router->addRoute(
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.variable-requirements">
-            <title>Variable requirements</title>
+            <title>Anforderungen an Variablen</title>
 
             <para>
                 Du kannst einen dritten Parameter hinzufügen, in dem Anforderungen an die Variablen 

@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.subclassing">
-	<title>Subclassing</title>
+	<title>Klassen ableiten</title>
 	
 	<sect2 id="zend.controller.subclassing.introduction">
 		<title>Einführung</title>
