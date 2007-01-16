@@ -236,7 +236,11 @@ class Zend_Locale_Data
             $locale = new Zend_Locale();
         }
 
-        if (is_object($locale)) {
+        if (!Zend_Locale::isLocale($locale)) {
+            throw new Zend_Locale_Exception("Locale ($locale) is a unknown locale");
+        }
+
+        if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         }
 
