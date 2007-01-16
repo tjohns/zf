@@ -22,9 +22,6 @@
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
-/** Zend_Controller_Action_RedirectException */
-require_once 'Zend/Controller/Action/RedirectException.php';
-
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -41,6 +38,32 @@ require_once 'Zend/Controller/Response/Abstract.php';
 abstract class Zend_Controller_Action
 {
     /**
+     * Array of arguments provided to the constructor, minus the 
+     * {@link $_request Request object}.
+     * @var array 
+     */
+    protected $_invokeArgs = array();
+
+    /**
+     * HTTP status code for redirects
+     * @var int
+     */
+    protected $_redirectCode = 302;
+
+    /**
+     * Whether or not calls to _redirect() should exit script execution
+     * @var bool
+     */
+    protected $_redirectExit = true;
+
+    /**
+     * Whether or not _redirect() should attempt to prepend the base URL to the 
+     * passed URL (if it's a relative URL)
+     * @var bool
+     */
+    protected $_redirectPrependBase = true;
+
+    /**
      * Zend_Controller_Request_Abstract object wrapping the request environment
      * @var Zend_Controller_Request_Abstract
      */
@@ -51,13 +74,6 @@ abstract class Zend_Controller_Action
      * @var Zend_Controller_Response_Abstract
      */
     protected $_response = null;
-
-    /**
-     * Array of arguments provided to the constructor, minus the 
-     * {@link $_request Request object}.
-     * @var array 
-     */
-    protected $_invokeArgs = array();
 
     /**
      * Class constructor
@@ -178,6 +194,90 @@ abstract class Zend_Controller_Action
         }
 
         return null;
+    }
+
+    /**
+     * Retrieve HTTP status code to emit on {@link _redirect()} call
+     * 
+     * @return int
+     */
+    public function getRedirectCode()
+    {
+        return $this->_redirectCode;
+    }
+
+    /**
+     * Validate HTTP status redirect code
+     * 
+     * @param int $code 
+     * @return true
+     */
+    protected function _checkRedirectCode($code)
+    {
+        if (!is_int($code) || (300 > $code) || (307 < $code)) {
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception('Invalid redirect HTTP status code (' . $code  . ')');
+        }
+
+        return true;
+    }
+
+    /**
+     * Retrieve HTTP status code for {@link _redirect()} behaviour
+     * 
+     * @param int $code 
+     * @return Zend_Controller_Action
+     */
+    public function setRedirectCode($code)
+    {
+        $this->_checkRedirectCode($code);
+        $this->_redirectCode = $code;
+        return $this;
+    }
+
+    /**
+     * Retrieve flag for whether or not {@link _redirect()} will exit when finished.
+     * 
+     * @return bool
+     */
+    public function getRedirectExit()
+    {
+        return $this->_redirectExit;
+    }
+
+    /**
+     * Retrieve exit flag for {@link _redirect()} behaviour
+     * 
+     * @param bool $flag 
+     * @return Zend_Controller_Action
+     */
+    public function setRedirectExit($flag)
+    {
+        $this->_redirectExit = ($flag) ? true : false;
+        return $this;
+    }
+
+    /**
+     * Retrieve flag for whether or not {@link _redirect()} will prepend the 
+     * base URL on relative URLs
+     * 
+     * @return bool
+     */
+    public function getRedirectPrependBase()
+    {
+        return $this->_redirectPrependBase;
+    }
+
+    /**
+     * Retrieve 'prepend base' flag for {@link _redirect()} behaviour
+     * 
+     * @param bool $flag 
+     * @return Zend_Controller_Action
+     */
+    public function setRedirectPrependBase($flag)
+    {
+        $this->_redirectPrependBase = ($flag) ? true : false;
+        return $this;
     }
 
     /**
@@ -364,34 +464,46 @@ abstract class Zend_Controller_Action
     /**
      * Redirect to another URL
      *
-     * Prepends base URL as defined in request object if url is relative by 
-     * default; override this behaviour by setting the third argument false.
+     * By default, emits a 302 HTTP status header, prepends base URL as defined 
+     * in request object if url is relative, and halts script execution by 
+     * calling exit().
      *
-     * _redirect() will not halt execution of the script; it merely sets the 
-     * Location header in the response object, which will send the header once 
-     * dispatch is done, and sets the request object's isDispatched flag to 
-     * true, which tells the dispatcher that there is no more work to do. You 
-     * should call 
-     * <code>
-     * return $this->_redirect($url);
-     * </code>
-     * from your action method to halt execution.
+     * $options is an optional associative array that can be used to control 
+     * redirect behaviour. The available option keys are:
+     * - exit: boolean flag indicating whether or not to halt script execution when done
+     * - prependBase: boolean flag indicating whether or not to prepend the base URL when a relative URL is provided
+     * - code: integer HTTP status code to use with redirect. Should be between 300 and 307.
+     *
+     * _redirect() sets the Location header in the response object. If you set 
+     * the exit flag to false, you can override this header later in code 
+     * execution.
+     *
+     * If the exit flag is true (true by default), _redirect() will write and 
+     * close the current session, if any.
      *
      * @param string $url
-     * @param int $code HTTP response code to use in redirect; defaults to 302, 
-     * Found (same as Location header redirect sent by PHP)
-     * @param bool $prependBase
+     * @param array $options Options to be used when redirecting
      * @return void
-     * @throws Zend_Controller_Action_RedirectException in order to bubble up to front controller
      */
     protected function _redirect($url, $code = 302, $prependBase = true)
     {
         // prevent header injections
         $url = str_replace(array("\n", "\r"), '', $url);
 
-        // Close session, if started
-        if (isset($_SESSION)) {
-            session_write_close();
+        $exit        = $this->getRedirectExit();
+        $prependBase = $this->getRedirectPrependBase();
+        $code        = $this->getRedirectCode();
+        if (null !== $options) {
+            if (isset($options['exit'])) {
+                $exit = ($options['exit']) ? true : false;
+            }
+            if (isset($options['prependBase'])) {
+                $prependBase = ($options['prependBase']) ? true : false;
+            }
+            if (isset($options['code'])) {
+                $this->_checkRedirectCode($options['code']);
+                $code = $options['code'];
+            }
         }
 
         // If relative URL, decide if we should prepend base URL
@@ -411,6 +523,14 @@ abstract class Zend_Controller_Action
         $response = $this->getResponse();
         $response->setRedirect($url, $code);
 
-        throw new Zend_Controller_Action_RedirectException('Redirect');
+        if ($exit) {
+            // Close session, if started
+            if (isset($_SESSION)) {
+                session_write_close();
+            }
+
+            $response->sendHeaders();
+            exit();
+        }
     }
 }

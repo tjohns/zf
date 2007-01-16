@@ -17,6 +17,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
                 'bar' => 'baz'
             )
         );
+        $this->_controller->setRedirectExit(false);
     }
 
     public function tearDown()
@@ -137,18 +138,8 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
     public function testRedirect()
     {
-        try {
-            $this->_controller->redirect('/baz/foo');
-        } catch (Zend_Controller_Action_RedirectException $e) {
-        } catch (Exception $e) {
-            $this->fail('redirect failed');
-        }
-        try {
-            $this->_controller->redirect('/foo/bar');
-        } catch (Zend_Controller_Action_RedirectException $e) {
-        } catch (Exception $e) {
-            $this->fail('redirect failed');
-        }
+        $this->_controller->redirect('/baz/foo');
+        $this->_controller->redirect('/foo/bar');
         $response = $this->_controller->getResponse();
         $headers  = $response->getHeaders();
         $found    = 0;
