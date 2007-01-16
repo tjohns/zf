@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 
@@ -34,7 +34,7 @@ require_once 'Zend/Db/Statement/Oracle.php';
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
@@ -53,7 +53,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @var array
      */
     protected $_config = array(
-        'database' => null,
+        'dbname' => null,
         'username' => null,
         'password' => null,
     );
@@ -85,6 +85,13 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Exception('config array must have at least a username and a password');
         }
 
+        // @todo Let this protect backward-compatibility for one release, then remove
+        if (array_key_exists('database', $config) || ! array_key_exists('dbname', $config)) {
+            $config['dbname'] = $config['database'];
+            unset($config['database']);
+            trigger_error("Deprecated config key 'database', use 'dbname' instead.", E_USER_NOTICE);
+        }
+
         // keep the config
         $this->_config = array_merge($this->_config, (array) $config);
 
@@ -112,8 +119,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
             return;
         }
 		
-		if (isset($this->_config['database'])) {
-			$this->_connection = oci_connect($this->_config['username'], $this->_config['password'], $this->_config['database']);
+		if (isset($this->_config['dbname'])) {
+			$this->_connection = oci_connect($this->_config['username'], $this->_config['password'], $this->_config['dbname']);
 		} else {
 			$this->_connection = oci_connect($this->_config['username'], $this->_config['password']);
 		}
