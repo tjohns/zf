@@ -179,7 +179,7 @@ abstract class Zend_Date_DateObject {
             // go through leapyears
             // add months from letest given year
             for ($count = 1970; $count <= $year; $count++) {
-                $leapyear = $this->isYearLeapYear($count);
+                $leapyear = self::isYearLeapYear($count);
                 if ($count < $year) {
 
                     $date += 365;
@@ -209,7 +209,7 @@ abstract class Zend_Date_DateObject {
             // add months from latest given year
             for ($count = 1969; $count >= $year; $count--) {
 
-                $leapyear = $this->isYearLeapYear($count);
+                $leapyear = self::isYearLeapYear($count);
                 if ($count > $year)
                 {
                     $date += 365;
@@ -248,7 +248,7 @@ abstract class Zend_Date_DateObject {
      * @param  integer  $year
      * @return boolean  true, if year is leap year
      */
-    protected function isYearLeapYear($year)
+    protected static function isYearLeapYear($year)
     {
         // all leapyears can be divided through 4
         if (($year % 4) != 0) {
@@ -394,7 +394,7 @@ abstract class Zend_Date_DateObject {
 
                 // year formats
                 case 'L':  // is leap year ?
-                    $output .= ($this->isYearLeapYear($date['year'])) ? '1' : '0';
+                    $output .= (self::isYearLeapYear($date['year'])) ? '1' : '0';
                     break;
 
                 case 'o':  // ISO 8601 year number
@@ -668,7 +668,7 @@ abstract class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += 31536000;
-                $leapyear = $this->isYearLeapYear($i);
+                $leapyear = self::isYearLeapYear($i);
                 if ($leapyear === true) {
                     $timestamp += 86400;
                 }
@@ -713,7 +713,7 @@ abstract class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp -= 31536000;
-                $leapyear = $this->isYearLeapYear($i);
+                $leapyear = self::isYearLeapYear($i);
                 if ($leapyear === true) {
                     $timestamp -= 86400;
                 }

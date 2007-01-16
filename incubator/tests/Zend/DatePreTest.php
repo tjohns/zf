@@ -64,17 +64,17 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     {
         // When specifying a timestamp, 0 always means 1970/01/01 00:00:00
         $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
-        $date->setGmt(true);
+        $date->setTimezone('UTC');
         echo "Timestamp = ", $date->get(), " new Zend_Date(0, Zend_Date::TIMESTAMP, true)\n";
         echo "Line#:", __LINE__, " ", $date->toString(), "\n";
         echo "Timestamp (GMT) = ", $date->get(), " new Zend_Date(0, null, false)\n";
         echo "toString(null, GMT -i.e. true) = ", $date->toString(null, true), "\n";
 
         $date = new Zend_Date(0, Zend_Date::TIMESTAMP);
-        $date->setGmt(false);
+        $date->setTimezone('America/Los_Angeles');
         echo "Timestamp = ", $date->get(), " new Zend_Date(0, Zend_Date::TIMESTAMP, false)\n";
         echo "Line#:", __LINE__, " ", $date->toString(), "\n";
-        $date->setGmt(true);
+        $date->setTimezone('UTC');
         echo "Timestamp (GMT) = ", $date->get(), " new Zend_Date(0, null, false)\n";
         echo "toString(null, GMT -i.e. true) = ", $date->toString(null), "\n";
 
@@ -109,10 +109,10 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
 
     public function testWeek()
     {
-        $date1 = new Zend_Date(null,null,false,'en_US');
-        $date2 = new Zend_Date(null,null,false,'en_US');
-        $date3 = new Zend_Date(null,null,false,'en_US');
-        $date4 = new Zend_Date(null,null,true,'en_US');
+        $date1 = new Zend_Date('en_US');
+        $date2 = new Zend_Date('en_US');
+        $date3 = new Zend_Date('en_US');
+        $date4 = new Zend_Date('en_US');
         $this->assertTrue($date1 instanceof Zend_Date);
         $this->assertTrue($date2 instanceof Zend_Date);
         $this->assertTrue($date3 instanceof Zend_Date);
@@ -121,21 +121,27 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         var_dump($date1);
         echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(),
                 " timestamps returned by get() are always UTC\n";
-        echo "Timestamp date1 new Zend_Date(null,null,true,'en_US') = ", $date1->get(null,true),
+        $date1->setTimezone('UTC');
+        echo "Timestamp date1 new Zend_Date(null,null,true,'en_US') = ", $date1->get(),
                 " timestamps returned by get() are always UTC\n";
+        $date1->setTimezone('America/Los_Angeles');
         echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(),
                 " timestamps returned by get() are always UTC\n";
-        echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(null,true),
+        $date4->setTimezone('UTC');
+        echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(),
                 " timestamps returned by get() are always UTC\n";
+        $date4->setTimezone('America/Los_Angeles');
 
         echo "\n";
 
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",
                 $date1->toString(), " defaults to formatting time in local timezone\n";
+        $date1->setTimezone('America/Los_Angeles');
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",
-                $date1->toString(null,false), " formatted in local timezone\n";
+                $date1->toString(), " formatted in local timezone\n";
+        $date1->setTimezone('UTC');
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",
-                $date1->toString(null,true), " formatted as UTC date string\n";
+                $date1->toString(), " formatted as UTC date string\n";
 
         echo "\n";
 
@@ -206,10 +212,10 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     public function testDay()
     {
         echo "\n------------------------------------------\n";
-        $date1 = new Zend_Date(null,null,false,'en_US');
-        $date2 = new Zend_Date(null,null,false,'en_US');
-        $date3 = new Zend_Date(null,null,false,'en_US');
-        $date4 = new Zend_Date(null,null,true,'en_US');
+        $date1 = new Zend_Date('en_US');
+        $date2 = new Zend_Date('en_US');
+        $date3 = new Zend_Date('en_US');
+        $date4 = new Zend_Date('en_US');
         $this->assertTrue($date1 instanceof Zend_Date);
         $this->assertTrue($date2 instanceof Zend_Date);
         $this->assertTrue($date3 instanceof Zend_Date);
@@ -218,13 +224,19 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(), "\n";
         echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(), "\n";
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",$date1->toString(), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(null,false), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(null,true), "\n";
+        $date1->setTimezone('America/Los_Angeles');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(), "\n";
+        $date1->setTimezone('UTC');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(), "\n";
+        $date1->setTimezone('America/Los_Angeles');
         echo "\n";
         echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString()           : ",$date4->toString(), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(null,false), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(null,true), "\n";
-
+        $date4->setTimezone('America/Los_Angeles');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(), "\n";
+        $date4->setTimezone('UTC');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(), "\n";
+        $date4->setTimezone('America/Los_Angeles');
+        
         echo "\nAfter addDay(1):\n";
         $date1->addDay(1);
         echo "Timestamp 1 = ", $date1->get(), " ->addDay(1)\n";
@@ -284,10 +296,10 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     public function testHour()
     {
         echo "\n------------------------------------------\n";
-        $date1 = new Zend_Date(null,null,false,'en_US');
-        $date2 = new Zend_Date(null,null,false,'en_US');
-        $date3 = new Zend_Date(null,null,false,'en_US');
-        $date4 = new Zend_Date(null,null,true,'en_US');
+        $date1 = new Zend_Date('en_US');
+        $date2 = new Zend_Date('en_US');
+        $date3 = new Zend_Date('en_US');
+        $date4 = new Zend_Date('en_US');
         $this->assertTrue($date1 instanceof Zend_Date);
         $this->assertTrue($date2 instanceof Zend_Date);
         $this->assertTrue($date3 instanceof Zend_Date);
@@ -296,13 +308,19 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(), "\n";
         echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(), "\n";
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",$date1->toString(), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(null,false), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(null,true), "\n";
+        $date1->setTimezone('America/Los_Angeles');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(), "\n";
+        $date1->setTimezone('UTC');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(), "\n";
+        $date1->setTimezone('America/Los_Angeles');
         echo "\n";
         echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString()           : ",$date4->toString(), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(null,false), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(null,true), "\n";
-
+        $date4->setTimezone('America/Los_Angeles');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(), "\n";
+        $date4->setTimezone('UTC');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(), "\n";
+        $date4->setTimezone('America/Los_Angeles');
+        
         echo "\nAfter addHour(1):\n";
         $date1->addHour(1);
         echo "Timestamp 1 = ", $date1->get(), " ->addHour(1)\n";
@@ -358,14 +376,15 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         echo "Timestamp 3 = ", $date3->get(), "->addHour(4,true) - should be exactly start time + 4 weeks\n";
         echo "Line#:", __LINE__, " ", $date3->toString(), "\n";
     }
-    
+
     public function testMonth()
     {
         echo "\n------------------------------------------\n";
-        $date1 = new Zend_Date(null,null,false,'en_US');
-        $date2 = new Zend_Date(null,null,false,'en_US');
-        $date3 = new Zend_Date(null,null,false,'en_US');
-        $date4 = new Zend_Date(null,null,true,'en_US');
+        $date1 = new Zend_Date('en_US');
+        $date2 = new Zend_Date('en_US');
+        $date3 = new Zend_Date('en_US');
+        $date4 = new Zend_Date('en_US');
+        $date4->setTimezone('UTC');
         $this->assertTrue($date1 instanceof Zend_Date);
         $this->assertTrue($date2 instanceof Zend_Date);
         $this->assertTrue($date3 instanceof Zend_Date);
@@ -374,13 +393,18 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(), "\n";
         echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(), "\n";
         echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",$date1->toString(), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(null,false), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(null,true), "\n";
+        $date1->setTimezone('America/Los_Angeles');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(), "\n";
+        $date1->setTimezone('UTC');
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(), "\n";
         echo "\n";
         echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString()           : ",$date4->toString(), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(null,false), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(null,true), "\n";
-
+        $date4->setTimezone('America/Los_Angeles');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(), "\n";
+        $date4->setTimezone('UTC');
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(), "\n";
+        $date4->setTimezone('America/Los_Angeles');
+        
         echo "\nAfter addMonth(1):\n";
         $date1->addMonth(1);
         echo "Timestamp 1 = ", $date1->get(), " ->addMonth(1)\n";
@@ -441,8 +465,8 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     public function testCompare()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(0,null,$locale);
-        $d2   = new Zend_Date(1010101010,null,$locale);//4 jan 2002
+        $date = new Zend_Date(0,$locale);
+        $d2   = new Zend_Date(1010101010,$locale);//4 jan 2002
 
         $retour = $date->set(1234567890);
         echo "\nset timestamp to : 1234567890 # ".$date->toString()."\n\n";
