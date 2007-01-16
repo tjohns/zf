@@ -42,11 +42,56 @@
             Zend_Http_Client->setConfig() メソッドを使用し、
             アダプタを後で設定することも可能です。
         </para>
+    </sect2>
+
+    <sect2>
+        <title>ソケットアダプタ</title>    
         <para>
             デフォルトの接続アダプタは Zend_Http_Client_Adapter_Socket
             です。明示的に接続アダプタを指定しない場合は、これが使用されます。
             Socket アダプタは PHP の組み込み関数 fsockopen()
             を使用しており、特別な拡張モジュールやコンパイルオプションは必要ありません。
+        </para>
+        <para>
+            ソケットアダプタでは、独自の設定オプション <code>'ssltransport'</code>
+            が指定できます (<code>Zend_Http_Client->setConfig()</code>
+            に渡すか、あるいはコンストラクタで設定します)。
+            このパラメータは文字列で、デフォルトは 'sslv2' となります。
+            これを変更すると、HTTPS 接続に使用するストリームトランスポート層が変更されます。
+            よく使用する値は 'ssl'、'sslv2'、'sslv3' および 'tls' です。これ以外にも、
+            PHP がサポートしているストリームトランスポート層ならどれでも使用できます。
+            しかし、結果が予期せぬものになるかもしれません。これ以外の値を使用する場合には、
+            それが何を意味するのかをしっかり把握した上で使用するようにしましょう。
+            <footnote>
+                <para>
+                    PHP マニュアルの付録 O に、サポートされるソケットトランスポートの一覧があります。
+                    <ulink url="http://www.php.net/manual/en/transports.php" />
+                </para>
+            </footnote>. 
+        </para>
+        <example>
+            <title>HTTPS トランスポート層の変更</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // 設定パラメータを指定します
+    $config = array(
+        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+        'ssltransport' => 'tls'
+    );
+    
+    // クライアントオブジェクトのインスタンスを作成します
+    $client = Zend_Http_Client('https://www.example.com', $config);
+    
+    // これ以降のリクエストは、TLS セキュア接続上で行われます
+    $response = $client->request();
+?>]]></programlisting>
+        </example>
+        <para>
+            上の例の結果は、次の PHP コマンドで TCP
+            接続をオープンした場合と同じになります。
+        </para>
+        <para>
+            <code>fsockopen('tls://www.example.com', 443)</code>
         </para>
     </sect2>
     
