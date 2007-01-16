@@ -89,7 +89,6 @@
         &module_specs.Zend_Locale-NumberSystems;
         &module_specs.Zend_Locale-AppendixLanguages;
         &module_specs.Zend_Locale-AppendixRegions;
-        &module_specs.Zend_Locale-AppendixNumberScripts;
     </chapter>
 
     <chapter id="zend.mail">
@@ -154,10 +153,6 @@
     <appendix id="appendix.regions">
         <title>Appendix Zend_Locale Regions</title>
         &module_specs.Zend_Locale-AppendixRegions;
-    </appendix>
-    <appendix id="appendix.numbersystems">
-        <title>Appendix Zend_Locale Number Systems</title>
-        &module_specs.Zend_Locale-AppendixNumberScripts;
     </appendix>
     <!-- &ref.faq; -->
     <appendix id="appendix.codingstandard">
