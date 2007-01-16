@@ -15,7 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Service
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -32,7 +32,7 @@ require_once 'Zend/Service/Exception.php';
 /**
  * @package    Zend_Service
  * @subpackage Audioscrobbler
- * @copyright  Copyright (c) 2005-2006 Zend Technologies Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd 	New BSD License
  * @author 	   Chris Hartjes chartjes@littlehart.net (ZCE # 901167)
  * @author 	   Derek Martin  derek@geekunity.com (ZCE # 901168)

@@ -14,7 +14,7 @@
  *
  * @package    Zend_Json
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -30,7 +30,7 @@ require_once 'Zend/Json/Exception.php';
  *
  * @package    Zend_Json
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_Json_Server_Exception extends Zend_Json_Exception

@@ -14,9 +14,8 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Console
- * @subpackage Getopt
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Console_Getopt
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -82,13 +81,55 @@ require_once 'Zend/Console/Getopt/Exception.php';
  * Example:  'abc:' means options '-a', '-b', and '-c'
  * are legal, and the latter requires a string parameter.
  *
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @category   Zend
+ * @package    Zend_Console_Getopt
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    Release: @package_version@
  * @since      Class available since Release 0.6.0
+ *
+ * @todo: Handle params with multiple values, e.g. --colors=red,green,blue
+ *        Set value of parameter to the array of values.  Allow user to specify
+ *        the separator with Zend_Console_Getopt::CONFIG_PARAMETER_SEPARATOR.
+ *        If this config value is null or empty string, do not split values
+ *        into arrays.  Default separator is comma (',').
+ *
+ * @todo: Handle params with multiple values specified with separate options
+ *        e.g. --colors red --colors green --colors blue should give one
+ *        option with an array(red, green, blue).
+ *        Enable with Zend_Console_Getopt::CONFIG_CUMULATIVE_PARAMETERS.
+ *        Default is that subsequent options overwrite the parameter value.
+ *
+ * @todo: Handle flags occurring multiple times, e.g. -v -v -v
+ *        Set value of the option's parameter to the integer count of instances
+ *        instead of a boolean.
+ *        Enable with Zend_Console_Getopt::CONFIG_CUMULATIVE_FLAGS.
+ *        Default is that the value is simply boolean TRUE regardless of 
+ *        how many instances of the flag appear.
+ *
+ * @todo: Handle flags that implicitly print usage message, e.g. --help
+ *
+ * @todo: Handle freeform options, e.g. --set-variable
+ *        Enable with Zend_Console_Getopt::CONFIG_FREEFORM_FLAGS
+ *        All flag-like syntax is recognized, no flag generates an exception.
+ *
+ * @todo: Handle numeric options, e.g. -1, -2, -3, -1000
+ *        Enable with Zend_Console_Getopt::CONFIG_NUMERIC_FLAGS
+ *        The rule must specify a named flag and the '#' symbol as the
+ *        parameter type. e.g.,  'lines=#'
+ *
+ * @todo: Enable user to specify header and footer content in the help message.
+ *
+ * @todo: Feature request to handle option interdependencies.
+ *        e.g. if -b is specified, -a must be specified or else the
+ *        usage is invalid.
+ *
+ * @todo: Feature request to implement callbacks.
+ *        e.g. if -a is specified, run function 'handleOptionA'().
  */
 class Zend_Console_Getopt
 {
+
     /**
      * The options for a given application can be in multiple formats.
      * modeGnu is for traditional 'ab:c:' style getopt format.
@@ -96,7 +137,6 @@ class Zend_Console_Getopt
      */
     const MODE_ZEND                         = 'zend';
     const MODE_GNU                          = 'gnu';
-    // @todo const MODE_PEAR                = 'pear';
 
     /**
      * Constant tokens for various symbols used in the mode_zend
@@ -107,22 +147,6 @@ class Zend_Console_Getopt
     const TYPE_STRING                       = 's';
     const TYPE_WORD                         = 'w';
     const TYPE_INTEGER                      = 'i';
-    /**
-     * @todo: handle params with multiple values, e.g. --colors=red,green,blue
-     */
-    /**
-     * @todo: handle flags occurring multiple times, e.g. -v -v -v
-     */
-    /**
-     * @todo: handle flags that implicitly print usage message, e.g. --help
-     */
-    /**
-     * @todo: handle freeform options, e.g. --set-variable
-     * Zend_Console_Getopt::CONFIG_FREEFORM
-     */
-    /**
-     * @todo: handle numeric options, e.g. -1, -2, -3 -1000
-     */
 
     /**
      * These are constants for optional behavior of this class.
@@ -150,27 +174,33 @@ class Zend_Console_Getopt
      * Stores the command-line arguments for the calling applicaion.
      */
     protected $_argv = array();
+
     /**
      * Stores the name of the calling applicaion.
      */
     protected $_progname = '';
+
     /**
      * Stores the list of legal options for this application.
      */
     protected $_rules = array();
+
     /**
      * Stores alternate spellings of legal options.
      */
     protected $_ruleMap = array();
+
     /**
      * Stores options given by the user in the current invocation
      * of the application, as well as parameters given in options.
      */
     protected $_options = array();
+
     /**
      * Stores the command-line arguments other than options.
      */
     protected $_remainingArgs = array();
+
     /**
      * State of the options: parsed or not yet parsed?
      */
@@ -403,7 +433,6 @@ class Zend_Console_Getopt
 
     /**
      * Return the current set of options and parameters seen in Json format.
-     * @todo Use an external Json library, e.g. Zend_Json.
      *
      * @throws Zend_Console_Getopt_Exception
      * @return string
@@ -431,7 +460,6 @@ class Zend_Console_Getopt
 
     /**
      * Return the current set of options and parameters seen in XML format.
-     * @todo Use an external XML library, e.g. DOM
      *
      * @throws Zend_Console_Getopt_Exception
      * @return string
@@ -779,6 +807,7 @@ class Zend_Console_Getopt
     protected function addRulesModeGnu($rules)
     {
         $ruleArray = array();
+
         /**
          * Options may be single alphanumeric characters.
          * Options may have a ':' which indicates a required string parameter.
@@ -874,5 +903,3 @@ class Zend_Console_Getopt
     }
 
 }
-
-?>

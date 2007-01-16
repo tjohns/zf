@@ -14,7 +14,7 @@
  *
  * @package    ZForm
  * @subpackage Elements
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -28,7 +28,7 @@ require_once 'ZForm/elements/ZFormInputElement.php';
 /**
  * @package    ZForm
  * @subpackage Elements
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class ZFormFile extends ZFormInputElement

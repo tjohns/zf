@@ -14,7 +14,7 @@
  *
  * @package    Zend_Rest
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -30,7 +30,7 @@ require_once 'Zend/Rest/Exception.php';
  *
  * @package    Zend_Rest
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_Rest_Server_Exception extends Zend_Rest_Exception

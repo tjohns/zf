@@ -13,7 +13,7 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Mail
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -50,7 +50,7 @@ require_once 'Zend/Mail/Exception.php';
 
 /**
  * @package    Zend_Mail
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_Mail_Imap extends Zend_Mail_Abstract implements Zend_Mail_Folder_Interface
