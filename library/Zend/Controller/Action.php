@@ -362,21 +362,17 @@ abstract class Zend_Controller_Action
             $this->setResponse($response);
         }
 
-        try {
-            $this->preDispatch();
+        $this->preDispatch();
 
-            $action = $this->getRequest()->getActionName();
-            if (null === $action) {
-                $action = 'noRoute';
-            }
-            $action = $action . 'Action';
-
-            $this->{$action}();
-
-            $this->postDispatch();
-        } catch (Zend_Controller_Action_RedirectException $e) {
-            // do nothing -- this is a redirect
+        $action = $this->getRequest()->getActionName();
+        if (null === $action) {
+            $action = 'noRoute';
         }
+        $action = $action . 'Action';
+
+        $this->{$action}();
+
+        $this->postDispatch();
 
         return $this->getResponse();
     }
