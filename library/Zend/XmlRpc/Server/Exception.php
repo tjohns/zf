@@ -14,7 +14,7 @@
  *
  * @package    Zend_XmlRpc
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -31,7 +31,7 @@ require_once 'Zend/XmlRpc/Exception.php';
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Server
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_XmlRpc_Server_Exception extends Zend_XmlRpc_Exception
