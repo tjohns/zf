@@ -1,6 +1,6 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>Глобальное управление сессиями<!--Global Session Management--></title>
+    <title>Общее управление сессиями<!--Global Session Management--></title>
 
     <para>
         Поведение сессий, принятое по умолчанию, можно изменить, используя статические методы класса Zend_Session_Core. Все управление производится посредством Zend_Session_Core, включая конфигурирование <ulink url="http://www.php.net/session#session.configuration">через опции, предоставляемые расширением ext/session</ulink>, с использованием метода <code>Zend_Session::setOptions()</code>.

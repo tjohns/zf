@@ -146,7 +146,7 @@
 
     <sect2 id="zend.session.accessors">
 
-        <title>Методы доступа для пространств имен сессий<!--Accessors for Session Namespaces--></title>
+        <title>Методы доступа для пространств имен<!--Accessors for Session Namespaces--></title>
 
         <para>
             Обычные методы доступа доступны через "магические" методы (magic
