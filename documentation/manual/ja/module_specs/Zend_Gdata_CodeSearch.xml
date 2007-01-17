@@ -11,7 +11,7 @@
 
     <para>
         Google CodeSearch API についての詳細な情報は
-        <ulink url="http://code.google.com/apis/gdata/codesearch.html">http://code.google.com/apis/gdata/codesearch.html</ulink>
+        <ulink url="http://code.google.com/apis/codesearch/overview.html">http://code.google.com/apis/codesearch/overview.html</ulink>
         を参照ください。
     </para>
 
@@ -28,6 +28,12 @@ $gdataCode->setQuery('malloc');
 $gdataCode->setMaxResults(20);
 $feed = $gdataCode->getCodeSearchFeed();
 ?>]]></programlisting>
+
+    <para>
+        このオブジェクトの使用法についての詳細は、
+        <link linkend="zend.feed.introduction">Zend_Feed</link>
+        のドキュメントを参照ください。
+    </para>
 
     <para>
         <code>startIndex</code> および <code>maxResults</code>
