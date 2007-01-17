@@ -35,6 +35,7 @@ require_once 'Zend/Console/GetoptTest.php';
 //require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
+require_once 'Zend/FilterTest.php';
 require_once 'Zend/LocaleTest.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';
@@ -42,6 +43,7 @@ require_once 'Zend/MeasureTest.php';
 require_once 'Zend/Measure/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
+require_once 'Zend/ValidateTest.php';
 
 /**
  * @category   Zend
@@ -70,6 +72,7 @@ class Zend_AllTests
 //        $suite->addTest(Zend_Currency_AllTests::suite());
         // $suite->addTestSuite('Zend_DateTest');
 //        $suite->addTest(Zend_Date_AllTests::suite());
+        $suite->addTestSuite('Zend_FilterTest');
         // $suite->addTestSuite('Zend_LocaleTest');
         // $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
@@ -82,6 +85,7 @@ class Zend_AllTests
          */
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
+        $suite->addTestSuite('Zend_ValidateTest');
 
         return $suite;
     }
