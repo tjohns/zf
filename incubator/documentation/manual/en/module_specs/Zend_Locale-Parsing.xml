@@ -21,7 +21,6 @@
                 which might yield unexpected behavior, if the input originated in a different locale, or output for a
                 specific locale was expected.
             </para>
-
         </note>
     </para>
 
@@ -76,8 +75,7 @@ print $number; // will return 13524.678
             <example>
                 <title>Number normalization with precision</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', 1, $locale);
@@ -104,8 +102,7 @@ print $number; // will return 13524.6
         <example>
             <title>Number localization</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.36, $locale);
@@ -133,8 +130,7 @@ print $number;
         <example>
             <title>Number localization with precision</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, 2, $locale);
@@ -167,8 +163,7 @@ print $number;
         <example>
             <title>Number testing</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
@@ -193,8 +188,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
         <example>
             <title>Floating point value normalization</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', 2, $locale);
@@ -218,8 +212,7 @@ print $number;
         <example>
             <title>Floating point value localization</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, 1, $locale);
@@ -252,8 +245,7 @@ print $number;
         <example>
             <title>Floating point value testing</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
@@ -277,8 +269,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
         <example>
             <title>Integer value normalization</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getInteger('13.524,678', $locale);
@@ -302,8 +293,7 @@ print $number;
         <example>
             <title>Integer value localization</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toInteger(13547.3655, $locale);
@@ -326,8 +316,7 @@ print $number;
         <example>
             <title>Integer value testing</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isInteger('13.445', $locale) {
@@ -340,279 +329,31 @@ if (Zend_Locale_Format::isInteger('13.445', $locale) {
 
     </sect2>
 
-    <sect2 id="zend.locale.date.normalizing">
+    <sect2 id="zend.locale.numbersystems">
 
-        <title>Normalize a date or time</title>
+        <title>Numeral System Conversion</title>
 
         <para>
-            <code>getDate()</code> has the ability to parse a localized date. There will always be an array with the
-            date values returned.
-            <note>
-                <title>Return values</title>
-                <para>
-                    All return values are OPTIONAL. If only date is given all time values are supressed. If no time is
-                    given all date values are supressed.
-                </para>
-            </note>
-            <note>
-                <title>Exception</title>
-                <para>
-                    If no date or time can be found within the given input, an exception will be thrown.
-                </para>
-            </note>
+            <code>Zend_Locale_Format::toNumberSystem()</code> converts digits between different
+            <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">numeral systems</ulink>
+            , including the standard Arabic/European numeral system (0,1,2,3,4,5,6,7,8,9), not to be confused with
+            <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Eastern Arabic numerals</ulink>
+            sometimes used with the Arabic language to express numerals. Attempts to use an unsupported numeral system
+            will result in an exception, to avoid accidentally performing an incorrect conversion due to a spelling
+            error. All characters in the input, which are not numerals for the selected numeral system, are copied to
+            the output -i.e. no conversion of decimal format characters.
         </para>
 
         <para>
-            The following return values are possible :
-            <table>
-                <title>Return values</title>
-                <tgroup cols='4'>
-                    <thead>
-                        <row>
-                            <entry>Array key</entry>
-                            <entry>Returned value</entry>
-                            <entry>Minimum</entry>
-                            <entry>Maximum</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>day</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>31</entry>
-                        </row>
-                        <row>
-                            <entry>month</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>12</entry>
-                        </row>
-                        <row>
-                            <entry>year</entry>
-                            <entry>integer</entry>
-                            <entry>no limit</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>hour</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>minute</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                        <row>
-                            <entry>second</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            Suppose a web form collected a numeric input expressed using arabic digits "١‎٠٠". Most software and
+            PHP functions expect input using Arabic numerals. Fortunately, converting this input to it's equivalent
+            Arabic numerals "100" requires little effort using <code>toNumberSystem($input, $sourceNumeralSystem,
+            $destNumeralSystem)</code>, which returns the <code>$input</code> with numerals in
+            <code>$sourceNumeralSystem</code> converted to <code>$destNumeralSystem</code>.
         </para>
 
         <example>
-            <title>Normalizing a date</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
-
-$date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
-
-print_r ($date);
-?>]]></programlisting>
-        </example>
-
-        <para>
-            But <code>getDate()</code> can now only handle given formats, it also knows local standard formats, so by
-            using only the locale the used format can be automatically detected.
-        </para>
-
-        <example>
-            <title>Normalizing a date by locale</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
-
-$locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2006', false, $locale);
-
-print_r ($date);
-?>]]></programlisting>
-        </example>
-
-        <para>
-            Also a complete date can be parsed by only giving by giving a complete date as input.
-        </para>
-
-        <example>
-            <title>Normalizing a date with time</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
-
-$locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
-
-print_r ($date);
-?>]]></programlisting>
-        </example>
-
-        <para>
-            Of course also an unusal´or userdefined format can be parsed.
-        </para>
-
-        <example>
-            <title>Normalizing a userdefined date</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
-
-$date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
-
-print_r ($date);
-?>]]></programlisting>
-        </example>
-
-        <para>
-            The format can include the following signs :
-            <table>
-                <title>Format definition</title>
-                <tgroup cols='2'>
-                    <thead>
-                        <row>
-                            <entry>Format Letter</entry>
-                            <entry>Description</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>d or dd</entry>
-                            <entry>1 or 2 digit day</entry>
-                        </row>
-                        <row>
-                            <entry>M or MM</entry>
-                            <entry>1 or 2 digit month</entry>
-                        </row>
-                        <row>
-                            <entry>y or yy</entry>
-                            <entry>1 or 2 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>yyyy</entry>
-                            <entry>4 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>h</entry>
-                            <entry>1 or 2 digit hour</entry>
-                        </row>
-                        <row>
-                            <entry>m</entry>
-                            <entry>1 or 2 digit minute</entry>
-                        </row>
-                        <row>
-                            <entry>s</entry>
-                            <entry>1 or 2 digit second</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
-
-        <para>
-            Examples for proper formats are
-            <table>
-                <title>Example formats</title>
-                <tgroup cols='3'>
-                    <thead>
-                        <row>
-                            <entry>Formats</entry>
-                            <entry>Input</entry>
-                            <entry>Output</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 1,
-                                   ['month'] => 4, 
-                                   ['year'] => 6</entry>
-                        </row>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>01.04.2006</entry>
-                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
-                        </row>
-                        <row>
-                            <entry>yyyyMMdd</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
-
-        <note>
-            <title>Database date format</title>
-            <para>
-                If you want to parse a database date value (f.e. MySql or MsSql) use Zend_Date's ISO_8601 format instead
-                of getDate().
-            </para>
-        </note>
-
-        <para>
-            <code>getDate()</code> has an build in automatic correction for false inputs. It can detect false values and
-            will fix them.
-        </para>
-
-        <example>
-            <title>Correction for date normalizing</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
-
-$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
-
-// instead of 41 for the day, the 41 will be returned as year value
-print_r ($date);
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-<sect2 id="zend.locale.numbersystems">
-
-    <title>Numeral System Conversion</title>
-
-    <para>
-        <code>Zend_Locale_Format::toNumberSystem()</code> converts digits between different
-        <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">numeral systems</ulink>
-        , including the standard Arabic/European numeral system (0,1,2,3,4,5,6,7,8,9), not to be confused with
-        <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Eastern Arabic numerals</ulink>
-        sometimes used with the Arabic language to express numerals. Attempts to use an unsupported numeral system will
-        result in an exception, to avoid accidentally performing an incorrect conversion due to a spelling error. All
-        characters in the input, which are not numerals for the selected numeral system, are copied to the output -i.e.
-        no conversion of decimal format characters.
-    </para>
-
-    <para>
-        Suppose a web form collected a numeric input expressed using arabic digits "١‎٠٠". Most software and PHP
-        functions expect input using Arabic numerals. Fortunately, converting this input to it's equivalent Arabic
-        numerals "100" requires little effort using <code>toNumberSystem($input, $sourceNumeralSystem,
-        $destNumeralSystem)</code>, which returns the <code>$input</code> with numerals in
-        <code>$sourceNumeralSystem</code> converted to <code>$destNumeralSystem</code>.
-    </para>
-
-    <example>
-        <title>Converting numerals to Arabic/European</title>
+            <title>Converting numerals to Arabic/European</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -622,14 +363,14 @@ $normal = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Euro');
 print "\nOriginal: ".$string;
 print "\nNormalized:".$normal;
 ?>]]></programlisting>
-    </example>
+        </example>
 
-    <para>
-        Similarly, any of the supported numeral systems may be converted to any other supported numeral system.
-    </para>
+        <para>
+            Similarly, any of the supported numeral systems may be converted to any other supported numeral system.
+        </para>
 
-    <example>
-        <title>Converting numerals from Arabic/European</title>
+        <example>
+            <title>Converting numerals from Arabic/European</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -639,111 +380,112 @@ $local = Zend_Locale_Format::toNumberSystem($string, 'Euro', 'Arab');
 print "\nOriginal: ".$string;
 print "\nLocalize:".$local;
 ?>]]></programlisting>
-    </example>
+        </example>
 
-    <sect3 id="zend.locale.appendix.numberscripts.supported">
+        <sect3 id="zend.locale.appendix.numberscripts.supported">
 
-        <title>List of supported numeral systems</title>
+            <title>List of supported numeral systems</title>
 
-        <para>
-            <table>
-                <title>List of supported numeral systems</title>
-                <tgroup cols="2">
-                    <thead>
-                        <row>
-                            <entry>Notation Name</entry>
-                            <entry>Script</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>Arabic</entry>
-                            <entry>Arab</entry>
-                        </row>
-                        <row>
-                            <entry>Balinese</entry>
-                            <entry>Bali</entry>
-                        </row>
-                        <row>
-                            <entry>Bengali</entry>
-                            <entry>Beng</entry>
-                        </row>
-                        <row>
-                            <entry>Devanagari</entry>
-                            <entry>Deva</entry>
-                        </row>
-                        <row>
-                            <entry>Gujarati</entry>
-                            <entry>Gujr</entry>
-                        </row>
-                        <row>
-                            <entry>Gurmukhi</entry>
-                            <entry>Guru</entry>
-                        </row>
-                        <row>
-                            <entry>Kannada</entry>
-                            <entry>Knda</entry>
-                        </row>
-                        <row>
-                            <entry>Khmer</entry>
-                            <entry>Khmr</entry>
-                        </row>
-                        <row>
-                            <entry>Lao</entry>
-                            <entry>Laoo</entry>
-                        </row>
-                        <row>
-                            <entry>Limbu</entry>
-                            <entry>Limb</entry>
-                        </row>
-                        <row>
-                            <entry>Malayalam</entry>
-                            <entry>Mlym</entry>
-                        </row>
-                        <row>
-                            <entry>Mongolian</entry>
-                            <entry>Mong</entry>
-                        </row>
-                        <row>
-                            <entry>Myanmar</entry>
-                            <entry>Mymr</entry>
-                        </row>
-                        <row>
-                            <entry>New_Tai_Lue</entry>
-                            <entry>Talu</entry>
-                        </row>
-                        <row>
-                            <entry>Nko</entry>
-                            <entry>Nkoo</entry>
-                        </row>
-                        <row>
-                            <entry>Oriya</entry>
-                            <entry>Orya</entry>
-                        </row>
-                        <row>
-                            <entry>Tamil</entry>
-                            <entry>Taml</entry>
-                        </row>
-                        <row>
-                            <entry>Telugu</entry>
-                            <entry>Telu</entry>
-                        </row>
-                        <row>
-                            <entry>Thai</entry>
-                            <entry>Tale</entry>
-                        </row>
-                        <row>
-                            <entry>Tibetan</entry>
-                            <entry>Tibt</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
+            <para>
+                <table>
+                    <title>List of supported numeral systems</title>
+                    <tgroup cols="2">
+                        <thead>
+                            <row>
+                                <entry>Notation Name</entry>
+                                <entry>Script</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Arabic</entry>
+                                <entry>Arab</entry>
+                            </row>
+                            <row>
+                                <entry>Balinese</entry>
+                                <entry>Bali</entry>
+                            </row>
+                            <row>
+                                <entry>Bengali</entry>
+                                <entry>Beng</entry>
+                            </row>
+                            <row>
+                                <entry>Devanagari</entry>
+                                <entry>Deva</entry>
+                            </row>
+                            <row>
+                                <entry>Gujarati</entry>
+                                <entry>Gujr</entry>
+                            </row>
+                            <row>
+                                <entry>Gurmukhi</entry>
+                                <entry>Guru</entry>
+                            </row>
+                            <row>
+                                <entry>Kannada</entry>
+                                <entry>Knda</entry>
+                            </row>
+                            <row>
+                                <entry>Khmer</entry>
+                                <entry>Khmr</entry>
+                            </row>
+                            <row>
+                                <entry>Lao</entry>
+                                <entry>Laoo</entry>
+                            </row>
+                            <row>
+                                <entry>Limbu</entry>
+                                <entry>Limb</entry>
+                            </row>
+                            <row>
+                                <entry>Malayalam</entry>
+                                <entry>Mlym</entry>
+                            </row>
+                            <row>
+                                <entry>Mongolian</entry>
+                                <entry>Mong</entry>
+                            </row>
+                            <row>
+                                <entry>Myanmar</entry>
+                                <entry>Mymr</entry>
+                            </row>
+                            <row>
+                                <entry>New_Tai_Lue</entry>
+                                <entry>Talu</entry>
+                            </row>
+                            <row>
+                                <entry>Nko</entry>
+                                <entry>Nkoo</entry>
+                            </row>
+                            <row>
+                                <entry>Oriya</entry>
+                                <entry>Orya</entry>
+                            </row>
+                            <row>
+                                <entry>Tamil</entry>
+                                <entry>Taml</entry>
+                            </row>
+                            <row>
+                                <entry>Telugu</entry>
+                                <entry>Telu</entry>
+                            </row>
+                            <row>
+                                <entry>Thai</entry>
+                                <entry>Tale</entry>
+                            </row>
+                            <row>
+                                <entry>Tibetan</entry>
+                                <entry>Tibt</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </para>
 
-    </sect3>
+        </sect3>
 
-</sect2>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

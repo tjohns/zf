@@ -124,7 +124,7 @@
         </para>
 
         <example>
-            <title>Choosing a Specific Locale</title>
+            <title>Choosing a specific locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale');
 $locale = new Zend_Locale('de_DE'); // German language _ Germany
@@ -167,7 +167,7 @@ $locale = new Zend_Locale('de_DE'); // German language _ Germany
         </para>
 
         <example>
-            <title>Automatically Selecting a Locale</title>
+            <title>Automatically selecting a locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 $locale  = new Zend_Locale();
@@ -231,11 +231,12 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
 
         <para>
             To override this default behavior, and force locale-aware ZF components to use specific locales, regardless
-            of the origin of your website visitors, explicitly specify a locale as the third argument to the constructor.
+            of the origin of your website visitors, explicitly specify a locale as the third argument to the
+            constructor.
         </para>
 
         <example>
-            <title>Overriding Default Locale Selection</title>
+            <title>Overriding default locale selection</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';
@@ -252,7 +253,7 @@ $temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $usLocale);
         </para>
 
         <example>
-            <title>Performance Optimization for Default Locales</title>
+            <title>Performance optimization when using a default locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';

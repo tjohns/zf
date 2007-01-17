@@ -53,7 +53,7 @@ print "\nLocalize:".$local;
 
     <sect2 id="zend.locale.appendix.numberscripts.supported">
 
-        <title>List of supported numeral systems</title>
+        <title>List of Supported Numeral Systems</title>
 
         <para>
             <table>
