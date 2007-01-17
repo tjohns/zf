@@ -116,12 +116,16 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
         $this->_messages = array();
 
         do {
-            // If the input looks like an IP address and IP addresses are not allowed, then fail validation
+            // Check input against IP address schema
             require_once 'Zend/Validate/Ip.php';
             $ip = new Zend_Validate_Ip();
-            if ($ip->isValid($value) && !($this->_allow & self::ALLOW_IP)) {
-                $this->_messages[] = "'$value' appears to be an IP address but IP addresses are not allowed";
-                return false;
+            if ($ip->isValid($value)) {
+                if (!($this->_allow & self::ALLOW_IP)) {
+                    $this->_messages[] = "'$value' appears to be an IP address but IP addresses are not allowed";
+                    return false;
+                } else{
+                    break;
+                }
             }
 
             // Check input against domain name schema
