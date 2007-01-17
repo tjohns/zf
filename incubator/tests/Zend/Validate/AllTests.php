@@ -40,6 +40,36 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
+ * @see Zend_Validate_AlnumTest
+ */
+require_once 'Zend/Validate/AlnumTest.php';
+
+
+/**
+ * @see Zend_Validate_AlphaTest
+ */
+require_once 'Zend/Validate/AlphaTest.php';
+
+
+/**
+ * @see Zend_Validate_BetweenTest
+ */
+require_once 'Zend/Validate/BetweenTest.php';
+
+
+/**
+ * @see Zend_Validate_CcnumTest
+ */
+require_once 'Zend/Validate/CcnumTest.php';
+
+
+/**
+ * @see Zend_Validate_DateTest
+ */
+require_once 'Zend/Validate/DateTest.php';
+
+
+/**
  * @see Zend_Validate_EmailAddressTest
  */
 require_once 'Zend/Validate/EmailAddressTest.php';
@@ -73,6 +103,11 @@ class Zend_Validate_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Validate');
 
+        $suite->addTestSuite('Zend_Validate_AlnumTest');
+        $suite->addTestSuite('Zend_Validate_AlphaTest');
+        $suite->addTestSuite('Zend_Validate_BetweenTest');
+        $suite->addTestSuite('Zend_Validate_CcnumTest');
+        $suite->addTestSuite('Zend_Validate_DateTest');
         $suite->addTestSuite('Zend_Validate_EmailAddressTest');
 
         return $suite;
