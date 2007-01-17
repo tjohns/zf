@@ -46,6 +46,8 @@ require_once 'Zend/Measure/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/ValidateTest.php';
 require_once 'Zend/Validate/AllTests.php';
+require_once 'Zend/TranslateTest.php';
+require_once 'Zend/Translate/AllTests.php';
 
 /**
  * @category   Zend
@@ -90,6 +92,8 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_TimeSyncTest');
         $suite->addTestSuite('Zend_ValidateTest');
         $suite->addTest(Zend_Validate_AllTests::suite());
+        $suite->addTestSuite('Zend_TranslateTest');
+        $suite->addTest(Zend_Translate_AllTests::suite());
 
         return $suite;
     }

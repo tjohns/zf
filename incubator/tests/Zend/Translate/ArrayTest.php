@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * @category   Zend
+ * @package    Zend_Translate
+ * @subpackage UnitTests
+ */
+
+
+/**
+ * Zend_Translate_Adapter_Array
+ */
+require_once 'Zend/Translate/Adapter/Array.php';
+
+/**
+ * PHPUnit test case
+ */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+
+/**
+ * @category   Zend
+ * @package    Zend_Config
+ * @subpackage UnitTests
+ */
+class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
+{
+    public function testCreate()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ));
+
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+    }
+
+    public function testToString()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ));
+
+        $this->assertEquals($adapter->toString(), 'Array');
+    }
+
+    public function testTranslate()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ));
+
+        $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->translate('msg4'), 'msg4');
+    }
+
+    public function testLoadTranslationData()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ),
+                                                    'en');
+
+        $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->translate('msg4'), 'msg4');
+
+        $adapter->addTranslation('en', array('msg4' => 'Message 4 (en)',
+                                             'msg5' => 'Message 5 (en)',
+                                             'msg6' => 'Message 6 (en)'
+                                            ));
+        $this->assertEquals($adapter->translate('msg5'), 'Message 5 (en)');
+
+        $adapter->addTranslation('ru', array('msg1' => 'Message 1 (ru)',
+                                             'msg2' => 'Message 2 (ru)',
+                                             'msg3' => 'Message 3 (ru)'
+                                            ));
+        $this->assertEquals($adapter->translate('msg1', 'ru'), 'Message 1 (ru)');
+
+        $adapter->addTranslation('ru', array('msg4' => 'Message 4 (ru)',
+                                             'msg5' => 'Message 5 (ru)',
+                                             'msg6' => 'Message 6 (ru)'
+                                            ),
+                                 true);
+        $this->assertEquals($adapter->translate('msg2', 'ru'), 'msg2');
+        $this->assertEquals($adapter->translate('msg4', 'ru'), 'Message 4 (ru)');
+    }
+}

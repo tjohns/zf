@@ -33,6 +33,14 @@ require_once 'Zend/Translate/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Translate_Adapter {
+    /**
+     * Current locale
+     *
+     * Is equal to language, if it's a string
+     *
+     * @var Zend_Locale|null
+     */
+    protected $_locale;
 
     /**
      * Actual set language
@@ -74,10 +82,14 @@ abstract class Zend_Translate_Adapter {
      *                                        see Zend_Locale for more information
      * @throws Zend_Translate_Exception
      */
-    public function __construct($options, $language = null)
+    public function __construct($options, $locale = null)
     {
-        $this->addTranslation($language, $options);
-        $this->setLanguage($language);
+        if ($locale === null) {
+            $locale = new Zend_Locale();
+        }
+
+        $this->addTranslation($locale, $options);
+        $this->setLocale($locale);
     }
 
 
@@ -114,8 +126,43 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
+     * Gets locale
+     *
+     * @return Zend_Locale|null
+     */
+    public function getLocale()
+    {
+        return $this->_locale;
+    }
+
+
+    /**
+     * Sets locale
+     *
+     * @param  string|Zend_Locale  $locale  Locale to set
+     * @throws Zend_Translate_Exception
+     */
+    public function setLocale($locale)
+    {
+        if (!Zend_Locale::isLocale($locale)) {
+            $this->_locale   = null;
+            $this->_language = $locale;
+        } else if ($locale instanceof Zend_Locale) {
+            $this->_locale   = $locale;
+            $this->_language = $locale->toString();
+        } else {
+            $this->_locale   = new Zend_Locale($locale);
+            $this->_language = $locale;
+        }
+
+        if (!in_array($this->_language, $this->_languages)) {
+            throw new Zend_Translate_Exception("Language ({$this->_language}) has to be added before it can be used.");
+        }
+    }
+
+    /**
      * Gets the actual language
-     * 
+     *
      * @return  string  Language
      */
     public function getLanguage()
@@ -127,24 +174,27 @@ abstract class Zend_Translate_Adapter {
     /**
      * Sets a new language
      *
-     * @param  string|Zend_Locale  $language  New language to set, identical with locale identifier,
-     *                                        see Zend_Locale for more information
+     * @param  string $language   Language to set.
      * @throws Zend_Translate_Exception
      */
     public function setLanguage($language)
     {
-        if (!Zend_Locale::isLocale($language)) {
-            throw new Zend_Translate_Exception("language ($language) is no proper language", $language);
-        }
-        if ($language instanceof Zend_Locale) {
-            $language = $language->toString();
+        if (!is_string($language)) {
+            throw new Zend_Translate_Exception("Language ($language) has to be a string.");
         }
 
         if (!in_array($language, $this->_languages)) {
-            throw new Zend_Translate_Exception("language ($language) has to be added before it can be used", $language);
+            throw new Zend_Translate_Exception("Language ($language) has to be added before it can be used.");
         }
 
         $this->_language = $language;
+        $this->_locale   = $language;
+
+        if (Zend_Locale::isLocale($language)) {
+            $this->_locale = new Zend_Locale($language);
+        } else {
+            $this->_locale = null;
+        }
     }
 
 

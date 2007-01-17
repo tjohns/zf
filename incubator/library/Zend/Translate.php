@@ -146,7 +146,7 @@ class Zend_Translate {
     /**
      * Sets a new locale/language
      *
-     * @param mixed $locale - New locale/language to set
+     * @param mixed $locale - Locale to set
      */
     public function setLocale($locale)
     {
@@ -157,7 +157,7 @@ class Zend_Translate {
     /**
      * Gets the actual locale/language
      *
-     * @return string|Zend_Locale
+     * @return Zend_Locale|null
      */
     public function getLocale()
     {
@@ -166,7 +166,17 @@ class Zend_Translate {
 
 
     /**
-     * Gets the actual language, can differ from the set locale
+     * Sets the actual language, can differ from the set locale
+     *
+     * @param string $language - Language to set
+     */
+    public function setLanguage($language)
+    {
+        return $this->_adapter->setLanguage($language);
+    }
+
+    /**
+     * Gets the actual language
      *
      * @return string
      */
