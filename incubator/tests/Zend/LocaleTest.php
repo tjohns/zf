@@ -73,7 +73,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testInitSearchEnv()
     {
-        $value = new Zend_Locale(Zend_Locale::SERVER);
+        $value = new Zend_Locale(Zend_Locale::ENVIRONMENT);
         $this->assertTrue($value instanceof Zend_Locale,'Zend_Locale Object not returned');
     }
 
