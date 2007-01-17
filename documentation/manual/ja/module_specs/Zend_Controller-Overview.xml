@@ -114,32 +114,31 @@
                     <para>
                         さらに、コントローラを読み込む際に使用する <code>module</code>
                         を指定することができます。モジュールは単に、
-                        コントローラを読み込む際に
-                        サブディレクトリやクラスプレフィックスを指定するためだけに使用されます。
-                        簡単に言うと、コントローラディレクトリを設定する際に、
-                        このようにモジュールを指定します。
+                        コントローラを読み込む際の
+                        クラスプレフィックスを指定するためだけに使用されます。
+                        また、クラスを探すサブディレクトリを指定するために使用することもあります。
+                        モジュールを使用するには、フロントコントローラでパラメータ
+                        <code>useModules</code> を設定します。
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    'default' => '/path/to/controllers',
-    'user'    => '/path/to/controllers/user',
-    'admin'   => '/path/to/controllers/admin'
-));
+$front->setParam('useModules', true);
 ]]></programlisting>
-                    
+
+                    <para>
+                        たとえば、次のような URL を考えてみましょう。
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+http://example.com/user/news/action
+]]></programlisting>
+
                     <para>
                         この例では、コントローラ 'news' に対してモジュール 'user'
-                        が設定された場合に、まず
-                        <code>/path/to/controllers/user</code> の中の
-                        <code>NewsController.php</code> を探し、それから他のパスを探します。
-                        さらに、クラス名もまず <code>User_NewsController</code> を探し、それから
-                        <code>NewsController</code> を探すようになります。
-                        このようなリソースにアクセスするには、デフォルトのルータの場合は
-                        <code>http://localhost/news/action/module/user</code>、
-                        そして RewriteRouter の場合は
-                        <code>http://localhost/module/news/action</code>
-                        のようになります。
+                        が設定されています。ディスパッチャはこれを
+                        <code>User_NewsController</code> クラスに変換し、
+                        <code>setControllerDirectory()</code> で指定したパスの中の
+                        <code>User/NewsController.php</code> でそのクラスを探します。
                     </para>
 
                     <para>
@@ -314,10 +313,12 @@ http://framework.zend.com/
         <itemizedlist>
             <listitem>
                 <para>
-                    コントローラの名前にハイフン (-) あるいはアンダースコア (_)
+                    コントローラの名前にアンダースコア (_)
                     を使用できます。たとえば
-                    <code>http://framework.zend.com/admin-roadmap/future</code>
-                    は、コントローラクラス Admin_RoadmapController に対応します。
+                    <code>http://framework.zend.com/admin_roadmap/future</code>
+                    は、コントローラクラス Admin_RoadmapController に対応します
+                    (その他のパス区切り文字を指定するには、ディスパッチャの
+                    setPathSeparator() メソッドを使用します)。
                 </para>
             </listitem>
             <listitem>
