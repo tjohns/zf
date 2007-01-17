@@ -429,7 +429,7 @@ class Zend_Locale {
     public function __construct($locale = null)
     {
         if ($locale instanceof Zend_Locale) {
-            $locale->toString();
+            $locale = $locale->toString();
         }
         $this->setLocale($locale);
     }
@@ -920,11 +920,12 @@ class Zend_Locale {
 
     /**
      * Checks if a locale identifier is a real locale or not
-     * en_XX refers to en which give true
-     * XX_yy refers to root which give false
+     * Examples:
+     * "en_XX" refers to "en", which returns true
+     * "XX_yy" refers to "root", which returns false
      * 
-     * @param  string         $locale  Locale to check for
-     * @param  boolean        $create  When true, a new automatic detected locale identifier is returned, if locale is empty
+     * @param  string|Zend_Locale  $locale  Locale to check for
+     * @param  boolean             $create  If true, create a default locale, if $locale is empty
      * @return false|string   false if given locale is not a locale, else the locale identifier is returned
      */
     public static function isLocale($locale, $create = false)
