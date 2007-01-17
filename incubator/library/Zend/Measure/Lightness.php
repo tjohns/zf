@@ -38,43 +38,43 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Lightness extends Zend_Measure_Abstract
 {
     // Lightness definitions
-    const STANDARD               = 'Lightness::CANDELA_PER_SQUARE_METER';
+    const STANDARD               = 'CANDELA_PER_SQUARE_METER';
 
-    const APOSTILB                      = 'Lightness::APOSTILB';
-    const BLONDEL                       = 'Lightness::BLONDEL';
-    const CANDELA_PER_SQUARE_CENTIMETER = 'Lightness::CANDELA_PER_SQUARE_CENTIMETER';
-    const CANDELA_PER_SQUARE_FOOT       = 'Lightness::CANDELA_PER_SQUARE_FOOT';
-    const CANDELA_PER_SQUARE_INCH       = 'Lightness::CANDELA_PER_SQUARE_INCH';
-    const CANDELA_PER_SQUARE_METER      = 'Lightness::CANDELA_PER_SQUARE_METER';
-    const FOOTLAMBERT                   = 'Lightness::FOOTLAMBERT';
-    const KILOCANDELA_PER_SQUARE_CENTIMETER = 'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER';
-    const KILOCANDELA_PER_SQUARE_FOOT   = 'Lightness::KILOCANDELA_PER_SQUARE_FOOT';
-    const KILOCANDELA_PER_SQUARE_INCH   = 'Lightness::KILOCANDELA_PER_SQUARE_INCH';
-    const KILOCANDELA_PER_SQUARE_METER  = 'Lightness::KILOCANDELA_PER_SQUARE_METER';
-    const LAMBERT                       = 'Lightness::LAMBERT';
-    const MILLIMALBERT                  = 'Lightness::MILLILAMBERT';
-    const NIT                           = 'Lightness::NIT';
-    const STILB                         = 'Lightness::STILB';
+    const APOSTILB                      = 'APOSTILB';
+    const BLONDEL                       = 'BLONDEL';
+    const CANDELA_PER_SQUARE_CENTIMETER = 'CANDELA_PER_SQUARE_CENTIMETER';
+    const CANDELA_PER_SQUARE_FOOT       = 'CANDELA_PER_SQUARE_FOOT';
+    const CANDELA_PER_SQUARE_INCH       = 'CANDELA_PER_SQUARE_INCH';
+    const CANDELA_PER_SQUARE_METER      = 'CANDELA_PER_SQUARE_METER';
+    const FOOTLAMBERT                   = 'FOOTLAMBERT';
+    const KILOCANDELA_PER_SQUARE_CENTIMETER = 'KILOCANDELA_PER_SQUARE_CENTIMETER';
+    const KILOCANDELA_PER_SQUARE_FOOT   = 'KILOCANDELA_PER_SQUARE_FOOT';
+    const KILOCANDELA_PER_SQUARE_INCH   = 'KILOCANDELA_PER_SQUARE_INCH';
+    const KILOCANDELA_PER_SQUARE_METER  = 'KILOCANDELA_PER_SQUARE_METER';
+    const LAMBERT                       = 'LAMBERT';
+    const MILLIMALBERT                  = 'MILLILAMBERT';
+    const NIT                           = 'NIT';
+    const STILB                         = 'STILB';
 
     private static $_UNITS = array(
-        'Lightness::APOSTILB'                      => array(0.31830989,   'asb'),
-        'Lightness::BLONDEL'                       => array(0.31830989,   'blondel'),
-        'Lightness::CANDELA_PER_SQUARE_CENTIMETER' => array(10000,        'cd/cm²'),
-        'Lightness::CANDELA_PER_SQUARE_FOOT'       => array(10.76391,     'cd/ft²'),
-        'Lightness::CANDELA_PER_SQUARE_INCH'       => array(1550.00304,   'cd/in²'),
-        'Lightness::CANDELA_PER_SQUARE_METER'      => array(1,            'cd/m²'),
-        'Lightness::FOOTLAMBERT'                   => array(3.4262591,    'ftL'),
-        'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER' => array(10000000, 'kcd/cm²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_FOOT'   => array(10763.91,     'kcd/ft²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_INCH'   => array(1550003.04,   'kcd/in²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_METER'  => array(1000,         'kcd/m²'),
-        'Lightness::LAMBERT'                       => array(3183.0989,    'L'),
-        'Lightness::MILLILAMBERT'                  => array(3.1830989,    'mL'),
-        'Lightness::NIT'                           => array(1,            'nt'),
-        'Lightness::STILB'                         => array(10000,        'sb')
+        'APOSTILB'                      => array(0.31830989,   'asb'),
+        'BLONDEL'                       => array(0.31830989,   'blondel'),
+        'CANDELA_PER_SQUARE_CENTIMETER' => array(10000,        'cd/cm²'),
+        'CANDELA_PER_SQUARE_FOOT'       => array(10.76391,     'cd/ft²'),
+        'CANDELA_PER_SQUARE_INCH'       => array(1550.00304,   'cd/in²'),
+        'CANDELA_PER_SQUARE_METER'      => array(1,            'cd/m²'),
+        'FOOTLAMBERT'                   => array(3.4262591,    'ftL'),
+        'KILOCANDELA_PER_SQUARE_CENTIMETER' => array(10000000, 'kcd/cm²'),
+        'KILOCANDELA_PER_SQUARE_FOOT'   => array(10763.91,     'kcd/ft²'),
+        'KILOCANDELA_PER_SQUARE_INCH'   => array(1550003.04,   'kcd/in²'),
+        'KILOCANDELA_PER_SQUARE_METER'  => array(1000,         'kcd/m²'),
+        'LAMBERT'                       => array(3183.0989,    'L'),
+        'MILLILAMBERT'                  => array(3.1830989,    'mL'),
+        'NIT'                           => array(1,            'nt'),
+        'STILB'                         => array(10000,        'sb')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Lightness provides an locale aware class for
@@ -84,30 +84,24 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Lightness Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Lightness Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param  $object  object to compare equality
+     * @param  Zend_Measure_Lightness  $object  Lightness object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -120,15 +114,23 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Lightness Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Lightness Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -138,24 +140,24 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of lightness:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown lightness");
         }
 
         parent::setValue($value, $type, $locale);
-        parent::setType( $type );
+        parent::setType($type);
     }
 
 
     /**
      * Set a new type, and convert the value
      *
-     * @param  $type  type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType( $type )
+    public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of lightness:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown lightness");
         }
 
         // Convert to standard value
@@ -165,7 +167,7 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
         // Convert to expected value
         $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType( $type );
+        parent::setType($type);
     }
 
 

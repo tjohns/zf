@@ -38,45 +38,45 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Torque extends Zend_Measure_Abstract
 {
     // Torque definitions
-    const STANDARD = 'Torque::NEWTON_METER';
+    const STANDARD = 'NEWTON_METER';
 
-    const DYNE_CENTIMETER     = 'Torque::DYNE_CENTIMETER';
-    const GRAM_CENTIMETER     = 'Torque::GRAM_CENTIMETER';
-    const KILOGRAM_CENTIMETER = 'Torque::KILOGRAM_CENTIMETER';
-    const KILOGRAM_METER      = 'Torque::KILOGRAM_METER';
-    const KILONEWTON_METER    = 'Torque::KILONEWTON_METER';
-    const KILOPOND_METER      = 'Torque::KILOPOND_METER';
-    const MEGANEWTON_METER    = 'Torque::MEGANEWTON_METER';
-    const MICRONEWTON_METER   = 'Torque::MICRONEWTON_METER';
-    const MILLINEWTON_METER   = 'Torque::MILLINEWTON_METER';
-    const NEWTON_CENTIMETER   = 'Torque::NEWTON_CENTIMETER';
-    const NEWTON_METER        = 'Torque::NEWTON_METER';
-    const OUNCE_FOOT          = 'Torque::OUNCE_FOOT';
-    const OUNCE_INCH          = 'Torque::OUNCE_INCH';
-    const POUND_FOOT          = 'Torque::POUND_FOOT';
-    const POUNDAL_FOOT        = 'Torque::POUNDAL_FOOT';
-    const POUND_INCH          = 'Torque::POUND_INCH';
+    const DYNE_CENTIMETER     = 'DYNE_CENTIMETER';
+    const GRAM_CENTIMETER     = 'GRAM_CENTIMETER';
+    const KILOGRAM_CENTIMETER = 'KILOGRAM_CENTIMETER';
+    const KILOGRAM_METER      = 'KILOGRAM_METER';
+    const KILONEWTON_METER    = 'KILONEWTON_METER';
+    const KILOPOND_METER      = 'KILOPOND_METER';
+    const MEGANEWTON_METER    = 'MEGANEWTON_METER';
+    const MICRONEWTON_METER   = 'MICRONEWTON_METER';
+    const MILLINEWTON_METER   = 'MILLINEWTON_METER';
+    const NEWTON_CENTIMETER   = 'NEWTON_CENTIMETER';
+    const NEWTON_METER        = 'NEWTON_METER';
+    const OUNCE_FOOT          = 'OUNCE_FOOT';
+    const OUNCE_INCH          = 'OUNCE_INCH';
+    const POUND_FOOT          = 'POUND_FOOT';
+    const POUNDAL_FOOT        = 'POUNDAL_FOOT';
+    const POUND_INCH          = 'POUND_INCH';
 
     private static $_UNITS = array(
-        'Torque::DYNE_CENTIMETER'     => array(0.0000001,          'dyncm'),
-        'Torque::GRAM_CENTIMETER'     => array(0.0000980665,       'gcm'),
-        'Torque::KILOGRAM_CENTIMETER' => array(0.0980665,          'kgcm'),
-        'Torque::KILOGRAM_METER'      => array(9.80665,            'kgm'),
-        'Torque::KILONEWTON_METER'    => array(1000,               'kNm'),
-        'Torque::KILOPOND_METER'      => array(9.80665,            'kpm'),
-        'Torque::MEGANEWTON_METER'    => array(1000000,            'MNm'),
-        'Torque::MICRONEWTON_METER'   => array(0.000001,           'µNm'),
-        'Torque::MILLINEWTON_METER'   => array(0.001,              'mNm'),
-        'Torque::NEWTON_CENTIMETER'   => array(0.01,               'Ncm'),
-        'Torque::NEWTON_METER'        => array(1,                  'Nm'),
-        'Torque::OUNCE_FOOT'          => array(0.084738622,        'ozft'),
-        'Torque::OUNCE_INCH'          => array(array('' => 0.084738622, '/' => 12), 'ozin'),
-        'Torque::POUND_FOOT'          => array(array('' => 0.084738622, '*' => 16), 'lbft'),
-        'Torque::POUNDAL_FOOT'        => array(0.0421401099752144, 'plft'),
-        'Torque::POUND_INCH'          => array(array('' => 0.084738622, '/' => 12, '*' => 16), 'lbin')
+        'DYNE_CENTIMETER'     => array(0.0000001,          'dyncm'),
+        'GRAM_CENTIMETER'     => array(0.0000980665,       'gcm'),
+        'KILOGRAM_CENTIMETER' => array(0.0980665,          'kgcm'),
+        'KILOGRAM_METER'      => array(9.80665,            'kgm'),
+        'KILONEWTON_METER'    => array(1000,               'kNm'),
+        'KILOPOND_METER'      => array(9.80665,            'kpm'),
+        'MEGANEWTON_METER'    => array(1000000,            'MNm'),
+        'MICRONEWTON_METER'   => array(0.000001,           'µNm'),
+        'MILLINEWTON_METER'   => array(0.001,              'mNm'),
+        'NEWTON_CENTIMETER'   => array(0.01,               'Ncm'),
+        'NEWTON_METER'        => array(1,                  'Nm'),
+        'OUNCE_FOOT'          => array(0.084738622,        'ozft'),
+        'OUNCE_INCH'          => array(array('' => 0.084738622, '/' => 12), 'ozin'),
+        'POUND_FOOT'          => array(array('' => 0.084738622, '*' => 16), 'lbft'),
+        'POUNDAL_FOOT'        => array(0.0421401099752144, 'plft'),
+        'POUND_INCH'          => array(array('' => 0.084738622, '/' => 12, '*' => 16), 'lbin')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Torque provides an locale aware class for
@@ -86,30 +86,24 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Torque Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Torque Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param  $object  object to compare equality
+     * @param  Zend_Measure_Torque  $object  Torque object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -122,15 +116,23 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Torque Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Torque Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -140,24 +142,24 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
         }
 
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of torque:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown torque");
         }
 
         parent::setValue($value, $type, $locale);
-        parent::setType( $type );
+        parent::setType($type);
     }
 
 
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType( $type )
+    public function setType($type)
     {
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of torque:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown torque");
         }
 
         // Convert to standard value

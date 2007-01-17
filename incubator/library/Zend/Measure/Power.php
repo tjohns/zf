@@ -38,151 +38,151 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Power extends Zend_Measure_Abstract
 {
     // Power definitions
-    const STANDARD = 'Power::WATT';
+    const STANDARD = 'WATT';
 
-    const ATTOWATT                    = 'Power::ATTOWATT';
-    const BTU_PER_HOUR                = 'Power::BTU_PER_HOUR';
-    const BTU_PER_MINUTE              = 'Power::BTU_PER_MINUTE';
-    const BTU_PER_SECOND              = 'Power::BTU_PER_SECOND';
-    const CALORIE_PER_HOUR            = 'Power::CALORIE_PER_HOUR';
-    const CALORIE_PER_MINUTE          = 'Power::CALORIE_PER_MINUTE';
-    const CALORIE_PER_SECOND          = 'Power::CALORIE_PER_SECOND';
-    const CENTIWATT                   = 'Power::CENTIWATT';
-    const CHEVAL_VAPEUR               = 'Power::CHEVAL_VAPEUR';
-    const CLUSEC                      = 'Power::CLUSEC';
-    const DECIWATT                    = 'Power::DECIWATT';
-    const DEKAWATT                    = 'Power::DEKAWATT';
-    const DYNE_CENTIMETER_PER_HOUR    = 'Power::DYNE_CENTIMETER_PER_HOUR';
-    const DYNE_CENTIMETER_PER_MINUTE  = 'Power::DYNE_CENTIMETER_PER_MINUTE';
-    const DYNE_CENTIMETER_PER_SECOND  = 'Power::DYNE_CENTIMETER_PER_SECOND';
-    const ERG_PER_HOUR                = 'Power::ERG_PER_HOUR';
-    const ERG_PER_MINUTE              = 'Power::ERG_PER_MINUTE';
-    const ERG_PER_SECOND              = 'Power::ERG_PER_SECOND';
-    const EXAWATT                     = 'Power::EXAWATT';
-    const FEMTOWATT                   = 'Power::FEMTOWATT';
-    const FOOT_POUND_FORCE_PER_HOUR   = 'Power::FOOT_POUND_FORCE_PER_HOUR';
-    const FOOT_POUND_FORCE_PER_MINUTE = 'Power::FOOT_POUND_FORCE_PER_MINUTE';
-    const FOOT_POUND_FORCE_PER_SECOND = 'Power::FOOT_POUND_FORCE_PER_SECOND';
-    const FOOT_POUNDAL_PER_HOUR       = 'Power::FOOT_POUNDAL_PER_HOUR';
-    const FOOT_POUNDAL_PER_MINUTE     = 'Power::FOOT_POUNDAL_PER_MINUTE';
-    const FOOT_POUNDAL_PER_SECOND     = 'Power::FOOT_POUNDAL_PER_SECOND';
-    const GIGAWATT                    = 'Power::GIGAWATT';
-    const GRAM_FORCE_CENTIMETER_PER_HOUR   = 'Power::GRAM_FORCE_CENTIMETER_PER_HOUR';
-    const GRAM_FORCE_CENTIMETER_PER_MINUTE = 'Power::GRAM_FORCE_CENTIMETER_PER_MINUTE';
-    const GRAM_FORCE_CENTIMETER_PER_SECOND = 'Power::GRAM_FORCE_CENTIMETER_PER_SECOND';
-    const HECTOWATT                   = 'Power::HECTOWATT';
-    const HORSEPOWER_INTERNATIONAL    = 'Power::HORSEPOWER_INTERNATIONAL';
-    const HORSEPOWER_ELECTRIC         = 'Power::HORSEPOWER_ELECTRIC';
-    const HORSEPOWER                  = 'Power::HORSEPOWER';
-    const HORSEPOWER_WATER            = 'Power::HORSEPOWER_WATER';
-    const INCH_OUNCE_FORCE_REVOLUTION_PER_MINUTE = 'Power::INCH_OUNCH_FORCE_REVOLUTION_PER_MINUTE';
-    const JOULE_PER_HOUR              = 'Power::JOULE_PER_HOUR';
-    const JOULE_PER_MINUTE            = 'Power::JOULE_PER_MINUTE';
-    const JOULE_PER_SECOND            = 'Power::JOULE_PER_SECOND';
-    const KILOCALORIE_PER_HOUR        = 'Power::KILOCALORIE_PER_HOUR';
-    const KILOCALORIE_PER_MINUTE      = 'Power::KILOCALORIE_PER_MINUTE';
-    const KILOCALORIE_PER_SECOND      = 'Power::KILOCALORIE_PER_SECOND';
-    const KILOGRAM_FORCE_METER_PER_HOUR   = 'Power::KILOGRAM_FORCE_METER_PER_HOUR';
-    const KILOGRAM_FORCE_METER_PER_MINUTE = 'Power::KILOGRAM_FORCE_METER_PER_MINUTE';
-    const KILOGRAM_FORCE_METER_PER_SECOND = 'Power::KILOGRAM_FORCE_METER_PER_SECOND';
-    const KILOPOND_METER_PER_HOUR     = 'Power::KILOPOND_METER_PER_HOUR';
-    const KILOPOND_METER_PER_MINUTE   = 'Power::KILOPOND_METER_PER_MINUTE';
-    const KILOPOND_METER_PER_SECOND   = 'Power::KILOPOND_METER_PER_SECOND';
-    const KILOWATT                    = 'Power::KILOWATT';
-    const MEGAWATT                    = 'Power::MEGAWATT';
-    const MICROWATT                   = 'Power::MICROWATT';
-    const MILLION_BTU_PER_HOUR        = 'Power::MILLION_BTU_PER_HOUR';
-    const MILLIWATT                   = 'Power::MILLIWATT';
-    const NANOWATT                    = 'Power::NANOWATT';
-    const NEWTON_METER_PER_HOUR       = 'Power::NEWTON_METER_PER_HOUR';
-    const NEWTON_METER_PER_MINUTE     = 'Power::NEWTON_METER_PER_MINUTE';
-    const NEWTON_METER_PER_SECOND     = 'Power::NEWTON_METER_PER_SECOND';
-    const PETAWATT                    = 'Power::PETAWATT';
-    const PFERDESTAERKE               = 'Power::PFERDESTAERKE';
-    const PICOWATT                    = 'Power::PICOWATT';
-    const PONCELET                    = 'Power::PONCELET';
-    const POUND_SQUARE_FOOR_PER_CUBIC_SECOND = 'Power::POUND_SQUARE_FOOT_PER_CUBIC_SECOND';
-    const TERAWATT                    = 'Power::TERAWATT';
-    const TON_OF_REFRIGERATION        = 'Power::TON_OF_REFRIGERATION';
-    const WATT                        = 'Power::WATT';
-    const YOCTOWATT                   = 'Power::YOCTOWATT';
-    const YOTTAWATT                   = 'Power::YOTTAWATT';
-    const ZEPTOWATT                   = 'Power::ZEPTOWATT';
-    const ZETTAWATT                   = 'Power::ZETTAWATT';
+    const ATTOWATT                    = 'ATTOWATT';
+    const BTU_PER_HOUR                = 'BTU_PER_HOUR';
+    const BTU_PER_MINUTE              = 'BTU_PER_MINUTE';
+    const BTU_PER_SECOND              = 'BTU_PER_SECOND';
+    const CALORIE_PER_HOUR            = 'CALORIE_PER_HOUR';
+    const CALORIE_PER_MINUTE          = 'CALORIE_PER_MINUTE';
+    const CALORIE_PER_SECOND          = 'CALORIE_PER_SECOND';
+    const CENTIWATT                   = 'CENTIWATT';
+    const CHEVAL_VAPEUR               = 'CHEVAL_VAPEUR';
+    const CLUSEC                      = 'CLUSEC';
+    const DECIWATT                    = 'DECIWATT';
+    const DEKAWATT                    = 'DEKAWATT';
+    const DYNE_CENTIMETER_PER_HOUR    = 'DYNE_CENTIMETER_PER_HOUR';
+    const DYNE_CENTIMETER_PER_MINUTE  = 'DYNE_CENTIMETER_PER_MINUTE';
+    const DYNE_CENTIMETER_PER_SECOND  = 'DYNE_CENTIMETER_PER_SECOND';
+    const ERG_PER_HOUR                = 'ERG_PER_HOUR';
+    const ERG_PER_MINUTE              = 'ERG_PER_MINUTE';
+    const ERG_PER_SECOND              = 'ERG_PER_SECOND';
+    const EXAWATT                     = 'EXAWATT';
+    const FEMTOWATT                   = 'FEMTOWATT';
+    const FOOT_POUND_FORCE_PER_HOUR   = 'FOOT_POUND_FORCE_PER_HOUR';
+    const FOOT_POUND_FORCE_PER_MINUTE = 'FOOT_POUND_FORCE_PER_MINUTE';
+    const FOOT_POUND_FORCE_PER_SECOND = 'FOOT_POUND_FORCE_PER_SECOND';
+    const FOOT_POUNDAL_PER_HOUR       = 'FOOT_POUNDAL_PER_HOUR';
+    const FOOT_POUNDAL_PER_MINUTE     = 'FOOT_POUNDAL_PER_MINUTE';
+    const FOOT_POUNDAL_PER_SECOND     = 'FOOT_POUNDAL_PER_SECOND';
+    const GIGAWATT                    = 'GIGAWATT';
+    const GRAM_FORCE_CENTIMETER_PER_HOUR   = 'GRAM_FORCE_CENTIMETER_PER_HOUR';
+    const GRAM_FORCE_CENTIMETER_PER_MINUTE = 'GRAM_FORCE_CENTIMETER_PER_MINUTE';
+    const GRAM_FORCE_CENTIMETER_PER_SECOND = 'GRAM_FORCE_CENTIMETER_PER_SECOND';
+    const HECTOWATT                   = 'HECTOWATT';
+    const HORSEPOWER_INTERNATIONAL    = 'HORSEPOWER_INTERNATIONAL';
+    const HORSEPOWER_ELECTRIC         = 'HORSEPOWER_ELECTRIC';
+    const HORSEPOWER                  = 'HORSEPOWER';
+    const HORSEPOWER_WATER            = 'HORSEPOWER_WATER';
+    const INCH_OUNCE_FORCE_REVOLUTION_PER_MINUTE = 'INCH_OUNCH_FORCE_REVOLUTION_PER_MINUTE';
+    const JOULE_PER_HOUR              = 'JOULE_PER_HOUR';
+    const JOULE_PER_MINUTE            = 'JOULE_PER_MINUTE';
+    const JOULE_PER_SECOND            = 'JOULE_PER_SECOND';
+    const KILOCALORIE_PER_HOUR        = 'KILOCALORIE_PER_HOUR';
+    const KILOCALORIE_PER_MINUTE      = 'KILOCALORIE_PER_MINUTE';
+    const KILOCALORIE_PER_SECOND      = 'KILOCALORIE_PER_SECOND';
+    const KILOGRAM_FORCE_METER_PER_HOUR   = 'KILOGRAM_FORCE_METER_PER_HOUR';
+    const KILOGRAM_FORCE_METER_PER_MINUTE = 'KILOGRAM_FORCE_METER_PER_MINUTE';
+    const KILOGRAM_FORCE_METER_PER_SECOND = 'KILOGRAM_FORCE_METER_PER_SECOND';
+    const KILOPOND_METER_PER_HOUR     = 'KILOPOND_METER_PER_HOUR';
+    const KILOPOND_METER_PER_MINUTE   = 'KILOPOND_METER_PER_MINUTE';
+    const KILOPOND_METER_PER_SECOND   = 'KILOPOND_METER_PER_SECOND';
+    const KILOWATT                    = 'KILOWATT';
+    const MEGAWATT                    = 'MEGAWATT';
+    const MICROWATT                   = 'MICROWATT';
+    const MILLION_BTU_PER_HOUR        = 'MILLION_BTU_PER_HOUR';
+    const MILLIWATT                   = 'MILLIWATT';
+    const NANOWATT                    = 'NANOWATT';
+    const NEWTON_METER_PER_HOUR       = 'NEWTON_METER_PER_HOUR';
+    const NEWTON_METER_PER_MINUTE     = 'NEWTON_METER_PER_MINUTE';
+    const NEWTON_METER_PER_SECOND     = 'NEWTON_METER_PER_SECOND';
+    const PETAWATT                    = 'PETAWATT';
+    const PFERDESTAERKE               = 'PFERDESTAERKE';
+    const PICOWATT                    = 'PICOWATT';
+    const PONCELET                    = 'PONCELET';
+    const POUND_SQUARE_FOOR_PER_CUBIC_SECOND = 'POUND_SQUARE_FOOT_PER_CUBIC_SECOND';
+    const TERAWATT                    = 'TERAWATT';
+    const TON_OF_REFRIGERATION        = 'TON_OF_REFRIGERATION';
+    const WATT                        = 'WATT';
+    const YOCTOWATT                   = 'YOCTOWATT';
+    const YOTTAWATT                   = 'YOTTAWATT';
+    const ZEPTOWATT                   = 'ZEPTOWATT';
+    const ZETTAWATT                   = 'ZETTAWATT';
 
     private static $_UNITS = array(
-        'Power::ATTOWATT'                    => array(1.0e-18,           'aW'),
-        'Power::BTU_PER_HOUR'                => array(0.29307197,        'BTU/h'),
-        'Power::BTU_PER_MINUTE'              => array(17.5843182,        'BTU/m'),
-        'Power::BTU_PER_SECOND'              => array(1055.059092,       'BTU/s'),
-        'Power::CALORIE_PER_HOUR'            => array(array('' => 11630, '*' => 1.0e-7),    'cal/h'),
-        'Power::CALORIE_PER_MINUTE'          => array(array('' => 697800, '*' => 1.0e-7),   'cal/m'),
-        'Power::CALORIE_PER_SECOND'          => array(array('' => 41868000, '*' => 1.0e-7), 'cal/s'),
-        'Power::CENTIWATT'                   => array(0.01,              'cW'),
-        'Power::CHEVAL_VAPEUR'               => array(735.49875,         'cv'),
-        'Power::CLUSEC'                      => array(0.0000013332237,   'clusec'),
-        'Power::DECIWATT'                    => array(0.1,               'dW'),
-        'Power::DEKAWATT'                    => array(10,                'daW'),
-        'Power::DYNE_CENTIMETER_PER_HOUR'    => array(array('' => 1.0e-7,'/' => 3600), 'dyn cm/h'),
-        'Power::DYNE_CENTIMETER_PER_MINUTE'  => array(array('' => 1.0e-7,'/' => 60),   'dyn cm/m'),
-        'Power::DYNE_CENTIMETER_PER_SECOND'  => array(1.0e-7,            'dyn cm/s'),
-        'Power::ERG_PER_HOUR'                => array(array('' => 1.0e-7,'/' => 3600), 'erg/h'),
-        'Power::ERG_PER_MINUTE'              => array(array('' => 1.0e-7,'/' => 60),   'erg/m'),
-        'Power::ERG_PER_SECOND'              => array(1.0e-7,            'erg/s'),
-        'Power::EXAWATT'                     => array(1.0e+18,           'EW'),
-        'Power::FEMTOWATT'                   => array(1.0e-15,           'fW'),
-        'Power::FOOT_POUND_FORCE_PER_HOUR'   => array(array('' => 1.3558179, '/' => 3600), 'ft lb/h'),
-        'Power::FOOT_POUND_FORCE_PER_MINUTE' => array(array('' => 1.3558179, '/' => 60),   'ft lb/m'),
-        'Power::FOOT_POUND_FORCE_PER_SECOND' => array(1.3558179,         'ft lb/s'),
-        'Power::FOOT_POUNDAL_PER_HOUR'       => array(array('' => 0.04214011,'/' => 3600), 'ft pdl/h'),
-        'Power::FOOT_POUNDAL_PER_MINUTE'     => array(array('' => 0.04214011, '/' => 60),  'ft pdl/m'),
-        'Power::FOOT_POUNDAL_PER_SECOND'     => array(0.04214011,        'ft pdl/s'),
-        'Power::GIGAWATT'                    => array(1.0e+9,            'GW'),
-        'Power::GRAM_FORCE_CENTIMETER_PER_HOUR' => array(array('' => 0.0000980665,'/' => 3600), 'gf cm/h'),
-        'Power::GRAM_FORCE_CENTIMETER_PER_MINUTE' => array(array('' => 0.0000980665,'/' => 60), 'gf cm/m'),
-        'Power::GRAM_FORCE_CENTIMETER_PER_SECOND' => array(0.0000980665, 'gf cm/s'),
-        'Power::HECTOWATT'                   => array(100,               'hW'),
-        'Power::HORSEPOWER_INTERNATIONAL'    => array(745.69987,         'hp'),
-        'Power::HORSEPOWER_ELECTRIC'         => array(746,               'hp'),
-        'Power::HORSEPOWER'                  => array(735.49875,         'hp'),
-        'Power::HORSEPOWER_WATER'            => array(746.043,           'hp'),
-        'Power::INCH_OUNCH_FORCE_REVOLUTION_PER_MINUTE' => array(0.00073948398,    'in ocf/m'),
-        'Power::JOULE_PER_HOUR'              => array(array('' => 1, '/' => 3600), 'J/h'),
-        'Power::JOULE_PER_MINUTE'            => array(array('' => 1, '/' => 60),   'J/m'),
-        'Power::JOULE_PER_SECOND'            => array(1,                 'J/s'),
-        'Power::KILOCALORIE_PER_HOUR'        => array(1.163,             'kcal/h'),
-        'Power::KILOCALORIE_PER_MINUTE'      => array(69.78,             'kcal/m'),
-        'Power::KILOCALORIE_PER_SECOND'      => array(4186.8,            'kcal/s'),
-        'Power::KILOGRAM_FORCE_METER_PER_HOUR' => array(array('' => 9.80665, '/' => 3600), 'kgf m/h'),
-        'Power::KILOGRAM_FORCE_METER_PER_MINUTE' => array(array('' => 9.80665, '/' => 60), 'kfg m/m'),
-        'Power::KILOGRAM_FORCE_METER_PER_SECOND' => array(9.80665,       'kfg m/s'),
-        'Power::KILOPOND_METER_PER_HOUR'     => array(array('' => 9.80665, '/' => 3600), 'kp/h'),
-        'Power::KILOPOND_METER_PER_MINUTE'   => array(array('' => 9.80665, '/' => 60),   'kp/m'),
-        'Power::KILOPOND_METER_PER_SECOND'   => array(9.80665,           'kp/s'),
-        'Power::KILOWATT'                    => array(1000,              'kW'),
-        'Power::MEGAWATT'                    => array(1000000,           'MW'),
-        'Power::MICROWATT'                   => array(0.000001,          'µW'),
-        'Power::MILLION_BTU_PER_HOUR'        => array(293071.07,         'mio BTU/h'),
-        'Power::MILLIWATT'                   => array(0.001,             'mM'),
-        'Power::NANOWATT'                    => array(1.0e-9,            'nN'),
-        'Power::NEWTON_METER_PER_HOUR'       => array(array('' => 1, '/' => 3600), 'Nm/h'),
-        'Power::NEWTON_METER_PER_MINUTE'     => array(array('' => 1, '/' => 60),   'Nm/m'),
-        'Power::NEWTON_METER_PER_SECOND'     => array(1,                 'Nm/s'),
-        'Power::PETAWATT'                    => array(1.0e+15,           'PW'),
-        'Power::PFERDESTAERKE'               => array(735.49875,         'PS'),
-        'Power::PICOWATT'                    => array(1.0e-12,           'pW'),
-        'Power::PONCELET'                    => array(980.665,           'p'),
-        'Power::POUND_SQUARE_FOOT_PER_CUBIC_SECOND' => array(0.04214011, 'lb ft²/s³'),
-        'Power::TERAWATT'                    => array(1.0e+12,           'TW'),
-        'Power::TON_OF_REFRIGERATION'        => array(3516.85284,        'RT'),
-        'Power::WATT'                        => array(1,                 'W'),
-        'Power::YOCTOWATT'                   => array(1.0e-24,           'yW'),
-        'Power::YOTTAWATT'                   => array(1.0e+24,           'YW'),
-        'Power::ZEPTOWATT'                   => array(1.0e-21,           'zW'),
-        'Power::ZETTAWATT'                   => array(1.0e+21,           'ZW')
+        'ATTOWATT'                    => array(1.0e-18,           'aW'),
+        'BTU_PER_HOUR'                => array(0.29307197,        'BTU/h'),
+        'BTU_PER_MINUTE'              => array(17.5843182,        'BTU/m'),
+        'BTU_PER_SECOND'              => array(1055.059092,       'BTU/s'),
+        'CALORIE_PER_HOUR'            => array(array('' => 11630, '*' => 1.0e-7),    'cal/h'),
+        'CALORIE_PER_MINUTE'          => array(array('' => 697800, '*' => 1.0e-7),   'cal/m'),
+        'CALORIE_PER_SECOND'          => array(array('' => 41868000, '*' => 1.0e-7), 'cal/s'),
+        'CENTIWATT'                   => array(0.01,              'cW'),
+        'CHEVAL_VAPEUR'               => array(735.49875,         'cv'),
+        'CLUSEC'                      => array(0.0000013332237,   'clusec'),
+        'DECIWATT'                    => array(0.1,               'dW'),
+        'DEKAWATT'                    => array(10,                'daW'),
+        'DYNE_CENTIMETER_PER_HOUR'    => array(array('' => 1.0e-7,'/' => 3600), 'dyn cm/h'),
+        'DYNE_CENTIMETER_PER_MINUTE'  => array(array('' => 1.0e-7,'/' => 60),   'dyn cm/m'),
+        'DYNE_CENTIMETER_PER_SECOND'  => array(1.0e-7,            'dyn cm/s'),
+        'ERG_PER_HOUR'                => array(array('' => 1.0e-7,'/' => 3600), 'erg/h'),
+        'ERG_PER_MINUTE'              => array(array('' => 1.0e-7,'/' => 60),   'erg/m'),
+        'ERG_PER_SECOND'              => array(1.0e-7,            'erg/s'),
+        'EXAWATT'                     => array(1.0e+18,           'EW'),
+        'FEMTOWATT'                   => array(1.0e-15,           'fW'),
+        'FOOT_POUND_FORCE_PER_HOUR'   => array(array('' => 1.3558179, '/' => 3600), 'ft lb/h'),
+        'FOOT_POUND_FORCE_PER_MINUTE' => array(array('' => 1.3558179, '/' => 60),   'ft lb/m'),
+        'FOOT_POUND_FORCE_PER_SECOND' => array(1.3558179,         'ft lb/s'),
+        'FOOT_POUNDAL_PER_HOUR'       => array(array('' => 0.04214011,'/' => 3600), 'ft pdl/h'),
+        'FOOT_POUNDAL_PER_MINUTE'     => array(array('' => 0.04214011, '/' => 60),  'ft pdl/m'),
+        'FOOT_POUNDAL_PER_SECOND'     => array(0.04214011,        'ft pdl/s'),
+        'GIGAWATT'                    => array(1.0e+9,            'GW'),
+        'GRAM_FORCE_CENTIMETER_PER_HOUR' => array(array('' => 0.0000980665,'/' => 3600), 'gf cm/h'),
+        'GRAM_FORCE_CENTIMETER_PER_MINUTE' => array(array('' => 0.0000980665,'/' => 60), 'gf cm/m'),
+        'GRAM_FORCE_CENTIMETER_PER_SECOND' => array(0.0000980665, 'gf cm/s'),
+        'HECTOWATT'                   => array(100,               'hW'),
+        'HORSEPOWER_INTERNATIONAL'    => array(745.69987,         'hp'),
+        'HORSEPOWER_ELECTRIC'         => array(746,               'hp'),
+        'HORSEPOWER'                  => array(735.49875,         'hp'),
+        'HORSEPOWER_WATER'            => array(746.043,           'hp'),
+        'INCH_OUNCH_FORCE_REVOLUTION_PER_MINUTE' => array(0.00073948398,    'in ocf/m'),
+        'JOULE_PER_HOUR'              => array(array('' => 1, '/' => 3600), 'J/h'),
+        'JOULE_PER_MINUTE'            => array(array('' => 1, '/' => 60),   'J/m'),
+        'JOULE_PER_SECOND'            => array(1,                 'J/s'),
+        'KILOCALORIE_PER_HOUR'        => array(1.163,             'kcal/h'),
+        'KILOCALORIE_PER_MINUTE'      => array(69.78,             'kcal/m'),
+        'KILOCALORIE_PER_SECOND'      => array(4186.8,            'kcal/s'),
+        'KILOGRAM_FORCE_METER_PER_HOUR' => array(array('' => 9.80665, '/' => 3600), 'kgf m/h'),
+        'KILOGRAM_FORCE_METER_PER_MINUTE' => array(array('' => 9.80665, '/' => 60), 'kfg m/m'),
+        'KILOGRAM_FORCE_METER_PER_SECOND' => array(9.80665,       'kfg m/s'),
+        'KILOPOND_METER_PER_HOUR'     => array(array('' => 9.80665, '/' => 3600), 'kp/h'),
+        'KILOPOND_METER_PER_MINUTE'   => array(array('' => 9.80665, '/' => 60),   'kp/m'),
+        'KILOPOND_METER_PER_SECOND'   => array(9.80665,           'kp/s'),
+        'KILOWATT'                    => array(1000,              'kW'),
+        'MEGAWATT'                    => array(1000000,           'MW'),
+        'MICROWATT'                   => array(0.000001,          'µW'),
+        'MILLION_BTU_PER_HOUR'        => array(293071.07,         'mio BTU/h'),
+        'MILLIWATT'                   => array(0.001,             'mM'),
+        'NANOWATT'                    => array(1.0e-9,            'nN'),
+        'NEWTON_METER_PER_HOUR'       => array(array('' => 1, '/' => 3600), 'Nm/h'),
+        'NEWTON_METER_PER_MINUTE'     => array(array('' => 1, '/' => 60),   'Nm/m'),
+        'NEWTON_METER_PER_SECOND'     => array(1,                 'Nm/s'),
+        'PETAWATT'                    => array(1.0e+15,           'PW'),
+        'PFERDESTAERKE'               => array(735.49875,         'PS'),
+        'PICOWATT'                    => array(1.0e-12,           'pW'),
+        'PONCELET'                    => array(980.665,           'p'),
+        'POUND_SQUARE_FOOT_PER_CUBIC_SECOND' => array(0.04214011, 'lb ft²/s³'),
+        'TERAWATT'                    => array(1.0e+12,           'TW'),
+        'TON_OF_REFRIGERATION'        => array(3516.85284,        'RT'),
+        'WATT'                        => array(1,                 'W'),
+        'YOCTOWATT'                   => array(1.0e-24,           'yW'),
+        'YOTTAWATT'                   => array(1.0e+24,           'YW'),
+        'ZEPTOWATT'                   => array(1.0e-21,           'zW'),
+        'ZETTAWATT'                   => array(1.0e+21,           'ZW')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Power provides an locale aware class for
@@ -192,26 +192,21 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Power Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Power Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
+     * @param  Zend_Measure_Power  $object  Power object to compare
      * @return boolean
      */
     public function equals($object)
@@ -227,17 +222,25 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Power Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Power Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
+        }
+        
         try {
             $value = Zend_Locale_Format::getNumber($value, $locale);
         } catch(Exception $e) {
@@ -245,7 +248,7 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of power:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown cooking weight");
         }
 
         parent::setValue($value, $type, $locale);
@@ -256,13 +259,13 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of power:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown power");
         }
 
         // Convert to standard value
