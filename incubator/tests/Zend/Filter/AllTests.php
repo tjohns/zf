@@ -46,6 +46,66 @@ require_once 'Zend/Filter/AlnumTest.php';
 
 
 /**
+ * @see Zend_Filter_AlphaTest
+ */
+require_once 'Zend/Filter/AlphaTest.php';
+
+
+/**
+ * @see Zend_Filter_BasenameTest
+ */
+require_once 'Zend/Filter/BasenameTest.php';
+
+
+/**
+ * @see Zend_Filter_DigitsTest
+ */
+require_once 'Zend/Filter/DigitsTest.php';
+
+
+/**
+ * @see Zend_Filter_DirTest
+ */
+require_once 'Zend/Filter/DirTest.php';
+
+
+/**
+ * @see Zend_Filter_HtmlEntitiesTest
+ */
+require_once 'Zend/Filter/HtmlEntitiesTest.php';
+
+
+/**
+ * @see Zend_Filter_IntTest
+ */
+require_once 'Zend/Filter/IntTest.php';
+
+
+/**
+ * @see Zend_Filter_RealPathTest
+ */
+require_once 'Zend/Filter/RealPathTest.php';
+
+
+/**
+ * @see Zend_Filter_StringToLowerTest
+ */
+require_once 'Zend/Filter/StringToLowerTest.php';
+
+
+/**
+ * @see Zend_Filter_StringTrimTest
+ */
+require_once 'Zend/Filter/StringTrimTest.php';
+
+
+/**
+ * @see Zend_Filter_StripTagsTest
+ */
+require_once 'Zend/Filter/StripTagsTest.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
@@ -74,6 +134,16 @@ class Zend_Filter_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Filter');
 
         $suite->addTestSuite('Zend_Filter_AlnumTest');
+        $suite->addTestSuite('Zend_Filter_AlphaTest');
+        $suite->addTestSuite('Zend_Filter_BasenameTest');
+        $suite->addTestSuite('Zend_Filter_DigitsTest');
+        $suite->addTestSuite('Zend_Filter_DirTest');
+        $suite->addTestSuite('Zend_Filter_HtmlEntitiesTest');
+        $suite->addTestSuite('Zend_Filter_IntTest');
+        $suite->addTestSuite('Zend_Filter_RealPathTest');
+        $suite->addTestSuite('Zend_Filter_StringToLowerTest');
+        $suite->addTestSuite('Zend_Filter_StringTrimTest');
+        $suite->addTestSuite('Zend_Filter_StripTagsTest');
 
         return $suite;
     }

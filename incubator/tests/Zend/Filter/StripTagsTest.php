@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Filter_Alnum
+ * @see Zend_Filter_StripTags
  */
-require_once 'Zend/Filter/Alnum.php';
+require_once 'Zend/Filter/StripTags.php';
 
 
 /**
@@ -41,23 +41,23 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_AlnumTest extends PHPUnit_Framework_TestCase
+class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_Alnum object
+     * Zend_Filter_StripTags object
      *
-     * @var Zend_Filter_Alnum
+     * @var Zend_Filter_StripTags
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_Alnum object for each test method
+     * Creates a new Zend_Filter_StripTags object for each test method
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_filter = new Zend_Filter_Alnum();
+        $this->_filter = new Zend_Filter_StripTags();
     }
 
     /**
@@ -67,14 +67,6 @@ class Zend_Filter_AlnumTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
-        $valuesExpected = array(
-            'abc123'  => 'abc123',
-            'abc 123' => 'abc123',
-            'abcxyz'  => 'abcxyz',
-            'AZ@#4.3' => 'AZ43'
-            );
-        foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $this->_filter->filter($input));
-        }
+        $this->assertEquals('foo', $this->_filter->filter('<a href="example.com">foo</a>'));
     }
 }
