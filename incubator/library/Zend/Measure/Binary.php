@@ -39,85 +39,85 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Binary extends Zend_Measure_Abstract
 {
     // Binary definitions
-    const STANDARD = 'Binary::BYTE';
+    const STANDARD = 'BYTE';
 
-    const BIT              = 'Binary::BIT';
-    const CRUMB            = 'Binary::CRUMB';
-    const NIBBLE           = 'Binary::NIBBLE';
-    const BYTE             = 'Binary::BYTE';
-    const KILOBYTE         = 'Binary::KILOBYTE';
-    const KIBIBYTE         = 'Binary::KIBIBYTE';
-    const KILO_BINARY_BYTE = 'Binary::KILO_BINARY_BYTE';
-    const KILOBYTE_SI      = 'Binary::KILOBYTE_SI';
-    const MEGABYTE         = 'Binary::MEGABYTE';
-    const MEBIBYTE         = 'Binary::MEBIBYTE';
-    const MEGA_BINARY_BYTE = 'Binary::MEGA_BINARY_BYTE';
-    const MEGABYTE_SI      = 'Binary::MEGABYTE_SI';
-    const GIGABYTE         = 'Binary::GIGABYTE';
-    const GIBIBYTE         = 'Binary::GIBIBYTE';
-    const GIGA_BINARY_BYTE = 'Binary::GIGA_BINARY_BYTE';
-    const GIGABYTE_SI      = 'Binary::GIGABYTE_SI';
-    const TERABYTE         = 'Binary::TERABYTE';
-    const TEBIBYTE         = 'Binary::TEBIBYTE';
-    const TERA_BINARY_BYTE = 'Binary::TERA_BINARY_BYTE';
-    const TERABYTE_SI      = 'Binary::TERABYTE_SI';
-    const PETABYTE         = 'Binary::PETABYTE';
-    const PEBIBYTE         = 'Binary::PEBIBYTE';
-    const PETA_BINARY_BYTE = 'Binary::PETA_BINARY_BYTE';
-    const PETABYTE_SI      = 'Binary::PETABYTE_SI';
-    const EXABYTE          = 'Binary::EXABYTE';
-    const EXBIBYTE         = 'Binary::EXBIBYTE';
-    const EXA_BINARY_BYTE  = 'Binary::EXA_BINARY_BYTE';
-    const EXABYTE_SI       = 'Binary::EXABYTE_SI';
-    const ZETTABYTE        = 'Binary::ZETTABYTE';
-    const ZEBIBYTE         = 'Binary::ZEBIBYTE';
-    const ZETTA_BINARY_BYTE= 'Binary::ZETTA_BINARY_BYTE';
-    const ZETTABYTE_SI     = 'Binary::ZETTABYTE_SI';
-    const YOTTABYTE        = 'Binary::YOTTABYTE';
-    const YOBIBYTE         = 'Binary::YOBIBYTE';
-    const YOTTA_BINARY_BYTE= 'Binary::YOTTA_BINARY_BYTE';
-    const YOTTABYTE_SI     = 'Binary::YOTTABYTE_SI';
+    const BIT              = 'BIT';
+    const CRUMB            = 'CRUMB';
+    const NIBBLE           = 'NIBBLE';
+    const BYTE             = 'BYTE';
+    const KILOBYTE         = 'KILOBYTE';
+    const KIBIBYTE         = 'KIBIBYTE';
+    const KILO_BINARY_BYTE = 'KILO_BINARY_BYTE';
+    const KILOBYTE_SI      = 'KILOBYTE_SI';
+    const MEGABYTE         = 'MEGABYTE';
+    const MEBIBYTE         = 'MEBIBYTE';
+    const MEGA_BINARY_BYTE = 'MEGA_BINARY_BYTE';
+    const MEGABYTE_SI      = 'MEGABYTE_SI';
+    const GIGABYTE         = 'GIGABYTE';
+    const GIBIBYTE         = 'GIBIBYTE';
+    const GIGA_BINARY_BYTE = 'GIGA_BINARY_BYTE';
+    const GIGABYTE_SI      = 'GIGABYTE_SI';
+    const TERABYTE         = 'TERABYTE';
+    const TEBIBYTE         = 'TEBIBYTE';
+    const TERA_BINARY_BYTE = 'TERA_BINARY_BYTE';
+    const TERABYTE_SI      = 'TERABYTE_SI';
+    const PETABYTE         = 'PETABYTE';
+    const PEBIBYTE         = 'PEBIBYTE';
+    const PETA_BINARY_BYTE = 'PETA_BINARY_BYTE';
+    const PETABYTE_SI      = 'PETABYTE_SI';
+    const EXABYTE          = 'EXABYTE';
+    const EXBIBYTE         = 'EXBIBYTE';
+    const EXA_BINARY_BYTE  = 'EXA_BINARY_BYTE';
+    const EXABYTE_SI       = 'EXABYTE_SI';
+    const ZETTABYTE        = 'ZETTABYTE';
+    const ZEBIBYTE         = 'ZEBIBYTE';
+    const ZETTA_BINARY_BYTE= 'ZETTA_BINARY_BYTE';
+    const ZETTABYTE_SI     = 'ZETTABYTE_SI';
+    const YOTTABYTE        = 'YOTTABYTE';
+    const YOBIBYTE         = 'YOBIBYTE';
+    const YOTTA_BINARY_BYTE= 'YOTTA_BINARY_BYTE';
+    const YOTTABYTE_SI     = 'YOTTABYTE_SI';
 
     private static $_UNITS = array(
-        'Binary::BIT'              => array('0.125',                     'b'),
-        'Binary::CRUMB'            => array('0.25',                      'crumb'),
-        'Binary::NIBBLE'           => array('0.5',                       'nibble'),
-        'Binary::BYTE'             => array('1',                         'B'),
-        'Binary::KILOBYTE'         => array('1024',                      'kB'),
-        'Binary::KIBIBYTE'         => array('1024',                      'KiB'),
-        'Binary::KILO_BINARY_BYTE' => array('1024',                      'KiB'),
-        'Binary::KILOBYTE_SI'      => array('1000',                      'kB.'),
-        'Binary::MEGABYTE'         => array('1048576',                   'MB'),
-        'Binary::MEBIBYTE'         => array('1048576',                   'MiB'),
-        'Binary::MEGA_BINARY_BYTE' => array('1048576',                   'MiB'),
-        'Binary::MEGABYTE_SI'      => array('1000000',                   'MB.'),
-        'Binary::GIGABYTE'         => array('1073741824',                'GB'),
-        'Binary::GIBIBYTE'         => array('1073741824',                'GiB'),
-        'Binary::GIGA_BINARY_BYTE' => array('1073741824',                'GiB'),
-        'Binary::GIGABYTE_SI'      => array('1000000000',                'GB.'),
-        'Binary::TERABYTE'         => array('1099511627776',             'TB'),
-        'Binary::TEBIBYTE'         => array('1099511627776',             'TiB'),
-        'Binary::TERA_BINARY_BYTE' => array('1099511627776',             'TiB'),
-        'Binary::TERABYTE_SI'      => array('1000000000000',             'TB.'),
-        'Binary::PETABYTE'         => array('1125899906842624',          'PB'),
-        'Binary::PEBIBYTE'         => array('1125899906842624',          'PiB'),
-        'Binary::PETA_BINARY_BYTE' => array('1125899906842624',          'PiB'),
-        'Binary::PETABYTE_SI'      => array('1000000000000000',          'PB.'),
-        'Binary::EXABYTE'          => array('1152921504606846976',       'EB'),
-        'Binary::EXBIBYTE'         => array('1152921504606846976',       'EiB'),
-        'Binary::EXA_BINARY_BYTE'  => array('1152921504606846976',       'EiB'),
-        'Binary::EXABYTE_SI'       => array('1000000000000000000',       'EB.'),
-        'Binary::ZETTABYTE'        => array('1180591620717411303424',    'ZB'),
-        'Binary::ZEBIBYTE'         => array('1180591620717411303424',    'ZiB'),
-        'Binary::ZETTA_BINARY_BYTE'=> array('1180591620717411303424',    'ZiB'),
-        'Binary::ZETTABYTE_SI'     => array('1000000000000000000000',    'ZB.'),
-        'Binary::YOTTABYTE'        => array('1208925819614629174706176', 'YB'),
-        'Binary::YOBIBYTE'         => array('1208925819614629174706176', 'YiB'),
-        'Binary::YOTTA_BINARY_BYTE'=> array('1208925819614629174706176', 'YiB'),
-        'Binary::YOTTABYTE_SI'     => array('1000000000000000000000000', 'YB.')
+        'BIT'              => array('0.125',                     'b'),
+        'CRUMB'            => array('0.25',                      'crumb'),
+        'NIBBLE'           => array('0.5',                       'nibble'),
+        'BYTE'             => array('1',                         'B'),
+        'KILOBYTE'         => array('1024',                      'kB'),
+        'KIBIBYTE'         => array('1024',                      'KiB'),
+        'KILO_BINARY_BYTE' => array('1024',                      'KiB'),
+        'KILOBYTE_SI'      => array('1000',                      'kB.'),
+        'MEGABYTE'         => array('1048576',                   'MB'),
+        'MEBIBYTE'         => array('1048576',                   'MiB'),
+        'MEGA_BINARY_BYTE' => array('1048576',                   'MiB'),
+        'MEGABYTE_SI'      => array('1000000',                   'MB.'),
+        'GIGABYTE'         => array('1073741824',                'GB'),
+        'GIBIBYTE'         => array('1073741824',                'GiB'),
+        'GIGA_BINARY_BYTE' => array('1073741824',                'GiB'),
+        'GIGABYTE_SI'      => array('1000000000',                'GB.'),
+        'TERABYTE'         => array('1099511627776',             'TB'),
+        'TEBIBYTE'         => array('1099511627776',             'TiB'),
+        'TERA_BINARY_BYTE' => array('1099511627776',             'TiB'),
+        'TERABYTE_SI'      => array('1000000000000',             'TB.'),
+        'PETABYTE'         => array('1125899906842624',          'PB'),
+        'PEBIBYTE'         => array('1125899906842624',          'PiB'),
+        'PETA_BINARY_BYTE' => array('1125899906842624',          'PiB'),
+        'PETABYTE_SI'      => array('1000000000000000',          'PB.'),
+        'EXABYTE'          => array('1152921504606846976',       'EB'),
+        'EXBIBYTE'         => array('1152921504606846976',       'EiB'),
+        'EXA_BINARY_BYTE'  => array('1152921504606846976',       'EiB'),
+        'EXABYTE_SI'       => array('1000000000000000000',       'EB.'),
+        'ZETTABYTE'        => array('1180591620717411303424',    'ZB'),
+        'ZEBIBYTE'         => array('1180591620717411303424',    'ZiB'),
+        'ZETTA_BINARY_BYTE'=> array('1180591620717411303424',    'ZiB'),
+        'ZETTABYTE_SI'     => array('1000000000000000000000',    'ZB.'),
+        'YOTTABYTE'        => array('1208925819614629174706176', 'YB'),
+        'YOBIBYTE'         => array('1208925819614629174706176', 'YiB'),
+        'YOTTA_BINARY_BYTE'=> array('1208925819614629174706176', 'YiB'),
+        'YOTTABYTE_SI'     => array('1000000000000000000000000', 'YB.')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Binary provides an locale aware class for
@@ -127,30 +127,24 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Binary Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Binary Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Binary  $object  Binary object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -163,15 +157,23 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Binary Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Binary Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -181,7 +183,7 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
         }
 
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of binary:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown binary");
         }
 
         parent::setValue($value, $type, $locale);
@@ -192,13 +194,13 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType( $type )
+    public function setType($type)
     {
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of binary:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown binary");
         }
 
         // Convert to standard value

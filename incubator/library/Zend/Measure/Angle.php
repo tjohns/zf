@@ -38,41 +38,41 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Angle extends Zend_Measure_Abstract
 {
     // Angle definitions
-    const STANDARD = 'Angle::RADIAN';
+    const STANDARD = 'RADIAN';
 
-    const RADIAN      = 'Angle::RADIAN';
-    const MIL         = 'Angle::MIL';
-    const GRAD        = 'Angle::GRAD';
-    const DEGREE      = 'Angle::DEGREE';
-    const MINUTE      = 'Angle::MINUTE';
-    const SECOND      = 'Angle::SECOND';
-    const POINT       = 'Angle::POINT';
-    const CIRCLE_16   = 'Angle::CIRCLE_16';
-    const CIRCLE_10   = 'Angle::CIRCLE_10';
-    const CIRCLE_8    = 'Angle::CIRCLE_8';
-    const CIRCLE_6    = 'Angle::CIRCLE_6';
-    const CIRCLE_4    = 'Angle::CIRCLE_4';
-    const CIRCLE_2    = 'Angle::CIRCLE_2';
-    const FULL_CIRCLE = 'Angle::FULL_CIRCLE';
+    const RADIAN      = 'RADIAN';
+    const MIL         = 'MIL';
+    const GRAD        = 'GRAD';
+    const DEGREE      = 'DEGREE';
+    const MINUTE      = 'MINUTE';
+    const SECOND      = 'SECOND';
+    const POINT       = 'POINT';
+    const CIRCLE_16   = 'CIRCLE_16';
+    const CIRCLE_10   = 'CIRCLE_10';
+    const CIRCLE_8    = 'CIRCLE_8';
+    const CIRCLE_6    = 'CIRCLE_6';
+    const CIRCLE_4    = 'CIRCLE_4';
+    const CIRCLE_2    = 'CIRCLE_2';
+    const FULL_CIRCLE = 'FULL_CIRCLE';
 
     private static $_UNITS = array(
-        'Angle::RADIAN'      => array(1,'rad'),
-        'Angle::MIL'         => array(array('' => M_PI,'/' => 3200),   'mil'),
-        'Angle::GRAD'        => array(array('' => M_PI,'/' => 200),    'gr'),
-        'Angle::DEGREE'      => array(array('' => M_PI,'/' => 180),    '°'),
-        'Angle::MINUTE'      => array(array('' => M_PI,'/' => 10800),  "'"),
-        'Angle::SECOND'      => array(array('' => M_PI,'/' => 648000), '"'),
-        'Angle::POINT'       => array(array('' => M_PI,'/' => 16),     'pt'),
-        'Angle::CIRCLE_16'   => array(array('' => M_PI,'/' => 8),      'per 16 circle'),
-        'Angle::CIRCLE_10'   => array(array('' => M_PI,'/' => 5),      'per 10 circle'),
-        'Angle::CIRCLE_8'    => array(array('' => M_PI,'/' => 4),      'per 8 circle'),
-        'Angle::CIRCLE_6'    => array(array('' => M_PI,'/' => 3),      'per 6 circle'),
-        'Angle::CIRCLE_4'    => array(array('' => M_PI,'/' => 2),      'per 4 circle'),
-        'Angle::CIRCLE_2'    => array(M_PI,                            'per 2 circle'),
-        'Angle::FULL_CIRCLE' => array(array('' => M_PI,'*' => 2),      'cir')
+        'RADIAN'      => array(1,'rad'),
+        'MIL'         => array(array('' => M_PI,'/' => 3200),   'mil'),
+        'GRAD'        => array(array('' => M_PI,'/' => 200),    'gr'),
+        'DEGREE'      => array(array('' => M_PI,'/' => 180),    '°'),
+        'MINUTE'      => array(array('' => M_PI,'/' => 10800),  "'"),
+        'SECOND'      => array(array('' => M_PI,'/' => 648000), '"'),
+        'POINT'       => array(array('' => M_PI,'/' => 16),     'pt'),
+        'CIRCLE_16'   => array(array('' => M_PI,'/' => 8),      'per 16 circle'),
+        'CIRCLE_10'   => array(array('' => M_PI,'/' => 5),      'per 10 circle'),
+        'CIRCLE_8'    => array(array('' => M_PI,'/' => 4),      'per 8 circle'),
+        'CIRCLE_6'    => array(array('' => M_PI,'/' => 3),      'per 6 circle'),
+        'CIRCLE_4'    => array(array('' => M_PI,'/' => 2),      'per 4 circle'),
+        'CIRCLE_2'    => array(M_PI,                            'per 2 circle'),
+        'FULL_CIRCLE' => array(array('' => M_PI,'*' => 2),      'cir')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Angle provides an locale aware class for
@@ -82,27 +82,21 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Angle Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Angle Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Angle  $object  Angle object to compare
      * @return boolean
      */
     public function equals($object)
@@ -118,15 +112,23 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Angle Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Angle Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -136,7 +138,7 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of angle:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown angle");
         }
 
         parent::setValue($value, $type, $locale);
@@ -147,13 +149,13 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of angle:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown angle");
         }
 
         // Convert to standard value
