@@ -70,7 +70,7 @@ echo $view->render('booklist.php');
         
         <para>
             Teraz potrzebujemy skryptu widoku "booklist.php". Jest
-            to skrypt PHP jak każy inny, z jednym wyjątkiem: jest on wykonywany
+            to skrypt PHP jak każdy inny, z jednym wyjątkiem: jest on wykonywany
             w przestrzeni instancji Zend_View, co oznacza, że odnosi się on do 
             właściwości i metod klasy Zend_View za pomocą $this. (Zmienne
             przekazane do tej instancji przez kontroler sa publicznymi 

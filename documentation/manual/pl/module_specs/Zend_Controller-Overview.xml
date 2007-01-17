@@ -123,34 +123,32 @@
                     <para>
                         Dodatkowo możesz określić moduł, który ma zostać użyty
                         gdy ładowany jest kontroler. Moduł jest używany aby
-                        określić podkatalog oraz/lub przedrostek klasy, które
-                        mają być użyte gdy ładowany jest kontroler. Najprościej
-                        możesz to zrobić wtedy kiedy ustawiasz ścieżki 
-                        kontrolera:
+                        określić przedrostek klasy, który ma być użyty gdy 
+                        ładowany jest kontroler, czyli idąc dalej, podkatalog w 
+                        którym znajduje sie klasa. Aby użyć modułów ustaw 
+                        parametr <code>useModules</code> w kontrolerze 
+                        frontowym:
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    'default' => '/path/to/controllers',
-    'user'    => '/path/to/controllers/user',
-    'admin'   => '/path/to/controllers/admin'
-));
+$front->setParam('useModules', true);
 ]]></programlisting>
                     
                     <para>
-                        W powyższym przykładzie jeśli określony jest moduł 'user' 
-                        z kontrolerem 'news', będzie on wpierw poszukiwany w 
-                        pliku <code>NewsController.php</code> w katalogu
-                        <code>/path/to/controllers/user</code>, zanim będą
-                        przeszukane inne ścieżki. Dodatkowo wpierw założone 
-                        zostanie, że klasa jest nazwana
-                        <code>User_NewsController</code>, a dopiero potem
-                        <code>NewsController</code>. Żądaniem do takich zasobów
-                        może być: 
-                        <code>http://localhost/news/action/module/user</code>
-                        dla domyślnego routera, a 
-                        <code>http://localhost/module/news/action</code> dla
-                        routera RewriteRouter.
+                        Zobacz poniższy przykład:
+                    </para>
+                    
+                    <programlisting role="php"><![CDATA[
+http://example.com/user/news/action
+]]></programlisting>
+
+                    <para>
+                        W powyższym przykładzie, określony jest moduł 'user' z
+                        kontrolerem 'news'. Obiekt uruchamiający przekłada to
+                        na klasę <code>User_NewsController</code>, której szuka
+                        w katalogu <code>User/NewsController.php</code> wewnątrz
+                        ścieżek określonych za pomocą metody 
+                        <code>setControllerDirectory()</code>.
                     </para>
 
                     <para>
@@ -333,10 +331,11 @@ Akcja    : index]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    W nazwach kontrolera może być użyty myślnik (-) lub podkreślnik 
-                    (_). Na przykład adres
+                    W nazwach kontrolera może być podkreślnik (_). Na przykład adres
                     <code>http://framework.zend.com/admin-roadmap/future</code>
                     wskazywałby na klasę kontrolera Admin_RoadmapController.
+                    (Alternatywny separator ścieżki może być określony używając
+                     metody setPathSeparator() obiektu uruchamiającego.)
                 </para>
             </listitem>
             <listitem>

@@ -2,27 +2,28 @@
 	<title>Action Controllers</title>
 
 	<sect2 id="zend.controller.action.introduction">
-		<title>Introduction</title>
+		<title>Wprowadzenie</title>
 		<para>
-            <code>Zend_Controller_Action</code> is an abstract class you may use
-            for implementing Action Controllers for use with the Front
-            Controller when building a website based on the
-            Model-View-Controller (MVC) pattern.
+            <code>Zend_Controller_Action</code> jest klasą abstrakcyjną, której
+            możesz użyć do implementacji kontrolerów akcji, których wraz z
+            kontrolerem frontowym użyjesz do budowania aplikacji opartej na 
+            wzorcu Model-View-Controller (MVC).
 		</para>
 
 		<para>
-            To use Zend_Controller_Action, you will need to subclass it in your
-            actual action controllers (or subclass it to create your own base
-            class for action controllers). The most basic operation is to
-            subclass it, and create action methods that correspond to the
-            various actions you wish the controller to handle for your site.
-            Zend_Controller's routing and dispatch handling will autodiscover
-            any methods ending in 'Action' in your class as potential
-            controller actions.
+            Aby użyć klasy Zend_Controller_Action, powinieneś ją rozszerzyć
+            w swoich kontrolerach akcji (lub rozszerzyć ją aby utworzyć swoją
+            własną bazową klasę dla kontrolerów akcji). Najbardziej podstawową
+            operacją jest rozszerzenie tej klasy oraz utworzenie metod akcji,
+            które odpowiadają różnym akcjom jakie ma obsługiwać kontroler na
+            twojej stronie. Obsługa routingu i uruchamiania w Zend_Controller
+            automatycznie przeszuka wszystkie metody twojej klasy, których 
+            nazwa zakończona jest wyrazem 'Action', aby znaleźć odpowiednią 
+            akcję kontrolera.
         </para>
 
         <para>
-            For example, let's say your class is defined as follows:
+            Na przykład, załóżmy, że twoja klasa jest zdefiniowana w ten sposób:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -30,47 +31,46 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // do something
+        // zrób coś
     }
 
     public function bazAction()
     {
-        // do something
+        // zrób coś
     }
 }
 ]]></programlisting>
             
         <para>
-            The above FooController class (controller 'foo') defines two
-            actions, 'bar' and 'baz'.
+            Powyższa klasa FooController (kontroler 'foo') definiuje dwie akcje,
+            'bar' oraz 'baz'.
         </para>
 
         <para>
-            There's much more that can be accomplished than this, such as custom
-            initialization actions, default actions to call should no action (or
-            an invalid action) be specified, pre- and post-dispatch hooks, and a
-            variety of helper methods. This chapter serves as an overview of the
-            action controller functionality
+            Można tu osiągnąć dużo więcej, na przykład: utworzyć własne akcje
+            inicjalizacyjne, utworzyć domyślne akcje do wywołania gdy nie ma
+            określonej akcji (lub określona jest nieprawidłowa), użyć metod 
+            pre- oraz post-dispatch oraz użyć wielu różnych metod pomocników.
+            Ten rozdział jest rozeznaniem w funkcjonalnościach kontrolera akcji.
         </para>
     </sect2>
 
 	<sect2 id="zend.controller.action.initialization">
-        <title>Object initialization</title>
+        <title>Inicjalizacja obiektu</title>
 
         <para>
-            While you can always override the action controller's constructor,
-            we do not recommend this. Zend_Controller_Action::__construct()
-            performs some important tasks, such as registring the request and
-            response objects, as well as any custom invocation arguments passed
-            in from the front controller. If you must override the constructor,
-            be sure to call parent::__construct($request, $response,
-            $invokeArgs).
+            O ile zawsze możesz nadpisać konstruktor kontrolera akcji, nie 
+            zalecamy tego. Zend_Controller_Action::__construct() przeprowadza
+            kilka ważnych zadań, takich jak zarejestrowanie obiektów żądania i
+            odpowiedzi, oraz przekazanie argumentów wywołania przez kontroler 
+            frontowy. Jeśli musisz nadpisać konstruktor, upewnij się że 
+            wywołasz parent::__construct($request, $response, $invokeArgs).
         </para>
 
         <para>
-            The more appropriate way to customize instantiation is to use the
-            init() method, which is called as the last task of __construct().
-            For example, if you want to connect to a database at instantiation:
+            Bardziej odpowiednim sposobem skonfigurowania instancji jest użycie
+            metody init(), która jest wywoływana jako ostatnie zadanie konstruktora
+            __construct(). Na przykład jeśli chcesz połączyć się z bazą danych:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -91,37 +91,40 @@ class FooController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
-        <title>Pre- and Post-Dispatch Hooks</title>
+        <title>Metody Pre-Dispatch oraz Post-Dispatch</title>
 
         <para>
-            Zend_Controller_Action specifies two methods that may be called to
-            bookend a requested action, preDispatch() and postDispatch(). These
-            can be useful in a variety of ways: verifying authentication and
-            ACLs prior to running an action (by calling _forward() in
-            preDispatch(), the action will be skipped), for instance, or placing
-            generated content in a sitewide template (postDispatch()).
+            Klasa Zend_Controller_Action definiuje dwie metody, preDispatch() 
+            oraz postDispatch(), które mogą być wywołane przed i po wywołaniu 
+            akcji. Mogą one być użyteczne w wielu sytuacjach: weryfikowanie
+            autentykacji oraz kontroli dostępu ACL odnośnie uruchamianej akcji,
+            (przez wywołanie metody _forward() w metodzie preDispatch(), dzięki 
+            czemu akcja może być pominięta), lub na przykład umieszczenie
+            wygenerowanej zawartości w głównym szablonie (postDispatch()).
         </para>
     </sect2>
 
     <sect2 id="zend.controller.action.accessors">
-        <title>Accessors</title>
+        <title>Metody dostępowe</title>
 
         <para>
-            A number of objects and variables are registered with the object,
-            and each has accessor methods.
+            W obiekcie zarejestrowanych jest wiele obiektów oraz zmiennych i 
+            wszystkie mają metody dostępowe..
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <emphasis>Request Object</emphasis>: getRequest() may be
-                used to retrieve the request object used to call the action.
+                <emphasis>Obiekt żądania</emphasis>: metoda getRequest() może
+                być użyta do odebrania obiektu żądania używanego do wywoływania 
+                akcji.
             </para></listitem>
 
             <listitem>
                 <para>
-                    <emphasis>Response Object</emphasis>: getResponse() may be
-                    used to retrieve the response object aggregating the final
-                    response. Some typical calls might look like:
+                    <emphasis>Obiekt odpowiedzi</emphasis>: metoda getResponse() 
+                    może być użyta do odebrania obiektu odpowiedzi 
+                    przechowującego finalną odpowiedź. Niektóre typowe wywołania 
+                    mogą wyglądać tak:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -132,64 +135,67 @@ $this->getResponse()->appendBody($content);
 
             <listitem>
                 <para>
-                    <emphasis>Invocation Arguments</emphasis>: the front
-                    controller may push parameters into the router, dispatcher,
-                    and action controller. To retrieve these, use
-                    getInvokeArg($key); alternatively, fetch the entire list
-                    using getInvokeArgs().
+                    <emphasis>Argumenty wywołania</emphasis>: kontroler frontowy
+                    może przekazać parametry do routera, obiektu uruchamiającego
+                    oraz do kontrolera akcji. Aby je odebrać użyj metody
+                    getInvokeArg($key); alternatywnie pobierz całą listę 
+                    używając metody getInvokeArgs().
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis>Request parameters</emphasis>: The request object
-                    aggregates request parameters, such as any _GET or _POST
-                    parameters, or user parameters specified in the URL's path
-                    information. To retrieve these, use _getParam($key) or
-                    _getAllParams(). You may also set request parameters using
-                    _setParam(); this is useful when forwarding to additional
-                    actions.
+                    <emphasis>Parametry żądania</emphasis>: Obiekt żądania 
+                    przechowuje parametry żądania takie jak dowolne parametry z
+                    tablic _GET lub _POST oraz parametry użytkownika zdefiniowane
+                    w ścieżce adresu URL. Aby je odebrać, użyj metody 
+                    _getParam($key) lub _getAllParams(). Możesz także ustawić
+                    parametry żądania używając metody _setParam(); jest to 
+                    użyteczne gdy przenosimy do innych akcji.
                 </para>
 
                 <para>
-                    To test whether or not a parameter exists (useful for
-                    logical branching), use _hasParam($key).
+                    Aby sprawdzić czy parametr istnieje czy nie (co jest 
+                    użyteczne przy wywołaniach logicznych), użyj _hasParam($key).
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.action.utilmethods">
-        <title>Utility Methods</title>
+        <title>Metody narzędziowe</title>
 
         <para>
-            Besides the accessors, Zend_Controller_Action has several utility
-            methods for performing common tasks from within your action methods
-            (or from pre-/post-dispatch).
+            Oprócz metod dostępowych, klasa Zend_Controller_Action posiada kilka 
+            metod narzędziowych używanych do przeprowadzania ważnych zadań 
+            wewnątrz twoich metod akcji (lub wewnątrz metod pre-/post-dispatch).
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <emphasis>_forward($controller, $action, $params = array())</emphasis>: 
-                    perform another action. If called in preDispatch(), the
-                    currently requested action will be skipped in favor of the
-                    new one. Otherwise, after the current action is processed,
-                    the action requested in _forward() will be executed.
+                    wykonuje inną akcję. Jeśli zostanie wywołana w metodzie 
+                    preDispatch(), obecnie zażądana akcja zostanie pominięta,
+                    na rzecz nowej akcji. W przeciwnym wypadku, po wykonaniu 
+                    obecnej akcji, będzie wywołana akcja zażądana w metodzie 
+                    _forward().
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis>_redirect($url, $code = 302)</emphasis>: redirect
-                    to another location. This method takes a URL and an optional
-                    HTTP status code. The redirect is performed immediately and
-                    program execution is halted.
+                    <emphasis>_redirect($url, $code = 302)</emphasis>: 
+                    przekierowuje do innej lokacji. Ta metoda pobiera URL oraz 
+                    opcjonalny kod stanu HTTP. Przekierowanie jest 
+                    przeprowadzane natychmiast, a wykonywanie aplikacji jest
+                    wstrzymywane.
                 </para>
 
                 <para>
-                    If a status code is provided, it will be passed to the PHP
-                    header() command when the redirect is performed.
+                    Jeśli podany jest kod stanu, będzie on przekazany 
+                    do komendy PHP header() gdy przekierowanie będzie 
+                    przeprowadzane.
                 </para>
             </listitem>
         </itemizedlist>
