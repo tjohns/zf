@@ -1,0 +1,344 @@
+<sect1 id="zend.locale.date.datesandtimes">
+    <title>Working with dates and times</title>
+
+    <para>
+        <code>Zend_Locale_Format</code> provides several methods for working with dates and times to help convert and normalize between different formats for different locales.  Use <code>Zend_Date</code> for manipulating dates.
+    </para>
+
+    <sect2 id="zend.locale.date.normalize">
+        <title>Normalize a date or time</title>
+
+        <para>
+            <code>getDate()</code> parses strings containing dates in localized formats.  The results are returned in a structured array, with well-defined keys for each part of the date.  Since a localized date string may not contain all parts of a date/time, the key-value pairs are optional. For example, if only the year, month, and day is given, then all time values are supressed from the returned array, and vice-versa if only hour, minute, and second were given as input.  If no date or time can be found within the given input, an exception will be thrown.
+        </para>
+
+        <para>
+            The following return values are possible, when the BCMath extension is available:
+            <table>
+                <title>Return values</title>
+
+                <tgroup cols='4'>
+                    <thead>
+                        <row>
+                            <entry>Array key</entry>
+                            <entry>Returned value</entry>
+                            <entry>Minimum</entry>
+                            <entry>Maximum</entry>
+
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>day</entry>
+                            <entry>integer</entry>
+                            <entry>1</entry>
+
+                            <entry>31</entry>
+                        </row>
+                        <row>
+                            <entry>month</entry>
+                            <entry>integer</entry>
+                            <entry>1</entry>
+                            <entry>12</entry>
+
+                        </row>
+                        <row>
+                            <entry>year</entry>
+                            <entry>integer</entry>
+                            <entry>no limit</entry>
+                            <entry>no limit</entry>
+                        </row>
+
+                        <row>
+                            <entry>hour</entry>
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>no limit</entry>
+                        </row>
+                        <row>
+
+                            <entry>minute</entry>
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>59</entry>
+                        </row>
+                        <row>
+                            <entry>second</entry>
+
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>59</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+        </para>
+
+        <example>
+            <title>Normalizing a date</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+
+        <para>
+            But <code>getDate()</code> can now only handle given formats, it also knows local standard formats, so by
+            using only the locale the used format can be automatically detected.
+        </para>
+
+        <example>
+            <title>Normalizing a date by locale</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
+$date = Zend_Locale_Format::getDate('13.04.2006', false, $locale);
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Also a complete date can be parsed by only giving by giving a complete date as input.
+        </para>
+
+        <example>
+
+            <title>Normalizing a date with time</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Of course also an unusal´or userdefined format can be parsed.
+        </para>
+
+        <example>
+            <title>Normalizing a userdefined date</title>
+
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+
+        <para>
+            The format can include the following signs :
+            <table>
+                <title>Format definition</title>
+                <tgroup cols='2'>
+                    <thead>
+                        <row>
+
+                            <entry>Format Letter</entry>
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>d or dd</entry>
+
+                            <entry>1 or 2 digit day</entry>
+                        </row>
+                        <row>
+                            <entry>M or MM</entry>
+                            <entry>1 or 2 digit month</entry>
+                        </row>
+                        <row>
+
+                            <entry>y or yy</entry>
+                            <entry>1 or 2 digit year</entry>
+                        </row>
+                        <row>
+                            <entry>yyyy</entry>
+                            <entry>4 digit year</entry>
+                        </row>
+
+                        <row>
+                            <entry>h</entry>
+                            <entry>1 or 2 digit hour</entry>
+                        </row>
+                        <row>
+                            <entry>m</entry>
+                            <entry>1 or 2 digit minute</entry>
+
+                        </row>
+                        <row>
+                            <entry>s</entry>
+                            <entry>1 or 2 digit second</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+        </para>
+
+        <para>
+            Examples for proper formats are
+            <table>
+                <title>Example formats</title>
+                <tgroup cols='3'>
+                    <thead>
+                        <row>
+
+                            <entry>Formats</entry>
+                            <entry>Input</entry>
+                            <entry>Output</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+
+                            <entry>dd.MM.yy</entry>
+                            <entry>1.4.6</entry>
+                            <entry>['day'] => 1,
+                                   ['month'] => 4, 
+                                   ['year'] => 6</entry>
+                        </row>
+                        <row>
+                            <entry>dd.MM.yy</entry>
+                            <entry>01.04.2006</entry>
+
+                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
+                        </row>
+                        <row>
+                            <entry>yyyyMMdd</entry>
+                            <entry>1.4.6</entry>
+                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
+                        </row>
+
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+
+        <note>
+            <title>Database date format</title>
+            <para>
+                If you want to parse a database date value (f.e. MySql or MsSql) use Zend_Date's ISO_8601 format instead
+                of getDate().
+            </para>
+
+        </note>
+
+        <para>
+            <code>getDate()</code> has an build in automatic correction for false inputs. It can detect false values and
+            will fix them.
+        </para>
+
+        <example>
+            <title>Correction for date normalizing</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+
+// instead of 41 for the day, the 41 will be returned as year value
+print_r ($date);
+?>]]></programlisting>
+
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.date.test">
+
+        <title>Testing dates</title>
+
+        <para>
+            Also dates can be tested the same way as numbers. <code>isDate()</code> checks if a given string contains a
+            proper date and returns true or false.
+        </para>
+
+        <example>
+            <title>Date testing</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
+if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
+    print "date";
+} else {
+    print "not a date";
+} 
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.time.normalizing">
+
+        <title>Normalizing a time</title>
+
+        <para>
+            Normaly a time will be returned with a date if the input contains both. But if the proper format is not
+            known <code>getTime()</code> should be used. It detects the default time format from the given locale.
+        </para>
+
+        <example>
+            <title>Normalize a unknown time</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
+if (Zend_Locale_Format::getTime('13:44:42', $locale) {
+    print "time";
+} else {
+    print "not a time";
+} 
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.time.test">
+
+        <title>Testing times</title>
+
+        <para>
+            And last but not least times can be parsed like dates. <code>isTime()</code> checks if a given string
+            contains a proper time and returns true or false.
+        </para>
+
+        <example>
+            <title>Time testing</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
+if (Zend_Locale_Format::isTime('13:44:42', $locale) {
+    print "time";
+} else {
+    print "not a time";
+} 
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

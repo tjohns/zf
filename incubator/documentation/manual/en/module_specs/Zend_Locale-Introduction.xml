@@ -231,7 +231,7 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
 
         <para>
             To override this default behavior, and force locale-aware ZF components to use specific locales, regardless
-            of the origin of your website visitors, explicitly specify a locale.
+            of the origin of your website visitors, explicitly specify a locale as the third argument to the constructor.
         </para>
 
         <example>

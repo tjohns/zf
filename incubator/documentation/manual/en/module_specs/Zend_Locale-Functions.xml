@@ -196,6 +196,7 @@ print $locale->getLanguageDisplay('de'); // echos "German"
             <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
             regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
             <code>getCalendarDisplay()</code> work identically.
+            Use a <code>try .. catch</code> block to handle exceptions that occur when using a locale that does not exist. Not all languages are also locales.  In the example, below exceptions are ignored to prevent early termination.
         </para>
 
         <example>
@@ -219,14 +220,6 @@ foreach($list as $language => $content) {
 }
 ?>]]></programlisting>
         </example>
-
-        <note>
-            <title>Exception handling</title>
-            <para>
-                The useage of a locale which does not exist, will throw an exception. Since not all languages are also
-                locales, we must catch the exception to prevent early termination of our example.
-            </para>
-        </note>
 
     </sect2>
 

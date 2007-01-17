@@ -3,7 +3,7 @@
     <title>Supported regions for locales</title>
 
     <para>
-        <code>Zend_Locale</code> provides informations on the following regions.
+        <code>Zend_Locale</code> provides information for the following regions.
     </para>
 
     <sect2 id="zend.locale.regions">

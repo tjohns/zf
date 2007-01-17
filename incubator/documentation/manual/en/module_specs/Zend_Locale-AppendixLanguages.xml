@@ -3,7 +3,7 @@
     <title>Supported languages for locales</title>
 
     <para>
-        <code>Zend_Locale</code> provides informations on the following languages.
+        <code>Zend_Locale</code> provides information for the following languages.
     </para>
 
     <sect2 id="zend.locale.languages.support">
