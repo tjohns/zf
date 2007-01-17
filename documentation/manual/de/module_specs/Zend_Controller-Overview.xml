@@ -109,30 +109,30 @@
                     <para>
                         Zusätzlich kann man ein <code>Modul</code> angeben, das beim Laden eines
                         Controllers verwendet wird. Ein Modul wird lediglich dazu verwendet, um
-                        ein Unterverzeichnis und/oder einen Klassenprefix beim Laden eines 
-                        Controllers zu verwenden. Man gibt das Modul ganz einfach an, wenn man die
-                        Controller Verzeichnisse setzt:
+                        ein Klassenprefix zum Laden eines Controllers und, als Erweiterung, ein
+                        Unterverzeichnis anzugeben, in dem nach der Klasse gesucht werden soll. Um
+                        Module zu verwenden, muss man den <code>useModules</code> Parameter im 
+                        Front Controller setzen:
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    'default' => '/path/to/controllers',
-    'user'    => '/path/to/controllers/user',
-    'admin'   => '/path/to/controllers/admin'
-));
+$front->setParam('useModules', true);
 ]]></programlisting>
-                    
+
                     <para>
-                        Wenn das Modul 'user' beim Controller 'news' angegeben wird, wird im obigen 
-                        Beispiel zuerst nach <code>NewsController.php</code> in 
-                        <code>/path/to/controllers/user</code> gesucht, bevor in anderen 
-                        Verzeichnissen gesucht wird. Zusätzlich wird zuerst angenommen, dass die 
-                        Klasse <code>User_NewsController</code> heißt und danach erst
-                        <code>NewsController</code>. Eine Anfrage für solch eine Ressource würde 
-                        aussehen wie <code>http://localhost/news/action/module/user</code> bei 
-                        Verwendung des Standardrouters und 
-                        <code>http://localhost/module/news/action</code> bei Verwendung des 
-                        RewriteRouters.
+                        Als Beispiele betrachten wir die folgende URL:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+http://example.com/user/news/action
+]]></programlisting>
+
+                    <para>
+                        Im obigen Beispiel wird das Modul 'user' mit dem Controller 'news' 
+                        angegeben. Der Dispatcher übersetze dies in die 
+                        <code>User_NewsController</code> Klasse und wird nach ihr in 
+                        <code>User/NewsController.php</code> innerhalb der mit 
+                        <code>setControllerDirectory()</code> angegebenen Verzeichnisse schauen.
                     </para>
 
                     <para>
@@ -308,10 +308,11 @@ Action    : index]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    Controller Namen, die einen Bindestrich (-) oder Unterstrich (_) haben, können
-                    verwendet werden. <code>http://framework.zend.com/admin-roadmap/future</code> 
+                    Controller Namen, die einen Unterstrich (_) haben, können verwendet werden. 
+                    <code>http://framework.zend.com/admin_roadmap/future</code> 
                     würde zum Beispiel auf der Controllerklasse Admin_RoadmapController abgebildet 
-                    werden.
+                    werden. (Ein alternative Pfadtrenner kann mittels der setPathSeparator() 
+                    Methode des Dispatchers angegeben werden.)
                 </para>
             </listitem>
             <listitem>
