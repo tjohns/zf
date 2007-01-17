@@ -232,55 +232,49 @@
                         Кроме этого, вы можете определять модуль
                         (<code>module</code>), который будет использоваться при
                         загрузке контроллера. Модуль используется только для
-                        определения поддиректории и/или префикса класса для
-                        использования при загрузке контроллера. В наиболее
-                        простом варианте вы определяете модуль, когда
-                        устанавливаете директории контроллеров:
+                        определения префикса класса, используемого при загрузке
+                        контроллера и вдобавок поддиректорию в которой следует
+                        искать класс. Для использования модулей установите
+                        параметр <code>useModules</code> во фронт-контроллере:
 <!--
                         Additionally, you can specify a <code>module</code> to
                         use when loading a controller. A module is merely used
-                        to specify a subdirectory and/or class prefix to use
-                        when loading the controller. Most simply, you specify
-                        the module when setting the controller directories:
+                        to specify a class prefix to use when loading the
+                        controller, and, by extension, a subdirectory in which
+                        to look for the class.  To use modules, set the
+                        <code>useModules</code> param in the front controller:
 -->
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    'default' => '/path/to/controllers',
-    'user'    => '/path/to/controllers/user',
-    'admin'   => '/path/to/controllers/admin'
-));
+$front->setParam('useModules', true);
 ]]></programlisting>
                     
                     <para>
-                        В приведенном выше примере, если модуль 'user'
-                        определен с контроллером 'news', то диспетчер сначала
-                        будет искать файл <code>NewsController.php</code> в
-                        <code>/path/to/controllers/user</code> до того, как
-                        будет искать его по другим путям. Кроме того, он
-                        сначала удостоверится, что класс называется
-                        <code>User_NewsController</code>, и затем
-                        <code>NewsController</code>. Запрос для этого ресурса
-                        будет выглядеть как
-                        <code>http://localhost/news/action/module/user</code>
-                        при использовании маршрутизатора по умолчанию и как
-                        <code>http://localhost/module/news/action</code>
-                        при использовании RewriteRouter. 
+                        В качестве примера рассмотрим следующий URL:
 <!--
-                        In the above example, if the module 'user' is specified
-                        with the controller 'news', it will look for 
-                        <code>NewsController.php</code> in
-                        <code>/path/to/controllers/user</code> first, before
-                        looking in the other paths. Additionally, it will first
-                        assume that the class is called
-                        <code>User_NewsController</code>, and then
-                        <code>NewsController</code>. A request for such a
-                        resource would look like
-                        <code>http://localhost/news/action/module/user</code>
-                        using the default router, and
-                        <code>http://localhost/module/news/action</code> using
-                        the RewriteRouter.
+                        As an example, consider the following URL:
+-->
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+http://example.com/user/news/action
+]]></programlisting>
+
+                    <para>
+                        В этом примере указаны модуль 'user' и контроллер
+                        'news'. Диспетчер переводит это как "класс
+                        <code>User_NewsController</code>" и ищет его, используя
+                        путь <code>User/NewsController.php</code> в путях,
+                        заданных через
+                        <code>setControllerDirectory()</code>.
+<!--
+                        In the above example, the module 'user' is specified
+                        with the controller 'news'. The dispatcher translates
+                        this the <code>User_NewsController</code> class, and
+                        will look for it in <code>User/NewsController.php</code>
+                        within the paths specified with
+                        <code>setControllerDirectory()</code>.
 -->
                     </para>
 
@@ -601,16 +595,20 @@ Action    : index]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    Могут использоваться имена контроллеров со знаком тире (-)
-                    или подчеркивания (_). Например,
-                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    Могут использоваться имена контроллеров со знаком 
+                    подчеркивания (_). Например,
+                    <code>http://framework.zend.com/admin_roadmap/future</code>
                     должен соответствовать классу контроллера
-                    Admin_RoadmapController. 
+                    Admin_RoadmapController.
+                    Альтернативный разделитель путей может быть задан через
+                    метод диспетчера <code>setPathSeparator()</code>. 
 <!--
-                    Controller names that have a hyphen (-) or underscore (_)
-                    can be used. As an example,
-                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    Controller names that have an underscore (_) can be used. As
+                    an example,
+                    <code>http://framework.zend.com/admin_roadmap/future</code>
                     would map to the Admin_RoadmapController controller class.
+                    (An alternate path separator may be specified using the
+                    dispatcher's setPathSeparator() method.)
 -->
                 </para>
             </listitem>
