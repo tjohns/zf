@@ -148,8 +148,6 @@ class Zend_Db {
      *
      * Additional keys are processed as key-value pairs for the adapter config array.
      *
-     * @todo Remove support for adapter names without underscores in 0.2 release.
-     *
      * @param string $adapterName   Name of the adapter to return:
      *                              'pdo_mysql' -> Zend_Db_Adapter_Pdo_Mysql
      *
@@ -168,16 +166,8 @@ class Zend_Db {
         }
 
         $adapterName = strtolower($adapterName); // normalize input
-        if (substr($adapterName, 0, 3) === 'pdo') {
-            if ($adapterName{3} !== '_') // this check will be removed, and underscores will be required in 0.2
-                trigger_error("Use of adapter name '$adapterName' is deprecated. Underscores will be required in 0.2 release. Please use 'PDO_".(strtoupper(substr($adapterName,3)))."'.", E_USER_WARNING);
-            $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(ltrim(substr($adapterName, 3),'_'));
-        } else {
-            $adapterName = 'Zend_Db_Adapter_' .
-                           str_replace(' ',
-                                       '_' ,
-                                       ucwords(str_replace('_', ' ', $adapterName)));
-        }
+        $adapterName = 'Zend_Db_Adapter_' .
+            str_replace(' ', '_' , ucwords(str_replace('_', ' ', $adapterName)));
 
         Zend::loadClass($adapterName);
 
