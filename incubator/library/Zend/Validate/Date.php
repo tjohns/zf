@@ -111,11 +111,11 @@ class Zend_Validate_Date implements Zend_Validate_Interface
      */
     public function setLocale($locale)
     {
+        /**
+         * @see Zend_Locale
+         */
+        require_once 'Zend/Locale.php';
         if (!Zend_Locale::isLocale($locale)) {
-            /**
-             * @see Zend_Locale
-             */
-            require_once 'Zend/Locale.php';
             $locale = new Zend_Locale();
             $this->_locale = $locale->toString();
         } else {
