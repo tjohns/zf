@@ -38,89 +38,89 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Force extends Zend_Measure_Abstract
 {
     // Force definitions
-    const STANDARD = 'Force::NEWTON';
+    const STANDARD = 'NEWTON';
 
-    const ATTONEWTON      = 'Force::ATTONEWTON';
-    const CENTINEWTON     = 'Force::CENTINEWTON';
-    const DECIGRAM_FORCE  = 'Force::DECIGRAM_FORCE';
-    const DECINEWTON      = 'Force::DECINEWTON';
-    const DEKAGRAM_FORCE  = 'Force::DEKAGRAM_FORCE';
-    const DEKANEWTON      = 'Force::DEKANEWTON';
-    const DYNE            = 'Force::DYNE';
-    const EXANEWTON       = 'Force::EXANEWTON';
-    const FEMTONEWTON     = 'Force::FEMTONEWTON';
-    const GIGANEWTON      = 'Force::GIGANEWTON';
-    const GRAM_FORCE      = 'Force::GRAM_FORCE';
-    const HECTONEWTON     = 'Force::HECTONEWTON';
-    const JOULE_PER_METER = 'Force::JOULE_PER_METER';
-    const KILOGRAM_FORCE  = 'Force::KILOGRAM_FORCE';
-    const KILONEWTON      = 'Force::KILONEWTON';
-    const KILOPOND        = 'Force::KILOPOND';
-    const KIP             = 'Force::KIP';
-    const MEGANEWTON      = 'Force::MEGANEWTON';
-    const MEGAPOND        = 'Force::MEGAPOND';
-    const MICRONEWTON     = 'Force::MICRONEWTON';
-    const MILLINEWTON     = 'Force::MILLINEWTON';
-    const NANONEWTON      = 'Force::NANONEWTON';
-    const NEWTON          = 'Force::NEWTON';
-    const OUNCE_FORCE     = 'Force::OUNCE_FORCE';
-    const PETANEWTON      = 'Force::PETANEWTON';
-    const PICONEWTON      = 'Force::PICONEWTON';
-    const POND            = 'Force::POND';
-    const POUND_FORCE     = 'Force::POUND_FORCE';
-    const POUNDAL         = 'Force::POUNDAL';
-    const STHENE          = 'Force::STHENE';
-    const TERANEWTON      = 'Force::TERANEWTON';
-    const TON_FORCE_LONG  = 'Force::TON_FORCE_LONG';
-    const TON_FORCE       = 'Force::TON_FORCE';
-    const TON_FORCE_SHORT = 'Force::TON_FORCE_SHORT';
-    const YOCTONEWTON     = 'Force::YOCTONEWTON';
-    const YOTTANEWTON     = 'Force::YOTTANEWTON';
-    const ZEPTONEWTON     = 'Force::ZEPTONEWTON';
-    const ZETTANEWTON = 'Force::ZETTANEWTON';
+    const ATTONEWTON      = 'ATTONEWTON';
+    const CENTINEWTON     = 'CENTINEWTON';
+    const DECIGRAM_FORCE  = 'DECIGRAM_FORCE';
+    const DECINEWTON      = 'DECINEWTON';
+    const DEKAGRAM_FORCE  = 'DEKAGRAM_FORCE';
+    const DEKANEWTON      = 'DEKANEWTON';
+    const DYNE            = 'DYNE';
+    const EXANEWTON       = 'EXANEWTON';
+    const FEMTONEWTON     = 'FEMTONEWTON';
+    const GIGANEWTON      = 'GIGANEWTON';
+    const GRAM_FORCE      = 'GRAM_FORCE';
+    const HECTONEWTON     = 'HECTONEWTON';
+    const JOULE_PER_METER = 'JOULE_PER_METER';
+    const KILOGRAM_FORCE  = 'KILOGRAM_FORCE';
+    const KILONEWTON      = 'KILONEWTON';
+    const KILOPOND        = 'KILOPOND';
+    const KIP             = 'KIP';
+    const MEGANEWTON      = 'MEGANEWTON';
+    const MEGAPOND        = 'MEGAPOND';
+    const MICRONEWTON     = 'MICRONEWTON';
+    const MILLINEWTON     = 'MILLINEWTON';
+    const NANONEWTON      = 'NANONEWTON';
+    const NEWTON          = 'NEWTON';
+    const OUNCE_FORCE     = 'OUNCE_FORCE';
+    const PETANEWTON      = 'PETANEWTON';
+    const PICONEWTON      = 'PICONEWTON';
+    const POND            = 'POND';
+    const POUND_FORCE     = 'POUND_FORCE';
+    const POUNDAL         = 'POUNDAL';
+    const STHENE          = 'STHENE';
+    const TERANEWTON      = 'TERANEWTON';
+    const TON_FORCE_LONG  = 'TON_FORCE_LONG';
+    const TON_FORCE       = 'TON_FORCE';
+    const TON_FORCE_SHORT = 'TON_FORCE_SHORT';
+    const YOCTONEWTON     = 'YOCTONEWTON';
+    const YOTTANEWTON     = 'YOTTANEWTON';
+    const ZEPTONEWTON     = 'ZEPTONEWTON';
+    const ZETTANEWTON = 'ZETTANEWTON';
 
     private static $_UNITS = array(
-        'Force::ATTONEWTON'      => array(1.0e-18,     'aN'),
-        'Force::CENTINEWTON'     => array(0.01,        'cN'),
-        'Force::DECIGRAM_FORCE'  => array(0.000980665, 'dgf'),
-        'Force::DECINEWTON'      => array(0.1,         'dN'),
-        'Force::DEKAGRAM_FORCE'  => array(0.0980665,   'dagf'),
-        'Force::DEKANEWTON'      => array(10,          'daN'),
-        'Force::DYNE'            => array(0.00001,     'dyn'),
-        'Force::EXANEWTON'       => array(1.0e+18,     'EN'),
-        'Force::FEMTONEWTON'     => array(1.0e-15,     'fN'),
-        'Force::GIGANEWTON'      => array(1.0e+9,      'GN'),
-        'Force::GRAM_FORCE'      => array(0.00980665,  'gf'),
-        'Force::HECTONEWTON'     => array(100,         'hN'),
-        'Force::JOULE_PER_METER' => array(1,           'J/m'),
-        'Force::KILOGRAM_FORCE'  => array(9.80665,     'kgf'),
-        'Force::KILONEWTON'      => array(1000,        'kN'),
-        'Force::KILOPOND'        => array(9.80665,     'kp'),
-        'Force::KIP'             => array(4448.2216,   'kip'),
-        'Force::MEGANEWTON'      => array(1000000,     'Mp'),
-        'Force::MEGAPOND'        => array(9806.65,     'MN'),
-        'Force::MICRONEWTON'     => array(0.000001,    'µN'),
-        'Force::MILLINEWTON'     => array(0.001,       'mN'),
-        'Force::NANONEWTON'      => array(0.000000001, 'nN'),
-        'Force::NEWTON'          => array(1,           'N'),
-        'Force::OUNCE_FORCE'     => array(0.27801385,  'ozf'),
-        'Force::PETANEWTON'      => array(1.0e+15,     'PN'),
-        'Force::PICONEWTON'      => array(1.0e-12,     'pN'),
-        'Force::POND'            => array(0.00980665,  'pond'),
-        'Force::POUND_FORCE'     => array(4.4482216,   'lbf'),
-        'Force::POUNDAL'         => array(0.13825495,  'pdl'),
-        'Force::STHENE'          => array(1000,        'sn'),
-        'Force::TERANEWTON'      => array(1.0e+12,     'TN'),
-        'Force::TON_FORCE_LONG'  => array(9964.016384, 'tnf'),
-        'Force::TON_FORCE'       => array(9806.65,     'tnf'),
-        'Force::TON_FORCE_SHORT' => array(8896.4432,   'tnf'),
-        'Force::YOCTONEWTON'     => array(1.0e-24,     'yN'),
-        'Force::YOTTANEWTON'     => array(1.0e+24,     'YN'),
-        'Force::ZEPTONEWTON'     => array(1.0e-21,     'zN'),
-        'Force::ZETTANEWTON'     => array(1.0e+21,     'ZN')
+        'ATTONEWTON'      => array(1.0e-18,     'aN'),
+        'CENTINEWTON'     => array(0.01,        'cN'),
+        'DECIGRAM_FORCE'  => array(0.000980665, 'dgf'),
+        'DECINEWTON'      => array(0.1,         'dN'),
+        'DEKAGRAM_FORCE'  => array(0.0980665,   'dagf'),
+        'DEKANEWTON'      => array(10,          'daN'),
+        'DYNE'            => array(0.00001,     'dyn'),
+        'EXANEWTON'       => array(1.0e+18,     'EN'),
+        'FEMTONEWTON'     => array(1.0e-15,     'fN'),
+        'GIGANEWTON'      => array(1.0e+9,      'GN'),
+        'GRAM_FORCE'      => array(0.00980665,  'gf'),
+        'HECTONEWTON'     => array(100,         'hN'),
+        'JOULE_PER_METER' => array(1,           'J/m'),
+        'KILOGRAM_FORCE'  => array(9.80665,     'kgf'),
+        'KILONEWTON'      => array(1000,        'kN'),
+        'KILOPOND'        => array(9.80665,     'kp'),
+        'KIP'             => array(4448.2216,   'kip'),
+        'MEGANEWTON'      => array(1000000,     'Mp'),
+        'MEGAPOND'        => array(9806.65,     'MN'),
+        'MICRONEWTON'     => array(0.000001,    'µN'),
+        'MILLINEWTON'     => array(0.001,       'mN'),
+        'NANONEWTON'      => array(0.000000001, 'nN'),
+        'NEWTON'          => array(1,           'N'),
+        'OUNCE_FORCE'     => array(0.27801385,  'ozf'),
+        'PETANEWTON'      => array(1.0e+15,     'PN'),
+        'PICONEWTON'      => array(1.0e-12,     'pN'),
+        'POND'            => array(0.00980665,  'pond'),
+        'POUND_FORCE'     => array(4.4482216,   'lbf'),
+        'POUNDAL'         => array(0.13825495,  'pdl'),
+        'STHENE'          => array(1000,        'sn'),
+        'TERANEWTON'      => array(1.0e+12,     'TN'),
+        'TON_FORCE_LONG'  => array(9964.016384, 'tnf'),
+        'TON_FORCE'       => array(9806.65,     'tnf'),
+        'TON_FORCE_SHORT' => array(8896.4432,   'tnf'),
+        'YOCTONEWTON'     => array(1.0e-24,     'yN'),
+        'YOTTANEWTON'     => array(1.0e+24,     'YN'),
+        'ZEPTONEWTON'     => array(1.0e-21,     'zN'),
+        'ZETTANEWTON'     => array(1.0e+21,     'ZN')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Force provides an locale aware class for
@@ -130,27 +130,21 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Force Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Force Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Force  $object  Force object to compare
      * @return boolean
      */
     public function equals($object)
@@ -166,15 +160,23 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Force Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Force Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -184,7 +186,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of force:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown force");
         }
 
         parent::setValue($value, $type, $locale);
@@ -195,12 +197,13 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of force:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown force");
         }
 
         // Convert to standard value

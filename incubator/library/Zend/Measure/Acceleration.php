@@ -38,53 +38,53 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Acceleration extends Zend_Measure_Abstract
 {
     // Acceleration definitions
-    const STANDARD = 'Acceleration::METER_PER_SQUARE_SECOND';
+    const STANDARD = 'METER_PER_SQUARE_SECOND';
 
-    const CENTIGAL                     = 'Acceleration::CENTIGAL';                 // Metric
-    const CENTIMETER_PER_SQUARE_SECOND = 'Acceleration::CENTIMETER_PER_SQUARE_SECOND'; // Metric
-    const DECIGAL                      = 'Acceleration::DECIGAL';                  // Metric
-    const DECIMETER_PER_SQUARE_SECOND  = 'Acceleration::DECIMETER_PER_SQUARE_SECOND';  // Metric
-    const DEKAMETER_PER_SQUARE_SECOND  = 'Acceleration::DEKAMETER_PER_SQUARE_SECOND';  // Metric
-    const FOOT_PER_SQUARE_SECOND       = 'Acceleration::FOOT_PER_SQUARE_SECOND';       // US
-    const G                            = 'Acceleration::G';                        // Gravity
-    const GAL                          = 'Acceleration::GAL';                      // Metric = 1cm/s²
-    const GALILEO                      = 'Acceleration::GALILEO';                  // Metric = 1cm/s²
-    const GRAV                         = 'Acceleration::GRAV';                     // Gravity
-    const HECTOMETER_PER_SQUARE_SECOND = 'Acceleration::HECTOMETER_PER_SQUARE_SECOND'; // Metric
-    const INCH_PER_SQUARE_SECOND       = 'Acceleration::INCH_PER_SQUARE_SECOND';       // US
-    const KILOMETER_PER_HOUR_SECOND    = 'Acceleration::KILOMETER_PER_HOUR_SECOND';    // Metric
-    const KILOMETER_PER_SQUARE_SECOND  = 'Acceleration::KILOMETER_PER_SQUARE_SECOND';  // Metric
-    const METER_PER_SQUARE_SECOND      = 'Acceleration::METER_PER_SQUARE_SECOND';      // Metric
-    const MILE_PER_HOUR_MINUTE         = 'Acceleration::MILE_PER_HOUR_MINUTE';         // US
-    const MILE_PER_HOUR_SECOND         = 'Acceleration::MILE_PER_HOUR_SECOND';         // US
-    const MILE_PER_SQUARE_SECOND       = 'Acceleration::MILE_PER_SQUARE_SECOND';       // US
-    const MILLIGAL                     = 'Acceleration::MILLIGAL';                 // Metric
-    const MILLIMETER_PER_SQUARE_SECOND = 'Acceleration::MILLIMETER_PER_SQUARE_SECOND'; // Metric
+    const CENTIGAL                     = 'CENTIGAL';                 // Metric
+    const CENTIMETER_PER_SQUARE_SECOND = 'CENTIMETER_PER_SQUARE_SECOND'; // Metric
+    const DECIGAL                      = 'DECIGAL';                  // Metric
+    const DECIMETER_PER_SQUARE_SECOND  = 'DECIMETER_PER_SQUARE_SECOND';  // Metric
+    const DEKAMETER_PER_SQUARE_SECOND  = 'DEKAMETER_PER_SQUARE_SECOND';  // Metric
+    const FOOT_PER_SQUARE_SECOND       = 'FOOT_PER_SQUARE_SECOND';       // US
+    const G                            = 'G';                        // Gravity
+    const GAL                          = 'GAL';                      // Metric = 1cm/s²
+    const GALILEO                      = 'GALILEO';                  // Metric = 1cm/s²
+    const GRAV                         = 'GRAV';                     // Gravity
+    const HECTOMETER_PER_SQUARE_SECOND = 'HECTOMETER_PER_SQUARE_SECOND'; // Metric
+    const INCH_PER_SQUARE_SECOND       = 'INCH_PER_SQUARE_SECOND';       // US
+    const KILOMETER_PER_HOUR_SECOND    = 'KILOMETER_PER_HOUR_SECOND';    // Metric
+    const KILOMETER_PER_SQUARE_SECOND  = 'KILOMETER_PER_SQUARE_SECOND';  // Metric
+    const METER_PER_SQUARE_SECOND      = 'METER_PER_SQUARE_SECOND';      // Metric
+    const MILE_PER_HOUR_MINUTE         = 'MILE_PER_HOUR_MINUTE';         // US
+    const MILE_PER_HOUR_SECOND         = 'MILE_PER_HOUR_SECOND';         // US
+    const MILE_PER_SQUARE_SECOND       = 'MILE_PER_SQUARE_SECOND';       // US
+    const MILLIGAL                     = 'MILLIGAL';                 // Metric
+    const MILLIMETER_PER_SQUARE_SECOND = 'MILLIMETER_PER_SQUARE_SECOND'; // Metric
 
     private static $_UNITS = array(
-        'Acceleration::CENTIGAL'                     => array(0.0001,   'cgal'),
-        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,     'cm/s²'),
-        'Acceleration::DECIGAL'                      => array(0.001,    'dgal'),
-        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,      'dm/s²'),
-        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,       'dam/s²'),
-        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,   'ft/s²'),
-        'Acceleration::G'                            => array(9.80665,  'g'),
-        'Acceleration::GAL'                          => array(0.01,     'gal'),
-        'Acceleration::GALILEO'                      => array(0.01,     'gal'),
-        'Acceleration::GRAV'                         => array(9.80665,  'g'),
-        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,      'h/s²'),
-        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,   'in/s²'),
-        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18), 'km/h²'),
-        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,     'km/s²'),
-        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,        'm/s²'),
-        'Acceleration::MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60), 'mph/m'),
-        'Acceleration::MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048), 'mph/s'),
-        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344, 'mi/s²'),
-        'Acceleration::MILLIGAL'                     => array(0.00001,  'mgal'),
-        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,    'mm/s²')
+        'CENTIGAL'                     => array(0.0001,   'cgal'),
+        'CENTIMETER_PER_SQUARE_SECOND' => array(0.01,     'cm/s²'),
+        'DECIGAL'                      => array(0.001,    'dgal'),
+        'DECIMETER_PER_SQUARE_SECOND'  => array(0.1,      'dm/s²'),
+        'DEKAMETER_PER_SQUARE_SECOND'  => array(10,       'dam/s²'),
+        'FOOT_PER_SQUARE_SECOND'       => array(0.3048,   'ft/s²'),
+        'G'                            => array(9.80665,  'g'),
+        'GAL'                          => array(0.01,     'gal'),
+        'GALILEO'                      => array(0.01,     'gal'),
+        'GRAV'                         => array(9.80665,  'g'),
+        'HECTOMETER_PER_SQUARE_SECOND' => array(100,      'h/s²'),
+        'INCH_PER_SQUARE_SECOND'       => array(0.0254,   'in/s²'),
+        'KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18), 'km/h²'),
+        'KILOMETER_PER_SQUARE_SECOND'  => array(1000,     'km/s²'),
+        'METER_PER_SQUARE_SECOND'      => array(1,        'm/s²'),
+        'MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60), 'mph/m'),
+        'MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048), 'mph/s'),
+        'MILE_PER_SQUARE_SECOND'       => array(1609.344, 'mi/s²'),
+        'MILLIGAL'                     => array(0.00001,  'mgal'),
+        'MILLIMETER_PER_SQUARE_SECOND' => array(0.001,    'mm/s²')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Acceleration provides an locale aware class for
@@ -94,27 +94,21 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Acceleration Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Acceleration Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Acceleration  $object  Acceleration object to compare
      * @return boolean
      */
     public function equals($object)
@@ -130,15 +124,23 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Acceleration Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Acceleration Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -148,7 +150,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of acceleration:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown acceleration");
         }
 
         parent::setValue($value, $type, $locale);
@@ -159,13 +161,13 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of acceleration:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown acceleration");
         }
 
         // Convert to standard value

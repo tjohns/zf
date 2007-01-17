@@ -38,32 +38,32 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Illumination extends Zend_Measure_Abstract
 {
     // Illumination definitions
-    const STANDARD = 'Illumination::LUX';
+    const STANDARD = 'LUX';
 
-    const FOOTCANDLE              = 'Illumination::FOOTCANDLE';
-    const KILOLUX                 = 'Illumination::KILOLUX';
-    const LUMEN_PER_SQUARE_CENTIMETER = 'Illumination::LUMEN_PER_SQUARE_CENTIMETER';
-    const LUMEN_PER_SQUARE_FOOT   = 'Illumination::LUMEN_PER_SQUARE_FOOT';
-    const LUMEN_PER_SQUARE_INCH   = 'Illumination::LUMEN_PER_SQUARE_INCH';
-    const LUMEN_PER_SQUARE_METER  = 'Illumination::LUMEN_PER_SQUARE_METER';
-    const LUX                     = 'Illumination::LUX';
-    const METERCANDLE             = 'Illumination::METERCANDLE';
-    const MILLIPHOT               = 'Illumination::MILLIPHOT';
-    const NOX                     = 'Illumination::NOX';
-    const PHOT                    = 'Illumination::PHOT';
+    const FOOTCANDLE              = 'FOOTCANDLE';
+    const KILOLUX                 = 'KILOLUX';
+    const LUMEN_PER_SQUARE_CENTIMETER = 'LUMEN_PER_SQUARE_CENTIMETER';
+    const LUMEN_PER_SQUARE_FOOT   = 'LUMEN_PER_SQUARE_FOOT';
+    const LUMEN_PER_SQUARE_INCH   = 'LUMEN_PER_SQUARE_INCH';
+    const LUMEN_PER_SQUARE_METER  = 'LUMEN_PER_SQUARE_METER';
+    const LUX                     = 'LUX';
+    const METERCANDLE             = 'METERCANDLE';
+    const MILLIPHOT               = 'MILLIPHOT';
+    const NOX                     = 'NOX';
+    const PHOT                    = 'PHOT';
 
     private static $_UNITS = array(
-        'Illumination::FOOTCANDLE'              => array(10.7639104,   'fc'),
-        'Illumination::KILOLUX'                 => array(1000,         'klx'),
-        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,    'lm/cm²'),
-        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,   'lm/ft²'),
-        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976, 'lm/in²'),
-        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,            'lm/m²'),
-        'Illumination::LUX'                     => array(1,            'lx'),
-        'Illumination::METERCANDLE'             => array(1,            'metercandle'),
-        'Illumination::MILLIPHOT'               => array(10,           'mph'),
-        'Illumination::NOX'                     => array(0.001,        'nox'),
-        'Illumination::PHOT'                    => array(10000,        'ph')
+        'FOOTCANDLE'              => array(10.7639104,   'fc'),
+        'KILOLUX'                 => array(1000,         'klx'),
+        'LUMEN_PER_SQUARE_CENTIMETER' => array(10000,    'lm/cm²'),
+        'LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,   'lm/ft²'),
+        'LUMEN_PER_SQUARE_INCH'   => array(1550.0030976, 'lm/in²'),
+        'LUMEN_PER_SQUARE_METER'  => array(1,            'lm/m²'),
+        'LUX'                     => array(1,            'lx'),
+        'METERCANDLE'             => array(1,            'metercandle'),
+        'MILLIPHOT'               => array(10,           'mph'),
+        'NOX'                     => array(0.001,        'nox'),
+        'PHOT'                    => array(10000,        'ph')
     );
 
     private $_Locale;
@@ -76,30 +76,24 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Illumination Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Illumination Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Illumination  $object  Illumination object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -112,15 +106,23 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Illumination Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Illumination Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -130,7 +132,7 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
         }
 
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of illumination:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown illumination");
         }
 
         parent::setValue($value, $type, $locale);
@@ -141,12 +143,13 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType( $type )
     {
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of illumination:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown illumination");
         }
 
         // Convert to standard value
