@@ -38,65 +38,65 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Current extends Zend_Measure_Abstract
 {
     // Current definitions
-    const STANDARD = 'Current::AMPERE';
+    const STANDARD = 'AMPERE';
 
-    const ABAMPERE             = 'Current::ABAMPERE';
-    const AMPERE               = 'Current::AMPERE';
-    const BIOT                 = 'Current::BIOT';
-    const CENTIAMPERE          = 'Current::CENTIAMPERE';
-    const COULOMB_PER_SECOND   = 'Current::COULOMB_PER_SECOND';
-    const DECIAMPERE           = 'Current::DECIAMPERE';
-    const DEKAAMPERE           = 'Current::DEKAAMPERE';
-    const ELECTROMAGNETIC_UNIT = 'Current::ELECTROMAGNATIC_UNIT';
-    const ELECTROSTATIC_UNIT   = 'Current::ELECTROSTATIC_UNIT';
-    const FRANCLIN_PER_SECOND  = 'Current::FRANCLIN_PER_SECOND';
-    const GAUSSIAN             = 'Current::GAUSSIAN';
-    const GIGAAMPERE           = 'Current::GIGAAMPERE';
-    const GILBERT              = 'Current::GILBERT';
-    const HECTOAMPERE          = 'Current::HECTOAMPERE';
-    const KILOAMPERE           = 'Current::KILOAMPERE';
-    const MEGAAMPERE           = 'Current::MEGAAMPERE';
-    const MICROAMPERE          = 'Current::MICROAMPERE';
-    const MILLIAMPERE          = 'Current::MILLIAMPERE';
-    const NANOAMPERE           = 'Current::NANOAMPERE';
-    const PICOAMPERE           = 'Current::PICOAMPERE';
-    const SIEMENS_VOLT         = 'Current::SIEMENS_VOLT';
-    const STATAMPERE           = 'Current::STATAMPERE';
-    const TERAAMPERE           = 'Current::TERAAMPERE';
-    const VOLT_PER_OHM         = 'Current::VOLT_PER_OHM';
-    const WATT_PER_VOLT        = 'Current::WATT_PER_VOLT';
-    const WEBER_PER_HENRY      = 'Current::WEBER_PER_HENRY';
+    const ABAMPERE             = 'ABAMPERE';
+    const AMPERE               = 'AMPERE';
+    const BIOT                 = 'BIOT';
+    const CENTIAMPERE          = 'CENTIAMPERE';
+    const COULOMB_PER_SECOND   = 'COULOMB_PER_SECOND';
+    const DECIAMPERE           = 'DECIAMPERE';
+    const DEKAAMPERE           = 'DEKAAMPERE';
+    const ELECTROMAGNETIC_UNIT = 'ELECTROMAGNATIC_UNIT';
+    const ELECTROSTATIC_UNIT   = 'ELECTROSTATIC_UNIT';
+    const FRANCLIN_PER_SECOND  = 'FRANCLIN_PER_SECOND';
+    const GAUSSIAN             = 'GAUSSIAN';
+    const GIGAAMPERE           = 'GIGAAMPERE';
+    const GILBERT              = 'GILBERT';
+    const HECTOAMPERE          = 'HECTOAMPERE';
+    const KILOAMPERE           = 'KILOAMPERE';
+    const MEGAAMPERE           = 'MEGAAMPERE';
+    const MICROAMPERE          = 'MICROAMPERE';
+    const MILLIAMPERE          = 'MILLIAMPERE';
+    const NANOAMPERE           = 'NANOAMPERE';
+    const PICOAMPERE           = 'PICOAMPERE';
+    const SIEMENS_VOLT         = 'SIEMENS_VOLT';
+    const STATAMPERE           = 'STATAMPERE';
+    const TERAAMPERE           = 'TERAAMPERE';
+    const VOLT_PER_OHM         = 'VOLT_PER_OHM';
+    const WATT_PER_VOLT        = 'WATT_PER_VOLT';
+    const WEBER_PER_HENRY      = 'WEBER_PER_HENRY';
 
     private static $_UNITS = array(
-        'Current::ABAMPERE'             => array(10,           'abampere'),
-        'Current::AMPERE'               => array(1,            'A'),
-        'Current::BIOT'                 => array(10,           'Bi'),
-        'Current::CENTIAMPERE'          => array(0.01,         'cA'),
-        'Current::COULOMB_PER_SECOND'   => array(1,            'C/s'),
-        'Current::DECIAMPERE'           => array(0.1,          'dA'),
-        'Current::DEKAAMPERE'           => array(10,           'daA'),
-        'Current::ELECTROMAGNATIC_UNIT' => array(10,           'current emu'),
-        'Current::ELECTROSTATIC_UNIT'   => array(3.335641e-10, 'current esu'),
-        'Current::FRANCLIN_PER_SECOND'  => array(3.335641e-10, 'Fr/s'),
-        'Current::GAUSSIAN'             => array(3.335641e-10, 'G current'),
-        'Current::GIGAAMPERE'           => array(1.0e+9,       'GA'),
-        'Current::GILBERT'              => array(0.79577472,   'Gi'),
-        'Current::HECTOAMPERE'          => array(100,          'hA'),
-        'Current::KILOAMPERE'           => array(1000,         'kA'),
-        'Current::MEGAAMPERE'           => array(1000000,      'MA') ,
-        'Current::MICROAMPERE'          => array(0.000001,     'µA'),
-        'Current::MILLIAMPERE'          => array(0.001,        'mA'),
-        'Current::NANOAMPERE'           => array(1.0e-9,       'nA'),
-        'Current::PICOAMPERE'           => array(1.0e-12,      'pA'),
-        'Current::SIEMENS_VOLT'         => array(1,            'SV'),
-        'Current::STATAMPERE'           => array(3.335641e-10, 'statampere'),
-        'Current::TERAAMPERE'           => array(1.0e+12,      'TA'),
-        'Current::VOLT_PER_OHM'         => array(1,            'V/Ohm'),
-        'Current::WATT_PER_VOLT'        => array(1,            'W/V'),
-        'Current::WEBER_PER_HENRY'      => array(1,            'Wb/H')
+        'ABAMPERE'             => array(10,           'abampere'),
+        'AMPERE'               => array(1,            'A'),
+        'BIOT'                 => array(10,           'Bi'),
+        'CENTIAMPERE'          => array(0.01,         'cA'),
+        'COULOMB_PER_SECOND'   => array(1,            'C/s'),
+        'DECIAMPERE'           => array(0.1,          'dA'),
+        'DEKAAMPERE'           => array(10,           'daA'),
+        'ELECTROMAGNATIC_UNIT' => array(10,           'current emu'),
+        'ELECTROSTATIC_UNIT'   => array(3.335641e-10, 'current esu'),
+        'FRANCLIN_PER_SECOND'  => array(3.335641e-10, 'Fr/s'),
+        'GAUSSIAN'             => array(3.335641e-10, 'G current'),
+        'GIGAAMPERE'           => array(1.0e+9,       'GA'),
+        'GILBERT'              => array(0.79577472,   'Gi'),
+        'HECTOAMPERE'          => array(100,          'hA'),
+        'KILOAMPERE'           => array(1000,         'kA'),
+        'MEGAAMPERE'           => array(1000000,      'MA') ,
+        'MICROAMPERE'          => array(0.000001,     'µA'),
+        'MILLIAMPERE'          => array(0.001,        'mA'),
+        'NANOAMPERE'           => array(1.0e-9,       'nA'),
+        'PICOAMPERE'           => array(1.0e-12,      'pA'),
+        'SIEMENS_VOLT'         => array(1,            'SV'),
+        'STATAMPERE'           => array(3.335641e-10, 'statampere'),
+        'TERAAMPERE'           => array(1.0e+12,      'TA'),
+        'VOLT_PER_OHM'         => array(1,            'V/Ohm'),
+        'WATT_PER_VOLT'        => array(1,            'W/V'),
+        'WEBER_PER_HENRY'      => array(1,            'Wb/H')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Current provides an locale aware class for
@@ -106,27 +106,21 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Current Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Current Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Current  $object  Current object to compare
      * @return boolean
      */
     public function equals($object)
@@ -142,15 +136,23 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Current Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Current Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -160,7 +162,7 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of current:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown current");
         }
 
         parent::setValue($value, $type, $locale);
@@ -171,13 +173,13 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of current:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown current");
         }
 
         // Convert to standard value

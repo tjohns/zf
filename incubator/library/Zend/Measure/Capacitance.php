@@ -38,61 +38,61 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Capacitance extends Zend_Measure_Abstract
 {
     // Capacitance definitions
-    const STANDARD = 'Capacitance::FARAD';
+    const STANDARD = 'FARAD';
 
-    const ABFARAD              = 'Capacitance::ABFARAD';
-    const AMPERE_PER_SECOND_VOLT   = 'Capacitance::AMPERE_PER_SECOND_VOLT';
-    const CENTIFARAD           = 'Capacitance::CENTIFARAD';
-    const COULOMB_PER_VOLT         = 'Capacitance::COULOMB_PER_VOLT';
-    const DECIFARAD            = 'Capacitance::DECIFARAD';
-    const DEKAFARAD            = 'Capacitance::DEKAFARAD';
-    const ELECTROMAGNETIC_UNIT = 'Capacitance::ELECTROMAGNETIC_UNIT';
-    const ELECTROSTATIC_UNIT   = 'Capacitance::ELECTROSTATIC_UNIT';
-    const FARAD                = 'Capacitance::FARAD';
-    const FARAD_INTERNATIONAL  = 'Capacitance::FARAD_INTERNATIONAL';
-    const GAUSSIAN             = 'Capacitance::GAUSSIAN';
-    const GIGAFARAD            = 'Capacitance::GIGAFARAD';
-    const HECTOFARAD           = 'Capacitance::HECTOFARAD';
-    const JAR                  = 'Capacitance::JAR';
-    const KILOFARAD            = 'Capacitance::KILOFARAD';
-    const MEGAFARAD            = 'Capacitance::MEGAFARAD';
-    const MICROFARAD           = 'Capacitance::MICROFARAD';
-    const MILLIFARAD           = 'Capacitance::MILLIFARAD';
-    const NANOFARAD            = 'Capacitance::NANOFARAD';
-    const PICOFARAD            = 'Capacitance::PICOFARAD';
-    const PUFF                 = 'Capacitance::PUFF';
-    const SECOND_PER_OHM       = 'Capacitance::SECOND_PER_OHM';
-    const STATFARAD            = 'Capacitance::STATFARAD';
-    const TERAFARAD            = 'Capacitance::TERAFARAD';
+    const ABFARAD              = 'ABFARAD';
+    const AMPERE_PER_SECOND_VOLT   = 'AMPERE_PER_SECOND_VOLT';
+    const CENTIFARAD           = 'CENTIFARAD';
+    const COULOMB_PER_VOLT         = 'COULOMB_PER_VOLT';
+    const DECIFARAD            = 'DECIFARAD';
+    const DEKAFARAD            = 'DEKAFARAD';
+    const ELECTROMAGNETIC_UNIT = 'ELECTROMAGNETIC_UNIT';
+    const ELECTROSTATIC_UNIT   = 'ELECTROSTATIC_UNIT';
+    const FARAD                = 'FARAD';
+    const FARAD_INTERNATIONAL  = 'FARAD_INTERNATIONAL';
+    const GAUSSIAN             = 'GAUSSIAN';
+    const GIGAFARAD            = 'GIGAFARAD';
+    const HECTOFARAD           = 'HECTOFARAD';
+    const JAR                  = 'JAR';
+    const KILOFARAD            = 'KILOFARAD';
+    const MEGAFARAD            = 'MEGAFARAD';
+    const MICROFARAD           = 'MICROFARAD';
+    const MILLIFARAD           = 'MILLIFARAD';
+    const NANOFARAD            = 'NANOFARAD';
+    const PICOFARAD            = 'PICOFARAD';
+    const PUFF                 = 'PUFF';
+    const SECOND_PER_OHM       = 'SECOND_PER_OHM';
+    const STATFARAD            = 'STATFARAD';
+    const TERAFARAD            = 'TERAFARAD';
 
     private static $_UNITS = array(
-        'Capacitance::ABFARAD'              => array(1.0e+9,      'abfarad'),
-        'Capacitance::AMPERE_PER_SECOND_VOLT' => array(1,         'A/sV'),
-        'Capacitance::CENTIFARAD'           => array(0.01,        'cF'),
-        'Capacitance::COULOMB_PER_VOLT'     => array(1,           'C/V'),
-        'Capacitance::DECIFARAD'            => array(0.1,         'dF'),
-        'Capacitance::DEKAFARAD'            => array(10,          'daF'),
-        'Capacitance::ELECTROMAGNETIC_UNIT' => array(1.0e+9,      'capacity emu'),
-        'Capacitance::ELECTROSTATIC_UNIT'   => array(1.11265e-12, 'capacity esu'),
-        'Capacitance::FARAD'                => array(1,           'F'),
-        'Capacitance::FARAD_INTERNATIONAL'  => array(0.99951,     'F'),
-        'Capacitance::GAUSSIAN'             => array(1.11265e-12, 'G'),
-        'Capacitance::GIGAFARAD'            => array(1.0e+9,      'GF'),
-        'Capacitance::HECTOFARAD'           => array(100,         'hF'),
-        'Capacitance::JAR'                  => array(1.11265e-9,  'jar'),
-        'Capacitance::KILOFARAD'            => array(1000,        'kF'),
-        'Capacitance::MEGAFARAD'            => array(1000000,     'MF'),
-        'Capacitance::MICROFARAD'           => array(0.000001,    'µF'),
-        'Capacitance::MILLIFARAD'           => array(0.001,       'mF'),
-        'Capacitance::NANOFARAD'            => array(1.0e-9,      'nF'),
-        'Capacitance::PICOFARAD'            => array(1.0e-12,     'pF'),
-        'Capacitance::PUFF'                 => array(1.0e-12,     'pF'),
-        'Capacitance::SECOND_PER_OHM'       => array(1,           's/Ohm'),
-        'Capacitance::STATFARAD'            => array(1.11265e-12, 'statfarad'),
-        'Capacitance::TERAFARAD'            => array(1.0e+12,     'TF')
+        'ABFARAD'              => array(1.0e+9,      'abfarad'),
+        'AMPERE_PER_SECOND_VOLT' => array(1,         'A/sV'),
+        'CENTIFARAD'           => array(0.01,        'cF'),
+        'COULOMB_PER_VOLT'     => array(1,           'C/V'),
+        'DECIFARAD'            => array(0.1,         'dF'),
+        'DEKAFARAD'            => array(10,          'daF'),
+        'ELECTROMAGNETIC_UNIT' => array(1.0e+9,      'capacity emu'),
+        'ELECTROSTATIC_UNIT'   => array(1.11265e-12, 'capacity esu'),
+        'FARAD'                => array(1,           'F'),
+        'FARAD_INTERNATIONAL'  => array(0.99951,     'F'),
+        'GAUSSIAN'             => array(1.11265e-12, 'G'),
+        'GIGAFARAD'            => array(1.0e+9,      'GF'),
+        'HECTOFARAD'           => array(100,         'hF'),
+        'JAR'                  => array(1.11265e-9,  'jar'),
+        'KILOFARAD'            => array(1000,        'kF'),
+        'MEGAFARAD'            => array(1000000,     'MF'),
+        'MICROFARAD'           => array(0.000001,    'µF'),
+        'MILLIFARAD'           => array(0.001,       'mF'),
+        'NANOFARAD'            => array(1.0e-9,      'nF'),
+        'PICOFARAD'            => array(1.0e-12,     'pF'),
+        'PUFF'                 => array(1.0e-12,     'pF'),
+        'SECOND_PER_OHM'       => array(1,           's/Ohm'),
+        'STATFARAD'            => array(1.11265e-12, 'statfarad'),
+        'TERAFARAD'            => array(1.0e+12,     'TF')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Capacitance provides an locale aware class for
@@ -102,30 +102,24 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Capacitance Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Capacitance Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Capacitance  $object  Capacitance object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -138,15 +132,23 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Capacitance Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Capacitance Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -156,7 +158,7 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of capacity:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown capacity");
         }
 
         parent::setValue($value, $type, $locale);
@@ -167,13 +169,13 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType( $type )
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of capacity:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown capacity");
         }
 
         // Convert to standard value
