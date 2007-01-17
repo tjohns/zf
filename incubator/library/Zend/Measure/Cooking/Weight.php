@@ -147,7 +147,7 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of weight-cooking:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown cooking weight");
         }
 
         // Convert to standard value

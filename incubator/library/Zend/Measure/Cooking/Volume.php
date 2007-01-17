@@ -38,150 +38,150 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
 {
     // Cooking_Volume definitions
-    const STANDARD = 'Cooking_Volume::CUBIC_METER';
+    const STANDARD = 'CUBIC_METER';
 
-    const CAN_2POINT5       = 'Cooking_Volume::CAN_2POINT5';
-    const CAN_10            = 'Cooking_Volume::CAN_10';
-    const BARREL_WINE       = 'Cooking_Volume::BARREL_WINE';
-    const BARREL            = 'Cooking_Volume::BARREL';
-    const BARREL_US_DRY     = 'Cooking_Volume::BARREL_US_DRY';
-    const BARREL_US_FEDERAL = 'Cooking_Volume::BARREL_US_FEDERAL';
-    const BARREL_US         = 'Cooking_Volume::BARREL_US';
-    const BUCKET            = 'Cooking_Volume::BUCKET';
-    const BUCKET_US         = 'Cooking_Volume::BUCKET_US';
-    const BUSHEL            = 'Cooking_Volume::BUSHEL';
-    const BUSHEL_US         = 'Cooking_Volume::BUSHEL_US';
-    const CENTILITER        = 'Cooking_Volume::CENTILITER';
-    const COFFEE_SPOON      = 'Cooking_Volume::COFFEE_SPOON';
-    const CUBIC_CENTIMETER  = 'Cooking_Volume::CUBIC_CENTIMETER';
-    const CUBIC_DECIMETER   = 'Cooking_Volume::CUBIC_DECIMETER';
-    const CUBIC_FOOT        = 'Cooking_Volume::CUBIC_FOOT';
-    const CUBIC_INCH        = 'Cooking_Volume::CUBIC_INCH';
-    const CUBIC_METER       = 'Cooking_Volume::CUBIC_METER';
-    const CUBIC_MICROMETER  = 'Cooking_Volume::CUBIC_MICROMETER';
-    const CUBIC_MILLIMETER  = 'Cooking_Volume::CUBIC_MILLIMETER';
-    const CUP_CANADA        = 'Cooking_Volume::CUP_CANADA';
-    const CUP               = 'Cooking_Volume::CUP';
-    const CUP_US            = 'Cooking_Volume::CUP_US';
-    const DASH              = 'Cooking_Volume::DASH';
-    const DECILITER         = 'Cooking_Volume::DECILITER';
-    const DEKALITER         = 'Cooking_Volume::DEKALITER';
-    const DEMI              = 'Cooking_Volume::DEMI';
-    const DRAM              = 'Cooking_Volume::DRAM';
-    const DROP              = 'Cooking_Volume::DROP';
-    const FIFTH             = 'Cooking_Volume::FIFTH';
-    const GALLON            = 'Cooking_Volume::GALLON';
-    const GALLON_US_DRY     = 'Cooking_Volume::GALLON_US_DRY';
-    const GALLON_US         = 'Cooking_Volume::GALLON_US';
-    const GILL              = 'Cooking_Volume::GILL';
-    const GILL_US           = 'Cooking_Volume::GILL_US';
-    const HECTOLITER        = 'Cooking_Volume::HECTOLITER';
-    const HOGSHEAD          = 'Cooking_Volume::HOGSHEAD';
-    const HOGSHEAD_US       = 'Cooking_Volume::HOGSHEAD_US';
-    const JIGGER            = 'Cooking_Volume::JIGGER';
-    const KILOLITER         = 'Cooking_Volume::KILOLITER';
-    const LITER             = 'Cooking_Volume::LITER';
-    const MEASURE           = 'Cooking_Volume::MEASURE';
-    const MEGALITER         = 'Cooking_Volume::MEGALITER';
-    const MICROLITER        = 'Cooking_Volume::MICROLITER';
-    const MILLILITER        = 'Cooking_Volume::MILLILITER';
-    const MINIM             = 'Cooking_Volume::MINIM';
-    const MINIM_US          = 'Cooking_Volume::MINIM_US';
-    const OUNCE             = 'Cooking_Volume::OUNCE';
-    const OUNCE_US          = 'Cooking_Volume::OUNCE_US';
-    const PECK              = 'Cooking_Volume::PECK';
-    const PECK_US           = 'Cooking_Volume::PECK_US';
-    const PINCH             = 'Cooking_Volume::PINCH';
-    const PINT              = 'Cooking_Volume::PINT';
-    const PINT_US_DRY       = 'Cooking_Volume::PINT_US_DRY';
-    const PINT_US           = 'Cooking_Volume::PINT_US';
-    const PIPE              = 'Cooking_Volume::PIPE';
-    const PIPE_US           = 'Cooking_Volume::PIPE_US';
-    const PONY              = 'Cooking_Volume::PONY';
-    const QUART_GERMANY     = 'Cooking_Volume::QUART_GERMANY';
-    const QUART_ANCIENT     = 'Cooking_Volume::QUART_ANCIENT';
-    const QUART             = 'Cooking_Volume::QUART';
-    const QUART_US_DRY      = 'Cooking_Volume::QUART_US_DRY';
-    const QUART_US          = 'Cooking_Volume::QUART_US';
-    const SHOT              = 'Cooking_Volume::SHOT';
-    const TABLESPOON        = 'Cooking_Volume::TABLESPOON';
-    const TABLESPOON_UK     = 'Cooking_Volume::TABLESPOON_UK';
-    const TABLESPOON_US     = 'Cooking_Volume::TABLESPOON_US';
-    const TEASPOON          = 'Cooking_Volume::TEASPOON';
-    const TEASPOON_UK       = 'Cooking_Volume::TEASPOON_UK';
-    const TEASPOON_US       = 'Cooking_Volume::TEASPOON_US';
+    const CAN_2POINT5       = 'CAN_2POINT5';
+    const CAN_10            = 'CAN_10';
+    const BARREL_WINE       = 'BARREL_WINE';
+    const BARREL            = 'BARREL';
+    const BARREL_US_DRY     = 'BARREL_US_DRY';
+    const BARREL_US_FEDERAL = 'BARREL_US_FEDERAL';
+    const BARREL_US         = 'BARREL_US';
+    const BUCKET            = 'BUCKET';
+    const BUCKET_US         = 'BUCKET_US';
+    const BUSHEL            = 'BUSHEL';
+    const BUSHEL_US         = 'BUSHEL_US';
+    const CENTILITER        = 'CENTILITER';
+    const COFFEE_SPOON      = 'COFFEE_SPOON';
+    const CUBIC_CENTIMETER  = 'CUBIC_CENTIMETER';
+    const CUBIC_DECIMETER   = 'CUBIC_DECIMETER';
+    const CUBIC_FOOT        = 'CUBIC_FOOT';
+    const CUBIC_INCH        = 'CUBIC_INCH';
+    const CUBIC_METER       = 'CUBIC_METER';
+    const CUBIC_MICROMETER  = 'CUBIC_MICROMETER';
+    const CUBIC_MILLIMETER  = 'CUBIC_MILLIMETER';
+    const CUP_CANADA        = 'CUP_CANADA';
+    const CUP               = 'CUP';
+    const CUP_US            = 'CUP_US';
+    const DASH              = 'DASH';
+    const DECILITER         = 'DECILITER';
+    const DEKALITER         = 'DEKALITER';
+    const DEMI              = 'DEMI';
+    const DRAM              = 'DRAM';
+    const DROP              = 'DROP';
+    const FIFTH             = 'FIFTH';
+    const GALLON            = 'GALLON';
+    const GALLON_US_DRY     = 'GALLON_US_DRY';
+    const GALLON_US         = 'GALLON_US';
+    const GILL              = 'GILL';
+    const GILL_US           = 'GILL_US';
+    const HECTOLITER        = 'HECTOLITER';
+    const HOGSHEAD          = 'HOGSHEAD';
+    const HOGSHEAD_US       = 'HOGSHEAD_US';
+    const JIGGER            = 'JIGGER';
+    const KILOLITER         = 'KILOLITER';
+    const LITER             = 'LITER';
+    const MEASURE           = 'MEASURE';
+    const MEGALITER         = 'MEGALITER';
+    const MICROLITER        = 'MICROLITER';
+    const MILLILITER        = 'MILLILITER';
+    const MINIM             = 'MINIM';
+    const MINIM_US          = 'MINIM_US';
+    const OUNCE             = 'OUNCE';
+    const OUNCE_US          = 'OUNCE_US';
+    const PECK              = 'PECK';
+    const PECK_US           = 'PECK_US';
+    const PINCH             = 'PINCH';
+    const PINT              = 'PINT';
+    const PINT_US_DRY       = 'PINT_US_DRY';
+    const PINT_US           = 'PINT_US';
+    const PIPE              = 'PIPE';
+    const PIPE_US           = 'PIPE_US';
+    const PONY              = 'PONY';
+    const QUART_GERMANY     = 'QUART_GERMANY';
+    const QUART_ANCIENT     = 'QUART_ANCIENT';
+    const QUART             = 'QUART';
+    const QUART_US_DRY      = 'QUART_US_DRY';
+    const QUART_US          = 'QUART_US';
+    const SHOT              = 'SHOT';
+    const TABLESPOON        = 'TABLESPOON';
+    const TABLESPOON_UK     = 'TABLESPOON_UK';
+    const TABLESPOON_US     = 'TABLESPOON_US';
+    const TEASPOON          = 'TEASPOON';
+    const TEASPOON_UK       = 'TEASPOON_UK';
+    const TEASPOON_US       = 'TEASPOON_US';
 
     private static $_UNITS = array(
-        'Cooking_Volume::CAN_2POINT5'       => array(array('' => 0.0037854118, '/' => 16, '' => 3.5), '2.5th can'),
-        'Cooking_Volume::CAN_10'            => array(array('' => 0.0037854118, '*' => 0.75),          '10th can'),
-        'Cooking_Volume::BARREL_WINE'       => array(0.143201835,   'bbl'),
-        'Cooking_Volume::BARREL'            => array(0.16365924,    'bbl'),
-        'Cooking_Volume::BARREL_US_DRY'     => array(array('' => 26.7098656608, '/' => 231), 'bbl'),
-        'Cooking_Volume::BARREL_US_FEDERAL' => array(0.1173477658,  'bbl'),
-        'Cooking_Volume::BARREL_US'         => array(0.1192404717,  'bbl'),
-        'Cooking_Volume::BUCKET'            => array(0.01818436,    'bucket'),
-        'Cooking_Volume::BUCKET_US'         => array(0.018927059,   'bucket'),
-        'Cooking_Volume::BUSHEL'            => array(0.03636872,    'bu'),
-        'Cooking_Volume::BUSHEL_US'         => array(0.03523907,    'bu'),
-        'Cooking_Volume::CENTILITER'        => array(0.00001,       'cl'),
-        'Cooking_Volume::COFFEE_SPOON'      => array(array('' => 0.0037854118, '/' => 1536), 'coffee spoon'),
-        'Cooking_Volume::CUBIC_CENTIMETER'  => array(0.000001,      'cm³'),
-        'Cooking_Volume::CUBIC_DECIMETER'   => array(0.001,         'dm³'),
-        'Cooking_Volume::CUBIC_FOOT'        => array(array('' => 6.54119159, '/' => 231),   'ft³'),
-        'Cooking_Volume::CUBIC_INCH'        => array(array('' => 0.0037854118, '/' => 231), 'in³'),
-        'Cooking_Volume::CUBIC_METER'       => array(1,             'm³'),
-        'Cooking_Volume::CUBIC_MICROMETER'  => array(1.0e-18,       'µm³'),
-        'Cooking_Volume::CUBIC_MILLIMETER'  => array(1.0e-9,        'mm³'),
-        'Cooking_Volume::CUP_CANADA'        => array(0.0002273045,  'c'),
-        'Cooking_Volume::CUP'               => array(0.00025,       'c'),
-        'Cooking_Volume::CUP_US'            => array(array('' => 0.0037854118, '/' => 16),   'c'),
-        'Cooking_Volume::DASH'              => array(array('' => 0.0037854118, '/' => 6144), 'ds'),
-        'Cooking_Volume::DECILITER'         => array(0.0001,        'dl'),
-        'Cooking_Volume::DEKALITER'         => array(0.001,         'dal'),
-        'Cooking_Volume::DEMI'              => array(0.00025,       'demi'),
-        'Cooking_Volume::DRAM'              => array(array('' => 0.0037854118, '/' => 1024),  'dr'),
-        'Cooking_Volume::DROP'              => array(array('' => 0.0037854118, '/' => 73728), 'ggt'),
-        'Cooking_Volume::FIFTH'             => array(0.00075708236, 'fifth'),
-        'Cooking_Volume::GALLON'            => array(0.00454609,    'gal'),
-        'Cooking_Volume::GALLON_US_DRY'     => array(0.0044048838,  'gal'),
-        'Cooking_Volume::GALLON_US'         => array(0.0037854118,  'gal'),
-        'Cooking_Volume::GILL'              => array(array('' => 0.00454609, '/' => 32),   'gi'),
-        'Cooking_Volume::GILL_US'           => array(array('' => 0.0037854118, '/' => 32), 'gi'),
-        'Cooking_Volume::HECTOLITER'        => array(0.1,           'hl'),
-        'Cooking_Volume::HOGSHEAD'          => array(0.28640367,    'hhd'),
-        'Cooking_Volume::HOGSHEAD_US'       => array(0.2384809434,  'hhd'),
-        'Cooking_Volume::JIGGER'            => array(array('' => 0.0037854118, '/' => 128, '*' => 1.5), 'jigger'),
-        'Cooking_Volume::KILOLITER'         => array(1,             'kl'),
-        'Cooking_Volume::LITER'             => array(0.001,         'l'),
-        'Cooking_Volume::MEASURE'           => array(0.0077,        'measure'),
-        'Cooking_Volume::MEGALITER'         => array(1000,          'Ml'),
-        'Cooking_Volume::MICROLITER'        => array(1.0e-9,        'µl'),
-        'Cooking_Volume::MILLILITER'        => array(0.000001,      'ml'),
-        'Cooking_Volume::MINIM'             => array(array('' => 0.00454609, '/' => 76800),  'min'),
-        'Cooking_Volume::MINIM_US'          => array(array('' => 0.0037854118,'/' => 61440), 'min'),
-        'Cooking_Volume::OUNCE'             => array(array('' => 0.00454609, '/' => 160),    'oz'),
-        'Cooking_Volume::OUNCE_US'          => array(array('' => 0.0037854118, '/' => 128),  'oz'),
-        'Cooking_Volume::PECK'              => array(0.00909218,    'pk'),
-        'Cooking_Volume::PECK_US'           => array(0.0088097676,  'pk'),
-        'Cooking_Volume::PINCH'             => array(array('' => 0.0037854118, '/' => 12288), 'pinch'),
-        'Cooking_Volume::PINT'              => array(array('' => 0.00454609, '/' => 8),       'pt'),
-        'Cooking_Volume::PINT_US_DRY'       => array(array('' => 0.0044048838, '/' => 8),     'pt'),
-        'Cooking_Volume::PINT_US'           => array(array('' => 0.0037854118, '/' => 8),     'pt'),
-        'Cooking_Volume::PIPE'              => array(0.49097772,    'pipe'),
-        'Cooking_Volume::PIPE_US'           => array(0.4769618868,  'pipe'),
-        'Cooking_Volume::PONY'              => array(array('' => 0.0037854118, '/' => 128), 'pony'),
-        'Cooking_Volume::QUART_GERMANY'     => array(0.00114504,    'qt'),
-        'Cooking_Volume::QUART_ANCIENT'     => array(0.00108,       'qt'),
-        'Cooking_Volume::QUART'             => array(array('' => 0.00454609, '/' => 4),     'qt'),
-        'Cooking_Volume::QUART_US_DRY'      => array(array('' => 0.0044048838, '/' => 4),   'qt'),
-        'Cooking_Volume::QUART_US'          => array(array('' => 0.0037854118, '/' => 4),   'qt'),
-        'Cooking_Volume::SHOT'              => array(array('' => 0.0037854118, '/' => 128), 'shot'),
-        'Cooking_Volume::TABLESPOON'        => array(0.000015,      'tbsp'),
-        'Cooking_Volume::TABLESPOON_UK'     => array(array('' => 0.00454609, '/' => 320),   'tbsp'),
-        'Cooking_Volume::TABLESPOON_US'     => array(array('' => 0.0037854118, '/' => 256), 'tbsp'),
-        'Cooking_Volume::TEASPOON'          => array(0.000005,      'tsp'),
-        'Cooking_Volume::TEASPOON_UK'       => array(array('' => 0.00454609, '/' => 1280),  'tsp'),
-        'Cooking_Volume::TEASPOON_US'       => array(array('' => 0.0037854118, '/' => 768), 'tsp')
+        'CAN_2POINT5'       => array(array('' => 0.0037854118, '/' => 16, '' => 3.5), '2.5th can'),
+        'CAN_10'            => array(array('' => 0.0037854118, '*' => 0.75),          '10th can'),
+        'BARREL_WINE'       => array(0.143201835,   'bbl'),
+        'BARREL'            => array(0.16365924,    'bbl'),
+        'BARREL_US_DRY'     => array(array('' => 26.7098656608, '/' => 231), 'bbl'),
+        'BARREL_US_FEDERAL' => array(0.1173477658,  'bbl'),
+        'BARREL_US'         => array(0.1192404717,  'bbl'),
+        'BUCKET'            => array(0.01818436,    'bucket'),
+        'BUCKET_US'         => array(0.018927059,   'bucket'),
+        'BUSHEL'            => array(0.03636872,    'bu'),
+        'BUSHEL_US'         => array(0.03523907,    'bu'),
+        'CENTILITER'        => array(0.00001,       'cl'),
+        'COFFEE_SPOON'      => array(array('' => 0.0037854118, '/' => 1536), 'coffee spoon'),
+        'CUBIC_CENTIMETER'  => array(0.000001,      'cm³'),
+        'CUBIC_DECIMETER'   => array(0.001,         'dm³'),
+        'CUBIC_FOOT'        => array(array('' => 6.54119159, '/' => 231),   'ft³'),
+        'CUBIC_INCH'        => array(array('' => 0.0037854118, '/' => 231), 'in³'),
+        'CUBIC_METER'       => array(1,             'm³'),
+        'CUBIC_MICROMETER'  => array(1.0e-18,       'µm³'),
+        'CUBIC_MILLIMETER'  => array(1.0e-9,        'mm³'),
+        'CUP_CANADA'        => array(0.0002273045,  'c'),
+        'CUP'               => array(0.00025,       'c'),
+        'CUP_US'            => array(array('' => 0.0037854118, '/' => 16),   'c'),
+        'DASH'              => array(array('' => 0.0037854118, '/' => 6144), 'ds'),
+        'DECILITER'         => array(0.0001,        'dl'),
+        'DEKALITER'         => array(0.001,         'dal'),
+        'DEMI'              => array(0.00025,       'demi'),
+        'DRAM'              => array(array('' => 0.0037854118, '/' => 1024),  'dr'),
+        'DROP'              => array(array('' => 0.0037854118, '/' => 73728), 'ggt'),
+        'FIFTH'             => array(0.00075708236, 'fifth'),
+        'GALLON'            => array(0.00454609,    'gal'),
+        'GALLON_US_DRY'     => array(0.0044048838,  'gal'),
+        'GALLON_US'         => array(0.0037854118,  'gal'),
+        'GILL'              => array(array('' => 0.00454609, '/' => 32),   'gi'),
+        'GILL_US'           => array(array('' => 0.0037854118, '/' => 32), 'gi'),
+        'HECTOLITER'        => array(0.1,           'hl'),
+        'HOGSHEAD'          => array(0.28640367,    'hhd'),
+        'HOGSHEAD_US'       => array(0.2384809434,  'hhd'),
+        'JIGGER'            => array(array('' => 0.0037854118, '/' => 128, '*' => 1.5), 'jigger'),
+        'KILOLITER'         => array(1,             'kl'),
+        'LITER'             => array(0.001,         'l'),
+        'MEASURE'           => array(0.0077,        'measure'),
+        'MEGALITER'         => array(1000,          'Ml'),
+        'MICROLITER'        => array(1.0e-9,        'µl'),
+        'MILLILITER'        => array(0.000001,      'ml'),
+        'MINIM'             => array(array('' => 0.00454609, '/' => 76800),  'min'),
+        'MINIM_US'          => array(array('' => 0.0037854118,'/' => 61440), 'min'),
+        'OUNCE'             => array(array('' => 0.00454609, '/' => 160),    'oz'),
+        'OUNCE_US'          => array(array('' => 0.0037854118, '/' => 128),  'oz'),
+        'PECK'              => array(0.00909218,    'pk'),
+        'PECK_US'           => array(0.0088097676,  'pk'),
+        'PINCH'             => array(array('' => 0.0037854118, '/' => 12288), 'pinch'),
+        'PINT'              => array(array('' => 0.00454609, '/' => 8),       'pt'),
+        'PINT_US_DRY'       => array(array('' => 0.0044048838, '/' => 8),     'pt'),
+        'PINT_US'           => array(array('' => 0.0037854118, '/' => 8),     'pt'),
+        'PIPE'              => array(0.49097772,    'pipe'),
+        'PIPE_US'           => array(0.4769618868,  'pipe'),
+        'PONY'              => array(array('' => 0.0037854118, '/' => 128), 'pony'),
+        'QUART_GERMANY'     => array(0.00114504,    'qt'),
+        'QUART_ANCIENT'     => array(0.00108,       'qt'),
+        'QUART'             => array(array('' => 0.00454609, '/' => 4),     'qt'),
+        'QUART_US_DRY'      => array(array('' => 0.0044048838, '/' => 4),   'qt'),
+        'QUART_US'          => array(array('' => 0.0037854118, '/' => 4),   'qt'),
+        'SHOT'              => array(array('' => 0.0037854118, '/' => 128), 'shot'),
+        'TABLESPOON'        => array(0.000015,      'tbsp'),
+        'TABLESPOON_UK'     => array(array('' => 0.00454609, '/' => 320),   'tbsp'),
+        'TABLESPOON_US'     => array(array('' => 0.0037854118, '/' => 256), 'tbsp'),
+        'TEASPOON'          => array(0.000005,      'tsp'),
+        'TEASPOON_UK'       => array(array('' => 0.00454609, '/' => 1280),  'tsp'),
+        'TEASPOON_US'       => array(array('' => 0.0037854118, '/' => 768), 'tsp')
     );
 
     private $_Locale;

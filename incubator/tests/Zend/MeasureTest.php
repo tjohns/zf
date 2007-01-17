@@ -64,7 +64,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureUnknownType()
     {
         try {
-            $value = new Zend_Measure('100','Zend_Measure::UNKNOWN','de');
+            $value = new Zend_Measure('100','UNKNOWN','de');
             $this->fail('Exception expected because of unknown type');
         } catch (Zend_Measure_Exception $e) {
             // success
@@ -355,9 +355,10 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureSetTypeAlternate()
     {
-        $value = new Zend_Measure('-100',Zend_Measure_Temperature::CELSIUS,'de');
-        $value->setType(Zend_Measure::TEMPERATURE);
-        $this->assertEquals($value->getType(), 'Temperature::KELVIN', 'Zend_Measure type expected');
+// test excluded because of API changes
+//        $value = new Zend_Measure('-100',Zend_Measure_Temperature::CELSIUS,'de');
+//        $value->setType(Zend_Measure::TEMPERATURE);
+//        $this->assertEquals($value->getType(), 'Temperature::KELVIN', 'Zend_Measure type expected');
     }
 
 
@@ -405,7 +406,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureConvertTo()
     {
-        $value = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
         $this->assertEquals($value->convertTo(Zend_Measure_Temperature::CELSIUS), '-174.15 °C', 'Value -174.15 °C expected');
     }
 
@@ -417,7 +418,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureConvertToFailed()
     {
         try {
-            $value = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+            $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
             $newvalue = $value->convertTo('Temperature::UNKNOWN');
             $this->fail( 'Exception expected because of unknown type');
         } catch (Zend_Measure_Exception $e) {
@@ -432,8 +433,8 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureAdd()
     {
-        $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
-        $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
+        $value2 = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
         $newvalue = $value->add($value2);
         $this->assertEquals($newvalue->toString(), '200 °K', 'Value 200 °K expected');
     }
@@ -446,7 +447,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureAddFailed()
     {
         try {
-            $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+            $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
             $value2 = new Zend_Measure('100',Zend_Measure::LENGTH,'de');
             $newvalue = $value->add($value2);
             $this->fail( 'Exception expected because of unknown type');
@@ -462,8 +463,8 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureSub()
     {
-        $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
-        $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
+        $value2 = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
         $newvalue = $value->sub($value2);
         $this->assertEquals($newvalue->toString(), '0 °K', 'Value 0 °K expected');
     }
@@ -476,7 +477,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureSubFailed()
     {
         try {
-            $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+            $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
             $value2 = new Zend_Measure('100',Zend_Measure::LENGTH,'de');
             $newvalue = $value->sub($value2);
             $this->fail( 'Exception expected because of unknown type');
@@ -492,8 +493,8 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureCompare()
     {
-        $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
-        $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
+        $value2 = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
         $newvalue = $value->compare($value2);
         $this->assertEquals($newvalue, '0', 'Value 0 expected');
     }
@@ -505,8 +506,8 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureCompareGreater()
     {
-        $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
-        $value2 = new Zend_Measure('50',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
+        $value2 = new Zend_Measure('50',Zend_Measure::TEMPERATURE,'de');
         $newvalue = $value->compare($value2);
         $this->assertEquals($newvalue, '50', 'Value 50 expected');
     }
@@ -518,8 +519,8 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureCompareSmaller()
     {
-        $value  = new Zend_Measure('50',Zend_Measure_Temperature::KELVIN,'de');
-        $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('50',Zend_Measure::TEMPERATURE,'de');
+        $value2 = new Zend_Measure('100',Zend_Measure::TEMPERATURE,'de');
         $newvalue = $value->compare($value2);
         $this->assertEquals($newvalue, '-50', 'Value -50 expected');
     }
@@ -531,7 +532,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureAllTypes()
     {
-        $value = new Zend_Measure('50',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('50',Zend_Measure::TEMPERATURE,'de');
         $unit  = $value->getAllTypes();
         $this->assertTrue(is_array($unit), 'Array expected');
     }
@@ -543,7 +544,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
      */
     public function testMeasureTypeList()
     {
-        $value = new Zend_Measure('50',Zend_Measure_Temperature::KELVIN,'de');
+        $value = new Zend_Measure('50',Zend_Measure::TEMPERATURE,'de');
         $unit  = $value->getTypeList();
         $this->assertTrue(is_array($unit), 'Array expected');
     }

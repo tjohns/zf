@@ -38,20 +38,20 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Temperature extends Zend_Measure_Abstract
 {
     // Temperature definitions
-    const STANDARD = 'Temperature::KELVIN';
+    const STANDARD = 'KELVIN';
 
-    const CELSIUS    = 'Temperature::CELSIUS';
-    const FAHRENHEIT = 'Temperature::FAHRENHEIT';
-    const RANKINE    = 'Temperature::RANKINE';
-    const REAUMUR    = 'Temperature::REAUMUR';
-    const KELVIN     = 'Temperature::KELVIN';
+    const CELSIUS    = 'CELSIUS';
+    const FAHRENHEIT = 'FAHRENHEIT';
+    const RANKINE    = 'RANKINE';
+    const REAUMUR    = 'REAUMUR';
+    const KELVIN     = 'KELVIN';
 
     public static $_UNITS = array(
-        'Temperature::CELSIUS'    => array(array('' => 1, '+' => 274.15),'°C'),
-        'Temperature::FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'°F'),
-        'Temperature::RANKINE'    => array(array('' => 1, '/' => 1.8),'°R'),
-        'Temperature::REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'°r'),
-        'Temperature::KELVIN'     => array(1,'°K')
+        'CELSIUS'    => array(array('' => 1, '+' => 274.15),'°C'),
+        'FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'°F'),
+        'RANKINE'    => array(array('' => 1, '/' => 1.8),'°R'),
+        'REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'°r'),
+        'KELVIN'     => array(1,'°K')
     );
 
     private $_Locale;

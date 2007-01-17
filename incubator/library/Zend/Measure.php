@@ -36,64 +36,64 @@ require_once 'Zend/Locale.php';
 class Zend_Measure
 {
 
-    const ACCELERATION   = 'Zend_Measure::ACCELERATION';
-    const ANGLE          = 'Zend_Measure::ANGLE';
-    const AREA           = 'Zend_Measure::AREA';
-    const BINARY         = 'Zend_Measure::BINARY';
-    const CAPACITANCE    = 'Zend_Measure::CAPACITANCE';
-    const COOKING_VOLUME = 'Zend_Measure::COOKING_VOLUME';
-    const COOKING_WEIGHT = 'Zend_Measure::COOKING_WEIGHT';
-    const CURRENT        = 'Zend_Measure::CURRENT';
-    const DENSITY        = 'Zend_Measure::DENSITY';
-    const ENERGY         = 'Zend_Measure::ENERGY';
-    const FORCE          = 'Zend_Measure::FORCE';
-    const FLOW_MASS      = 'Zend_Measure::FLOW_MASS';
-    const FLOW_MOLE      = 'Zend_Measure::FLOW_MOLE';
-    const FLOW_VOLUME    = 'Zend_Measure::FLOW_VOLUME';
-    const FREQUENCY      = 'Zend_Measure::FREQUENCY';
-    const ILLUMINATION   = 'Zend_Measure::ILLUMINATION';
-    const LENGTH         = 'Zend_Measure::LENGTH';
-    const LIGHTNESS      = 'Zend_Measure::LIGHTNESS';
-    const NUMBER         = 'Zend_Measure::NUMBER';
-    const POWER          = 'Zend_Measure::POWER';
-    const PRESSURE       = 'Zend_Measure::PRESSURE';
-    const SPEED          = 'Zend_Measure::SPEED';
-    const TEMPERATURE    = 'Zend_Measure::TEMPERATURE';
-    const TORQUE         = 'Zend_Measure::TORQUE';
-    const VISCOSITY_DYNAMIC   = 'Zend_Measure::VISCOSITY_DYNAMIC';
-    const VISCOSITY_KINEMATIC = 'Zend_Measure::VISCOSITY_KINEMATIC';
-    const VOLUME         = 'Zend_Measure::VOLUME';
-    const WEIGHT         = 'Zend_Measure::WEIGHT';
+    const ACCELERATION   = 'ACCELERATION';
+    const ANGLE          = 'ANGLE';
+    const AREA           = 'AREA';
+    const BINARY         = 'BINARY';
+    const CAPACITANCE    = 'CAPACITANCE';
+    const COOKING_VOLUME = 'COOKING_VOLUME';
+    const COOKING_WEIGHT = 'COOKING_WEIGHT';
+    const CURRENT        = 'CURRENT';
+    const DENSITY        = 'DENSITY';
+    const ENERGY         = 'ENERGY';
+    const FORCE          = 'FORCE';
+    const FLOW_MASS      = 'FLOW_MASS';
+    const FLOW_MOLE      = 'FLOW_MOLE';
+    const FLOW_VOLUME    = 'FLOW_VOLUME';
+    const FREQUENCY      = 'FREQUENCY';
+    const ILLUMINATION   = 'ILLUMINATION';
+    const LENGTH         = 'LENGTH';
+    const LIGHTNESS      = 'LIGHTNESS';
+    const NUMBER         = 'NUMBER';
+    const POWER          = 'POWER';
+    const PRESSURE       = 'PRESSURE';
+    const SPEED          = 'SPEED';
+    const TEMPERATURE    = 'TEMPERATURE';
+    const TORQUE         = 'TORQUE';
+    const VISCOSITY_DYNAMIC   = 'VISCOSITY_DYNAMIC';
+    const VISCOSITY_KINEMATIC = 'VISCOSITY_KINEMATIC';
+    const VOLUME         = 'VOLUME';
+    const WEIGHT         = 'WEIGHT';
 
     private static $_UNIT = array(
-        'Zend_Measure::ACCELERATION'   => array('Acceleration' =>   'METER_PER_SQUARE_SECOND'),
-        'Zend_Measure::ANGLE'          => array('Angle' =>          'RADIAN'),
-        'Zend_Measure::AREA'           => array('Area' =>           'SQUARE_METER'),
-        'Zend_Measure::BINARY'         => array('Binary' =>         'BYTE'),
-        'Zend_Measure::CAPACITANCE'    => array('Capacitance' =>    'FARAD'),
-        'Zend_Measure::COOKING_VOLUME' => array('Cooking_Volume' => 'CUBIC_METER'),
-        'Zend_Measure::COOKING_WEIGHT' => array('Cooking_Weight' => 'GRAM'),
-        'Zend_Measure::CURRENT'        => array('Current' =>        'AMPERE'),
-        'Zend_Measure::DENSITY'        => array('Density' =>        'KILOGRAM_PER_CUBIC_METER'),
-        'Zend_Measure::ENERGY'         => array('Energy' =>         'JOULE'),
-        'Zend_Measure::FORCE'          => array('Force' =>          'NEWTON'),
-        'Zend_Measure::FLOW_MASS'      => array('Flow_Mass' =>      'KILOGRAM_PER_SECOND'),
-        'Zend_Measure::FLOW_MOLE'      => array('Flow_Mole' =>      'MOLE_PER_SECOND'),
-        'Zend_Measure::FLOW_VOLUME'    => array('Flow_Volume' =>    'CUBIC_METER_PER_SECOND'),
-        'Zend_Measure::FREQUENCY'      => array('Frequency' =>      'HERTZ'),
-        'Zend_Measure::ILLUMINATION'   => array('Illumination' =>   'LUX'),
-        'Zend_Measure::LENGTH'         => array('Length' =>         'METER'),
-        'Zend_Measure::LIGHTNESS'      => array('Lightness' =>      'CANDELA_PER_SQUARE_METER'),
-        'Zend_Measure::NUMBER'         => array('Number' =>         'DECIMAL'),
-        'Zend_Measure::POWER'          => array('Power' =>          'WATT'),
-        'Zend_Measure::PRESSURE'       => array('Pressure' =>       'NEWTON_PER_SQUARE_METER'),
-        'Zend_Measure::SPEED'          => array('Speed' =>          'METER_PER_SECOND'),
-        'Zend_Measure::TEMPERATURE'    => array('Temperature' =>    'KELVIN'),
-        'Zend_Measure::TORQUE'         => array('Torque' =>         'NEWTON_METER'),
-        'Zend_Measure::VISCOSITY_DYNAMIC'   => array('Viscosity_Dynamic' =>   'KILOGRAM_PER_METER_SECOND'),
-        'Zend_Measure::VISCOSITY_KINEMATIC' => array('Viscosity_Kinematic' => 'SQUARE_METER_PER_SECOND'),
-        'Zend_Measure::VOLUME'         => array('Volume' =>         'CUBIC_METER'),
-        'Zend_Measure::WEIGHT'         => array('Weight' =>         'KILOGRAM')
+        'ACCELERATION'   => array('Acceleration' =>   'METER_PER_SQUARE_SECOND'),
+        'ANGLE'          => array('Angle' =>          'RADIAN'),
+        'AREA'           => array('Area' =>           'SQUARE_METER'),
+        'BINARY'         => array('Binary' =>         'BYTE'),
+        'CAPACITANCE'    => array('Capacitance' =>    'FARAD'),
+        'COOKING_VOLUME' => array('Cooking_Volume' => 'CUBIC_METER'),
+        'COOKING_WEIGHT' => array('Cooking_Weight' => 'GRAM'),
+        'CURRENT'        => array('Current' =>        'AMPERE'),
+        'DENSITY'        => array('Density' =>        'KILOGRAM_PER_CUBIC_METER'),
+        'ENERGY'         => array('Energy' =>         'JOULE'),
+        'FORCE'          => array('Force' =>          'NEWTON'),
+        'FLOW_MASS'      => array('Flow_Mass' =>      'KILOGRAM_PER_SECOND'),
+        'FLOW_MOLE'      => array('Flow_Mole' =>      'MOLE_PER_SECOND'),
+        'FLOW_VOLUME'    => array('Flow_Volume' =>    'CUBIC_METER_PER_SECOND'),
+        'FREQUENCY'      => array('Frequency' =>      'HERTZ'),
+        'ILLUMINATION'   => array('Illumination' =>   'LUX'),
+        'LENGTH'         => array('Length' =>         'METER'),
+        'LIGHTNESS'      => array('Lightness' =>      'CANDELA_PER_SQUARE_METER'),
+        'NUMBER'         => array('Number' =>         'DECIMAL'),
+        'POWER'          => array('Power' =>          'WATT'),
+        'PRESSURE'       => array('Pressure' =>       'NEWTON_PER_SQUARE_METER'),
+        'SPEED'          => array('Speed' =>          'METER_PER_SECOND'),
+        'TEMPERATURE'    => array('Temperature' =>    'KELVIN'),
+        'TORQUE'         => array('Torque' =>         'NEWTON_METER'),
+        'VISCOSITY_DYNAMIC'   => array('Viscosity_Dynamic' =>   'KILOGRAM_PER_METER_SECOND'),
+        'VISCOSITY_KINEMATIC' => array('Viscosity_Kinematic' => 'SQUARE_METER_PER_SECOND'),
+        'VOLUME'         => array('Volume' =>         'CUBIC_METER'),
+        'WEIGHT'         => array('Weight' =>         'KILOGRAM')
     );
 
     private $_Measurement;
@@ -115,35 +115,35 @@ class Zend_Measure
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
+        if ($locale === null) {
+            $locale = $this->_Locale;
         }
 
-        $library = substr($type, 0, strpos($type, '::'));
-        $sublib  = substr($type, strpos($type, '::') + 2);
-
-        if ($library == 'Zend_Measure')
-        {
-            if (!empty(self::$_UNIT[$type])) {
-                $library = $library . '_' . key(self::$_UNIT[$type]);
-            } else {
-                throw new Zend_Measure_Exception('unknown measurement type ' . $type);
-            }
-
-            $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
-            if (!empty($sublib)) {
-                $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
-            }
-            Zend::loadClass($library);
-
-        } else {
-            $sublib = $library . '::' . $sublib;
-            $library = 'Zend_Measure_' . $library;
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
         }
 
-        $this->_Measurement = new $library($value, $sublib, $this->_Locale);
+        if ($type === null) {
+            $type = self::STANDARD;
+        }
+
+        if (strpos($type, '::') !== false) {
+            $type = substr($type, 0, strpos($type, '::'));
+            $sublib  = substr($type, strpos($type, '::') + 2);
+        }
+
+        if (!array_key_exists($type, self::$_UNIT)) {
+            throw new Zend_Measure_Exception("type ($type) is unknown");
+        }
+        
+        if (empty($sublib)) {
+            $sublib = current(self::$_UNIT[$type]);
+        }
+
+        $library = 'Zend_Measure_' . key(self::$_UNIT[$type]);
+
+        Zend::loadClass($library);
+        $this->_Measurement = new $library($value, $sublib, $locale);
     }
 
 
@@ -187,18 +187,18 @@ class Zend_Measure
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale = false)
+    public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
-        $library = substr($type, 0, strpos($type, '::'));
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
 
-        if ($library == 'Zend_Measure')
-        {
-            $library = $library . '_' . key(self::$_UNIT[$type]);
-            $type = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
+        if (array_key_exists($type, self::$_UNIT)) {
+            $type = current(self::$_UNIT[$type]);
         }
 
         $this->_Measurement->setValue($value, $type, $locale);
@@ -274,13 +274,15 @@ class Zend_Measure
      * Adds an unit to another one
      *
      * @param $object  object of same unit type
-     * @return object
+     * @return  Zend_Measure object
      */
     public function add($object)
     {
         $object->setType($this->getType());
         $value  = $this->getValue() + $object->getValue();
-        return new Zend_Measure($value, $this->getType(), $this->_Locale);
+
+        $this->setValue($value, $this->getType(), $this->_Locale);
+        return $this;
     }
 
 
@@ -288,13 +290,15 @@ class Zend_Measure
      * Substracts an unit from another one
      *
      * @param $object  object of same unit type
-     * @return object
+     * @return  Zend_Measure object
      */
     public function sub($object)
     {
         $object->setType($this->getType());
         $value  = $this->getValue() - $object->getValue();
-        return new Zend_Measure($value, $this->getType(), $this->_Locale);
+        
+        $this->setValue($value, $this->getType(), $this->_Locale);
+        return $this;
     }
 
 
