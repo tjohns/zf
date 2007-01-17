@@ -1,22 +1,53 @@
 <sect1 id="zend.session.theory">
 
-    <title>Theory</title>
+    <title>Теория</title>
 
     <para>
+        <code>Zend_Session_Core</code> предоставляет внутренний интерфейс для
+        инкапсуляции всего доступа к сиглетону <code>$_SESSION</code> с
+        использованием обычного паттерна getInstance(). В общем случае
+        разработчики не должны иметь прямой доступ к <code>$_SESSION</code>,
+        когда используют компоненту Zend_Session. Тем не менее, "унаследованный"
+        код может сосуществовать с Zend_Session благодаря тому, что
+        пространства имен, используемые Zend_Session, не перекрываются с ключами
+        в массиве <code>$_SESSION</code>, используемым действующим кодом. 
+<!--
         <code>Zend_Session_Core</code> provides an internal interface to encapsulate all access to singleton
         <code>$_SESSION</code> using the typical getInstance() pattern. In general, developers should not directly
         access <code>$_SESSION</code>, when using the Zend_Session component. However, it is possible for legacy code to
         coexist with Zend_Session, provided the namespaces used by Zend_Session do not overlap with the keys in
         <code>$_SESSION</code> used by legacy code.
+-->
     </para>
 
     <para>
+        Глобальное управление сессиями производится с использованием
+        статических методов класса Zend_Session_Core, это влияет на общее
+        поведение сессий, управляемыми компонентами, родственными с
+        Zend_Session. Большинству разработчиков эти статические методы могут не
+        понадобиться.
+<!--
         All management and manipulation of global session management occurs using static "class" methods defined in
         Zend_Session_Core that affect the overall behavior of sessions managed by Zend_Session related components. Most
         developers will not need to use these static methods.
+-->
     </para>
 
     <para>
+        В отличие от <code>$_SESSION</code>, Zend_Session выделяет данные сессий
+        в отдельные пространства имен посредством сохранения данных в массиве и
+        сохранении этого массива в <code>$_SESSION</code>, используя
+        имя пространства имен в качестве ключа. Создание экземпляра класса
+        Zend_Session вернет неуникальное "окно" к выбранному пространству имен.
+        Одно и то же пространство имен может иметь множество "окон", несморя на
+        то, что через определенный ключ (имя пространства имен) доступно только
+        одно пространство имен. Эти экземпляры обеспечивают непосредственное
+        манипулирование сессионными данными для определенных пространств имен.
+        Таким образом, экземпляры Zend_Session помогают ограничить область
+        видимости посредством введения переменных с локальной областью видимости
+        (объект), фактически это импорт определенного пространства имен в
+        локальную область видимости.   
+<!--
         Unlike <code>$_SESSION</code>, Zend_Session segregates all session data into separate namespaces, by storing
         data in a PHP array and storing the array in <code>$_SESSION</code> using the namespace as the key. Constructing
         an instance of Zend_Session returns a non-unique "window" to the selected namespace. Multiple "windows" are
@@ -25,6 +56,7 @@
         namespaces, as explicitly specified when creating an instance of Zend_Session. Zend_Session instances therefore
         help restrict scope by introducing a locally scoped variable (instance object) that effectively imports a
         specific session namespace into the local scope.
+-->
     </para>
 
 </sect1>
