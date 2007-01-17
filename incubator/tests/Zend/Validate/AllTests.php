@@ -100,6 +100,42 @@ require_once 'Zend/Validate/HostnameTest.php';
 
 
 /**
+ * @see Zend_Validate_InArrayTest
+ */
+require_once 'Zend/Validate/InArrayTest.php';
+
+
+/**
+ * @see Zend_Validate_IntTest
+ */
+require_once 'Zend/Validate/IntTest.php';
+
+
+/**
+ * @see Zend_Validate_IpTest
+ */
+require_once 'Zend/Validate/IpTest.php';
+
+
+/**
+ * @see Zend_Validate_LessThanTest
+ */
+require_once 'Zend/Validate/LessThanTest.php';
+
+
+/**
+ * @see Zend_Validate_RegexTest
+ */
+require_once 'Zend/Validate/RegexTest.php';
+
+
+/**
+ * @see Zend_Validate_StringLengthTest
+ */
+require_once 'Zend/Validate/StringLengthTest.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
@@ -137,6 +173,12 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_GreaterThanTest');
         $suite->addTestSuite('Zend_Validate_HexTest');
         $suite->addTestSuite('Zend_Validate_HostnameTest');
+        $suite->addTestSuite('Zend_Validate_InArrayTest');
+        $suite->addTestSuite('Zend_Validate_IntTest');
+        $suite->addTestSuite('Zend_Validate_IpTest');
+        $suite->addTestSuite('Zend_Validate_LessThanTest');
+        $suite->addTestSuite('Zend_Validate_RegexTest');
+        $suite->addTestSuite('Zend_Validate_StringLengthTest');
 
         return $suite;
     }
