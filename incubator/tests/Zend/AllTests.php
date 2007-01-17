@@ -72,12 +72,12 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_Console_GetoptTest');
 // Do not include Zend_Currency as empty testbeds can cause phpunit to crash
 //        $suite->addTest(Zend_Currency_AllTests::suite());
-        // $suite->addTestSuite('Zend_DateTest');
-//        $suite->addTest(Zend_Date_AllTests::suite());
+        $suite->addTestSuite('Zend_DateTest');
+        $suite->addTest(Zend_Date_AllTests::suite());
+        $suite->addTestSuite('Zend_LocaleTest');
+        $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTestSuite('Zend_FilterTest');
         $suite->addTest(Zend_Filter_AllTests::suite());
-        // $suite->addTestSuite('Zend_LocaleTest');
-        // $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
         $suite->addTestSuite('Zend_MeasureTest');
         $suite->addTest(Zend_Measure_AllTests::suite());

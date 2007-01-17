@@ -99,7 +99,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale = false)
+    public function __construct($value, $type = null, $locale = null)
     {
         if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
@@ -135,7 +135,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale = false)
+    public function setValue($value, $type = null, $locale = null)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;

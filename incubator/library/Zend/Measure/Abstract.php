@@ -58,7 +58,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
      * @param $type   new type to set   - abstract
      * @param $locale new locale to set - abstract
      */
-    protected function setValue($value, $type, $locale = false)
+    protected function setValue($value, $type = null, $locale = null)
     {
         $this->_value = $value;
     }

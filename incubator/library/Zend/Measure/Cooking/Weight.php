@@ -38,33 +38,33 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
 {
     // Cooking_Weight definitions
-    const STANDARD = 'Cooking_Weight::GRAM';
+    const STANDARD = 'GRAM';
 
-    const HALF_STICK    = 'Cooking_Weight::HALF_STICK';
-    const STICK         = 'Cooking_Weight::STICK';
-    const CUP           = 'Cooking_Weight::CUP';
-    const GRAM          = 'Cooking_Weight::GRAM';
-    const OUNCE         = 'Cooking_Weight::OUNCE';
-    const POUND         = 'Cooking_Weight::POUND';
-    const TEASPOON      = 'Cooking_Weight::TEASPOON';
-    const TEASPOON_US   = 'Cooking_Weight::TEASPOON_US';
-    const TABLESPOON    = 'Cooking_Weight::TABLESPOON';
-    const TABLESPOON_US = 'Cooking_Weight::TABLESPOON_US';
+    const HALF_STICK    = 'HALF_STICK';
+    const STICK         = 'STICK';
+    const CUP           = 'CUP';
+    const GRAM          = 'GRAM';
+    const OUNCE         = 'OUNCE';
+    const POUND         = 'POUND';
+    const TEASPOON      = 'TEASPOON';
+    const TEASPOON_US   = 'TEASPOON_US';
+    const TABLESPOON    = 'TABLESPOON';
+    const TABLESPOON_US = 'TABLESPOON_US';
 
     private static $_UNITS = array(
-        'Cooking_Weight::HALF_STICK'    => array(array('' => 453.59237, '/' => 8),                    'half stk'),
-        'Cooking_Weight::STICK'         => array(array('' => 453.59237, '/' => 4),                    'stk'),
-        'Cooking_Weight::CUP'           => array(array('' => 453.59237, '/' => 2),                    'c'),
-        'Cooking_Weight::GRAM'          => array(1,                                                   'g'),
-        'Cooking_Weight::OUNCE'         => array(array('' => 453.59237, '/' => 16),                   'oz'),
-        'Cooking_Weight::POUND'         => array(453.59237,                                           'lb'),
-        'Cooking_Weight::TEASPOON'      => array(array('' => 1.2503332, '' => 453.59237, '/' => 128), 'tsp'),
-        'Cooking_Weight::TEASPOON_US'   => array(array('' => 453.59237, '/' => 96),                   'tsp'),
-        'Cooking_Weight::TABLESPOON'    => array(array('' => 1.2503332, '' => 453.59237, '/' => 32),  'tbsp'),
-        'Cooking_Weight::TABLESPOON_US' => array(array('' => 453.59237, '/' => 32),                   'tbsp')
+        'HALF_STICK'    => array(array('' => 453.59237, '/' => 8),                    'half stk'),
+        'STICK'         => array(array('' => 453.59237, '/' => 4),                    'stk'),
+        'CUP'           => array(array('' => 453.59237, '/' => 2),                    'c'),
+        'GRAM'          => array(1,                                                   'g'),
+        'OUNCE'         => array(array('' => 453.59237, '/' => 16),                   'oz'),
+        'POUND'         => array(453.59237,                                           'lb'),
+        'TEASPOON'      => array(array('' => 1.2503332, '' => 453.59237, '/' => 128), 'tsp'),
+        'TEASPOON_US'   => array(array('' => 453.59237, '/' => 96),                   'tsp'),
+        'TABLESPOON'    => array(array('' => 1.2503332, '' => 453.59237, '/' => 32),  'tbsp'),
+        'TABLESPOON_US' => array(array('' => 453.59237, '/' => 32),                   'tbsp')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Cooking_Weight provides an locale aware class for
@@ -74,27 +74,21 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Cooking_Weight Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Cooking_Weight Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale = false)
+    public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Cooking_Weight  $object  Cooking Weight object to compare
      * @return boolean
      */
     public function equals($object)
@@ -110,15 +104,23 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Cooking_Weight Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Cooking_Weight Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale = false)
+    public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -128,7 +130,7 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of weight-cooking:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown cooking weight");
         }
 
         parent::setValue($value, $type, $locale);
@@ -139,6 +141,7 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)

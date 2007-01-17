@@ -235,7 +235,7 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale = false)
+    public function setValue($value, $type = null, $locale = null)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
