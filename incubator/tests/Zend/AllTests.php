@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -44,12 +44,13 @@ require_once 'Zend/Measure/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/ValidateTest.php';
+require_once 'Zend/Validate/AllTests.php';
 
 /**
  * @category   Zend
  * @package    Zend
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_AllTests
@@ -86,6 +87,7 @@ class Zend_AllTests
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
         $suite->addTestSuite('Zend_ValidateTest');
+        $suite->addTest(Zend_Validate_AllTests::suite());
 
         return $suite;
     }
