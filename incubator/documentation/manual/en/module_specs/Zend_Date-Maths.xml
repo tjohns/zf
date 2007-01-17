@@ -1,45 +1,71 @@
 <sect1 id="zend.date.maths">
+
     <title>How to compute dates</title>
+
     <para>
-        describing add() / sub() and compare()
-        chapter follows soon...
+        describing add() / sub() and compare() chapter follows soon...
     </para>
+
     <sect2 id="zend.date.maths.add">
+
         <title>Adding two dates with add()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.maths.sub">
+
         <title>Substracting two dates with sub()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.maths.compare">
+
         <title>Comparing two dates with compare()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.maths.equals">
+
         <title>Comparing two dates with equals()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.maths.isearlier">
+
         <title>Looking if one date is earlier than the other one with isEarlier()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.maths.islater">
+
         <title>Looking for later dates with isLater()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

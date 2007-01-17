@@ -1,62 +1,101 @@
 <sect1 id="zend.date.other">
+
     <title>Additional functions</title>
+
     <para>
         chapter follows soon...
     </para>
+
     <sect2 id="zend.date.other.now">
+
         <title>Now it is time... or the actual timestamp with now()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.other.leapyear">
+
         <title>How to calculate leapyears with isLeapYear()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.other.today">
+
         <title>Is today today or not today... or how to use isToday()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.other.tomorrow">
+
         <title>Tomorrow is also a day... or how to use isTomorrow()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.other.yesterday">
+
         <title>Yesterday, another day... or how to use isYesterday()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.other.sun">
+
         <title>What about the sun ?</title>
+
         <para>
             coming soon...
         </para>
+
         <sect3 id="zend.date.other.sun.rise">
+
             <title>getSunRise()</title>
+
             <para>
                 coming soon...
             </para>
+
         </sect3>
+
         <sect3 id="zend.date.other.sun.set">
+
             <title>getSunSet()</title>
+
             <para>
                 coming soon...
             </para>
+
         </sect3>
+
         <sect3 id="zend.date.other.sun.info">
+
             <title>getSunInfo()</title>
+
             <para>
                 coming soon...
             </para>
+
         </sect3>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

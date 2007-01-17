@@ -1,37 +1,62 @@
 <sect1 id="zend.date.introduction">
+
     <title>Introduction</title>
+
     <para>
-        With <code>Zend_Date</code> the Zend Framework offers a detailed and very simple API for
-        date and time handling. It offers a large amount of features and possibilities which even
-        take the standard PHP functions to a higher level.
+        With <code>Zend_Date</code> the Zend Framework offers a detailed and very simple API for date and time handling.
+        It offers a large amount of features and possibilities which even take the standard PHP functions to a higher
+        level.
     </para>
+
     <para>
-        The simple handling of time and date is a required by each user. But in reality it is never 
-        as simple as it seemed to be on the first glance.
+        The simple handling of time and date is a required by each user. But in reality it is never as simple as it
+        seemed to be on the first glance.
     </para>
+
     <para>
-        The background is very simple. Dates, as well as times, are written differently in each 
-        country. Once the month is written at the first position, another time the day is written
-        first. 
+        The background is very simple. Dates, as well as times, are written differently in each country. Once the month
+        is written at the first position, another time the day is written first.
     </para>
+
+    <para>
+        Before using any date related functions in PHP or the Zend Framework, first make certain your application has a
+        correct default timezone, by either setting the TZ environment variable, using the <code>date.timezone</code>
+        php.ini setting, or using
+        <ulink url="http://php.net/date_default_timezone_set">date_default_timezone_set()</ulink>
+        . In PHP, we can adjust all date and time related functions to work for a particular user by setting a default
+        timezone according to the user's expectations. For a complete list of timezone settings, see the
+        <ulink url="http://unicode.org/cldr/data/diff/supplemental/territory_containment_un_m_49.html">CLDR Timezone Identifier List</ulink>
+        .
+        <example>
+            <title>Setting a Default Timezone</title>
+<programlisting role="php"><![CDATA[<?php
+date_default_timezone_set('America/Los_Angeles'); // timezone for an American in California
+date_default_timezone_set('America/Los_Angeles'); // timezone for a German in Germany
+?>]]></programlisting>
+        </example>
+    </para>
+
     <sect2 id="zend.date.possibilities">
+
         <title>Zend_Date possibilities</title>
+
         <para>
             Why should you use <code>Zend_Date</code> instead of the standard PHP functions?
         </para>
+
         <para>
-            Well, among other things <code>Zend_Date</code> offers the following features which 
-            extend the standard PHP scope:
+            Well, among other things <code>Zend_Date</code> offers the following features which extend the standard PHP
+            scope:
         </para>
+
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
                     Simple API
                 </para>
                 <para>
-                    <code>Zend_Date</code> offers a very simple API which combines the best of
-                    4 programming languages. It is possible, for example, to add or compare 2 times
-                    within a single row. 
+                    <code>Zend_Date</code> offers a very simple API which combines the best of 4 programming languages.
+                    It is possible, for example, to add or compare 2 times within a single row.
                 </para>
             </listitem>
             <listitem>
@@ -39,10 +64,9 @@
                     Completely internationalized
                 </para>
                 <para>
-                    All full and abbreviated names of months and days are supported for more than 
-                    130 languages. Both at the input and the output of a date the day and month can
-                    be written in the local languages. Also standard date and time formats of each country
-                    are supported.
+                    All full and abbreviated names of months and days are supported for more than 130 languages. Both at
+                    the input and the output of a date the day and month can be written in the local languages. Also
+                    standard date and time formats of each country are supported.
                 </para>
             </listitem>
             <listitem>
@@ -50,14 +74,13 @@
                     Unlimited timestamps
                 </para>
                 <para>
-                    Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support
-                    partly rises tp 64bit timestamps. With Zend_Date unlimited timestamp will be
-                    supported. Even very high values can be calculated.
+                    Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support partly rises tp 64bit
+                    timestamps. With Zend_Date unlimited timestamp will be supported. Even very high values can be
+                    calculated.
                 </para>
                 <para>
-                    The only limit is the speed of the server and the avaiability of the BCMath extension.
-                    If BCMath is not avaiable Zend_Date will have reduced support only for timestamps within
-                    the float range.
+                    The only limit is the speed of the server and the avaiability of the BCMath extension. If BCMath is
+                    not avaiable Zend_Date will have reduced support only for timestamps within the float range.
                 </para>
             </listitem>
             <listitem>
@@ -65,10 +88,10 @@
                     Support for ISO_8601 date specifications
                 </para>
                 <para>
-                    ISO_8601 date specifications are supported. Whereas even partial compliant 
-                    ISO_8601 date specifications will be identified. These dates formats are
-                    particularly used within databases. For example MsSQL and MySQL dates can be
-                    mentioned here. They differ a little from each other but both are supported.
+                    ISO_8601 date specifications are supported. Whereas even partial compliant ISO_8601 date
+                    specifications will be identified. These dates formats are particularly used within databases. For
+                    example MsSQL and MySQL dates can be mentioned here. They differ a little from each other but both
+                    are supported.
                 </para>
             </listitem>
             <listitem>
@@ -80,7 +103,9 @@
                 </para>
             </listitem>
         </itemizedlist>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -1,33 +1,47 @@
 <sect1 id="zend.measure.creation">
+
     <title>Creation of measurements</title>
+
     <para>
         For creating a measurement, any type of variable can be used.
     </para>
+
     <para>
-        <link linkend="zend.measure.creation.number"><code>Numeric variables</code></link>
+        <link linkend="zend.measure.creation.number"><code>Numeric variables</code>
+        </link>
     </para>
+
     <para>
-        <link linkend="zend.measure.creation.string"><code>Strings</code></link>
+        <link linkend="zend.measure.creation.string"><code>Strings</code>
+        </link>
     </para>
+
     <para>
-        <link linkend="zend.measure.creation.localized"><code>Localized strings</code></link>
+        <link linkend="zend.measure.creation.localized"><code>Localized strings</code>
+        </link>
     </para>
+
     <para>
-        <code>Zend_Measure</code> expects the original value as the first parameter.
-        This can be an arbitrary variable or a string.
+        <code>Zend_Measure</code> expects the original value as the first parameter. This can be an arbitrary variable
+        or a string.
     </para>
+
     <para>
-        The second parameter defines the type of the measurement.
-        Just like the first parameter, this is a mandatory value.
+        The second parameter defines the type of the measurement. Just like the first parameter, this is a mandatory
+        value.
     </para>
+
     <para>
         As an optional third parameter, the language can be defined.
     </para>
+
     <sect2 id="zend.measure.creation.number">
+
         <title>Measurements from variables</title>
+
         <example>
             <title>Creation using integer variables</title>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -38,25 +52,31 @@ echo $unit;
 // outputs '1234 m'
 ?>]]></programlisting>
         </example>
+
         <note>
             <title>Using floating point</title>
             <para>
                 Instead of integer types, floating point types could be used as well. It doesn't make any difference.
             </para>
             <para>
-                When using floating point variables, please be aware that there may be
-                inaccuracies during the conversion.
+                When using floating point variables, please be aware that there may be inaccuracies during the
+                conversion.
             </para>
         </note>
+
     </sect2>
+
     <sect2 id="zend.measure.creation.string">
+
         <title>Measurements from strings</title>
+
         <para>
             Many measurements can only be passed as strings, such as roman numbers or binary values.
         </para>
+
         <example>
             <title>Creation using strings</title>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Number');
@@ -67,23 +87,28 @@ $unit = new Zend_Measure($mystring,Zend_Measure_Number::BINARY);
 echo $unit;
 ?>]]></programlisting>
         </example>
+
         <note>
             <title>Also strings are allowed</title>
             <para>
                 All integer types can of course also be written as string types, without resulting in any drawbacks.
             </para>
             <para>
-                As shown in the above example, <code>Zend_Measure_Number</code> can work with values of arbitrary length.
-                <code>Zend_Measure_Number</code> does not have any of the 16/32bit limitations such as the
-                PHP function <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink>.
+                As shown in the above example, <code>Zend_Measure_Number</code> can work with values of arbitrary
+                length. <code>Zend_Measure_Number</code> does not have any of the 16/32bit limitations such as the PHP
+                function
+                <ulink url="http://php.net/bin2dec"><code>bin2dec()</code>
+                </ulink>
+                .
             </para>
         </note>
+
         <example>
             <title>Arbitrary texts</title>
             <para>
                 Measurements can also be just a part of an arbitrary string.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -93,16 +118,18 @@ $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
 echo $unit;
 ?>]]></programlisting>
         </example>
+
         <note>
             <title>Be aware</title>
             <para>
-                Only the first identifiable number us being used for measurement creation. If there are
-                more numbers in the string, the rest will be ignored.
+                Only the first identifiable number us being used for measurement creation. If there are more numbers in
+                the string, the rest will be ignored.
             </para>
         </note>
+
         <example>
             <title>Arbitrary texts</title>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -112,26 +139,34 @@ $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
 echo $unit;
 ?>]]></programlisting>
         </example>
+
     </sect2>
+
     <sect2 id="zend.measure.creation.localized">
+
         <title>Measurements from localized strings</title>
+
         <para>
             When a string is entered in a localized notation, the standard parser is reaching its limits.
         </para>
+
         <para>
             The division of decimal digits with "." and grouping of thousands with "," is common in the English language
             and when dealing with computers, but not so in other languages.
         </para>
+
         <para>
             In German, for example, the number "1,234.50" would become interpreted as "1.2345".
         </para>
+
         <para>
-            To deal with such problems, <code>Zend_Measure</code> offers the possibility to specify a language
-            or region.
+            To deal with such problems, <code>Zend_Measure</code> offers the possibility to specify a language or
+            region.
         </para>
+
         <example>
             <title>Localized string</title>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -142,7 +177,9 @@ $unit = new Zend_Measure($mystring,Zend_Measure::LENGTH, $locale);
 echo $unit;
 ?>]]></programlisting>
         </example>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

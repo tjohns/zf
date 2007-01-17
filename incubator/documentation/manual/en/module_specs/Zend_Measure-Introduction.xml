@@ -1,28 +1,34 @@
 <sect1 id="zend.measure.introduction">
+
     <title>Introduction</title>
+
     <para>
         <code>Zend_Measure</code> provides a generic and very easy way for working with measurements.
     </para>
+
     <para>
-        Using <code>Zend_Measure</code>, you can convert measurements into different units of the same type.
-        They can be added, subtracted and compared against each other.
-        From a given input made in the user's native language, the unit of measurement can be automatically extracted.
+        Using <code>Zend_Measure</code>, you can convert measurements into different units of the same type. They can be
+        added, subtracted and compared against each other. From a given input made in the user's native language, the
+        unit of measurement can be automatically extracted.
     </para>
+
     <para>
-        Of course a great number of completely different units of measurement is being supported. Most
-        of these units are of a physical nature, but there are also special measurements used, in numerics or
-        other areas, that are only partly physical - or not at all.
+        Of course a great number of completely different units of measurement is being supported. Most of these units
+        are of a physical nature, but there are also special measurements used, in numerics or other areas, that are
+        only partly physical - or not at all.
     </para>
+
     <para>
         The following quickstart tutorial shows how units of measurement can be automatically converted.
     </para>
+
     <example>
         <title>Converting measurements</title>
         <para>
-            To convert a measurement, its value and its type have to be known.
-            The value can be an integer, a float, or even a string.
+            To convert a measurement, its value and its type have to be known. The value can be an integer, a float, or
+            even a string.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -36,12 +42,14 @@ $unit = new Zend_Measure(100,Zend_Measure_Length::METER, $locale);
 echo $unit->convertTo(Zend_Measure_Length::YARD);
 ?>]]></programlisting>
     </example>
+
     <note>
         <para>
-            As you can see, the example consists of only 4 lines of code.
-            The usage of <code>Zend_Measure</code> is so compact that usually 4 lines of code is all that's needed.
+            As you can see, the example consists of only 4 lines of code. The usage of <code>Zend_Measure</code> is so
+            compact that usually 4 lines of code is all that's needed.
         </para>
     </note>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

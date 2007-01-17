@@ -13,7 +13,7 @@
         <para>
             <table>
                 <title>List of all supported languages</title>
-                <tgroup cols="5">
+                <tgroup cols="2">
                     <thead>
                         <row>
                             <entry>Locale</entry>

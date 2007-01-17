@@ -1,14 +1,102 @@
-<sect1 id="zend.date.definition">    <title>Why only one class?</title>    <para>        Why is there only one class <code>Zend_Date</code> for handling dates and times in the Zend        Framework?    </para>    <para>        In other languages it was decided to split time and date. We think it is more natural to         treat date and time always together. On the other hand in this manner the inevitable code        duplication can be avoided which supports the performance as well.    </para>
-    <sect2 id="zend.date.definition.notavaiable">        <title>What is not possible with Zend_Date</title>        <para>            Nevertheless there are some functionalities which do not work with the current             <code>Zend_Date</code> class.        </para>        <para>            <code>Zend_Date</code> is laid out as a pure date and time class. Therefore there are            some functionalities which are not possible with the current <code>Zend_Date</code>             class. Even if there are only a few missing features they have to be mentioned for the             sake of completeness.        </para>
-        <itemizedlist mark='opencircle'>            <listitem>                <para>                    Calendar formats                </para>                <para>                    Other calendar formats besides Gregorian are not supported by                     <code>Zend_Date</code>. For this purpose the is the own class                     <code>Zend_Calendar</code>. It supports not only Gregorian but also Arabic,                    Hebrew, Julian and other calendar formats.                </para>            </listitem>            <listitem>                <para>                    Foreign-language month                </para>                <para>                    If the month is set up in a different language than the fixed stated language                    or the language of the browser or the server, it can not be detected. The                     reason is that not all 126 known languages can be parsed due to possible                    performance problems.                </para>            </listitem>        </itemizedlist>    </sect2>
-    <sect2 id="zend.date.definition.internal">        <title>Internal handling of date and time </title>        <para>            Date as well as time will be processed using timestamps.        </para>        <para>            This was only possible, because <code>Zend_Date</code> is not limited to UNIX timestamps
-            nor integer values. Due to the possibility to handle ALL digits Zend_Framework 
-            is able to compute even astronomic dates. PHP itself is not able to this and will at first
-            be with the coming version PHP 6.         </para>        <para>            If possible, <code>Zend_Date</code> will use internal php procedures, which leads to an
-            optimized performance.        </para>        <note>            <title>Beware</title>            <para>                Using date specifications outside of 32bit timestamp range analogical will lead to
-                internal computing. The more far off your timestamp will be, the more time computing 
-                will need. Therefore you should use astronomical dates with care.            </para>        </note>    </sect2>
-    <sect2 id="zend.date.definition.normalisation">        <title>Normalization and localization</title>        <para>            As mentioned before <code>Zend_Date</code> is able to work with abbreviated names of 
-            months in your local language. As the month will be transferred to a timestamp internally
-            follows, that the output may also be transferred into a date of your choice.            This happens to be able through <code>Zend_Locale</code>.        </para>        <para>            For in-depth information about handling localization and normalization, 
-            please refer to <code>Zend_Locale</code>.        </para>    </sect2></sect1><!--vim:se ts=4 sw=4 et:-->
+<sect1 id="zend.date.definition">
+
+    <title>Why only one class?</title>
+
+    <para>
+        Why is there only one class <code>Zend_Date</code> for handling dates and times in the Zend Framework?
+    </para>
+
+    <para>
+        In other languages it was decided to split time and date. We think it is more natural to treat date and time
+        always together. On the other hand in this manner the inevitable code duplication can be avoided which supports
+        the performance as well.
+    </para>
+
+    <sect2 id="zend.date.definition.notavaiable">
+
+        <title>What is not possible with Zend_Date</title>
+
+        <para>
+            Nevertheless there are some functionalities which do not work with the current <code>Zend_Date</code> class.
+        </para>
+
+        <para>
+            <code>Zend_Date</code> is laid out as a pure date and time class. Therefore there are some functionalities
+            which are not possible with the current <code>Zend_Date</code> class. Even if there are only a few missing
+            features they have to be mentioned for the sake of completeness.
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    Calendar formats
+                </para>
+                <para>
+                    Other calendar formats besides Gregorian are not supported by <code>Zend_Date</code>. For this
+                    purpose the is the own class <code>Zend_Calendar</code>. It supports not only Gregorian but also
+                    Arabic, Hebrew, Julian and other calendar formats.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Foreign-language month
+                </para>
+                <para>
+                    If the month is set up in a different language than the fixed stated language or the language of the
+                    browser or the server, it can not be detected. The reason is that not all 126 known languages can be
+                    parsed due to possible performance problems.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+    </sect2>
+
+    <sect2 id="zend.date.definition.internal">
+
+        <title>Internal handling of date and time </title>
+
+        <para>
+            Date as well as time will be processed using timestamps.
+        </para>
+
+        <para>
+            This was only possible, because <code>Zend_Date</code> is not limited to UNIX timestamps nor integer values.
+            Due to the possibility to handle ALL digits Zend_Framework is able to compute even astronomic dates. PHP
+            itself is not able to this and will at first be with the coming version PHP 6.
+        </para>
+
+        <para>
+            If possible, <code>Zend_Date</code> will use internal php procedures, which leads to an optimized
+            performance.
+        </para>
+
+        <note>
+            <title>Beware</title>
+            <para>
+                Using date specifications outside of 32bit timestamp range analogical will lead to internal computing.
+                The more far off your timestamp will be, the more time computing will need. Therefore you should use
+                astronomical dates with care.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.date.definition.normalisation">
+
+        <title>Normalization and localization</title>
+
+        <para>
+            As mentioned before <code>Zend_Date</code> is able to work with abbreviated names of months in your local
+            language. As the month will be transferred to a timestamp internally follows, that the output may also be
+            transferred into a date of your choice. This happens to be able through <code>Zend_Locale</code>.
+        </para>
+
+        <para>
+            For in-depth information about handling localization and normalization, please refer to
+            <code>Zend_Locale</code>.
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--vim:se ts=4 sw=4 et:-->

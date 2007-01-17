@@ -1,27 +1,41 @@
 <sect1 id="zend.date.output">
+
     <title>How to output dates</title>
+
     <para>
-        describing get() / toString() and /toValue()
-        chapter follows soon...
+        describing get() / toString() and /toValue() chapter follows soon...
     </para>
+
     <sect2 id="zend.date.output.tostring">
+
         <title>Generating strings from dates with toString()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.output.tovalue">
+
         <title>Getting partitial values from dates with toValue()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.output.get">
+
         <title>Getting partitial dates with get()</title>
+
         <para>
             coming soon...
         </para>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -4,23 +4,23 @@
 
     <para>
         <code>Zend_Locale</code> is the Frameworks answer to the question, "How can the same application be used around
-        the whole world?" Most people will say, "That's easy. Let's translate all our output to the several languages."
-        However, using simple translation table to map phrases from one language to another is not sufficient. Different
+        the whole world?" Most people will say, "That's easy. Let's translate all our output to several languages."
+        However, using simple translation tables to map phrases from one language to another is not sufficient. Different
         regions will have different conventions for first names, surnames, salutory titles, formatting of numbers,
-        dates, times, etc.
+        dates, times, currencies, etc.
     </para>
 
     <para>
         We need
         <ulink url="http://en.wikipedia.org/wiki/L10n">Localization</ulink>
         and complementary
-        <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalization</ulink>
-        . Both are often abbreviated to <code>L10N</code> and <code>I18N</code>. Internationalization refers more to
+        <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalization</ulink>. Both are often abbreviated to <code>L10N</code> and <code>I18N</code>. Internationalization refers more to
         support for use of systems, regardless of special needs unique to groups of users related by language, region,
         number format conventions, financial conventions, time and date conventions, etc. Localization involves adding
         explicit support to systems for special needs of these unique groups, such as language translation, and support
         for local customs or conventions for communicating plurals, dates, times, currencies, names, symbols, sorting
-        and ordering, etc. These compliment each other. Support for them is provided in the ZF by a combination of
+        and ordering, etc. <code>L10N</code> and <code>I18N</code> compliment each other. 
+        The Zend Framework provides support for these through a combination of components, including
         Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency, and Zend_TimeSync.
     </para>
 
@@ -37,38 +37,38 @@
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <code>Zend_Locale</code> Backend support of locales available for localization support within other
+                    <code>Zend_Locale</code> - Backend support of locales available for localization support within other
                     ZF components.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Translate</code> Translating of strings.
+                    <code>Zend_Translate</code> - Translating of strings.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Date</code> Localization of dates, times.
+                    <code>Zend_Date</code> - Localization of dates, times.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Calendar</code> Localization of calendars (support for non-Gregorian calendar systems)
+                    <code>Zend_Calendar</code> - Localization of calendars (support for non-Gregorian calendar systems)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Currency</code> Localization of currencies.
+                    <code>Zend_Currency</code> - Localization of currencies.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Format</code> Parsing and generating localized numbers.
+                    <code>Zend_Locale_Format</code> - Parsing and generating localized numbers.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Data</code> Retrieve localized standard strings as country names, language names
+                    <code>Zend_Locale_Data</code> - Retrieve localized standard strings as country names, language names
                     and
                     <ulink url="http://unicode.org/cldr/">more from the CLDR</ulink>
                     .
@@ -76,7 +76,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <code>TODO</code> Localization of collations
+                    <code>TODO</code> - Localization of collations
                 </para>
             </listitem>
         </itemizedlist>
@@ -115,9 +115,9 @@
         </para>
 
         <para>
-            A user from USA would expect the language <code>English</code> and the region <code>USA</code> yielding the
+            A user from USA would expect the language <code>English</code> and the region <code>USA</code>, yielding the
             locale identifier "en_US". A user in Germany would expect the language <code>German</code> and the region
-            <code>Germany</code> yielding the locale identifir "de_DE". See the
+            <code>Germany</code>, yielding the locale identifier "de_DE". See the
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">list of pre-defined locale and region combinations</ulink>
             , if you need to select a specific locale within the Zend Framework.
         </para>
@@ -134,10 +134,10 @@ $locale = new Zend_Locale('de_DE'); // German language _ Germany
             A German user in America might expect the language <code>German</code> and the region <code>USA</code>, but
             these non-standard mixes are not supported directly as recognized "locales". Instead, if an invalid
             combination is used, then it will automatically be truncated by dropping the region code. For example,
-            "de_US" would be truncated to "de", and "xh_RU" would be truncated to "xh", because neither of these
-            combinations are valid. Additionally, if the base language code is not supported (e.g. "zz_US"), then a
+            "de_IS" would be truncated to "de", and "xh_RU" would be truncated to "xh", because neither of these
+            combinations are valid. Additionally, if the base language code is not supported (e.g. "zz_US") or does not exist, then a
             default "root" locale will be used. The "root" locale has default definitions for internationally recognized
-            representations of dates, times, numbers, currencies, etc.
+            representations of dates, times, numbers, currencies, etc.  The truncation process depends on the requested information, since some combinations of language and region might be valid for one type of data (e.g. dates), but not for another (e.g. currency format).
         </para>
 
         <para>
@@ -167,7 +167,10 @@ $locale = new Zend_Locale('de_DE'); // German language _ Germany
             <title>Automatically Selecting a Locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-$locale = new Zend_Locale();
+$locale  = new Zend_Locale();
+$locale1 = new Zend_Locale(Zend_Locale::BROWSER);   // default behavior, same as above
+$locale2 = new Zend_Locale(Zend_Locale::SERVER);    // prefer settings on host server
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK); // perfer framework app default settings
 ?>]]></programlisting>
         </example>
 
@@ -239,7 +242,7 @@ $temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $usLocale);
         </example>
 
         <para>
-            Tip: If you know many objects should all use the same default locale, explicitly specify the default locale
+            If you know many objects should all use the same default locale, explicitly specify the default locale
             to avoid the overhead of each object determining the default locale.
         </para>
 

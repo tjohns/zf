@@ -1,27 +1,35 @@
 <sect1 id="zend.date.general">
+
     <title>General Functions</title>
+
     <para>
-        From this chapter on speaking of dates always implies a date with a time, even when not
-        mentioned in addition.
+        From this chapter on speaking of dates always implies a date with a time, even when not mentioned in addition.
     </para>
+
     <para>
         Setting only a specific date implies a time set to 00:00:00.
     </para>
+
     <para>
         Setting only a specific date implies a date internally set to 01.01.1970.
     </para>
+
     <sect2 id="zend.date.simple.creation">
+
         <title>The current date</title>
+
         <para>
             Naturally we will cover basics like 'creating the current date' at first.
         </para>
+
         <para>
-            When you want to create a current date, the simplicity of <code>Zend_Date</code> will
-            strike at once. It is sufficient to create a new Zend_Date object.
+            When you want to create a current date, the simplicity of <code>Zend_Date</code> will strike at once. It is
+            sufficient to create a new Zend_Date object.
         </para>
+
         <example>
             <title>Creating the current date</title>
-            <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -31,26 +39,35 @@ $date = new Zend_Date();
 print $date;
 ?>]]></programlisting>
         </example>
+
         <para>
             As it may have attracted your attention, not only creation is simple but output also.
         </para>
+
     </sect2>
+
     <sect2 id="zend.date.simple.functions">
+
         <title>So what's this all about?</title>
+
         <para>
-            Let's talk about the more general functions provided by <code>Zend_Date</code> before
-            the detailed functions will pop up. A small example will be provided for each function.
+            Let's talk about the more general functions provided by <code>Zend_Date</code> before the detailed functions
+            will pop up. A small example will be provided for each function.
         </para>
+
         <sect3 id="zend.date.simple.functions.get">
+
             <title>Ouput a date</title>
+
             <para>
-                You can demand the content of a <code>Zend_Date</code> object through the get()
-                method. get() comes with lots of available options dealing (of course) with the
-                date format. In-depth explanation can be found in the next chapters.
+                You can demand the content of a <code>Zend_Date</code> object through the get() method. get() comes with
+                lots of available options dealing (of course) with the date format. In-depth explanation can be found in
+                the next chapters.
             </para>
+
             <example>
                 <title>get() - output a date</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -60,17 +77,21 @@ $date = new Zend_Date();
 print $date->get();
 ?>]]></programlisting>
             </example>
+
         </sect3>
+
         <sect3 id="zend.date.simple.functions.set">
+
             <title>Setting a date</title>
+
             <para>
-                The set() method will be used to generate a new date. Analoguely to get() are provided
-                lots of option regarding the input format. For further information please refer to
-                the next chapters.
+                The set() method will be used to generate a new date. Analoguely to get() are provided lots of option
+                regarding the input format. For further information please refer to the next chapters.
             </para>
+
             <example>
                 <title>set() - set a date</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -81,16 +102,21 @@ $date->set('13:00:00',Zend_Date::TIMES);
 print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
+
         </sect3>
+
         <sect3 id="zend.date.simple.functions.add">
+
             <title>Adding and subtracting with two dates</title>
+
             <para>
-                Adding two dates with add() is evenly simple as get() and set(). The method accepts the
-                same modifiers as all general functions.
+                Adding two dates with add() is evenly simple as get() and set(). The method accepts the same modifiers
+                as all general functions.
             </para>
+
             <example>
                 <title>add() - adding dates</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -101,12 +127,14 @@ $date->add('13:00:00', Zend_Date::TIMES);
 print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
+
             <para>
                 Subtraction works analogue to addition. The method for subtraction is called sub().
             </para>
+
             <example>
                 <title>sub() - subtracting dates</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -117,16 +145,21 @@ $date->sub(10, Zend_Date::HOUR);
 print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
+
         </sect3>
+
         <sect3 id="zend.date.simple.functions.compare">
+
             <title>Comparation of dates</title>
+
             <para>
-                Naturally we need to compare dates as well. The method compare() will compare two
-                dates or parts of them.
+                Naturally we need to compare dates as well. The method compare() will compare two dates or parts of
+                them.
             </para>
+
             <example>
                 <title>compare() - compare dates</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -140,13 +173,15 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
 }
 ?>]]></programlisting>
             </example>
+
             <para>
-                There also lives a purely boolean comparation method in <code>Zend_Date</code>.
-                equals() returns TRUE or FALSE. As with all general functions, all modifier are supported.
+                There also lives a purely boolean comparation method in <code>Zend_Date</code>. equals() returns TRUE or
+                FALSE. As with all general functions, all modifier are supported.
             </para>
+
             <example>
                 <title>equals() - identify a date</title>
-                <programlisting role="php"><![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 
@@ -160,8 +195,11 @@ if ($date->equals(10, Zend_Date::HOUR)) {
 }
 ?>]]></programlisting>
             </example>
+
         </sect3>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

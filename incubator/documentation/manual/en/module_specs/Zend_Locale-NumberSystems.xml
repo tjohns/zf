@@ -1,6 +1,6 @@
 <sect1 id="zend.locale.numbersystems">
 
-    <title>Numercal System Conversion</title>
+    <title>Numeral System Conversion</title>
 
     <para>
         <code>Zend_Locale_Format::toNumberSystem()</code> converts digits between different
@@ -9,7 +9,7 @@
         <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Eastern Arabic numerals</ulink>
         sometimes used with the Arabic language to express numerals. Attempts to use an unsupported numeral system will
         result in an exception, to avoid accidentally performing an incorrect conversion due to a spelling error. All
-        characters in the input, which are not numerals for the selected numeral system, are copied to the output.
+        characters in the input, which are not numerals for the selected numeral system, are copied to the output with no conversion provided for unit separator characters.
     </para>
 
     <para>

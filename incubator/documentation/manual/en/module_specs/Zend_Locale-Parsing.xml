@@ -1,28 +1,5 @@
 <sect1 id="zend.locale.parsing">
 
-    <title>Normalization and Localization</title>
-
-    <para>
-        <code>Zend_Locale_Format</code> is a internal component used by Zend_Locale. All locale aware classes use
-        <code>Zend_Locale_Format</code> for normalization and localization of numbers and dates. Normalization involves
-        parsing input from a variety of data respresentations, like dates, into a standardized, structured
-        representation, such as a PHP array with year, month, and day elements.
-    </para>
-
-    <para>
-        The exact same string containing a number or a date might mean different things to people with different customs
-        and conventions. Disambiguation of numbers and dates requires rules about how to interpret these strings and
-        normalize the values into a standardized data structure. Thus, all methods in <code>Zend_Locale_Format</code>
-        require a locale in order to parse the input data.
-        <note>
-            <title>Default "root" Locale</title>
-            <para>
-                If no locale is specified, then normalization and localization will use the standard "root" locale,
-                which might yield unexpected behavior, if the input originated in a different locale, or output for a
-                specific locale was expected.
-            </para>
-        </note>
-    </para>
 
     <sect2 id="zend.locale.number.normalize">
 
@@ -68,7 +45,7 @@ print $number; // will return 13524.678
             <para>
                 Also, the precision of the resulting decimal representation can be truncated to a desired length with
                 <code>getNumber()</code>. If no precision is given, no truncation occurs. Use only PHP integers to
-                specify the precision. The result will not be rounded. So "1.6" will not return "1", not "2", if the
+                specify the precision. The result will not be rounded. So "1.6" will return "1", not "2", if the
                 precision is zero.
             </para>
 

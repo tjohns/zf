@@ -1,43 +1,52 @@
 <sect1 id="zend.locale.functions">
 
-    <title>Functions within a locale</title>
+    <title>Using Zend_Locale</title>
 
     <para>
-        <code>Zend_Locale</code> also provides additional informations on locales. These will be described in the
-        following sections.
+        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized names for other locales, days of the week, month names, etc.
     </para>
 
-    <sect2 id="zend.locale.serialize">
+    <sect2 id="zend.locale.copying">
 
-        <title>Serialization</title>
+        <title>Copying, Cloning, and Serializing Locale Objects</title>
 
         <para>
-            Of course <code>Zend_Locale</code> provides the possibility to serialize itself, as all other locale-aware
-            classes should do.
+            Use <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink> to duplicate a locale object exactly and efficiently.  Most locale-aware methods also accept string representations of locales, such as the result of <code>$locale->toString()</code>.
         </para>
 
         <example>
-            <title>Serialize locales</title>
+            <title>clone</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$locale = new Zend_Locale();
-$serial = $locale->serialize();
+$locale = new Zend_Locale('ar');
 
-// and now create the original class
-$newlocale = unserialize($serial);
+// Save the $locale object as a serialization
+$serializedLocale = $locale->serialize();
+// re-create the original object
+$localeObject = unserialize($serializedLocale);
+
+// Obtain a string identification of the locale
+$stringLocale = $locale->toString();
+
+// Make a cloned copy of the $local object
+$copiedLocale = clone $locale;
+
+print "copied: ", $copiedLocale->toString();
+print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
 ?>]]></programlisting>
         </example>
 
     </sect2>
 
+
     <sect2 id="zend.locale.equals">
 
-        <title>Equality</title>
+        <title>isEqual() - Equality</title>
 
         <para>
-            <code>Zend_Locale</code> also provides an check of equality. All locale-aware classes should also provide
-            this check.
+            <code>Zend_Locale</code> also provides a convenience function to compare two locales.
+            All locale-aware classes should provide a similar equality check.
         </para>
 
         <example>
@@ -49,63 +58,26 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Check if locales are equal
-if ($locale->equals($mylocale)
+if ($locale->isEqual($mylocale) { 
     print "Locales are equal";
-else
-    print "Locales differ from each other";
+}
 ?>]]></programlisting>
         </example>
 
     </sect2>
 
-    <sect2 id="zend.locale.tostring">
-
-        <title>toString</title>
-
-        <para>
-            <code>Zend_Locale</code> provides also the <code>toString()</code> function for the locale.
-        </para>
-
-        <example>
-            <title>String output of locales</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-print $locale->toString();
-?>]]></programlisting>
-        </example>
-
-        <para>
-            Of course there are ways, the <code>toString()</code> function will be called automaticaly.
-        </para>
-
-        <example>
-            <title>Automatic toString for locales</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-print $locale;
-?>]]></programlisting>
-        </example>
-
-    </sect2>
 
     <sect2 id="zend.locale.getdefault">
 
         <title>Default locales</title>
 
         <para>
-            All default locales the framework has found, can be returned by using the function
-            <code>getDefault()</code>. They will be returned as array and include not only the locale but also a quality
-            when avaiable.
-        </para>
+            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's web browser (if available), information from the environment of the host server, and ZF settings.
+            As with the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information to consider <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>SERVER</code>, or <code>FRAMEWORK)</code></link> first.
 
-        <para>
-            There are 2 parameters... the first one defines which default should be outputted first. It can be
-            <code>BROWSER</code>, <code>SERVER</code> and <code>FRAMEWORK</code>. The second parameter defines if all
-            default locales should be returned or just the first ones.
+            The second parameter toggles between returning all matching locales or only the first/best match.
+            Locale-aware components normally use only the first locale.
+            A quality rating is included, when avaiable.
         </para>
 
         <example>
@@ -125,80 +97,16 @@ print_r($found2);
 ?>]]></programlisting>
         </example>
 
-    </sect2>
-
-    <sect2 id="zend.locale.environment">
-
-        <title>Get all environment locales</title>
-
         <para>
-            All set environment locales can be retrieves by using <code>getEnvironment()</code>. They will be returned
-            as array.
+            To obtain only the default locales relevent to the <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>SERVER</code>, or <code>FRAMEWORK</code></link>, use the corresponding method:
+
+            <itemizedlist>
+                <listitem> <para> <code>getEnvironment()</code> </para> </listitem>
+                <listitem> <para> <code>getBrowser()</code> </para> </listitem>
+                <listitem> <para> <code>getLocale()</code> </para> </listitem>
+        </itemizedlist>
+
         </para>
-
-        <example>
-            <title>Get environment locales</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Return all environment locales
-$found = $locale->getEnvironment();
-print_r($found);
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.browser">
-
-        <title>Get all browser locales</title>
-
-        <para>
-            As for environment locales, the same function can be found for browser locales. <code>getBrowser()</code>
-            will return the information as array.
-        </para>
-
-        <example>
-            <title>Get browser locales</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Return all browser locales
-$found = $locale->getBrowser();
-print_r($found);
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.clone">
-
-        <title>Cloning a locale</title>
-
-        <para>
-            Ofcourse the locale can be cloned with the <code>clone</code> keyword as every other object.
-        </para>
-
-        <example>
-            <title>clone</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale('ar');
-
-// Return all browser locales
-$found = $locale->toString();
-$newlocale = clone $locale;
-
-print $found . "=" . $newlocale->toString();
-?>]]></programlisting>
-        </example>
-
-    </sect2>
 
     <sect2 id="zend.locale.setlocale">
 
@@ -206,7 +114,9 @@ print $found . "=" . $newlocale->toString();
 
         <para>
             A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
-            parameter. If no locale is given, the best locale will be searched automatically.
+            parameter. If no locale is given, a locale is <link linkend="zend.locale.selection">automatically selected</link>.
+            Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that have
+            references to the existing instance object.
         </para>
 
         <example>
@@ -227,58 +137,25 @@ print $locale->toString();
 
     </sect2>
 
+    <sect2 id="zend.locale.getlocale">
+
+        <title>Getting the language and region</title>
+
+        <para>
+            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string locale identifier.
+            Use <code>getRegion()</code> to obtain a string containing the two character region code from the string locale identifier.
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.locale.getlanguage">
 
-        <title>Get the actual set language</title>
+        <title>Obtaining localized name for languages, regions, and calendars</title>
 
         <para>
-            With <code>getLanguage()</code> the language can be returned from the actual set locale. It will be returned
-            as string.
-        </para>
-
-        <example>
-            <title>getLanguage</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Actual language
-print $locale->getLanguage();
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getregion">
-
-        <title>Get the actual set region</title>
-
-        <para>
-            With <code>getRegion()</code> the region can be returned from the actual set locale. It will be returned as
-            string or, when no region is defined, as empty string.
-        </para>
-
-        <example>
-            <title>getRegion</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Actual region
-print $locale->getRegion();
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getlanguagedisplay">
-
-        <title>Get an translated string of an language</title>
-
-        <para>
-            With <code>getLanguageDisplay()</code> the translated languagename of the given language will be returned.
+            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of a language for a specific $locale (defaults to the current object's locale).
+            Use <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the language associated with $locale (defaults to the current object's locale).
+            language will be returned.
         </para>
 
         <example>
@@ -286,79 +163,41 @@ print $locale->getRegion();
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$locale = new Zend_Locale();
-// Language
-print $locale->getLanguageDisplay('de');
+$locale = new Zend_Locale('en_US');
+print $locale->getLanguageDisplay('de'); // echos "German"
 ?>]]></programlisting>
         </example>
 
         <para>
-            You want to have for each language the language written in native letters ? Well... then you should just try
-            this example within your browser. You can just add an locale for which you want the display be returned.
+            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language, try the example below in a web page.  Similarly, <code>getRegionList()</code> and <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for regions to the names of the regions shown in another language.  Likewise, <code>getCalendarList()</code> and <code>getCalendarDisplay()</code> work identically.
         </para>
 
         <example>
-            <title>All Languages written in native letters</title>
+            <title>All Languages written in thier native language</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$locale = new Zend_Locale();
+$sourceLanguage = null; // set to your native language code
+$locale = new Zend_Locale($sourceLanguage);
 $list = $locale->getLanguageList();
 
 foreach($list as $language => $content) {
-   try {
-       $output = $locale->getLanguageDisplay($language, $language);
-       if (is_string($output)) {
-           print "\n<br>[".$language."] ".$output;
-       }
-   } catch (Exception $e) {
-       continue;
-   }
+    try {
+        $output = $locale->getLanguageDisplay($language, $language);
+        if (is_string($output)) {
+            print "\n<br>[".$language."] ".$output;
+        }
+    } catch (Exception $e) {
+        continue;
+    }
 }
 ?>]]></programlisting>
         </example>
 
-        <para>
-            As you can see the handling and receiving of information is very easy. You can do the same for all scripts
-            or all territories for example
-        </para>
-
         <note>
-            <title>Be aware</title>
+            <title>Exception handling</title>
             <para>
-                The useage of a locale which does not exist, will throw an exception. As not all languages are also
-                locales a exception would be thrown if we would not have catched it.
-            </para>
-        </note>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getlanguagelist">
-
-        <title>Get a list of languages</title>
-
-        <para>
-            With <code>getLanguageList()</code> an array of all known languagenames translated to the actual locale's
-            language will be returned.
-        </para>
-
-        <example>
-            <title>getLanguageList</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// LanguageList
-print_r($locale->getLanguageList());
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>Languagelists for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
+                The useage of a locale which does not exist, will throw an exception. Since not all languages are also locales, we must catch the exception to prevent early termination of our example.
             </para>
         </note>
 
@@ -369,8 +208,7 @@ print_r($locale->getLanguageList());
         <title>Get an translated string of an script</title>
 
         <para>
-            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be
-            returned.
+            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be returned.  The same way as with the function getLanguageDisplay(), this function also supports the useage for obtaining output localized to other locales, using the optional $locale argument.
         </para>
 
         <example>
@@ -385,13 +223,6 @@ print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
 
-        <note>
-            <title>Scripts for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
 
     </sect2>
 
@@ -400,8 +231,9 @@ print $locale->getScriptDisplay('Latn');
         <title>Get a list of scripts</title>
 
         <para>
-            With <code>getScriptList()</code> an array of all known scriptnames translated to the actual locale's
-            language will be returned.
+            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected $locale (defaults to the current object's locale).
+            For L10N purposes, a script is the set of characters used to display a language.
+            For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
         </para>
 
         <example>
@@ -416,155 +248,20 @@ print_r($locale->getScriptList());
 ?>]]></programlisting>
         </example>
 
-        <note>
-            <title>Scriptlists for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getregiondisplay">
-
-        <title>Get an translated string of an region</title>
-
-        <para>
-            With <code>getRegionDisplay()</code> the translated name of an region of the given language will be
-            returned.
-        </para>
-
-        <example>
-            <title>getRegionDisplay</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Region
-print $locale->getRegionDisplay('AT');
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>Regions for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getregionlist">
-
-        <title>Get a list of regions</title>
-
-        <para>
-            With <code>getRegionList()</code> an array of all known regionnames translated to the actual locale's
-            language will be returned.
-        </para>
-
-        <example>
-            <title>getRegionList</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// RegionList
-print_r($locale->getRegionList());
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>Regionlists for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getcalendardisplay">
-
-        <title>Get an translated string of an calendar</title>
-
-        <para>
-            With <code>getCalendarDisplay()</code> the translated name of an calendar of the given language will be
-            returned.
-        </para>
-
-        <example>
-            <title>getCalendarDisplay</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Calendar
-print $locale->getCalendarDisplay('chinese');
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>Calendars for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getcalendarlist">
-
-        <title>Get a list of calendars</title>
-
-        <para>
-            With <code>getCalendarList()</code> an array of all known calendarnames translated to the actual locale's
-            language will be returned.
-        </para>
-
-        <example>
-            <title>getCalendarList</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// CalendarList
-print_r($locale->getCalendarList());
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>Calendarlists for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
-
     </sect2>
 
     <sect2 id="zend.locale.getquestion">
 
-        <title>Get a translation for yes and no</title>
+        <title>Obtaining translations for "yes" and "no"</title>
 
         <para>
-            With <code>getQuestion()</code> an array with questionstring translated to the actual locale's language will
-            be returned.
-        </para>
-
-        <para>
-            There will be 4 returned contents... <code>YES</code> and <code>NO</code> and their abbeviated strings.
+            Frequently, programs need to solicit a "yes" or "no" response from the user.
+            Use <code>getQuestion()</code> to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale (defaults to the current object's locale).
+            The array will contain four key-value pairs, for "yes", "no", and their abbreviations, as shown in the example below.
         </para>
 
         <example>
-            <title>getCalendarList</title>
+            <title>getQuestion()</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -572,16 +269,15 @@ $locale = new Zend_Locale();
 
 // Question strings
 print_r($locale->getQuestion());
+Array
+(
+    [yes] => yes
+    [yesabbr] => y
+    [no] => no
+    [noabbr] => n
+)
 ?>]]></programlisting>
         </example>
-
-        <note>
-            <title>Question strings for other locales</title>
-            <para>
-                The same way as with the function getLanguageDisplay() this function also supports the useage for
-                informations returned from other locales. Just use the optional locale setting as last parameter.
-            </para>
-        </note>
 
     </sect2>
 
