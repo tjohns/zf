@@ -38,83 +38,83 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Viscosity_Dynamic extends Zend_Measure_Abstract
 {
     // Viscosity_Dynamic definitions
-    const STANDARD = 'Viscosity_Dynamic::KILOGRAM_PER_METER_SECOND';
+    const STANDARD = 'KILOGRAM_PER_METER_SECOND';
 
-    const CENTIPOISE           = 'Viscosity_Dynamic::CENTIPOISE';
-    const DECIPOISE            = 'Viscosity_Dynamic::DECIPOISE';
-    const DYNE_SECOND_PER_SQUARE_CENTIMETER       = 'Viscosity_Dynamic::DYNE_SECOND_PER_SQUARE_CENTIMETER';
-    const GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER = 'Viscosity_Dynamic::GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER';
-    const GRAM_PER_CENTIMETER_SECOND              = 'Viscosity_Dynamic::GRAM_PER_CENTIMETER_SECOND';
-    const KILOGRAM_FORCE_SECOND_PER_SQUARE_METER  = 'Viscosity_Dynamic::KILOGRAM_FORCE_SECOND_PER_SQUARE_METER';
-    const KILOGRAM_PER_METER_HOUR    = 'Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR';
-    const KILOGRAM_PER_METER_SECOND  = 'Viscosity_Dynamic::KILOGRAM_PER_METER_SECOND';
-    const MILLIPASCAL_SECOND   = 'Viscosity_Dynamic::MILLIPASCAL_SECOND';
-    const MILLIPOISE           = 'Viscosity_Dynamic::MILLIPOISE';
-    const NEWTON_SECOND_PER_SQUARE_METER = 'Viscosity_Dynamic::NEWTON_SECOND_PER_SQUARE_METER';
-    const PASCAL_SECOND        = 'Viscosity_Dynamic::PASCAL_SECOND';
-    const POISE                = 'Viscosity_Dynamic::POISE';
-    const POISEUILLE           = 'Viscosity_Dynamic::POISEUILLE';
-    const POUND_FORCE_SECOND_PER_SQUARE_FEET = 'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_FEET';
-    const POUND_FORCE_SECOND_PER_SQUARE_INCH = 'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_INCH';
-    const POUND_PER_FOOT_HOUR                = 'Viscosity_Dynamic::POUND_PER_FOOT_HOUR';
-    const POUND_PER_FOOT_SECOND              = 'Viscosity_Dynamic::POUND_PER_FOOT_SECOND';
-    const POUNDAL_HOUR_PER_SQUARE_FOOT       = 'Viscosity_Dynamic::POUNDAL_HOUR_PER_SQUARE_FOOT';
-    const POUNDAL_SECOND_PER_SQUARE_FOOT     = 'Viscosity_Dynamic::POUNDAL_SECOND_PER_SQUARE_FOOT';
-    const REYN                 = 'Viscosity_Dynamic::REYN';
-    const SLUG_PER_FOOT_SECOND = 'Viscosity_Dynamic::SLUG_PER_FOOT_SECOND';
-    const LBFS_PER_SQUARE_FOOT = 'Viscosity_Dynamic::LBFS_PER_SQUARE_FOOT';
-    const NS_PER_SQUARE_METER  = 'Viscosity_Dynamic::NS_PER_SQUARE_METER';
-    const WATER_20C            = 'Viscosity_Dynamic::WATER_20C';
-    const WATER_40C            = 'Viscosity_Dynamic::WATER_40C';
-    const HEAVY_OIL_20C        = 'Viscosity_Dynamic::HEAVY_OIL_20C';
-    const HEAVY_OIL_40C        = 'Viscosity_Dynamic::HEAVY_OIL_40C';
-    const GLYCERIN_20C         = 'Viscosity_Dynamic::GLYCERIN_20C';
-    const GLYCERIN_40C         = 'Viscosity_Dynamic::GLYCERIN_40C';
-    const SAE_5W_MINUS18C      = 'Viscosity_Dynamic::SAE_5W_MINUS18C';
-    const SAE_10W_MINUS18C     = 'Viscosity_Dynamic::SAE_10W_MINUS18C';
-    const SAE_20W_MINUS18C     = 'Viscosity_Dynamic::SAE_20W_MINUS18C';
-    const SAE_5W_99C           = 'Viscosity_Dynamic::SAE_5W_99C';
-    const SAE_10W_99C          = 'Viscosity_Dynamic::SAE_10W_99C';
-    const SAE_20W_99C          = 'Viscosity_Dynamic::SAE_20W_99C';
+    const CENTIPOISE           = 'CENTIPOISE';
+    const DECIPOISE            = 'DECIPOISE';
+    const DYNE_SECOND_PER_SQUARE_CENTIMETER       = 'DYNE_SECOND_PER_SQUARE_CENTIMETER';
+    const GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER = 'GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER';
+    const GRAM_PER_CENTIMETER_SECOND              = 'GRAM_PER_CENTIMETER_SECOND';
+    const KILOGRAM_FORCE_SECOND_PER_SQUARE_METER  = 'KILOGRAM_FORCE_SECOND_PER_SQUARE_METER';
+    const KILOGRAM_PER_METER_HOUR    = 'KILOGRAM_PER_METER_HOUR';
+    const KILOGRAM_PER_METER_SECOND  = 'KILOGRAM_PER_METER_SECOND';
+    const MILLIPASCAL_SECOND   = 'MILLIPASCAL_SECOND';
+    const MILLIPOISE           = 'MILLIPOISE';
+    const NEWTON_SECOND_PER_SQUARE_METER = 'NEWTON_SECOND_PER_SQUARE_METER';
+    const PASCAL_SECOND        = 'PASCAL_SECOND';
+    const POISE                = 'POISE';
+    const POISEUILLE           = 'POISEUILLE';
+    const POUND_FORCE_SECOND_PER_SQUARE_FEET = 'POUND_FORCE_SECOND_PER_SQUARE_FEET';
+    const POUND_FORCE_SECOND_PER_SQUARE_INCH = 'POUND_FORCE_SECOND_PER_SQUARE_INCH';
+    const POUND_PER_FOOT_HOUR                = 'POUND_PER_FOOT_HOUR';
+    const POUND_PER_FOOT_SECOND              = 'POUND_PER_FOOT_SECOND';
+    const POUNDAL_HOUR_PER_SQUARE_FOOT       = 'POUNDAL_HOUR_PER_SQUARE_FOOT';
+    const POUNDAL_SECOND_PER_SQUARE_FOOT     = 'POUNDAL_SECOND_PER_SQUARE_FOOT';
+    const REYN                 = 'REYN';
+    const SLUG_PER_FOOT_SECOND = 'SLUG_PER_FOOT_SECOND';
+    const LBFS_PER_SQUARE_FOOT = 'LBFS_PER_SQUARE_FOOT';
+    const NS_PER_SQUARE_METER  = 'NS_PER_SQUARE_METER';
+    const WATER_20C            = 'WATER_20C';
+    const WATER_40C            = 'WATER_40C';
+    const HEAVY_OIL_20C        = 'HEAVY_OIL_20C';
+    const HEAVY_OIL_40C        = 'HEAVY_OIL_40C';
+    const GLYCERIN_20C         = 'GLYCERIN_20C';
+    const GLYCERIN_40C         = 'GLYCERIN_40C';
+    const SAE_5W_MINUS18C      = 'SAE_5W_MINUS18C';
+    const SAE_10W_MINUS18C     = 'SAE_10W_MINUS18C';
+    const SAE_20W_MINUS18C     = 'SAE_20W_MINUS18C';
+    const SAE_5W_99C           = 'SAE_5W_99C';
+    const SAE_10W_99C          = 'SAE_10W_99C';
+    const SAE_20W_99C          = 'SAE_20W_99C';
 
     private static $_UNITS = array(
-        'Viscosity_Dynamic::CENTIPOISE'          => array(0.001,      'cP'),
-        'Viscosity_Dynamic::DECIPOISE'           => array(0.01,       'dP'),
-        'Viscosity_Dynamic::DYNE_SECOND_PER_SQUARE_CENTIMETER'       => array(0.1,     'dyn s/cm²'),
-        'Viscosity_Dynamic::GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER' => array(98.0665, 'gf s/cm²'),
-        'Viscosity_Dynamic::GRAM_PER_CENTIMETER_SECOND'              => array(0.1,     'g/cm s'),
-        'Viscosity_Dynamic::KILOGRAM_FORCE_SECOND_PER_SQUARE_METER'  => array(9.80665, 'kgf s/m²'),
-        'Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR'    => array(array('' => 1, '/' => 3600), 'kg/m h'),
-        'Viscosity_Dynamic::KILOGRAM_PER_METER_SECOND'  => array(1,   'kg/ms'),
-        'Viscosity_Dynamic::MILLIPASCAL_SECOND'  => array(0.001,      'mPa s'),
-        'Viscosity_Dynamic::MILLIPOISE'          => array(0.0001,     'mP'),
-        'Viscosity_Dynamic::NEWTON_SECOND_PER_SQUARE_METER' => array(1, 'N s/m²'),
-        'Viscosity_Dynamic::PASCAL_SECOND'       => array(1,          'Pa s'),
-        'Viscosity_Dynamic::POISE'               => array(0.1,        'P'),
-        'Viscosity_Dynamic::POISEUILLE'          => array(1,          'Pl'),
-        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_FEET' => array(47.880259,  'lbf s/ft²'),
-        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_INCH' => array(6894.75729, 'lbf s/in²'),
-        'Viscosity_Dynamic::POUND_PER_FOOT_HOUR' => array(0.00041337887,             'lb/ft h'),
-        'Viscosity_Dynamic::POUND_PER_FOOT_SECOND'          => array(1.4881639,      'lb/ft s'),
-        'Viscosity_Dynamic::POUNDAL_HOUR_PER_SQUARE_FOOT'   => array(0.00041337887,  'pdl h/ft²'),
-        'Viscosity_Dynamic::POUNDAL_SECOND_PER_SQUARE_FOOT' => array(1.4881639,      'pdl s/ft²'),
-        'Viscosity_Dynamic::REYN'                => array(6894.75729, 'reyn'),
-        'Viscosity_Dynamic::SLUG_PER_FOOT_SECOND'=> array(47.880259,  'slug/ft s'),
-        'Viscosity_Dynamic::WATER_20C'           => array(0.001,      'water (20°)'),
-        'Viscosity_Dynamic::WATER_40C'           => array(0.00065,    'water (40°)'),
-        'Viscosity_Dynamic::HEAVY_OIL_20C'       => array(0.45,       'oil (20°)'),
-        'Viscosity_Dynamic::HEAVY_OIL_40C'       => array(0.11,       'oil (40°)'),
-        'Viscosity_Dynamic::GLYCERIN_20C'        => array(1.41,       'glycerin (20°)'),
-        'Viscosity_Dynamic::GLYCERIN_40C'        => array(0.284,      'glycerin (40°)'),
-        'Viscosity_Dynamic::SAE_5W_MINUS18C'     => array(1.2,        'SAE 5W (-18°)'),
-        'Viscosity_Dynamic::SAE_10W_MINUS18C'    => array(2.4,        'SAE 10W (-18°)'),
-        'Viscosity_Dynamic::SAE_20W_MINUS18C'    => array(9.6,        'SAE 20W (-18°)'),
-        'Viscosity_Dynamic::SAE_5W_99C'          => array(0.0039,     'SAE 5W (99°)'),
-        'Viscosity_Dynamic::SAE_10W_99C'         => array(0.0042,     'SAE 10W (99°)'),
-        'Viscosity_Dynamic::SAE_20W_99C'         => array(0.0057,     'SAE 20W (99°)')
+        'CENTIPOISE'          => array(0.001,      'cP'),
+        'DECIPOISE'           => array(0.01,       'dP'),
+        'DYNE_SECOND_PER_SQUARE_CENTIMETER'       => array(0.1,     'dyn s/cm²'),
+        'GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER' => array(98.0665, 'gf s/cm²'),
+        'GRAM_PER_CENTIMETER_SECOND'              => array(0.1,     'g/cm s'),
+        'KILOGRAM_FORCE_SECOND_PER_SQUARE_METER'  => array(9.80665, 'kgf s/m²'),
+        'KILOGRAM_PER_METER_HOUR'    => array(array('' => 1, '/' => 3600), 'kg/m h'),
+        'KILOGRAM_PER_METER_SECOND'  => array(1,   'kg/ms'),
+        'MILLIPASCAL_SECOND'  => array(0.001,      'mPa s'),
+        'MILLIPOISE'          => array(0.0001,     'mP'),
+        'NEWTON_SECOND_PER_SQUARE_METER' => array(1, 'N s/m²'),
+        'PASCAL_SECOND'       => array(1,          'Pa s'),
+        'POISE'               => array(0.1,        'P'),
+        'POISEUILLE'          => array(1,          'Pl'),
+        'POUND_FORCE_SECOND_PER_SQUARE_FEET' => array(47.880259,  'lbf s/ft²'),
+        'POUND_FORCE_SECOND_PER_SQUARE_INCH' => array(6894.75729, 'lbf s/in²'),
+        'POUND_PER_FOOT_HOUR' => array(0.00041337887,             'lb/ft h'),
+        'POUND_PER_FOOT_SECOND'          => array(1.4881639,      'lb/ft s'),
+        'POUNDAL_HOUR_PER_SQUARE_FOOT'   => array(0.00041337887,  'pdl h/ft²'),
+        'POUNDAL_SECOND_PER_SQUARE_FOOT' => array(1.4881639,      'pdl s/ft²'),
+        'REYN'                => array(6894.75729, 'reyn'),
+        'SLUG_PER_FOOT_SECOND'=> array(47.880259,  'slug/ft s'),
+        'WATER_20C'           => array(0.001,      'water (20°)'),
+        'WATER_40C'           => array(0.00065,    'water (40°)'),
+        'HEAVY_OIL_20C'       => array(0.45,       'oil (20°)'),
+        'HEAVY_OIL_40C'       => array(0.11,       'oil (40°)'),
+        'GLYCERIN_20C'        => array(1.41,       'glycerin (20°)'),
+        'GLYCERIN_40C'        => array(0.284,      'glycerin (40°)'),
+        'SAE_5W_MINUS18C'     => array(1.2,        'SAE 5W (-18°)'),
+        'SAE_10W_MINUS18C'    => array(2.4,        'SAE 10W (-18°)'),
+        'SAE_20W_MINUS18C'    => array(9.6,        'SAE 20W (-18°)'),
+        'SAE_5W_99C'          => array(0.0039,     'SAE 5W (99°)'),
+        'SAE_10W_99C'         => array(0.0042,     'SAE 10W (99°)'),
+        'SAE_20W_99C'         => array(0.0057,     'SAE 20W (99°)')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Viscosity_Dynamic provides an locale aware class for
@@ -124,30 +124,25 @@ class Zend_Measure_Viscosity_Dynamic extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Viscosity_Dynamic Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Cooking_Weight Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Viscosity_Dynamic  $object  Viscosity Dynamic object to compare
+     *      * @param $object  object to compare equality
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -160,15 +155,23 @@ class Zend_Measure_Viscosity_Dynamic extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Viscosity_Dynamic Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Viscosity_Dynamic Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty( $locale )) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -178,24 +181,24 @@ class Zend_Measure_Viscosity_Dynamic extends Zend_Measure_Abstract
         }
 
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of dynamic viscosity:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown dynamic viscosity");
         }
 
         parent::setValue($value, $type, $locale);
-        parent::setType( $type );
+        parent::setType($type);
     }
 
 
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType( $type )
+    public function setType($type)
     {
         if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of dynamic viscosity:'.$type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown dynamic viscosity");
         }
 
         // Convert to standard value
