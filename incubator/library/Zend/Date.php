@@ -4331,9 +4331,7 @@ class Zend_Date extends Zend_Date_DateObject {
     {
         if ($locale instanceof Zend_Locale) {
             $this->_Locale = $locale;
-        }
-
-        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+        } else if (!$locale = Zend_Locale::isLocale($locale, true)) {
             throw new Zend_Date_Exception("Given locale ($locale) does not exist", $locale);
         } else {
             $this->_Locale = new Zend_Locale($locale);
