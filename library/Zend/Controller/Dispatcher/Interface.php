@@ -37,6 +37,17 @@ require_once 'Zend/Controller/Response/Abstract.php';
 interface Zend_Controller_Dispatcher_Interface
 {
     /**
+     * Formats a string into a module name.  This is used to take a raw
+     * module name, such as one that would be packaged inside a request
+     * object, and reformat it to a proper class name prefix that a class 
+     * extending Zend_Controller_Action would use.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatModuleName($unformatted);
+
+    /**
      * Formats a string into a controller name.  This is used to take a raw
      * controller name, such as one that would be packaged inside a request
      * object, and reformat it to a proper class name that a class extending
@@ -129,10 +140,9 @@ interface Zend_Controller_Dispatcher_Interface
      * Add a controller directory to the controller directory stack
      * 
      * @param string $path 
-     * @param string $module Optional; module name under which to store $path
      * @return Zend_Controller_Dispatcher_Interface
      */
-    public function addControllerDirectory($path, $module = null);
+    public function addControllerDirectory($path);
 
     /**
      * Set the directory where controller files are stored

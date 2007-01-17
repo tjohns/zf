@@ -200,17 +200,15 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     public function testNamespacedModules()
     {
         $this->_dispatcher->setControllerDirectory(array(
-            'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-            'admin'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files/Admin',
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
         ));
 
         $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
         $request->setControllerName('foo');
         $request->setActionName('bar');
-        $request->setParam('module', 'admin');
 
         $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files/Admin', $this->_dispatcher->getDispatchDirectory());
 
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->dispatch($request, $response);
@@ -224,6 +222,39 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     public function testZf637()
     {
         $test = $this->_dispatcher->formatActionName('view_entry');
-        $this->assertEquals('viewEntryAction', $test);
+        $this->assertEquals('viewentryAction', $test);
+    }
+
+    public function testWordDelimiter()
+    {
+        $this->assertEquals(array('-', '.'), $this->_dispatcher->getWordDelimiter());
+        $this->_dispatcher->setWordDelimiter(':');
+        $this->assertEquals(array(':'), $this->_dispatcher->getWordDelimiter());
+    }
+
+    public function testPathDelimiter()
+    {
+        $this->assertEquals('_', $this->_dispatcher->getPathDelimiter());
+        $this->_dispatcher->setPathDelimiter(':');
+        $this->assertEquals(':', $this->_dispatcher->getPathDelimiter());
+    }
+
+    public function testNamespacedControllerWithCamelCaseAction()
+    {
+        $this->_dispatcher->setControllerDirectory(array(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
+        ));
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
+        $request->setControllerName('foo-bar');
+        $request->setActionName('baz.bat');
+
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertContains("Admin_FooBar::bazBat action called", $body, $body);
     }
 }

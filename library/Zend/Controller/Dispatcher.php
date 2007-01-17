@@ -75,10 +75,22 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     protected $_invokeParams = array();
 
     /**
+     * Path delimiter character
+     * @var string
+     */
+    protected $_pathDelimiter = '_';
+
+    /**
      * Response object to pass to action controllers, if any
      * @var Zend_Controller_Response_Abstract|null 
      */
     protected $_response = null;
+
+    /**
+     * Word delimiter characters
+     * @var array
+     */
+    protected $_wordDelimiter = array('-', '.');
 
     /**
      * Constructor
@@ -88,6 +100,17 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function __construct(array $params = array())
     {
         $this->setParams($params);
+    }
+
+    /**
+     * Format the module name.
+     * 
+     * @param string $unformatted 
+     * @return string
+     */
+    public function formatModuleName($unformatted)
+    {
+        return ucfirst($this->_formatName($unformatted));
     }
 
     /**
@@ -104,7 +127,6 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         return ucfirst($this->_formatName($unformatted)) . 'Controller';
     }
 
-
     /**
      * Formats a string into an action name.  This is used to take a raw
      * action name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
@@ -117,35 +139,132 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function formatActionName($unformatted)
     {
-        $formatted = $this->_formatName($unformatted, false);
+        $formatted = $this->_formatName($unformatted, true);
         return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
     }
 
+    /**
+     * Verify delimiter
+     *
+     * Verify a delimiter to use in controllers/modules/actions. May be a 
+     * single string or an array of strings.
+     * 
+     * @param string|array $spec 
+     * @return array
+     * @throws Zend_Controller_Dispatcher_Exception with invalid delimiters
+     */
+    public function _verifyDelimiter($spec)
+    {
+        if (is_string($spec)) {
+            return (array) $spec;
+        } elseif (is_array($spec)) {
+            $allStrings = true;
+            foreach ($spec as $delim) {
+                if (!is_string($delim)) {
+                    $allStrings = false;
+                    break;
+                }
+            }
+
+            if (!$allStrings) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
+                throw new Zend_Controller_Dispatcher_Exception('Word delimiter array must contain only strings');
+            }
+
+            return $spec;
+        }
+
+        require_once 'Zend/Controller/Dispatcher/Exception.php';
+        throw new Zend_Controller_Dispatcher_Exception('Invalid word delimiter');
+    }
 
     /**
-     * Formats a string from a URI into a PHP-friendly name.  Replaces words
-     * separated by "-", "_", or "." with camelCaps and removes any characters
-     * that are not alphanumeric.
+     * Retrieve the word delimiter character(s) used in 
+     * controller/module/action names
+     * 
+     * @return array
+     */
+    public function getWordDelimiter()
+    {
+        return $this->_wordDelimiter;
+    }
+
+    /**
+     * Set word delimiter
      *
-     * If $preserveUnderscores is true, underscores are retained, and the word 
-     * following Title-cased.
+     * Set the word delimiter to use in controllers/modules/actions. May be a 
+     * single string or an array of strings.
+     * 
+     * @param string|array $spec 
+     * @return Zend_Controller_Dispatcher
+     */
+    public function setWordDelimiter($spec)
+    {
+        $spec = $this->_verifyDelimiter($spec);
+        $this->_wordDelimiter = $spec;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve the path delimiter character(s) used in 
+     * controller/module/action names
+     * 
+     * @return array
+     */
+    public function getPathDelimiter()
+    {
+        return $this->_pathDelimiter;
+    }
+
+    /**
+     * Set path delimiter
+     *
+     * Set the path delimiter to use in controllers/modules/actions. May be a 
+     * single string or an array of strings.
+     * 
+     * @param string|array $spec 
+     * @return Zend_Controller_Dispatcher
+     */
+    public function setPathDelimiter($spec)
+    {
+        if (!is_string($spec)) {
+            require_once 'Zend/Controller/Dispatcher/Exception.php';
+            throw new Zend_Controller_Dispatcher_Exception('Invalid path delimiter');
+        }
+        $this->_pathDelimiter = $spec;
+
+        return $this;
+    }
+
+    /**
+     * Formats a string from a URI into a PHP-friendly name.  
+     *
+     * By default, replaces words separated by '-' or '.' with camelCaps. If 
+     * $isAction is false, it also preserves underscores, and makes the letter 
+     * following the underscore uppercase. All non-alphanumeric characters are 
+     * removed.
      *
      * @param string $unformatted
-     * @param boolean $preserveUnderscores Defaults to true
+     * @param boolean $isAction Defaults to false
      * @return string
      */
-    protected function _formatName($unformatted, $preserveUnderscores = true)
+    protected function _formatName($unformatted, $isAction = false)
     {
-        if ($preserveUnderscores) {
-            $unformatted = str_replace(array('-', '.'), ' ', strtolower($unformatted));
+        // preserve directories
+        if (!$isAction) {
+            $segments = explode($this->getPathDelimiter(), $unformatted);
         } else {
-            $unformatted = str_replace(array('-', '.', '_'), ' ', strtolower($unformatted));
+            $segments = (array) $unformatted;
         }
-        $unformatted = preg_replace('/[^a-z0-9_ ]/', '', $unformatted);
-        $unformatted = str_replace(' ', '', ucwords($unformatted));
 
-        $unformatted = str_replace('_', ' ', $unformatted);
-        return str_replace(' ', '_', ucwords($unformatted));
+        foreach ($segments as $key => $segment) {
+            $segment        = str_replace($this->getWordDelimiter(), ' ', strtolower($segment));
+            $segment        = preg_replace('/[^a-z0-9 ]/', '', $segment);
+            $segments[$key] = str_replace(' ', '', ucwords($segment));
+        }
+
+        return implode('_', $segments);
     }
 
     /**
@@ -154,17 +273,13 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * @param string $path 
      * @return Zend_Controller_Dispatcher
      */
-    public function addControllerDirectory($path, $module = null)
+    public function addControllerDirectory($path)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
             throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
-        if (null === $module) {
-            $this->_directories[] = rtrim($path, '\//');
-        } else {
-            $this->_directories[(string) $module] = rtrim($path, '\//');
-        }
+        $this->_directories[] = rtrim($path, '\//');
 
         return $this;
     }
@@ -201,13 +316,15 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     }
 
     /**
-     * Returns TRUE if the Zend_Controller_Request_Abstract object can be dispatched to a controller.
-     * This only verifies that the Zend_Controller_Action can be dispatched and does not
-     * guarantee that the action will be accepted by the Zend_Controller_Action.
+     * Returns TRUE if the Zend_Controller_Request_Abstract object can be 
+     * dispatched to a controller.
+     *
+     * This only verifies that the Zend_Controller_Action can be dispatched and 
+     * does not guarantee that the action will be accepted by the 
+     * Zend_Controller_Action.
      *
      * @param Zend_Controller_Request_Abstract $action
      * @return boolean
-     * @throws Zend_Controller_Dispatcher_Exception
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
@@ -377,7 +494,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Get controller class
          */
-        $className = $this->_getController($request, $directories);
+        $className = $this->_getController($request);
 
         /**
          * If no class name returned, report exceptional behaviour
@@ -389,20 +506,9 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Load the controller class file
          *
-         * Attempts to load the controller class file from {@link getDispatchDirectory()}, 
-         * using the module prefix if a module was requested.
+         * Attempts to load the controller class file from {@link getControllerDirectory()}.
          */
-        $moduleClass = $this->_getModuleClass($request, $className);
-        if ($className != $moduleClass) {
-            $classLoaded = $this->loadClass($moduleClass, $this->getDispatchDirectory());
-            if (!$classLoaded) {
-                Zend::loadClass($className, $this->getDispatchDirectory());
-            } else {
-                $className = $classLoaded;
-            }
-        } else {
-            Zend::loadClass($className, $this->getDispatchDirectory());
-        }
+        Zend::loadClass($className, $this->getControllerDirectory());
 
         /**
          * Instantiate controller with request, response, and invocation 
@@ -449,18 +555,10 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * if still not found, fallback to default
      *
      * @param Zend_Controller_Request_Abstract $request
-     * @param array $directories
      * @return string|false Returns class name on success
      */
-    protected function _getController($request, $directories = null)
+    protected function _getController($request)
     {
-        if (null === $directories) {
-            $directories  = $this->getControllerDirectory();
-        }
-        if (empty($directories)) {
-            throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
-        }
-
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
             $controllerName = $this->getDefaultController();
@@ -468,33 +566,18 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         $className = $this->formatControllerName($controllerName);
-        $classPath = str_replace('_', DIRECTORY_SEPARATOR, $className);
 
         /**
-         * Determine if controller is dispatchable
-         *
-         * Checks to see if a module name is present in the request; if so, 
-         * checks for class file existing in module directory. Otherwise, loops through 
-         * directories in FIFO order to find it.
+         * Check to see if a module name is present in the request; if so, 
+         * prepend module to controller class name, using underscore as 
+         * separator. 
          */
-        $dispatchable = false;
-        $module = (string) $request->getParam('module', false);
-        if ($module && isset($directories[$module])) {
-            $dispatchable = Zend::isReadable($directories[$module] . DIRECTORY_SEPARATOR . $classPath . '.php');
-            if ($dispatchable) {
-                $this->_curDirectory = $directories[$module];
-            }
-        } else {
-            foreach ($directories as $directory) {
-                $dispatchable = Zend::isReadable($directory . DIRECTORY_SEPARATOR . $classPath . '.php');
-                if ($dispatchable) {
-                    $this->_curDirectory = $directory;
-                    break;
-                }
-            }
+        $module = $request->getModuleName();
+        if ((null !== $module)) {
+            $className = $this->formatModuleName($module) . '_' . $className;
         }
 
-        return $dispatchable ? $className : false;
+        return $className;
     }
 
     /**
@@ -517,75 +600,5 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         return $this->formatActionName($action);
-    }
-
-    /**
-     * Return a class name prefixed with the module name, if a module was specified
-     * 
-     * @param Zend_Controller_Request_Abstract $request 
-     * @param string $className 
-     * @return string
-     */
-    protected function _getModuleClass(Zend_Controller_Request_Abstract $request, $className)
-    {
-        if (false !== ($module = $request->getParam('module', false))) {
-            $className = $this->_formatName($module) . '_' . $className;
-        }
-
-        return $className;
-    }
-
-    /**
-     * Dispatcher class loader
-     *
-     * Allows loading prefixed classes from a specific directory; used when 
-     * modules are utilized.
-     * 
-     * @param string $class 
-     * @param string $dir 
-     * @return false|string Returns false if unable to load class, class name 
-     * of class loaded otherwise
-     */
-    public function loadClass($class, $dir)
-    {
-        if (class_exists($class, false)) {
-            return $class;
-        }
-
-        $path = str_replace('_', DIRECTORY_SEPARATOR, $class);
-        if (strstr($path, DIRECTORY_SEPARATOR)) {
-            $file = substr($path, strrpos($path, DIRECTORY_SEPARATOR));
-            $spec = $dir . DIRECTORY_SEPARATOR . $file . '.php';
-            if (is_readable($spec)) {
-                include_once $spec;
-                if (!class_exists($class)) {
-                    while (strstr($class, '_')) {
-                        $class = substr($class, strpos($class, '_') + 1);
-                        if (class_exists($class)) {
-                            return $class;
-                        }
-                    }
-                    return false;
-                }
-
-                return $class;
-            }
-        } else {
-            Zend::loadClass($class, $dir);
-            return $class;
-        }
-
-        return false;
-    }
-
-    /**
-     * Return the value of the currently selected dispatch directory (as set by 
-     * {@link _getController()})
-     * 
-     * @return string
-     */
-    public function getDispatchDirectory()
-    {
-        return $this->_curDirectory;
     }
 }

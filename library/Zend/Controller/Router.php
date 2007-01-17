@@ -213,7 +213,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
          * Set module, controller and action, now that params are set
          */
         if (isset($module)) {
-            $request->setParam('module', urldecode($module));
+            $request->setModuleName(urldecode($module));
         }
 
         if (isset($controller)) {

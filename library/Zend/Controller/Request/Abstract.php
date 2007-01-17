@@ -33,6 +33,18 @@ abstract class Zend_Controller_Request_Abstract
     protected $_dispatched = false;
 
     /**
+     * Module
+     * @var string
+     */
+    protected $_module;
+
+    /**
+     * Module key for retrieving module from params
+     * @var string 
+     */
+    protected $_moduleKey = 'module';
+
+    /**
      * Controller
      * @var string
      */
@@ -61,6 +73,32 @@ abstract class Zend_Controller_Request_Abstract
      * @var array 
      */
     protected $_params = array();
+
+    /**
+     * Retrieve the module name
+     * 
+     * @return string
+     */
+    public function getModuleName()
+    {
+        if (null === $this->_module) {
+            $this->_module = $this->getParam($this->getModuleKey());
+        }
+
+        return $this->_module;
+    }
+
+    /**
+     * Set the module name to use
+     * 
+     * @param string $value 
+     * @return Zend_Controller_Request_Abstract
+     */
+    public function setModuleName($value)
+    {
+        $this->_module = $value;
+        return $this;
+    }
 
     /**
      * Retrieve the controller name
@@ -111,6 +149,28 @@ abstract class Zend_Controller_Request_Abstract
     public function setActionName($value)
     {
         $this->_action = $value;
+        return $this;
+    }
+
+    /**
+     * Retrieve the module key
+     * 
+     * @return string
+     */
+    public function getModuleKey() 
+    {
+        return $this->_moduleKey;
+    }
+
+    /**
+     * Set the module key
+     * 
+     * @param string $key 
+     * @return Zend_Controller_Request_Abstract
+     */
+    public function setModuleKey($key)
+    {
+        $this->_moduleKey = (string) $key;
         return $this;
     }
 
