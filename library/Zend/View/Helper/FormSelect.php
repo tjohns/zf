@@ -115,20 +115,17 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
             // build the list of options
             $list = array();
             foreach ($options as $opt_value => $opt_label) {
-            
-                // option value and label
-                $opt = '<option'
-                     . ' value="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') . '"'
-                     . ' label="' . htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8') . '"';
-                     
-                // selected?
-                if (in_array($opt_value, $value)) {
-                    $opt .= ' selected="selected"';
+
+                if (is_array($opt_label)) {
+                    $list[] = '<optgroup '
+                            . 'name="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') .'">';
+                    foreach ($opt_label as $val => $lab) {
+                        $list[] = $this->_build($val, $lab, $value);
+                    }
+                    $list[] = '</optgroup>';
+                } else {
+                    $list[] = $this->_build($opt_value, $opt_label, $value);
                 }
-                
-                // close and add
-                $opt .= '>' . htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8') . "</option>";
-                $list[] = $opt;
             }
             
             // add the options to the xhtml and close the select
@@ -138,4 +135,29 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
         
         return $xhtml;
     }
+
+    /**
+     * Builds the actual <option> tag
+     * 
+     * @param string $value Options Value
+     * @param string $label Options Label
+     * @param array  $selected The option value(s) to mark as 'selected'
+     * @return string Option Tag XHTML
+     */
+    protected function _build($value, $label, $selected)
+    {
+        $opt = '<option'
+             . ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
+             . ' label="' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . '"';
+             
+        // selected?
+        if (in_array($value, $selected)) {
+            $opt .= ' selected="selected"';
+        }
+        
+        $opt .= '>' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . "</option>";
+        
+        return $opt;
+    }
+
 }
