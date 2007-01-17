@@ -70,9 +70,33 @@ require_once 'Zend/Validate/DateTest.php';
 
 
 /**
+ * @see Zend_Validate_FloatTest
+ */
+require_once 'Zend/Validate/FloatTest.php';
+
+
+/**
  * @see Zend_Validate_EmailAddressTest
  */
 require_once 'Zend/Validate/EmailAddressTest.php';
+
+
+/**
+ * @see Zend_Validate_GreaterThanTest
+ */
+require_once 'Zend/Validate/GreaterThanTest.php';
+
+
+/**
+ * @see Zend_Validate_HexTest
+ */
+require_once 'Zend/Validate/HexTest.php';
+
+
+/**
+ * @see Zend_Validate_HostnameTest
+ */
+require_once 'Zend/Validate/HostnameTest.php';
 
 
 /**
@@ -108,7 +132,11 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_BetweenTest');
         $suite->addTestSuite('Zend_Validate_CcnumTest');
         $suite->addTestSuite('Zend_Validate_DateTest');
+        $suite->addTestSuite('Zend_Validate_FloatTest');
         $suite->addTestSuite('Zend_Validate_EmailAddressTest');
+        $suite->addTestSuite('Zend_Validate_GreaterThanTest');
+        $suite->addTestSuite('Zend_Validate_HexTest');
+        $suite->addTestSuite('Zend_Validate_HostnameTest');
 
         return $suite;
     }
