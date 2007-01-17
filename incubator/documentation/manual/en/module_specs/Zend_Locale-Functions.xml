@@ -3,7 +3,8 @@
     <title>Using Zend_Locale</title>
 
     <para>
-        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized names for other locales, days of the week, month names, etc.
+        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized
+        names for other locales, days of the week, month names, etc.
     </para>
 
     <sect2 id="zend.locale.copying">
@@ -11,7 +12,10 @@
         <title>Copying, Cloning, and Serializing Locale Objects</title>
 
         <para>
-            Use <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink> to duplicate a locale object exactly and efficiently.  Most locale-aware methods also accept string representations of locales, such as the result of <code>$locale->toString()</code>.
+            Use
+            <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink>
+            to duplicate a locale object exactly and efficiently. Most locale-aware methods also accept string
+            representations of locales, such as the result of <code>$locale->toString()</code>.
         </para>
 
         <example>
@@ -39,14 +43,13 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
 
     </sect2>
 
-
     <sect2 id="zend.locale.equals">
 
         <title>isEqual() - Equality</title>
 
         <para>
-            <code>Zend_Locale</code> also provides a convenience function to compare two locales.
-            All locale-aware classes should provide a similar equality check.
+            <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
+            classes should provide a similar equality check.
         </para>
 
         <example>
@@ -66,18 +69,19 @@ if ($locale->isEqual($mylocale) {
 
     </sect2>
 
-
     <sect2 id="zend.locale.getdefault">
 
         <title>Default locales</title>
 
         <para>
-            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's web browser (if available), information from the environment of the host server, and ZF settings.
-            As with the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information to consider <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>SERVER</code>, or <code>FRAMEWORK)</code></link> first.
-
-            The second parameter toggles between returning all matching locales or only the first/best match.
-            Locale-aware components normally use only the first locale.
-            A quality rating is included, when avaiable.
+            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's
+            web browser (if available), information from the environment of the host server, and ZF settings. As with
+            the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information
+            to consider
+            <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
+            </link>
+            first. The second parameter toggles between returning all matching locales or only the first/best match.
+            Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
         </para>
 
         <example>
@@ -98,15 +102,30 @@ print_r($found2);
         </example>
 
         <para>
-            To obtain only the default locales relevent to the <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>SERVER</code>, or <code>FRAMEWORK</code></link>, use the corresponding method:
-
+            To obtain only the default locales relevent to the
+            <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK</code>
+            </link>
+            , use the corresponding method:
             <itemizedlist>
-                <listitem> <para> <code>getEnvironment()</code> </para> </listitem>
-                <listitem> <para> <code>getBrowser()</code> </para> </listitem>
-                <listitem> <para> <code>getLocale()</code> </para> </listitem>
-        </itemizedlist>
-
+                <listitem>
+                    <para>
+                        <code>getEnvironment()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getBrowser()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getLocale()</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
         </para>
+
+    </sect2>
 
     <sect2 id="zend.locale.setlocale">
 
@@ -114,9 +133,10 @@ print_r($found2);
 
         <para>
             A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
-            parameter. If no locale is given, a locale is <link linkend="zend.locale.selection">automatically selected</link>.
-            Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that have
-            references to the existing instance object.
+            parameter. If no locale is given, a locale is
+            <link linkend="zend.locale.selection">automatically selected</link>
+            . Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that
+            have references to the existing instance object.
         </para>
 
         <example>
@@ -142,8 +162,9 @@ print $locale->toString();
         <title>Getting the language and region</title>
 
         <para>
-            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string locale identifier.
-            Use <code>getRegion()</code> to obtain a string containing the two character region code from the string locale identifier.
+            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string
+            locale identifier. Use <code>getRegion()</code> to obtain a string containing the two character region code
+            from the string locale identifier.
         </para>
 
     </sect2>
@@ -153,9 +174,10 @@ print $locale->toString();
         <title>Obtaining localized name for languages, regions, and calendars</title>
 
         <para>
-            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of a language for a specific $locale (defaults to the current object's locale).
-            Use <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the language associated with $locale (defaults to the current object's locale).
-            language will be returned.
+            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of
+            a language for a specific $locale (defaults to the current object's locale). Use
+            <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the
+            language associated with $locale (defaults to the current object's locale). language will be returned.
         </para>
 
         <example>
@@ -169,7 +191,11 @@ print $locale->getLanguageDisplay('de'); // echos "German"
         </example>
 
         <para>
-            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language, try the example below in a web page.  Similarly, <code>getRegionList()</code> and <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for regions to the names of the regions shown in another language.  Likewise, <code>getCalendarList()</code> and <code>getCalendarDisplay()</code> work identically.
+            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
+            try the example below in a web page. Similarly, <code>getRegionList()</code> and
+            <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
+            regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
+            <code>getCalendarDisplay()</code> work identically.
         </para>
 
         <example>
@@ -197,7 +223,8 @@ foreach($list as $language => $content) {
         <note>
             <title>Exception handling</title>
             <para>
-                The useage of a locale which does not exist, will throw an exception. Since not all languages are also locales, we must catch the exception to prevent early termination of our example.
+                The useage of a locale which does not exist, will throw an exception. Since not all languages are also
+                locales, we must catch the exception to prevent early termination of our example.
             </para>
         </note>
 
@@ -208,7 +235,9 @@ foreach($list as $language => $content) {
         <title>Get an translated string of an script</title>
 
         <para>
-            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be returned.  The same way as with the function getLanguageDisplay(), this function also supports the useage for obtaining output localized to other locales, using the optional $locale argument.
+            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be
+            returned. The same way as with the function getLanguageDisplay(), this function also supports the useage for
+            obtaining output localized to other locales, using the optional $locale argument.
         </para>
 
         <example>
@@ -223,7 +252,6 @@ print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
 
-
     </sect2>
 
     <sect2 id="zend.locale.getscriptlist">
@@ -231,9 +259,9 @@ print $locale->getScriptDisplay('Latn');
         <title>Get a list of scripts</title>
 
         <para>
-            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected $locale (defaults to the current object's locale).
-            For L10N purposes, a script is the set of characters used to display a language.
-            For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
+            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected
+            $locale (defaults to the current object's locale). For L10N purposes, a script is the set of characters used
+            to display a language. For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
         </para>
 
         <example>
@@ -255,9 +283,10 @@ print_r($locale->getScriptList());
         <title>Obtaining translations for "yes" and "no"</title>
 
         <para>
-            Frequently, programs need to solicit a "yes" or "no" response from the user.
-            Use <code>getQuestion()</code> to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale (defaults to the current object's locale).
-            The array will contain four key-value pairs, for "yes", "no", and their abbreviations, as shown in the example below.
+            Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
+            to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale
+            (defaults to the current object's locale). The array will contain four key-value pairs, for "yes", "no", and
+            their abbreviations, as shown in the example below.
         </para>
 
         <example>

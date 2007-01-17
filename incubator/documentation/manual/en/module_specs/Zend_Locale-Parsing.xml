@@ -1,6 +1,5 @@
 <sect1 id="zend.locale.parsing">
 
-
     <sect2 id="zend.locale.number.normalize">
 
         <title>Number normalization: getNumber($input, $precision = false, $locale = false)</title>
