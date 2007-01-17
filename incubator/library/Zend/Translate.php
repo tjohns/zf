@@ -70,8 +70,8 @@ class Zend_Translate {
      */
     public function setAdapter($adapter, $options, $locale = null)
     {
-        if ($locale === null) {
-            $locale = new Zend_Locale();
+        if (!$locale = Zend_Locale::isLocale($locale)) {
+            throw new Zend_Translate_Exception("language ($locale) is a unknown language", $locale);
         }
 
         switch (strtolower($adapter)) {

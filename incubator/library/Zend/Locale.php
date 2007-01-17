@@ -428,6 +428,9 @@ class Zend_Locale {
      */
     public function __construct($locale = null)
     {
+        if ($locale instanceof Zend_Locale) {
+            $locale->toString();
+        }
         $this->setLocale($locale);
     }
 
@@ -920,23 +923,28 @@ class Zend_Locale {
      * en_XX refers to en which give true
      * XX_yy refers to root which give false
      * 
-     * @param string  $locale  Locale to check for
-     * @return boolean
+     * @param  string         $locale  Locale to check for
+     * @param  boolean        $create  When true, a new automatic detected locale identifier is returned, if locale is empty
+     * @return false|string   false if given locale is not a locale, else the locale identifier is returned
      */
-    public static function isLocale($locale)
+    public static function isLocale($locale, $create = false)
     {
+        if (empty($locale) and ($create === true)) {
+            $locale = new Zend_Locale();
+        }
         if ($locale instanceof Zend_Locale) {
-            return true;
-        } else if (empty($locale) or (!is_string($locale))) {
+            return $locale->toString();
+        }
+        if (!is_string($locale)) {
             return false;
         }
 
         if (array_key_exists($locale, self::$_LocaleData)) {
-            return true;
+            return $locale;
         } else {
             $locale = explode('_', $locale);
             if (array_key_exists($locale[0], self::$_LocaleData)) {
-                return true;
+                return $locale;
             }
         }
         return false;

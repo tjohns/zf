@@ -130,6 +130,7 @@ class Zend_Date extends Zend_Date_DateObject {
     const RSS            = 'RSS';            // --- DATE_RSS
     const W3C            = 'W3C';            // --- DATE_W3C
 
+
     /**
      * Generates the standard date object, could be a unix timestamp, localized date, 
      * string, integer and so on. Also parts of dates or time are supported
@@ -4328,17 +4329,14 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function setLocale($locale = null)
     {
-        if (empty($locale)) {
-            unset($this->_Locale);
-            $this->_Locale = new Zend_Locale();
-        } else if ($locale instanceof Zend_Locale) {
+        if ($locale instanceof Zend_Locale) {
             $this->_Locale = $locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Date_Exception("Given locale ($locale) does not exist", $locale);
         } else {
-            if (Zend_Locale::isLocale($locale)) {
-                $this->_Locale = new Zend_Locale($locale);
-            } else {
-                throw new Zend_Date_Exception("Given locale ($locale) does not exist", $locale);
-            }
+            $this->_Locale = new Zend_Locale($locale);
         }
         
         return $this->getLocale();
