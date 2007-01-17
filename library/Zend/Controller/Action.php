@@ -481,7 +481,7 @@ abstract class Zend_Controller_Action
      * @param array $options Options to be used when redirecting
      * @return void
      */
-    protected function _redirect($url, $code = 302, $prependBase = true)
+    protected function _redirect($url, array $options = null)
     {
         // prevent header injections
         $url = str_replace(array("\n", "\r"), '', $url);
