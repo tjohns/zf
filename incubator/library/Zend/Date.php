@@ -48,88 +48,87 @@ class Zend_Date extends Zend_Date_DateObject {
 
     // Class wide Date Constants
     // day formats
-    const DAY            = 'Zend_Date::DAY';            // d - 2 digit day of month, 01-31
-    const WEEKDAY_SHORT  = 'Zend_Date::WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
-    const DAY_SHORT      = 'Zend_Date::DAY_SHORT';      // j - 1,2 digit day of month, 1-31
-    const WEEKDAY        = 'Zend_Date::WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
-    const WEEKDAY_8601   = 'Zend_Date::WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
-    const DAY_SUFFIX     = 'Zend_Date::DAY_SUFFIX';     // S - english suffix day of month, st-th
-    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // w - weekday, 0-6 0=sunday, 6=saturday
-    const DAY_OF_YEAR    = 'Zend_Date::DAY_OF_YEAR';    // z - Number of day of year
+    const DAY            = 'DAY';            // d - 2 digit day of month, 01-31
+    const WEEKDAY_SHORT  = 'WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
+    const DAY_SHORT      = 'DAY_SHORT';      // j - 1,2 digit day of month, 1-31
+    const WEEKDAY        = 'WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
+    const WEEKDAY_8601   = 'WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
+    const DAY_SUFFIX     = 'DAY_SUFFIX';     // S - english suffix day of month, st-th
+    const WEEKDAY_DIGIT  = 'WEEKDAY_DIGIT';  // w - weekday, 0-6 0=sunday, 6=saturday
+    const DAY_OF_YEAR    = 'DAY_OF_YEAR';    // z - Number of day of year
 
-    const WEEKDAY_NARROW = 'Zend_Date::WEEKDAY_NARROW'; // --- 1 letter day name - locale aware, M-S
-    const WEEKDAY_NAME   = 'Zend_Date::WEEKDAY_NAME';   // --- 2 letter day name - locale aware,Mo-Su
+    const WEEKDAY_NARROW = 'WEEKDAY_NARROW'; // --- 1 letter day name - locale aware, M-S
+    const WEEKDAY_NAME   = 'WEEKDAY_NAME';   // --- 2 letter day name - locale aware,Mo-Su
 
     // week formats
-    const WEEK           = 'Zend_Date::WEEK';           // W - number of week ISO8601, 1-53
+    const WEEK           = 'WEEK';           // W - number of week ISO8601, 1-53
 
     // month formats
-    const MONTH          = 'Zend_Date::MONTH';          // F - full month name - locale aware, January-December
-    const MONTH_SHORT    = 'Zend_Date::MONTH_SHORT';    // m - 2 digit month, 01-12
-    const MONTH_NAME     = 'Zend_Date::MONTH_NAME';     // M - 3 letter monthname - locale aware, Jan-Dec
-    const MONTH_DIGIT    = 'Zend_Date::MONTH_DIGIT';    // n - 1 digit month, no leading zeros, 1-12
-    const MONTH_DAYS     = 'Zend_Date::MONTH_DAYS';     // t - Number of days this month
+    const MONTH          = 'MONTH';          // F - full month name - locale aware, January-December
+    const MONTH_SHORT    = 'MONTH_SHORT';    // m - 2 digit month, 01-12
+    const MONTH_NAME     = 'MONTH_NAME';     // M - 3 letter monthname - locale aware, Jan-Dec
+    const MONTH_DIGIT    = 'MONTH_DIGIT';    // n - 1 digit month, no leading zeros, 1-12
+    const MONTH_DAYS     = 'MONTH_DAYS';     // t - Number of days this month
 
-    const MONTH_NARROW   = 'Zend_Date::MONTH_NARROW';   // --- 1 letter month name - locale aware, J-D
+    const MONTH_NARROW   = 'MONTH_NARROW';   // --- 1 letter month name - locale aware, J-D
 
     // year formats
-    const LEAPYEAR       = 'Zend_Date::LEAPYEAR';       // L - is leapyear ?, 0-1
-    const YEAR_8601      = 'Zend_Date::YEAR_8601';      // o - number of year ISO8601
-    const YEAR           = 'Zend_Date::YEAR';           // Y - 4 digit year
-    const YEAR_SHORT     = 'Zend_Date::YEAR_SHORT';     // y - 2 digit year, leading zeros 00-99
+    const LEAPYEAR       = 'LEAPYEAR';       // L - is leapyear ?, 0-1
+    const YEAR_8601      = 'YEAR_8601';      // o - number of year ISO8601
+    const YEAR           = 'YEAR';           // Y - 4 digit year
+    const YEAR_SHORT     = 'YEAR_SHORT';     // y - 2 digit year, leading zeros 00-99
 
-    const YEAR_SHORT_8601= 'Zend_Date::YEAR_SHORT_8601';// --- 2 digit number of year ISO8601
+    const YEAR_SHORT_8601= 'YEAR_SHORT_8601';// --- 2 digit number of year ISO8601
 
     // time formats
-    const MERIDIEM       = 'Zend_Date::MERIDIEM';       // A,a - AM/PM - locale aware, AM/PM
-    const SWATCH         = 'Zend_Date::SWATCH';         // B - Swatch Internet Time
-    const HOUR_SHORT_AM  = 'Zend_Date::HOUR_SHORT_AM';  // g - 1 digit hour, no leading zero, 1-12 am/pm
-    const HOUR_SHORT     = 'Zend_Date::HOUR_SHORT';     // G - 1 digit hour, no leading zero, 0-23
-    const HOUR_AM        = 'Zend_Date::HOUR_AM';        // h - 2 digit hour, leading zeros, 01-12 am/pm
-    const HOUR           = 'Zend_Date::HOUR';           // H - 2 digit hour, leading zeros, 00-23
-    const MINUTE         = 'Zend_Date::MINUTE';         // i - 2 digit minute, leading zeros, 00-59
-    const SECOND         = 'Zend_Date::SECOND';         // s - 2 digit second, leading zeros, 00-59
-    const MILLISECOND    = 'Zend_Date::MILLISECOND';    // --- milliseconds
+    const MERIDIEM       = 'MERIDIEM';       // A,a - AM/PM - locale aware, AM/PM
+    const SWATCH         = 'SWATCH';         // B - Swatch Internet Time
+    const HOUR_SHORT_AM  = 'HOUR_SHORT_AM';  // g - 1 digit hour, no leading zero, 1-12 am/pm
+    const HOUR_SHORT     = 'HOUR_SHORT';     // G - 1 digit hour, no leading zero, 0-23
+    const HOUR_AM        = 'HOUR_AM';        // h - 2 digit hour, leading zeros, 01-12 am/pm
+    const HOUR           = 'HOUR';           // H - 2 digit hour, leading zeros, 00-23
+    const MINUTE         = 'MINUTE';         // i - 2 digit minute, leading zeros, 00-59
+    const SECOND         = 'SECOND';         // s - 2 digit second, leading zeros, 00-59
+    const MILLISECOND    = 'MILLISECOND';    // --- milliseconds
 
-    const MINUTE_SHORT   = 'Zend_Date::MINUTE_SHORT';   // --- 1 digit minute, no leading zero, 0-59
-    const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // --- 1 digit second, no leading zero, 0-59
+    const MINUTE_SHORT   = 'MINUTE_SHORT';   // --- 1 digit minute, no leading zero, 0-59
+    const SECOND_SHORT   = 'SECOND_SHORT';   // --- 1 digit second, no leading zero, 0-59
 
     // timezone formats
-    const TIMEZONE_NAME  = 'Zend_Date::TIMEZONE_NAME';  // e - timezone string
-    const DAYLIGHT       = 'Zend_Date::DAYLIGHT';       // I - is Daylight saving time ?, 0-1
-    const GMT_DIFF       = 'Zend_Date::GMT_DIFF';       // O - GMT difference, -1200 +1200
-    const GMT_DIFF_SEP   = 'Zend_Date::GMT_DIFF_SEP';   // P - seperated GMT diff, -12:00 +12:00
-    const TIMEZONE       = 'Zend_Date::TIMEZONE';       // T - timezone, EST, GMT, MDT
-    const TIMEZONE_SECS  = 'Zend_Date::TIMEZONE_SECS';  // Z - timezone offset in seconds, -43200 +43200
+    const TIMEZONE_NAME  = 'TIMEZONE_NAME';  // e - timezone string
+    const DAYLIGHT       = 'DAYLIGHT';       // I - is Daylight saving time ?, 0-1
+    const GMT_DIFF       = 'GMT_DIFF';       // O - GMT difference, -1200 +1200
+    const GMT_DIFF_SEP   = 'GMT_DIFF_SEP';   // P - seperated GMT diff, -12:00 +12:00
+    const TIMEZONE       = 'TIMEZONE';       // T - timezone, EST, GMT, MDT
+    const TIMEZONE_SECS  = 'TIMEZONE_SECS';  // Z - timezone offset in seconds, -43200 +43200
 
     // date strings
-    const ISO_8601       = 'Zend_Date::ISO_8601';       // c - ISO 8601 date string
-    const RFC_2822       = 'Zend_Date::RFC_2822';       // r - RFC 2822 date string
-    const TIMESTAMP      = 'Zend_Date::TIMESTAMP';      // U - unix timestamp
+    const ISO_8601       = 'ISO_8601';       // c - ISO 8601 date string
+    const RFC_2822       = 'RFC_2822';       // r - RFC 2822 date string
+    const TIMESTAMP      = 'TIMESTAMP';      // U - unix timestamp
 
     // additional formats
-    const ERA            = 'Zend_Date::ERA';            // --- short name of era, locale aware,
-    const ERA_NAME       = 'Zend_Date::ERA_NAME';       // --- full name of era, locale aware,
-    const DATES          = 'Zend_Date::DATES';          // --- standard date, locale aware
-    const DATE_FULL      = 'Zend_Date::DATE_FULL';      // --- full date, locale aware
-    const DATE_LONG      = 'Zend_Date::DATE_LONG';      // --- long date, locale aware
-    const DATE_MEDIUM    = 'Zend_Date::DATE_MEDIUM';    // --- medium date, locale aware
-    const DATE_SHORT     = 'Zend_Date::DATE_SHORT';     // --- short date, locale aware
-    const TIMES          = 'Zend_Date::TIMES';          // --- standard time, locale aware
-    const TIME_FULL      = 'Zend_Date::TIME_FULL';      // --- full time, locale aware
-    const TIME_LONG      = 'Zend_Date::TIME_LONG';      // --- long time, locale aware
-    const TIME_MEDIUM    = 'Zend_Date::TIME_MEDIUM';    // --- medium time, locale aware
-    const TIME_SHORT     = 'Zend_Date::TIME_SHORT';     // --- short time, locale aware
-    const ATOM           = 'Zend_Date::ATOM';           // --- DATE_ATOM
-    const COOKIE         = 'Zend_Date::COOKIE';         // --- DATE_COOKIE
-    const RFC_822        = 'Zend_Date::RFC_822';        // --- DATE_RFC822
-    const RFC_850        = 'Zend_Date::RFC_850';        // --- DATE_RFC850
-    const RFC_1036       = 'Zend_Date::RFC_1036';       // --- DATE_RFC1036
-    const RFC_1123       = 'Zend_Date::RFC_1123';       // --- DATE_RFC1123
-    const RFC_3339       = 'Zend_Date::RFC_3339';       // --- DATE_RFC3339
-    const RSS            = 'Zend_Date::RSS';            // --- DATE_RSS
-    const W3C            = 'Zend_Date::W3C';            // --- DATE_W3C
-
+    const ERA            = 'ERA';            // --- short name of era, locale aware,
+    const ERA_NAME       = 'ERA_NAME';       // --- full name of era, locale aware,
+    const DATES          = 'DATES';          // --- standard date, locale aware
+    const DATE_FULL      = 'DATE_FULL';      // --- full date, locale aware
+    const DATE_LONG      = 'DATE_LONG';      // --- long date, locale aware
+    const DATE_MEDIUM    = 'DATE_MEDIUM';    // --- medium date, locale aware
+    const DATE_SHORT     = 'DATE_SHORT';     // --- short date, locale aware
+    const TIMES          = 'TIMES';          // --- standard time, locale aware
+    const TIME_FULL      = 'TIME_FULL';      // --- full time, locale aware
+    const TIME_LONG      = 'TIME_LONG';      // --- long time, locale aware
+    const TIME_MEDIUM    = 'TIME_MEDIUM';    // --- medium time, locale aware
+    const TIME_SHORT     = 'TIME_SHORT';     // --- short time, locale aware
+    const ATOM           = 'ATOM';           // --- DATE_ATOM
+    const COOKIE         = 'COOKIE';         // --- DATE_COOKIE
+    const RFC_822        = 'RFC_822';        // --- DATE_RFC822
+    const RFC_850        = 'RFC_850';        // --- DATE_RFC850
+    const RFC_1036       = 'RFC_1036';       // --- DATE_RFC1036
+    const RFC_1123       = 'RFC_1123';       // --- DATE_RFC1123
+    const RFC_3339       = 'RFC_3339';       // --- DATE_RFC3339
+    const RSS            = 'RSS';            // --- DATE_RSS
+    const W3C            = 'W3C';            // --- DATE_W3C
 
     /**
      * Generates the standard date object, could be a unix timestamp, localized date, 
@@ -150,9 +149,9 @@ class Zend_Date extends Zend_Date_DateObject {
             throw new Zend_Date_Exception('parameter $date must be set');
         }
 
-        $type = gettype('part');
+        $type = gettype($part);
         if (($type === 'object' && ($part instanceof Zend_Locale)) or
-            ($type === 'string' && (Zend_Locale::isLocale('part')))) {
+            ($type === 'string' && (Zend_Locale::isLocale($part)))) {
             $locale = $part;
             $part = null;
         }
