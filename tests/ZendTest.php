@@ -140,4 +140,43 @@ class ZendTest extends PHPUnit_Framework_TestCase
             // success...
         }
     }
+
+    /**
+     * Tests that version_compare() and its "proxy" (Zend::compareVersion) work as expected.
+     */
+    public function testCompareVersion()
+    {
+        $expect = -1;
+        // unit test breaks if ZF version > 10.x
+        for ($i=0; $i <= 10; $i++) {
+            for ($j=0; $j < 10; $j++) {
+                for ($k=0; $k < 20; $k++) {
+                    foreach (array('dev', 'alpha', 'beta', 'RC', '', 'pl') as $rel) {
+                        $ver = "$i.$j.$k$rel";
+                        if ($ver === Zend::VERSION
+                            || "$i.$j.$k-$rel" === Zend::VERSION
+                            || "$i.$j.$k.$rel" === Zend::VERSION
+                            || "$i.$j.$k $rel" === Zend::VERSION) {
+
+                            if ($expect != -1) {
+                                $this->fail("Unexpected double match for Zend::VERSION ("
+                                    . Zend::VERSION . ")");
+                            }
+                            else {
+                                $expect = 1;
+                            }
+                        } else {
+                            $this->assertSame(Zend::compareVersion($ver), $expect,
+                                "For version '$ver' and Zend::VERSION = '"
+                                . Zend::VERSION . "': result=" . (Zend::compareVersion($ver))
+                                . ', but expected ' . $expect);
+                        }
+                    }
+                }
+            }
+        }
+        if ($expect === -1) {
+            $this->fail('Unable to recognize Zend::VERSION ('. Zend::VERSION . ')');
+        }
+    }
 }

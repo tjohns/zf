@@ -37,6 +37,11 @@ require_once 'Zend/Exception.php';
 final class Zend
 {
     /**
+     * Zend Framework version identification - see compareVersion()
+     */
+    const VERSION = '0.7.0';
+
+    /**
      * Object registry provides storage for shared objects
      * @var Zend_Registry
      */
@@ -402,4 +407,15 @@ final class Zend
         return $output;
     }
 
+    /**
+     * Compare the specified ZF $version with the current Zend::VERSION of the ZF.
+     *
+     * @param  string  $version  A version identifier for the ZF (e.g. "0.7.1")
+     * @return boolean    -1 if the $version is older, 0 if they are the same, and +1 if $version is newer
+     *
+     */
+    static public function compareVersion($version)
+    {
+        return version_compare($version, Zend::VERSION);
+    }
 }
