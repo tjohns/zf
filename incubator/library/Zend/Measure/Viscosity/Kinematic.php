@@ -127,7 +127,7 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
      * @param  Zend_Measure_Viscosity_Kinematic  $object  Viscosity Kinematic object to compare
      * @return boolean
      */
-    public function equals( $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString()) {
             return true;
@@ -177,7 +177,7 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)

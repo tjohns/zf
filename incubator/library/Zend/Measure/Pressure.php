@@ -254,27 +254,21 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Pressure Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Pressure Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param  $object  object to compare equality
+     * @param  Zend_Measure_Pressure  $object  Pressure object to compare
      * @return boolean
      */
     public function equals( $object )
@@ -290,15 +284,23 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Pressure Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Pressure Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
+        }
+
+        if ($type === null) {
+            $type = self::STANDARD;
         }
 
         try {
@@ -307,8 +309,8 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
             throw new Zend_Measure_Exception($e->getMessage());
         }
 
-        if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception('unknown type of pressure:' . $type);
+        if (empty(self::$_UNITS[$type])) {
+            throw new Zend_Measure_Exception("type ($type) is a unknown pressure");
         }
         
         parent::setValue($value, $type, $locale);
@@ -319,13 +321,13 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
-     * @param  $type  new type to set
+     * @param  string  $type  New type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType( $type )
+    public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of pressure:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown pressure");
         }
 
         // Convert to standard value

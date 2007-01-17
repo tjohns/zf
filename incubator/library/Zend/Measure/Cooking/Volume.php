@@ -184,7 +184,7 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
         'TEASPOON_US'       => array(array('' => 0.0037854118, '/' => 768), 'tsp')
     );
 
-    private $_Locale;
+    private $_Locale = null;
 
     /**
      * Zend_Measure_Cooking_Volume provides an locale aware class for
@@ -194,27 +194,21 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Cooking_Volume Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Cooking_Volume Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setValue($value, $type, $this->_Locale);
+        $this->setValue($value, $type, $locale);
     }
 
 
     /**
      * Compare if the value and type is equal
      *
-     * @param $object  object to compare equality
+     * @param  Zend_Measure_Cooking_Volume  $object  Cooking Volume object to compare
      * @return boolean
      */
     public function equals($object)
@@ -230,15 +224,19 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
     /**
      * Set a new value
      *
-     * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Cooking_Volume Type
-     * @param  $locale locale - OPTIONAL a Zend_Locale Type
+     * @param  integer|string      $value   Value as string, integer, real or float
+     * @param  string              $type    OPTIONAL A Zend_Measure_Cooking_Volume Type
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
      * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->_Locale;
+        }
+
+        if (!$locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
         }
 
         try {
@@ -248,7 +246,7 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of volume-cooking:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown cooking volume");
         }
 
         parent::setValue($value, $type, $locale);
@@ -264,7 +262,7 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of volume-cooking:' . $type);
+            throw new Zend_Measure_Exception("type ($type) is a unknown cooking volume");
         }
 
         // Convert to standard value
