@@ -125,7 +125,7 @@ class Zend_Validate_InArray implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (in_array($value, $this->_haystack, $this->_strict)) {
+        if (!in_array($value, $this->_haystack, $this->_strict)) {
             $this->_messages[] = "'$value' was not found in the haystack";
             return false;
         }
