@@ -396,9 +396,9 @@ class Zend_Locale {
     /**
      * Autosearch constants
      */
-    const BROWSER  = 1;
-    const SERVER   = 2;
-    const FRAMEWORK= 3;
+    const BROWSER     = 1;
+    const ENVIRONMENT = 2;
+    const FRAMEWORK   = 3;
 
 
     /**
@@ -474,9 +474,9 @@ class Zend_Locale {
      * ordered by quality
      * 
      * Standard Searchorder is
-     * - getHTTPLanguages
-     * - getServerLanguages
-     * @todo - getFrameworkLanguages
+     * - getBrowser
+     * - getEnvironment
+     * @todo - getFramework
      * 
      * @param $searchorder  - OPTIONAL searchorder
      * @param $fastsearch   - OPTIONAL returnes the first found locale array when true
@@ -486,7 +486,7 @@ class Zend_Locale {
     public function getDefault($searchorder = null, $fastsearch = null)
     {
         $languages = array();
-        if ($searchorder == self::SERVER) {
+        if ($searchorder == self::ENVIRONMENT) {
 
             $languages = $this->getEnvironment();
             if (empty($languages) or !$fastsearch) {
@@ -633,7 +633,7 @@ class Zend_Locale {
      */
     public function setLocale($locale = null)
     {
-        if (($locale == self::BROWSER) or ($locale == self::SERVER) or ($locale === null)) {
+        if (($locale == self::BROWSER) or ($locale == self::ENVIRONMENT) or ($locale === null)) {
             $locale = $this->getDefault($locale, true);
         }
 
