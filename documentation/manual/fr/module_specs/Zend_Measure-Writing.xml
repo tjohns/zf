@@ -1,0 +1,47 @@
+<sect1 id="zend.measure.writing">
+
+    <title>Measurements in the Zend Framework</title>
+
+    <para>
+        <code>Zend_Measure</code> supports a great number of different units of measurement. Every type of measurement
+        is identical to a specific physical or numerical property.
+    </para>
+
+    <para>
+        The units of measurement all have a unified notation: <code>Measurement_Type::NAME_OF_UNIT</code>. Every unit of
+        measurement consists of a conversion factor and a display unit.
+        <example>
+            <title>The <code>meter</code> measurement</title>
+            <para>
+                The <code>meter</code> is used for measuring lengths, so its type constant can be found in the
+                <code>Length</code> class. To refer to this unit of measurement, the notation <code>Length::METER</code>
+                must be used. The display unit is <code>m</code>.
+            </para>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+// loading the Length class
+Zend::loadClass('Zend_Measure_Length');
+
+echo Zend_Measure::LENGTH;           // outputs 'Zend_Measure::LENGTH'
+echo Zend_Measure_Length::STANDARD;  // outputs 'Length::METER'
+echo Zend_Measure_Length::KILOMETER; // outputs 'Length::KILOMETER'
+
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure_Length::METER,$locale);
+echo $unit;
+// outputs '100 m'
+?>]]></programlisting>
+        </example>
+    </para>
+
+    <para>
+        A detailed list can be found in the chapter
+        <link linkend="zend.measure.types"><code>Types of measurements</code>
+        </link>
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
