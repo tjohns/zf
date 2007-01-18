@@ -51,18 +51,6 @@
     </chapter>
     -->
 
-    <chapter id="zend.date">
-        <title>Zend_Date</title>
-        &module_specs.Zend_Date-Introduction;
-        &module_specs.Zend_Date-Basic;
-        &module_specs.Zend_Date-Theory;
-        &module_specs.Zend_Date-Overview;
-        &module_specs.Zend_Date-Timestamp;
-        &module_specs.Zend_Date-Output;
-        &module_specs.Zend_Date-Others;
-        &module_specs.Zend_Date-Constants;
-    </chapter>
-
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
         &module_specs.Zend_Http_Server-Introduction;
@@ -75,30 +63,9 @@
     </chapter>
     -->
 
-    <chapter id="zend.locale">
-        <title>Zend_Locale</title>
-        &module_specs.Zend_Locale-Introduction;
-        &module_specs.Zend_Locale-Functions;
-        &module_specs.Zend_Locale-Parsing;
-        &module_specs.Zend_Locale-DatesTimes;
-        &module_specs.Zend_Locale-AppendixLanguages;
-        &module_specs.Zend_Locale-AppendixRegions;
-    </chapter>
-
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
         &module_specs.Zend_Mail_Read;
-    </chapter>
-
-    <chapter id="zend.measure">
-        <title>Zend_Measure</title>
-        &module_specs.Zend_Measure-Introduction;
-        &module_specs.Zend_Measure-Writing;
-        &module_specs.Zend_Measure-Creation;
-        &module_specs.Zend_Measure-Output;
-        &module_specs.Zend_Measure-Edit;
-        &module_specs.Zend_Measure-Special;
-        &module_specs.Zend_Measure-Types;
     </chapter>
 
     <!--
