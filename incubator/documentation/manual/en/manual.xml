@@ -107,6 +107,11 @@
     </chapter>
     -->
 
+    <chapter id="zend.translate">
+        <title>Zend_Translate</title>
+        &module_specs.Zend_Translate;
+    </chapter>
+
     <appendix id="appendix.languages">
         <title>Appendix Zend_Locale Languages</title>
         &module_specs.Zend_Locale-AppendixLanguages;

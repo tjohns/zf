@@ -200,6 +200,8 @@ abstract class Zend_Translate_Adapter {
 
     /**
      * Returns the avaiable languages from this adapter
+     *
+     * @return array
      */
     public function getLanguageList()
     {
@@ -216,9 +218,6 @@ abstract class Zend_Translate_Adapter {
      */
     public function isAvaiable($language)
     {
-        if (!Zend_Locale::isLocale($language)) {
-            throw new Zend_Translate_Exception("language ($language) is no proper language", $language);
-        }
         if ($language instanceof Zend_Locale) {
             $language = $language->toString();
         }
@@ -277,7 +276,7 @@ abstract class Zend_Translate_Adapter {
      *                                        see Zend_Locale for more information
      * @return string
      */
-    public function translate($translation, $language = null)
+    public function translate($messageId, $language = null)
     {
         if ($language === null) {
             $language = $this->_language;
@@ -290,24 +289,24 @@ abstract class Zend_Translate_Adapter {
         }
 
         if (array_key_exists($language, $this->_translate)) {
-           if (array_key_exists($translation, $this->_translate[$language])) {
+           if (array_key_exists($messageId, $this->_translate[$language])) {
                 // return original translation
-                return $this->_translate[$language][$translation];
+                return $this->_translate[$language][$messageId];
            }
         } else if (strlen($language) != 2) {
             // faster than creating a new locale and separate the leading part
             $language = substr($language, 0, -strlen(strrchr($language, '_')));
 
             if (array_key_exists($language, $this->_translate)) {
-                if (array_key_exists($translation, $this->_translate[$language])) {
+                if (array_key_exists($messageId, $this->_translate[$language])) {
                     // return regionless translation (en_US -> en)
-                    return $this->_translate[$language][$translation];
+                    return $this->_translate[$language][$messageId];
                 }
             }
         }
 
         // no translation found, return original
-        return $translation;
+        return $messageId;
     }
 
 

@@ -70,10 +70,6 @@ class Zend_Translate {
      */
     public function setAdapter($adapter, $options, $locale = null)
     {
-        if (!$locale = Zend_Locale::isLocale($locale)) {
-            throw new Zend_Translate_Exception("language ($locale) is a unknown language", $locale);
-        }
-
         switch (strtolower($adapter)) {
             case 'array':
                 /** Zend_Translate_Adapter_Array */
@@ -189,7 +185,7 @@ class Zend_Translate {
     /**
      * Returns the avaiable languages from this adapter
      *
-     * @return string
+     * @return array
      */
     public function getLanguageList()
     {
@@ -216,9 +212,9 @@ class Zend_Translate {
      * @param mixed  $locale      - OPTIONAL locale/language to translate to
      * @return string
      */
-    public function _($translation, $locale = null)
+    public function _($messageId, $locale = null)
     {
-        return $this->_adapter->translate($translation, $locale);
+        return $this->_adapter->translate($messageId, $locale);
     }
 
 
@@ -229,8 +225,8 @@ class Zend_Translate {
      * @param mixed  $locale      - OPTIONAL locale/language to translate to
      * @return string
      */
-    public function translate($translation, $locale = null)
+    public function translate($messageId, $locale = null)
     {
-        return $this->_adapter->translate($translation, $locale);
+        return $this->_adapter->translate($messageId, $locale);
     }
 }
