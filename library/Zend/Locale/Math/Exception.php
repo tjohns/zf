@@ -28,7 +28,7 @@ require_once 'Zend/Exception.php';
 
 /**
  * @category   Zend
- * @package    Zend_Zend_Locale_Math_Exception 
+ * @package    Zend_Locale
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
