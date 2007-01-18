@@ -7,7 +7,7 @@
         <title>Generating Date Strings Using toString()</title>
 
         <para>
-            The <code>toString()</code> method automatically formats the date object according to the conventions of the object's locale, or an optionally specified <ocde>$locale</code>.
+            The <code>toString()</code> method automatically formats the date object according to the conventions of the object's locale, or an optionally specified <code>$locale</code>.
         </para>
 
     </sect2>
