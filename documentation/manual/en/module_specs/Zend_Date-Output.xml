@@ -1,37 +1,33 @@
 <sect1 id="zend.date.output">
 
-    <title>How to output dates</title>
-
-    <para>
-        describing get() / toString() and /toValue() chapter follows soon...
-    </para>
+    <title>How to Output Dates</title>
 
     <sect2 id="zend.date.output.tostring">
 
-        <title>Generating strings from dates with toString()</title>
+        <title>Generating Date Strings Using toString()</title>
 
         <para>
-            coming soon...
+            The <code>toString()</code> method automatically formats the date object according to the conventions of the object's locale, or an optionally specified <ocde>$locale</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.date.output.tovalue">
 
-        <title>Getting partitial values from dates with toValue()</title>
+        <title>toValue() - Partial Dates as Integers</title>
 
         <para>
-            coming soon...
+            To obtain an integer for some part of the date, use <code>toValue($part)</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.date.output.get">
 
-        <title>Getting partitial dates with get()</title>
+        <title>get() - Partial Dates as Localized Strings</title>
 
-        <para>
-            coming soon...
+        <para> get($part = null, $locale = null) </para>
+        <para> This method returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted string or integer
         </para>
 
     </sect2>

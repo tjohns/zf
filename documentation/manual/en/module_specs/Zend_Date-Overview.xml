@@ -102,7 +102,7 @@
                     get($part = null, $locale = null)
                 </para>
                 <para>
-                    returns a localized date output as a formatted string or integer
+                    returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted string or integer
                 </para>
             </listitem>
             <listitem>
@@ -579,13 +579,13 @@ setTimeZone()
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.other.tomorrow">isTomorrow()</link>
+                            <link linkend="zend.date.other.today">isTomorrow()</link>
                         </entry>
                         <entry>Is the date tomorrow?</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.other.yesterday">isYesterday()</link>
+                            <link linkend="zend.date.other.today">isYesterday()</link>
                         </entry>
                         <entry>is the date yesterday?</entry>
                     </row>
