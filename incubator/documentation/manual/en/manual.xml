@@ -54,16 +54,10 @@
     <chapter id="zend.date">
         <title>Zend_Date</title>
         &module_specs.Zend_Date-Introduction;
-        &module_specs.Zend_Date-Definition;
+        &module_specs.Zend_Date-Basic;
+        &module_specs.Zend_Date-Theory;
         &module_specs.Zend_Date-Overview;
-        &module_specs.Zend_Date-Simple;
-        &module_specs.Zend_Date-Setting;
-        &module_specs.Zend_Date-Maths;
-        &module_specs.Zend_Date-TimeValues;
-        &module_specs.Zend_Date-DateValues;
         &module_specs.Zend_Date-Timestamp;
-        &module_specs.Zend_Date-LocalDate;
-        &module_specs.Zend_Date-LocalTime;
         &module_specs.Zend_Date-Output;
         &module_specs.Zend_Date-Others;
         &module_specs.Zend_Date-Constants;

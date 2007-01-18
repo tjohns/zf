@@ -3,29 +3,90 @@
     <title>Zend_Date API Overview</title>
 
     <para>
-        While the <code>Zend_Date</code> API remains simplistic and unitary it is very rich and mighty.
+        While the <code>Zend_Date</code> API remains simplistic and unitary, its design remains flexible and powerful
+        through the rich permutations of operations and operands.
     </para>
 
-    <para>
-        The following overview should provide help to the functions.
-    </para>
+    <sect2 id="zend.date.values">
 
-    <sect2 id="zend.date.overview.general">
-
-        <title>General Functions</title>
+        <title>Working with Date Values</title>
 
         <para>
-            The general functions expect a constant providing the date's desired part (such as Zend_Date::HOUR). Those
-            constants are valid to all functions. A list of all available constants is provided in
-            <xref linkend="zend.date.constants" />
+            Once input has been normalized via the creation of a <code>Zend_Date</code> object, it will have an
+            associated timezone. All manipulations of the object are assumed to be relative to this timezone. Beware of
+            mixing and matching operations with date parts between date objects for different timezones, which generally
+            produces undesireable results, unless the manipulations are only related to the timestamp.
         </para>
 
         <para>
-            The following general functions will be available:
+            The general functions expect a constant providing the date's desired <code>$part</code>, such as
+            <code>Zend_Date::HOUR</code>. These constants are valid for all of the functions below. A list of all
+            available constants is provided in
+            <xref linkend="zend.date.constants.list" />
+            . If no <code>$part</code> is specified, then <code>Zend_Date::TIMESTAMP</code> is assumed.
+        </para>
+
+        <para>
+            If there is a <code>$date</code> input parameter, then the <code>$locale</code> parameter disambiguates the
+            <code>$date</code> by explicitly specifying the locale it belongs to (e.g. what language should be used to
+            parse month names). If there is no <code>$date</code> input parameter, then the <code>$locale</code>
+            parameter specifies the locale to use for localizing output (e.g. the date format for a string
+            representation). If no <code>$locale</code> was specified, then the locale of the current object is used to
+            interpret <code>$date</code>.
         </para>
 
         <table>
-            <title>General functions</title>
+            <title>Basic <code>Zend_Date</code> Methods and Part Specific Methods</title>
+            <tgroup cols="3">
+                <thead>
+                    <row>
+                        <entry>Basic Method Types</entry>
+                        <entry>Date Parts</entry>
+                        <entry>Special Types of Date "Parts"</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>add*()</entry>
+                        <entry>Year</entry>
+                        <entry>Timestamp</entry>
+                    </row>
+                    <row>
+                        <entry>sub*()</entry>
+                        <entry>Month</entry>
+                        <entry>Date</entry>
+                    </row>
+                    <row>
+                        <entry>compare*()</entry>
+                        <entry>Day</entry>
+                        <entry>Week</entry>
+                    </row>
+                    <row>
+                        <entry>get*()</entry>
+                        <entry>Hour</entry>
+                        <entry>Weekday</entry>
+                    </row>
+                    <row>
+                        <entry>set*()</entry>
+                        <entry>Minute</entry>
+                        <entry>DayOfYear</entry>
+                    </row>
+                    <row>
+                        <entry></entry>
+                        <entry>Second</entry>
+                        <entry>Arpa</entry>
+                    </row>
+                    <row>
+                        <entry></entry>
+                        <entry>Millisecond</entry>
+                        <entry>Iso</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <table>
+            <title>Basic methods</title>
             <tgroup cols="2">
                 <thead>
                     <row>
@@ -36,55 +97,58 @@
                 <tbody>
                     <row>
                         <entry>
-                            <link linkend="zend.date.output.get">get()</link>
+                            <link linkend="zend.date.output.get">get($part = null, $locale = null)</link>
                         </entry>
-                        <entry>date output</entry>
+                        <entry>returns a localized date output as a formatted string or integer</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.setting.set">set()</link>
+                            <link linkend="zend.date.setting.set">set($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>setting a new date</entry>
+                        <entry>sets the <code>$part</code> of the current object to the corresponding value for that part found in the input <code>$date</code> having a locale <code>$locale</code>
+                        </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.maths.add">add()</link>
+                            <link linkend="zend.date.maths.add">add($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>adding with dates</entry>
+                        <entry>adds the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the current object's date</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.maths.sub">sub()</link>
+                            <link linkend="zend.date.maths.sub">sub($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>subtraction with dates</entry>
+                        <entry>subtracts the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the current object's date</entry>
                     </row>
                     <row>
-                        <entry>copy()</entry>
-                        <entry>copy a date and return a new object</entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.maths.compare">compare()</link>
-                        </entry>
-                        <entry>compares dates by time. returns 0, 1 or -1</entry>
+                        <entry>copyPart($part, $locale = null)</entry>
+                        <entry>returns a cloned object, with only <code>$part</code> of the object's date copied to the clone, with the clone have its locale arbitrarily set to <code>$locale</code> (if specified)</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.maths.equals">equals()</link>
+                            <link linkend="zend.date.maths.compare">compare($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>compares dates by equality. returns boolean</entry>
+                        <entry>compares <code>$part</code> of <code>$date</code> to this object's timestamp, returning 0 if they are equal, 1 if this object's part was more recent than $date's part, otherwise -1.</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.maths.isearlier">isEarlier()</link>
+                            <link linkend="zend.date.maths.equals">equals($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>checks against age. returns true, if younger</entry>
+                        <entry>returns true, if <code>$part</code> of <code>$date</code> having locale <code>$locale</code> is the same as this object's date <code>$part</code>, otherwise false</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.maths.islater">isLater()</link>
+                            <link linkend="zend.date.maths.isearlier">isEarlier($date, $part = null, $locale = null)</link>
                         </entry>
-                        <entry>checks against age. returns true, if older</entry>
+                        <entry>returns true, if <code>$part</code> of this object's date is earlier than <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <link linkend="zend.date.maths.islater">isLater($date, $part = null, $locale = null)</link>
+                        </entry>
+                        <entry>returns true, if <code>$part</code> of this object's date is later than <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                        </entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -94,16 +158,12 @@
 
     <sect2 id="zend.date.overview.detail">
 
-        <title>Detailed functions</title>
+        <title>Date Part Specific Methods</title>
 
         <para>
-            The detailed functions do not need constants, but are to use only for a specified part of the date. There
-            are lots of them, but because of their intuitiveness their are easy to guess. Not all possible variants will
-            be supported.
-        </para>
-
-        <para>
-            The following detailed functions are available:
+            These convenience methods help us lazy programmers avoid having to type out the
+            <link linkend="zend.date.constants.list">date part constants</link>
+            when using the general methods above. The following date-part-specific methods are available:
         </para>
 
         <table>
@@ -122,313 +182,313 @@
                 <tbody>
                     <row>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp">Unix Timestamp</link>
+                            Unix Timestamp
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp.get">getTimestamp()</link>
+                            getTimestamp()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp.set">setTimestamp()</link>
+                            setTimestamp()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp.add">addTimestamp()</link>
+                            addTimestamp()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp.sub">subTimestamp()</link>
+                            subTimestamp()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.timestamp.com">compareTimestamp()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.localdate">Date</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.localdate.get">getDate()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.localdate.set">setDate()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.localdate.add">addDate()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.localdate.sub">subDate()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.localdate.compare">compareDate()</link>
+                            compareTimestamp()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.localtime">Time</link>
+                            Date
                         </entry>
                         <entry>
-                            <link linkend="zend.date.localtime.get">getTime()</link>
+                            getDate()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.localtime.set">setTime()</link>
+                            setDate()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.localtime.add">addTime()</link>
+                            addDate()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.localtime.sub">subTime()</link>
+                            subDate()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.localtime.compare">compareTime()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.date.year">Year</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.year.get">getYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.year.set">setYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.year.add">addYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.year.sub">subYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.year.compare">compareYear()</link>
+                            compareDate()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.date.year">Month</link>
+                            Time
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.year.get">getMonth()</link>
+                            getTime()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.year.set">setMonth()</link>
+                            setTime()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.year.add">addMonth()</link>
+                            addTime()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.year.sub">subMonth()</link>
+                            subTime()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.year.compare">compareMonth()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.date.day">Day</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.day.get">getDay()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.day.set">setDay()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.day.add">addDay()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.day.sub">subDay()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.day.compare">compareDay()</link>
+                            compareTime()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.date.weekday">Weekday</link>
+                            Year
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.weekday.get">getWeekday()</link>
+                            getYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.weekday.set">setWeekday()</link>
+                            setYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.weekday.add">addWeekday()</link>
+                            addYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.weekday.sub">subWeekday()</link>
+                            subYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.weekday.compare">compareWeekday()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.date.yearday">Day of Year</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.yearday.get">getDayOfYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.yearday.set">setDayOfYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.yearday.add">addDayOfYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.yearday.sub">subDayOfYear()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.date.yearday.compare">compareDayOfYear()</link>
+                            compareYear()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.time.hour">Hour</link>
+Month
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.hour.get">getHour()</link>
+getMonth()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.hour.set">setHour()</link>
+setMonth()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.hour.add">addHour()</link>
+addMonth()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.hour.sub">subHour()</link>
+subMonth()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.hour.compare">compareHour()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.time.minute">Minute</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.minute.get">getMinute()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.minute.set">setMinute()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.minute.add">addMinute()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.minute.sub">subMinute()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.minute.compare">compareMinute()</link>
+compareMonth()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.time.second">Second</link>
+Day
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.second.get">getSecond()</link>
+getDay()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.second.set">setSecond()</link>
+setDay()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.second.add">addSecond()</link>
+addDay()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.second.sub">subSecond()</link>
+subDay()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.second.compare">compareSecond()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond">Millisecond</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.get">getMilliSecond()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.set">setMilliSecond()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.add">addMilliSecond()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.sub">subMilliSecond()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.compare">compareMilliSecond()</link>
+compareDay()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.date.week">Week</link>
+Weekday
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.week.get">getWeek()</link>
+getWeekday()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.week.set">setWeek()</link>
+setWeekday()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.week.add">addWeek()</link>
+addWeekday()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.week.sub">subWeek()</link>
+subWeekday()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.date.week.compare">compareWeek()</link>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.complete.iso">ISO 8601 date</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.complete.iso.get">getIso()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.complete.iso.set">setIso()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.complete.iso.add">addIso()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.complete.iso.sub">subIso()</link>
-                        </entry>
-                        <entry>
-                            <link linkend="zend.date.complete.iso.compare">compareIso()</link>
+compareWeekday()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.complete.arpa">Arpa date</link>
+Day of Year
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.arpa.get">getArpa()</link>
+getDayOfYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.arpa.set">setArpa()</link>
+setDayOfYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.arpa.add">addArpa()</link>
+addDayOfYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.arpa.sub">subArpa()</link>
+subDayOfYear()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.complete.arpa.compare">compareArpa()</link>
+compareDayOfYear()
                         </entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.time.timezone">TimeZone</link>
+Hour
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.timezone.get">getTimeZone()</link>
+getHour()
                         </entry>
                         <entry>
-                            <link linkend="zend.date.time.timezone.set">setTimeZone()</link>
+setHour()
+                        </entry>
+                        <entry>
+addHour()
+                        </entry>
+                        <entry>
+subHour()
+                        </entry>
+                        <entry>
+compareHour()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+Minute
+                        </entry>
+                        <entry>
+getMinute()
+                        </entry>
+                        <entry>
+setMinute()
+                        </entry>
+                        <entry>
+addMinute()
+                        </entry>
+                        <entry>
+subMinute()
+                        </entry>
+                        <entry>
+compareMinute()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+Second
+                        </entry>
+                        <entry>
+getSecond()
+                        </entry>
+                        <entry>
+setSecond()
+                        </entry>
+                        <entry>
+addSecond()
+                        </entry>
+                        <entry>
+subSecond()
+                        </entry>
+                        <entry>
+compareSecond()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+Millisecond
+                        </entry>
+                        <entry>
+getMilliSecond()
+                        </entry>
+                        <entry>
+setMilliSecond()
+                        </entry>
+                        <entry>
+addMilliSecond()
+                        </entry>
+                        <entry>
+subMilliSecond()
+                        </entry>
+                        <entry>
+compareMilliSecond()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+Week
+                        </entry>
+                        <entry>
+getWeek()
+                        </entry>
+                        <entry>
+setWeek()
+                        </entry>
+                        <entry>
+addWeek()
+                        </entry>
+                        <entry>
+subWeek()
+                        </entry>
+                        <entry>
+compareWeek()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+ISO 8601 date
+                        </entry>
+                        <entry>
+getIso()
+                        </entry>
+                        <entry>
+setIso()
+                        </entry>
+                        <entry>
+addIso()
+                        </entry>
+                        <entry>
+subIso()
+                        </entry>
+                        <entry>
+compareIso()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+Arpa date
+                        </entry>
+                        <entry>
+getArpa()
+                        </entry>
+                        <entry>
+setArpa()
+                        </entry>
+                        <entry>
+addArpa()
+                        </entry>
+                        <entry>
+subArpa()
+                        </entry>
+                        <entry>
+compareArpa()
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+TimeZone
+                        </entry>
+                        <entry>
+getTimeZone()
+                        </entry>
+                        <entry>
+setTimeZone()
                         </entry>
                         <entry></entry>
                         <entry></entry>
@@ -537,30 +597,6 @@
                 </tbody>
             </tgroup>
         </table>
-
-    </sect2>
-
-    <sect2 id="zend.date.overview.addons">
-
-        <title>Additional Information</title>
-
-        <para>
-            A list of time constants is provided in
-            <xref linkend="zend.date.constants" />
-        </para>
-
-        <para>
-            <link linkend="zend.date.constants.list">Constants for general functions</link>
-        </para>
-
-        <para>
-            A list of string constants is provided in
-            <xref linkend="zend.date.constants" />
-        </para>
-
-        <para>
-            <link linkend="zend.date.constants.format">Constants for string output functions</link>
-        </para>
 
     </sect2>
 

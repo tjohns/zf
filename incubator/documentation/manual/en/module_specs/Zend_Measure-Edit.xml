@@ -3,39 +3,49 @@
     <title>Manipulating measurements</title>
 
     <para>
-        Naturally, in- and output of measurements is not enough - it is equally important to be able to manipulate them.
-        This can be done using the following methods.
+        Parsing and normalization of input, combined with output to localized notations makes data accessible to users
+        in different locales. Many additional methods exist in <code>Zend_Measure</code> components to manipulate and
+        work with this data, after it has been normalized.
     </para>
 
-    <para>
-        <link linkend="zend.measure.edit.convert"><code>Convert</code>
-        </link>
-    </para>
-
-    <para>
-        <link linkend="zend.measure.edit.add"><code>Add and subtract</code>
-        </link>
-    </para>
-
-    <para>
-        <link linkend="zend.measure.edit.equal"><code>Compare</code>
-        </link>
-    </para>
-
-    <para>
-        <link linkend="zend.measure.edit.compare"><code>Calculate differences</code>
-        </link>
-    </para>
-
-    <para>
-        <link linkend="zend.measure.edit.changevalue"><code>Manually change values</code>
-        </link>
-    </para>
-
-    <para>
-        <link linkend="zend.measure.edit.changetype"><code>Manually change types</code>
-        </link>
-    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.convert"><code>Convert</code>
+                </link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.add"><code>Add and subtract</code>
+                </link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.equal"><code>Compare</code>
+                </link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.compare"><code>Calculate differences</code>
+                </link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.changevalue"><code>Manually change values</code>
+                </link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.measure.edit.changetype"><code>Manually change types</code>
+                </link>
+            </para>
+        </listitem>
+    </itemizedlist>
 
     <sect2 id="zend.measure.edit.convert">
 
@@ -43,18 +53,9 @@
 
         <para>
             Probably the most important feature is the conversion into different units of measurement. The conversion of
-            a unit can be done any number of times using the method <code>convertTo()</code>.
-        </para>
-
-        <note>
-            <title>Conversion limit</title>
-            <para>
-                Units of measurement can only be converted to other units of the same type.
-            </para>
-        </note>
-
-        <para>
-            Therefore, it is not possible to convert (e.g.) a length into a weight.
+            a unit can be done any number of times using the method <code>convertTo()</code>. Units of measurement can
+            only be converted to other units of the same type. Therefore, it is not possible to convert (e.g.) a length
+            into a weight, which would allow bad programming practice and allow errors to propagate without exceptions.
         </para>
 
         <example>
@@ -80,7 +81,11 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
         <title>Add and subtract</title>
 
         <para>
-            Measurements can be added together using <code>add()</code> and subtracted using <code>sub()</code>.
+            Measurements can be added together using <code>add()</code> and subtracted using <code>sub()</code>. Each
+            addition will create a new object for the result. The actual object will never be changed by the class. The
+            new object will be of the same type as the originating object. Dynamic objects support a fluid style of
+            programming, where complex sequences of operations can be nested without risk of side-effects altering the
+            input objects.
         </para>
 
         <para>
@@ -102,17 +107,6 @@ echo $sum;
 ?>]]></programlisting>
             </example>
         </para>
-
-        <note>
-            <title>Addition returns object</title>
-            <para>
-                Each addition will create a new object for the result. The actual object will never be changed by the
-                class.
-            </para>
-            <para>
-                The new object will be of the same type as the originating object.
-            </para>
-        </note>
 
         <note>
             <title>Automatic conversion</title>
@@ -155,7 +149,8 @@ echo $sum;
         <title>Compare</title>
 
         <para>
-            Of course, measurements can also be compared.
+            Measurements can also be compared, but without automatic unit conversion. Thus, <code>equals()</code>
+            returns <code>TRUE</code>, only if both the value and the unit of measure are identical.
         </para>
 
         <para>
@@ -199,14 +194,6 @@ if ($unit->equals($unit2)) {
             </example>
         </para>
 
-        <note>
-            <title>Equality</title>
-            <para>
-                <code>equals()</code> will return <code>TRUE</code> only if both the value and the unit of measure are
-                identical.
-            </para>
-        </note>
-
     </sect2>
 
     <sect2 id="zend.measure.edit.compare">
@@ -214,12 +201,9 @@ if ($unit->equals($unit2)) {
         <title>Calculate differences</title>
 
         <para>
-            To determine if a measurement is less or greater than another, you can use the <code>compare()</code>
-            method. It will return the difference between two objects as an integer value.
-        </para>
-
-        <para>
-            Identical measurements will return 0. Lesser ones will return a negative, greater ones a positive value.
+            To determine if a measurement is less than or greater than another, use <code>compare()</code>, which
+            returns the difference between two objects as an integer value. Identical measurements will return 0. Lesser
+            ones will return a negative, greater ones a positive value.
         </para>
 
         <para>
@@ -248,13 +232,8 @@ print "Lesser:".$unit3->compare($unit2);
         <title>Manually change values</title>
 
         <para>
-            Every now and then you might need to change the value of a measurement by hand. This is what the method
-            <code>setValue()</code> is for.
-        </para>
-
-        <para>
-            <code>setValue()</code> will overwrite the current value and accepts the same parameters like when creating
-            the object instance.
+            To change the value of a measurement explicitly, use <code>setValue()</code>. to overwrite the current
+            value. The parameters are the same as the constructor.
         </para>
 
         <para>
@@ -287,17 +266,11 @@ echo $unit;
         <title>Manually change types</title>
 
         <para>
-            Just like the value, you can also change the type of a measurement without altering its value. This can be
-            done using the method <code>setType()</code>.
+            To change the type of a measurement without altering its value use <code>setType()</code>.
         </para>
 
-        <para>
-            <code>setType()</code> will not change the current value.
-        </para>
-
-        <para>
-            <example>
-                <title>Changing the type</title>
+        <example>
+            <title>Changing the type</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -312,8 +285,7 @@ echo $unit;
 $unit->setType(Zend_Measure_Length::KILOMETER);
 echo $unit;
 ?>]]></programlisting>
-            </example>
-        </para>
+        </example>
 
     </sect2>
 

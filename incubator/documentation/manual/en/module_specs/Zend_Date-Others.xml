@@ -1,57 +1,74 @@
 <sect1 id="zend.date.other">
 
-    <title>Additional functions</title>
+    <title>Miscellaneous Methods</title>
 
     <para>
-        chapter follows soon...
+        Several other methods exist for special purpose tasks.
     </para>
 
-    <sect2 id="zend.date.other.now">
+    <sect2 id="zend.date.time.millisecond">
 
-        <title>Now it is time... or the actual timestamp with now()</title>
+        <title>Fractional Seconds</title>
+
+        <para>
+            <code>Zend_Date</code> supports several methods for working with time units smaller than seconds. By
+            default, precision is set to track milliseconds, as seen using <code>getFractionalPrecision()</code>. To
+            change the precision use <code>setFractionalPrecision($precision)</code>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.date.time.timezone">
+
+        <title>Working with Timezones</title>
+
+        <para>
+            In order for a date to be rendered in a localized manner, a timezone must be known first. The default
+            timezone is always GMT/UTC. To examine an object's timezone use <code>getTimeZone())</code>. To change an
+            object's timezone, use <code>setTimeZone())</code>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.date.time.daylight">
+
+        <title>Understanding daylight saving</title>
 
         <para>
             coming soon...
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.date.other.now">
+
+        <title>public static now()</title>
+
+        <para>
+            This convenience function is equivalent to <code>new Zend_Date()</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.date.other.leapyear">
 
-        <title>How to calculate leapyears with isLeapYear()</title>
+        <title>Leap Years</title>
 
         <para>
-            coming soon...
+            Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
+            Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or instance of
+            <code>Zend_Date</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.date.other.today">
 
-        <title>Is today today or not today... or how to use isToday()</title>
+        <title>Today, Tomorrow, Yesterday</title>
 
         <para>
-            coming soon...
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.date.other.tomorrow">
-
-        <title>Tomorrow is also a day... or how to use isTomorrow()</title>
-
-        <para>
-            coming soon...
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.date.other.yesterday">
-
-        <title>Yesterday, another day... or how to use isYesterday()</title>
-
-        <para>
-            coming soon...
+            Conveniently, <code>Zend_Date</code> provides the ability to check localized dates against the common tests
+            for <code>isToday()</code>, <code>isYesterday()</code>, and <code>isTomorrow()</code>.
         </para>
 
     </sect2>
