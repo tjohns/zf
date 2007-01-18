@@ -37,12 +37,12 @@
 # run 'php' with the phpdoc script as the argument, in Windows-style
 # path format, e.g.  "C:/php/phpdoc".  On UNIX/Linux you can just run
 # 'phpdoc' if that script is in your PATH.
-PHPDOC=php C:/xampp/php/phpdoc
+PHPDOC=php c:/xampp/php/PhpDocumentor/phpdoc
 
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=HEAD
+ZF_TAG=2886
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
