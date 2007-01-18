@@ -1,45 +1,53 @@
 <sect1 id="zend.acl.advanced">
 
-    <title>Advanced Use</title>
+    <title>Zaawansowane użycie</title>
 
     <sect2 id="zend.acl.advanced.storing">
 
-        <title>Storing ACL Data for Persistence</title>
+        <title>Trwałe przechowywanie danych ACL</title>
 
         <para>
-        Zend_Acl was designed in such a way that it does not require any particular backend technology such
-        as a database or cache server for storage of the ACL data. Its complete PHP implementation enables
-        customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many
-        situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods
-        setting up, and querying against, the access controls of an application.
+        Klasa Zend_Acl została zaprojektowana w taki sposób, aby nie wymagała
+        żadnej szczególnej technologii backendu do przechowywania danych ACL 
+        takiej jak np. baza danych czy serwer buforujący. Kompletna 
+        implementacja w PHP pozwala na podstawie Zend_Acl budować dostosowane 
+        narzędzia administracyjne, które są relatywnie łatwe oraz elastyczne.
+        Wiele sytuacji wymaga pewnej formy interaktywnego zarządzania ACL, a
+        Zend_Acl zapewnia metody ustawiania oraz odpytywania kontroli dostępu
+        aplikacji.
         </para>
 
         <para>
-        Storage of ACL data is therefore left as a task for the developer, since use cases are expected to
-        vary widely for various situations. Because Zend_Acl is serializable, ACL objects may be serialized
-        with PHP's <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> function, and the
-        results may be stored anywhere the developer should desire, such as a file, database, or caching
-        mechanism.
+        Przechowywanie danych ACL jest zadaniem pozostawionym dla programisty,
+        dlatego, że przykłady użycia mogą się bardzo różnić w rozmaitych 
+        sytuacjach. Ponieważ możliwe jest serializowanie Zend_Acl, obiekty ACL 
+        mogą być serializowane za pomocą funkcji PHP 
+        <ulink url="http://php.net/serialize"><code>serialize()</code></ulink>, 
+        a wyniki mogą być przechowane tam gdzie określi to programista, na 
+        przykład w pliku, w bazie danych lub w mechanizmie buforowania.
         </para>
 
     </sect2>
 
     <sect2 id="zend.acl.advanced.assertions">
 
-        <title>Writing Conditional ACL Rules with Assertions</title>
+        <title>Tworzenie warunkowych reguł ACL z zapewnieniami</title>
 
         <para>
-        Sometimes a rule for allowing or denying an Role access to a Resource should not be absolute but dependent
-        upon various criteria. For example, suppose that certain access should be allowed, but only between the
-        hours of 8:00am and 5:00pm. Another example would be denying access because a request comes from an
-        IP address that has been flagged as a source of abuse. Zend_Acl has built-in support for implementing
-        rules based on whatever conditions the developer needs.
+        Czasem reguła przyznawania lub zabraniania dostępu roli do zasobu nie
+        powinna być absolutna, ale powinna być oparta na różnych kryteriach.
+        Na przykład załóżmy, że pewien dostęp powinien być przyznany, ale 
+        jedynie między godziną 8:00 a 17:00. Innym przykładem może być zabranie
+        dostępu adresom IP, które zostały oznaczone jako źródło nadużyć.
+        Zend_Acl ma wbudowaną obsługę implementowania reguł opartych na 
+        dowolnych warunkach, wedle potrzeb programisty.
         </para>
 
         <para>
-        Zend_Acl provides support for conditional rules with <code>Zend_Acl_Assert_Interface</code>. In order
-        to use the rule assertion interface, a developer writes a class that implements the
-        <code>assert()</code> method of the interface:
+        Zend_Acl zapewnia obsługę warunkowych reguł za pomocą interfejsu 
+        <code>Zend_Acl_Assert_Interface</code>. W celu użycia interfejsu 
+        zapewnień reguł, programista pisze klasę, ktora implementuje metodę
+        <code>assert()</code> interfejsu:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -60,9 +68,10 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 }]]></programlisting>
 
         <para>
-        Once an assertion class is available, the developer must supply an instance of the assertion class
-        when assigning conditional rules. A rule that is created with an assertion only applies when the
-        assertion method returns true.
+        Kiedy klasa zapewnień jest już dostępna, programista musi przekazać 
+        klasę zapewnień kiedy przypisuje regułę warunkową. Reguła, która jest
+        utworzona z klasą zapewnienia będzie jedynie stosowana wtedy, gdy metoda 
+        zapewnienia zwróci logiczną wartośc true.
         </para>
 
         <programlisting role="php"><![CDATA[require_once 'Zend/Acl.php';
@@ -71,19 +80,26 @@ $acl = new Zend_Acl();
 $acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
 
         <para>
-        The above code creates a conditional allow rule that allows access to all privileges on everything
-        by everyone, except when the requesting IP is "blacklisted." If a request comes in from an IP that
-        is not considered "clean," then the allow rule does not apply. Since the rule applies to all Roles,
-        all Resources, and all privileges, an "unclean" IP would result in a denial of access. This is a special
-        case, however, and it should be understood that in all other cases (i.e., where a specific Role,
-        Resource, or privilege is specified for the rule), a failed assertion results in the rule not applying,
-        and other rules would be used to determine whether access is allowed or denied.
+        Powyższy kod tworzy warunkową regułę dostępu, ktora pozwala na dostęp
+        do wszystkich przywilejów do wszystkich zasobów dla wszystkich ról, z 
+        wyjątkiem adresów IP, będących na czarnej liście. Jeśli żądanie pochodzi 
+        z adresu IP, który nie jest uznany jako "czysty", wtedy reguła nie ma 
+        zastosowania. Z tego względu, że reguła ma zastosowanie do wszystkich 
+        ról, zasobów oraz przywilejów, zablokowany adres IP będzie miał 
+        zabroniony cały dostęp. Jest to specjalny przypadek i powinien być 
+        zrozumiany tak, że we  wszystkich innych przypadkach (np., tam gdzie
+        specyficzna rola, zasób lub przywilej są określone w regule), nieudane 
+        zapewnienie spowoduje, że reguła nie zostanie zastosowana i inne reguły 
+        powinny być zastosowane aby określić czy dostęp jest dozwolony czy 
+        zabroniony. 
         </para>
 
         <para>
-        The <code>assert()</code> method of an assertion object is passed the ACL, Role, Resource, and privilege
-        to which the authorization query (i.e., <code>isAllowed()</code>) applies, in order to provide
-        a context for the assertion class to determine its conditions where needed.
+        Metoda <code>assert()</code> obiektu zapewnienia jest przekazywana do
+        ACL, roli, zasobu, oraz przywileju do których stosuje się zapytanie 
+        autoryzacyjne (np., <code>isAllowed()</code>), w celu dostarczenia 
+        kontekstu dla klasy zapewnienia aby określić warunki zapewnienia tam
+        gdzie są one potrzebne.
         </para>
 
     </sect2>
