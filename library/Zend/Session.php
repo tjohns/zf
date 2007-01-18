@@ -42,9 +42,9 @@ class Zend_Session implements IteratorAggregate
 {
 
     /**
-	 * used as option to constructor to prevent additional instances to the same namespace
-	 */
-	const SINGLE_INSTANCE = true;
+     * used as option to constructor to prevent additional instances to the same namespace
+     */
+    const SINGLE_INSTANCE = true;
 
     /**
      * Session_Core instance

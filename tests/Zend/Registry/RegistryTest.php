@@ -27,7 +27,7 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-	}
+    }
 
     public function tearDown()
     {
@@ -85,33 +85,33 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
     // make sure that the registry can be used without a userland call to create it
     public function testInstance()
     {
-        //echo __LINE__, "\n";	
+        //echo __LINE__, "\n";    
 
-    	// Make sure we get a Zend_Registry object
+        // Make sure we get a Zend_Registry object
         #$registry1 = Zend::initRegistry();
-    	Zend::register('foo', 'bar');
+        Zend::register('foo', 'bar');
         $this->assertTrue(Zend::isRegistered('foo'));
 
         $registry1 = Zend::registry();
-    	$this->assertEquals(get_class($registry1), 'Zend_Registry');
+        $this->assertEquals(get_class($registry1), 'Zend_Registry');
 
-    	// should receive a reference to the same object
-    	$registry2 = Zend::registry();
-    	$this->assertSame($registry1, $registry2);
-    	
+        // should receive a reference to the same object
+        $registry2 = Zend::registry();
+        $this->assertSame($registry1, $registry2);
+        
         // compare existing registry with a duplicate
         $registry4 = new Zend_Registry(array('foo'=>'bar'));
-    	$this->assertTrue($registry2 == $registry4);
-    	
-    	// make sure these are not the same, since one is empty, and the other is not
-    	$this->assertNotSame($registry1, new Zend_Registry());
+        $this->assertTrue($registry2 == $registry4);
+        
+        // make sure these are not the same, since one is empty, and the other is not
+        $this->assertNotSame($registry1, new Zend_Registry());
     }
 
     public function testInit()
     {
         // re-initialization is not permitted
         try {
-        	$registry3 = Zend::initRegistry(new Zend_Registry());
+            $registry3 = Zend::initRegistry(new Zend_Registry());
             $this->fail('Expected exception, because re-initialization is not permitted.');
         } catch (Zend_Exception $e) {
             $this->assertRegexp('/already.initializ/i', $e->getMessage());
@@ -121,7 +121,7 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
     public function testBadIndex()
     {
         try {
-        	Zend::registry('foobar');
+            Zend::registry('foobar');
             $this->fail('Expected exception when trying to fetch a non-existent key.');
         } catch (Zend_Exception $e) {
             $this->assertRegexp('/no.key/i', $e->getMessage());
@@ -139,10 +139,10 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
     // make sure registry is not the same as a different instance
     public function testRegistryEmptyReturnsArray()
     {
-    	$registry = new Zend_Registry();
+        $registry = new Zend_Registry();
         $this->assertNotSame($registry, new ArrayObject());
 
-    	$registry = new Zend_Registry(array('foo', 'bar'));
+        $registry = new Zend_Registry(array('foo', 'bar'));
         $this->assertNotSame($registry, Zend::registry());
 
         Zend::register('foo', 'bar');
@@ -158,8 +158,8 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
      */    
     public function testRegistry()
     {
-    	$registry = Zend::registry();
-    	
+        $registry = Zend::registry();
+        
         $this->assertFalse($registry->offsetExists('objectName'));
         
         $subregistry = new Zend_Registry(array('option1' => 'setting1', 'option2' => 'setting2'));

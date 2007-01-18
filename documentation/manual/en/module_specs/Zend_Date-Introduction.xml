@@ -6,6 +6,9 @@
         The <code>Zend_Date</code> component offers a detailed, but simple API for manipulating dates and times. It's
         methods accept a wide variety of types of information, including date parts, in numerous combinations yielding
         many features and possibilities above and beyond the existing PHP date related functions.
+        For the very latest manual updates, please see
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOCDEV/Home">our online manual
+        (frequently synced to Subversion)</ulink>.
     </para>
 
     <para>

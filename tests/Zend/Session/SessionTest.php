@@ -37,7 +37,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_SessionTest extends PHPUnit_Framework_TestCase
 {
     private $script = null;
-	private $error_list = array();
+    private $error_list = array();
 
     public function __construct() {
         $this->script = "php " . (dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php ';
@@ -51,16 +51,16 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-		$this->old_error_reporting_level = error_reporting( E_ALL | E_STRICT );
-		set_error_handler ( array ( &$this, 'errorHandler' ) );
-	}
+        $this->old_error_reporting_level = error_reporting( E_ALL | E_STRICT );
+        set_error_handler ( array ( &$this, 'errorHandler' ) );
+    }
 
     public function tearDown()
     {
-		$old = error_reporting( E_ALL | E_STRICT );
+        $old = error_reporting( E_ALL | E_STRICT );
         $this->assertTrue ( $old === (error_reporting( E_ALL | E_STRICT )),
             'something associated with a particular test altered error_reporting to something other than E_STRICT');
-		restore_error_handler();
+        restore_error_handler();
         Zend_Session::unlockAll();
         // @todo: cleanup
         if (count($this->error_list)) {
@@ -78,12 +78,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
                 return;
             }
         }
-	}
+    }
 
     public function errorHandler ( $errno, $errstr, $errfile, $errline )
     {
-		$this->error_list[] = array ( 'number' => $errno, 'string' => $errstr, 'file' => $errfile, 'line' => $errline );
-	}
+        $this->error_list[] = array ( 'number' => $errno, 'string' => $errstr, 'file' => $errfile, 'line' => $errline );
+    }
 
     /*
      * Sorts the compound result returned by SessionTestHelper, so that the

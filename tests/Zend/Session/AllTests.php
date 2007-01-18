@@ -68,30 +68,30 @@ class Zend_Session_AllTests extends Zend_Session_PathHelper
     {
         $filename = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Core.php';
 
-    	if (false === ($out = fopen($filename, 'w'))) {
+        if (false === ($out = fopen($filename, 'w'))) {
             return false;
         }
 
-    	$src = self::$pathIncubatorLibrary
+        $src = self::$pathIncubatorLibrary
             . DIRECTORY_SEPARATOR . 'Zend'
             . DIRECTORY_SEPARATOR . 'Session'
             . DIRECTORY_SEPARATOR . 'Core.php';
-    	
-    	echo "$src\n";
-    	$lines = file($src);
-    	
-    	foreach ($lines as $line) {
-    	
-    	    $line = rtrim($line);
-    	
-    	    if ($line === 'final class Zend_Session_Core') {
-    	        fputs($out, "class Zend_Session_Core\n");
-    	    } else {
-    	        if (false === fputs($out, (preg_replace('/^(\s*)static private\s/',
+        
+        echo "$src\n";
+        $lines = file($src);
+        
+        foreach ($lines as $line) {
+        
+            $line = rtrim($line);
+        
+            if ($line === 'final class Zend_Session_Core') {
+                fputs($out, "class Zend_Session_Core\n");
+            } else {
+                if (false === fputs($out, (preg_replace('/^(\s*)static private\s/',
                     '\1static protected ', $line)."\n"))) {
                     return false;
-    	        }
-    	    }
+                }
+            }
         }
 
         return true;
