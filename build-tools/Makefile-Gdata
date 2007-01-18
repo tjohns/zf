@@ -42,7 +42,7 @@ PHPDOC=php c:/xampp/php/PhpDocumentor/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=2887
+ZF_TAG=HEAD
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
@@ -81,15 +81,17 @@ API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 
 .PHONY: clean clean-docbook clean-export
 
-dist: export stage zip tarball
+dist: export stage zipball tarball
 
-zip: stage
+zip: zipball
+zipball:
 	@echo "== CREATING ZIP ARCHIVE =="
-	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) ./$(GDATA_PRODUCT))
+	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) $(GDATA_PRODUCT))
 
-tarball: stage
+tar: tarball
+tarball: 
 	@echo "== CREATING TAR.GZ ARCHIVE =="
-	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) ./$(GDATA_PRODUCT))
+	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
 
 stage: stage-files stage-docs
 	@echo "$(GDATA_PRODUCT_NAME) Preview Release $(GDATA_VERSION) (build $(ZF_TAG))" > $(GDATA_STAGE_DIR)/VERSION.txt
