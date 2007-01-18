@@ -1,12 +1,120 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.7.0 / 18-Jan-2007=
+- Zend.php:
+    ZF-35 ZF Version check
+    ZF-329 Removal of loadInterface() Method
+    ZF-380 Zend::loadFile() method do not return correct values
+    ZF-411 API doc improvement
+    ZF-454 Zend::isReadable triggers error-handler
+- Zend_Acl:
+    Moved from incubator to core.
+- Zend_Auth: (incubator)
+    ZF-657 Zend_Auth's use of Zend_Session
+- Zend_Cache:
+    ZF-463 Zend_Cache tests use a system directory
+    ZF-724 testGetWithAnExistingCacheIdAndUTFCharacters fails 
+- Zend_Cache_Backend_ZendPlatform:
+    Moved from incubator to core.
+- Zend_Controller:
+    ZF-537 Handling HTTP 100 responses
+    ZF-628 Zend_Controller_Action::redirect and new repsonse object integration
+    ZF-637 _formatName not removeing underscores in actions
+    ZF-656 MVC Plugin Interface/Abstract Class incorrect
+    ZF-658 request object should not set controller and action in params
+    ZF-659 MVC documentation should cover utility methods of Action Controllers
+    ZF-660 MVC modules fail need default module setting
+    ZF-669 setHeader() shoudl allow modifications to HTTP response codes
+    ZF-671 No baseUrl/pathInfo auto-detection in Zend_Controller_Request_Http
+    ZF-679 Missing argument in _hasParam()
+    ZF-680 endless loop Zend_Controller_Dispatcher::loadClass()
+    ZF-682 Zend_Controller_Router_Route problem when using empty route and path
+    ZF-707 Unsupported operand when $_GET and/or $_POST are null
+    ZF-711 Unit test failure in Zend/Controller/Request/HttpTest::test__Isset()
+    ZF-713 _hasParam in Zend_Controller_Action is just wrong
+- Zend_Date:
+    Finished implementation, resolved many issues.
+    Moved from incubator to core.
+- Zend_Db:
+    ZF-201 PDO Adapter names should begin with 'pdo_'. 
+    ZF-511 Zend_Db_Adapter_MySQLi coding standards conformance
+- Zend_Filter/Zend_Validate: (incubator)
+    New prototype implementation.
+- Zend_Gdata:
+    ZF-704 testOrderbyParam(Zend_Gdata_CalendarTest) failing
+    ZF-708 Document Gdata delete() method better
+    ZF-712 Gdata exception handling is confusing
+    ZF-729 Unable to delete calender events when using ClientLogin 
+    ZF-747 Report POST response message in Gdata exception
+    ZF-757 Gdata doc hyperlinks have changed
+    ZF-759 Doc use of Zend_Gdata->delete() without a feed object
+    ZF-762 Gdata doc should explain how to use Zend_Feed object
+- Zend_Http_Client:
+    ZF-647 Support proxy servers
+    ZF-689 Zend_Http_Client sets wrong HTTP protocol version
+    ZF-697 Bad handling of the query part of an uri
+    ZF-725 Can't choose which type of SSL to use
+    ZF-741 Invalid chunk size in Zend_Http_Client_Adapter_Socket
+    ZF-751 The timeout option is only applied on the opening of the connection
+    ZF-753 PHP Notice: Undefined offset: 1
+- Zend_Http_Server: (incubator)
+    ZF-533 Server only reads the first line of the request
+- Zend_Locale:
+    Finished implementation, resolved issues.
+    Moved from incubator to core.
+- Zend_Mail_Folder: (incubator).
+    Improvements to component under development.
+- Zend_Memory: (incubator).
+    New component.
+- Zend_Measure:
+    Moved from incubator to core, resolved issues.
+- Zend_Registry:
+    ZF-662 testManualInit(Zend_RegistryTest) failure
+    ZF-672 Zend_Registry needs its set() and has() methods back
+    ZF-674 testBeforeInit(Zend_RegistryTest) failure
+    ZF-675 testManualInit(Zend_RegistryTest) failure
+- Zend_Search_Lucene:
+    ZF-85  Query Parser not handling fieldbname with underscores
+    ZF-228 document and field boost does not work
+    ZF-690 Large file indexing problem
+- Zend_Service_Amazon:
+    ZF-119 Service_Amazon_Item not return valid Track
+- Zend_Session:
+    Moved from incubator to core.
+    ZF-548 Documentation for Zend_Session
+    ZF-661 Expiration of namespace variables by hop does not work as expected
+    ZF-676 Zend_Session_Core does not correctly check its state 
+    ZF-678 Some of the public API methods are not documented.
+    ZF-698 Ambiguous error messages
+    ZF-735 automatic defaulting of session name, and session collisions
+    ZF-736 Rename unLock() method to unlock()
+    ZF-740 doc not clear on session locking and limiting instances 
+    ZF-749 Exception handling for certain errors not clear
+- Zend_TimeSync: (incubator)
+    Improvements to component under development.
+- Zend_Translate: (incubator)
+    New component.
+- Zend_Uri:
+    ZF-611 Switch to lazy loading Exceptions
+- Zend_XmlRpc:
+    Improvements to code and documentation.
+- Zend_View:
+    ZF-173 Missing parenthesis in the example
+    ZF-655 opt group support for FormSelect
+    ZF-699 empty() and isset() on view properties are broken 
+    ZF-706 Cannot specify id attribute for hidden fields in 0.6.0
+    ZF-727 Loading of helpers is not LIFO
+    ZF-752 Wrong error message in Zend_View_Abstract
+- Total of 95 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 0.6.0 / 16-Dec-2006=
 - Zend_Acl: new architecture (incubator).
 - Zend_Auth: new component (incubator).
 - Zend_Cache_Backend_ZendPlatform: new class (incubator).
 - Zend_Console_Getopt: new component (incubator).
-- Zend_Db_Adapter_Oci: new database adapter.
+- Zend_Db_Adapter_Oracle: new database adapter.
 - Zend_Gdata: new component integrated into core library.
 - Zend_Http_Client: new architecture, cookie support.
 - Zend_Http_Client: proxy server support (incubator)
