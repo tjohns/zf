@@ -1,0 +1,313 @@
+<sect1 id="zend.locale.functions">
+
+    <title>Using Zend_Locale</title>
+
+    <para>
+        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized
+        names for other locales, days of the week, month names, etc.
+    </para>
+
+    <sect2 id="zend.locale.copying">
+
+        <title>Copying, Cloning, and Serializing Locale Objects</title>
+
+        <para>
+            Use
+            <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink>
+            to duplicate a locale object exactly and efficiently. Most locale-aware methods also accept string
+            representations of locales, such as the result of <code>$locale->toString()</code>.
+        </para>
+
+        <example>
+            <title>clone</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('ar');
+
+// Save the $locale object as a serialization
+$serializedLocale = $locale->serialize();
+// re-create the original object
+$localeObject = unserialize($serializedLocale);
+
+// Obtain a string identification of the locale
+$stringLocale = $locale->toString();
+
+// Make a cloned copy of the $local object
+$copiedLocale = clone $locale;
+
+print "copied: ", $copiedLocale->toString();
+print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.equals">
+
+        <title>isEqual() - Equality</title>
+
+        <para>
+            <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
+            classes should provide a similar equality check.
+        </para>
+
+        <example>
+            <title>Check for equal locales</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+$mylocale = new Zend_Locale('en_US');
+
+// Check if locales are equal
+if ($locale->isEqual($mylocale) { 
+    print "Locales are equal";
+}
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getdefault">
+
+        <title>Default locales</title>
+
+        <para>
+            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's
+            web browser (if available), information from the environment of the host server, and ZF settings. As with
+            the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information
+            to consider
+            <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
+            </link>
+            first. The second parameter toggles between returning all matching locales or only the first/best match.
+            Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
+        </para>
+
+        <example>
+            <title>Get default locales</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// Return all default locales
+$found = $locale->getDefault();
+print_r($found);
+
+// Return only browser locales
+$found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
+print_r($found2);
+?>]]></programlisting>
+        </example>
+
+        <para>
+            To obtain only the default locales relevent to the
+            <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK</code>
+            </link>
+            , use the corresponding method:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>getEnvironment()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getBrowser()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getLocale()</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.locale.setlocale">
+
+        <title>Set a new locale</title>
+
+        <para>
+            A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
+            parameter. If no locale is given, a locale is
+            <link linkend="zend.locale.selection">automatically selected</link>
+            . Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that
+            have references to the existing instance object.
+        </para>
+
+        <example>
+            <title>setLocale</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// Actual locale
+print $locale->toString();
+
+// new locale
+$locale->setLocale('aa_DJ');
+print $locale->toString();
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getlocale">
+
+        <title>Getting the language and region</title>
+
+        <para>
+            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string
+            locale identifier. Use <code>getRegion()</code> to obtain a string containing the two character region code
+            from the string locale identifier.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getlanguage">
+
+        <title>Obtaining localized name for languages, regions, and calendars</title>
+
+        <para>
+            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of
+            a language for a specific $locale (defaults to the current object's locale). Use
+            <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the
+            language associated with $locale (defaults to the current object's locale). language will be returned.
+        </para>
+
+        <example>
+            <title>getLanguageDisplay</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('en_US');
+print $locale->getLanguageDisplay('de'); // echos "German"
+?>]]></programlisting>
+        </example>
+
+        <para>
+            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
+            try the example below in a web page. Similarly, <code>getRegionList()</code> and
+            <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
+            regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
+            <code>getCalendarDisplay()</code> work identically. Use a <code>try .. catch</code> block to handle
+            exceptions that occur when using a locale that does not exist. Not all languages are also locales. In the
+            example, below exceptions are ignored to prevent early termination.
+        </para>
+
+        <example>
+            <title>All Languages written in thier native language</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$sourceLanguage = null; // set to your native language code
+$locale = new Zend_Locale($sourceLanguage);
+$list = $locale->getLanguageList();
+
+foreach($list as $language => $content) {
+    try {
+        $output = $locale->getLanguageDisplay($language, $language);
+        if (is_string($output)) {
+            print "\n<br>[".$language."] ".$output;
+        }
+    } catch (Exception $e) {
+        continue;
+    }
+}
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getscriptdisplay">
+
+        <title>Get an translated string of an script</title>
+
+        <para>
+            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be
+            returned. The same way as with the function getLanguageDisplay(), this function also supports the useage for
+            obtaining output localized to other locales, using the optional $locale argument.
+        </para>
+
+        <example>
+            <title>getScriptDisplay</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// Script
+print $locale->getScriptDisplay('Latn');
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getscriptlist">
+
+        <title>Get a list of scripts</title>
+
+        <para>
+            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected
+            $locale (defaults to the current object's locale). For L10N purposes, a script is the set of characters used
+            to display a language. For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
+        </para>
+
+        <example>
+            <title>getScriptList</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// ScriptList
+print_r($locale->getScriptList());
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getquestion">
+
+        <title>Obtaining translations for "yes" and "no"</title>
+
+        <para>
+            Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
+            to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale
+            (defaults to the current object's locale). The array will contain four key-value pairs, for "yes", "no", and
+            their abbreviations, as shown in the example below.
+        </para>
+
+        <example>
+            <title>getQuestion()</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// Question strings
+print_r($locale->getQuestion());
+
+- - - Output - - -
+
+Array
+(
+    [yes] => yes
+    [yesabbr] => y
+    [no] => no
+    [noabbr] => n
+)
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
