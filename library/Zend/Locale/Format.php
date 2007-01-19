@@ -133,8 +133,9 @@ class Zend_Locale_Format
      */
     public static function getNumber($input, $precision = null, $script = null, $locale = null)
     {
-        if (!is_string($input))
+        if (!is_string($input)) {
             return $input;
+        }
 
         if (Zend_Locale::isLocale($precision)) {
             $locale    = $precision;
@@ -145,14 +146,14 @@ class Zend_Locale_Format
             $script = null;
         }
         
-        if (is_string($precision)) {
+        if (!is_numeric($precision)) {
             $script = $precision;
             $precision = null;
         }
 
         // Change digits from foreign to 0-9
         if ($script !== null) {
-            self::toNumberSystem($input, $script);
+            $input = self::toNumberSystem($input, $script);
         }
 
         // Get correct signs for this locale
@@ -314,7 +315,7 @@ class Zend_Locale_Format
 
         // Change digits from 0-9 to foreign notation
         if ($script !== null) {
-            self::toNumberSystem($format, 'Decimal', $script);
+            $format = self::toNumberSystem($format, 'Decimal', $script);
         }
 
         return (string) $format;        
@@ -338,7 +339,7 @@ class Zend_Locale_Format
 
         // Change digits from 0-9 to foreign notation
         if ($script !== null) {
-            self::toNumberSystem($format, $script);
+            $input = self::toNumberSystem($input, $script);
         }
 
         // Get correct signs for this locale
@@ -470,7 +471,7 @@ class Zend_Locale_Format
 
         // Change digits from 0-9 to foreign notation
         if ($script !== null) {
-            self::toNumberSystem($format, 'Decimal', $script);
+            $format = self::toNumberSystem($format, 'Decimal', $script);
         }
 
         $day   = iconv_strpos($format, 'd');
