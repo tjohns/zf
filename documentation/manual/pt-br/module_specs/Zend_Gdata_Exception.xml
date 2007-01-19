@@ -1,65 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.gdata.exception">
-    <title>Catching Gdata Exceptions</title>
+  <title>Catching Gdata Exceptions</title>
 
-    <para>
-        The <code>Zend_Gdata_Exception</code> class is a base class
-        for exceptions thrown by Zend_Gdata.  You can catch any exception
-        thrown by Zend_Gdata by catching Zend_Gdata_Exception.
-    </para>
+  <para>A classe <code>Zend_Gdata_Exception</code> é classe base para as
+  exceções lançadas por Zend_Gdata. Você pode capturar qualquer exceção
+  lançada por Zend_Gdata capturando Zend_Gdata_Exception.</para>
 
-    <programlisting role="php"><![CDATA[<?php
+  <programlisting role="php">&lt;?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_Exception $ex) {
     // Report the exception to the user
-    die($ex->getMessage());
+    die($ex-&gt;getMessage());
 }
-?>]]></programlisting>
+?&gt;</programlisting>
 
-    <para>
-        The following exception subclasses are used by Zend_Gdata:
+  <para>Zend_Gdata utiliza as seguintes subclasses de exceções: <itemizedlist>
+      <listitem>
+        <para><code>Zend_Gdata_AuthException</code> indica que as credenciais
+        da conta de usuário não são mais válidas.</para>
+      </listitem>
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <code>Zend_Gdata_AuthException</code>
-                    indicates that the user's account credentials were not valid.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Zend_Gdata_BadMethodCallException</code>
-                    indicates that a method was called for a service
-                    that does not support the method.  For example,
-                    the CodeSearch service does not support <code>post()</code>.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Zend_Gdata_HttpException</code>
-                    indicates that an HTTP request was not successful.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Zend_Gdata_InvalidArgumentException</code>
-                    is thrown when the application provides a value that
-                    is not valid in a given context.  For example,
-                    specifying a Calendar visibility value of "banana",
-                    or fetching a Blogger feed without specifying
-                    any blog name.
-                </para>
-            </listitem>
-        </itemizedlist>
-    </para>
+      <listitem>
+        <para><code>Zend_Gdata_BadMethodCallException</code> indica que um
+        método foi chamado por um serviço que não suporta o referido método.
+        Por exemplo, o serviço CodeSearch não suporta
+        <code>post()</code>.</para>
+      </listitem>
 
-    <para>
-        You can use these exception subclasses to handle specific exceptions
-        differently.  See the API documentation for information on which 
-        exception subclasses are thrown by which methods in Zend_Gdata.
-    </para>
+      <listitem>
+        <para><code>Zend_Gdata_HttpException</code> indica que uma requisição
+        HTTP não obteve sucesso.</para>
+      </listitem>
 
-    <programlisting role="php"><![CDATA[<?php
+      <listitem>
+        <para><code>Zend_Gdata_InvalidArgumentException</code> é lançado
+        quando a aplicação fornece um valor invalido para o contexto. Por
+        exemplo, tentar especificar um valor "banana" para a visibilidade de
+        um objeto "Calendar", ou tentar recuperar o conteúdo de um blog sem
+        especificar para Blogger o nome do blog.</para>
+      </listitem>
+    </itemizedlist></para>
+
+  <para>Você pode usar as subclasses de exceção para manusear exceções
+  específicas. Consulte a documentação da API para saber que subclasses de
+  exceções são lançadas por cada um dos métodos de Zend_Gdata.</para>
+
+  <programlisting role="php">&lt;?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_AuthException $authEx) {
@@ -68,8 +55,7 @@ try {
     ...
 } catch(Zend_Gdata_HttpException $httpEx) {
     // Google Data servers cannot be contacted.
-    die($httpEx->getMessage);
+    die($httpEx-&gt;getMessage);
 }
-?>]]></programlisting>
-
+?&gt;</programlisting>
 </sect1>
