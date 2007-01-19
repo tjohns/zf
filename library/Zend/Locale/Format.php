@@ -40,6 +40,7 @@ class Zend_Locale_Format
 {
 
     private static $_signs = array(
+        'Decimal'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Decimal
         'Arab' => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669 arabic
         'Deva' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F devanagari
         'Beng' => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF bengali
@@ -64,21 +65,29 @@ class Zend_Locale_Format
 
     /**
      * Changes the numbers/digits within a given string from one script to another
-     * When a script is not supported, no action is taken, so the original input will be returned
-     * So this function works the same way like translating
+     * 'default' representated the stardard numbers 0-9, if a script does not exist
+     * an exception will be thrown.
      *
      * Examples for input:
      *   toNumberSystem('١١٠ Tests', 'Arab'); -> returns '100 Tests'
      * Example for not supported script
-     *   toNumberSystem('١١٠ Tests', 'Unkn'); -> returns '١١٠ Tests'
+     *   toNumberSystem('١١٠ Tests', 'Default'); -> returns '100 Tests'
      * 
      * @param  string  $input   String to convert
      * @param  string  $locale  Script to parse, see Zend_Locale->getScriptList() for details
      * @param  string  $to      OPTIONAL Script to convert to
      * @return string  Returns the converted input
+     * @throws Zend_Locale_Exception
      */
     public static function toNumberSystem($input, $from, $to = null)
     {
+        if (!array_key_exists($from, self::$_signs)) {
+            throw new Zend_Locale_Exception("script ($from) is no known script, use 'default' for 0-9");
+        }
+        if (($to !== null) and (!array_key_exists($to, self::$_signs))) {
+            throw new Zend_Locale_Exception("script ($to) is no known script, use 'default' for 0-9");
+        }
+        
         if (isset(self::$_signs[$from])) {
             for ($X = 0; $X < 10; ++$X) {
                 $source[$X + 10] = "/" . self::$_signs[$from][$X] . "/u";
