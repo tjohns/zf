@@ -223,6 +223,6 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
 
     public function redirect($url, $code = 302, $prependBase = true)
     {
-        $this->_redirect($url, $code, $prependBase);
+        $this->_redirect($url, array('code' => $code, 'prependBase' => $prependBase));
     }
 }
