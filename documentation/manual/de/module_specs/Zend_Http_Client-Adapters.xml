@@ -210,7 +210,7 @@
             Aus diesem Grund wird der Zend_Http_Client_Adapter_Test Adapter bereit gestellt. Man
             kann seine eigenen Applikationen schreiben, um Zend_Http_Client zu verwenden, und nur
             zu Testzwecken, z.B. in der Unit Test Suite, den Standardadapter durch den Testadapter
-            austauschen, um Tests ohne direkte Serverbindungen auszuführen.
+            (ein Mock Objekt) austauschen, um Tests ohne direkte Serverbindungen auszuführen.
         </para>
         <para>
             Der Zend_Http_Client_Adapter_Test Adapter stellt die zusätzliche Methode setResponse() 
@@ -220,7 +220,7 @@
             auszuführen.         
         </para>
         <example>
-            <title>Code testen ohne auf ein Netzwerk zuzugreifen</title>
+            <title>Testen gegen einen einfachen HTTP Response Stumpf</title>
             <programlisting role="php">
 <![CDATA[<?php
     // Instanziere einen neuen Adapter und Client
@@ -253,6 +253,72 @@
             machen, ohne von einer Netzwerkverbindung, der Serverantwort, etc. abhängig zu sein. In
             diesem Fall würde der Test mit der Prüfung fortfahren, wie die Applikation das XML aus
             der Antwort verarbeitet..
+        </para>
+        <para>
+            Sometimes, a single method call to an object can result in that
+            object performing multiple HTTP transactions. In this case, it's
+            not possible to use setResponse() alone because there's no
+            opportunity to set the next response(s) your program might need
+            before returning to the caller.
+        </para>
+        <example>
+            <title>Testing Against Multiple HTTP Response Stubs</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // Instantiate a new adapter and client
+    $adapter = new Zend_Http_Client_Adapter_Test();
+    $client = Zend_Http_Client('http://www.example.com', array(
+        'adapter' => $adapter
+    ));
+    
+    // Set the first expected response
+    $adapter->setResponse(
+        "HTTP/1.1 302 Found"      . "\r\n" .
+        "Location: /"             . "\r\n" .
+        "Content-Type: text/html" . "\r\n" .
+                                    "\r\n" . 
+        '<html>' . 
+        '  <head><title>Moved</title></head>' .
+        '  <body><p>This page has moved.</p></body>' . 
+        '</html>');
+
+    // Set the next successive response
+    $adapter->addResponse(
+        "HTTP/1.1 200 OK"         . "\r\n" .
+        "Content-Type: text/html" . "\r\n" .
+                                    "\r\n" . 
+        '<html>' . 
+        '  <head><title>My Pet Store Home Page</title></head>' . 
+        '  <body><p>...</p></body>' . 
+        '</html>');
+
+    // inject the http client object ($client) into your object 
+    // being tested and then test your object's behavior below
+?>]]></programlisting>
+        </example>
+        <para>
+            The setResponse() method clears any responses in the
+            Zend_Http_Client_Adapter_Test's buffer and sets the
+            first response that will be returned.  The addResponse()
+            method will add successive responses.
+        </para>
+        <para>
+            The responses will be replayed in the order that they
+            were added.  If more requests are made than the number
+            of responses stored, the responses will cycle again
+            in order.
+        </para>
+        <para>
+            In the example above, the adapter is configured to test your
+            object's behavior when it encounters a 302 redirect. Depending on
+            your application, following a redirect may or may not be desired
+            behavior. In our example, we expect that the redirect will be
+            followed and we configure the test adapter to help us test this.
+            The initial 302 response is set up with the setResponse() method
+            and the 200 response to be returned next is added with the
+            addResponse() method. After configuring the test adapter, inject
+            the HTTP client containing the adapter into your object under test
+            and test its behavior.
         </para>
     </sect2>
 
