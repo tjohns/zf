@@ -13,13 +13,17 @@
 
         <para>
             Once input has been normalized via the creation of a <code>Zend_Date</code> object, it will have an
-            associated timezone. All manipulations of the object are assumed to be relative to this timezone. Beware of
-            mixing and matching operations with date parts between date objects for different timezones, which generally
-            produces undesireable results, unless the manipulations are only related to the timestamp.
+            associated timezone, but an internal representation using standard
+            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamps</ulink>
+            . All manipulations of these objects are assumed to be relative to this timezone. Beware of mixing and
+            matching operations with date parts between date objects for different timezones, which generally produce
+            undesireable results, unless the manipulations are only related to the timestamp. Operating on
+            <code>Zend_Date</code> objects having different timezones generally works, since dates are normalized to
+            UNIX timestamps on instantiation of <code>Zend_Date</code>.
         </para>
 
         <para>
-            The general functions expect a constant providing the date's desired <code>$part</code>, such as
+            Most methods expect a constant selecting the desired <code>$part</code> of a date, such as
             <code>Zend_Date::HOUR</code>. These constants are valid for all of the functions below. A list of all
             available constants is provided in
             <xref linkend="zend.date.constants.list" />
@@ -27,87 +31,161 @@
         </para>
 
         <para>
-            If there is a <code>$date</code> input parameter, then the <code>$locale</code> parameter disambiguates the
-            <code>$date</code> by explicitly specifying the locale it belongs to (e.g. what language should be used to
-            parse month names). If there is no <code>$date</code> input parameter, then the <code>$locale</code>
-            parameter specifies the locale to use for localizing output (e.g. the date format for a string
-            representation). If no <code>$locale</code> was specified, then the locale of the current object is used to
-            interpret <code>$date</code>.
+            If the optional <code>$locale</code> parameter is provided, then the <code>$locale</code> disambiguates the
+            <code>$date</code> operand by replacing month and weekday names for string <code>$date</code> operands, and
+            even parsing date strings expressed according to the conventions of that locale (see
+            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::getDate()</link>
+            ). The automatic normalization of localized <code>$date</code> operands of a string type occurs when
+            <code>$part</code> is one of the <code>Zend_Date::DATE*</code> or <code>Zend_Date::TIME*</code> constants.
+            The locale identifies which language should be used to parse month names and weekday names, if the
+            <code>$date</code> is a string containing a date. If there is no <code>$date</code> input parameter, then
+            the <code>$locale</code> parameter specifies the locale to use for localizing output (e.g. the date format
+            for a string representation). Note that the <code>$date</code> input parameter might actually have a type
+            name instead (e.g. <code>$hour</code> for <code>addHour()</code>), although that does not prevent the use of
+            <code>Zend_Date</code> objects as arguments for that parameter. If no <code>$locale</code> was specified,
+            then the locale of the current object is used to interpret <code>$date</code>, or select the localized
+            format for output.
+        </para>
+
+    </sect2>
+
+    <sect2 id="id.date.basic">
+
+        <title>Basic <code>Zend_Date</code> Operations Common to Many Date Parts</title>
+
+        <para>
+            The methods <code>add(), sub(), compare(), get(), and set()</code> operate generically on dates. In each
+            case, the operation is performed on the date held in the instance object. The <code>$date</code> operand is
+            required for all of these methods, except <code>get()</code>, and may be a <code>Zend_Date</code> instance
+            object, a numeric string, or an integer. These methods assume <code>$date</code> is a timestamp, if it is
+            not an object. However, the <code>$part</code> operand controls which logical part of the two dates are
+            operated on, allowing operations on parts of the object's date, such as year or minute, even when
+            <code>$date</code> contains a long form date string, such as, "December 31, 2007 23:59:59". The result of
+            the operation changes the date in the object, except for <code>compare()</code>, and <code>get()</code>.
+        </para>
+
+        <example>
+            <title>Operating on Parts of Dates</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date.php';
+
+$date = new Zend_Date(); // $date's timestamp === time()
+
+// changes $date by adding 12 hours
+$date->add('12', Zend_Date::HOUR);
+print $date;
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Convenience methods exist for each combination of the basic operations above and several common date parts.
+            Conveniently, they are named by combining a prefix (name of a basic operation) with a suffix (type of date
+            part), such as <code>addYear()</code>. In the list below, all combinations of "Date Parts" and "Basic
+            Operations" exist. For example, the operation "add" exists for each of these date parts, including
+            <code>addDay()</code>, <code>addYear()</code>, etc.
         </para>
 
         <para>
-            In the table below, nearly all combinations of "Date Parts" and "Basic Method Types" exist (e.g.
-            <code>addYear()</code>), as well as "Special Types of Date 'Parts'" and the "Basic Method Types" (e.g.
-            <code>subWeek()</code>).
+            These convenience methods have the same equivalent functionality as the basic operation methods, but expect
+            string and integer <code>$date</code> operands containing values representing the type indicated by the
+            suffix of the convenience method. Thus, the names of these methods (e.g. "Year" or "Minute") identify the
+            units of the <code>$date</code> operand.
         </para>
 
         <table>
-            <title>Basic <code>Zend_Date</code> Methods and Part Specific Methods</title>
-            <tgroup cols="3">
+            <title>Date Parts</title>
+            <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Basic Method Types</entry>
-                        <entry>Date Parts</entry>
-                        <entry>Special Types of Date "Parts"</entry>
+                        <entry>Date Part</entry>
+                        <entry>Explanation</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry>add*()</entry>
-                        <entry>Year</entry>
                         <entry>Timestamp</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
+                        </entry>
                     </row>
                     <row>
-                        <entry>sub*()</entry>
+                        <entry>Year</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Gregorian_calendar">Gregorian calendar</ulink> year</entry>
+                    </row>
+                    <row>
                         <entry>Month</entry>
-                        <entry>Date</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Month#Julian_and_Gregorian_calendars">Gregorian calendar month (1-12, localized names supported)</ulink>
+                        </entry>
                     </row>
                     <row>
-                        <entry>compare*()</entry>
-                        <entry>Day</entry>
-                        <entry>Week</entry>
-                    </row>
-                    <row>
-                        <entry>get*()</entry>
                         <entry>Hour</entry>
-                        <entry>Weekday</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/24-hour_clock">24 hour clock</ulink> (0-23)</entry>
                     </row>
                     <row>
-                        <entry>set*()</entry>
                         <entry>Minute</entry>
-                        <entry>DayOfYear</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Minute">minute</ulink> of the hour (0-59)</entry>
                     </row>
                     <row>
-                        <entry></entry>
                         <entry>Second</entry>
-                        <entry>Arpa</entry>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Second">second</ulink> usually used to denote the elapsed seconds, since the start of the minute (0-59)</entry>
                     </row>
                     <row>
+                        <entry>
+                            <ulink url="http://en.wikipedia.org/wiki/Millisecond">millisecond</ulink>
+                        </entry>
+                        <entry>thousands of a second (0-999)</entry>
+                    </row>
+                    <row>
+                        <entry>Day</entry>
+                        <entry>
+                            Zend_Date::DAY_SHORT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
+                    </row>
+                    <row>
+                        <entry>Week</entry>
                         <entry></entry>
-                        <entry>Millisecond</entry>
+                    </row>
+                    <row>
+                        <entry>Date</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>Weekday</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>DayOfYear</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>Arpa</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
                         <entry>Iso</entry>
+                        <entry></entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
 
-        <para>
-            Each of the basic methods has the same equivalent functionality for each of the data parts supported, as
-            explained below.
-        </para>
-
         <itemizedlist>
             <listitem>
                 <para>
-                    get($part = null, $locale = null)
+                    <emphasis role="strong">get($part = null, $locale = null)</emphasis>
                 </para>
                 <para>
-                    returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted string or integer
+                    returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted
+                    string or integer
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    set($date, $part = null, $locale = null)
+                    <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     sets the <code>$part</code> of the current object to the corresponding value for that part found in
@@ -116,7 +194,7 @@
             </listitem>
             <listitem>
                 <para>
-                    add($date, $part = null, $locale = null)
+                    <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     adds the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the
@@ -125,7 +203,7 @@
             </listitem>
             <listitem>
                 <para>
-                    sub($date, $part = null, $locale = null)
+                    <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     subtracts the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the
@@ -134,7 +212,7 @@
             </listitem>
             <listitem>
                 <para>
-                    copyPart($part, $locale = null)
+                    <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
                 </para>
                 <para>
                     returns a cloned object, with only <code>$part</code> of the object's date copied to the clone, with
@@ -143,16 +221,24 @@
             </listitem>
             <listitem>
                 <para>
-                    compare($date, $part = null, $locale = null)
+                    <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     compares <code>$part</code> of <code>$date</code> to this object's timestamp, returning 0 if they
                     are equal, 1 if this object's part was more recent than $date's part, otherwise -1.
                 </para>
             </listitem>
+        </itemizedlist>
+
+        <para>
+            The following basic operations do not have corresponding convenience methods for the data parts listed
+            above:
+        </para>
+
+        <itemizedlist>
             <listitem>
                 <para>
-                    equals($date, $part = null, $locale = null)
+                    <emphasis role="strong">equals($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     returns true, if <code>$part</code> of <code>$date</code> having locale <code>$locale</code> is the
@@ -161,7 +247,7 @@
             </listitem>
             <listitem>
                 <para>
-                    isEarlier($date, $part = null, $locale = null)
+                    <emphasis role="strong">isEarlier($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     returns true, if <code>$part</code> of this object's date is earlier than <code>$part</code> of
@@ -170,7 +256,7 @@
             </listitem>
             <listitem>
                 <para>
-                    isLater($date, $part = null, $locale = null)
+                    <emphasis role="strong">isLater($date, $part = null, $locale = null)</emphasis>
                 </para>
                 <para>
                     returns true, if <code>$part</code> of this object's date is later than <code>$part</code> of
@@ -198,7 +284,7 @@
                     <row>
                         <entry>Related</entry>
                         <entry>Output</entry>
-                        <entry>Seting</entry>
+                        <entry>Setting</entry>
                         <entry>Addition</entry>
                         <entry>Subtraction</entry>
                         <entry>Comparation</entry>
