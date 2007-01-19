@@ -151,7 +151,7 @@ abstract class Zend_XmlRpc_Value
     public function getAsDOM()
     {
         if (!$this->_as_dom) {
-            $doc = new DOMDocument('1.0', 'UTF-8');
+            $doc = new DOMDocument('1.0');
             $doc->loadXML($this->saveXML());
             $this->_as_dom = $doc->documentElement;
         }
@@ -161,7 +161,7 @@ abstract class Zend_XmlRpc_Value
 
     protected function _stripXmlDeclaration(DOMDocument $dom)
     {
-        return preg_replace('/<\?xml version="1.0" encoding="[^\"]*"\?>\n/u', '', $dom->saveXML());
+        return preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $dom->saveXML());
     }
 
     /**

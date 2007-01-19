@@ -55,7 +55,7 @@ class Zend_XmlRpc_Value_Array extends Zend_XmlRpc_Value_Collection
     public function saveXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
-            $dom   = new DOMDocument('1.0', 'ISO-8859-1');
+            $dom   = new DOMDocument('1.0');
             $value = $dom->appendChild($dom->createElement('value'));
             $array = $value->appendChild($dom->createElement('array'));
             $data  = $array->appendChild($dom->createElement('data'));
