@@ -36,6 +36,16 @@ require_once 'Zend/Environment/Exception.php';
 class Zend_Environment extends Zend_Environment_Container_Abstract
 {
     /**
+     * Optional cache instance
+     */
+    protected $_cache;
+
+    /**
+     * Cache prefix (to avoid namespace clashes)
+     */
+    protected $_cachePrefix = '_zf_environment_';
+
+    /**
      * @param  array $modules
      * @param  array $config
      * @throws Zend_Environment_Exception
@@ -43,7 +53,18 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
      */
     public function __construct($modules, $config = array())
     {
-        // TO DO - implement caching if set in $config
+        if (is_array($config)) {
+            if (isset($config['cache'])) {
+                $this->_cache = $config['cache'];
+            }
+        }
+        
+        if (isset($this->_cache)) {
+            if ($data = $this->_cache->load($this->_cachePrefix . 'module')) {
+                $this->_data = unserialize($data);
+                return;
+            }
+        }
 
         if (!is_array($modules)) {
             $modules = array($modules);
@@ -55,6 +76,8 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
             }
             $this->_data[$instance->getId()] = $instance;
         }
+        
+        $this->_cache('module', serialize($this->_data));
     }
     
     /**
@@ -119,6 +142,12 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
      */
 	public function match($locations, $server = null, $ip = null)
 	{
+	    if (isset($this->_config)) {
+	        if ($id = $this->_config->load($this->_cachePrefix . 'match')) {
+	            return $id;
+	        }
+	    }
+
 	    if (is_null($server) && isset($_SERVER['SERVER_NAME'])) {
 	        $server = $_SERVER['SERVER_NAME'];
 	    }
@@ -130,40 +159,67 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
 	    if (!is_array($locations)) {
 	        throw new exception('Locations must be provided as array');
 	    }
-
+	    
+	    $lip = ip2long($ip);
+        $cidr = array("0.0.0.0", "128.0.0.0", "192.0.0.0", "224.0.0.0",
+                      "240.0.0.0", "248.0.0.0", "252.0.0.0", "254.0.0.0",
+                      "255.0.0.0", "255.128.0.0", "255.192.0.0", "255.224.0.0",
+                      "255.240.0.0", "255.248.0.0", "255.252.0.0", "255.254.0.0",
+                      "255.255.0.0", "255.255.128.0", "255.255.192.0", "255.255.224.0",
+                      "255.255.240.0", "255.255.248.0", "255.255.252.0", "255.255.254.0",
+                      "255.255.255.0", "255.255.255.128", "255.255.255.192", "255.255.255.224",
+                      "255.255.255.240", "255.255.255.248", "255.255.255.252", "255.255.255.254",
+                      "255.255.255.255");
+	    
 	    foreach ($locations as $id => $environment) {
+
             if (!is_array($environment)) {
                 $environment = array($environment);
             }
+
             foreach ($environment as $host) {
+
                 if (preg_match("/^(\d+\.){3}\d+(\/\d+)?$/", $host)) {
-                    list($network, $mask) = explode('/', $host);
 
-                    $network = sprintf("%-032s", decbin(ip2long($network)));
-                    $ip = sprintf("%-032s", decbin(ip2long($ip)));
-
-                    if (!is_null($mask)) {
-                        $cmp = strncmp($ip, $network, $mask);
+                    if (strpos($host, '/') === false) {
+                        // If not in CIDR notation then perform straight compare
+                        if ($host == $ip) {
+                            return $this->_cache('match', $id);
+                        }
                     } else {
-                        $cmp = strcmp($ip, $network);
+                        // Parse CIDR notation and calculate
+                        list($network, $mask) = explode('/', $host);
+                        $lmask = ip2long($cidr[$mask]);
+                        $lnetwork = ip2long($network) & $lmask;
+                        $lbroadcast = $lnetwork | $lmask ^ ip2long($cidr[32]);
+    
+                        if ($lip >= $lnetwork && $lip <= $lbroadcast) {
+                            return $this->_cache('match', $id);
+                        }
                     }
 
-                    if ($cmp === 0) {
-                        return $id;
-                    }
                 } else {
-                    $host = preg_replace("/[^A-Za-z0-9\.\*]+/", '', $host);
+
                     $host = str_replace('*', '_', $host);
                     $host = preg_quote($host, '/');
                     $host = str_replace('_', '.*', $host);
 
-                    if (preg_match("/^" . $host . "$/", $host)) {
-                        return $id;
+                    if (preg_match("/^" . $host . "$/", $server)) {
+                        return $this->_cache('match', $id);
                     }
                 }
             }
 	    }
 
-	    return false;
+	    return $this->_cache('match', false);
+	}
+	
+	protected function _cache($id, $value)
+	{
+	    if (isset($this->_cache)) {
+	        $this->_cache->save($value, $this->_cachePrefix . $id);
+	    }
+	    
+	    return $value;
 	}
 }
