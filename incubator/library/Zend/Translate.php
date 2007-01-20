@@ -36,8 +36,8 @@ class Zend_Translate {
     /**
      * Adapter names constants
      */
-     const AN_GETTEXT = 'gettext';
-     const AN_ARRAY   = 'array';
+    const AN_GETTEXT = 'gettext';
+    const AN_ARRAY   = 'array';
 
     /**
      * Adapter
@@ -50,9 +50,11 @@ class Zend_Translate {
     /**
      * Generates the standard translation object
      *
-     * @param string $adapter - Adapter to use
-     * @param mixed  $options - Options for this adapter
-     * @param mixed  $locale  - OPTIONAL locale to use
+     * @param  string              $adapter  Adapter to use
+     * @param  array               $options  Options for this adapter to set
+     *                                       Depends on the Adapter
+     * @param  string|Zend_Locale  $locale   OPTIONAL locale to use
+     * @throws Zend_Translate_Exception
      */
     public function __construct($adapter, $options, $locale = null)
     {
@@ -63,10 +65,10 @@ class Zend_Translate {
     /**
      * Sets a new adapter
      *
-     * @param string $adapter - adapter to use
-     * @param mixed  $options - Adapter options
-     * @param mixed  $locale  - OPTIONAL locale to use
-     * @return timestamp
+     * @param  string              $adapter  Adapter to use
+     * @param  array               $options  Options for the adapter to set
+     * @param  string|Zend_Locale  $locale   OPTIONAL locale to use
+     * @throws Zend_Translate_Exception
      */
     public function setAdapter($adapter, $options, $locale = null)
     {
@@ -76,31 +78,19 @@ class Zend_Translate {
                 require_once('Zend/Translate/Adapter/Array.php');
                 $this->_adapter = new Zend_Translate_Adapter_Array($options, $locale);
                 break;
-            case 'cvs':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'gettext':
                 /** Zend_Translate_Adapter_Gettext */
                 require_once('Zend/Translate/Adapter/Gettext.php');
                 $this->_adapter = new Zend_Translate_Adapter_Gettext($options, $locale);
                 break;
+            case 'cvs':
             case 'qt':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'sql':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'tbx':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'tmx':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'xliff':
-                throw new Zend_Translate_Exception('not supported for now');
-                break;
             case 'xmltm':
-                throw new Zend_Translate_Exception('not supported for now');
+                throw new Zend_Translate_Exception("adapter '$adapter' is not supported for now");
                 break;
             default:
                 throw new Zend_Translate_Exception('no adapter selected');
@@ -127,11 +117,9 @@ class Zend_Translate {
      * If $clear parameter is true, then translation data for specified
      * language is replaced and added otherwise
      *
-     * @param mixed $locale  - locale/language to add to this adapter
-     * @param mixed $options - option for this adapter depends on the adapter
-     *        'array'   - the array to add
-     *        'gettext' - the gettext file inclusive the filename
-     * @param boolean $empty - add if the language already exists
+     * @param  string|Zend_Locale  $locale   Locale/Language to add to this adapter
+     * @param  string|array        $options  Option for this adapter, depends on the adapter
+     * @param  boolean             $clear    If true the new translation is added to the existing one
      */
     public function addTranslation($locale, $options, $clear = false)
     {
@@ -142,7 +130,7 @@ class Zend_Translate {
     /**
      * Sets a new locale/language
      *
-     * @param mixed $locale - Locale to set
+     * @param  string|Zend_Locale  $locale  Locale/Language to set for translations
      */
     public function setLocale($locale)
     {
@@ -151,7 +139,7 @@ class Zend_Translate {
 
 
     /**
-     * Gets the actual locale/language
+     * Returns the actual set locale/language
      *
      * @return Zend_Locale|null
      */
@@ -162,54 +150,33 @@ class Zend_Translate {
 
 
     /**
-     * Sets the actual language, can differ from the set locale
-     *
-     * @param string $language - Language to set
-     */
-    public function setLanguage($language)
-    {
-        return $this->_adapter->setLanguage($language);
-    }
-
-    /**
-     * Gets the actual language
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->_adapter->getLanguage();
-    }
-
-
-    /**
-     * Returns the avaiable languages from this adapter
+     * Returns all avaiable locales/anguages from this adapter
      *
      * @return array
      */
-    public function getLanguageList()
+    public function getList()
     {
-        return $this->_adapter->getLanguageList();
+        return $this->_adapter->getList();
     }
 
 
     /**
      * is the wished language avaiable ?
      *
-     * @param mixed $language - is locale or language avaiable
+     * @param  string|Zend_Locale  $locale  Is the locale/language avaiable
      * @return boolean
      */
-    public function isAvaiable($language)
+    public function isAvaiable($locale)
     {
-        return $this->_adapter->isAvaiable($language);
+        return $this->_adapter->isAvaiable($locale);
     }
 
 
     /**
      * Translate the given string
      *
-     * @param string $translation - string to translate
-     * @param mixed  $locale      - OPTIONAL locale/language to translate to
+     * @param  string              $messageId  Original to translate
+     * @param  string|Zend_Locale  $locale     OPTIONAL locale/language to translate to
      * @return string
      */
     public function _($messageId, $locale = null)
@@ -221,8 +188,8 @@ class Zend_Translate {
     /**
      * Translate the given string
      *
-     * @param string $translation - string to translate
-     * @param mixed  $locale      - OPTIONAL locale/language to translate to
+     * @param  string              $messageId  Original to translate
+     * @param  string|Zend_Locale  $locale     OPTIONAL locale/language to translate to
      * @return string
      */
     public function translate($messageId, $locale = null)

@@ -44,20 +44,20 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     /**
      * Generates the  adapter
      *
-     * @param array $options - Options for this adapter
-     * @param  string|Zend_Locale  $language  OPTIONAL Language to set, identical with locale identifier,
-     *                                        see Zend_Locale for more information
+     * @param  array               $options  Options for this adapter
+     * @param  string|Zend_Locale  $locale   OPTIONAL Locale/Language to set, identical with locale identifier,
+     *                                       see Zend_Locale for more information
      */
-    public function __construct($options, $language = null)
+    public function __construct($options, $locale = null)
     {
-        parent::__construct($options, $language);
+        parent::__construct($options, $locale);
     }
 
 
     /**
      * Read values from the MO file
      *
-     * @param string $bytes
+     * @param  string  $bytes
      */
     private function _readMOData($bytes)
     {
@@ -72,12 +72,12 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     /**
      * Load translation data (MO file reader)
      *
-     * @param  string $language  New language to set, identical with locale identifier,
-     *                                        see Zend_Locale for more information
+     * @param  string  $locale    New Locale/Language to set, identical with locale identifier,
+     *                            see Zend_Locale for more information
      * @param  string  $filename  MO file to add, full path must be given for access
      * @throws Zend_Translation_Exception
      */
-    protected function _loadTranslationData($language, $filename)
+    protected function _loadTranslationData($locale, $filename)
     {
         if (!is_readable($filename)) {
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
@@ -129,9 +129,9 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
 
             if ($transtemp[$count * 2 + 1] != 0) {
                 fseek($this->_file, $transtemp[$count * 2 + 2]);
-                $this->_translate[$language][$original] = fread($this->_file, $transtemp[$count * 2 + 1]);
+                $this->_translate[$locale][$original] = fread($this->_file, $transtemp[$count * 2 + 1]);
             } else {
-                $this->_translate[$language][$original] = '';
+                $this->_translate[$locale][$original] = '';
             }
         }
     }
