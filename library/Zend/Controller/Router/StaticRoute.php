@@ -19,6 +19,9 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
+/** Zend_Controller_Router_Route_Interface */
+require_once 'Zend/Controller/Router/Route/Interface.php';
+
 /**
  * StaticRoute is used for managing static URIs. 
  * 
