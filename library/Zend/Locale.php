@@ -945,7 +945,7 @@ class Zend_Locale {
         } else {
             $locale = explode('_', $locale);
             if (array_key_exists($locale[0], self::$_LocaleData)) {
-                return $locale;
+                return $locale[0];
             }
         }
         return false;
