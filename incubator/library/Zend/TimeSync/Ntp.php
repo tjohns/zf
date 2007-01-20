@@ -32,13 +32,12 @@ require_once 'Zend/TimeSync/Protocol.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
-{    
+{
     /**
      * Class constructor, sets the timeserver and port number
      *
      * @param  string $timeserver
      * @param  int    $port
-     * @return void
      */
     public function __construct($timeserver, $port)
     {
@@ -46,6 +45,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
 
+    /**
+     * Prepares the data that will be send to the timeserver
+     * 
+     * @return array
+     */
     protected function _prepare()
     {
         $frac   = microtime();
@@ -80,6 +84,12 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         return $ntppacket;
     }
 
+    /**
+     * Reads the data returned from the timeserver
+     * 
+     * @return array
+     * @throws Zend_TimeSync_Exception
+     */
     protected function _read()
     {
         $flags = ord(fread($this->_socket, 1));
@@ -114,6 +124,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         return $result;
     }
 
+    /**
+     * Writes data to to the timeserver
+     * 
+     * @param  array $data
+     */
     protected function _write($data)
     {
         $this->_connect();
@@ -122,6 +137,12 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         stream_set_timeout($this->_socket, Zend_TimeSync::$options['timeout']);
     }
 
+    /**
+     * Extracts the binary data returned from the timeserver
+     * 
+     * @param  array $binary
+     * @return integer
+     */
     protected function _extract($binary)
     {
         $leap = ($binary['flags'] & 0xc0) >> 6; // Leap Indicator bit 1100 0000
@@ -183,6 +204,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                     $ntpserviceid = 'Digital Time Service';
                 }
                 break;
+
             case 1:
                 if (substr($refid, 0, 4) == 'ATOM') {
                     $ntpserviceid = 'Atomic Clock (calibrated)';
@@ -198,13 +220,14 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                     $ntpserviceid = 'GPS UHF satellite positioning';
                 }
                 break;
+
             default:
                 $ntpserviceid  = ord(substr($binary['referenceid'], 0, 1));
-                $ntpserviceid .= ".";
+                $ntpserviceid .= '.';
                 $ntpserviceid .= ord(substr($binary['referenceid'], 1, 1));
-                $ntpserviceid .= ".";
+                $ntpserviceid .= '.';
                 $ntpserviceid .= ord(substr($binary['referenceid'], 2, 1));
-                $ntpserviceid .= ".";
+                $ntpserviceid .= '.';
                 $ntpserviceid .= ord(substr($binary['referenceid'], 3, 1));
                 break;
         }

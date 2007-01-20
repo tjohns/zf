@@ -33,6 +33,11 @@ require_once 'Zend/TimeSync/Protocol.php';
  */
 class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
 {
+    /**
+     * Socket delay
+     *
+     * @var integer
+     */
     private $_delay;
     
     /**
@@ -48,18 +53,35 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
 
+    /**
+     * Prepares the data that will be send to the timeserver
+     * 
+     * @return array
+     */
     protected function _prepare()
     {
         return "\n";
     }
 
+    /**
+     * Reads the data returned from the timeserver
+     * 
+     * @return void
+     */
     protected function _read()
     {
         $result = fread($this->_socket, 49);
         $this->_delay = ($this->_delay - time()) / 2;
-        
+
+        return $result;
     }
 
+    /**
+     * Writes data to to the timeserver
+     * 
+     * @param  array $data
+     * @return void
+     */
     protected function _write($data)
     {
         $this->_connect();
@@ -67,6 +89,12 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         fputs($this->_socket, $data);
     }
 
+    /**
+     * Extracts the data returned from the timeserver
+     * 
+     * @param  array $result
+     * @return integer
+     */
     protected function _extract($result)
     {
         $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));

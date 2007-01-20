@@ -56,14 +56,14 @@ class Zend_TimeSync implements IteratorAggregate
     const DEFAULT_SCHEME = 'ntp';
 
     /**
-     * Contains array of timeservers
+     * Contains array of timeserver objects
      *
      * @var array
      */
     protected $_timeservers = array();
 
     /**
-     * Holds a reference to the current timeserver being used
+     * Holds a reference to the timeserver that is currently being used
      *
      * @var object
      */
@@ -92,23 +92,8 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Zend_TimeSync constructor
      *
-     * The constructor takes one to two parameters. The first parameter 
-     * is $server, which may be a single string representation for a 
-     * timeserver, or a structured array for multiple timeservers.
-     *
-     * Each server must be provided with a valid scheme, and may
-     * contain an optional port number. If no port number has been
-     * suplied, the default matching port number will be used.
-     *
-     * Supported schemes are:
-     * - ntp
-     * - sntp
-     *
-     * The second parameter is $options, and it is optional. If not
-     * specified, default options will be used.
-     *
-     * @param   mixed $server
-     * @param   array $options
+     * @param   string|array $server    OPTIONAL single timeserver, or an array of timeservers.
+     * @param   array        $options   OPTIONAL configuration settings
      * @return  Zend_TimeSync
      */
     public function __construct($server = array(), $options = array())
@@ -133,11 +118,18 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Adds a timeserver to the server list
      * 
-     * The $server parameter may be a string with a single timeserver, or an array 
-     * listing multiple timeservers.
+     * Server should be a single string representation of a timeserver, 
+     * or a structured array listing multiple timeservers.
      *
-     * @param  mixed $server
-     * @return void
+     * Each timeserver must be provided with a valid scheme, and may
+     * contain an optional port number. If no port number has been
+     * suplied, the default matching port number will be used.
+     *
+     * Supported schemes are:
+     * - ntp
+     * - sntp
+     *
+     * @param  string|array $server single timeserver, or an array of timeservers.
      * @throws Zend_TimeSync_Exception
      */
     public function addServer($server)
@@ -158,9 +150,8 @@ class Zend_TimeSync implements IteratorAggregate
      * 
      * This will replace any currently defined options.
      *
-     * @param   mixed $key
-     * @param   mixed $value
-     * @return  void
+     * @param   integer|string $key The option's identifier
+     * @param   integer|string $key The option's value
      * @throws  Zend_TimeSync_Exception
      */
     public function setOption($key, $value)
@@ -177,8 +168,7 @@ class Zend_TimeSync implements IteratorAggregate
      * 
      * This will replace any currently defined options.
      *
-     * @param   array $options
-     * @return  void
+     * @param   array $options An array of options to be set
      * @throws  Zend_TimeSync_Exception
      */
     public function setOptions($options = array())
@@ -196,7 +186,6 @@ class Zend_TimeSync implements IteratorAggregate
      * Marks a nameserver as current
      *
      * @param   integer $flag
-     * @return  void
      * @throws  Zend_TimeSync_Exception
      */
     public function setCurrent($flag = null)
@@ -268,7 +257,7 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Query the timeserver list using the fallback mechanism
      *
-     * @param   $locale optional locale
+     * @param   $locale OPTIONAL locale
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
@@ -291,9 +280,13 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Adds a timeserver object to the timeserver list
+     * 
+     * Server should be a single string representation of a timeserver,
+     * and must be provided with a valid scheme, and may contain an optional 
+     * port number. If no port number has been suplied, the default matching 
+     * port number will be used.
      *
      * @param   string $server
-     * @return  void
      */
     protected function _addServer($server)
     {
@@ -324,7 +317,7 @@ class Zend_TimeSync implements IteratorAggregate
 
         $protocol  = ($scheme == 'ntp') ? 'udp' : 'tcp';
         $className = 'Zend_TimeSync_' . ucfirst($scheme);
-        
+
         if (!isset($port)) {
             if ($scheme == 'ntp') {
                 $port = self::DEFAULT_NTP_PORT;
