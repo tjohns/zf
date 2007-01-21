@@ -3,7 +3,7 @@
 
 	<sect2 id="zend.controller.overview.introduction">
 		<title>简介</title>
-		<para>			Zend_Controller是使用MVC模式来构建一个站点的基础。Zend_Controller体系是一个轻量的，模块化和可扩展的体系。它只提供最核心的必要的部分，允许开发者有很大的自由来灵活地构建自己的站点。使用Zend_Controller的站点，其代码结构会有一部份是相似的。
+		<para>			Zend_Controller是使用MVC模式来构建一个站点的基础。Zend_Controller体系是一个轻量的，模块化和可扩展的体系。它只提供最核心的必要的部分，允许开发者有很大的自由来灵活地构建自己的站点。使用Zend_Controller的站点，其文件组织和代码结构会比较相似。
 		</para>
 
 		<para>			
@@ -15,54 +15,162 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<code>Zend_Controller_Front</code>是Zend_Controller_Controller体系的组织者，它是FrontController设计模式的实现。Zend_Controller_Front处理服务器接受的所有请求，并最后负责将请求分配给ActionController (<code>Zend_Controller_Action</code>)
+						<code>Zend_Controller_Front</code>是Zend_Controller_Controller体系的组织者，它是FrontController设计模式的实现。Zend_Controller_Front处理服务器接受的所有请求，并最后负责将请求分配给各个ActionController(<code>Zend_Controller_Action</code>)
 					</para>
 				</listitem>
 
 				<listitem>
-					<para>
-						<code>Zend_Controller_Router</code>相当于一个路由器。路由是将一个URI分解并决定由哪一个controller，和用什么 Action来处理的过程。controller，action和可选的参数的定义，被封装成一个对象--Zend_Controller_Dispather_Token，然后由Zend_Controller_Dispatcher来处理。路由只发生一次：当请求被服务器接收到时，在分配到第一个控制器之前。 
+					<para>                 
+						<code>Zend_Controller_Request_Abstract</code>用于处理用户请求，提供各种类方法来设置和获得Controller和action的名称及各种请求的参数。另外，它可以跟踪其中的action是否已经被<code>Zend_Controller_Dispatcher</code>分配。本抽象类的子类可用于封装整个请求环境，允许router从中获取用户请求相关信息，或设置controller和action的名称。
 					</para>
-					<para>					(所谓router，和我们熟知的网络路由器的功能是很相似的，具有判断网络地址和选择路径的功能，这里就是用来重定向 --Haohappy注) 
-					</para>
+
+                    <para>                        
+						Zend Framework默认使用<code>Zend_Controller_Request_Http</code>类来处理用户请求，该类可用于访问HTTP请求相关信息（用户请求不一定通过HTTP，那么就需要你自己实现相关的类--Haohappy注），
+                    </para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Dispatcher</code>即分配器。
+                        <code>Zend_Controller_Router_Interface</code>用于定义router。路由是将检查用户请求并决定由哪一个controller，和其中哪一个 Action来接受请求的过程。request对象中的Controller,action和可选的参数将被<code>Zend_Controller_Dispatcher</code>处理。路由只发生一次：当请求被服务器接收到时，在分配到第一个控制器之前。
+						
+						(所谓router，和我们熟知的网络路由器的功能是很相似的，具有判断网络地址和选择路径的功能，这里就是用来定位到某个控制器中的某个方法 --Haohappy注) 
+                    </para>
+
+                    <para>                      
+						默认的router是<code>Zend_Controller_Router</code>，它将一个<code>Zend_Controller_Request_Http</code>指定的URI分解成controller,action和参数。例如：URL<code>http://localhost/foo/bar/key/value</code>将被分解成<code>foo</code> controller,
+                        <code>bar</code> action,并带有参数<code>key</code>，参数值为<code>value</code>.
+					</para>
+				</listitem>
+			
+				<listitem>
+				<para>                   
+				<code>Zend_Controller_Dispatcher_Interface</code>接口用于定义dispatcher（分配器，或称调度器、派遣器等）。
+
+				“分配”是指从request对象中获取controller和action的名称，并映射到controller文件/类及其中action类方法的过程。如果controller或action不存在，会将请求分配到默认的控制器和方法进行处理。
+
+                    </para>
+					
+					<para>                       
+					实际上分配过程包括初始化controller类和调用类方法。和路由不一样，路由只发生一次，而分配是一个循环发生的过程。如果request对象的分配状态被重设为false，则循环就会重复，调用request中设置的方法。如果request对象的分配状态被设置成true，则分配过程结束。
+                    </para>
+
+                    <para>                       
+
+					默认的dispatcher是<code>Zend_Controller_Dispatcher</code>。它规定了控制器类命名首字母大写，并以Controller结尾，而action方法则是首字母小写，以Action结尾，例如：
+					<code>SomeFooController::barAction</code>. 
+
+					在例子中，控制器是<code>somefoo</code>，而action是<code>bar</code>.
+
 					</para>
 
-					<para>
-					“分配”的过程即根据Zend_Controller_Dispatcher_Token来查找适合的contoller文件，实例化其中的 controller类(必须实现Zend_Controller_Action)，并且最后在控制器内运行action。和路由不同，分配的过程不断重复的，Zend_Controller_Dispatcher被Zend_Controller_Front不断调用直到所有action都依次分配完毕。
-					</para>
+                    <para>                      
+					另外，在加载一个控制器的时候，你可以指定一个<code>module</code>（模块）。有了module，我们可以将controller放在一个子目录中，而不用全部放在controllers目录下。要使用module，可以在front controller中设置参数 <code>useModules</code>：
+
+                    </para>
+
+					<programlisting role="php"><![CDATA[
+						$front->setParam('useModules', true);
+						]]>
+					</programlisting>
+
+                    <para>
+                       举个例子，看下面的URL:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+						http://example.com/user/news/action
+					]]>
+					</programlisting>
+
+					<para>                    
+					在上面的例子中，我们指定了'user'模块，并调用其中的news控制器。dispatcher会将其解释成<code>User_NewsController</code>类，并在<code>User/NewsController.php</code>文件中寻找该类。
+                    </para>
+
+                    <para>
+                    Module非常有用，当你想把代码分散到子目录中去的时候，或者使用第三方代码时，或者在不同的应用中重用相同的控制器时。
+                    </para>					
 				</listitem>
 
 				<listitem>
-					<para>						<code>Zend_Controller_Action</code>是最基本的控制器。每个具体的控制器都是从Zend_Controller_Action类继承而来，是Zend_Controller_Action的子类，并且有自己的action方法。
+					<para>
+					<code>Zend_Controller_Action</code>是最基本的控制器。每个具体的控制器都是从Zend_Controller_Action类继承而来，是Zend_Controller_Action的子类，并且有自己的action方法。
 					</para>
 				</listitem>
-			</itemizedlist>
 
-			Zend_Controller的工作流程相当简单。Zend_Controller_Front接收一个请求，然后由Zend_Controller_Router来决定分配给哪个controller。Zend_Controller_Router把URI分解封装成一个Zend_Controller_Dispatcher_Token 对象。Zend_Controller_Front接着进入一个分配循环，调用Zend_Controller_Dispatcher，把token对象传给dispatcher来分配到具体的controller和action进行处理。在controller结束后，又把控制权交加给 Zend_Controller_Front。如果controller发现需要分配另一个controller（返回一个新的token对象），循环会一直继续直到另一次分配执行完毕。
+				 <listitem>
+                    <para>                     
+					<code>Zend_Controller_Response_Abstract</code>定义了基础的响应类，用于收集并返回action的响应，包括响应的头部(header)和主体(body)，由于它使用了 <code>__toString()</code>方法，所以可以直接用echo来一次性输出所有header和内容。
+
+                    </para>
+
+                    <para>                       
+						默认的响应类是<code>Zend_Controller_Response_Http</code>，它很适合于HTTP环境下使用。
+                    </para>
+
+                </listitem>
+			</itemizedlist>		
+
+			Zend_Controller的工作流程相当简单。<code>Zend_Controller_Front</code>接收一个请求，然后由<code>Zend_Controller_Router</code>来决定分配给哪个controller。<code>Zend_Controller_Router</code>把URI分解，便于设定请求中的controller和action的名称。<code>Zend_Controller_Front</code>接着进入一个分配循环，调用Zend_Controller_Dispatcher，把dispatcher传给request，来调用请求中指定的具体的(或默认的)controller和action进行处理。在controller结束后，又把控制权交加给 <code>Zend_Controller_Front</code>。如果controller发现需要调用另一个controller（request的分配状态被清零），循环会一直继续直到另一次分配执行完毕。
 		</para>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.request">
+		<title>Request Object Request对象</title>
+
+		<para>           
+			Request对象是一个简单的“值对象”(value object)，在 <code>Zend_Controller_Front</code>和router、dispatcher和controller间传递。它封装了controller、action名称及要传递给某个action的参数，还有请求环境中的其它信息，请求环境可以是HTTP、命令行或PHP-GTK等。
+		</para>
+
+		<itemizedlist>
+			<listitem>
+			<para>                
+				controller的名称可以通过<code>getControllerName()</code> 和<code>setControllerName()</code>来访问和设置。
+			</para>
+			</listitem>
+
+			<listitem>
+			<para>                
+				action的名称可以通过<code>getActionName()</code> 和<code>setActionName()</code>来访问和设置。
+			</para>
+			</listitem>
+
+			<listitem>
+			<para>             
+			传递给action的参数是一个关联数组，可以通过<code>getParams()</code>和 <code>setParams()</code>访问和设置，或者只访问和设置其中一个参数，可以用<code>getParam()</code> 和 <code>setParam()</code>。
+			</para>
+			</listitem>
+
+		</itemizedlist>
+
+        <para>
+           根据请求的不同类型，不同的请求类中可能有各种可用的方法，例如默认的请求类是<code>Zend_Controller_Request_Http</code>，它有一些用于获取请求URI、路径信息，$_GET和$_POST参数等的类方法。
+        </para>
+
+        <para>            
+			request对象被传递给front controller，或者如果没有提供request对象，会自动在分配过程一开始时实例化生成，在路由发生之前。request对象会被传递给dispatch循环中的每个对象。
+        </para>
+
+        <para>         
+		另外，request对象在测试时非常有用。程序员可能会构造请求环境，包括controller、action、参数、URI等，并传递请求对象到front controller，来测试整个程序的工作流。同时使用request和response对象，精细和准确的单元测试将变成可能。
+        </para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.routing-process">
 		<title>Route Process 路由过程</title>
 
 		<para>
-			在你构建第一个控制器之前，你需要理解Zend_Controller_Router中的重定向过程是如何工作的。记住工作流程分为两步：一是重定向（routing），只发生一次；二是分配（dispatching），循环过程。
+			在你构建第一个控制器之前，你需要理解Zend_Controller_Router中的重定向过程是如何工作的。记住工作流程分为两步：一是路由（routing），只发生一次；二是分配（dispatching），循环过程。
 		</para>
 
 		<para>
-			<code>Zend_Controller_Front</code> 调用Zend_Controller_Router来使一个URI映射到一个controller及其中的action上。Zend_Controller_Router分解URI，生成一个对象Zend_Controller_Dispatcher_Token，然后再传递给分配器（Zend_Controller_Dispatcher）。
+         <code>Zend_Controller_Front</code> 调用Zend_Controller_Router（或者你自己注册的router）来使一个URI映射到一个controller及其中的action上。<code>Zend_Controller_Router</code>从request对象中获取URI，并分解之，决定将调用的controller、action和其它URL参数，并把分解所得的这些结果存入request对象。
 		</para>
 
 		<para>
 			router使用很简单的方法来决定使用的controller及其action：
 
 			<programlisting role="php"><![CDATA[
-http://framework.zend.com/controller/action/]]>
+				http://framework.zend.com/controller/action/]]>
 			</programlisting>
 			上面controller就是我们要采用的控制器，action就是我们要采用的action。
 		</para>
@@ -71,61 +179,208 @@ http://framework.zend.com/controller/action/]]>
 			可选择地，参数可以在URI中定义，并传递给controller。格式为key/value　：
 
 			<programlisting role="php"><![CDATA[
-http://framework.zend.com/controller/action/key1/value1/]]>
+				http://framework.zend.com/controller/action/key1/value1/]]>
 			</programlisting>
 		</para>
 
-		<para>
-			如果/controller/这部分没有写明，默认调用index。 如果/action/这部份没有写，也默认调用index。如：
+		<para>	
+
+			如果URL中controller或action/这部份没有写，<code>Zend_Controller_Dispatcher</code>会尝试从request对象的参数中获取相应的值，如果没有找到，则使用默认值。不论controller还是action，默认都是调用index。如：
 
 				<programlisting role="php"><![CDATA[
-http://framework.zend.com/roadmap/future/
-Controller: roadmap
-Action    : future
+				http://framework.zend.com/roadmap/future/
+				Controller: roadmap
+				Action    : future
 
-http://framework.zend.com/roadmap/
-Controller: roadmap
-Action    : index
+				http://framework.zend.com/roadmap/
+				Controller: roadmap
+				Action    : index
 
-http://framework.zend.com/
-Controller: index
-Action    : index]]>
+				http://framework.zend.com/
+				Controller: index
+				Action    : index]]>
 				</programlisting>
 			</para>
 
-			<note>
-				我们正在开发一个新的使用URI重写引擎的router，这样可以更灵活一些。新版本会很快发布。
-			</note>
+			<para>     
+			你也可以通过几种方式把controller放在子目录或模块下：
+			</para>		
 
-			<para>				controller，action的名称及参数将会被封装到一个token对象中--Zend_Controller_Dispatcher_Token。这个对象被传回到Zend_Controller_Front，然后进入分配过程，被传递给Zend_Controller_Dispatcher。
-			</para>
-	</sect2>
+			<itemizedlist>
+            <listitem>
+                <para>                    
+				使用下划线_来命名控制器，例如：<code>http://framework.zend.com/admin_roadmap/future</code>　将映射到Admin_RoadmapController控制器。如果你不想使用下划线，也可以使用其它分隔符号，通过dispatcher的setPathSeparator()方法可以设置。
+                </para>
+            </listitem>
+            <listitem>
+                <para>                   
+				通过设置front controller的<code>useModules</code>参数，你可以使用干净漂亮的URI来访问子目录下的控制器。上例将访问<code>http://framework.zend.com/admin/roadmap/future</code>。要达到这个目的，可以在front controller或者router中设置<code>useModules</code>参数：
+                </para>
 
-	<sect2 id="zend.controller.overview.dispatch-token">
-		<title>Token对象</title>
+                <programlisting><![CDATA[
+				$front->setParam('useModules', true);
+				// or
+				$router->setParam('useModules', true);
+				]]></programlisting>
 
-		<para>			Token对象是个很简单的对象，在Zend_Controller_Front和实现router，dispatcher接口的类间传递。它把controller,action和参数封装在一起。
+                <para>                    
+					这样的设置对于基本的router和RewriteRouter都有效。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+		<note>
+		    <title>Flexibility 灵活性</title>
+		    <para>             
+				如果你想得到更多灵活性，你可以看看这里：
+				<xref linkend="zend.controller.providedsubclasses.rewriterouter"/>。
+            </para>
+		</note>
+
+		<para>           
+		controller和其中的action名称，及任何参数都在request对象中设置。当<code>Zend_Controller_Front</code>进行dispatch循环时，request对象将被传递给 <code>Zend_Controller_Dispatcher</code>。
 		</para>
 
-		<itemizedlist>
-			<listitem><para>
-				controller的名称通过getControllerName()及setControllerName()来获得和设置
-			</para></listitem>
-			<listitem><para>
-				action的名称过getActionName()和setActionName()来获得和设置.
-			</para></listitem>
-			<listitem><para>
-				传递给action的参数是个数组(key/value形式)，可以通过getParams()来获得，通过setParams()来设置
-			</para></listitem>
-		</itemizedlist>
-	</sect2>
+			
+	</sect2>	
 
 	<sect2 id="zend.controller.overview.dispatching">
 		<title>Dispatch Process 分配过程</title>
 
-		<para>
-			所谓分配过程，就是根据token对象(Zend_Controller_Dispatcher_Token) ，抽取其中的信息：controller的名称，action的名称，参数等等，然后实例化一个controller，并调用其中的action来进行处理。
+		<para>         
+			“分配”（Dispatching，是指分发请求到具体的控制器的过程，也是调用控制器和方法的过程，从这个角度说理解为“调度”更为准确 --Haohappy注）是根据request对象(<code>Zend_Controller_Request_Abstract</code>)，从中得到controller和action名称及参数，然后实例化一个controller并调用其中方法的过程。如果没有发现controller和action的名称，它会使用默认值。 <code>Zend_Controller_Dispatcher</code>指定<code>index</code>作为默认值，但允许开发者自行指定默认值，可以通过<code>setDefaultController()</code>和<code>setDefaultAction()</code>方法。
 		</para>
+
+        <para>        
+		调度过程发生于front controller内部的一个循环中。在调度发生之前，前端控制器把请求分解，得到控制器、方法的名称及参数，然后进行一个调度循环，分派请求。
+        </para>
+
+        <para>           
+		在每次迭代的开始，request对象中都会有个标识变量(flag)来指示当前action是否已经被分配。如果一个action或者pre/postDispatch(分配前/后)插件清空了该标识变量，则分配过程会继续下去，尝试再次分配该请求。通过改变请求中的controller和/或action，或重设flag，程序员可以定义一定的“请求链”并执行。
+        </para>
+
+        <para>
+            The action controller method that controlls such dispatching is
+            <code>_forward()</code>; call this method from any of the
+            pre/postDispatch() or action methods, providing a controller,
+            action, and optionally any additional parameters you may wish to
+            send to the new action:
+
+		控制分配过程的类方法是 <code>_forward()</code>，在任何 pre/postDispatch()方法或者action方法中调用该方法，即可调用另一个action：
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+			public function myAction()
+			{
+			  // 进行一些处理...    
+			  //跳转到另一个action,FooController::barAction():
+			  $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+			}
+			]]></programlisting>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.response">
+		<title>Response Object</title>
+
+		<para>
+            The response object is the logical pair to the request object. Its
+            purpose is to collate content and/or headers so that they may be
+            returned en masse. Additionally, the front controller will pass any
+            caught exceptions to the response object, allowing the developer to
+            gracefully handle exceptions. This functionality may be overridden
+            by setting
+            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
+
+        <para>
+            Since the response object implements <code>__toString()</code>, it
+            may be safely echoed. This allows for the following usage:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+echo $controller->getResponse();
+
+// or
+$response = $controller->getResponse();
+echo $response;
+]]></programlisting>
+        
+        <para>
+            Developers should make use of the response object in their action
+            controllers. Instead of directly rendering output and sending
+            headers, push them to the response object:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Within an action controller action:
+// Set a header
+$this->getResponse()
+    ->setHeader('Content-Type', 'text/html')
+    ->appendBody($content);
+]]></programlisting>
+
+        <para>
+            By doing this, all headers get sent at once, just prior to
+            displaying the content.
+        </para>
+
+        <para>
+            Should an exception occur in an application, check the
+            response object's <code>isException()</code> flag, and retrieve the
+            exception using <code>getException()</code>. Additionally, one
+            may create custom response objects that redirect to error pages, log
+            exception messages, do pretty formatting of exception messages (for
+            development environments), etc.
+        </para>
+
+        <para>
+            You may retrieve the response object following the front controller
+            dispatch(), or request the front controller to return the response
+            object instead of rendering output.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// retrieve post-dispatch:
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // log, mail, etc...
+}
+
+// Or, have the front controller dispatch() process return it
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// do some processing...
+
+// finally, echo the response
+echo $response;
+]]></programlisting>
+
+        <para>
+            By default, exception messages are not displayed. This behaviour may
+            be overridden by calling <code>renderExceptions()</code>, or enabling
+            the front controller to throwExceptions(), as shown above:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// or:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// or:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
 	</sect2>
 </sect1>
 
