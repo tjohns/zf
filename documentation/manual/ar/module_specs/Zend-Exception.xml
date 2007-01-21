@@ -3,6 +3,17 @@
 
     <para>يقوم بعمل lazy loading لـ exception class و يقوم بعمل نسخة من الـ exception ثم إرجاعها.</para>
 
+    <note>
+        <title>إلغاء</title>
+        <para>
+            هذا الـ method تمت اضافته فى Zend Framework 0.6.0 , 
+            لكن مؤخراً تم اقرار انه من الأفضل إستخدام الأساليب المعتادة 
+            لإنشاء و throwing و catching الـ exceptions.
+            الـ method المسمى <code>()Zend::exception</code> تم إلغائه فى
+            Zend Framework 0.6.1, و سيتم حذفه من Zend Framework فى الإصدارات التالية.
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);
