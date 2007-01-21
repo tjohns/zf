@@ -24,18 +24,18 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 {
     public $timeservers = array(
         // invalid servers
-        'ntp://be.foo.bar.org',
-        'sntp://be.foo.bar.org',
-        'sntp://foo:bar@be.foo.bar.org:123',
+        'server_a'  => 'ntp://be.foo.bar.org',
+        'server_b'  => 'sntp://be.foo.bar.org',
+        'server_c'  => 'sntp://foo:bar@be.foo.bar.org:123',
 
         // valid servers
-        'ntp://be.pool.ntp.org',
-        'ntp://time.windows.com',
-        'sntp://time-C.timefreq.bldrdoc.gov'
+        'server_d'  => 'ntp://be.pool.ntp.org',
+        'server_e'  => 'ntp://time.windows.com',
+        'server_f'  => 'sntp://time-C.timefreq.bldrdoc.gov'
     );
 
     /**
-     * Test for object initialisation without timeservers, options
+     * Test for object initialisation
      *
      * @return void
      */
@@ -47,15 +47,14 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for object initialisation with multiple timeservers, and
-     * without options
+     * Test for object initialisation with multiple timeservers
      *
      * @return void
      */
     public function testInitTimeservers()
     {        
         $server = new Zend_TimeSync($this->timeservers);
-        $result = $server->get(count($this->timeservers)-1);
+        $result = $server->get('server_f');
 
         $this->assertTrue($result instanceof Zend_TimeSync_Protocol);
     }
@@ -68,8 +67,8 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      */
     public function testInitDefaultScheme()
     {
-        $server = new Zend_TimeSync('time.windows.com');
-        $server->setcurrent(0);
+        $server = new Zend_TimeSync('time.windows.com', 'windows_time');
+        $server->setcurrent('windows_time');
         $result = $server->getCurrent();
 
         $this->assertTrue($result instanceof Zend_TimeSync_Ntp);
@@ -82,8 +81,8 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      */
     public function testInitNtpScheme()
     {
-        $server = new Zend_TimeSync('ntp://time.windows.com');
-        $server->setcurrent(0);
+        $server = new Zend_TimeSync('ntp://time.windows.com', 'windows_time');
+        $server->setcurrent('windows_time');
         $result = $server->getCurrent();
 
         $this->assertTrue($result instanceof Zend_TimeSync_Ntp);
@@ -97,8 +96,8 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      */
     public function testInitSntpScheme()
     {
-        $server = new Zend_TimeSync('sntp://time.zend.com');
-        $server->setcurrent(0);
+        $server = new Zend_TimeSync('sntp://time.zend.com', 'windows_time');
+        $server->setcurrent('windows_time');
         $result = $server->getCurrent();
 
         $this->assertTrue($result instanceof Zend_TimeSync_Sntp);
@@ -113,43 +112,9 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      */
     public function testInitUnknownScheme()
     {
-        $server = new Zend_TimeSync('http://time.windows.com');
-        $server->setcurrent(0);
-        $result = $server->getCurrent();
-
-        $this->assertTrue($result instanceof Zend_TimeSync_Ntp);
-    }
-
-
-    /**
-     * Test for object initialisation with a single NTP timeserver,
-     * and an array of options
-     *
-     * @return void
-     */
-    public function testInitOptions()
-    {
-        $options = array(
-            'timeout' => 5
-        );
-
-        $server = new Zend_TimeSync('ntp://time.windows.com', $options);
-
-        $this->assertEquals($options['timeout'], $server->getOption('timeout'));
-    }
-
-    /**
-     * Test adding an invalid timeserver
-     *
-     * @return void
-     */
-    public function testAddInvalidServer()
-    {
-    	$server = new Zend_TimeSync();
-
     	try {
-    		$server->addServer(12345);
-            $this->fail('Exception expected because we supplied an invalid timeserverserver');
+    		$server = new Zend_TimeSync('http://time.windows.com', 'windows_time');
+            $this->fail('Exception expected because we supplied an invalid protocol');
         } catch (Zend_TimeSync_Exception $e) {
             // success
         }
@@ -182,7 +147,8 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
             'foo'     => 'bar'
         );
 
-        $server = new Zend_TimeSync('ntp://time.windows.com', $options);
+        $server = new Zend_TimeSync();
+        $server->setOptions($options);
 
         $this->assertEquals($options['timeout'], $server->getOption('timeout'));
         $this->assertEquals($options['foo'], $server->getOption('foo'));
@@ -249,7 +215,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
         $server = new Zend_TimeSync();
 
         try {
-            $server->setCurrent(1);
+            $server->setCurrent('unkown_alias');
             $this->fail('Exception expected because there is no timeserver which we can mark as current');
         } catch (Zend_TimeSync_Exception $e) {
             // success
@@ -283,13 +249,19 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
         $server = new Zend_TimeSync();
 
         try {
-            $result = $server->get(count($this->timeservers));
+            $result = $server->get('none_existing_server_alias');
             $this->fail('Exception expected, because the requested timeserver does not exist');
         } catch (Zend_TimeSync_Exception $e) {
             // success
         }
     }
 
+    /**
+     * Test getting a date using the fallback mechanism, will try to 
+     * return the date from the first server that returns a valid result
+     * 
+     * @return void
+     */
     public function testGetDate()
     {
         $server = new Zend_TimeSync($this->timeservers);
@@ -298,22 +270,32 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
             $result = $server->getDate();
             $this->assertTrue($result instanceof Zend_Date);
         } catch (Zend_TimeSync_Exception $e) {
-            $this->assertContains('could not connect', $e->getMessage());
+            $this->assertContains('all timeservers are bogus', $e->getMessage());
         }
     }
 
+    /**
+     * Test getting a date from an ntp timeserver
+     * 
+     * @return void
+     */
     public function testGetNtpDate()
     {
-        $server = new Zend_TimeSync('time.windows.com');
+        $server = new Zend_TimeSync('ntp://time.windows.com', 'time_windows');
 
         try {
             $result = $server->getDate();
             $this->assertTrue($result instanceof Zend_Date);
         } catch (Zend_TimeSync_Exception $e) {
-            $this->assertContains('could not connect', $e->getMessage());
+            $this->assertContains('all timeservers are bogus', $e->getMessage());
         }
     }
 
+    /**
+     * Test getting a date from an sntp timeserver
+     * 
+     * @return void
+     */
     public function testGetSntpDate()
     {
         $server = new Zend_TimeSync('sntp://time-C.timefreq.bldrdoc.gov');
@@ -322,15 +304,20 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
             $result = $server->getDate();
             $this->assertTrue($result instanceof Zend_Date);
         } catch (Zend_TimeSync_Exception $e) {
-            $this->assertContains('could not connect', $e->getMessage());
+            $this->assertContains('all timeservers are bogus', $e->getMessage());
         }
     }
 
+    /**
+     * Test getting a date from an invalid timeserver
+     * 
+     * @return void
+     */
     public function testGetInvalidDate()
     {
         $servers = array(
-            'dummy-ntp-timeserver.com',
-            'another-dummy-ntp-timeserver.com'
+            'server_a' => 'dummy-ntp-timeserver.com',
+            'server_b' => 'another-dummy-ntp-timeserver.com'
         );
 
         $server = new Zend_TimeSync($servers);
@@ -346,6 +333,11 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test walking through the server list
+     * 
+     * @return void
+     */
     public function testWalkServers()
     {
         $servers = new Zend_TimeSync($this->timeservers);
@@ -355,13 +347,18 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test getting info returned from the server
+     * 
+     * @return void
+     */
     public function testGetInfo()
     {
         $server = new Zend_TimeSync('time.windows.com');
         try {
             $date   = $server->getDate();
             $result = $server->getInfo();
-    
+
             $this->assertTrue(count($result) > 0);
         } catch (Zend_TimeSync_Exception  $e) {
             // nothing

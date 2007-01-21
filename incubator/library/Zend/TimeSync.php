@@ -44,16 +44,10 @@ require_once 'Zend/TimeSync/Exception.php';
 class Zend_TimeSync implements IteratorAggregate
 {
     /**
-     * The well-known NTP and SNTP port numbers
+     * Set the default timeserver protocol to "Ntp". This will be called 
+     * when no protocol is specified
      */
-    const DEFAULT_NTP_PORT  = 123;
-    const DEFAULT_SNTP_PORT = 37;
-
-    /**
-     * Set the default timeserver scheme to "ntp". This will be called 
-     * when no, or an invalid scheme is specified
-     */
-    const DEFAULT_SCHEME = 'ntp';
+    const DEFAULT_PROTOCOL = 'Ntp';
 
     /**
      * Contains array of timeserver objects
@@ -75,8 +69,8 @@ class Zend_TimeSync implements IteratorAggregate
      * @var array
      */
     protected $_allowedSchemes = array(
-        'ntp',
-        'sntp'
+        'Ntp',
+        'Sntp'
     );
 
     /**
@@ -92,16 +86,15 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Zend_TimeSync constructor
      *
-     * @param   string|array $server    OPTIONAL single timeserver, or an array of timeservers.
-     * @param   array        $options   OPTIONAL configuration settings
-     * @return  Zend_TimeSync
+     * @param  string|array $target - OPTIONAL single timeserver, or an array of timeservers.
+     * @param  string       $alias  - OPTIONAL an alias for this timeserver
+     * @return  object
      */
-    public function __construct($server = array(), $options = array())
+    public function __construct($target = null, $alias = null)
     {
-        $this->addServer($server);
-        $this->setOptions($options);
-
-        $this->_current = reset($this->_timeservers);
+        if (!is_null($target)) {
+            $this->addServer($target, $alias);
+        }
     }
 
     /**
@@ -116,32 +109,43 @@ class Zend_TimeSync implements IteratorAggregate
     }
 
     /**
-     * Adds a timeserver to the server list
+     * Add a timeserver or multiple timeservers
      * 
      * Server should be a single string representation of a timeserver, 
      * or a structured array listing multiple timeservers.
+     * 
+     * If you provide an array of timeservers in the $target variable, 
+     * $alias will be ignored. you can enter these as the array key
+     * in the provided array, which should be structured as follows:
+     * 
+     * <code>
+     * $example = array(
+     *   'server_a' => 'ntp://127.0.0.1',
+     *   'server_b' => 'ntp://127.0.0.1:123',
+     *   'server_c' => 'ntp://[2000:364:234::2.5]',
+     *   'server_d' => 'ntp://[2000:364:234::2.5]:123'
+     * ); 
+     * </code>
+     * 
+     * If no port number has been suplied, the default matching port 
+     * number will be used.
      *
-     * Each timeserver must be provided with a valid scheme, and may
-     * contain an optional port number. If no port number has been
-     * suplied, the default matching port number will be used.
-     *
-     * Supported schemes are:
+     * Supported protocols are:
      * - ntp
      * - sntp
      *
-     * @param  string|array $server single timeserver, or an array of timeservers.
+     * @param  string|array $target - Single timeserver, or an array of timeservers.
+     * @param  string       $alias  - OPTIONAL an alias for this timeserver
      * @throws Zend_TimeSync_Exception
      */
-    public function addServer($server)
+    public function addServer($target, $alias = null)
     {
-        if (is_array($server)) {
-            foreach ($server as $key => $timeServer) {
-                $this->_addServer($timeServer);
+        if (is_array($target)) {
+            foreach ($target as $key => $server) {
+                $this->_addServer($server, $key);
             }
-        } elseif (is_string($server)) {
-            $this->_addServer($server);
         } else {
-            throw new Zend_TimeSync_Exception('$server should be an array or string, ' . gettype($server) . ' given');
+            $this->_addServer($target, $alias);
         }
     }
 
@@ -150,8 +154,8 @@ class Zend_TimeSync implements IteratorAggregate
      * 
      * This will replace any currently defined options.
      *
-     * @param   integer|string $key The option's identifier
-     * @param   integer|string $key The option's value
+     * @param   integer|string $key - The option's identifier
+     * @param   integer|string $key - The option's value
      * @throws  Zend_TimeSync_Exception
      */
     public function setOption($key, $value)
@@ -168,13 +172,13 @@ class Zend_TimeSync implements IteratorAggregate
      * 
      * This will replace any currently defined options.
      *
-     * @param   array $options An array of options to be set
+     * @param   array $options - An array of options to be set
      * @throws  Zend_TimeSync_Exception
      */
     public function setOptions($options = array())
     {
         if (!is_array($options)) {
-            throw new Zend_TimeSync_Exception('$options is expected to be an array, ' . gettype($options) . ' given');
+            throw new Zend_TimeSync_Exception("'$options' is expected to be an array, '" . gettype($options) . "' given");
         }
 
         foreach ($options as $key => $value) {
@@ -185,47 +189,47 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Marks a nameserver as current
      *
-     * @param   integer $flag
+     * @param   string|integer $alias - The alias from the timeserver to set as current
      * @throws  Zend_TimeSync_Exception
      */
-    public function setCurrent($flag = null)
+    public function setCurrent($alias = null)
     {
-    	if (array_key_exists($flag, $this->_timeservers)) {
-            $this->_current = $this->_timeservers[$flag];
+    	if (array_key_exists($alias, $this->_timeservers)) {
+            $this->_current = $this->_timeservers[$alias];
         } else {
-            throw new Zend_TimeSync_Exception('$flag does not point to valid timeserver');
+            throw new Zend_TimeSync_Exception("'$alias' does not point to valid timeserver");
         }
     }
 
     /**
      * Returns the value to the option
      *
-     * @param   integer $flag
+     * @param   string $key - The option's identifier
      * @return  mixed
      * @throws  Zend_TimeSync_Exception
      */
-    public function getOption($flag)
+    public function getOption($key)
     {
-    	if (array_key_exists($flag, Zend_TimeSync::$options)) {
-            return Zend_TimeSync::$options[$flag];
+    	if (array_key_exists($key, Zend_TimeSync::$options)) {
+            return Zend_TimeSync::$options[$key];
         } else {
-            throw new Zend_TimeSync_Exception('$flag does not point to valid option');
+            throw new Zend_TimeSync_Exception("'$key' does not point to valid option");
         }
     }
 
     /**
-     * Receive a specified timeservers
+     * Return a specified timeserver by alias
      *
-     * @param   integer $flag
+     * @param   string|integer $alias - The alias from the timeserver to return
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
-    public function get($flag = null)
+    public function get($alias = null)
     {
-    	if (array_key_exists($flag, $this->_timeservers)) {
-            return $this->_timeservers[$flag];
+    	if (array_key_exists($alias, $this->_timeservers)) {
+            return $this->_timeservers[$alias];
         } else {
-            throw new Zend_TimeSync_Exception('$flag does not point to valid timeserver');
+            throw new Zend_TimeSync_Exception("'$alias' does not point to valid timeserver");
         }
     }
 
@@ -257,7 +261,7 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Query the timeserver list using the fallback mechanism
      *
-     * @param   $locale OPTIONAL locale
+     * @param   $locale - OPTIONAL locale
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
@@ -280,55 +284,45 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Adds a timeserver object to the timeserver list
-     * 
-     * Server should be a single string representation of a timeserver,
-     * and must be provided with a valid scheme, and may contain an optional 
-     * port number. If no port number has been suplied, the default matching 
-     * port number will be used.
      *
-     * @param   string $server
+     * @param  string|array $target   - Single timeserver, or an array of timeservers.
+     * @param  string       $alias    - An alias for this timeserver
      */
-    protected function _addServer($server)
+    protected function _addServer($target, $alias)
     {
-        $urlinfo = @parse_url($server);
-        $scheme  = self::DEFAULT_SCHEME;
-
-        foreach ($urlinfo as $key => $value) {
-            switch ($key) {
-                case 'scheme':
-                    if (in_array($value, $this->_allowedSchemes)) {
-                        $scheme = strtolower($value);
-                    }
-                    break;
-
-                case 'path':
-                case 'host':
-                    $host = $value;
-                    break;
-
-                case 'port':
-                    $port = $value;
-                    break;
-
-                default:
-                    break; // break intentionally omitted
-            }
+        if ($pos = strpos($target, '://')) {
+            $protocol = substr($target, 0, $pos);
+            $adress = substr($target, $pos + 3);
+        } else {
+            $adress = $target;
+            $protocol = self::DEFAULT_PROTOCOL;
         }
 
-        $protocol  = ($scheme == 'ntp') ? 'udp' : 'tcp';
-        $className = 'Zend_TimeSync_' . ucfirst($scheme);
-
-        if (!isset($port)) {
-            if ($scheme == 'ntp') {
-                $port = self::DEFAULT_NTP_PORT;
-            } elseif ($scheme == 'sntp') {
-                $port = self::DEFAULT_SNTP_PORT;
+        if ($pos = strrpos($adress, ':')) {
+            $posbr = strpos($adress, ']');
+            if ($posbr and ($pos > $posbr)) {
+                $port = substr($adress, $pos + 1);
+                $adress = substr($adress, 0, $pos);
+            } else if (!$posbr and $pos) {
+                $port = substr($adress, $pos + 1);
+                $adress = substr($adress, 0, $pos);
+            } else {
+                $port = null;
             }
+        } else {
+            $port = null;
         }
+
+        $protocol = ucfirst(strtolower($protocol));
+        if (!in_array($protocol, $this->_allowedSchemes)) {
+            throw new Zend_TimeSync_Exception("'$protocol' is not a supported protocol");
+        }
+
+        $className = 'Zend_TimeSync_' . $protocol;
 
         Zend::loadClass($className);
+        $timeServerObj = new $className($adress, $port);
 
-        $server = new $className($protocol . '://' . $host, $port);
-        array_push($this->_timeservers, $server);
+        $this->_timeservers[$alias] = $timeServerObj;
     }
 }

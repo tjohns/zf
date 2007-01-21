@@ -50,13 +50,6 @@ abstract class Zend_TimeSync_Protocol
     protected $_timeserver;
 
     /**
-     * Port number for this timeserver
-     *
-     * @var int
-     */
-    protected $_port;
-
-    /**
      * Holds information passed/returned from timeserver
      *
      * @var array

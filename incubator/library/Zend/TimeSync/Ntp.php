@@ -34,6 +34,13 @@ require_once 'Zend/TimeSync/Protocol.php';
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 {
     /**
+     * Port number for this timeserver
+     *
+     * @var int
+     */
+    protected $_port = 123;
+    
+    /**
      * Class constructor, sets the timeserver and port number
      *
      * @param  string $timeserver
@@ -41,8 +48,10 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
      */
     public function __construct($timeserver, $port)
     {
-        $this->_timeserver = $timeserver;
-        $this->_port       = $port;
+        $this->_timeserver = 'udp://' . $timeserver;
+        if (!is_null($port)) {
+            $this->_port = $port;
+        }
     }
 
     /**
