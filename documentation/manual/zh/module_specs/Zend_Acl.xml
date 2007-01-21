@@ -1,42 +1,36 @@
-<sect1 id="zend.acl.introduction">
-    <title>Introduction</title>
+﻿<sect1 id="zend.acl.introduction">
+    <title>简介</title>
 
     <para>
-        Zend_Acl provides lightweight and flexible access control list (ACL) functionality
-        and privileges management. In general, an application may utilize such functionality
-        to control access to certain protected objects by other requesting objects.
+        Zend_Acl 提供轻量并灵活的访问控制列表 (ACL) 功能和特权管理。一般地，应用软件可以利用这样的功能控制其它的请求对象来访问特定保护的对象。
     </para>
 
     <para>
-        For the purposes of this documentation,
-
-        <itemizedlist>
+        在本文档中，
+ 
+         <itemizedlist>
             <listitem>
                 <para>
-                    a <emphasis role="strong">Resource</emphasis> is an object
-                    to which access is controlled.
+                    <emphasis role="strong">Resource</emphasis> 是一个访问被控制的对象。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    a <emphasis role="strong">Role</emphasis> is an object
-                    that may request access to a Resource.
+                    <emphasis role="strong">Role</emphasis> 是一个可以发出请求去访问Resource的对象。
                 </para>
             </listitem>
         </itemizedlist>
 
-        Put simply, <emphasis role="strong">Roles request access to Resources</emphasis>.
-        For example, if a person requests access to a car, then the person is the requesting Role,
-        and the car is the Resource, since access to the car is under control.
+        简单来说，<emphasis role="strong">Roles 请求访问 Resources</emphasis>.
+        例如，如果一个人要用汽车，这样，这个人就是发出请求的 Role，而这辆汽车就是 Resource, 所以使用这辆车就在控制之中了。
     </para>
 
     <para>
-        Through the specification and use of an access control list (ACL), an application may control
-        how requesting objects (Roles) are granted access to protected objects (Resources).
+         通过规范和访问控制列表（ACL）的使用，应用软件可以控制如何授权给发出请求的对象（Roles）来访问被保护的对象（Resources）。
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-        <title>About Resources</title>
+        <title>关于 Resources</title>
         <para>
             In Zend_Acl, creating a Resource is very simple. Zend_Acl provides
             <code>Zend_Acl_Resource_Interface</code> to facilitate developers' creating Resources. A class need only
@@ -63,7 +57,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>About Roles</title>
+        <title>关于 Roles</title>
         <para>
             Like with Resources, creating a Role is also very simple. Zend_Acl provides
             <code>Zend_Acl_Role_Interface</code> to facilitate developers' creating Roles. A class need only
@@ -91,7 +85,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>Creating the Access Control List (ACL)</title>
+        <title>建立访问控制列表(ACL)</title>
 
         <para>
             An ACL can represent any set of physical or virtual objects that you wish.
@@ -115,7 +109,7 @@ $acl = new Zend_Acl();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
-        <title>Registering Roles</title>
+        <title>注册 Roles</title>
 
         <para>
             Content Management Systems will nearly always require a hierarchy of permissions
@@ -199,7 +193,7 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-        <title>Defining Access Controls</title>
+        <title>定义访问控制</title>
 
         <para>
             Now that the ACL contains the relevant Roles, rules can be established that define how
