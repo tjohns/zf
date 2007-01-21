@@ -7,7 +7,8 @@
         <title>Generating Date Strings Using toString()</title>
 
         <para>
-            The <code>toString()</code> method automatically formats the date object according to the conventions of the object's locale, or an optionally specified <code>$locale</code>.
+            The <code>toString()</code> method automatically formats the date object according to the conventions of the
+            object's locale, or an optionally specified <code>$locale</code>.
         </para>
 
     </sect2>
@@ -26,8 +27,13 @@
 
         <title>get() - Partial Dates as Localized Strings</title>
 
-        <para> get($part = null, $locale = null) </para>
-        <para> This method returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted string or integer
+        <para>
+            get($part = null, $locale = null)
+        </para>
+
+        <para>
+            This method returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted
+            string or integer
         </para>
 
     </sect2>

@@ -64,7 +64,7 @@ $view->books = $data;
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
-        
+
     </sect2>
     
     <sect2 id="zend.view.introduction.view">
