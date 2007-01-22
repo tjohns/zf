@@ -2,7 +2,7 @@
     <title>简介</title>
 
     <para>
-        Zend_Acl 提供轻量并灵活的访问控制列表 (ACL) 功能和特权管理。一般地，应用软件可以利用这样的功能控制其它的请求对象来访问特定保护的对象。
+        Zend_Acl 提供轻量并灵活的访问控制列表 (ACL) 功能和权限管理。一般地，应用软件可以利用这样的功能控制其它的请求对象来访问特定保护的对象。
     </para>
 
     <para>
@@ -21,8 +21,7 @@
             </listitem>
         </itemizedlist>
 
-        简单来说，<emphasis role="strong">Roles 请求访问 Resources</emphasis>.
-        例如，如果一个人要用汽车，这样，这个人就是发出请求的 Role，而这辆汽车就是 Resource, 所以使用这辆车就在控制之中了。
+        简单来说，<emphasis role="strong">Roles 请求访问 Resources</emphasis>。例如，如果一个人要用汽车，这样，这个人就是发出请求的 Role，而这辆汽车就是 Resource，所以使用这辆车就在控制之中了。
     </para>
 
     <para>
@@ -32,66 +31,36 @@
     <sect2 id="zend.acl.introduction.resources">
         <title>关于 Resources</title>
         <para>
-            In Zend_Acl, creating a Resource is very simple. Zend_Acl provides
-            <code>Zend_Acl_Resource_Interface</code> to facilitate developers' creating Resources. A class need only
-            implement this interface, which consists of a single method, <code>getResourceId()</code>, in order
-            for Zend_Acl to consider the object to be a Resource. Additionally, <code>Zend_Acl_Resource</code> is
-            included with Zend_Acl as a basic Resource implementation for developers to extend where desirable.
+            在 Zend_Acl 中，创建建一个 Resource 非常简单。Zend_Acl 提供了<code>Zend_Acl_Resource_Interface</code> 使开发者创建 Resources 非常容易。为了使Zend_Acl把某个对象当作一个Resource，一个类只需要实现这个只包含了一个方法 <code>getResourceId()</code> 的接口。 另外，<code>Zend_Acl_Resource</code>是一个包含在 Zend_Acl 里作为一个基本的 Resource 实现的类，开发者可以任意扩展它。
         </para>
         <para>
-            Zend_Acl provides a tree structure to which multiple Resources (or "areas under access control")
-            can be added. Since Resources are stored in such a tree structure, they can be organized from the
-            general (toward the tree root) to the specific (toward the tree leaves). Queries upon
-            a specific Resource will automatically search the Resource's hierarchy for rules assigned to ancestor
-            Resources, allowing for simple inheritance of rules. For example, if a default rule is to be
-            applied to each building in a city, one would simply assign the rule to the city, instead of
-            assigning the same rule to each building. Some buildings may require exceptions to such a
-            rule, however, and this is achieved easily in Zend_Acl by assigning such exception rules to
-            each such building that requires an exception to the rule. a Resource may inherit from only one
-            parent Resource, though this parent Resource can have its own parent Resource, and so on.
-        </para>
+            Zend_Acl 提供了一个树结构，它可以添加多个 Resources (或者叫“访问控制下的区域”）。因为 Resources 被存储在这样一个树结构，所以它们可以被组织成从一般（树根）到特殊（树叶）。基于特殊Resource的查询将自动从Resource的等级结构中搜索分配给祖先Resources的规则，它允许简单的规则继承。例如，要把一个缺省的规则应用到一个城市的每个建筑物，就简单地把这个规则分配给这个城市，而不是把规则分配给每个建筑物。然而，有些建筑物也许要求例外的规则，在Zend_Acl里，很容易地通过分配例外规则给每个有这样要求的建筑物来实现。一个 Resource 可以从唯一的一个父 Resource 继承，而这个父 Resource 也有它自己的父 Resource，等等。
+         </para>
         <para>
-            Zend_Acl also supports privileges upon Resources (e.g., "create", "read", "update", "delete"), and
-            the developer can assign rules that affect all privileges or specific privileges upon a Resource.
+            Zend_Acl 也支持基于 Resources 的权限（例如："create", "read", "update", "delete"）， 开发者可以根据 Resource 分配影响全部或者特殊权限的规则。
         </para>
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
         <title>关于 Roles</title>
         <para>
-            Like with Resources, creating a Role is also very simple. Zend_Acl provides
-            <code>Zend_Acl_Role_Interface</code> to facilitate developers' creating Roles. A class need only
-            implement this interface, which consists of a single method, <code>getRoleId()</code>, in order
-            for Zend_Acl to consider the object to be a Role. Additionally, <code>Zend_Acl_Role</code> is
-            included with Zend_Acl as a basic Role implementation for developers to extend where desirable.
+            象 Resources 一样，创建一个 Role 也非常简单。 Zend_Acl 提供了 <code>Zend_Acl_Role_Interface</code> 使开发者创建 Roles 非常容易。为了使Zend_Acl把某个对象当作一个 Role，一个类只需要实现这个只包含了一个方法 <code>getRoleId()</code> 的接口。 另外，<code>Zend_Acl_Role</code>是一个包含在Zend_Acl里作为一个基本的 Role 实现的类，开发者可以任意扩展它。
         </para>
         <para>
-            In Zend_Acl, a Role may inherit from one or more Roles. This is to support inheritance of rules
-            among Roles. For example, a user Role, such as "sally", may belong to one or more role Roles,
-            such as "editor" and "administrator". The developer can assign rules to "editor" and
-            "administrator" separately, and "sally" would inherit such rules from both, without having to
-            assign rules directly to "sally".
+            在 Zend_Acl, 一个 Role 可以从一个或多个 Role 继承，这就是在 Role 中支持规则的继承。例如，一个用户 Role，如 “sally”，可以属于一个或多个 Role，如：“editor”和“administrator”。开发者可以分别给“editor”和“administrator”分配规则，而“sally”将从它们俩继承规则，不需要直接给“sally”分配规则。  
         </para>
         <note>
             <para>
-                Since Zend_Acl supports inheriting rules from multiple Roles, which may possibly
-                conflict with each other, a way to unambiguously resolve such conflicts is necessary. Zend_Acl
-                resolves such potential conflicts by considering the most recently inherited Role as highest
-                priority. That is, once a rule is found for a "parent" Role, starting at the most recently
-                inherited Role, no other rules are considered, since the highest priority rule has already been
-                reached.
-            </para>
+                因为 Zend_Acl 支持从多个 Role 继承规则，它们彼此间可能会有冲突，有必要很清楚地解决这些冲突。Zend_Acl 通过把最近继承的 Role 作为最高优先级来解决潜在的冲突。换句话说，从最近继承的 Role 开始，一旦发现一个 “parent” Role 的规则，其它的规则将不被考虑，因为最高优先级的规则已经找到。 
+             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>建立访问控制列表(ACL)</title>
+        <title>创建访问控制列表(ACL)</title>
 
         <para>
-            An ACL can represent any set of physical or virtual objects that you wish.
-            For the purposes of demonstration, however, we will create a basic Content Management System ACL
-            that maintains several tiers of groups over a wide variety of areas. To create a new ACL object,
-            we instantiate the ACL with no parameters:
+           ACL 可以表示任何一组物理或虚拟对象，然而，作为示范，我们将创建一个基本的内容管理系统的 ACL，在一个范围很宽的多样化区域里，它将维护若干个等级的组。为创建一个新的 ACL 对象，我们不带参数地实例化这个 ACL.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -101,9 +70,7 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Zend_Acl is a "whitelist" implementation by default, which means that unless otherwise
-                specified by the developer, Zend_Acl denies access to every privilege upon every Resource by
-                every Role.
+               缺省地，Zend_Acl是一个“白名单”实现，这就意味着除非开发者指定，Zend_Acl 禁止任何 Role 对任何 Resource 的任何访问权限。
             </para>
         </note>
     </sect2>
@@ -112,26 +79,17 @@ $acl = new Zend_Acl();]]></programlisting>
         <title>注册 Roles</title>
 
         <para>
-            Content Management Systems will nearly always require a hierarchy of permissions
-            to determine the authoring capabilities of its users. There may be a 'Guest' group to
-            allow limited access for demonstrations, a 'Staff' group for the majority of CMS users
-            who perform most of the day-to-day operations, an 'Editor' group for those responsible for publishing,
-            reviewing, archiving and deleting content, and finally an 'Administrator' group whose tasks may
-            include all of those of the other groups as well as maintenance of sensitive information,
-            user management, back-end configuration data and backup/export. This set of permissions can be
-            represented in a Role registry, allowing each group to inherit privileges from 'parent' groups,
-            as well as providing distinct privileges for their unique group only.
-            The permissions may be expressed as follows:
-        </para>
+            内容管理系统总是几乎需要一个等级结构的许可来决定它的用户的授权能力。作为示范，“Guest”组允许有限的访问，“Staff”适合大多数的执行日常操作的CMS用户，“Editor”组适合于发布、复核、存档和删除内容，最后“Administrator”组的任务包括所有其它组的内容并包括敏感的信息、用户管理、后台配置数据和备份/导出。这组许可可以被表示为一个 Role 注册表，允许每个组从“”组继承权限，也可以为单一的组提供独特的权限。这些许可可以表示如下：
+         </para>
 
         <table>
-          <title>Access Controls for an Example CMS</title>
+          <title>一CMS范例的访问控制</title>
           <tgroup cols="3">
             <thead>
               <row>
-                <entry>Name</entry>
-                <entry>Unique permissions</entry>
-                <entry>Inherit permissions from</entry>
+                <entry>名称</entry>
+                <entry>独特的许可</entry>
+                <entry>从...继承的许可</entry>
               </row>
             </thead>
             <tbody>
@@ -160,9 +118,7 @@ $acl = new Zend_Acl();]]></programlisting>
         </table>
 
         <para>
-            For this example, <code>Zend_Acl_Role</code> is used, but any object that implements
-            <code>Zend_Acl_Role_Interface</code> is acceptable. These groups can be added to the
-            Role registry as follows:
+            对于这个范例，<code>Zend_Acl_Role</code>  被使用，但任何实现 <code>Zend_Acl_Role_Interface</code>  的对象是可接受的。这些组可以被添加到 Role 注册表如下：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -170,24 +126,24 @@ require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
-// Add groups to the Role registry using Zend_Acl_Role
+// 用 Zend_Acl_Role 把组添加到 Role 注册表 
 require_once 'Zend/Acl/Role.php';
 
-// Guest does not inherit access controls
+// Guest 不继承访问控制
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
 
-// Staff inherits from guest
+// Staff 从 guest 继承
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
-/* alternatively, the above could be written:
+/* 另外, 上面的也可这样来写：
 $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
-// Editor inherits from staff
+// Editor 从 staff 继承
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
-// Administrator does not inherit access controls
+// Administrator 不继承访问控制
 $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
 
     </sect2>
@@ -196,17 +152,11 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
         <title>定义访问控制</title>
 
         <para>
-            Now that the ACL contains the relevant Roles, rules can be established that define how
-            Resources may be accessed by Roles. You may have noticed that we have not defined any particular
-            Resources for this example, which is simplified to illustrate that the rules apply to all Resources.
-            Zend_Acl provides an implementation whereby rules need only be assigned from general to specific,
-            minimizing the number of rules needed, because Resources and Roles inherit rules that are defined upon
-            their ancestors.
+           现在 ACL 包含了相关的 Roles，可以建立规则来定义 Roles 如何访问 Resources。你也许注意到我们在这个范例里没有定义任何特定的 Resources， 这简单地表示这些规则适用于所有 Resources。Zend_Acl 提供一个实现，籍此，规则只需要被分配从一般到特殊，最小化规则的需求，因为 Resources 和 Roles 继承由它们祖先定义的规则。
         </para>
 
         <para>
-            Consequently, we can define a reasonably complex set of rules with a minimum amount of code.
-            To apply the base permissions as defined above:
+           因此，我们可以用最少量的代码来定义适度复杂的规则。应用上面定义的基本许可：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -222,63 +172,61 @@ $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 $acl->addRole(new Zend_Acl_Role('administrator'));
 
-// Guest may only view content
+// Guest 只可以浏览内容
 $acl->allow($roleGuest, null, 'view');
 
-/* alternatively, the above could be written:
+/* 另外, 上面也可写为：
 $acl->allow('guest', null, 'view');
 //*/
 
-// Staff inherits view privilege from guest, but also needs additional privileges
+// Staff 从 guest 继承浏览权限，但也要另外的权限
 $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 
-// Editor inherits view, edit, submit, and revise privileges from staff,
-// but also needs additional privileges
+// Editor 从 Staff 继承 view, edit, submit 和 revise 权限
+// 但也要另外的权限
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
-// Administrator inherits nothing, but is allowed all privileges
+// Administrator 不需要继承任何权限，它拥有所有的权限
 $acl->allow('administrator');]]></programlisting>
 
         <para>
-            The <code>null</code> values in the above <code>allow()</code> calls are used to indicate
-            that the allow rules apply to all Resources.
+                
+          在上面 <code>allow()</code> 中调用中 <code>null</code> 的值用来表明 allow 规则适用于所有的 Resources。
         </para>
 
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-        <title>Querying the ACL</title>
+        <title>查询 ACL</title>
 
         <para>
-            We now have a flexible ACL that can be used to determine whether requesters have permission
-            to perform functions throughout the web application. Performing queries is quite simple using
-            the <code>isAllowed()</code> method:
+           我们现在有一个灵活的 ACL 可以用来决定请求者在整个 web 应用里是否拥有执行功能的许可。用<code>isAllowed()</code>方法来执行查询相当简单：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 echo $acl->isAllowed('guest', null, 'view') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // 允许
 
 echo $acl->isAllowed('staff', null, 'publish') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // 禁止
 
 echo $acl->isAllowed('staff', null, 'revise') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // 允许
 
 echo $acl->isAllowed('editor', null, 'view') ?
-     "allowed" : "denied"; // allowed because of inheritance from guest
+     "allowed" : "denied"; // 允许，因为从 guest 继承而来
 
 echo $acl->isAllowed('editor', null, 'update') ?
-     "allowed" : "denied"; // denied because no allow rule for 'update'
+     "allowed" : "denied"; // 禁止，因为对于 'update' 没有 allow 规则
 
 echo $acl->isAllowed('administrator', null, 'view') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied"; // 允许，因为 administrator 有所有权限
 
 echo $acl->isAllowed('administrator') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied"; // 允许，因为 administrator 有所有权限
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]></programlisting>
+     "allowed" : "denied"; // 允许，因为 administrator 有所有权限]]></programlisting>
 
     </sect2>
 </sect1>
