@@ -296,6 +296,7 @@
     // being tested and then test your object's behavior below
 ?>]]></programlisting>
         </example>
+
         <para>
             The setResponse() method clears any responses in the
             Zend_Http_Client_Adapter_Test's buffer and sets the
