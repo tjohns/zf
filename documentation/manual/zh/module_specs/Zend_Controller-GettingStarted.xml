@@ -9,15 +9,7 @@
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
 		<title>服务器设置</title>
-		 <para>
-            Zend_Controller is built to support modern websites with clean URIs
-            (few or no query parameters).  As such, the suggested configuration
-            requires support from the webserver in the form of URI rewriting to
-            redirect all requests to a single file, here called "index.php",
-            which will simply bootstrap <code>Zend_Controller_Front</code>.  On
-            Apache webservers, this is handled by an optional module called
-            mod_rewrite.
-
+		 <para>       
 			Zend_Controller 支持比较漂亮干净的URI(没有乱七八糟的查询参数)。建议你配置服务器，使所有用户请求集中到一个文件，即index.php，index.php将会启动<code>Zend_Controller_Front</code>。如果你使用Apache服务器，可以通过设置mod_rewrite模块来实现。
         </para>			
 
