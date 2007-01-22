@@ -3,15 +3,23 @@
 	
 	<sect2 id="zend.controller.getting-started.introduction">
 		<title>简介</title>
-		<para>			Zend_Controller体系具有可扩展性，可以通过继承已有的类或者自己写个新的类来实现Zend_Controller_Router_Interface或Zend_Controller_Dispatcher_Interface接口。
+		<para>			Zend_Controller体系具有可扩展性，可以通过继承已有的类或者自己写个新的类来实现各种接口和抽象类。
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
 		<title>服务器设置</title>
-		<para>
-			Zend_Controller 支持比较漂亮的URI(没有乱七八糟的查询参数)，这需要你的服务器支持URI重写功能。如果你使用Apache服务器，可以通过设置mod_rewrite模块来实现。
-		</para>
+		 <para>
+            Zend_Controller is built to support modern websites with clean URIs
+            (few or no query parameters).  As such, the suggested configuration
+            requires support from the webserver in the form of URI rewriting to
+            redirect all requests to a single file, here called "index.php",
+            which will simply bootstrap <code>Zend_Controller_Front</code>.  On
+            Apache webservers, this is handled by an optional module called
+            mod_rewrite.
+
+			Zend_Controller 支持比较漂亮干净的URI(没有乱七八糟的查询参数)。建议你配置服务器，使所有用户请求集中到一个文件，即index.php，index.php将会启动<code>Zend_Controller_Front</code>。如果你使用Apache服务器，可以通过设置mod_rewrite模块来实现。
+        </para>			
 
 		<para>
 			第一步，首先安装Apache并启用mod_rewrite模块。然后把两个文件放到根目录下：.htaccess和index.php。 .htaccess文件用来让服务器读取，其中必须包含一个mod_rewrite的重写规则，使所有请求都被重定向到index.php。下面是个例子：
@@ -23,16 +31,27 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
 			在上例中，所有请求(除了对那几个扩展名的文件的请求)都被转向到index.php。在开发中这是很有用的，当然在程序正式运行时重写规则应该写成把某些目录排除而不是文件。
 		</para>
+
+		<note>	
+		    <title>bootstrap文件的位置</title>
+		    <para>    				
+				bootstrap文件（即index.php）应当是站点根目录下唯一一个PHP文件。
+			</para>
+		</note>
+
+		<para>            
+		Zend_Controller也支持使用查询字符串的URL，例如： <code>index.php?controller=foo&amp;action=bar</code>。另外，Zend_Controller所带的一个router--<code>Zend_Controller_RewriteRouter</code>，可以让程序不使用服务器所带的mod_rewrite功能，就可进行URL重写。这样即使你在你的主机上无法使用mod_rewrite，你仍然可以使用Zend_Controller。
+        </para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
 		<title>Bootstrap文件</title>
 
-		<para>(Bootstrap相当于一小段引导程序，如果你用过Struts或Phrame，可能会有一点了解--Haohappy注)
+			<para>(所谓Bootstrap，就相当于一小段引导程序或者入口程序，在ZF中，通常即指index.php，因为我们所有的请求都是从index.php进入的。--Haohappy注)
 		</para>
 		
 		<para>
-			在设置好 .htaccess文件之后，建立一个新的文件index.php，这是一个入口文件，目的在于启动Zend_Controller_Front。Zend_Controller_Front最好要放在你的站点根目录以外。
+			在设置好 .htaccess文件之后，建立一个新的文件index.php，这是一个入口文件，目的仅在于启动Zend_Controller_Front。Zend_Controller_Front最好要放在你的站点根目录以外。
 		</para>
 
 		<note>	
@@ -40,7 +59,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</note>
 
 		<para>
-			出处安全方面的考虑，我们强烈建议在所有可能通过服务器访问的目录下（站点根目录的子目录）不放置任何PHP文件。有时候这可能做不到，例如虚拟主机。
+			出于安全方面的考虑，我们强烈建议在所有可能通过服务器访问的目录下（例如站点根目录的子目录下）不放置任何PHP文件。有时候这可能做不到，例如虚拟主机。
 		</para>
 
 		<para>
@@ -54,18 +73,15 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 
 ?>]]></programlisting>
 
-			看下面的章节来理解 /path/to/your/controllers。就像在README.txt中所介绍的，Zend Framework的library 目录必须在include_path中。如果没有在php.ini中设置，你可以通过set_include_path()函数来设置（放在require_once()之前）。
-		</para>
-
-		<note>			我们现在正在寻找不需要服务器mod_rewrite模块支持的解决方案。我们希望能提供有mod_rewrite和没有mod_rewrite两种情况下的配置。注意：服务器不仅限于Apache和mod_rewrite模块，任何具有类似的功能的服务器都可以。
-		</note>
+			看下面的章节来理解  <code>/path/to/your/controllers</code>。就像在README.txt中所介绍的，Zend Framework的library 目录必须在include_path中。如果没有在php.ini中设置，你可以通过set_include_path()函数来设置（放在require_once()之前）。
+		</para>		
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
 		<title>目录结构</title>
 		
 		<para>
-			建议使用 Zend Framework的站点采用相同的目录结构。这样可以让其它熟悉Zend Framework的人更好地理解你的程序。
+			建议使用 Zend Framework的站点采用相同的目录结构，尽管可能不是每个站点都能一模一样。这样可以让其它熟悉Zend Framework的人更好地理解你的程序。
 		</para>
 		
 		<para>	
@@ -90,45 +106,60 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 			这一章节尚未完成，可能会有大量内容补充或修改。
 		</note>
 	</sect2>	
-		
-	<sect2 id="zend.controller.overview.indexcontroller">
-		<title>IndexController</title>
 
-		<para>
-			每个站点都必须定义一个名为IndexController的控制器。没指定控制器时默认采用这个控制器。如：
+<sect2 id="zend.controller.overview.defaultcontroller">
+        <title>默认的控制器</title>
 
-			<programlisting role="php"><![CDATA[
+        <para>         
+			每个站点都必须定义一个默认的控制器，当用户访问的URI中没有指定控制器时，就会调用该控制器，例如：
+        </para>
+
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
-		<para>
-			The <code>IndexController</code> class must be stored in a file named <code>IndexController.php</code>, and
-			this must be stored in the controllers directory.  The <code>IndexController</code> must subclass
-			<code>Zend_Controller_Action</code>.  Here is a sample <code>IndexController</code>:
+        <para>
+         在自带的配置中，默认控制器是<code>IndexController</code>，它是在文件<code>IndexController.php</code>中定义的。在内部访问中，该控制器的名称是'index'。
+        </para>
 
-			<programlisting role="php"><![CDATA[<?php
-				
+        <para>
+         你可以通过调用front controller的<code>setDefaultController()</code>方法来改变默认的控制器。在使用时，请使用内部命名原则，也就是说类<code>HomeController</code>（位于文件<code>HomeController.php</code>中）应该以'<code>home</code>'的名称来访问。
+        </para>
+
+        <para>
+        控制器应该继承自<code>Zend_Controller_Action</code>类，并放置于controllers目录下。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
 require_once 'Zend/Controller/Action.php';
 
-class IndexController extends Zend_Controller_Action 
+class IndexController extends Zend_Controller_Action
 {
-	public function indexAction()
-	{
-		echo 'Hello from IndexController';
-	}
+    public function indexAction()
+    {
+        echo 'Hello from IndexController';
+    }
 
-	public function noRouteAction()
-	{
-		$this->_redirect('/');
-	}
+    public function noRouteAction()
+    {
+        $this->_redirect('/');
+    }
 }
 
 ?>]]></programlisting>
-			
-			<note>
-				这一章节尚未完成，可能会有大量内容补充或修改。
-			</note>			
-		</para>
-	</sect2>			
+
+        <para>         
+		关于默认控制器和action的更多细节，例如如何编写controller类等，会在后面的章节介绍。
+        </para>
+
+        <note>
+            <para>             
+			本章节还未完成，可能会有很多内容被更新。
+            </para>
+        </note>
+    </sect2>
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
