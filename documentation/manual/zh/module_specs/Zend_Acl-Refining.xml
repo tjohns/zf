@@ -1,43 +1,38 @@
 <sect1 id="zend.acl.refining">
 
-    <title>Refining Access Controls</title>
+    <title>精制访问控制</title>
 
     <sect2 id="zend.acl.refining.precise">
 
-        <title>Precise Access Controls</title>
+        <title>精确的访问控制</title>
 
         <para>
-        The basic ACL as defined in the <link linkend="zend.acl.introduction">previous section</link> shows
-        how various privileges may be allowed upon the entire ACL (all Resources). In practice, however, access
-        controls tend to have exceptions and varying degrees of complexity. Zend_Acl allows to you accomplish
-        these refinements in a straightforward and flexible manner.
+        
+		在<link linkend="zend.acl.introduction">前一章节</link>中定义的基本的 ACL 显示如何在整个 ACL (所有的 Resources )允许各种各样的权限。然而在实践中，访问控制趋向于拥有例外和可变程度的复杂性。Zend_Acl 允许你直截了当并灵活地完成这些精制。
         </para>
 
         <para>
-        For the example CMS, it has been determined that whilst the 'staff' group covers the needs of the
-        vast majority of users, there is a need for a new 'marketing' group that requires access to the
-        newsletter and latest news in the CMS. The group is fairly self-sufficient and will have the ability
-        to publish and archive both newsletters and the latest news.
+        
+		对于CMS范例，'staff' 组覆盖了绝大多数用户的需求，同时，一个新的 'marketing' 组要求在CMS中访问时事通讯和最近的新闻。这个组相当地自给自足并有能力发布和归档时事通讯和最近的新闻。
         </para>
 
         <para>
-        In addition, it has also been requested that the 'staff' group be allowed to view news stories but
-        not to revise the latest news. Finally, it should be impossible for anyone (administrators included)
-        to archive any 'announcement' news stories since they only have a lifespan of 1-2 days.
-        </para>
+       
+        另外，还要求 'staff' 组被允许浏览新闻故事但不能修订最近的新闻。最后，不可能让每一个人（包括系统管理员）去归档任何'announcement' 新闻故事，因为它们只有1-2天的生命周期。
+		</para>
 
         <para>
-        First we revise the Role registry to reflect these changes. We have determined that the 'marketing'
-        group has the same basic permissions as 'staff', so we define 'marketing' in such a way that it
-        inherits permissions from 'staff':
+        
+		首先我们修订 Role 注册表来反映这些变化。我们已经确定 'marketing' 组和 'staff' 组有着同样的基本许可，所以我们用从 'staff' 组继承许可的方法来定义 'marketing' 组
         </para>
 
-        <programlisting role="php"><![CDATA[// The new marketing group inherits permissions from staff
+        <programlisting role="php"><![CDATA[// 新 marketing 组从 staff 组继承许可
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
         <para>
-        Next, note that the above access controls refer to specific Resources (e.g., "newsletter", "latest news", "announcement news"). Now we add these Resources:
-        </para>
+
+        然后， 注意上面的访问控制涉及到特定的 Resources ( 例如 "newsletter", "latest news", "announcement news"). 现在我们来添加这些 Resources：
+		</para>
 
         <programlisting role="php"><![CDATA[// Create Resources for the rules
 require_once 'Zend/Acl/Resource.php';
@@ -47,20 +42,21 @@ $acl->add(new Zend_Acl_Resource('latest'), 'news');       // latest news
 $acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]></programlisting>
 
         <para>
-        Then it is simply a matter of defining these more specific rules on the target areas of the ACL:
+
+		接着，这个是在 ACL 的目标区域定义更特定的规则的概况：
         </para>
 
         <programlisting role="php"><![CDATA[// Marketing must be able to publish and archive newsletters and the latest news
 $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
 
-// Staff (and marketing, by inheritance), are denied permission to revise the latest news
+// Staff (和 marketing, 通过继承), 禁止修订 latest news
 $acl->deny('staff', 'latest', 'revise');
 
-// Everyone (including administrators) are denied permission to archive news announcements
+// Everyone (包括 administrators) 禁止归档 news announcements
 $acl->deny(null, 'announcement', 'archive');]]></programlisting>
 
         <para>
-        We can now query the ACL with respect to the latest changes:
+		我们现在能够查询到 ACL 的最新变化：
         </para>
 
         <programlisting role="php"><![CDATA[echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
@@ -91,12 +87,13 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
 
     <sect2 id="zend.acl.refining.removing">
 
-        <title>Removing Access Controls</title>
+        <title>除去访问控制</title>
 
         <para>
         To remove one or more access rules from the ACL, simply use the available <code>removeAllow()</code>
         or <code>removeDeny()</code> methods. As with <code>allow()</code> and <code>deny()</code>, you may
         provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges:
+		简单地用 <code>removeAllow()</code> 或 <code>removeDeny()</code> 方法从 ACL 中除去一个或多个访问规则。 用 <code>allow()</code> 和 <code>deny()</code> 对所有的 Roles， Resources， and/or privileges 你可以提供一个 <code>null</code> 值来指示应用软件。
         </para>
 
         <programlisting role="php"><![CDATA[// Remove the denial of revising latest news to staff (and marketing, by inheritance)
@@ -105,7 +102,7 @@ $acl->removeDeny('staff', 'latest', 'revise');
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
      "allowed" : "denied"; // allowed
 
-// Remove the allowance of publishing and archiving newsletters to marketing
+// 除去 marketing 发布和归档 newsletters 的许可
 $acl->removeAllow('marketing', 'newsletter', array('publish', 'archive'));
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
@@ -115,11 +112,10 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
      "allowed" : "denied"; // denied]]></programlisting>
 
         <para>
-        Privileges may be modified incrementally as indicated above, but a <code>null</code> value for the
-        privileges overrides such incremental changes:
-        </para>
+          如上所示，对于权限的修改可能是增量的，但使用 <code>null</code> 值超越了对权限的增量修改。（所谓的增量修改是指可以对 Resources 一个一个地添加权限或禁止，而使用 <code>null</code> 值可以使得这些步骤简化，一次性地对所有 Resources 允许或禁止。Jason注）
+		</para>
 
-        <programlisting role="php"><![CDATA[// Allow marketing all permissions upon the latest news
+        <programlisting role="php"><![CDATA[// 允许 marketing 对 latest news 有所有的许可
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
