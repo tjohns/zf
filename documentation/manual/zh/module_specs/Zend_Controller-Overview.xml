@@ -280,25 +280,18 @@
 	</sect2>
 
 	<sect2 id="zend.controller.overview.response">
-		<title>Response Object</title>
+		<title>Response Object 响应对象</title>
 
 		<para>
-            The response object is the logical pair to the request object. Its
-            purpose is to collate content and/or headers so that they may be
-            returned en masse. Additionally, the front controller will pass any
-            caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions. This functionality may be overridden
-            by setting
-            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+         response对象与request对象从逻辑上说是相对应的，它的目的是收集服务器返回的内容的header和body。另外，front controller将把捕捉到的异常传递到response对象中，允许程序员优雅地处理异常。这个功能可以通过设设置 <code>Zend_Controller_Front::throwExceptions(true)</code>来实现：
         </para>
 
         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
 ]]></programlisting>
 
-        <para>
-            Since the response object implements <code>__toString()</code>, it
-            may be safely echoed. This allows for the following usage:
+        <para>           
+			由于response对象使用了<code>__toString()</code>方法，所以你可以很安全地用echo来输出该对象。也就是这样使用：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -310,9 +303,7 @@ echo $response;
 ]]></programlisting>
         
         <para>
-            Developers should make use of the response object in their action
-            controllers. Instead of directly rendering output and sending
-            headers, push them to the response object:
+          程序员应当在controller中使用response对的是，不要直接输出内容或头部，应该把这些输出放到response对象中去：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -323,28 +314,21 @@ $this->getResponse()
     ->appendBody($content);
 ]]></programlisting>
 
-        <para>
-            By doing this, all headers get sent at once, just prior to
-            displaying the content.
+        <para>         
+			这样做，所有的header会在发送内容之前设置一次。
         </para>
 
         <para>
-            Should an exception occur in an application, check the
-            response object's <code>isException()</code> flag, and retrieve the
-            exception using <code>getException()</code>. Additionally, one
-            may create custom response objects that redirect to error pages, log
-            exception messages, do pretty formatting of exception messages (for
-            development environments), etc.
+           程序中是否发生异常，可以使用<code>isException()</code>来检查response对象的flag，并且通过<code>getException()</code>来得到该异常。另外，你也可以定制自己的response对象，使程序出错时转向到出错信息页、记录异常信息或格式化异常信息等。
         </para>
 
-        <para>
-            You may retrieve the response object following the front controller
-            dispatch(), or request the front controller to return the response
-            object instead of rendering output.
+        <para>           
+			在front controller进行dispatch()之后，你可以得到response对象，或者请求front controller返回response对象而不是直接显示输出。
         </para>
 
         <programlisting role="php"><![CDATA[
 // retrieve post-dispatch:
+//得到dispatch后的响应：
 $front->dispatch();
 $response = $front->getResponse();
 if ($response->isException()) {
@@ -352,32 +336,32 @@ if ($response->isException()) {
 }
 
 // Or, have the front controller dispatch() process return it
+// 或者，让front controller在dispatch()执行过程中返回响应
 $front->returnResponse(true);
 $response = $front->dispatch();
 
 // do some processing...
 
 // finally, echo the response
+//最后，用echo输出响应信息
 echo $response;
 ]]></programlisting>
 
         <para>
-            By default, exception messages are not displayed. This behaviour may
-            be overridden by calling <code>renderExceptions()</code>, or enabling
-            the front controller to throwExceptions(), as shown above:
+        默认地，异常信息不会被显示。要显示异常信息，需要通过调用<code>renderExceptions()</code>，或者启用front controller的throwExceptions()方法，例如：
         </para>
 
         <programlisting role="php"><![CDATA[
 $response->renderExceptions(true);
 $front->dispatch($request, $response);
 
-// or:
+// 或者
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
 echo $response;
 
-// or:
+// 或者
 $front->throwExceptions(true);
 $front->dispatch();
 ]]></programlisting>
