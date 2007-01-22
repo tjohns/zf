@@ -118,14 +118,6 @@
         &module_specs.Zend_Translate;
     </chapter>
 
-    <appendix id="appendix.languages">
-        <title>Appendix Zend_Locale Languages</title>
-        &module_specs.Zend_Locale-AppendixLanguages;
-    </appendix>
-    <appendix id="appendix.regions">
-        <title>Appendix Zend_Locale Regions</title>
-        &module_specs.Zend_Locale-AppendixRegions;
-    </appendix>
     <!-- &ref.faq; -->
     <appendix id="appendix.codingstandard">
         <title>Zend Framework PHP Coding Standard</title>
