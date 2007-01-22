@@ -92,6 +92,12 @@
         &module_specs.Zend_Service_Simpy;
         -->
     </chapter>
+    
+    <chapter id="zend.timesync">
+        <title>Zend_TimeSync</title>
+        &module_specs.Zend_TimeSync;
+        &module_specs.Zend_TimeSync-Queries;
+    </chapter>
 
     <!--
     <chapter id="zend.soap">

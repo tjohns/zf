@@ -1,0 +1,29 @@
+<sect1 id="zend.timesync.introduction">
+    <title>Introduction</title>
+    <para>
+        Zend_TimeSync is able to receive internet or network time from a timeserver using 
+        the NTP or SNTP protocol. With Zend_TimeSync a page/script is able to act 
+        indepentendly from the timesettings of the server the script is running.
+    </para>
+    <note>
+        <title>Server's time</title>
+        <para>
+            Zend_TimeSync is not able to change the server's time, but it will return a date object 
+            from which the difference to the servers time can be worked with.
+        </para>
+    </note>
+    <sect2 id="zend.timesync.introduction.ntp">
+        <title>What is NTP?</title>
+        <para>
+            The Network Time Protocol (NTP) is a protocol for synchronizing the clocks of computer 
+            systems over packet-switched, variable-latency data networks. NTP uses UDP port 123 as 
+            its transport layer.
+        </para>
+    </sect2>
+    <sect2 id="zend.timesync.introduction.sntp">
+        <title>What is SNTP?</title>
+        <para>
+            Todo
+        </para>
+    </sect2>
+</sect1>
