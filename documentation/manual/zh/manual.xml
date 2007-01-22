@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+    "http://home.xmu.edu.cn/docbook/docbookx.dtd"
 [
     <!ENTITY % magic.fixup SYSTEM "./entities.ent">
     %magic.fixup;
@@ -41,9 +41,8 @@
         &module_specs.Zend-Dump;
         &module_specs.Zend-Register;
         &module_specs.Zend-Registry;
-        &module_specs.Zend-InitRegistry;
     </chapter>
-    <chapter id="zend.acl">
+	<chapter id="zend.acl">
         <title>Zend_Acl</title>
         &module_specs.Zend_Acl;
         &module_specs.Zend_Acl-Refining;
@@ -63,7 +62,7 @@
         &module_specs.Zend_Config_Ini;
         &module_specs.Zend_Config_Xml;
     </chapter>
-    <chapter id="zend.controller">
+     <chapter id="zend.controller">
         <title>Zend_Controller</title>
         &module_specs.Zend_Controller-Overview;
         &module_specs.Zend_Controller-GettingStarted;
@@ -72,16 +71,6 @@
         &module_specs.Zend_Controller-ActionController;
         &module_specs.Zend_Controller-Plugins;
         &module_specs.Zend_Controller-Migration;
-    </chapter>
-    <chapter id="zend.date">
-        <title>Zend_Date</title>
-        &module_specs.Zend_Date-Introduction;
-        &module_specs.Zend_Date-Basic;
-        &module_specs.Zend_Date-Theory;
-        &module_specs.Zend_Date-Overview;
-        &module_specs.Zend_Date-Output;
-        &module_specs.Zend_Date-Others;
-        &module_specs.Zend_Date-Constants;
     </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
@@ -108,7 +97,7 @@
         &module_specs.Zend_Filter;
         &module_specs.Zend_Filter_Input;
     </chapter>
-    <chapter id="zend.gdata">
+	<chapter id="zend.gdata">
         <title>Zend_Gdata</title>
         &module_specs.Zend_Gdata-Introduction;
         &module_specs.Zend_Gdata_AuthSub;
@@ -121,7 +110,7 @@
         &module_specs.Zend_Gdata_Spreadsheets;
         -->
         &module_specs.Zend_Gdata_Data;
-        &module_specs.Zend_Gdata_Exception;
+		&module_specs.Zend_Gdata_Exception;
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
@@ -137,7 +126,7 @@
         &module_specs.Zend_Json-Basics;
         &module_specs.Zend_Json-Objects;
     </chapter>
-    <chapter id="zend.locale">
+	<chapter id="zend.locale">
         <title>Zend_Locale</title>
         &module_specs.Zend_Locale-Introduction;
         &module_specs.Zend_Locale-Functions;
@@ -168,7 +157,7 @@
         &module_specs.Zend_Mail-Encoding;
         &module_specs.Zend_Mail-SmtpAuthentication;
     </chapter>
-    <chapter id="zend.measure">
+	 <chapter id="zend.measure">
         <title>Zend_Measure</title>
         &module_specs.Zend_Measure-Introduction;
         &module_specs.Zend_Measure-Writing;
@@ -212,7 +201,7 @@
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
     </chapter>
-    <chapter id="zend.session">
+	 <chapter id="zend.session">
         <title>Zend_Session</title>
         &module_specs.Zend_Session-Introduction;
         &module_specs.Zend_Session-BasicUsage;
@@ -220,7 +209,7 @@
         &module_specs.Zend_Session-GlobalSessionManagement;
         &module_specs.Zend_Session-Theory;
     </chapter>
-    <chapter id="zend.uri">
+	 <chapter id="zend.uri">
         <title>Zend_Uri</title>
         &module_specs.Zend_Uri;
     </chapter>
@@ -245,6 +234,7 @@
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;
+	&ref.ga;
     <index id="the.index" />
 </book>
 <!--
