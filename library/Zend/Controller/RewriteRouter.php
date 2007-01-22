@@ -55,6 +55,13 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     protected $_currentRoute = null;
 
     /**
+     * Directories where controllers are stored
+     * 
+     * @var array
+     */
+    protected $_directories = array();
+
+    /**
      * Constructor
      * 
      * @param array $params Optional invocation arguments
@@ -143,6 +150,34 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this;
     }
 
+    /**
+     * Retrieve controller directory
+     *
+     * Retrieves stored controller directory
+     *
+     * @return array
+     */    
+    public function getControllerDirectory()
+    {
+        return $this->_directories;
+    }
+    
+    /**
+     * Set controller directory
+     *
+     * Stores controller directory to pass to dispatcher. May be an array of 
+     * directories or a string containing a single directory.
+     *
+     * @param string|array $dirs Path to Zend_Controller_Action controller 
+     * classes or array of such paths
+     * @return Zend_Controller_Router
+     */    
+    public function setControllerDirectory($dirs)
+    {
+        $this->_directories = $dirs;
+        return $this;
+    }
+    
     /** 
      * Add default routes which are used to mimic basic router behaviour
      */

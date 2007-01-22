@@ -86,4 +86,22 @@ interface Zend_Controller_Router_Interface
      * @return Zend_Controller_Router_Interface
      */
     public function clearParams($name = null);
+
+    /**
+     * Retrieve controller directory
+     *
+     * Retrieves stored controller directory
+     *
+     * @return array
+     */    
+    public function getControllerDirectory();
+
+    /**
+     * Set the controller directories
+     * 
+     * @param string|array $dirs Path to Zend_Controller_Action controller 
+     * classes or array of such paths
+     * @return Zend_Controller_Router
+     */
+    public function setControllerDirectory($dirs);
 }

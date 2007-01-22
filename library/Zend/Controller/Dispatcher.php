@@ -50,6 +50,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     protected $_curDirectory;
 
     /**
+     * Current module (formatted)
+     * @var string
+     */
+    protected $_curModule;
+
+    /**
      * Default action name; defaults to 'index'
      * @var string 
      */
@@ -141,6 +147,17 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     {
         $formatted = $this->_formatName($unformatted, true);
         return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
+    }
+
+    /**
+     * Convert a class name to a filename
+     * 
+     * @param string $class 
+     * @return string
+     */
+    public function classToFilename($class)
+    {
+        return str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     }
 
     /**
@@ -268,22 +285,25 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     }
 
     /**
-     * Add a single path to the controller directory stack
-     * 
-     * @param string $path 
-     * @return Zend_Controller_Dispatcher
-     */
-    public function addControllerDirectory($path)
+    * Add a single path to the controller directory stack
+    * 
+    * @param string $path 
+    * @return Zend_Controller_Dispatcher
+    */
+    public function addControllerDirectory($path, $module = null)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
             throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
-        $this->_directories[] = rtrim($path, '\//');
+        if (null === $module) {
+            $this->_directories[] = rtrim($path, '\//');
+        } else {
+            $this->_directories[(string) $module] = rtrim($path, '\//');
+        }
 
         return $this;
     }
-
     /**
      * Sets the directory(ies) where the Zend_Controller_Action class files are stored.
      *
@@ -308,7 +328,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Return the currently set directory for Zend_Controller_Action class 
      * lookup
      * 
-     * @return string
+     * @return array
      */
     public function getControllerDirectory()
     {
@@ -328,9 +348,28 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
-        $dispatchable = $this->_getController($request);
+        $className   = $this->_getController($request);
+        if (!$className) {
+            return false;
+        }
 
-        return is_string($dispatchable);
+        $fileSpec    = $this->classToFilename($className);
+        $dispatchDir = $this->getDispatchDirectory();
+        if (is_string($dispatchDir)) {
+            $test = $dispatchDir . DIRECTORY_SEPARATOR . $fileSpec;
+            return Zend::isReadable($test);
+        }
+
+        $found = false;
+        foreach ($dispatchDir as $dir) {
+            $test = $dir . DIRECTORY_SEPARATOR . $fileSpec;
+            if (Zend::isReadable($test)) {
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
     }
 
     /**
@@ -497,10 +536,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $className = $this->_getController($request);
 
         /**
-         * If no class name returned, report exceptional behaviour
+         * If no class name returned, dispatch to default controller
          */
-        if (!$className) {
-            throw new Zend_Controller_Dispatcher_Exception('"' . $request->getControllerName() . '" controller does not exist');
+        if (empty($className)) {
+            $controller = $this->getDefaultController();
+            $request->setControllerName($controller);
+            $className = $this->formatControllerName($controller);
         }
 
         /**
@@ -508,14 +549,30 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          *
          * Attempts to load the controller class file from {@link getControllerDirectory()}.
          */
-        Zend::loadClass($className, $this->getControllerDirectory());
-
+        $dispatchDir = $this->getDispatchDirectory();
+        if (is_string($dispatchDir)) {
+            // module found
+            $loadFile = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
+            $dir      = dirname($loadFile);
+            $file     = basename($loadFile);
+            Zend::loadFile($file, $dir);
+            $moduleClass = $this->_curModule . '_' . $className;
+            if (!class_exists($moduleClass)) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
+                throw new Zend_Controller_Dispatcher_Exception('Invalid controller class ("' . $moduleClass . '")');
+            }
+            $className = $moduleClass;
+        } else {
+            Zend::loadClass($className, $this->getControllerDirectory());
+        }
+        
         /**
          * Instantiate controller with request, response, and invocation 
          * arguments; throw exception if it's not an action controller
          */
         $controller = new $className($request, $this->getResponse(), $this->getParams());
         if (!$controller instanceof Zend_Controller_Action) {
+            require_once 'Zend/Controller/Dispatcher/Exception.php';
             throw new Zend_Controller_Dispatcher_Exception("Controller '$className' is not an instance of Zend_Controller_Action");
         }
 
@@ -561,20 +618,25 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     {
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
-            $controllerName = $this->getDefaultController();
-            $request->setControllerName($controllerName);
+            return false;
         }
 
         $className = $this->formatControllerName($controllerName);
+        $controllerDirectory = $this->getControllerDirectory();
 
         /**
-         * Check to see if a module name is present in the request; if so, 
+         * Check to see if a module name is present in the request, and that 
+         * the module has been defined in the controller directory list; if so, 
          * prepend module to controller class name, using underscore as 
          * separator. 
          */
         $module = $request->getModuleName();
-        if ((null !== $module)) {
-            $className = $this->formatModuleName($module) . '_' . $className;
+        
+        if ((null !== $module) && isset($controllerDirectory[$module])) {
+            $this->_curModule    = $this->formatModuleName($module);
+            $this->_curDirectory = $controllerDirectory[$module];
+        } else {
+            $this->_curDirectory = $controllerDirectory;
         }
 
         return $className;
@@ -600,5 +662,16 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         return $this->formatActionName($action);
+    }
+    
+    /**
+     * Return the value of the currently selected dispatch directory (as set by 
+     * {@link _getController()})
+     * 
+     * @return string
+     */
+    public function getDispatchDirectory()
+    {
+        return $this->_curDirectory;
     }
 }

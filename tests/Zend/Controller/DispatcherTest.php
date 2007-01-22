@@ -20,20 +20,22 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         unset($this->_dispatcher);
     }
 
-    public function disableTestFormatControllerName()
+    public function testFormatControllerName()
     {
         $this->assertEquals('IndexController', $this->_dispatcher->formatControllerName('index'));
         $this->assertEquals('Site_CustomController', $this->_dispatcher->formatControllerName('site_custom'));
     }
 
-    public function disableTestFormatActionName()
+    public function testFormatActionName()
     {
         $this->assertEquals('indexAction', $this->_dispatcher->formatActionName('index'));
         $this->assertEquals('myindexAction', $this->_dispatcher->formatActionName('myIndex'));
-        $this->assertEquals('my_IndexAction', $this->_dispatcher->formatActionName('my_index'));
+        $this->assertEquals('myindexAction', $this->_dispatcher->formatActionName('my_index'));
+        $this->assertEquals('myIndexAction', $this->_dispatcher->formatActionName('my.index'));
+        $this->assertEquals('myIndexAction', $this->_dispatcher->formatActionName('my-index'));
     }
 
-    public function disableTestGetSetControllerDirectory()
+    public function testGetSetControllerDirectory()
     {
         $test = $this->_dispatcher->getControllerDirectory();
         $this->assertTrue(is_array($test));
@@ -41,7 +43,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test[0]);
     }
 
-    public function disableTestIsDispatchable()
+    public function testIsDispatchable()
     {
         $request = new Zend_Controller_Request_Http();
 
@@ -51,18 +53,19 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $request->setControllerName('foo');
         $this->assertTrue($this->_dispatcher->isDispatchable($request));
 
+        // True, because it will dispatch to default controller
         $request->setControllerName('bogus');
         $this->assertFalse($this->_dispatcher->isDispatchable($request));
     }
 
-    public function disableTestSetGetResponse()
+    public function testSetGetResponse()
     {
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->setResponse($response);
         $this->assertTrue($response === $this->_dispatcher->getResponse());
     }
 
-    public function disableTestSetGetDefaultController()
+    public function testSetGetDefaultController()
     {
         $this->assertEquals('index', $this->_dispatcher->getDefaultController());
 
@@ -70,7 +73,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->_dispatcher->getDefaultController());
     }
 
-    public function disableTestSetGetDefaultAction()
+    public function testSetGetDefaultAction()
     {
         $this->assertEquals('index', $this->_dispatcher->getDefaultAction());
 
@@ -81,7 +84,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test default action on valid controller
      */
-    public function disableTestDispatch()
+    public function testDispatch()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -94,7 +97,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test valid action on valid controller
      */
-    public function disableTestDispatch1()
+    public function testDispatch1()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -108,7 +111,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test invalid action on valid controller
      */
-    public function disableTestDispatch2()
+    public function testDispatch2()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -126,7 +129,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test invalid controller
      */
-    public function disableTestDispatch3()
+    public function testDispatch3()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('bogus');
@@ -143,7 +146,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test valid action on valid controller; test pre/postDispatch
      */
-    public function disableTestDispatch4()
+    public function testDispatch4()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('foo');
@@ -160,7 +163,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test defaults of controller and action pair 
      */
-    public function disableTestDispatch5()
+    public function testDispatch5()
     {
         $request = new Zend_Controller_Request_Http();
         $response = new Zend_Controller_Response_Cli();
@@ -173,24 +176,24 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     /**
      * Test that classes are found in modules
      */
-    public function disableTestModules()
+    public function testModules()
     {
         $this->_dispatcher->setControllerDirectory(array(
-            'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-            'admin'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files/Admin',
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'
         ));
+        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
 
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('baz');
         $request->setActionName('bar');
-        $request->setParam('module', 'admin');
+        $request->setModuleName('admin');
+        $this->_dispatcher->setParam('useModules', true);
 
         $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files/Admin', $this->_dispatcher->getDispatchDirectory());
 
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->dispatch($request, $response);
-        $body = $this->_dispatcher->getResponse()->getBody();
+        $body = $response->getBody();
         $this->assertContains("Admin's Baz::bar action called", $body, $body);
     }
 
@@ -202,6 +205,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->_dispatcher->setControllerDirectory(array(
             dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
         ));
+        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
 
         $request = new Zend_Controller_Request_Http();
         $request->setModuleName('admin');
@@ -241,9 +245,8 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testNamespacedControllerWithCamelCaseAction()
     {
-        $this->_dispatcher->setControllerDirectory(array(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-        ));
+        $this->_dispatcher->setParam('useModules', true);
+        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
 
         $request = new Zend_Controller_Request_Http();
         $request->setModuleName('admin');

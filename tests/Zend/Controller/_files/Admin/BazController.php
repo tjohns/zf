@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Controller/Action.php';
 
-class BazController extends Zend_Controller_Action
+class Admin_BazController extends Zend_Controller_Action
 {
     public function preDispatch()
     {

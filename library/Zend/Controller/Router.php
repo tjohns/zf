@@ -51,6 +51,13 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
      * @var array 
      */
     protected $_invokeParams = array();
+    
+    /**
+     * Directories where controllers are stored
+     * 
+     * @var array
+     */
+    protected $_directories = array();
 
     /**
      * Constructor
@@ -140,7 +147,35 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
 
         return $this;
     }
-
+    
+    /**
+     * Retrieve controller directory
+     *
+     * Retrieves stored controller directory
+     *
+     * @return array
+     */    
+    public function getControllerDirectory()
+    {
+        return $this->_directories;
+    }
+    
+    /**
+     * Set controller directory
+     *
+     * Stores controller directory to pass to dispatcher. May be an array of 
+     * directories or a string containing a single directory.
+     *
+     * @param string|array $dirs Path to Zend_Controller_Action controller 
+     * classes or array of such paths
+     * @return Zend_Controller_Router
+     */    
+    public function setControllerDirectory($dirs)
+    {
+        $this->_directories = $dirs;
+        return $this;
+    }
+    
     /**
      * Route a request
      *
@@ -164,13 +199,17 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
 
         $pathInfo = $request->getPathInfo();
         $pathSegs = explode('/', trim($pathInfo, '/'));
-
+        
+        $controllerDir = $this->getControllerDirectory();
+        $modules = array_keys($controllerDir);
+        
         /**
          * Retrieve module if useModules is set in object
+         * 
          */
         $useModules = $this->getParam('useModules');
         if (!empty($useModules)) {
-            if (isset($pathSegs[0]) && !empty($pathSegs[0])) {
+            if (isset($pathSegs[0]) && !empty($pathSegs[0]) && in_array($pathSegs[0], $modules)) {
                 $module = array_shift($pathSegs);
             }
         }

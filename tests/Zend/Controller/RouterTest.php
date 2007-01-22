@@ -40,6 +40,9 @@ class Zend_Controller_RouterTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_RouterTest_Request('http://framework.zend.com/module/controller/action/var/value');
         $router = new Zend_Controller_Router();
         $router->setParam('useModules', true);
+        $router->setControllerDirectory(array(
+            'module' => realpath(dirname(__FILE__) . '/_files')
+        ));
         $route = $router->route($request);
 
         $this->assertEquals('module', $request->getModuleName());
