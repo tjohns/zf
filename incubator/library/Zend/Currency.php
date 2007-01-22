@@ -323,7 +323,7 @@ class Zend_Currency {
      * @param  string|Zend_Locale  $locale     OPTIONAL Locale to display informations
      * @return string
      */ 
-    public static function getSign($currency, $locale) 
+    public static function getSign($currency = null, $locale = null) 
     {
         //TODO finish this method
     } 
@@ -336,7 +336,7 @@ class Zend_Currency {
      * @param  string|Zend_Locale  $locale     OPTIONAL the locale
      * @return string
      */ 
-    public static function getName($currency, $locale) 
+    public static function getName($currency = null, $locale = null) 
     {
         //TODO finish this method
     } 
