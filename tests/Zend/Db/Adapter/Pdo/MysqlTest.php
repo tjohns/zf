@@ -31,10 +31,12 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getParams()
     {
-        $params = array ('host'     => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_HOSTNAME,
+        $params = array (
+            'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_HOSTNAME,
             'username' => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_PASSWORD,
-            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_DATABASE);
+            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_DATABASE
+        );
 
         return $params;
     }

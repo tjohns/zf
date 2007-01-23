@@ -30,9 +30,11 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
 
     function getParams()
     {
-        $params = array ('username' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME,
+        $params = array (
+            'username' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD,
-            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE);
+            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
+        );
 
         return $params;
     }
