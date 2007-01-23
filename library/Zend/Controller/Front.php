@@ -201,11 +201,17 @@ class Zend_Controller_Front
      * Add a controller directory to the controller directory stack
      * 
      * @param string $directory 
+     * @param string $module
      * @return Zend_Controller_Front
      */
-    public function addControllerDirectory($directory)
+    public function addControllerDirectory($directory, $module = null)
     {
-        $this->_controllerDir[] = (string) $directory;
+        if (null === $module) {
+            $this->_controllerDir[] = (string) $directory;
+        } else {
+            $this->_controllerDir[(string) $module] = (string) $directory;
+        }
+
         return $this;
     }
 
