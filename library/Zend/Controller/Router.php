@@ -201,6 +201,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
         $pathSegs = explode('/', trim($pathInfo, '/'));
         
         $controllerDir = $this->getControllerDirectory();
+        unset($controllerDir['default']);
         $modules = array_keys($controllerDir);
         
         /**

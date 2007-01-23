@@ -40,7 +40,10 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $test = $this->_dispatcher->getControllerDirectory();
         $this->assertTrue(is_array($test));
         $this->assertEquals(1, count($test));
-        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test[0]);
+        $this->assertTrue(isset($test['default']));
+        $this->assertTrue(is_array($test['default']));
+        $this->assertEquals(1, count($test['default']));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test['default'][0]);
     }
 
     public function testIsDispatchable()

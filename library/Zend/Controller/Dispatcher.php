@@ -296,8 +296,8 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
             throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
-        if (null === $module) {
-            $this->_directories[] = rtrim($path, '\//');
+        if ((null === $module) || ('default' == $module)) {
+            $this->_directories['default'][] = rtrim($path, '\//');
         } else {
             $this->_directories[(string) $module] = rtrim($path, '\//');
         }
@@ -313,14 +313,19 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function setControllerDirectory($path)
     {
         $dirs = (array) $path;
+        $this->_directories = array('default' => array());
+
         foreach ($dirs as $key => $dir) {
-            if (!is_dir($dir) or !is_readable($dir)) {
+            if (!is_dir($dir) || !is_readable($dir)) {
                 throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
             }
-            $dirs[$key] = rtrim($dir, '/\\');
+            if (!is_string($key) || ('default' == $key)) {
+                $this->_directories['default'][] = rtrim($dir, '/\\');
+            } else {
+                $this->_directories[$key] = rtrim($dir, '/\\');
+            }
         }
 
-        $this->_directories = $dirs;
         return $this;
     }
 
@@ -356,10 +361,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $fileSpec    = $this->classToFilename($className);
         $dispatchDir = $this->getDispatchDirectory();
         if (is_string($dispatchDir)) {
+            // module controller found
             $test = $dispatchDir . DIRECTORY_SEPARATOR . $fileSpec;
             return Zend::isReadable($test);
         }
 
+        // Test for controller in default controller directories
         $found = false;
         foreach ($dispatchDir as $dir) {
             $test = $dir . DIRECTORY_SEPARATOR . $fileSpec;
@@ -526,11 +533,6 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $this->setResponse($response);
 
         /**
-         * Get controller directories
-         */
-        $directories  = $this->getControllerDirectory();
-
-        /**
          * Get controller class
          */
         $className = $this->_getController($request);
@@ -563,7 +565,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
             }
             $className = $moduleClass;
         } else {
-            Zend::loadClass($className, $this->getControllerDirectory());
+            Zend::loadClass($className, $dispatchDir);
         }
         
         /**
@@ -632,11 +634,11 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $module = $request->getModuleName();
         
-        if ((null !== $module) && isset($controllerDirectory[$module])) {
+        if ((null === $module) || ('default' == $module) || !isset($controllerDirectory[$module])) {
+            $this->_curDirectory = $controllerDirectory['default'];
+        } else {
             $this->_curModule    = $this->formatModuleName($module);
             $this->_curDirectory = $controllerDirectory[$module];
-        } else {
-            $this->_curDirectory = $controllerDirectory;
         }
 
         return $className;
