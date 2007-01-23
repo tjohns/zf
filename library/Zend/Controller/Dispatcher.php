@@ -292,15 +292,25 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     */
     public function addControllerDirectory($path, $module = null)
     {
-        if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
-            require_once 'Zend/Controller/Dispatcher/Exception.php';
-            throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
-        }
-
-        if ((null === $module) || ('default' == $module)) {
-            $this->_directories['default'][] = rtrim($path, '\//');
+        if ('default' == $module) {
+            foreach ((array) $path as $dir) {
+                if (!is_string($dir) || !is_dir($dir) || !is_readable($dir)) {
+                    require_once 'Zend/Controller/Dispatcher/Exception.php';
+                    throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
+                }
+                $this->_directories['default'][] = rtrim($dir, '\//');
+            }
         } else {
-            $this->_directories[(string) $module] = rtrim($path, '\//');
+            if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
+                throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
+            }
+
+            if (null === $module) {
+                $this->_directories['default'][] = rtrim($path, '\//');
+            } else {
+                $this->_directories[(string) $module] = rtrim($path, '\//');
+            }
         }
 
         return $this;
@@ -317,13 +327,19 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $this->_directories = array('default' => array());
 
         foreach ($dirs as $key => $dir) {
-            if (!is_dir($dir) || !is_readable($dir)) {
-                require_once 'Zend/Controller/Dispatcher/Exception.php';
-                throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
-            }
-            if (!is_string($key) || ('default' == $key)) {
-                $this->_directories['default'][] = rtrim($dir, '/\\');
+            if ('default' == $key) {
+                foreach ((array) $dir as $d) {
+                    if (!is_dir($d) || !is_readable($d)) {
+                        require_once 'Zend/Controller/Dispatcher/Exception.php';
+                        throw new Zend_Controller_Dispatcher_Exception("Directory \"$d\" not found or not readable");
+                    }
+                    $this->_directories['default'][] = rtrim($d, '/\\');
+                }
             } else {
+                if (!is_dir($dir) || !is_readable($dir)) {
+                    require_once 'Zend/Controller/Dispatcher/Exception.php';
+                    throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
+                }
                 $this->_directories[$key] = rtrim($dir, '/\\');
             }
         }

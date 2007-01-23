@@ -207,7 +207,7 @@ class Zend_Controller_Front
     public function addControllerDirectory($directory, $module = null)
     {
         if ((null === $module) || ('default' == $module)) {
-            $this->_controllerDir['default'] = (string) $directory;
+            $this->_controllerDir['default'][] = (string) $directory;
         } else {
             $this->_controllerDir[(string) $module] = (string) $directory;
         }

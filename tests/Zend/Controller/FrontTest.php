@@ -113,7 +113,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     public function testSetGetControllerDirectory()
     {
         $test = $this->_controller->getControllerDirectory();
-        $expected = array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        $expected = array('default' => array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'));
         $this->assertSame($expected, $test);
     }
 
