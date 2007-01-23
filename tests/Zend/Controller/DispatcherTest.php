@@ -263,4 +263,22 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertContains("Admin_FooBar::bazBat action called", $body, $body);
     }
+
+    public function testUseModuleDefaultController()
+    {
+        $this->_dispatcher->setParam('useModules', true);
+        $this->_dispatcher->setParam('useModuleDefault', true);
+        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
+        $this->_dispatcher->setDefaultController('foo');
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
+
+        $this->assertFalse($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertContains("Admin_Foo::index action called", $body, $body);
+    }
 }

@@ -293,6 +293,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path, $module = null)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
+            require_once 'Zend/Controller/Dispatcher/Exception.php';
             throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
@@ -317,6 +318,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
         foreach ($dirs as $key => $dir) {
             if (!is_dir($dir) || !is_readable($dir)) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
                 throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
             }
             if (!is_string($key) || ('default' == $key)) {
@@ -344,16 +346,17 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Returns TRUE if the Zend_Controller_Request_Abstract object can be 
      * dispatched to a controller.
      *
-     * This only verifies that the Zend_Controller_Action can be dispatched and 
-     * does not guarantee that the action will be accepted by the 
-     * Zend_Controller_Action.
+     * Use this method wisely. By default, the dispatcher will fall back to the 
+     * default controller (either in the module specified or the global default) 
+     * if a given controller does not exist. This method returning false does 
+     * not necessarily indicate the dispatcher will not still dispatch the call.
      *
      * @param Zend_Controller_Request_Abstract $action
      * @return boolean
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
-        $className   = $this->_getController($request);
+        $className = $this->_getController($request);
         if (!$className) {
             return false;
         }
@@ -541,9 +544,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          * If no class name returned, dispatch to default controller
          */
         if (empty($className)) {
-            $controller = $this->getDefaultController();
-            $request->setControllerName($controller);
-            $className = $this->formatControllerName($controller);
+            $className = $this->_getDefaultControllerName($request);
         }
 
         /**
@@ -557,7 +558,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
             $loadFile = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
             $dir      = dirname($loadFile);
             $file     = basename($loadFile);
-            Zend::loadFile($file, $dir);
+            Zend::loadFile($file, $dir, true);
             $moduleClass = $this->_curModule . '_' . $className;
             if (!class_exists($moduleClass)) {
                 require_once 'Zend/Controller/Dispatcher/Exception.php';
@@ -634,14 +635,65 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $module = $request->getModuleName();
         
-        if ((null === $module) || ('default' == $module) || !isset($controllerDirectory[$module])) {
-            $this->_curDirectory = $controllerDirectory['default'];
-        } else {
+        if ($this->_isValidModule($module)) {
             $this->_curModule    = $this->formatModuleName($module);
             $this->_curDirectory = $controllerDirectory[$module];
+        } else {
+            $this->_curDirectory = $controllerDirectory['default'];
         }
 
         return $className;
+    }
+
+    /**
+     * Determine if a given module is valid
+     * 
+     * @param string $module 
+     * @return bool
+     */
+    protected function _isValidModule($module)
+    {
+        $controllerDir = $this->getControllerDirectory();
+        return ((null !== $module) && ('default' != $module) && isset($controllerDir[$module]));
+    }
+
+    /**
+     * Retrieve default controller
+     *
+     * Determines whether the default controller to use lies within the 
+     * requested module, or if the global default should be used.
+     *
+     * Will only use the module default if this has been specified as a param:
+     * <code>
+     * $dispatcher->setParam('useModuleDefault', true);
+     *
+     * // OR
+     * $front->setParam('useModuleDefault', true);
+     * </code>
+     * 
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return string
+     */
+    protected function _getDefaultControllerName($request)
+    {
+        $controller = $this->getDefaultController();
+        $default    = $this->formatControllerName($controller);
+        $request->setControllerName($controller);
+
+        $useModuleDefault = $this->getParam('useModuleDefault');
+
+        $module = $request->getModuleName();
+        if ($useModuleDefault && $this->_isValidModule($module)) {
+            $controllerDirs = $this->getControllerDirectory();
+            $moduleDir      = $controllerDirs[$module];
+            $fileSpec       = $moduleDir . DIRECTORY_SEPARATOR . $this->classToFilename($default);
+            if (Zend::isReadable($fileSpec)) {
+                $this->_curModule    = $this->formatModuleName($module);
+                $this->_curDirectory = $moduleDir;
+            } 
+        }
+
+        return $default;
     }
 
     /**
