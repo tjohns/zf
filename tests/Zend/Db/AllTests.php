@@ -1,21 +1,53 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+if (is_readable('TestConfiguration.php')) {
+    require_once('TestConfiguration.php');
+} else {
+    require_once('TestConfiguration.php.dist');
+}
+
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Db_AllTests::main');
+
+    /**
+     * Prepend library/ to the include_path.  This allows the tests to run out
+     * of the box and helps prevent finding other copies of the framework that
+     * might be present.
+     */
+    $zf_top = dirname(dirname(dirname(dirname(__FILE__))));
+    set_include_path($zf_top . DIRECTORY_SEPARATOR . 'library'
+         . PATH_SEPARATOR . get_include_path());
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-if(TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_ENABLED == true) {
-    require_once 'Zend/Db/Adapter/Pdo/MssqlTest.php';
-}
-if(TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED == true) {
-    require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
-}
-
-if(TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED == true) {
-    require_once 'Zend/Db/Adapter/Pdo/SqliteTest.php';
-}
+require_once 'Zend/Db/DbTest.php';
+require_once 'Zend/Db/Adapter/Pdo/MssqlTest.php';
+require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
+require_once 'Zend/Db/Adapter/Pdo/SqliteTest.php';
+// require_once 'Zend/Db/Adapter/Pdo/PostgresqlTest.php';
+// require_once 'Zend/Db/Adapter/Pdo/OracleTest.php';
+// require_once 'Zend/Db/Adapter/Pdo/Db2Test.php';
 
 class Zend_Db_AllTests
 {
@@ -28,16 +60,14 @@ class Zend_Db_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Db');
 
-        if(TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_ENABLED == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_MssqlTest');
-        }
-        if(TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_MysqlTest');
-        }
+        $suite->addTestSuite('Zend_Db_DbTest');
 
-        if(TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_SqliteTest');
-        }
+        $suite->addTestSuite('Zend_Db_Adapter_Pdo_MssqlTest');
+        $suite->addTestSuite('Zend_Db_Adapter_Pdo_MysqlTest');
+        $suite->addTestSuite('Zend_Db_Adapter_Pdo_SqliteTest');
+        // $suite->addTestSuite('Zend_Db_Adapter_Pdo_PostgresqlTest');
+        // $suite->addTestSuite('Zend_Db_Adapter_Pdo_OracleTest');
+        // $suite->addTestSuite('Zend_Db_Adapter_Pdo_Db2Test');
 
         return $suite;
     }

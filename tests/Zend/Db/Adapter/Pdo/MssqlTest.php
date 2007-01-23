@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getCreatTableSQL()
+    function getCreateTableSQL()
     {
         return 'CREATE TABLE  '. self::TableName . '
             (id int IDENTITY, title varchar(100), subTitle varchar (100),

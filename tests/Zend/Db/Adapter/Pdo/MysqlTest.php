@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getCreatTableSQL()
+    function getCreateTableSQL()
     {
         return 'CREATE TABLE  '. self::TableName . '
             (id INT NOT NULL auto_increment, title VARCHAR(100), subTitle VARCHAR (100),

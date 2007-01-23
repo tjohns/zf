@@ -24,7 +24,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     const TableName = 'zf_test_table';
 
 
-    abstract function getCreatTableSQL();
+    abstract function getCreateTableSQL();
     abstract function getParams();
     abstract function getDriver();
 
@@ -40,7 +40,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     protected function createTestTable()
     {
-        $this->_db->query($this->getCreatTableSQL());
+        $this->_db->query($this->getCreateTableSQL());
 
         $sql = 'INSERT INTO ' . self::TableName . " (title, subTitle, body, date_created)
                 VALUES ('News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
@@ -53,6 +53,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     function setUp()
     {
+        // check for driver test disabled
+        $driver = $this->getDriver();
+        $enabledConst = 'TESTS_ZEND_DB_ADAPTER_' . strtoupper($driver) . '_ENABLED';
+        if (!(defined($enabledConst) && constant($enabledConst) == true)) {
+            $this->markTestSkipped($driver . " tests disabled in TestConfiguration.php");
+        }
+        
         // open a new connection
         $this->_db = Zend_Db::factory($this->getDriver(), $this->getParams());
 
@@ -71,6 +78,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db = null;
     }
 
+
+    function testListTables()
+    {
+        $tables = $this->_db->listTables();
+        $this->assertEquals($tables[0], self::TableName);
+    }
+
+    function testDescribeTable()
+    {
+        $descr = $this->_db->describeTable(self::TableName);
+        $this->assertEquals($descr['id']['name'], 'id');
+        $this->assertEquals($descr['id']['type'], 'INTEGER');
+        $this->assertEquals($descr['id']['primary'], 1);
+    }
 
     function testFetchAll()
     {
@@ -110,6 +131,40 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $rows_affected = $this->_db->insert(self::TableName, $row);
         $last_insert_id = $this->_db->lastInsertId();
         $this->assertEquals('3', (string)$last_insert_id); // correct id has been set
+    }
+
+    function testLimit()
+    {
+        $sql = $this->_db->limit('SELECT * FROM ' . self::TableName, 1);
+        $result = $this->_db->query($sql);
+        $rows = $result->fetchAll();
+        $this->assertEquals(1, count($rows));
+        $this->assertEquals(5, count($rows[0]));
+        $this->assertEquals(1, $rows[0]['id']);
+
+        $sql = $this->_db->limit('SELECT * FROM ' . self::TableName, 1, 1);
+        $result = $this->_db->query($sql);
+        $rows = $result->fetchAll();
+        $this->assertEquals(1, count($rows));
+        $this->assertEquals(5, count($rows[0]));
+        $this->assertEquals(2, $rows[0]['id']);
+    }
+
+    function testProfilerCreation()
+    {
+        $this->assertThat($this->_db->getProfiler(), $this->isInstanceOf('Zend_Db_Profiler'));
+    }
+
+    function testSelect()
+    {
+        $select = $this->_db->select();
+        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
+
+        $select->from(self::TableName);
+        $result = $this->_db->query($select);
+        $row = $result->fetch();
+        $this->assertEquals(5, count($row)); // correct number of fields
+        $this->assertEquals('1', $row['id']); // correct data
     }
 
 }
