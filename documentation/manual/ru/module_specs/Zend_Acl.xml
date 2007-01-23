@@ -73,7 +73,7 @@
         </para>
         <para>
             In Zend_Acl, a Role may inherit from one or more Roles. This is to support inheritance of rules
-            among Roles. For example, a user Role, such as "sally", may belong to one or more role Roles,
+            among Roles. For example, a user Role, such as "sally", may belong to one or more parent Roles,
             such as "editor" and "administrator". The developer can assign rules to "editor" and
             "administrator" separately, and "sally" would inherit such rules from both, without having to
             assign rules directly to "sally".

@@ -229,13 +229,12 @@
         				    </para>
         				    
                     <para>
-                        Кроме этого, вы можете определять модуль
-                        (<code>module</code>), который будет использоваться при
-                        загрузке контроллера. Модуль используется только для
-                        определения префикса класса, используемого при загрузке
-                        контроллера и вдобавок поддиректорию в которой следует
-                        искать класс. Для использования модулей установите
-                        параметр <code>useModules</code> во фронт-контроллере:
+                        Кроме этого, вы можете определять модуль, используемый
+                        при загрузке контроллера. Модуль используется для
+                        определения префикса класса и поддиректории, в которой
+                        следует искать класс. Для того, чтобы использовать
+                        модули, установите параметр <code>useModules</code> во
+                        фронт-контроллере:
 <!--
                         Additionally, you can specify a <code>module</code> to
                         use when loading a controller. A module is merely used
@@ -251,6 +250,29 @@ $front->setParam('useModules', true);
 ]]></programlisting>
                     
                     <para>
+                        При этом необходимо установить соответствие директорий
+                        модулям. Вы можете делать это как при установке
+                        директорий так и при добавлении новой: 
+<!--
+                        Additionally, you have to specify a module to directory
+                        pairing when setting the controller directory. You can do
+                        this either when initializing it, or when adding another
+                        directory:
+-->
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    0      => '/path/to/default/controllers',
+    'user' => '/path/to/user/controllers'
+));
+
+// OR
+$front->setControllerDirectory('/path/to/default/controllers');
+$front->addControllerDirectory('/path/to/user/controllers', 'user');
+]]></programlisting>
+
+                    <para>
                         В качестве примера рассмотрим следующий URL:
 <!--
                         As an example, consider the following URL:
@@ -263,24 +285,30 @@ http://example.com/user/news/action
 
                     <para>
                         В этом примере указаны модуль 'user' и контроллер
-                        'news'. Диспетчер переводит это как "класс
+                        'news'. Если был определен модуль 'user' с
+                        соответствующей директорией, то из нее загружается файл
+                        <code>NewsController.php</code>, при этом ожидается, что
+                        в нем определен класс <code>User_NewsController</code>.
+                        
+                        Диспетчер переводит это как "класс
                         <code>User_NewsController</code>" и ищет его, используя
                         путь <code>User/NewsController.php</code> в путях,
                         заданных через
                         <code>setControllerDirectory()</code>.
 <!--
                         In the above example, the module 'user' is specified
-                        with the controller 'news'. The dispatcher translates
-                        this the <code>User_NewsController</code> class, and
-                        will look for it in <code>User/NewsController.php</code>
-                        within the paths specified with
-                        <code>setControllerDirectory()</code>.
+                        with the controller 'news'. The dispatcher attempts to
+                        determine if a module named 'user' is mapped to a
+                        directory; it is, so it then loads the
+                        <code>NewsController.php</code> file in that directory,
+                        expecing that the <code>User_NewsController</code> class
+                        will then be defined.
 -->
                     </para>
 
                     <para>
-                        Модули полезны, если вы хотите разбить код по
-                        связанным поддиректориям, использовать код сторонних
+                        Модули полезны, если вы хотите разделить код по
+                        директориям, использовать код сторонних
                         разработчиков или повторно использовать одну и ту же
                         библиотеку контроллеров для различных приложений.
 <!--
@@ -620,7 +648,8 @@ Action    : index]]>
                     примере может быть преобразован в
                     <code>http://framework.zend.com/admin/roadmap/future</code>.
                     Для этого установите параметр <code>useModules</code> во
-                    фронт-контроллере или маршрутизаторе: 
+                    фронт-контроллере или маршрутизаторе и добавьте директорию
+                    контроллера как модуль 'admin': 
 <!--
                     By setting the <code>useModules</code> parameter in the front
                     controller, you can map to subdirectories using clean URIs.
@@ -632,9 +661,12 @@ Action    : index]]>
                 </para>
 
                 <programlisting><![CDATA[
-$front->setParam('useModules', true);
-// или
 $router->setParam('useModules', true);
+// ИЛИ
+$front->setParam('useModules', true);
+
+// И
+$front->addControllerDirectory('/path/to/admin/controllers', 'admin');
 ]]></programlisting>
 
                 <para>

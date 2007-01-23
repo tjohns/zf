@@ -15,11 +15,17 @@
             Once input has been normalized via the creation of a <code>Zend_Date</code> object, it will have an
             associated timezone, but an internal representation using standard
             <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamps</ulink>
-            . All manipulations of these objects are assumed to be relative to this timezone. Beware of mixing and
-            matching operations with date parts between date objects for different timezones, which generally produce
-            undesireable results, unless the manipulations are only related to the timestamp. Operating on
-            <code>Zend_Date</code> objects having different timezones generally works, since dates are normalized to
-            UNIX timestamps on instantiation of <code>Zend_Date</code>.
+            . In order for a date to be rendered in a localized manner, a timezone must be known first. The default
+            timezone is always GMT/UTC. To examine an object's timezone use <code>getTimeZone())</code>. To change an
+            object's timezone, use <code>setTimeZone())</code>. All manipulations of these objects are assumed to be
+            relative to this timezone.
+        </para>
+
+        <para>
+            Beware of mixing and matching operations with date parts between date objects for different timezones, which
+            generally produce undesireable results, unless the manipulations are only related to the timestamp.
+            Operating on <code>Zend_Date</code> objects having different timezones generally works, except as just
+            noted, since dates are normalized to UNIX timestamps on instantiation of <code>Zend_Date</code>.
         </para>
 
         <para>
@@ -78,18 +84,20 @@ print $date;
         </example>
 
         <para>
-            Convenience methods exist for each combination of the basic operations above and several common date parts.
-            Conveniently, they are named by combining a prefix (name of a basic operation) with a suffix (type of date
-            part), such as <code>addYear()</code>. In the list below, all combinations of "Date Parts" and "Basic
-            Operations" exist. For example, the operation "add" exists for each of these date parts, including
-            <code>addDay()</code>, <code>addYear()</code>, etc.
+            Convenience methods exist for each combination of the basic operations and several common date parts as
+            shown in the tables below. These convenience methods help us lazy programmers avoid having to type out the
+            <link linkend="zend.date.constants.list">date part constants</link>
+            when using the general methods above. Conveniently, they are named by combining a prefix (name of a basic
+            operation) with a suffix (type of date part), such as <code>addYear()</code>. In the list below, all
+            combinations of "Date Parts" and "Basic Operations" exist. For example, the operation "add" exists for each
+            of these date parts, including <code>addDay()</code>, <code>addYear()</code>, etc.
         </para>
 
         <para>
             These convenience methods have the same equivalent functionality as the basic operation methods, but expect
-            string and integer <code>$date</code> operands containing values representing the type indicated by the
-            suffix of the convenience method. Thus, the names of these methods (e.g. "Year" or "Minute") identify the
-            units of the <code>$date</code> operand.
+            string and integer <code>$date</code> operands containing only the values representing the type indicated by
+            the suffix of the convenience method. Thus, the names of these methods (e.g. "Year" or "Minute") identify
+            the units of the <code>$date</code> operand, when <code>$date</code> is a string or integer.
         </para>
 
         <table>
@@ -138,24 +146,27 @@ print $date;
                         <entry>
                             <ulink url="http://en.wikipedia.org/wiki/Millisecond">millisecond</ulink>
                         </entry>
-                        <entry>thousands of a second (0-999)</entry>
+                        <entry>thousands of a second (0-999)
+            <code>Zend_Date</code> supports two additional methods for working with time units smaller than seconds. By
+            default, <code>Zend_Date</code> instances precision defaults to track milliseconds, as seen using <code>getFractionalPrecision()</code>. To
+            change the precision use <code>setFractionalPrecision($precision)</code>.
+                        </entry>
                     </row>
                     <row>
                         <entry>Day</entry>
-                        <entry>
-                            Zend_Date::DAY_SHORT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
+                        <entry>Zend_Date::DAY_SHORT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
                     </row>
                     <row>
                         <entry>Week</entry>
-                        <entry></entry>
+                        <entry>Zend_Date::WEEK is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string. Otherwise an exception is raised.</entry>
                     </row>
                     <row>
                         <entry>Date</entry>
-                        <entry></entry>
+                        <entry>Zend_Date::DAY_MEDIUM is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code>.  Otherwise, an attempt is made to normalize the <code>$date</code> string into a Zend_Date::DATE_MEDIUM formatted date.</entry>
                     </row>
                     <row>
                         <entry>Weekday</entry>
-                        <entry></entry>
+                        <entry>Zend_Date::WEEKDAY_DIGIT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
                     </row>
                     <row>
                         <entry>DayOfYear</entry>
@@ -173,437 +184,94 @@ print $date;
             </tgroup>
         </table>
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="strong">get($part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    returns the <code>$part</code> of object's date localized to <code>$locale</code> as a formatted
-                    string or integer
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    sets the <code>$part</code> of the current object to the corresponding value for that part found in
-                    the input <code>$date</code> having a locale <code>$locale</code>
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    adds the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the
-                    current object's date
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    subtracts the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code> to t the
-                    current object's date
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
-                </para>
-                <para>
-                    returns a cloned object, with only <code>$part</code> of the object's date copied to the clone, with
-                    the clone have its locale arbitrarily set to <code>$locale</code> (if specified)
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    compares <code>$part</code> of <code>$date</code> to this object's timestamp, returning 0 if they
-                    are equal, 1 if this object's part was more recent than $date's part, otherwise -1.
-                </para>
-            </listitem>
-        </itemizedlist>
-
         <para>
-            The following basic operations do not have corresponding convenience methods for the data parts listed
-            above:
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="strong">equals($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    returns true, if <code>$part</code> of <code>$date</code> having locale <code>$locale</code> is the
-                    same as this object's date <code>$part</code>, otherwise false
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">isEarlier($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    returns true, if <code>$part</code> of this object's date is earlier than <code>$part</code> of
-                    <code>$date</code> having a locale <code>$locale</code>
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">isLater($date, $part = null, $locale = null)</emphasis>
-                </para>
-                <para>
-                    returns true, if <code>$part</code> of this object's date is later than <code>$part</code> of
-                    <code>$date</code> having a locale <code>$locale</code>
-                </para>
-            </listitem>
-        </itemizedlist>
-
-    </sect2>
-
-    <sect2 id="zend.date.overview.detail">
-
-        <title>Date Part Specific Methods</title>
-
-        <para>
-            These convenience methods help us lazy programmers avoid having to type out the
-            <link linkend="zend.date.constants.list">date part constants</link>
-            when using the general methods above. The following date-part-specific methods are available:
+            These basic operations can be used instead of the convenience operations for specific date parts, if the
+            appropriate constant is used for the <code>$part</code> parameter.
         </para>
 
         <table>
-            <title>Detailed functions</title>
-            <tgroup cols="6">
+            <title>Basic Operations</title>
+            <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Related</entry>
-                        <entry>Output</entry>
-                        <entry>Setting</entry>
-                        <entry>Addition</entry>
-                        <entry>Subtraction</entry>
-                        <entry>Comparation</entry>
+                        <entry>Basic Operation</entry>
+                        <entry>Explanation</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
+                        <entry>get()</entry>
                         <entry>
-                            Unix Timestamp
-                        </entry>
-                        <entry>
-                            getTimestamp()
-                        </entry>
-                        <entry>
-                            setTimestamp()
-                        </entry>
-                        <entry>
-                            addTimestamp()
-                        </entry>
-                        <entry>
-                            subTimestamp()
-                        </entry>
-                        <entry>
-                            compareTimestamp()
+                            <para>
+                                <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns the <code>$part</code> of object's date localized to <code>$locale</code> as a
+                                formatted string or integer
+                            </para>
                         </entry>
                     </row>
                     <row>
+                        <entry>set()</entry>
                         <entry>
-                            Date
-                        </entry>
-                        <entry>
-                            getDate()
-                        </entry>
-                        <entry>
-                            setDate()
-                        </entry>
-                        <entry>
-                            addDate()
-                        </entry>
-                        <entry>
-                            subDate()
-                        </entry>
-                        <entry>
-                            compareDate()
+                            <para>
+                                <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                sets the <code>$part</code> of the current object to the corresponding value for that
+                                part found in the input <code>$date</code> having a locale <code>$locale</code>
+                            </para>
                         </entry>
                     </row>
                     <row>
+                        <entry>add()</entry>
                         <entry>
-                            Time
-                        </entry>
-                        <entry>
-                            getTime()
-                        </entry>
-                        <entry>
-                            setTime()
-                        </entry>
-                        <entry>
-                            addTime()
-                        </entry>
-                        <entry>
-                            subTime()
-                        </entry>
-                        <entry>
-                            compareTime()
+                            <para>
+                                <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                adds the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                                to t the current object's date
+                            </para>
                         </entry>
                     </row>
                     <row>
+                        <entry>sub()</entry>
                         <entry>
-                            Year
-                        </entry>
-                        <entry>
-                            getYear()
-                        </entry>
-                        <entry>
-                            setYear()
-                        </entry>
-                        <entry>
-                            addYear()
-                        </entry>
-                        <entry>
-                            subYear()
-                        </entry>
-                        <entry>
-                            compareYear()
+                            <para>
+                                <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                subtracts the <code>$part</code> of <code>$date</code> having a locale
+                                <code>$locale</code> to t the current object's date
+                            </para>
                         </entry>
                     </row>
                     <row>
+                        <entry>copyPart()</entry>
                         <entry>
-Month
-                        </entry>
-                        <entry>
-getMonth()
-                        </entry>
-                        <entry>
-setMonth()
-                        </entry>
-                        <entry>
-addMonth()
-                        </entry>
-                        <entry>
-subMonth()
-                        </entry>
-                        <entry>
-compareMonth()
+                            <para>
+                                <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns a cloned object, with only <code>$part</code> of the object's date copied to the
+                                clone, with the clone have its locale arbitrarily set to <code>$locale</code> (if
+                                specified)
+                            </para>
                         </entry>
                     </row>
                     <row>
+                        <entry>compare()</entry>
                         <entry>
-Day
+                            <para>
+                                <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                compares <code>$part</code> of <code>$date</code> to this object's timestamp, returning
+                                0 if they are equal, 1 if this object's part was more recent than $date's part,
+                                otherwise -1.
+                            </para>
                         </entry>
-                        <entry>
-getDay()
-                        </entry>
-                        <entry>
-setDay()
-                        </entry>
-                        <entry>
-addDay()
-                        </entry>
-                        <entry>
-subDay()
-                        </entry>
-                        <entry>
-compareDay()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Weekday
-                        </entry>
-                        <entry>
-getWeekday()
-                        </entry>
-                        <entry>
-setWeekday()
-                        </entry>
-                        <entry>
-addWeekday()
-                        </entry>
-                        <entry>
-subWeekday()
-                        </entry>
-                        <entry>
-compareWeekday()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Day of Year
-                        </entry>
-                        <entry>
-getDayOfYear()
-                        </entry>
-                        <entry>
-setDayOfYear()
-                        </entry>
-                        <entry>
-addDayOfYear()
-                        </entry>
-                        <entry>
-subDayOfYear()
-                        </entry>
-                        <entry>
-compareDayOfYear()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Hour
-                        </entry>
-                        <entry>
-getHour()
-                        </entry>
-                        <entry>
-setHour()
-                        </entry>
-                        <entry>
-addHour()
-                        </entry>
-                        <entry>
-subHour()
-                        </entry>
-                        <entry>
-compareHour()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Minute
-                        </entry>
-                        <entry>
-getMinute()
-                        </entry>
-                        <entry>
-setMinute()
-                        </entry>
-                        <entry>
-addMinute()
-                        </entry>
-                        <entry>
-subMinute()
-                        </entry>
-                        <entry>
-compareMinute()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Second
-                        </entry>
-                        <entry>
-getSecond()
-                        </entry>
-                        <entry>
-setSecond()
-                        </entry>
-                        <entry>
-addSecond()
-                        </entry>
-                        <entry>
-subSecond()
-                        </entry>
-                        <entry>
-compareSecond()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Millisecond
-                        </entry>
-                        <entry>
-getMilliSecond()
-                        </entry>
-                        <entry>
-setMilliSecond()
-                        </entry>
-                        <entry>
-addMilliSecond()
-                        </entry>
-                        <entry>
-subMilliSecond()
-                        </entry>
-                        <entry>
-compareMilliSecond()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Week
-                        </entry>
-                        <entry>
-getWeek()
-                        </entry>
-                        <entry>
-setWeek()
-                        </entry>
-                        <entry>
-addWeek()
-                        </entry>
-                        <entry>
-subWeek()
-                        </entry>
-                        <entry>
-compareWeek()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-ISO 8601 date
-                        </entry>
-                        <entry>
-getIso()
-                        </entry>
-                        <entry>
-setIso()
-                        </entry>
-                        <entry>
-addIso()
-                        </entry>
-                        <entry>
-subIso()
-                        </entry>
-                        <entry>
-compareIso()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-Arpa date
-                        </entry>
-                        <entry>
-getArpa()
-                        </entry>
-                        <entry>
-setArpa()
-                        </entry>
-                        <entry>
-addArpa()
-                        </entry>
-                        <entry>
-subArpa()
-                        </entry>
-                        <entry>
-compareArpa()
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-TimeZone
-                        </entry>
-                        <entry>
-getTimeZone()
-                        </entry>
-                        <entry>
-setTimeZone()
-                        </entry>
-                        <entry></entry>
-                        <entry></entry>
-                        <entry></entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -613,67 +281,144 @@ setTimeZone()
 
     <sect2 id="zend.date.overview.others">
 
-        <title>Additional Functions</title>
+        <title>Miscellaneous Methods</title>
 
         <para>
-            Certainly there are some additional functions not fitting into the above scheme while being helpful.
-        </para>
-
-        <para>
-            The following additional functions are available:
+            The following basic operations do not have corresponding convenience methods for the data parts listed
+            above:
         </para>
 
         <table>
-            <title>Additional Functions</title>
+            <title>Miscellaneous Methods</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Function</entry>
-                        <entry>Description</entry>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
+                        <entry>equals()</entry>
                         <entry>
-                            <link linkend="zend.date.output.tostring">toString()</link>
+                            <para>
+                                <emphasis role="strong">equals($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of <code>$date</code> having locale
+                                <code>$locale</code> is the same as this object's date <code>$part</code>, otherwise
+                                false
+                            </para>
                         </entry>
-                        <entry>Is able to return a user-defined string</entry>
                     </row>
                     <row>
+                        <entry>isEarlier()</entry>
                         <entry>
-                            <link linkend="zend.date.output.tovalue">toValue()</link>
+                            <para>
+                                <emphasis role="strong">isEarlier($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of this object's date is earlier than
+                                <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                            </para>
                         </entry>
-                        <entry>Converts a date to a digit</entry>
                     </row>
                     <row>
+                        <entry>isLater()</entry>
                         <entry>
-                            <link linkend="zend.date.other.now">now()</link>
+                            <para>
+                                <emphasis role="strong">isLater($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of this object's date is later than
+                                <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                            </para>
                         </entry>
-                        <entry>Returns the current date</entry>
                     </row>
                     <row>
+                        <entry>isToday()</entry>
                         <entry>
-                            <link linkend="zend.date.other.leapyear">isLeapYear()</link>
+                            <para>
+                                <emphasis role="strong">isToday()</emphasis>
+                            </para>
+                            <para>
+                                Tests if today's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
                         </entry>
-                        <entry>Is the year a leap year?</entry>
                     </row>
                     <row>
+                        <entry>isTomorrow()</entry>
                         <entry>
-                            <link linkend="zend.date.other.today">isToday()</link>
+                            <para>
+                                <emphasis role="strong">isTomorrow()</emphasis>
+                            </para>
+                            <para>
+                                Tests if tomorrow's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
                         </entry>
-                        <entry>Is the date today?</entry>
                     </row>
                     <row>
+                        <entry>isYesterday()</entry>
                         <entry>
-                            <link linkend="zend.date.other.today">isTomorrow()</link>
+                            <para>
+                                <emphasis role="strong">isYesterday()</emphasis>
+                            </para>
+                            <para>
+                                Tests if yesterday's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
                         </entry>
-                        <entry>Is the date tomorrow?</entry>
                     </row>
                     <row>
+                        <entry>toString()</entry>
                         <entry>
-                            <link linkend="zend.date.other.today">isYesterday()</link>
+                            <para>
+                                <emphasis role="strong">toString($format = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                Invoked directly or via the magic method <code>__toString()</code>. Returns this
+                                object's date value formatted according to <code>$locale</code> (defaults to this
+                                object's locale).
+                            </para>
                         </entry>
-                        <entry>is the date yesterday?</entry>
+                    </row>
+                    <row>
+                        <entry>toValue()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toValue($part = null)</emphasis>
+                            </para>
+                            <para>
+                                Converts a date to a digit
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>now()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">now($locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This convenience function is equivalent to <code>new Zend_Date()</code>. It returns the
+                                current date as a <code>Zend_Date</code> object, having <code>$locale</code>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isLeapYear()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">now($locale = null)</emphasis>
+                            </para>
+                            <para>
+                                Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
+                                Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or
+                                instance of <code>Zend_Date</code>. Is the year a leap year?
+                            </para>
+                        </entry>
                     </row>
                     <row>
                         <entry>
