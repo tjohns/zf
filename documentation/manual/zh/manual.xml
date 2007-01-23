@@ -72,6 +72,16 @@
         &module_specs.Zend_Controller-Plugins;
         &module_specs.Zend_Controller-Migration;
     </chapter>
+	 <chapter id="zend.date">
+        <title>Zend_Date</title>
+        &module_specs.Zend_Date-Introduction;
+        &module_specs.Zend_Date-Basic;
+        &module_specs.Zend_Date-Theory;
+        &module_specs.Zend_Date-Overview;
+        &module_specs.Zend_Date-Output;
+        &module_specs.Zend_Date-Others;
+        &module_specs.Zend_Date-Constants;
+    </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
@@ -233,8 +243,7 @@
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
-    &ref.copyrights;
-	&ref.ga;
+    &ref.copyrights;	
     <index id="the.index" />
 </book>
 <!--
