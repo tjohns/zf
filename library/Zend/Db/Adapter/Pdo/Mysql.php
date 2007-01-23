@@ -103,11 +103,11 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
      *
      * @return string
      */
-     public function limit($sql, $count, $offset)
+     public function limit($sql, $count, $offset = 0)
      {
         if ($count > 0) {
             $offset = ($offset > 0) ? $offset : 0;
-            $sql .= "LIMIT $offset, $count";
+            $sql .= " LIMIT $offset, $count";
         }
         return $sql;
     }

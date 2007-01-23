@@ -542,5 +542,5 @@ abstract class Zend_Db_Adapter_Abstract
      *
      * @return string
      */
-    abstract public function limit($sql, $count, $offset);
+    abstract public function limit($sql, $count, $offset = 0);
 }

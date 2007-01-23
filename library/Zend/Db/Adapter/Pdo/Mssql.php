@@ -109,7 +109,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * @link http://lists.bestpractical.com/pipermail/rt-devel/2005-June/007339.html
      * @return string
      */
-     public function limit($sql, $count, $offset)
+     public function limit($sql, $count, $offset = 0)
      {
         if ($count) {
 

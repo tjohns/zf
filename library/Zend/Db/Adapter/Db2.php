@@ -400,7 +400,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @return string
      */
-  	public function limit($sql, $count, $offset)
+  	public function limit($sql, $count, $offset = 0)
   	{
   		if(!$count) {
   			return $sql;

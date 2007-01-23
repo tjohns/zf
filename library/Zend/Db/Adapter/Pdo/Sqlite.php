@@ -139,10 +139,10 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
      *
      * @return string
      */
-    public function limit($sql, $count, $offset)
+    public function limit($sql, $count, $offset = 0)
     {
         if ($count > 0) {
-            $sql .= "LIMIT $count";
+            $sql .= " LIMIT $count";
             if ($offset > 0) {
                 $sql .= " OFFSET $offset";
             }
