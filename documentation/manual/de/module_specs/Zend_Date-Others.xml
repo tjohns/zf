@@ -10,11 +10,7 @@
 
         <title>Fractional Seconds</title>
 
-        <para>
-            <code>Zend_Date</code> supports several methods for working with time units smaller than seconds. By
-            default, precision is set to track milliseconds, as seen using <code>getFractionalPrecision()</code>. To
-            change the precision use <code>setFractionalPrecision($precision)</code>.
-        </para>
+        <para></para>
 
     </sect2>
 
@@ -22,11 +18,7 @@
 
         <title>Working with Timezones</title>
 
-        <para>
-            In order for a date to be rendered in a localized manner, a timezone must be known first. The default
-            timezone is always GMT/UTC. To examine an object's timezone use <code>getTimeZone())</code>. To change an
-            object's timezone, use <code>setTimeZone())</code>.
-        </para>
+        <para></para>
 
     </sect2>
 
@@ -44,9 +36,7 @@
 
         <title>public static now()</title>
 
-        <para>
-            This convenience function is equivalent to <code>new Zend_Date()</code>.
-        </para>
+        <para></para>
 
     </sect2>
 
@@ -54,11 +44,7 @@
 
         <title>Leap Years</title>
 
-        <para>
-            Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
-            Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or instance of
-            <code>Zend_Date</code>.
-        </para>
+        <para></para>
 
     </sect2>
 
@@ -67,7 +53,6 @@
         <title>Today, Tomorrow, Yesterday</title>
 
         <para>
-            Conveniently, <code>Zend_Date</code> provides the ability to check localized dates against the common tests
             for <code>isToday()</code>, <code>isYesterday()</code>, and <code>isTomorrow()</code>.
         </para>
 

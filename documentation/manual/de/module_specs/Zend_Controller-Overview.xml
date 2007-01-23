@@ -109,14 +109,31 @@
                     <para>
                         Zusätzlich kann man ein <code>Modul</code> angeben, das beim Laden eines
                         Controllers verwendet wird. Ein Modul wird lediglich dazu verwendet, um
-                        ein Klassenprefix zum Laden eines Controllers und, als Erweiterung, ein
-                        Unterverzeichnis anzugeben, in dem nach der Klasse gesucht werden soll. Um
+                        ein Klassenprefix zum Laden eines Controllers und ein Unterverzeichnis 
+                        anzugeben, in dem nach der Klasse gesucht werden soll. Um
                         Module zu verwenden, muss man den <code>useModules</code> Parameter im 
                         Front Controller setzen:
                     </para>
 
                     <programlisting role="php"><![CDATA[
 $front->setParam('useModules', true);
+]]></programlisting>
+
+                    <para>
+                        Zusätzlich muss man ein Modul nach Verzeichnis Paar angeben, wenn das
+                        Controller Verzeichnis gesetzt wird. Man kann dies sowohl beim
+                        Initialisieren als auch beim Hinzufügen weiterer Verzeichnisse machen:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    0      => '/path/to/default/controllers',
+    'user' => '/path/to/user/controllers'
+));
+
+// OR
+$front->setControllerDirectory('/path/to/default/controllers');
+$front->addControllerDirectory('/path/to/user/controllers', 'user');
 ]]></programlisting>
 
                     <para>
@@ -129,10 +146,10 @@ http://example.com/user/news/action
 
                     <para>
                         Im obigen Beispiel wird das Modul 'user' mit dem Controller 'news' 
-                        angegeben. Der Dispatcher übersetze dies in die 
-                        <code>User_NewsController</code> Klasse und wird nach ihr in 
-                        <code>User/NewsController.php</code> innerhalb der mit 
-                        <code>setControllerDirectory()</code> angegebenen Verzeichnisse schauen.
+                        angegeben. Der Dispatcher versucht herauszufinden, ob ein Modul 'user' auf
+                        ein Verzeichnis passt; falls ja, wird die <code>NewsController.php</code> 
+                        in diesem Verzeichnis geladen unter der Annahme, dass dann die 
+                        <code>User_NewsController</code> Klasse definiert wird sein.
                     </para>
 
                     <para>

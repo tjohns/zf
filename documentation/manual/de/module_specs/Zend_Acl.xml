@@ -85,10 +85,10 @@
         <para>
             In Zend_Acl kann eine Rolle von einer oder mehreren Rollen erben. Dies soll die 
             Vererbung von Regeln zwischen den Rollen ermöglichen. Zum Beispiel kann eine 
-            Benutzerrolle, wie "Sally" zu einer oder mehreren Rollen gehören, wie "Editor" und 
-            "Administrator". Der Entwickler kann zu "Editor" und "Administrator" getrennt Regeln 
-            zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass "Sally" direkt
-            Regeln zugeordnet werden müssen.
+            Benutzerrolle, wie "Sally" zu einer oder mehreren übergeordneten Rollen gehören, wie 
+            "Editor" und "Administrator". Der Entwickler kann zu "Editor" und "Administrator" 
+            getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass 
+            "Sally" direkt Regeln zugeordnet werden müssen.
         </para>
         <note>
             <para>
