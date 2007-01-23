@@ -47,6 +47,25 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
 
 
     /**
+     * Creates a PDO DSN for the adapter from $this->_config settings.
+     *
+     * @return string
+     */
+    protected function _dsn()
+    {
+        // baseline of DSN parts
+        $dsn = $this->_config;
+
+        $tns = 'dbname=//' . $dsn['host'];
+        if (isset($dsn['port'])) {
+            $tns .= ':' . $dsn['port'];
+        }
+        $tns .= '/' . $dsn['dbname'];
+
+        return $this->_pdoType . ':' . $tns;
+    }
+
+    /**
      * Quotes an identifier.
      *
      * @param string $ident The identifier.
