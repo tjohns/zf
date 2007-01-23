@@ -27,7 +27,6 @@ define('TESTS_ZEND_CACHE_MEMCACHED_HOST', '127.0.0.1');
 define('TESTS_ZEND_CACHE_MEMCACHED_PORT', 11211);
 define('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT', true);
 
-
 /**
  * Zend_Db_Adapter_Pdo_MySQL
  */
@@ -37,7 +36,6 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_USERNAME', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_DATABASE', 'test');
 
-
 /**
  * Zend_Db_Adapter_Pdo_Sqlite
  */
@@ -45,7 +43,6 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED',  false);
 define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
-
 
 /**
  * Zend_Db_Adapter_Pdo_Mssql
@@ -56,11 +53,21 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE', 'test');
 
+/**
+ * Zend_Db_Adapter_Pdo_Pgsql
+ */
+define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE', 'postgres');
 
 /**
- * @todo Pgsql, etc.
+ * @todo Pdo_Oracle
+ * @todo Pdo_DB2
+ * @todo Oracle
+ * @todo DB2
  */
-
 
 /**
  * Zend_Http_Client tests
