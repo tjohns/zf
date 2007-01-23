@@ -83,7 +83,7 @@ $acl = new Zend_Acl();]]></programlisting>
          </para>
 
         <table>
-          <title>一CMS范例的访问控制</title>
+          <title>一个CMS范例的访问控制</title>
           <tgroup cols="3">
             <thead>
               <row>
