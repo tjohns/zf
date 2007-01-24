@@ -57,7 +57,7 @@ class Zend_Currency {
     /**
      * the locale name of the region that uses the currency
      * 
-     * @var Zend_Locale
+     * @var string
      */
     private $_currencyLocale = null;
     
@@ -96,7 +96,7 @@ class Zend_Currency {
     /**
      * the locale of the symbol
      * 
-     * @var Zend_Locale
+     * @var string
      */
     private $_symbolLocale = null;
     
@@ -112,7 +112,7 @@ class Zend_Currency {
     /**
      * the locale for formating the output
      *
-     * @var Zend_Locale
+     * @var string
      */
     private $_formatLocale = null;
     
@@ -158,11 +158,10 @@ class Zend_Currency {
         foreach ($params as $num => $param){
             
             //get the locale
-            if ( (is_object($param) && $param instanceof Zend_Locale) || 
-                 (is_string($param) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$param)) ) {
+            if ( ( $locale = Zend_Locale::isLocale($param) ) && strlen($locale) > 4) {
                 
                 if (empty($this->_currencyLocale)){
-                    $this->_setCurrencyLocale($param);
+                    $this->_setCurrencyLocale($locale);
                 } else {
                     throw new Zend_Currency_Exception('many locales passed');
                 }
@@ -213,8 +212,10 @@ class Zend_Currency {
      */
     protected function _updateShortName()
     {
+        $locale = $this->_currencyLocale;
+        
         //getting the short name of the currency
-        $data = Zend_Locale_Data::getContent('','currencyforregion',$this->_currencyLocale->getRegion());
+        $data = Zend_Locale_Data::getContent('','currencyforregion',substr($locale, strpos($locale, '_')+1));
         
         $this->_shortName = $data['currency'];
         
@@ -230,8 +231,10 @@ class Zend_Currency {
      */
     protected function _updateFullName()
     {
+        $locale = $this->_currencyLocale;
+        
         //getting the full name of the currency
-        $names = Zend_Locale_Data::getContent('','currencynames',$this->_currencyLocale->getRegion());
+        $names = Zend_Locale_Data::getContent('','currencynames',substr($locale, strpos($locale, '_')+1) );
         
         $this->_fullName = isset($names[$this->_shortName])?$names[$this->_shortName]:$this->_shortName;
         
@@ -249,7 +252,7 @@ class Zend_Currency {
     {
         $formatLocale = $this->_symbolLocale;
         
-        if (!$formatLocale instanceof Zend_Locale) {
+        if (!empty($formatLocale)) {
             $formatLocale = $this->_currencyLocale;
         }
         
@@ -272,7 +275,7 @@ class Zend_Currency {
     {
         $formatLocale = $this->_formatLocale;
         
-        if (!$formatLocale instanceof Zend_Locale) {
+        if (!empty($formatLocale)) {
             $this->_formatLocale = $this->_currencyLocale;
             $formatLocale = $this->_formatLocale;
         }
@@ -389,7 +392,7 @@ class Zend_Currency {
         
         //set the locale for the number formating process
         if (!empty($locale)) {
-            if (Zend_Locale::isLocale($locale)) {
+            if ($locale = Zend_Locale::isLocale($locale)) {
                 $this->_formatLocale = $locale;
             } else {
                 throw new Zend_Currency_Exception('the 3rd param isn\'t a valid locale');
@@ -421,10 +424,8 @@ class Zend_Currency {
         //validate the locale and get the country short name
         $country = null;
         
-        if (is_object($locale) && $locale instanceof Zend_Locale) {
-            $country = $locale->getRegion();
-        } else if (is_string($locale) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$locale)) {
-            $country = substr($locale, 3, 2);
+        if ( ($locale = Zend_Locale::isLocale($locale) ) && strlen($locale) > 4 ) {
+            $country = substr($locale, strpos($locale, '_')+1 );
         } else {
             throw new Zend_Currency_Exception('pass a valid locale');
         }
@@ -468,10 +469,8 @@ class Zend_Currency {
         //validate the locale and get the country short name
         $country = null;
         
-        if (is_object($locale) && $locale instanceof Zend_Locale) {
-            $country = $locale->getRegion();
-        } else if (is_string($locale) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$locale)) {
-            $country = substr($locale, 3, 2);
+        if ( ($locale = Zend_Locale::isLocale($locale) ) && strlen($locale) > 4 ) {
+            $country = substr($locale, strpos($locale, '_')+1 );
         } else {
             throw new Zend_Currency_Exception('pass a valid locale');
         }
@@ -564,10 +563,8 @@ class Zend_Currency {
      */
     private function _setCurrencyLocale($locale)
     {
-        if (is_object($locale) && $locale instanceof Zend_Locale){
+        if (( $locale = Zend_Locale::isLocale($locale) ) && strlen($locale) > 4){
             $this->_currencyLocale = $locale ;
-        } else if (is_string($locale)) {
-            $this->_currencyLocale = new Zend_Locale($locale);
         } else {
             throw new Zend_Currency_Exception('invalid locale');
         }
@@ -606,5 +603,7 @@ class Zend_Currency {
             throw new Zend_Currency_Exception('invalid script name');
         }
     }
+
+    
 }
 
