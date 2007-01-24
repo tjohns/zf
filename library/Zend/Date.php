@@ -2835,7 +2835,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function getSunRise($location)
+    public function getSunrise($location)
     {
         $horizon = $this->_checkLocation($location);
         $result = clone $this;
@@ -2855,7 +2855,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function getSunSet($location)
+    public function getSunset($location)
     {
         $horizon = $this->_checkLocation($location);
         $result = clone $this;
