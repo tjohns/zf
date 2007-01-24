@@ -210,7 +210,7 @@
         <para>
             このようなときのためにあるのが Zend_Http_Client_Adapter_Test アダプタです。
             Zend_Http_Client を使用するアプリケーションを作成し、それをテストしたい場合には、
-            デフォルトのアダプタを Test アダプタに変更します。
+            デフォルトのアダプタを Test アダプタ (モックオブジェクト) に変更します。
             これで、サーバに接続せずにテストを行えるようになります。
         </para>
         <para>
@@ -221,7 +221,7 @@
             実際の HTTP リクエストは行いません。
         </para>
         <example>
-            <title>ネットワーク接続をせずにコードをテストする</title>
+            <title>HTTP レスポンススタブを使用したテスト</title>
             <programlisting role="php">
 <![CDATA[<?php
     // 新しいアダプタとクライアントのインスタンスを作成します
@@ -253,6 +253,70 @@
             その際にネットワーク接続は使用しません。また、実際のサーバからのレスポンスも使用しません。
             この場合、このテストでテストするのは、
             レスポンス本文の XML をアプリケーションが正しくパースできるかどうかということです。
+        </para>
+        
+        <para>
+            時には、オブジェクトに対するひとつのメソッド呼び出しの中で複数の
+            HTTP トランザクションを行うこともあるでしょう。そのような場合は
+            setResponse() を単独で使うことはできません。なぜなら、
+            結果が呼び出し元に返ってくるまで次のレスポンスを設定できないからです。
+        </para>
+        <example>
+            <title>複数の HTTP レスポンススタブを使用したテスト</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    // 新しいアダプタおよびクライアントのインスタンスを作成します
+    $adapter = new Zend_Http_Client_Adapter_Test();
+    $client = Zend_Http_Client('http://www.example.com', array(
+        'adapter' => $adapter
+    ));
+    
+    // 最初の応答として期待する値を設定します
+    $adapter->setResponse(
+        "HTTP/1.1 302 Found"      . "\r\n" .
+        "Location: /"             . "\r\n" .
+        "Content-Type: text/html" . "\r\n" .
+                                    "\r\n" . 
+        '<html>' . 
+        '  <head><title>Moved</title></head>' .
+        '  <body><p>This page has moved.</p></body>' . 
+        '</html>');
+
+    // それに続くレスポンスを設定します
+    $adapter->addResponse(
+        "HTTP/1.1 200 OK"         . "\r\n" .
+        "Content-Type: text/html" . "\r\n" .
+                                    "\r\n" . 
+        '<html>' . 
+        '  <head><title>My Pet Store Home Page</title></head>' . 
+        '  <body><p>...</p></body>' . 
+        '</html>');
+
+    // HTTP クライアントオブジェクト ($client) をテスト対象の
+    // オブジェクトに注入し、オブジェクトの動きを以下でテストします
+?>]]></programlisting>
+        </example>
+        <para>
+            setResponse() メソッドは、
+            Zend_Http_Client_Adapter_Test のバッファにあるレスポンスをすべて削除し、
+            最初に返されるレスポンスを設定します。addResponse()
+            メソッドは、それに続くレスポンスを追加します。
+        </para>
+        <para>
+            レスポンスは、それを追加した順に再生されます。
+            登録したよりも多くのリクエストが発生した場合は、
+            返されるレスポンスは最初のものに戻り、そこからまた順に返されるようになります。
+        </para>
+        <para>
+            上の例で、このアダプタがテストするように設定されているのは、
+            302 リダイレクトが発生した場合のオブジェクトの挙動です。
+            アプリケーションの内容によって、リダイレクトさせるべきなのかそうでないのかは異なるでしょう。
+            この例ではリダイレクトさせることを想定しているので、
+            テストアダプタもそれにあわせて設定しています。
+            最初の 302 レスポンスを setResponse() メソッドで設定し、
+            次に返される 200 レスポンスを addResponse() メソッドで設定します。
+            テストアダプタを設定し終えたら、そのアダプタを含む HTTP
+            クライアントをテスト対象オブジェクトに注入し、その挙動をテストします。
         </para>
     </sect2>
     
