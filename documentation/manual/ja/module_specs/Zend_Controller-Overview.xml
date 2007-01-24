@@ -126,6 +126,24 @@ $front->setParam('useModules', true);
 ]]></programlisting>
 
                     <para>
+                        さらに、コントローラディレクトリを設定する際に
+                        モジュールとディレクトリの対応を指定しなければなりません。
+                        これはコントローラを初期化するときでも可能ですし、
+                        あとで別のディレクトリを追加してもかまいません。
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    0      => '/path/to/default/controllers',
+    'user' => '/path/to/user/controllers'
+));
+
+// あるいは
+$front->setControllerDirectory('/path/to/default/controllers');
+$front->addControllerDirectory('/path/to/user/controllers', 'user');
+]]></programlisting>
+
+                    <para>
                         たとえば、次のような URL を考えてみましょう。
                     </para>
 
@@ -135,10 +153,12 @@ http://example.com/user/news/action
 
                     <para>
                         この例では、コントローラ 'news' に対してモジュール 'user'
-                        が設定されています。ディスパッチャはこれを
-                        <code>User_NewsController</code> クラスに変換し、
-                        <code>setControllerDirectory()</code> で指定したパスの中の
-                        <code>User/NewsController.php</code> でそのクラスを探します。
+                        が設定されています。ディスパッチャは
+                        'user' という名前のモジュールがディレクトリに対応しているかどうかを調べます。
+                        対応している場合はそのディレクトリから
+                        <code>NewsController.php</code> というファイルを読み込みます。
+                        この中で <code>User_NewsController</code>
+                        というクラスが定義されているものと考えます。
                     </para>
 
                     <para>
@@ -328,13 +348,17 @@ http://framework.zend.com/
                     きれいな URI に対応させることができます。上の例の URL は
                     <code>http://framework.zend.com/admin/roadmap/future</code>
                     となります。こうするには、<code>useModules</code>
-                    パラメータをフロントコントローラかルータで設定します。
+                    パラメータをフロントコントローラかルータで設定し、
+                    コントローラのディレクトリを 'admin' モジュールとして追加します。
                 </para>
 
                 <programlisting><![CDATA[
-$front->setParam('useModules', true);
-// あるいは
 $router->setParam('useModules', true);
+// あるいは
+$front->setParam('useModules', true);
+
+// そして
+$front->addControllerDirectory('/path/to/admin/controllers', 'admin');
 ]]></programlisting>
 
                 <para>
