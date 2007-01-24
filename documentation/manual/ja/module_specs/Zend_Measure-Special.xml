@@ -1,37 +1,39 @@
 <sect1 id="zend.measure.special">
 
-    <title>Special functions</title>
+    <title>特別な関数</title>
 
     <para>
-        To make your work easier, there are a few additional functions, which will be described below.
+        作業を簡単に進めるため、さらにいくつかの関数が用意されています。
+        以下で、それらについて説明します。
     </para>
 
     <para>
-        <link linkend="zend.measure.special.serial"><code>Serializing and Deserializing</code>
+        <link linkend="zend.measure.special.serial"><code>シリアライズおよびデシリアライズ</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.special.typelist"><code>Listing all known types</code>
+        <link linkend="zend.measure.special.typelist"><code>すべての型の一覧</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.special.unitlist"><code>Listing all known units</code>
+        <link linkend="zend.measure.special.unitlist"><code>すべての単位の一覧</code>
         </link>
     </para>
 
     <sect2 id="zend.measure.special.serial">
 
-        <title>Serializing and Deserializing</title>
+        <title>シリアライズおよびデシリアライズ</title>
 
         <para>
-            To save measurements for later use, <code>Zend_Measure</code> supports serialization.
+            保存しておいた値を後で使用できるように、
+            <code>Zend_Measure</code> はシリアライズをサポートしています。
         </para>
 
         <para>
             <example>
-                <title>Serializing</title>
+                <title>シリアライズ</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -40,17 +42,17 @@ $unit = new Zend_Measure(100,Zend_Measure::LENGTH);
 
 $serial = $unit->serialize();
 
-// save ... or any other action
+// 保存するなど、何らかの操作をします
 ?>]]></programlisting>
             </example>
             <example>
-                <title>Deserializing</title>
+                <title>デシリアライズ</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
 
-// load serialized object
+// シリアライズしたオブジェクトを読み込みます
 
 $unit = unserialize($serial);
 
@@ -63,34 +65,35 @@ echo $unit;
 
     <sect2 id="zend.measure.special.typelist">
 
-        <title>Listing all known types</title>
+        <title>すべての型の一覧</title>
 
         <para>
-            The function <code>getAllTypes</code> returns an array containing all types of measurement.
+            関数 <code>getAllTypes</code> は、すべての型を含む配列を返します。
         </para>
 
         <para>
-            This could be used to let a user choose the type of measurement (length, weight, area) he wishes to input.
+            これを使用すると、ユーザ自身に使用したい型 (長さ、重さ、面積など)
+            を選択させることができます。
         </para>
 
     </sect2>
 
     <sect2 id="zend.measure.special.unitlist">
 
-        <title>Listing all known units</title>
+        <title>すべての単位の一覧</title>
 
         <para>
-            The function <code>getTypeList</code> returns an array containing all units of measurement for a given type.
+            関数 <code>getTypeList</code> は、指定した方のすべての単位を含む配列を返します。
         </para>
 
         <para>
-            This could be used to let a user choose the unit of measurement (meters, kilometers, millimeters,...) for
-            his input.
+            これを使用すると、ユーザ自身に使用したい単位 (メートル、キロメートル、ミリメートルなど)
+            を選択させることができます。
         </para>
 
         <para>
             <example>
-                <title>Listing all units for a given type</title>
+                <title>指定した方のすべての単位の一覧</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');

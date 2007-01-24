@@ -1,19 +1,19 @@
 <sect1 id="zend.measure.types">
 
-    <title>Types of measurements</title>
+    <title>計測値の型</title>
 
     <sect2 id="zend.measure.types.acceleration">
 
         <title>Zend_Measure_Acceleration</title>
 
         <para>
-            <code>Zend_Measure_Acceleration</code> covers the physical factor of acceleration.
+            <code>Zend_Measure_Acceleration</code> は加速度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is meter per square second (<code>m/s²</code>).
+                標準の計測単位は、メートル毎秒毎秒 (<code>m/s²</code>) です。
             </para>
         </note>
 
@@ -23,11 +23,11 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Acceleration');
 
-// define standard measurement unit
+// 標準の計測単位を定義します
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure(100,Zend_Measure::ACCELERATION, $locale);
 
-// convert to km/s²
+// km/s² に変換します
 echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
 ?>]]></programlisting>
         </para>
@@ -39,13 +39,13 @@ echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
         <title>Zend_Measure_Angle</title>
 
         <para>
-            <code>Zend_Measure_Angle</code> covers angular dimensions.
+            <code>Zend_Measure_Angle</code> は角度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is radiant (<code>rad</code>).
+                標準の計測単位は、ラジアン (<code>rad</code>) です。
             </para>
         </note>
 
@@ -58,7 +58,7 @@ Zend::loadClass('Zend_Measure_Angle');
 $locale = new Zend_Locale('en');
 $angle = new Zend_Measure(100,Zend_Measure::ANGLE, $locale);
 
-// add a second angle
+// ふたつめの角度を追加します
 $second = new Zend_Measure(30,Zend_Measure::ANGLE, $locale);
 $sum = $angle->add($second);
 
@@ -73,13 +73,13 @@ echo $sum->convertTo(Zend_Measure_Angle::DEGREE);
         <title>Zend_Measure_Area</title>
 
         <para>
-            <code>Zend_Measure_Area</code> covers square measures.
+            <code>Zend_Measure_Area</code> は平方値を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is square meter (<code>m²</code>).
+                標準の計測単位は平方メートル (<code>m²</code>) です。
             </para>
         </note>
 
@@ -89,11 +89,11 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Area');
 
-// define another measurement... here hectare
+// 別の値を、ここではヘクタールで定義します
 $locale = new Zend_Locale('en');
 $area = new Zend_Measure(100,Zend_Measure_Area::HECTARE, $locale);
 
-// convert to the standard measurement unit Zend_Measure_Area::SQUARE_METER
+// 標準単位である Zend_Measure_Area::SQUARE_METER に変換します
 echo $area->convertTo(Zend_Measure_Area::STANDARD);
 ?>]]></programlisting>
         </para>
@@ -105,13 +105,13 @@ echo $area->convertTo(Zend_Measure_Area::STANDARD);
         <title>Zend_Measure_Binary</title>
 
         <para>
-            <code>Zend_Measure_Binary</code> covers binary convertions.
+            <code>Zend_Measure_Binary</code> はバイナリ変換を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is byte (<code>b</code>).
+                標準の計測単位は、バイト (<code>b</code>) です。
             </para>
         </note>
 
@@ -124,34 +124,36 @@ Zend::loadClass('Zend_Measure_Binary');
 $locale = new Zend_Locale('en');
 $binary = new Zend_Measure(100,Zend_Measure_Binary::MEGABYTE, $locale);
 
-// convert to the measurement unit megabyte as defined by SI
+// SI で定義されている単位であるメガバイトに変換します
 echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
 ?>]]></programlisting>
         </para>
 
         <note>
-            <title>Binary conventions</title>
+            <title>バイナリ変換</title>
             <para>
-                The terms kilo-, mega-, giga and so on... have to be seen, in the normal language use, for 1000 or 10³.
+                キロ、メガ、ギガ、... という言葉は、通常はそれぞれ
+                1000 あるいは 10³ を表します。
             </para>
             <para>
-                In the binary format for computers the terms kilo-, mega-, giga- and so on have to be seen for a
-                convertion factor of 1024 instead of 1000.
+                コンピュータの世界のバイナリフォーマットでは、
+                キロ、メガ、ギガ、... という言葉は 1000 ではなく 1024 を表します。
             </para>
             <para>
-                To preclude confusions a few years ago the notation BI was introduced. Instead of kilobyte, kibibyte for
-                kilo-binary-byte should be used.
+                このような混乱を避けるため、数年前に BI 記法が生まれました。
+                キロバイトのかわりに、キビバイト (kibibyte) というのです。
+                これは、キロ-バイナリ-バイト (kilo-binary-byte) を略したものです。
             </para>
             <para>
-                In the class BINARY both notations can be found.
+                BINARY クラスでは、両方の表記を使用しています。
             </para>
             <para>
-                KILOBYTE = 1024 - binary conputer conversion KIBIBYTE = 1024 - new notation KILO_BINARY_BYTE = 1024 -
-                new notation, long format KILOBYTE_SI = 1000 - SI notation for kilo (1000)
+                KILOBYTE = 1024 - バイナリコンピュータの世界の形式、KIBIBYTE = 1024 - 新しい記法、KILO_BINARY_BYTE = 1024 -
+                新しい記法 (長い形式)、KILOBYTE_SI = 1000 - SI 記法によるキロ (1000)
             </para>
             <para>
-                DVDs for example are marked with the SI-notation, but almost all harddisks are marked in computer binary
-                notation.
+                たとえば DVD は SI 記法が使用されていますが、
+                ほとんどすべてのハードディスクではバイナリ記法が使用されています。
             </para>
         </note>
 
@@ -162,13 +164,13 @@ echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
         <title>Zend_Measure_Capacitance</title>
 
         <para>
-            <code>Zend_Measure_Capacitance</code> covers the physical factor of capacitance.
+            <code>Zend_Measure_Capacitance</code> は容量を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is farad (<code>F</code>).
+                標準の計測単位は、ファラド (<code>F</code>) です。
             </para>
         </note>
 
@@ -178,11 +180,11 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Capacitance.');
 
-// definition of the measurement as string
+// 計測値を文字列で定義します
 $locale = new Zend_Locale('en');
 $capacity = new Zend_Measure('100 Farad',Zend_Measure::CAPACITANCE, $locale);
 
-// output value
+// 値を出力します
 echo $capacity;
 ?>]]></programlisting>
         </para>
@@ -194,18 +196,19 @@ echo $capacity;
         <title>Zend_Measure_Cooking_Volume</title>
 
         <para>
-            <code>Zend_Measure_Cooking_Volume</code> covers volumes which are used for cooking or written in cookbooks.
+            <code>Zend_Measure_Cooking_Volume</code>
+            は、料理をしたり料理の本を書いたりする際に使用する体積を扱います。
         </para>
 
         <para>
-            This class is a reduced version of the class <code>Zend_Measure_Volume</code>, but it covers only the
-            measurement units which are needed for cooking.
+            このクラスは <code>Zend_Measure_Volume</code>
+            の機能を絞ったもので、料理に必要な単位のみをカバーしています。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is cubic meter (<code>m³</code>).
+                標準の計測単位は、立方メートル (<code>m³</code>) です。
             </para>
         </note>
 
@@ -215,11 +218,11 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Cooking_Volume');
 
-// define the measurement unit as extended string
+// 拡張文字列で計測値を定義します
 $locale = new Zend_Locale('de');
 $rum = new Zend_Measure('You will need 10cl rum',Zend_Measure_Cooking_Volume::CENTILITER, $locale);
 
-// output value
+// 値を出力します
 echo $rum;
 ?>]]></programlisting>
         </para>
@@ -231,19 +234,19 @@ echo $rum;
         <title>Zend_Measure_Cooking_Weight</title>
 
         <para>
-            <code>Zend_Measure_Cooking_Weight</code> covers the weights which are used for cooking or written in
-            cookbooks.
+            <code>Zend_Measure_Cooking_Weight</code>
+            は、料理をしたり料理の本を書いたりする際に使用する重さを扱います。
         </para>
 
         <para>
-            This class is a reduced version of the class <code>Zend_Measure_Weight</code>, but it covers only the
-            measurement units which are neededfor cooking.
+            このクラスは <code>Zend_Measure_Weight</code>
+            の機能を絞ったもので、料理に必要な単位のみをカバーしています。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is gram (<code>g</code>).
+                標準の計測単位は、グラム (<code>g</code>) です。
             </para>
         </note>
 
@@ -253,11 +256,11 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Cooking_Weight');
 
-// extract the measurement unit from an localized string
+// 拡張文字列で計測値を定義します
 $locale = new Zend_Locale('de');
 $rum = new Zend_Measure('The cake needs 2,5g oil',Zend_Measure_Cooking_Weight::GRAM, $locale);
 
-// output value
+// 値を出力します
 echo $rum;
 ?>]]></programlisting>
         </para>
@@ -269,13 +272,13 @@ echo $rum;
         <title>Zend_Measure_Current</title>
 
         <para>
-            <code>Zend_Measure_Current</code> covers the physical factor of current.
+            <code>Zend_Measure_Current</code> は電流を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is ampere (<code>A</code>).
+                標準の計測単位は、アンペア (<code>A</code>) です。
             </para>
         </note>
 
@@ -285,7 +288,7 @@ require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Current');
 
-// extract the measurement unit from an localized string with number grouping
+// 桁区切り文字つきのローカライズ文字列から、計測値を抽出します
 $locale = new Zend_Locale('de');
 $unit = new Zend_Measure('1.200,50Ampere',Zend_Measure::CURRENT, $locale);
 
@@ -300,13 +303,13 @@ echo $unit->convertTo(Zend_Measure_Current::KILOAMPERE);
         <title>Zend_Measure_Density</title>
 
         <para>
-            <code>Zend_Measure_Density</code> covers the physical factor of density.
+            <code>Zend_Measure_Density</code> は密度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is kilogram per cubic meter (<code>kg/m³</code>).
+                標準の計測単位は、キログラム毎立方メートル (<code>kg/m³</code>) です。
             </para>
         </note>
 
@@ -330,13 +333,13 @@ echo $unit;
         <title>Zend_Measure_Energy</title>
 
         <para>
-            <code>Zend_Measure_Energy</code> covers the physical factor of energy.
+            <code>Zend_Measure_Energy</code> は熱量を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is joule (<code>J</code>).
+                標準の計測単位は、ジュール (<code>J</code>) です。
             </para>
         </note>
 
@@ -360,13 +363,13 @@ echo $unit;
         <title>Zend_Measure_Force</title>
 
         <para>
-            <code>Zend_Measure_Force</code> covers the physical factor of force.
+            <code>Zend_Measure_Force</code> は、力を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is newton (<code>N</code>).
+                標準の計測単位は、ニュートン (<code>N</code>) です。
             </para>
         </note>
 
@@ -390,14 +393,14 @@ echo $unit;
         <title>Zend_Measure_Flow_Mass</title>
 
         <para>
-            <code>Zend_Measure_Flow_Mass</code> covers the physical factor of flow rate. The weight of the flowing mass
-            is used as reference point within this class.
+            <code>Zend_Measure_Flow_Mass</code> は流量を扱います。
+            このクラスでは、流れた物質の重さを基準とします。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is kilogram per second (<code>kg/s</code>).
+                標準の計測単位は、キログラム毎秒 (<code>kg/s</code>) です。
             </para>
         </note>
 
@@ -421,14 +424,14 @@ echo $unit;
         <title>Zend_Measure_Flow_Mole</title>
 
         <para>
-            <code>Zend_Measure_Flow_Mole</code> covers the physical factor of flow rate. The density of the flowing mass
-            is used as reference point within this class.
+            <code>Zend_Measure_Flow_Mole</code> は流量を扱います。
+            このクラスでは、流れた物質の密度を基準とします。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is mole per second (<code>mol/s</code>).
+                標準の計測単位は、モル毎秒 (<code>mol/s</code>) です。
             </para>
         </note>
 
@@ -452,14 +455,14 @@ echo $unit;
         <title>Zend_Measure_Flow_Volume</title>
 
         <para>
-            <code>Zend_Measure_Flow_Volume</code> covers the physical factor of flow rate. The volume of the flowing
-            mass is used as reference point within this class.
+            <code>Zend_Measure_Flow_Volume</code> は流量を扱います。
+            このクラスでは、流れた物質の体積を基準とします。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is cubic meter per second (<code>m³/s</code>).
+                標準の計測単位は、立方メートル毎秒 (<code>m³/s</code>) です。
             </para>
         </note>
 
@@ -483,13 +486,13 @@ echo $unit;
         <title>Zend_Measure_Frequency</title>
 
         <para>
-            <code>Zend_Measure_Frequency</code> covers the physical factor of frequency.
+            <code>Zend_Measure_Frequency</code> は周波数を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is hertz (<code>Hz</code>).
+                標準の計測単位は、ヘルツ (<code>Hz</code>) です。
             </para>
         </note>
 
@@ -513,13 +516,13 @@ echo $unit;
         <title>Zend_Measure_Illumination</title>
 
         <para>
-            <code>Zend_Measure_Illumination</code> covers the physical factor of light density.
+            <code>Zend_Measure_Illumination</code> は、光度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is lux (<code>lx</code>).
+                標準の計測単位は、ルクス (<code>lx</code>) です。
             </para>
         </note>
 
@@ -543,13 +546,13 @@ echo $unit;
         <title>Zend_Measure_Length</title>
 
         <para>
-            <code>Zend_Measure_Length</code> covers the physical factor of length.
+            <code>Zend_Measure_Length</code> は長さを扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is meter (<code>m</code>).
+                標準の計測単位は、メートル (<code>m</code>) です。
             </para>
         </note>
 
@@ -573,13 +576,13 @@ echo $unit;
         <title>Zend_Measure_Lightness</title>
 
         <para>
-            <code>Zend_Measure_Lightness</code> covers the physical factor of light energy.
+            <code>Zend_Measure_Lightness</code> は輝度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is candela per square meter (<code>cd/m²</code>).
+                標準の計測単位は、カンデラ毎平方メートル (<code>cd/m²</code>) です。
             </para>
         </note>
 
@@ -603,13 +606,13 @@ echo $unit;
         <title>Zend_Measure_Number</title>
 
         <para>
-            <code>Zend_Measure_Number</code> can convert between number formats.
+            <code>Zend_Measure_Number</code> は、数値フォーマットを変換します。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard unit is decimal.
+                標準単位は、十進数です。
             </para>
         </note>
 
@@ -622,34 +625,36 @@ Zend::loadClass('Zend_Measure_Number');
 $locale = new Zend_Locale('en');
 $binary = new Zend_Measure('10010110',Zend_Measure_Number::BINARY, $locale);
 
-// convert to roman number format
+// ローマ数字に変換します
 echo $binary->convertTo(Zend_Measure_Number::ROMAN);
 ?>]]></programlisting>
         </para>
 
         <para>
-            The best known number format is the decimal system.
+            いちばんよく知られている形式が、十進法です。
         </para>
 
         <para>
-            Additionaly this class covers the octal system, the hexadecimal system, the binary system, the roman number
-            format and a few not so familiar systems.
+            それ以外に、このクラスでは八進数、十六進数、二進数、
+            ローマ数字そしてあまり知られていないその他の形式を扱っています。
             <note>
-                <title>Be aware</title>
+                <title>注意</title>
                 <para>
-                    Be aware that only the decimal part of numbers is handled. The fractional part will be stripped.
+                    整数部分のみが処理の対象となることに注意しましょう。
+                    小数部分は捨てられます。
                 </para>
             </note>
         </para>
 
         <note>
-            <title>Roman numbers</title>
+            <title>ローマ数字</title>
             <para>
-                For the roman numbersystem digits greater 4000 are supported. In reality these digits are shown with a
-                crossbeam on top of the digit.
+                ローマ数字では 4000 以上の数字もサポートしています。
+                実際は、これらの数字を現す際には数字の上に横線を引きます。
             </para>
             <para>
-                As the crossbeam can not be shown within the computer, an underline has to be used instead of it.
+                コンピュータ上では上線は表示できないので、
+                その代わりに下線を使用します。
             </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
@@ -660,7 +665,7 @@ $great = '_X';
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
 
-// convert to the decimal system
+// 十進数に変換します
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
 ?>]]></programlisting>
         </note>
@@ -672,13 +677,13 @@ echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
         <title>Zend_Measure_Power</title>
 
         <para>
-            <code>Zend_Measure_Power</code> covers the physical factor of power.
+            <code>Zend_Measure_Power</code> は力を表します。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is watt (<code>W</code>).
+                標準の計測単位は、ワット (<code>W</code>) です。
             </para>
         </note>
 
@@ -702,13 +707,13 @@ echo $unit;
         <title>Zend_Measure_Pressure</title>
 
         <para>
-            <code>Zend_Measure_Pressure</code> covers the physical factor of pressure.
+            <code>Zend_Measure_Pressure</code> は圧力を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is newton per square meter (<code>N/m²</code>).
+                標準の計測単位は、ニュートン毎平方メートル (<code>N/m²</code>) です。
             </para>
         </note>
 
@@ -732,13 +737,13 @@ echo $unit;
         <title>Zend_Measure_Speed</title>
 
         <para>
-            <code>Zend_Measure_Speed</code> covers the physical factor of speed.
+            <code>Zend_Measure_Speed</code> は速度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is meter per second (<code>m/s</code>).
+                標準の計測単位は、メートル毎秒 (<code>m/s</code>) です。
             </para>
         </note>
 
@@ -762,13 +767,13 @@ echo $unit;
         <title>Zend_Measure_Temperature</title>
 
         <para>
-            <code>Zend_Measure_Temperature</code> covers the physical factor of temperature.
+            <code>Zend_Measure_Temperature</code> は温度を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is kelvin (<code>K</code>).
+                標準の計測単位は、ケルビン (<code>K</code>) です。
             </para>
         </note>
 
@@ -792,13 +797,13 @@ echo $unit;
         <title>Zend_Measure_Torque</title>
 
         <para>
-            <code>Zend_Measure_Torque</code> covers the physical factor of torque.
+            <code>Zend_Measure_Torque</code> はトルクを扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is newton meter (<code>Nm</code>).
+                標準の計測単位は、ニュートンメートル (<code>Nm</code>) です。
             </para>
         </note>
 
@@ -822,14 +827,14 @@ echo $unit;
         <title>Zend_Measure_Viscosity_Dynamic</title>
 
         <para>
-            <code>Zend_Measure_Viscosity_Dynamic</code> covers the physical factor of viscosity. The weight of the fluid
-            is used as reference point within this class.
+            <code>Zend_Measure_Viscosity_Dynamic</code> は粘性を扱います。
+            このクラスでは、流体の重さを基準とします。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is kilogram per meter second (<code>kg/ms</code>).
+                標準の計測単位は、キログラム毎メートル秒 (<code>kg/ms</code>) です。
             </para>
         </note>
 
@@ -853,14 +858,14 @@ echo $unit;
         <title>Zend_Measure_Viscosity_Kinematic</title>
 
         <para>
-            <code>Zend_Measure_Viscosity_Kinematic</code> covers the physical factor of viscosity. The distance of the
-            flown fluid is used as reference point within this class.
+            <code>Zend_Measure_Viscosity_Kinematic</code> は粘性を扱います。
+            このクラスでは、流体の距離を基準とします。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is square meter per second (<code>m²/s</code>).
+                標準の計測単位は、平方メートル毎秒 (<code>m²/s</code>) です。
             </para>
         </note>
 
@@ -884,13 +889,13 @@ echo $unit;
         <title>Zend_Measure_Volume</title>
 
         <para>
-            <code>Zend_Measure_Volume</code> covers the physical factor of volume (content).
+            <code>Zend_Measure_Volume</code> は体積 (容積) を扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is cubic meter (<code>m³</code>).
+                標準の計測単位は、立方メートル (<code>m³</code>) です。
             </para>
         </note>
 
@@ -914,13 +919,13 @@ echo $unit;
         <title>Zend_Measure_Weight</title>
 
         <para>
-            <code>Zend_Measure_Weight</code> covers the physical factor of weight.
+            <code>Zend_Measure_Weight</code> は重さを扱います。
         </para>
 
         <note>
-            <title>Standard unit</title>
+            <title>標準単位</title>
             <para>
-                The standard measurement unit is kilogram (<code>kg</code>).
+                標準の計測単位はキログラム (<code>kg</code>) です。
             </para>
         </note>
 

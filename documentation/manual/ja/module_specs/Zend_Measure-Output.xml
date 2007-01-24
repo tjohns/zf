@@ -1,39 +1,39 @@
 <sect1 id="zend.measure.output">
 
-    <title>Outputting measurements</title>
+    <title>計測値の出力</title>
 
     <para>
-        Measurements can be output in a number of different ways.
+        計測値は、さまざまな方法で出力することができます。
     </para>
 
     <para>
-        <link linkend="zend.measure.output.auto"><code>Automatic output</code>
+        <link linkend="zend.measure.output.auto"><code>自動的な出力</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.value"><code>Outputting values</code>
+        <link linkend="zend.measure.output.value"><code>値の出力</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.unit"><code>Output with unit of measurement</code>
+        <link linkend="zend.measure.output.unit"><code>単位つきの出力</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.unit"><code>Output as localized string</code>
+        <link linkend="zend.measure.output.unit"><code>ローカライズされた文字列での出力</code>
         </link>
     </para>
 
     <sect2 id="zend.measure.output.auto">
 
-        <title>Automatic output</title>
+        <title>自動的な出力</title>
 
         <para>
-            <code>Zend_Measure</code> supports outputting of strings automatically.
+            <code>Zend_Measure</code> は、文字列の自動的な出力をサポートしています。
             <example>
-                <title>Automatic output</title>
+                <title>自動的な出力</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -48,15 +48,15 @@ echo $unit;
         </para>
 
         <note>
-            <title>Measurement output</title>
+            <title>計測値の出力</title>
             <para>
-                Output can be achieved simply by using
+                出力を行うには、単に
                 <ulink url="http://php.net/echo"><code>echo</code>
                 </ulink>
-                or
+                あるいは
                 <ulink url="http://php.net/print"><code>print</code>
                 </ulink>
-                .
+                を使用するだけです。
             </para>
         </note>
 
@@ -64,12 +64,12 @@ echo $unit;
 
     <sect2 id="zend.measure.output.value">
 
-        <title>Outputting values</title>
+        <title>値の出力</title>
 
         <para>
-            The value of a measurement can be output using <code>getValue()</code>.
+            計測値の値だけを出力するには <code>getValue()</code> を使用します。
             <example>
-                <title>Output a value</title>
+                <title>値の出力</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -87,12 +87,12 @@ echo $unit->getValue();
 
     <sect2 id="zend.measure.output.unit">
 
-        <title>Output with unit of measurement</title>
+        <title>単位つきの出力</title>
 
         <para>
-            The function <code>getType()</code> returns the current unit of measurement.
+            関数 <code>getType()</code> は、現在の単位を返します。
             <example>
-                <title>Outputting units</title>
+                <title>単位の出力</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -111,19 +111,19 @@ echo $unit->getType();
 
     <sect2 id="zend.measure.output.localized">
 
-        <title>Output as localized string</title>
+        <title>ローカライズされた文字列での出力</title>
 
         <para>
-            Outputtig a string in a format common in the users' country is usually desirable.
+            文字列を出力する際は、通常はユーザの国にあわせた書式にしたくなることでしょう。
         </para>
 
         <para>
-            For example, the measurement "1234567.8" would become "1.234.567,8" for Germany.
+            たとえば、"1234567.8" という値はドイツでは "1.234.567,8" と表します。
         </para>
 
         <note>
             <para>
-                This functionality will be supported in a future release.
+                この機能は、将来のリリースでサポートされる予定です。
             </para>
         </note>
 

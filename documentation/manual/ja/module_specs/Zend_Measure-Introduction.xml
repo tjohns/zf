@@ -1,52 +1,57 @@
 <sect1 id="zend.measure.introduction">
 
-    <title>Introduction</title>
+    <title>導入</title>
 
     <para>
-        <code>Zend_Measure</code> provides a generic and very easy way for working with measurements.
+        <code>Zend_Measure</code> は、
+        さまざまな計測を行うためのパッケージです。
+        汎用的で非常に簡単な方法を提供しています。
     </para>
 
     <para>
-        Using <code>Zend_Measure</code>, you can convert measurements into different units of the same type. They can be
-        added, subtracted and compared against each other. From a given input made in the user's native language, the
-        unit of measurement can be automatically extracted.
+        <code>Zend_Measure</code> を使用すると、
+        計測値の単位変換ができるようになります。
+        異なる単位どうしでの足し算や引き算、そして比較も可能です。
+        ユーザが自国語で入力した内容から、単位を自動的に抽出します。
     </para>
 
     <para>
-        Of course a great number of completely different units of measurement is being supported. Most of these units
-        are of a physical nature, but there are also special measurements used, in numerics or other areas, that are
-        only partly physical - or not at all.
+        もちろん、広範囲におよぶさまざまな計測単位をサポートしています。
+        これらの単位の大半は自然科学のものですが、
+        中には数値計算やその他の分野の特殊なものも含まれています。
     </para>
 
     <para>
-        The following quickstart tutorial shows how units of measurement can be automatically converted.
+        以下の簡単なチュートリアルで、
+        単位の自動変換の様子を見てみましょう。
     </para>
 
     <example>
-        <title>Converting measurements</title>
+        <title>計測値の変換</title>
         <para>
-            To convert a measurement, its value and its type have to be known. The value can be an integer, a float, or
-            even a string.
+            計測値を変換するには、その値と型を知っている必要があります。
+            値としては、整数や浮動小数点数だけでなく文字列も使用できます。
         </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
-// The Length class is needed when using the constants
+// Length クラスは、定数を使うために必要となります
 Zend::loadClass('Zend_Measure_Length');
 
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure(100,Zend_Measure_Length::METER, $locale);
 
-// Convert meters to yards
+// メートルをヤードに変換します
 echo $unit->convertTo(Zend_Measure_Length::YARD);
 ?>]]></programlisting>
     </example>
 
     <note>
         <para>
-            As you can see, the example consists of only 4 lines of code. The usage of <code>Zend_Measure</code> is so
-            compact that usually 4 lines of code is all that's needed.
+            ご覧の通り、この例のコードはたったの四行しかありません。
+            <code>Zend_Measure</code> は非常にコンパクトにまとまっているので、
+            通常はこの四行のコードですべて済ませられます。
         </para>
     </note>
 

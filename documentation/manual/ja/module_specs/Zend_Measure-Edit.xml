@@ -1,47 +1,49 @@
 <sect1 id="zend.measure.edit">
 
-    <title>Manipulating measurements</title>
+    <title>計測値の操作</title>
 
     <para>
-        Parsing and normalization of input, combined with output to localized notations makes data accessible to users
-        in different locales. Many additional methods exist in <code>Zend_Measure</code> components to manipulate and
-        work with this data, after it has been normalized.
+        入力のパースと正規化、そしてローカライズされた表記での出力により、
+        さまざまなロケールのユーザがデータにアクセスできるようになります。
+        <code>Zend_Measure</code> コンポーネントには
+        それ以外にもさまざまなメソッドがあり、
+        正規化されたデータを操作することができます。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.convert"><code>Convert</code>
+                <link linkend="zend.measure.edit.convert"><code>変換</code>
                 </link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.add"><code>Add and subtract</code>
+                <link linkend="zend.measure.edit.add"><code>加減算</code>
                 </link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.equal"><code>Compare</code>
+                <link linkend="zend.measure.edit.equal"><code>比較</code>
                 </link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.compare"><code>Calculate differences</code>
+                <link linkend="zend.measure.edit.compare"><code>差の計算</code>
                 </link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changevalue"><code>Manually change values</code>
+                <link linkend="zend.measure.edit.changevalue"><code>値の変更</code>
                 </link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changetype"><code>Manually change types</code>
+                <link linkend="zend.measure.edit.changetype"><code>型の変更</code>
                 </link>
             </para>
         </listitem>
@@ -49,17 +51,20 @@
 
     <sect2 id="zend.measure.edit.convert">
 
-        <title>Convert</title>
+        <title>変換</title>
 
         <para>
-            Probably the most important feature is the conversion into different units of measurement. The conversion of
-            a unit can be done any number of times using the method <code>convertTo()</code>. Units of measurement can
-            only be converted to other units of the same type. Therefore, it is not possible to convert (e.g.) a length
-            into a weight, which would allow bad programming practice and allow errors to propagate without exceptions.
+            おそらく最も重要な機能は、異なる単位の変換でしょう。
+            単位の変換は、<code>convertTo()</code>
+            メソッドを使用していつでも何度でも行えます。
+            単位の変換は、同じ型の単位間に限られます。したがって、
+            たとえば長さの単位を重さの単位に変換することなどはできません。
+            もしそんなことができたらプログラムがめちゃくちゃになってしまい、
+            エラーだらけになってしまうでしょう。
         </para>
 
         <example>
-            <title>Convert</title>
+            <title>変換</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -78,29 +83,32 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 
     <sect2 id="zend.measure.edit.add">
 
-        <title>Add and subtract</title>
+        <title>加減算</title>
 
         <para>
-            Measurements can be added together using <code>add()</code> and subtracted using <code>sub()</code>. Each
-            addition will create a new object for the result. The actual object will never be changed by the class. The
-            new object will be of the same type as the originating object. Dynamic objects support a fluid style of
-            programming, where complex sequences of operations can be nested without risk of side-effects altering the
+            複数の計測値の加算には <code>add()</code>、そして減算には <code>sub()</code>
+            を使用します。これらはそれぞれ、結果を格納した新しいオブジェクトを作成します。
+            このクラスがもとのオブジェクトを変更することはありません。
+            新しいオブジェクトは、もとのオブジェクトと同じ型になります。
+            Dynamic objects support a fluid style of
+            programming, where complex sequences of operations 
+            can be nested without risk of side-effects altering the
             input objects.
         </para>
 
         <para>
             <example>
-                <title>Adding units</title>
+                <title>単位の加算</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
 
-// Define objects
+// オブジェクトを定義します
 $unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
 
-// Add $unit2 to $unit 
+// $unit2 を $unit に足します
 $sum = $unit->add($unit2);
 
 echo $sum;
@@ -109,32 +117,31 @@ echo $sum;
         </para>
 
         <note>
-            <title>Automatic conversion</title>
+            <title>自動的な変換</title>
             <para>
-                Adding one object to another will automatically convert it to the correct unit. It is not neccessary to
-                call
+                あるオブジェクトを別のオブジェクトに足す際には、
+                適切な単位に自動的に変換されます。異なる単位の値を足す前に
                 <link linkend="zend.measure.edit.convert"><code>convertTo()</code>
-                </link>
-                before adding different units.
+                </link> をコールする必要はありません。
             </para>
         </note>
 
         <para>
             <example>
-                <title>Subtract</title>
+                <title>減算</title>
                 <para>
-                    Subtraction of measurements works just like addition.
+                    減算も、加算と同じように動作します。
                 </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
 
-// Define objects
+// オブジェクトを定義します
 $unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
 
-// Subtract $unit2 from $unit
+// $unit2 を $unit から引きます
 $sum = $unit->sub($unit2);
 
 echo $sum;
@@ -146,49 +153,50 @@ echo $sum;
 
     <sect2 id="zend.measure.edit.equal">
 
-        <title>Compare</title>
+        <title>比較</title>
 
         <para>
-            Measurements can also be compared, but without automatic unit conversion. Thus, <code>equals()</code>
-            returns <code>TRUE</code>, only if both the value and the unit of measure are identical.
+            計測値を比較することもできますが、自動的な単位変換は行われません。
+            したがって、<code>equals()</code> が
+            <code>TRUE</code> を返すのは、値と単位の両方が等しい場合のみです。
         </para>
 
         <para>
             <example>
-                <title>Different measurements</title>
+                <title>異なる計測値</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
 
-// Define measurements
+// 値を定義します
 $unit = new Zend_Measure(100,Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
 
 if ($unit->equals($unit2)) {
-    print "Both measurements are identical";
+    print "これらは同じです";
 } else {
-    print "These are different measurements";
+    print "これらは異なります";
 }
 ?>]]></programlisting>
             </example>
             <example>
-                <title>Identical measurements</title>
+                <title>同一の計測値</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
 
-// Define measurements
+// 値を定義します
 $unit = new Zend_Measure(100,Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
 
 $unit2->setType(Zend_Measure_Length::CENTIMETER);
 
 if ($unit->equals($unit2)) {
-    print "Both measurements are identical";
+    print "これらは同じです";
 } else {
-    print "These are different measurements";
+    print "これらは異なります";
 }
 ?>]]></programlisting>
             </example>
@@ -198,17 +206,19 @@ if ($unit->equals($unit2)) {
 
     <sect2 id="zend.measure.edit.compare">
 
-        <title>Calculate differences</title>
+        <title>差の計算</title>
 
         <para>
-            To determine if a measurement is less than or greater than another, use <code>compare()</code>, which
-            returns the difference between two objects as an integer value. Identical measurements will return 0. Lesser
-            ones will return a negative, greater ones a positive value.
+            ある計測値が別の計測値より小さいか大きいかを調べるには
+            <code>compare()</code> を使用します。これは、
+            ふたつのオブジェクトの差を整数値で返します。
+            ふたつが同一の場合は 0、小さい場合は負の数、
+            そして大きい場合は正の数を返します。
         </para>
 
         <para>
             <example>
-                <title>Difference</title>
+                <title>差</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -229,16 +239,16 @@ print "Lesser:".$unit3->compare($unit2);
 
     <sect2 id="zend.measure.edit.changevalue">
 
-        <title>Manually change values</title>
+        <title>値の変更</title>
 
         <para>
-            To change the value of a measurement explicitly, use <code>setValue()</code>. to overwrite the current
-            value. The parameters are the same as the constructor.
+            値を明示的に変更するには <code>setValue()</code> を使用します。
+            これは現在の値を上書きします。パラメータは、コンストラクタと同じです。
         </para>
 
         <para>
             <example>
-                <title>Changing a value</title>
+                <title>値の変更</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -263,14 +273,15 @@ echo $unit;
 
     <sect2 id="zend.measure.edit.changetype">
 
-        <title>Manually change types</title>
+        <title>型の変更</title>
 
         <para>
-            To change the type of a measurement without altering its value use <code>setType()</code>.
+            値はそのままで型だけを変更するには <code>setType()</code>
+            を使用します。
         </para>
 
         <example>
-            <title>Changing the type</title>
+            <title>型の変更</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
@@ -278,10 +289,10 @@ Zend::loadClass('Zend_Measure_Length');
 
 $unit = new Zend_Measure(1,Zend_Measure_Length::METER);
 
-// output: 1 m
+// 出力: 1 m
 echo $unit;
 
-// output: 1 km
+// 出力: 1 km
 $unit->setType(Zend_Measure_Length::KILOMETER);
 echo $unit;
 ?>]]></programlisting>
