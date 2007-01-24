@@ -1,14 +1,14 @@
 <sect1 id="zend.acl.refining">
 
-    <title>精制访问控制</title>
+    <title>精细的访问控制</title>
 
     <sect2 id="zend.acl.refining.precise">
 
-        <title>精确的访问控制</title>
+        <title>精细的访问控制</title>
 
         <para>
         
-		在<link linkend="zend.acl.introduction">前一章节</link>中定义的基本的 ACL 显示如何在整个 ACL (所有的 Resources )允许各种各样的权限。然而在实践中，访问控制趋向于拥有例外和可变程度的复杂性。Zend_Acl 允许你直截了当并灵活地完成这些精制。
+		在<link linkend="zend.acl.introduction">前一章节</link>中定义的基本的 ACL 显示如何在整个 ACL (所有的 Resources )允许各种各样的权限。然而在实践中，访问控制趋向于拥有例外和可变程度的复杂性。Zend_Acl 允许你直截了当并灵活地完成这些精细准确的控制。
         </para>
 
         <para>
@@ -90,10 +90,9 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
         <title>除去访问控制</title>
 
         <para>
-        To remove one or more access rules from the ACL, simply use the available <code>removeAllow()</code>
-        or <code>removeDeny()</code> methods. As with <code>allow()</code> and <code>deny()</code>, you may
+        As with <code>allow()</code> and <code>deny()</code>, you may
         provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges:
-		简单地用 <code>removeAllow()</code> 或 <code>removeDeny()</code> 方法从 ACL 中除去一个或多个访问规则。 用 <code>allow()</code> 和 <code>deny()</code> 对所有的 Roles， Resources， and/or privileges 你可以提供一个 <code>null</code> 值来指示应用软件。
+		要从 ACL 中除去一个或多个访问规则，只要简单地用 <code>removeAllow()</code> 或 <code>removeDeny()</code> 方法即可。如果提供一个<code>null</code>参数值给 <code>allow()</code> 和 <code>deny()</code> 方法，则访问规则将应用到所有的角色， 资源和/或权限上。
         </para>
 
         <programlisting role="php"><![CDATA[// Remove the denial of revising latest news to staff (and marketing, by inheritance)
@@ -112,7 +111,7 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
      "allowed" : "denied"; // denied]]></programlisting>
 
         <para>
-          如上所示，对于权限的修改可能是增量的，但使用 <code>null</code> 值超越了对权限的增量修改。（所谓的增量修改是指可以对 Resources 一个一个地添加权限或禁止，而使用 <code>null</code> 值可以使得这些步骤简化，一次性地对所有 Resources 允许或禁止。Jason注）
+          如上所示，对于权限的修改可能是增量的，但使用 <code>null</code> 值（未指定权限项的参数值）超越了对权限的增量修改。（所谓的增量修改是指可以对 Resources 一个一个地添加权限或禁止，而如果未指定权限参数值，即使用 <code>null</code> 值，可以使得这些步骤简化，一次性地对某个Resource的所有权限进行允许或禁止。Jason注，Haohappy补）
 		</para>
 
         <programlisting role="php"><![CDATA[// 允许 marketing 对 latest news 有所有的许可

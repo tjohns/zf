@@ -1,8 +1,8 @@
-﻿<sect1 id="zend.acl.introduction">
+<sect1 id="zend.acl.introduction">
     <title>简介</title>
 
     <para>
-        Zend_Acl 提供轻量并灵活的访问控制列表 (ACL) 功能和权限管理。一般地，应用软件可以利用这样的功能控制其它的请求对象来访问特定保护的对象。
+        Zend_Acl 提供轻量并灵活的访问控制列表 (ACL,access control list) 功能和权限管理。一般地，应用软件可以利用这样的功能限制某些特定对象来访问特定保护的对象。
     </para>
 
     <para>
@@ -11,17 +11,17 @@
          <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis role="strong">Resource</emphasis> 是一个访问被控制的对象。
+                    <emphasis role="strong">Resource</emphasis> （资源）是一个限制访问的对象。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Role</emphasis> 是一个可以发出请求去访问Resource的对象。
+                    <emphasis role="strong">Role</emphasis> （角色）是一个可以发出请求去访问Resource的对象。
                 </para>
             </listitem>
         </itemizedlist>
 
-        简单来说，<emphasis role="strong">Roles 请求访问 Resources</emphasis>。例如，如果一个人要用汽车，这样，这个人就是发出请求的 Role，而这辆汽车就是 Resource，所以使用这辆车就在控制之中了。
+        简单地说就是：<emphasis role="strong">Roles 请求访问 Resources</emphasis>。例如，如果一个人要用汽车，这样，这个人就是发出请求的 Role，而这辆汽车就是 Resource，所以使用这辆车就在控制之中了。
     </para>
 
     <para>
@@ -29,7 +29,7 @@
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-        <title>关于 Resources</title>
+        <title>关于资源(Resource)</title>
         <para>
             在 Zend_Acl 中，创建建一个 Resource 非常简单。Zend_Acl 提供了<code>Zend_Acl_Resource_Interface</code> 使开发者创建 Resources 非常容易。为了使Zend_Acl把某个对象当作一个Resource，一个类只需要实现这个只包含了一个方法 <code>getResourceId()</code> 的接口。 另外，<code>Zend_Acl_Resource</code>是一个包含在 Zend_Acl 里作为一个基本的 Resource 实现的类，开发者可以任意扩展它。
         </para>
@@ -42,7 +42,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>关于 Roles</title>
+        <title>关于角色(Role)</title>
         <para>
             象 Resources 一样，创建一个 Role 也非常简单。 Zend_Acl 提供了 <code>Zend_Acl_Role_Interface</code> 使开发者创建 Roles 非常容易。为了使Zend_Acl把某个对象当作一个 Role，一个类只需要实现这个只包含了一个方法 <code>getRoleId()</code> 的接口。 另外，<code>Zend_Acl_Role</code>是一个包含在Zend_Acl里作为一个基本的 Role 实现的类，开发者可以任意扩展它。
         </para>
@@ -76,7 +76,7 @@ $acl = new Zend_Acl();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
-        <title>注册 Roles</title>
+        <title>注册角色(Role)</title>
 
         <para>
             内容管理系统总是几乎需要一个等级结构的许可来决定它的用户的授权能力。作为示范，“Guest”组允许有限的访问，“Staff”适合大多数的执行日常操作的CMS用户，“Editor”组适合于发布、复核、存档和删除内容，最后“Administrator”组的任务包括所有其它组的内容并包括敏感的信息、用户管理、后台配置数据和备份/导出。这组许可可以被表示为一个 Role 注册表，允许每个组从“”组继承权限，也可以为单一的组提供独特的权限。这些许可可以表示如下：
