@@ -51,7 +51,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db->query($sql);
     }
 
-    function setUp()
+    public function setUp()
     {
         // check for driver test disabled
         $driver = $this->getDriver();
@@ -63,14 +63,23 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         // open a new connection
         $this->_db = Zend_Db::factory($this->getDriver(), $this->getParams());
 
+        $this->setUpMetadata();
+    }
+
+    protected function setUpMetadata()
+    {
         // create a test table and populate it
+        try {
+            $this->tearDownMetadata();
+        } catch (Exception $e) {
+            // eat the exception
+        }
         $this->createTestTable();
     }
 
-    function tearDown()
+    public function tearDown()
     {
-        // drop test table
-        $this->_db->query($this->getDropTableSQL());
+        $this->tearDownMetadata();
 
         // close the PDO connection
         $connection = $this->_db->getConnection();
@@ -78,22 +87,28 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db = null;
     }
 
-
-    function testListTables()
+    protected function tearDownMetadata()
     {
-        $tables = $this->_db->listTables();
-        $this->assertEquals($tables[0], self::TableName);
+        // drop test table
+        $this->_db->query($this->getDropTableSQL());
     }
 
-    function testDescribeTable()
+    public function testListTables()
+    {
+        $tables = $this->_db->listTables();
+        $this->assertContains(strtoupper(self::TableName), array_values($tables));
+    }
+
+    public function testDescribeTable()
     {
         $descr = $this->_db->describeTable(self::TableName);
+        print_r($descr);
         $this->assertEquals($descr['id']['name'], 'id');
         $this->assertEquals($descr['id']['type'], 'INTEGER');
         $this->assertEquals($descr['id']['primary'], 1);
     }
 
-    function testFetchAll()
+    public function testFetchAll()
     {
         $result = $this->_db->query('SELECT * FROM ' . self::TableName . ' WHERE date_created > :placeholder',
                         array('placeholder' => '2006-01-01')
@@ -104,7 +119,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $rows[0]['id']);
     }
 
-    function testFieldNamesAreLowercase()
+    public function testFieldNamesAreLowercase()
     {
         $result = $this->_db->query('SELECT * FROM ' . self::TableName . ' WHERE date_created > :placeholder',
                         array('placeholder' => '2006-01-01')
@@ -120,7 +135,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     }
 
-    function testInsert()
+    public function testInsert()
     {
         $row = array (
             'title' => 'News Item 3',
@@ -133,7 +148,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals('3', (string)$last_insert_id); // correct id has been set
     }
 
-    function testLimit()
+    /*
+    public function testLimit()
     {
         $sql = $this->_db->limit('SELECT * FROM ' . self::TableName, 1);
         $result = $this->_db->query($sql);
@@ -149,13 +165,14 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(5, count($rows[0]));
         $this->assertEquals(2, $rows[0]['id']);
     }
+     */
 
-    function testProfilerCreation()
+    public function testProfilerCreation()
     {
         $this->assertThat($this->_db->getProfiler(), $this->isInstanceOf('Zend_Db_Profiler'));
     }
 
-    function testSelect()
+    public function testSelect()
     {
         $select = $this->_db->select();
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
