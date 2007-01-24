@@ -34,6 +34,11 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class Zend_Search_Lucene_Analysis_Analyzer_Common_Text extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
+    /**
+     * Current position in a stream
+     *
+     * @var integer
+     */
     private $_position;
 
     /**
@@ -42,6 +47,14 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Text extends Zend_Search_Lucen
     public function reset()
     {
         $this->_position = 0;
+
+        if ($this->_input === null) {
+            return;
+        }
+
+        // convert input into ascii
+        $this->_input = iconv($this->_encoding, 'ASCII//TRANSLIT', $this->_input);
+        $this->_encoding = 'ASCII';
     }
 
     /**

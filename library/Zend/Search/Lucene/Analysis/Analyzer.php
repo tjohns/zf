@@ -23,16 +23,19 @@
 /** Zend_Search_Lucene_Analysis_Token */
 require_once 'Zend/Search/Lucene/Analysis/Token.php';
 
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Utf8.php';
+
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text/CaseInsensitive.php';
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum.php';
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum/CaseInsensitive.php';
 
 /** Zend_Search_Lucene_Analysis_TokenFilter_StopWords */
@@ -76,15 +79,24 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
     protected $_input = null;
 
     /**
+     * Input string encoding
+     *
+     * @var string
+     */
+    protected $_encoding = '';
+
+    /**
      * Tokenize text to a terms
      * Returns array of Zend_Search_Lucene_Analysis_Token objects
+     *
+     * Tokens are returned in UTF-8 (internal Zend_Search_Lucene encoding)
      *
      * @param string $data
      * @return array
      */
-    public function tokenize($data)
+    public function tokenize($data, $encoding = '')
     {
-        $this->setInput($data);
+        $this->setInput($data, $encoding);
 
         $tokenList = array();
         while (($nextToken = $this->nextToken()) !== null) {
@@ -101,9 +113,10 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
      *
      * @param string $data
      */
-    public function setInput($data)
+    public function setInput($data, $encoding = '')
     {
-        $this->_input = $data;
+        $this->_input    = $data;
+        $this->_encoding = $encoding;
         $this->reset();
     }
 
@@ -116,6 +129,8 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
      * Tokenization stream API
      * Get next token
      * Returns null at the end of stream
+     *
+     * Tokens are returned in UTF-8 (internal Zend_Search_Lucene encoding)
      *
      * @return Zend_Search_Lucene_Analysis_Token|null
      */
@@ -148,6 +163,5 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
 
         return self::$_defaultImpl;
     }
-
 }
 

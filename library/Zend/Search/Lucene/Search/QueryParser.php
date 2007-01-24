@@ -125,6 +125,19 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
      */
     private $_contextStack;
 
+    /**
+     * Query string encoding
+     *
+     * @var string
+     */
+    private $_encoding;
+
+    /**
+     * Query string default encoding
+     *
+     * @var string
+     */
+    private $_defaultEncoding = '';
 
 
     /** Query parser State Machine states */
@@ -231,22 +244,52 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
 
 
     /**
-     * Parses a query string
+     * Set query string default encoding
      *
-     * @param string $strQuery
-     * @return Zend_Search_Lucene_Search_Query
-     * @throws Zend_Search_Lucene_Search_QueryParserException
+     * @param string $encoding
      */
-    static public function parse($strQuery)
+    public static function setDefaultEncoding($encoding)
     {
         if (self::$_instance === null) {
             self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
         }
 
+        self::$_instance->_defaultEncoding = $encoding;
+    }
+
+    /**
+     * Get query string default encoding
+     *
+     * @return string
+     */
+    public static function getDefaultEncoding()
+    {
+        if (self::$_instance === null) {
+            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+        }
+
+        return self::$_instance->_defaultEncoding;
+    }
+
+    /**
+     * Parses a query string
+     *
+     * @param string $strQuery
+     * @param string $encoding
+     * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Search_QueryParserException
+     */
+    static public function parse($strQuery, $encoding = null)
+    {
+        if (self::$_instance === null) {
+            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+        }
+
+        self::$_instance->_encoding     = ($encoding !== null) ? $encoding : self::$_instance->_defaultEncoding;
         self::$_instance->_lastToken    = null;
-        self::$_instance->_context      = new Zend_Search_Lucene_Search_QueryParserContext();
+        self::$_instance->_context      = new Zend_Search_Lucene_Search_QueryParserContext(self::$_instance->_encoding);
         self::$_instance->_contextStack = array();
-        self::$_instance->_tokens       = self::$_instance->_lexer->tokenize($strQuery);
+        self::$_instance->_tokens       = self::$_instance->_lexer->tokenize($strQuery, self::$_instance->_encoding);
 
         // Empty query
         if (count(self::$_instance->_tokens) == 0) {
@@ -359,7 +402,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public function subqueryStart()
     {
         $this->_contextStack[] = $this->_context;
-        $this->_context        = new Zend_Search_Lucene_Search_QueryParserContext($this->_context->getField());
+        $this->_context        = new Zend_Search_Lucene_Search_QueryParserContext($this->_encoding, $this->_context->getField());
     }
 
     /**

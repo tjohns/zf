@@ -231,10 +231,10 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                          0x00; /* 0x04 - third bit, compressed (ZLIB) */
             $this->_fdtFile->writeByte($fieldBits);
             if ($field->isBinary) {
-                $this->_fdtFile->writeVInt(strlen($field->stringValue));
-                $this->_fdtFile->writeBytes($field->stringValue);
+                $this->_fdtFile->writeVInt(strlen($field->value));
+                $this->_fdtFile->writeBytes($field->value);
             } else {
-                $this->_fdtFile->writeString($field->stringValue);
+                $this->_fdtFile->writeString($field->getUtf8Value());
             }
         }
 
@@ -400,7 +400,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      *
      * Term positions is an array( docId => array(pos1, pos2, pos3, ...), ... )
      *
-     * @param Zend_Search_Lucene_Index_Term $term
+     * @param Zend_Search_Lucene_Index_Term $termEntry
      * @param array $termDocs
      */
     public function addTerm($termEntry, $termDocs)
@@ -482,17 +482,42 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                                         &$prevTermInfo, Zend_Search_Lucene_Index_TermInfo $termInfo)
     {
         if (isset($prevTerm) && $prevTerm->field == $term->field) {
-            $prefixLength = 0;
-            while ($prefixLength < strlen($prevTerm->text) &&
-                   $prefixLength < strlen($term->text) &&
-                   $prevTerm->text{$prefixLength} == $term->text{$prefixLength}
-                  ) {
-                $prefixLength++;
+            $matchedBytes = 0;
+            $maxBytes = min(strlen($prevTerm->text), strlen($term->text));
+            while ($matchedBytes < $maxBytes  &&
+                   $prevTerm->text[$matchedBytes] == $term->text[$matchedBytes]) {
+                $matchedBytes++;
             }
+
+            // Calculate actual matched UTF-8 pattern
+            $prefixBytes = 0;
+            $prefixChars = 0;
+            while ($prefixBytes < $matchedBytes) {
+                $charBytes = 1;
+                if ((ord($term->text[$prefixBytes]) & 0xC0) == 0xC0) {
+                    $charBytes++;
+                    if (ord($term->text[$prefixBytes]) & 0x20 ) {
+                        $charBytes++;
+                        if (ord($term->text[$prefixBytes]) & 0x10 ) {
+                            $charBytes++;
+                        }
+                    }
+                }
+
+                if ($prefixBytes + $charBytes > $matchedBytes) {
+                    // char crosses matched bytes boundary
+                    // skip char
+                    break;
+                }
+
+                $prefixChars++;
+                $prefixBytes += $charBytes;
+            }
+
             // Write preffix length
-            $dicFile->writeVInt($prefixLength);
+            $dicFile->writeVInt($prefixChars);
             // Write suffix
-            $dicFile->writeString( substr($term->text, $prefixLength) );
+            $dicFile->writeString(substr($term->text, $prefixBytes));
         } else {
             // Write preffix length
             $dicFile->writeVInt(0);

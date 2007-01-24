@@ -80,9 +80,9 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
     private $_lexemes;
 
     /**
-     * Query string
+     * Query string (array of single- or non single-byte characters)
      *
-     * @var string
+     * @var array
      */
     private $_queryString;
 
@@ -332,19 +332,30 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
      * This method is used to tokenize query string into lexemes
      *
      * @param string $inputString
+     * @param string $encoding
      * @return array
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
-    public function tokenize($inputString)
+    public function tokenize($inputString, $encoding)
     {
-        $this->_lexemes = array();
-        $this->_queryString = $inputString;
         $this->reset();
 
+        $this->_lexemes     = array();
+        $this->_queryString = array();
+
+        $strLength = iconv_strlen($inputString, $encoding);
+
+        // Workaround for iconv_substr bug
+        $inputString .= ' ';
+
+        for ($count = 0; $count < $strLength; $count++) {
+            $this->_queryString[$count] = iconv_substr($inputString, $count, 1, $encoding);
+        }
+
         for ($this->_queryStringPosition = 0;
-             $this->_queryStringPosition < strlen($inputString);
+             $this->_queryStringPosition < count($this->_queryString);
              $this->_queryStringPosition++) {
-            $this->process($this->_translateInput($inputString[$this->_queryStringPosition]));
+            $this->process($this->_translateInput($this->_queryString[$this->_queryStringPosition]));
         }
 
         $this->process(self::IN_WHITE_SPACE);
@@ -381,7 +392,7 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
             $this->_queryStringPosition++;
 
             // check,
-            if ($this->_queryStringPosition == strlen($this->_queryString)  ||
+            if ($this->_queryStringPosition == count($this->_queryString)  ||
                 $this->_queryString[$this->_queryStringPosition] != $lexeme) {
                     throw new Zend_Search_Lucene_Search_QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
                 }

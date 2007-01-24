@@ -107,10 +107,11 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
     /**
      * Transform entry to a subquery
      *
+     * @param string $encoding
      * @return Zend_Search_Lucene_Search_Query
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
-    public function getQuery()
+    public function getQuery($encoding)
     {
         if ($this->_fuzzyQuery) {
             throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is not supported yet.');
@@ -120,7 +121,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
             throw new Zend_Search_Lucene_Search_QueryParserException('Wildcard queries are not supported yet.');
         }
 
-        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_term);
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_term, $encoding);
 
         if (count($tokens) == 0) {
             return new Zend_Search_Lucene_Search_Query_Empty();

@@ -68,9 +68,10 @@ abstract class Zend_Search_Lucene_Search_QueryEntry
     /**
      * Transform entry to a subquery
      *
+     * @param string $encoding
      * @return Zend_Search_Lucene_Search_Query
      */
-    abstract public function getQuery();
+    abstract public function getQuery($encoding);
 
     /**
      * Boost query entry

@@ -90,9 +90,9 @@ class Zend_Search_Lucene_Document
      */
     public function getField($fieldName)
     {
-		if (!array_key_exists($fieldName, $this->_fields)) {
-			throw new Zend_Search_Lucene_Exception("Field name \"$fieldName\" not found in document.");
-		}
+        if (!array_key_exists($fieldName, $this->_fields)) {
+            throw new Zend_Search_Lucene_Exception("Field name \"$fieldName\" not found in document.");
+        }
         return $this->_fields[$fieldName];
     }
 
@@ -105,7 +105,17 @@ class Zend_Search_Lucene_Document
      */
     public function getFieldValue($fieldName)
     {
-    	return $this->getField($fieldName)->stringValue;
+    	return $this->getField($fieldName)->value;
     }
 
+    /**
+     * Returns the string value of a named field in UTF-8 encoding.
+     *
+     * @see __get()
+     * @return string
+     */
+    public function getFieldUtf8Value($fieldName)
+    {
+    	return $this->getField($fieldName)->getUtf8Value();
+    }
 }

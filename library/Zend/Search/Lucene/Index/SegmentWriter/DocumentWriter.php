@@ -93,7 +93,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
             if ($field->isIndexed) {
                 if ($field->isTokenized) {
                     $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
-                    $analyzer->setInput($field->stringValue);
+                    $analyzer->setInput($field->value, $field->encoding);
 
                     $position     = 0;
                     $tokenCounter = 0;
@@ -119,7 +119,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                                                                            $document->boost*
                                                                            $field->boost ));
                 } else {
-                    $term = new Zend_Search_Lucene_Index_Term($field->stringValue, $field->name);
+                    $term = new Zend_Search_Lucene_Index_Term($field->getUtf8Value(), $field->name);
                     $termKey = $term->key();
 
                     if (!isset($this->_termDictionary[$termKey])) {

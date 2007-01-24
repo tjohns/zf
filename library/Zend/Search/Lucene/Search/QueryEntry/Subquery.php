@@ -74,9 +74,10 @@ class Zend_Search_Lucene_Search_QueryEntry_Subquery extends Zend_Search_Lucene_S
     /**
      * Transform entry to a subquery
      *
+     * @param string $encoding
      * @return Zend_Search_Lucene_Search_Query
      */
-    public function getQuery()
+    public function getQuery($encoding)
     {
         $this->_query->setBoost($this->_boost);
 

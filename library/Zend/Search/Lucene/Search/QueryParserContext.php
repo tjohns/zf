@@ -120,14 +120,23 @@ class Zend_Search_Lucene_Search_QueryParserContext
      */
     private $_entries = array();
 
+    /**
+     * Query string encoding
+     *
+     * @var string
+     */
+    private $_encoding;
+
 
     /**
      * Context object constructor
      *
+     * @param string $encoding
      * @param string|null $defaultField
      */
-    public function __construct($defaultField = null)
+    public function __construct($encoding, $defaultField = null)
     {
+        $this->_encoding     = $encoding;
         $this->_defaultField = $defaultField;
     }
 
@@ -271,7 +280,7 @@ class Zend_Search_Lucene_Search_QueryParserContext
         $query = new Zend_Search_Lucene_Search_Query_Boolean();
 
         foreach ($this->_entries as $entryId => $entry) {
-            $query->addSubquery($entry->getQuery(), $this->_signs[$entryId]);
+            $query->addSubquery($entry->getQuery($this->_encoding), $this->_signs[$entryId]);
         }
 
         return $query;
@@ -350,12 +359,12 @@ class Zend_Search_Lucene_Search_QueryParserContext
         foreach ($conjuctions as  $conjuction) {
             // Check, if it's a one term conjuction
             if (count($conjuction) == 1) {
-                $subqueries[] = $conjuction[0][0]->getQuery();
+                $subqueries[] = $conjuction[0][0]->getQuery($this->_encoding);
             } else {
                 $subquery = new Zend_Search_Lucene_Search_Query_Boolean();
 
                 foreach ($conjuction as $conjuctionEntry) {
-                    $subquery->addSubquery($conjuctionEntry[0]->getQuery(), $conjuctionEntry[1]);
+                    $subquery->addSubquery($conjuctionEntry[0]->getQuery($this->_encoding), $conjuctionEntry[1]);
                 }
 
                 $subqueries[] = $subquery;

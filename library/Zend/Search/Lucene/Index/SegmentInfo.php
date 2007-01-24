@@ -349,7 +349,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
         for ($count = 0; $count < $indexTermCount; $count++) {
             $termPrefixLength = $tiiFile->readVInt();
             $termSuffix       = $tiiFile->readString();
-            $termValue        = substr( $prevTerm, 0, $termPrefixLength ) . $termSuffix;
+            $termValue        = Zend_Search_Lucene_Index_Term::getPrefix($prevTerm, $termPrefixLength) . $termSuffix;
 
             $termFieldNum     = $tiiFile->readVInt();
             $docFreq          = $tiiFile->readVInt();
@@ -363,7 +363,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
             $indexPointer += $tiiFile->readVInt();
 
-            $this->_termDictionary[] =  new Zend_Search_Lucene_Index_Term($termValue,$termFieldNum);
+            $this->_termDictionary[] =  new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
             $this->_termDictionaryInfos[] =
                 new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
             $prevTerm = $termValue;
@@ -376,7 +376,6 @@ class Zend_Search_Lucene_Index_SegmentInfo
             // Treat 64-bit 0xFFFFFFFF as -1
             $this->_termDictionary[0]->field = -1;
         }
-
     }
 
 
@@ -465,7 +464,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $termPrefixLength = $tisFile->readVInt();
             $termSuffix       = $tisFile->readString();
             $termFieldNum     = $tisFile->readVInt();
-            $termValue        = substr( $termValue, 0, $termPrefixLength ) . $termSuffix;
+            $termValue        = Zend_Search_Lucene_Index_Term::getPrefix($termValue, $termPrefixLength) . $termSuffix;
 
             $docFreq      = $tisFile->readVInt();
             $freqPointer += $tisFile->readVInt();
@@ -795,7 +794,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $termPrefixLength = $this->_tisFile->readVInt();
         $termSuffix       = $this->_tisFile->readString();
         $termFieldNum     = $this->_tisFile->readVInt();
-        $termValue        = substr($this->_lastTerm->text, 0, $termPrefixLength) . $termSuffix;
+        $termValue        = Zend_Search_Lucene_Index_Term::getPrefix($this->_lastTerm->text, $termPrefixLength) . $termSuffix;
 
         $this->_lastTerm = new Zend_Search_Lucene_Index_Term($termValue, $this->_fields[$termFieldNum]->name);
 

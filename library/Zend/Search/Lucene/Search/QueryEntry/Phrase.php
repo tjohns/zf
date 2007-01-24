@@ -105,16 +105,17 @@ class Zend_Search_Lucene_Search_QueryEntry_Phrase extends Zend_Search_Lucene_Sea
     /**
      * Transform entry to a subquery
      *
+     * @param string $encoding
      * @return Zend_Search_Lucene_Search_Query
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
-    public function getQuery()
+    public function getQuery($encoding)
     {
         if (strpos($this->_phrase, '?') !== false || strpos($this->_phrase, '*') !== false) {
             throw new Zend_Search_Lucene_Search_QueryParserException('Wildcards are only allowed in a single terms.');
         }
 
-        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_phrase);
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_phrase, $encoding);
 
         if (count($tokens) == 0) {
             return new Zend_Search_Lucene_Search_Query_Empty();
