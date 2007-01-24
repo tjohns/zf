@@ -65,13 +65,13 @@ class Zend_Locale_Format
 
     /**
      * Changes the numbers/digits within a given string from one script to another
-     * 'default' representated the stardard numbers 0-9, if a script does not exist
+     * 'Decimal' representated the stardard numbers 0-9, if a script does not exist
      * an exception will be thrown.
      *
      * Examples for input:
      *   toNumberSystem('١١٠ Tests', 'Arab'); -> returns '100 Tests'
      * Example for not supported script
-     *   toNumberSystem('١١٠ Tests', 'Default'); -> returns '100 Tests'
+     *   toNumberSystem('١١٠ Tests', 'Decimal'); -> returns '100 Tests'
      * 
      * @param  string  $input   String to convert
      * @param  string  $locale  Script to parse, see Zend_Locale->getScriptList() for details
@@ -82,10 +82,10 @@ class Zend_Locale_Format
     public static function toNumberSystem($input, $from, $to = null)
     {
         if (!array_key_exists($from, self::$_signs)) {
-            throw new Zend_Locale_Exception("script ($from) is no known script, use 'default' for 0-9");
+            throw new Zend_Locale_Exception("script ($from) is no known script, use 'Decimal' for 0-9");
         }
         if (($to !== null) and (!array_key_exists($to, self::$_signs))) {
-            throw new Zend_Locale_Exception("script ($to) is no known script, use 'default' for 0-9");
+            throw new Zend_Locale_Exception("script ($to) is no known script, use 'Decimal' for 0-9");
         }
         
         if (isset(self::$_signs[$from])) {
