@@ -39,9 +39,9 @@
         <para>
             If the optional <code>$locale</code> parameter is provided, then the <code>$locale</code> disambiguates the
             <code>$date</code> operand by replacing month and weekday names for string <code>$date</code> operands, and
-            even parsing date strings expressed according to the conventions of that locale (see
+            even parsing date strings expressed according to the conventions of that locale (see <code>
             <link linkend="zend.locale.date.normalize">Zend_Locale_Format::getDate()</link>
-            ). The automatic normalization of localized <code>$date</code> operands of a string type occurs when
+            </code> ). The automatic normalization of localized <code>$date</code> operands of a string type occurs when
             <code>$part</code> is one of the <code>Zend_Date::DATE*</code> or <code>Zend_Date::TIME*</code> constants.
             The locale identifies which language should be used to parse month names and weekday names, if the
             <code>$date</code> is a string containing a date. If there is no <code>$date</code> input parameter, then
@@ -100,196 +100,230 @@ print $date;
             the units of the <code>$date</code> operand, when <code>$date</code> is a string or integer.
         </para>
 
-        <table>
-            <title>Date Parts</title>
-            <tgroup cols="2">
-                <thead>
-                    <row>
-                        <entry>Date Part</entry>
-                        <entry>Explanation</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry>Timestamp</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>Year</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Gregorian_calendar">Gregorian calendar</ulink> year</entry>
-                    </row>
-                    <row>
-                        <entry>Month</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Month#Julian_and_Gregorian_calendars">Gregorian calendar month (1-12, localized names supported)</ulink>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>Hour</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/24-hour_clock">24 hour clock</ulink> (0-23)</entry>
-                    </row>
-                    <row>
-                        <entry>Minute</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Minute">minute</ulink> of the hour (0-59)</entry>
-                    </row>
-                    <row>
-                        <entry>Second</entry>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Second">second</ulink> usually used to denote the elapsed seconds, since the start of the minute (0-59)</entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <ulink url="http://en.wikipedia.org/wiki/Millisecond">millisecond</ulink>
-                        </entry>
-                        <entry>thousands of a second (0-999)
-            <code>Zend_Date</code> supports two additional methods for working with time units smaller than seconds. By
-            default, <code>Zend_Date</code> instances precision defaults to track milliseconds, as seen using <code>getFractionalPrecision()</code>. To
-            change the precision use <code>setFractionalPrecision($precision)</code>.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>Day</entry>
-                        <entry>Zend_Date::DAY_SHORT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
-                    </row>
-                    <row>
-                        <entry>Week</entry>
-                        <entry>Zend_Date::WEEK is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string. Otherwise an exception is raised.</entry>
-                    </row>
-                    <row>
-                        <entry>Date</entry>
-                        <entry>Zend_Date::DAY_MEDIUM is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code>.  Otherwise, an attempt is made to normalize the <code>$date</code> string into a Zend_Date::DATE_MEDIUM formatted date.</entry>
-                    </row>
-                    <row>
-                        <entry>Weekday</entry>
-                        <entry>Zend_Date::WEEKDAY_DIGIT is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: Zend_Date::WEEKDAY_NARROW, Zend_Date::WEEKDAY_NAME, Zend_Date::WEEKDAY_SHORT, Zend_Date::WEEKDAY</entry>
-                    </row>
-                    <row>
-                        <entry>DayOfYear</entry>
-                        <entry></entry>
-                    </row>
-                    <row>
-                        <entry>Arpa</entry>
-                        <entry></entry>
-                    </row>
-                    <row>
-                        <entry>Iso</entry>
-                        <entry></entry>
-                    </row>
-                </tbody>
-            </tgroup>
-        </table>
+        <sect3 id="id.date.basic.parts">
 
-        <para>
-            These basic operations can be used instead of the convenience operations for specific date parts, if the
-            appropriate constant is used for the <code>$part</code> parameter.
-        </para>
+            <title>List of Date Parts</title>
 
-        <table>
-            <title>Basic Operations</title>
-            <tgroup cols="2">
-                <thead>
-                    <row>
-                        <entry>Basic Operation</entry>
-                        <entry>Explanation</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry>get()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">get($part = null, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                returns the <code>$part</code> of object's date localized to <code>$locale</code> as a
-                                formatted string or integer
-                            </para>
+            <table>
+                <title>Date Parts</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row>
+                            <entry>Date Part</entry>
+                            <entry>Explanation</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Unix_Time">Timestamp</ulink>
+                            </entry>
+                            <entry>
+                            UNIX timestamp, expressed in seconds elapsed since January 1st, 1970 00:00:00 GMT/UTC.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>set()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                sets the <code>$part</code> of the current object to the corresponding value for that
-                                part found in the input <code>$date</code> having a locale <code>$locale</code>
-                            </para>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Gregorian_calendar">Year</ulink>
+                            </entry>
+                            <entry>Gregorian calendar year (e.g. 2006)</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Month#Julian_and_Gregorian_calendars">Month</ulink>
+                            </entry>
+                            <entry>Gregorian calendar month (1-12, localized names supported)</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/24-hour_clock">24 hour clock</ulink>
+                            </entry>
+                            <entry>Hours of the day (0-23) denote the hours elapsed, since the start of the day.</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Minute">minute</ulink>
+                            </entry>
+                            <entry>Minutes of the hour (0-59) denote minutes elapsed, since the start of the hour.</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Second">Second</ulink>
+                            </entry>
+                            <entry>Seconds of the minute (0-59) denote the elapsed seconds, since the start of the minute.</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Millisecond">millisecond</ulink>
+                            </entry>
+                            <entry>Milliseconds denote thousandths of a second (0-999). <code>Zend_Date</code> supports two additional methods for working with time units smaller than seconds. By default, <code>Zend_Date</code> instances use a precision defaulting to milliseconds, as seen using <code>getFractionalPrecision()</code>. To change the precision use <code>setFractionalPrecision($precision)</code>.  However, precision is limited practically to microseconds, since <code>Zend_Date</code> uses <code>
+                                <ulink url="http://php.net/microtime">microtime()</ulink></code>.</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Day">Day</ulink>
+                            </entry>
+                            <entry><code>Zend_Date::DAY_SHORT</code> is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: <code>Zend_Date::WEEKDAY_NARROW</code>, <code>Zend_Date::WEEKDAY_NAME</code>, <code>Zend_Date::WEEKDAY_SHORT</code>, <code>Zend_Date::WEEKDAY</code> (Gregorian calendar assumed)</entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/Week">Week</ulink>
+                            </entry>
+                            <entry><code>Zend_Date::WEEK</code> is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string. Otherwise an exception is raised. (Gregorian calendar assumed)</entry>
+                        </row>
+                        <row>
+                            <entry>Date</entry>
+                            <entry><code>Zend_Date::DAY_MEDIUM</code> is extracted from <code>$date</code> if the <code>$date</code> operand is an instance of <code>Zend_Date</code>.  Otherwise, an attempt is made to normalize the <code>$date</code> string into a Zend_Date::DATE_MEDIUM formatted date. The format of <code>Zend_Date::DAY_MEDIUM</code> depends on the object's locale.</entry>
+                        </row>
+                        <row>
+                            <entry>Weekday</entry>
+                            <entry>Weekdays are represented numerically as 0 (for Sunday) through 6 (for Saturday).  <code>Zend_Date::WEEKDAY_DIGIT</code> is extracted from <code>$date</code>, if the <code>$date</code> operand is an instance of <code>Zend_Date</code> or a numeric string.  Otherwise, an attempt is made to extract the day according to the conventions documented for these constants: <code>Zend_Date::WEEKDAY_NARROW</code>, <code>Zend_Date::WEEKDAY_NAME</code>, <code>Zend_Date::WEEKDAY_SHORT</code>, <code>Zend_Date::WEEKDAY</code> (Gregorian calendar assumed)</entry>
+                        </row>
+                        <row>
+                            <entry>DayOfYear</entry>
+                            <entry>In <code>Zend_Date</code>, the day of the year represents the number of calendar days elapsed since the start of the year (0-365).  As with other units above, fractions are rounded down to the nearest whole number. (Gregorian calendar assumed)
                         </entry>
-                    </row>
-                    <row>
-                        <entry>add()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                adds the <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
-                                to t the current object's date
-                            </para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>sub()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                subtracts the <code>$part</code> of <code>$date</code> having a locale
-                                <code>$locale</code> to t the current object's date
-                            </para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>copyPart()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                returns a cloned object, with only <code>$part</code> of the object's date copied to the
-                                clone, with the clone have its locale arbitrarily set to <code>$locale</code> (if
-                                specified)
-                            </para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>compare()</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
-                            </para>
-                            <para>
-                                compares <code>$part</code> of <code>$date</code> to this object's timestamp, returning
-                                0 if they are equal, 1 if this object's part was more recent than $date's part,
-                                otherwise -1.
-                            </para>
-                        </entry>
-                    </row>
-                </tbody>
-            </tgroup>
-        </table>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://www.faqs.org/rfcs/rfc822.html">Arpa</ulink>
+                            </entry>
+                            <entry>Arpa dates (i.e. RFC 822 formatted dates) are supported. Output uses either a "GMT" or "Local differential hours+min" format (see section 5 of RFC 822). Example: <code>Mon, 31 Dec 06 23:59:59 GMT</code>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                <ulink url="http://en.wikipedia.org/wiki/ISO_8601">Iso</ulink>
+                            </entry>
+                            <entry>Only complete ISO 8601 dates are supported for output. Example: <code>2009-02-14T00:31:30+01:00</code>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+        </sect3>
+
+        <sect3 id="id.date.basic.operations">
+
+            <title>List of Date Operations</title>
+
+            <para>
+                The basic operations below can be used instead of the convenience operations for specific date parts, if
+                the
+                <link linkend="zend.date.constants.list">appropriate constant</link>
+                is used for the <code>$part</code> parameter.
+            </para>
+
+            <table>
+                <title>Basic Operations</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row>
+                            <entry>Basic Operation</entry>
+                            <entry>Explanation</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>get()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    Use <code>get($part)</code> to retrieve the date <code>$part</code> of this object's
+                                    date localized to <code>$locale</code> as a formatted string or integer. When using
+                                    the BCMath extension, numeric strings might be returned instead of integers for
+                                    large values. <emphasis role="strong">NOTE:</emphasis> Unlike <code>get()</code>,
+                                    the other get*() convenience methods only return instances of <code>Zend_Date</code>
+                                    containing a date representing the selected or computed date/time.
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>set()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    Sets the <code>$part</code> of the current object to the corresponding value for
+                                    that part found in the input <code>$date</code> having a locale
+                                    <code>$locale</code>.
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>add()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    Adds the <code>$part</code> of <code>$date</code> having a locale
+                                    <code>$locale</code> to the current object's date.
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>sub()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    Subtracts the <code>$part</code> of <code>$date</code> having a locale
+                                    <code>$locale</code> from the current object's date.
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>copyPart()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    Returns a cloned object, with only <code>$part</code> of the object's date copied to
+                                    the clone, with the clone have its locale arbitrarily set to <code>$locale</code>
+                                    (if specified).
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>compare()</entry>
+                            <entry>
+                                <para>
+                                    <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
+                                </para>
+                                <para>
+                                    compares <code>$part</code> of <code>$date</code> to this object's timestamp,
+                                    returning 0 if they are equal, 1 if this object's part was more recent than $date's
+                                    part, otherwise -1.
+                                </para>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+        </sect3>
 
     </sect2>
 
-    <sect2 id="zend.date.overview.others">
+    <sect2 id="zend.date.others.comparison">
 
-        <title>Miscellaneous Methods</title>
+        <title>Comparing Dates</title>
 
         <para>
-            The following basic operations do not have corresponding convenience methods for the data parts listed
-            above:
+            The following basic operations do not have corresponding convenience methods for the date parts listed in
+            <xref linkend="zend.date.overview" />
+            .
         </para>
 
         <table>
-            <title>Miscellaneous Methods</title>
+            <title>Date Comparison Methods</title>
             <tgroup cols="2">
                 <thead>
                     <row>
@@ -372,15 +406,53 @@ print $date;
                         </entry>
                     </row>
                     <row>
+                        <entry>isLeapYear()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isLeapYear()</emphasis>
+                            </para>
+                            <para>
+                                Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
+                                Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or
+                                instance of <code>Zend_Date</code>. Is the year a leap year?
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+    <sect2 id="zend.date.others.gettingparts">
+
+        <title>Getting Dates and Date Parts</title>
+
+        <para>
+            Several methods support retrieving values related to a <code>Zend_Date</code> instance.
+        </para>
+
+        <table>
+            <title>Date Output Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
                         <entry>toString()</entry>
                         <entry>
                             <para>
                                 <emphasis role="strong">toString($format = null, $locale = null)</emphasis>
                             </para>
                             <para>
-                                Invoked directly or via the magic method <code>__toString()</code>. Returns this
-                                object's date value formatted according to <code>$locale</code> (defaults to this
-                                object's locale).
+                                Invoke directly or via the magic method <code>__toString()</code>. The
+                                <code>toString()</code> method automatically formats the date object's value according
+                                to the conventions of the object's locale, or an optionally specified
+                                <code>$locale</code>.
                             </para>
                         </entry>
                     </row>
@@ -391,7 +463,32 @@ print $date;
                                 <emphasis role="strong">toValue($part = null)</emphasis>
                             </para>
                             <para>
-                                Converts a date to a digit
+                                Returns an integer representation of the selected date <code>$part</code> according to
+                                the conventions of the object's locale. Returns <code>false</code> when
+                                <code>$part</code> selects a non-numeric value, such as
+                                <code>Zend_Date::MONTH_NAME</code>. <emphasis role="strong">NOTE:</emphasis> This method
+                                calls
+                                <link linkend="id.date.basic.operations"><code>get()</code>
+                                </link>
+                                and casts the result to a PHP integer, which will give unpredictable results, if
+                                <code>get()</code> returns a numeric string containing a number too large for a PHP
+                                integer on your system. Use <code>get()</code> instead.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <link linkend="id.date.basic.operations">get()</link>
+                        </entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This method returns the <code>$part</code> of object's date localized to
+                                <code>$locale</code> as a formatted string or integer. See
+                                <xref linkend="id.date.basic.operations" />
+                                for more information.
                             </para>
                         </entry>
                     </row>
@@ -407,48 +504,94 @@ print $date;
                             </para>
                         </entry>
                     </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+    <sect2 id="zend.date.others.fractions">
+
+        <title>Working with Fractions of Seconds</title>
+
+        <para>
+            Several methods support retrieving values related to a <code>Zend_Date</code> instance.
+        </para>
+
+        <table>
+            <title>Date Output Methods</title>
+            <tgroup cols="2">
+                <thead>
                     <row>
-                        <entry>isLeapYear()</entry>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">now($locale = null)</emphasis>
+                                <emphasis role="strong">getFractionalPrecision()</emphasis>
                             </para>
-                            <para>
-                                Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
-                                Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or
-                                instance of <code>Zend_Date</code>. Is the year a leap year?
-                            </para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.other.sun.rise">getSunRise()</link>
-                        </entry>
-                        <entry>Return the date's time of sunrise</entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.other.sun.set">getSunSet()</link>
-                        </entry>
-                        <entry>Return the date's time of sunset</entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.other.sun.info">getSunInfo()</link>
-                        </entry>
-                        <entry>Return an array with the date's sun dates</entry>
-                    </row>
-                    <row>
-                        <entry>
-                            <link linkend="zend.date.time.millisecond.getfrac">getFractionalPrecision()</link>
                         </entry>
                         <entry>Return the precision of the part seconds</entry>
                     </row>
                     <row>
                         <entry>
-                            <link linkend="zend.date.time.millisecond.setfrac">setFractionalPrecision()</link>
+                            <para>
+                                <emphasis role="strong">setFractionalPrecision()</emphasis>
+                            </para>
                         </entry>
                         <entry>Set the precision of the part seconds</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+    <sect2 id="zend.date.other.sun">
+
+        <title>Sunrise / Sunset</title>
+
+        <para>
+            Three methods provide access to geographically localized information about the Sun, including the time of
+            sunrise and sunset.
+        </para>
+
+        <table>
+            <title>Miscellaneous Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunrise($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return the date's time of sunrise</entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunset($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return the date's time of sunset</entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunInfo($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return an array with the date's sun dates</entry>
                     </row>
                 </tbody>
             </tgroup>
