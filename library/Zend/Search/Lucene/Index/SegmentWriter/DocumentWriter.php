@@ -98,6 +98,8 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                     $position     = 0;
                     $tokenCounter = 0;
                     while (($token = $analyzer->nextToken()) !== null) {
+                        $tokenCounter++;
+
                         $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $field->name);
                         $termKey = $term->key();
 
