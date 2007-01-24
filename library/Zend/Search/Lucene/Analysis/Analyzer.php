@@ -26,6 +26,9 @@ require_once 'Zend/Search/Lucene/Analysis/Token.php';
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Utf8.php';
 
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Utf8Num.php';
+
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
