@@ -90,7 +90,7 @@ class Zend_Currency {
      * 
      * @var const
      */
-    private $_symbolPosition = null;
+    private $_signPosition = null;
     
     
     /**
@@ -115,6 +115,23 @@ class Zend_Currency {
      * @var Zend_Locale
      */
     private $_formatLocale = null;
+    
+    
+    /**
+     * use symbols or not
+     * 
+     * @var bool
+     */
+    private $_useSymbol = true;
+    
+    
+    /**
+     * use currency names or not
+     * 
+     * @var bool
+     */
+    private $_useName = true;
+    
     
     
     /**
@@ -144,7 +161,7 @@ class Zend_Currency {
             if ( (is_object($param) && $param instanceof Zend_Locale) || 
                  (is_string($param) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$param)) ) {
                 
-                if (empty($this->_CurrencyLocale)){
+                if (empty($this->_currencyLocale)){
                     $this->_setCurrencyLocale($param);
                 } else {
                     throw new Zend_Currency_Exception('many locales passed');
@@ -152,21 +169,21 @@ class Zend_Currency {
             //get the currency short name   
             } else if (is_string($param) && strlen($param) == 3) {
                 
-                if(empty($this->_CurrencyShortName)) {
+                if(empty($this->_currencyShortName)) {
                     $this->_setCurrencyShortName($param);
                 } else {
                     throw new Zend_Currency_Exception('many currency names passed');
                 }
             //get the script name
-            } else if (is_string($param) && strlen($param) == 4) {
+            } else if (is_string($param) && (strlen($param) == 4 || $param == 'Decimal') ) {
                 
-                if (empty($this->_NumberScript)) {
+                if (empty($this->_numberScript)) {
                     $this->_setNumberScript($param);
                 } else {
                     throw new Zend_Currency_Exception('many number script names passed');
                 }
             //unknown data passed in this param  
-            } else if ($param !== false){
+            } else if ($param !== null){
                 throw new Zend_Currency_Exception('unknown value passed at param #' . $num);
             }
             
@@ -174,7 +191,7 @@ class Zend_Currency {
         
         
         //make sure that the locale is passed
-        if (empty($this->_CurrencyLocale)) {
+        if (empty($this->_currencyLocale)) {
             throw new Zend_Currency_Exception('you should pass the locale of the currency');
         }
         
@@ -216,7 +233,7 @@ class Zend_Currency {
         //getting the full name of the currency
         $names = Zend_Locale_Data::getContent('','currencynames',$this->_currencyLocale->getRegion());
         
-        $this->_fullName = $names[$this->_shortName];
+        $this->_fullName = isset($names[$this->_shortName])?$names[$this->_shortName]:$this->_shortName;
         
         return $this;
     }
@@ -230,7 +247,7 @@ class Zend_Currency {
      */
     protected function _updateSymbol()
     {
-        $formatLocale = $this->symbolLocale;
+        $formatLocale = $this->_symbolLocale;
         
         if (!$formatLocale instanceof Zend_Locale) {
             $formatLocale = $this->_currencyLocale;
@@ -239,7 +256,7 @@ class Zend_Currency {
         //getting the symbol of the currency
         $symbols = Zend_Locale_Data::getContent($formatLocale, 'currencysymbols');
         
-        $this->_symbol = $symbols[$this->_shortName];
+        $this->_symbol = isset($symbols[$this->_shortName])?$symbols[$this->_shortName]:null;
         
         return $this;
     }
@@ -253,10 +270,11 @@ class Zend_Currency {
      */
     protected function _updateFormat()
     {
-        $formatLocale = $this->formatLocale;
+        $formatLocale = $this->_formatLocale;
         
         if (!$formatLocale instanceof Zend_Locale) {
-            $formatLocale = $this->_currencyLocale;
+            $this->_formatLocale = $this->_currencyLocale;
+            $formatLocale = $this->_formatLocale;
         }
         
         //getting the format information of the currency
@@ -270,11 +288,11 @@ class Zend_Currency {
         }
         
         
-        //knowing the symbol positioning information
+        //knowing the sign positioning information
         if (iconv_strpos($format, '¤') == 0) {
-            $this->_symbolPosition = self::RIGHT;
+            $this->_signPosition = self::LEFT;
         } else if (iconv_strpos($format, '¤') == iconv_strlen($format)-1) {
-            $this->_symbolPosition = self::LEFT;
+            $this->_signPosition = self::RIGHT;
         }
         
         return $this;
@@ -291,7 +309,48 @@ class Zend_Currency {
      */ 
     public function toCurrency($value, $script = NULL, $locale = NULL) 
     {
-        //TODO finish this method
+        
+        //validate the passed number
+        if (!isset($value) || !is_numeric($value)) {
+            throw new Zend_Currency_Exception('the first param should be a number');
+        }
+        
+        //format the number
+        if (!empty($locale)) {
+            $value = Zend_Locale_Format::toNumber($value, null, $locale);
+        } else {
+            $value = Zend_Locale_Format::toNumber($value, null, $this->_formatLocale);
+        }
+        
+        //localize the number digits
+        if (!empty($script)) {
+            $value = Zend_Locale_Format::toNumberSystem($value, 'Decimal', $script);
+        } else if (!empty($this->_numberScript)) {
+            $value = Zend_Locale_Format::toNumberSystem($value, 'Decimal', $this->_numberScript);
+        }
+        
+        
+        //get the sign to be placed next to the number
+        
+        $sign = '';
+        
+        if ($this->_useSymbol && !empty($this->_symbol)) {
+            $sign = $this->_symbol;
+        } else if ($this->_useName) {
+            $sign = $this->_fullName;
+        } else {
+            $sign = $this->_shortName;
+        }
+        
+        //place the sign next to the number
+        if ($this->_signPosition == self::RIGHT) {
+            $value = $value . ' ' . $sign;
+        } else if ($this->_signPosition == self::LEFT) {
+            $value = $sign . ' ' . $value;
+        }
+        
+        
+        return $value;
     } 
     
     
@@ -301,9 +360,9 @@ class Zend_Currency {
      * actual set locale will be used
      *
      * @param  const|string        $rules   OPTIONAL formating rules for currency
-     *                  - SYMBOL|NOSYMBOL : display currency symbol
-     *                  - NAME|NONAME     : display currency name
-     *                  - DEFAULT|RIGHT|LEFT : where to display currency symbol/name
+     *                  - USE_SYMBOL|NOSYMBOL : display currency symbol
+     *                  - USE_NAME|NONAME     : display currency name
+     *                  - STANDARD|RIGHT|LEFT : where to display currency symbol/name
      *                  - string: gives the currency string/name/sign to set
      * @param  string              $script  OPTIONAL Number script to use for output
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for output formatting
@@ -311,7 +370,32 @@ class Zend_Currency {
      */
     public function setFormat($rules = NULL, $script = NULL, $locale = NULL)
     {
-        //TODO finish this method
+        
+        //process the rules
+        if ($rules === self::USE_SYMBOL || $rules === self::NO_SYMBOL) {
+            $this->_useSymbol = $rules;
+        } else if ($rules === self::USE_NAME || $rules === self::NO_NAME) {
+            $this->_useName = $rules;
+        } else if ($rules === self::RIGHT || $rules === self::LEFT) {
+            $this->_signPosition = $rules;
+        } else if ($rules === self::STANDARD) {
+            $this->_updateFormat();
+        }
+        
+        //set the new number script
+        if (!empty($script)) {
+            $this->_setNumberScript($script);
+        }
+        
+        //set the locale for the number formating process
+        if (!empty($locale)) {
+            if (Zend_Locale::isLocale($locale)) {
+                $this->_formatLocale = $locale;
+            } else {
+                throw new Zend_Currency_Exception('the 3rd param isn\'t a valid locale');
+            }
+        }
+        
     }
     
     
@@ -325,7 +409,41 @@ class Zend_Currency {
      */ 
     public static function getSign($currency = null, $locale = null) 
     {
-        //TODO finish this method
+        
+        //manage the params
+        if (empty($locale) && !empty($currency)) {
+            $locale = $currency;
+            $currency = null;
+        } else if (empty($locale) && empty($currency)) {
+            throw new Zend_Currency_Exception('you should pass a locale');
+        }
+        
+        //validate the locale and get the country short name
+        $country = null;
+        
+        if (is_object($locale) && $locale instanceof Zend_Locale) {
+            $country = $locale->getRegion();
+        } else if (is_string($locale) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$locale)) {
+            $country = substr($locale, 3, 2);
+        } else {
+            throw new Zend_Currency_Exception('pass a valid locale');
+        }
+        
+        //TODO wait tell thomas fixes the problem of the currencies list
+        //I need not just one currency, I need a full list of the active ones
+        
+        //get the available currencies for this country
+        $data = Zend_Locale_Data::getContent('','currencyforregion',$country);
+        
+        $shortName = $data['currency'];
+        
+        //TODO if thomas fixed the currencies list, validate $currency exists in $data
+        
+        //get the symbol
+        $symbols = Zend_Locale_Data::getContent($locale, 'currencysymbols');
+        
+        return isset($symbols[$shortName])?$symbols[$shortName]:$shortName;
+        
     } 
 
  
@@ -338,7 +456,41 @@ class Zend_Currency {
      */ 
     public static function getName($currency = null, $locale = null) 
     {
-        //TODO finish this method
+
+        //manage the params
+        if (empty($locale) && !empty($currency)) {
+            $locale = $currency;
+            $currency = null;
+        } else if (empty($locale) && empty($currency)) {
+            throw new Zend_Currency_Exception('you should pass a locale');
+        }
+        
+        //validate the locale and get the country short name
+        $country = null;
+        
+        if (is_object($locale) && $locale instanceof Zend_Locale) {
+            $country = $locale->getRegion();
+        } else if (is_string($locale) && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$locale)) {
+            $country = substr($locale, 3, 2);
+        } else {
+            throw new Zend_Currency_Exception('pass a valid locale');
+        }
+        
+        //TODO wait tell thomas fixes the problem of the currencies list
+        //I need not just one currency, I need a full list of the active ones
+        
+        //get the available currencies for this country
+        $data = Zend_Locale_Data::getContent('','currencyforregion',$country);
+        
+        $shortName = $data['currency'];
+        
+        //TODO if thomas fixed the currencies list, validate $currency exists in $data
+        
+        //get the name
+        $names = Zend_Locale_Data::getContent($locale, 'currencynames', $country);
+        
+        return isset($names[$shortName])?$symbols[$names]:$shortName;
+        
     } 
 
 
@@ -350,7 +502,17 @@ class Zend_Currency {
      */ 
     public static function getRegionList($currency) 
     {
-        //TODO finish this method
+        $data = Zend_Locale_Data::getContent('', 'currencyforregionlist');
+        
+        $regionList = array();
+        
+        foreach($data as $region => $currencyShortName) {
+            if ($currencyShortName == $currency) {
+                $regionList[] = $region;
+            }
+        }
+        
+        return $regionList;
     } 
     
  
@@ -363,7 +525,7 @@ class Zend_Currency {
      */ 
     public static function getCurrencyList($region) 
     {
-        //TODO finish this method
+        return Zend_Locale_Data::getContent('','currencyforregion',$region);
     }
 
 
@@ -403,7 +565,7 @@ class Zend_Currency {
     private function _setCurrencyLocale($locale)
     {
         if (is_object($locale) && $locale instanceof Zend_Locale){
-            $this->_CurrencyLocale = $locale ;
+            $this->_currencyLocale = $locale ;
         } else if (is_string($locale)) {
             $this->_currencyLocale = new Zend_Locale($locale);
         } else {
@@ -438,7 +600,7 @@ class Zend_Currency {
      */
     private function _setNumberScript($script)
     {
-        if (is_string($script) && strlen($script) == 4) {
+        if (is_string($script) && (strlen($script) == 4 || $script == 'Decimal') ) {
             $this->_numberScript = $script ;
         } else {
             throw new Zend_Currency_Exception('invalid script name');
