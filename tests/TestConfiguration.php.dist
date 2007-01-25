@@ -73,9 +73,16 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_SID',      'xe');
 
 /**
- * @todo Oracle
+ * Zend_Db_Adapter_Oracle
+ */
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME', null)
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD', null)
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_SID',      'xe');
+
+/**
  * @todo DB2
- * @todo Mysqli (when it moves to core)
  */
 
 /**

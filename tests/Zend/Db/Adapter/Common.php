@@ -69,11 +69,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     protected function setUpMetadata()
     {
         // create a test table and populate it
-        try {
-            $this->tearDownMetadata();
-        } catch (Exception $e) {
-            // eat the exception
-        }
+        $this->tearDownMetadata();
         $this->createTestTable();
     }
 
@@ -102,10 +98,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     public function testDescribeTable()
     {
         $descr = $this->_db->describeTable(self::TableName);
-        print_r($descr);
-        $this->assertEquals($descr['id']['name'], 'id');
-        $this->assertEquals($descr['id']['type'], 'INTEGER');
-        $this->assertEquals($descr['id']['primary'], 1);
+        $this->assertEquals('id', $descr['id']['name']);
+        $this->assertEquals('INTEGER', $descr['id']['type']);
+        $this->assertEquals(1, $descr['id']['primary']);
     }
 
     public function testFetchAll()
