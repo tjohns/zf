@@ -486,7 +486,23 @@ $router->addConfig($config, 'routes');
                 <code>Zend_Controller_Router_StaticRoute</code>.
             </para>
         </sect3>
-    
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
+            <title>Using RewriteRouter with modular MVC components</title>
+
+            <para>
+                A module aware version of the RewriteRouter is also available,
+                Zend_Controller_ModuleRewriteRouter. It works in precisely the
+                same fashion as Zend_Controller_RewriteRouter, but has for the
+                default route the path ':module/:controller/:action/*'.
+            </para>
+
+            <para>
+                See the <xref linkend="zend.controller.modular">Conventional
+                Modular directory structure documentation</xref> for more
+                information. 
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.response.http">

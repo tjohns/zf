@@ -40,10 +40,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $test = $this->_dispatcher->getControllerDirectory();
         $this->assertTrue(is_array($test));
         $this->assertEquals(1, count($test));
-        $this->assertTrue(isset($test['default']));
-        $this->assertTrue(is_array($test['default']));
-        $this->assertEquals(1, count($test['default']));
-        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test['default'][0]);
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test[0]);
     }
 
     public function testIsDispatchable()
@@ -177,53 +174,6 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that classes are found in modules
-     */
-    public function testModules()
-    {
-        $this->_dispatcher->setControllerDirectory(array(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'
-        ));
-        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('baz');
-        $request->setActionName('bar');
-        $request->setModuleName('admin');
-        $this->_dispatcher->setParam('useModules', true);
-
-        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-
-        $response = new Zend_Controller_Response_Cli();
-        $this->_dispatcher->dispatch($request, $response);
-        $body = $response->getBody();
-        $this->assertContains("Admin's Baz::bar action called", $body, $body);
-    }
-
-    /**
-     * Test that classes are found in modules, using a prefix
-     */
-    public function testNamespacedModules()
-    {
-        $this->_dispatcher->setControllerDirectory(array(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-        ));
-        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setModuleName('admin');
-        $request->setControllerName('foo');
-        $request->setActionName('bar');
-
-        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-
-        $response = new Zend_Controller_Response_Cli();
-        $this->_dispatcher->dispatch($request, $response);
-        $body = $this->_dispatcher->getResponse()->getBody();
-        $this->assertContains("Admin_Foo::bar action called", $body, $body);
-    }
-
-    /**
      * Tests ZF-637 -- action names with underscores not being correctly changed to camelCase
      */
     public function testZf637()
@@ -244,41 +194,5 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('_', $this->_dispatcher->getPathDelimiter());
         $this->_dispatcher->setPathDelimiter(':');
         $this->assertEquals(':', $this->_dispatcher->getPathDelimiter());
-    }
-
-    public function testNamespacedControllerWithCamelCaseAction()
-    {
-        $this->_dispatcher->setParam('useModules', true);
-        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setModuleName('admin');
-        $request->setControllerName('foo-bar');
-        $request->setActionName('baz.bat');
-
-        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-
-        $response = new Zend_Controller_Response_Cli();
-        $this->_dispatcher->dispatch($request, $response);
-        $body = $this->_dispatcher->getResponse()->getBody();
-        $this->assertContains("Admin_FooBar::bazBat action called", $body, $body);
-    }
-
-    public function testUseModuleDefaultController()
-    {
-        $this->_dispatcher->setParam('useModules', true);
-        $this->_dispatcher->setParam('useModuleDefault', true);
-        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
-        $this->_dispatcher->setDefaultController('foo');
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setModuleName('admin');
-
-        $this->assertFalse($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-
-        $response = new Zend_Controller_Response_Cli();
-        $this->_dispatcher->dispatch($request, $response);
-        $body = $this->_dispatcher->getResponse()->getBody();
-        $this->assertContains("Admin_Foo::index action called", $body, $body);
     }
 }

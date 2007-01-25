@@ -113,7 +113,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     public function testSetGetControllerDirectory()
     {
         $test = $this->_controller->getControllerDirectory();
-        $expected = array('default' => array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'));
+        $expected = array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
         $this->assertSame($expected, $test);
     }
 
@@ -421,28 +421,4 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->setRequest($request);
         $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
-
-    /**
-     * Test that classes are found in modules, using a prefix
-     */
-    public function testNamespacedModules()
-    {
-        $this->_controller->setControllerDirectory(array(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-        ));
-        $this->_controller->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
-        $this->_controller->returnResponse(true);
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setModuleName('admin');
-        $request->setControllerName('foo');
-        $request->setActionName('bar');
-
-        $response = new Zend_Controller_Response_Cli();
-
-        $this->_controller->dispatch($request, $response);
-        $body = $response->getBody();
-        $this->assertContains("Admin_Foo::bar action called", $body, $body);
-    }
-
 }

@@ -19,11 +19,11 @@
  */ 
 
 
-/** Zend_Controller_Router_Exception */
-require_once 'Zend/Controller/Router/Exception.php';
-
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
+
+/** Zend_Controller_Front */
+require_once 'Zend/Controller/Front.php';
 
 /**
  * @package    Zend_Controller
@@ -88,20 +88,17 @@ interface Zend_Controller_Router_Interface
     public function clearParams($name = null);
 
     /**
-     * Retrieve controller directory
+     * Retrieve front controller instance
      *
-     * Retrieves stored controller directory
-     *
-     * @return array
+     * @return Zend_Controller_Front
      */    
-    public function getControllerDirectory();
+    public function getFrontController();
 
     /**
      * Set the controller directories
      * 
-     * @param string|array $dirs Path to Zend_Controller_Action controller 
-     * classes or array of such paths
-     * @return Zend_Controller_Router
+     * @param Zend_Controller_Front $controller
+     * @return Zend_Controller_Router_Interface
      */
-    public function setControllerDirectory($dirs);
+    public function setFrontController(Zend_Controller_Front $controller);
 }

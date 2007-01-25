@@ -37,17 +37,6 @@ require_once 'Zend/Controller/Response/Abstract.php';
 interface Zend_Controller_Dispatcher_Interface
 {
     /**
-     * Formats a string into a module name.  This is used to take a raw
-     * module name, such as one that would be packaged inside a request
-     * object, and reformat it to a proper class name prefix that a class 
-     * extending Zend_Controller_Action would use.
-     *
-     * @param string $unformatted
-     * @return string
-     */
-    public function formatModuleName($unformatted);
-
-    /**
      * Formats a string into a controller name.  This is used to take a raw
      * controller name, such as one that would be packaged inside a request
      * object, and reformat it to a proper class name that a class extending
@@ -163,34 +152,19 @@ interface Zend_Controller_Dispatcher_Interface
     public function getControllerDirectory();
 
     /**
-     * Set default controller name (minus formatting)
+     * Retrieve front controller instance
      * 
-     * @param string $controller 
-     * @return Zend_Controller_Dispatcher_Interface
+     * @return Zend_Controller_Front
      */
-    public function setDefaultController($controller);
+    public function getFrontController();
 
     /**
-     * Retrieve the default controller name (minus formatting)
+     * Set front controller instance
      * 
-     * @return string
+     * @param Zend_Controller_Front $controller 
+     * @return Zend_Controller_Dispatcher
      */
-    public function getDefaultController();
-
-    /**
-     * Set default action name (minus formatting)
-     * 
-     * @param string $action 
-     * @return Zend_Controller_Dispatcher_Interface
-     */
-    public function setDefaultAction($action);
-
-    /**
-     * Retrieve the default action name (minus formatting)
-     * 
-     * @return string
-     */
-    public function getDefaultAction();
+    public function setFrontController(Zend_Controller_Front $controller);
 
     /**
      * Dispatches a request object to a controller/action.  If the action

@@ -227,18 +227,6 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertSame('act', $token->getActionName());
     }
 
-    public function testDefaultRouteMatchedWithModules()
-    {
-        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/mod/ctrl/act');
-        $this->_router->setParam('useModules', true);
-        
-        $token = $this->_router->route($request);
-        
-        $this->assertSame('mod', $token->getParam('module')); // getModuleName does not exist yet
-        $this->assertSame('ctrl', $token->getControllerName());
-        $this->assertSame('act', $token->getActionName());
-    }
-    
     public function testDefaultRouteMatchedWithControllerOnly()
     {
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/ctrl');

@@ -19,17 +19,14 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-/** Zend_Controller_Router_Interface */
-require_once 'Zend/Controller/Router/Interface.php';
+/** Zend_Controller_Router_Abstract */
+require_once 'Zend/Controller/Router/Abstract.php';
 
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Request_Http */
-require_once 'Zend/Controller/Request/Http.php';
-
-/** Zend_Controller_Route */
+/** Zend_Controller_Router_Route */
 require_once 'Zend/Controller/Router/Route.php';
+
+/** Zend_Controller_Router_StaticRoute */
+require_once 'Zend/Controller/Router/StaticRoute.php';
 
 /**
  * Ruby routing based Router.
@@ -40,156 +37,22 @@ require_once 'Zend/Controller/Router/Route.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
+class Zend_Controller_RewriteRouter extends Zend_Controller_Router_Abstract
 {
     
     protected $useDefaultRoutes = true;
+    protected $_defaultPath = ':controller/:action/*';
 
-    /**
-     * Array of invocation parameters to use when instantiating action 
-     * controllers
-     * @var array 
-     */
-    protected $_invokeParams = array();
     protected $_routes = array();
     protected $_currentRoute = null;
 
-    /**
-     * Directories where controllers are stored
-     * 
-     * @var array
-     */
-    protected $_directories = array();
-
-    /**
-     * Constructor
-     * 
-     * @param array $params Optional invocation arguments
-     * @return void
-     */
-    public function __construct(array $params = array())
-    {
-        $this->setParams($params);
-    }
-
-    /**
-     * Add or modify a parameter to use when instantiating an action controller
-     * 
-     * @param string $name 
-     * @param mixed $value 
-     * @return Zend_Controller_RewriteRouter
-     */
-    public function setParam($name, $value)
-    {
-        $name = (string) $name;
-        $this->_invokeParams[$name] = $value;
-        return $this;
-    }
-
-    /**
-     * Set parameters to pass to action controller constructors
-     * 
-     * @param array $params 
-     * @return Zend_Controller_RewriteRouter
-     */
-    public function setParams(array $params)
-    {
-        $this->_invokeParams = array_merge($this->_invokeParams, $params);
-        return $this;
-    }
-
-    /**
-     * Retrieve a single parameter from the controller parameter stack
-     * 
-     * @param string $name 
-     * @return mixed
-     */
-    public function getParam($name)
-    {
-        if(isset($this->_invokeParams[$name])) {
-            return $this->_invokeParams[$name];
-        }
-
-        return null;
-    }
-
-    /**
-     * Retrieve action controller instantiation parameters
-     * 
-     * @return array
-     */
-    public function getParams()
-    {
-        return $this->_invokeParams;
-    }
-
-    /**
-     * Clear the controller parameter stack
-     *
-     * By default, clears all parameters. If a parameter name is given, clears 
-     * only that parameter; if an array of parameter names is provided, clears 
-     * each.
-     * 
-     * @param null|string|array single key or array of keys for params to clear
-     * @return Zend_Controller_RewriteRouter
-     */
-    public function clearParams($name = null)
-    {
-        if (null === $name) {
-            $this->_invokeParams = array();
-        } elseif (is_string($name) && isset($this->_invokeParams[$name])) {
-            unset($this->_invokeParams[$name]);
-        } elseif (is_array($name)) {
-            foreach ($name as $key) {
-                if (is_string($key) && isset($this->_invokeParams[$key])) {
-                    unset($this->_invokeParams[$key]);
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Retrieve controller directory
-     *
-     * Retrieves stored controller directory
-     *
-     * @return array
-     */    
-    public function getControllerDirectory()
-    {
-        return $this->_directories;
-    }
-    
-    /**
-     * Set controller directory
-     *
-     * Stores controller directory to pass to dispatcher. May be an array of 
-     * directories or a string containing a single directory.
-     *
-     * @param string|array $dirs Path to Zend_Controller_Action controller 
-     * classes or array of such paths
-     * @return Zend_Controller_Router
-     */    
-    public function setControllerDirectory($dirs)
-    {
-        $this->_directories = $dirs;
-        return $this;
-    }
-    
     /** 
      * Add default routes which are used to mimic basic router behaviour
      */
     protected function addDefaultRoutes()
     {
         if (!$this->hasRoute('default')) {
-            if ($this->getParam('useModules')) {
-                $path = ':module/:controller/:action/*';
-            } else {
-                $path = ':controller/:action/*';
-            }
-            $compat = new Zend_Controller_Router_Route($path, array('action' => 'index'));
+            $compat = new Zend_Controller_Router_Route($this->_defaultPath, array('action' => 'index'));
             $this->_routes = array_merge(array('default' => $compat), $this->_routes);
         }
     }

@@ -199,17 +199,20 @@ class Zend_Controller_Front
 
     /**
      * Add a controller directory to the controller directory stack
+     *
+     * If $args is presented and is a string, uses it for the array key mapping 
+     * to the directory specified.
      * 
      * @param string $directory 
-     * @param string $module
+     * @param mixed $args Optional argument; if string value, used as array key map
      * @return Zend_Controller_Front
      */
-    public function addControllerDirectory($directory, $module = null)
+    public function addControllerDirectory($directory, $args = null)
     {
-        if ((null === $module) || ('default' == $module)) {
-            $this->_controllerDir['default'][] = (string) $directory;
+        if (is_string($args) && !empty($args)) {
+            $this->_controllerDir[$args] = (string) $directory;
         } else {
-            $this->_controllerDir[(string) $module] = (string) $directory;
+            $this->_controllerDir[] = (string) $directory;
         }
 
         return $this;
@@ -227,14 +230,10 @@ class Zend_Controller_Front
      */
     public function setControllerDirectory($directory)
     {
-        $this->_controllerDir = array('default' => array());
+        $this->_controllerDir = array();
 
         foreach ((array) $directory as $key => $value) {
-            if (!is_string($key) || ('default' == $key)) {
-                $this->_controllerDir['default'][] = (string) $value;
-            } else {
-                $this->_controllerDir[$key]= (string) $value;
-            }
+            $this->_controllerDir[$key] = (string) $value;
         }
 
         return $this;
@@ -679,14 +678,13 @@ class Zend_Controller_Front
              * Route request to controller/action, if a router is provided
              */
             $router = $this->getRouter();
-            $router->setControllerDirectory($this->getControllerDirectory());
+            $router->setFrontController($this);
 
             /**
             * Notify plugins of router startup
             */
             $this->_plugins->routeStartup($request);
 
-            $router->setParams($this->getParams());
             $router->route($request);
 
             /**
@@ -700,10 +698,7 @@ class Zend_Controller_Front
             $this->_plugins->dispatchLoopStartup($request);
 
             $dispatcher = $this->getDispatcher();
-            $dispatcher->setParams($this->getParams());
-            foreach ($this->getControllerDirectory() as $module => $directory) {
-                $dispatcher->addControllerDirectory($directory, $module);
-            }
+            $dispatcher->setFrontController($this);
 
             /**
              *  Attempt to dispatch the controller/action. If the $request
