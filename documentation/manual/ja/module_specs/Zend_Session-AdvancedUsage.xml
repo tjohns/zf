@@ -73,15 +73,36 @@ v            </listitem>
                 <para>
                     3. 正解: <code>Zend_Session_Core::start()</code> を使用します。
                     すべてのリクエストでセッションを使用したい場合は、
-                    この関数コールを ZF の起動コードの中で記述します。
-                    セッションを使用したいリクエストとそうでないリクエストがある場合は、
-                    起動コード内で <code>strict</code> を true に設定し (
-                    <link
-                        linkend="zend.session.startingasession"><code>setOptions()</code>
-                    </link>
-                    を参照ください)、最初に <code>new Zend_Session()</code>
-                    をコールする前に <code>Zend_Session_Core::start()</code> をコールします。
+                    この関数コールを ZF の起動コードの最初のほうで無条件に記述します。
                     セッションにはある程度のオーバーヘッドがあります。
+                    セッションを使用したいリクエストとそうでないリクエストがある場合は、
+                </para>
+                <itemizedlist mark='opencircle'>
+                    <listitem>
+                        <para>
+                            起動コード内で、無条件にオプション <code>strict</code> を true にします (
+                            <link
+                        linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code>
+                            </link> を参照ください
+                            )。
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            セッションを必要とするリクエスト内で、
+                            最初に <code>new Zend_Session()</code>
+                            をコールする前に、<code>Zend_Session_Core::start()</code> をコールします。
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            通常とおり、必要に応じて <code>new Zend_Session()</code>
+                            を使用します。事前に <code>Zend_Session_Core::start()</code>
+                            がコールされていることを確認しておきましょう。
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <para>
                     <code>strict</code> オプションにより、<code>new Zend_Session()</code>
                     が自動的に Zend_Session_Core を開始することがなくなります。
                     したがって、このオプションを使用すると、ZF アプリケーションの開発者が
@@ -91,7 +112,7 @@ v            </listitem>
                     のインスタンスを作成しようとしたときに例外がスローされます。
                     ZF のコアのコードではこのオプションを使用しないでください。
                     このような設計上の決断をくだすのは、アプリケーションの開発者だからです。
-                    同様に、"ライブラリ" の開発者も、setOptions()
+                    同様に、"ライブラリ" の開発者も、<code>Zend_Session_Core::setOptions()</code>
                     の使用がユーザにどれだけの影響を与えるかを注意するようにしましょう。
                     これらのオプションは
                     (もととなる ext/session のオプションと同様)、
@@ -100,19 +121,22 @@ v            </listitem>
             </listitem>
             <listitem>
                 <para>
-                    4. 正解: <code>new Zend_Session()</code> を使用します。
+                    4. 正解: 必要に応じて <code>new Zend_Session()</code> を使用します。
                     セッションは、Zend_Session_Core の内部で自動的に開始されます。
+                    これはもっともシンプルな使用法で、たいていの場合にうまく動作します。
+                    しかし、デフォルトであるクッキーベースのセッション (推奨)
+                    を使用している場合には、PHP がクライアントに何らかの出力
+                    (<ulink url="http://www.php.net/headers_sent">HTTP ヘッダ</ulink> など)
+                    をする <emphasis role="strong">前に</emphasis>、確実に
+                    最初の <code>new Zend_Session()</code> をコールしなければなりません。
+                    <ulink url="http://php.net/outcontrol">出力バッファリング</ulink>
+                    を使用すると、この問題を解決することができ、パフォーマンスも向上させることができるでしょう。
+                    たとえば、<code>php.ini</code> で "<code>output_buffering = 65535</code>"
+                    とすると、出力バッファリング用のバッファが 64K になります。
+                    buffer.
                 </para>
             </listitem>
         </itemizedlist>
-
-        <para>
-            四番目の方法は、三番目のものに比べてすこし難しい方法です。
-            なぜなら、デフォルトであるクッキーベースのセッション (推奨)
-            を使用している場合には、PHP がクライアントに何らかの出力をする
-            <emphasis role="strong">前に</emphasis>、確実に
-            最初の <code>new Zend_Session()</code> をコールしなければならないからです。
-        </para>
 
     </sect2>
 

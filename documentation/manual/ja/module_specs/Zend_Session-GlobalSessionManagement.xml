@@ -1,6 +1,6 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>グローバルセッションの管理</title>
+    <title>グローバルセッションの管理 - Zend_Session_Core</title>
 
     <para>
         セッションのデフォルトの挙動を変更するには、Zend_Session_Core
@@ -8,12 +8,12 @@
         Zend_Session_Core を使用します。たとえば
         <ulink url="http://www.php.net/session#session.configuration">
         ext/session のオプション</ulink>
-        を設定するには、<code>Zend_Session::setOptions()</code> を使用します。
+        を設定するには、<code>Zend_Session_Core::setOptions()</code> を使用します。
     </para>
 
     <sect2 id="zend.session.setoptions">
 
-        <title>setOptions()</title>
+        <title>Zend_Session_Core::setOptions()</title>
 
         <para>
             セッション名前空間が要求されると、事前に
@@ -21,12 +21,13 @@
             で明示的に開始されていない場合には Zend_Session_Core が自動的にセッションを開始します。
             もととなる PHP セッションの設定は Zend_Session_Core
             のデフォルトを使用します。これを変更するには、事前に
-            <code>Zend_Session::setOptions()</code> を使用して設定しておきます。
+            <code>Zend_Session_Core::setOptions()</code>
+            を使用して設定しておきます。
         </para>
 
         <para>
             オプションを渡すには、そのベース名 (<code>session.</code> 以外の部分)
-            を使用した配列を setOptions に渡します。
+            を使用した配列を <code>Zend_Session_Core::setOptions()</code> に渡します。
             何もオプションを設定しなければ、Zend_Session はまず推奨オプションを使用し、
             それがなければ php.ini の設定を使用します。
             これらのオプションの扱いについてのよい案があれば、ぜひ
@@ -283,7 +284,12 @@ remember_me_seconds = 864000
             <title>セッションハイジャックおよびセッション固定化</title>
 
             <para>
-                XSS 問題は、頻繁に発生します。
+                <ulink url="http://en.wikipedia.org/wiki/Cross_site_scripting">
+                クロスサイトスクリプト (XSS) 脆弱性</ulink>
+                を避けることは、セッションハイジャックを防ぐ助けになります。
+                <ulink url="http://secunia.com/">Secunia の統計</ulink>
+                によると、XSS 問題は頻繁に発生します。これは、
+                ウェブアプリケーションの開発言語が何であっても同じです。
                 XSS 問題が決して起こらないことを期待するよりも、
                 もしそれが発生した場合の被害を最小限に抑える方法を考えましょう。
                 XSS があれば、攻撃者は犠牲者のネットワークトラフィックに
@@ -395,7 +401,7 @@ if (!isset($session->initialized))
             を使用すると、更新したセッションクッキーをユーザに送信します。
             その有効期間は、<code>remember_me_seconds</code>
             によって決まり、デフォルトは二週間です。この期間を変更するには
-            <code>setOptions()</code> を使用します。
+            <code>Zend_Session_Core::setOptions()</code> を使用します。
             セッションの固定化/のっとり を防ぐには、
             ユーザが認証を通過してアプリケーションが「ログイン」
             を行う際にこの関数を使用します。
