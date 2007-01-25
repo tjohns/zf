@@ -36,7 +36,7 @@ require_once 'Zend/Translate/Adapter.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
+class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
     /**
      * Generates the adapter
      *
@@ -52,18 +52,35 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
     /**
      * Load translation data
      *
-     * @param  string        $locale  Locale/Language to add data for, identical with locale identifier,
-     *                                see Zend_Locale for more information
-     * @param  string|array  $data
-     * @param  boolean       $option  OPTIONAL  If true, the Translation is erased before adding it
+     * @param  string        $locale    Locale/Language to add data for, identical with locale identifier,
+     *                                  see Zend_Locale for more information
+     * @param  string|array  $filename  Filename and full path to the translation source
+     * @param  boolean       $option    OPTIONAL If true, the Translation is erased before adding it
      */
-    protected function _loadTranslationData($locale, $data, $option = null)
+    protected function _loadTranslationData($locale, $filename, $option = null)
     {
         if ($option  ||  !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();
         }
 
-        $this->_translate[$locale] = array_merge($this->_translate[$locale], $data);
+        if (!is_readable($filename)) {
+            throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
+        }
+
+        $this->_file = @fopen($filename, 'rb');
+        if (!$this->_file) {
+            throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
+        }
+
+        while(!feof($this->_file)) {
+            $content = fgets($this->_file);
+            $content = explode(";", $content);
+            // # marks a comment in the translation source
+            if ($content[0][0] == "#") {
+                continue;
+            }
+            $this->_translate[$locale][$content[0]] = $content[1];
+        }
     }
 
     /**
@@ -73,6 +90,6 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
      */
     public function toString()
     {
-        return "Array";
+        return "Csv";
     }
 }

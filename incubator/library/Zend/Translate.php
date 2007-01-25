@@ -38,7 +38,9 @@ class Zend_Translate {
      */
     const AN_GETTEXT = 'gettext';
     const AN_ARRAY   = 'array';
-
+    const AN_CSV     = 'csv';
+    const AN_TMX     = 'tmx';
+    
     /**
      * Adapter
      *
@@ -83,11 +85,19 @@ class Zend_Translate {
                 require_once('Zend/Translate/Adapter/Gettext.php');
                 $this->_adapter = new Zend_Translate_Adapter_Gettext($options, $locale);
                 break;
-            case 'cvs':
+            case 'tmx':
+                /** Zend_Translate_Adapter_Tmx */
+                require_once('Zend/Translate/Adapter/Tmx.php');
+                $this->_adapter = new Zend_Translate_Adapter_Tmx($options, $locale);
+                break;
+            case 'csv':
+                /** Zend_Translate_Adapter_Csv */
+                require_once('Zend/Translate/Adapter/Csv.php');
+                $this->_adapter = new Zend_Translate_Adapter_Csv($options, $locale);
+                break;
             case 'qt':
             case 'sql':
             case 'tbx':
-            case 'tmx':
             case 'xliff':
             case 'xmltm':
                 throw new Zend_Translate_Exception("adapter '$adapter' is not supported for now");
