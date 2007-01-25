@@ -25,6 +25,9 @@ require_once 'Zend/Search/Lucene/Exception.php';
 /** Zend_Search_Lucene_Document */
 require_once 'Zend/Search/Lucene/Document.php';
 
+/** Zend_Search_Lucene_Document_Html */
+require_once 'Zend/Search/Lucene/Document/Html.php';
+
 /** Zend_Search_Lucene_Storage_Directory */
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 
