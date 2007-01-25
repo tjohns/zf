@@ -1,7 +1,7 @@
 <sect1 id="zend.search.searching">
     <title>Searching an Index</title>
 
-    <sect2 id="zend.search.searching.query-parser">
+    <sect2 id="zend.search.searching.query_building">
         <title>Building Queries</title>
 
         <para>
@@ -75,7 +75,7 @@ $index->find($query);
 
         <para>
             It is important to note that query parser uses standard analyzer to tokenize separate parts of query string.
-            Thus all transformations, whech are done on indexed text are also done on query string entries.
+            Thus all transformations, which are done on indexed text are also done on query string entries.
         </para>
         <para>
             It may be transforming to lower case to make search case-insensitive, removing stop-words, stamming and
@@ -85,6 +85,175 @@ $index->find($query);
             As opposed to it, API method doesn't transform or filter input terms. Thus it's more suitable for
             computer generated or untokenized fields.
         </para>
+
+        <sect3 id="zend.search.searching.query_building.parsing">
+            <title>Query parsing</title>
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
+                into query object.
+            </para>
+
+            <para>
+                This object may be used in query construction API methods to combine user entered queries with
+                machine generated queries.
+            </para>
+
+            <para>
+                Actually, in some cases it's only way to search for values within untokenized fields:
+
+                <programlisting role="php"><![CDATA[<?php
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+
+$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathQuery = new Zend_Search_Query_Term($pathTerm);
+
+$query = new Zend_Search_Query_Boolean();
+$query->addSubquery($userQuery, true /* required */);
+$query->addSubquery($pathQuery, true /* required */);
+
+$hits = $index->find($query);
+
+?>]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
+                which can specify query string encoding:
+            <programlisting role="php"><![CDATA[
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+]]></programlisting>
+            </para>
+
+            <para>
+                If encoding is omitted, then current locale is used.
+            </para>
+
+            <para>
+                It's also possible to specify default query string encoding with
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
+            <programlisting role="php"><![CDATA[
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
+...
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
+                string encoding (empty string means "current locale").
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2 id="zend.search.searching.results">
+        <title>Search Results</title>
+        <para>
+            The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
+            two properties: <code>$hit->document</code> is a document number within
+            the index and <code>$hit->score</code> is a score of the hit in
+            a search result. Result is ordered by score (top scores come first).
+        </para>
+
+        <para>
+            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
+            the hit as a property of the hit.  In this example, a hit is returned and
+            the corresponding document has two fields: title and author.
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+require_once('Zend/Search/Lucene.php');
+
+$index = new Zend_Search_Lucene('/data/my_index');
+
+$hits = $index->find($query);
+
+foreach ($hits as $hit) {
+    echo $hit->score;
+    echo $hit->title;
+    echo $hit->author;
+}
+
+?>]]></programlisting>
+
+        <para>
+            Stored fields are always returned in UTF-8 encoding.
+        </para>
+
+        <para>
+            Optionally, the original Zend_Search_Lucene_Document object can be returned from the
+            Zend_Search_Lucene_Search_QueryHit.
+
+            You can retrieve stored parts of the document by using the <code>getDocument()</code>
+            method of the index object and then get them by
+            <code>getFieldValue()</code> method:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+require_once('Zend/Search/Lucene.php');
+
+$index = new Zend_Search_Lucene('/data/my_index');
+
+$hits = $index->find($query);
+foreach ($hits as $hit) {
+    // return Zend_Search_Lucene_Document object for this hit
+    echo $document = $hit->getDocument();
+
+    // return a Zend_Search_Lucene_Field object
+    // from the Zend_Search_Lucene_Document
+    echo $document->getField('title');
+
+    // return the string value of the Zend_Search_Lucene_Field object
+    echo $document->getFieldValue('title');
+
+    // same as getFieldValue()
+    echo $document->title;
+}
+
+?>]]></programlisting>
+        <para>
+        The fields available from the Zend_Search_Lucene_Document object are determined at
+        the time of indexing.  The document fields are either indexed, or
+        index and stored, in the document by the indexing application
+        (e.g. LuceneIndexCreation.jar).
+        </para>
+
+        <para>
+        Note that the document identity ('path' in our example) is also stored
+        in the index and must be retrieved from it.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.searching.results-scoring">
+        <title>Results Scoring</title>
+        <para>
+            Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
+            Search results are ordered by score. Hits with greater score come first, and
+            documents having higher scores match the query more than documents having lower scores.
+        </para>
+
+        <para>
+            Roughly speaking, search hits that contain the searched term or phrase more frequently
+            will have a higher score.
+        </para>
+
+        <para>
+            A scores can be retrieved by accessing the <code>score</code> property of a hit:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$hits = $index->find($query);
+
+foreach ($hits as $hit) {
+    echo $hit->id;
+    echo $hit->score;
+}
+
+?>]]></programlisting>
+
+        <para>
+            Zend_Search_Lucene_Search_Similarity class is used to calculate score.
+            See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
+        </para>
+
     </sect2>
 
     <sect2 id="zend.search.searching.sorting">
@@ -133,117 +302,8 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
 
         <para>
             Please be careful when using non-default search order.
-            It needs to completely retrive documents from the index and may drammatically slow down search performance.
+            It needs to retrive documents completely from an index and may drammatically slow down search performance.
         </para>
-</sect2>
-
-    <sect2 id="zend.search.searching.results">
-        <title>Search Results</title>
-        <para>
-            The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
-            two properties: <code>$hit->document</code> is a document number within
-            the index and <code>$hit->score</code> is a score of the hit in
-            a search result. Result is ordered by score (top scores come first).
-        </para>
-
-        <para>
-            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
-            the hit as a property of the hit.  In this example, a hit is returned and
-            the corresponding document has two fields: title and author.
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Search/Lucene.php');
-
-$index = new Zend_Search_Lucene('/data/my_index');
-
-$hits = $index->find($query);
-
-foreach ($hits as $hit) {
-    echo $hit->score;
-    echo $hit->title;
-    echo $hit->author;
-}
-
-?>]]></programlisting>
-
-        <para>
-        Optionally, the original Zend_Search_Lucene_Document object can be returned from the
-        Zend_Search_Lucene_Search_QueryHit.
-
-        You can retrieve stored parts of the document by using the <code>getDocument()</code>
-        method of the index object and then get them by
-        <code>getFieldValue()</code> method:
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Search/Lucene.php');
-
-$index = new Zend_Search_Lucene('/data/my_index');
-
-$hits = $index->find($query);
-foreach ($hits as $hit) {
-    // return Zend_Search_Lucene_Document object for this hit
-    echo $document = $hit->getDocument();
-
-    // return a Zend_Search_Lucene_Field object
-    // from the Zend_Search_Lucene_Document
-    echo $document->getField('title');
-
-    // return the string value of the Zend_Search_Lucene_Field object
-    echo $document->getFieldValue('title');
-
-    // same as getFieldValue()
-    echo $document->title;
-}
-
-?>]]></programlisting>
-        <para>
-        The fields available from the Zend_Search_Lucene_Document object are determined at
-        the time of indexing.  The document fields are either indexed, or
-        index and stored, in the document by the indexing application
-        (e.g. LuceneIndexCreation.jar).
-        </para>
-
-        <para>
-        Note that the document identity ('path' in our example) is also stored
-        in the index and must be retrieved from it.
-        </para>
-
-    </sect2>
-
-
-    <sect2 id="zend.search.searching.results-scoring">
-        <title>Results Scoring</title>
-        <para>
-            Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Search results are ordered by score. Hits with greater score come first, and
-            documents having higher scores match the query more than documents having lower scores.
-        </para>
-
-        <para>
-            Roughly speaking, search hits that contain the searched term or phrase more frequently
-            will have a higher score.
-        </para>
-
-        <para>
-            A scores can be retrieved by accessing the <code>score</code> property of a hit:
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-$hits = $index->find($query);
-
-foreach ($hits as $hit) {
-    echo $hit->id;
-    echo $hit->score;
-}
-
-?>]]></programlisting>
-
-        <para>
-            Zend_Search_Lucene_Search_Similarity class is used to calculate score.
-            See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
-        </para>
-
     </sect2>
 
 </sect1>
