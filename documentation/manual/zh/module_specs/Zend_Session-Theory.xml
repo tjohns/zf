@@ -1,30 +1,17 @@
 <sect1 id="zend.session.theory">
 
-    <title>Theory</title>
+    <title>原理</title>
 
     <para>
-        <code>Zend_Session_Core</code> provides an internal interface to encapsulate all access to singleton
-        <code>$_SESSION</code> using the typical getInstance() pattern. In general, developers should not directly
-        access <code>$_SESSION</code>, when using the Zend_Session component. However, it is possible for legacy code to
-        coexist with Zend_Session, provided the namespaces used by Zend_Session do not overlap with the keys in
-        <code>$_SESSION</code> used by legacy code.
+        Zend_Session_Core提供了一个内部接口getInstance()，封装了所有对<code>$_SESSION</code>单体的访问。平常，开发者在使用 Zend_Session组件的时候，不应该直接去访问<code>$_SESSION</code>。然而，遗留下来的代码也可与Zend_Session共存，只要Zend_Session使用的命名空间的名字不与遗留代码使用的<code>$_SESSION</code>中的键名重叠。
     </para>
 
     <para>
-        All management and manipulation of global session management occurs using static "class" methods defined in
-        Zend_Session_Core that affect the overall behavior of sessions managed by Zend_Session related components. Most
-        developers will not need to use these static methods.
+        所有使用Zend_Session_Core中的静态方法来处理和操作全局会话管理，将影响到所有使用Zend_Session相关组件管理会话的行为。所有管理和操作全局会话管理大多数开发者不需要使用这些静态方法。
     </para>
 
     <para>
-        Unlike <code>$_SESSION</code>, Zend_Session segregates all session data into separate namespaces, by storing
-        data in a PHP array and storing the array in <code>$_SESSION</code> using the namespace as the key. Constructing
-        an instance of Zend_Session returns a non-unique "window" to the selected namespace. Multiple "windows" are
-        possible for the same namespace, although there is only one namespace possible for a given programmatic key (the
-        name of the namespace). These instances serve to restrict manipulation of session state data to specific
-        namespaces, as explicitly specified when creating an instance of Zend_Session. Zend_Session instances therefore
-        help restrict scope by introducing a locally scoped variable (instance object) that effectively imports a
-        specific session namespace into the local scope.
+        不像<code>$_SESSION</code>，Zend_Session分离了所有的会话数据到各自独立的命名空间下，并储存在PHP的数组中，然后再把这些数组存储到以命名空间名为键名的<code>$_SESSION</code>中去。构造一个特定命名空间的Zend_Session，返回一个不唯一的“窗口”。虽然程序给定的命名空间的名字只能对应一个命名空间，但多个窗口可能共用一个命名空间。这些对象实例只能用于操作当创建Zend_Session实例时指定的命名空间下的会话状态数据。因此，Zend_Session实例引入当前作用域时，只是引入了一个特定的命名空间。
     </para>
 
 </sect1>

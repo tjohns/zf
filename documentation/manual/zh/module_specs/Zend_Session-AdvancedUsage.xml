@@ -1,26 +1,21 @@
 <sect1 id="zend.session.advancedusage">
 
-    <title>Advanced Usage</title>
+    <title>高级用法</title>
 
     <para>
-        While the basic usage examples are a perfectly acceptable way to utilize Zend_Session, there are some best
-        practices to consider. Consider the
-        <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> example</link>
-        that transparently uses Zend_Session by default to persist authentication tokens. This example shows one
-        approach to quickly and easily integrate Zend_Session and Zend_Auth.
+	    虽然Zend_Session的基本用法是完全可以接受的，但还有些最佳实践需要去考虑。考虑在<link linkend="zend.auth.introduction.using"><code>Zend_Auth</code>的例子</link>中默认是怎样透明地使用了Zend_Session来持久化鉴别标识符（authentication token)。这个例子展示了快速而简便的整合Zend_Session和Zend_Auth的一个方法。
     </para>
 
     <sect2 id="zend.session.startingasession">
 
-        <title>Starting a Session</title>
+        <title>开启会话</title>
 
         <para>
-            If you want all requests to have a session and use Zend_Session, then start the session in the bootstrap
-            file:
+             如何你希望所有的请求都有个会话值并且使用Zend_Session，那么请在程序的引导文件中开启它：
         </para>
 
         <example>
-            <title>Starting the Global Session</title>
+            <title>开启全局会话</title>
 <programlisting role="php">
 <![CDATA[<?php
 ...
@@ -31,90 +26,68 @@ Zend_Session_Core::start();
         </example>
 
         <para>
-            By starting the session in the bootstrap file, you avoid the possibility that your session might be started
-            after headers have been sent to the browser, which results in an exception, and possibly a broken page for
-            website viewers. Various advanced features require <code>Zend_Session_Core::start()</code> first. (More on
-            advanced features later).
+            在程序的引导文件中开启会话，可以避免引发会话开启之前已经有HTTP头发向用户浏览器的异常，那样可能会破坏web页面的美观。许多高级的特性需要先执行<code>Zend_Session_Core::start()</code>（更多高级的特性之后会展开）。
         </para>
 
         <para>
-            There are four ways to start a session, when using Zend_Session. Two are wrong.
+            使用Zend_Session组件，有4种开启会话的方法，其中2种是错误的。
         </para>
 
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    1. Wrong: Do not set PHP's session.auto_start ini setting in either php.ini or .htaccess
-                    (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start). If you do not have the
-                    ability to disable this setting in php.ini, you are using mod_php (or equivalent), and the setting
-                    is already enabled in php.ini, then add <code>php_value session.auto_start 0</code> to your
-                    .htaccess file (usually in your HTML document root directory).
+                    1. 错误的：没有在php.ini或.htaccess文件中关闭session.auto_start选项。如果在php.ini中已经开启了该选项，而你又没有权限去关闭该选项，你可以在.htaccess文件中增加<code>php_value session.auto_start 0</code>这一句。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    2. Wrong: Do not use <code>session_start()</code> directly (see <code>
-                    <ulink url="http://www.php.net/session_start">session_start()</ulink>
-                    </code>). If you use <code>session_start()</code> directly, and then start using Zend_Session, an
-                    exception will be thrown by <code>Zend_Session::start()</code> ("session has already been started").
-                    If you call <code>session_start()</code>, after starting Zend_Session, an error of level E_NOTICE
-                    will be generated, and the call will be ignored.
+				    2. 错误的：直接调用<code><ulink url="http://www.php.net/session_start">session_start()</ulink></code>开启会话。如果你直接调用<code>session_start()</code>开启了会话，之后再使用Zend_Session，那么<code>Zend_Session::start()</code>会抛出"会话已经开始"的异常。如果你在开启Zend_Session之后调用<code>session_start()</code>函数开启会话，那么会产生一个E_NOTICE级别的错误，该调用将会被忽略。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    3. Correct: Use <code>Zend_Session_Core::start()</code>. If you want all requests to have sessions,
-                    then place this function call in your ZF bootstrap code. If some requests should have sessions, but
-                    others should not, then set the <code>strict</code> option to true (see
-                    <link
-                        linkend="zend.session.startingasession"><code>setOptions()</code>
-                    </link>
-                    ) in your userland bootstrap, and then call <code>Zend_Session_Core::start()</code> in your
-                    bootstrap, before the first call to <code>new Zend_Session()</code>. Sessions have some overhead.
-                    The <code>strict</code> option prevents <code>new Zend_Session()</code> from automatically starting
-                    Zend_Session_Core. Thus, this option helps developers of userland ZF applications enforce a design
-                    decision to avoid using sessions for certain requests, since an error will be thrown when using this
-                    option and instantiating Zend_Session, before an explicit call to
-                    <code>Zend_Session_Core::start()</code>. Do not use this option in ZF core code, because only
-                    userland developers should make this design choice. Similarly, all "library" developers should
-                    carefully consider the impact of using setOptions() on users of their library code, since these
-                    options have global side-effects (as do the underlying options for ext/session).
+                    3. 正确的：使用<code>Zend_Session_Core::start()</code>开启会话。如果你想让每个页面请求都开启会话，那么应该在ZF应用程序的引导文件（index.php）中尽早的调用这个函数。开启会话有些额外的开销，如果只有部分页面请求需要开启会话，那么就：
+                </para>
+                <itemizedlist mark='opencircle'>
+                    <listitem>
+                        <para>
+						    在ZF应用程序的引导文件中，无条件的设置<code>strict</code>选项为true（参考<link linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code></link>）。
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            在需要使用会话的页面请求中，先调用<code>Zend_Session_Core::start()</code>开启会话，后调用<code>new Zend_Session()</code>。
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+						    向往常一样，在需要会话的地方，使用<code>new Zend_Session()</code>，但必须确认先前已经调用过<code>Zend_Session_Core::start()</code>了。
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <para>
+                    <code>strict</code>选项阻止了当调用<code>new Zend_Session()</code>时自动开启<code>Zend_Session_Core</code>。因此，这个选项有利于ZF应用程序的开发者强制执行一个设计原则以避免在某些页面请求中使用会话，因为在调用<code>Zend_Session_Core::start()</code>之前，又开启了<code>strict</code>选项，实例化<code>Zend_Session</code>时，会抛出一个异常。不要在ZF的核心代码中开启这个选项，因为只有应用程序的开发者才能决定是否执行这个设计原则。同样地，所有“程序库”的开发者，需小心地考虑在它们库代码中使用<code>Zend_Session_Core::setOptions()</code>方法所引起的冲突，因为这些选项具有全局副作用。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    4. Correct: Just use <code>new Zend_Session()</code>, and the session will be automatically started
-                    within Zend_Session_Core.
+				    4. 正确的：只要有需要使用会话的地方，就调用<code>new Zend_Session()</code>，会话会由<code>Zend_Session_Core</code>自动的开启。这个方法非常的简单，且在大多数的情形下能很好地工作。然而，如果你使用地是默认的基于cookie的会话（被推荐的），你必须确保在第一次调用<code>new Zend_Session()</code>在任何向客户端输出（也就是<ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>）<emphasis role="strong">之前</emphasis>。使用<ulink url="http://php.net/outcontrol">输出缓存（output buffering）</ulink>可以防止第一次调用new Zend_Session()在向客户端输出之后，同时也有利于改善执行效率。例如，在<code>php.ini</code>中，"<code>output_buffering = 65535</code>"设置了输出缓存为64K。
                 </para>
             </listitem>
         </itemizedlist>
-
-        <para>
-            Option #4 is more difficult to use than #3, because you are responsible for ensuring that the first
-            <code>new Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output has been sent
-            by PHP to the client, if you are using the default, cookie-based sessions (recommended).
-        </para>
 
     </sect2>
 
     <sect2 id="zend.session.locking">
 
-        <title>Locking Session Namespaces</title>
+        <title>锁住会话命名空间</title>
 
         <para>
-            Session namespaces can be locked, to prevent further alterations to the data in that namespace. Use
-            <code>lock()</code> to make the namespace read-only, <code>unLock()</code> to make a read-only namespace
-            read-write, and <code>isLocked()</code> to test if a namespace has been previously locked. Locks are
-            transient and do not persist from one request to the next. Locking the namespace has no effect on setter
-            methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to
-            remove or replace the object. Similarly, locking Zend_Session namespaces does not prevent the use of symbol
-            table aliases to the same data (see
-            <ulink url="http://www.php.net/references">PHP references</ulink>
-            ).
+		    会话的命名空间可以加锁，以防止意外的变更该命名空间下的会话变量值。调用<code>lock()</code>方法使该命名空间下会话变量为只读，<code>unlock()</code>方法使该命名空间下会话变量值可读可写，<code>isLocked()</code>方法测试该命名空间是否已经被加锁。加锁是短暂的，且只在此页面请求内有效，不会持续到下一个页面请求。给命名空间加锁不会影响到存储在该命名空间下对象的setter方法，但是阻止了命名空间下的setter方法的移除或替换对象。也就是说，虽给Zend_Session命名空间加了锁，但还是不能阻止它处同样引用了命名空间下数据的对它的变更（参见<ulink url="http://www.php.net/references">PHP references</ulink>)。
         </para>
 
         <example>
-            <title>Locking Session Namespaces</title>
+            <title>锁住会话命名空间</title>
 <programlisting role="php">
 <![CDATA[<?php
     // assuming:
@@ -131,14 +104,11 @@ Zend_Session_Core::start();
         </example>
 
         <para>
-            There are numerous ideas for how to manage models in MVC paradigms for the Web, including creating
-            presentation models for use by views. Sometimes existing data, whether part of your domain model or not, is
-            adequate for the task. To discourage views from applying any processing logic to alter such data, consider
-            locking session namespaces before permitting views to access this subset of your "presentation" model.
+            关于管理MVC模式中的模型(models)已经存在着大量不同的思想，包括创建视图所使用的表现层模型。有时已存在的数据，无论是否属于领域模型的数据，已经足够完成任务。为了阻止在视图中辑修改那些数据，可以考虑在允许视图访问表现层模型前给会话命名空间加锁。
         </para>
 
         <example>
-            <title>Locking Sessions in Views</title>
+            <title>锁住视图中的会话</title>
 <programlisting role="php">
 <![CDATA[<?php
 class FooModule_View extends Zend_View
@@ -167,17 +137,14 @@ class FooModule_View extends Zend_View
 
     <sect2 id="zend.session.controllers">
 
-        <title>Session Encapsulation and Controllers</title>
+        <title>会话封装和控制器</title>
 
         <para>
-            Namespaces can also be used to separate session access by controllers to protect variables from
-            contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all
-            other controllers. That is done by retrieving an instance from the sessions getInstance and priming it with
-            a string of the desired namespace.
+            命名空间可以被用来保护控制器对会话的访问，以免被污染。例如， 'Zend_Auth'控制器可以保持它的会话状态数据与其他控制器分离。通过使用getInstance()方法获取 Zend_Session_Core实例和调用_startNamespace($namespace)方法来完成与其他控制器的分离。
         </para>
 
         <example>
-            <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
+            <title>给控制器会话赋于命名空间及生命期</title>
 <programlisting role="php">
 <![CDATA[<?php
 require_once 'Zend/Session.php';
@@ -204,27 +171,19 @@ else {
 
     <sect2 id="zend.session.limitinginstances">
 
-        <title>Limiting Instances of Zend_Session to One Per Namespace</title>
+        <title>限制每个命名的Zend_Session实例</title>
 
         <para>
-            We recommend using session locking (see above) instead of the feature below, which places extra management
-            burden on the developer to pass the Zend_Session instance into whatever functions and objects need access.
+            我们推荐使用会话加锁（上面的）来代替下面讲到的特性，因为它额外地加重了开发者的负担，需要传递Zend_Session的实例给需要存取会话变量的函数和对象。
         </para>
 
         <para>
-            When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
-            Zend_Session to not make any more instances for that namespace. Thus, any future attempts to construct a
-            Zend_Session instance having the same namespace will throw an error. Such behavior is optional, and not the
-            default behavior, but remains available to those who prefer to pass around a single instance object for each
-            namespace. This increases protection from changes by components that should not modify a particular session
-            namespace, because they won't have easy access. However, limiting a namespace to a single instance may lead
-            to more code or more complex code, as it removes access to the convient <code>$session = new
-            Zend_Session('aNamespace');</code>, after the first intance has been created, as follows in the example
+            当你构造第一个Zend_Session实例并把它绑定到一个具体的命名空间上时，你可以指出不允许在该命名空间下构造更多的Zend_Session实例。因此，任何试图再次构造该命名空间下的Zend_Session实例都将抛出一个异常。这样的行为是可选的，且不是默认的行为，是留给喜欢为每个命名空间传递一个单一实例的人用的。这样增强了保护，免受来自其他组件的非法变更，因为他们很难访问。然而，限制一个命名空间只能有一个实例可能会导致编写更多的代码或使得代码复杂化，同时在第一个实例创建后，将不能调用<code>$session = new Zend_Session('aNamespace');</code>，就像下面例子中所述的：
             below:
         </para>
 
         <example>
-            <title>Limiting to Single Instances</title>
+            <title>限制为单一实例</title>
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
@@ -241,14 +200,7 @@ else {
         </example>
 
         <para>
-            The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
-            instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
-            thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
-            executed, the developer becomes responsible for storing the instance object
-            (<code>$componentAuthState</code> in the example above) somewhere, if access to this session namespace is
-            needed at a later time during the same request. For example, a developer may store the instance in a static
-            variable, or pass it to other methods that might need access to this session namespace. Session locking (see
-            above) provides a more convenient, and less burdensome approach to limiting access to namespaces.
+		    上述构造器中的第二个参数告诉Zend_Session，之后任何实例化命名空间为'Zend_Auth'的Zend_Session对象都是不允许的，且将会抛出异常。因为，执行过上面一段代码后，将不允许执行<code>new Zend_Session('Zend_Auth')</code>，如果当前页面请求的剩余时间段还需要访问该命名空间，则开发人员有责任在某处储存该命名空间的实例对象（上例中的<code>$componentAuthState</code>）。例如，开发者可以把该实例对象储存在静态变量中，或者把它传递给需要访问该命名空间的函数。会话加锁（参见上面的）为限制访问命名空间，提供了一个更加轻便合理的方法。
         </para>
 
     </sect2>
