@@ -176,9 +176,9 @@ class Zend_Translate {
      * @param  string|Zend_Locale  $locale  Is the locale/language avaiable
      * @return boolean
      */
-    public function isAvaiable($locale)
+    public function isAvailable($locale)
     {
-        return $this->_adapter->isAvaiable($locale);
+        return $this->_adapter->isAvailable($locale);
     }
 
 

@@ -164,7 +164,7 @@ abstract class Zend_Translate_Adapter {
      *                                      see Zend_Locale for more information
      * @return boolean
      */
-    public function isAvaiable($locale)
+    public function isAvailable($locale)
     {
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
