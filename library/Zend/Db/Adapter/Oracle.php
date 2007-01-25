@@ -171,7 +171,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function listTables()
     {
         $this->_connect();
-		$data = $stmt->fetchCol('SELECT table_name FROM all_tables');
+		$data = $this->fetchCol('SELECT table_name FROM all_tables');
 		return $data;
     }
 

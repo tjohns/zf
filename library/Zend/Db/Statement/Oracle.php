@@ -309,6 +309,9 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement {
                 break;
             case Zend_Db::FETCH_OBJ:
                 break;
+            case Zend_Db::FETCH_COLUMN:
+                $flags |= OCI_ASSOC;
+                break;
             default:
                 throw new Zend_Db_Statement_Exception("invalid fetch mode specified");
                 break;
