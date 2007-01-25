@@ -36,6 +36,20 @@ require_once 'Zend/Search/Lucene/Document.php';
 class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
 {
     /**
+     * List of document links
+     *
+     * @var array
+     */
+    private $_links = array();
+
+    /**
+     * List of document header links
+     *
+     * @var array
+     */
+    private $_headerLinks = array();
+
+    /**
      * Object constructor
      *
      * @param string  $data
@@ -74,15 +88,51 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         $bodyNodes = $xpath->query('/html/body');
         foreach ($bodyNodes as $bodyNode) {
             // body should always have only one entry, but we process all nodeset entries
-            $docBody .= $bodyNode->nodeValue;
+            $docBody .= $bodyNode->textContent;
         }
         if ($storeContent) {
             $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, $doc->actualEncoding));
         } else {
             $this->addField(Zend_Search_Lucene_Field::UnStored('body', $docBody, $doc->actualEncoding));
         }
+
+        $linkNodes = $doc->getElementsByTagName('a');
+        foreach ($linkNodes as $linkNode) {
+            if (($href = $linkNode->getAttribute('href')) != '') {
+                $this->_links[] = $href;
+            }
+        }
+        $this->_links = array_unique($this->_links);
+
+        $linkNodes = $xpath->query('/html/head/link');
+        foreach ($linkNodes as $linkNode) {
+            if (($href = $linkNode->getAttribute('href')) != '') {
+                $this->_headerLinks[] = $href;
+            }
+        }
+        $this->_headerLinks = array_unique($this->_headerLinks);
     }
 
+
+    /**
+     * Get document HREF links
+     *
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->_links;
+    }
+
+    /**
+     * Get document header links
+     *
+     * @return array
+     */
+    public function getHeaderLinks()
+    {
+        return $this->_headerLinks;
+    }
 
     /**
      * Load HTML document from a string
