@@ -139,5 +139,19 @@ abstract class Zend_Search_Lucene_Search_Query
      * @return string
      */
     abstract public function __toString();
+
+
+    /**
+     * Highlight matches in $inputHTML
+     *
+     * @param $inputHTML
+     * @return string
+     */
+    public function highlightMatches($inputHTML)
+    {
+        /** @todo implementation */
+
+        return $inputHTML
+    }
 }
 
