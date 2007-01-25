@@ -79,8 +79,6 @@
         &module_specs.Zend_Date-Basic;
         &module_specs.Zend_Date-Theory;
         &module_specs.Zend_Date-Overview;
-        &module_specs.Zend_Date-Output;
-        &module_specs.Zend_Date-Others;
         &module_specs.Zend_Date-Constants;
     </chapter>
     <chapter id="zend.db">
