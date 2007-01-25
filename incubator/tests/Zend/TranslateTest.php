@@ -116,9 +116,9 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
         $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
 
-        $this->assertTrue($lang->isAvaiable('en'));
-        $this->assertTrue($lang->isAvaiable('ru'));
-        $this->assertFalse($lang->isAvaiable('fr'));
+        $this->assertTrue($lang->isAvailable('en'));
+        $this->assertTrue($lang->isAvailable('ru'));
+        $this->assertFalse($lang->isAvailable('fr'));
     }
 
     public function testTranslate()
