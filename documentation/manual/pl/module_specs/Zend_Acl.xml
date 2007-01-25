@@ -89,11 +89,12 @@
         <para>
             W Zend_Acl rola może dziedziczyć z jednej lub więcej ról. Jest to po
             to, aby możliwe było dziedziczenie zasad dla ról. Na przykład rola, 
-            użytkownik "sally", może dziedziczyć z jednej lub więcej ról, takich 
-            jak na przykład "editor" oraz "administrator". Programista może 
-            przypisać reguły dla ról "editor" oraz "administrator" osobno, a 
-            "sally" będzie dziedziczyć te reguły od obu ról, bez konieczności 
-            przypisania reguł bezpośrednio dla "sally".
+            użytkownik "sally", może dziedziczyć z jednej lub więcej ról 
+            rodziców, takich jak na przykład "editor" oraz "administrator". 
+            Programista może przypisać reguły dla ról "editor" oraz 
+            "administrator" osobno, a "sally" będzie dziedziczyć te reguły od 
+            obu ról, bez konieczności przypisania reguł bezpośrednio dla 
+            "sally".
         </para>
         <note>
             <para>

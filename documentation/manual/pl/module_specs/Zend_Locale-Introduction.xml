@@ -86,7 +86,9 @@
 
     <sect2 id="zend.locale.whatis">
 
-        <title>What is a Locale?</title>
+        <title>
+            <ulink url="http://unicode.org/reports/tr35/#Locale">What is a Locale?</ulink>
+        </title>
 
         <para>
             Each computer user makes use of Locales, even when they don't know it. Applications lacking localization

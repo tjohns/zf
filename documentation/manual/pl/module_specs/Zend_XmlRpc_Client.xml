@@ -26,11 +26,11 @@
         </para>
                 
         <para>
-            To call a remote method with the XML-RPC client, instantiate it
-            and use the <code>call()</code> instance method. The code sample
-            below uses a demonstration XML-RPC server on the Zend Framework
-            website. You can use it for testing or exploring the
-            <code>Zend_XmlRpc</code> components.
+            Aby wywołać zdalną metodę za pomocą klienta XML-RPC, utwórz 
+            instancję i użyj metody <code>call()</code>. Przykładowy kod poniżej
+            używa demonstracyjnego serwera XML-RPC na stronie Zend Framework.
+            Możesz go użyć do testowania lub eksplorowania komponentów 
+            <code>Zend_XmlRpc</code>.
         </para>
 
         <example>
@@ -49,18 +49,18 @@ echo $client->call('test.sayHello');
         </example>
 
         <para>
-            The XML-RPC value returned from the remote method call will be
-            automatically unmarshaled and cast to the equivalent PHP native
-            type. In the example above, a PHP <code>string</code> is returned
-            and is immediately ready to be used.
+            Wartość XML-RPC zwracana przez wywołanie zdalnej metody jest 
+            automatycznie konwertowana do odpowiedniego natywnego typu 
+            PHP. W powyższym przykładzie, zwraca jest wartość typu 
+            <code>string</code> i jest ona natychmiast gotowa do użycia.
         </para>
 
         <para>
-            The first parameter of the <code>call()</code> method receives the
-            name of the remote method to call. If the remote method requires
-            any parameters, these can be sent by supplying a second, optional
-            parameter to <code>call()</code> with an <code>array</code> of
-            values to pass to the remote method:
+            Pierwszy parametr metody <code>call()</code> to nazwa zdalnej metody 
+            do wywołania. Jeśli zdalna metoda wymaga jakichkolwiek parametrów, 
+            mogą być one wysłane przez podanie do metody <code>call()</code>
+            drugiego opcjonalnego parametru w postaci tablicy wartości do 
+            przekazania do zdalnej metody:
         </para>
 
         <example>
@@ -82,43 +82,42 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         </example>
         
         <para>
-            If the remote method doesn't require parameters, this optional
-            parameter may either be left out or an empty <code>array()</code>
-            passed to it. The array of parameters for the remote method can
-            contain native PHP types, <code>Zend_XmlRpc_Value</code>
-            objects, or a mix of each.
+            Jeśli zdalna metoda nie wymaga parametrów, ten opcjonalony parametr
+            może pozostać pusty, lub może być pustą tablicą 
+            <code>array()</code>. Tablica parametrów dla zdalnej metody może 
+            zawierać natywne typy PHP, obiekty <code>Zend_XmlRpc_Value</code>, 
+            lub ich kombinacje.
         </para>
 
         <para>
-            The <code>call()</code> method will automatically convert the
-            XML-RPC response and return its equivalent PHP native type. A
-            <code>Zend_XmlRpc_Response</code> object for the return value will
-            also be available by calling the <code>getLastResponse()</code>
-            method after the call.
+            Metoda <code>call()</code> automatycznie skonwertuje odpowiedź 
+            XML-RPC i zwróci wartość odpowiedniego natywnego typu PHP. Obiekt
+            <code>Zend_XmlRpc_Response</code> ze zwróconą wartością będzie także
+            dostępny po wywołaniu poprzez wywołanie metody 
+            <code>getLastResponse()</code>.
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.value.parameters">
         <title>Typy i konwersje</title>
         <para>
-            Some remote method calls require parameters.  These are given to
-            the <code>call()</code> method of <code>Zend_XmlRpc_Client</code>
-            as an array in the second parameter. Each parameter may be
-            given as either a native PHP type which will be automatically
-            converted, or as an object representing a specific XML-RPC type
-            (one of the <code>Zend_XmlRpc_Value</code> objects).
+            Niektóre zdalne wywołania metod wymagają parametrów. Są one 
+            przekazywane do metody <code>call()</code> obiektu 
+            <code>Zend_XmlRpc_Client</code> jako tablica w drugim parametrze.
+            Każdy podany parametr może być natywnego typu PHP, wtedy będzie 
+            automatycznie skonwertowany, lub może być obiektem reprezentującym 
+            specyficzny typ XML-RPC (jeden z obiektów <code>Zend_XmlRpc_Value</code>).
         </para>
 
         <sect3 id="zend.xmlrpc.value.parameters.php-native">
             <title>Natywne typy PHP jako parametry</title>
             <para>
-                Parameters may be passed to <code>call()</code> as native PHP
-                variables, meaning as a <code>string</code>,
-                <code>integer</code>, <code>float</code>,
-                <code>boolean</code>, <code>array</code>, or an
-                <code>object</code>. In this case, each PHP native type will
-                be auto-detected and converted into one of the XML-RPC types
-                according to this table:
+                Parametry mogą być przekazane do metody <code>call()</code> jako
+                natywne zmienne PHP, czyli jako <code>string</code>,
+                <code>integer</code>, <code>float</code>, <code>boolean</code>, 
+                <code>array</code>, lub <code>object</code>. W tym przypadku
+                każda natywna wartość zostanie automatycznie wykryta i 
+                skonwertowana do jednego z typów XML-RPC, zgodnie z tą tabelą:
             </para>
             
             <table>
@@ -167,44 +166,45 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
             <title>Obiekty <code>Zend_XmlRpc_Value</code> jako parametry</title>
             <para>
-                Parameters may also be created as <code>Zend_XmlRpc_Value</code>
-                instances to specify an exact XML-RPC type.  The primary reasons
-                for doing this are:
+                Parametry mogą być także tworzone jako instancje klasy
+                <code>Zend_XmlRpc_Value</code> w celu określenia dokładnego typu
+                XML-RPC. Konieczne jest to gdy:
 
                 <itemizedlist>
                     <listitem>
                         <para>
-                            When you want to make sure the correct parameter
-                            type is passed to the procedure (i.e. the
-                            procedure requires an integer and you may get it
-                            from a database as a string)
+                            gdy chcesz być pewny, że parametr poprawnego typu 
+                            jest przekazany do procedury (np. procedura wymaga
+                            liczby całkowitej, a ty możesz pobrać tę wartość z
+                            bazy jako łańcuch znaków).
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            When the procedure requires <code>base64</code> or
-                            <code>dateTime.iso8601</code> type (which doesn't exists as a
-                            PHP native type)
+                            Wtedy gdy procedura wymaga typu <code>base64</code> 
+                            lub <code>dateTime.iso8601</code> (które nie istnieją
+                            jako natywne typy PHP)
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            When auto-conversion may fail (i.e. you want to
-                            pass an empty XML-RPC struct as a parameter. Empty
-                            structs are represented as empty arrays in PHP
-                            but, if you give an empty array as a parameter it
-                            will be auto-converted to an XML-RPC array since
-                            it's not an associative array)
+                            Gdy automatyczna konwersja może nie zadziałać (np. 
+                            gdy chcesz przekazać pustą strukturę XML-RPC jako 
+                            parametr. Puste struktury są reprezentowane przez
+                            puste tablice w PHP, ale jeśli podasz pustą tablicę
+                            w parametrze będzie ona automatycznie skonwertowana
+                            do tablicy XML-RPC z tego powodu, że nie jest ona 
+                            tablicą asocjacyjną)
                         </para>
                     </listitem>
                 </itemizedlist>
             </para>
 
             <para>
-                There are two ways to create a <code>Zend_XmlRpc_Value</code>
-                object: instantiate one of the <code>Zend_XmlRpc_Value</code>
-                subclasses directly, or use the static factory method
-                <code>Zend_XmlRpc_Value::getXmlRpcValue()</code>.
+                Są dwa sposoby utworzenia obiektu <code>Zend_XmlRpc_Value</code>: 
+                bezpośrednie utworzenie instancji jednej z podklas klasy
+                <code>Zend_XmlRpc_Value</code>,lub użycie statycznej metody 
+                fabryki <code>Zend_XmlRpc_Value::getXmlRpcValue()</code>.
             </para>
             
             <table>
@@ -349,10 +349,10 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"
     <sect2 id="zend.xmlrpc.client.error-handling">
         <title>Obsługa błędów</title>
         <para>
-            Two kinds of errors can occur during an XML-RPC method call: HTTP
-            errors and XML-RPC faults. The <code>Zend_XmlRpc_Client</code>
-            recognizes each and provides the ability to detect and trap them
-            independently.
+            Dwa rodzaje błędów mogą wystąpić podczas wywoływania metod XML-RPC: 
+            błędy HTTP oraz błędy XML-RPC. Klient <code>Zend_XmlRpc_Client</code>
+            rozpoznaje te błędy i daje możliwośc wykrycia i złapania każdego z
+            nich.
         </para>
 
         <sect3 id="zend.xmlrpc.client.error-handling.http">
@@ -388,14 +388,14 @@ try {
             </example>                
 
             <para>
-                Regardless of how the XML-RPC client is used, the
-                <code>Zend_XmlRpc_Client_HttpException</code> will be thrown
-                whenever an HTTP error occurs.
+                Zależnie od tego jak używany jest klient XML-RPC, gdy wystąpi
+                błąd HTTP zostanie wyrzucony wyjątek
+                <code>Zend_XmlRpc_Client_HttpException</code>.
             </para>
         </sect3>
         
         <sect3 id="zend.xmlrpc.client.error-handling.faults">
-            <title>XML-RPC Faults</title>
+            <title>Błędy XML-RPC</title>
             
             <para>
                 An XML-RPC fault is analogous to a PHP exception. It is a
@@ -415,7 +415,7 @@ try {
             </para>
             
             <example>
-                <title>Handling XML-RPC Faults</title>
+                <title>Obsługa błędów XML-RPC</title>
                 
                 <programlisting role="php"><![CDATA[<?php
                                 
@@ -460,28 +460,33 @@ try {
     <sect2 id="zend.xmlrpc.client.introspection">
         <title>Introspekcja serwerów</title>
         <para>
-            Some XML-RPC servers support the de facto introspection methods under the XML-RPC
-            <code>system.</code> namespace.  <code>Zend_XmlRpc_Client</code> provides special
-            support for servers with these capabilities.
+            Some XML-RPC servers support the de facto introspection methods under 
+            the XML-RPC <code>system.</code> namespace. 
+            <code>Zend_XmlRpc_Client</code> provides special support for servers 
+            with these capabilities.
         </para>
         
         <para>
-            A <code>Zend_XmlRpc_Client_ServerIntrospection</code> instance may be retrieved by calling
-            the <code>getIntrospector()</code> method of <code>Zend_XmlRpcClient</code>.  It can
-            then be used to perform introspection operations on the server.
+            A <code>Zend_XmlRpc_Client_ServerIntrospection</code> instance may 
+            be retrieved by calling the <code>getIntrospector()</code> method 
+            of <code>Zend_XmlRpcClient</code>.  It can then be used to perform 
+            introspection operations on the server.
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.client.request-to-response">
         <title>Od żądania do odpowiedzi</title>
         <para>
-            Under the hood, the <code>call()</code> instance method of <code>Zend_XmlRpc_Client</code>
-            builds a request object (<code>Zend_XmlRpc_Request</code>) and sends it to another method,
-            <code>doRequest()</code>, that returns a response object (<code>Zend_XmlRpc_Response</code>).
+            Under the hood, the <code>call()</code> instance method of 
+            <code>Zend_XmlRpc_Client</code> builds a request object 
+            (<code>Zend_XmlRpc_Request</code>) and sends it to another method, 
+            <code>doRequest()</code>, that returns a response object 
+            (<code>Zend_XmlRpc_Response</code>).
         </para>
             
         <para>
-            Metoda <code>doRequest()</code> jest także dostępna dla bezpośredniego użycia:
+            Metoda <code>doRequest()</code> jest także dostępna dla 
+            bezpośredniego użycia:
         </para>
         
         <example>

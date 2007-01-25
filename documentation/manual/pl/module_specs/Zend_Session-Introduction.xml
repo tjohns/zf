@@ -21,15 +21,18 @@
     </para>
 
     <para>
-        The Zend_Session component wraps the existing PHP ext/session to provide a standardized, object-oriented
-        interface for working with sessions, including both anonymous and login sessions. Zend_Auth, the authentication
-        component of the ZF uses Zend_Session to store some information associated with login sessions. Since
-        Zend_Session uses the normal PHP session functions internally, all the usual configuration options and settings
-        apply (see
+        The <code>Zend_Session_Core</code> component wraps the existing PHP ext/session with an administration and
+        management interface, as well as providing an API for <code>Zend_Session</code> to persist namespaces.
+        <code>Zend_Session</code> provides a standardized, object-oriented interface for working with namespaces
+        persisted inside PHP's standard session mechanism. Support exists for both anonymous and "login" sessions.
+        <code>Zend_Auth</code>, the authentication component of the ZF uses <code>Zend_Session</code> to store some
+        information associated with authenticated users in the "Zend_Auth" namespace. Since
+        <code>Zend_Session_Core</code> uses the normal PHP session functions internally, and all the familiar
+        configuration options and settings apply (see
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Thus, a session id, stored either in a cookie or URLs, maintains the association between a client and session
-        state data.
+        ). Thus, a standard session id, stored either in a cookie or embedded in URLs, maintains the association between
+        a client and session state data.
     </para>
 
     <para>
@@ -39,7 +42,10 @@
       save handler</ulink>
         does not solve the problem of maintaining this association, when a client may connect to any sever in a cluster
         of servers, since session state data is saved to the local server only. A list of additional, appropriate save
-        handlers will be provided, when available.
+        handlers will be provided, when available. Community members are encouraged to suggest and submit save handlers
+        to the
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+        list.
     </para>
 
 </sect1>

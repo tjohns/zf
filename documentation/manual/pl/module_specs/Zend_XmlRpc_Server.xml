@@ -288,11 +288,11 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
 
 echo $server->handle();]]></programlisting>
         <para>
-            The above example attempts to retrieve a server definition from
-            xmlrpc.cache in the same directory as the script. If unsuccessful,
-            it loads the service classes it needs, attaches them to the server
-            instance, and then attempts to create a new cache file with the
-            server definition.
+            Powyższy przykład próbuje pobrać definicję serwera z pliku bufora
+            xmlrpc.cache znajdującego się w tym samym katalogu co skrypt. Jeśli
+            się to nie uda, załaduje on potrzebne klasy serwisu, dołączy do
+            instancji serwera i spróbuje utworzyć nowy plik bufora z definicją
+            sderwera.
         </para>
     </sect2>
 
