@@ -96,8 +96,48 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
 
             <para>
+                これらの各メソッド (<code>Zend_Search_Lucene_Field::Binary()</code>
+                メソッドを除く) には、オプションのパラメータ
+                <code>$encoding</code> があります。これで入力データのエンコーディングを指定します。
+            </para>
+
+            <para>
+                エンコーディングはドキュメントによって異なるでしょうし、
+                同一ドキュメント内でもフィールドによって異なることもあるでしょう。
+
+                <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                エンコーディングパラメータを省略した場合は、
+                現在のロケールが処理時に使用されます。たとえば次のようになります。
+                <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                フィールドをインデックス化したり返したりする際には、
+                常に UTF-8 エンコーディングとなります。UTF-8 への変換は自動的に行われます。
+            </para>
+
+            <para>
+                テキスト解析器 (<link linkend="zend.search.extending.analysis">以下を参照ください</link>)
+                は、テキストをその他のエンコーディングに変換したりもします。
+                実際、デフォルトの解析器はテキストを 'ASCII//TRANSLIT' エンコーディングに変換します。
+                ここで注意が必要なのは、このような変換は現在のロケールに依存して行われるということです。
+            </para>
+
+            <para>
                 フィールドの名前は自由につけることができます。
             </para>
+
             <para>
                 Java Lucene は、検索の際にデフォルトで使用されるフィールド名として "contents" を使用します。
                 Zend_Search_Lucene は、デフォルトではすべてのフィールドを検索します。

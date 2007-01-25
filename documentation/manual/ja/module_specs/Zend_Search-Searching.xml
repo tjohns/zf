@@ -1,11 +1,11 @@
 <sect1 id="zend.search.searching">
     <title>インデックスの検索</title>
 
-    <sect2 id="zend.search.searching.query-parser">
+    <sect2 id="zend.search.searching.query_building">
         <title>クエリの作成</title>
 
         <para>
-            インデックスを検索するには 2 通りの方法があります。
+            インデックスを検索するには二通りの方法があります。
             クエリパーサを使用して文字列からクエリを作成する方法と、
             Zend_search_Lucene API を使用して独自のクエリを作成する方法です。
         </para>
@@ -86,61 +86,70 @@ $index->find($query);
             それに対して、API メソッドは単語の変換やフィルタリングを行いません。これは、
             コンピュータが生成したフィールドやトークン化されていないフィールドに適しています。
         </para>
+
+        <sect3 id="zend.search.searching.query_building.parsing">
+            <title>クエリのパース</title>
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code>
+                メソッドを使用してクエリ文字列をパースし、
+                クエリオブジェクトに格納します。
+            </para>
+
+            <para>
+                このオブジェクトをクエリ作成 API メソッドで使用し、
+                ユーザが入力したクエリと機械が生成したクエリを結合します。
+            </para>
+
+            <para>
+                実際のところ、これが
+                トークン化されたいないフィールドを検索する唯一の方法となることもあります。
+
+                <programlisting role="php"><![CDATA[<?php
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+
+$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathQuery = new Zend_Search_Query_Term($pathTerm);
+
+$query = new Zend_Search_Query_Boolean();
+$query->addSubquery($userQuery, true /* required */);
+$query->addSubquery($pathQuery, true /* required */);
+
+$hits = $index->find($query);
+
+?>]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code>
+                メソッドはオプションのパラメータでエンコーディングを受け取ることができます。
+                ここで、クエリ文字列のエンコーディングを指定します。
+            <programlisting role="php"><![CDATA[
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+]]></programlisting>
+            </para>
+
+            <para>
+                エンコーディングを省略した場合は、現在のロケールを使用します。
+            </para>
+
+            <para>
+                デフォルトのクエリ文字列エンコーディングを
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code>
+                メソッドで指定することもできます。
+            <programlisting role="php"><![CDATA[
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
+...
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code>
+                は、デフォルトのクエリ文字列エンコーディングを返します
+                (空文字列は "現在のロケール" を表します)。
+            </para>
+        </sect3>
     </sect2>
-
-    <sect2 id="zend.search.searching.sorting">
-        <title>検索結果の並べ替え</title>
-        <para>
-            検索結果のデフォルトの表示順は、スコア順となります。
-            これを変更するには、並べ替え用の (ひとつあるいは複数の) フィールド、
-            並べ替えの形式と並べ替えの方向をパラメータで指定します。
-        </para>
-
-        <para>
-            <code>$index->find()</code> のコール時にオプションのパラメータを指定することができます。
-            <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
-]]></programlisting>
-        </para>
-
-        <para>
-            <code>$sortField</code> は、結果の並べ替えの対象となるフィールド名です。
-        </para>
-
-        <para>
-            <code>$sortType</code> は省略可能です。
-            <code>SORT_REGULAR</code> (通常の並べ替え。デフォルト)、
-            <code>SORT_NUMERIC</code> (数値として並べ替え)、
-            <code>SORT_STRING</code> (文字列として並べ替え)
-            のいずれかとなります。
-        </para>
-
-        <para>
-            <code>$sortOrder</code> は省略可能です。
-            <code>SORT_ASC</code> (昇順で並べ替え。デフォルト)、
-            <code>SORT_DESC</code> (降順で並べ替え)
-            のいずれかとなります。
-        </para>
-
-        <para>
-            例:
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
-        </para>
-
-        <para>
-            デフォルト以外の並べ替えを使用する際には注意しましょう。
-            並べ替えのためにはドキュメント全体をインデックスから読み込む必要があり、
-            検索のパフォーマンスが著しく低下してしまいます。
-        </para>
-</sect2>
 
     <sect2 id="zend.search.searching.results">
         <title>検索結果</title>
@@ -176,14 +185,18 @@ foreach ($hits as $hit) {
 ?>]]></programlisting>
 
         <para>
-        オプションで、
-        Zend_Search_Lucene_Search_QueryHit から元の Zend_Search_Lucene_Document
-        を取得することができます。
+            保存されたフィールドは、常に UTF-8 エンコーディングで返されます。
+        </para>
 
-        保存されたドキュメントを取得するには、
-        インデックスオブジェクトの <code>getDocument()</code>
-        メソッドを使用し、その <code>getFieldValue()</code>
-        メソッドでフィールドの値を取得します。
+        <para>
+            オプションで、
+            Zend_Search_Lucene_Search_QueryHit から元の Zend_Search_Lucene_Document
+            を取得することができます。
+
+            保存されたドキュメントを取得するには、
+            インデックスオブジェクトの <code>getDocument()</code>
+            メソッドを使用し、その <code>getFieldValue()</code>
+            メソッドでフィールドの値を取得します。
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -219,9 +232,7 @@ foreach ($hits as $hit) {
         ドキュメントを識別するフィールド (例では 'path')
         もインデックス化して取得できるようにしなければならないことに注意しましょう。
         </para>
-
     </sect2>
-
 
     <sect2 id="zend.search.searching.results-scoring">
         <title>結果の重み付け</title>
@@ -255,6 +266,59 @@ foreach ($hits as $hit) {
             を参照ください。
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.search.searching.sorting">
+        <title>検索結果の並べ替え</title>
+        <para>
+            検索結果は、デフォルトではスコアで並べ替えられます。
+            これを変更するには、並べ替え用の (ひとつあるいは複数の)
+            フィールドと並べ替えの形式、そして並べ替えの方向をパラメータで指定します。
+            and sort order parameters.
+        </para>
+
+        <para>
+            <code>$index->find()</code> のコール時に、オプションのパラメータを指定することができます。
+            <programlisting role="php"><![CDATA[
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>$sortField</code> は、結果の並べ替えを行う保存されたフィールドの名前です。
+        </para>
+
+        <para>
+            <code>$sortType</code> は省略可能です。
+            <code>SORT_REGULAR</code> (通常の並べ替え。デフォルト)、
+            <code>SORT_NUMERIC</code> (数値として並べ替え)、
+            <code>SORT_STRING</code> (文字列として並べ替え) のいずれかとなります。
+        </para>
+
+        <para>
+            <code>$sortOrder</code> は省略可能です。
+            <code>SORT_ASC</code> (昇順で並べ替え。デフォルト)、
+            <code>SORT_DESC</code> (降順で並べ替え) のいずれかとなります。
+        </para>
+
+        <para>
+            例を以下に示します。
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+        </para>
+
+        <para>
+            デフォルト以外の並び順を使用する際には注意しましょう。
+            並べ替えのためにはドキュメント全体をインデックスから読み込む必要があり、
+            検索のパフォーマンスが著しく低下してしまいます。
+        </para>
     </sect2>
 
 </sect1>
