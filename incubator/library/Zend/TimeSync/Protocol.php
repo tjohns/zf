@@ -94,7 +94,8 @@ abstract class Zend_TimeSync_Protocol
     {
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
-            throw new Zend_TimeSync_Exception("could not connect to '$this->_timeserver' on port '$this->_port', reason: '$errstr'");
+            throw new Zend_TimeSync_Exception("could not connect to " .
+                "'$this->_timeserver' on port '$this->_port', reason: '$errstr'");
         }
 
         $this->_socket = $socket;
