@@ -472,6 +472,10 @@ final class Zend_Session_Core
      */
     static public function setId($id)
     {
+        if (defined('SID')) {
+            throw new Zend_Session_Exception('The session has already been started.  The session id must be set first.');
+        }
+
         if (headers_sent($filename, $linenum)) {
             throw new Zend_Session_Exception("You must call ".__CLASS__.'::'.__FUNCTION__.
                 "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");

@@ -100,6 +100,31 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /*
+     * test session id manipulations
+     * expect isRegenerated flag == true
+     */
+    public function testRegenerateId()
+    {
+        Zend_Session_Core::setId('myid123');
+        Zend_Session_Core::regenerateId();
+
+        $this->assertFalse(Zend_Session_Core::isRegenerated());
+        $id = Zend_Session_Core::getId();
+        $this->assertTrue($id === 'myid123',
+            'getId() reported something different than set via setId("myid123")');
+
+        Zend_Session_Core::start();
+        $this->assertTrue(Zend_Session_Core::isRegenerated());
+
+        try {
+            Zend_Session_Core::setId($id);
+            $this->fail('No exception was returned when trying to set the session id, after session_start()');
+        } catch (Zend_Session_Exception $e) {
+            $this->assertRegexp('/already.*started/i', $e->getMessage());
+        }
+    }
+
+    /*
      * test setting core options
      * expect no exceptions
      */
@@ -111,24 +136,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/unknown.option/i', $e->getMessage());
         }
-    }
-
-    /*
-     * test session id manipulations
-     * expect isRegenerated flag == true
-     */
-    public function testRegenerateId()
-    {
-        $core = Zend_Session_Core::getInstance();
-        $core->regenerateId();
-        $this->assertTrue($core->isRegenerated(), 'No exception was returned when trying to set an invalid option');
-        $id = $core->getId();
-        $core->setId('myid123');
-        $this->assertTrue($core->getId() === 'myid123',
-            'getId() reported something different than set via setId("myid123")');
-        $core->setId($id);
-        $this->assertTrue($core->getId() === $id,
-            'getId() reported something different than set via setId(<original id>)');
     }
 
     /**
