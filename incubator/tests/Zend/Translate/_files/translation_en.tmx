@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" ?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+ <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en-us" srclang="de-at" o-tmf="abc" creationtool="XYZTool" >
+ </header>
+ <body>
+  <tu tuid='Hallo'>
+   <tuv xml:lang="de"><seg>Hallo</seg></tuv>
+   <tuv xml:lang="en"><seg>Hy</seg></tuv>
+  </tu>
+  <tu tuid='Übersetzung'>
+   <tuv xml:lang="en"><seg>Translation</seg></tuv>
+   <tuv xml:lang="de"><seg>Übersetzung</seg></tuv>
+  </tu>
+  <tu tuid='Test'>
+   <tuv xml:lang="en"><seg>Test</seg></tuv>
+   <tuv xml:lang="de"><seg>Test</seg></tuv>
+  </tu>
+  <tu tuid='Inhalt'>
+   <tuv xml:lang="en"><seg>Inhalt mit Nummer %1\$s</seg></tuv>
+   <tuv xml:lang="de"><seg>Content with number %1\$s</seg></tuv>
+  </tu>
+ </body>
+</tmx>
