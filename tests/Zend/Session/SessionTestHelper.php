@@ -89,6 +89,49 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         $core->writeClose();
         echo $result;
     }
+
+    public function _ZF_setArray($args)
+    {
+        $GLOBALS['fpc'] = 'set';
+        session_id($args[0]);
+        $s = new Zend_Session($args[1]);
+        array_shift($args);
+        $s->astring = 'happy';
+        $s->someArray = $args;
+        $s->someArray['bee'] = 'honey'; // for PHP 5.1.6, repeating this line twice "solves" the problem
+        $s->someArray['ant'] = 'sugar';
+        $s->someArray['dog'] = 'cat';
+        file_put_contents('out.sessiontest.set', (str_replace(array("\n", ' '),array(';',''), print_r($_SESSION, true))) );
+        $s->serializedArray = serialize($args);
+
+        $result = '';
+        foreach ($s->getIterator() as $key => $val) {
+            $result .= "$key === ". (print_r($val,true)) .';';
+        }
+
+        $core = Zend_Session_Core::getInstance();
+        $core->writeClose();
+    }
+
+    public function _ZF_getArray($args)
+    {
+        $GLOBALS['fpc'] = 'get';
+        session_id($args[0]);
+        if (isset($args[1]) && !empty($args[1])) {
+            $s = new Zend_Session($args[1]);
+        }
+        else {
+            $s = new Zend_Session();
+        }
+        $result = '';
+        foreach ($s->getIterator() as $key => $val) {
+            $result .= "$key === ". (str_replace(array("\n", ' '),array(';',''), print_r($val, true))) .';';
+        }
+        $core = Zend_Session_Core::getInstance();
+        file_put_contents('out.sesstiontest.get', print_r($s->someArray, true));
+        $core->writeClose();
+        echo $result;
+    }
 } 
 
 $testHelper = new Zend_Session_TestHelper($argv);

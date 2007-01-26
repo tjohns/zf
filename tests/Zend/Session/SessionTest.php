@@ -778,7 +778,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         session_start(); // resume artificially suspended session
     }
 
-
     /**
      * test expiration of namespace variables by hops
      * expect expiration of specified keys in the proper number of hops
@@ -825,6 +824,22 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         session_start(); // resume artificially suspended session
     }
 
+    public function testArrays()
+    {
+        $s = new Zend_Session('aspace');
+        // $this->markTestIncomplete();
+        $id = Zend_Session_Core::getId();
+        $this->assertSame($id, session_id());
+        $s->top = 'begin';
+        session_write_close(); // release session so process below can use it
+        exec($this->script . "setArray $id aspace 1 2 3 4 5", $result);
+        exec($this->script . "getArray $id aspace", $result);
+        $result = array_pop($result);
+        $expect = 'top === begin;astring === happy;someArray === Array;(;[0]=>aspace;[1]=>1;[2]=>2;[3]=>3;[4]=>4;[5]=>5;[bee]=>honey;[ant]=>sugar;[dog]=>cat;);;serializedArray === a:8:{i:0;s:6:"aspace";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";s:3:"ant";s:5:"sugar";s:3:"dog";s:3:"cat";};';
+        $this->assertTrue($result === $expect,
+            "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result')");
+        session_start(); // resume artificially suspended session
+    }
 
     /**
      * test expiration of namespace variables by hops
@@ -867,4 +882,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $core = Zend_Session_Core::getInstance();
         $core->destroy();
     }
+
+    // DO NOT put tests below testSetExpireSessionVarsByHopsOnUse(), since the session is destroy()'d.
 }
