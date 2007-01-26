@@ -96,6 +96,8 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         session_id($args[0]);
         $s = new Zend_Session($args[1]);
         array_shift($args);
+        $_SESSION['foo'] = array('one'=>'A');
+        $_SESSION['foo']['two'] = 'B'; // This shows adding elements to an array works using $_SESSION
         $s->astring = 'happy';
         $s->someArray = $args;
         $s->someArray['bee'] = 'honey'; // for PHP 5.1.6, repeating this line twice "solves" the problem
@@ -128,7 +130,9 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
             $result .= "$key === ". (str_replace(array("\n", ' '),array(';',''), print_r($val, true))) .';';
         }
         $core = Zend_Session_Core::getInstance();
-        file_put_contents('out.sesstiontest.get', print_r($s->someArray, true));
+        // Note the "foo" array found in out.sessiontest.get contains both elements, showing adding
+        // elements to an array in $_SESSION works.
+        file_put_contents('out.sessiontest.get', (str_replace(array("\n", ' '),array(';',''), print_r($_SESSION, true))) );
         $core->writeClose();
         echo $result;
     }
