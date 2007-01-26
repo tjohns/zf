@@ -156,13 +156,80 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
 
             <para>
-                Вы можете давать имена полям по своему усмотрению. 
-                По умолчанию для поиска используется поле с именем "contents".
-                В поле с этим именем лучше всего помещать основные
-                данные документа. 
+                Каждый из этх методов (исключая метод <code>Zend_Search_Lucene_Field::Binary()</code>)
+                имеет необязательный параметр <code>$encoding</code>. Через него
+                указывается кодировка для входных данных. 
 <!--
-                You could give names for fields by your own choice.  A "contents" field name is used to search
-                by default.  It's good idea to place main document data into this field with this name.
+                Each of these methods (excluding <code>Zend_Search_Lucene_Field::Binary()</code> method) has optional
+                <code>$encoding</code> paremeter. It specifies input data encoding.
+-->
+            </para>
+
+            <para>
+                Кодировка может различаться как для документов, так и для
+                полей в одном документе.
+<!--
+                Encoding may differ for different documents as well as for different fields within one document:
+-->
+
+                <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                Если этот параметр опущен, то используется текущая локаль.
+                Например: 
+<!--
+                If encoding parameter is omitted, then current locale is used at processing time. For example:
+-->
+                <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                Поля всегда сохраняются и возвращаются из индекса в кодировке
+                UTF-8. Преобразование в UTF-8 производится автоматически.   
+<!--
+                Fields are always stored and returned from index in UTF-8 encoding. Conversion to UTF-8 proceeds
+                automatically.
+-->
+            </para>
+
+            <para>
+                Анализатор текста (<link linkend="zend.search.extending.analysis">см. далее</link>)
+                может также преобразовывать текст в другие кодировки. В
+                настоящее время используемый по умолчанию анализатор преобразует
+                текст в кодировку 'ASCII//TRANSLIT'. Имейте в виду, что такое
+                преобразование может зависеть от текущей локали.
+<!--
+                Text analyzers (<link linkend="zend.search.extending.analysis">see below</link>) may also convert text
+                to some other encodings. Actually, default analyzer converts text to 'ASCII//TRANSLIT' encoding.
+                Be care with this, such translation may depend on current locale.
+-->
+            </para>
+
+            <para>
+                Имена полей могут быть любыми.
+<!--
+                Fields' names are defined only by your own choice.
+-->
+            </para>
+
+            <para>
+                Java Lucene по умолчанию использует для поиска поле "contents".
+                Zend_Search_Lucene по умолчанию производит поиск по всем полям,
+                но это поведение можно изменить. За подробностями см.
+                <link linkend="zend.search.query-language.fields">Поля для поиска</link>.   
+<!--
+                Java Lucene uses "contents" field as a default field to search.
+                Zend_Search_Lucene searches through all fiels by default, but it's also possible to change this behavior.
+                See <link linkend="zend.search.query-language.fields">"Default search field"</link> chapter for details.
 -->
             </para>
     </sect2>
