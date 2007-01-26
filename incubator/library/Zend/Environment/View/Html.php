@@ -80,16 +80,16 @@ class Zend_Environment_View_Html extends Zend_View_Abstract
             if (is_string($val) || is_object($val) || empty($val)) {
                 return trim("{$val}");
             }
-            
+
             $array = array();
-            
+
             foreach ($val as $key => $row) {
                 $array[] = $key . ': ' . toString($row);
             }
-            
+
             return "\n" . trim(join("\n", $array));
         }
-        
+
         $zfbg = trim(str_replace("\n", "", '
 R0lGODlhAQBiALMAABNrjjGIqhB0mhFzmBJvkxFwlRRoihFylxJtkBNqjBB1m/n8/9ru9QAAAAAA
 AAAAACH5BAAAAAAALAAAAAABAGIAAAQYkC1Jp6346sy371SgjGRpnsJwFAQCJEYEADs='));
@@ -317,31 +317,31 @@ UlWj+FukBY0AAAAASUVORK5CYII%3D'));
         width: 100%;
         margin: 2em 0;
     }
-    
+
     tr
     {
         vertical-align: top;
     }
-    
+
     th
     {
         text-align: left;
     }
-    
+
     thead th
     {
         border: 1px solid #D3E0EB;
         padding: 0.5em 1em;
         background-color:#EDF7FF;
 	}
-	
+
 	tbody th, tbody td
 	{
         border-left: 1px solid #D3E0EB;
         border-bottom: 1px solid #D3E0EB;
         padding: 0.5em 1em;
 	}
-	
+
 	.header th
 	{
 	    font-size: 160%;
@@ -363,10 +363,11 @@ UlWj+FukBY0AAAAASUVORK5CYII%3D'));
 <body>
     <h1 id="logo">Zend Environment Info : <?php echo date('jS F, Y') ?></h1>
     <?php
-    
-    foreach ($this->environment as $section) {
 
-    ?><table width="100%" summary="Section - <?php echo $section->getType() ?>">
+    foreach ($this->environment as $section) {
+    ?>
+    <?php if ( strtolower($section->getType()) != 'security') : ?>
+    <table width="100%" summary="Section - <?php echo $section->getType() ?>">
         <col width="30%" />
         <col width="10%" />
         <col width="20%" />
@@ -391,10 +392,50 @@ UlWj+FukBY0AAAAASUVORK5CYII%3D'));
             </tr>
         <?php } ?></tbody>
     </table>
+
+    <?php else : // special layout for security section ?>
+
+    <table width="100%" summary="Section - <?php echo $section->getType() ?>">
+        <col width="10%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col width="10%" />
+        <col />
+        <col width="10%" />
+        <thead>
+            <tr class="header">
+                <th colspan="7"><?php echo ucwords($section->getType()) ?></th>
+            </tr>
+            <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Result</th>
+                <th>Current Value</th>
+                <th>Recommended Value</th>
+                <th>Details</th>
+                <th>More Info</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($section as $info) { ?>    <tr>
+                <td><?php echo nl2br($this->escape(toString($info->group))) ?></td>
+                <td><?php echo nl2br($this->escape(toString($info->name))) ?></td>
+                <td><?php echo nl2br($this->escape(toString($info->result))) ?></td>
+                <td><?php echo nl2br($this->escape(toString($info->current_value))) ?></td>
+                <td><?php echo nl2br($this->escape(toString($info->recommended_value))) ?></td>
+                <td><?php echo nl2br($this->escape(toString($info->details))) ?></td>
+                <td><a href="<?php echo nl2br($this->escape(toString($info->link))) ?>">More Info &raquo;</a></td>
+            </tr>
+        <?php } ?></tbody>
+    </table>
+
+    <?php endif; ?>
+
     <?php
-    
+
     }
-    
+
     ?></body>
 </html><?php
 
