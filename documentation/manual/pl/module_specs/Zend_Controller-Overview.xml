@@ -119,61 +119,7 @@
                         odpowiadałoby to kontrolerowi o nazwie <code>somefoo</code> 
                         oraz akcji o nazwie <code>bar</code>.
 					</para>
-					
-                    <para>
-                        Dodatkowo możesz określić moduł, który ma zostać użyty
-                        gdy ładowany jest kontroler. Moduł jest używany aby
-                        określić przedrostek klasy, który ma być użyty gdy 
-                        ładowany jest kontroler oraz podkatalog, w którym 
-                        znajduje sie klasa. Aby użyć modułów ustaw parametr 
-                        <code>useModules</code> w kontrolerze frontowym:
-                    </para>
 
-                    <programlisting role="php"><![CDATA[
-$front->setParam('useModules', true);
-]]></programlisting>
-                    
-                    <para>
-                        Additionally, you have to specify a module to directory
-                        pairing when setting the controller directory. You can do
-                        this either when initializing it, or when adding another
-                        directory:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    0      => '/path/to/default/controllers',
-    'user' => '/path/to/user/controllers'
-));
-
-// LUB
-$front->setControllerDirectory('/path/to/default/controllers');
-$front->addControllerDirectory('/path/to/user/controllers', 'user');
-]]></programlisting>
-
-                    <para>
-                        Zobacz poniższy przykład:
-                    </para>
-                    
-                    <programlisting role="php"><![CDATA[
-http://example.com/user/news/action
-]]></programlisting>
-
-                    <para>
-                        W powyższym przykładzie, określony jest moduł 'user' z
-                        kontrolerem 'news'. Obiekt uruchamiający próbuje 
-                        określić czy moduł nazwany 'user' odpowiada ścieżce;
-                        tak jest, więc ładowany jest plik 
-                        <code>NewsController.php</code> znajdujący się w tym
-                        katalogu. W tym pliku powinna być zdefiniowana klasa 
-                        <code>User_NewsController</code>.
-                    </para>
-
-                    <para>
-                        Moduły są użyteczne gdy chcesz oddzielić kod w powiązanych
-                        katalogach, użyć kodu z innej aplikacji, lub użyć tej
-                        samej biblioteki kontrolera w różnych aplikacjach.
-                    </para>
 				</listitem>
 
 				<listitem>
@@ -340,49 +286,6 @@ http://framework.zend.com/
 Kontroler: index
 Akcja    : index]]>
 	    </programlisting>
-	    
-        <para>
-            Dodatkowo możesz określić kontrolery w podkatalogach lub modułach
-            na kilka sposobów:
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    W nazwach kontrolera może być podkreślnik (_). Na przykład adres
-                    <code>http://framework.zend.com/admin-roadmap/future</code>
-                    wskazywałby na klasę kontrolera Admin_RoadmapController.
-                    (Alternatywny separator ścieżki może być określony używając
-                     metody setPathSeparator() obiektu uruchamiającego.)
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Określając parametr <code>useModules</code> w kontrolerze
-                    frontowym, możesz wskazywać na podkatalogi używając czystych
-                    adresów URI. Poprzedni przykładowy adres URL mógłby być
-                    zamieniony na 
-                    <code>http://framework.zend.com/admin/roadmap/future</code>.
-                    Aby to zrobić, określ parametr <code>useModules</code> w
-                    kontrolerze frontowym lub w routerze, a następnie ustaw
-                    katalog kontrolerów jako moduł 'admin':
-                </para>
-
-                <programlisting><![CDATA[
-$router->setParam('useModules', true);
-// LUB
-$front->setParam('useModules', true);
-
-// ORAZ
-$front->addControllerDirectory('/path/to/admin/controllers', 'admin');
-]]></programlisting>
-
-                <para>
-                    To będzie działało zarówno dla podstawowego routera jaki
-                    i dla routera RewriteRouter.
-                </para>
-            </listitem>
-        </itemizedlist>
 
 	    <note>
 		    <title>Elastyczność</title>
