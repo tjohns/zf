@@ -283,7 +283,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
             } else {
                 $this->_curDirectory = $controllerDirs['default'];
             }
-        } elseif ($useGlobalDefault && $validModule) {
+        } else {
             $dirs = $this->getControllerDirectory();
             $this->_curDirectory = $dirs['default'];
         }
