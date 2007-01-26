@@ -72,6 +72,7 @@
         &module_specs.Zend_Controller-ActionController;
         &module_specs.Zend_Controller-Plugins;
         &module_specs.Zend_Controller-Modular;
+        &module_specs.Zend_Controller-Exceptions;
         &module_specs.Zend_Controller-Migration;
     </chapter>
     <chapter id="zend.date">
