@@ -48,6 +48,7 @@ require_once 'Zend/Db/Adapter/Pdo/SqliteTest.php';
 require_once 'Zend/Db/Adapter/Pdo/PgsqlTest.php';
 require_once 'Zend/Db/Adapter/Pdo/OciTest.php';
 require_once 'Zend/Db/Adapter/OracleTest.php';
+require_once 'Zend/Db/Adapter/Db2Test.php';
 
 class Zend_Db_AllTests
 {
@@ -60,6 +61,7 @@ class Zend_Db_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Db');
 
+        /*
         $suite->addTestSuite('Zend_Db_DbTest');
 
         $suite->addTestSuite('Zend_Db_Adapter_Pdo_MssqlTest');
@@ -68,6 +70,8 @@ class Zend_Db_AllTests
         $suite->addTestSuite('Zend_Db_Adapter_Pdo_PgsqlTest');
         $suite->addTestSuite('Zend_Db_Adapter_Pdo_OciTest');
         $suite->addTestSuite('Zend_Db_Adapter_OracleTest');
+         */
+        $suite->addTestSuite('Zend_Db_Adapter_Db2Test');
 
         return $suite;
     }

@@ -63,27 +63,26 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE', 'postgres');
 
 /**
- * Zend_Db_Adapter_Pdo_Oci
+ * Zend_Db_Adapter_Oracle and Zend_Db_Adapter_Pdo_Oci
+ * There are separate properties to enable tests for the PDO_OCI adapter and
+ * the native Oracle adapter, but the other properties are shared between the
+ * two Oracle-related Zend_Db adapters.
  */
 define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_ENABLED',  false);
-define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_HOSTNAME', '127.0.0.1');
-define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_PORT',     1521);
-define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_USERNAME', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_PASSWORD', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_OCI_SID',      'xe');
-
-/**
- * Zend_Db_Adapter_Oracle
- */
 define('TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED',  false);
 define('TESTS_ZEND_DB_ADAPTER_ORACLE_HOSTNAME', '127.0.0.1');
-define('TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME', null)
-define('TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD', null)
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_ORACLE_SID',      'xe');
 
 /**
- * @todo DB2
+ * Zend_Db_Adapter_Db2
  */
+define('TESTS_ZEND_DB_ADAPTER_DB2_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_DB2_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_DB2_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_DB2_DATABASE', 'sample');
 
 /**
  * Zend_Http_Client tests
