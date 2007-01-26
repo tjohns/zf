@@ -79,4 +79,46 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($output, $this->_filter->filter($input));
         }
     }
+
+    /**
+     * Ensures that getQuoteStyle() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetQuoteStyle()
+    {
+        $this->assertEquals(ENT_COMPAT, $this->_filter->getQuoteStyle());
+    }
+
+    /**
+     * Ensures that setQuoteStyle() follows expected behavior
+     *
+     * @return void
+     */
+    public function testSetQuoteStyle()
+    {
+        $this->_filter->setQuoteStyle(ENT_QUOTES);
+        $this->assertEquals(ENT_QUOTES, $this->_filter->getQuoteStyle());
+    }
+
+    /**
+     * Ensures that getCharSet() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetCharSet()
+    {
+        $this->assertEquals('ISO-8859-1', $this->_filter->getCharSet());
+    }
+
+    /**
+     * Ensures that setCharSet() follows expected behavior
+     *
+     * @return void
+     */
+    public function testSetCharSet()
+    {
+        $this->_filter->setCharSet('UTF-8');
+        $this->assertEquals('UTF-8', $this->_filter->getCharSet());
+    }
 }

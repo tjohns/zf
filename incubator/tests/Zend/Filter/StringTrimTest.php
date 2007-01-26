@@ -76,4 +76,36 @@ class Zend_Filter_StringTrimTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($output, $this->_filter->filter($input));
         }
     }
+
+    /**
+     * Ensures that getCharList() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetCharList()
+    {
+        $this->assertEquals(null, $this->_filter->getCharList());
+    }
+
+    /**
+     * Ensures that setCharList() follows expected behavior
+     *
+     * @return void
+     */
+    public function testSetCharList()
+    {
+        $this->_filter->setCharList('&');
+        $this->assertEquals('&', $this->_filter->getCharList());
+    }
+
+    /**
+     * Ensures expected behavior under custom character list
+     *
+     * @return void
+     */
+    public function testCharList()
+    {
+        $this->_filter->setCharList('&');
+        $this->assertEquals('a&b', $this->_filter->filter('&&a&b&&'));
+    }
 }

@@ -69,4 +69,96 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('foo', $this->_filter->filter('<a href="example.com">foo</a>'));
     }
+
+    /**
+     * Ensures that getTagsAllowed() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetTagsAllowed()
+    {
+        $this->assertEquals(array(), $this->_filter->getTagsAllowed());
+    }
+
+    /**
+     * Ensures that setTagsAllowed() follows expected behavior when provided a single tag
+     *
+     * @return void
+     */
+    public function testSetTagsAllowedString()
+    {
+        $this->_filter->setTagsAllowed('b');
+        $this->assertEquals(array('b' => array()), $this->_filter->getTagsAllowed());
+    }
+
+    /**
+     * Ensures that setTagsAllowed() follows expected behavior when provided an array of tags
+     *
+     * @return void
+     */
+    public function testSetTagsAllowedArray()
+    {
+        $tagsAllowed = array(
+            'b',
+            'a'   => 'href',
+            'div' => array('id', 'class')
+            );
+        $this->_filter->setTagsAllowed($tagsAllowed);
+        $tagsAllowedExpected = array(
+            'b'   => array(),
+            'a'   => array('href' => null),
+            'div' => array('id' => null, 'class' => null)
+            );
+        $this->assertEquals($tagsAllowedExpected, $this->_filter->getTagsAllowed());
+    }
+
+    /**
+     * Ensures that getAttributesAllowed() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetAttributesAllowed()
+    {
+        $this->assertEquals(array(), $this->_filter->getAttributesAllowed());
+    }
+
+    /**
+     * Ensures that setAttributesAllowed() follows expected behavior when provided a single tag
+     *
+     * @return void
+     */
+    public function testSetAttributesAllowedString()
+    {
+        $this->_filter->setAttributesAllowed('class');
+        $this->assertEquals(array('class' => null), $this->_filter->getAttributesAllowed());
+    }
+
+    /**
+     * Ensures that an unclosed tag is stripped in its entirety
+     *
+     * @return void
+     */
+    public function testStripUnclosedTag()
+    {
+        $input    = '<a href="http://example.com" Some Text';
+        $expected = '';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
+
+    /**
+     * Ensures that unallowed tags and attributes are stripped and that tags are backward-compatible XHTML
+     *
+     * @return void
+     */
+    public function testBasicBehaviors()
+    {
+        $input    = '<a href="http://example.com" style="color: #ffffff"><b>Some Text</b></a><br/>';
+        $expected = '<a href="http://example.com">Some Text</a><br />';
+        $tagsAllowed = array(
+            'a' => 'href',
+            'br'
+            );
+        $this->_filter->setTagsAllowed($tagsAllowed);
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
 }

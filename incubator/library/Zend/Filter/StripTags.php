@@ -138,10 +138,6 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      */
     public function setAttributesAllowed($attributesAllowed)
     {
-        if (0 === count($this->_tagsAllowed)) {
-            return $this;
-        }
-
         if (!is_array($attributesAllowed)) {
             $attributesAllowed = array($attributesAllowed);
         }
