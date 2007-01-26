@@ -44,6 +44,23 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Validate_StringLengthTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Default instance created for all test methods
+     *
+     * @var Zend_Validate_StringLength
+     */
+    protected $_validator;
+
+    /**
+     * Creates a new Zend_Validate_StringLength object for each test method
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        $this->_validator = new Zend_Validate_StringLength();
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
      * @return void
@@ -72,5 +89,35 @@ class Zend_Validate_StringLengthTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[2], $validator->isValid($input));
             }
         }
+    }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    /**
+     * Ensures that getMin() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMin()
+    {
+        $this->assertEquals(0, $this->_validator->getMin());
+    }
+
+    /**
+     * Ensures that getMax() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMax()
+    {
+        $this->assertEquals(null, $this->_validator->getMax());
     }
 }

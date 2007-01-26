@@ -67,4 +67,42 @@ class Zend_Validate_RegexTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $validator = new Zend_Validate_Regex('/./');
+        $this->assertEquals(array(), $validator->getMessages());
+    }
+
+    /**
+     * Ensures that getPattern() returns expected value
+     *
+     * @return void
+     */
+    public function testGetPattern()
+    {
+        $validator = new Zend_Validate_Regex('/./');
+        $this->assertEquals('/./', $validator->getPattern());
+    }
+
+    /**
+     * Ensures that a bad pattern results in a thrown exception upon isValid() call
+     *
+     * @return void
+     */
+    public function testBadPattern()
+    {
+        $validator = new Zend_Validate_Regex('/');
+        try {
+            $validator->isValid('anything');
+            $this->fail('Expected Zend_Validate_Exception not thrown for bad pattern');
+        } catch (Zend_Validate_Exception $e) {
+            $this->assertContains('Internal error matching pattern', $e->getMessage());
+        }
+    }
 }

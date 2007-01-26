@@ -81,4 +81,14 @@ class Zend_Validate_IntTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($element[1], $this->_validator->isValid($element[0]));
         }
     }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $this->assertEquals(array(), $this->_validator->getMessages());
+    }
 }

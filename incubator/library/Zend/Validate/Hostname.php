@@ -56,11 +56,31 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     const ALLOW_ALL   = 7;
 
     /**
+     * Default regular expression for Internet domain name validation
+     */
+    const REGEX_DNS_DEFAULT = '/^(?:[^\W_]((?:[^\W_]|-){0,61}[^\W_])?\.)+[a-zA-Z]{2,6}\.?$/';
+
+    /**
+     * Default regular expression for local network name validation
+     */
+    const REGEX_LOCAL_DEFAULT = '/^(?:[^\W_](?:[^\W_]|-){0,61}[^\W_]\.)*(?:[^\W_](?:[^\W_]|-){0,61}[^\W_])\.?$/';
+
+    /**
      * Bit field of ALLOW constants; determines which types of hostnames are allowed
      *
      * @var integer
      */
     protected $_allow;
+
+    /**
+     * Array of regular expressions used for validation
+     *
+     * @var array
+     */
+    protected $_regex = array(
+        'dns'   => self::REGEX_DNS_DEFAULT,
+        'local' => self::REGEX_LOCAL_DEFAULT
+        );
 
     /**
      * Array of validation failure messages
@@ -103,6 +123,30 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     }
 
     /**
+     * Returns the regular expression used for validating $type hostnames
+     *
+     * @param  string $type
+     * @return string
+     */
+    public function getRegex($type)
+    {
+        return $this->_checkRegexType($type)->_regex[$type];
+    }
+
+    /**
+     * Enter description here...
+     *
+     * @param  string $type
+     * @param  string $pattern
+     * @return Zend_Validate_Hostname Provides a fluent interface
+     */
+    public function setRegex($type, $pattern)
+    {
+        $this->_checkRegexType($type)->_regex[$type] = $pattern;
+        return $this;
+    }
+
+    /**
      * Defined by Zend_Validate_Interface
      *
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
@@ -117,6 +161,9 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
 
         do {
             // Check input against IP address schema
+            /**
+             * @see Zend_Validate_Ip
+             */
             require_once 'Zend/Validate/Ip.php';
             $ip = new Zend_Validate_Ip();
             if ($ip->isValid($value)) {
@@ -129,8 +176,11 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
             }
 
             // Check input against domain name schema
-    		$status = @preg_match('/^(?:[^\W_]((?:[^\W_]|-){0,61}[^\W_])?\.)+[a-zA-Z]{2,6}\.?$/', $value);
+    		$status = @preg_match($this->_regex['dns'], $value);
             if (false === $status) {
+                /**
+                 * @see Zend_Validate_Exception
+                 */
                 require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception('Internal error: DNS validation failed');
             }
@@ -142,9 +192,11 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
             }
 
             // Check input against local network name schema; last chance to pass validation
-            $status = @preg_match('/^(?:[^\W_](?:[^\W_]|-){0,61}[^\W_]\.)*(?:[^\W_](?:[^\W_]|-){0,61}[^\W_])\.?$/',
-                                  $value);
+            $status = @preg_match($this->_regex['local'], $value);
             if (false === $status) {
+                /**
+                 * @see Zend_Validate_Exception
+                 */
                 require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception('Internal error: local network name validation failed');
             }
@@ -181,5 +233,25 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     public function getMessages()
     {
         return $this->_messages;
+    }
+
+    /**
+     * Throws an exception if a regex for $type does not exist
+     *
+     * @param  string $type
+     * @throws Zend_Validate_Exception
+     * @return Zend_Validate_Hostname Provides a fluent interface
+     */
+    protected function _checkRegexType($type)
+    {
+        if (!isset($this->_regex[$type])) {
+            /**
+             * @see Zend_Validate_Exception
+             */
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception("'$type' must be one of ('" . implode(', ', array_keys($this->_regex))
+                                            . "')");
+        }
+        return $this;
     }
 }

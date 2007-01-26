@@ -77,4 +77,14 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $this->assertEquals(array(), $this->_validator->getMessages());
+    }
 }
