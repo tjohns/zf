@@ -205,7 +205,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
      * @param Zend_Controller_Request_Abstract $request
      * @return string|false Returns class name on success
      */
-    public function getController($request)
+    public function getController(Zend_Controller_Request_Abstract $request)
     {
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
@@ -262,7 +262,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
      * @param Zend_Controller_Request_Abstract $request 
      * @return string
      */
-    public function getDefaultControllerName($request)
+    public function getDefaultControllerName(Zend_Controller_Request_Abstract $request)
     {
         $controller = $this->getDefaultController();
         $default    = $this->formatControllerName($controller);
