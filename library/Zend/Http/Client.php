@@ -84,7 +84,8 @@ class Zend_Http_Client
         'timeout'         => 10,
         'adapter'         => 'Zend_Http_Client_Adapter_Socket',
         'httpversion'     => self::HTTP_1,
-        'keepalive'       => false
+        'keepalive'       => false,
+        'storeresponse'   => true
     );
 
     /**
@@ -181,6 +182,13 @@ class Zend_Http_Client
      */
     protected $last_request = null;
 
+    /**
+     * The last HTTP response received by the client
+     *
+     * @var Zend_Http_Response
+     */
+    protected $last_response = null;
+    
     /**
      * Redirection counter
      *
@@ -660,10 +668,24 @@ class Zend_Http_Client
      * 
      * @return string
      */
-    public function getLastRequest() {
+    public function getLastRequest() 
+    {
         return $this->last_request;
     }
 
+    /**
+     * Get the last HTTP response received by this client
+     * 
+     * If $config['storeresponse'] is set to false, or no response was 
+     * stored yet, will return null
+     *
+     * @return Zend_Http_Response or null if none
+     */
+    public function getLastResponse()
+    {
+    	return $this->last_response;
+    }
+    
     /**
      * Send the HTTP request and return an HTTP response object
      *
@@ -709,6 +731,7 @@ class Zend_Http_Client
                 throw new Zend_Http_Client_Exception('Unable to read response, or response is empty');
                 
             $response = Zend_Http_Response::fromString($response);
+            if ($this->config['storeresponse']) $this->last_response = $response;
             
             // Load cookies into cookie jar
             if (isset($this->cookiejar)) $this->cookiejar->addCookiesFromResponse($response, $uri);

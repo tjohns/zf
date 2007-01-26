@@ -111,6 +111,34 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($this->client->getLastRequest(), $res->getBody(), 'Response body should be exactly like the last request');
 	}
 
+	/**
+	 * Test the getLastResponse() method actually returns the last response
+	 *
+	 */
+	public function testGetLastResponse()
+	{
+		// First, make sure we get null before the request
+		$this->assertEquals(null, $this->client->getLastResponse(), 'getLastResponse() is still expected to return null');
+		
+		// Now, test we get a proper response after the request
+		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		$response = $this->client->request();
+		
+		$this->assertTrue(($response === $this->client->getLastResponse()), 'Response is expected to be identical to the result of getLastResponse()');
+	}
+	
+	/**
+	 * Test that getLastResponse returns null when not storing
+	 *
+	 */
+	public function testGetLastResponseWhenNotStoring()
+	{
+		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		$this->client->setConfig(array('storeresponse' => false));
+		$response = $this->client->request();
+		
+		$this->assertEquals(null, $this->client->getLastResponse(), 'getLastResponse is expected to be null when not storing');
+	}
 
 	/**
 	 * GET and POST parameters tests
