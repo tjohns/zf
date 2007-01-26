@@ -1,0 +1,152 @@
+<sect1 id="zend.controller.modular">
+    <title>モジュラーディレクトリ構造の規約の使用</title>
+
+	<sect2 id="zend.controller.modular.introduction">
+		<title>導入</title>
+        <para>
+            モジュラーディレクトリ構造の規約 (The Conventional Modular directory structure)
+            により、さまざまな MVC アプリケーションを自己完結した単位にまとめることができます。
+            また、それをさまざまなフロントコントローラで再利用できるようになります。
+            このディレクトリ構造は、次のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+docroot/
+    index.php
+application/
+    controllers/
+        IndexController.php
+        FooController.php
+    blog/
+        controllers/
+            IndexController.php
+        models/
+        views/
+    news/
+        controllers/
+            IndexController.php
+            ListController.php
+        models/
+        views/
+]]></programlisting>
+        
+        <para>
+            この考え方では、モジュール名が、
+            その中に含まれるコントローラのプレフィックスとなります。
+            上の例には、三つのモジュールコントローラ
+            'Blog_IndexController'、'News_IndexController' および
+            'News_ListController' が含まれます。また、グローバルコントローラも
+            'IndexController' と 'FooController' の二つが定義されています。
+            これらは名前空間に属しません。この章のサンプルでは、
+            ここで示したディレクトリ構造を使用します。
+        </para>
+
+        <para>
+            それでは、Zend Framework の MVC コンポーネントを使用して
+            これらのディレクトリ配置を実装するにはどうすればいいのでしょうか?
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.directories">
+        <title>モジュールコントローラディレクトリの指定</title>
+
+        <para>
+            モジュールを使用するための第一歩となるのが、
+            フロントコントローラでのコントローラディレクトリの設定方法を変更することです。
+            基本的な MVC 版では、配列あるいは文字列を
+            setControllerDirectory() に渡すか、あるいはパスを addControllerDirectory()
+            に渡していました。モジュールを使用する場合は、
+            これらのメソッドコールを少々変更する必要があります。
+        </para>
+
+        <para>
+            setControllerDirectory() では、連想配列を渡す必要があります。
+            連想配列のキーにはモジュール名、そしてその値としてディレクトリのパスを指定します。
+            特別な名前 'default' をキーにすると、グローバルコントローラ
+            (モジュール名前空間を必要としないもの)
+            を指定できます。この値には、パスの配列を指定することができます。
+            その他のものについては、文字列のキーに対してひとつのパスを指定するようにしなければなりません。
+            次の例のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+      'default' => array('/path/to/application/controllers'),
+      'blog'    => '/path/to/application/blog/controllers'
+));
+]]></programlisting>
+
+        <para>
+            addControllerDirectory() では、オプションの二番目の引数を受け付けます。
+            モジュールを使用する際には、モジュール名を二番目の引数で渡します。
+            指定しない場合は、そのパスはデフォルトの名前空間に追加されます。
+            次の例のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.directories">
+        <title>ModuleRouter、ModuleRewriteRouter および ModuleDispatcher</title>
+
+        <para>
+            コントローラのディレクトリ指定の方法が変わることに加えて、
+            モジュール対応のルータとディスパッチャを使用するように変更することも必要です。
+            ルータとしては Zend_Controller_ModuleRouter あるいは
+            Zend_Controller_ModuleRewriteRouter、そしてディスパッチャには
+            Zend_Controller_ModuleDispatcher を指定します。
+            そのために、フロントコントローラの起動部分を少々変更します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Controller/ModuleRouter.php';
+require_once 'Zend/Controller/ModuleDispatcher.php';
+
+$front->setRouter(new Zend_Controller_ModuleRouter())
+      ->setDispatcher(new Zend_Controller_ModuleDispatcher())
+]]></programlisting>
+
+        <para>
+            これ以降は、フロントコントローラを通常通りにディスパッチします。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->dispatch();
+]]></programlisting>
+        
+        <para>
+            Zend_Controller_ModuleRouter がモジュールにマッチするのは、
+            対応するキーがコントローラのディレクトリの配列に存在する場合のみです。
+            存在しない場合は、通常通り /controller/action にマッチさせます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.defaultcontroller">
+        <title>モジュールあるいはグローバルのデフォルトコントローラ</title>
+
+        <para>
+            デフォルトのルータでは、コントローラが URL で指定されなかった場合には
+　          デフォルトのコントローラ (特に指定しなければ IndexController) を使用します。
+            モジュール対応のコントローラにおいて、
+            モジュールのみを指定してコントローラを指定しなかった場合は、
+            ディスパッチャはまず最初にモジュールパス内のデフォルトコントローラを探します。
+            次に、グローバル名前空間 'default' にあるデフォルトコントローラを探します。
+        </para>
+
+        <para>
+            デフォルトは常にグローバル名前空間のほうにしたい場合は、
+            フロントコントローラでパラメータ
+            'useGlobalDefault' を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->setParam('useGlobalDefault', true);
+]]></programlisting>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

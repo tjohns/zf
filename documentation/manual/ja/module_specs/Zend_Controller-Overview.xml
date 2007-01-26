@@ -110,62 +110,6 @@
                         <code>somefoo</code>、アクションは <code>bar</code>
                         となります。
                     </para>
-
-                    <para>
-                        さらに、コントローラを読み込む際に使用する <code>module</code>
-                        を指定することができます。モジュールは単に、
-                        コントローラを読み込む際の
-                        クラスプレフィックスを指定するためだけに使用されます。
-                        また、クラスを探すサブディレクトリを指定するために使用することもあります。
-                        モジュールを使用するには、フロントコントローラでパラメータ
-                        <code>useModules</code> を設定します。
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setParam('useModules', true);
-]]></programlisting>
-
-                    <para>
-                        さらに、コントローラディレクトリを設定する際に
-                        モジュールとディレクトリの対応を指定しなければなりません。
-                        これはコントローラを初期化するときでも可能ですし、
-                        あとで別のディレクトリを追加してもかまいません。
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    0      => '/path/to/default/controllers',
-    'user' => '/path/to/user/controllers'
-));
-
-// あるいは
-$front->setControllerDirectory('/path/to/default/controllers');
-$front->addControllerDirectory('/path/to/user/controllers', 'user');
-]]></programlisting>
-
-                    <para>
-                        たとえば、次のような URL を考えてみましょう。
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-http://example.com/user/news/action
-]]></programlisting>
-
-                    <para>
-                        この例では、コントローラ 'news' に対してモジュール 'user'
-                        が設定されています。ディスパッチャは
-                        'user' という名前のモジュールがディレクトリに対応しているかどうかを調べます。
-                        対応している場合はそのディレクトリから
-                        <code>NewsController.php</code> というファイルを読み込みます。
-                        この中で <code>User_NewsController</code>
-                        というクラスが定義されているものと考えます。
-                    </para>
-
-                    <para>
-                        モジュールは、関連するコードをディレクトリごとに分けて管理したい場合に便利です。
-                        また、サードパーティのコードを使用したり、
-                        同一コントローラをさまざまなアプリケーションで再利用したりする場合にも便利です。
-                    </para>
                 </listitem>
 
                 <listitem>
@@ -326,47 +270,6 @@ http://framework.zend.com/
 アクション  : index]]>
         </programlisting>
 
-        <para>
-            さらに、サブディレクトリ内のコントローラやモジュールもいくつかの方法で指定できます。
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    コントローラの名前にアンダースコア (_)
-                    を使用できます。たとえば
-                    <code>http://framework.zend.com/admin_roadmap/future</code>
-                    は、コントローラクラス Admin_RoadmapController に対応します
-                    (その他のパス区切り文字を指定するには、ディスパッチャの
-                    setPathSeparator() メソッドを使用します)。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    フロントコントローラで <code>useModules</code>
-                    パラメータを設定すると、これをサブディレクトリを使用した
-                    きれいな URI に対応させることができます。上の例の URL は
-                    <code>http://framework.zend.com/admin/roadmap/future</code>
-                    となります。こうするには、<code>useModules</code>
-                    パラメータをフロントコントローラかルータで設定し、
-                    コントローラのディレクトリを 'admin' モジュールとして追加します。
-                </para>
-
-                <programlisting><![CDATA[
-$router->setParam('useModules', true);
-// あるいは
-$front->setParam('useModules', true);
-
-// そして
-$front->addControllerDirectory('/path/to/admin/controllers', 'admin');
-]]></programlisting>
-
-                <para>
-                    これは、基本ルータおよび RewriteRouter のどちらでも動作します。
-                </para>
-            </listitem>
-        </itemizedlist>
-
         <note>
             <title>柔軟性</title>
             <para>
@@ -378,7 +281,7 @@ $front->addControllerDirectory('/path/to/admin/controllers', 'admin');
 
         <para>
             コントローラの名前、コントローラ内のアクションの名前、
-            そしてオプションのパラメータ (モジュールの名前を含む) の内容が、
+            そしてオプションのパラメータの内容が、
             リクエストオブジェクトにまとめられます。
             <code>Zend_Controller_Front</code> がディスパッチループに入ると、
             リクエストオブジェクトが <code>Zend_Controller_Dispatcher</code> に渡されます。

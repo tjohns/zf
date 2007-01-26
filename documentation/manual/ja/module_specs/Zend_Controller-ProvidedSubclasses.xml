@@ -484,7 +484,23 @@ $router->addConfig($config, 'routes');
                 を使用するようにしています。
             </para>
         </sect3>
-    
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
+            <title>RewriteRouter の、モジュラー MVC コンポーネントでの使用</title>
+
+            <para>
+                モジュール対応版の RewriteRouter である、
+                Zend_Controller_ModuleRewriteRouter も使用できます。
+                これは Zend_Controller_RewriteRouter とまったく同様に動作しますが、
+                デフォルトルートのパスが ':module/:controller/:action/*' となります。
+            </para>
+
+            <para>
+                詳細な情報は、<xref linkend="zend.controller.modular">
+                モジュラーディレクトリ構造の規約についてのドキュメント</xref>
+                を参照ください。
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.response.http">
