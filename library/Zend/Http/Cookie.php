@@ -274,7 +274,8 @@ class Zend_Http_Cookie
         
         // Get the name and value of the cookie
         list($name, $value) = explode('=', trim(array_shift($parts)), 2);
-        $value = urldecode($value);
+        $name  = trim($name);
+        $value = urldecode(trim($value));
         
         // Set default domain and path
         if ($ref_uri instanceof Zend_Uri_Http) {
