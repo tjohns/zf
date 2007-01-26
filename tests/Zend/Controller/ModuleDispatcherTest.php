@@ -85,12 +85,13 @@ class Zend_Controller_ModuleDispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testUseModuleDefaultController()
     {
-        $this->_dispatcher->setDefaultController('foo');
+        $this->_dispatcher->setDefaultController('foo')
+             ->setParam('useDefaultControllerAlways', true);
 
         $request = new Zend_Controller_Request_Http();
         $request->setModuleName('admin');
 
-        $this->assertFalse($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
 
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->dispatch($request, $response);
@@ -100,12 +101,13 @@ class Zend_Controller_ModuleDispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testUseGlobalDefaultController()
     {
-        $this->_dispatcher->setParam('useGlobalDefault', true);
+        $this->_dispatcher->setParam('useGlobalDefault', true)
+             ->setParam('useDefaultControllerAlways', true);
 
         $request = new Zend_Controller_Request_Http();
         $request->setModuleName('admin');
 
-        $this->assertFalse($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
 
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->dispatch($request, $response);
@@ -117,7 +119,7 @@ class Zend_Controller_ModuleDispatcherTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http('http://example.com/');
 
-        $this->assertFalse($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
 
         $response = new Zend_Controller_Response_Cli();
         $this->_dispatcher->dispatch($request, $response);

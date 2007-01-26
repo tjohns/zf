@@ -142,7 +142,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
     {
         $className = $this->_getController($request);
         if (!$className) {
-            return false;
+            return true;
         }
 
         $fileSpec    = $this->classToFilename($className);

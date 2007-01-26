@@ -47,6 +47,8 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http();
 
+        $this->assertTrue($this->_dispatcher->isDispatchable($request));
+
         $request->setControllerName('index');
         $this->assertTrue($this->_dispatcher->isDispatchable($request));
 
@@ -81,10 +83,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $this->_dispatcher->getDefaultAction());
     }
 
-    /**
-     * Test default action on valid controller
-     */
-    public function testDispatch()
+    public function testDispatchValidControllerDefaultAction()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -94,10 +93,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
 
-    /**
-     * Test valid action on valid controller
-     */
-    public function testDispatch1()
+    public function testDispatchValidControllerAndAction()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -108,10 +104,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
 
-    /**
-     * Test invalid action on valid controller
-     */
-    public function testDispatch2()
+    public function testDispatchValidControllerWithInvalidAction()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
@@ -126,10 +119,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Test invalid controller
-     */
-    public function testDispatch3()
+    public function testDispatchInvalidController()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('bogus');
@@ -143,10 +133,24 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Test valid action on valid controller; test pre/postDispatch
-     */
-    public function testDispatch4()
+    public function testDispatchInvalidControllerUsingDefaults()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('bogus');
+        $response = new Zend_Controller_Response_Cli();
+
+        $this->_dispatcher->setParam('useDefaultControllerAlways', true);
+
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $this->assertSame('index', $request->getControllerName());
+            $this->assertSame('index', $request->getActionName());
+        } catch (Exception $e) {
+            $this->fail('Exception should not be raised when useDefaultControllerAlways set');
+        }
+    }
+
+    public function testDispatchValidControllerWithPrePostDispatch()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('foo');
@@ -160,10 +164,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertContains('postDispatch called', $body);
     }
 
-    /**
-     * Test defaults of controller and action pair 
-     */
-    public function testDispatch5()
+    public function testDispatchNoControllerUsesDefaults()
     {
         $request = new Zend_Controller_Request_Http();
         $response = new Zend_Controller_Response_Cli();

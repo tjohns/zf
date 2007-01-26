@@ -61,6 +61,10 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      * not necessarily indicate the dispatcher will not still dispatch the call 
      * to the default controller.
      *
+     * If no controller is set in the request, this method will return true, as 
+     * the dispatcher will always use the default controller in such an 
+     * instance.
+     *
      * @param Zend_Controller_Request_Abstract $action
      * @return boolean
      */
@@ -68,7 +72,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
     {
         $className = $this->_getController($request);
         if (!$className) {
-            return false;
+            return true; // no controller specified; this will dispatch to the default controller
         }
 
         $fileSpec = $this->classToFilename($className);
@@ -95,6 +99,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
     public function setDefaultController($controller)
     {
         $this->_defaultController = (string) $controller;
+        return $this;
     }
 
     /**
@@ -116,6 +121,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
     public function setDefaultAction($action)
     {
         $this->_defaultAction = (string) $action;
+        return $this;
     }
 
     /**
@@ -131,9 +137,14 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
     /**
      * Dispatch to a controller/action
      *
+     * By default, if a controller is not dispatchable, dispatch() will throw 
+     * an exception. If you wish to use the default controller instead, set the 
+     * param 'useDefaultControllerAlways' via {@link setParam()}.
+     *
      * @param Zend_Controller_Request_Abstract $request
      * @param Zend_Controller_Response_Abstract $response
      * @return boolean
+     * @throws Zend_Controller_Dispatcher_Exception
      */
     public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
     {
@@ -142,13 +153,18 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
         /**
          * Get controller class
          */
-        $className = $this->_getController($request);
+        if (!$this->isDispatchable($request)) {
+            if (!$this->getParam('useDefaultControllerAlways')) {
+                require_once 'Zend/Controller/Dispatcher/Exception.php';
+                throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
+            }
 
-        /**
-         * If no class name returned, dispatch to default controller
-         */
-        if (empty($className)) {
             $className = $this->_getDefaultControllerName($request);
+        } else {
+            $className = $this->_getController($request);
+            if (!$className) {
+                $className = $this->_getDefaultControllerName($request);
+            }
         }
 
         /**
