@@ -41,7 +41,7 @@
                     As an example:
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 $front->throwExceptions(true);
 try {
     $front->dispatch();
@@ -82,7 +82,7 @@ try {
                     the getException() method. As an example:
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 $front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
@@ -134,7 +134,7 @@ if ($response->isException()) {
                             the following directive:
                         </para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting role="php"><![CDATA[<?php
 $front->setParam('useDefaultControllerAlways', true);
 
 // or
@@ -146,7 +146,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             default controller and action instead of throwing an
                             exception. The disadvantage to this method is that
                             any typos a user makes when accessing your site will
-                            still resolve and display your home page.
+                            still resolve and display your home page, which can
+                            wreak havoc with search engine optimization.
                         </para>
                     </listitem>
 
@@ -168,7 +169,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
             <listitem>
                 <para>
                     Zend_Controller_Action::__call() will throw an exception if
-                    it cannot dispatch a non-existant action to a method. Most
+                    it cannot dispatch a non-existent action to a method. Most
                     likely, you will want to use some default action in the
                     controller in cases like this. Ways to achieve this include:
                 </para>
@@ -180,7 +181,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             __call() method. As an example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting role="php"><![CDATA[<?php
 class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
@@ -209,7 +210,7 @@ class My_Controller_Action extends Zend_Controller_Action
                             As an example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting role="php"><![CDATA[<?php
 class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
@@ -279,7 +280,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             As an example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting role="php"><![CDATA[<?php
 class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
