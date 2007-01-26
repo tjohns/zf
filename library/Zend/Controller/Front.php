@@ -210,9 +210,9 @@ class Zend_Controller_Front
     public function addControllerDirectory($directory, $args = null)
     {
         if (is_string($args) && !empty($args)) {
-            $this->_controllerDir[$args] = (string) $directory;
+            $this->_controllerDir[$args] = $directory;
         } else {
-            $this->_controllerDir[] = (string) $directory;
+            $this->_controllerDir[] = $directory;
         }
 
         return $this;
@@ -233,7 +233,7 @@ class Zend_Controller_Front
         $this->_controllerDir = array();
 
         foreach ((array) $directory as $key => $value) {
-            $this->_controllerDir[$key] = (string) $value;
+            $this->addControllerDirectory($value, $key);
         }
 
         return $this;

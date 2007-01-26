@@ -124,4 +124,34 @@ class Zend_Controller_ModuleDispatcherTest extends PHPUnit_Framework_TestCase
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertContains("Index action called", $body, $body);
     }
+
+    public function testSettingDefaultControllerDirectoryAsArray()
+    {
+        $this->_dispatcher->setControllerDirectory(array(
+                 'default' => array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')))
+             ->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin')
+             ->setParam('useGlobalDefault', true);
+        $controllerDirs = $this->_dispatcher->getControllerDirectory();
+        $this->assertTrue(isset($controllerDirs['default']));
+        $this->assertTrue(is_array($controllerDirs['default']));
+        $this->assertTrue(is_string($controllerDirs['default'][0]));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $controllerDirs['default'][0]);
+    }
+
+    public function testSettingDefaultControllerDirectoryAsArrayFromFrontController()
+    {
+        require_once 'Zend/Controller/Front.php';
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        $front->setControllerDirectory(array(
+            'default' => array(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')
+        ));
+        $this->_dispatcher->setFrontController($front);
+
+        $controllerDirs = $this->_dispatcher->getControllerDirectory();
+        $this->assertTrue(isset($controllerDirs['default']));
+        $this->assertTrue(is_array($controllerDirs['default']));
+        $this->assertTrue(is_string($controllerDirs['default'][0]));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $controllerDirs['default'][0]);
+    }
 }
