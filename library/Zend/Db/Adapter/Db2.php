@@ -165,7 +165,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 					  ';DATABASE='	. $this->_config['dbname'] .
 					  ';HOSTNAME=' 	. $this->_config['host'] .
 					  ';PORT=' 		. $this->_config['port'] . 
-					  ';PROTOCOL= ' . $this->_config['protocol'] . 
+					  ';PROTOCOL='  . $this->_config['protocol'] . 
 					  ';UID=' 		. $this->_config['username'] .
 					  ';PWD=' 		. $this->_config['password'] .';';
 			$this->_connection = $conn_func_name($dbname,
