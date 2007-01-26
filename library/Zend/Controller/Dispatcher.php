@@ -70,7 +70,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
-        $className = $this->_getController($request);
+        $className = $this->getController($request);
         if (!$className) {
             return true; // no controller specified; this will dispatch to the default controller
         }
@@ -159,11 +159,11 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
                 throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
             }
 
-            $className = $this->_getDefaultControllerName($request);
+            $className = $this->getDefaultControllerName($request);
         } else {
-            $className = $this->_getController($request);
+            $className = $this->getController($request);
             if (!$className) {
-                $className = $this->_getDefaultControllerName($request);
+                $className = $this->getDefaultControllerName($request);
             }
         }
 
@@ -185,7 +185,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
         /**
          * Retrieve the action name
          */
-        $action = $this->_getAction($request);
+        $action = $this->getAction($request);
 
         /**
          * If method does not exist, default to __call()
@@ -234,7 +234,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      * @param Zend_Controller_Request_Abstract $request
      * @return string|false Returns class name on success
      */
-    protected function _getController($request)
+    public function getController($request)
     {
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
@@ -253,7 +253,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      * @param Zend_Controller_Request_Abstract $request 
      * @return string
      */
-    protected function _getDefaultControllerName($request)
+    public function getDefaultControllerName($request)
     {
         $controller = $this->getDefaultController();
         $request->setControllerName($controller)
@@ -273,7 +273,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      * @param Zend_Controller_Request_Abstract $request
      * @return string
      */
-    protected function _getAction($request)
+    public function getAction($request)
     {
         $action = $request->getActionName();
         if (empty($action)) {

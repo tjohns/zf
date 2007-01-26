@@ -140,7 +140,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
-        $className = $this->_getController($request);
+        $className = $this->getController($request);
         if (!$className) {
             return true;
         }
@@ -205,7 +205,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
      * @param Zend_Controller_Request_Abstract $request
      * @return string|false Returns class name on success
      */
-    protected function _getController($request)
+    public function getController($request)
     {
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
@@ -262,7 +262,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
      * @param Zend_Controller_Request_Abstract $request 
      * @return string
      */
-    protected function _getDefaultControllerName($request)
+    public function getDefaultControllerName($request)
     {
         $controller = $this->getDefaultController();
         $default    = $this->formatControllerName($controller);
@@ -294,7 +294,7 @@ class Zend_Controller_ModuleDispatcher extends Zend_Controller_Dispatcher
    
     /**
      * Return the value of the currently selected dispatch directory (as set by 
-     * {@link _getController()})
+     * {@link getController()})
      * 
      * @return string
      */
