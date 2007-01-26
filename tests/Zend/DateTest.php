@@ -3714,31 +3714,31 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $result = Zend_Date_Cities::City('vienna');
         $this->assertTrue(is_array($result));
-        $result = $date->getSunSet($result);
+        $result = $date->getSunset($result);
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:10:10+01:00');
 
         unset($result);
         $result = Zend_Date_Cities::City('vienna', 'civil');
         $this->assertTrue(is_array($result));
-        $result = $date->getSunSet($result);
+        $result = $date->getSunset($result);
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:09:31+01:00');
 
         unset($result);
         $result = Zend_Date_Cities::City('vienna', 'nautic');
         $this->assertTrue(is_array($result));
-        $result = $date->getSunSet($result);
+        $result = $date->getSunset($result);
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:08:45+01:00');
 
         unset($result);
         $result = Zend_Date_Cities::City('vienna', 'astronomic');
         $this->assertTrue(is_array($result));
-        $result = $date->getSunSet($result);
+        $result = $date->getSunset($result);
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:08:00+01:00');
 
         unset($result);
         $result = Zend_Date_Cities::City('BERLIN');
         $this->assertTrue(is_array($result));
-        $result = $date->getSunRise($result);
+        $result = $date->getSunrise($result);
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T08:21:17+01:00');
 
         unset($result);
