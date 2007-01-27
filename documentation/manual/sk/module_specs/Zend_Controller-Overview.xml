@@ -61,13 +61,13 @@
 					<para>
                         <code>Zend_Controller_Router_Interface</code> is used to
                         define routers.  Routing is the process of examining the
-                        request environment to determine which  to determine
-                        which controller, and action of that controller, should
-                        receive the request.  This controller, action, and
-                        optional parameters are then set in the request object
-                        to be processed by <code>Zend_Controller_Dispatcher</code>.  
-                        Routing occurs only once: when the request is initially
-                        received and before the first controller is dispatched.
+                        request environment to determine which controller, and
+                        action of that controller, should receive the request.
+                        This controller, action, and optional parameters are
+                        then set in the request object to be processed by
+                        <code>Zend_Controller_Dispatcher</code>.  Routing occurs
+                        only once: when the request is initially received and
+                        before the first controller is dispatched.
                     </para>
 
                     <para>
@@ -117,42 +117,6 @@
                         the controller would be referred to as
                         <code>somefoo</code> and the action as <code>bar</code>.
 					</para>
-
-                    <para>
-                        Additionally, you can specify a <code>module</code> to
-                        use when loading a controller. A module is merely used
-                        to specify a class prefix to use when loading the
-                        controller, and, by extension, a subdirectory in which
-                        to look for the class.  To use modules, set the
-                        <code>useModules</code> param in the front controller:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setParam('useModules', true);
-]]></programlisting>
-
-                    <para>
-                        As an example, consider the following URL:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-http://example.com/user/news/action
-]]></programlisting>
-
-                    <para>
-                        In the above example, the module 'user' is specified
-                        with the controller 'news'. The dispatcher translates
-                        this the <code>User_NewsController</code> class, and
-                        will look for it in <code>User/NewsController.php</code>
-                        within the paths specified with
-                        <code>setControllerDirectory()</code>.
-                    </para>
-
-                    <para>
-                        Modules are useful when you wish to segregate code into
-                        related subdirectories, use third party code, or re-use
-                        the same controller library in different applications.
-                    </para>
 				</listitem>
 
 				<listitem>
@@ -318,45 +282,6 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
-        <para>
-            Additionally, you can specify controllers in subdirectories or
-            modules through several means:
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    Controller names that have an underscore (_) can be used. As
-                    an example,
-                    <code>http://framework.zend.com/admin_roadmap/future</code>
-                    would map to the Admin_RoadmapController controller class.
-                    (An alternate path separator may be specified using the
-                    dispatcher's setPathSeparator() method.)
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    By setting the <code>useModules</code> parameter in the front
-                    controller, you can map to subdirectories using clean URIs.
-                    The previous example URL would read
-                    <code>http://framework.zend.com/admin/roadmap/future</code>.
-                    To do so, set the <code>useModules</code> parameter in the
-                    front controller or the router:
-                </para>
-
-                <programlisting><![CDATA[
-$front->setParam('useModules', true);
-// or
-$router->setParam('useModules', true);
-]]></programlisting>
-
-                <para>
-                    This will work for both the basic router as well as the
-                    RewriteRouter.
-                </para>
-            </listitem>
-        </itemizedlist>
-
 		<note>
 		    <title>Flexibility</title>
 		    <para>
@@ -367,10 +292,9 @@ $router->setParam('useModules', true);
 
 		<para>
             The controller name, the action name within that controller, and any
-            optional parameters (including the module) are set in the request
-            object.  When <code>Zend_Controller_Front</code> enters the dispatch
-            loop, the request object will be passed to
-            <code>Zend_Controller_Dispatcher</code>.
+            optional parameters are set in the request object.  When
+            <code>Zend_Controller_Front</code> enters the dispatch loop, the
+            request object will be passed to <code>Zend_Controller_Dispatcher</code>.
 		</para>
 	</sect2>
 

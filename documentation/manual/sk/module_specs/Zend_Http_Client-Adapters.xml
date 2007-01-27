@@ -285,7 +285,7 @@
         '<html>' . 
         '  <head><title>Moved</title></head>' .
         '  <body><p>This page has moved.</p></body>' . 
-	    '</html>');
+        '</html>');
 
     // Set the next successive response
     $adapter->addResponse(
@@ -294,8 +294,8 @@
                                     "\r\n" . 
         '<html>' . 
         '  <head><title>My Pet Store Home Page</title></head>' . 
-	    '  <body><p>...</p></body>' . 
-	    '</html>');
+        '  <body><p>...</p></body>' . 
+        '</html>');
 
     // inject the http client object ($client) into your object 
     // being tested and then test your object's behavior below
