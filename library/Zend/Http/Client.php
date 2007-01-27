@@ -592,7 +592,7 @@ class Zend_Http_Client
     public function setFileUpload($filename, $formname, $data = null, $ctype = null)
     {
         if ($data === null) {
-            if (! $data = @file_get_contents($filename))
+            if (($data = @file_get_contents($filename)) === false)
                 throw new Zend_Http_Client_Exception("Unable to read file '{$filename}' for upload");
 
             if (! $ctype && function_exists('mime_content_type')) $ctype = mime_content_type($filename);
