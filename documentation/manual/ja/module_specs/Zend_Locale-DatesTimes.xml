@@ -1,36 +1,39 @@
 <sect1 id="zend.locale.date.datesandtimes">
 
-    <title>Working with Dates and Times</title>
+    <title>日付および時刻の扱い</title>
 
     <para>
-        <code>Zend_Locale_Format</code> provides several methods for working with dates and times to help convert and
-        normalize between different formats for different locales. Use <code>Zend_Date</code> for manipulating dates.
+        <code>Zend_Locale_Format</code> では、日付や時刻を扱うためのメソッドを提供しています。
+        これらを使用して、さまざまなロケールのさまざまな書式間での変換や正規化を行います。
+        日付の操作には <code>Zend_Date</code> を使用します。
     </para>
 
     <sect2 id="zend.locale.date.normalize">
 
-        <title>Normalizing Dates and Times</title>
+        <title>日付および時刻の正規化</title>
 
         <para>
-            <code>getDate()</code> parses strings containing dates in localized formats. The results are returned in a
-            structured array, with well-defined keys for each part of the date. Since a localized date string may not
-            contain all parts of a date/time, the key-value pairs are optional. For example, if only the year, month,
-            and day is given, then all time values are supressed from the returned array, and vice-versa if only hour,
-            minute, and second were given as input. If no date or time can be found within the given input, an exception
-            will be thrown.
+            <code>getDate()</code> は、地域化された書式の日付を含む文字列をパースします。
+            結果は構造化された配列で返されます。この配列のキーが、日付の各部分を表します。
+            地域化された日付文字列が日付/時刻のすべての要素を含んでいるとは限らないので、
+            配列のすべてのキーが存在するとは限りません。
+            たとえば年月日のみが指定された場合は、時刻に関する情報は配列から取り除かれます。
+            逆に時分秒のみが指定された場合も同様です。
+            入力に日付や時刻が含まれない場合は、例外がスローされます。
         </para>
 
         <para>
-            The following return values are possible, when the BCMath extension is available:
+            BCMath 拡張モジュールが有効な場合に、
+            以下のような値が返されます。
             <table>
-                <title>Return values</title>
+                <title>返り値</title>
                 <tgroup cols='4'>
                     <thead>
                         <row>
-                            <entry>Array key</entry>
-                            <entry>Returned value</entry>
-                            <entry>Minimum</entry>
-                            <entry>Maximum</entry>
+                            <entry>配列のキー</entry>
+                            <entry>返される値</entry>
+                            <entry>最小値</entry>
+                            <entry>最大値</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -49,14 +52,14 @@
                         <row>
                             <entry>year</entry>
                             <entry>integer</entry>
-                            <entry>no limit</entry>
-                            <entry>no limit</entry>
+                            <entry>無制限</entry>
+                            <entry>無制限</entry>
                         </row>
                         <row>
                             <entry>hour</entry>
                             <entry>integer</entry>
                             <entry>0</entry>
-                            <entry>no limit</entry>
+                            <entry>無制限</entry>
                         </row>
                         <row>
                             <entry>minute</entry>
@@ -76,7 +79,7 @@
         </para>
 
         <example>
-            <title>Normalizing a date</title>
+            <title>日付の正規化</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -87,12 +90,13 @@ print_r ($date);
         </example>
 
         <para>
-            Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
-            strings adhering to that locale's format.
+            <code>getDate()</code> は "ロケール対応" なので、
+            <code>$locale</code> を指定することで
+            そのロケールの書式の日付文字列を使用できます。
         </para>
 
         <example>
-            <title>Normalizing a date by locale</title>
+            <title>ロケールを指定した日付の正規化</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -104,11 +108,12 @@ print_r ($date);
         </example>
 
         <para>
-            A complete date and time is returned when the input contains both a date and time in the expected format.
+            入力に日付と時刻の両方が含まれている場合に、
+            完全な日付と時刻が返されます。
         </para>
 
         <example>
-            <title>Normalizing a date with time</title>
+            <title>日付と時刻の正規化</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -120,13 +125,14 @@ print_r ($date);
         </example>
 
         <para>
-            If a specific format is desired, specify the <code>$format</code> argument, without giving a
-            <code>$locale</code>. Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported in the
-            <code>$format</code>.
+            書式を指定したい場合は、
+            <code>$locale</code> ではなく <code>$format</code> 引数を指定します。
+            <code>$format</code> としてサポートされるのは、一文字のコード
+            (H, m, s, y, M, d) および MMMM、EEEE だけです。
         </para>
 
         <example>
-            <title>Normalizing a userdefined date</title>
+            <title>ユーザ定義の日付書式への正規化</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
@@ -137,44 +143,44 @@ print_r ($date);
         </example>
 
         <para>
-            The format can include the following signs :
+            書式には次の記号が使用できます。
             <table>
-                <title>Format definition</title>
+                <title>書式定義</title>
                 <tgroup cols='2'>
                     <thead>
                         <row>
-                            <entry>Format Letter</entry>
-                            <entry>Description</entry>
+                            <entry>書式指定文字</entry>
+                            <entry>説明</entry>
                         </row>
                     </thead>
                     <tbody>
                         <row>
-                            <entry>d or dd</entry>
-                            <entry>1 or 2 digit day</entry>
+                            <entry>d あるいは dd</entry>
+                            <entry>1 桁あるいは 2 桁の日</entry>
                         </row>
                         <row>
-                            <entry>M or MM</entry>
-                            <entry>1 or 2 digit month</entry>
+                            <entry>M あるいは MM</entry>
+                            <entry>1 桁あるいは 2 桁の月</entry>
                         </row>
                         <row>
-                            <entry>y or yy</entry>
-                            <entry>1 or 2 digit year</entry>
+                            <entry>y あるいは yy</entry>
+                            <entry>1 桁あるいは 2 桁の年</entry>
                         </row>
                         <row>
                             <entry>yyyy</entry>
-                            <entry>4 digit year</entry>
+                            <entry>4 桁の年</entry>
                         </row>
                         <row>
                             <entry>h</entry>
-                            <entry>1 or 2 digit hour</entry>
+                            <entry>1 桁あるいは 2 桁の時</entry>
                         </row>
                         <row>
                             <entry>m</entry>
-                            <entry>1 or 2 digit minute</entry>
+                            <entry>1 桁あるいは 2 桁の分</entry>
                         </row>
                         <row>
                             <entry>s</entry>
-                            <entry>1 or 2 digit second</entry>
+                            <entry>1 桁あるいは 2 桁の秒</entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -182,15 +188,15 @@ print_r ($date);
         </para>
 
         <para>
-            Examples for proper formats are
+            適切な書式の例は、次のようになります。
             <table>
-                <title>Example formats</title>
+                <title>書式の例</title>
                 <tgroup cols='3'>
                     <thead>
                         <row>
-                            <entry>Formats</entry>
-                            <entry>Input</entry>
-                            <entry>Output</entry>
+                            <entry>書式</entry>
+                            <entry>入力</entry>
+                            <entry>出力</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -217,26 +223,27 @@ print_r ($date);
         </para>
 
         <note>
-            <title>Database date format</title>
+            <title>データベースの日付書式</title>
             <para>
-                To parse a database date value (f.e. MySql or MsSql), use Zend_Date's ISO_8601 format instead of
-                getDate().
+                データベース (たとえば MySql や MsSql など) の日付値をパースするには、
+                getDate() のかわりに Zend_Date の ISO_8601 書式を使用します。
             </para>
         </note>
 
         <para>
-            <code>getDate()</code> automatically detects and corrects some kinds of problems with input, such as
-            misplacing the year:
+            <code>getDate()</code> は、
+            入力に問題がある場合にそれを自動で検出し、訂正します。
+            たとえば年の位置が違っている場合などがこれにあたります。
         </para>
 
         <example>
-            <title>Correction for date normalizing</title>
+            <title>日付の正規化時の訂正処理</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
 
-// instead of 41 for the day, the 41 will be returned as year value
+// 41 は、日付ではなく年として返されます
 print_r ($date);
 ?>]]></programlisting>
         </example>
@@ -245,22 +252,23 @@ print_r ($date);
 
     <sect2 id="zend.locale.date.test">
 
-        <title>Testing Dates</title>
+        <title>日付かどうかの確認</title>
 
         <para>
-            Use <code>isDate()</code> to check if a given string contains a valid date.
+            <code>isDate()</code> を使用して、
+            指定した文字列が有効な日付を含むかどうかを調べます。
         </para>
 
         <example>
-            <title>Date testing</title>
+            <title>日付かどうかの確認</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
-    print "date";
+    print "日付です";
 } else {
-    print "not a date";
+    print "日付ではありません";
 } 
 ?>]]></programlisting>
         </example>
@@ -269,24 +277,26 @@ if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
 
     <sect2 id="zend.locale.time.normalizing">
 
-        <title>Normalizing a Time</title>
+        <title>時刻の正規化</title>
 
         <para>
-            Normally, a time will be returned with a date, if the input contains both. If the proper format is not
-            known, but the locale relevant to the user input is known, then <code>getTime()</code> should be used,
-            because it uses the default time format for the selected locale.
+            通常、入力に日付と時刻が両方含まれている場合は、
+            時刻は日付とともに返されます。
+            適切な書式はわからないが、ユーザの入力のロケールがわかるという場合に
+            <code>getTime()</code> を使用します。
+            これは、選択したロケールに対するデフォルトの時刻書式を使用するからです。
         </para>
 
         <example>
-            <title>Normalize an unknown time</title>
+            <title>未知の時刻の正規化</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::getTime('13:44:42', $locale) {
-    print "time";
+    print "時刻です";
 } else {
-    print "not a time";
+    print "時刻ではありません";
 } 
 ?>]]></programlisting>
         </example>
@@ -295,22 +305,23 @@ if (Zend_Locale_Format::getTime('13:44:42', $locale) {
 
     <sect2 id="zend.locale.time.test">
 
-        <title>Testing Times</title>
+        <title>時刻かどうかの確認</title>
 
         <para>
-            Use <code>isTime()</code> to check if a given string contains a proper time.
+            <code>isTime()</code> を使用して、
+            指定した文字列が有効な時刻を含むかどうかを調べます。
         </para>
 
         <example>
-            <title>Testing a time</title>
+            <title>時刻かどうかの確認</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isTime('13:44:42', $locale) {
-    print "time";
+    print "時刻です";
 } else {
-    print "not a time";
+    print "時刻ではありません";
 } 
 ?>]]></programlisting>
         </example>

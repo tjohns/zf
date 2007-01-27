@@ -1,21 +1,22 @@
 <sect1 id="zend.locale.functions">
 
-    <title>Using Zend_Locale</title>
+    <title>Zend_Locale の使用法</title>
 
     <para>
-        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized
-        names for other locales, days of the week, month names, etc.
+        <code>Zend_Locale</code> は、各ロケールについての情報も、
+        自分自身のロケールに合わせた形式で提供します。
+        たとえば他のロケールの名前や曜日名、月名などがこれにあたります。
     </para>
 
     <sect2 id="zend.locale.copying">
 
-        <title>Copying, Cloning, and Serializing Locale Objects</title>
+        <title>ロケールオブジェクトのコピー、クローン作成およびシリアライズ</title>
 
         <para>
-            Use
-            <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink>
-            to duplicate a locale object exactly and efficiently. Most locale-aware methods also accept string
-            representations of locales, such as the result of <code>$locale->toString()</code>.
+            <ulink url="http://php.net/language.oop5.cloning">オブジェクトのクローンを作成</ulink>し、
+            ロケールオブジェクトを正確かつ効率的に複製することができます。
+            ロケール対応のメソッドのほとんどは、<code>$locale->toString()</code>
+            が返す文字列表現のロケールを受け付けます。
         </para>
 
         <example>
@@ -25,19 +26,19 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('ar');
 
-// Save the $locale object as a serialization
+// $locale オブジェクトをシリアライズして保存します
 $serializedLocale = $locale->serialize();
-// re-create the original object
+// もとのオブジェクトを再度作成します
 $localeObject = unserialize($serializedLocale);
 
-// Obtain a string identification of the locale
+// ロケールの文字列表記を取得します
 $stringLocale = $locale->toString();
 
-// Make a cloned copy of the $local object
+// $local オブジェクトの複製を作成します
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
+print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に toString() をコールします
 ?>]]></programlisting>
         </example>
 
@@ -45,24 +46,25 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
 
     <sect2 id="zend.locale.equals">
 
-        <title>isEqual() - Equality</title>
+        <title>isEqual() - 同等</title>
 
         <para>
-            <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
-            classes should provide a similar equality check.
+            <code>Zend_Locale</code> は、
+            二つのロケールを比較するための便利な関数も提供しています。
+            ロケール対応のクラスはすべて、これと同等の同一性チェック機能を提供しなければなりません。
         </para>
 
         <example>
-            <title>Check for equal locales</title>
+            <title>ロケールが同一かどうかの調査</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
-// Check if locales are equal
+// ロケールが同一かどうかを調べます
 if ($locale->isEqual($mylocale) { 
-    print "Locales are equal";
+    print "これらのロケールは同一です";
 }
 ?>]]></programlisting>
         </example>
@@ -71,41 +73,44 @@ if ($locale->isEqual($mylocale) {
 
     <sect2 id="zend.locale.getdefault">
 
-        <title>Default locales</title>
+        <title>デフォルトのロケール</title>
 
         <para>
-            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's
-            web browser (if available), information from the environment of the host server, and ZF settings. As with
-            the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information
-            to consider
-            <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
+            <code>getDefault()</code> メソッドは、関連するロケールの配列を返します。
+            これは、ユーザのウェブブラウザからの情報 (取得できる場合)、
+            ホストサーバの環境変数および ZF の設定をもとに取得します。
+            <code>Zend_Locale</code> のコンストラクタの最初のパラメータで、
+            <link linkend="zend.locale.selection">
+              (<code>BROWSER</code>、<code>ENVIRONMENT</code> あるいは <code>FRAMEWORK</code> のうちの)
             </link>
-            first. The second parameter toggles between returning all matching locales or only the first/best match.
-            Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
+            どの情報を優先するかを選択します。
+            二番目のパラメータでは、マッチしたロケールをすべて返すのか
+            あるいは最初にマッチした/一番マッチしたものを返すのかを指定します。
+            ロケール対応のコンポーネントは、通常は最初のロケールのみを使用します。
+            優先度が指定されている場合は、それも考慮します。
         </para>
 
         <example>
-            <title>Get default locales</title>
+            <title>デフォルトロケールの取得</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Return all default locales
+// すべてのデフォルトロケールを返します
 $found = $locale->getDefault();
 print_r($found);
 
-// Return only browser locales
+// ブラウザのロケールのみを返します
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
 print_r($found2);
 ?>]]></programlisting>
         </example>
 
         <para>
-            To obtain only the default locales relevent to the
-            <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK</code>
-            </link>
-            , use the corresponding method:
+            <link linkend="zend.locale.selection"><code>BROWSER</code>、<code>ENVIRONMENT</code> あるいは <code>FRAMEWORK</code>
+            </link> のいずれかに対応するデフォルトロケールを取得するには、
+            それぞれ対応するメソッドを使用します。
             <itemizedlist>
                 <listitem>
                     <para>
@@ -129,14 +134,15 @@ print_r($found2);
 
     <sect2 id="zend.locale.setlocale">
 
-        <title>Set a new locale</title>
+        <title>新しいロケールの設定</title>
 
         <para>
-            A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
-            parameter. If no locale is given, a locale is
-            <link linkend="zend.locale.selection">automatically selected</link>
-            . Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that
-            have references to the existing instance object.
+            新しいロケールを設定するには、関数 <code>setLocale()</code>
+            を使用します。この関数は、ロケール文字列をパラメータとして受け取ります。
+            ロケールを省略した場合は、ロケールが
+            <link linkend="zend.locale.selection">自動的に選択</link>
+            されます。Zend_Locale オブジェクトは "light"
+            なので、このメソッドは既存のインスタンスを参照しているすべてのコードに影響をおよぼします。
         </para>
 
         <example>
@@ -146,10 +152,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Actual locale
+// 実際のロケール
 print $locale->toString();
 
-// new locale
+// 新しいロケール
 $locale->setLocale('aa_DJ');
 print $locale->toString();
 ?>]]></programlisting>
@@ -159,25 +165,29 @@ print $locale->toString();
 
     <sect2 id="zend.locale.getlocale">
 
-        <title>Getting the language and region</title>
+        <title>言語および地域の取得</title>
 
         <para>
-            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string
-            locale identifier. Use <code>getRegion()</code> to obtain a string containing the two character region code
-            from the string locale identifier.
+            <code>getLanguage()</code> を使用して、二文字の言語コード文字列を
+            ロケール識別文字列から取得します。また、
+            <code>getRegion()</code> を使用して、二文字の地域コード文字列を
+            ロケール識別文字列から取得します。
         </para>
 
     </sect2>
 
     <sect2 id="zend.locale.getlanguage">
 
-        <title>Obtaining localized name for languages, regions, and calendars</title>
+        <title>各地域での言語、地域、カレンダーの名前の取得</title>
 
         <para>
-            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of
-            a language for a specific $locale (defaults to the current object's locale). Use
-            <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the
-            language associated with $locale (defaults to the current object's locale). language will be returned.
+            <code>getLanguageDisplay($language, $locale)</code>
+            を使用して、ある言語の名前を指定した $locale
+            (デフォルトは、そのオブジェクトのロケール)
+            で表した文字列を取得します。また、
+            <code>getLanguageList($locale)</code> を使用して、既知の言語名をすべて $locale
+            (デフォルトは、そのオブジェクトのロケール)
+            に翻訳した文字列の配列を取得します。
         </para>
 
         <example>
@@ -186,26 +196,31 @@ print $locale->toString();
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
-print $locale->getLanguageDisplay('de'); // echos "German"
+print $locale->getLanguageDisplay('de'); // "German" と表示されます
 ?>]]></programlisting>
         </example>
 
         <para>
-            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
-            try the example below in a web page. Similarly, <code>getRegionList()</code> and
-            <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
-            regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
-            <code>getCalendarDisplay()</code> work identically. Use a <code>try .. catch</code> block to handle
-            exceptions that occur when using a locale that does not exist. Not all languages are also locales. In the
-            example, below exceptions are ignored to prevent early termination.
+            Zend_Locale で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
+            以下の例をウェブページで使用してみましょう
+            同様に <code>getRegionList()</code> および
+            <code>getRegionDisplay()</code> を使用すると、
+            あなたのネイティブ言語での地域名と別の言語での地域名の対応表を作成できます。
+            また、<code>getCalendarList()</code> および
+            <code>getCalendarDisplay()</code> も同様に動作します。
+            <code>try .. catch</code> ブロックで、
+            存在しないロケールを使用した場合の例外を処理するようにしましょう。
+            すべての言語がすべてのロケールに対応しているわけではありません。
+            この例では、例外を無視することで、
+            スクリプトが途中で終わってしまうことを防いでいます。
         </para>
 
         <example>
-            <title>All Languages written in thier native language</title>
+            <title>すべての言語を、その国のネイティブ言語で書き出す</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$sourceLanguage = null; // set to your native language code
+$sourceLanguage = null; // あなたのネイティブ言語のコードを設定します
 $locale = new Zend_Locale($sourceLanguage);
 $list = $locale->getLanguageList();
 
@@ -226,12 +241,12 @@ foreach($list as $language => $content) {
 
     <sect2 id="zend.locale.getscriptdisplay">
 
-        <title>Get an translated string of an script</title>
+        <title>翻訳された文字名の取得</title>
 
         <para>
-            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be
-            returned. The same way as with the function getLanguageDisplay(), this function also supports the useage for
-            obtaining output localized to other locales, using the optional $locale argument.
+            <code>getScriptDisplay()</code> は、指定した言語の文字名を翻訳したものを返します。
+            getLanguageDisplay() 関数と同様、この関数は別のロケールで結果を出力することもできます。
+            その場合はオプションの引数 $locale を指定します。
         </para>
 
         <example>
@@ -241,7 +256,7 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Script
+// 文字
 print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
@@ -250,12 +265,17 @@ print $locale->getScriptDisplay('Latn');
 
     <sect2 id="zend.locale.getscriptlist">
 
-        <title>Get a list of scripts</title>
+        <title>文字一覧の取得</title>
 
         <para>
-            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected
-            $locale (defaults to the current object's locale). For L10N purposes, a script is the set of characters used
-            to display a language. For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
+            <code>getScriptList()</code>
+            を使用して、既知の文字名をすべて $locale
+            (デフォルトは、そのオブジェクトのロケール)
+            に翻訳した文字列の配列を取得します。
+            L10N の観点から、ここでいう文字とは
+            ある言語を表示するために使用する文字セットとなります。
+            英語を表示するための文字の名前はラテン文字 (Latin)
+            で、ISO-15924 における短縮形は "Latn" となります。
         </para>
 
         <example>
@@ -265,7 +285,7 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// ScriptList
+// 文字の一覧
 print_r($locale->getScriptList());
 ?>]]></programlisting>
         </example>
@@ -274,13 +294,16 @@ print_r($locale->getScriptList());
 
     <sect2 id="zend.locale.getquestion">
 
-        <title>Obtaining translations for "yes" and "no"</title>
+        <title>"yes" および "no" に対応する翻訳の取得</title>
 
         <para>
-            Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
-            to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale
-            (defaults to the current object's locale). The array will contain four key-value pairs, for "yes", "no", and
-            their abbreviations, as shown in the example below.
+            プログラム上で、ユーザに "はい" あるいは "いいえ"
+            で答えてもらうことがよくあります。
+            <code>getQuestion()</code> を使用すると、
+            ユーザに問い合わせるときに使用する単語を含む配列を、特定の $locale
+            (デフォルトは、そのオブジェクトのロケール)
+            にあわせて返します。この配列には四つの要素が含まれます。それぞれが
+            "はい"、"いいえ" とその省略形を現します。以下の例を参照ください。
         </para>
 
         <example>
@@ -290,10 +313,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Question strings
+// 設問の文字列
 print_r($locale->getQuestion());
 
-- - - Output - - -
+- - - 出力 - - -
 
 Array
 (

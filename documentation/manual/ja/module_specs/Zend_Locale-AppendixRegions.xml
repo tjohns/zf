@@ -1,542 +1,542 @@
 <sect1 id="zend.locale.regions">
 
-    <title>Supported Regions for Locales</title>
+    <title>ロケールがサポートする地域</title>
 
     <para>
-        <code>Zend_Locale</code> provides information for the following regions.
+        <code>Zend_Locale</code> は、以下の地域についての情報を提供します。
         <table>
-            <title>List of all supported regions</title>
+            <title>サポートする地域の全一覧</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Locale</entry>
-                        <entry>Region</entry>
+                        <entry>ロケール</entry>
+                        <entry>地域</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>AE</entry>
-                        <entry>United Arab Emirates</entry>
+                        <entry>アラブ首長国連邦</entry>
                     </row>
                     <row>
                         <entry>AF</entry>
-                        <entry>Afghanistan</entry>
+                        <entry>アフガニスタン</entry>
                     </row>
                     <row>
                         <entry>AL</entry>
-                        <entry>Albania</entry>
+                        <entry>アルバニア</entry>
                     </row>
                     <row>
                         <entry>AM</entry>
-                        <entry>Armenia</entry>
+                        <entry>アルメニア</entry>
                     </row>
                     <row>
                         <entry>AR</entry>
-                        <entry>Argentina</entry>
+                        <entry>アルゼンチン</entry>
                     </row>
                     <row>
                         <entry>AS</entry>
-                        <entry>American Samoa</entry>
+                        <entry>米領サモア</entry>
                     </row>
                     <row>
                         <entry>AT</entry>
-                        <entry>Austria</entry>
+                        <entry>オーストリア</entry>
                     </row>
                     <row>
                         <entry>AU</entry>
-                        <entry>Australia</entry>
+                        <entry>オーストラリア</entry>
                     </row>
                     <row>
                         <entry>AZ</entry>
-                        <entry>Azerbaijan</entry>
+                        <entry>アゼルバイジャン</entry>
                     </row>
                     <row>
                         <entry>BA</entry>
-                        <entry>Bosnia and Herzegovina</entry>
+                        <entry>ボスニア・ヘルツェゴビナ</entry>
                     </row>
                     <row>
                         <entry>BE</entry>
-                        <entry>Belgium</entry>
+                        <entry>ベルギー</entry>
                     </row>
                     <row>
                         <entry>BG</entry>
-                        <entry>Bulgaria</entry>
+                        <entry>ブルガリア</entry>
                     </row>
                     <row>
                         <entry>BH</entry>
-                        <entry>Bahrain</entry>
+                        <entry>バーレーン</entry>
                     </row>
                     <row>
                         <entry>BN</entry>
-                        <entry>Brunei</entry>
+                        <entry>ブルネイ</entry>
                     </row>
                     <row>
                         <entry>BO</entry>
-                        <entry>Bolivia</entry>
+                        <entry>ボリビア</entry>
                     </row>
                     <row>
                         <entry>BR</entry>
-                        <entry>Brazil</entry>
+                        <entry>ブラジル</entry>
                     </row>
                     <row>
                         <entry>BT</entry>
-                        <entry>Bhutan</entry>
+                        <entry>ブータン</entry>
                     </row>
                     <row>
                         <entry>BW</entry>
-                        <entry>Botswana</entry>
+                        <entry>ボツワナ</entry>
                     </row>
                     <row>
                         <entry>BY</entry>
-                        <entry>Belarus</entry>
+                        <entry>ベラルーシ</entry>
                     </row>
                     <row>
                         <entry>BZ</entry>
-                        <entry>Belize</entry>
+                        <entry>ベリーズ</entry>
                     </row>
                     <row>
                         <entry>CA</entry>
-                        <entry>Canada</entry>
+                        <entry>カナダ</entry>
                     </row>
                     <row>
                         <entry>CH</entry>
-                        <entry>Switzerland</entry>
+                        <entry>スイス</entry>
                     </row>
                     <row>
                         <entry>CL</entry>
-                        <entry>Chile</entry>
+                        <entry>チリ</entry>
                     </row>
                     <row>
                         <entry>CN</entry>
-                        <entry>China</entry>
+                        <entry>中国</entry>
                     </row>
                     <row>
                         <entry>CO</entry>
-                        <entry>Colombia</entry>
+                        <entry>コロンビア</entry>
                     </row>
                     <row>
                         <entry>CR</entry>
-                        <entry>Costa Rica</entry>
+                        <entry>コスタリカ</entry>
                     </row>
                     <row>
                         <entry>CS</entry>
-                        <entry>Serbia And Montenegro</entry>
+                        <entry>セルビア・モンテネグロ</entry>
                     </row>
                     <row>
                         <entry>CY</entry>
-                        <entry>Cyprus</entry>
+                        <entry>キプロス</entry>
                     </row>
                     <row>
                         <entry>CZ</entry>
-                        <entry>Czech Republic</entry>
+                        <entry>チェコ</entry>
                     </row>
                     <row>
                         <entry>DE</entry>
-                        <entry>Germany</entry>
+                        <entry>ドイツ</entry>
                     </row>
                     <row>
                         <entry>DJ</entry>
-                        <entry>Djibouti</entry>
+                        <entry>ジブチ</entry>
                     </row>
                     <row>
                         <entry>DK</entry>
-                        <entry>Denmark</entry>
+                        <entry>デンマーク</entry>
                     </row>
                     <row>
                         <entry>DO</entry>
-                        <entry>Dominican Republic</entry>
+                        <entry>ドミニカ共和国</entry>
                     </row>
                     <row>
                         <entry>DZ</entry>
-                        <entry>Algeria</entry>
+                        <entry>アルジェリア</entry>
                     </row>
                     <row>
                         <entry>EC</entry>
-                        <entry>Ecuador</entry>
+                        <entry>エクアドル</entry>
                     </row>
                     <row>
                         <entry>EE</entry>
-                        <entry>Estonia</entry>
+                        <entry>エストニア</entry>
                     </row>
                     <row>
                         <entry>EG</entry>
-                        <entry>Egypt</entry>
+                        <entry>エジプト</entry>
                     </row>
                     <row>
                         <entry>ER</entry>
-                        <entry>Eritrea</entry>
+                        <entry>エリトリア</entry>
                     </row>
                     <row>
                         <entry>ES</entry>
-                        <entry>Spain</entry>
+                        <entry>スペイン</entry>
                     </row>
                     <row>
                         <entry>ET</entry>
-                        <entry>Ethiopia</entry>
+                        <entry>エチオピア</entry>
                     </row>
                     <row>
                         <entry>FI</entry>
-                        <entry>Finland</entry>
+                        <entry>フィンランド</entry>
                     </row>
                     <row>
                         <entry>FO</entry>
-                        <entry>Faroe Islands</entry>
+                        <entry>フェロー諸島</entry>
                     </row>
                     <row>
                         <entry>FR</entry>
-                        <entry>France</entry>
+                        <entry>フランス</entry>
                     </row>
                     <row>
                         <entry>GB</entry>
-                        <entry>United Kingdom</entry>
+                        <entry>イギリス</entry>
                     </row>
                     <row>
                         <entry>GE</entry>
-                        <entry>Georgia</entry>
+                        <entry>グルジア</entry>
                     </row>
                     <row>
                         <entry>GL</entry>
-                        <entry>Greenland</entry>
+                        <entry>グリーンランド</entry>
                     </row>
                     <row>
                         <entry>GR</entry>
-                        <entry>Greece</entry>
+                        <entry>ギリシャ</entry>
                     </row>
                     <row>
                         <entry>GT</entry>
-                        <entry>Guatemala</entry>
+                        <entry>グアテマラ</entry>
                     </row>
                     <row>
                         <entry>GU</entry>
-                        <entry>Guam</entry>
+                        <entry>グアム島</entry>
                     </row>
                     <row>
                         <entry>HK</entry>
-                        <entry>Hong Kong S.A.R., China</entry>
+                        <entry>中華人民共和国香港特別行政区</entry>
                     </row>
                     <row>
                         <entry>HN</entry>
-                        <entry>Honduras</entry>
+                        <entry>ホンジュラス</entry>
                     </row>
                     <row>
                         <entry>HR</entry>
-                        <entry>Croatia</entry>
+                        <entry>クロアチア</entry>
                     </row>
                     <row>
                         <entry>HU</entry>
-                        <entry>Hungary</entry>
+                        <entry>ハンガリー</entry>
                     </row>
                     <row>
                         <entry>ID</entry>
-                        <entry>Indonesia</entry>
+                        <entry>インドネシア</entry>
                     </row>
                     <row>
                         <entry>IE</entry>
-                        <entry>Ireland</entry>
+                        <entry>アイルランド</entry>
                     </row>
                     <row>
                         <entry>IL</entry>
-                        <entry>Israel</entry>
+                        <entry>イスラエル</entry>
                     </row>
                     <row>
                         <entry>IN</entry>
-                        <entry>India</entry>
+                        <entry>インド</entry>
                     </row>
                     <row>
                         <entry>IQ</entry>
-                        <entry>Iraq</entry>
+                        <entry>イラク</entry>
                     </row>
                     <row>
                         <entry>IR</entry>
-                        <entry>Iran</entry>
+                        <entry>イラン</entry>
                     </row>
                     <row>
                         <entry>IS</entry>
-                        <entry>Iceland</entry>
+                        <entry>アイスランド</entry>
                     </row>
                     <row>
                         <entry>IT</entry>
-                        <entry>Italy</entry>
+                        <entry>イタリア</entry>
                     </row>
                     <row>
                         <entry>JM</entry>
-                        <entry>Jamaica</entry>
+                        <entry>ジャマイカ</entry>
                     </row>
                     <row>
                         <entry>JO</entry>
-                        <entry>Jordan</entry>
+                        <entry>ヨルダン</entry>
                     </row>
                     <row>
                         <entry>JP</entry>
-                        <entry>Japan</entry>
+                        <entry>日本</entry>
                     </row>
                     <row>
                         <entry>KE</entry>
-                        <entry>Kenya</entry>
+                        <entry>ケニア</entry>
                     </row>
                     <row>
                         <entry>KG</entry>
-                        <entry>Kyrgyzstan</entry>
+                        <entry>キルギスタン</entry>
                     </row>
                     <row>
                         <entry>KH</entry>
-                        <entry>Cambodia</entry>
+                        <entry>カンボジア</entry>
                     </row>
                     <row>
                         <entry>KR</entry>
-                        <entry>South Korea</entry>
+                        <entry>大韓民国</entry>
                     </row>
                     <row>
                         <entry>KW</entry>
-                        <entry>Kuwait</entry>
+                        <entry>クウェート</entry>
                     </row>
                     <row>
                         <entry>KZ</entry>
-                        <entry>Kazakhstan</entry>
+                        <entry>カザフスタン</entry>
                     </row>
                     <row>
                         <entry>LA</entry>
-                        <entry>Laos</entry>
+                        <entry>ラオス</entry>
                     </row>
                     <row>
                         <entry>LB</entry>
-                        <entry>Lebanon</entry>
+                        <entry>レバノン</entry>
                     </row>
                     <row>
                         <entry>LI</entry>
-                        <entry>Liechtenstein</entry>
+                        <entry>リヒテンシュタイン</entry>
                     </row>
                     <row>
                         <entry>LT</entry>
-                        <entry>Lithuania</entry>
+                        <entry>リトアニア</entry>
                     </row>
                     <row>
                         <entry>LU</entry>
-                        <entry>Luxembourg</entry>
+                        <entry>ルクセンブルグ</entry>
                     </row>
                     <row>
                         <entry>LV</entry>
-                        <entry>Latvia</entry>
+                        <entry>ラトビア</entry>
                     </row>
                     <row>
                         <entry>LY</entry>
-                        <entry>Libya</entry>
+                        <entry>リビア</entry>
                     </row>
                     <row>
                         <entry>MA</entry>
-                        <entry>Morocco</entry>
+                        <entry>モロッコ</entry>
                     </row>
                     <row>
                         <entry>MC</entry>
-                        <entry>Monaco</entry>
+                        <entry>モナコ</entry>
                     </row>
                     <row>
                         <entry>MH</entry>
-                        <entry>Marshall Islands</entry>
+                        <entry>マーシャル諸島共和国</entry>
                     </row>
                     <row>
                         <entry>MK</entry>
-                        <entry>Macedonia</entry>
+                        <entry>マケドニア</entry>
                     </row>
                     <row>
                         <entry>MM</entry>
-                        <entry>Myanmar</entry>
+                        <entry>ミャンマー</entry>
                     </row>
                     <row>
                         <entry>MO</entry>
-                        <entry>Macao S.A.R., China</entry>
+                        <entry>中華人民共和国マカオ特別行政区</entry>
                     </row>
                     <row>
                         <entry>MP</entry>
-                        <entry>Northern Mariana Islands</entry>
+                        <entry>北マリアナ諸島</entry>
                     </row>
                     <row>
                         <entry>MT</entry>
-                        <entry>Malta</entry>
+                        <entry>マルタ</entry>
                     </row>
                     <row>
                         <entry>MV</entry>
-                        <entry>Maldives</entry>
+                        <entry>モルジブ</entry>
                     </row>
                     <row>
                         <entry>MX</entry>
-                        <entry>Mexico</entry>
+                        <entry>メキシコ</entry>
                     </row>
                     <row>
                         <entry>MY</entry>
-                        <entry>Malaysia</entry>
+                        <entry>マレーシア</entry>
                     </row>
                     <row>
                         <entry>NI</entry>
-                        <entry>Nicaragua</entry>
+                        <entry>ニカラグア</entry>
                     </row>
                     <row>
                         <entry>NL</entry>
-                        <entry>Netherlands</entry>
+                        <entry>オランダ</entry>
                     </row>
                     <row>
                         <entry>NO</entry>
-                        <entry>Norway</entry>
+                        <entry>ノルウェー</entry>
                     </row>
                     <row>
                         <entry>NZ</entry>
-                        <entry>New Zealand</entry>
+                        <entry>ニュージーランド</entry>
                     </row>
                     <row>
                         <entry>OM</entry>
-                        <entry>Oman</entry>
+                        <entry>オマーン</entry>
                     </row>
                     <row>
                         <entry>PA</entry>
-                        <entry>Panama</entry>
+                        <entry>パナマ</entry>
                     </row>
                     <row>
                         <entry>PE</entry>
-                        <entry>Peru</entry>
+                        <entry>ペルー</entry>
                     </row>
                     <row>
                         <entry>PH</entry>
-                        <entry>Philippines</entry>
+                        <entry>フィリピン</entry>
                     </row>
                     <row>
                         <entry>PK</entry>
-                        <entry>Pakistan</entry>
+                        <entry>パキスタン</entry>
                     </row>
                     <row>
                         <entry>PL</entry>
-                        <entry>Poland</entry>
+                        <entry>ポーランド</entry>
                     </row>
                     <row>
                         <entry>PR</entry>
-                        <entry>Puerto Rico</entry>
+                        <entry>プエルトリコ</entry>
                     </row>
                     <row>
                         <entry>PT</entry>
-                        <entry>Portugal</entry>
+                        <entry>ポルトガル</entry>
                     </row>
                     <row>
                         <entry>PY</entry>
-                        <entry>Paraguay</entry>
+                        <entry>パラグアイ</entry>
                     </row>
                     <row>
                         <entry>QA</entry>
-                        <entry>Qatar</entry>
+                        <entry>カタール</entry>
                     </row>
                     <row>
                         <entry>RO</entry>
-                        <entry>Romania</entry>
+                        <entry>ルーマニア</entry>
                     </row>
                     <row>
                         <entry>RU</entry>
-                        <entry>Russia</entry>
+                        <entry>ロシア</entry>
                     </row>
                     <row>
                         <entry>SA</entry>
-                        <entry>Saudi Arabia</entry>
+                        <entry>サウジアラビア</entry>
                     </row>
                     <row>
                         <entry>SD</entry>
-                        <entry>Sudan</entry>
+                        <entry>スーダン</entry>
                     </row>
                     <row>
                         <entry>SE</entry>
-                        <entry>Sweden</entry>
+                        <entry>スウェーデン</entry>
                     </row>
                     <row>
                         <entry>SG</entry>
-                        <entry>Singapore</entry>
+                        <entry>シンガポール</entry>
                     </row>
                     <row>
                         <entry>SI</entry>
-                        <entry>Slovenia</entry>
+                        <entry>スロベニア</entry>
                     </row>
                     <row>
                         <entry>SK</entry>
-                        <entry>Slovakia</entry>
+                        <entry>スロバキア</entry>
                     </row>
                     <row>
                         <entry>SO</entry>
-                        <entry>Somalia</entry>
+                        <entry>ソマリア</entry>
                     </row>
                     <row>
                         <entry>SV</entry>
-                        <entry>El Salvador</entry>
+                        <entry>エルサルバドル</entry>
                     </row>
                     <row>
                         <entry>SY</entry>
-                        <entry>Syria</entry>
+                        <entry>シリア</entry>
                     </row>
                     <row>
                         <entry>TH</entry>
-                        <entry>Thailand</entry>
+                        <entry>タイ</entry>
                     </row>
                     <row>
                         <entry>TN</entry>
-                        <entry>Tunisia</entry>
+                        <entry>チュニジア</entry>
                     </row>
                     <row>
                         <entry>TR</entry>
-                        <entry>Turkey</entry>
+                        <entry>トルコ</entry>
                     </row>
                     <row>
                         <entry>TT</entry>
-                        <entry>Trinidad and Tobago</entry>
+                        <entry>トリニダード・トバゴ</entry>
                     </row>
                     <row>
                         <entry>TW</entry>
-                        <entry>Taiwan</entry>
+                        <entry>台湾</entry>
                     </row>
                     <row>
                         <entry>TZ</entry>
-                        <entry>Tanzania</entry>
+                        <entry>タンザニア</entry>
                     </row>
                     <row>
                         <entry>UA</entry>
-                        <entry>Ukraine</entry>
+                        <entry>ウクライナ</entry>
                     </row>
                     <row>
                         <entry>UM</entry>
-                        <entry>United States Minor Outlying Islands</entry>
+                        <entry>米領太平洋諸島</entry>
                     </row>
                     <row>
                         <entry>US</entry>
-                        <entry>United States</entry>
+                        <entry>アメリカ合衆国</entry>
                     </row>
                     <row>
                         <entry>UY</entry>
-                        <entry>Uruguay</entry>
+                        <entry>ウルグアイ</entry>
                     </row>
                     <row>
                         <entry>UZ</entry>
-                        <entry>Uzbekistan</entry>
+                        <entry>ウズベキスタン</entry>
                     </row>
                     <row>
                         <entry>VE</entry>
-                        <entry>Venezuela</entry>
+                        <entry>ベネズエラ</entry>
                     </row>
                     <row>
                         <entry>VI</entry>
-                        <entry>U.S. Virgin Islands</entry>
+                        <entry>米領バージン諸島</entry>
                     </row>
                     <row>
                         <entry>VN</entry>
-                        <entry>Vietnam</entry>
+                        <entry>ベトナム</entry>
                     </row>
                     <row>
                         <entry>YE</entry>
-                        <entry>Yemen</entry>
+                        <entry>イエメン</entry>
                     </row>
                     <row>
                         <entry>YU</entry>
-                        <entry>Yugoslavian Union</entry>
+                        <entry>ユーゴスラビア連邦</entry>
                     </row>
                     <row>
                         <entry>ZA</entry>
-                        <entry>South Africa</entry>
+                        <entry>南アフリカ</entry>
                     </row>
                     <row>
                         <entry>ZW</entry>
-                        <entry>Zimbabwe</entry>
+                        <entry>ジンバブエ</entry>
                     </row>
                 </tbody>
             </tgroup>

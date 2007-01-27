@@ -1,406 +1,406 @@
 <sect1 id="zend.locale.languages">
 
-    <title>Supported Languages for Locales</title>
+    <title>ロケールがサポートする言語</title>
 
     <para>
-        <code>Zend_Locale</code> provides information for the following languages.
+        <code>Zend_Locale</code> は、以下の言語についての情報を提供します。
         <table>
-            <title>List of all supported languages</title>
+            <title>サポートする言語の全一覧</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Locale</entry>
-                        <entry>Language</entry>
+                        <entry>ロケール</entry>
+                        <entry>言語</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>aa</entry>
-                        <entry>Afar</entry>
+                        <entry>アファール語</entry>
                     </row>
                     <row>
                         <entry>af</entry>
-                        <entry>Afrikaans</entry>
+                        <entry>アフリカーンス語</entry>
                     </row>
                     <row>
                         <entry>am</entry>
-                        <entry>Amharic</entry>
+                        <entry>アムハラ語</entry>
                     </row>
                     <row>
                         <entry>ar</entry>
-                        <entry>Arabic</entry>
+                        <entry>アラビア語</entry>
                     </row>
                     <row>
                         <entry>as</entry>
-                        <entry>Assamese</entry>
+                        <entry>アッサム語</entry>
                     </row>
                     <row>
                         <entry>az</entry>
-                        <entry>Azerbaijani</entry>
+                        <entry>アゼルバイジャン語</entry>
                     </row>
                     <row>
                         <entry>be</entry>
-                        <entry>Belarusian</entry>
+                        <entry>ベラルーシ語</entry>
                     </row>
                     <row>
                         <entry>bg</entry>
-                        <entry>Bulgarian</entry>
+                        <entry>ブルガリア語</entry>
                     </row>
                     <row>
                         <entry>bn</entry>
-                        <entry>Bengali</entry>
+                        <entry>ベンガル語</entry>
                     </row>
                     <row>
                         <entry>bs</entry>
-                        <entry>Bosnian</entry>
+                        <entry>ボスニア語</entry>
                     </row>
                     <row>
                         <entry>byn</entry>
-                        <entry>Blin</entry>
+                        <entry>ビリン語</entry>
                     </row>
                     <row>
                         <entry>ca</entry>
-                        <entry>Catalan</entry>
+                        <entry>カタロニア語</entry>
                     </row>
                     <row>
                         <entry>cs</entry>
-                        <entry>Czech</entry>
+                        <entry>チェコ語</entry>
                     </row>
                     <row>
                         <entry>cy</entry>
-                        <entry>Welsh</entry>
+                        <entry>ウェールズ語</entry>
                     </row>
                     <row>
                         <entry>da</entry>
-                        <entry>Danish</entry>
+                        <entry>デンマーク語</entry>
                     </row>
                     <row>
                         <entry>de</entry>
-                        <entry>German</entry>
+                        <entry>ドイツ語</entry>
                     </row>
                     <row>
                         <entry>dv</entry>
-                        <entry>Divehi</entry>
+                        <entry>ディヴェヒ語</entry>
                     </row>
                     <row>
                         <entry>dz</entry>
-                        <entry>Dzongkha</entry>
+                        <entry>ブータン語</entry>
                     </row>
                     <row>
                         <entry>el</entry>
-                        <entry>Greek</entry>
+                        <entry>ギリシャ語</entry>
                     </row>
                     <row>
                         <entry>en</entry>
-                        <entry>English</entry>
+                        <entry>英語</entry>
                     </row>
                     <row>
                         <entry>eo</entry>
-                        <entry>Esperanto</entry>
+                        <entry>エスペラント語</entry>
                     </row>
                     <row>
                         <entry>es</entry>
-                        <entry>Spanish</entry>
+                        <entry>スペイン語</entry>
                     </row>
                     <row>
                         <entry>et</entry>
-                        <entry>Estonian</entry>
+                        <entry>エストニア語</entry>
                     </row>
                     <row>
                         <entry>eu</entry>
-                        <entry>Basque</entry>
+                        <entry>バスク語</entry>
                     </row>
                     <row>
                         <entry>fa</entry>
-                        <entry>Persian</entry>
+                        <entry>ペルシア語</entry>
                     </row>
                     <row>
                         <entry>fi</entry>
-                        <entry>Finnish</entry>
+                        <entry>フィンランド語</entry>
                     </row>
                     <row>
                         <entry>fo</entry>
-                        <entry>Faroese</entry>
+                        <entry>フェロー語</entry>
                     </row>
                     <row>
                         <entry>fr</entry>
-                        <entry>French</entry>
+                        <entry>フランス語</entry>
                     </row>
                     <row>
                         <entry>ga</entry>
-                        <entry>Irish</entry>
+                        <entry>アイルランド語</entry>
                     </row>
                     <row>
                         <entry>gez</entry>
-                        <entry>Geez</entry>
+                        <entry>ゲエズ語</entry>
                     </row>
                     <row>
                         <entry>gl</entry>
-                        <entry>Gallegan</entry>
+                        <entry>ガリシア語</entry>
                     </row>
                     <row>
                         <entry>gu</entry>
-                        <entry>Gujarati</entry>
+                        <entry>グジャラート語</entry>
                     </row>
                     <row>
                         <entry>gv</entry>
-                        <entry>Manx</entry>
+                        <entry>マン島語</entry>
                     </row>
                     <row>
                         <entry>haw</entry>
-                        <entry>Hawaiian</entry>
+                        <entry>ハワイ語</entry>
                     </row>
                     <row>
                         <entry>he</entry>
-                        <entry>Hebrew</entry>
+                        <entry>ヘブライ語</entry>
                     </row>
                     <row>
                         <entry>hi</entry>
-                        <entry>Hindi</entry>
+                        <entry>ヒンディー語</entry>
                     </row>
                     <row>
                         <entry>hr</entry>
-                        <entry>Croatian</entry>
+                        <entry>クロアチア語</entry>
                     </row>
                     <row>
                         <entry>hu</entry>
-                        <entry>Hungarian</entry>
+                        <entry>ハンガリー語</entry>
                     </row>
                     <row>
                         <entry>hy</entry>
-                        <entry>Armenian</entry>
+                        <entry>アルメニア語</entry>
                     </row>
                     <row>
                         <entry>id</entry>
-                        <entry>Indonesian</entry>
+                        <entry>インドネシア語</entry>
                     </row>
                     <row>
                         <entry>is</entry>
-                        <entry>Icelandic</entry>
+                        <entry>アイスランド語</entry>
                     </row>
                     <row>
                         <entry>it</entry>
-                        <entry>Italian</entry>
+                        <entry>イタリア語</entry>
                     </row>
                     <row>
                         <entry>iu</entry>
-                        <entry>Inuktitut</entry>
+                        <entry>イヌクウティトット語</entry>
                     </row>
                     <row>
                         <entry>ja</entry>
-                        <entry>Japanese</entry>
+                        <entry>日本語</entry>
                     </row>
                     <row>
                         <entry>ka</entry>
-                        <entry>Georgian</entry>
+                        <entry>グルジア語</entry>
                     </row>
                     <row>
                         <entry>kk</entry>
-                        <entry>Kazakh</entry>
+                        <entry>カザフ語</entry>
                     </row>
                     <row>
                         <entry>kl</entry>
-                        <entry>Kalaallisut</entry>
+                        <entry>グリーンランド語</entry>
                     </row>
                     <row>
                         <entry>km</entry>
-                        <entry>Khmer</entry>
+                        <entry>カンボジア語</entry>
                     </row>
                     <row>
                         <entry>kn</entry>
-                        <entry>Kannada</entry>
+                        <entry>カンナダ語</entry>
                     </row>
                     <row>
                         <entry>ko</entry>
-                        <entry>Korean</entry>
+                        <entry>韓国語</entry>
                     </row>
                     <row>
                         <entry>kok</entry>
-                        <entry>Konkani</entry>
+                        <entry>コンカニ語</entry>
                     </row>
                     <row>
                         <entry>kw</entry>
-                        <entry>Cornish</entry>
+                        <entry>コーンウォール語</entry>
                     </row>
                     <row>
                         <entry>ky</entry>
-                        <entry>Kirghiz</entry>
+                        <entry>キルギス語</entry>
                     </row>
                     <row>
                         <entry>lo</entry>
-                        <entry>Lao</entry>
+                        <entry>ラオ語</entry>
                     </row>
                     <row>
                         <entry>lt</entry>
-                        <entry>Lithuanian</entry>
+                        <entry>リトアニア語</entry>
                     </row>
                     <row>
                         <entry>lv</entry>
-                        <entry>Latvian</entry>
+                        <entry>ラトビア語</entry>
                     </row>
                     <row>
                         <entry>mk</entry>
-                        <entry>Macedonian</entry>
+                        <entry>マケドニア語</entry>
                     </row>
                     <row>
                         <entry>ml</entry>
-                        <entry>Malayalam</entry>
+                        <entry>マラヤーラム語</entry>
                     </row>
                     <row>
                         <entry>mn</entry>
-                        <entry>Mongolian</entry>
+                        <entry>モンゴル語</entry>
                     </row>
                     <row>
                         <entry>mr</entry>
-                        <entry>Marathi</entry>
+                        <entry>マラーティー語</entry>
                     </row>
                     <row>
                         <entry>ms</entry>
-                        <entry>Malay</entry>
+                        <entry>マライ語</entry>
                     </row>
                     <row>
                         <entry>mt</entry>
-                        <entry>Maltese</entry>
+                        <entry>マルタ語</entry>
                     </row>
                     <row>
                         <entry>nb</entry>
-                        <entry>Norwegian Bokmal</entry>
+                        <entry>ノルウェー語 (ボクモール)</entry>
                     </row>
                     <row>
                         <entry>nl</entry>
-                        <entry>Dutch</entry>
+                        <entry>オランダ語</entry>
                     </row>
                     <row>
                         <entry>nn</entry>
-                        <entry>Norwegian Nynorsk</entry>
+                        <entry>ノルウェー語 (ニューノルスク)</entry>
                     </row>
                     <row>
                         <entry>om</entry>
-                        <entry>Oromo</entry>
+                        <entry>ガラ語</entry>
                     </row>
                     <row>
                         <entry>or</entry>
-                        <entry>Oriya</entry>
+                        <entry>オリヤー語</entry>
                     </row>
                     <row>
                         <entry>pa</entry>
-                        <entry>Punjabi</entry>
+                        <entry>パンジャブ語</entry>
                     </row>
                     <row>
                         <entry>pl</entry>
-                        <entry>Polish</entry>
+                        <entry>ポーランド語</entry>
                     </row>
                     <row>
                         <entry>ps</entry>
-                        <entry>Pashto (Pushto)</entry>
+                        <entry>パシュトー語</entry>
                     </row>
                     <row>
                         <entry>pt</entry>
-                        <entry>Portuguese</entry>
+                        <entry>ポルトガル語</entry>
                     </row>
                     <row>
                         <entry>ro</entry>
-                        <entry>Romanian</entry>
+                        <entry>ルーマニア語</entry>
                     </row>
                     <row>
                         <entry>ru</entry>
-                        <entry>Russian</entry>
+                        <entry>ロシア語</entry>
                     </row>
                     <row>
                         <entry>sa</entry>
-                        <entry>Sanskrit</entry>
+                        <entry>サンスクリット語</entry>
                     </row>
                     <row>
                         <entry>sh</entry>
-                        <entry>Serbo-Croatian</entry>
+                        <entry>セルボ＝クロアチア語</entry>
                     </row>
                     <row>
                         <entry>sid</entry>
-                        <entry>Sidamo</entry>
+                        <entry>シダモ語</entry>
                     </row>
                     <row>
                         <entry>sk</entry>
-                        <entry>Slovak</entry>
+                        <entry>スロバキア語</entry>
                     </row>
                     <row>
                         <entry>sl</entry>
-                        <entry>Slovenian</entry>
+                        <entry>スロベニア語</entry>
                     </row>
                     <row>
                         <entry>so</entry>
-                        <entry>Somali</entry>
+                        <entry>ソマリ語</entry>
                     </row>
                     <row>
                         <entry>sq</entry>
-                        <entry>Albanian</entry>
+                        <entry>アルバニア語</entry>
                     </row>
                     <row>
                         <entry>sr</entry>
-                        <entry>Serbian</entry>
+                        <entry>セルビア語</entry>
                     </row>
                     <row>
                         <entry>sv</entry>
-                        <entry>Swedish</entry>
+                        <entry>スウェーデン語</entry>
                     </row>
                     <row>
                         <entry>sw</entry>
-                        <entry>Swahili</entry>
+                        <entry>スワヒリ語</entry>
                     </row>
                     <row>
                         <entry>syr</entry>
-                        <entry>Syriac</entry>
+                        <entry>シリア語</entry>
                     </row>
                     <row>
                         <entry>ta</entry>
-                        <entry>Tamil</entry>
+                        <entry>タミール語</entry>
                     </row>
                     <row>
                         <entry>te</entry>
-                        <entry>Telugu</entry>
+                        <entry>テルグ語</entry>
                     </row>
                     <row>
                         <entry>th</entry>
-                        <entry>Thai</entry>
+                        <entry>タイ語</entry>
                     </row>
                     <row>
                         <entry>ti</entry>
-                        <entry>Tigrinya</entry>
+                        <entry>ティグリニア語</entry>
                     </row>
                     <row>
                         <entry>tig</entry>
-                        <entry>Tigre</entry>
+                        <entry>ティグレ語</entry>
                     </row>
                     <row>
                         <entry>tr</entry>
-                        <entry>Turkish</entry>
+                        <entry>トルコ語</entry>
                     </row>
                     <row>
                         <entry>tt</entry>
-                        <entry>Tatar</entry>
+                        <entry>タタール語</entry>
                     </row>
                     <row>
                         <entry>uk</entry>
-                        <entry>Ukrainian</entry>
+                        <entry>ウクライナ語</entry>
                     </row>
                     <row>
                         <entry>ur</entry>
-                        <entry>Urdu</entry>
+                        <entry>ウルドゥー語</entry>
                     </row>
                     <row>
                         <entry>uz</entry>
-                        <entry>Uzbek</entry>
+                        <entry>ウズベク語</entry>
                     </row>
                     <row>
                         <entry>vi</entry>
-                        <entry>Vietnamese</entry>
+                        <entry>ベトナム語</entry>
                     </row>
                     <row>
                         <entry>wal</entry>
-                        <entry>Walamo</entry>
+                        <entry>ワッラモ語</entry>
                     </row>
                     <row>
                         <entry>zh</entry>
-                        <entry>Chinese</entry>
+                        <entry>中国語</entry>
                     </row>
                 </tbody>
             </tgroup>
