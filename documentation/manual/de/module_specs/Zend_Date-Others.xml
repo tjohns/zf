@@ -1,100 +1,291 @@
-<sect1 id="zend.date.other">
+<sect1 id="zend.date.others">
 
-    <title>Miscellaneous Methods</title>
+    <title>Others</title>
 
-    <para>
-        Several other methods exist for special purpose tasks.
-    </para>
+    <sect2 id="zend.date.others.comparison">
 
-    <sect2 id="zend.date.time.millisecond">
-
-        <title>Fractional Seconds</title>
-
-        <para></para>
-
-    </sect2>
-
-    <sect2 id="zend.date.time.timezone">
-
-        <title>Working with Timezones</title>
-
-        <para></para>
-
-    </sect2>
-
-    <sect2 id="zend.date.time.daylight">
-
-        <title>Understanding daylight saving</title>
+        <title>Comparing Dates</title>
 
         <para>
-            coming soon...
+            The following basic operations do not have corresponding convenience methods for the date parts listed in
+            <xref linkend="zend.date.overview" />
+            .
         </para>
 
+        <table>
+            <title>Date Comparison Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>equals()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">equals($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of <code>$date</code> having locale
+                                <code>$locale</code> is the same as this object's date <code>$part</code>, otherwise
+                                false
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isEarlier()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isEarlier($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of this object's date is earlier than
+                                <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isLater()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isLater($date, $part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                returns true, if <code>$part</code> of this object's date is later than
+                                <code>$part</code> of <code>$date</code> having a locale <code>$locale</code>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isToday()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isToday()</emphasis>
+                            </para>
+                            <para>
+                                Tests if today's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isTomorrow()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isTomorrow()</emphasis>
+                            </para>
+                            <para>
+                                Tests if tomorrow's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isYesterday()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isYesterday()</emphasis>
+                            </para>
+                            <para>
+                                Tests if yesterday's year, month, and day match this object's date value, using this
+                                object's timezone.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isLeapYear()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isLeapYear()</emphasis>
+                            </para>
+                            <para>
+                                Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
+                                Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or
+                                instance of <code>Zend_Date</code>. Is the year a leap year?
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
     </sect2>
 
-    <sect2 id="zend.date.other.now">
+    <sect2 id="zend.date.others.gettingparts">
 
-        <title>public static now()</title>
-
-        <para></para>
-
-    </sect2>
-
-    <sect2 id="zend.date.other.leapyear">
-
-        <title>Leap Years</title>
-
-        <para></para>
-
-    </sect2>
-
-    <sect2 id="zend.date.other.today">
-
-        <title>Today, Tomorrow, Yesterday</title>
+        <title>Getting Dates and Date Parts</title>
 
         <para>
-            for <code>isToday()</code>, <code>isYesterday()</code>, and <code>isTomorrow()</code>.
+            Several methods support retrieving values related to a <code>Zend_Date</code> instance.
         </para>
+
+        <table>
+            <title>Date Output Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>toString()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toString($format = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                Invoke directly or via the magic method <code>__toString()</code>. The
+                                <code>toString()</code> method automatically formats the date object's value according
+                                to the conventions of the object's locale, or an optionally specified
+                                <code>$locale</code>.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>toValue()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toValue($part = null)</emphasis>
+                            </para>
+                            <para>
+                                Returns an integer representation of the selected date <code>$part</code> according to
+                                the conventions of the object's locale. Returns <code>false</code> when
+                                <code>$part</code> selects a non-numeric value, such as
+                                <code>Zend_Date::MONTH_NAME</code>. <emphasis role="strong">NOTE:</emphasis> This method
+                                calls
+                                <link linkend="id.date.basic.operations"><code>get()</code>
+                                </link>
+                                and casts the result to a PHP integer, which will give unpredictable results, if
+                                <code>get()</code> returns a numeric string containing a number too large for a PHP
+                                integer on your system. Use <code>get()</code> instead.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <link linkend="id.date.basic.operations">get()</link>
+                        </entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This method returns the <code>$part</code> of object's date localized to
+                                <code>$locale</code> as a formatted string or integer. See
+                                <xref linkend="id.date.basic.operations" />
+                                for more information.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>now()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">now($locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This convenience function is equivalent to <code>new Zend_Date()</code>. It returns the
+                                current date as a <code>Zend_Date</code> object, having <code>$locale</code>
+                            </para>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+    <sect2 id="zend.date.others.fractions">
+
+        <title>Working with Fractions of Seconds</title>
+
+        <para>
+            Several methods support retrieving values related to a <code>Zend_Date</code> instance.
+        </para>
+
+        <table>
+            <title>Date Output Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getfrac">getFractionalPrecision()</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return the precision of the part seconds</entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">setFractionalPrecision()</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Set the precision of the part seconds</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
     </sect2>
 
     <sect2 id="zend.date.other.sun">
 
-        <title>What about the sun ?</title>
+        <title>Sunrise / Sunset</title>
 
         <para>
-            coming soon...
+            Three methods provide access to geographically localized information about the Sun, including the time of
+            sunrise and sunset.
         </para>
 
-        <sect3 id="zend.date.other.sun.rise">
-
-            <title>getSunRise()</title>
-
-            <para>
-                coming soon...
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.date.other.sun.set">
-
-            <title>getSunSet()</title>
-
-            <para>
-                coming soon...
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.date.other.sun.info">
-
-            <title>getSunInfo()</title>
-
-            <para>
-                coming soon...
-            </para>
-
-        </sect3>
+        <table>
+            <title>Miscellaneous Methods</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Method</entry>
+                        <entry>Explanation</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunrise($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return the date's time of sunrise</entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunset($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return the date's time of sunset</entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">getSunInfo($location)</emphasis>
+                            </para>
+                        </entry>
+                        <entry>Return an array with the date's sun dates</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
     </sect2>
 

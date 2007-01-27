@@ -3,9 +3,11 @@
     <title>Basic Methods</title>
 
     <para>
-        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, dates
+        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"
         always imply a calendar date with a time, even when not explicitly mentioned, and vice-versa. The part not
-        specified defaults to an internal representation of "zero".
+        specified defaults to an internal representation of "zero". Thus, adding a date having no calendar date and a
+        time value of 12 hours to another date consisting only of a calendar date would result in a date having that
+        calendar date and a time of "noon".
     </para>
 
     <para>
@@ -24,7 +26,9 @@
             Without any arguments, constructing an instance returns an object in the default locale with the current,
             local date using PHP's <code>time()</code> function to obtain the
             <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
-            for the object.
+            for the object. Make sure your PHP environment has the correct
+            <link linkend="zend.date.setdefaulttimezone">default timezone</link>
+            .
         </para>
 
         <example>
@@ -117,7 +121,11 @@ $date = new Zend_Date();
 
 // changes $date by adding 12 hours
 $date->add('12:00:00', Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);
+
+print "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+
+// use magic __toString() method to call Zend_Date's toString()
+print "Date via toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
 

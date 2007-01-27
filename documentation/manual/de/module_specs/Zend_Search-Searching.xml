@@ -1,7 +1,7 @@
 <sect1 id="zend.search.searching">
 	<title>Einen Index durchsuchen</title>
 
-	<sect2 id="zend.search.searching.query-parser">
+    <sect2 id="zend.search.searching.query_building">
 		<title>Abfrage erstellen</title>
 
         <para>
@@ -93,59 +93,65 @@ $index->find($query);
             nicht. Deshalb passen sie besser für computergenerierte und nicht in Token aufgeteilte 
             Felder.
         </para>
+        
+        <sect3 id="zend.search.searching.query_building.parsing">
+            <title>Query parsing</title>
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
+                into query object.
+            </para>
+
+            <para>
+                This object may be used in query construction API methods to combine user entered queries with
+                machine generated queries.
+            </para>
+
+            <para>
+                Actually, in some cases it's only way to search for values within untokenized fields:
+
+                <programlisting role="php"><![CDATA[<?php
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+
+$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathQuery = new Zend_Search_Query_Term($pathTerm);
+
+$query = new Zend_Search_Query_Boolean();
+$query->addSubquery($userQuery, true /* required */);
+$query->addSubquery($pathQuery, true /* required */);
+
+$hits = $index->find($query);
+
+?>]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
+                which can specify query string encoding:
+            <programlisting role="php"><![CDATA[
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+]]></programlisting>
+            </para>
+
+            <para>
+                If encoding is omitted, then current locale is used.
+            </para>
+
+            <para>
+                It's also possible to specify default query string encoding with
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
+            <programlisting role="php"><![CDATA[
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
+...
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
+                string encoding (empty string means "current locale").
+            </para>
+        </sect3>
 	</sect2>
-
-    <sect2 id="zend.search.searching.sorting">
-        <title>Sortierung der Suchergebnisse</title>
-        <para>
-            Die Suchergebnisse werden standardmäßig nach dem Punktwert sortiert. Man kann dies durch
-            Setzen von Parametern für das Sortierfeld (oder -felder), den Sortiertyp und der 
-            Sortierreihenfolge ändern.
-        </para>
-
-        <para>
-            <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
-            <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
-]]></programlisting>
-        </para>
-
-        <para>
-            <code>$sortField</code> ist ein Name eines gespeicherten Feldes für das Suchergebnis
-        </para>
-
-        <para>
-            <code>$sortType</code> kann ausgelassen werden oder folgende Werte annehmen
-            <code>SORT_REGULAR</code> (vergleiche Items normal, Standardwert),
-            <code>SORT_NUMERIC</code> (vergleiche Items numerisch),
-            <code>SORT_STRING</code> (vergleiche items als Strings).
-        </para>
-
-        <para>
-            <code>$sortOrder</code> kann ausgelassen werden oder folgende Werte annehmen
-            <code>SORT_ASC</code> (sortiere in aufsteigender Folge, Standardwert),
-            <code>SORT_DESC</code> (sortiere in absteigender Folge).
-        </para>
-
-        <para>
-            Beispiele:
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
-        </para>
-
-        <para>
-            Bitte beim Verwenden von nicht standardmäßigen Sortierreihenfolgen. Es erfordert die
-            komplette Übernahme der Dokumente aus dem Index und kann die Suchperformance dramatisch
-            verlangsamen.
-        </para>
-    </sect2>
 
 	<sect2 id="zend.search.searching.results">
 		<title>Suchergebnisse</title>
@@ -179,6 +185,10 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
+
+        <para>
+            Gespeicherte Felder werden immer in UTF-8 Kodierung zurückgegeben.
+        </para>
 
         <para>
             Optional kann das originale Zend_Search_Lucene_Document Objekt vom 
@@ -263,6 +273,58 @@ foreach ($hits as $hit) {
         </para>
 
 	</sect2>
+
+    <sect2 id="zend.search.searching.sorting">
+        <title>Sortierung der Suchergebnisse</title>
+        <para>
+            Die Suchergebnisse werden standardmäßig nach dem Punktwert sortiert. Man kann dies durch
+            Setzen von Parametern für das Sortierfeld (oder -felder), den Sortiertyp und der 
+            Sortierreihenfolge ändern.
+        </para>
+
+        <para>
+            <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
+            <programlisting role="php"><![CDATA[
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>$sortField</code> ist ein Name eines gespeicherten Feldes für das Suchergebnis
+        </para>
+
+        <para>
+            <code>$sortType</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_REGULAR</code> (vergleiche Items normal, Standardwert),
+            <code>SORT_NUMERIC</code> (vergleiche Items numerisch),
+            <code>SORT_STRING</code> (vergleiche items als Strings).
+        </para>
+
+        <para>
+            <code>$sortOrder</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_ASC</code> (sortiere in aufsteigender Folge, Standardwert),
+            <code>SORT_DESC</code> (sortiere in absteigender Folge).
+        </para>
+
+        <para>
+            Beispiele:
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+        </para>
+
+        <para>
+            Bitte beim Verwenden von nicht standardmäßigen Sortierreihenfolgen. Es erfordert die
+            komplette Übernahme der Dokumente aus dem Index und kann die Suchperformance dramatisch
+            verlangsamen.
+        </para>
+    </sect2>
 
 </sect1>
 

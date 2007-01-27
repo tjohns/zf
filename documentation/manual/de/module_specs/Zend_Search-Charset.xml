@@ -5,7 +5,7 @@
         <title>Unterstützung für UTF-8 und Zeichensätze mit einzelnen Bytes.</title>
 
         <para>
-            Zend_Search_Lucene wurde entwicklet, um mit dem UTF-8 Zeichensatz zu arbeiten. Die
+            Zend_Search_Lucene arbeitet intern mit dem UTF-8 Zeichensatz. Die
             Indexdateien speichern Unicode Daten in Javas "modified UTF-8 encoding". 
             Der Kern von Zend_Search_Lucene unterstützt dies komplett mit einer Ausnahme. 
             <footnote>
@@ -22,37 +22,105 @@
                    zusätzliche Zeichen.
                </para>
             </footnote>
-
         </para>
 
         <para>
-            Dennoch verwenden die Textanalysatoren und der Query Parser ctype_alpha(), um Texte
-            und Abfragen in Tokens aufzuteilen. ctype_alpha() unterstützt UTF-8 nicht und muss in
-            naher Zukunft durch etwas anderes ersetzt werden.
+            Actual input data encoding may be specified through Zend_Search_Lucene API. Data will
+            be automatically converted into UTF-8 encoding.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.charset.default_analyzer">
+        <title>Default text analyzer.</title>
+        <para>
+            However, default text analyzer (which is also used within query parser) uses
+            ctype_alpha() for tokenizing text and queries.
         </para>
 
         <para>
-            Vorher empfehlen wir sehr, deine Daten in eine ASCII Darstellung 
+            ctype_alpha() is not UTF-8 compatible, so it converts text to 'ASCII//TRANSLIT' encoding before
+            indexing. The same processing is performed during query parsing, so it's done
+            transparently.
             <footnote>
                <para>
-                   Wenn Daten Nicht-ASCII Zeichen enthalten sein könnten oder als UTF-8 vorliegen.
+                   Conversion to 'ASCII//TRANSLIT' may depend on current locale and OS.
                </para>
             </footnote>
-            umzuwandeln (sowohl für das Speichern der Quelldokumente als auch für die Abfragen):
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.charset.utf_analyzer">
+        <title>UTF-8 compatible text analyzer.</title>
+
+        <para>
+            Zend_Search_Lucene also contains limited functionaliy utf-8 analyzer. It can be turned on with the following code:
+
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+?>]]></programlisting>
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <para>
+            It tokenizes data for indexing in UTF-8 mode and has no problems with any UTF-8 compatible character.
+        </para>
+
+        <para>
+            It has two limitations:
+            <itemizedlist>
+                <listitem>
+                    <para>treats all non-ascii characters as letters (it's not always true);</para>
+                </listitem>
+                <listitem>
+                    <para>is case-sensitive;</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Because of these limitations it's not set as default, but may be helpful for someone.
+        </para>
+
+        <para>
+            Case insensitivity my be emulated with <code>strtolower()</code> conversion:
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
+
+...
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+
+...
+
 $doc = new Zend_Search_Lucene_Document();
-...
-$docText = iconv('ISO-8859-1', 'ASCII//TRANSLIT', $docText);
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docText));
 
-...
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
 
-$query = iconv('', 'ASCII//TRANSLIT', $query);
-$hits = $index->find($query);
+// Title field for search through (indexed, unstored)
+$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+
+// Title field for retrieving (unindexed, stored)
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
+
 ?>]]></programlisting>
+        </para>
 
+        <para>
+            The same conversion has to be performed with query string:
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
+
+...
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+
+...
+
+$hits = $index->find(strtolower($query));
+?>]]></programlisting>
+        </para>
     </sect2>
 </sect1>
 

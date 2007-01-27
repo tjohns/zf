@@ -23,16 +23,20 @@
     </para>
 
     <para>
-        Die Zend_Session-Komponente ist ein Wrapper für das bestehende PHP ext/session, der eine standardisierte,
-        objektorientierte Schnittstelle für den Umgang mit anonymen und authentifizierten Sessions zur Verfügung stellt.
-        Zend_Auth, die Authentifizierungs-Komponente des Zend Frameworks, verwendet Zend_Session, um einige 
-        Informationen im Zusammenhang mit Login-Sessions (authentifizierten Sessions) zu speichern. Da Zend_Session
-        intern die normalen Session-Funktionen von PHP verwendet, sind alle regulären Konfigurations-Optionen und
-        -Einstellungen nutzbar (siehe
+        Die <code>Zend_Session_Core</code> ist ein Wrapper für das bestehende PHP ext/session mit
+        einem Administrations- und Verwaltungsinterface sowie der Bereitstellung einer API für
+        <code>Zend_Session</code>, um Namensräume beizubehalten. <code>Zend_Session</code> stellt
+        eine standardisierte, objektorientierte Schnittstelle für den Umgang mit Namensräumen, die
+        innerhalb des Standard Session Mechanismus von PHP bereit gehalten werden. Unterstützung
+        besteht sowohl für anonymen und authentifizierten Sessions. Zend_Auth, die 
+        Authentifizierungs-Komponente des Zend Frameworks, verwendet Zend_Session, um einige 
+        Informationen im Zusammenhang mit authentifizieren Benutzer im "Zend_Auth" Namensraum zu
+        speichern. Da Zend_Session intern die normalen Session-Funktionen von PHP verwendet, sind 
+        alle regulären Konfigurations-Optionen und -Einstellungen nutzbar (siehe
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Eine Session-Id, entweder in einem Cookie oder den URLs gespeichert, hält also die Verbindung zwischen
-        einem Client und bestehenden Session-Daten aufrecht.
+        ). Eine Standard Session-Id, entweder in einem Cookie oder den URLs gespeichert, hält also 
+        die Verbindung zwischen einem Client und bestehenden Session-Daten aufrecht.
     </para>
 
     <para>
@@ -43,7 +47,9 @@
         löst nicht das Problem, diese Verbindung in Szenarien aufrecht zu erhalten, in denen ein Client sich mit einem
         beliebigen Server eines Server-Clusters verbinden kann, da die bestehenden Session-Daten nur lokal auf einem
         Server gespeichert werden. Eine Liste zusätzlicher, geeigneter Speicher-Module wird zur Verfügung gestellt werden
-        wenn diese verfügbar sind.
+        wenn diese verfügbar sind. Mitglieder der Community werden ermutigt, Speicher-Module in der
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Liste 
+        vorzuschlagen und einzusenden.
     </para>
 
 </sect1>

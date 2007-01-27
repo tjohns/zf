@@ -64,36 +64,61 @@ Zend_Session_Core::start();
             <listitem>
                 <para>
                     3. Correct: Use <code>Zend_Session_Core::start()</code>. If you want all requests to have sessions,
-                    then place this function call in your ZF bootstrap code. If some requests should have sessions, but
-                    others should not, then set the <code>strict</code> option to true (see
-                    <link
-                        linkend="zend.session.startingasession"><code>setOptions()</code>
-                    </link>
-                    ) in your userland bootstrap, and then call <code>Zend_Session_Core::start()</code> in your
-                    bootstrap, before the first call to <code>new Zend_Session()</code>. Sessions have some overhead.
+                    then place this function call early and unconditionally in your ZF bootstrap code. Sessions have
+                    some overhead. If some requests need sessions, but other requests will not need to use sessions,
+                    then:
+                </para>
+                <itemizedlist mark='opencircle'>
+                    <listitem>
+                        <para>
+                            Unconditionally, set the <code>strict</code> option to true (see
+                            <link
+                        linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code>
+                            </link>
+                            ) in your userland bootstrap.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Call <code>Zend_Session_Core::start()</code>, only for requests that need to use sessions,
+                            before the first call to <code>new Zend_Session()</code>.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Use <code>new Zend_Session()</code> normally, where needed, but make sure
+                            <code>Zend_Session_Core::start()</code> has been called previously.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <para>
                     The <code>strict</code> option prevents <code>new Zend_Session()</code> from automatically starting
                     Zend_Session_Core. Thus, this option helps developers of userland ZF applications enforce a design
                     decision to avoid using sessions for certain requests, since an error will be thrown when using this
                     option and instantiating Zend_Session, before an explicit call to
                     <code>Zend_Session_Core::start()</code>. Do not use this option in ZF core code, because only
                     userland developers should make this design choice. Similarly, all "library" developers should
-                    carefully consider the impact of using setOptions() on users of their library code, since these
-                    options have global side-effects (as do the underlying options for ext/session).
+                    carefully consider the impact of using <code>Zend_Session_Core::setOptions()</code> on users of
+                    their library code, since these options have global side-effects (as do the underlying options for
+                    ext/session).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    4. Correct: Just use <code>new Zend_Session()</code>, and the session will be automatically started
-                    within Zend_Session_Core.
+                    4. Correct: Just use <code>new Zend_Session()</code> whenever needed, and the session will be
+                    automatically started within Zend_Session_Core. This offers extremely simple usage that works well
+                    in most situations. However, you are responsible for ensuring that the first <code>new
+                    Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output (i.e.
+                    <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>
+                    ) has been sent by PHP to the client, if you are using the default, cookie-based sessions
+                    (recommended). Using
+                    <ulink url="http://php.net/outcontrol">output buffering</ulink>
+                    often is sufficient to prevent this issue and may help improve performance. For example, in
+                    <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a 64K
+                    buffer.
                 </para>
             </listitem>
         </itemizedlist>
-
-        <para>
-            Option #4 is more difficult to use than #3, because you are responsible for ensuring that the first
-            <code>new Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output has been sent
-            by PHP to the client, if you are using the default, cookie-based sessions (recommended).
-        </para>
 
     </sect2>
 

@@ -105,58 +105,6 @@
                         den Controller über <code>somefoo</code> und auf die Aktion über 
                         <code>bar</code> zugegriffen.
 					</para>
-					
-                    <para>
-                        Zusätzlich kann man ein <code>Modul</code> angeben, das beim Laden eines
-                        Controllers verwendet wird. Ein Modul wird lediglich dazu verwendet, um
-                        ein Klassenprefix zum Laden eines Controllers und ein Unterverzeichnis 
-                        anzugeben, in dem nach der Klasse gesucht werden soll. Um
-                        Module zu verwenden, muss man den <code>useModules</code> Parameter im 
-                        Front Controller setzen:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setParam('useModules', true);
-]]></programlisting>
-
-                    <para>
-                        Zusätzlich muss man ein Modul nach Verzeichnis Paar angeben, wenn das
-                        Controller Verzeichnis gesetzt wird. Man kann dies sowohl beim
-                        Initialisieren als auch beim Hinzufügen weiterer Verzeichnisse machen:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-$front->setControllerDirectory(array(
-    0      => '/path/to/default/controllers',
-    'user' => '/path/to/user/controllers'
-));
-
-// OR
-$front->setControllerDirectory('/path/to/default/controllers');
-$front->addControllerDirectory('/path/to/user/controllers', 'user');
-]]></programlisting>
-
-                    <para>
-                        Als Beispiele betrachten wir die folgende URL:
-                    </para>
-
-                    <programlisting role="php"><![CDATA[
-http://example.com/user/news/action
-]]></programlisting>
-
-                    <para>
-                        Im obigen Beispiel wird das Modul 'user' mit dem Controller 'news' 
-                        angegeben. Der Dispatcher versucht herauszufinden, ob ein Modul 'user' auf
-                        ein Verzeichnis passt; falls ja, wird die <code>NewsController.php</code> 
-                        in diesem Verzeichnis geladen unter der Annahme, dass dann die 
-                        <code>User_NewsController</code> Klasse definiert wird sein.
-                    </para>
-
-                    <para>
-                        Module sind nützlich, wenn man den Code in zugehörige Unterverzeichnisse
-                        trennen möchte, fremden Code verwendet oder die selben Controllerbibliotheken
-                        in verschiedenen Applikationen verwenden möchte.
-                    </para>
 				</listitem>
 
 				<listitem>
@@ -317,42 +265,6 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
-        <para>
-            Zusätzlich kann man Controller in Unterverzeichnissen oder Modulen auf verschiedene
-            Weisen angeben:
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    Controller Namen, die einen Unterstrich (_) haben, können verwendet werden. 
-                    <code>http://framework.zend.com/admin_roadmap/future</code> 
-                    würde zum Beispiel auf der Controllerklasse Admin_RoadmapController abgebildet 
-                    werden. (Ein alternative Pfadtrenner kann mittels der setPathSeparator() 
-                    Methode des Dispatchers angegeben werden.)
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Durch Angabe des <code>useModules</code> Parameters im Frontcontroller, können
-                    Unterverzeichnisse durch saubere URIs abgebildet werden. Das vorherige Beispiel
-                    würde <code>http://framework.zend.com/admin/roadmap/future</code> lauten. Um
-                    dies zu erreichen, setze den <code>useModules</code> Parameter im 
-                    Frontcontroller oder im Router:
-                </para>
-
-                <programlisting><![CDATA[
-$front->setParam('useModules', true);
-// oder
-$router->setParam('useModules', true);
-]]></programlisting>
-
-                <para>
-                    Dies funktioniert sowohl beim Standardrouter als auch beim RewriteRouter.
-                </para>
-            </listitem>
-        </itemizedlist>
-
 		<note>
 		    <title>Flexibilität</title>
 		    <para>
@@ -363,7 +275,7 @@ $router->setParam('useModules', true);
 
 		<para>
 		    Der Name des Controllers und der Aktion innerhalb dieses Controllers sowie weitere
-		    optionale Parameter (einschließlich des Moduls) werden im Request Objekt gesetzt. Wenn 
+		    optionale Parameter werden im Request Objekt gesetzt. Wenn 
             <code>Zend_Controller_Front</code> die Dispatcher Schleife startet wird das Request 
             Objekt an <code>Zend_Controller_Dispatcher</code> übergeben.
 		</para>

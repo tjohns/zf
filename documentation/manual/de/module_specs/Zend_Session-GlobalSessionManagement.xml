@@ -1,17 +1,17 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>Global Session Management</title>
+    <title>Global Session Management - Zend_Session_Core</title>
 
     <para>
         The default behavior of sessions can be modified using the static methods in Zend_Session_Core. All management
         and manipulation of global session management occurs using Zend_Session_Core, including configuration of the
         <ulink url="http://www.php.net/session#session.configuration">usual options provided by ext/session</ulink>
-        , using <code>Zend_Session::setOptions()</code>.
+        , using <code>Zend_Session_Core::setOptions()</code>.
     </para>
 
     <sect2 id="zend.session.setoptions">
 
-        <title>setOptions()</title>
+        <title>Zend_Session_Core::setOptions()</title>
 
         <para>
             When the first session namespace is requested, Zend_Session_Core will autostart itself, unless already
@@ -19,13 +19,14 @@
             <link linkend="zend.session.startingasession"><code>Zend_Session_Core::start()</code>
             </link>
             . The underlying PHP session will use defaults from Zend_Session_Core, unless modified first by
-            <code>Zend_Session::setOptions()</code>.
+            <code>Zend_Session_Core::setOptions()</code>.
         </para>
 
         <para>
             To pass the options just pass the basename (the non <code>session.</code> part) as part of an array to
-            setOptions. Without setting any options, Zend_Session will utilize the recommended options first, then the
-            default php.ini settings. Community feedback about best practices for these options should be sent to
+            <code>Zend_Session_Core::setOptions()</code>. Without setting any options, Zend_Session will utilize the
+            recommended options first, then the default php.ini settings. Community feedback about best practices for
+            these options should be sent to
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
             .
         </para>
@@ -236,25 +237,29 @@ remember_me_seconds = 864000
             <title>Session Hijacking and Fixation</title>
 
             <para>
-                XSS problems occur frequently. Rather than expecting to never have a XSS problem with an application,
-                plan for it by following best practices to help minimize damage, if it occurs. With XSS, an attacker
-                does not need direct access to a victim's network traffic. If the victim already has a session cookie,
-                Javascript XSS might allow an attacker to read the cookie and steal the session. For victims with no
-                session cookies, using XSS to inject Javascript, an attacker could create a session id cookie on the
-                victim's browser with a known value, then set an identical cookie on the attacker's system, in order to
-                hijack the victim's session. If the victim visited an attacker's website, then the attacker can also
-                emulate most other identifiable characteristics of the victim's user agent. If your website has an XSS
-                vulnerability, the attacker might be able to insert an AJAX Javascript that secretly "visits" the
-                attacker's website, so that the attacker knows the victim's browser characteristics and becomes aware of
-                a compromised session at the victim website. However, the attacker can not arbitrarily alter the
-                server-side state of PHP sessions, provided the developer has correctly set the value for the
-                <code>save_path</code> option.
+                Avoiding
+                <ulink url="http://en.wikipedia.org/wiki/Cross_site_scripting">cross-site script (XSS) vulnerabilities</ulink>
+                helps preventing session hijacking. According to
+                <ulink url="http://secunia.com/">Secunia's statistics</ulink>
+                XSS problems occur frequently, regardless of the languages used to create web applications. Rather than
+                expecting to never have a XSS problem with an application, plan for it by following best practices to
+                help minimize damage, if it occurs. With XSS, an attacker does not need direct access to a victim's
+                network traffic. If the victim already has a session cookie, Javascript XSS might allow an attacker to
+                read the cookie and steal the session. For victims with no session cookies, using XSS to inject
+                Javascript, an attacker could create a session id cookie on the victim's browser with a known value,
+                then set an identical cookie on the attacker's system, in order to hijack the victim's session. If the
+                victim visited an attacker's website, then the attacker can also emulate most other identifiable
+                characteristics of the victim's user agent. If your website has an XSS vulnerability, the attacker might
+                be able to insert an AJAX Javascript that secretly "visits" the attacker's website, so that the attacker
+                knows the victim's browser characteristics and becomes aware of a compromised session at the victim
+                website. However, the attacker can not arbitrarily alter the server-side state of PHP sessions, provided
+                the developer has correctly set the value for the <code>save_path</code> option.
             </para>
 
             <para>
                 By itself, calling <code>Zend_Session_Core::regenerateId()</code> when the user's session is first used,
                 does not prevent session fixation attacks, unless you can distinguish between a session originated by an
-                attacker emulating the victim. At first, this might sound contradictory to previous statement above,
+                attacker emulating the victim. At first, this might sound contradictory to the previous statement above,
                 until we consider an attacker who first initiates a real session on your website. The session is "first
                 used" by the attacker, who then knows the result of the initialization (<code>regenerateId()</code>).
                 The attacker then uses the new session id in combination with an XSS vulnerability, or injects the
@@ -319,8 +324,9 @@ if (!isset($session->initialized))
             for 24 hours, or even longer. Forum software commonly gives the user a choice for how long their session
             should last. Use <code>Zend_Session_Core::rememberMe()</code> to send an updated session cookie to the user
             agent with a lifetime defaulting to <code>remember_me_seconds</code>, which is set to 2 weeks, unless you
-            modify that value using <code>setOptions()</code>. To help thwart session fixation/hijacking, use this
-            function when a user successfully authenticates and you application performs a "login".
+            modify that value using <code>Zend_Session_Core::setOptions()</code>. To help thwart session
+            fixation/hijacking, use this function when a user successfully authenticates and you application performs a
+            "login".
         </para>
 
     </sect2>

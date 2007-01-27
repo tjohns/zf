@@ -100,8 +100,44 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
         
             <para>
-                Du kannst die Felder benennen, wie du möchtest. 
+                Each of these methods (excluding <code>Zend_Search_Lucene_Field::Binary()</code> method) has optional
+                <code>$encoding</code> paremeter. It specifies input data encoding.
             </para>
+
+            <para>
+                Encoding may differ for different documents as well as for different fields within one document:
+
+                <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                If encoding parameter is omitted, then current locale is used at processing time. For example:
+                <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                Fields are always stored and returned from index in UTF-8 encoding. Conversion to UTF-8 proceeds
+                automatically.
+            </para>
+
+            <para>
+                Text analyzers (<link linkend="zend.search.extending.analysis">see below</link>) may also convert text
+                to some other encodings. Actually, default analyzer converts text to 'ASCII//TRANSLIT' encoding.
+                Be care with this, such translation may depend on current locale.
+            </para>
+
+            <para>
+                Fields' names are defined only by your own choice.
+            </para>
+
             <para>
                 Java Lucene verwendet das "contents" Feld für die Suche als Standardfeld. 
                 Zend_Search_Lucene durchsucht standardmäßig alle Felder, aber dieses Verhalten kann

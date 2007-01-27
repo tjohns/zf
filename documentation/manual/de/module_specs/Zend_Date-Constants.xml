@@ -16,8 +16,10 @@
             For example, the constant <code>Zend_Date::HOUR</code> can be used in the ways shown below. When working
             with days of the week, calendar dates, hours, minutes, seconds, and any other date parts that are expressed
             differently when in different parts of the world, the object's timezone will automatically be used to
-            compute the correct value, even though the internal timestamp is the same. Regardless of the units involved,
-            output must be expressed either as GMT/UTC or localized to a locale. The examples below
+            compute the correct value, even though the internal timestamp is the same for the same moment in time,
+            regardless of the user's physical location in the world. Regardless of the units involved, output must be
+            expressed either as GMT/UTC or localized to a locale. The example output below reflect localization to
+            Europe/GMT+1 hour (e.g. Germany, Austria, France).
         </para>
 
         <table>
@@ -654,8 +656,8 @@
 
         <para>
             All formats which need to be self-defined correspond to the ISO 8601 norm. However, not all formats defined
-            in the ISO norm are supported. Die format length is unlimited. Also the multiple usage of formats is
-            allowed. The following example illustrates the usage of constants from the table below to create
+            in the ISO norm are supported. Die format length is unlimited. Also, multiple usage of format constants is
+            allowed. The following examples illustrate the usage of constants from the table below to create
             self-defined formats.
         </para>
 
