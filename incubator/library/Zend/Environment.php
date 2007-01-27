@@ -36,12 +36,12 @@ require_once 'Zend/Environment/Exception.php';
 class Zend_Environment extends Zend_Environment_Container_Abstract
 {
     /**
-     * Optional cache instance
+     * Optional cache instance.
      */
     protected $_cache;
 
     /**
-     * Cache prefix (to avoid namespace clashes)
+     * Cache prefix (to avoid namespace clashes).
      */
     protected $_cachePrefix = '_zf_environment_';
 
@@ -66,7 +66,19 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
             }
         }
 
-        if (!is_array($modules)) {
+        if ($modules === null) {
+            $modules = array();
+            $registry = new Zend_Environment_ModuleRegistry();
+            foreach ($registry as $file) {
+                $class = rtrim($file->getFilename(), '.php');
+                $module = "Zend_Environment_Module_{$class}";
+                Zend::loadClass($module);
+                try {
+                    $modules[] = new $module(strtolower($class));
+                } catch (Zend_Environment_Exception $e) {
+                }
+            }
+        } elseif (!is_array($modules)) {
             $modules = array($modules);
         }
 
@@ -82,44 +94,54 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
     
     /**
      * Passes the environment to a Zend_View to format as a whole HTML page
-     * (using the default HTML rendered) or to a user-supplied Zend_View
+     * (using the default HTML renderer) or to a user-supplied Zend_View.
      *
      * @param  Zend_View_Abstract $view
+     * @param  string $script
      * @return string
      */
-	public function toHtml(Zend_View_Abstract $view = null)
-	{
-	    if ($view === null) {
-	        $view = new Zend_Environment_View_Html;
-	    }
-
-        $view->environment = $this;
-        return $view->render(null);
-	}
+    public function toHtml(Zend_View_Abstract $view = null, $script = 'Html.php')
+    {
+        return $this->_render($view, $script);
+    }
+    
+    /**
+     * Passes the environment to a Zend_View to format as a whole Text page
+     * (using the default Text renderer) or to a user-supplied Zend_View.
+     *
+     * @param  Zend_View_Abstract $view
+     * @param  string $script
+     * @return string
+     */
+    public function toText(Zend_View_Abstract $view = null, $script = 'Text.php')
+    {
+        return $this->_render($view, $script);
+    }
 
     /**
-     * Sends formatted text-only output of the environment to a file 
+     * Sends formatted text-only output of the environment to a file.
+     *
+     * Will create a default text view if no text is provided.
      *
      * @param string $path
      * @param  Zend_View_Abstract $view
      * @return string
      */
-	public function toFile($path, Zend_View_Abstract $view = null)
-	{
+    public function toFile($path, $text = null)
+    {
         if (!is_writeable(dirname($path))) {
             throw new Zend_Environment_Exception('Cannot write file to ' . $path);
         }
+        
+        if ($text === null) {
+            $text = $this->toText();
+        }
 
-	    if ($view === null) {
-	        $view = new Zend_Environment_View_Html;
-	    }
-
-        $view->environment = $this;
-        return file_put_contents($path, $view->render(null));
-	}
-	
+        return file_put_contents($path, $text);
+    }
+    
     /**
-     * Returns a string identifier associated to a specific environment
+     * Returns a string identifier associated to a specific environment.
      *
      * Zend Environment can determine which 'environment' a current webserver is
      * running by parsing an array of identifiers and hostnames. Returns a
@@ -140,27 +162,27 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
      * @throws Zend_Environment_Exception
      * @return string|boolean
      */
-	public function match($locations, $server = null, $ip = null)
-	{
-	    if (isset($this->_config)) {
-	        if ($id = $this->_config->load($this->_cachePrefix . 'match')) {
-	            return $id;
-	        }
-	    }
+    public function match($locations, $server = null, $ip = null)
+    {
+        if (isset($this->_config)) {
+            if ($id = $this->_config->load($this->_cachePrefix . 'match')) {
+                return $id;
+            }
+        }
 
-	    if (is_null($server) && isset($_SERVER['SERVER_NAME'])) {
-	        $server = $_SERVER['SERVER_NAME'];
-	    }
+        if (is_null($server) && isset($_SERVER['SERVER_NAME'])) {
+            $server = $_SERVER['SERVER_NAME'];
+        }
 
-	    if (is_null($ip) && isset($_SERVER['SERVER_ADDR'])) {
-	        $ip = $_SERVER['SERVER_ADDR'];
-	    }
+        if (is_null($ip) && isset($_SERVER['SERVER_ADDR'])) {
+            $ip = $_SERVER['SERVER_ADDR'];
+        }
 
-	    if (!is_array($locations)) {
-	        throw new exception('Locations must be provided as array');
-	    }
-	    
-	    $lip = ip2long($ip);
+        if (!is_array($locations)) {
+            throw new exception('Locations must be provided as array');
+        }
+        
+        $lip = ip2long($ip);
         $cidr = array("0.0.0.0", "128.0.0.0", "192.0.0.0", "224.0.0.0",
                       "240.0.0.0", "248.0.0.0", "252.0.0.0", "254.0.0.0",
                       "255.0.0.0", "255.128.0.0", "255.192.0.0", "255.224.0.0",
@@ -170,8 +192,8 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
                       "255.255.255.0", "255.255.255.128", "255.255.255.192", "255.255.255.224",
                       "255.255.255.240", "255.255.255.248", "255.255.255.252", "255.255.255.254",
                       "255.255.255.255");
-	    
-	    foreach ($locations as $id => $environment) {
+        
+        foreach ($locations as $id => $environment) {
 
             if (!is_array($environment)) {
                 $environment = array($environment);
@@ -209,17 +231,53 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
                     }
                 }
             }
-	    }
+        }
 
-	    return $this->_cache('match', false);
-	}
-	
-	protected function _cache($id, $value)
-	{
-	    if (isset($this->_cache)) {
-	        $this->_cache->save($value, $this->_cachePrefix . $id);
-	    }
-	    
-	    return $value;
-	}
+        return $this->_cache('match', false);
+    }
+    
+    /**
+     * Internal method to retrieve environment view.
+     *
+     * @param  Zend_View_Abstract $view
+     * @param  string $script
+     * @return string
+     */
+    protected function _render($view, $script)
+    {
+        if ($view === null) {
+            $view = $this->_getDefaultView();
+        }
+
+        $view->environment = $this;
+        return $view->render($script);
+    }
+    
+    /**
+     * Creates instance of default environment view.
+     *
+     * @return Zend_View_Abstract $view
+     */
+    protected function _getDefaultView()
+    {
+        $view = new Zend_Environment_View;
+        $view->setScriptPath(dirname(__FILE__) . '/Environment/View');
+        return $view;
+    }
+    
+    /**
+     * Save contents of operation to cache if it has been instantiated.
+     *
+     * @param  string $id
+     * @param  string $value
+     * @return string $value
+     */
+    protected function _cache($id, $value)
+    {
+        if (isset($this->_cache)) {
+            $this->_cache->save($value, $this->_cachePrefix . $id);
+        }
+        
+        return $value;
+    }
 }

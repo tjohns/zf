@@ -1,100 +1,10 @@
 <?php
 
-/**
- * Zend Framework
- *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Environment
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
- */
-
-
-/**
- * Zend_View_Abstract
- */
-require_once('Zend/View/Abstract.php');
-
-
-/**
- * @category   Zend
- * @package    Zend_Environment
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class Zend_Environment_View_Html extends Zend_View_Abstract
-{
-    /**
-     * Subclass the default Zend_View to provide defaults. Since this class has
-     * embedded HTML no script name is needed. To render, simply call the
-     * render() method with a null parameter
-     *
-     * E.g. return $view->render(null);
-     *
-     * @param  array $config
-     * @return void
-     */
-    public function __construct($config = array())
-    {
-        if (!isset($config['scriptPath'])) {
-            $config['scriptPath'] = dirname(__FILE__);
-        }
-
-        parent::__construct($config);
-    }
-
-    /**
-     * The default HTML template iterates through each section within the
-     * environment and displays the default fields in a matrix.
-     *
-     * $zflogo contains a base64 encoded version of the Zend Framework logo
-     * so that when this page is rendered it can display inline on browsers
-     * that support inline CSS encoded images. Currently Internet Explorer for
-     * PC does not support this and subsequently the CSS degrades gracefully.
-     *
-     * The page validates to XHTML 1.0 Strict
-     *
-     * TO DO:-
-     * - Javascript show/hide sections? Cookie-based prefs?
-     * - Summary table at top of page for errors/warnings?
-     * - Smarter handling of table columns per module
-     * - Better linking of modules to php.net documentation
-     *
-     * @return string
-     */
-    protected function _run()
-    {
-        function toString($val, $padding = 4)
-        {
-            if (is_string($val) || is_object($val) || empty($val)) {
-                return trim("{$val}");
-            }
-
-            $array = array();
-
-            foreach ($val as $key => $row) {
-                $array[] = $key . ': ' . toString($row);
-            }
-
-            return "\n" . trim(join("\n", $array));
-        }
-
-        $zfbg = trim(str_replace("\n", "", '
+$zfbg = trim(str_replace("\n", "", '
 R0lGODlhAQBiALMAABNrjjGIqhB0mhFzmBJvkxFwlRRoihFylxJtkBNqjBB1m/n8/9ru9QAAAAAA
 AAAAACH5BAAAAAAALAAAAAABAGIAAAQYkC1Jp6346sy371SgjGRpnsJwFAQCJEYEADs='));
 
-        $zflogo = trim(str_replace("\n", "", '
+$zflogo = trim(str_replace("\n", "", '
 iVBORw0KGgoAAAANSUhEUgAAAM4AAAAvCAIAAAFTYlIiAAAABGdBTUEAAK/INwWK6QAAABl0RVh0
 U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAACuDSURBVHjalFA7SwNBEL7de+SSqAli4QOt
 LXPa2NvFMmBpowQsRESttLSxsbYQtLETLCSaSCoLiRAJ+gNUUHMEfCDRu33czjpHsFBQcPjY/XZm
@@ -360,84 +270,15 @@ UlWj+FukBY0AAAAASUVORK5CYII%3D'));
 	}
 </style>
 </head>
+
 <body>
     <h1 id="logo">Zend Environment Info : <?php echo date('jS F, Y') ?></h1>
     <?php
 
-    foreach ($this->environment as $section) {
-    ?>
-    <?php if ( strtolower($section->getType()) != 'security') : ?>
-    <table width="100%" summary="Section - <?php echo $section->getType() ?>">
-        <col width="30%" />
-        <col width="10%" />
-        <col width="20%" />
-        <col />
-        <thead>
-            <tr class="header">
-                <th colspan="4"><?php echo ucwords($section->getType()) ?></th>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <th>Version</th>
-                <th>Value</th>
-                <th>Info</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($section as $info) { ?>    <tr>
-                <td><?php echo nl2br($this->escape(toString($info->title))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->version))) ?></td>
-                <td><?php echo nl2br($this->escape(toString(join(PATH_SEPARATOR . "\n", explode(PATH_SEPARATOR, $info->value))))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->info))) ?></td>
-            </tr>
-        <?php } ?></tbody>
-    </table>
-
-    <?php else : // special layout for security section ?>
-
-    <table width="100%" summary="Section - <?php echo $section->getType() ?>">
-        <col width="10%" />
-        <col width="10%" />
-        <col width="10%" />
-        <col width="10%" />
-        <col width="10%" />
-        <col />
-        <col width="10%" />
-        <thead>
-            <tr class="header">
-                <th colspan="7"><?php echo ucwords($section->getType()) ?></th>
-            </tr>
-            <tr>
-                <th>Group</th>
-                <th>Name</th>
-                <th>Result</th>
-                <th>Current Value</th>
-                <th>Recommended Value</th>
-                <th>Details</th>
-                <th>More Info</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($section as $info) { ?>    <tr>
-                <td><?php echo nl2br($this->escape(toString($info->group))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->name))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->result))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->current_value))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->recommended_value))) ?></td>
-                <td><?php echo nl2br($this->escape(toString($info->details))) ?></td>
-                <td><a href="<?php echo nl2br($this->escape(toString($info->link))) ?>">More Info &raquo;</a></td>
-            </tr>
-        <?php } ?></tbody>
-    </table>
-
-    <?php endif; ?>
-
-    <?php
-
+    foreach ($this->environment as $this->section) {
+        echo $this->render('Html/' . ucwords($this->section->getType()) . '.php');
     }
 
     ?></body>
-</html><?php
 
-    }
-}
+</html>
