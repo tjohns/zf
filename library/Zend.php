@@ -39,7 +39,7 @@ final class Zend
     /**
      * Zend Framework version identification - see compareVersion()
      */
-    const VERSION = '0.7.0';
+    const VERSION = '0.8.0dev';
 
     /**
      * Object registry provides storage for shared objects
