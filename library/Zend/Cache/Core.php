@@ -150,12 +150,12 @@ class Zend_Cache_Core
     {
         if (is_string($name)) {
             if (array_key_exists($name, $this->_options)) {
-            	// This is a Core option
+                // This is a Core option
                 $this->_setOption($name, $value);
                 return;
             }
             if (array_key_exists($name, $this->_specificOptions)) { 
-        		// This a specic option of this frontend
+                // This a specic option of this frontend
                 $this->_specificOptions[$name] = $value;
                 return;
             }
@@ -257,9 +257,10 @@ class Zend_Cache_Core
      * @param mixed $data data to put in cache (can be another type than string if automaticSerialization is on)
      * @param cache $id cache id (if not set, the last cache id will be used)
      * @param array $tags cache tags
+     * @param int $specificLifeTime if not null, set a specific lifetime for this cache record
      * @return boolean true if no problem
      */
-    public function save($data, $id = null, $tags = array()) 
+    public function save($data, $id = null, $tags = array(), $specificLifeTime = -1) 
     {
         if (!$this->_options['caching']) {
             return true;
@@ -284,7 +285,7 @@ class Zend_Cache_Core
                 $this->clean('old');
             }
         }
-        $result = $this->_backend->save($data, $id, $tags);
+        $result = $this->_backend->save($data, $id, $tags, $specificLifeTime);
         if (!$result) {
             // maybe the cache is corrupted, so we remove it !
             if ($this->_options['logging']) {
@@ -364,8 +365,8 @@ class Zend_Cache_Core
         if (!is_string($string)) {
             Zend_Cache::throwException('Invalid id or tag : must be a string');
         }
-        if (substr($string, 0, 9) == 'internal_') {
-            Zend_Cache::throwException('"internal_*" ids or tags are reserved');
+        if (substr($string, 0, 9) == 'internal-') {
+            Zend_Cache::throwException('"internal-*" ids or tags are reserved');
         }
         if (!preg_match('~^[\w]+$~', $string)) {
             Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-A0-9_]');
