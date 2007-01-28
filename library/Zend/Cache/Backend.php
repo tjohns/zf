@@ -115,6 +115,22 @@ class Zend_Cache_Backend
     }   
     
     /**
+     * Get the life time
+     * 
+     * if $specificLifeTime is not false, the given specific life time is used
+     * else, the global lifeTime is used
+     * 
+     * @return int cache life time
+     */
+    public function getLifeTime($specificLifeTime)
+    {
+        if ($specificLifeTime === false) {
+            return $this->_directives['lifeTime'];
+        }
+        return $specificLifeTime;
+    }
+    
+    /**
      * Return a system-wide tmp directory 
      *
      * @return string system-wide tmp directory
