@@ -1,4 +1,4 @@
-<sect1 id="zend.acl.refining">
+﻿<sect1 id="zend.acl.refining">
 
     <title>精细的访问控制</title>
 
@@ -90,9 +90,8 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
         <title>除去访问控制</title>
 
         <para>
-        As with <code>allow()</code> and <code>deny()</code>, you may
-        provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges:
-		要从 ACL 中除去一个或多个访问规则，只要简单地用 <code>removeAllow()</code> 或 <code>removeDeny()</code> 方法即可。如果提供一个<code>null</code>参数值给 <code>allow()</code> 和 <code>deny()</code> 方法，则访问规则将应用到所有的角色， 资源和/或权限上。
+        
+		    要从 ACL 中除去一个或多个访问规则，只要简单地用 <code>removeAllow()</code> 或 <code>removeDeny()</code> 方法即可。如果提供一个<code>null</code>参数值给 <code>allow()</code> 和 <code>deny()</code> 方法，则访问规则将应用到所有的角色， 资源和/或权限上。
         </para>
 
         <programlisting role="php"><![CDATA[// Remove the denial of revising latest news to staff (and marketing, by inheritance)
