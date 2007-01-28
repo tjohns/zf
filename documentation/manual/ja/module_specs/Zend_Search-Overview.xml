@@ -97,8 +97,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 
             <para>
                 これらの各メソッド (<code>Zend_Search_Lucene_Field::Binary()</code>
-                メソッドを除く) には、オプションのパラメータ
-                <code>$encoding</code> があります。これで入力データのエンコーディングを指定します。
+                メソッドを除く) は、オプションのパラメータ
+                <code>$encoding</code> を持っています。これで入力データのエンコーディングを指定します。
             </para>
 
             <para>
