@@ -5,7 +5,7 @@
         <title>UTF-8 and single-byte character sets support.</title>
 
         <para>
-            Zend_Search_Lucene works with UTF-8 charset internaly. Index files store
+            Zend_Search_Lucene works with UTF-8 charset internally. Index files store
             unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
             completely supports it with one exception.
             <footnote>
@@ -40,7 +40,7 @@
         </para>
 
         <para>
-            ctype_alpha() is not UTF-8 compatible, so it converts text to 'ASCII//TRANSLIT' encoding before
+            ctype_alpha() is not UTF-8 compatible, so analyzer converts text to 'ASCII//TRANSLIT' encoding before
             indexing. The same processing is performed during query parsing, so it's done
             transparently.
             <footnote>
