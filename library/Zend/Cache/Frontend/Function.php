@@ -36,6 +36,10 @@ require_once 'Zend/Cache/Core.php';
 class Zend_Cache_Frontend_Function extends Zend_Cache_Core
 {
        
+    // ------------------
+    // --- Properties ---
+    // ------------------     
+       
     /**
      * This frontend specific options
      * 
@@ -51,10 +55,15 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
      * @var array options
      */
     protected $_specificOptions = array(
-    	'cacheByDefault' => true, 
-    	'cachedFunctions' => array(),
+        'cacheByDefault' => true, 
+        'cachedFunctions' => array(),
         'nonCachedFunctions' => array()
     ); 
+    
+    
+    // ----------------------
+    // --- Public methods ---
+    // ----------------------             
            
     /**
      * Constructor
@@ -74,9 +83,11 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
      * 
      * @param string $name function name
      * @param array $parameters function parameters
+     * @param array $tags cache tags
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)    
      * @return mixed result
      */
-    public function call($name, $parameters = array()) 
+    public function call($name, $parameters = array(), $tags = array(), $specificLifeTime = false) 
     {
         $cacheBool1 = $this->_specificOptions['cacheByDefault'];
         $cacheBool2 = in_array($name, $this->_specificOptions['cachedFunctions']);
@@ -100,11 +111,16 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
             $output = ob_get_contents();
             ob_end_clean();
             $data = array($output, $return);
-            $this->save($data);
+            $this->save($data, $id, $tags, $specificLifeTime);
         }
         echo $output;
         return $return;
     }
+
+    
+    // ------------------------------------
+    // --- Private or protected methods ---
+    // ------------------------------------
     
     /**
      * Make a cache id from the function name and parameters
