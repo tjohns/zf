@@ -70,9 +70,9 @@ class Zend_Cache_Backend_APC extends Zend_Cache_Backend implements Zend_Cache_Ba
     public function load($id, $doNotTestCacheValidity = false) 
     {
         if ($doNotTestCacheValidity) {
-	        if ($this->_directives['logging']) {
+            if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_APC::load() : \$doNotTestCacheValidity=true is unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
-	        }
+            }
         }
         $tmp = apc_fetch($id);
         if (is_array($tmp)) {
@@ -105,11 +105,13 @@ class Zend_Cache_Backend_APC extends Zend_Cache_Backend implements Zend_Cache_Ba
      * @param string $data datas to cache
      * @param string $id cache id
      * @param array $tags array of strings, the cache record will be tagged by each string entry
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id, $tags = array())
+    public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
-        $result = apc_store($id, array($data, time()), $this->_directives['lifeTime']);
+        $lifeTime = $this->getLifeTime($specificLifeTime);
+        $result = apc_store($id, array($data, time()), $lifeTime);
         if (count($tags) > 0) {
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_APC::save() : tags are unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
