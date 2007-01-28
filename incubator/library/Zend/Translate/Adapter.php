@@ -76,7 +76,7 @@ abstract class Zend_Translate_Adapter {
             $locale = new Zend_Locale();
         }
 
-        $this->addTranslation($locale, $options);
+        $this->addTranslation($locale, $options, false);
         $this->setLocale($locale);
     }
 
