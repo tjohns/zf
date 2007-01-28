@@ -35,6 +35,10 @@ require_once 'Zend/Cache/Core.php';
 class Zend_Cache_Frontend_Class extends Zend_Cache_Core
 {
        
+    // ------------------
+    // --- Properties ---
+    // ------------------  
+    
     /**
      * Available options
      * 
@@ -54,11 +58,27 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      * @var array available options
      */
     protected $_specificOptions = array(
-    	'cachedEntity' => null,
-    	'cacheByDefault' => true,
-    	'cachedMethods' => array(),
+        'cachedEntity' => null,
+        'cacheByDefault' => true,
+        'cachedMethods' => array(),
         'nonCachedMethods' => array()
     );
+    
+    /**
+     * Tags array
+     * 
+     * @var array
+     */
+    private $_tags = array();
+    
+    /**
+     * SpecificLifeTime value
+     * 
+     * false => no specific life time
+     * 
+     * @var int
+     */
+    private $_specificLifeTime = false;
             
     /**
      * The cached object or the name of the cached abstract class
@@ -66,6 +86,11 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      * @var mixed
      */
     private $_cachedEntity = null;
+    
+    
+    // ----------------------
+    // --- Public methods ---
+    // ----------------------
        
     /**
      * Constructor
@@ -87,6 +112,26 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         }
         $this->setOption('automaticSerialization', true);
     }    
+    
+    /**
+     * Set a specific life time
+     * 
+     * @param int $specificLifeTime 
+     */
+    public function setSpecificLifeTime($specificLifeTime = false)
+    {
+        $this->_specificLifeTime = $specificLifeTime;
+    }
+    
+    /**
+     * Set the cache array
+     * 
+     * @param array $tags
+     */
+    public function setTagsArray($tags = array())
+    {
+        $this->_tags = $tags;
+    }
     
     /**
      * Main method : call the specified method or get the result from cache
@@ -119,11 +164,16 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
             $output = ob_get_contents();
             ob_end_clean();
             $data = array($output, $return);
-            $this->save($data);
+            $this->save($data, $id, $this->_tags, $this->_specificLifeTime);
         }
         echo $output;
         return $return;
     }
+    
+    
+    // ------------------------------------
+    // --- Private or protected methods ---
+    // ------------------------------------
     
     /**
      * Make a cache id from the method name and parameters
