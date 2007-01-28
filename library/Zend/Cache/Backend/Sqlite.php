@@ -61,7 +61,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @var array available options
      */
     protected $_options = array(
-    	'cacheDBCompletePath' => null,
+        'cacheDBCompletePath' => null,
         'automaticVacuumFactor' => 10
     ); 
   
@@ -147,9 +147,10 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @param string $data datas to cache
      * @param string $id cache id
      * @param array $tags array of strings, the cache record will be tagged by each string entry
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id, $tags = array())
+    public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
         if (!$this->_checkStructureVersion()) {
             $this->_buildStructure();
@@ -157,12 +158,13 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
                 Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cacheDBCompletePath']);
             }
         }    
+        $lifeTime = $this->getLifeTime($specificLifeTime);
         $data = @sqlite_escape_string($data);
         $mktime = time();
-        if (is_null($this->_directives['lifeTime'])) {
+        if (is_null($lifeTime)) {
             $expire = 0;
         } else {
-            $expire = $mktime + $this->_directives['lifeTime'];
+            $expire = $mktime + $lifeTime;
         }
         @sqlite_query($this->_db, "DELETE FROM cache WHERE id='$id'");
         $sql = "INSERT INTO cache (id, content, lastModified, expire) VALUES ('$id', '$data', $mktime, $expire)";
@@ -170,7 +172,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         if (!$res) {
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_Sqlite::save() : impossible to store the cache id=$id", Zend_Log::LEVEL_WARNING);
-	        }
+            }
             return false;
         }
         $res = true;
@@ -270,9 +272,9 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         $res = @sqlite_query($this->_db, "DELETE FROM TAG WHERE tag='$tag' AND id='$id'");
         $res = @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
         if (!$res) {        
-	        if ($this->_directives['logging']) {
-	            Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
-	        }
+            if ($this->_directives['logging']) {
+                Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
+            }
             return false;
         }
         return true;
@@ -315,7 +317,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
             // old cache structure
             if ($this->_directives['logging']) {
                 Zend_Log::log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped', Zend_Log::LEVEL_WARNING);
-	        }
+            }
             return false;
         }
         return true;

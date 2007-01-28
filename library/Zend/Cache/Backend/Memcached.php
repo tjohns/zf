@@ -68,7 +68,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     protected $_options = array(
         'servers' => array(array(
-        	'host' => Zend_Cache_Backend_Memcached::DEFAULT_HOST,
+            'host' => Zend_Cache_Backend_Memcached::DEFAULT_HOST,
             'port' => Zend_Cache_Backend_Memcached::DEFAULT_PORT,
             'persistent' => Zend_Cache_Backend_Memcached::DEFAULT_PERSISTENT
         )),
@@ -129,9 +129,9 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     {
         // WARNING : $doNotTestCacheValidity is not supported !!!
         if ($doNotTestCacheValidity) {
-	        if ($this->_directives['logging']) {
+            if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_Memcached::load() : \$doNotTestCacheValidity=true is unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
-	        }
+            }
         }
         $tmp = $this->_memcache->get($id);
         if (is_array($tmp)) {
@@ -164,16 +164,18 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      * @param string $data datas to cache
      * @param string $id cache id
      * @param array $tags array of strings, the cache record will be tagged by each string entry
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id, $tags = array())
+    public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
+        $lifeTime = $this->getLifeTime($specificLifeTime);
         if ($this->_options['compression']) {
             $flag = MEMCACHE_COMPRESSED;
         } else {
             $flag = 0;
         }
-        $result = $this->_memcache->set($id, array($data, time()), $flag, $this->_directives['lifeTime']);
+        $result = $this->_memcache->set($id, array($data, time()), $flag, $lifeTime);
         if (count($tags) > 0) {
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);

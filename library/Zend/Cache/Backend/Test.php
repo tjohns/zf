@@ -149,9 +149,10 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * @param string $data datas to cache
      * @param string $id cache id
      * @param array $tags array of strings, the cache record will be tagged by each string entry
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id, $tags = array())
+    public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
         $this->_addLog('save', array($data, $id, $tags));
         if ($id=='false') {
