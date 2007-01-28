@@ -34,36 +34,18 @@ require_once 'Zend/Cache/Backend/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
+class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface
 {
 
-    // ------------------
-    // --- Properties ---
-    // ------------------
-
-    /**
-     * Frontend or Core directives
-     *
-     * =====> (int) lifeTime :
-     * - Cache lifetime (in seconds)
-     * - If null, the cache is valid forever
-     *
-     * =====> (int) logging :
-     * - if set to true, a logging is activated throw Zend_Log
-     *
-     * @var array directives
-     */
-    private $_directives = array(
-        'lifeTime' => 3600,
-        'logging' => false
-    );
-    private $_options = array();
-
+    // -----------------
+    // --- Constants ---
+    // -----------------
     const TAGS_PREFIX = "internal_ZPtag:";
+    
+    
     // ----------------------
     // --- Public methods ---
     // ----------------------
-
 
     /**
      * Constructor
@@ -90,46 +72,8 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
         if (!is_writable($accConf['output_cache_dir'])) {
             Zend_Cache::throwException('The cache copies directory \''. ini_get('zend_accelerator.output_cache_dir') .'\' must be writable !');
         }
-        if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
-        while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
-        }
+        parent:: __construct($options);       
     }
-
-
-    /**
-     * Set the frontend directives
-     *
-     * @param array $directives assoc of directives
-     */
-    public function setDirectives($directives)
-    {
-        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
-        while (list($name, $value) = each($directives)) {
-            if (!is_string($name)) {
-                Zend_Cache::throwException("Incorrect option name : $name");
-            }
-            if (array_key_exists($name, $this->_directives)) {
-                $this->_directives[$name] = $value;
-            }
-        }
-    }
-
-
-    /**
-     * Set an option
-     *
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setOption($name, $value)
-    {
-        if (!is_string($name) || !array_key_exists($name, $this->_options)) {
-            Zend_Cache::throwException("Incorrect option name : $name");
-        }
-        $this->_options[$name] = $value;
-    }
-
 
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
@@ -140,10 +84,15 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
      */
     public function load($id, $doNotTestCacheValidity = false)
     {
-	// doNotTestCacheValidity implemented by giving zero lifetime to the cache
-        $res = output_cache_get($id, $doNotTestCacheValidity?0:$this->_directives['lifeTime']);
-	if($res) {
-	    return $res[0];
+        // doNotTestCacheValidity implemented by giving zero lifetime to the cache
+        if ($doNotTestCacheValidity) {
+            $lifeTime = 0;
+        } else {
+            $lifeTime = $this->_directives['lifeTime'];
+        }
+        $res = output_cache_get($id, $lifeTime);
+        if($res) {
+            return $res[0];
         } else {
             return false;
         }
@@ -165,7 +114,6 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
         return false;
     }
 
-
     /**
      * Save some string datas into a cache record
      *
@@ -175,24 +123,28 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
      * @param string $data data to cache
      * @param string $id cache id
      * @param array $tags array of strings, the cache record will be tagged by each string entry
-     * *                  This option is not supported in this backend
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id, $tags = array())
+    public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
-        $result = output_cache_put($id, array($data, time()));
-        if (count($tags) > 0) {
-		foreach($tags as $tag) {
-			$tagid = self::TAGS_PREFIX.$tag;
-			$old_tags = output_cache_get($tagid, $this->_directives['lifeTime']);
-			if($old_tags === false) {
-				$old_tags = array();
-			}
-			$old_tags[$id] = $id;
-			output_cache_put($tagid, $old_tags);
-		}
+        if (!($specificLifeTime === false)) {
+            if ($this->_directives['logging']) {
+                Zend_Log::log("Zend_Cache_Backend_ZendPlatform::save() : non false specifc lifeTime is unsuported for this backend", Zend_Log::LEVEL_WARNING);
+            }
         }
-        return $result;
+        $lifeTime = $this->_directives['lifeTime'];
+        $result1 = output_cache_put($id, array($data, time()));
+        foreach($tags as $tag) {
+            $tagid = self::TAGS_PREFIX.$tag;
+            $old_tags = output_cache_get($tagid, $lifeTime);
+            if ($old_tags === false) {
+                $old_tags = array();
+            }
+            $old_tags[$id] = $id;
+            $result2 = output_cache_put($tagid, $old_tags);
+        }
+        return $result1 && $result2;
     }
 
 
@@ -229,33 +181,32 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
-		$idlist = null;
-		foreach($tags as $tag) {
-			$next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifeTime']);
-			if($idlist) {
-				$idlist = array_intersect_assoc($idlist, $next_idlist);
-			} else {
-				$idlist = $next_idlist;
-			}
-			if(count($idlist) == 0) {
-				// if ID list is already empty - we may skip checking other IDs
-				$idlist = null;
-				break;
-			}
-		}
-		if($idlist) {
-		        foreach($idlist as $id) {
-				output_cache_remove_key($id);
-			}
-		}
-		return true;
+            $idlist = null;
+            foreach ($tags as $tag) {
+                $next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifeTime']);
+                if ($idlist) {
+                    $idlist = array_intersect_assoc($idlist, $next_idlist);
+                } else {
+                    $idlist = $next_idlist;
+                }
+                if (count($idlist) == 0) {
+                    // if ID list is already empty - we may skip checking other IDs
+                    $idlist = null;
+                    break;
+                }
+            }
+            if ($idlist) {
+                foreach ($idlist as $id) {
+                    output_cache_remove_key($id);
+                }
+            }
+            return true;
         }
         if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend", Zend_Log::LEVEL_WARNING);
             }
         }
-
         $cacheDir = ini_get('zend_accelerator.output_cache_dir');
         if (!$cacheDir) {
             return false;
@@ -286,7 +237,6 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
             return false;
         }
         $result = true;
-
         while (false !== ($file = $d->read())) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -297,7 +247,7 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
             } else {
                 if ($mode == Zend_Cache::CLEANING_MODE_ALL) {
                     $result = ($this->_remove($file)) && ($result);
-                } elseif ($mode == Zend_Cache::CLEANING_MODE_OLD) {
+                } else if ($mode == Zend_Cache::CLEANING_MODE_OLD) {
                     // Files older than lifeTime get deleted from cache
                     if (!is_null($this->_directives['lifeTime'])) {
                         if ((time() - @filemtime($file)) > $this->_directives['lifeTime']) {
@@ -310,7 +260,6 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
         $d->close();
         return $result;
     }
-
 
     /**
      * Remove a file
@@ -328,7 +277,7 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
             # the file to invalidate it
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_ZendPlatform::_remove() : we can't remove $file => we are going to try to invalidate it", Zend_Log::LEVEL_WARNING);
-		    }
+            }
             if (is_null($this->_directives['lifeTime'])) {
                 return false;
             }
