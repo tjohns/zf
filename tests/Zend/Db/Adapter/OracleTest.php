@@ -1,7 +1,22 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
@@ -26,12 +41,6 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Common
         return $sql;
     }
 
-    protected function getDropTableSQL()
-    {
-        $sql = 'DROP TABLE ' . self::TableName;
-        return $sql;
-    }
-
     protected function getCreateSequenceSQL()
     {
         $sql = 'CREATE SEQUENCE ' . self::SequenceName;
@@ -53,7 +62,6 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Common
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_ORACLE_HOSTNAME,
-            'port'     => TESTS_ZEND_DB_ADAPTER_ORACLE_PORT,
             'username' => TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_ORACLE_SID
@@ -65,11 +73,11 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Common
     protected function tearDownMetadata()
     {
         $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES');
-        if (in_array(self::TableName, $tableList['TABLE_NAME'])) {
+        if (in_array(self::TableName, $tableList)) {
             $this->_db->query($this->getDropTableSQL());
         }
         $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
-        if (in_array(self::SequenceName, $seqList['SEQUENCE_NAME'])) {
+        if (in_array(self::SequenceName, $seqList)) {
             $this->_db->query($this->getDropSequenceSQL());
         }
     }
