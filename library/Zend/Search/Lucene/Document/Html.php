@@ -218,7 +218,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     {
         $textNodes = array();
 
-        if (!isset($contextNode->childNodes)  ||  !is_array($contextNode->childNodes)) {
+        if (!$contextNode->hasChildNodes()) {
             return;
         }
 
