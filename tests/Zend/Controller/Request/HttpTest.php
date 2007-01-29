@@ -428,4 +428,26 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->_request->getEnv('BAR', 'foo'));
         $this->assertEquals($_ENV, $this->_request->getEnv());
     }
+
+    public function testGetHeader()
+    {
+        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'UTF-8';
+        $_SERVER['HTTP_CONTENT_TYPE']    = 'text/json';
+
+        $this->assertEquals('UTF-8', $this->_request->getHeader('Accept-Encoding'));
+        $this->assertEquals('text/json', $this->_request->getHeader('Content-Type'));
+
+        $this->assertFalse($this->_request->getHeader('X-No-Such-Thing'));
+    }
+
+    public function testGetHeaderThrowsExceptionWithNoInput()
+    {
+        try {
+            // Suppressing warning
+            $header = @$this->_request->getHeader();
+            $this->fail('getHeader() should fail with no arguments)');
+        } catch (Exception $e) {
+            // success
+        }
+    }
 }

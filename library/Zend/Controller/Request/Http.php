@@ -99,6 +99,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
                 $this->setRequestUri($path);
             } else {
+                require_once 'Zend/Controller/Request/Exception.php';
                 throw new Zend_Controller_Request_Exception('Invalid URI provided to constructor');
             }
         } else {
@@ -163,6 +164,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      */
     public function __set($key, $value)
     {
+        require_once 'Zend/Controller/Request/Exception.php';
         throw new Zend_Controller_Request_Exception('Setting values in superglobals not allowed; please use setParam()');
     }
 
@@ -703,6 +705,40 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         if ('POST' == $this->getMethod()) {
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Return the value of the given HTTP header. Pass the header name as the 
+     * plain, HTTP-specified header name. Ex.: Ask for 'Accept' to get the 
+     * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
+     *
+     * @param string HTTP header name
+     * @return string|false HTTP header value, or false if not found
+     * @throws Zend_Controller_Request_Exception
+     */
+    public function getHeader($header)
+    {
+        if (empty($header)) {
+            require_once 'Zend/Controller/Request/Exception.php';
+            throw new Zend_Controller_Request_Exception('An HTTP header name is required');
+        }
+
+        // Try to get it from the $_SERVER array first
+        $temp = 'HTTP_' . strtoupper(str_replace('-', '_', $header));
+        if (!empty($_SERVER[$temp])) {
+            return $_SERVER[$temp];
+        }
+
+        // This seems to be the only way to get the Authorization header on 
+        // Apache
+        if (function_exists('apache_request_headers')) {
+            $headers = apache_request_headers();
+            if (!empty($headers[$header])) {
+                return $headers[$header];
+            }
         }
 
         return false;
