@@ -279,8 +279,16 @@ class Zend_Search_Lucene_Search_QueryParserContext
     {
         $query = new Zend_Search_Lucene_Search_Query_Boolean();
 
+        if (Zend_Search_Lucene_Search_QueryParser::getDefaultOperator() == Zend_Search_Lucene_Search_QueryParser::B_AND) {
+            $defaultSign = true; // required
+        } else {
+            // Zend_Search_Lucene_Search_QueryParser::B_OR
+            $defaultSign = null; // optional
+        }
+
         foreach ($this->_entries as $entryId => $entry) {
-            $query->addSubquery($entry->getQuery($this->_encoding), $this->_signs[$entryId]);
+            $sign = ($this->_signs[$entryId] !== null) ?  $this->_signs[$entryId] : $defaultSign;
+            $query->addSubquery($entry->getQuery($this->_encoding), $sign);
         }
 
         return $query;

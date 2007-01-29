@@ -140,6 +140,20 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     private $_defaultEncoding = '';
 
 
+    /**
+     * Boolean operators constants
+     */
+    const B_OR  = 0;
+    const B_AND = 1;
+
+    /**
+     * Default boolean queries operator
+     *
+     * @var integer
+     */
+    private $_defaultOperator = self::B_OR;
+
+
     /** Query parser State Machine states */
     const ST_COMMON_QUERY_ELEMENT       = 0;   // Terms, phrases, operators
     const ST_CLOSEDINT_RQ_START         = 1;   // Range query start (closed interval) - '['
@@ -269,6 +283,34 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
         }
 
         return self::$_instance->_defaultEncoding;
+    }
+
+    /**
+     * Set default boolean operator
+     *
+     * @param integer $operator
+     */
+    public static function setDefaultOperator($operator)
+    {
+        if (self::$_instance === null) {
+            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+        }
+
+        self::$_instance->_defaultOperator = $operator;
+    }
+
+    /**
+     * Get default boolean operator
+     *
+     * @return integer
+     */
+    public static function getDefaultOperator()
+    {
+        if (self::$_instance === null) {
+            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+        }
+
+        return self::$_instance->_defaultOperator;
     }
 
     /**
