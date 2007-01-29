@@ -17,25 +17,24 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Adapter_Exception
  */
 require_once 'Zend/Db/Adapter/Exception.php';
 
-
 /**
  * Zend_Db_Adapter_Oracle_Exception
- * 
+ *
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Adapter_Oracle_Exception extends Zend_Db_Adapter_Exception {
+class Zend_Db_Adapter_Oracle_Exception extends Zend_Db_Adapter_Exception
+{
    protected $message = 'Unknown exception';
    protected $code = 0;
 
@@ -56,6 +55,3 @@ class Zend_Db_Adapter_Oracle_Exception extends Zend_Db_Adapter_Exception {
        }
    }
 }
-
-/* vim: set et fdm=syntax syn=php ft=php: */
-

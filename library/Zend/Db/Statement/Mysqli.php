@@ -17,15 +17,12 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-/**
-
+ */
 
 /**
  * Zend_Db_Statement
  */
 require_once 'Zend/Db/Statement.php';
-
 
 /**
  * Extends for Mysqli
@@ -36,53 +33,58 @@ require_once 'Zend/Db/Statement.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Statement_Mysqli extends Zend_Db_Statement {
+class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
+{
 
     /**
-     * the mysqli_stmt object
+     * The mysqli_stmt object.
      */
     protected $_stmt;
 
     /**
-     * column names
+     * Column names.
      */
     protected $_keys;
 
     /**
-     * fetched result values
+     * Fetched result values.
      */
     protected $_values;
 
-
     /**
-     * closes the cursor, allowing the statement to be executed again
+     * Closes the cursor, allowing the statement to be executed again.
+     *
+     * @return void
      */
     public function closeCursor()
     {
         $this->_stmt->close();
     }
 
-
     /**
-     * returns the number of columns in the result set
+     * Returns the number of columns in the result set.
+     *
+     * @return field count.
      */
     public function columnCount()
     {
         return $this->_meta->field_count;
     }
 
-
     /**
-     * retrieves an error code, if any, from the statement
+     * Retrieves an error code, if any, from the statement.
+     *
+     * @return error code.
      */
     public function errorCode()
     {
         return substr($this->_stmt->sqlstate, 0, 5);
     }
 
-
     /**
-     * retrieves an array of error information, if any, from the statement
+     * Retrieves an array of error information, if any, from the statement.
+     *
+     * @return array
      */
     public function errorInfo()
     {
@@ -93,9 +95,11 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement {
         );
     }
 
-
     /**
-     * executes a prepared statement
+     * Executes a prepared statement.
+     *
+     * @param $params
+     * @return void
      */
     public function execute($params = null)
     {
@@ -103,6 +107,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement {
         $sql = $this->_joinSql();
         $mysqli = $this->_db->getMysqli();
         $this->_stmt = $mysqli->prepare($sql);
+
         if (! $this->_stmt) {
             throw new Zend_Db_Statement_Exception($mysqli->error);
         }
@@ -139,7 +144,13 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement {
 
 
     /**
-     * fetches a row from the result set
+     * Fetches a row from the result set.
+     *
+     * @param $style
+     * @param $cursor
+     * @param $offset
+     * @return $data
+     * @throws Zend_Db_Statement_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
@@ -201,7 +212,8 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement {
 
 
     /**
-     * returns the number of rows that were affected by the execution of an SQL statement
+     * Returns the number of rows that were affected by the execution of an SQL statement.
+     * @return num_rows
      */
     public function rowCount()
     {

@@ -34,13 +34,13 @@ require_once 'Zend/Db/Statement/Db2.php';
  * @package    Zend_Db
  * @copyright  Copyright (c) 2005-2007 Zend Technologies Inc. (http://www.zend.com)
  * @license    Zend Framework License version 1.0
- * @author 	   Joscha Feth <jffeth@de.ibm.com>
+ * @author     Joscha Feth <jffeth@de.ibm.com>
  * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
 
 class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 {
-	/**
+    /**
      * User-provided configuration.
      *
      * Basic keys are:
@@ -52,17 +52,17 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * protocol   => (string)  Protocol to use, defaults to "TCPIP"
      * port       => (integer) Port number to use for TCP/IP if protocol is "TCPIP"
      * persistent => (boolean) Set TRUE to use a persistent connection (db2_pconnect)
-     *     
+     *
      * @var array
      */
     protected $_config = array(
-        'dbname' 		=> null,
-        'username' 		=> null,
-        'password' 		=> null,
-        'host' 			=> 'localhost',
-        'port' 			=> '50000',
-        'protocol' 		=> 'TCPIP',
-        'persistent'	=> false
+        'dbname'       => null,
+        'username'     => null,
+        'password'     => null,
+        'host'         => 'localhost',
+        'port'         => '50000',
+        'protocol'     => 'TCPIP',
+        'persistent'   => false
     );
 
     /**
@@ -77,41 +77,39 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * Table name of the last accessed table for an insert operation
      * This is a DB2-Adapter-specific member variable with the utmost
      * probability you might not find it in other adapters...
-     * 
+     *
      * @var string
      * @access protected
      */
     protected $_lastInsertTable = null;
-    
+
      /**
      * Constructor.
      *
      * $config is an array of key/value pairs containing configuration
      * options.  These options are common to most adapters:
      *
-     * dbname   	=> (string) The name of the database to user
-     * username 	=> (string) Connect to the database as this username.
-     * password 	=> (string) Password associated with the username.
-     * host     	=> (string) What host to connect to, defaults to localhost
-     * port     	=> (string) The port of the database, defaults to 50000
-     * persistent 	=> (boolean) Whether to use a persistent connection or not, 
-     * 				   defaults to false 
-     * protocol 	=> (string) The network protocol, defaults to TCPIP
-     * options  	=> (array)  Other database options such as, 
-     * 				   autocommit, case, and cursor options
+     * dbname         => (string) The name of the database to user
+     * username       => (string) Connect to the database as this username.
+     * password       => (string) Password associated with the username.
+     * host           => (string) What host to connect to, defaults to localhost
+     * port           => (string) The port of the database, defaults to 50000
+     * persistent     => (boolean) Whether to use a persistent connection or not, defaults to false
+     * protocol       => (string) The network protocol, defaults to TCPIP
+     * options        => (array)  Other database options such as autocommit, case, and cursor options
      *
      * @param array $config An array of configuration keys.
      */
-	public function __construct($config)
+    public function __construct($config)
     {
         // make sure the config array exists
-    	if (! is_array($config)) {
+        if (! is_array($config)) {
             throw new Zend_Db_Adapter_Exception('must pass a config array');
         }
 
         // we need at least a dbname, a user and a password
-        if (! array_key_exists('password', $config) || 
-        	! array_key_exists('username', $config) ||
+        if (! array_key_exists('password', $config) ||
+            ! array_key_exists('username', $config) ||
             ! array_key_exists('dbname', $config)) {
             throw new Zend_Db_Adapter_Exception('config array must have at least a username, a password, and a database name');
         }
@@ -130,58 +128,62 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
-    * Creates a connection resource.
- 	*
-    * @return void
-    */
+     * Creates a connection resource.
+     *
+     * @return void
+     */
     protected function _connect()
     {
-   		if (is_resource($this->_connection)) {
-			// connection already exists
+        if (is_resource($this->_connection)) {
+            // connection already exists
             return;
         }
 
-        if($this->_config['persistent']) {
-			// use persistent connection
-        	$conn_func_name = 'db2_pconnect';
+        if ($this->_config['persistent']) {
+            // use persistent connection
+            $conn_func_name = 'db2_pconnect';
         } else {
-			// use "normal" connection
-        	$conn_func_name = 'db2_connect';
-        }
-        
-        if (!isset($this->_config['options'])) {
-			// config options were not set, so set it to an empty array
-        	$this->_config['options'] = array();
-        }
-        
-        if (!isset($this->_config['options']['autocommit'])) {
-			// set execution mode
-        	$this->_config['options']['autocommit'] = &$this->_execute_mode;
+            // use "normal" connection
+            $conn_func_name = 'db2_connect';
         }
 
-		if ($this->_config['host'] !== 'localhost') {
-			// if the host isn't localhost, use extended connection params
-			$dbname = 'DRIVER={IBM DB2 ODBC DRIVER}' .
-					  ';DATABASE='	. $this->_config['dbname'] .
-					  ';HOSTNAME=' 	. $this->_config['host'] .
-					  ';PORT=' 		. $this->_config['port'] . 
-					  ';PROTOCOL='  . $this->_config['protocol'] . 
-					  ';UID=' 		. $this->_config['username'] .
-					  ';PWD=' 		. $this->_config['password'] .';';
-			$this->_connection = $conn_func_name($dbname,
-											 	 null,
-											 	 null,
-											 	 $this->_config['options']);
-		} else {
-			// host is localhost, so use standard connection params
-			$this->_connection = $conn_func_name($this->_config['dbname'],
-											 	 $this->_config['username'],
-											 	 $this->_config['password'],
-											 	 $this->_config['options']);
-		}
+        if (!isset($this->_config['options'])) {
+            // config options were not set, so set it to an empty array
+            $this->_config['options'] = array();
+        }
+
+        if (!isset($this->_config['options']['autocommit'])) {
+            // set execution mode
+            $this->_config['options']['autocommit'] = &$this->_execute_mode;
+        }
+
+        if ($this->_config['host'] !== 'localhost') {
+            // if the host isn't localhost, use extended connection params
+            $dbname = 'DRIVER={IBM DB2 ODBC DRIVER}' .
+                     ';DATABASE=' . $this->_config['dbname'] .
+                     ';HOSTNAME=' . $this->_config['host'] .
+                     ';PORT='     . $this->_config['port'] .
+                     ';PROTOCOL=' . $this->_config['protocol'] .
+                     ';UID='      . $this->_config['username'] .
+                     ';PWD='      . $this->_config['password'] .';';
+            $this->_connection = $conn_func_name(
+                $dbname,
+                null,
+                null,
+                $this->_config['options']
+            );
+        } else {
+            // host is localhost, so use standard connection params
+            $this->_connection = $conn_func_name(
+                $this->_config['dbname'],
+                $this->_config['username'],
+                $this->_config['password'],
+                $this->_config['options']
+            );
+        }
 
         // check the connection
-		if (!$this->_connection) {
+        if (!$this->_connection) {
             throw new Zend_Db_Adapter_Db2_Exception(db2_conn_errormsg(), db2_conn_error());
         }
     }
@@ -200,190 +202,201 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         return $stmt;
     }
 
-	/**
-	* Gets the execution mode
-	*
-	* @return int the execution mode (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
-	*/
+    /**
+     * Gets the execution mode
+     *
+     * @return int the execution mode (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
+     */
     public function _getExecuteMode()
     {
-    	return $this->_execute_mode;
-    }
-
-    public function _setExecuteMode($mode)
-    {
-    	switch ($mode) {
-			case DB2_AUTOCOMMIT_OFF:
-			case DB2_AUTOCOMMIT_ON:
-    			$this->_execute_mode = $mode;
-    			db2_autocommit($this->_connection, $mode);	
-    			break;
-			default:
-				throw new Zend_Db_Adapter_Db2_Exception("execution mode not supported");
-				break;
-    	}
+        return $this->_execute_mode;
     }
 
     /**
-     * Quote a raw string
+     * @param integer $mode
+     * @return void
+     */
+    public function _setExecuteMode($mode)
+    {
+        switch ($mode) {
+            case DB2_AUTOCOMMIT_OFF:
+            case DB2_AUTOCOMMIT_ON:
+                $this->_execute_mode = $mode;
+                db2_autocommit($this->_connection, $mode);
+                break;
+            default:
+                throw new Zend_Db_Adapter_Db2_Exception("execution mode not supported");
+                break;
+        }
+    }
+
+    /**
+     * Quote a raw string.
      *
-     * @param string $value		Raw string
-     * @return string			Quoted string
+     * @param string $value Raw string
+     * @return string Quoted string
      */
     protected function _quote($value)
     {
-    	$value = str_replace('"', "'", $value);
-    	return $value;
+        $value = str_replace('"', "'", $value);
+        return $value;
     }
 
     /**
-     * Quotes an identifier.
+     * Quote an identifier.
      *
      * @param string $ident The identifier.
-     * 
      * @return string The quoted identifier.
      */
     public function quoteIdentifier($string)
     {
         $info = db2_server_info($this->_connection);
-        $identQuote = $info->IDENTIFIER_QUOTE_CHAR;
-    	return $identQuote . $string . $identQuote;
+        self::$identQuote = $info->IDENTIFIER_QUOTE_CHAR;
+        return $identQuote . $string . $identQuote;
     }
-       
-   	/**
+
+    /**
      * Returns a list of the tables in the database.
      *
      * @return array
      */
     public function listTables()
     {
-    	if (!$this->_connection) {
-    		$this->_connect();
-    	}
-    	// take the most general case and assume no z/OS
-    	// since listTables() takes no parameters
-    	$stmt = db2_tables($this->_connection);
+        if (!$this->_connection) {
+            $this->_connect();
+        }
+        // take the most general case and assume no z/OS
+        // since listTables() takes no parameters
+        $stmt = db2_tables($this->_connection);
 
-    	$tables = array();
+        $tables = array();
 
-    	while( $tables[] = db2_fetch_assoc($stmt));
+        while ($tables[] = db2_fetch_assoc($stmt));
 
-    	return $tables;
+        return $tables;
     }
-  
+
     /**
-     *
      * Returns the column descriptions for a table.
+     *
      * @param string schema.tablename or just tablename
      * @return array
      */
     public function describeTable($table)
     {
-    	$sql = "select colname,tabschema,typename, length," . "
-    	        scale, nulls from syscat.columns where tabname = '";
+        $sql = "select colname,tabschema,typename, length," . "
+            scale, nulls from syscat.columns where tabname = '";
 
-    	$schema = strtok($table, '.');
-    	$name = strtok('.');
-    	if ($name !== false) {
-    		$sql .= strtoupper($name) . "' and tabschema ='"
-    			  . strtoupper($schema) . "'";
-    	} else {
-    		$sql .= strtoupper($table) . "'";
-    	}
+        $schema = strtok($table, '.');
+        $name = strtok('.');
+        if ($name !== false) {
+            $sql .= strtoupper($name) . "' and tabschema ='"
+              . strtoupper($schema) . "'";
+        } else {
+            $sql .= strtoupper($table) . "'";
+        }
 
-    	$ret = array();
-    	$result = $this->fetchAssoc($sql);
-    	foreach($result as $row) {
-    		$ret[$row['COLNAME']] = $row;
-    	}
-    	
-    	return $ret;
+        $ret = array();
+        $result = $this->fetchAssoc($sql);
+        foreach ($result as $row) {
+            $ret[$row['COLNAME']] = $row;
+        }
+
+        return $ret;
     }
 
-	/**
+    /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   name of table associated with sequence
-     * @param  string $primaryKey  primary key in $tableName (not used in this adapter)
-     * @todo   can we skip the select COLNAME query,
-     *         if primaryKey is available?
+     * @todo   can we skip the select COLNAME query, if primaryKey is available?
+     *
+     * @param string $tableName OPTIONAL name of table associated with sequence
+     * @param string $primaryKey OPTIONAL primary key in $tableName (not used in this adapter)
      * @return integer
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
-    	// we must know the name of the table
-    	if (!$tableName) {
-    		$tableName = $this->_lastInsertTable;
-    	}
-  
-    	if (!$tableName) {
-    		return -1;
-    	}
+        // we must know the name of the table
+        if (!$tableName) {
+            $tableName = $this->_lastInsertTable;
+        }
 
-    	if (!$this->_connection) {
-    		$this->_connect();
-    	}
-    	
-    	$sql = "select COLNAME from syscat.colidentattributes "
-    	 	 . "where TABNAME='" . strtoupper($tableName) . "'";
-    	$result = $this->fetchAssoc($sql);
-    	if ($result) {
-    		$identCol = $result[0]['COLNAME'];
-    	} else {
-    		$identCol = 'ID';
-    	}
-    	
-    	$sql = "select max($identCol) as MAX from $tableName";
-    	$result = $this->fetchAssoc($sql);
-    	if ($result) {
-    		return $result[0]['MAX'];
-    	} else {
-    		return -1;
-    	}    		
+        if (!$tableName) {
+            return -1;
+        }
+
+        if (!$this->_connection) {
+            $this->_connect();
+        }
+
+        $sql = "SELECT COLNAME FROM SYSCAT.COLIDENTATTRIBUTES WHERE TABNAME='" . strtoupper($tableName) . "'";
+        $result = $this->fetchAssoc($sql);
+        if ($result) {
+            $identCol = $result[0]['COLNAME'];
+        } else {
+            $identCol = 'ID';
+        }
+
+        $sql = "SELECT MAX($identCol) AS MAX FROM $tableName";
+        $result = $this->fetchAssoc($sql);
+        if ($result) {
+            return $result[0]['MAX'];
+        } else {
+            return -1;
+        }
     }
 
     /**
      * Begin a transaction.
+     *
+     * @return void
      */
     protected function _beginTransaction()
     {
-    	$this->_setExecuteMode(DB2_AUTOCOMMIT_OFF);
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_OFF);
     }
 
-	/**
+    /**
      * Commit a transaction.
+     *
+     * @return void
      */
     protected function _commit()
     {
-    	if (!db2_commit($this->_connection)) {
-    		throw new Zend_Db_Adapter_Db2_Exception(db2_conn_errormsg($this->_connection),
-    		                                        db2_conn_error($this->_connection));
-    	}
+        if (!db2_commit($this->_connection)) {
+            throw new Zend_Db_Adapter_Db2_Exception(
+                db2_conn_errormsg($this->_connection),
+                db2_conn_error($this->_connection));
+        }
 
-    	$this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
     }
 
- 	/**
-     * Roll-back a transaction.
+    /**
+     * Rollback a transaction.
+     *
+     * @return void
      */
     protected function _rollBack()
     {
-    	if (!db2_rollback($this->_connection)) {
-    		throw new Zend_Db_Adapter_Db2_Exception(db2_conn_errormsg($this->_connection),
-    		                                        db2_conn_error($this->_connection));
-    	}
-    	$this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
+        if (!db2_rollback($this->_connection)) {
+            throw new Zend_Db_Adapter_Db2_Exception(
+                db2_conn_errormsg($this->_connection),
+                db2_conn_error($this->_connection));
+        }
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
     }
 
-     /**
+    /**
      * Set the fetch mode.
      *
      * @param integer $mode
+     * @return void
      */
     public function setFetchMode($mode)
     {
-   		switch ($mode) {
-        	case Zend_Db::FETCH_NUM:   // seq array
+        switch ($mode) {
+            case Zend_Db::FETCH_NUM:   // seq array
             case Zend_Db::FETCH_ASSOC: // assoc array
             case Zend_Db::FETCH_BOTH:  // seq+assoc array
             case Zend_Db::FETCH_OBJ:   // object
@@ -395,36 +408,38 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
     }
 
-	/**
+    /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string|Zend_Db_Select $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
-  	public function limit($sql, $count, $offset = 0)
-  	{
-  		if(!$count) {
-  			return $sql;
-  		}
-  		
-  		if ($offset == 0) {
-  			return $sql . " FETCH FIRST $count ROWS ONLY";
-  		} else {
-  			
-  			$sqlPieces = split("from", $sql);
-  			$select = $sqlPieces[0];
-  			$table = $sqlPieces[1];
-  			
-  			$col = split("select", $select);
-  			
-  			$sql = "WITH OFFSET AS($select, ROW_NUMBER() " . 
-  				   "OVER(ORDER BY " . $col[1] . ") AS RN FROM $table)" . 
-  				   $select ."FROM OFFSET WHERE rn between $offset " .
-  			       "and " . ($offset + $count - 1);
-  			return $sql;
-  		}
-	}
+    public function limit($sql, $count, $offset = 0)
+    {
+        if (!$count) {
+            return $sql;
+        }
 
-	 /**
+        if ($offset == 0) {
+            return $sql . " FETCH FIRST $count ROWS ONLY";
+        } else {
+            $sqlPieces = split("from", $sql);
+            $select = $sqlPieces[0];
+            $table = $sqlPieces[1];
+
+            $col = split("select", $select);
+
+            $sql = "WITH OFFSET AS($select, ROW_NUMBER() " .
+                "OVER(ORDER BY " . $col[1] . ") AS RN FROM $table)" .
+                $select ."FROM OFFSET WHERE rn between $offset " .
+                "and " . ($offset + $count - 1);
+            return $sql;
+        }
+    }
+
+    /**
      * Inserts a table row with specified data.
      *
      * @param string $table The table to insert data into.
@@ -435,41 +450,41 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     {
         // col names come from the array keys
         $cols = array_keys($bind);
-        
+
         $sql = '';
         $values = array();
-        foreach($bind as $key => $value){
-        	if($value !== null) {
-        		if($sql){
-        			$sql .= ', ';
-        		}
-        		$sql .= $key;
-        		$values[] = $value;
-        	}
+        foreach ($bind as $key => $value) {
+            if ($value !== null) {
+                if ($sql) {
+                    $sql .= ', ';
+                }
+                $sql .= $key;
+                $values[] = $value;
+            }
         }
-        
+
         $sql = "INSERT INTO $table (" . $sql . ") VALUES (";
-        
+
         $markers = '';
         $numParams = count($bind);
-        
+
         for ($i = 0; $i < $numParams; $i++) {
-        	$markers .= '?';
-        	if ($i != $numParams - 1 ) {
-        		$markers .= ',';
-        	}
+            $markers .= '?';
+            if ($i != $numParams - 1 ) {
+                $markers .= ',';
+            }
         }
         $sql .= $markers . ')';
-           
+
         // execute the statement and return the number of affected rows
         $result = $this->query($sql, $values);
-        
+
         $this->_lastInsertTable = $table;
-        
+
         return $result->rowCount();
     }
-    
-     /**
+
+    /**
      * Updates table rows with specified data based on a WHERE clause.
      *
      * @param string $table The table to udpate.
@@ -484,18 +499,17 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $values = array_values($bind);
         $newValues = array();
         foreach ($bind as $col => $val) {
-        	if($val !== null) {
-        		$set[] = "$col = ?";
-        		$newValues[] = $val;	
-        	}
-            
+            if ($val !== null) {
+                $set[] = "$col = ?";
+                $newValues[] = $val;
+            }
         }
 
         // build the statement
         $sql = "UPDATE $table "
              . 'SET ' . implode(', ', $set)
              . (($where) ? " WHERE $where" : '');
-              
+
         // execute the statement and return the number of affected rows
         $result = $this->query($sql, $newValues);
         return $result->rowCount();
@@ -507,8 +521,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * The first column is the key, the entire row array is the
      * value.
      *
-     * @param string $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
+     * @param array $bind OPTIONAL Data to bind into SELECT placeholders.
      * @return string
      */
     public function fetchAssoc($sql, $bind = null)
@@ -520,4 +534,5 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
         return $data;
     }
+
 }

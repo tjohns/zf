@@ -17,8 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /** Zend_Db_Adapter_Exception */
 require_once 'Zend/Db/Adapter/Exception.php';
@@ -28,7 +27,6 @@ require_once 'Zend/Db/Profiler.php';
 
 /** Zend_Db_Select */
 require_once 'Zend/Db/Select.php';
-
 
 /**
  * Class for connecting to SQL databases and performing common operations.
@@ -70,7 +68,6 @@ abstract class Zend_Db_Adapter_Abstract
      */
     protected $_connection = null;
 
-
     /**
      * Constructor.
      *
@@ -83,6 +80,8 @@ abstract class Zend_Db_Adapter_Abstract
      * host     => (string) What host to connect to (default 127.0.0.1).
      *
      * @param array $config An array of configuration keys.
+     * @return void
+     * @throws Zend_Db_Adapter_Exception
      */
     public function __construct($config)
     {
@@ -109,7 +108,6 @@ abstract class Zend_Db_Adapter_Abstract
         $this->_profiler = new Zend_Db_Profiler($enabled);
     }
 
-
     /**
      * Returns the underlying database connection object or resource.  If not
      * presently connected, this may return null.
@@ -121,7 +119,6 @@ abstract class Zend_Db_Adapter_Abstract
         return $this->_connection;
     }
 
-
     /**
      * Returns the profiler for this adapter.
      *
@@ -132,11 +129,10 @@ abstract class Zend_Db_Adapter_Abstract
         return $this->_profiler;
     }
 
-
     /**
      * Prepares and executes an SQL statement with bound data.
      *
-     * @param string $sql The SQL statement with placeholders.
+     * @param string|Zend_Db_Select $sql The SQL statement with placeholders.
      * @param array $bind An array of data to bind to the placeholders.
      * @return Zend_Db_Statement (may also be PDOStatement in the case of PDO)
      */
@@ -161,11 +157,10 @@ abstract class Zend_Db_Adapter_Abstract
         return $stmt;
     }
 
-
     /**
      * Leave autocommit mode and begin a transaction.
      *
-     * @return void
+     * @return bool True
      */
     public function beginTransaction()
     {
@@ -176,10 +171,10 @@ abstract class Zend_Db_Adapter_Abstract
         return true;
     }
 
-
     /**
      * Commit a transaction and return to autocommit mode.
      *
+     * @return bool True
      */
     public function commit()
     {
@@ -190,11 +185,10 @@ abstract class Zend_Db_Adapter_Abstract
         return true;
     }
 
-
     /**
      * Roll back a transaction and return to autocommit mode.
      *
-     * @return void
+     * @return bool True
      */
     public function rollBack()
     {
@@ -204,7 +198,6 @@ abstract class Zend_Db_Adapter_Abstract
         $this->_profiler->queryEnd($q);
         return true;
     }
-
 
     /**
      * Inserts a table row with specified data.
@@ -227,7 +220,6 @@ abstract class Zend_Db_Adapter_Abstract
         $result = $this->query($sql, $bind);
         return $result->rowCount();
     }
-
 
     /**
      * Updates table rows with specified data based on a WHERE clause.
@@ -255,7 +247,6 @@ abstract class Zend_Db_Adapter_Abstract
         return $result->rowCount();
     }
 
-
     /**
      * Deletes table rows based on a WHERE clause.
      *
@@ -274,7 +265,6 @@ abstract class Zend_Db_Adapter_Abstract
         return $result->rowCount();
     }
 
-
     /**
      * Creates and returns a new Zend_Db_Select object for this adapter.
      *
@@ -284,7 +274,6 @@ abstract class Zend_Db_Adapter_Abstract
     {
         return new Zend_Db_Select($this);
     }
-
 
     /**
      * Get the fetch mode.
@@ -296,11 +285,10 @@ abstract class Zend_Db_Adapter_Abstract
         return $this->_fetchMode;
     }
 
-
     /**
      * Fetches all SQL result rows as a sequential array.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
@@ -310,14 +298,13 @@ abstract class Zend_Db_Adapter_Abstract
         return $result->fetchAll($this->_fetchMode);
     }
 
-
     /**
      * Fetches all SQL result rows as an associative array.
      *
      * The first column is the key, the entire row array is the
      * value.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
@@ -332,13 +319,12 @@ abstract class Zend_Db_Adapter_Abstract
         return $data;
     }
 
-
     /**
      * Fetches the first column of all SQL result rows as an array.
      *
      * The first column in each row is used as the array key.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
@@ -348,14 +334,13 @@ abstract class Zend_Db_Adapter_Abstract
         return $result->fetchAll(Zend_Db::FETCH_COLUMN, 0);
     }
 
-
     /**
      * Fetches all SQL result rows as an array of key-value pairs.
      *
      * The first column is the key, the second column is the
      * value.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
@@ -369,11 +354,10 @@ abstract class Zend_Db_Adapter_Abstract
         return $data;
     }
 
-
     /**
      * Fetches the first column of the first row of the SQL result.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
@@ -383,11 +367,10 @@ abstract class Zend_Db_Adapter_Abstract
         return $result->fetchColumn(0);
     }
 
-
     /**
      * Fetches the first row of the SQL result.
      *
-     * @param string $sql An SQL SELECT statement.
+     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
@@ -396,7 +379,6 @@ abstract class Zend_Db_Adapter_Abstract
         $result = $this->query($sql, $bind);
         return $result->fetch($this->_fetchMode);
     }
-
 
     /**
      * Safely quotes a value for an SQL statement.
@@ -420,7 +402,6 @@ abstract class Zend_Db_Adapter_Abstract
         }
     }
 
-
     /**
      * Quotes a value and places into a piece of text at a placeholder.
      *
@@ -434,8 +415,8 @@ abstract class Zend_Db_Adapter_Abstract
      * // $safe = "WHERE date < '2005-01-02'"
      * </code>
      *
-     * @param string $txt The text with a placeholder.
-     * @param mixed $val The value to quote.
+     * @param string $text The text with a placeholder.
+     * @param mixed $value The value to quote.
      * @return mixed An SQL-safe quoted value placed into the orignal text.
      */
     public function quoteInto($text, $value)
@@ -443,11 +424,9 @@ abstract class Zend_Db_Adapter_Abstract
         return str_replace('?', $this->quote($value), $text);
     }
 
-
     /**
      * Abstract Methods
      */
-
 
     /**
      * Quotes an identifier.
@@ -457,7 +436,6 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract public function quoteIdentifier($string);
 
-
     /**
      * Returns a list of the tables in the database.
      *
@@ -465,14 +443,12 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract public function listTables();
 
-
     /**
      * Returns the column descriptions for a table.
      *
      * @return array
      */
     abstract public function describeTable($table);
-
 
     /**
      * Quote a raw string.
@@ -482,7 +458,6 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract protected function _quote($value);
 
-
     /**
      * Creates a connection to the database.
      *
@@ -490,43 +465,37 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract protected function _connect();
 
-
     /**
      * Prepare a statement and return a PDOStatement-like object.
      *
-     * @param  string  $sql  SQL query
+     * @param string|Zend_Db_Select $sql SQL query
      * @return Zend_Db_Statment|PDOStatement
      */
     abstract public function prepare($sql);
 
-
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   name of table (or sequence) associated with sequence
-     * @param  string $primaryKey  primary key in $tableName
+     * @param string $tableName   Name of table (or sequence) associated with sequence.
+     * @param string $primaryKey  Primary key in $tableName.
      * @return integer
      */
     abstract public function lastInsertId($tableName = null, $primaryKey = null);
-
 
     /**
      * Begin a transaction.
      */
     abstract protected function _beginTransaction();
 
-
     /**
      * Commit a transaction.
      */
     abstract protected function _commit();
 
-
     /**
      * Roll-back a transaction.
      */
     abstract protected function _rollBack();
-
 
     /**
      * Set the fetch mode.
@@ -535,12 +504,14 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract public function setFetchMode($mode);
 
-
-
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param mixed $sql
+     * @param integer $count
+     * @param integer $offset
      * @return string
      */
     abstract public function limit($sql, $count, $offset = 0);
+
 }

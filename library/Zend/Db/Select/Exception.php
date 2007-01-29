@@ -17,14 +17,12 @@
  * @subpackage Select
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Exception
  */
 require_once 'Zend/Db/Exception.php';
-
 
 /**
  * @category   Zend
@@ -33,6 +31,8 @@ require_once 'Zend/Db/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
 class Zend_Db_Select_Exception extends Zend_Db_Exception
-{}
+{
+}
 

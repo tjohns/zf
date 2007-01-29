@@ -17,14 +17,12 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Adapter_Pdo
  */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
-
 
 /**
  * Class for connecting to Oracle databases and performing common operations.
@@ -44,7 +42,6 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * @var string
      */
     protected $_pdoType = 'oci';
-
 
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
@@ -68,16 +65,16 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Quotes an identifier.
      *
+     * @todo this function is an exact duplicate of the one in Pdo/Oracle.php
+     *
      * @param string $ident The identifier.
      * @return string The quoted identifier.
-     * @todo this function is an exact duplicate of the one in Pdo/Oracle.php
      */
     public function quoteIdentifier($ident)
     {
         $ident = str_replace('"', '""', $ident);
-        return '"'.$ident.'"';
+        return '"' . $ident . '"';
     }
-
 
     /**
      * Returns a list of the tables in the database.
@@ -89,7 +86,6 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         return $this->fetchCol('SELECT table_name FROM all_tables');
     }
 
-
     /**
      * Returns the column descriptions for a table.
      *
@@ -98,7 +94,9 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     public function describeTable($table)
     {
         $table = strtoupper($table);
-        $sql = "SELECT column_name, data_type, data_length, nullable, data_default from all_tab_columns WHERE table_name='$table' ORDER BY column_name";
+        $sql = "SELECT column_name, data_type, data_length, nullable, data_default
+            FROM all_tab_columns
+            WHERE table_name='$table' ORDER BY column_name";
         $result = $this->query($sql);
         while ($val = $result->fetch()) {
             $descr[$val['column_name']] = array(
@@ -111,9 +109,9 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         }
 
         return $descr;
-	}
+    }
 
- 	/**
+    /**
      * Quote a raw string.
      *
      * @param string $value     Raw string
@@ -128,10 +126,16 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @todo Implement subquery simulation of LIMIT
+     *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
     public function limit($sql, $count, $offset = 0)
     {
         return $sql;
     }
+
 }

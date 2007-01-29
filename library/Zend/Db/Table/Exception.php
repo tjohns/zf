@@ -17,8 +17,7 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Exception
@@ -33,5 +32,6 @@ require_once 'Zend/Db/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Table_Exception extends Zend_Db_Exception
-{}
+{
+}
 

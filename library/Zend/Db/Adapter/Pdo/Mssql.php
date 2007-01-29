@@ -17,12 +17,10 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /** Zend_Db_Adapter_Pdo_Abstract */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
-
 
 /**
  * Class for connecting to MSSQL databases and performing common operations.
@@ -42,7 +40,6 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      */
     protected $_pdoType = 'mssql';
 
-
     /**
      * Quotes an identifier.
      *
@@ -53,7 +50,6 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     {
         return '[' . str_replace(']', ']]', $ident) . ']';
     }
-
 
     /**
      * Returns a list of the tables in the database.
@@ -66,10 +62,10 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         return $this->fetchCol($sql);
     }
 
-
     /**
      * Returns the column descriptions for a table.
      *
+     * @param string $table
      * @return array
      */
     public function describeTable($table)
@@ -102,11 +98,14 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         return $descr;
     }
 
-
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
      * @link http://lists.bestpractical.com/pipermail/rt-devel/2005-June/007339.html
+     *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
      public function limit($sql, $count, $offset = 0)
@@ -135,17 +134,16 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         return $sql;
     }
 
-
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   not used in this adapter
-     * @param  string $primaryKey  not used in this adapter
+     * @param  string $tableName   OPTIONAL not used in this adapter
+     * @param  string $primaryKey  OPTIONAL not used in this adapter
      * @return integer
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        $sql = 'select @@IDENTITY';
+        $sql = 'SELECT @@IDENTITY';
         return (int)$this->fetchOne($sql);
     }
 

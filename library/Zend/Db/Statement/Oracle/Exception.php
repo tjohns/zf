@@ -17,14 +17,12 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Statement_Exception
  */
 require_once 'Zend/Db/Statement/Exception.php';
-
 
 /**
  * @category   Zend
@@ -33,11 +31,14 @@ require_once 'Zend/Db/Statement/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Statement_Oracle_Exception extends Zend_Db_Statement_Exception {
+
+class Zend_Db_Statement_Oracle_Exception extends Zend_Db_Statement_Exception
+{
    protected $message = 'Unknown exception';
    protected $code = 0;
 
-   function __construct($error = null, $code = 0) {
+   function __construct($error = null, $code = 0)
+   {
        if (is_array($error)) {
             if (!isset($error['offset'])) {
                 $this->message = $error['code']." ".$error['message'];
@@ -54,6 +55,4 @@ class Zend_Db_Statement_Oracle_Exception extends Zend_Db_Statement_Exception {
        }
    }
 }
-
-/* vim: set et fdm=syntax syn=php ft=php: */
 

@@ -19,20 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend_Db_Exception
  */
 require_once 'Zend/Db/Exception.php';
 
-
 /**
  * Zend_Db_Statement_Exception
- * 
+ *
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Statement_Exception extends Zend_Db_Exception {}
+class Zend_Db_Statement_Exception extends Zend_Db_Exception
+{
+}

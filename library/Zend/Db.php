@@ -18,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend
  */
@@ -58,7 +57,7 @@ class Zend_Db {
      *    'ATTR_STRINGIFY_FETCHES', 'ATTR_MAX_COLUMN_LEN', 'ERRMODE_SILENT',
      *    'ERRMODE_WARNING', 'ERRMODE_EXCEPTION', 'CASE_NATURAL',
      *    'CASE_LOWER', 'CASE_UPPER', 'NULL_NATURAL', 'NULL_EMPTY_STRING',
-     *    'NULL_TO_STRING		', 'ERR_NONE', 'FETCH_ORI_NEXT',
+     *    'NULL_TO_STRING', 'ERR_NONE', 'FETCH_ORI_NEXT',
      *    'FETCH_ORI_PRIOR', 'FETCH_ORI_FIRST', 'FETCH_ORI_LAST',
      *    'FETCH_ORI_ABS', 'FETCH_ORI_REL', 'CURSOR_FWDONLY', 'CURSOR_SCROLL',
      *    'ERR_CANT_MAP', 'ERR_SYNTAX', 'ERR_CONSTRAINT', 'ERR_NOT_FOUND',
@@ -133,7 +132,7 @@ class Zend_Db {
     const FETCH_UNIQUE = 196608;
     const NULL_EMPTY_STRING = 1;
     const NULL_NATURAL = 0;
-    const NULL_TO_STRING		 = NULL;
+    const NULL_TO_STRING = NULL;
     const PARAM_BOOL = 5;
     const PARAM_INPUT_OUTPUT = -2147483648;
     const PARAM_INT = 1;
@@ -141,7 +140,6 @@ class Zend_Db {
     const PARAM_NULL = 0;
     const PARAM_STMT = 4;
     const PARAM_STR = 2;
-
 
     /**
      * Factory for Zend_Db_Adapter classes.
@@ -151,9 +149,10 @@ class Zend_Db {
      * @param string $adapterName   Name of the adapter to return:
      *                              'pdo_mysql' -> Zend_Db_Adapter_Pdo_Mysql
      *
-     * @param array  $config        An array of adapter configuration keys.
+     * @param array  $config        OPTIONAL; an array of adapter configuration keys.
      *
      * @return Zend_Db_Adapter_Abstract
+     * @throws Zend_Db_Exception
      */
     static public function factory($adapterName, $config = array())
     {
@@ -173,4 +172,5 @@ class Zend_Db {
 
         return new $adapterName($config);
     }
+
 }

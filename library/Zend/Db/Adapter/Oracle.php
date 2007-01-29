@@ -17,8 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /** Zend_Db_Adapter_Abstract */
 require_once 'Zend/Db/Adapter/Abstract.php';
@@ -28,7 +27,6 @@ require_once 'Zend/Db/Adapter/Oracle/Exception.php';
 
 /** Zend_Db_Statement_Oracle */
 require_once 'Zend/Db/Statement/Oracle.php';
-
 
 /**
  * @category   Zend
@@ -53,12 +51,15 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @var array
      */
     protected $_config = array(
-        'dbname' => null,
-        'username' => null,
-        'password' => null,
+        'dbname'       => null,
+        'username'     => null,
+        'password'     => null,
     );
 
-	protected $_execute_mode = OCI_COMMIT_ON_SUCCESS;
+    /**
+     * @var integer
+     */
+    protected $_execute_mode = OCI_COMMIT_ON_SUCCESS;
 
     /**
      * Constructor.
@@ -72,6 +73,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *             name of the entry in tnsnames.ora to which you want to connect.
      *
      * @param array $config An array of configuration keys.
+     * @throws Zend_Db_Adapter_Exception
      */
     public function __construct($config)
     {
@@ -104,7 +106,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
 
         $this->_profiler = new Zend_Db_Profiler($enabled);
     }
-	
+
     /**
      * Creates a connection resource.
      *
@@ -118,15 +120,20 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         if ($this->_connection) {
             return;
         }
-		
-		if (isset($this->_config['dbname'])) {
-			$this->_connection = oci_connect($this->_config['username'], $this->_config['password'], $this->_config['dbname']);
-		} else {
-			$this->_connection = oci_connect($this->_config['username'], $this->_config['password']);
-		}
+
+        if (isset($this->_config['dbname'])) {
+            $this->_connection = oci_connect(
+                $this->_config['username'],
+                $this->_config['password'],
+                $this->_config['dbname']);
+        } else {
+            $this->_connection = oci_connect(
+                $this->_config['username'],
+                $this->_config['password']);
+        }
 
         // check the connection
-		if (!$this->_connection) {
+        if (!$this->_connection) {
             throw new Zend_Db_Adapter_Oracle_Exception(oci_error());
         }
     }
@@ -149,18 +156,19 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   name of table associated with sequence
-     * @param  string $primaryKey  not used in this adapter
+     * @param string $tableName   name of table associated with sequence
+     * @param string $primaryKey  not used in this adapter
      * @return integer
+     * @throws Zend_Db_Adapter
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
-		if (!$tableName) {
-			throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
-		}
+        if (!$tableName) {
+            throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
+        }
         $this->_connect();
-		$data = $this->fetchCol("SELECT $tableName.currval FROM dual");
-		return $data[0]; //we can't fail here, right? if the sequence doesn't exist we should fail earlier.
+        $data = $this->fetchCol("SELECT $tableName.currval FROM dual");
+        return $data[0]; //we can't fail here, right? if the sequence doesn't exist we should fail earlier.
     }
 
     /**
@@ -171,8 +179,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function listTables()
     {
         $this->_connect();
-		$data = $this->fetchCol('SELECT table_name FROM all_tables');
-		return $data;
+        $data = $this->fetchCol('SELECT table_name FROM all_tables');
+        return $data;
     }
 
     /**
@@ -183,10 +191,12 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function describeTable($table)
     {
         $table = strtoupper($table);
-        $sql = "SELECT column_name, data_type, data_length, nullable, data_default from all_tab_columns WHERE table_name='$table' ORDER BY column_name";
+        $sql = "SELECT column_name, data_type, data_length, nullable, data_default
+            FROM all_tab_columns
+            WHERE table_name='$table' ORDER BY column_name";
         $result = $this->query($sql);
         while ($val = $result->fetch()) {
-			$descr[$val['column_name']] = array(
+            $descr[$val['column_name']] = array(
                'name'    => $val['column_name'],
                'notnull' => (bool)($val['nullable'] === 'N'), // nullable is N when mandatory
                'type'    => $val['data_type'],
@@ -211,12 +221,13 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     /**
      * Commit a transaction and return to autocommit mode.
      *
+     * @return void
      */
     protected function _commit()
     {
-		if (!oci_commit($this->_connection)) {
-			throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
-		}
+        if (!oci_commit($this->_connection)) {
+            throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
+        }
         $this->_setExecuteMode(OCI_COMMIT_ON_SUCCESS);
     }
 
@@ -227,9 +238,9 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     protected function _rollBack()
     {
-		if (!oci_rollback($this->_connection)) {
-			throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
-		}
+        if (!oci_rollback($this->_connection)) {
+            throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
+        }
         $this->_setExecuteMode(OCI_COMMIT_ON_SUCCESS);
     }
 
@@ -237,9 +248,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     /**
      * Set the fetch mode.
      *
-     * @param int $mode A fetch mode.
-     * @return void
      * @todo Support FETCH_CLASS and FETCH_INTO.
+     *
+     * @param integer $mode A fetch mode.
+     * @return void
      */
     public function setFetchMode($mode)
     {
@@ -266,7 +278,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected function _quote($value)
     {
         //@todo should we throw an exception here?
-		return $value;
+        return $value;
     }
 
 
@@ -279,56 +291,60 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function quoteIdentifier($ident)
     {
         //@todo should we throw an exception here?
-		return $ident;
+        return $ident;
     }
 
 
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset
      * @return string
      */
     public function limit($sql, $count, $offset = 0)
     {
-        /*
-        Oracle doesn't have a LIMIT statement implementation, so we have to "emulate" it using rnum
-        */
-        $limit_sql = "SELECT
-                            zsubselect2.*
-                        FROM
-                            (
-                             SELECT
-                                   rownum zrownum,
-                                   zsubselect1.*
-                               FROM
-                                   (
-                                    ".$sql."
-                                   )
-                                   zsubselect1
-                            )
-                            zsubselect2
-                       WHERE
-                            zrownum BETWEEN ".$offset." AND ".($offset+$count)."
-                      ";
+        /**
+         * Oracle doesn't have a LIMIT statement implementation, so we have to "emulate" it using rnum
+         */
+        $limit_sql = "SELECT zsubselect2.*
+            FROM (
+                SELECT rownum zrownum, zsubselect1.*
+                FROM (
+                    " . $sql . "
+                ) zsubselect1
+            ) zsubselect2
+            WHERE zsubselect2.zrownum BETWEEN " . $offset . " AND " . ($offset+$count);
         return $limit_sql;
     }
 
-	private function _setExecuteMode($mode) {
-		switch($mode) {
-			case OCI_COMMIT_ON_SUCCESS:
-			case OCI_DEFAULT:
-			case OCI_DESCRIBE_ONLY:
-				$this->_execute_mode = $mode;
-				break;
-			default:
-				throw new Zend_Db_Adapter_Exception('wrong execution mode specified');
-				break;
-		}
-	}
+    /**
+     * @param integer $mode
+     * @throws
+     */
+    private function _setExecuteMode($mode)
+    {
+        switch($mode) {
+            case OCI_COMMIT_ON_SUCCESS:
+            case OCI_DEFAULT:
+            case OCI_DESCRIBE_ONLY:
+                $this->_execute_mode = $mode;
+                break;
+            default:
+                throw new Zend_Db_Adapter_Exception('wrong execution mode specified');
+                break;
+        }
+    }
 
-	public function _getExecuteMode() {
-		return $this->_execute_mode;
-	}
+    /**
+     * @return
+     */
+    public function _getExecuteMode()
+    {
+        return $this->_execute_mode;
+    }
+
 }
 
 

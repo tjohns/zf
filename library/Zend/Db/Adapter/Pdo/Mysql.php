@@ -17,14 +17,12 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Adapter_Pdo
  */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
-
 
 /**
  * Class for connecting to MySQL databases and performing common operations.
@@ -45,7 +43,6 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
      */
     protected $_pdoType = 'mysql';
 
-
     /**
      * Quotes an identifier.
      *
@@ -63,7 +60,6 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         return "`$ident`";
     }
 
-
     /**
      * Returns a list of the tables in the database.
      *
@@ -74,10 +70,10 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         return $this->fetchCol('SHOW TABLES');
     }
 
-
     /**
      * Returns the column descriptions for a table.
      *
+     * @param string $table
      * @return array
      */
     public function describeTable($table)
@@ -97,10 +93,12 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         return $descr;
     }
 
-
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
      public function limit($sql, $count, $offset = 0)
@@ -111,4 +109,5 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         }
         return $sql;
     }
+
 }

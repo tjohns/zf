@@ -17,8 +17,7 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Emulates a PDOStatement for native database adapters.
@@ -29,7 +28,8 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Db_Statement_Interface {
+interface Zend_Db_Statement_Interface
+{
 
     /**
      * binds a PHP variable to an output column in a result set

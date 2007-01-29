@@ -17,12 +17,10 @@
  * @subpackage Select
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /** Zend_Db_Adapter_Abstract */
 require_once 'Zend/Db/Adapter/Abstract.php';
-
 
 /**
  * Class for SQL SELECT generation and results.
@@ -33,7 +31,8 @@ require_once 'Zend/Db/Adapter/Abstract.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Select {
+class Zend_Db_Select
+{
 
     /**
      * Zend_Db_Adapter_Abstract object.
@@ -68,7 +67,6 @@ class Zend_Db_Select {
      */
     protected $_tableCols = array();
 
-
     /**
      * Class constructor
      *
@@ -78,7 +76,6 @@ class Zend_Db_Select {
     {
         $this->_adapter = $adapter;
     }
-
 
     /**
      * Converts this object to an SQL SELECT string.
@@ -169,7 +166,6 @@ class Zend_Db_Select {
         return trim($this->_adapter->limit($sql, $count, $offset));
     }
 
-
     /**
      * Makes the query SELECT DISTINCT.
      *
@@ -182,7 +178,6 @@ class Zend_Db_Select {
         return $this;
     }
 
-
     /**
      * Makes the query SELECT FOR UPDATE.
      *
@@ -194,7 +189,6 @@ class Zend_Db_Select {
         $this->_parts['forUpdate'] = (bool) $flag;
         return $this;
     }
-
 
     /**
      * Adds a FROM table and optional columns to the query.
@@ -226,7 +220,7 @@ class Zend_Db_Select {
      * @param array|string $cols The columns to select from the joined table
      * @return Zend_Db_Select This Zend_Db_Select object
      */
-    protected function _join($type, $name, $cond, $cols) 
+    protected function _join($type, $name, $cond, $cols)
     {
         if (!in_array($type, array('left', 'inner'))) {
             $type = null;
@@ -256,7 +250,6 @@ class Zend_Db_Select {
         return $this->_join(null, $name, $cond, $cols);
     }
 
-
     /**
      * Add a LEFT JOIN table and colums to the query
      *
@@ -265,7 +258,7 @@ class Zend_Db_Select {
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinLeft($name, $cond, $cols = null) 
+    public function joinLeft($name, $cond, $cols = null)
     {
         return $this->_join('left', $name, $cond, $cols);
     }
@@ -278,11 +271,10 @@ class Zend_Db_Select {
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinInner($name, $cond, $cols = null) 
+    public function joinInner($name, $cond, $cols = null)
     {
         return $this->_join('inner', $name, $cond, $cols);
     }
-
 
     /**
      * Adds a WHERE condition to the query by AND.
@@ -301,12 +293,12 @@ class Zend_Db_Select {
      * // alternatively, with named binding
      * $select->where('id = :id');
      * </code>
-     * 
+     *
      * Note that it is more correct to use named bindings in your
      * queries for values other than strings. When you use named
      * bindings, don't forget to pass the values when actually
      * making a query:
-     * 
+     *
      * <code>
      * $db->fetchAll($select, array('id' => 5));
      * </code>
@@ -330,7 +322,6 @@ class Zend_Db_Select {
 
         return $this;
     }
-
 
     /**
      * Adds a WHERE condition to the query by OR.
@@ -359,7 +350,6 @@ class Zend_Db_Select {
         return $this;
     }
 
-
     /**
      * Adds grouping to the query.
      *
@@ -380,7 +370,6 @@ class Zend_Db_Select {
 
         return $this;
     }
-
 
     /**
      * Adds a HAVING condition to the query by AND.
@@ -409,7 +398,6 @@ class Zend_Db_Select {
         return $this;
     }
 
-
     /**
      * Adds a HAVING condition to the query by OR.
      *
@@ -436,7 +424,6 @@ class Zend_Db_Select {
 
         return $this;
     }
-
 
     /**
      * Adds a row order to the query.
@@ -465,7 +452,6 @@ class Zend_Db_Select {
         return $this;
     }
 
-
     /**
      * Sets a limit count and offset to the query.
      *
@@ -479,7 +465,6 @@ class Zend_Db_Select {
         $this->_parts['limitOffset'] = (int) $offset;
         return $this;
     }
-
 
     /**
      * Sets the limit and count by page number.
@@ -496,7 +481,6 @@ class Zend_Db_Select {
         $this->_parts['limitOffset'] = (int) $rowCount * ($page - 1);
         return $this;
     }
-
 
     /**
      * Adds to the internal table-to-column mapping array.

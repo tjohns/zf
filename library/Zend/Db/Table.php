@@ -17,8 +17,7 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /** Zend_Db_Inflector */
 require_once 'Zend/Db/Inflector.php';
@@ -32,7 +31,6 @@ require_once 'Zend/Db/Table/Row.php';
 /** Zend_Db_Table_Rowset */
 require_once 'Zend/Db/Table/Rowset.php';
 
-
 /**
  * Class for SQL table interface.
  *
@@ -42,7 +40,8 @@ require_once 'Zend/Db/Table/Rowset.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Db_Table {
+abstract class Zend_Db_Table
+{
 
     /**
      * Default Zend_Db_Adapter object.
@@ -93,6 +92,7 @@ abstract class Zend_Db_Table {
      * Constructor.
      *
      * @param array $config Array of user-specified config options.
+     * @throws Zend_Db_Table_Exception
      */
     public function __construct($config = null)
     {
@@ -127,6 +127,8 @@ abstract class Zend_Db_Table {
      * Sets the default Zend_Db_Adapter for all Zend_Db_Table objects.
      *
      * @param Zend_Db_Adapter $db A Zend_Db_Adapter object.
+     * @return void
+     * @throws Zend_Db_Table_Exception
      */
     static public final function setDefaultAdapter($db)
     {
@@ -140,6 +142,7 @@ abstract class Zend_Db_Table {
     /**
      * Gets the default Zend_Db_Adapter for all Zend_Db_Table objects.
      *
+     * @return Zend_Db_Adapter_Abstract
      */
     protected final function _getDefaultAdapter()
     {
@@ -149,16 +152,18 @@ abstract class Zend_Db_Table {
     /**
      * Gets the Zend_Db_Adapter for this particular Zend_Db_Table object.
      *
+     * @return Zend_Db_Adapter_Abstract
      */
     public final function getAdapter()
     {
         return $this->_db;
     }
-    
+
     /**
      * Populate static properties for this table module.
      *
      * @return void
+     * @throws Zend_Db_Table_Exception
      */
     protected function _setup()
     {
@@ -166,11 +171,11 @@ abstract class Zend_Db_Table {
         if (! $this->_db) {
             $this->_db = $this->_getDefaultAdapter();
         }
-        
+
         if (! $this->_db instanceof Zend_Db_Adapter_Abstract) {
             throw new Zend_Db_Table_Exception('db object does not implement Zend_Db_Adapter_Abstract');
         }
-        
+
         // get the table name
         if (! $this->_name) {
             $this->_name = self::$_inflector->underscore(get_class($this));
@@ -217,12 +222,12 @@ abstract class Zend_Db_Table {
     // Manipulation
     //
     // -----------------------------------------------------------------
-    
+
     /**
      * Inserts a new row.
      *
      * Columns must be in underscore format.
-     * 
+     *
      * @param array $data Column-value pairs.
      * @param string $where An SQL WHERE clause.
      * @return int The last insert ID.
@@ -303,11 +308,11 @@ abstract class Zend_Db_Table {
      *
      * Honors the Zend_Db_Adapter fetch mode.
      *
-     * @param string|array $where An SQL WHERE clause.
-     * @param string|array $order An SQL ORDER clause.
-     * @param int $count An SQL LIMIT count.
-     * @param int $offset An SQL LIMIT offset.
-     * @return mixed The row results per the Zend_Db_Adapter fetch mode.
+     * @param string|array $where  OPTIONAL An SQL WHERE clause.
+     * @param string|array $order  OPTIONAL An SQL ORDER clause.
+     * @param int          $count  OPTIONAL An SQL LIMIT count.
+     * @param int          $offset OPTIONAL An SQL LIMIT offset.
+     * @return Zend_Db_Table_Rowset The row results per the Zend_Db_Adapter fetch mode.
      */
     public function fetchAll($where = null, $order = null, $count = null,
         $offset = null)
@@ -318,15 +323,15 @@ abstract class Zend_Db_Table {
             'data'  => $this->_fetch('All', $where, $order, $count, $offset),
         ));
     }
-    
+
     /**
      * Fetches one row.
      *
      * Honors the Zend_Db_Adapter fetch mode.
      *
-     * @param string|array $where An SQL WHERE clause.
-     * @param string|array $order An SQL ORDER clause.
-     * @return mixed The row results per the Zend_Db_Adapter fetch mode.
+     * @param string|array $where OPTIONAL An SQL WHERE clause.
+     * @param string|array $order OPTIONAL An SQL ORDER clause.
+     * @return Zend_Db_Table_Row The row results per the Zend_Db_Adapter fetch mode.
      */
     public function fetchRow($where = null, $order = null)
     {
@@ -336,10 +341,10 @@ abstract class Zend_Db_Table {
             'data'  => $this->_fetch('Row', $where, $order, 1),
         ));
     }
-    
+
     /**
      * Fetches a new blank row (not from the database).
-     * 
+     *
      * @return Zend_Db_Table_Row
      */
     public function fetchNew()
@@ -349,19 +354,18 @@ abstract class Zend_Db_Table {
         return new Zend_Db_Table_Row(array(
             'db'    => $this->_db,
             'table' => $this,
-            'data'  => array_combine($keys, $vals),
-
+            'data'  => array_combine($keys, $vals)
         ));
     }
-    
+
     /**
      * Support method for fetching rows.
      *
-     * @param string $type Whether to fetch 'all' or 'row'.
-     * @param string|array $where An SQL WHERE clause.
-     * @param string|array $order An SQL ORDER clause.
-     * @param int $count An SQL LIMIT count.
-     * @param int $offset An SQL LIMIT offset.
+     * @param string       $type   Whether to fetch 'all' or 'row'.
+     * @param string|array $where  OPTIONAL An SQL WHERE clause.
+     * @param string|array $order  OPTIONAL An SQL ORDER clause.
+     * @param int          $count  OPTIONAL An SQL LIMIT count.
+     * @param int          $offset OPTIONAL An SQL LIMIT offset.
      * @return mixed The row results per the Zend_Db_Adapter fetch mode.
      */
     protected function _fetch($type, $where = null, $order = null, $count = null,
@@ -400,4 +404,5 @@ abstract class Zend_Db_Table {
         $method = "fetch$type";
         return $this->_db->$method($select);
     }
+
 }

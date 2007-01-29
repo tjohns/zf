@@ -17,14 +17,12 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Table_Row_Exception
  */
 require_once 'Zend/Db/Table/Row/Exception.php';
-
 
 /**
  * @category   Zend
@@ -37,41 +35,43 @@ class Zend_Db_Table_Row
 {
     /**
      * The data for each column in the row (underscore_words => value).
-     * 
+     *
      * @var array
      */
     protected $_data = array();
-    
+
     /**
      * Zend_Db_Adapter object from the table interface.
-     * 
+     *
      * @var Zend_Db_Adapter
      */
     protected $_db;
-    
+
     /**
      * Zend_Db_Table interface (the row "parent").
-     * 
+     *
      * @var Zend_Db_Table
      */
     protected $_table;
-    
+
     /**
      * Zend_Db_Table info (name, cols, primary, etc).
-     * 
+     *
      * @var array
      */
     protected $_info = array();
-    
+
     /**
      * Constructor.
+     *
+     * @param array $config OPTIONAL
      */
     public function __construct($config = array())
     {
         $this->_db    = $config['db'];
         $this->_table = $config['table'];
         $this->_info  = $this->_table->info();
-        
+
         if ($config['data'] === false) {
             // empty row, use blanks
             $cols = array_keys($this->_info['cols']);
@@ -81,12 +81,11 @@ class Zend_Db_Table_Row
             $this->_data  = (array) $config['data'];
         }
     }
-    
+
     /**
      * Getter for camelCaps properties mapped to underscore_word columns.
-     * 
-     * @param string $camel The camelCaps property name; e.g., 'columnName'
-     * maps to 'column_name'.
+     *
+     * @param string $camel The camelCaps property name; e.g., 'columnName' maps to 'column_name'.
      * @return string The mapped column value.
      */
     public function __get($camel)
@@ -98,14 +97,14 @@ class Zend_Db_Table_Row
             throw new Zend_Db_Table_Row_Exception("column '$camel' not in row");
         }
     }
-    
+
     /**
      * Setter for camelCaps properties mapped to underscore_word columns.
-     * 
-     * @param string $camel The camelCaps property name; e.g., 'columnName'
-     * maps to 'column_name'.
+     *
+     * @param string $camel The camelCaps property name; e.g., 'columnName' maps to 'column_name'.
      * @param mixed $value The value for the property.
      * @return void
+     * @throws Zend_Db_Table_Row_Exception
      */
     public function __set($camel, $value)
     {
@@ -118,27 +117,27 @@ class Zend_Db_Table_Row
             $this->_data[$under] = $value;
         }
     }
-    
+
     /**
      * Saves the properties to the database.
-     * 
-     * This performs an intelligent insert/update, and reloads the 
+     *
+     * This performs an intelligent insert/update, and reloads the
      * properties with fresh data from the table on success.
-     * 
-     * @return int 0 on failure, 1 on success.
+     *
+     * @return integer 0 on failure, 1 on success.
      */
     public function save()
     {
         // convenience var for the primary key name
         $primary = $this->_info['primary'];
-        
+
         // check the primary key value for insert/update
         if (empty($this->_data[$primary])) {
-        
+
             // no primary key value, must be an insert.
             // make sure it's null.
             $this->_data[$primary] = null;
-            
+
             // attempt the insert.
             $result = $this->_table->insert($this->_data);
             if (is_numeric($result)) {
@@ -146,16 +145,16 @@ class Zend_Db_Table_Row
                 $this->_data[$primary] = $result;
                 $this->_refresh();
             }
-            
-            
+
+
         } else {
-            
+
             // has a primary key value, update only that key.
             $where = $this->_db->quoteInto(
                 "$primary = ?",
                 $this->_data[$primary]
             );
-            
+
             // return the result of the update attempt,
             // no need to update the row object.
             $result = $this->_table->update($this->_data, $where);
@@ -164,24 +163,24 @@ class Zend_Db_Table_Row
                 $this->_refresh();
             }
         }
-        
+
         // regardless of success return the result
         return $result;
     }
-    
+
     /**
      * Returns the column/value data as an array.
-     * 
+     *
      * @return array
      */
     public function toArray()
     {
         return $this->_data;
     }
-    
+
     /**
      * Sets all data in the row from an array.
-     * 
+     *
      * @param array $data
      */
     public function setFromArray($data)
@@ -192,9 +191,11 @@ class Zend_Db_Table_Row
             }
         }
     }
-    
+
     /**
      * Refreshes properties from the database.
+     *
+     * @return void
      */
     protected function _refresh()
     {
@@ -202,5 +203,5 @@ class Zend_Db_Table_Row
         // we can do this because they're both Zend_Db_Table_Row objects
         $this->_data = $fresh->_data;
     }
-}
 
+}

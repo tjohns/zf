@@ -19,12 +19,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
-
 
 /**
  * Class for connecting to MySQL databases and performing common operations.
@@ -37,14 +35,14 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
  */
 class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
 {
+
     /**
      * PDO type.
      *
      * @var string
      */
     protected $_pdoType = 'pgsql';
-     
-    
+
     /**
      * Quotes an identifier.
      *
@@ -55,7 +53,6 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
     {
         return '"' . $this->quote($ident) . '"';
     }
-
 
     /**
      * Returns a list of the tables in the database.
@@ -80,10 +77,10 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         return $this->fetchCol($sql);
     }
 
-
     /**
      * Returns the column descriptions for a table.
      *
+     * @param string $table
      * @return array
      */
     public function describeTable($table)
@@ -100,7 +97,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
              . "WHERE c.oid = pg_attrdef.adrelid "
              . "AND pg_attrdef.adnum=a.attnum) AS default "
              . "FROM pg_attribute a, pg_class c, pg_type t "
-             . "WHERE c.relname = '{$table}' "
+             . "WHERE c.relname = '$table' "
              . "AND a.attnum > 0 "
              . "AND a.attrelid = c.oid "
              . "AND a.atttypid = t.oid "
@@ -125,10 +122,12 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         return $descr;
     }
 
-
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
     public function limit($sql, $count, $offset = 0)
@@ -142,12 +141,11 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         return $sql;
     }
 
-
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   table or sequence name needed for some PDO drivers
-     * @param  string $primaryKey  primary key in $tableName need for some PDO drivers
+     * @param  string $tableName   OPTIONAL table or sequence name needed for some PDO drivers
+     * @param  string $primaryKey  OPTIONAL primary key in $tableName need for some PDO drivers
      * @return integer
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
@@ -155,4 +153,5 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         $this->_connect();
         return $this->_connection->lastInsertId($tableName .'_'. $primaryKey .'_seq');
     }
+
 }

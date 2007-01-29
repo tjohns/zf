@@ -17,14 +17,12 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Zend_Db_Adapter_Pdo_Abstract
  */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
-
 
 /**
  * Class for connecting to MySQL databases and performing common operations.
@@ -37,14 +35,14 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
  */
 class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 {
+
     /**
      * PDO type
      *
      * @var string
      */
      protected $_pdoType = 'sqlite';
-     
-     
+
     /**
      * Constructor.
      *
@@ -70,19 +68,17 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         // SQLite uses no username/password.  Stub to satisfy parent::_connect()
         $this->_config['username'] = null;
         $this->_config['password'] = null;
-        
+
         return parent::__construct($config);
     }
-
 
     /**
      * DSN builder
      */
     protected function _dsn()
     {
-        return $this->_pdoType .':'. $this->_config['dbname'];        
+        return $this->_pdoType .':'. $this->_config['dbname'];
     }
-
 
     /**
      * Quotes an identifier.
@@ -94,7 +90,6 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
     {
         return $this->quote($ident);
     }
-
 
     /**
      * Returns a list of the tables in the database.
@@ -110,10 +105,10 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         return $this->fetchCol($sql);
     }
 
-
     /**
      * Returns the column descriptions for a table.
      *
+     * @param string $table
      * @return array
      */
     public function describeTable($table)
@@ -133,10 +128,12 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         return $descr;
     }
 
-
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string $sql
+     * @param integer $count
+     * @param integer $offset OPTIONAL
      * @return string
      */
     public function limit($sql, $count, $offset = 0)
@@ -149,4 +146,5 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         }
         return $sql;
     }
+
 }

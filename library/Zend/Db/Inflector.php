@@ -17,8 +17,7 @@
  * @subpackage Inflector
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * Class for name inflections.
@@ -33,10 +32,14 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Inflector {
+class Zend_Db_Inflector
+{
 
     /**
      * Convert underscore_words to camelCaps.
+     *
+     * @param string $name
+     * @return string
      */
     public function camelize($name)
     {
@@ -49,9 +52,11 @@ class Zend_Db_Inflector {
         return ltrim(str_replace(' ', '', ucwords($name)), '_');
     }
 
-
     /**
      * Convert camelCaps to underscore_words.
+     *
+     * @param string $name
+     * @return string
      */
     public function underscore($name)
     {
@@ -80,7 +85,6 @@ class Zend_Db_Inflector {
         }
         return $name;
     }
-
 
     /**
      * Pluralize a name.

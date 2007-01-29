@@ -17,8 +17,7 @@
  * @subpackage Profiler
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-
+ */
 
 /**
  * @category   Zend
@@ -27,6 +26,7 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
 class Zend_Db_Profiler_Query
 {
 
@@ -58,7 +58,6 @@ class Zend_Db_Profiler_Query
      */
     protected $_endedMicrotime = null;
 
-
     /**
      * Class constructor.  A query is about to be started, save the query text ($query) and its
      * type (one of the Zend_Db_Profiler::* constants).
@@ -75,7 +74,6 @@ class Zend_Db_Profiler_Query
         return true;
     }
 
-
     /**
      * The query has ended.  Record the time so that the elapsed time can be determined later.
      *
@@ -87,7 +85,6 @@ class Zend_Db_Profiler_Query
         return true;
     }
 
-
     /**
      * Has this query ended?
      *
@@ -97,7 +94,6 @@ class Zend_Db_Profiler_Query
     {
         return ($this->_endedMicrotime != null);
     }
-
 
     /**
      * Get the original SQL text of the query.
@@ -109,7 +105,6 @@ class Zend_Db_Profiler_Query
         return $this->_query;
     }
 
-
     /**
      * Get the type of this query (one of the Zend_Db_Profiler::* constants)
      *
@@ -120,10 +115,9 @@ class Zend_Db_Profiler_Query
         return $this->_queryType;
     }
 
-
     /**
-     * Get the elapsed time (in seconds) that the query ran.  If the query has
-     * not yet ended, return false.
+     * Get the elapsed time (in seconds) that the query ran.
+     * If the query has not yet ended, return false.
      *
      * @return mixed
      */

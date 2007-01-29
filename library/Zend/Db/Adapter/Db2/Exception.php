@@ -18,24 +18,23 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-
 /**
  * Zend_Db_Adapter_Exception
  */
 require_once 'Zend/Db/Adapter/Exception.php';
 
-
 /**
  * Zend_Db_Adapter_Db2_Exception
- * 
+ *
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
- * @author 	   Joscha Feth <jffeth@de.ibm.com>
+ * @author     Joscha Feth <jffeth@de.ibm.com>
  * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
-class Zend_Db_Adapter_Db2_Exception extends Zend_Db_Adapter_Exception {
+class Zend_Db_Adapter_Db2_Exception extends Zend_Db_Adapter_Exception
+{
    protected $code = '00000';
    protected $message = 'unknown exception';
 
@@ -44,4 +43,3 @@ class Zend_Db_Adapter_Db2_Exception extends Zend_Db_Adapter_Exception {
        $this->code = $state;
    }
 }
-

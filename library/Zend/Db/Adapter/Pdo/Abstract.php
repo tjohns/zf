@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /** Zend_Db_Adapter_Abstract */
 require_once 'Zend/Db/Adapter/Abstract.php';
-
 
 /**
  * Class for connecting to SQL databases and performing common operations using PDO.
@@ -56,7 +54,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
         return $this->_pdoType . ':' . implode(';', $dsn);
     }
-
 
     /**
      * Creates a PDO object and connects to the database.
@@ -105,7 +102,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
     }
 
-
     /**
      * Prepares an SQL statement.
      *
@@ -119,12 +115,11 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         return $this->_connection->prepare($sql);
     }
 
-
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   table or sequence name needed for some PDO drivers
-     * @param  string $primaryKey  primary key in $tableName need for some PDO drivers
+     * @param  string $tableName   OPTIONAL table or sequence name needed for some PDO drivers
+     * @param  string $primaryKey  OPTIONAL primary key in $tableName need for some PDO drivers
      * @return integer
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
@@ -132,7 +127,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         $this->_connect();
         return $this->_connection->lastInsertId();
     }
-
 
     /**
      * Begin a transaction.
@@ -142,7 +136,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         $this->_connection->beginTransaction();
     }
 
-
     /**
      * Commit a transaction.
      */
@@ -151,14 +144,12 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         $this->_connection->commit();
     }
 
-
     /**
      * Roll-back a transaction.
      */
     protected function _rollBack() {
         $this->_connection->rollBack();
     }
-
 
     /**
      * Quote a raw string.
@@ -171,13 +162,13 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         return $this->_connection->quote($value);
     }
 
-
     /**
      * Set the PDO fetch mode.
      *
+     * @todo Support FETCH_CLASS and FETCH_INTO.
+     *
      * @param int $mode A PDO fetch mode.
      * @return void
-     * @todo Support FETCH_CLASS and FETCH_INTO.
      */
     public function setFetchMode($mode)
     {
