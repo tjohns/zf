@@ -252,7 +252,14 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
         <sect3 id="zend.search.query-language.boolean.no-operator">
             <title>演算子なし</title>
             <para>
-                演算子を使用しなかった場合は、その単語は任意となります。
+                演算子を使用しなかった場合は、
+                その挙動は "デフォルトの boolean 演算子" として定義されます。
+            </para>
+            <para>
+                これは、デフォルトでは <code>OR</code> となります。
+            </para>
+            <para>
+                つまり、その単語は任意となるということです。
                 その単語はドキュメント中に存在するかもしれないし、しないかもしれません。
                 ただ、その単語を含むドキュメントのほうが高いスコアとなります。
             </para>
@@ -260,6 +267,17 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
                 "PHP framework" は必須で "Zend Framework" は含んでも含まなくてもかまわないドキュメントを検索するには
                 <programlisting role="querystring"><![CDATA[+"PHP framework" "Zend Framework"]]></programlisting>
                 を使用します。
+            </para>
+
+            <para>
+                デフォルトの boolean 演算子を設定したり取得したりするには、それぞれ
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</code> および
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</code> を使用します。
+            </para>
+            <para>
+                これらのメソッドで使用する定数は、
+                <code>Zend_Search_Lucene_Search_QueryParser::B_AND</code> および
+                <code>Zend_Search_Lucene_Search_QueryParser::B_OR</code> です。
             </para>
         </sect3>
     </sect2>
