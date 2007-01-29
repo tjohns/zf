@@ -185,7 +185,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
 
                 $query->addSubquery($subquery->rewrite($index),
-                                    ($this->_signs === null)?  true : $this->_signs[$subqueryId]);
+                                    ($this->_signs === null)?  true : $this->_signs[$termId]);
             }
 
             return $query;
@@ -466,6 +466,53 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Return query terms
+     *
+     * @return array
+     */
+    public function getQueryTerms()
+    {
+        if ($this->_signs === null) {
+            return $this->_terms;
+        }
+
+        $terms = array();
+
+        foreach ($this->_signs as $id => $sign) {
+            if ($sign !== false) {
+                $terms[] = $this->_terms[$id];
+            }
+        }
+
+        return $terms;
+    }
+
+    /**
+     * Highlight query terms
+     *
+     * @param integer &$colorIndex
+     * @param Zend_Search_Lucene_Document_Html $doc
+     */
+    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
+    {
+        $words = array();
+
+        if ($this->_signs === null) {
+            foreach ($this->_terms as $term) {
+                $words[] = $term->text;
+            }
+        } else {
+            foreach ($this->_signs as $id => $sign) {
+                if ($sign !== false) {
+                    $words[] = $this->_terms[$id]->text;
+                }
+            }
+        }
+
+        $doc->highlight($words, $this->_getHighlightColor($colorIndex));
     }
 
     /**

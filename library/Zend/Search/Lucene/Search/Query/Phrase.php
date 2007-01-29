@@ -456,6 +456,32 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
     }
 
     /**
+     * Return query terms
+     *
+     * @return array
+     */
+    public function getQueryTerms()
+    {
+        return $this->_terms;
+    }
+
+    /**
+     * Highlight query terms
+     *
+     * @param integer &$colorIndex
+     * @param Zend_Search_Lucene_Document_Html $doc
+     */
+    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
+    {
+        $words = array();
+        foreach ($this->_terms as $term) {
+            $words[] = $term->text;
+        }
+
+        $doc->highlight($words, $this->_getHighlightColor($colorIndex));
+    }
+
+    /**
      * Print a query
      *
      * @return string

@@ -50,6 +50,13 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     private $_headerLinks = array();
 
     /**
+     * Stored DOM representation
+     *
+     * @var DOMDocument
+     */
+    private $_doc;
+
+    /**
      * Object constructor
      *
      * @param string  $data
@@ -58,16 +65,16 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      */
     private function __construct($data, $isFile, $storeContent)
     {
-        $doc = new DOMDocument();
-        $doc->substituteEntities = true;
+        $this->_doc = new DOMDocument();
+        $this->_doc->substituteEntities = true;
 
         if ($isFile) {
-            @$doc->loadHTMLFile($data);
+            @$this->_doc->loadHTMLFile($data);
         } else{
-            @$doc->loadHTML($data);
+            @$this->_doc->loadHTML($data);
         }
 
-        $xpath = new DOMXPath($doc);
+        $xpath = new DOMXPath($this->_doc);
 
         $docTitle = '';
         $titleNodes = $xpath->query('/html/head/title');
@@ -75,13 +82,13 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             // title should always have only one entry, but we process all nodeset entries
             $docTitle .= $titleNode->nodeValue . ' ';
         }
-        $this->addField(Zend_Search_Lucene_Field::Text('title', $docTitle, $doc->actualEncoding));
+        $this->addField(Zend_Search_Lucene_Field::Text('title', $docTitle, $this->_doc->actualEncoding));
 
         $metaNodes = $xpath->query('/html/head/meta[@name]');
         foreach ($metaNodes as $metaNode) {
             $this->addField(Zend_Search_Lucene_Field::Text($metaNode->getAttribute('name'),
                                                            $metaNode->getAttribute('content'),
-                                                           $doc->actualEncoding));
+                                                           $this->_doc->actualEncoding));
         }
 
         $docBody = '';
@@ -91,12 +98,12 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             $docBody .= $bodyNode->textContent;
         }
         if ($storeContent) {
-            $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, $doc->actualEncoding));
+            $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, $this->_doc->actualEncoding));
         } else {
-            $this->addField(Zend_Search_Lucene_Field::UnStored('body', $docBody, $doc->actualEncoding));
+            $this->addField(Zend_Search_Lucene_Field::UnStored('body', $docBody, $this->_doc->actualEncoding));
         }
 
-        $linkNodes = $doc->getElementsByTagName('a');
+        $linkNodes = $this->_doc->getElementsByTagName('a');
         foreach ($linkNodes as $linkNode) {
             if (($href = $linkNode->getAttribute('href')) != '') {
                 $this->_links[] = $href;
@@ -157,4 +164,121 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     {
         return new Zend_Search_Lucene_Document_Html($file, true, $storeContent);
     }
+
+
+    /**
+     * Highlight text in text node
+     *
+     * @param DOMText $node
+     * @param array   $wordsToHighlight
+     * @param string  $color
+     */
+    public function _highlightTextNode(DOMText $node, $wordsToHighlight, $color)
+    {
+        $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
+        $analyzer->setInput($node->nodeValue, $this->_doc->encoding);
+
+        $matchedTokens = array();
+
+        while (($token = $analyzer->nextToken()) !== null) {
+            if (isset($wordsToHighlight[$token->getTermText()])) {
+                $matchedTokens[] = $token;
+            }
+        }
+
+        if (count($matchedTokens) == 0) {
+            return;
+        }
+
+        $matchedTokens = array_reverse($matchedTokens);
+
+        foreach ($matchedTokens as $token) {
+            // Cut text after matched token
+            $node->splitText($token->getEndOffset());
+
+            // Cut matched node
+            $matchedWordNode = $node->splitText($token->getStartOffset());
+
+            $highlightedNode = $this->_doc->createElement('b', $matchedWordNode->nodeValue);
+            $highlightedNode->setAttribute('style', 'color:black;background-color:' . $color);
+
+            $node->parentNode->replaceChild($highlightedNode, $matchedWordNode);
+        }
+    }
+
+
+    /**
+     * highlight words in content of the specified node
+     *
+     * @param DOMNode $contextNode
+     * @param array $wordsToHighlight
+     * @param string $color
+     */
+    public function _highlightNode(DOMNode $contextNode, $wordsToHighlight, $color)
+    {
+        $textNodes = array();
+
+        foreach ($contextNode->childNodes as $childNode) {
+            if ($childNode->nodeType == XML_TEXT_NODE) {
+                // process node later to leave childNodes structure untouched
+                $textNodes[] = $childNode;
+            } else {
+                $this->_highlightNode($childNode, $wordsToHighlight, $color);
+            }
+        }
+
+        foreach ($textNodes as $textNode) {
+            $this->_highlightTextNode($textNode, $wordsToHighlight, $color);
+        }
+    }
+
+
+
+    /**
+     * Highlight text with specified color
+     *
+     * @param string|array $words
+     * @param string $color
+     * @return string
+     */
+    public function highlight($words, $color = '#66ffff')
+    {
+        if (!is_array($words)) {
+            $words = array($words);
+        }
+        $wordsToHighlight = array();
+
+        $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
+        foreach ($words as $wordString) {
+            $wordsToHighlight = array_merge($wordsToHighlight, $analyzer->tokenize($wordString));
+        }
+
+        if (count($wordsToHighlight) == 0) {
+            return $this->_doc->saveHTML();
+        }
+
+        $wordsToHighlightFlipped = array();
+        foreach ($wordsToHighlight as $id => $token) {
+            $wordsToHighlightFlipped[$token->getTermText()] = $id;
+        }
+
+        $xpath = new DOMXPath($this->_doc);
+
+        $matchedNodes = $xpath->query("/html/body/*");
+        foreach ($matchedNodes as $matchedNode) {
+            $this->_highlightNode($matchedNode, $wordsToHighlightFlipped, $color);
+        }
+
+    }
+
+    /**
+     * Get HTML
+     *
+     * @return string
+     */
+    public function getHTML()
+    {
+        return $this->_doc->saveHTML();
+    }
 }
+

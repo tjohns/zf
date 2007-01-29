@@ -270,6 +270,39 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     }
 
     /**
+     * Return query terms
+     *
+     * @return array
+     */
+    public function getQueryTerms()
+    {
+        $terms = array();
+
+        foreach ($this->_subqueries as $id => $subquery) {
+            if ($this->_signs === null  ||  $this->_signs[$id] !== false) {
+                $terms = array_merge($terms, $subquery->getQueryTerms());
+            }
+        }
+
+        return $terms;
+    }
+
+    /**
+     * Highlight query terms
+     *
+     * @param integer &$colorIndex
+     * @param Zend_Search_Lucene_Document_Html $doc
+     */
+    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
+    {
+        foreach ($this->_subqueries as $id => $subquery) {
+            if ($this->_signs === null  ||  $this->_signs[$id] !== false) {
+                $subquery->highlightMatchesDOM($doc, $colorIndex);
+            }
+        }
+    }
+
+    /**
      * Print a query
      *
      * @return string

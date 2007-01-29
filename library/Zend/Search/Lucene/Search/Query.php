@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Search_Lucene_Document_Html */
+require_once 'Zend/Search/Lucene/Document/Html.php';
+
 
 /**
  * @category   Zend
@@ -43,6 +46,23 @@ abstract class Zend_Search_Lucene_Search_Query
      * @var Zend_Search_Lucene_Search_Weight
      */
     protected $_weight = null;
+
+    /**
+     * Current highlight color
+     *
+     * @var integer
+     */
+    private $_currentColorIndex = 0;
+
+    /**
+     * List of colors for text highlighting
+     *
+     * @var array
+     */
+    private $_highlightColors = array('#66ffff', '#ff66ff', '#ffff66',
+                                      '#ff8888', '#88ff88', '#8888ff',
+                                      '#88dddd', '#dd88dd', '#dddd88',
+                                      '#aaddff', '#aaffdd', '#ddaaff', '#ddffaa', '#ffaadd', '#ffddaa');
 
 
     /**
@@ -140,6 +160,35 @@ abstract class Zend_Search_Lucene_Search_Query
      */
     abstract public function __toString();
 
+    /**
+     * Return query terms
+     *
+     * @return array
+     */
+    abstract public function getQueryTerms();
+
+    /**
+     * Get highlight color and shift to next
+     *
+     * @param integer &$colorIndex
+     * @return string
+     */
+    protected function _getHighlightColor(&$colorIndex)
+    {
+        $color = $this->_highlightColors[$colorIndex++];
+
+        $colorIndex %= count($this->_highlightColors);
+
+        return $color;
+    }
+
+    /**
+     * Highlight query terms
+     *
+     * @param integer &$colorIndex
+     * @param Zend_Search_Lucene_Document_Html $doc
+     */
+    abstract public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex);
 
     /**
      * Highlight matches in $inputHTML
@@ -149,9 +198,12 @@ abstract class Zend_Search_Lucene_Search_Query
      */
     public function highlightMatches($inputHTML)
     {
-        /** @todo implementation */
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHTML);
 
-        return $inputHTML;
+        $colorIndex = 0;
+        $this->highlightMatchesDOM($doc, $colorIndex);
+
+        return $doc->getHTML();
     }
 }
 

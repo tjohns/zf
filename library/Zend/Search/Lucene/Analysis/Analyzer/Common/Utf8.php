@@ -67,7 +67,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
         if (strcasecmp($this->_encoding, 'utf8' ) != 0  ||
             strcasecmp($this->_encoding, 'utf-8') != 0 ) {
                 $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
-                $this->_encoding = 'ASCII';
+                $this->_encoding = 'UTF-8';
         }
 
         // Get UTF-8 string length.
@@ -138,7 +138,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
                 $char = '';
             }
 
-            $termStartPosition = $this->_position;
+            $termStartPosition = $this->_position - 1;
             $termText = $char;
 
             // read token
@@ -155,7 +155,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
             $token = new Zend_Search_Lucene_Analysis_Token(
                                       $termText,
                                       $termStartPosition,
-                                      $this->_position);
+                                      $this->_position - 1);
             $token = $this->normalize($token);
             if ($token !== null) {
                 return $token;
