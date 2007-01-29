@@ -70,7 +70,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
         true を返す場合にのみ適用されます。
         </para>
 
-        <programlisting role="php"><![CDATA[require_once 'Zend/Acl.php';
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 $acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
