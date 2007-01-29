@@ -2,27 +2,25 @@
 	<title>Action Controllers</title>
 
 	<sect2 id="zend.controller.action.introduction">
-		<title>Introduction</title>
+		<title>Uvod</title>
 		<para>
-            <code>Zend_Controller_Action</code> is an abstract class you may use
-            for implementing Action Controllers for use with the Front
-            Controller when building a website based on the
-            Model-View-Controller (MVC) pattern.
+            <code>Zend_Controller_Action</code> je abstraktná trieda ktorá sa
+            používa na vytvorenie skupiny akcii, ktoré sa používajú
+            pri WWW sídle vytvorenom na základe vzoru Model-View-Controller
+            (MVC).
 		</para>
 
 		<para>
-            To use Zend_Controller_Action, you will need to subclass it in your
-            actual action controllers (or subclass it to create your own base
-            class for action controllers). The most basic operation is to
-            subclass it, and create action methods that correspond to the
-            various actions you wish the controller to handle for your site.
-            Zend_Controller's routing and dispatch handling will autodiscover
-            any methods ending in 'Action' in your class as potential
-            controller actions.
+            Pre použitie Zend_Controller_Action je potrebne vytvoriť odvodenú
+            triedu (alebo odvodenú triedu ktorá bude základom pre ostatné
+            skupiny akcii). Najčastejšie sa vytvára odvodená trieda ktorej
+            metódy zodpovedajú akciám ktoré je potrebné vytvoriť na svojom WWW sídle.
+            Trieda Zend_Controller automaticky používa ako akcie všetky metódy,
+            ktoré končia na 'Action'.
         </para>
 
         <para>
-            For example, let's say your class is defined as follows:
+            Ako príklad, uvedieme nasledujúcu odvodenú triedu:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -41,36 +39,36 @@ class FooController extends Zend_Controller_Action
 ]]></programlisting>
             
         <para>
-            The above FooController class (controller 'foo') defines two
-            actions, 'bar' and 'baz'.
+            Uvedená odvodená trieda FooController (skupina akcii 'Foo') definuje
+            dve akcie: 'bar' a 'baz'.
         </para>
 
         <para>
-            There's much more that can be accomplished than this, such as custom
-            initialization actions, default actions to call should no action (or
-            an invalid action) be specified, pre- and post-dispatch hooks, and a
-            variety of helper methods. This chapter serves as an overview of the
-            action controller functionality
+            Nasledujúca časť približuje možnosti, ktoré môžu byt realizované 
+            zmenou metód v odvodenej triede, ako napríklad vlastnú inicializačnú
+            postupnosť, ošetrenie neexistujúcich (zlých) akcii, definovanie 
+            operácii ktoré sa majú vykonať pred a po vykonaní akcie a ďalšie iné
+            činnosti.
         </para>
     </sect2>
 
 	<sect2 id="zend.controller.action.initialization">
-        <title>Object initialization</title>
+        <title>Inicializácia objektu</title>
 
         <para>
-            While you can always override the action controller's constructor,
-            we do not recommend this. Zend_Controller_Action::__construct()
-            performs some important tasks, such as registring the request and
-            response objects, as well as any custom invocation arguments passed
-            in from the front controller. If you must override the constructor,
-            be sure to call parent::__construct($request, $response,
-            $invokeArgs).
+            Je možne zmeniť konštruktor objektu, ale tento postup nie je
+            odporúčaný. Metóda Zend_Controller_Action::__construct() realizuje
+            niekoľko dôležitých úloh ako napríklad registráciu request, response
+            objektov a tiež ľubovoľné vlastné parametre ktoré boli predané 
+            z front controller-a. Ak je potrebné zmeniť konštruktor objektu, je
+            vhodné, zavolať rodičovský konštruktor 
+            parent::__construct($request, $response, $invokeArgs)
         </para>
 
         <para>
-            The more appropriate way to customize instantiation is to use the
-            init() method, which is called as the last task of __construct().
-            For example, if you want to connect to a database at instantiation:
+            Vhodnejšie je predefinovať metódu init(), ktorá sa vola ako posledná
+            z konštruktoru __construct(). V tejto metóde sa napríklad môžeme 
+            pripojiť k databáze:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -94,12 +92,11 @@ class FooController extends Zend_Controller_Action
         <title>Pre- and Post-Dispatch Hooks</title>
 
         <para>
-            Zend_Controller_Action specifies two methods that may be called to
-            bookend a requested action, preDispatch() and postDispatch(). These
-            can be useful in a variety of ways: verifying authentication and
-            ACLs prior to running an action (by calling _forward() in
-            preDispatch(), the action will be skipped), for instance, or placing
-            generated content in a sitewide template (postDispatch()).
+            Zend_Controller_Action ponúka dve metódy, preDispatch() a postDispatch(),
+            ktoré môžu byť vyvolané pri vyžiadanej akcii. Je ich možné použiť
+            na rôzne úkony ako napríklad na znovu overenie prístupových práv ešte pred
+            samostatnou akciou (ak sa zavolá _forward() v metóde preDispatch()
+            akcia bude preskočená), alebo uloženie vygenerovaného obsahu (postDispatch()).
         </para>
     </sect2>
 
