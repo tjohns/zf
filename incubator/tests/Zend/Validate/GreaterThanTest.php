@@ -69,4 +69,26 @@ class Zend_Validate_GreaterThanTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $validator = new Zend_Validate_GreaterThan(10);
+        $this->assertEquals(array(), $validator->getMessages());
+    }
+
+    /**
+     * Ensures that getMin() returns expected value
+     *
+     * @return void
+     */
+    public function testGetMin()
+    {
+        $validator = new Zend_Validate_GreaterThan(10);
+        $this->assertEquals(10, $validator->getMin());
+    }
 }

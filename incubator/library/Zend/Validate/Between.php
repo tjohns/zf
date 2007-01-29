@@ -76,9 +76,9 @@ class Zend_Validate_Between implements Zend_Validate_Interface
      */
     public function __construct($min, $max, $inclusive = true)
     {
-        $this->_min       = $min;
-        $this->_max       = $max;
-        $this->_inclusive = $inclusive;
+        $this->setMin($min)
+             ->setMax($max)
+             ->setInclusive($inclusive);
     }
 
     /**

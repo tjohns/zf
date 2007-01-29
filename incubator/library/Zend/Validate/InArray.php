@@ -65,8 +65,8 @@ class Zend_Validate_InArray implements Zend_Validate_Interface
      */
     public function __construct(array $haystack, $strict = false)
     {
-        $this->_haystack = $haystack;
-        $this->_strict   = $strict;
+        $this->setHaystack($haystack)
+             ->setStrict($strict);
     }
 
     /**

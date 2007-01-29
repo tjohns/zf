@@ -60,6 +60,7 @@ class Zend_Validate_BetweenTest extends PHPUnit_Framework_TestCase
          */
         $valuesExpected = array(
             array(1, 100, true, true, array(1, 10, 100)),
+            array(1, 100, true, false, array(0, 0.99, 100.01, 101)),
             array(1, 100, false, false, array(0, 1, 100, 101)),
             array('a', 'z', true, true, array('a', 'b', 'y', 'z')),
             array('a', 'z', false, false, array('!', 'a', 'z'))
@@ -70,5 +71,49 @@ class Zend_Validate_BetweenTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[3], $validator->isValid($input));
             }
         }
+    }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $validator = new Zend_Validate_Between(1, 10);
+        $this->assertEquals(array(), $validator->getMessages());
+    }
+
+    /**
+     * Ensures that getMin() returns expected value
+     *
+     * @return void
+     */
+    public function testGetMin()
+    {
+        $validator = new Zend_Validate_Between(1, 10);
+        $this->assertEquals(1, $validator->getMin());
+    }
+
+    /**
+     * Ensures that getMax() returns expected value
+     *
+     * @return void
+     */
+    public function testGetMax()
+    {
+        $validator = new Zend_Validate_Between(1, 10);
+        $this->assertEquals(10, $validator->getMax());
+    }
+
+    /**
+     * Ensures that getInclusive() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetInclusive()
+    {
+        $validator = new Zend_Validate_Between(1, 10);
+        $this->assertEquals(true, $validator->getInclusive());
     }
 }

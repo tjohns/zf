@@ -57,7 +57,7 @@ class Zend_Validate_LessThan implements Zend_Validate_Interface
      */
     public function __construct($max)
     {
-        $this->_max = $max;
+        $this->setMax($max);
     }
 
     /**

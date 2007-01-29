@@ -57,7 +57,7 @@ class Zend_Validate_GreaterThan implements Zend_Validate_Interface
      */
     public function __construct($min)
     {
-        $this->_min = $min;
+        $this->setMin($min);
     }
 
     /**

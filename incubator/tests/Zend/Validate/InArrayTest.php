@@ -59,4 +59,37 @@ class Zend_Validate_InArrayTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($validator->isValid(2.3));
         $this->assertTrue($validator->isValid(2.3e0));
     }
+
+    /**
+     * Ensures that getMessages() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $validator = new Zend_Validate_InArray(array(1, 2, 3));
+        $this->assertEquals(array(), $validator->getMessages());
+    }
+
+    /**
+     * Ensures that getHaystack() returns expected value
+     *
+     * @return void
+     */
+    public function testGetHaystack()
+    {
+        $validator = new Zend_Validate_InArray(array(1, 2, 3));
+        $this->assertEquals(array(1, 2, 3), $validator->getHaystack());
+    }
+
+    /**
+     * Ensures that getStrict() returns expected default value
+     *
+     * @return void
+     */
+    public function testGetStrict()
+    {
+        $validator = new Zend_Validate_InArray(array(1, 2, 3));
+        $this->assertEquals(false, $validator->getStrict());
+    }
 }
