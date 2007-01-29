@@ -218,6 +218,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     {
         $textNodes = array();
 
+        if (!isset($contextNode->childNodes)  ||  !is_array($contextNode->childNodes)) {
+            return;
+        }
+
         foreach ($contextNode->childNodes as $childNode) {
             if ($childNode->nodeType == XML_TEXT_NODE) {
                 // process node later to leave childNodes structure untouched
