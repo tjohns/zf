@@ -408,4 +408,21 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($view->bar));
         $this->assertTrue(empty($view->baz));
     }
+
+    public function testFluidInterfaces()
+    {
+        $view = new Zend_View();
+        try {
+            $test = $view->setEscape('strip_tags')
+                ->setFilter('htmlspecialchars')
+                ->setEncoding('UTF-8')
+                ->setScriptPath(dirname(__FILE__) . '/View/_templates')
+                ->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1')
+                ->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1');
+        } catch (Exception $e){
+            $this->fail('Setters should not throw exceptions');
+        }
+
+        $this->assertTrue($test instanceof Zend_View);
+    }
 }

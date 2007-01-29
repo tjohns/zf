@@ -240,12 +240,13 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * To clear all paths, use Zend_View::setScriptPath(null).
      *
      * @param string|array The directory (-ies) to set as the path.
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setScriptPath($path)
     {
         $this->_path['script'] = array();
         $this->_addPath('script', $path);
+        return $this;
     }
 
     /**
@@ -283,7 +284,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * @param string|array $path The directory (-ies) to set as the path.
      * @param string $classPrefix The class prefix to apply to all elements in 
      * $path; defaults to Zend_View_Helper
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setHelperPath($path, $classPrefix = 'Zend_View_Helper_')
     {
@@ -292,6 +293,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         }
 
         $this->_setPath('helper', $path, $classPrefix);
+        return $this;
     }
 
     /**
@@ -334,7 +336,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * @param string|array The directory (-ies) to set as the path.
      * @param string $classPrefix The class prefix to apply to all elements in 
      * $path; defaults to Zend_View_Filter
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setFilterPath($path, $classPrefix = 'Zend_View_Filter_')
     {
@@ -343,6 +345,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         }
 
         $this->_setPath('filter', $path, $classPrefix);
+        return $this;
     }
 
     /**
@@ -384,23 +387,25 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * To clear all filters, use Zend_View::setFilter(null).
      *
      * @param string|array One or more filters to set.
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setFilter($name)
     {
         $this->_filter = array();
         $this->addFilter($name);
+        return $this;
     }
 
     /**
      * Sets the _escape() callback.
      *
      * @param mixed $spec The callback for _escape() to use.
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setEscape($spec)
     {
         $this->_escape = $spec;
+        return $this;
     }
 
     /**
@@ -528,11 +533,12 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * Set encoding to use with htmlentities() and htmlspecialchars()
      * 
      * @param string $encoding 
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function setEncoding($encoding)
     {
         $this->_encoding = $encoding;
+        return $this;
     }
 
     /**
