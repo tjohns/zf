@@ -78,7 +78,7 @@ abstract class Zend_Environment_Security_Test
 	 *
 	 * @var integer
 	 */
-	protected $_result = NULL;
+	protected $_result = self::RESULT_NOTRUN;
 
 
 	/**
@@ -124,7 +124,7 @@ abstract class Zend_Environment_Security_Test
 	                        );
 
 
-		/**
+	/**
 	 * Constructor for Test skeleton class
 	 *
 	 * @return PhpSecInfo_Test
@@ -168,11 +168,11 @@ abstract class Zend_Environment_Security_Test
 	 *
 	 */
 	protected function _setMessages() {
-		$this->setMessageForResult(PHPSECINFO_TEST_RESULT_OK,		'en', 'This setting should be safe');
-		$this->setMessageForResult(PHPSECINFO_TEST_RESULT_NOTICE,	'en', 'This could potentially be a security issue');
-		$this->setMessageForResult(PHPSECINFO_TEST_RESULT_WARN,	'en', 'This setting may be a serious security problem');
-		$this->setMessageForResult(PHPSECINFO_TEST_RESULT_ERROR,	'en', 'There was an error running this test');
-		$this->setMessageForResult(PHPSECINFO_TEST_RESULT_NOTRUN,	'en', 'This test cannot be run');
+		$this->setMessageForResult(self::RESULT_OK,		'en', 'This setting should be safe');
+		$this->setMessageForResult(self::RESULT_NOTICE,	'en', 'This could potentially be a security issue');
+		$this->setMessageForResult(self::RESULT_WARN,	'en', 'This setting may be a serious security problem');
+		$this->setMessageForResult(self::RESULT_ERROR,	'en', 'There was an error running this test');
+		$this->setMessageForResult(self::RESULT_NOTRUN,	'en', 'This test cannot be run');
 	}
 
 
@@ -305,7 +305,7 @@ abstract class Zend_Environment_Security_Test
 	 */
 	public function getMoreInfoURL() {
 		if ($tn = $this->getTestName()) {
-			return self::MOREINFO_BASEURL.strtolower("{$tn}/");
+			return self::MOREINFO_BASEURL.strtolower("{$tn}.html");
 		} else {
 			return false;
 		}

@@ -28,7 +28,7 @@ require_once 'Zend/Environment/Exception.php';
 
 
 /**
- * Zend_Environment_Container_Abstract
+ * Zend_Environment_Field
  */
 require_once 'Zend/Environment/Field.php';
 

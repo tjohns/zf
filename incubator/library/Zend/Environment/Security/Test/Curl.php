@@ -46,7 +46,9 @@ abstract class Zend_Environment_Security_Test_Curl extends Zend_Environment_Secu
 	 *
 	 */
 	protected function _setMessages() {
+	   parent::_setMessages();
 	   $this->setMessageForResult(self::RESULT_NOTRUN, 'en', "CURL support is not enabled in your PHP install");
 	}
+
 
 }

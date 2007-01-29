@@ -85,7 +85,8 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
 			$this_dir = dir($test_root->path.DIRECTORY_SEPARATOR.$test_dir);
 
 			while (false !== ($entry = $this_dir->read())) {
-				if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)) {
+				if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)
+					&& preg_match("/[A-Za-z]+\.php/i", $entry)) {
 					include_once $this_dir->path.DIRECTORY_SEPARATOR.$entry;
 					$classNames[] = "Zend_Environment_Security_Test_".$test_dir."_".basename($entry, '.php');
 				}

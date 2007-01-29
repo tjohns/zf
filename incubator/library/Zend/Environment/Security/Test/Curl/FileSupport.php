@@ -65,6 +65,7 @@ class Zend_Environment_Security_Test_Curl_FileSupport extends Zend_Environment_S
 	 *
 	 */
 	protected function _setMessages() {
+	    parent::_setMessages();
 	    $this->setMessageForResult(self::RESULT_OK, 'en', "You are running PHP 4.4.4 or higher, or PHP 5.1.6 or higher.  These versions fix the security hole present in the cURL functions that allow it to bypass safe_mode and open_basedir restrictions.");
 		$this->setMessageForResult(self::RESULT_WARN, 'en', "A security hole present in your version of PHP allows the cURL functions to bypass safe_mode and open_basedir restrictions.  You should upgrade to the latest version of PHP.");
 	}

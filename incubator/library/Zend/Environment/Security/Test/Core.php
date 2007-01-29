@@ -26,30 +26,18 @@ require_once 'Zend/Environment/Security/Test.php';
 
 
 
-abstract class Zend_Environment_Security_Test_CGI extends Zend_Environment_Security_Test
+abstract class Zend_Environment_Security_Test_Core extends Zend_Environment_Security_Test
 {
 
-    protected $_group = 'cgi';
+    protected $_group = 'core';
 
 	/**
-	 * No CGI tests should be run if the CGI SAPI isn't being used
-	 *
+	 * "Core" tests should pretty much be always testable, so the default is just to return true
+	 * 
 	 * @return boolean
 	 */
 	public function isTestable() {
-        return strpos(php_sapi_name(), 'cgi') === 0;
+		
+		return true;
 	}
-
-
-	/**
-	 * Set the messages specific to this test
-	 *
-	 * @access	public
-	 * @return	null
-	 */
-	protected function _setMessages() {
-		parent::_setMessages();
-		$this->setMessageForResult(self::RESULT_NOTRUN, 'en', "You don't seem to be using the CGI SAPI");
-	}
-
 }
