@@ -241,9 +241,9 @@ foreach ($hits as $hit) {
 		<title>Ergebnisgewichtung</title>
         <para>
             Zend_Search_Lucene verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Die
-            Suchergebnisse werden nach einem Punktwert sortiert. Treffer mit höherem Punktwert
-            kommen zuerst, und Dokumente mit höherem Punktwert passen auf die Abfrage besser als 
-            solche mit niedrigerem Punktwert.
+            Treffer in den Suchergebnisse werden standardmäßig nach einem Punktwert sortiert. 
+            Treffer mit höherem Punktwert kommen zuerst, und Dokumente mit höherem Punktwert passen 
+            auf die Abfrage besser als solche mit niedrigerem Punktwert.
             
         </para>
 

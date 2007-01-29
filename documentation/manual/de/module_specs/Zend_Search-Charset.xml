@@ -38,7 +38,7 @@
         </para>
 
         <para>
-            ctype_alpha() is not UTF-8 compatible, so it converts text to 'ASCII//TRANSLIT' encoding before
+            ctype_alpha() is not UTF-8 compatible, so analyzer converts text to 'ASCII//TRANSLIT' encoding before
             indexing. The same processing is performed during query parsing, so it's done
             transparently.
             <footnote>

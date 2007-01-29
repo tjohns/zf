@@ -101,7 +101,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
         
             <para>
                 Each of these methods (excluding <code>Zend_Search_Lucene_Field::Binary()</code> method) has optional
-                <code>$encoding</code> paremeter. It specifies input data encoding.
+                <code>$encoding</code> parameter. It specifies input data encoding.
             </para>
 
             <para>
