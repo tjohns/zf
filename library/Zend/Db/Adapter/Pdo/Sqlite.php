@@ -81,17 +81,6 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
-     * Quotes an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
-     */
-    public function quoteIdentifier($ident)
-    {
-        return $this->quote($ident);
-    }
-
-    /**
      * Returns a list of the tables in the database.
      *
      * @return array
@@ -108,24 +97,47 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Returns the column descriptions for a table.
      *
-     * @param string $table
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATATYPE    => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "PRAGMA table_info($table)";
+        $sql = "PRAGMA table_info($tableName)";
         $result = $this->fetchAll($sql);
-        $descr = array();
-        foreach ($result as $key => $val) {
-            $descr[$val['name']] = array(
-                'name'    => $val['name'],
-                'type'    => $val['type'],
-                'notnull' => (bool) $val['notnull'],
-                'default' => $val['dflt_value'],
-                'primary' => (bool) $val['pk'],
+        $desc = array();
+        foreach ($result as $key => $row) {
+            $desc[$row['name']] = array(
+                'SCHEMA_NAME' => null,
+                'TABLE_NAME'  => $tableName,
+                'COLUMN_NAME' => $row['name'],
+                'DATA_TYPE'   => $row['type'],
+                'DEFAULT'     => $row['dflt_value'],
+                'NULLABLE'    => ! (bool) $row['notnull'],
+                'LENGTH'      => null,
+                'SCALE'       => null,
+                'PRECISION'   => null,
+                'PRIMARY'     => (bool) $row['pk'],
             );
         }
-        return $descr;
+        return $desc;
     }
 
     /**

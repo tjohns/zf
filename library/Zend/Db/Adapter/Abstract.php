@@ -425,23 +425,31 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Abstract Methods
-     */
-
-    /**
      * Quotes an identifier.
      *
      * @param string $ident The identifier.
      * @return string The quoted identifier.
      */
-    abstract public function quoteIdentifier($string);
+    public function quoteIdentifier($ident)
+    {
+        $q = $this->getQuoteIdentifierSymbol();
+        $ident = str_replace("$q", "$q$q", $ident);
+        return $q . $ident . $q;
+    }
 
     /**
      * Returns the symbol the adapter uses for delimited identifiers.
      *
      * @return string
      */
-    abstract public function getQuoteIdentifier();
+    public function getQuoteIdentifierSymbol()
+    {
+        return '"';
+    }
+
+    /**
+     * Abstract Methods
+     */
 
     /**
      * Returns a list of the tables in the database.

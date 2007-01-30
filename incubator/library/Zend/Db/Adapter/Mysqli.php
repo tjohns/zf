@@ -52,16 +52,13 @@ require_once 'Zend/Db/Statement/Mysqli.php';
 
 class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
 {
+
     /**
-     * Quotes an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
+     * @return string
      */
-    public function quoteIdentifier($ident)
+    public function getQuoteIdentifierSymbol()
     {
-        $ident = str_replace('`', '``', $ident);
-        return "`$ident`"; 
+        return "`";
     }
 
     /**
@@ -79,7 +76,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      *
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($table, $schemaName = null)
     {
         $sql = "DESCRIBE $table";
         $this->_connect();

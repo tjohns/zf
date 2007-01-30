@@ -44,23 +44,13 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
     protected $_pdoType = 'pgsql';
 
     /**
-     * Quotes an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
-     */
-    public function quoteIdentifier($ident)
-    {
-        return '"' . $this->quote($ident) . '"';
-    }
-
-    /**
      * Returns a list of the tables in the database.
      *
      * @return array
      */
     public function listTables()
     {
+        // @todo use a better query with joins instead of subqueries
         $sql = "SELECT c.relname AS table_name "
              . "FROM pg_class c, pg_user u "
              . "WHERE c.relowner = u.usesysid AND c.relkind = 'r' "
@@ -80,10 +70,28 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Returns the column descriptions for a table.
      *
-     * @param string $table
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATATYPE    => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
         $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, format_type(a.atttypid, a.atttypmod) AS complete_type, "
              . "a.attnotnull AS isnotnull, "
@@ -102,9 +110,23 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
              . "AND a.attrelid = c.oid "
              . "AND a.atttypid = t.oid "
              . "ORDER BY a.attnum ";
-        $result = $this->fetchAll($sql);
+
+        /*
+         * @todo use a better query with joins instead of subqueries
+         *
+        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type,
+                FORMAT_TYPE(a.atttypid, a.atttypmod) AS complete_type,
+                a.attnotnull AS nullable, COALESCE(i.indrelid, 0) AS pri
+            FROM pg_attribute AS a
+                JOIN pg_class AS c ON a.attrelid = c.oid
+                JOIN pg_type AS t ON a.atttypid = t.oid
+                LEFT OUTER JOIN pg_index AS i ON (i.indrelid = c.oid AND i.indkey[0] = a.attnum AND i.indisprimary = 't')
+            WHERE c.relname = '$tableName' AND a.attnum > 0"
+         */
+
+        $result = $this->query($sql);
         $descr = array();
-        foreach ($result as $key => $val) {
+        while ($row = $result->fetch()) {
             if ($val['type'] === 'varchar') {
                 // need to add length to the type so we are compatible with
                 // Zend_Db_Adapter_Pdo_Pgsql!
@@ -118,9 +140,27 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 'default' => $val['default'],
                 'primary' => ($val['pri'] == 't'),
             );
+
+            /*
+             * @todo conform to standard format
+             *
+            $desc[$row['field']] = array(
+                'SCHEMA_NAME' => '',
+                'TABLE_NAME'  => $tableName,
+                'COLUMN_NAME' => $row['field'],
+                'DATA_TYPE'   => $row['type'],
+                'DEFAULT'     => $row['default'],
+                'NULLABLE'    => (bool) ($row['null'] == 'YES'),
+                'LENGTH'      => ''
+                'SCALE'       => ''
+                'PRECISION'   => ''
+                'PRIMARY'     => (bool) (strtoupper($val['key']) == 'PRI')
+            );
+             */
         }
         return $descr;
     }
+
 
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.

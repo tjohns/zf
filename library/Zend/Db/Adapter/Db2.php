@@ -244,21 +244,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Quote an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
-     */
-    public function quoteIdentifier($string)
-    {
-        $identQuote = $this->getQuoteIdentifier();
-        return $identQuote . $string . $identQuote;
-    }
-
-    /**
      * @return string
      */
-    public function getQuoteIdentifier()
+    public function getQuoteIdentifierSymbol()
     {
         $info = db2_server_info($this->_connection);
         $identQuote = $info->IDENTIFIER_QUOTE_CHAR;
@@ -281,7 +269,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
         $tables = array();
 
-        while ($tables[] = db2_fetch_assoc($stmt));
+        while ($row = db2_fetch_assoc($stmt)) {
+            $tables[] = $row['TABLE_NAME'];
+        }
 
         return $tables;
     }

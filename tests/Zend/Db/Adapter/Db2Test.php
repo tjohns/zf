@@ -37,7 +37,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     public function getCreateTableSQL()
     {
         $sql = 'CREATE TABLE  '. self::TableName . '
-        (id NUMBER(11) PRIMARY KEY, subTitle VARCHAR2(100), title VARCHAR2(100), body VARCHAR2(100), date_created VARCHAR2(100))';
+        (id INT NOT NULL PRIMARY KEY, subTitle VARCHAR(100), title VARCHAR(100), body VARCHAR(100), date_created VARCHAR(100))';
         return $sql;
     }
 
@@ -49,13 +49,13 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     protected function getCreateSequenceSQL()
     {
-        $sql = 'CREATE SEQUENCE ' . self::SequenceName;
+        $sql = 'CREATE SEQUENCE ' . self::SequenceName . ' AS INTEGER';
         return $sql;
     }
 
     protected function getDropSequenceSQL()
     {
-        $sql = 'DROP SEQUENCE ' . self::SequenceName;
+        $sql = 'DROP SEQUENCE ' . self::SequenceName . ' RESTRICT';
         return $sql;
     }
 
@@ -78,16 +78,14 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     protected function tearDownMetadata()
     {
-        /*
-        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES');
-        if (in_array(self::TableName, $tableList['TABLE_NAME'])) {
+        $tableList = $this->_db->fetchCol('SELECT tabname FROM SYSCAT.TABLES');
+        if (in_array(self::TableName, $tableList)) {
             $this->_db->query($this->getDropTableSQL());
         }
-        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
-        if (in_array(self::SequenceName, $seqList['SEQUENCE_NAME'])) {
+        $seqList = $this->_db->fetchCol('SELECT seqname FROM SYSCAT.SEQUENCES');
+        if (in_array(self::SequenceName, $seqList)) {
             $this->_db->query($this->getDropSequenceSQL());
         }
-         */
     }
 
     protected function createTestTable()
@@ -98,11 +96,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         $this->_db->query($this->getCreateTableSQL());
 
         $sql = 'INSERT INTO ' . self::TableName . " (id, title, subTitle, body, date_created)
-                VALUES (" . self::SequenceName . ".nextval, 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
+                VALUES (NEXTVAL FOR " . self::SequenceName . ", 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . self::TableName . " (id, title, subTitle, body, date_created)
-                VALUES (" . self::SequenceName . ".nextval, 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
+                VALUES (NEXTVAL FOR " . self::SequenceName . ", 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
     }
 
@@ -110,7 +108,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("St John\"s Wort", $value);
+        $this->assertEquals("'St John\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quote("St John's Wort");
@@ -138,16 +136,16 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         $this->assertEquals("id='St John\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
+        $value = $this->_db->quoteInto('id = ?', "St John's Wort");
         $this->assertEquals("id = 'St John''s Wort'", $value);
     }
 
     public function testQuoteIdentifier()
     {
         $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals("'table_name'", $value);
+        $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals("'table_`_name'", $value);
+        $this->assertEquals('"table_`_name"', $value);
     }
 
     public function testInsert()

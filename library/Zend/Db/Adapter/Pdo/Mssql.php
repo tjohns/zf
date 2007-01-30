@@ -48,7 +48,17 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function quoteIdentifier($ident)
     {
-        return '[' . str_replace(']', ']]', $ident) . ']';
+        $q = $this->getQuoteIdentifierSymbol();
+        $ident = str_replace("$q[1]", "$q[1]$q[1]", $ident);
+        return $q[0] . $ident . $q[1];
+    }
+
+    /**
+     * @return array
+     */
+    public function getQuoteIdentifierSymbol()
+    {
+        return array('[', ']');
     }
 
     /**
@@ -65,37 +75,49 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Returns the column descriptions for a table.
      *
-     * @param string $table
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATATYPE    => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($table);
+        $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($tableName);
         $result = $this->fetchAll($sql);
-        $descr = array();
-        foreach ($result as $key => $val) {
-            if (strstr($val['type_name'], ' ')) {
-                list($type, $identity) = explode(' ', $val['type_name']);
-            } else {
-                $type = $val['type_name'];
-                $identity = '';
-            }
+        $desc = array();
+        foreach ($result as $key => $row) {
+            list($type, $identity) = explode(' ', $row['type_name']);
 
-            if ($type == 'varchar') {
-                // need to add length to the type so we are compatible with
-                // Zend_Db_Adapter_Pdo_Mysql!
-                $type .= '('.$val['length'].')';
-            }
-
-            $descr[$val['column_name']] = array(
-                'name'    => $val['column_name'],
-                'type'    => $type,
-                'notnull' => (bool) ($val['is_nullable'] === 'NO'),
-                'default' => $val['column_def'],
-                'primary' => (strtolower($identity) == 'identity'),
+            $desc[$row['column_name']] = array(
+                'SCHEMA_NAME' => null,
+                'TABLE_NAME'  => $row['table_name'],
+                'COLUMN_NAME' => $row['column_name'],
+                'DATA_TYPE'   => $type,
+                'DEFAULT'     => $row['column_def'],
+                'NULLABLE'    => (bool) $row['nullable'],
+                'LENGTH'      => $row['length'],
+                'SCALE'       => $row['scale'],
+                'PRECISION'   => $row['precision'],
+                'PRIMARY'     => (bool)(strtolower($identity) == 'identity')
             );
         }
-        return $descr;
+        return $desc;
     }
 
     /**

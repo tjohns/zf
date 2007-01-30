@@ -44,20 +44,11 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
     protected $_pdoType = 'mysql';
 
     /**
-     * Quotes an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
-     * @todo Quoting in this function does not work for versions older than 4.1.x:
-     *       http://dev.mysql.com/doc/refman/4.1/en/legal-names.html
-     * @todo filter according to *all* of the rules in:
-     *       http://dev.mysql.com/doc/refman/5.0/en/legal-names.html
-     * @todo this function is an exact duplicate of the one in Pdo/Mysql.php
+     * @return string
      */
-    public function quoteIdentifier($ident)
+    public function getQuoteIdentifierSymbol()
     {
-        $ident = str_replace('`', '``', $ident);
-        return "`$ident`";
+        return "`";
     }
 
     /**
@@ -73,24 +64,47 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Returns the column descriptions for a table.
      *
-     * @param string $table
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATATYPE    => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
         $sql = "DESCRIBE $table";
         $result = $this->fetchAll($sql);
-        $descr = array();
-        foreach ($result as $key => $val) {
-            $descr[$val['field']] = array(
-                'name'    => $val['field'],
-                'type'    => $val['type'],
-                'notnull' => (bool) ($val['null'] != 'YES'), // not null is NO or empty, null is YES
-                'default' => $val['default'],
-                'primary' => (strtolower($val['key']) == 'pri'),
+        $desc = array();
+        foreach ($result as $key => $row) {
+            $desc[$row['field']] = array(
+                'SCHEMA_NAME' => null,
+                'TABLE_NAME'  => $tableName,
+                'COLUMN_NAME' => $row['field'],
+                'DATA_TYPE'   => $row['type'],
+                'DEFAULT'     => $row['default'],
+                'NULLABLE'    => (bool) ($row['null'] == 'YES'),
+                'LENGTH'      => null,
+                'SCALE'       => null,
+                'PRECISION'   => null,
+                'PRIMARY'     => (bool) (strtoupper($val['key']) == 'PRI')
             );
         }
-        return $descr;
+        return $desc;
     }
 
     /**

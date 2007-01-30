@@ -111,6 +111,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * Creates a connection resource.
      *
      * @return void
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     protected function _connect()
     {
@@ -138,7 +139,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         }
     }
 
-
     /**
      * Returns an SQL statement for preparation.
      *
@@ -159,16 +159,16 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @param string $tableName   name of table associated with sequence
      * @param string $primaryKey  not used in this adapter
      * @return integer
-     * @throws Zend_Db_Adapter
+     * @throws Zend_Db_Adapter_Exception
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        if (!$tableName) {
-            throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
+        if ($sequenceName == null) {
+            throw new Zend_Db_Adapter_Exception('You must specify a sequence name with lastInsertId()');
         }
         $this->_connect();
-        $data = $this->fetchCol("SELECT $tableName.currval FROM dual");
-        return $data[0]; //we can't fail here, right? if the sequence doesn't exist we should fail earlier.
+        $data = $this->fetchOne("SELECT $sequenceName.CURRVAL FROM DUAL");
+        return $data;
     }
 
     /**
@@ -186,27 +186,53 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     /**
      * Returns the column descriptions for a table.
      *
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATA_TYPE   => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @todo Improve discovery of primary key columns.
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
-        $table = strtoupper($table);
-        $sql = "SELECT column_name, data_type, data_length, nullable, data_default
-            FROM all_tab_columns
-            WHERE table_name='$table' ORDER BY column_name";
-        $result = $this->query($sql);
-        while ($val = $result->fetch()) {
-            $descr[$val['column_name']] = array(
-               'name'    => $val['column_name'],
-               'notnull' => (bool)($val['nullable'] === 'N'), // nullable is N when mandatory
-               'type'    => $val['data_type'],
-               'default' => $val['data_default'],
-               'length'  => $val['data_length']
+        $tableName = strtoupper($tableName);
+        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, DATA_DEFAULT, NULLABLE, DATA_LENGTH, DATA_SCALE, DATA_PRECISION
+            FROM ALL_TAB_COLUMNS
+            WHERE TABLE_NAME = '$tableName'";
+        $result = $this->fetchAll($sql);
+        $desc = array();
+        foreach ($result as $key => $row) {
+            $desc[$val['COLUMN_NAME']] = array(
+                'SCHEMA_NAME' => '',
+                'TABLE_NAME'  => $row['TABLE_NAME'],
+                'COLUMN_NAME' => $row['COLUMN_NAME'],
+                'DATA_TYPE'   => $row['DATA_TYPE'],
+                'DEFAULT'     => $row['DATA_DEFAULT'],
+                'NULLABLE'    => (bool) ($row['NULLABLE'] == 'Y'),
+                'LENGTH'      => $row['DATA_LENGTH'],
+                'SCALE'       => $row['DATA_SCALE'],
+                'PRECISION'   => $row['DATA_PRECISION'],
+                'PRIMARY'     => (bool) 0
             );
         }
-        return $descr;
+        return $desc;
     }
-
 
     /**
      * Leave autocommit mode and begin a transaction.
@@ -222,6 +248,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * Commit a transaction and return to autocommit mode.
      *
      * @return void
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     protected function _commit()
     {
@@ -235,6 +262,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * Roll back a transaction and return to autocommit mode.
      *
      * @return void
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     protected function _rollBack()
     {
@@ -244,7 +272,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $this->_setExecuteMode(OCI_COMMIT_ON_SUCCESS);
     }
 
-
     /**
      * Set the fetch mode.
      *
@@ -252,6 +279,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * @param integer $mode A fetch mode.
      * @return void
+     * @throws Zend_Db_Adapter_Exception
      */
     public function setFetchMode($mode)
     {
@@ -268,32 +296,17 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         }
     }
 
-
     /**
      * Quote a raw string.
      *
      * @param string $value     Raw string
      * @return string           Quoted string
      */
-    protected function _quote($value)
+    public function _quote($value)
     {
-        //@todo should we throw an exception here?
-        return $value;
+        $value = str_replace("'", "''", $value);
+        return "'" . $value . "'";
     }
-
-
-    /**
-     * Quotes an identifier.
-     *
-     * @param string $ident The identifier.
-     * @return string The quoted identifier.
-     */
-    public function quoteIdentifier($ident)
-    {
-        //@todo should we throw an exception here?
-        return $ident;
-    }
-
 
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
@@ -305,23 +318,36 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     public function limit($sql, $count, $offset = 0)
     {
+        $count = intval($count);
+        if ($count <= 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
+        }
+
+        $offset = intval($offset);
+        if ($offset < 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
+        }
+
         /**
-         * Oracle doesn't have a LIMIT statement implementation, so we have to "emulate" it using rnum
+         * Oracle does not implement the LIMIT clause as some RDBMS do.
+         * We have to simulate it with subqueries and ROWNUM.
+         * Unfortunately because we use the column wildcard "*", 
+         * this puts an extra column into the query result set.
          */
-        $limit_sql = "SELECT zsubselect2.*
+        $limit_sql = "SELECT z2.*
             FROM (
-                SELECT rownum zrownum, zsubselect1.*
+                SELECT ROWNUM AS zend_db_rownum, z1.*
                 FROM (
                     " . $sql . "
-                ) zsubselect1
-            ) zsubselect2
-            WHERE zsubselect2.zrownum BETWEEN " . $offset . " AND " . ($offset+$count);
+                ) z1
+            ) z2
+            WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
         return $limit_sql;
     }
 
     /**
      * @param integer $mode
-     * @throws
+     * @throws Zend_Db_Adapter_Exception
      */
     private function _setExecuteMode($mode)
     {
@@ -346,5 +372,4 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
 }
-
 
