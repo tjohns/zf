@@ -1,4 +1,4 @@
-<sect1 id="zend.acl.advanced">
+﻿<sect1 id="zend.acl.advanced">
 
     <title>高级用法</title>
 
@@ -52,7 +52,9 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
         一旦声明类可用，当分配有条件的规则时，开发者必需提供声明类的一个实例。用声明建立的规则只适用于当声明方法返回 true。
         </para>
 
-        <programlisting role="php"><![CDATA[require_once 'Zend/Acl.php';
+        <programlisting role="php"><![CDATA[<?php
+        
+require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 $acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
