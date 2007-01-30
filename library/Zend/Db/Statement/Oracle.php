@@ -319,7 +319,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * @throws Zend_Db_Statement_Oracle_Exception
      * @throws Zend_Db_Statement_Exception
      */
-    public function fetchAll($style = null, $col = null)
+    public function fetchAll($style = null, $col = 0)
     {
         if (!$this->_stmt) {
             return false;
@@ -346,7 +346,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             case Zend_Db::FETCH_OBJ:
                 break;
             case Zend_Db::FETCH_COLUMN:
-                $flags |= OCI_ASSOC;
+                $flags |= OCI_NUM;
                 break;
             default:
                 throw new Zend_Db_Statement_Exception("invalid fetch mode specified");
@@ -364,6 +364,9 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 if (!$rows) {
                     return array();
                 }
+            }
+            if ($style == Zend_Db::FETCH_COLUMN) {
+                $result = $result[$col];
             }
         } else {
             while (($row = oci_fetch_object($this->_stmt)) !== false) {
