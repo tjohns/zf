@@ -394,7 +394,7 @@ final class Zend
         } else {
             $output = '<pre>'
                     . $label
-                    . htmlentities($output, ENT_QUOTES)
+                    . htmlentities($output, ENT_QUOTES, 'UTF-8')
                     . '</pre>';
         }
 
