@@ -152,18 +152,26 @@ class Zend_Db_Select
             $sql .= implode(",\n\t", $this->_parts['order']) . "\n";
         }
 
-        // determine count
-        $count = ! empty($this->_parts['limitCount'])
-            ? (int) $this->_parts['limitCount']
-            : 0;
-
         // determine offset
-        $offset = ! empty($this->_parts['limitOffset'])
-            ? (int) $this->_parts['limitOffset']
-            : 0;
+        $count = 0;
+        $offset = 0;
+        if (!empty($this->_parts['limitOffset'])) {
+            $offset = (int) $this->_parts['limitOffset'];
+            // this should be reduced to the max integer PHP can support
+            $count = intval(9223372036854775807);
+        }
 
-        // add limits, and done
-        return trim($this->_adapter->limit($sql, $count, $offset));
+        // determine count
+        if (!empty($this->_parts['limitCount'])) {
+            $count = (int) $this->_parts['limitCount'];
+        }
+
+        // add limits clause
+        if ($count > 0) {
+            $sql = trim($this->_adapter->limit($sql, $count, $offset));
+        }
+
+        return $sql;
     }
 
     /**
