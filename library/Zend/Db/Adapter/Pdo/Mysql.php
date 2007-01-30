@@ -87,7 +87,7 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "DESCRIBE $table";
+        $sql = "DESCRIBE $tableName";
         $result = $this->fetchAll($sql);
         $desc = array();
         foreach ($result as $key => $row) {
