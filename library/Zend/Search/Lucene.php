@@ -239,7 +239,7 @@ class Zend_Search_Lucene
 
 
     /**
-     * Returns the total number of documents in this index.
+     * Returns the total number of documents in this index (including deleted documents).
      *
      * @return integer
      */
@@ -248,6 +248,58 @@ class Zend_Search_Lucene
         return $this->_docCount;
     }
 
+    /**
+     * Returns one greater than the largest possible document number.
+     * This may be used to, e.g., determine how big to allocate a structure which will have
+     * an element for every document number in an index.
+     *
+     * @return integer
+     */
+    public function maxDoc()
+    {
+        return $this->count();
+    }
+
+    /**
+     * Returns the total number of non-deleted documents in this index.
+     *
+     * @return integer
+     */
+    public function numDocs()
+    {
+        $numDocs = 0;
+
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            $numDocs += $segmentInfo->numDocs();
+        }
+
+        return $numDocs;
+    }
+
+    /**
+     * Checks, that document is deleted
+     *
+     * @param integer
+     * @return boolean
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function isDeleted($id)
+    {
+        if ($id >= $this->_docCount) {
+            throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
+        }
+
+        $segmentStartId = 0;
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            if ($segmentStartId + $segmentInfo->count() > $id) {
+                break;
+            }
+
+            $segmentStartId += $segmentInfo->count();
+        }
+
+        return $segmentInfo->isDeleted($id - $segmentStartId);
+    }
 
     /**
      * Set default search field.

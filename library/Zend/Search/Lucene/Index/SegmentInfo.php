@@ -198,7 +198,6 @@ class Zend_Search_Lucene_Index_SegmentInfo
                         }
                     }
                 }
-
             }
         } catch(Zend_Search_Exception $e) {
             if (strpos($e->getMessage(), 'compound file doesn\'t contain') !== false ) {
@@ -293,13 +292,45 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
-     * Returns the total number of documents in this segment.
+     * Returns the total number of documents in this segment (including deleted documents).
      *
      * @return integer
      */
     public function count()
     {
         return $this->_docCount;
+    }
+
+    /**
+     * Returns number of deleted documents.
+     *
+     * @return integer
+     */
+    private function _deletedCount()
+    {
+        if ($this->_deleted === null) {
+            return 0;
+        }
+
+        if (extension_loaded('bitset')) {
+            return count(bitset_to_array($this->_deleted));
+        } else {
+            return count($this->_deleted);
+        }
+    }
+
+    /**
+     * Returns the total number of non-deleted documents in this segment.
+     *
+     * @return integer
+     */
+    public function numDocs()
+    {
+        if ($this->hasDeletions()) {
+            return $this->_docCount - $this->_deletedCount();
+        } else {
+            return $this->_docCount;
+        }
     }
 
     /**
