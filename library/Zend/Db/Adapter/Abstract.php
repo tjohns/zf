@@ -437,6 +437,13 @@ abstract class Zend_Db_Adapter_Abstract
     abstract public function quoteIdentifier($string);
 
     /**
+     * Returns the symbol the adapter uses for delimited identifiers.
+     *
+     * @return string
+     */
+    abstract public function getQuoteIdentifier();
+
+    /**
      * Returns a list of the tables in the database.
      *
      * @return array
@@ -446,9 +453,28 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Returns the column descriptions for a table.
      *
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATA_TYPE   => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    abstract public function describeTable($table);
+    abstract public function describeTable($tableName, $schemaName = null);
 
     /**
      * Quote a raw string.

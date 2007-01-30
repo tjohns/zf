@@ -238,7 +238,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
-        $value = str_replace('"', "'", $value);
+        $value = str_replace("'", "''", $value);
+        $value = "'$value'";
         return $value;
     }
 
@@ -250,9 +251,18 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     public function quoteIdentifier($string)
     {
-        $info = db2_server_info($this->_connection);
-        self::$identQuote = $info->IDENTIFIER_QUOTE_CHAR;
+        $identQuote = $this->getQuoteIdentifier();
         return $identQuote . $string . $identQuote;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuoteIdentifier()
+    {
+        $info = db2_server_info($this->_connection);
+        $identQuote = $info->IDENTIFIER_QUOTE_CHAR;
+        return $identQuote;
     }
 
     /**
@@ -279,30 +289,57 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     /**
      * Returns the column descriptions for a table.
      *
-     * @param string schema.tablename or just tablename
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * DATA_TYPE    => string; SQL datatype name of column
+     * DEFAULT     => default value of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => length of CHAR/VARCHAR
+     * SCALE       => scale of NUMERIC/DECIMAL
+     * PRECISION   => precision of NUMERIC/DECIMAL
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @todo Improve discovery of primary key columns; they are not always identity columns.
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table)
+    public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "select colname,tabschema,typename, length," . "
-            scale, nulls from syscat.columns where tabname = '";
-
-        $schema = strtok($table, '.');
-        $name = strtok('.');
-        if ($name !== false) {
-            $sql .= strtoupper($name) . "' and tabschema ='"
-              . strtoupper($schema) . "'";
-        } else {
-            $sql .= strtoupper($table) . "'";
+        $tableName = strtoupper($tableName);
+        $sql = "SELECT tabschema, tabname, colname, typename, default, nulls, length, scale, identity
+            FROM syscat.columns
+            WHERE tabname = '$tableName'";
+        if ($schemaName != null) {
+            $sql .= " AND tabschema = '$schemaName'";
         }
 
-        $ret = array();
-        $result = $this->fetchAssoc($sql);
-        foreach ($result as $row) {
-            $ret[$row['COLNAME']] = $row;
+        $desc = array();
+        $result = $this->fetchAll($sql);
+        foreach ($result as $key => $row) {
+            $desc[$row['COLNAME']] = array(
+                'SCHEMA_NAME' => $row['TABSCHEMA'],
+                'TABLE_NAME'  => $row['TABNAME'],
+                'COLUMN_NAME' => $row['COLNAME'],
+                'DATA_TYPE'   => $row['TYPENAME'],
+                'DEFAULT'     => $row['DEFAULT'],
+                'NULLABLE'    => (bool) ($row['NULLS'] == 'Y'),
+                'LENGTH'      => $row['LENGTH'],
+                'SCALE'       => $row['SCALE'],
+                'PRECISION'   => ($row['TYPENAME'] == 'DECIMAL' ? $row['LENGTH'] : 0),
+                'PRIMARY'     => (bool) ($row['IDENTITY'] == 'Y')
+            );
         }
 
-        return $ret;
+        return $desc;
     }
 
     /**
@@ -415,28 +452,19 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @param integer $count
      * @param integer $offset OPTIONAL
      * @return string
+     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function limit($sql, $count, $offset = 0)
     {
-        if (!$count) {
+        if ($count <= 0) {
             return $sql;
         }
 
-        if ($offset == 0) {
+        if ($offset <= 0) {
             return $sql . " FETCH FIRST $count ROWS ONLY";
-        } else {
-            $sqlPieces = split("from", $sql);
-            $select = $sqlPieces[0];
-            $table = $sqlPieces[1];
-
-            $col = split("select", $select);
-
-            $sql = "WITH OFFSET AS($select, ROW_NUMBER() " .
-                "OVER(ORDER BY " . $col[1] . ") AS RN FROM $table)" .
-                $select ."FROM OFFSET WHERE rn between $offset " .
-                "and " . ($offset + $count - 1);
-            return $sql;
         }
+
+        throw new Zend_Db_Adapter_Db2_Exception('LIMIT <count>, <offset> is not implemented yet');
     }
 
     /**
