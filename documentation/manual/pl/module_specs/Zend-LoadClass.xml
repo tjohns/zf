@@ -1,31 +1,49 @@
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
     <para>
-    <code>Zend::loadClass()</code> ładuje plik PHP o nazwie w postaci "<code>$className.php</code>", 
-    a następnie sprawdza czy istnieje klasa o nazwie <code>$className</code>.
+    <code>Zend::loadClass($class, $dirs)</code> ładuje plik PHP, a następnie 
+    sprawdza czy klasa istnieje.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::loadClass($class, $dirs)
+Zend::loadClass('Container_Tree', array('/home/production/mylib', (/home/production/myapp')));
 
 ?>]]></programlisting>
 
     <para>
-    Jeśli plik nie zostaje znaleziony lub gdy po załadowaniu pliku klasa nie istnieje
-    wyrzucany jest wyjątek <code>Zend_Exception</code>. Do załadowania pliku używana
-    jest metoda <code>Zend::loadFile()</code>, a parametr <code>$dirs</code> jest
-    do niej bezpośrednio przekazywany.
+        Bo skonwertowaniu zmiennej <code>$class</code> na hierarchię katalogów
+        poprzez zamianę podkreślników na separatory katalogów, uzyskana 
+        hierarchia zostanie dodana do każdej części w zmiennej <code>$dirs</code>
+        Jeśli zmienna <code>$dirs</code> ma wartość <code>null</code>, spowoduje
+        to uzyskanie tylko pojedynczej hierarchii.
+        Na przykład, <code>Container_Tree</code> stanie się <code>Container/Tree.php</code>.
+        Jeśli plik <code>/home/production/mylib/Container/Tree.php</code> istnieje, 
+        wtedy będzie on załadowany.
+        Jeśli nie, wtedy zostanie załadowany plik <code>/home/production/myapp/Container/Tree.php</code> 
+        jeśli istnieje.
+        W przeciwnym razie, plik <code>Container/Tree.php</code> zostanie 
+        wyszukany w katalogach ze zmiennej PHP include path.
     </para>
 
     <para>
-    Jeśli próbuje się załadować klasę zawierającą podkreślniki w nazwie, a parametr 
-    <code>$dirs</code> ma wartość null (wartość domyślna), to metoda <code>Zend::loadClass()</code> 
-    spróbuje automatycznie pobrać parametr <code>$dirs</code> z nazwy klasy
-    zamieniając podkreślniki na separatory katalogów. Na przykład jeżeli parametr
-    <code>$class</code> ma wartość <code>Zend_Example_Class</code>, to zostanie
-    załadowana klasa <code>Zend/Example/Class.php</code>.
+        Jeśli zmienna <code>$dirs</code> jest łańcuchem znaków lub tablicą,
+        katalogi zostaną przesukane w takiej kolejności w jakiej zostały
+        zdefiniowane, a pierwszy pasujący plik zostanie dołączony.
+
+        Jeśli plik nie istnieje w katalogach podanych w zmiennej 
+        <code>$dirs</code>, wtedy w wyrażeniu <code>include</code> zostaną użyte 
+        katalogi ze zmiennej PHP include_path (np. <code>include 'Tree.php'</code>).
     </para>
+
+    <para>
+        Jeśli plik nie zostanie znaleziony lub klasa po załadowaniu pliku nie
+        istnieje, zostanie wyrzucony wyjątek <code>Zend_Exception</code>. 
+        Metoda <code>Zend::loadFile()</code> jest używana do ładowania, więc 
+        nazwa klasy może jedynie zawierać znaki alfanumeryczne, myślnik ('-'), 
+        podkreślnik ('_'), oraz kropkę ('.').
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

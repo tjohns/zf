@@ -227,7 +227,7 @@ foreach ($hits as $hit) {
         <title>Results Scoring</title>
         <para>
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Search results are ordered by score. Hits with greater score come first, and
+            Hits in search result are ordered by score by default. Hits with greater score come first, and
             documents having higher scores match the query more than documents having lower scores.
         </para>
 
@@ -288,7 +288,7 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
         </para>
 
         <para>
-            Exampes:
+            Examples:
             <programlisting role="php"><![CDATA[
 $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
 ]]></programlisting>
