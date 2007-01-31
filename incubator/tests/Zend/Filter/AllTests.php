@@ -76,9 +76,9 @@ require_once 'Zend/Filter/HtmlEntitiesTest.php';
 
 
 /**
- * @see Zend_Filter_Input
+ * @see Zend_Filter_InputTest
  */
-require_once 'Zend/Filter/Input.php';
+require_once 'Zend/Filter/InputTest.php';
 
 
 /**
