@@ -1,44 +1,48 @@
 <sect1 id="zend.date.basic">
 
-    <title>Basic Methods</title>
+    <title>基本メソッド</title>
 
     <para>
-        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"
-        always imply a calendar date with a time, even when not explicitly mentioned, and vice-versa. The part not
-        specified defaults to an internal representation of "zero". Thus, adding a date having no calendar date and a
-        time value of 12 hours to another date consisting only of a calendar date would result in a date having that
-        calendar date and a time of "noon".
+        この章では、<code>Zend_Date</code> の基本的な使用法を、
+        例をもとに説明します。このマニュアルで "日付"
+        というときは、常に時刻も含んでいるものとします。
+        これは、明示的に説明していなくても同様です。
+        指定していない部分のデフォルトは "ゼロ" になります。
+        つまり、日付情報をもたず 12 時間という時刻情報だけを持つ値と
+        日付情報だけを持つ値を足すと、その日付の "正午" を表すようになります。
     </para>
 
     <para>
-        Setting only a specific date, with no time part, implies a time set to 00:00:00. Conversely, setting only a
-        specific time implies a date internally set to 01.01.1970 plus the number of seconds equal to the elapsed hours,
-        minutes, and seconds identified by the time. Normally, people measure things from a starting point, such as the
-        year 0 A.D. However, many software systems use the first second of the year 1970 as the starting point, and
-        denote times as a timestamp offset counting the number of seconds elapsed from this starting point.
+        日付のみを指定して時刻部を省略すると、時刻は 00:00:00 になります。
+        逆に時刻のみを指定した場合は、日付の内部表現は
+        01.01.1970 からの経過秒数と等しくなります。
+        通常、人間が時間を計算する場合は西暦ゼロ年を基準とします。
+        しかし、多くのソフトウェアは 1970 年を基準として時間を計算します。
+        そして、ここからの経過秒数をタイムスタンプとして表します。
     </para>
 
     <sect2 id="zend.date.basic.creation">
 
-        <title>The current date</title>
+        <title>現在の日付</title>
 
         <para>
-            Without any arguments, constructing an instance returns an object in the default locale with the current,
-            local date using PHP's <code>time()</code> function to obtain the
-            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
-            for the object. Make sure your PHP environment has the correct
-            <link linkend="zend.date.setdefaulttimezone">default timezone</link>
-            .
+            引数を指定せずにインスタンスを作成すると、
+            デフォルトのロケールでの現在時刻を表すオブジェクトを返します。
+            PHP の <code>time()</code> 関数で、このオブジェクトが使用する
+            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX タイムスタンプ</ulink>
+            を取得します。PHP の環境で、
+            <link linkend="zend.date.setdefaulttimezone">デフォルトのタイムゾーン</link>
+            が正しく設定されていることを確認しておきましょう。
         </para>
 
         <example>
-            <title>Creating the current date</title>
+            <title>現在の日付の作成</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Output of the current timestamp
+// 現在のタイムスタンプを出力します
 print $date;
 ?>]]></programlisting>
         </example>
@@ -47,30 +51,33 @@ print $date;
 
     <sect2 id="zend.date.basic.functions">
 
-        <title>Zend_Date by Example</title>
+        <title>Zend_Date の使用例</title>
 
         <para>
-            Reviewing basic methods of <code>Zend_Date</code> is a good place to start for those unfamiliar with date
-            objects in other languages or frameworks. A small example will be provided for each method below.
+            <code>Zend_Date</code> の基本的なメソッドを見ていきましょう。
+            他の言語やフレームワークの日付オブジェクトではあまり見かけないメソッドもあります。
+            以下の各メソッドについて、簡単な例を示しています。
         </para>
 
         <sect3 id="zend.date.simple.functions.get">
 
-            <title>Ouput a Date</title>
+            <title>日付の出力</title>
 
             <para>
-                The date in a <code>Zend_Date</code> object may be obtained as a localized integer or string using the
-                <code>get()</code> method. There are many available options, which will be explained in later sections.
+                <code>Zend_Date</code> オブジェクトの日付を
+                地域化された形式の整数あるいは文字列で取得する際に、
+                <code>get()</code> メソッドを使用します。このメソッドには、
+                さまざまなオプションが使用可能です。これらのオプションについてはあとで説明します。
             </para>
 
             <example>
-                <title>get() - output a date</title>
+                <title>get() - 日付の出力</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Output of the desired date
+// 指定した日付を出力します
 print $date->get();
 ?>]]></programlisting>
             </example>
@@ -79,21 +86,23 @@ print $date->get();
 
         <sect3 id="zend.date.simple.functions.set">
 
-            <title>Setting a Date</title>
+            <title>日付の設定</title>
 
             <para>
-                The <code>set()</code> method alters the date stored in the object, and returns the final date value as
-                a timestamp (not an object). Again, there are many options which will be explored in later sections.
+                <code>set()</code> メソッドは、オブジェクトに格納されている日付を変更し、
+                変更後の値をタイムスタンプ (オブジェクトではありません) で返します。
+                このメソッドでもさまざまなオプションが使用可能です。
+                これらのオプションについてはあとで説明します。
             </para>
 
             <example>
-                <title>set() - set a date</title>
+                <title>set() - 日付の設定</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Setting of a new time
+// 新しい時刻を設定します
 $date->set('13:00:00',Zend_Date::TIMES);
 print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
@@ -103,28 +112,30 @@ print $date->get(Zend_Date::W3C);
 
         <sect3 id="zend.date.simple.functions.add">
 
-            <title>Adding and Subtracting Dates</title>
+            <title>日付の加減算</title>
 
             <para>
-                Adding two dates with <code>add()</code> usually involves adding a real date in time with an artificial
-                timestramp representing a date part, such as 12 hours, as shown in the example below. Both
-                <code>add()</code> and <code>sub()</code> use the same set of options as <code>set()</code>, which will
-                be explained later.
+                二つの日付を <code>add()</code> で加算するという場合、
+                通常は実際の日付データにそうでない日付データの一部 ("12 時間" など)
+                を加算することになります。たとえば以下の例のようなものです。
+                <code>add()</code> および <code>sub()</code> は、どちらも
+                <code>set()</code> と同様のオプションを使用します。
+                これについてはあとで説明します。
             </para>
 
             <example>
-                <title>add() - adding dates</title>
+                <title>add() - 日付の加算</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// changes $date by adding 12 hours
+// $date に 12 時間加算します
 $date->add('12:00:00', Zend_Date::TIMES);
 
 print "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
 
-// use magic __toString() method to call Zend_Date's toString()
+// マジックメソッド __toString() から、Zend_Date の toString() をコールします
 print "Date via toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
@@ -133,23 +144,25 @@ print "Date via toString() = ", $date, "\n";
 
         <sect3 id="zend.date.simple.functions.compare">
 
-            <title>Comparation of dates</title>
+            <title>日付の比較</title>
 
             <para>
-                All basic <code>Zend_Date</code> methods can operate on entire dates contained in the objects, or can
-                operate on date parts, such as comparing the minutes value in a date to an absolute value. For example,
-                the current minutes in the current time may be compared with a specific number of minutes using
-                <code>compare()</code>, as in the example below.
+                <code>Zend_Date</code> の基本メソッド群はすべて、
+                オブジェクトに含まれる日付データ全体に対して操作することができます。
+                また、日付の一部に対して操作する (日付の "分"
+                の部分だけをある値と比較するなど) こともできます。
+                たとえば、現在時刻の "分" の部分を指定した値と比較するには
+                <code>compare()</code> を使用します。以下に例を示します。
             </para>
 
             <example>
-                <title>compare() - compare dates</title>
+                <title>compare() - 日付の比較</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Comparation of both times
+// 二つの時刻を比較します
 if ($date->compare(10, Zend_Date::MINUTE) == -1) {
     print "This hour is less than 10 minutes old";
 } else {
@@ -159,21 +172,22 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
             </example>
 
             <para>
-                For simple equality comparisons, use <code>equals()</code>, which returns a boolean.
+                単純に等しいかどうかを比較するには <code>equals()</code>
+                を使用します。これは boolean 値を返します。
             </para>
 
             <example>
-                <title>equals() - identify a date or date part</title>
+                <title>equals() - 日付あるいはその一部の同一性</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Comparation of the two dates
+// 二つの日付を比較します
 if ($date->equals(10, Zend_Date::HOUR)) {
-    print "It's 10 o'clock. Time to get to work.";
+    print "十時です。仕事を始める時間です。";
 } else {
-    print "It is not 10 o'clock. You can keep sleeping.";
+    print "十時ではありません。もうちょっと寝ていましょう。";
 }
 ?>]]></programlisting>
             </example>
