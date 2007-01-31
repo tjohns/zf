@@ -27,6 +27,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
     
     public function setUp() {
         $this->_router = new Zend_Controller_RewriteRouter();
+        $this->_router->setFrontController(new Zend_Controller_RewriteRouterTest_FrontController());
     }
     
     public function tearDown() {
@@ -153,7 +154,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $token = $this->_router->route($request);
 
         $this->assertSame('ctrl', $token->getControllerName());
-        $this->assertSame('index', $token->getActionName());
+        $this->assertSame('defact', $token->getActionName());
     }
 
     public function testEmptyRoute()
@@ -195,14 +196,14 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertSame('act', $token->getActionName());
     }
 
-    public function testRouteCompat()
+    public function testRouteCompatDefaults()
     {
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
         
         $token = $this->_router->route($request);
 
-        $this->assertSame(null, $token->getControllerName());
-        $this->assertSame(null, $token->getActionName());
+        $this->assertSame('defctrl', $token->getControllerName());
+        $this->assertSame('defact', $token->getActionName());
     }
 
     public function testRouteNotMatched()
@@ -234,7 +235,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $token = $this->_router->route($request);
 
         $this->assertSame('ctrl', $token->getControllerName());
-        $this->assertSame('index', $token->getActionName());
+        $this->assertSame('defact', $token->getActionName());
     }
 
     public function testFirstRouteMatched()
@@ -314,51 +315,10 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertSame(0, count($routes));
     }
     
-    
-    /* Param tests copied from Front Controller. Functionality is exactly the same */
-    
-    public function testGetSetParam()
-    {
-        $this->_router->setParam('foo', 'bar');
-        $this->assertEquals('bar', $this->_router->getParam('foo'));
-
-        $this->_router->setParam('bar', 'baz');
-        $this->assertEquals('baz', $this->_router->getParam('bar'));
-    }
-
-    public function testGetSetParams()
-    {
-        $this->_router->setParams(array('foo' => 'bar'));
-        $this->assertSame(array('foo' => 'bar'), $this->_router->getParams());
-
-        $this->_router->setParam('baz', 'bat');
-        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_router->getParams());
-
-        $this->_router->setParams(array('foo' => 'bug'));
-        $this->assertSame(array('foo' => 'bug', 'baz' => 'bat'), $this->_router->getParams());
-    }
-
-    public function testClearParams()
-    {
-        $this->_router->setParams(array('foo' => 'bar', 'baz' => 'bat'));
-        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_router->getParams());
-
-        $this->_router->clearParams('foo');
-        $this->assertSame(array('baz' => 'bat'), $this->_router->getParams());
-
-        $this->_router->clearParams();
-        $this->assertSame(array(), $this->_router->getParams());
-
-        $this->_router->setParams(array('foo' => 'bar', 'bar' => 'baz', 'baz' => 'bat'));
-        $this->assertSame(array('foo' => 'bar', 'bar' => 'baz', 'baz' => 'bat'), $this->_router->getParams());
-        $this->_router->clearParams(array('foo', 'baz'));
-        $this->assertSame(array('bar' => 'baz'), $this->_router->getParams());
-    }
-
 }
 
 /**
- * Zend_Controller_RouterTest_Request - request object for router testing
+ * Zend_Controller_RewriteRouterTest_Request - request object for router testing
  * 
  * @uses Zend_Controller_Request_Interface
  */
@@ -375,9 +335,42 @@ class Zend_Controller_RewriteRouterTest_Request extends Zend_Controller_Request_
 }
 
 /**
+ * Zend_Controller_RouterTest_Dispatcher
+ */
+class Zend_Controller_RewriteRouterTest_Dispatcher 
+{
+    public function getDefaultController() {
+        return 'defctrl';
+    }
+    public function getDefaultAction() {
+        return 'defact';
+    }
+}
+
+/**
+ * Zend_Controller_RewriteRouterTest_FrontController
+ * 
+ * $router->setFrontController() doesn't use an interface, so unfortunately the
+ * base class has to be extended
+ */
+class Zend_Controller_RewriteRouterTest_FrontController extends Zend_Controller_Front 
+{
+    protected $_dispatcher;
+    
+    public function __construct() 
+    {
+        $this->_dispatcher = new Zend_Controller_RewriteRouterTest_Dispatcher();
+    }
+    public function getDispatcher() 
+    {
+        return $this->_dispatcher;
+    }
+}
+
+/**
  * Zend_Controller_RouterTest_Request_Incorrect - request object for router testing
  * 
- * @uses Zend_Controller_Request_Interface
+ * @uses Zend_Controller_Request_Abstract
  */
 class Zend_Controller_RewriteRouterTest_Request_Incorrect extends Zend_Controller_Request_Abstract
 {

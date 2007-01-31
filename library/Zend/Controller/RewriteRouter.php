@@ -40,11 +40,23 @@ require_once 'Zend/Controller/Router/StaticRoute.php';
 class Zend_Controller_RewriteRouter extends Zend_Controller_Router_Abstract
 {
     
-    protected $useDefaultRoutes = true;
+    protected $_useDefaultRoutes = true;
     protected $_defaultPath = ':controller/:action/*';
 
     protected $_routes = array();
     protected $_currentRoute = null;
+
+    /** 
+     * Get the route defaults (eg. controller, action names) out of the Dispatcher
+     */
+    protected function getRouteDefaults()
+    {
+        $dispatcher = $this->getFrontController()->getDispatcher();
+        return array(
+            'controller' => $dispatcher->getDefaultController(), 
+            'action' => $dispatcher->getDefaultAction()
+        );
+    }
 
     /** 
      * Add default routes which are used to mimic basic router behaviour
@@ -52,7 +64,7 @@ class Zend_Controller_RewriteRouter extends Zend_Controller_Router_Abstract
     protected function addDefaultRoutes()
     {
         if (!$this->hasRoute('default')) {
-            $compat = new Zend_Controller_Router_Route($this->_defaultPath, array('action' => 'index'));
+            $compat = new Zend_Controller_Router_Route($this->_defaultPath, $this->getRouteDefaults());
             $this->_routes = array_merge(array('default' => $compat), $this->_routes);
         }
     }
@@ -134,7 +146,7 @@ class Zend_Controller_RewriteRouter extends Zend_Controller_Router_Abstract
      * @param Zend_Controller_Router_Route_Interface Route
      */
     public function removeDefaultRoutes() {
-        $this->useDefaultRoutes = false;
+        $this->_useDefaultRoutes = false;
     }
 
     /** 
@@ -215,7 +227,7 @@ class Zend_Controller_RewriteRouter extends Zend_Controller_Router_Abstract
             throw new Zend_Controller_Router_Exception('Zend_Controller_RewriteRouter requires a Zend_Controller_Request_Http-based request object');
         }
 
-        if ($this->useDefaultRoutes) {
+        if ($this->_useDefaultRoutes) {
             $this->addDefaultRoutes();
         }
 

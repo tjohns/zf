@@ -34,4 +34,14 @@ require_once 'Zend/Controller/RewriteRouter.php';
 class Zend_Controller_ModuleRewriteRouter extends Zend_Controller_RewriteRouter
 {
     protected $_defaultPath = ':module/:controller/:action/*';
+
+    /** 
+     * Get the route defaults (eg. controller, action names) out of the Dispatcher
+     */
+    protected function getRouteDefaults()
+    {
+        $return = parent::getRouteDefaults();
+        $return['module'] = 'default';
+        return $return;
+    }
 }
