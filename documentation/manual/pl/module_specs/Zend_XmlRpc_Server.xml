@@ -4,10 +4,12 @@
     <sect2 id="zend.xmlrpc.server.introduction">
         <title>Wprowadzenie</title>
 
-        <para>Zend_XmlRpc_Server is intended as a fully-featured XML-RPC server,
-            following <ulink url="http://www.xmlrpc.com/spec">the specifications
-            outlined at www.xmlrpc.com</ulink>. Additionally, it implements the
-            system.multicall() method, allowing boxcarring of requests.
+        <para>Klasa Zend_XmlRpc_Server jest przeznaczona do użycia jako 
+            pełnofunkcjonalny serwer XML-RPC, zgodny ze
+            <ulink url="http://www.xmlrpc.com/spec">specyfikacją przedstawioną
+            na www.xmlrpc.com</ulink>. Dodatkowo implementuje ona metodę
+            system.multicall(), pozwalającą na wywołanie wielu metod podczas
+            jednego żądania.
         </para>
     </sect2>
 
@@ -31,8 +33,9 @@ echo $server->handle();]]></programlisting>
         <title>Struktura serwera</title>
 
         <para>
-            Zend_XmlRpc_Server składa się z wielu różnych komponentów, ranging
-            from the server itself to request, response, and fault objects.
+            Zend_XmlRpc_Server składa się z wielu różnych komponentów, od
+            samego serwera, przez obiekty żądania, obiekty odpowiedzi aż do 
+            obiektów błędów.
         </para>
 
         <para>
@@ -42,11 +45,12 @@ echo $server->handle();]]></programlisting>
         </para>
 
         <para>
-            Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
-            object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
-            instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
-            is provided -- thus grabbing the request from
-            <code>php://input</code>.
+            Kiedy jest to już zrobione, możesz przekazać obiekt 
+            <code>Zend_XmlRpc_Request</code> do metody 
+            <code>Zend_XmlRpc_Server::handle()</code>, lub zostanie utworzona
+            instancja obiektu <code>Zend_XmlRpc_Request_Http</code> w przypadku
+            gdy nie zostanie zapewniony żaden obiekt -- spowoduje to pobieranie
+            żądań z <code>php://input</code>.
         </para>
 
         <para>
@@ -63,11 +67,11 @@ echo $server->handle();]]></programlisting>
     <sect2 id="zend.xmlrpc.server.conventions">
         <title>Konwencje</title>
         <para>
-            Zend_XmlRpc_Server allows the developer to attach functions and
-            class method calls as dispatchable XML-RPC methods. Via
-            Zend_Server_Reflection, it does introspection on all attached
-            methods, using the function and method docblocks to determine the
-            method help text and method signatures.
+            Zend_XmlRpc_Server pozwala programiście dołączać funkcje oraz metody
+            klas jako uruchamialne metody XML-RPC. Poprzez Zend_Server_Reflection, 
+            przeprowadzana jest introspekcja dla wszystkich dołączanych metod, 
+            używając bloków dokumentacji funkcji i metod do określenia opisów
+            pomocy dla metod oraz sygnatur metod.
         </para>
 
         <para>
@@ -156,14 +160,14 @@ function myFunc($val1, $val2, $val3)
         </itemizedlist>
 
         <para>
-            Internally, these map to the methods of the same name in
+            Wewnątrz odpowiada to metodom o tych samych w obiekcie 
             Zend_XmlRpc_Server.
         </para>
 
         <para>
-            If you want to add namespaces to the methods you serve, simply
-            provide a namespace to the appropriate method when attaching a
-            function or class:
+            Jeśli chcesz dodać przestrzenie nazw do metod, które oferujesz, po 
+            prostu podaj przestrzeń nazw do odpowiedniej metody wtedy, gdy
+            dołączasz funkcję lub klasę:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -248,15 +252,17 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
     <sect2 id="zend.xmlrpc.server.caching">
         <title>Buforowanie definicji serwera pomiędzy żądaniami</title>
         <para>
-            Attaching many classes to an XML-RPC server instance can utilize a
-            lot of resources; each class must introspect using the Reflection
-            API (via Zend_Server_Reflection), which in turn generates a list of
-            all possible method signatures to provide to the server class.
+            Dołączanie wielu klas do instancji serwera XML-RPC może zajmować
+            wiele zasobów; za pomocą Reflection API (przez Zend_Server_Reflection)
+            musi być dokonana introspekcja każdej klasy co w rezultacie wygeneruje
+            listę wszystkich możliwych sygnatur metod w celu przekazania jej
+            do klasy serwera.
         </para>
         <para>
-            To reduce this performance hit somewhat, Zend_XmlRpc_Server_Cache
-            can be used to cache the server definition between requests. When
-            combined with __autoload(), this can greatly increase performance.
+            Aby zredukować straty wydajności, możemy użyć obiektu 
+            Zend_XmlRpc_Server_Cache do buforowania definicji serwera pomiędzy 
+            żądaniami. Gdy połączymy to z funkcją __autoload(), może to mocno 
+            zwiększyć wydajność.
         </para>
         <para>
             Przykładowe użycie:
@@ -369,11 +375,12 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
-            <title>Specifying exceptions to use as valid fault responses</title>
+            <title>Określenie wyjątków dla odpowiedzi błędów</title>
 
             <para>
-                The example below allows any Services_Exception-derived class to
-                report its code and message in the fault response.
+                Poniższy przykład pozwala dowolnej klasie pochodzącej od
+                Services_Exception na przekazywanie informacji o wyjątkach w
+                postaci kodu i wiadomości w odpowiedzi błędu.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -384,7 +391,7 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Pozwala na wyrzucanie wyjątku Services_Exceptions dla odpowiedzi błędu
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
@@ -395,11 +402,11 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
-            <title>Utilizing a custom request object</title>
+            <title>Użycie własnego obiektu żądania</title>
 
             <para>
-                The example below instantiates a custom request object and
-                passes it to the server to handle.
+                Poniższy przykład tworzy instancję własnego obiektu żądania i
+                przekazuje go do obiektu serwera.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -411,7 +418,7 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Pozwala na wyrzucanie wyjątku Services_Exceptions dla odpowiedzi błędu
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
@@ -426,11 +433,11 @@ echo $server->handle($request);]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
-            <title>Utilizing a custom response object</title>
+            <title>Użycie własnego obiektu odpowiedzi</title>
 
             <para>
-                The example below illustrates specifying a custom response class
-                for the returned response.
+                Poniższy przykład pokazuje określanie własnej klasy odpowiedzi
+                dla zwracanej odpowiedzi.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -443,7 +450,7 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Pozwala na wyrzucanie wyjątku Services_Exceptions dla odpowiedzi błędu
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
@@ -454,14 +461,14 @@ $server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 // Utwórz obiekt żądania
 $request = new Services_Request();
 
-// Utilize a custom response
+// Użyj własnego obiektu żądania
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
-            <title>Cache server definitions between requests</title>
+            <title>Buforowanie definicji serwera pomiędzy żądaniami</title>
 
             <para>
                 Poniższy przykład pokazuje buforowanie definicji serwera pomiędzy
@@ -482,7 +489,7 @@ require_once 'Services/Pick.php';
 // Określ plik cache
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
-// Allow Services_Exceptions to report as fault responses
+// Pozwala na wyrzucanie wyjątku Services_Exceptions dla odpowiedzi błędu
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
@@ -500,7 +507,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
 // Utwórz obiekt żądania
 $request = new Services_Request();
 
-// Utilize a custom response
+// Użyj własnej klasy odpowiedzi
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);]]></programlisting>
