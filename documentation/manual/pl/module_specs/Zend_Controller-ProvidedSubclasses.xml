@@ -497,19 +497,20 @@ $router->addConfig($config, 'routes');
         </sect3>
         
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
-            <title>Użycie RewriteRoutera z modularnymi komponentami MVC</title>
+            <title>Użycie RewriteRoutera z modularnymi komponentami MVC components</title>
 
             <para>
-                A module aware version of the RewriteRouter is also available,
-                Zend_Controller_ModuleRewriteRouter. It works in precisely the
-                same fashion as Zend_Controller_RewriteRouter, but has for the
-                default route the path ':module/:controller/:action/*'.
+                Wersja RewriteRoutera działająca z modułami jest także dostępna, 
+                jest to Zend_Controller_ModuleRewriteRouter. Działa ona 
+                dokładnie w ten sam sposób co Zend_Controller_ModuleRewriteRouter, 
+                z tym wyjątkiem, że jej domyślna trasa jest zdefiniowana jako
+                ':module/:controller/:action/*'.
             </para>
 
             <para>
-                See the <xref linkend="zend.controller.modular">Conventional
-                Modular directory structure documentation</xref> for more
-                information. 
+                Zobacz <xref linkend="zend.controller.modular">dokumentację
+                konwencjonalnej modularnej struktury katalogów</xref> aby 
+                uzyskać więcej informacji.
             </para>
         </sect3>
 

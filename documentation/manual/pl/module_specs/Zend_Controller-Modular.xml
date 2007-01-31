@@ -1,13 +1,13 @@
 <sect1 id="zend.controller.modular">
-    <title>Using a Conventional Modular Directory Structure</title>
+    <title>Użycie konwencjonalnej modularnej struktury katalogów</title>
 
 	<sect2 id="zend.controller.modular.introduction">
 		<title>Wprowadzenie</title>
         <para>
-            The Conventional Modular directory structure allows you to separate
-            different MVC applications into self-contained units, and re-use
-            them with different front controllers. To illustrate such a
-            directory structure:
+            Konwencjonalna modularna struktura katalogów pozwala ci na 
+            oddzielenie różnych aplikacji MVC w osobne jednostki i użycie ich
+            z różnymi kontrolerami frontowymi. Przykładem może być taka 
+            struktura katalogów:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -31,40 +31,40 @@ application/
 ]]></programlisting>
         
         <para>
-            In this paradigm, the module name serves as a prefix to the
-            controllers it contains. The above example contains three
-            module controllers, 'Blog_IndexController', 'News_IndexController', and
-            'News_ListController'. Two global controllers, 'IndexController' and
-            'FooController' are also defined; neither of these will be
-            namespaced. This directory structure will be used for examples in
-            this chapter.
+            W tym modelu, nazwa modułu uwidacznia się jako przedrostek nazw 
+            kontrolerów, ktore zawiera moduł. Powyższy przykład zawiera trzy
+            kontrolery modułów, 'Blog_IndexController', 'News_IndexController',
+            oraz 'News_ListController'. Dwa globalne kontrolery, 'IndexController'
+            oraz 'FooController' są także zdefiniowane; żaden z nich nie posiada
+            własnej przestrzeni nazw. Ta struktura katalogów będzie używana w 
+            przykładach w tym rozdziale.
         </para>
 
         <para>
-            So, how do you implement such a directory layout using the Zend
-            Framework MVC components?
+            Więc jak implementujesz taką strukturę katalogów używając 
+            komponentów MVC Zend Framework?
         </para>
     </sect2>
 
     <sect2 id="zend.controller.modular.directories">
-        <title>Specifying Module Controller Directories</title>
+        <title>Określanie ścieżek kontrolera modułów</title>
 
         <para>
-            The first step to making use of modules is to modify how you specify
-            the controller directory list in the front controller. In the basic
-            MVC series, you pass either an array or a string to
-            setControllerDirectory(), or a path to addControllerDirectory().
-            When using modules, you need to alter your calls to these methods
-            slightly.
+            Pierwszym krokiem użycia modułów jest zmodyfikowanie sposobu 
+            określania listy ścieżek do kontrolerów w kontrolerze frontowym.
+            W podstawowej wersji MVC, przekazujesz tablicę lub łańcuch znaków
+            do metody setControllerDirectory(), lub ścieżkę do metody 
+            addControllerDirectory(). Gdy używasz modułów, musisz także 
+            odpowiednio zmienić wywołania tych metod.
         </para>
 
         <para>
-            With setControllerDirectory(), you will need to pass an associative
-            array and specify key/value pairs of module name/directory paths.
-            The special key 'default' will be used for global controllers (those
-            not needing a module namespace), and can contain an array of paths.
-            All others need a string key pointing to a single path. As an
-            example:
+            W metodzie setControllerDirectory(), musisz przekazać tablicę 
+            asocjacyjną i określić pary klucz/wartość w postaci 
+            moduł/ścieżka. Specjalny klucz 'default' będzie użyty dla globalnych 
+            kontrolerów (tych, które nie potrzebują przestrzeni nazw), i może on 
+            zawierać tablicę ścieżek. Wszystkie inne potrzebują łańcucha znaków 
+            wskazującego na pojedyncza ścieżkę. Na przykład:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -75,10 +75,10 @@ $front->setControllerDirectory(array(
 ]]></programlisting>
 
         <para>
-            addControllerDirectory() will take an optional second argument. When
-            using modules, pass the module name as the second argument; if not
-            specified, the path will be added to the default namespace. As an
-            example:
+            Metoda addControllerDirectory() przyjmuje opcjonalny drugi argument.
+            Gdy używasz modułów, przekaż nazwę modułu jak drugi argument; jeśli
+            nie określisz drugiego argumentu, ścieżka zostanie dodana dla 
+            domyślnej przestrzeni nazw. Na przykład:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -90,12 +90,12 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
         <title>ModuleRouter, ModuleRewriteRouter, oraz ModuleDispatcher</title>
 
         <para>
-            In addition to changing how you specify the controller directories,
-            you will also need to use a module-aware router and dispatcher. You
-            can choose either Zend_Controller_ModuleRouter or
-            Zend_Controller_ModuleRewriteRouter for the router, and
-            Zend_Controller_ModuleDispatcher for the dispatcher. To do so,
-            modify your front controller bootstrap slightly:
+            Oprócz zmiany sposobu określania ścieżek kontrolerów powinieneś
+            także użyć routera oraz obiektu uruchamiającego działających z 
+            modułami. Możesz wybrać Zend_Controller_ModuleRouter lub
+            Zend_Controller_ModuleRewriteRouter jako router, oraz
+            Zend_Controller_ModuleDispatcher jako obiekt uruchamiający. Aby to
+            zrobić, zmodyfikuj plik ładujący kontroler frontowy w ten sposób:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -107,7 +107,8 @@ $front->setRouter(new Zend_Controller_ModuleRouter())
 ]]></programlisting>
 
         <para>
-            From this point forward, dispatch the front controller as normal:
+            Od tego momentu możesz uruchamwiać kontroler frontowy w ten sam
+            sposób co zwykle:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -115,27 +116,29 @@ $front->dispatch();
 ]]></programlisting>
         
         <para>
-            Zend_Controller_ModuleRouter will only match a module if a matching
-            key exists in the controller directory array; otherwise, it falls
-            back on the default behaviour of matching /controller/action.
+            Zend_Controller_ModuleRouter jedynie dopasuje moduł wtedy, jeśli
+            odpowiedni klucz istnieje w tablicy ze ścieżkami kontrolerów; w
+            przeciwnym wypadku, zachowa się według domyślnego dopasowania
+            /controller/action.
         </para>
     </sect2>
 
     <sect2 id="zend.controller.modular.defaultcontroller">
-        <title>Module or Global Default Controller</title>
+        <title>Moduł lub globalny domyślny kontroler</title>
 
         <para>
-            In the default router, if a controller was not specified in the URL,
-            a default controller is used (IndexController, unless otherwise
-            requested). With modular controllers, if a module has been specified
-            but no controller, the dispatcher first looks for this default
-            controller in the module path, and then falls back on the default
-            controller found in the 'default', global, namespace.
+            W domyślnym routerze jeśli w URL nie został określony kontroler, 
+            użyty zostanie domyślny kontroler (IndexController, jeśli nie 
+            określono inaczej). Gdy używamy kontrolerów modularnych, jeśli moduł
+            został określony, ale kontroler nie, obiekt uruchamiający wpierw
+            będzie szukał domyślnego kontrolera w ścieżce modułu, a w drugiej
+            kolejności będzie szukał w ścieżce dla domyślnej globalnej 
+            przestrzeni nazw 'default'.
         </para>
 
         <para>
-            If you wish to always default to the global namespace, set the
-            'useGlobalDefault' parameter in the front controller:
+            Jeśli chcesz zawsze używać domyślnej przestrzeni nazw, ustaw 
+            parametr 'useGlobalDefault' w kontrolerze frontowym:
         </para>
 
         <programlisting role="php"><![CDATA[
