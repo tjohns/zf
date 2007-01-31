@@ -161,10 +161,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null, $primaryKey = null)
     {
         if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Exception('You must specify a sequence name with lastInsertId()');
+            throw new Zend_Db_Adapter_Oracle_Exception('You must specify a sequence name with lastInsertId()');
         }
         $this->_connect();
         $data = $this->fetchOne("SELECT $sequenceName.CURRVAL FROM DUAL");
@@ -218,7 +218,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $result = $this->fetchAll($sql);
         $desc = array();
         foreach ($result as $key => $row) {
-            $desc[$val['COLUMN_NAME']] = array(
+            $desc[$row['COLUMN_NAME']] = array(
                 'SCHEMA_NAME' => '',
                 'TABLE_NAME'  => $row['TABLE_NAME'],
                 'COLUMN_NAME' => $row['COLUMN_NAME'],
