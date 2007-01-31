@@ -1,26 +1,39 @@
 <sect1 id="zend.session.advancedusage">
 
-    <title>Advanced Usage</title>
+    <title>Продвинутое использование<!--Advanced Usage--></title>
 
     <para>
+        Хотя базовое использование является совершенно допустимым вариантом
+        использования Zend_Session, стоит рассмотреть другие аспекты его
+        использования. См. <link linkend="zend.auth.introduction.using">пример
+        на  <code>Zend_Auth</code></link>, который по умолчанию прозрачно
+        использует Zend_Session для сохранения меток аутентификации. Этот пример
+        показывает один из способов быстрой и легкой интеграции Zend_Session и
+        Zend_Auth.
+<!--
         While the basic usage examples are a perfectly acceptable way to utilize Zend_Session, there are some best
         practices to consider. Consider the
         <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> example</link>
         that transparently uses Zend_Session by default to persist authentication tokens. This example shows one
         approach to quickly and easily integrate Zend_Session and Zend_Auth.
+-->
     </para>
 
     <sect2 id="zend.session.startingasession">
 
-        <title>Starting a Session</title>
+        <title>Старт сессии<!--Starting a Session--></title>
 
         <para>
+            Если вы хотите, чтобы все запросы имели сессии и использовали
+            Zend_Session, то стартуйте сессию в файле загрузки:
+<!--
             If you want all requests to have a session and use Zend_Session, then start the session in the bootstrap
             file:
+-->
         </para>
 
         <example>
-            <title>Starting the Global Session</title>
+            <title>Старт общей сессии<!--Starting the Global Session--></title>
 <programlisting role="php">
 <![CDATA[<?php
 ...
@@ -31,77 +44,214 @@ Zend_Session_Core::start();
         </example>
 
         <para>
+            Стартуя сессию в файле загрузки, вы исключаете вероятность того, что
+            старт сессии произойдет после того, как заголовки будут
+            отправлены броузеру, что вызвовет исключение и, возможно,
+            отображение испорченной страницы посетителю сайта. Некоторые
+            расширенные возможности Zend_Session требуют вызова
+            <code>Zend_Session_Core::start()</code> в начале (больше о
+            расширенных возможностях будет написано позднее).    
+<!--
             By starting the session in the bootstrap file, you avoid the possibility that your session might be started
             after headers have been sent to the browser, which results in an exception, and possibly a broken page for
             website viewers. Various advanced features require <code>Zend_Session_Core::start()</code> first. (More on
             advanced features later).
+-->
         </para>
 
         <para>
-            There are four ways to start a session, when using Zend_Session. Two are wrong.
+            Есть четыре способа стартовать сессию, используя Zend_Session. Два
+            из них - неправильные.
+<!--            There are four ways to start a session, when using Zend_Session. Two are wrong.
+-->
         </para>
 
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
+                    1. Неправильно: Устанавливать опцию session.auto_start в
+                    php.ini или .htaccess (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start).
+                    Если вы не имеете возможность отключить эту опцию в php.ini,
+                    то, если используется mod_php (или его эквивалент) и в
+                    php.ini уже установлена эта опция, добавьте строку
+                    <code>php_value session.auto_start 0</code> в ваш файл
+                    .htaccess (обычно находится в корневой директории для
+                    HTML-документов).
+<!--
                     1. Wrong: Do not set PHP's session.auto_start ini setting in either php.ini or .htaccess
                     (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start). If you do not have the
                     ability to disable this setting in php.ini, you are using mod_php (or equivalent), and the setting
                     is already enabled in php.ini, then add <code>php_value session.auto_start 0</code> to your
                     .htaccess file (usually in your HTML document root directory).
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
+                    2. Неправильно: Непосредственно использовать функцию
+                    <ulink url="http://www.php.net/session_start"><code>session_start()</code></ulink>.
+                    Если вы вызываете <code>session_start()</code> напрямую и
+                    начинаете использование Zend_Session, то при вызове метода
+                    <code>Zend_Session::start()</code> будет сгенерировано
+                    исключение. Если вы вызываете <code>session_start()</code>
+                    после запуска Zend_Session, то будет сгенерирована ошибка
+                    уровня E_NOTICE и вызов будет проигнорирован. 
+<!--
                     2. Wrong: Do not use <code>session_start()</code> directly (see <code>
                     <ulink url="http://www.php.net/session_start">session_start()</ulink>
                     </code>). If you use <code>session_start()</code> directly, and then start using Zend_Session, an
                     exception will be thrown by <code>Zend_Session::start()</code> ("session has already been started").
                     If you call <code>session_start()</code>, after starting Zend_Session, an error of level E_NOTICE
                     will be generated, and the call will be ignored.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
+                    3. Правильно:
+                    Используйте <code>Zend_Session_Core::start()</code>. Если вы
+                    хотите, чтобы все запросы имели сессии, то поместите вызов
+                    этой функции в коде загрузки близко к точке входа и без
+                    условной логики. При этом присутствуют некоторые издержки за
+                    счет сессий. Если для одних запросов нужны сессии, а
+                    для других - нет, то:
+<!--
                     3. Correct: Use <code>Zend_Session_Core::start()</code>. If you want all requests to have sessions,
-                    then place this function call in your ZF bootstrap code. If some requests should have sessions, but
-                    others should not, then set the <code>strict</code> option to true (see
-                    <link
-                        linkend="zend.session.startingasession"><code>setOptions()</code>
-                    </link>
-                    ) in your userland bootstrap, and then call <code>Zend_Session_Core::start()</code> in your
-                    bootstrap, before the first call to <code>new Zend_Session()</code>. Sessions have some overhead.
+                    then place this function call early and unconditionally in your ZF bootstrap code. Sessions have
+                    some overhead. If some requests need sessions, but other requests will not need to use sessions,
+                    then:
+-->
+                </para>
+                <itemizedlist mark='opencircle'>
+                    <listitem>
+                        <para>
+                            Установите опцию <code>strict</code> в true (см.
+                            <link linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code></link>) в коде загрузки.
+<!--
+                            Unconditionally, set the <code>strict</code> option to true (see
+                            <link
+                        linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code>
+                            </link>
+                            ) in your userland bootstrap.
+-->
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Вызывайте <code>Zend_Session_Core::start()</code>
+                            только для тех запросов, для которых нужны сессии,
+                            и до того, как будет произведен первый вызов
+                            <code>new Zend_Session()</code>. 
+<!--
+                            Call <code>Zend_Session_Core::start()</code>, only for requests that need to use sessions,
+                            before the first call to <code>new Zend_Session()</code>.
+-->
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Используйте <code>new Zend_Session()</code> как
+                            обычно и там, где это нужно, но при этом необходимо
+                            убедиться, что
+                            <code>Zend_Session_Core::start()</code> был вызван
+                            ранее.
+<!--
+                            Use <code>new Zend_Session()</code> normally, where needed, but make sure
+                            <code>Zend_Session_Core::start()</code> has been called previously.
+-->
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <para>
+                    Опция <code>strict</code> предотвращает автоматический
+                    запуск Zend_Session_Core при вызове
+                    <code>new Zend_Session()</code>. Эта опция помогает
+                    разработчикам пользовательских областей приложений ZF
+                    следовать принятому при проектировании решению не
+                    использовать сессии для определенных запросов, т.к. при
+                    установке этой опции и впоследствии инстанцировании
+                    Zend_Session до явного вызова
+                    <code>Zend_Session_Core::start()</code> будет
+                    сгенерировано исключение. Не используйте эту опцию в базовом
+                    коде ZF, поскольку проектные решения должны принимать только
+                    разработчики пользовательской области. Аналогичным образом,
+                    все разработчики "библиотек" должны осторожно подходить
+                    к использованию <code>Zend_Session_Core::setOptions()</code>
+                    в коде их библиотек, поскольку эти опции имеют глобальную
+                    область действия (как и лежащие в основе опции расширения
+                    ext/session).
+<!--
                     The <code>strict</code> option prevents <code>new Zend_Session()</code> from automatically starting
                     Zend_Session_Core. Thus, this option helps developers of userland ZF applications enforce a design
                     decision to avoid using sessions for certain requests, since an error will be thrown when using this
                     option and instantiating Zend_Session, before an explicit call to
                     <code>Zend_Session_Core::start()</code>. Do not use this option in ZF core code, because only
                     userland developers should make this design choice. Similarly, all "library" developers should
-                    carefully consider the impact of using setOptions() on users of their library code, since these
-                    options have global side-effects (as do the underlying options for ext/session).
+                    carefully consider the impact of using <code>Zend_Session_Core::setOptions()</code> on users of
+                    their library code, since these options have global side-effects (as do the underlying options for
+                    ext/session).
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    4. Correct: Just use <code>new Zend_Session()</code>, and the session will be automatically started
-                    within Zend_Session_Core.
+                    4. Правильно: Просто используйте
+                    <code>new Zend_Session()</code> когда нужно, и сессия будет
+                    автоматически запущена в Zend_Session_Core. Это наиболее
+                    простой вариант использования, подходящий для большинства
+                    случаев. Но необходимо будет следить за тем, чтобы первый
+                    вызов <code>new Zend_Session()</code> всегда производился до
+                    того, как выходные данные будут отправлены клиенту (т.е. до
+                    того, как агенту пользователя будут отправлены заголовки),
+                    если используются основанные на куках сессии
+                    (рекомендуется). Использование
+                    <ulink url="http://php.net/outcontrol">буферизации
+                    вывода</ulink> может быть удачным решением, при этом может
+                    быть улучшена производительность. Например, в
+                    <code>php.ini</code>
+                    "<code>output_buffering = 65535</code>" включает буферизацию
+                    вывода с размером буфера 64K. 
+<!--
+                    4. Correct: Just use <code>new Zend_Session()</code> whenever needed, and the session will be
+                    automatically started within Zend_Session_Core. This offers extremely simple usage that works well
+                    in most situations. However, you are responsible for ensuring that the first <code>new
+                    Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output (i.e.
+                    <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>
+                    ) has been sent by PHP to the client, if you are using the default, cookie-based sessions
+                    (recommended). Using
+                    <ulink url="http://php.net/outcontrol">output buffering</ulink>
+                    often is sufficient to prevent this issue and may help improve performance. For example, in
+                    <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a 64K
+                    buffer.
+-->
                 </para>
             </listitem>
         </itemizedlist>
-
-        <para>
-            Option #4 is more difficult to use than #3, because you are responsible for ensuring that the first
-            <code>new Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output has been sent
-            by PHP to the client, if you are using the default, cookie-based sessions (recommended).
-        </para>
 
     </sect2>
 
     <sect2 id="zend.session.limitinginstances">
 
-        <title>Limiting Instances of Zend_Session to One Per Namespace</title>
+        <title>Ограничение количества экземпляров Zend_Session до одного на каждое пространство имен<!--Limiting Instances of Zend_Session to One Per Namespace--></title>
 
         <para>
+            Когда создается первый экземпляр Zend_Session, связанный с
+            определенным пространством имен, вы можете дать команду Zend_Session
+            больше не создавать объекты для этого пространства имен. Таким
+            образом, в дальнейшем попытка создать экземпляр Zend_Session для
+            того же пространства имен вызовут генерацию исключения. Это
+            поведение является опциональным и не принято по умолчанию, но
+            остается доступным для тех, кто предпочитает передавать по коду
+            единственный объект для каждого пространства имен. Это повышает
+            защиту пространства имен от изменений компонентами, которые не
+            должны делать этого, поскольку тогда они не будут иметь легкого
+            доступа к пространствам имен. Тем не менее, ограничение пространства
+            имен до одного экземпляра модет привести к большему объему кода или
+            к его усложнению, поскольку он отменяет возможность использования
+            конструкций вида <code>$session = new
+            Zend_Session('aNamespace');</code> после того, как был создан первый
+            экземпляр. Это продемонстрировано в примере ниже:
+<!--
             When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
             Zend_Session to not make any more instances for that namespace. Thus, any future attempts to construct a
             Zend_Session instance having the same namespace will throw an error. Such behavior is optional, and not the
@@ -111,19 +261,32 @@ Zend_Session_Core::start();
             to more code or more complex code, as it removes access to the convient <code>$session = new
             Zend_Session('aNamespace');</code>, after the first intance has been created, as follows in the example
             below:
+-->
         </para>
 
         <example>
-            <title>Limiting to Single Instances</title>
+            <title>Ограничение до единичных экземпляров<!--Limiting to Single Instances--></title>
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
     $componentAuthState = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
-    doSomething($options, $componentAuthState); // pass the state to wherever it is needed
+    doSomething($options, $componentAuthState); // передача экземпляра туда, где он нужен
 ?>]]></programlisting>
         </example>
 
         <para>
+            Второй параметр в конструкторе выше говорит Zend_Session, что любые
+            другие экземпляры Zend_Session с пространством имен 'Zend_Auth' не
+            допустимы и приведут к генерации исключения. Поскольку
+            код <code>new Zend_Session('Zend_Auth')</code> нельзя использовать
+            после того, как будет выполнен приведенный выше код, то нужно будет
+            где-нибудь сохранять объект (<code>$componentAuthState</code> в
+            примере выше), если вам впоследствии будет нужен доступ к этому
+            пространству имен сессии при обработке того же запроса. Например, вы
+            можете сохранять экземпляр в статической переменной или передавать
+            его другим методам, которым нужен доступ к данному пространству
+            имен. 
+<!--
             The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
             instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
             thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
@@ -131,15 +294,31 @@ Zend_Session_Core::start();
             example above) somewhere, if you need access to this session namespace at a later time during the same
             request. For example, you may store the instance in a static variable, or pass it to other methods that
             might need access to this session namespace.
+-->
         </para>
 
     </sect2>
 
     <sect2 id="zend.session.locking">
 
-        <title>Locking Session Namespaces</title>
+        <title>Блокировка пространств имен<!--Locking Session Namespaces--></title>
 
         <para>
+            Можно применять блокировку к пространствам имен для предотвращения
+            изменения данных в этом пространстве имен. Используйте
+            <code>lock()</code>, чтобы сделать пространство имен
+            доступным только для чтения, <code>unLock()</code> - чтобы сделать
+            пространство имен доступным для чтения и изменений, а
+            <code>isLocked()</code> для проверки того, не было ли пространство
+            имен заблокировано ранее. Блокировка не сохраняется от одного
+            запроса к другому. Блокировка пространства имен не действует на
+            методы установки (setter methods) в объектах, сохраненных в
+            пространстве имен, но предотвращает использование методов установки
+            пространства имен сессии для удаления или замены самого объекта.
+            Также блокирование пространств имен Zend_Session не предотвращает
+            использование ссылок на те же данные
+            (см. <ulink url="http://www.php.net/references">PHP references</ulink>). 
+<!--
             Session namespaces can be locked, to prevent further alterations to the data in that namespace. Use
             <code>lock()</code> to make the namespace read-only, <code>unLock()</code> to make a read-only namespace
             read-write, and <code>isLocked()</code> to test if a namespace has been previously locked. Locks are
@@ -149,19 +328,19 @@ Zend_Session_Core::start();
             table aliases to the same data (see
             <ulink url="http://www.php.net/references">PHP references</ulink>
             ).
+-->
         </para>
 
         <example>
-            <title>Locking Session Namespaces</title>
+            <title>Блокировка пространств имен<!--Locking Session Namespaces--></title>
 <programlisting role="php">
 <![CDATA[<?php
-    // assuming:
     $my_session = new Zend_Session('my_session');
 
-    // marking session as read only locked
+    // блокируем сессию (теперь доступна только для чтения)
     $my_session->lock();
 
-    // unlocking read-only lock
+    // разблокировка сессии
     if ($my_session->isLocked()) {
         $my_session->unLock();
     }
@@ -169,14 +348,24 @@ Zend_Session_Core::start();
         </example>
 
         <para>
+            Есть некоторые идеи по поводу того, как организовывать модели в
+            парадигме MVC для Веб, включая создание моделей представления для
+            использования видами (views). Иногда имеющиеся данные, являются ли
+            они частью вашей доменной модели или нет, являются подходящими для
+            этой задачи. Для того, чтобы предотвратить изменение таких данных,
+            используйте блокировку пространств имен сессий до того, как
+            предоставить видам доступ к этим подмножествам вашей модели
+            представления.   
+<!--
             There are numerous ideas for how to manage models in MVC paradigms for the Web, including creating
             presentation models for use by views. Sometimes existing data, whether part of your domain model or not, is
             adequate for the task. To discourage views from applying any processing logic to alter such data, consider
             locking session namespaces before permitting views to access this subset of your "presentation" model.
+-->
         </para>
 
         <example>
-            <title>Locking Sessions in Views</title>
+            <title>Блокировка сессий в видах<!--Locking Sessions in Views--></title>
 <programlisting role="php">
 <![CDATA[<?php
 class FooModule_View extends Zend_View
@@ -205,35 +394,44 @@ class FooModule_View extends Zend_View
 
     <sect2 id="zend.session.controllers">
 
-        <title>Session Encapsulation and Controllers</title>
+        <title>Инкапсуляция сессий и контроллеры<!--Session Encapsulation and Controllers--></title>
 
         <para>
+            Пространства имен могут также использоваться для разделения доступа
+            контроллеров к сессиям, чтобы защитить переменные от повреждения.
+            Например, контроллер 'Zend_Auth' может хранить свои постоянные
+            данные сессии отдельно от всех остальных контроллеров. Это
+            получается получением экземпляра из getInstance сессий и
+            передачи ему строки с именем требуемого пространства имен.     
+<!--
             Namespaces can also be used to separate session access by controllers to protect variables from
             contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all
             other controllers. That is done by retrieving an instance from the sessions getInstance and priming it with
             a string of the desired namespace.
+-->
         </para>
 
         <example>
-            <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
+            <title>Сессии с пространствами имен для контроллеров с автоматическим истечением времени<!--Namespaced Sessions for Controllers with Automatic Expiration--></title>
 <programlisting role="php">
 <![CDATA[<?php
 require_once 'Zend/Session.php';
-// question view controller
+// контроллер для вывода вопроса
 $test_session = new Zend_Session('test');
-$test_session->setExpirationSeconds(300, "accept_answer"); // expire only this variable
+// установка времени жизни только для этой переменной
+$test_session->setExpirationSeconds(300, "accept_answer");
 $test_session->accept_answer = true;
 
 -- 
 
-// answer processing controller
+// контроллер для обработки ответа на вопрос
 $test_session = new Zend_Session('test');
 
 if ($test_session->accept_answer === true) {
-    // within time
+    // время не истекло
 }
 else {
-    // not within time
+    // время истекло
 }
 ?>]]></programlisting>
         </example>

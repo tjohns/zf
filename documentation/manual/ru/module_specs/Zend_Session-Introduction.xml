@@ -18,16 +18,16 @@
     </para>
 
     <para>
-        Для веб-приложений, написанных с использованием PHP
+        Для веб-приложений, написанных с использованием PHP,
         <emphasis role="bold">сессия</emphasis> (session) представляет собой
-        логическую связь один-к-одному между серверными постоянными данными и
-        определенным агентом пользователя (т.е. веб-броузером). Zend_Session
-        помогает сохранять и управлять данными сессий, логическое дополнение к
-        данным в куках (cookie), между запросами от одного и того же
-        клиента. В отличие от данных, сохраняемых в куках, данные сессий не
-        хранятся на клиентской стороне, они только предоставляются клиенту когда
-        код серверной стороны делает данными доступными через ответ на запрос
-        клиента.
+        логическую связь один-к-одному между постоянными данными на стороне
+        сервера и определенным агентом пользователя (т.е. веб-броузером).
+        Zend_Session помогает сохранять и управлять данными сессий, являющимся
+        логическоим дополнением к данным в куках (cookie), между запросами
+        одного и того же клиента. В отличие от данных, сохраняемых в куках,
+        данные сессий не хранятся на клиентской стороне, они становятся
+        доступными клиенту только если код серверной стороны предоставляет эти
+        данные в ответ на запрос клиента.
 <!--
         With web applications written using PHP, a <emphasis role="bold">session</emphasis> represents a logical,
         one-to-one connection between server-side, persistent state data and a particular user agent client (e.g. web
@@ -40,25 +40,36 @@
     </para>
 
     <para>
-        Компонента Zend_Session является "оберткой" к существующему расширению 
-        ext/session для того, чтобы предоставлять стандартизованный,
-        объектно-ориентированный интерфейс для работы с сессиями, включая как
-        анонимные, так и авторизованные сессии. Поскольку Zend_Session
-        внутри себя использует обычные функции PHP для работы со сессиями, то
-        для настройки используются обычные опции конфигурации (см.
+        Компонента <code>Zend_Session_Core</code> является "оберткой" к
+        расширению ext/session c интерфейсом для администрирования и управления,
+        а также предоставляет API для <code>Zend_Session</code>.
+        <code>Zend_Session</code> предоставляет стандартизированный,
+        объектно-ориентированный интерфейс для работы с пространствами имен,
+        сохраняемыми через стандартный механизм сессий PHP. Поддерживаются как
+        анонимные, так и "авторизованные" сессии. <code>Zend_Auth</code>,
+        компонента ZF для аутентификации, использует <code>Zend_Session</code>
+        для хранения информации, связанной с аутентифицироанными пользователями,
+        в пространстве имен "Zend_Auth". Поскольку внутри себя
+        <code>Zend_Session_Core</code> использует обычные PHP-функции,
+        предназначенные для работы со сессиями, то используются
+        соответствующие опции конфигурации PHP (см.
         <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>).
-        Таким образом, идентификатор сессии, сохраненный в куках или URL-ах
-        поддерживает ассоциацию между клиентом и постоянными данными сессии.
+        Стандартный идентификатор сессии, сохраненный в куках или встроенный
+        в URL, поддерживает ассоциацию между клиентом и постоянными данными
+        сессии.
 <!--
-        The Zend_Session component wraps the existing PHP ext/session to provide a standardized, object-oriented
-        interface for working with sessions, including both anonymous and login sessions. Zend_Auth, the authentication
-        component of the ZF uses Zend_Session to store some information associated with login sessions. Since
-        Zend_Session uses the normal PHP session functions internally, all the usual configuration options and settings
-        apply (see
+        The <code>Zend_Session_Core</code> component wraps the existing PHP ext/session with an administration and
+        management interface, as well as providing an API for <code>Zend_Session</code> to persist namespaces.
+        <code>Zend_Session</code> provides a standardized, object-oriented interface for working with namespaces
+        persisted inside PHP's standard session mechanism. Support exists for both anonymous and "login" sessions.
+        <code>Zend_Auth</code>, the authentication component of the ZF uses <code>Zend_Session</code> to store some
+        information associated with authenticated users in the "Zend_Auth" namespace. Since
+        <code>Zend_Session_Core</code> uses the normal PHP session functions internally, and all the familiar
+        configuration options and settings apply (see
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Thus, a session id, stored either in a cookie or URLs, maintains the association between a client and session
-        state data.
+        ). Thus, a standard session id, stored either in a cookie or embedded in URLs, maintains the association between
+        a client and session state data.
 -->
     </para>
 
@@ -69,6 +80,7 @@
         любым сервером в кластере серверов, поскольку постоянные данные сессии
         сохраняются только на локальном сервере. Список дополнительных
         подходящих механизмов хранения будет предоставлен позднее.
+        
 <!--
         The default
         <ulink
