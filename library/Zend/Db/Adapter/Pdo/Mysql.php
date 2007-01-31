@@ -101,7 +101,7 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
                 'LENGTH'      => null,
                 'SCALE'       => null,
                 'PRECISION'   => null,
-                'PRIMARY'     => (bool) (strtoupper($val['key']) == 'PRI')
+                'PRIMARY'     => (bool) (strtoupper($row['key']) == 'PRI')
             );
         }
         return $desc;

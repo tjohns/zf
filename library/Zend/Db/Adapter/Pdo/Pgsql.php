@@ -105,7 +105,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
              . "WHERE c.oid = pg_attrdef.adrelid "
              . "AND pg_attrdef.adnum=a.attnum) AS default "
              . "FROM pg_attribute a, pg_class c, pg_type t "
-             . "WHERE c.relname = '$table' "
+             . "WHERE c.relname = '$tableName' "
              . "AND a.attnum > 0 "
              . "AND a.attrelid = c.oid "
              . "AND a.atttypid = t.oid "
@@ -127,18 +127,18 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         $result = $this->query($sql);
         $descr = array();
         while ($row = $result->fetch()) {
-            if ($val['type'] === 'varchar') {
+            if ($row['type'] === 'varchar') {
                 // need to add length to the type so we are compatible with
                 // Zend_Db_Adapter_Pdo_Pgsql!
-                $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $val['complete_type']);
-                $val['type'] .= '(' . $length . ')';
+                $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $row['complete_type']);
+                $row['type'] .= '(' . $length . ')';
             }
-            $descr[$val['field']] = array(
-                'name'    => $val['field'],
-                'type'    => $val['type'],
-                'notnull' => ($val['isnotnull'] == ''),
-                'default' => $val['default'],
-                'primary' => ($val['pri'] == 't'),
+            $descr[$row['field']] = array(
+                'name'    => $row['field'],
+                'type'    => $row['type'],
+                'notnull' => ($row['isnotnull'] == ''),
+                'default' => $row['default'],
+                'primary' => ($row['pri'] == 't'),
             );
 
             /*
@@ -154,7 +154,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 'LENGTH'      => ''
                 'SCALE'       => ''
                 'PRECISION'   => ''
-                'PRIMARY'     => (bool) (strtoupper($val['key']) == 'PRI')
+                'PRIMARY'     => (bool) (strtoupper($row['key']) == 'PRI')
             );
              */
         }
