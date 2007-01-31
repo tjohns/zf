@@ -10,7 +10,7 @@
             Java. Ядро Zend_Search_Lucene полностью поддерживает его за одним
             исключением.
 <!--
-            Zend_Search_Lucene works with UTF-8 charset internaly. Index files store
+            Zend_Search_Lucene works with UTF-8 charset internally. Index files store
             unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
             completely supports it with one exception.
 -->
@@ -74,10 +74,10 @@
 
         <para>
             <code>ctype_alpha()</code> не является совместимым с UTF-8, поэтому
-            текст конвертируется в кодировку 'ASCII//TRANSLIT' до индексации. То
-            же самое выполняется при парсинге запросов.  
+            анализатор конвертирует текст в кодировку 'ASCII//TRANSLIT' до
+            индексации. То же самое выполняется при парсинге запросов.  
 <!--
-            ctype_alpha() is not UTF-8 compatible, so it converts text to 'ASCII//TRANSLIT' encoding before
+            ctype_alpha() is not UTF-8 compatible, so analyzer converts text to 'ASCII//TRANSLIT' encoding before
             indexing. The same processing is performed during query parsing, so it's done
             transparently.
 -->

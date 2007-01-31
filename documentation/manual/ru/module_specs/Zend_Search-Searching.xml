@@ -365,19 +365,14 @@ foreach ($hits as $hit) {
 		<title>Ранжирование результата<!--Results Scoring--></title>
         <para>
             Zend_Search_Lucene использует тот же самый алгоритм ранжирования,
-            что и Java Lucene. Результаты поиска сортируются по рангу
-            (релевантности). "Хиты" с наибольшим рангом идут первыми.
+            что и Java Lucene. Результаты поиска по умолчанию сортируются по
+            рангу (релевантности). "Хиты" с наибольшим рангом идут первыми, и
+            документы, имеющие больший ранг, болльше соответствуют запросу, чем
+            документы с меньшим рангом. 
 <!--
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Saerch results are ordered by score. Hits with greater score come first.
--->
-        </para>
-
-        <para>
-            Различные ранги результатов означают, что один документ больше
-            соответствует запросу, чем другой.
-<!--
-            Different score means, that one document matches the query more then another.
+            Hits in search result are ordered by score by default. Hits with greater score come first, and
+            documents having higher scores match the query more than documents having lower scores.
 -->
         </para>
 
@@ -385,7 +380,8 @@ foreach ($hits as $hit) {
             Приблизительно говоря, документы, в которых искомый элемент или фраза
             встречаются чаще, будут иметь более высокий ранг.
 <!--
-            Roughly speaking, search hits, which contain searched term or phrase more frequently, have greater score.
+            Roughly speaking, search hits that contain the searched term or phrase more frequently
+            will have a higher score.
 -->
         </para>
 
@@ -476,7 +472,7 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
 
         <para>
 <!--
-            Exampes:
+            Examples:
 -->
             <programlisting role="php"><![CDATA[
 $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
