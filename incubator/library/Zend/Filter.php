@@ -104,6 +104,20 @@ class Zend_Filter implements Zend_Filter_Interface
     }
 
     /**
+     * Returns only the alphabetic characters and digits in value.
+     *
+     * @deprecated since 0.8.0
+     * @param      mixed $value
+     * @return     string
+     */
+    public static function getAlnum($value)
+    {
+        require_once 'Zend/Filter/Alnum.php';
+        $filter = new Zend_Filter_Alnum();
+        return $filter->filter($value);
+    }
+
+    /**
      * Returns only the digits in value. This differs from getInt().
      *
      * @deprecated since 0.8.0

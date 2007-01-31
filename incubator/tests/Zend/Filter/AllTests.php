@@ -76,6 +76,12 @@ require_once 'Zend/Filter/HtmlEntitiesTest.php';
 
 
 /**
+ * @see Zend_Filter_Input
+ */
+require_once 'Zend/Filter/Input.php';
+
+
+/**
  * @see Zend_Filter_IntTest
  */
 require_once 'Zend/Filter/IntTest.php';
@@ -139,6 +145,7 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_DigitsTest');
         $suite->addTestSuite('Zend_Filter_DirTest');
         $suite->addTestSuite('Zend_Filter_HtmlEntitiesTest');
+        $suite->addTestSuite('Zend_Filter_InputTest');
         $suite->addTestSuite('Zend_Filter_IntTest');
         $suite->addTestSuite('Zend_Filter_RealPathTest');
         $suite->addTestSuite('Zend_Filter_StringToLowerTest');

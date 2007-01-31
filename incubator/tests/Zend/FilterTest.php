@@ -209,6 +209,7 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
     {
         $testData = array(
             array('getAlpha', 'a1b2c3', 'abc'),
+            array('getAlnum', 'a1!b2@c3#', 'a1b2c3'),
             array('getDigits', 'a1b2c3', '123'),
             array('getDir', '/path/to/index', '/path/to'),
             array('getInt', '123', 123),
