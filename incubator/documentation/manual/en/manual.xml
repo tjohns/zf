@@ -51,6 +51,12 @@
     </chapter>
     -->
 
+    <chapter id="zend.filter">
+        <title>Zend_Filter</title>
+        &module_specs.Zend_Filter;
+        &module_specs.Zend_Filter_Input;
+    </chapter>
+
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
         &module_specs.Zend_Http_Server-Introduction;
@@ -92,7 +98,7 @@
         &module_specs.Zend_Service_Simpy;
         -->
     </chapter>
-    
+
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
         &module_specs.Zend_TimeSync;
@@ -116,6 +122,11 @@
     <chapter id="zend.translate">
         <title>Zend_Translate</title>
         &module_specs.Zend_Translate;
+    </chapter>
+
+    <chapter id="zend.validate">
+        <title>Zend_Validate</title>
+        &module_specs.Zend_Validate;
     </chapter>
 
     <!-- &ref.faq; -->
