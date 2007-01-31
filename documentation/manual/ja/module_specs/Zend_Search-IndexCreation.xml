@@ -83,6 +83,50 @@ foreach ($hits as $hit) {
 ?>]]></programlisting>
     </sect2>
 
+    <sect2 id="zend.search.index-creation.counting">
+        <title>インデックスの大きさの取得</title>
+
+        <para>
+            Zend_Search_Lucene のインデックスの大きさを知るには、二通りの方法があります。
+        </para>
+
+        <para>
+             <code>Zend_Search_Lucene::maxDoc()</code> は、
+             最大のドキュメント番号にひとつ足した値を返します。
+             これは、削除されたドキュメントを含む、インデックス内のドキュメントの総数を表します。
+             そこで、このメソッドのシノニムとして <code>Zend_Search_Lucene::count()</code>
+             を用意しました。
+        </para>
+
+        <para>
+             <code>Zend_Search_Lucene::numDocs()</code> は、削除されていないドキュメントの総数を返します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$indexSize = $index->count();
+$documents = $index->numDocs();
+?>]]></programlisting>
+
+        <para>
+            <code>Zend_Search_Lucene::isDeleted($id)</code>
+            メソッドで、そのドキュメントが削除されているかどうかを調べます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+for ($count = 0; $count < $index->maxDoc(); $count++) {
+    if ($index->isDeleted($count)) {
+        echo "ドキュメント #$id は削除されました。\n";
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            インデックスの最適化を行うと、削除されたドキュメントを取り除き、
+            ドキュメントの ID を前のほうに詰め込みます。
+            つまり、内部でのドキュメント ID は変わる可能性があります。
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.index-creation.optimization">
         <title>インデックスの最適化</title>
 
