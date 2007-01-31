@@ -32,13 +32,6 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getCreateTableSQL()
-    {
-        return 'CREATE TABLE  '. self::TableName . '
-            (id int IDENTITY, title varchar(100), subTitle varchar (100),
-            body text, date_created datetime)';
-    }
-
     function getDriver()
     {
         return 'pdo_Mssql';
@@ -56,6 +49,12 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
         return $params;
     }
 
+    function getCreateTableSQL()
+    {
+        return 'CREATE TABLE  '. self::TABLE_NAME . '
+            (id int IDENTITY, title varchar(100), subTitle varchar (100),
+            body text, date_created datetime)';
+    }
 
     public function testQuote()
     {

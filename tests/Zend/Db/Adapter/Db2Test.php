@@ -31,33 +31,8 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
  */
 class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 {
-    const TableName = 'ZF_TEST_TABLE';
-    const SequenceName = 'ZF_TEST_TABLE_SEQ';
-
-    public function getCreateTableSQL()
-    {
-        $sql = 'CREATE TABLE  '. self::TableName . '
-        (id INT NOT NULL PRIMARY KEY, subTitle VARCHAR(100), title VARCHAR(100), body VARCHAR(100), date_created VARCHAR(100))';
-        return $sql;
-    }
-
-    protected function getDropTableSQL()
-    {
-        $sql = 'DROP TABLE ' . self::TableName;
-        return $sql;
-    }
-
-    protected function getCreateSequenceSQL()
-    {
-        $sql = 'CREATE SEQUENCE ' . self::SequenceName . ' AS INTEGER';
-        return $sql;
-    }
-
-    protected function getDropSequenceSQL()
-    {
-        $sql = 'DROP SEQUENCE ' . self::SequenceName . ' RESTRICT';
-        return $sql;
-    }
+    const TABLE_NAME = 'ZF_TEST_TABLE';
+    const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
 
     public function getDriver()
     {
@@ -72,18 +47,42 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
             'password' => TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_DB2_DATABASE
         );
-
         return $params;
+    }
+
+    public function getCreateTableSQL()
+    {
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME . '
+        (id INT NOT NULL PRIMARY KEY, subTitle VARCHAR(100), title VARCHAR(100), body VARCHAR(100), date_created VARCHAR(100))';
+        return $sql;
+    }
+
+    protected function getDropTableSQL()
+    {
+        $sql = 'DROP TABLE ' . self::TABLE_NAME;
+        return $sql;
+    }
+
+    protected function getCreateSequenceSQL()
+    {
+        $sql = 'CREATE SEQUENCE ' . self::SEQUENCE_NAME . ' AS INTEGER';
+        return $sql;
+    }
+
+    protected function getDropSequenceSQL()
+    {
+        $sql = 'DROP SEQUENCE ' . self::SEQUENCE_NAME . ' RESTRICT';
+        return $sql;
     }
 
     protected function tearDownMetadata()
     {
         $tableList = $this->_db->fetchCol('SELECT tabname FROM SYSCAT.TABLES');
-        if (in_array(self::TableName, $tableList)) {
+        if (in_array(self::TABLE_NAME, $tableList)) {
             $this->_db->query($this->getDropTableSQL());
         }
         $seqList = $this->_db->fetchCol('SELECT seqname FROM SYSCAT.SEQUENCES');
-        if (in_array(self::SequenceName, $seqList)) {
+        if (in_array(self::SEQUENCE_NAME, $seqList)) {
             $this->_db->query($this->getDropSequenceSQL());
         }
     }
@@ -95,13 +94,27 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
         $this->_db->query($this->getCreateTableSQL());
 
-        $sql = 'INSERT INTO ' . self::TableName . " (id, title, subTitle, body, date_created)
-                VALUES (NEXTVAL FOR " . self::SequenceName . ", 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+                VALUES (NEXTVAL FOR " . self::SEQUENCE_NAME . ", 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TableName . " (id, title, subTitle, body, date_created)
-                VALUES (NEXTVAL FOR " . self::SequenceName . ", 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+                VALUES (NEXTVAL FOR " . self::SEQUENCE_NAME . ", 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
+    }
+
+    public function testInsert()
+    {
+        $row = array (
+            'id'           => 3,
+            'title'        => 'News Item 3',
+            'subTitle'     => 'Sub title 3',
+            'body'         => 'This is body 1',
+            'date_created' => '2006-05-03 13:13:13'
+        );
+        $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
+        $last_insert_id = $this->_db->lastInsertId();
+        $this->assertEquals('3', (string)$last_insert_id); // correct id has been set
     }
 
     public function testQuote()
@@ -146,20 +159,6 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_`_name');
         $this->assertEquals('"table_`_name"', $value);
-    }
-
-    public function testInsert()
-    {
-        $row = array (
-            'id'           => 3,
-            'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
-            'body'         => 'This is body 1',
-            'date_created' => '2006-05-03 13:13:13'
-        );
-        $rows_affected = $this->_db->insert(self::TableName, $row);
-        $last_insert_id = $this->_db->lastInsertId();
-        $this->assertEquals('3', (string)$last_insert_id); // correct id has been set
     }
 
 }

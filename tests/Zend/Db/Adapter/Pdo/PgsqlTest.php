@@ -31,13 +31,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
  */
 class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 {
-
-    function getCreateTableSQL()
-    {
-        return 'CREATE TABLE  '. self::TableName . '
-            (id SERIAL, title VARCHAR(100), subTitle VARCHAR (100),
-            body TEXT, date_created TIMESTAMP, PRIMARY KEY (id))';
-    }
+    const SEQUENCE_NAME = 'zf_test_table_seq';
 
     function getDriver()
     {
@@ -52,10 +46,67 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE
         );
-
         return $params;
     }
 
+    function getCreateTableSQL()
+    {
+        return 'CREATE TABLE  '. self::TABLE_NAME . '
+            (id SERIAL, title VARCHAR(100), subTitle VARCHAR (100),
+            body TEXT, date_created TIMESTAMP, PRIMARY KEY (id))';
+    }
+
+    public function getDropTableSQL()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
+
+    protected function getCreateSequenceSQL()
+    {
+        $sql = 'CREATE SEQUENCE ' . self::SEQUENCE_NAME;
+        return $sql;
+    }
+
+    protected function getDropSequenceSQL()
+    {
+        $sql = 'DROP SEQUENCE IF EXISTS ' . self::SEQUENCE_NAME;
+        return $sql;
+    }
+
+    protected function tearDownMetadata()
+    {
+        $this->_db->query($this->getDropTableSQL());
+        $this->_db->query($this->getDropSequenceSQL());
+    }
+
+    protected function createTestTable()
+    {
+        $this->tearDownMetadata();
+        $this->_db->query($this->getCreateSequenceSQL());
+        $this->_db->query($this->getCreateTableSQL());
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+                VALUES (nextval('" . self::SEQUENCE_NAME . "'), 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
+        $this->_db->query($sql);
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+                VALUES (nextval('" . self::SEQUENCE_NAME . "'), 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
+        $this->_db->query($sql);
+    }
+
+    public function testInsert()
+    {
+        $nextId = $this->_db->fetchOne("SELECT nextval('" . self::SEQUENCE_NAME . "')");
+        $row = array (
+            'id'           => $nextId,
+            'title'        => 'News Item 3',
+            'subTitle'     => 'Sub title 3',
+            'body'         => 'This is body 1',
+            'date_created' => '2006-05-03 13:13:13'
+        );
+        $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
+        $last_insert_id = $this->_db->lastInsertId(self::SEQUENCE_NAME);
+        $this->assertEquals(3, $last_insert_id); // correct id has been set
+    }
 
     public function testQuote()
     {
@@ -96,17 +147,21 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
     public function testQuoteIdentifier()
     {
         $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals("\"'table_name'\"", $value);
-        $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals("\"'table_`_name'\"", $value);
+        $this->assertEquals('"table_name"', $value);
+        $value = $this->_db->quoteIdentifier('table_"_name');
+        $this->assertEquals('"table_""_name"', $value);
     }
 
-    function testDescribeTable()
+    public function testSelect()
     {
-        $descr = $this->_db->describeTable(self::TableName);
-        $this->assertEquals($descr['id']['name'], 'id');
-        $this->assertEquals($descr['id']['type'], 'int4');
-        $this->assertEquals($descr['id']['primary'], 1);
+        $select = $this->_db->select();
+        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
+
+        $select->from(self::TABLE_NAME);
+        $result = $this->_db->query($select);
+        $row = $result->fetch();
+        $this->assertEquals(5, count($row)); // correct number of fields
+        $this->assertEquals('1', $row['ID']); // correct data
     }
 
 }

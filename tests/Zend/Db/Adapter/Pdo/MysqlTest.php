@@ -31,13 +31,6 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getCreateTableSQL()
-    {
-        return 'CREATE TABLE  '. self::TableName . '
-            (id INT NOT NULL auto_increment, title VARCHAR(100), subTitle VARCHAR (100),
-            body TEXT, date_created DATETIME, PRIMARY KEY (id))';
-    }
-
     function getDriver()
     {
         return 'pdo_Mysql';
@@ -51,10 +44,22 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_DATABASE
         );
-
         return $params;
     }
 
+    function getCreateTableSQL()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . '
+            (id INT NOT NULL auto_increment, title VARCHAR(100), subTitle VARCHAR (100),
+            body TEXT, date_created DATETIME, PRIMARY KEY (id))';
+        return $sql;
+    }
+
+    protected function getDropTableSQL()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
 
     public function testQuote()
     {
@@ -98,14 +103,6 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("`table_name`", $value);
         $value = $this->_db->quoteIdentifier('table_`_name');
         $this->assertEquals("`table_``_name`", $value);
-    }
-
-    function testDescribeTable()
-    {
-        $descr = $this->_db->describeTable(self::TableName);
-        $this->assertEquals($descr['id']['name'], 'id');
-        $this->assertEquals($descr['id']['type'], 'int(11)');
-        $this->assertEquals($descr['id']['primary'], 1);
     }
 
 }

@@ -32,28 +32,32 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getCreateTableSQL()
-    {
-        return 'CREATE TABLE  '. self::TableName . '
-        (id INTEGER PRIMARY KEY, subTitle TEXT, title TEXT, body TEXT, date_created TEXT)';
-    }
-
-    function getDriver()
+    public function getDriver()
     {
         return 'pdo_Sqlite';
     }
 
-    function getParams()
+    public function getParams()
     {
         $params = array (
             'username' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
         );
-
         return $params;
     }
 
+    public function getCreateTableSQL()
+    {
+        return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . '
+        (id INTEGER PRIMARY KEY, subTitle TEXT, title TEXT, body TEXT, date_created TEXT)';
+    }
+
+    public function getDropTableSQL()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
 
     public function testQuote()
     {
@@ -94,9 +98,9 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function testQuoteIdentifier()
     {
         $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals("'table_name'", $value);
+        $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals("'table_`_name'", $value);
+        $this->assertEquals('"table_`_name"', $value);
     }
 
 }
