@@ -32,14 +32,16 @@
         inherits permissions from 'staff':
         </para>
 
-        <programlisting role="php"><![CDATA[// The new marketing group inherits permissions from staff
+        <programlisting role="php"><![CDATA[<?php
+// The new marketing group inherits permissions from staff
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
         <para>
         Next, note that the above access controls refer to specific Resources (e.g., "newsletter", "latest news", "announcement news"). Now we add these Resources:
         </para>
 
-        <programlisting role="php"><![CDATA[// Create Resources for the rules
+        <programlisting role="php"><![CDATA[<?php
+// Create Resources for the rules
 require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('newsletter'));           // newsletter
 $acl->add(new Zend_Acl_Resource('news'));                 // news
@@ -50,7 +52,8 @@ $acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]
         Then it is simply a matter of defining these more specific rules on the target areas of the ACL:
         </para>
 
-        <programlisting role="php"><![CDATA[// Marketing must be able to publish and archive newsletters and the latest news
+        <programlisting role="php"><![CDATA[<?php
+// Marketing must be able to publish and archive newsletters and the latest news
 $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
 
 // Staff (and marketing, by inheritance), are denied permission to revise the latest news
@@ -63,7 +66,8 @@ $acl->deny(null, 'announcement', 'archive');]]></programlisting>
         We can now query the ACL with respect to the latest changes:
         </para>
 
-        <programlisting role="php"><![CDATA[echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
+        <programlisting role="php"><![CDATA[<?php
+echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
      "allowed" : "denied"; // denied
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
@@ -99,7 +103,8 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
         provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges:
         </para>
 
-        <programlisting role="php"><![CDATA[// Remove the denial of revising latest news to staff (and marketing, by inheritance)
+        <programlisting role="php"><![CDATA[<?php
+// Remove the denial of revising latest news to staff (and marketing, by inheritance)
 $acl->removeDeny('staff', 'latest', 'revise');
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
@@ -119,7 +124,8 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
         privileges overrides such incremental changes:
         </para>
 
-        <programlisting role="php"><![CDATA[// Allow marketing all permissions upon the latest news
+        <programlisting role="php"><![CDATA[<?php
+// Allow marketing all permissions upon the latest news
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
