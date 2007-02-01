@@ -49,8 +49,13 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
 
     public function getCreateTableSQL()
     {
-        return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . '
-        (id INTEGER PRIMARY KEY, subTitle TEXT, title TEXT, body TEXT, date_created TEXT)';
+        return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . " (
+            id           INTEGER PRIMARY KEY,
+            subTitle     {$this->_textDataType},
+            title        {$this->_textDataType},
+            body         {$this->_textDataType},
+            date_created {$this->_textDataType}
+        )";
     }
 
     public function getDropTableSQL()

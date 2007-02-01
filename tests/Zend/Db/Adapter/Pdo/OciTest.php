@@ -33,6 +33,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 {
     const TABLE_NAME    = 'ZF_TEST_TABLE';
     const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
+    protected $_textDataType = 'VARCHAR2';
 
     public function getDriver()
     {
@@ -52,13 +53,13 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
     public function getCreateTableSQL()
     {
-        $sql = 'CREATE TABLE  '. self::TABLE_NAME . ' (
-            id NUMBER(11) PRIMARY KEY,
-            subTitle VARCHAR2(100),
-            title VARCHAR2(100),
-            body VARCHAR2(100),
-            date_created VARCHAR2(100)
-        )';
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
+            id           NUMBER(11) PRIMARY KEY,
+            subTitle     {$this->_textDataType}(100),
+            title        {$this->_textDataType}(100),
+            body         {$this->_textDataType}(100),
+            date_created {$this->_textDataType}(100)
+        )";
         return $sql;
     }
 
@@ -77,20 +78,14 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     protected function tearDownMetadata()
     {
         $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES');
-        // echo "*** tearDownMetadata(): tableList = ";
-        // print_r($tableList);
         if (in_array(self::TABLE_NAME, $tableList)) {
-            // echo "+++ dropping table\n";
             $this->_db->query($this->getDropTableSQL());
         } else {
-            // echo "--- not dopping table\n";
         }
         $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
         if (in_array(self::SEQUENCE_NAME, $seqList)) {
-            // echo "+++ dropping sequence\n";
             $this->_db->query($this->getDropSequenceSQL());
         } else {
-            // echo "--- not dopping table\n";
         }
     }
 
@@ -152,6 +147,11 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
     public function testLimit()
     {
+        $colName = 'id';
+        if ($this->_resultSetUppercase) {
+            $colName = strtoupper($colName);
+        }
+
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
 
         $result = $this->_db->query($sql);
@@ -159,7 +159,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
         $this->assertEquals(1, count($rows));
         $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(1, $rows[0]['id']);
+        $this->assertEquals(1, $rows[0][$colName]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
 
@@ -167,7 +167,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(2, $rows[0]['id']);
+        $this->assertEquals(2, $rows[0][$colName]);
     }
 
     public function testListTables()

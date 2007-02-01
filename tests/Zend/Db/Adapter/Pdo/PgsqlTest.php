@@ -51,9 +51,14 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQL()
     {
-        return 'CREATE TABLE  '. self::TABLE_NAME . '
-            (id SERIAL, title VARCHAR(100), subTitle VARCHAR (100),
-            body TEXT, date_created TIMESTAMP, PRIMARY KEY (id))';
+        return 'CREATE TABLE  '. self::TABLE_NAME . " (
+            id           SERIAL,
+            title        VARCHAR(100),
+            subTitle     VARCHAR(100),
+            body         {$this->_textDataType},
+            date_created TIMESTAMP,
+            PRIMARY KEY (id)
+        )";
     }
 
     public function getDropTableSQL()
@@ -150,18 +155,6 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_"_name');
         $this->assertEquals('"table_""_name"', $value);
-    }
-
-    public function testSelect()
-    {
-        $select = $this->_db->select();
-        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
-
-        $select->from(self::TABLE_NAME);
-        $result = $this->_db->query($select);
-        $row = $result->fetch();
-        $this->assertEquals(5, count($row)); // correct number of fields
-        $this->assertEquals('1', $row['ID']); // correct data
     }
 
 }

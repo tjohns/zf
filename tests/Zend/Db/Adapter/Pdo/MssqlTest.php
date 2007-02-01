@@ -41,6 +41,7 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME,
+            'port'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT,
             'username' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE
@@ -51,9 +52,13 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQL()
     {
-        return 'CREATE TABLE  '. self::TABLE_NAME . '
-            (id int IDENTITY, title varchar(100), subTitle varchar (100),
-            body text, date_created datetime)';
+        return 'CREATE TABLE  '. self::TABLE_NAME . " (
+            id           int IDENTITY,
+            title        varchar(100),
+            subTitle     varchar (100),
+            body         {$this->_textDataType},
+            date_created datetime
+        )";
     }
 
     public function testQuote()

@@ -31,6 +31,8 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
  */
 class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 {
+    protected $_resultSetUppercase = true;
+    protected $_textDataType = 'VARCHAR';
     const TABLE_NAME = 'ZF_TEST_TABLE';
     const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
 
@@ -52,8 +54,13 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     public function getCreateTableSQL()
     {
-        $sql = 'CREATE TABLE  '. self::TABLE_NAME . '
-        (id INT NOT NULL PRIMARY KEY, subTitle VARCHAR(100), title VARCHAR(100), body VARCHAR(100), date_created VARCHAR(100))';
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
+            id           INT NOT NULL PRIMARY KEY,
+            subTitle     {$this->_textDataType}(100),
+            title        {$this->_textDataType}(100),
+            body         {$this->_textDataType}(100),
+            date_created {$this->_textDataType}(100)
+        )";
         return $sql;
     }
 
@@ -105,6 +112,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     public function testInsert()
     {
+        // @todo get NEXTVAL FOR self::SEQUENCE_NAME
         $row = array (
             'id'           => 3,
             'title'        => 'News Item 3',
@@ -113,8 +121,34 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
             'date_created' => '2006-05-03 13:13:13'
         );
         $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
+        // @todo specify sequence name as argument
         $last_insert_id = $this->_db->lastInsertId();
         $this->assertEquals('3', (string)$last_insert_id); // correct id has been set
+    }
+
+    public function testLimit()
+    {
+        $colName = 'id';
+        if ($this->_resultSetUppercase) {
+            $colName = strtoupper($colName);
+        }
+
+        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
+
+        $result = $this->_db->query($sql);
+        $rows = $result->fetchAll();
+
+        $this->assertEquals(1, count($rows));
+        $this->assertEquals(6, count($rows[0]));
+        $this->assertEquals(1, $rows[0][$colName]);
+
+        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
+
+        $result = $this->_db->query($sql);
+        $rows = $result->fetchAll();
+        $this->assertEquals(1, count($rows));
+        $this->assertEquals(6, count($rows[0]));
+        $this->assertEquals(2, $rows[0][$colName]);
     }
 
     public function testQuote()
@@ -157,8 +191,8 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     {
         $value = $this->_db->quoteIdentifier('table_name');
         $this->assertEquals('"table_name"', $value);
-        $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals('"table_`_name"', $value);
+        $value = $this->_db->quoteIdentifier('table_"_name');
+        $this->assertEquals('"table_""_name"', $value);
     }
 
 }

@@ -49,9 +49,14 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQL()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . '
-            (id INT NOT NULL auto_increment, title VARCHAR(100), subTitle VARCHAR (100),
-            body TEXT, date_created DATETIME, PRIMARY KEY (id))';
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . "(
+            id           INT NOT NULL AUTO_INCREMENT,
+            title        VARCHAR(100),
+            subTitle     VARCHAR(100),
+            body         {$this->_textDataType},
+            date_created DATETIME,
+            PRIMARY KEY (id)
+        )";
         return $sql;
     }
 

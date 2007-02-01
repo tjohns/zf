@@ -37,6 +37,8 @@ require_once 'PHPUnit/Framework/TestCase.php';
 abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 {
     const TABLE_NAME = 'zf_test_table';
+    protected $_resultSetUppercase = false;
+    protected $_textDataType = 'text';
 
     abstract public function getDriver();
     abstract public function getParams();
@@ -109,32 +111,43 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     {
         $desc = $this->_db->describeTable(self::TABLE_NAME);
 
-        $this->assertContains('body', array_keys($desc));
+        $bodyKey = 'body';
+        $tableName = self::TABLE_NAME;
+        if ($this->_resultSetUppercase) {
+            $bodyKey = strtoupper($bodyKey);
+            $tableName = strtoupper($tableName);
+        }
 
-        $this->assertContains('SCHEMA_NAME', array_keys($desc['body']));
-        $this->assertContains('TABLE_NAME', array_keys($desc['body']));
-        $this->assertContains('COLUMN_NAME', array_keys($desc['body']));
-        $this->assertContains('DATA_TYPE', array_keys($desc['body']));
-        $this->assertContains('DEFAULT', array_keys($desc['body']));
-        $this->assertContains('NULLABLE', array_keys($desc['body']));
-        $this->assertContains('LENGTH', array_keys($desc['body']));
-        $this->assertContains('SCALE', array_keys($desc['body']));
-        $this->assertContains('PRECISION', array_keys($desc['body']));
-        $this->assertContains('PRIMARY', array_keys($desc['body']));
+        $this->assertThat($desc, $this->arrayHasKey($bodyKey));
 
-        $this->assertEquals(self::TABLE_NAME, $desc['body']['TABLE_NAME']);
-        $this->assertEquals('body', $desc['body']['COLUMN_NAME']);
-        $this->assertEquals('VARCHAR', $desc['body']['DATA_TYPE']);
-        $this->assertEquals('', $desc['body']['DEFAULT']);
-        $this->assertTrue($desc['body']['NULLABLE']);
-        $this->assertEquals(100, $desc['body']['LENGTH']);
-        $this->assertEquals(0, $desc['body']['SCALE']);
-        $this->assertEquals(0, $desc['body']['PRECISION']);
-        $this->assertEquals('', $desc['body']['PRIMARY']);
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('SCHEMA_NAME'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('TABLE_NAME'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('COLUMN_NAME'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('DATA_TYPE'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('DEFAULT'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('NULLABLE'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('LENGTH'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('SCALE'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('PRECISION'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('PRIMARY'));
+
+        $this->assertEquals($tableName, $desc[$bodyKey]['TABLE_NAME']);
+        $this->assertEquals($bodyKey, $desc[$bodyKey]['COLUMN_NAME']);
+        $this->assertEquals($this->_textDataType, $desc[$bodyKey]['DATA_TYPE']);
+        $this->assertEquals('', $desc[$bodyKey]['DEFAULT']);
+        $this->assertTrue($desc[$bodyKey]['NULLABLE']);
+        $this->assertEquals(0, $desc[$bodyKey]['SCALE']);
+        $this->assertEquals(0, $desc[$bodyKey]['PRECISION']);
+        $this->assertEquals('', $desc[$bodyKey]['PRIMARY']);
     }
 
     public function testFetchAll()
     {
+        $colName = 'id';
+        if ($this->_resultSetUppercase) {
+            $colName = strtoupper($colName);
+        }
+
         $result = $this->_db->query(
             'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ?',
             array('2006-01-01')
@@ -142,7 +155,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $rows = $result->fetchAll();
         $this->assertEquals(2, count($rows));
-        $this->assertEquals('1', $rows[0]['id']);
+        $this->assertEquals('1', $rows[0][$colName]);
     }
 
     public function testInsert()
@@ -160,13 +173,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testLimit()
     {
+        $colName = 'id';
+        if ($this->_resultSetUppercase) {
+            $colName = strtoupper($colName);
+        }
+
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
 
         $result = $this->_db->query($sql);
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(1, $rows[0]['id']);
+        $this->assertEquals(1, $rows[0][$colName]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
 
@@ -174,13 +192,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(2, $rows[0]['id']);
+        $this->assertEquals(2, $rows[0][$colName]);
     }
 
     public function testListTables()
     {
+        $tableName = self::TABLE_NAME;
+        if ($this->_resultSetUppercase) {
+            $tableName = strtoupper($tableName);
+        }
+
         $tables = $this->_db->listTables();
-        $this->assertContains(self::TABLE_NAME, $tables);
+        $this->assertContains($tableName, $tables);
     }
 
     public function testProfilerCreation()
@@ -190,6 +213,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testSelect()
     {
+        $colName = 'id';
+        if ($this->_resultSetUppercase) {
+            $colName = strtoupper($colName);
+        }
+
         $select = $this->_db->select();
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
 
@@ -197,7 +225,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->query($select);
         $row = $result->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
-        $this->assertEquals('1', $row['id']); // correct data
+        $this->assertEquals('1', $row[$colName]); // correct data
     }
 
 }
