@@ -87,12 +87,12 @@ abstract class Zend_Db_Adapter_Abstract
     {
         // make sure the config array exists
         if (! is_array($config)) {
-            throw new Zend_Db_Adapter_Exception('must pass a config array');
+            throw new Zend_Db_Adapter_Exception('Configuration must be an array.');
         }
 
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
-            throw new Zend_Db_Adapter_Exception('config array must have a key for dbname');
+            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
         }
 
         // keep the config
