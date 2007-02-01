@@ -217,8 +217,9 @@ abstract class Zend_Db_Adapter_Abstract
              . 'VALUES (:' . implode(', :', $cols) . ')';
 
         // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $bind);
-        return $result->rowCount();
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->rowCount();
+        return $result;
     }
 
     /**
@@ -243,8 +244,9 @@ abstract class Zend_Db_Adapter_Abstract
              . (($where) ? " WHERE $where" : '');
 
         // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $bind);
-        return $result->rowCount();
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->rowCount();
+        return $result;
     }
 
     /**
@@ -261,8 +263,9 @@ abstract class Zend_Db_Adapter_Abstract
              . (($where) ? " WHERE $where" : '');
 
         // execute the statement and return the number of affected rows
-        $result = $this->query($sql);
-        return $result->rowCount();
+        $stmt = $this->query($sql);
+        $result = $stmt->rowCount();
+        return $result;
     }
 
     /**
@@ -294,8 +297,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchAll($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
-        return $result->fetchAll($this->_fetchMode);
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->fetchAll($this->_fetchMode);
+        return $result;
     }
 
     /**
@@ -310,9 +314,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchAssoc($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
+        $stmt = $this->query($sql, $bind);
         $data = array();
-        while ($row = $result->fetch($this->_fetchMode)) {
+        while ($row = $stmt->fetch($this->_fetchMode)) {
             $tmp = array_values(array_slice($row, 0, 1));
             $data[$tmp[0]] = $row;
         }
@@ -330,8 +334,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchCol($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
-        return $result->fetchAll(Zend_Db::FETCH_COLUMN, 0);
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_COLUMN, 0);
+        return $result;
     }
 
     /**
@@ -346,9 +351,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchPairs($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
+        $stmt = $this->query($sql, $bind);
         $data = array();
-        while ($row = $result->fetch(Zend_Db::FETCH_NUM)) {
+        while ($row = $stmt->fetch(Zend_Db::FETCH_NUM)) {
             $data[$row[0]] = $row[1];
         }
         return $data;
@@ -363,8 +368,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchOne($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
-        return $result->fetchColumn(0);
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->fetchColumn(0);
+        return $result;
     }
 
     /**
@@ -376,8 +382,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function fetchRow($sql, $bind = null)
     {
-        $result = $this->query($sql, $bind);
-        return $result->fetch($this->_fetchMode);
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->fetch($this->_fetchMode);
+        return $result;
     }
 
     /**

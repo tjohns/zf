@@ -33,6 +33,7 @@ require_once 'Zend/Db/Adapter/Abstract.php';
  */
 abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 {
+
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
      *

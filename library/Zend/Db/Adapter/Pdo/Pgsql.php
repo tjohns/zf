@@ -93,72 +93,48 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, format_type(a.atttypid, a.atttypmod) AS complete_type, "
-             . "a.attnotnull AS isnotnull, "
-             . "( SELECT 't' "
-             . "FROM pg_index "
-             . "WHERE c.oid = pg_index.indrelid "
-             . "AND pg_index.indkey[0] = a.attnum "
-             . "AND pg_index.indisprimary = 't') AS pri, "
-             . "(SELECT pg_attrdef.adsrc "
-             . "FROM pg_attrdef "
-             . "WHERE c.oid = pg_attrdef.adrelid "
-             . "AND pg_attrdef.adnum=a.attnum) AS default "
-             . "FROM pg_attribute a, pg_class c, pg_type t "
-             . "WHERE c.relname = '$tableName' "
-             . "AND a.attnum > 0 "
-             . "AND a.attrelid = c.oid "
-             . "AND a.atttypid = t.oid "
-             . "ORDER BY a.attnum ";
-
-        /*
-         * @todo use a better query with joins instead of subqueries
-         *
-        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type,
+        $sql = "SELECT
+                a.attnum,
+                c.relname,
+                a.attname AS colname,
+                t.typname AS type,
+                a.atttypmod,
                 FORMAT_TYPE(a.atttypid, a.atttypmod) AS complete_type,
-                a.attnotnull AS nullable, COALESCE(i.indrelid, 0) AS pri
+                d.adsrc AS default_value,
+                a.attnotnull AS notnull,
+                a.attlen AS length,
+                CASE WHEN i.indrelid IS NOT NULL THEN 1 ELSE 0 END AS pri
             FROM pg_attribute AS a
                 JOIN pg_class AS c ON a.attrelid = c.oid
+                JOIN pg_namespace AS n ON c.relnamespace = n.oid
                 JOIN pg_type AS t ON a.atttypid = t.oid
-                LEFT OUTER JOIN pg_index AS i ON (i.indrelid = c.oid AND i.indkey[0] = a.attnum AND i.indisprimary = 't')
-            WHERE c.relname = '$tableName' AND a.attnum > 0"
-         */
+                LEFT OUTER JOIN pg_index AS i ON (i.indrelid = c.oid
+                    AND i.indkey[0] = a.attnum
+                    AND i.indisprimary = 't')
+                LEFT OUTER JOIN pg_attrdef AS d ON d.adrelid = c.oid AND d.adnum = a.attnum
+            WHERE c.relname = '$tableName' AND a.attnum > 0";
 
         $result = $this->query($sql);
-        $descr = array();
+        $desc = array();
         while ($row = $result->fetch()) {
-            if ($row['type'] === 'varchar') {
-                // need to add length to the type so we are compatible with
-                // Zend_Db_Adapter_Pdo_Pgsql!
-                $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $row['complete_type']);
-                $row['type'] .= '(' . $length . ')';
+            if ($row['type'] == 'varchar') {
+                preg_match('/character varying\((\d+)\)/', $row['complete_type'], $matches);
+                $row['length'] = $matches[1];
             }
-            $descr[$row['field']] = array(
-                'name'    => $row['field'],
-                'type'    => $row['type'],
-                'notnull' => ($row['isnotnull'] == ''),
-                'default' => $row['default'],
-                'primary' => ($row['pri'] == 't'),
-            );
-
-            /*
-             * @todo conform to standard format
-             *
-            $desc[$row['field']] = array(
-                'SCHEMA_NAME' => '',
-                'TABLE_NAME'  => $tableName,
-                'COLUMN_NAME' => $row['field'],
+            $desc[$row['colname']] = array(
+                'SCHEMA_NAME' => null,
+                'TABLE_NAME'  => $row['relname'],
+                'COLUMN_NAME' => $row['colname'],
                 'DATA_TYPE'   => $row['type'],
-                'DEFAULT'     => $row['default'],
-                'NULLABLE'    => (bool) ($row['null'] == 'YES'),
-                'LENGTH'      => ''
-                'SCALE'       => ''
-                'PRECISION'   => ''
-                'PRIMARY'     => (bool) (strtoupper($row['key']) == 'PRI')
+                'DEFAULT'     => $row['default_value'],
+                'NULLABLE'    => (bool) ($row['notnull'] != 't'),
+                'LENGTH'      => $row['length'],
+                'SCALE'       => null,
+                'PRECISION'   => null,
+                'PRIMARY'     => (bool) $row['pri']
             );
-             */
         }
-        return $descr;
+        return $desc;
     }
 
 

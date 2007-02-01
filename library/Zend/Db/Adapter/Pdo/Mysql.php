@@ -91,6 +91,14 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         $result = $this->fetchAll($sql);
         $desc = array();
         foreach ($result as $key => $row) {
+            if (preg_match('/^((?:var)?char)\((\d+)\)/', $row['type'], $matches)) {
+                $row['type'] = $matches[1];
+                $row['length'] = $matches[2];
+            } else if (preg_match('/^decimal\((\d+),(\d+)\)/', $row['type'], $matches)) {
+                $row['type'] = 'decimal';
+                $row['precision'] = $matches[1];
+                $row['scale'] = $matches[2];
+            }
             $desc[$row['field']] = array(
                 'SCHEMA_NAME' => null,
                 'TABLE_NAME'  => $tableName,
@@ -98,9 +106,9 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
                 'DATA_TYPE'   => $row['type'],
                 'DEFAULT'     => $row['default'],
                 'NULLABLE'    => (bool) ($row['null'] == 'YES'),
-                'LENGTH'      => null,
-                'SCALE'       => null,
-                'PRECISION'   => null,
+                'LENGTH'      => $row['length'],
+                'PRECISION'   => $row['precision'],
+                'SCALE'       => $row['scale'],
                 'PRIMARY'     => (bool) (strtoupper($row['key']) == 'PRI')
             );
         }

@@ -41,6 +41,35 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     protected $_pdoType = 'mssql';
 
     /**
+     * Creates a PDO DSN for the adapter from $this->_config settings.
+     *
+     * @return string
+     */
+    protected function _dsn()
+    {
+        // baseline of DSN parts
+        $dsn = $this->_config;
+
+        // don't pass the username and password in the DSN
+        unset($dsn['username']);
+        unset($dsn['password']);
+        $port = 1433;
+        if (isset($dsn['port'])) {
+            $port = $dsn['port'];
+            unset($dsn['port']);
+        }
+        $dsn['host'] .= ',' . $port;
+
+        // use all remaining parts in the DSN
+        foreach ($dsn as $key => $val) {
+            $dsn[$key] = "$key=$val";
+        }
+
+        $dsn = $this->_pdoType . ':' . implode(';', $dsn);
+        return $dsn;
+    }
+
+    /**
      * Quotes an identifier.
      *
      * @param string $ident The identifier.
