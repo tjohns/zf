@@ -438,23 +438,38 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
-     * @param string|Zend_Db_Select $sql
+     * @param string $sql
      * @param integer $count
      * @param integer $offset OPTIONAL
      * @return string
-     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function limit($sql, $count, $offset = 0)
     {
+        $count = intval($count);
         if ($count <= 0) {
-            return $sql;
+            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument count=$count is not valid");
         }
 
-        if ($offset <= 0) {
-            return $sql . " FETCH FIRST $count ROWS ONLY";
+        $offset = intval($offset);
+        if ($offset < 0) {
+            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument offset=$offset is not valid");
         }
 
-        throw new Zend_Db_Adapter_Db2_Exception('LIMIT <count>, <offset> is not implemented yet');
+        /**
+         * Oracle does not implement the LIMIT clause as some RDBMS do.
+         * We have to simulate it with subqueries and ROWNUM.
+         * Unfortunately because we use the column wildcard "*", 
+         * this puts an extra column into the query result set.
+         */
+        $limit_sql = "SELECT z2.*
+            FROM (
+                SELECT ROW_NUMBER() OVER() AS zend_db_rownum, z1.*
+                FROM (
+                    " . $sql . "
+                ) z1
+            ) z2
+            WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
+        return $limit_sql;
     }
 
     /**
