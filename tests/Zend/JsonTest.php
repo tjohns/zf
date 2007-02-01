@@ -376,6 +376,42 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+
+    public function testEncodeObject()
+    {
+        $actual  = new Zend_JsonTest_Object();
+        $encoded = Zend_Json_Encoder::encode($actual);
+        $decoded = Zend_Json_Decoder::decode($encoded, Zend_Json::TYPE_OBJECT);
+
+        $this->assertTrue(isset($decoded->__className));
+        $this->assertEquals('Zend_JsonTest_Object', $decoded->__className);
+        $this->assertTrue(isset($decoded->foo));
+        $this->assertEquals('bar', $decoded->foo);
+        $this->assertTrue(isset($decoded->bar));
+        $this->assertEquals('baz', $decoded->bar);
+        $this->assertFalse(isset($decoded->_foo));
+    }
+
+    public function testEncodeClass()
+    {
+        $encoded = Zend_Json_Encoder::encodeClass('Zend_JsonTest_Object');
+
+        $this->assertContains("Class.create('Zend_JsonTest_Object'", $encoded);
+        $this->assertContains("ZAjaxEngine.invokeRemoteMethod(this, 'foo'", $encoded);
+        $this->assertContains("ZAjaxEngine.invokeRemoteMethod(this, 'bar'", $encoded);
+        $this->assertNotContains("ZAjaxEngine.invokeRemoteMethod(this, 'baz'", $encoded);
+
+        $this->assertContains('variables:{foo:"bar",bar:"baz"}', $encoded);
+        $this->assertContains('constants : {FOO: "bar"}', $encoded);
+    }
+    
+    public function testEncodeClasses()
+    {
+        $encoded = Zend_Json_Encoder::encodeClasses(array('Zend_JsonTest_Object', 'Zend_JsonTest'));
+
+        $this->assertContains("Class.create('Zend_JsonTest_Object'", $encoded);
+        $this->assertContains("Class.create('Zend_JsonTest'", $encoded);
+    }
 }
 
 /**
@@ -383,4 +419,29 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
  */
 class Zend_JsonTest_Item 
 { 
+}
+
+/**
+ * Zend_JsonTest_Object: test class for encoding classes
+ */
+class Zend_JsonTest_Object
+{
+    const FOO = 'bar';
+
+    public $foo = 'bar';
+    public $bar = 'baz';
+
+    protected $_foo = 'fooled you';
+
+    public function foo($bar, $baz)
+    {
+    }
+
+    public function bar($baz)
+    {
+    }
+
+    protected function baz()
+    {
+    }
 }

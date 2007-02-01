@@ -355,6 +355,7 @@ class Zend_Json_Encoder
     	    }
 
             $tmpArray[] = $prop->getName()
+        		        . ':'
                         . self::encode($propValues[$prop->getName()]);
         }
         $result .= implode(',', $tmpArray);
@@ -398,7 +399,7 @@ class Zend_Json_Encoder
      * @param string $package
      * @return string
      */
-    static public function encodeClasses($classNames, $package = '')
+    static public function encodeClasses(array $classNames, $package = '')
     {
     	$result = '';
     	foreach ($classNames as $className) {
