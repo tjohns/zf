@@ -45,16 +45,22 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     abstract public function getCreateTableSQL();
 
     /**
-     * @var Zend_Db_Adapter_Pdo_Abstract
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
 
+    /**
+     *
+     */
     protected function getDropTableSQL()
     {
         $sql = 'DROP TABLE ' . self::TABLE_NAME;
         return $sql;
     }
 
+    /**
+     *
+     */
     protected function createTestTable()
     {
         $this->_db->query($this->getCreateTableSQL());
@@ -68,13 +74,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db->query($sql);
     }
 
+    /**
+     *
+     */
     public function setUp()
     {
         // check for driver test disabled
         $driver = $this->getDriver();
         $enabledConst = 'TESTS_ZEND_DB_ADAPTER_' . strtoupper($driver) . '_ENABLED';
         if (!(defined($enabledConst) && constant($enabledConst) == true)) {
-            $this->markTestSkipped($driver . " tests disabled in TestConfiguration.php");
+            $this->markTestSkipped("Tests for Zend_Db adapter $driver are disabled in TestConfiguration.php");
         }
         
         // open a new connection
@@ -83,6 +92,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->setUpMetadata();
     }
 
+    /**
+     *
+     */
     protected function setUpMetadata()
     {
         // create a test table and populate it
@@ -90,6 +102,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable();
     }
 
+    /**
+     *
+     */
     public function tearDown()
     {
         $this->tearDownMetadata();
@@ -100,6 +115,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db = null;
     }
 
+    /**
+     *
+     */
     protected function tearDownMetadata()
     {
         // drop test table
@@ -107,6 +125,33 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db->query($sql);
     }
 
+    /**
+     *
+     */
+    public function testDelete()
+    {
+        $idColName = 'id';
+        if ($this->_resultSetUppercase) {
+            $idColName = strtoupper($idColName);
+        }
+
+        $result = $this->_db->delete(self::TABLE_NAME, $this->_db->quoteInto('id = ?', 2));
+        $this->assertEquals(1, $result);
+
+        $select = $this->_db->select();
+        $select->from(self::TABLE_NAME);
+        $result = $this->_db->fetchAll($select);
+
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, $result[0][$idColName]);
+
+        $result = $this->_db->delete(self::TABLE_NAME, $this->_db->quoteInto('id = ?', 327));
+        $this->assertEquals(0, $result);
+    }
+
+    /**
+     *
+     */
     public function testDescribeTable()
     {
         $desc = $this->_db->describeTable(self::TABLE_NAME);
@@ -141,11 +186,14 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $desc[$bodyKey]['PRIMARY']);
     }
 
+    /**
+     *
+     */
     public function testFetchAll()
     {
-        $colName = 'id';
+        $idColName = 'id';
         if ($this->_resultSetUppercase) {
-            $colName = strtoupper($colName);
+            $idColName = strtoupper($idColName);
         }
 
         $result = $this->_db->query(
@@ -155,9 +203,61 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $rows = $result->fetchAll();
         $this->assertEquals(2, count($rows));
-        $this->assertEquals('1', $rows[0][$colName]);
+        $this->assertEquals('1', $rows[0][$idColName]);
     }
 
+    /**
+     *
+    public function testFetchAllWithParameters()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchAllWithBoundParameters()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchAssoc()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchCol()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchOne()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchPairs()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testFetchRow()
+    {
+    }
+     */
+
+    /**
+     *
+     */
     public function testInsert()
     {
         $row = array (
@@ -165,17 +265,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             'subTitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
-            );
+        );
         $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
         $last_insert_id = $this->_db->lastInsertId();
         $this->assertEquals('3', (string) $last_insert_id); // correct id has been set
     }
 
+    /**
+     *
+     */
     public function testLimit()
     {
-        $colName = 'id';
+        $idColName = 'id';
         if ($this->_resultSetUppercase) {
-            $colName = strtoupper($colName);
+            $idColName = strtoupper($idColName);
         }
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
@@ -184,7 +287,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(1, $rows[0][$colName]);
+        $this->assertEquals(1, $rows[0][$idColName]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
 
@@ -192,9 +295,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(2, $rows[0][$colName]);
+        $this->assertEquals(2, $rows[0][$idColName]);
     }
 
+    /**
+     *
+     */
     public function testListTables()
     {
         $tableName = self::TABLE_NAME;
@@ -206,16 +312,29 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertContains($tableName, $tables);
     }
 
+    /**
+     *
+     */
     public function testProfilerCreation()
     {
         $this->assertThat($this->_db->getProfiler(), $this->isInstanceOf('Zend_Db_Profiler'));
     }
 
+    /**
+     *
+    public function testQuery()
+    {
+    }
+     */
+
+    /**
+     *
+     */
     public function testSelect()
     {
-        $colName = 'id';
+        $idColName = 'id';
         if ($this->_resultSetUppercase) {
-            $colName = strtoupper($colName);
+            $idColName = strtoupper($idColName);
         }
 
         $select = $this->_db->select();
@@ -225,7 +344,163 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->query($select);
         $row = $result->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
-        $this->assertEquals('1', $row[$colName]); // correct data
+        $this->assertEquals('1', $row[$idColName]); // correct data
+    }
+
+    /**
+     *
+    public function testSelectWithBoundParameters()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectDistinctModifier()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectForUpdateModifier()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectJoinClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectLeftOuterJoinClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectWhereClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectOrWhereClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectGroupByClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectHavingClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectOrHavingClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectOrderByClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectLimitClause()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testSelectLimitPage()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testTransactionCommit()
+    {
+    }
+     */
+
+    /**
+     *
+    public function testTransactionRollback()
+    {
+    }
+     */
+
+    /**
+     *
+     */
+    public function testUpdate()
+    {
+        $idColName = 'id';
+        $titleColName = 'title';
+        $subtitleColName = 'subtitle';
+        if ($this->_resultSetUppercase) {
+            $idColName = strtoupper($idColName);
+            $titleColName = strtoupper($titleColName);
+            $subtitleColName = strtoupper($subtitleColName);
+        }
+
+        $newTitle = 'New News Item 2';
+        $newSubTitle = 'New Sub title 2';
+
+        // Test that we can change the values in
+        // an existing row.
+        $result = $this->_db->update(self::TABLE_NAME,
+            array(
+                'title'        => $newTitle,
+                'subTitle'     => $newSubTitle
+            ),
+            $this->_db->quoteInto('id = ?', 2)
+        );
+        $this->assertEquals(1, $result);
+
+        // Query the row to see if we have the new values.
+        $select = $this->_db->select();
+        $select->from(self::TABLE_NAME);
+        $select->where('id = ?', 2);
+        $stmt = $this->_db->query($select);
+        $row = $stmt->fetch();
+
+        $this->assertEquals(2, $row[$idColName]);
+        $this->assertEquals($newTitle, $row[$titleColName]);
+        $this->assertEquals($newSubTitle, $row[$subtitleColName]);
+
+        // Test that update affects no rows if the WHERE
+        // clause matches none.
+        $result = $this->_db->update(self::TABLE_NAME,
+            array(
+                'title'        => $newTitle,
+                'subTitle'     => $newSubTitle,
+            ),
+            $this->_db->quoteInto('id = ?', 327)
+        );
+        $this->assertEquals(0, $result);
     }
 
 }

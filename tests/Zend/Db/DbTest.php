@@ -38,14 +38,44 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
 {
     function testFactory()
     {
-        $db = Zend_Db::factory('pdo_sqlite', array('dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE));
+        $db = Zend_Db::factory('pdo_sqlite',
+            array(
+                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
+            )
+        );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    function testFactoryOption()
+    function testFactoryProfilerOption()
     {
-        $db = Zend_Db::factory('pdo_sqlite', array('dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE));
+        $db = Zend_Db::factory('pdo_sqlite',
+            array(
+                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE,
+                'profiler' => true
+            )
+        );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
+    }
+
+    function testConstructorWithoutFactory()
+    {
+        $db = new Zend_Db_Adapter_Pdo_Sqlite(
+            array(
+                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
+            )
+        );
+        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
+    }
+
+    function testGetFetchMode()
+    {
+        $db = Zend_Db::factory('pdo_sqlite',
+            array(
+                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
+            )
+        );
+        $mode = $db->getFetchMode();
+        $this->assertType('integer', $mode);
     }
 
     function testExceptionInvalidDriverName()
@@ -54,7 +84,7 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
             $db = Zend_Db::factory(null);
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
-            $this->assertEquals($e->getMessage(), 'Adapter name must be specified in a string');
+            $this->assertEquals($e->getMessage(), 'Adapter name must be specified in a string.');
         }
     }
 
@@ -64,7 +94,37 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
             $db = Zend_Db::factory('pdo_sqlite', 'scalar');
         } catch (Zend_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
-            $this->assertEquals($e->getMessage(), 'Configuration must be an array');
+            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+        }
+    }
+
+    function testExceptionInvalidOptionsArrayWithoutFactory()
+    {
+        try {
+            $db = new Zend_Db_Adapter_Pdo_Sqlite('scalar');
+        } catch (Zend_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+        }
+    }
+
+    function testExceptionNoConfig()
+    {
+        try {
+            $db = Zend_Db::factory('pdo_sqlite', null);
+        } catch (Zend_Db_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
+            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+        }
+    }
+
+    function testExceptionNoDatabaseName()
+    {
+        try {
+            $db = Zend_Db::factory('pdo_sqlite', array());
+        } catch (Zend_Db_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $this->assertEquals($e->getMessage(), "Configuration must have a key for 'dbname' that names the database instance.");
         }
     }
 
