@@ -407,15 +407,30 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
         <sect3 id="zend.search.query-language.boolean.no-operator">
             <title>Отсутствие оператора<!--no operator--></title>
             <para>
-                Если не используется оператор, то элемент является
-                необязательным. Он может как присутствовать, так и не
-                присутствовать в документе, но документы с ними имеют более
-                высокий ранг.
+                Если не не указан оператор, то поведение определяется
+                используемым по умолчанию булевым оператором.
 <!--
-                If no operator is used, then term is optional. It may be or may not be presented within document,
-                but documents with this term will have higher score.
+                If no operator is used, then behavior is defined by "default boolean operator".
 -->
             </para>
+            
+            <para>
+                По умолчанию таким оператором является <code>OR</code>. 
+<!--
+                It's <code>OR</code> by default.
+-->
+            </para>
+            
+            <para>
+                Это означает, что данный элемент является необязательным. Он
+                может как присутствовать, так и не присутствовать в документе,
+                но документы с этим элементом имеют более высокий ранг. 
+<!--
+                That means, that term is optional. It may be or may not be presented within document, but documents with this term
+                will have higher score.
+-->
+            </para>
+
             <para>
                 Для поиска документов, которые должны содержать "PHP framework"
                 и могут содержать "Zend Framework", используется запрос: 
@@ -424,6 +439,27 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
 -->
                 <programlisting role="querystring"><![CDATA[+"PHP framework" "Zend Framework"]]></programlisting>
             </para>
+            
+            <para>
+                Используемые по умолчанию булевы операторы могут быть
+                установлены или получены с помощью методов
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</code>
+                и <code>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</code>.  
+<!--
+                Default boolean operator may be set or retrieved with
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</code> and
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</code> methods.
+-->
+            </para>
+            <para>
+                Эти методы работают с константами <code>Zend_Search_Lucene_Search_QueryParser::B_AND</code> и <code>Zend_Search_Lucene_Search_QueryParser::B_OR</code>.
+<!--
+                These methods operate with
+                <code>Zend_Search_Lucene_Search_QueryParser::B_AND</code> and
+                <code>Zend_Search_Lucene_Search_QueryParser::B_OR</code> constants.
+-->
+            </para>
+
         </sect3>
     </sect2>
 

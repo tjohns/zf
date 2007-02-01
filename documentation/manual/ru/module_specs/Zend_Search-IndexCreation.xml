@@ -106,6 +106,68 @@ foreach ($hits as $hit) {
 ?>]]></programlisting>
     </sect2>
     
+    <sect2 id="zend.search.index-creation.counting">
+        <title>Получение размера индекса<!--Retrieving Index size--></title>
+
+        <para>
+            В Zend_Search_Lucene есть два способа получения размера индекса.
+<!--
+            There are two methods to retrieve index size in Zend_Search_Lucene.
+-->
+        </para>
+
+        <para>
+             Метод <code>Zend_Search_Lucene::maxDoc()</code> возвращает число,
+             на единицу большее, чем наибольший возможный номер документа.
+             Фактически это общее количество документов в индексе, включая
+             удаленные. У этого метода есть синоним -
+             <code>Zend_Search_Lucene::count()</code>.
+<!--
+             <code>Zend_Search_Lucene::maxDoc()</code> returns one greater than the largest possible document number.
+             It's actually overall number of the documents in the index including deleted documents.
+             So it has a synonym: <code>Zend_Search_Lucene::count()</code>.
+-->
+        </para>
+
+        <para>
+             <code>Zend_Search_Lucene::numDocs()</code> возвращает общее
+             количество не удаленных документов.
+<!--
+             <code>Zend_Search_Lucene::numDocs()</code> returns the total number of non-deleted documents.
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$indexSize = $index->count();
+$documents = $index->numDocs();
+?>]]></programlisting>
+
+        <para>
+            Метод <code>Zend_Search_Lucene::isDeleted($id)</code> может
+            использоваться для проверки того, был ли документ удален.  
+<!--
+            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+for ($count = 0; $count < $index->maxDoc(); $count++) {
+    if ($index->isDeleted($count)) {
+        echo "Document #$id is deleted.\n";
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            При оптимизации индекса производится очищение индекса от удаленных
+            документов и сжатие диапазона используемых идентификаторов. Поэтому
+            внутренний идентификатор документа может изменяться
+<!--
+            Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
+-->
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.index-creation.optimization">
         <title>Оптимизация индекса<!--Index optimization--></title>
 
