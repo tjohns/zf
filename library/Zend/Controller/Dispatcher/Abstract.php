@@ -59,12 +59,6 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
     protected $_directories = array();
 
     /**
-     * Front Controller instance
-     * @var Zend_Controller_Front
-     */
-    protected $_frontController;
-
-    /**
      * Array of invocation parameters to use when instantiating action 
      * controllers
      * @var array 

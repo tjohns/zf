@@ -22,7 +22,6 @@ class Zend_Controller_ModuleRouterTest extends PHPUnit_Framework_TestCase
         ));
         $request = new Zend_Controller_ModuleRouterTest_Request();
         $router  = new Zend_Controller_ModuleRouter();
-        $router->setFrontController($this->front);
         $route   = $router->route($request);
 
         $this->assertEquals('foo', $request->getModuleName(), $request->getPathInfo());

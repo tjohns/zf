@@ -152,21 +152,6 @@ interface Zend_Controller_Dispatcher_Interface
     public function getControllerDirectory();
 
     /**
-     * Retrieve front controller instance
-     * 
-     * @return Zend_Controller_Front
-     */
-    public function getFrontController();
-
-    /**
-     * Set front controller instance
-     * 
-     * @param Zend_Controller_Front $controller 
-     * @return Zend_Controller_Dispatcher
-     */
-    public function setFrontController(Zend_Controller_Front $controller);
-
-    /**
      * Dispatches a request object to a controller/action.  If the action
      * requests a forward to another action, a new request will be returned.
      *

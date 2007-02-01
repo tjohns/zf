@@ -226,4 +226,35 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
         }
     }
+
+    public function testSetController()
+    {
+        require_once 'Zend/Controller/Front.php';
+        $front = Zend_Controller_Front::getInstance();
+
+        $this->assertNull($this->_response->getController());
+
+        $this->_response->setController($front);
+        $this->assertSame($front, $this->_response->getController());
+
+        require_once 'Zend/Controller/Request/Http.php';
+        $request = new Zend_Controller_Request_Http();
+        $action = new Zend_Controller_Response_HttpTest_Action($request, $this->_response);
+        $this->_response->setController($action);
+        $this->assertSame($action, $this->_response->getController());
+    }
+
+    public function testSetControllerThrowsExceptionOnBadInput()
+    {
+        try {
+            $this->_response->setController($this);
+            $this->fail('setController() should not allow non controller input');
+        } catch (Exception $e) {
+            // success
+        }
+    }
 }
+
+require_once 'Zend/Controller/Action.php';
+class Zend_Controller_Response_HttpTest_Action extends Zend_Controller_Action 
+{}

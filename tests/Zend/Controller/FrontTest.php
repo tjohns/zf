@@ -260,7 +260,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $response = $this->_controller->dispatch($request);
 
         $body = $response->getBody();
-        $this->assertContains('foo: bar', $body);
+        $this->assertContains('foo: bar', $body, $body);
         $this->assertContains('baz: bat', $body);
     }
 

@@ -22,6 +22,9 @@
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
+/** Zend_Controller_Front */
+require_once 'Zend/Controller/Front.php';
+
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -43,6 +46,12 @@ abstract class Zend_Controller_Action
      * @var array 
      */
     protected $_invokeArgs = array();
+
+    /**
+     * Front controller instance
+     * @var Zend_Controller_Front
+     */
+    protected $_frontController;
 
     /**
      * HTTP status code for redirects
@@ -197,6 +206,42 @@ abstract class Zend_Controller_Action
     }
 
     /**
+     * Set the front controller instance
+     * 
+     * @param Zend_Controller_Front $front 
+     * @return Zend_Controller_Action
+     */
+    public function setFrontController(Zend_Controller_Front $front)
+    {
+        $this->_frontController = $front;
+        return $this;
+    }
+
+    /**
+     * Retrieve Front Controller
+     *
+     * @return Zend_Controller_Front
+     */
+    public function getFrontController()
+    {
+        // Used cache version if found
+        if (null !== $this->_frontController) {
+            return $this->_frontController;
+        }
+
+        // Grab singleton instance, if class has been loaded
+        if (class_exists('Zend_Controller_Front')) {
+            $this->_frontController = Zend_Controller_Front::getInstance();
+            return $this->_frontController;
+        }
+
+        // Throw exception in all other cases
+        require_once 'Zend/Controller/Exception.php';
+        throw new Zend_Controller_Exception('Front controller class has not been loaded');
+    }
+
+
+    /**
      * Retrieve HTTP status code to emit on {@link _redirect()} call
      * 
      * @return int
@@ -334,6 +379,22 @@ abstract class Zend_Controller_Action
     }
 
     /**
+     * Dispatch the requested action
+     * 
+     * @param string $action Method name of action
+     * @return void
+     */
+    public function dispatch($action)
+    {
+        $this->preDispatch();
+        if ($this->getRequest()->isDispatched()) {
+            // preDispatch() didn't change the action, so we can continue
+            $this->$action();
+            $this->postDispatch();
+        }
+    }
+
+    /**
      * Call the action specified in the request object, and return a response
      *
      * Not used in the Action Controller implementation, but left for usage in 
@@ -356,23 +417,22 @@ abstract class Zend_Controller_Action
     {
         if (null !== $request) {
             $this->setRequest($request);
+        } else {
+            $request = $this->getRequest();
         }
 
         if (null !== $response) {
             $this->setResponse($response);
         }
 
-        $this->preDispatch();
-
-        $action = $this->getRequest()->getActionName();
-        if (null === $action) {
-            $action = 'noRoute';
+        $action = $request->getActionName();
+        if (empty($action)) {
+            $action = 'index';
         }
         $action = $action . 'Action';
 
-        $this->{$action}();
-
-        $this->postDispatch();
+        $request->setDispatched(true);
+        $this->dispatch($action);
 
         return $this->getResponse();
     }

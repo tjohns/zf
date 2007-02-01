@@ -188,24 +188,10 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
         $action = $this->getAction($request);
 
         /**
-         * If method does not exist, default to __call()
-         */
-        $doCall = !method_exists($controller, $action);
-
-        /**
-         * Dispatch the method call, bookending with pre/postDispatch() calls
+         * Dispatch the method call
          */
         $request->setDispatched(true);
-        $controller->preDispatch();
-        if ($request->isDispatched()) {
-            // preDispatch() didn't change the action, so we can continue
-            if ($doCall) {
-                $controller->__call($action, array());
-            } else {
-                $controller->$action();
-            }
-            $controller->postDispatch();
-        }
+        $controller->dispatch($action);
 
         // Destroy the page controller instance and reflection objects
         $controller = null;

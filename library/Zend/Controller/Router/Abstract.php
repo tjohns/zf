@@ -46,18 +46,18 @@ require_once 'Zend/Controller/Request/Http.php';
 abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router_Interface
 {
     /**
+     * Front controller instance
+     * @var Zend_Controller_Front
+     */
+    protected $_frontController;
+
+    /**
      * Array of invocation parameters to use when instantiating action 
      * controllers
      * @var array 
      */
     protected $_invokeParams = array();
     
-    /**
-     * Front controller instance
-     * @var Zend_Controller_Front
-     */
-    protected $_frontController;
-
     /**
      * Constructor
      * 
@@ -146,26 +146,38 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
 
         return $this;
     }
-    
+
     /**
-     * Retrieve front controller instance
+     * Retrieve Front Controller
      *
      * @return Zend_Controller_Front
-     */    
+     */
     public function getFrontController()
     {
-        return $this->_frontController;
+        // Used cache version if found
+        if (null !== $this->_frontController) {
+            return $this->_frontController;
+        }
+
+        // Grab singleton instance, if class has been loaded
+        if (class_exists('Zend_Controller_Front')) {
+            $this->_frontController = Zend_Controller_Front::getInstance();
+            return $this->_frontController;
+        }
+
+        // Throw exception in all other cases
+        require_once 'Zend/Controller/Router/Exception.php';
+        throw new Zend_Controller_Router_Exception('Front controller class has not been loaded');
     }
-    
+
     /**
-     * Set front controller instance
-     *
+     * Set Front Controller
+     * 
      * @param Zend_Controller_Front $controller 
-     * @return Zend_Controller_Router
-     */    
+     * @return Zend_Controller_Router_Abstract
+     */
     public function setFrontController(Zend_Controller_Front $controller)
     {
-        $this->setParams($controller->getParams());
         $this->_frontController = $controller;
         return $this;
     }

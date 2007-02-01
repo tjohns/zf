@@ -83,8 +83,9 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
     public function testRun()
     {
         $response = $this->_controller->run();
-        $this->assertContains('In the index action', $response->getBody());
-        $this->assertNotContains('Prerun ran', $this->_controller->getResponse()->getBody());
+        $body     = $response->getBody();
+        $this->assertContains('In the index action', $body, var_export($this->_controller->getRequest(), 1));
+        $this->assertNotContains('Prerun ran', $body, $body);
     }
 
     public function testRun2()

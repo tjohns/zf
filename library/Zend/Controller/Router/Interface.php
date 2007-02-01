@@ -86,19 +86,4 @@ interface Zend_Controller_Router_Interface
      * @return Zend_Controller_Router_Interface
      */
     public function clearParams($name = null);
-
-    /**
-     * Retrieve front controller instance
-     *
-     * @return Zend_Controller_Front
-     */    
-    public function getFrontController();
-
-    /**
-     * Set the controller directories
-     * 
-     * @param Zend_Controller_Front $controller
-     * @return Zend_Controller_Router_Interface
-     */
-    public function setFrontController(Zend_Controller_Front $controller);
 }

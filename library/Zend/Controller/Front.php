@@ -678,7 +678,7 @@ class Zend_Controller_Front
              * Route request to controller/action, if a router is provided
              */
             $router = $this->getRouter();
-            $router->setFrontController($this);
+            $router->setParams($this->getParams());
 
             /**
             * Notify plugins of router startup
@@ -698,7 +698,15 @@ class Zend_Controller_Front
             $this->_plugins->dispatchLoopStartup($request);
 
             $dispatcher = $this->getDispatcher();
-            $dispatcher->setFrontController($this);
+
+            /**
+             * Add params, controller directories, and response to dispatcher
+             */
+            $dispatcher->setParams($this->getParams());
+            foreach ($this->getControllerDirectory() as $key => $dir) {
+                $dispatcher->addControllerDirectory($dir, $key);
+            }
+            $dispatcher->setResponse($response);
 
             /**
              *  Attempt to dispatch the controller/action. If the $request

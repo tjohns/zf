@@ -44,6 +44,15 @@ abstract class Zend_Controller_Response_Abstract
     protected $_exceptions = array();
 
     /**
+     * Controller instance
+     *
+     * No type hinting here, as implementation will not care what kind of 
+     * controller is used.
+     * @var mixed
+     */
+    protected $_controller;
+
+    /**
      * Array of headers. Each header is an array with keys 'name' and 'value'
      * @var array
      */
@@ -67,6 +76,42 @@ abstract class Zend_Controller_Response_Abstract
      * @var boolean 
      */
     protected $_renderExceptions = false;
+
+    /**
+     * Set controller
+     *
+     * Current implementation checks that controller is either a front or 
+     * action controller instance.
+     * 
+     * @param Zend_Controller_Action|Zend_Controller_Front $controller 
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function setController($controller)
+    {
+        if (!is_object($controller)) {
+            require_once 'Zend/Controller/Response/Exception.php';
+            throw new Zend_Controller_Response_Exception('Controller must be a Zend_Controller_Front or Zend_Controller_Action instance');
+        }
+        if ((!$controller instanceof Zend_Controller_Front) && 
+            (!$controller instanceof Zend_Controller_Action))
+        {
+            require_once 'Zend/Controller/Response/Exception.php';
+            throw new Zend_Controller_Response_Exception('Controller must be a Zend_Controller_Front or Zend_Controller_Action instance');
+        }
+
+        $this->_controller = $controller;
+        return $this;
+    }
+
+    /**
+     * Return current controller instance
+     * 
+     * @return Zend_Controller_Action|Zend_Controller_Front
+     */
+    public function getController()
+    {
+        return $this->_controller;
+    }
 
     /**
      * Set a header
