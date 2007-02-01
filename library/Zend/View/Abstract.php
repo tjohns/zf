@@ -227,11 +227,12 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * Adds to the stack of view script paths in LIFO order.
      *
      * @param string|array The directory (-ies) to add.
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function addScriptPath($path)
     {
         $this->_addPath('script', $path);
+        return $this;
     }
 
     /**
@@ -265,7 +266,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * @param string|array The directory (-ies) to add.
      * @param string $classPrefix Class prefix to use with classes in this 
      * directory; defaults to Zend_View_Helper
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function addHelperPath($path, $classPrefix = 'Zend_View_Helper_')
     {
@@ -274,6 +275,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         }
 
         $this->_addPath('helper', $path, $classPrefix);
+        return $this;
     }
 
     /**
@@ -317,7 +319,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * @param string|array The directory (-ies) to add.
      * @param string $classPrefix Class prefix to use with classes in this 
      * directory; defaults to Zend_View_Filter
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function addFilterPath($path, $classPrefix = 'Zend_View_Filter_')
     {
@@ -326,6 +328,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         }
 
         $this->_addPath('filter', $path, $classPrefix);
+        return $this;
     }
 
     /**
@@ -372,13 +375,14 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * Add one or more filters to the stack in FIFO order.
      *
      * @param string|array One or more filters to add.
-     * @return void
+     * @return Zend_View_Abstract
      */
     public function addFilter($name)
     {
         foreach ((array) $name as $val) {
             $this->_filter[] = $val;
         }
+        return $this;
     }
 
     /**

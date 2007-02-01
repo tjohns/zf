@@ -409,7 +409,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($view->baz));
     }
 
-    public function testFluidInterfaces()
+    public function testFluentInterfaces()
     {
         $view = new Zend_View();
         try {
@@ -424,5 +424,139 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue($test instanceof Zend_View);
+    }
+
+    public function testSetConfigInConstructor()
+    {
+        $scriptPath = dirname(__FILE__) . '/View/_templates/';
+        $helperPath = dirname(__FILE__) . '/View/_stubs/HelperDir1/';
+        $filterPath = dirname(__FILE__) . '/View/_stubs/HelperDir1/';
+
+        $config = array(
+            'escape'     => 'strip_tags',
+            'encoding'   => 'UTF-8',
+            'scriptPath' => $scriptPath,
+            'helperPath' => $helperPath,
+            'filterPath' => $filterPath,
+            'filter'     => 'urlencode',
+        );
+
+        $view = new Zend_View($config);
+        $scriptPaths = $view->getScriptPaths();
+        $helperPaths = $view->getHelperPaths();
+        $filterPaths = $view->getFilterPaths();
+
+        $this->assertContains($scriptPath, $scriptPaths);
+
+        $found = false;
+        foreach ($helperPaths as $pathInfo) {
+            if (strstr($pathInfo['dir'], $helperPath)) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, var_export($helperPaths, 1));
+
+        $found = false;
+        foreach ($filterPaths as $pathInfo) {
+            if (strstr($pathInfo['dir'], $filterPath)) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, var_export($filterPaths, 1));
+    }
+
+    public function testUnset()
+    {
+        $view = new Zend_View();
+        unset($view->_path);
+    }
+
+    public function testSetProtectedThrowsException()
+    {
+        $view = new Zend_View();
+        try {
+            $view->_path = 'bar';
+            $this->fail('Should not be able to set protected properties');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testHelperPathWithPrefix()
+    {
+        $view = new Zend_View();
+        $status = $view->addHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/', 'My_View_Helper');
+        $this->assertSame($view, $status);
+        $helperPaths = $view->getHelperPaths();
+        $path = $helperPaths[0];
+        $this->assertEquals('My_View_Helper_', $path['prefix']);
+        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir1/', $path['dir']);
+
+        $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Helper');
+        $helperPaths = $view->getHelperPaths();
+        $path = $helperPaths[0];
+        $this->assertEquals('Other_View_Helper_', $path['prefix']);
+        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir2/', $path['dir']);
+    }
+
+    public function testFilterPathWithPrefix()
+    {
+        $view = new Zend_View();
+        $status = $view->addFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/', 'My_View_Filter');
+        $this->assertSame($view, $status);
+        $filterPaths = $view->getFilterPaths();
+        $path = $filterPaths[0];
+        $this->assertEquals('My_View_Filter_', $path['prefix']);
+        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir1/', $path['dir']);
+
+        $view->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Filter');
+        $filterPaths = $view->getFilterPaths();
+        $path = $filterPaths[0];
+        $this->assertEquals('Other_View_Filter_', $path['prefix']);
+        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir2/', $path['dir']);
+    }
+
+    public function testAssignThrowsExceptionsOnBadValues()
+    {
+        $view = new Zend_View();
+        try {
+            $view->assign('_path', dirname(__FILE__) . '/View/_stubs/HelperDir2/');
+            $this->fail('Protected/private properties cannot be assigned');
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $view->assign(array('_path' => dirname(__FILE__) . '/View/_stubs/HelperDir2/'));
+            $this->fail('Protected/private properties cannot be assigned');
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $view->assign($this);
+            $this->fail('Assign spec requires string or array');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testEscape()
+    {
+        $view = new Zend_View();
+        $original = "Me, Myself, & I";
+        $escaped  = $view->escape($original);
+        $this->assertNotEquals($original, $escaped);
+        $this->assertEquals("Me, Myself, &amp; I", $escaped);
+    }
+
+    public function testCustomEscape()
+    {
+        $view = new Zend_View();
+        $view->setEscape('strip_tags');
+        $original = "<p>Some text</p>";
+        $escaped  = $view->escape($original);
+        $this->assertNotEquals($original, $escaped);
+        $this->assertEquals("Some text", $escaped);
     }
 }
