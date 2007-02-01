@@ -3,56 +3,52 @@
     <title>Introduction</title>
 
     <para>
-        <literal>Zend_Filter</literal> provides a library of static methods for filtering data. For input
-        filtering, you should use <xref linkend="zend.filter.input" /> instead, because it provides a
-        framework for filtering input using the methods provided by this class. However, because
-        <literal>Zend_Filter_Input</literal> is designed primarily for arrays,
-        <literal>Zend_Filter</literal> can be useful for filtering scalars, because it behaves like PHP's
-        string functions:
+        The Zend_Filter component provides a set of commonly needed data filters. It also provides a simple
+        filter chaining mechanism by which multiple filters may be applied to a single datum in a
+        user-defined order.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-$alphaUsername = Zend_Filter::getAlpha('John123Doe');
-// $alphaUsername === 'JohnDoe']]></programlisting>
+    <para>
+        <emphasis role="strong">What is a filter?</emphasis>
+    </para>
 
-    <sect2 id="zend.filter.introduction.use_cases">
+    <para>
+        In the physical world, a filter is typically used for removing unwanted portions of input, and the
+        desired portion of the input passes through as filter output (e.g., coffee). In such scenarios, a
+        filter is an operator that produces a subset of the input. This type of filtering is useful for web
+        applications - removing illegal input, trimming unnecessary white space, etc.
+    </para>
 
-        <title>Use Cases</title>
+    <para>
+        This basic definition of a filter may be extended to include generalized transformations upon input.
+        A common transformation applied in web applications is the escaping of HTML entities. For example, if
+        a form field is automatically populated with untrusted input (e.g., from a web browser), this value
+        should either be free of HTML entities or contain only escaped HTML entities, in order to prevent
+        undesired behavior and security vulnerabilities. To meet this requirement, HTML entities that appear
+        in the input must either be removed or escaped. Of course, which approach is more appropriate depends
+        on the situation. A filter that removes the HTML entities operates within the scope of the first
+        definition of filter - an operator that produces a subset of the input. A filter that escapes the
+        HTML entities, however, transforms the input (e.g., "<code>&amp;</code>" is transformed to
+        "<code>&amp;amp;</code>"). Supporting such use cases for web developers is important, and "to
+        filter," in the context of using Zend_Filter, means to perform some transformations upon input data.
+    </para>
 
-        <para>
-            In each of these use cases, <literal>$value</literal> represents an arbitrary scalar value.
-        </para>
+    <para>
+        Having this filter definition established provides the foundation for
+        <code>Zend_Filter_Interface</code>, which requires a single method named <code>filter()</code> to be
+        implemented by a filter class.
+    </para>
 
-        <para>
-            Whitelist Filtering:
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-if (Zend_Filter::isEmail($value)) {
-    // $value is a valid email format.
-} else {
-    // $value is not a valid email format.
-}]]></programlisting>
-
-        <para>
-            Blind Filtering:
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-$alphaName = Zend_Filter::getAlpha($value);]]></programlisting>
-
-        <para>
-            Blacklist Filtering:
-        </para>
+    <para>
+        Following is a basic example of using a filter upon two input data, the ampersand (<code>&amp;</code>) and double quote (<code>&quot;</code>) characters:
 
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-$taglessComment = Zend_Filter::noTags($value);]]></programlisting>
+require_once 'Zend/Filter/HtmlEntities.php';
+$htmlEntities = new Zend_Filter_HtmlEntities();
+echo $htmlEntities->filter('&'); // &amp;
+echo $htmlEntities->filter('"'); // &quot;]]></programlisting>
 
-    </sect2>
+    </para>
 
 </sect1>
 <!--
