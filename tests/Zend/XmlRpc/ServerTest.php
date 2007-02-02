@@ -324,6 +324,107 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ISO-8859-1', $request->getEncoding());
         $this->assertEquals('ISO-8859-1', $response->getEncoding());
     }
+
+    public function testAddFunctionWithExtraArgs()
+    {
+        $this->_server->addFunction('Zend_XmlRpc_Server_testFunction', 'test', 'arg1');
+        $methods = $this->_server->listMethods();
+        $this->assertContains('test.Zend_XmlRpc_Server_testFunction', $methods);
+    }
+
+    public function testAddFunctionThrowsExceptionWithBadData()
+    {
+        $o = new stdClass();
+        try {
+            $this->_server->addFunction($o);
+            $this->fail('addFunction() should not accept objects');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testLoadFunctionsThrowsExceptionWithBadData()
+    {
+        $o = new stdClass();
+        try {
+            $this->_server->loadFunctions($o);
+            $this->fail('loadFunctions() should not accept objects');
+        } catch (Exception $e) {
+            // success
+        }
+
+        $o = array($o);
+        try {
+            $this->_server->loadFunctions($o);
+            $this->fail('loadFunctions() should not allow non-reflection objects in an array');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testSetClassThrowsExceptionWithInvalidClass()
+    {
+        try {
+            $this->_server->setClass('mybogusclass');
+            $this->fail('setClass() should not allow invalid classes');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testSetRequestUsingString()
+    {
+        $this->_server->setRequest('Zend_XmlRpc_Server_testRequest');
+        $req = $this->_server->getRequest();
+        $this->assertTrue($req instanceof Zend_XmlRpc_Server_testRequest);
+    }
+
+    public function testSetRequestThrowsExceptionOnBadClass()
+    {
+        try {
+            $this->_server->setRequest('Zend_XmlRpc_Server_testRequest2');
+            $this->fail('Invalid request class should throw exception');
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $this->_server->setRequest($this);
+            $this->fail('Invalid request object should throw exception');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function testHandleObjectMethod()
+    {
+        $this->_server->setClass('Zend_XmlRpc_Server_testClass');
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('test1');
+        $request->addParam('value');
+        $response = $this->_server->handle($request);
+        $this->assertEquals('String: value', $response->getReturnValue());
+    }
+
+    public function testHandleClassStaticMethod()
+    {
+        $this->_server->setClass('Zend_XmlRpc_Server_testClass');
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('test2');
+        $request->addParam(array('value1', 'value2'));
+        $response = $this->_server->handle($request);
+        $this->assertEquals('value1; value2', $response->getReturnValue());
+    }
+
+    public function testHandleFunction()
+    {
+        $this->_server->addFunction('Zend_XmlRpc_Server_testFunction');
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('Zend_XmlRpc_Server_testFunction');
+        $request->setParams(array(array('value1'), 'key'));
+        $response = $this->_server->handle($request);
+        $this->assertEquals('key: value1', $response->getReturnValue());
+    }
 }
 
 /**
@@ -403,5 +504,9 @@ class Zend_XmlRpc_Server_testClass
 }
 
 class Zend_XmlRpc_Server_testResponse extends Zend_XmlRpc_Response
+{
+}
+
+class Zend_XmlRpc_Server_testRequest extends Zend_XmlRpc_Request
 {
 }

@@ -196,7 +196,7 @@ class Zend_XmlRpc_Server
             'multicall'
         );
 
-        $class = new Zend_Server_Reflection_Class(new ReflectionObject($this));
+        $class = Zend_Server_Reflection::reflectClass($this);
         foreach ($system as $method) {
             $reflection = new Zend_Server_Reflection_Method($class, new ReflectionMethod($this, $method), 'system');
             $reflection->system = true;
@@ -512,7 +512,8 @@ class Zend_XmlRpc_Server
         }
 
         if ($info instanceof Zend_Server_Reflection_Function) {
-            return $info->invokeArgs($params);
+            $func = $info->getName();
+            $return = call_user_func_array($func, $params);
         } elseif (($info instanceof Zend_Server_Reflection_Method) && $info->system) {
             // System methods
             $return = $info->invokeArgs($this, $params);
@@ -536,7 +537,7 @@ class Zend_XmlRpc_Server
                 $return = $info->invokeArgs($object, $params);
             }
         } else {
-            throw new Zend_XmlRpc_Server_Exception('Method missing implementation', 622);
+            throw new Zend_XmlRpc_Server_Exception('Method missing implementation ' . get_class($info), 622);
         }
 
         $response = new ReflectionClass($this->_responseClass);
