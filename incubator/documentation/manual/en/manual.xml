@@ -129,6 +129,8 @@
     <chapter id="zend.validate">
         <title>Zend_Validate</title>
         &module_specs.Zend_Validate;
+        &module_specs.Zend_Validate-ValidatorChains;
+        &module_specs.Zend_Validate-WritingValidators;
     </chapter>
 
     <!-- &ref.faq; -->
