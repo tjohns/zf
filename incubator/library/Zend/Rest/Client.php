@@ -21,19 +21,14 @@
 
 
 /**
- * Zend_Service_Abstract
+ * Zend_Http_Client
  */
-require_once 'Zend/Service/Abstract.php';
+require_once 'Zend/Http/Client.php';
 
 /**
  * Zend_Rest_Client_Result
  */
 require_once 'Zend/Rest/Client/Result.php';
-
-/**
- * Zend_Rest_Client_Exception
- */
-require_once 'Zend/Rest/Client/Exception.php';
 
 /**
  * Zend_Uri
@@ -47,48 +42,69 @@ require_once 'Zend/Uri.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Rest_Client extends Zend_Service_Abstract
+class Zend_Rest_Client
 {
     /**
+     * Data for the query
+     * @var array
+     */
+    protected $_data = array();
+
+    /**
+     * Zend_Http_Client
+     * @var Zend_Http_Client
+     */
+    protected $_httpClient;
+
+     /**
      * Zend_Uri of this web service
-     *
      * @var Zend_Uri_Http
      */
     protected $_uri = null;
     
     /**
-     * Data for the query
-     * 
-     * @var array
-     */
-    protected $_data = array();
-    
-    /**
      * Constructor
      * 
-     * @param $uri Zend_Uri_Http|string URI for the web service
+     * @param string|Zend_Uri_Http $uri URI for the web service
+     * @return void
      */
-    public function __construct($uri)
+    public function __construct($uri = null)
+    {
+        if (!empty($uri)) {
+            $this->setUri($uri);
+        }
+    }
+
+    /**
+     * Set the URI to use in the request
+     * 
+     * @param string|Zend_Uri_Http $uri URI for the web service
+     * @return Zend_Rest_Client
+     */
+    public function setUri($uri)
     {
     	if ($uri instanceof Zend_Uri_Http) {
     		$this->_uri = $uri;
     	} else {
     		$this->_uri = Zend_Uri::factory($uri);
     	}
+
+        return $this;
     }
 
 	/**
 	 * Call a remote REST web service URI and return the Zend_Http_Response object
 	 *
 	 * @param  string $path            The path to append to the URI
-	 * @throws Zend_Service_Exception
+	 * @throws Zend_Rest_Exception
 	 * @return void
 	 */
 	final private function _prepareRest($path, $query = null)
 	{
 		// Get the URI object and configure it
 		if (!$this->_uri instanceof Zend_Uri_Http) {
-		    throw new Zend_Service_Exception('URI object must be set before performing call');
+            require_once 'Zend/Rest/Client/Exception.php';
+		    throw new Zend_Rest_Client_Exception('URI object must be set before performing call');
 		}
 		
 		$uri = $this->_uri->getUri();
@@ -106,7 +122,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 		 * Get the HTTP client and configure it for the endpoint URI.  Do this each time
 		 * because the Zend_Http_Client instance is shared among all Zend_Service_Abstract subclasses.
 		 */
-		self::getHttpClient()->setUri($this->_uri);
+		$this->getHttpClient()->setUri($this->_uri);
 	}
 
 	/**
@@ -118,7 +134,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restGet($path, $query = null)
 	{
 	   $this->_prepareRest($path, $query);
-	   return self::getHttpClient()->request('GET');
+	   return $this->getHttpClient()->request('GET');
 	}
 
 	/**
@@ -131,7 +147,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restPost($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->request('POST');
+	   return $this->getHttpClient()->request('POST');
 	}
 
 	/**
@@ -144,7 +160,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restPut($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->request('PUT');;
+	   return $this->getHttpClient()->request('PUT');;
 	}
 
 	/**
@@ -156,7 +172,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restDelete($path)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->request('DELETE');
+	   return $this->getHttpClient()->request('DELETE');
 	}
 	
 	/**
@@ -195,5 +211,30 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 			return $this;
 		}
 	}
+
+    /**
+     * Retrieve HTTP client
+     *
+     * @return Zend_Http_Client
+     */
+    public function getHttpClient()
+    {
+        if (!$this->_httpClient instanceof Zend_Http_Client) {
+            $this->_httpClient = new Zend_Http_Client();
+        }
+
+        return $this->_httpClient;
+    }
+
+    /**
+     * Set HTTP Client
+     *
+     * @param Zend_Http_Client $value
+     * @return Zend_Rest_Client
+     */
+    public function setHttpClient(Zend_Http_Client $client)
+    {
+        $this->_httpClient = $client;
+        return $this;
+    }
 }
-?>
