@@ -16,8 +16,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// 2 番目の引数を TRUE にすると、新しいインデックスを作成します。
-$index = new Zend_Search_Lucene('/data/my-index', true);
+// インデックスを作成します
+$index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
@@ -47,7 +47,7 @@ $index->addDocument($doc);
 
         <programlisting role="php"><![CDATA[<?php
 // 既存のインデックスをオープンします。
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 // ドキュメントの URL を、検索結果の ID として保存します。
@@ -157,7 +157,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </para>
         <programlisting role="php"><![CDATA[<?php
 // 既存のインデックスをオープンします
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 // インデックスを最適化します
 $index->optimize();
