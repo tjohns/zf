@@ -195,14 +195,18 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * SCHEMA_NAME => string; name of database or schema
      * TABLE_NAME  => string;
      * COLUMN_NAME => string; column name
+     * COLUMN_POSITION => number; ordinal position of column in table
      * DATA_TYPE   => string; SQL datatype name of column
-     * DEFAULT     => default value of column, null if none
+     * DEFAULT     => string; default expression of column, null if none
      * NULLABLE    => boolean; true if column can have nulls
-     * LENGTH      => length of CHAR/VARCHAR
-     * SCALE       => scale of NUMERIC/DECIMAL
-     * PRECISION   => precision of NUMERIC/DECIMAL
+     * LENGTH      => number; length of CHAR/VARCHAR
+     * SCALE       => number; scale of NUMERIC/DECIMAL
+     * PRECISION   => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED    => boolean; unsigned property of an integer type
      * PRIMARY     => boolean; true if column is part of the primary key
      *
+     * @todo Discover column position.
+     * @todo Discover integer unsigned property.
      * @todo Improve discovery of primary key columns.
      *
      * @param string $tableName
@@ -222,12 +226,14 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 'SCHEMA_NAME' => '',
                 'TABLE_NAME'  => $row['TABLE_NAME'],
                 'COLUMN_NAME' => $row['COLUMN_NAME'],
+                'COLUMN_POSITION' => null, // @todo
                 'DATA_TYPE'   => $row['DATA_TYPE'],
                 'DEFAULT'     => $row['DATA_DEFAULT'],
                 'NULLABLE'    => (bool) ($row['NULLABLE'] == 'Y'),
                 'LENGTH'      => $row['DATA_LENGTH'],
                 'SCALE'       => $row['DATA_SCALE'],
                 'PRECISION'   => $row['DATA_PRECISION'],
+                'UNSIGNED'    => null, // @todo
                 'PRIMARY'     => (bool) 0
             );
         }
@@ -313,19 +319,20 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * @param string $sql
      * @param integer $count
-     * @param integer $offset
+     * @param integer $offset OPTIONAL
      * @return string
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     public function limit($sql, $count, $offset = 0)
     {
         $count = intval($count);
         if ($count <= 0) {
-            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
+            throw new Zend_Db_Adapter_Oracle_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
-            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
+            throw new Zend_Db_Adapter_Oracle_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         /**

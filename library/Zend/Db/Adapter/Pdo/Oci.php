@@ -85,14 +85,18 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * SCHEMA_NAME => string; name of database or schema
      * TABLE_NAME  => string;
      * COLUMN_NAME => string; column name
+     * COLUMN_POSITION => number; ordinal position of column in table
      * DATA_TYPE   => string; SQL datatype name of column
-     * DEFAULT     => default value of column, null if none
+     * DEFAULT     => string; default expression of column, null if none
      * NULLABLE    => boolean; true if column can have nulls
-     * LENGTH      => length of CHAR/VARCHAR
-     * SCALE       => scale of NUMERIC/DECIMAL
-     * PRECISION   => precision of NUMERIC/DECIMAL
+     * LENGTH      => number; length of CHAR/VARCHAR
+     * SCALE       => number; scale of NUMERIC/DECIMAL
+     * PRECISION   => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED    => boolean; unsigned property of an integer type
      * PRIMARY     => boolean; true if column is part of the primary key
      *
+     * @todo Discover column position.
+     * @todo Discover integer unsigned property.
      * @todo Improve discovery of primary key columns.
      *
      * @param string $tableName
@@ -112,12 +116,14 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
                 'SCHEMA_NAME' => null,
                 'TABLE_NAME'  => $row['table_name'],
                 'COLUMN_NAME' => $row['column_name'],
+                'COLUMN_POSITION' => null,
                 'DATA_TYPE'   => $row['data_type'],
                 'DEFAULT'     => $row['data_default'],
                 'NULLABLE'    => (bool) ($row['nullable'] == 'Y'),
                 'LENGTH'      => $row['data_length'],
                 'SCALE'       => $row['data_scale'],
                 'PRECISION'   => $row['data_precision'],
+                'UNSIGNED'    => null,
                 'PRIMARY'     => (bool) 0
             );
         }

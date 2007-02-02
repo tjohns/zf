@@ -477,12 +477,14 @@ abstract class Zend_Db_Adapter_Abstract
      * SCHEMA_NAME => string; name of database or schema
      * TABLE_NAME  => string;
      * COLUMN_NAME => string; column name
+     * COLUMN_POSITION => number; ordinal position of column in table
      * DATA_TYPE   => string; SQL datatype name of column
-     * DEFAULT     => default value of column, null if none
+     * DEFAULT     => string; default expression of column, null if none
      * NULLABLE    => boolean; true if column can have nulls
-     * LENGTH      => length of CHAR/VARCHAR
-     * SCALE       => scale of NUMERIC/DECIMAL
-     * PRECISION   => precision of NUMERIC/DECIMAL
+     * LENGTH      => number; length of CHAR/VARCHAR
+     * SCALE       => number; scale of NUMERIC/DECIMAL
+     * PRECISION   => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED    => boolean; unsigned property of an integer type
      * PRIMARY     => boolean; true if column is part of the primary key
      *
      * @param string $tableName

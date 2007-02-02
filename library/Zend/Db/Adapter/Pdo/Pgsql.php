@@ -79,13 +79,18 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      * SCHEMA_NAME => string; name of database or schema
      * TABLE_NAME  => string;
      * COLUMN_NAME => string; column name
-     * DATATYPE    => string; SQL datatype name of column
-     * DEFAULT     => default value of column, null if none
+     * COLUMN_POSITION => number; ordinal position of column in table
+     * DATA_TYPE   => string; SQL datatype name of column
+     * DEFAULT     => string; default expression of column, null if none
      * NULLABLE    => boolean; true if column can have nulls
-     * LENGTH      => length of CHAR/VARCHAR
-     * SCALE       => scale of NUMERIC/DECIMAL
-     * PRECISION   => precision of NUMERIC/DECIMAL
+     * LENGTH      => number; length of CHAR/VARCHAR
+     * SCALE       => number; scale of NUMERIC/DECIMAL
+     * PRECISION   => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED    => boolean; unsigned property of an integer type
      * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @todo Discover column position.
+     * @todo Discover integer unsigned property.
      *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
@@ -125,12 +130,14 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 'SCHEMA_NAME' => null,
                 'TABLE_NAME'  => $row['relname'],
                 'COLUMN_NAME' => $row['colname'],
+                'COLUMN_POSITION' => null, // @todo
                 'DATA_TYPE'   => $row['type'],
                 'DEFAULT'     => $row['default_value'],
                 'NULLABLE'    => (bool) ($row['notnull'] != 't'),
                 'LENGTH'      => $row['length'],
                 'SCALE'       => null,
                 'PRECISION'   => null,
+                'UNSIGNED'    => null, // @todo
                 'PRIMARY'     => (bool) $row['pri']
             );
         }
