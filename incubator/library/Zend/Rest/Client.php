@@ -20,19 +20,13 @@
  */
 
 
-/**
- * Zend_Http_Client
- */
-require_once 'Zend/Http/Client.php';
+/** Zend_Service_Abstract */
+require_once 'Zend/Service/Abstract.php';
 
-/**
- * Zend_Rest_Client_Result
- */
+/** Zend_Rest_Client_Result */
 require_once 'Zend/Rest/Client/Result.php';
 
-/**
- * Zend_Uri
- */
+/** Zend_Uri */
 require_once 'Zend/Uri.php';
 
 /**
@@ -42,19 +36,13 @@ require_once 'Zend/Uri.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Rest_Client
+class Zend_Rest_Client extends Zend_Service_Abstract
 {
     /**
      * Data for the query
      * @var array
      */
     protected $_data = array();
-
-    /**
-     * Zend_Http_Client
-     * @var Zend_Http_Client
-     */
-    protected $_httpClient;
 
      /**
      * Zend_Uri of this web service
@@ -122,7 +110,7 @@ class Zend_Rest_Client
 		 * Get the HTTP client and configure it for the endpoint URI.  Do this each time
 		 * because the Zend_Http_Client instance is shared among all Zend_Service_Abstract subclasses.
 		 */
-		$this->getHttpClient()->setUri($this->_uri);
+        self::getHttpClient()->setUri($this->_uri);
 	}
 
 	/**
@@ -134,7 +122,7 @@ class Zend_Rest_Client
 	final public function restGet($path, $query = null)
 	{
 	   $this->_prepareRest($path, $query);
-	   return $this->getHttpClient()->request('GET');
+	   return self::getHttpClient()->request('GET');
 	}
 
 	/**
@@ -147,7 +135,7 @@ class Zend_Rest_Client
 	final public function restPost($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return $this->getHttpClient()->request('POST');
+	   return self::getHttpClient()->request('POST');
 	}
 
 	/**
@@ -160,7 +148,7 @@ class Zend_Rest_Client
 	final public function restPut($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return $this->getHttpClient()->request('PUT');;
+	   return self::getHttpClient()->request('PUT');;
 	}
 
 	/**
@@ -172,7 +160,7 @@ class Zend_Rest_Client
 	final public function restDelete($path)
 	{
 	   $this->_prepareRest($path);
-	   return $this->getHttpClient()->request('DELETE');
+	   return self::getHttpClient()->request('DELETE');
 	}
 	
 	/**
@@ -211,30 +199,4 @@ class Zend_Rest_Client
 			return $this;
 		}
 	}
-
-    /**
-     * Retrieve HTTP client
-     *
-     * @return Zend_Http_Client
-     */
-    public function getHttpClient()
-    {
-        if (!$this->_httpClient instanceof Zend_Http_Client) {
-            $this->_httpClient = new Zend_Http_Client();
-        }
-
-        return $this->_httpClient;
-    }
-
-    /**
-     * Set HTTP Client
-     *
-     * @param Zend_Http_Client $value
-     * @return Zend_Rest_Client
-     */
-    public function setHttpClient(Zend_Http_Client $client)
-    {
-        $this->_httpClient = $client;
-        return $this;
-    }
 }
