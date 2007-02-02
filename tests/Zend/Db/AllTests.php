@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+error_reporting( E_ALL | E_STRICT );
+
 if (is_readable('TestConfiguration.php')) {
     require_once('TestConfiguration.php');
 } else {
