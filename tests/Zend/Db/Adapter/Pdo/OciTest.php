@@ -219,4 +219,17 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("id = 'St John''s Wort'", $value);
     }
 
+    public function testExceptionInvalidLoginCredentials()
+    {
+        $params = $this->getParams();
+        $params['password'] = 'xxxxxxxx'; // invalid password
+
+        try {
+            $db = new Zend_Db_Adapter_Pdo_Oci($params);
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Pdo_Exception'));
+            echo $e->getMessage();
+        }
+    }
+
 }

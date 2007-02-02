@@ -43,6 +43,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     abstract public function getDriver();
     abstract public function getParams();
     abstract public function getCreateTableSQL();
+    abstract public function testExceptionInvalidLoginCredentials();
 
     /**
      * @var Zend_Db_Adapter_Abstract
@@ -50,7 +51,21 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     protected $_db;
 
     /**
-     *
+     * @param string The name of the identifier, to be transformed.
+     * @return string The name of a column or table, transformed for the
+     * current adapter.
+     */
+    public function getIdentifier($name)
+    {
+        if ($this->_resultSetUppercase) {
+            return strtoupper($name);
+        } else {
+            return $name;
+        }
+    }
+
+    /**
+     * @return string SQL statement for dropping the test table.
      */
     protected function getDropTableSQL()
     {
@@ -59,7 +74,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Create the test table and populate it with some rows of data.
+     * @return void
      */
     protected function createTestTable()
     {
@@ -75,7 +91,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Create a second test table that is used for joins.
+     * @return void
+    protected function createTestTableTwo()
+    {
+    }
+     */
+
+    /**
+     * Skip test if driver is disabled in TestConfiguration.php.
+     * Instantiate driver.  Set up database metadata.
      */
     public function setUp()
     {
@@ -93,7 +118,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Drop existing test table if such exists.
+     * This is also where one would drop other metadata objects, like sequences.
+     * Then create clean test table.
      */
     protected function setUpMetadata()
     {
@@ -103,7 +130,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Drop test table and close connection.
      */
     public function tearDown()
     {
@@ -116,26 +143,26 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Drop test table.
      */
     protected function tearDownMetadata()
     {
-        // drop test table
         $sql = $this->getDropTableSQL();
         $this->_db->query($sql);
     }
 
     /**
+     * Test Adapter's delete() method.
+     * Delete one row from test table, and verify it was deleted.
+     * Then try to delete a row that doesn't exist, and verify it had no effect.
      *
+     * @todo: test that require delimited identifiers.
      */
     public function testDelete()
     {
-        $idColName = 'id';
-        if ($this->_resultSetUppercase) {
-            $idColName = strtoupper($idColName);
-        }
+        $id = $this->getIdentifier('id');
 
-        $result = $this->_db->delete(self::TABLE_NAME, $this->_db->quoteInto('id = ?', 2));
+        $result = $this->_db->delete(self::TABLE_NAME, 'id = 2');
         $this->assertEquals(1, $result);
 
         $select = $this->_db->select();
@@ -143,25 +170,22 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(1, count($result));
-        $this->assertEquals(1, $result[0][$idColName]);
+        $this->assertEquals(1, $result[0][$id]);
 
-        $result = $this->_db->delete(self::TABLE_NAME, $this->_db->quoteInto('id = ?', 327));
+        $result = $this->_db->delete(self::TABLE_NAME, 'id = 327');
         $this->assertEquals(0, $result);
     }
 
     /**
-     *
+     * Test Adapter's describeTable() method.
+     * Retrieve the adapter's description of the test table and examine it.
      */
     public function testDescribeTable()
     {
         $desc = $this->_db->describeTable(self::TABLE_NAME);
 
-        $bodyKey = 'body';
-        $tableName = self::TABLE_NAME;
-        if ($this->_resultSetUppercase) {
-            $bodyKey = strtoupper($bodyKey);
-            $tableName = strtoupper($tableName);
-        }
+        $bodyKey = $this->getIdentifier('body');
+        $tableName = $this->getIdentifier(self::TABLE_NAME);
 
         $this->assertThat($desc, $this->arrayHasKey($bodyKey));
 
@@ -187,40 +211,24 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test the Adapter's fetchAll() method.
      */
     public function testFetchAll()
     {
-        $idColName = 'id';
-        if ($this->_resultSetUppercase) {
-            $idColName = strtoupper($idColName);
-        }
+        $id = $this->getIdentifier('id');
 
         $result = $this->_db->query(
             'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ?',
             array('2006-01-01')
         );
 
-        $rows = $result->fetchAll();
-        $this->assertEquals(2, count($rows));
-        $this->assertEquals('1', $rows[0][$idColName]);
+        $result = $result->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals('1', $result[0][$id]);
     }
 
     /**
-     *
-    public function testFetchAllWithParameters()
-    {
-    }
-     */
-
-    /**
-     *
-    public function testFetchAllWithBoundParameters()
-    {
-    }
-     */
-
-    /**
+     * Test the Adapter's fetchAssoc() method.
      *
     public function testFetchAssoc()
     {
@@ -228,6 +236,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's fetchCol() method.
      *
     public function testFetchCol()
     {
@@ -235,6 +244,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's fetchOne() method.
      *
     public function testFetchOne()
     {
@@ -242,6 +252,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's fetchPairs() method.
      *
     public function testFetchPairs()
     {
@@ -249,6 +260,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's fetchRow() method.
      *
     public function testFetchRow()
     {
@@ -256,7 +268,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's insert() method.
+     * This requires providing an associative array of column=>value pairs.
      *
+     * @todo: test that require delimited identifiers.
      */
     public function testInsert()
     {
@@ -272,48 +287,45 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test the Adapter's limit() method.
+     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
      */
     public function testLimit()
     {
-        $idColName = 'id';
-        if ($this->_resultSetUppercase) {
-            $idColName = strtoupper($idColName);
-        }
+        $id = $this->getIdentifier('id');
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
 
         $result = $this->_db->query($sql);
-        $rows = $result->fetchAll();
-        $this->assertEquals(1, count($rows));
-        $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(1, $rows[0][$idColName]);
+        $result = $result->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(5, count($result[0]));
+        $this->assertEquals(1, $result[0][$id]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
 
         $result = $this->_db->query($sql);
-        $rows = $result->fetchAll();
-        $this->assertEquals(1, count($rows));
-        $this->assertEquals(5, count($rows[0]));
-        $this->assertEquals(2, $rows[0][$idColName]);
+        $result = $result->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(5, count($result[0]));
+        $this->assertEquals(2, $result[0][$id]);
     }
 
     /**
-     *
+     * Test the Adapter's listTables() method.
+     * Fetch the list of tables and verify that the test table exists in
+     * the list.
      */
     public function testListTables()
     {
-        $tableName = self::TABLE_NAME;
-        if ($this->_resultSetUppercase) {
-            $tableName = strtoupper($tableName);
-        }
+        $tableName = $this->getIdentifier(self::TABLE_NAME);
 
         $tables = $this->_db->listTables();
         $this->assertContains($tableName, $tables);
     }
 
     /**
-     *
+     * Test that the Adapter has an instance of a Zend_Db_Profiler object.
      */
     public function testProfilerCreation()
     {
@@ -321,21 +333,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
-    public function testQuery()
-    {
-    }
-     */
-
-    /**
-     *
+     * Test basic use of the Zend_Db_Select class.
      */
     public function testSelect()
     {
-        $idColName = 'id';
-        if ($this->_resultSetUppercase) {
-            $idColName = strtoupper($idColName);
-        }
+        $id = $this->getIdentifier('id');
 
         $select = $this->_db->select();
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
@@ -344,10 +346,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->query($select);
         $row = $result->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
-        $this->assertEquals('1', $row[$idColName]); // correct data
+        $this->assertEquals('1', $row[$id]); // correct data
     }
 
     /**
+     * Test Zend_Db_Select with parameters.
      *
     public function testSelectWithBoundParameters()
     {
@@ -355,6 +358,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
      *
     public function testSelectDistinctModifier()
     {
@@ -362,6 +366,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
      *
     public function testSelectForUpdateModifier()
     {
@@ -369,6 +374,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a JOIN to a Zend_Db_Select object.
      *
     public function testSelectJoinClause()
     {
@@ -376,6 +382,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding an outer join to a Zend_Db_Select object.
      *
     public function testSelectLeftOuterJoinClause()
     {
@@ -383,6 +390,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a WHERE clause to a Zend_Db_Select object.
      *
     public function testSelectWhereClause()
     {
@@ -390,6 +398,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding an OR WHERE clause to a Zend_Db_Select object.
      *
     public function testSelectOrWhereClause()
     {
@@ -397,6 +406,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a GROUP BY clause to a Zend_Db_Select object.
      *
     public function testSelectGroupByClause()
     {
@@ -404,6 +414,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a HAVING clause to a Zend_Db_Select object.
      *
     public function testSelectHavingClause()
     {
@@ -411,6 +422,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a HAVING clause to a Zend_Db_Select object.
      *
     public function testSelectOrHavingClause()
     {
@@ -418,6 +430,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding a HAVING clause to a Zend_Db_Select object.
      *
     public function testSelectOrderByClause()
     {
@@ -425,6 +438,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test adding an OR HAVING clause to a Zend_Db_Select object.
      *
     public function testSelectLimitClause()
     {
@@ -432,6 +446,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the limitPage() method of a Zend_Db_Select object.
      *
     public function testSelectLimitPage()
     {
@@ -453,18 +468,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
 
     /**
+     * Test the Adapter's update() method.
+     * Update a single row and verify that the change was made.
+     * Attempt to update a row that does not exist, and verify
+     * that no change was made.
      *
+     * @todo: test that requires delimited identifiers.
      */
     public function testUpdate()
     {
-        $idColName = 'id';
-        $titleColName = 'title';
-        $subtitleColName = 'subtitle';
-        if ($this->_resultSetUppercase) {
-            $idColName = strtoupper($idColName);
-            $titleColName = strtoupper($titleColName);
-            $subtitleColName = strtoupper($subtitleColName);
-        }
+        $id = $this->getIdentifier('id');
+        $title = $this->getIdentifier('title');
+        $subtitle = $this->getIdentifier('subtitle');
 
         $newTitle = 'New News Item 2';
         $newSubTitle = 'New Sub title 2';
@@ -476,20 +491,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
                 'title'        => $newTitle,
                 'subTitle'     => $newSubTitle
             ),
-            $this->_db->quoteInto('id = ?', 2)
+            'id = 2'
         );
         $this->assertEquals(1, $result);
 
         // Query the row to see if we have the new values.
         $select = $this->_db->select();
         $select->from(self::TABLE_NAME);
-        $select->where('id = ?', 2);
+        $select->where('id = 2');
         $stmt = $this->_db->query($select);
-        $row = $stmt->fetch();
+        $result = $stmt->fetchAll();
 
-        $this->assertEquals(2, $row[$idColName]);
-        $this->assertEquals($newTitle, $row[$titleColName]);
-        $this->assertEquals($newSubTitle, $row[$subtitleColName]);
+        $this->assertEquals(2, $result[0][$id]);
+        $this->assertEquals($newTitle, $result[0][$title]);
+        $this->assertEquals($newSubTitle, $result[0][$subtitle]);
 
         // Test that update affects no rows if the WHERE
         // clause matches none.
@@ -498,7 +513,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
                 'title'        => $newTitle,
                 'subTitle'     => $newSubTitle,
             ),
-            $this->_db->quoteInto('id = ?', 327)
+            'id = 327'
         );
         $this->assertEquals(0, $result);
     }

@@ -110,4 +110,17 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("`table_``_name`", $value);
     }
 
+    public function testExceptionInvalidLoginCredentials()
+    {
+        $params = $this->getParams();
+        $params['password'] = 'xxxxxxxx'; // invalid password
+
+        try {
+            $db = new Zend_Db_Adapter_Pdo_Mysql($params);
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Pdo_Exception'));
+            echo $e->getMessage();
+        }
+    }
+
 }

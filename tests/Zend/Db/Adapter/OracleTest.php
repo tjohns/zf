@@ -75,4 +75,17 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Pdo_OciTest
         $this->assertEquals('1', $row['ID']); // correct data
     }
 
+    public function testExceptionInvalidLoginCredentials()
+    {
+        $params = $this->getParams();
+        $params['password'] = 'xxxxxxxx'; // invalid password
+
+        try {
+            $db = new Zend_Db_Adapter_Oracle($params);
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'));
+            echo $e->getMessage();
+        }
+    }
+
 }
