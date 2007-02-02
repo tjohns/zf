@@ -45,6 +45,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Db/DbTest.php';
 require_once 'Zend/Db/Adapter/Db2Test.php';
+// require_once 'Zend/Db/Adapter/MysqliTest.php';
 require_once 'Zend/Db/Adapter/OracleTest.php';
 require_once 'Zend/Db/Adapter/Pdo/MssqlTest.php';
 require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
@@ -66,6 +67,7 @@ class Zend_Db_AllTests
         $suite->addTestSuite('Zend_Db_DbTest');
 
         $suite->addTestSuite('Zend_Db_Adapter_Db2Test');
+        // $suite->addTestSuite('Zend_Db_Adapter_MysqliTest');
         $suite->addTestSuite('Zend_Db_Adapter_OracleTest');
         $suite->addTestSuite('Zend_Db_Adapter_Pdo_MssqlTest');
         $suite->addTestSuite('Zend_Db_Adapter_Pdo_MysqlTest');
