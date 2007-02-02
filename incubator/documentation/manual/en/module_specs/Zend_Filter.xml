@@ -40,7 +40,8 @@
     </para>
 
     <para>
-        Following is a basic example of using a filter upon two input data, the ampersand (<code>&amp;</code>) and double quote (<code>&quot;</code>) characters:
+        Following is a basic example of using a filter upon two input data, the ampersand (<code>&amp;</code>)
+        and double quote (<code>&quot;</code>) characters:
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/HtmlEntities.php';
