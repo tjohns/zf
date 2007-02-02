@@ -106,14 +106,4 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
 		$client = new Zend_Rest_Client_Result($xml);
 		$this->assertTrue($client->isError());
 	}
-	
-	function testFlickrEcho()
-	{
-		if (!TESTS_ZEND_REST_CLIENT_FLICKR_APIKEY) {
-			$this->markTestSkipped("Flickr API Key not found");
-		}
-		$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
- 		$result = $client->method('flickr.test.echo')->name('Davey Shafik')->api_key(TESTS_ZEND_REST_CLIENT_FLICKR_APIKEY)->get()->name;
- 		$this->assertEquals("Davey Shafik", $result);
-	}
 }

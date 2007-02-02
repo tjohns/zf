@@ -51,7 +51,7 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 	public function __get($name)
 	{
 		if (isset($this->_sxml->{$name})) {
-			return $this->_sxml->{$name};
+			return (string) $this->_sxml->{$name};
 		}
 		
 		$result = $this->_sxml->xpath("//$name");
@@ -59,9 +59,9 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 		if (sizeof($result) == 0) {
 			return null;
 		} elseif (sizeof($result) == 1) {
-			return $result[0];
+			return (string) $result[0];
 		} else {
-			return $result;
+			return (string) $result;
 		}
 	}
 	
