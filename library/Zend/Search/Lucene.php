@@ -126,6 +126,29 @@ class Zend_Search_Lucene
      */
     private $_lock;
 
+
+    /**
+     * Create index
+     *
+     * @param mixed $directory
+     * @return Zend_Search_Lucene
+     */
+    static public function create($directory)
+    {
+        return new Zend_Search_Lucene($directory, true);
+    }
+
+    /**
+     * Open index
+     *
+     * @param mixed $directory
+     * @return Zend_Search_Lucene
+     */
+    static public function open($directory)
+    {
+        return new Zend_Search_Lucene($directory);
+    }
+
     /**
      * Opens the index.
      *
@@ -151,19 +174,30 @@ class Zend_Search_Lucene
 
 
         // Get a shared lock to the index
-        // Wait if index is under switching from one set of segments to another (Index_Writer::_updateSegments())
         $this->_lock = $this->_directory->createFile('index.lock');
-        if (!$this->_lock->lock(LOCK_SH)) {
-            throw new Zend_Search_Lucene_Exception('Can\'t obtain shared index lock');
-        }
 
         $this->_segmentInfos = array();
 
         if ($create) {
+            // Throw an exception if index is under processing now
+            if (!$this->_lock->lock(LOCK_EX, true)) {
+                throw new Zend_Search_Lucene_Exception('Can\'t create index. It\'s under processing now');
+            }
+
+            // Writer will create segments file for empty segments list
             $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos, true);
+
+            if (!$this->_lock->lock(LOCK_SH)) {
+                throw new Zend_Search_Lucene_Exception('Can\'t reduce lock level from Exclusive to Shared');
+            }
         } else {
+            // Wait if index is under switching from one set of segments to another (Index_Writer::_updateSegments())
+            if (!$this->_lock->lock(LOCK_SH)) {
+                throw new Zend_Search_Lucene_Exception('Can\'t obtain shared index lock');
+            }
             $this->_writer = null;
         }
+
 
         $segmentsFile = $this->_directory->getFileObject('segments');
 
