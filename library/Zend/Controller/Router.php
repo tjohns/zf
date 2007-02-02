@@ -45,6 +45,7 @@ class Zend_Controller_Router extends Zend_Controller_Router_Abstract
     public function getPathSegs(Zend_Controller_Request_Abstract $request)
     {
         if (!$request instanceof Zend_Controller_Request_Http) {
+            require_once 'Zend/Controller/Router/Exception.php';
             throw new Zend_Controller_Router_Exception('Zend_Controller_Router requires a Zend_Controller_Request_Http-based request object');
         }
 
