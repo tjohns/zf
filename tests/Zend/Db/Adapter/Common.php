@@ -109,6 +109,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $enabledConst = 'TESTS_ZEND_DB_ADAPTER_' . strtoupper($driver) . '_ENABLED';
         if (!(defined($enabledConst) && constant($enabledConst) == true)) {
             $this->markTestSkipped("Tests for Zend_Db adapter $driver are disabled in TestConfiguration.php");
+            return;
         }
         
         // open a new connection
@@ -192,12 +193,14 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('SCHEMA_NAME'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('TABLE_NAME'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('COLUMN_NAME'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('COLUMN_POSITION'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('DATA_TYPE'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('DEFAULT'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('NULLABLE'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('LENGTH'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('SCALE'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('PRECISION'));
+        $this->assertThat($desc[$bodyKey], $this->arrayHasKey('UNSIGNED'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('PRIMARY'));
 
         $this->assertEquals($tableName, $desc[$bodyKey]['TABLE_NAME']);
@@ -213,59 +216,132 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     /**
      * Test the Adapter's fetchAll() method.
      */
-    public function testFetchAll()
+    public function testAdapterFetchAll()
     {
         $id = $this->getIdentifier('id');
-
-        $result = $this->_db->query(
-            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ?',
+        $result = $this->_db->fetchAll(
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id ASC',
             array('2006-01-01')
         );
-
-        $result = $result->fetchAll();
         $this->assertEquals(2, count($result));
         $this->assertEquals('1', $result[0][$id]);
     }
 
     /**
      * Test the Adapter's fetchAssoc() method.
-     *
-    public function testFetchAssoc()
-    {
-    }
      */
+    public function testAdapterFetchAssoc()
+    {
+        $id = $this->getIdentifier('id');
+        $result = $this->_db->fetchAssoc(
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id DESC',
+            array('2006-01-01')
+        );
+        foreach ($result as $idKey => $row) {
+            $this->assertEquals($idKey, $row[$id]);
+        }
+    }
 
     /**
      * Test the Adapter's fetchCol() method.
-     *
-    public function testFetchCol()
-    {
-    }
      */
+    public function testAdapterFetchCol()
+    {
+        $id = $this->getIdentifier('id');
+        $result = $this->_db->fetchCol(
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            array('2006-01-01')
+        );
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals(1, $result[0]);
+        $this->assertEquals(2, $result[1]);
+    }
 
     /**
      * Test the Adapter's fetchOne() method.
-     *
-    public function testFetchOne()
-    {
-    }
      */
+    public function testAdapterFetchOne()
+    {
+        $title = 'News Item 1';
+        $result = $this->_db->fetchOne(
+            'SELECT title FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            array('2006-01-01')
+        );
+        $this->assertEquals($title, $result);
+    }
 
     /**
      * Test the Adapter's fetchPairs() method.
-     *
-    public function testFetchPairs()
-    {
-    }
      */
+    public function testAdapterFetchPairs()
+    {
+        $title = 'News Item 1';
+        $result = $this->_db->fetchPairs(
+            'SELECT id, title FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            array('2006-01-01')
+        );
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals($title, $result[1]);
+    }
 
     /**
      * Test the Adapter's fetchRow() method.
-     *
-    public function testFetchRow()
-    {
-    }
      */
+    public function testAdapterFetchRow()
+    {
+        $id = $this->getIdentifier('id');
+
+        $result = $this->_db->fetchRow(
+            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            array('2006-01-01')
+        );
+        $this->assertEquals(5, count($result)); // count columns
+        $this->assertEquals(1, $result[$id]);
+    }
+
+    /**
+     * Test the Statement's fetchAll() method.
+     */
+    public function testStatementFetchAll()
+    {
+        $id = $this->getIdentifier('id');
+        $stmt = $this->_db->query(
+            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+        );
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(5, count($result[0]));
+        $this->assertEquals(1, $result[0][$id]);
+    }
+
+    /**
+     * Test the Statement's fetchColumn() method.
+     */
+    public function testStatementFetchColumn()
+    {
+        $stmt = $this->_db->query(
+            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+        );
+        $result = $stmt->fetchColumn();
+        $this->assertEquals(1, $result);
+        $result = $stmt->fetchColumn();
+        $this->assertEquals(2, $result);
+    }
+
+    /**
+     * Test the Statement's fetchObject() method.
+     */
+    public function testStatementFetchObject()
+    {
+        $title = 'News Item 1';
+        $titleCol = $this->getIdentifier('title');
+        $stmt = $this->_db->query(
+            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+        );
+        $result = $stmt->fetchObject();
+        $this->assertThat($result, $this->isInstanceOf('stdClass'));
+        $this->assertEquals($title, $result->$titleCol);
+    }
 
     /**
      * Test the Adapter's insert() method.
@@ -516,6 +592,27 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             'id = 327'
         );
         $this->assertEquals(0, $result);
+    }
+
+    public function testExceptionInvalidLimitArgument()
+    {
+        $exceptionSeen = false;
+        try {
+            $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 0);
+        } catch (Zend_Db_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $exceptionSeen = true;
+        }
+        $this->assertTrue($exceptionSeen);
+
+        $exceptionSeen = false;
+        try {
+            $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, -1);
+        } catch (Zend_Db_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $exceptionSeen = true;
+        }
+        $this->assertTrue($exceptionSeen);
     }
 
 }

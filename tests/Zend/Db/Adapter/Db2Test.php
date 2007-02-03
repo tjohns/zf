@@ -84,13 +84,19 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     protected function tearDownMetadata()
     {
-        $tableList = $this->_db->fetchCol('SELECT tabname FROM SYSCAT.TABLES');
-        if (in_array(self::TABLE_NAME, $tableList)) {
-            $this->_db->query($this->getDropTableSQL());
+        $tables = $this->_db->fetchAll('SELECT TABNAME FROM SYSCAT.TABLES');
+        foreach ($tables as $table) {
+            if ($table['TABNAME'] == self::TABLE_NAME) {
+                $this->_db->query($this->getDropTableSQL());
+                break;
+            }
         }
-        $seqList = $this->_db->fetchCol('SELECT seqname FROM SYSCAT.SEQUENCES');
-        if (in_array(self::SEQUENCE_NAME, $seqList)) {
-            $this->_db->query($this->getDropSequenceSQL());
+        $sequences = $this->_db->fetchAll('SELECT SEQNAME FROM SYSCAT.SEQUENCES');
+        foreach ($sequences as $sequence) {
+            if ($sequence['SEQNAME'] == self::SEQUENCE_NAME) {
+                $this->_db->query($this->getDropSequenceSQL());
+                break;
+            }
         }
     }
 
@@ -198,14 +204,53 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     public function testExceptionInvalidLoginCredentials()
     {
         $params = $this->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
 
+        $exceptionSeen = false;
         try {
-            $db = new Zend_Db_Adapter_Db2($params);
-        } catch (Zend_Db_Adapter_Exception $e) {
+            $db = new Zend_Db_Adapter_Db2('scalar');
+        } catch (Zend_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
-            echo $e->getMessage();
+            $this->assertEquals("Configuration must be an array.", $e->getMessage());
+            $exceptionSeen = true;
         }
+        $this->assertTrue($exceptionSeen);
+
+        $exceptionSeen = false;
+        try {
+            $p = $params;
+            unset($p['password']);
+            $db = new Zend_Db_Adapter_Db2($p);
+        } catch (Zend_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->assertEquals("Configuration array must have a key for 'password' for login credentials.", $e->getMessage());
+            $exceptionSeen = true;
+        }
+        $this->assertTrue($exceptionSeen);
+
+        $exceptionSeen = false;
+        try {
+            $p = $params;
+            unset($p['username']);
+            $db = new Zend_Db_Adapter_Db2($p);
+        } catch (Zend_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->assertEquals("Configuration array must have a key for 'username' for login credentials.", $e->getMessage());
+            $exceptionSeen = true;
+        }
+        $this->assertTrue($exceptionSeen);
+
+        $exceptionSeen = false;
+        try {
+            $p = $params;
+            unset($p['dbname']);
+            $db = new Zend_Db_Adapter_Db2($p);
+        } catch (Zend_Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
+            $exceptionSeen = true;
+        }
+        $this->assertTrue($exceptionSeen);
+
     }
 
 }

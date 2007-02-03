@@ -80,52 +80,67 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
 
     function testExceptionInvalidDriverName()
     {
+        $seenException = false;
         try {
             $db = Zend_Db::factory(null);
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
             $this->assertEquals($e->getMessage(), 'Adapter name must be specified in a string.');
+            $seenException = true;
         }
+        $this->assertTrue($seenException);
     }
 
     function testExceptionInvalidOptionsArray()
     {
+        $seenException = false;
         try {
             $db = Zend_Db::factory('pdo_sqlite', 'scalar');
         } catch (Zend_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
             $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+            $seenException = true;
         }
+        $this->assertTrue($seenException);
     }
 
     function testExceptionInvalidOptionsArrayWithoutFactory()
     {
+        $seenException = false;
         try {
             $db = new Zend_Db_Adapter_Pdo_Sqlite('scalar');
         } catch (Zend_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
             $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+            $seenException = true;
         }
+        $this->assertTrue($seenException);
     }
 
     function testExceptionNoConfig()
     {
+        $seenException = false;
         try {
             $db = Zend_Db::factory('pdo_sqlite', null);
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
             $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+            $seenException = true;
         }
+        $this->assertTrue($seenException);
     }
 
     function testExceptionNoDatabaseName()
     {
+        $seenException = false;
         try {
             $db = Zend_Db::factory('pdo_sqlite', array());
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
             $this->assertEquals($e->getMessage(), "Configuration must have a key for 'dbname' that names the database instance.");
+            $seenException = true;
         }
+        $this->assertTrue($seenException);
     }
 
 }
