@@ -39,8 +39,8 @@ require_once 'Zend/Mail/Transport/Abstract.php';
  */
 class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
 
-    const CONNECTION_TIMEOUT = 30;
-    const COMMUNICATION_TIMEOUT = 2;
+    const CONNECTION_TIMEOUT = 300;
+    const COMMUNICATION_TIMEOUT = 300;
     const DEBUG = false;
 
     protected $_host;
