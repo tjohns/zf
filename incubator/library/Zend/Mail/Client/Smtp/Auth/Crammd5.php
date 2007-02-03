@@ -14,7 +14,8 @@
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Transport
+ * @subpackage Client
+ * @version    $$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -27,49 +28,41 @@ require_once 'Zend/Mail/Client/Smtp.php';
 
 
 /**
- * Zend_Mail_Transport_Abstract
+ * Zend_Mail_Client_Exception
  */
-require_once 'Zend/Mail/Transport/Abstract.php';
+require_once 'Zend/Mail/Client/Exception.php';
 
 
 /**
- * SMTP connection object
- * minimum implementation according to RFC2821:
- * EHLO, MAIL FROM, RCPT TO, DATA, RSET, NOOP, QUIT
+ * Performs CRAM-MD5 authentication
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Transport
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Transport_Smtp_Auth_Crammd5
+class Zend_Mail_Client_Smtp_Auth_Crammd5 extends Zend_Mail_Client_Smtp
 {
-    /**
-     * Instance of Zend_Mail_Client_Smtp
-     *
-     * @var Stream
-     */
-    protected $_client;
-
     /**
      * Constructor.
      *
-     * @param string $host
-     * @param int $port
-     * @param mixed $config
+     * @param string $host   (Default: 127.0.0.1)
+     * @param int    $port   (Default: null)
+     * @param array  $config Auth-specific parameters
+     * @todo Parse $config with Auth-specific parameters
      */
-    public function __construct(Zend_Mail_Client_Smtp $client)
+    public function __construct($host = '127.0.0.1', $port = null, $config = null)
     {
-        $this->_client = $client;
+        parent::__construct($host, $port);
     }
 
+    
     /**
-     * Class destructor to cleanup open resources
-     *
+     * @todo Perform CRAM-MD5 authentication with supplied credentials
      */
-    public function authenticate($username, $password)
+    public function auth()
     {
-        $this->_client->auth('CRAM-MD5', array(base64_encode($username), base64_encode($password)));
+        throw new Zend_Mail_Client_Exception('CRAM-MD5 Not yet implemented.')
     }
 }

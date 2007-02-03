@@ -14,34 +14,58 @@
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Transport
+ * @subpackage Client
+ * @version    $$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /**
- * SMTP connection object
- * minimum implementation according to RFC2821:
- * EHLO, MAIL FROM, RCPT TO, DATA, RSET, NOOP, QUIT
+ * Zend_Mail_Client_Smtp
+ */
+require_once 'Zend/Mail/Client/Smtp.php';
+
+
+/**
+ * Zend_Mail_Client_Exception
+ */
+require_once 'Zend/Mail/Client/Exception.php';
+
+
+/**
+ * Performs LOGIN authentication
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Transport
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Client_Smtp_Auth_Login extends Zend_Mail_Client_Smtp
 {
+    /**
+     * LOGIN username
+     *
+     * @var string
+     */
     protected $_username;
+    
+    
+    /**
+     * LOGIN password
+     *
+     * @var string
+     */
     protected $_password;
 
+    
     /**
      * Constructor.
      *
-     * @param string $host
-     * @param int    $port
-     * @param string $name  (for use with HELO)
+     * @param string $host   (Default: 127.0.0.1)
+     * @param int    $port   (Default: null)
+     * @param array  $config Auth-specific parameters
      */
     public function __construct($host = '127.0.0.1', $port = null, $config = null)
     {
@@ -57,12 +81,13 @@ class Zend_Mail_Client_Smtp_Auth_Login extends Zend_Mail_Client_Smtp
         parent::__construct($host, $port);
     }
 
+    
     /**
-     * Class destructor to cleanup open resources
-     *
+     * Perform LOGIN authentication with supplied credentials
      */
     public function auth()
     {
+        // Ensure AUTH has not already been initiated.
         parent::auth();
         
         $this->_send('AUTH LOGIN');

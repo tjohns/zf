@@ -16,20 +16,34 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Client
- * @version    $Id: Client.php 3039 2007-01-27 12:55:48Z shahar $
+ * @version    $$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
  
-require_once('Zend/Mail/Client/Exception.php');
-require_once('Zend/Validate.php');
-require_once('Zend/Validate/Hostname.php');
 
 /**
- * Zend_Http_Client is an implemetation of an HTTP client in PHP. The client 
- * supports basic features like sending different HTTP requests and handling
- * redirections, as well as more advanced features like proxy settings, HTTP
- * authentication and cookie persistance (using a Zend_Http_CookieJar object)
+ * Zend_Mail_Client_Exception
+ */
+require_once('Zend/Mail/Client/Exception.php');
+
+
+/**
+ * Zend_Validate
+ */
+require_once('Zend/Validate.php');
+
+
+/**
+ * Zend_Validate_Hostname
+ */
+require_once('Zend/Validate/Hostname.php');
+
+
+/**
+ * Zend_Mail_Client
+ * 
+ * Provides low-level methods for concrete adapters to communicate with a remote mail server and track requests and responses.
  * 
  * @todo Implement proxy settings
  * @category   Zend
@@ -41,27 +55,80 @@ require_once('Zend/Validate/Hostname.php');
  */
 abstract class Zend_Mail_Client
 {
-    const PORT = null;
-    const DEBUG = false;
+    /**
+     * Mail default EOL string
+     */
     const EOL = "\r\n";
 
+
+    /**
+     * Default timeout in seconds for initiating session
+     */
     const TIMEOUT_CONNECTION = 30;
 
+
+    /**
+     * Hostname or IP address of remote server
+     * @var string
+     */
     protected $_host;
+
+
+    /**
+     * Port number of connection
+     * @var integer
+     */
     protected $_port;
 
+
+    /**
+     * Instance of Zend_Validate to check hostnames
+     * @var Zend_Validate
+     */
     protected $_validHost;
 
+
+    /**
+     * Socket connection resource
+     * @var resource
+     */
     protected $_socket;
     
+
+    /**
+     * Last request sent to server
+     * @var string
+     */
+    protected $_request;
+    
+
+    /**
+     * Array of server responses to last request
+     * @var array
+     */
+    protected $_response;
+    
+
+    /**
+     * String template for parsing server responses using sscanf (default: 3 digit code and response string)
+     * @var resource
+     */
+    protected $_template = '%d%s';
+    
+
+    /**
+     * Log of mail requests and server responses for a session
+     * @var string
+     */
     private $_log;
+
 
     /**
      * Constructor.
      *
-     * @param string $host
-     * @param int    $port
-     * @param string $name  (for use with HELO)
+     * @param string  $host OPTIONAL Hostname of remote connection (default: 127.0.0.1)
+     * @param integer $port OPTIONAL Port number (default: null)
+     * @throws Zend_Mail_Client_Exception
      */
     public function __construct($host = '127.0.0.1', $port = null)
     {
@@ -69,7 +136,7 @@ abstract class Zend_Mail_Client
         $this->_validHost->addValidator(new Zend_Validate_Hostname());
 
         if (!$this->_validHost->isValid($host)) {
-            throw new Zend_Mail_Transport_Exception(join(', ', $validator->getMessage()));
+            throw new Zend_Mail_Client_Exception(join(', ', $this->_validHost->getMessage()));
         }
         
         $this->_host = $host;
@@ -79,28 +146,74 @@ abstract class Zend_Mail_Client
     
     /**
      * Class destructor to cleanup open resources
-     *
      */
     public function __destruct()
     {
-        if (is_resource($this->_socket)) {
-            fclose($this->_socket);
-        }
+        $this->_disconnect();
     }
     
+
     /**
-     * Connect to the server with the parameters given
-     * in the constructor.
+     * Create a connection to the remote host
+     * 
+     * Concrete adapters for this class will implement their own unique connect scripts, using the _connect() method to create the socket resource.
+     *
      *
      * @throws Zend_Mail_Transport_Exception
      */
     abstract public function connect();
+    
 
     /**
-     * Connect to the server with the parameters given
-     * in the constructor.
+     * Retrieve the last client request
      *
-     * @throws Zend_Mail_Transport_Exception
+     * @return string
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+
+    /**
+     * Retrieve the last server response
+     *
+     * @return array
+     */
+    public function getResponse()
+    {
+        return $this->_response;
+    }
+
+
+    /**
+     * Retrieve the transaction log
+     *
+     * @return string
+     */
+    public function getLog()
+    {
+        return $this->_log;
+    }
+
+
+    /**
+     * Reset the transaction log
+     */
+    public function resetLog()
+    {
+        $this->_log = '';
+    }
+
+
+    /**
+     * Connect to the server using the supplied transport and target
+     * 
+     * An example $remote string may be 'tcp://mail.example.com:25' or 'ssh://hostname.com:2222'
+     *
+     * @param string $remote Remote
+     * @return boolean
+     * @throws Zend_Mail_Client_Exception
      */
     protected function _connect($remote)
     {
@@ -120,35 +233,56 @@ abstract class Zend_Mail_Client
         if (($result = stream_set_timeout($this->_socket, self::TIMEOUT_CONNECTION)) === false) {
             throw new Zend_Mail_Client_Exception('Could not set Stream Timeout.');
         }
+        
+        return $result;
     }
+    
 
     /**
-     * Send the given string followed by a LINEEND to the server.
-     *
-     * @param string $data
-     * @throws Zend_Mail_Transport_Exception
+     * Disconnect from remote host and free resource
      */
-    protected function _send($data)
+    protected function _disconnect()
+    {
+        if (is_resource($this->_socket)) {
+            fclose($this->_socket);
+        }
+    }
+
+
+    /**
+     * Send the given request followed by a LINEEND to the server.
+     *
+     * @param string $request
+     * @return integer|boolean Number of bytes written to remote host
+     * @throws Zend_Mail_Client_Exception
+     */
+    protected function _send($request)
     {
         if (!is_resource($this->_socket)) {
             throw new Zend_Mail_Client_Exception('No connection has been established to ' . $this->_host . '.');
         }
         
-        $result = fwrite($this->_socket, $data . self::EOL);
-        $this->_log .= $data . self::EOL;
+        $this->_request = $request;
+        
+        $result = fwrite($this->_socket, $request . self::EOL);
+        
+        // Save request to internal log
+        $this->_log .= $request . self::EOL;
 
         if ($result === false) {
-            throw new Zend_Mail_Client_Exception('Could not write to ' . $this->_host . '.');
+            throw new Zend_Mail_Client_Exception('Could not send request to ' . $this->_host . '.');
         }
         
         return $result;
     }
 
+
     /**
      * Get a line from the stream.
      *
+     * @var    integer $timeout Per-request timeout value if applicable
      * @return string
-     * @throws Zend_Mail_Transport_Exception
+     * @throws Zend_Mail_Client_Exception
      */
     protected function _receive($timeout = null)
     {
@@ -156,12 +290,15 @@ abstract class Zend_Mail_Client
             throw new Zend_Mail_Client_Exception('No connection has been established to ' . $this->_host . '.');
         }
 
+        // Adapters may wish to supply per-commend timeouts according to appropriate RFC
         if ($timeout !== null) {
            stream_set_timeout($this->_socket, $timeout);
         }
         
+        // Save request to internal log
         $this->_log .= $reponse = fgets($this->_socket, 1024);
 
+        // Check meta data to ensure connection is still valid
         $info = stream_get_meta_data($this->_socket);
         
         if (!empty($info['timed_out'])) {
@@ -175,20 +312,22 @@ abstract class Zend_Mail_Client
         return $reponse;
     }
     
+
     /**
-     * Read the response from the stream and
-     * check for expected return code. throws
-     * a Zend_Mail_Transport_Exception if an unexpected code
-     * is returned
+     * Parse server response for successful codes
+     * 
+     * Read the response from the stream and check for expected return code.
+     * Throws a Zend_Mail_Client_Exception if an unexpected code is returned.
      *
-     * @param int $val1
-     * @param int $val2
-     * @param int $val3
-     * @throws Zend_Mail_Transport_Exception
+     * @param string|array $code One or more codes that indicate a successful response
+     * @return string Last line of response string
+     * @throws Zend_Mail_Client_Exception
      */
     protected function _expect($code)
     {
         $this->_response = array();
+        $cmd = '';
+        $msg = '';
         
         if (!is_array($code)) {
             $code = array($code);
@@ -196,12 +335,14 @@ abstract class Zend_Mail_Client
 
         do {
             $this->_response[] = $result = $this->_receive();
-            sscanf($result, '%d%s', $cmd, $msg);
+            sscanf($result, $this->_template, $cmd, $msg);
             
             if ($cmd === null || !in_array($cmd, $code)) {
                 throw new Zend_Mail_Client_Exception($result);
             }
 
-        } while ($msg[0] == '-');
+        } while ($msg[0] == '-'); // The '-' message prefix indicates an information string instead of a response string.
+        
+        return $msg;
     }
 }
