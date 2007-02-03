@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
- * @version    $$
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -103,16 +103,14 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
      */
     public function __construct($host = '127.0.0.1', Array $config = array())
     {
-        if (is_array($config)) {
-            if (isset($config['name'])) {
-                $this->_name = $config['name'];
-            }
-            if (isset($config['port'])) {
-                $this->_port = $config['port'];
-            }
-            if (isset($config['auth'])) {
-                $this->_auth = $config['auth'];
-            }
+        if (isset($config['name'])) {
+            $this->_name = $config['name'];
+        }
+        if (isset($config['port'])) {
+            $this->_port = $config['port'];
+        }
+        if (isset($config['auth'])) {
+            $this->_auth = $config['auth'];
         }
 
         $this->_host = $host;
@@ -169,7 +167,6 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
             } else {
                 $this->setClient(new Zend_Mail_Client_Smtp($this->_host, $this->_port));
             }           
-            $this->_client = new Zend_Mail_Client_Smtp($this->_host, $this->_port);
             $this->_client->connect();
             $this->_client->helo($this->_name);
         } else {

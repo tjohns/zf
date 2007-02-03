@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Client
- * @version    $$
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -92,9 +92,9 @@ class Zend_Mail_Client_Smtp_Auth_Login extends Zend_Mail_Client_Smtp
         
         $this->_send('AUTH LOGIN');
         $this->_expect(334);
-        $this->_send($this->_username);
+        $this->_send(base64_encode($this->_username));
         $this->_expect(334);
-        $this->_send($this->_password);
+        $this->_send(base64_encode($this->_password));
         $this->_expect(235);
         $this->_auth = true;
     }
