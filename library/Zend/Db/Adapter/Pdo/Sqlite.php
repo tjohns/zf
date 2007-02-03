@@ -25,6 +25,11 @@
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 
 /**
+ * Zend_Db_Adapter_Exception
+ */
+require_once 'Zend/Db/Adapter/Exception.php';
+
+/**
  * Class for connecting to MySQL databases and performing common operations.
  *
  * @category   Zend
@@ -133,7 +138,7 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
                 'SCHEMA_NAME' => null,
                 'TABLE_NAME'  => $tableName,
                 'COLUMN_NAME' => $row['name'],
-                'UNSIGNED'    => null, // @todo
+                'COLUMN_POSITION' => null, // @todo
                 'DATA_TYPE'   => $row['type'],
                 'DEFAULT'     => $row['dflt_value'],
                 'NULLABLE'    => ! (bool) $row['notnull'],
@@ -157,12 +162,21 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function limit($sql, $count, $offset = 0)
     {
-        if ($count > 0) {
-            $sql .= " LIMIT $count";
-            if ($offset > 0) {
-                $sql .= " OFFSET $offset";
-            }
+        $count = intval($count);
+        if ($count <= 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
+
+        $offset = intval($offset);
+        if ($offset < 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
+        }
+
+        $sql .= " LIMIT $count";
+        if ($offset > 0) {
+            $sql .= " OFFSET $offset";
+        }
+
         return $sql;
     }
 

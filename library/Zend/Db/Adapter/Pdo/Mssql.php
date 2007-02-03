@@ -19,11 +19,18 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Db_Adapter_Pdo_Abstract */
+/**
+ * Zend_Db_Adapter_Pdo_Abstract
+ */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 
 /**
- * Class for connecting to MSSQL databases and performing common operations.
+ * Zend_Db_Adapter_Exception
+ */
+require_once 'Zend/Db/Adapter/Exception.php';
+
+/**
+ * Class for connecting to Microsoft SQL Server databases and performing common operations.
  *
  * @category   Zend
  * @package    Zend_Db
@@ -179,27 +186,35 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      */
      public function limit($sql, $count, $offset = 0)
      {
-        if ($count) {
-
-            $orderby = stristr($sql, 'ORDER BY');
-            if ($orderby !== false) {
-                $sort = (stripos($orderby, 'desc') !== false) ? 'desc' : 'asc';
-                $order = str_ireplace('ORDER BY', '', $orderby);
-                $order = trim(preg_replace('/ASC|DESC/i', '', $order));
-            }
-
-            $sql = preg_replace('/^SELECT /i', 'SELECT TOP '.($count+$offset).' ', $sql);
-
-            $sql = 'SELECT * FROM (SELECT TOP '.$count.' * FROM ('.$sql.') AS inner_tbl';
-            if ($orderby !== false) {
-                $sql .= ' ORDER BY '.$order.' ';
-                $sql .= (stripos($sort, 'asc') !== false) ? 'DESC' : 'ASC';
-            }
-            $sql .= ') AS outer_tbl';
-            if ($orderby !== false) {
-                $sql .= ' ORDER BY '.$order.' '.$sort;
-            }
+        $count = intval($count);
+        if ($count <= 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
+
+        $offset = intval($offset);
+        if ($offset < 0) {
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
+        }
+
+        $orderby = stristr($sql, 'ORDER BY');
+        if ($orderby !== false) {
+            $sort = (stripos($orderby, 'desc') !== false) ? 'desc' : 'asc';
+            $order = str_ireplace('ORDER BY', '', $orderby);
+            $order = trim(preg_replace('/ASC|DESC/i', '', $order));
+        }
+
+        $sql = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . ($count+$offset) . ' ', $sql);
+
+        $sql = 'SELECT * FROM (SELECT TOP ' . $count . ' * FROM (' . $sql . ') AS inner_tbl';
+        if ($orderby !== false) {
+            $sql .= ' ORDER BY ' . $order . ' ';
+            $sql .= (stripos($sort, 'asc') !== false) ? 'DESC' : 'ASC';
+        }
+        $sql .= ') AS outer_tbl';
+        if ($orderby !== false) {
+            $sql .= ' ORDER BY ' . $order . ' ' . $sort;
+        }
+
         return $sql;
     }
 

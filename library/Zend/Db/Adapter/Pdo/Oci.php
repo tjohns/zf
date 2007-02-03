@@ -25,6 +25,11 @@
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 
 /**
+ * Zend_Db_Adapter_Exception
+ */
+require_once 'Zend/Db/Adapter/Exception.php';
+
+/**
  * Class for connecting to Oracle databases and performing common operations.
  *
  * @category   Zend
