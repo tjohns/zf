@@ -207,7 +207,8 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Returns the data from a single column in a result set.
+     * Returns the data from a single column in the next
+     * single row of the result set.
      *
      * @param string $col OPTIONAL
      * @return array
@@ -216,10 +217,12 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     {
         $data = array();
         $col = (int) $col;
-        while ($row = $this->fetch(Zend_Db::FETCH_NUM)) {
-            $data[] = $row[$col];
+        $row = $this->fetch(Zend_Db::FETCH_NUM);
+        if (is_array($row)) {
+            return $row[$col];
+        } else {
+            return false;
         }
-        return $data;
     }
 
     /**
