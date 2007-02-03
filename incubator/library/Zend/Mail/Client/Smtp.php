@@ -146,12 +146,12 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
         
         // Support for older, less-compliant remote servers. Tries multiple attempts of EHLO or HELO.
         try {
-            $this->_expect(array(220));
+            $this->_expect(220, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
             $this->_send('EHLO ' . $host);
-            $this->_expect(array(250));
+            $this->_expect(250, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
         } catch (Zend_Mail_Client_Exception $e) {
             $this->_send('HELO ' . $host);
-            $this->_expect(array(250));
+            $this->_expect(250, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
         } catch (Zend_Mail_Client_Exception $e) {
             throw $e;
         }
@@ -174,7 +174,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
         }
 
         $this->_send('MAIL FROM:<' . $from . '>');
-        $this->_expect(250);
+        $this->_expect(250, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
         
         // Set mail to true, clear recipients and any existing data flags as per 4.1.1.2 of RFC 2821
         $this->_mail = true;
@@ -197,7 +197,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
 
         // Set rcpt to true, as per 4.1.1.3 of RFC 2821
         $this->_send('RCPT TO:<' . $to . '>');
-        $this->_expect(array(250, 251));
+        $this->_expect(array(250, 251), 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
         $this->_rcpt = true;
     }
 
@@ -216,7 +216,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
         }
 
         $this->_send('DATA');
-        $this->_expect(354);
+        $this->_expect(354, 120); // Timeout set for 2 minutes as per RFC 2821 4.5.3.2
         
         foreach (explode(self::EOL, $data) as $line) {
             if (strpos($line, '.') === 0) {
@@ -227,7 +227,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
         }
 
         $this->_send('.');
-        $this->_expect(250);
+        $this->_expect(250, 600); // Timeout set for 10 minutes as per RFC 2821 4.5.3.2
         $this->_data = true;
     }
 
@@ -256,7 +256,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
     public function noop()
     {
         $this->_send('NOOP');
-        $this->_expect(250);
+        $this->_expect(250, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
     }
 
 
@@ -270,7 +270,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
     public function vrfy($user)
     {
         $this->_send('VRFY ' . $user);
-        $this->_expect(array(250, 251, 252));
+        $this->_expect(array(250, 251, 252), 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
     }
 
 
@@ -280,7 +280,7 @@ class Zend_Mail_Client_Smtp extends Zend_Mail_Client
     public function quit()
     {
         $this->_send('QUIT');
-        $this->_expect(221);
+        $this->_expect(221, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
         $this->_stopSession();
     }
 

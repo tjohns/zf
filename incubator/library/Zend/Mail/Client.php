@@ -323,7 +323,7 @@ abstract class Zend_Mail_Client
      * @return string Last line of response string
      * @throws Zend_Mail_Client_Exception
      */
-    protected function _expect($code)
+    protected function _expect($code, $timeout = null)
     {
         $this->_response = array();
         $cmd = '';
@@ -334,7 +334,7 @@ abstract class Zend_Mail_Client
         }
 
         do {
-            $this->_response[] = $result = $this->_receive();
+            $this->_response[] = $result = $this->_receive($timeout);
             sscanf($result, $this->_template, $cmd, $msg);
             
             if ($cmd === null || !in_array($cmd, $code)) {
