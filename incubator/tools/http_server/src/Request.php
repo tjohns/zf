@@ -192,6 +192,9 @@ class Request
 		}
 		
 		if (! $this->path) $this->path = '/';
+
+		$this->path = urldecode( $this->path );
+		$this->file = urldecode( $this->file );
 		
 		parse_str($this->query_string, $this->get);
 	}

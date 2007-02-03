@@ -31,10 +31,9 @@ require_once( 'AbstractHandler.php' );
  */
 class DefaultHandler extends AbstractHandler
 {
+
 	public function handle()
 	{
-		$this->applyRewriteRules();
-
 		$types = array(
 				"php" => "text/html",
 				"html" => "text/html",
@@ -44,22 +43,25 @@ class DefaultHandler extends AbstractHandler
 				"jpeg" => "image/jpeg",
 				"gif" => "image/gif",
 				"phps" => "text/html",
+				"pdf" => "application/pdf",
 				"" => "text/plain",
 			);
 
-		$extension = array_pop( explode( ".", $this->request->file ) );
+		$real_file = $this->applyRewriteRules();
+
+		$extension = array_pop( explode( ".", basename( $real_file ) ) );
 
 		if( !in_array( $extension, array_keys( $types ) ) )
 		{
 			$extension = "";
 		}
 
-		if( file_exists( $this->request->document_root . $this->request->path . "/" . $this->request->file ) )
+		if( file_exists( $this->request->document_root . $real_file ) )
 		{
 			// DefaultHandler: File exists
 			if( $extension == "phps" )
 			{
-				$output = highlight_file( $this->request->document_root . $this->request->path . "/" . $this->request->file, true );
+				$output = highlight_file( $this->request->document_root . $real_file, true );
 
 				$headers = array(
 					"Content-Type" => $types[ $extension ],
@@ -73,7 +75,7 @@ class DefaultHandler extends AbstractHandler
 				// DefaultHandler: PHP script
 
 				$current_directory = getcwd();
-				chdir( $this->request->document_root . $this->request->path );
+				chdir( dirname( $this->request->document_root . $real_file ) );
 
 				// Setting up globals
 
@@ -84,6 +86,7 @@ class DefaultHandler extends AbstractHandler
 				$_SERVER[ "DOCUMENT_ROOT" ] = $this->request->document_root;
 				$_SERVER[ "SCRIPT_FILENAME" ] = $this->request->file;
 				$_SERVER[ "PHP_SELF" ] = $this->request->path;
+				$_SERVER[ "SCRIPT_NAME" ] = $this->request->path . "/" . $this->request->file;
 				$_SERVER[ "argv" ] = $this->request->query_string;
 				$_SERVER[ "SERVER_ADDR" ] = "";
 				$_SERVER[ "SERVER_NAME" ] = "";
@@ -97,8 +100,7 @@ class DefaultHandler extends AbstractHandler
 
 				unset( $_SERVER[ "argc" ] );
 
-				$output = self::startScript( $this->request->document_root . $this->request->path . "/" .
-					$this->request->file );
+				$output = self::startScript( $this->request->document_root . $real_file );
 
 				// DefaultHandler: Done.  Sending response.
 
@@ -119,7 +121,7 @@ class DefaultHandler extends AbstractHandler
 			}
 			else
 			{
-				$data = file_get_contents( $this->request->document_root . $this->request->path . "/" . $this->request->file );
+				$data = file_get_contents( $this->request->document_root . $real_file );
 				$response = new Zend_Http_Response( 200, array( "Content-Type" => $types[ $extension ], "Content-Length" => strlen( $data ) ), $data );
 			}
 		}
@@ -142,11 +144,11 @@ class DefaultHandler extends AbstractHandler
 
 			For now, put in just the rule neccessary for Zend_Controller_RewriteRouter to work
 		*/
+
 /*
 		if( !preg_match( "!\.(js|ico|gif|jpg|png|css)$!", $this->request->file ) )
 		{
-			$this->request->path = "/";
-			$this->request->file = "index.php";
+			return "/index.php";
 		}
 */
 	}
