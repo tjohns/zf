@@ -17,7 +17,6 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  *
- *
  */
 
 /** Zend_Db_Adapter_Abstract */
@@ -104,14 +103,20 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     {
         // make sure the config array exists
         if (! is_array($config)) {
-            throw new Zend_Db_Adapter_Exception('must pass a config array');
+            throw new Zend_Db_Adapter_Db2_Exception('Configuration must be an array.');
         }
 
         // we need at least a dbname, a user and a password
-        if (! array_key_exists('password', $config) ||
-            ! array_key_exists('username', $config) ||
-            ! array_key_exists('dbname', $config)) {
-            throw new Zend_Db_Adapter_Exception('config array must have at least a username, a password, and a database name');
+        if (! array_key_exists('password', $config)) {
+            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'password' for login credentials.");
+        }
+
+        if (! array_key_exists('username', $config)) {
+            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'username' for login credentials.");
+        }
+
+        if (! array_key_exists('dbname', $config)) {
+            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'dbname' that names the database instance.");
         }
 
         // keep the config
@@ -363,7 +368,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
 
         $sql = "SELECT COLNAME FROM SYSCAT.COLIDENTATTRIBUTES WHERE TABNAME='" . strtoupper($tableName) . "'";
-        $result = $this->fetchAssoc($sql);
+        $result = $this->fetchAll($sql);
         if ($result) {
             $identCol = $result[0]['COLNAME'];
         } else {
@@ -371,7 +376,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
 
         $sql = "SELECT MAX($identCol) AS MAX FROM $tableName";
-        $result = $this->fetchAssoc($sql);
+        $result = $this->fetchAll($sql);
         if ($result) {
             return $result[0]['MAX'];
         } else {
@@ -552,26 +557,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         // execute the statement and return the number of affected rows
         $result = $this->query($sql, $newValues);
         return $result->rowCount();
-    }
-
-    /**
-     * Fetches all SQL result rows as an associative array.
-     *
-     * The first column is the key, the entire row array is the
-     * value.
-     *
-     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind OPTIONAL Data to bind into SELECT placeholders.
-     * @return string
-     */
-    public function fetchAssoc($sql, $bind = null)
-    {
-        $result = $this->query($sql, $bind);
-        $data = array();
-        while ($row = $result->fetch($this->_fetchMode)) {
-            $data[] = $row;
-        }
-        return $data;
     }
 
 }

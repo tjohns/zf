@@ -315,7 +315,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             }
         } else {
             while ($val = $this->fetchColumn($col)) {
-                $data = $val;
+                $data[] = $val;
             }
         }
         return $data;
