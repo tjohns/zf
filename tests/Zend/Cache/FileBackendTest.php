@@ -55,6 +55,18 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
         $test = new Zend_Cache_Backend_File(array());    
     }    
     
+    public function testConstructorWithABadFileNamePrefix()
+    {
+        try {
+            $class = new Zend_Cache_Backend_File(array(
+                'fileNamePrefix' => 'foo bar'
+            ));
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
     public function testGetWithANonExistingCacheIdAndANullLifeTime() 
     {
         $this->_instance->setDirectives(array('lifeTime' => null));

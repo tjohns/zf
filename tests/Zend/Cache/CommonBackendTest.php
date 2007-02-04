@@ -121,6 +121,13 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($res);
     }
     
+    public function testSaveWithSpecificLifeTime()
+    {
+        $this->_instance->setDirectives(array('lifeTime' => 3600));
+        $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'), 10);
+        $this->assertTrue($res);
+    }
+    
     public function testRemoveCorrectCall()
     {   
         $this->assertTrue($this->_instance->remove('bar'));
