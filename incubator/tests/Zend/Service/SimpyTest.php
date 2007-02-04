@@ -42,9 +42,14 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
 	    $this->_simpy = new Zend_Service_Simpy('syapizend', 'mgt37ge');
         
         /* clear any previous test data */
-        $linkSet = $this->_simpy->getLinks(new Zend_Service_Simpy_LinkQuery());
+        $linkSet = $this->_simpy->getLinks();
         foreach ($linkSet as $link) {
             $this->_simpy->deleteLink($link->getUrl());
+        }
+        
+        $noteSet = $this->_simpy->getNotes();
+        foreach ($noteSet as $note) {
+        	$this->_simpy->deleteNote($note->getId());
         }
 	}
 	
@@ -104,6 +109,12 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
                 && $note->getTags() == $tags
                 && $note->getDescription() == $description);
         $this->assertTrue($test, 'Saved note not found');
+        
+        /* deleteNote */
+        $this->_simpy->deleteNote($note->getId());
+        $noteSet = $this->_simpy->getNotes($note->getUri());
+        $test = ($noteSet->getLength() == 0);
+        $this->assertTrue($test, 'Note was not deleted');
     }
     
     public function testTags()

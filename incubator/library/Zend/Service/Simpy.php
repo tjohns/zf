@@ -158,7 +158,7 @@ class Zend_Service_Simpy
 	 * decreasing order
 	 *
 	 * @param int $limit Limits the number of tags returned (optional)
-	 * @see http://www.simpy.com/simpy/service/api/rest/GetTags.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/GetTags
 	 * @throws Zend_Service_Exception
 	 * @return Zend_Service_Simpy_TagSet
 	 */
@@ -176,7 +176,7 @@ class Zend_Service_Simpy
 	 * Removes a tag.
 	 *
 	 * @param string $tag Tag to be removed
-	 * @see http://www.simpy.com/simpy/service/api/rest/RemoveTag.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/RemoveTag
 	 * @return void
 	 */
 	public function removeTag($tag)
@@ -193,7 +193,7 @@ class Zend_Service_Simpy
 	 *
 	 * @param string $fromTag Tag to be renamed
 	 * @param string $toTag New tag name
-	 * @see http://www.simpy.com/simpy/service/api/rest/RenameTag.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/RenameTag
 	 * @return void
 	 */
 	public function renameTag($fromTag, $toTag)
@@ -212,7 +212,7 @@ class Zend_Service_Simpy
 	 * @param string $fromTag1 First tag to merge.
 	 * @param string $fromTag2 Second tag to merge.
 	 * @param string $toTag Tag to merge the two tags into.
-	 * @see http://www.simpy.com/simpy/service/api/rest/MergeTags.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/MergeTags
 	 * @return void
 	 */
 	public function mergeTags($fromTag1, $fromTag2, $toTag)
@@ -232,7 +232,7 @@ class Zend_Service_Simpy
 	 * @param string $tag Tag to split
 	 * @param string $toTag1 First tag to split into
 	 * @param string $toTag2 Second tag to split into
-	 * @see http://www.simpy.com/simpy/service/api/rest/SplitTag.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/SplitTag
 	 * @return void
 	 */
 	public function splitTag($tag, $toTag1, $toTag2)
@@ -311,7 +311,7 @@ class Zend_Service_Simpy
 	 * Deletes a given link.
 	 *
 	 * @param string $href URL of the bookmark to delete
-	 * @see http://www.simpy.com/simpy/service/api/rest/DeleteLink.jsp
+	 * @see http://www.simpy.com/simpy/service/api/rest/DeleteLink
 	 * @return void
 	 */
 	public function deleteLink($href)
@@ -327,7 +327,7 @@ class Zend_Service_Simpy
      * Return a list of watchlists and their meta-data, including the number
      * of new links added to each watchlist since last login.
      *
-     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlists.jsp
+     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlists
      * @return Zend_Service_Simpy_WatchlistSet
      */
     public function getWatchlists()
@@ -340,7 +340,7 @@ class Zend_Service_Simpy
      * Returns the meta-data for a given watchlist.
      *
      * @param int $watchlistId ID of the watchlist to retrieve
-     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlist.jsp
+     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlist
      * @return Zend_Service_Simpy_Watchlist
      */
     public function getWatchlist($watchlistId)
@@ -360,7 +360,7 @@ class Zend_Service_Simpy
      * @param string $q Query string formatted using Simpy search syntax
      *                  and search fields (optional)
      * @param int $limit Limits the number notes returned (optional)
-     * @see http://www.simpy.com/simpy/service/api/rest/GetNotes.jsp
+     * @see http://www.simpy.com/simpy/service/api/rest/GetNotes
      * @see http://www.simpy.com/simpy/FAQ.do#searchSyntax
      * @see http://www.simpy.com/simpy/FAQ.do#searchFieldsLinks
      * @return Zend_Service_Simpy_NoteSet
@@ -383,7 +383,7 @@ class Zend_Service_Simpy
      * @param mixed $tags String containing a comma-separated list of tags
      *                    or array of strings containing tags (optional)
      * @param string $description Free-text note (optional)
-     * @see http://www.simpy.com/simpy/service/api/rest/SaveNote.jsp
+     * @see http://www.simpy.com/simpy/service/api/rest/SaveNote
      * @return void
      */
     public function saveNote($title, $tags = null, $description = null)
@@ -400,4 +400,20 @@ class Zend_Service_Simpy
 
         $this->_makeRequest('SaveNote', $query);
     }
+    
+    /**
+	 * Deletes a given note.
+	 *
+	 * @param int $noteId ID of the note to delete
+	 * @see http://www.simpy.com/simpy/service/api/rest/DeleteNote
+	 * @return void
+	 */
+	public function deleteNote($noteId)
+	{
+		$query = array(
+			'noteId' => $noteId
+		);
+
+		$this->_makeRequest('DeleteNote', $query);
+	}
 }
