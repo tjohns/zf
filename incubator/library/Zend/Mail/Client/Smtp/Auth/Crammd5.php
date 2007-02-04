@@ -63,6 +63,6 @@ class Zend_Mail_Client_Smtp_Auth_Crammd5 extends Zend_Mail_Client_Smtp
      */
     public function auth()
     {
-        throw new Zend_Mail_Client_Exception('CRAM-MD5 Not yet implemented.')
+        throw new Zend_Mail_Client_Exception('CRAM-MD5 Not yet implemented.');
     }
 }
