@@ -60,9 +60,27 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         return $sql;
     }
 
+    function getCreateTableSQL2()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . "(
+            news_id      INT NOT NULL,
+            user_id      INT NOT NULL,
+            commentTitle VARCHAR(100),
+            commentBody  {$this->_textDataType},
+            date_posted  DATETIME
+        )";
+        return $sql;
+    }
+
     protected function getDropTableSQL()
     {
         $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
+
+    protected function getDropTableSQL2()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_2;
         return $sql;
     }
 

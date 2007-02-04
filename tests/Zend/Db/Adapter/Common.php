@@ -37,12 +37,15 @@ require_once 'PHPUnit/Framework/TestCase.php';
 abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 {
     const TABLE_NAME = 'zf_test_table';
+    const TABLE_NAME_2 = 'zf_test_table2';
+
     protected $_resultSetUppercase = false;
     protected $_textDataType = 'text';
 
     abstract public function getDriver();
     abstract public function getParams();
     abstract public function getCreateTableSQL();
+    abstract public function getCreateTableSQL2();
     abstract public function testExceptionInvalidLoginCredentials();
 
     /**
@@ -74,29 +77,58 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return string SQL statement for dropping the test table.
+     */
+    protected function getDropTableSQL2()
+    {
+        $sql = 'DROP TABLE ' . self::TABLE_NAME_2;
+        return $sql;
+    }
+
+    /**
      * Create the test table and populate it with some rows of data.
      * @return void
      */
     protected function createTestTable()
     {
-        $this->_db->query($this->getCreateTableSQL());
-
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (title, subTitle, body, date_created)
-                VALUES ('News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
+        $sql = $this->getCreateTableSQL();
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (title, subTitle, body, date_created)
-                VALUES ('News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . "
+            (title, subTitle, body, date_created)
+            VALUES ('News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
+        $this->_db->query($sql);
+
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . "
+            (title, subTitle, body, date_created)
+            VALUES ('News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
     }
 
     /**
      * Create a second test table that is used for joins.
      * @return void
-    protected function createTestTableTwo()
-    {
-    }
      */
+    protected function createTestTable2()
+    {
+        $sql = $this->getCreateTableSQL2();
+        $this->_db->query($sql);
+
+        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+            (news_id, user_id, commentTitle, commentBody, date_posted)
+            VALUES (1, 101, 'I agree', 'This is comment 1', '2006-05-01 13:13:13')";
+        $this->_db->query($sql);
+
+        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+            (news_id, user_id, commentTitle, commentBody, date_posted)
+            VALUES (1, 102, 'I disagree', 'This is comment 2', '2006-05-01 14:14:14')";
+        $this->_db->query($sql);
+
+        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+            (news_id, user_id, commentTitle, commentBody, date_posted)
+            VALUES (1, 101, 'I still agree', 'This is comment 3', '2006-05-01 15:15:15')";
+        $this->_db->query($sql);
+    }
 
     /**
      * Skip test if driver is disabled in TestConfiguration.php.
@@ -149,6 +181,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     protected function tearDownMetadata()
     {
         $sql = $this->getDropTableSQL();
+        $this->_db->query($sql);
+        $sql = $this->getDropTableSQL2();
         $this->_db->query($sql);
     }
 
@@ -426,20 +460,43 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Zend_Db_Select with parameters.
-     *
-    public function testSelectWithBoundParameters()
-    {
-    }
+     * Test Zend_Db_Select specifying columns
      */
+    public function testSelectColumns()
+    {
+        $title = $this->getIdentifier('title');
+        $subtitle = $this->getIdentifier('subtitle');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME, $title); // scalar
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result[0]));
+        $this->assertThat($result[0], $this->arrayHasKey($title));
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME, array($title, $subtitle)); // array
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result[0]));
+        $this->assertThat($result[0], $this->arrayHasKey($title));
+        $this->assertThat($result[0], $this->arrayHasKey($subtitle));
+    }
 
     /**
      * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
-     *
+     */
     public function testSelectDistinctModifier()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->distinct()
+            ->from(self::TABLE_NAME, 327);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
     }
-     */
 
     /**
      * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
@@ -451,83 +508,300 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     /**
      * Test adding a JOIN to a Zend_Db_Select object.
-     *
+     */
     public function testSelectJoinClause()
     {
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->join(self::TABLE_NAME_2,
+                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(10, count($result[0]));
     }
+
+    /**
+     * Test adding an INNER JOIN to a Zend_Db_Select object.
+     * This should be exactly the same as the plain JOIN clause.
      */
+    public function testSelectJoinInnerClause()
+    {
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->joinInner(self::TABLE_NAME_2,
+                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(10, count($result[0]));
+    }
 
     /**
      * Test adding an outer join to a Zend_Db_Select object.
-     *
-    public function testSelectLeftOuterJoinClause()
-    {
-    }
      */
+    public function testSelectLeftJoinClause()
+    {
+        $id = $this->getIdentifier('id');
+        $newsId = $this->getIdentifier('news_id');
+
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->joinLeft(self::TABLE_NAME_2,
+                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(4, count($result));
+        $this->assertEquals(10, count($result[0]));
+        $this->assertEquals(2, $result[3][$id]);
+        $this->assertNull($result[3][$newsId]);
+    }
 
     /**
      * Test adding a WHERE clause to a Zend_Db_Select object.
-     *
+     * @todo: test where() with 2 args for quoteInto()
+     */
     public function testSelectWhereClause()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->where('id = 2');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, $result[0][$id]);
+
+        // test adding more WHERE conditions,
+        // which should be combined with AND by default.
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->where('id = 2')
+            ->where('id = 1');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(0, count($result));
     }
-     */
 
     /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
-     *
+     * @todo: test orWhere() with 2 args for quoteInto()
+     */
     public function testSelectOrWhereClause()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->orWhere('id = 1')
+            ->orWhere('id = 2');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(2, $result[1][$id]);
     }
-     */
 
     /**
      * Test adding a GROUP BY clause to a Zend_Db_Select object.
-     *
+     */
     public function testSelectGroupByClause()
     {
+        $userId = $this->getIdentifier('user_id');
+        $count = $this->getIdentifier('thecount');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group('user_id')
+            ->order('user_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(101, $result[0][$userId]);
+        $this->assertEquals(2, $result[0][$count]);
+        $this->assertEquals(102, $result[1][$userId]);
+        $this->assertEquals(1, $result[1][$count]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group(array('user_id', 'user_id'))
+            ->order('user_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(101, $result[0][$userId]);
+        $this->assertEquals(2, $result[0][$count]);
+        $this->assertEquals(102, $result[1][$userId]);
+        $this->assertEquals(1, $result[1][$count]);
     }
-     */
 
     /**
      * Test adding a HAVING clause to a Zend_Db_Select object.
-     *
+     * @todo: test having() with 2 args for quoteInto()
+     */
     public function testSelectHavingClause()
     {
+        $userId = $this->getIdentifier('user_id');
+        $count = $this->getIdentifier('thecount');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group('user_id')
+            ->having('count(*) > 1');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(101, $result[0][$userId]);
+        $this->assertEquals(2, $result[0][$count]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group('user_id')
+            ->having('count(*) > 1')
+            ->having('count(*) = 1');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(0, count($result));
     }
-     */
 
     /**
      * Test adding a HAVING clause to a Zend_Db_Select object.
-     *
+     * @todo: test orHaving() with 2 args for quoteInto()
+     */
     public function testSelectOrHavingClause()
     {
+        $userId = $this->getIdentifier('user_id');
+        $count = $this->getIdentifier('thecount');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group('user_id')
+            ->orHaving('count(*) > 1')
+            ->orHaving('count(*) = 1')
+            ->order('user_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(101, $result[0][$userId]);
+        $this->assertEquals(2, $result[0][$count]);
+        $this->assertEquals(102, $result[1][$userId]);
+        $this->assertEquals(1, $result[1][$count]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->group('user_id')
+            ->orHaving('count(*) > 1')
+            ->orHaving('count(*) = 1')
+            ->order('user_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(101, $result[0][$userId]);
+        $this->assertEquals(2, $result[0][$count]);
+        $this->assertEquals(102, $result[1][$userId]);
+        $this->assertEquals(1, $result[1][$count]);
     }
-     */
 
     /**
-     * Test adding a HAVING clause to a Zend_Db_Select object.
-     *
+     * Test adding an ORDER BY clause to a Zend_Db_Select object.
+     */
     public function testSelectOrderByClause()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->order($id);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$id]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->order(array($id, $id));
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$id]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->order("$id ASC");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$id]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->order("$id DESC");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, $result[0][$id]);
     }
-     */
 
     /**
-     * Test adding an OR HAVING clause to a Zend_Db_Select object.
-     *
+     * Test adding a LIMIT clause to a Zend_Db_Select object.
+     */
     public function testSelectLimitClause()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limit(); // no limit
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limit(1);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, $result[0][$id]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limit(1, 1);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, $result[0][$id]);
     }
-     */
 
     /**
      * Test the limitPage() method of a Zend_Db_Select object.
-     *
+     */
     public function testSelectLimitPage()
     {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limitPage(1, 1); // first page, length 1
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, $result[0][$id]);
+
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limitPage(2, 1); // second page, length 1
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, $result[0][$id]);
     }
-     */
 
     /**
      *

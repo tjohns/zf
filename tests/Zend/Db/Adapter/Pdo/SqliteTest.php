@@ -58,9 +58,26 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
         )";
     }
 
+    public function getCreateTableSQL2()
+    {
+        return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . " (
+            news_id      INTEGER,
+            user_id      INTEGER,
+            commentTitle {$this->_textDataType},
+            commentBody  {$this->_textDataType},
+            date_posted  {$this->_textDataType}
+        )";
+    }
+
     public function getDropTableSQL()
     {
         $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
+
+    public function getDropTableSQL2()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_2;
         return $sql;
     }
 

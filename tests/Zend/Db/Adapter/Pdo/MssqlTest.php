@@ -61,6 +61,17 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
         )";
     }
 
+    function getCreateTableSQL2()
+    {
+        return 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
+            news_id      int,
+            user_id      int,
+            commentTitle varchar (100),
+            commentBody  {$this->_textDataType},
+            date_posted  datetime
+        )";
+    }
+
     public function testQuote()
     {
         // test double quotes are fine

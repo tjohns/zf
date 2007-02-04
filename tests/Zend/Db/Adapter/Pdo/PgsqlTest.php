@@ -51,7 +51,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQL()
     {
-        return 'CREATE TABLE  '. self::TABLE_NAME . " (
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
             id           SERIAL,
             title        VARCHAR(100),
             subTitle     VARCHAR(100),
@@ -59,11 +59,30 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
             date_created TIMESTAMP,
             PRIMARY KEY (id)
         )";
+        return $sql;
+    }
+
+    function getCreateTableSQL2()
+    {
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
+            news_id      INTEGER,
+            user_id      INTEGER,
+            commentTitle VARCHAR(100),
+            commentBody  {$this->_textDataType},
+            date_posted  TIMESTAMP
+        )";
+        return $sql;
     }
 
     public function getDropTableSQL()
     {
         $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
+        return $sql;
+    }
+
+    public function getDropTableSQL2()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_2;
         return $sql;
     }
 
@@ -81,15 +100,21 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
     protected function tearDownMetadata()
     {
-        $this->_db->query($this->getDropTableSQL());
-        $this->_db->query($this->getDropSequenceSQL());
+        $sql = $this->getDropTableSQL();
+        $this->_db->query($sql);
+        $sql = $this->getDropTableSQL2();
+        $this->_db->query($sql);
+        $sql = $this->getDropSequenceSQL();
+        $this->_db->query($sql);
     }
 
     protected function createTestTable()
     {
         $this->tearDownMetadata();
-        $this->_db->query($this->getCreateSequenceSQL());
-        $this->_db->query($this->getCreateTableSQL());
+        $sql = $this->getCreateSequenceSQL();
+        $this->_db->query($sql);
+        $sql = $this->getCreateTableSQL();
+        $this->_db->query($sql);
         $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
                 VALUES (nextval('" . self::SEQUENCE_NAME . "'), 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);

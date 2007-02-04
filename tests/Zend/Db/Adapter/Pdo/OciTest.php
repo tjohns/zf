@@ -32,6 +32,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 {
     const TABLE_NAME    = 'ZF_TEST_TABLE';
+    const TABLE_NAME_2    = 'ZF_TEST_TABLE2';
     const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
     protected $_textDataType = 'VARCHAR2';
 
@@ -63,6 +64,18 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         return $sql;
     }
 
+    public function getCreateTableSQL2()
+    {
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
+            news_id      NUMBER(11),
+            user_id      NUMBER(11),
+            commentTitle {$this->_textDataType}(100),
+            commentBody  {$this->_textDataType}(100),
+            date_posted  {$this->_textDataType}(100)
+        )";
+        return $sql;
+    }
+
     protected function getCreateSequenceSQL()
     {
         $sql = 'CREATE SEQUENCE ' . self::SEQUENCE_NAME;
@@ -80,12 +93,14 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES');
         if (in_array(self::TABLE_NAME, $tableList)) {
             $this->_db->query($this->getDropTableSQL());
-        } else {
         }
+        if (in_array(self::TABLE_NAME_2, $tableList)) {
+            $this->_db->query($this->getDropTableSQL2());
+        }
+
         $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
         if (in_array(self::SEQUENCE_NAME, $seqList)) {
             $this->_db->query($this->getDropSequenceSQL());
-        } else {
         }
     }
 

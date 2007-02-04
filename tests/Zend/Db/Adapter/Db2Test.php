@@ -34,6 +34,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     protected $_resultSetUppercase = true;
     protected $_textDataType = 'VARCHAR';
     const TABLE_NAME = 'ZF_TEST_TABLE';
+    const TABLE_NAME_2 = 'ZF_TEST_TABLE2';
     const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
 
     public function getDriver()
@@ -64,9 +65,15 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         return $sql;
     }
 
-    protected function getDropTableSQL()
+    public function getCreateTableSQL2()
     {
-        $sql = 'DROP TABLE ' . self::TABLE_NAME;
+        $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
+            news_id      INT NOT NULL,
+            user_id      INT NOT NULL,
+            commentTitle {$this->_textDataType}(100),
+            commentBody  {$this->_textDataType}(100),
+            date_posted  {$this->_textDataType}(100)
+        )";
         return $sql;
     }
 
@@ -90,7 +97,12 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
                 $this->_db->query($this->getDropTableSQL());
                 break;
             }
+            if ($table['TABNAME'] == self::TABLE_NAME_2) {
+                $this->_db->query($this->getDropTableSQL2());
+                break;
+            }
         }
+
         $sequences = $this->_db->fetchAll('SELECT SEQNAME FROM SYSCAT.SEQUENCES');
         foreach ($sequences as $sequence) {
             if ($sequence['SEQNAME'] == self::SEQUENCE_NAME) {
