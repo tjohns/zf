@@ -425,6 +425,56 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $response = $this->_server->handle($request);
         $this->assertEquals('key: value1', $response->getReturnValue());
     }
+
+    public function testMulticallReturnsFaultsWithBadData()
+    {
+        // bad method array
+        $try = array(
+            'system.listMethods',
+            array(
+                'name' => 'system.listMethods'
+            ),
+            array(
+                'methodName' => 'system.listMethods'
+            ),
+            array(
+                'methodName' => 'system.listMethods',
+                'params'     => ''
+            ),
+            array(
+                'methodName' => 'system.multicall',
+                'params'     => array()
+            )
+        );
+        $returned = $this->_server->multicall($try);
+        $this->assertTrue(is_array($returned));
+        $this->assertEquals(5, count($returned));
+
+        $response = $returned[0];
+        $this->assertTrue(is_array($response));
+        $this->assertTrue(isset($response['faultCode']));
+        $this->assertEquals(601, $response['faultCode']);
+
+        $response = $returned[1];
+        $this->assertTrue(is_array($response));
+        $this->assertTrue(isset($response['faultCode']));
+        $this->assertEquals(602, $response['faultCode']);
+
+        $response = $returned[2];
+        $this->assertTrue(is_array($response));
+        $this->assertTrue(isset($response['faultCode']));
+        $this->assertEquals(603, $response['faultCode']);
+
+        $response = $returned[3];
+        $this->assertTrue(is_array($response));
+        $this->assertTrue(isset($response['faultCode']));
+        $this->assertEquals(604, $response['faultCode']);
+
+        $response = $returned[4];
+        $this->assertTrue(is_array($response));
+        $this->assertTrue(isset($response['faultCode']));
+        $this->assertEquals(605, $response['faultCode']);
+    }
 }
 
 /**
