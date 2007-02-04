@@ -104,7 +104,8 @@
 
     <chapter id="zend.translate">
         <title>Zend_Translate</title>
-        <xi:include href="module_specs/Zend_Translate.xml" xpointer="xpointer(book/*)" />
+        <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Translate-Old.xml" />
     </chapter>
 
     <chapter id="zend.validate">
