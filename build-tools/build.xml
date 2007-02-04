@@ -90,10 +90,8 @@
   <target name="dist" depends="build"
     description="Stage product, build docs, create tarball and zip archives.  This is the default target.">
     <echo message="Creating tar and zip archives..." />
-    <!--
     <tar destfile="${zf.tarball}.gz" basedir="${zf.stage.dir}" compression="gzip" />
     <zip destfile="${zf.zipball}" basedir="${zf.stage.dir}" />
-    -->
   </target>
 
   <target name="build" depends="stage,docs"
@@ -103,7 +101,6 @@
   <target name="stage" depends="prepare,source.export"
     description="">
     <echo msg="Staging files from ${zf.src} to ${zf.stage.dir}" />
-    <!--
     <copy todir="${zf.stage.dir}">
       <fileset dir="${zf.src}">
         <exclude name="**/.svn/**" />
@@ -115,7 +112,6 @@
         <exclude name="tests/TestConfiguration.php" />
       </fileset>
     </copy>
-    -->
     <echo file="${zf.stage.dir}/VERSION.txt">
 ${zf.product.name} Preview Release ${zf.version} (build ${zf.svn.revision})
     </echo>
