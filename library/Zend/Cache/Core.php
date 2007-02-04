@@ -257,10 +257,10 @@ class Zend_Cache_Core
      * @param mixed $data data to put in cache (can be another type than string if automaticSerialization is on)
      * @param cache $id cache id (if not set, the last cache id will be used)
      * @param array $tags cache tags
-     * @param int $specificLifeTime if not null, set a specific lifetime for this cache record
+     * @param int $specificLifeTime if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($data, $id = null, $tags = array(), $specificLifeTime = -1) 
+    public function save($data, $id = null, $tags = array(), $specificLifeTime = false) 
     {
         if (!$this->_options['caching']) {
             return true;
