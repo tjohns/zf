@@ -82,6 +82,11 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
 ?>]]></programlisting>
+        <note><para>
+            <code>save()</code> メソッドには、オプションの第四引数
+            <code>$specificLifeTime</code> を指定できることに注意しましょう
+            (false 以外を指定することで、このキャッシュレコードの有効期限を特定の値に設定できます)。
+        </para></note>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>キャッシュの削除</title>
