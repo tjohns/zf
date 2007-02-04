@@ -233,8 +233,14 @@ class Zend_Currency {
     {
         $locale = $this->_currencyLocale;
         
+        if(empty($this->_symbolLocale)) {
+            $this->_symbolLocale = $this->_currencyLocale;
+        }
+        
         //getting the full name of the currency
-        $names = Zend_Locale_Data::getContent('','currencynames',substr($locale, strpos($locale, '_')+1) );
+        $names = Zend_Locale_Data::getContent($this->_symbolLocale,
+                                              'currencynames',
+                                              substr($locale, strpos($locale, '_')+1) );
         
         $this->_fullName = isset($names[$this->_shortName])?$names[$this->_shortName]:$this->_shortName;
         
@@ -252,8 +258,9 @@ class Zend_Currency {
     {
         $formatLocale = $this->_symbolLocale;
         
-        if (!empty($formatLocale)) {
-            $formatLocale = $this->_currencyLocale;
+        if (empty($formatLocale)) {
+            $this->_symbolLocale = $this->_currencyLocale;
+            $formatLocale = $this->_symbolLocale;
         }
         
         //getting the symbol of the currency
@@ -275,7 +282,7 @@ class Zend_Currency {
     {
         $formatLocale = $this->_formatLocale;
         
-        if (!empty($formatLocale)) {
+        if (empty($formatLocale)) {
             $this->_formatLocale = $this->_currencyLocale;
             $formatLocale = $this->_formatLocale;
         }
@@ -376,9 +383,9 @@ class Zend_Currency {
         
         //process the rules
         if ($rules === self::USE_SYMBOL || $rules === self::NO_SYMBOL) {
-            $this->_useSymbol = $rules;
+            $this->_useSymbol = ($rules==self::USE_SYMBOL)? true : false ;
         } else if ($rules === self::USE_NAME || $rules === self::NO_NAME) {
-            $this->_useName = $rules;
+            $this->_useName = ($rules==self::USE_NAME)? true : false;
         } else if ($rules === self::RIGHT || $rules === self::LEFT) {
             $this->_signPosition = $rules;
         } else if ($rules === self::STANDARD) {
@@ -430,15 +437,18 @@ class Zend_Currency {
             throw new Zend_Currency_Exception('pass a valid locale');
         }
         
-        //TODO wait tell thomas fixes the problem of the currencies list
-        //I need not just one currency, I need a full list of the active ones
         
         //get the available currencies for this country
-        $data = Zend_Locale_Data::getContent('','currencyforregion',$country);
+        $data = Zend_Locale_Data::getContent($locale,'currencyforregion',$country);
         
-        $shortName = $data['currency'];
+        if(isset($data['currency'])) {
+            $shortName = $data['currency'];
+        } else if (isset($data[$currency])) {
+            $shortName = $currency;
+        } else {
+            return $shortName;
+        }
         
-        //TODO if thomas fixed the currencies list, validate $currency exists in $data
         
         //get the symbol
         $symbols = Zend_Locale_Data::getContent($locale, 'currencysymbols');
@@ -475,20 +485,21 @@ class Zend_Currency {
             throw new Zend_Currency_Exception('pass a valid locale');
         }
         
-        //TODO wait tell thomas fixes the problem of the currencies list
-        //I need not just one currency, I need a full list of the active ones
-        
         //get the available currencies for this country
-        $data = Zend_Locale_Data::getContent('','currencyforregion',$country);
+        $data = Zend_Locale_Data::getContent($locale,'currencyforregion',$country);
         
-        $shortName = $data['currency'];
-        
-        //TODO if thomas fixed the currencies list, validate $currency exists in $data
+        if(isset($data['currency'])) {
+            $shortName = $data['currency'];
+        } else if (isset($data[$currency])) {
+            $shortName = $currency;
+        } else {
+            return $shortName;
+        }
         
         //get the name
         $names = Zend_Locale_Data::getContent($locale, 'currencynames', $country);
         
-        return isset($names[$shortName])?$symbols[$names]:$shortName;
+        return isset($names[$shortName])?$names[$shortName]:$shortName;
         
     } 
 
