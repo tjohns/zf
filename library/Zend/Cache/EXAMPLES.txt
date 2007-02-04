@@ -7,7 +7,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours
+    'lifeTime' => 7200 // cache lifetime of 2 hours
 );
 
 $backendOptions = array(
@@ -19,25 +19,25 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 $id = 'foo'; // cache id of "what we want to cache"
 
 if (!($cache->test($id))) {
-	// cache missed
-	
-	require_once ... // for perfs reasons, all "require_once" have to be loaded ONLY if the cache is missed
-	require_once ...
-	
-	// we build "what we want to cache"
-	// for example
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . $i;
-	} 
-	
-	// We save the result into the cache
+    // cache missed
+    
+    require_once ... // for perfs reasons, all "require_once" have to be loaded ONLY if the cache is missed
+    require_once ...
+    
+    // we build "what we want to cache"
+    // for example
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . $i;
+    } 
+    
+    // We save the result into the cache
     $cache->save($data);
 
 } else {
-	// cache hit
-	
-	$data = $cache->load($id);
+    // cache hit
+    
+    $data = $cache->load($id);
 
 }
 
@@ -63,13 +63,13 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 $id = 'foo'; // cache id of "what we want to cache"
 
 if (!($data = $cache->load($id))) {
-	// cache missed
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . $i;
-	}
-	
+    // cache missed
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . $i;
+    }
+    
     $cache->save($data);
     
 } 
@@ -94,17 +94,17 @@ echo($data);
 
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 $id1 = 'foo'; // cache id of block1
-$id1 = 'foo'; // cache id of block2
+$id2 = 'bar'; // cache id of block2
 
 // BLOCK1
 if (!($data = $cache->load($id1))) {
-	// cache missed
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . $i;
-	}
-	
+    // cache missed
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . $i;
+    }
+    
     $cache->save($data);
     
 } 
@@ -115,14 +115,62 @@ echo('NEVER CACHED !');
 
 // BLOCK2
 if (!($data = $cache->load($id2))) {
-	// cache missed
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . '!';
-	}
-	
+    // cache missed
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . '!';
+    }
+    
     $cache->save($data);
+    
+} 
+echo($data);
+
+?>
+
+
+// =========================================================
+// === "Compact" use of the "Core" of Zend_Cache         ===
+// === (example with two blocks and different lifetimes) ===
+// =========================================================
+
+<?php
+
+// [...] // require and configuration
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$id1 = 'foo'; // cache id of block1
+$id2 = 'bar'; // cache id of block2
+
+// BLOCK1
+if (!($data = $cache->load($id1))) {
+    // cache missed
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . $i;
+    }
+    
+    $cache->save($data);
+    
+} 
+echo($data);
+
+// NEVER CACHED BLOCK
+echo('NEVER CACHED !');
+
+// BLOCK2
+if (!($data = $cache->load($id2))) {
+    // cache missed
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . '!';
+    }
+    
+    $cache->save($data, null, array(), 3600);
+    // => this cache will have a specific lifeTime of 3600 seconds
     
 } 
 echo($data);
@@ -139,7 +187,7 @@ echo($data);
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours
+    'lifeTime' => 7200 // cache lifetime of 2 hours
 );
 
 $backendOptions = array(
@@ -155,8 +203,8 @@ if (!($cache->start($id))) {
     
     // Output you want to cache
     for ($i=0;$i<10000;$i++) {
-		echo($i);
-	}
+        echo($i);
+    }
 
     // store "captured" output into cache
     $cache->end();
@@ -174,7 +222,7 @@ if (!($cache->start($id))) {
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours
+    'lifeTime' => 7200 // cache lifetime of 2 hours
 );
 
 $backendOptions = array(
@@ -223,7 +271,7 @@ class test {
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours,
+    'lifeTime' => 7200 // cache lifetime of 2 hours,
     'cachedEntity' => 'test'
 );
 
@@ -271,7 +319,7 @@ class test {
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours,
+    'lifeTime' => 7200 // cache lifetime of 2 hours,
     'cachedEntity' => new test()
 );
 
@@ -310,7 +358,7 @@ echo($res3);
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => null // no lifetime,
+    'lifeTime' => null // no lifetime,
     'masterFile' => '/path/to/your/master.file' // your master file here
 );
 
