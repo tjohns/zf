@@ -25,18 +25,19 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Установка второго аргумента в TRUE создает новый индекс.
-$index = new Zend_Search_Lucene('/data/my-index', true);
+// Создание индекса
+$index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Сохранение URL документа для того, чтобы идентифицировать его в результатах поиска.
+// Сохранение URL документа для того, чтобы идентифицировать его
+// в результатах поиска
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-// Индексирование содержимого документа.
+// Индексирование содержимого документа
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Добавление документа в индекс.
+// Добавление документа в индекс
 $index->addDocument($doc);
 ?>]]></programlisting>
 
@@ -63,7 +64,7 @@ $index->addDocument($doc);
 
         <programlisting role="php"><![CDATA[<?php
 // Открытие существующего индекса
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 // Сохраниение URL документа для того, чтобы идентифицировать его в результатах поиска.
@@ -222,7 +223,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Открытие существующего индекса
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 // Оптимизация индекса
 $index->optimize();
