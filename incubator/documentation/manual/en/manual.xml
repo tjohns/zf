@@ -2,10 +2,8 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 [
-    <!ENTITY % magic.fixup SYSTEM "./entities.ent">
-    %magic.fixup;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="en" xmlns:xi="http://www.w3.org/2001/XInclude">
     <bookinfo>
         <title>Programmer's Reference Guide</title>
         <subtitle>Zend Framework</subtitle>
@@ -27,123 +25,108 @@
             </mediaobject>
         -->
     </bookinfo>
-    <!-- &ref.preface; -->
-    <!-- &ref.install; -->
-    <!-- &ref.conf;    -->
-
     <!--
-    <chapter id="zend">
-        <title>Zend</title>
-        &module_specs.Zend;
-    </chapter>
+    <xi:include href="ref/preface.xml" />
+    -->
+    <!--
+    <xi:include href="ref/install.xml" />
+    -->
+    <!--
+    <xi:include href="ref/conf.xml" />
     -->
 
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
-        &module_specs.Zend_Auth;
-        &module_specs.Zend_Auth_Digest;
+        <xi:include href="module_specs/Zend_Auth.xml" />
+        <xi:include href="module_specs/Zend_Auth_Digest.xml" />
     </chapter>
 
-    <!--
     <chapter id="zend.console">
         <title>Zend_Console_Getopt</title>
-        &module_specs.Zend_Console_Getopt;
+        <!--
+        <xi:include href="module_specs/Zend_Console_Getopt.xml" />
+        -->
     </chapter>
-    -->
 
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
-        &module_specs.Zend_Filter;
-        &module_specs.Zend_Filter-FilterChains;
-        &module_specs.Zend_Filter-WritingFilters;
-        &module_specs.Zend_Filter_Input;
+        <xi:include href="module_specs/Zend_Filter.xml" />
+        <xi:include href="module_specs/Zend_Filter-FilterChains.xml" />
+        <xi:include href="module_specs/Zend_Filter-WritingFilters.xml" />
+        <xi:include href="module_specs/Zend_Filter_Input.xml" />
     </chapter>
 
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
-        &module_specs.Zend_Http_Server-Introduction;
+        <xi:include href="module_specs/Zend_Http_Server-Introduction.xml" />
     </chapter>
 
     <!--
     <chapter id="zend.json.server">
         <title>Zend_Json_Server</title>
-        &module_specs.Zend_Json_Server;
+        <xi:include href="module_specs/Zend_Json_Server.xml" />
     </chapter>
     -->
 
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
-        &module_specs.Zend_Mail_Read;
+        <xi:include href="module_specs/Zend_Mail_Read.xml" />
     </chapter>
-
-    <!--
-    <chapter id="zend.registry">
-        <title>Zend_Registry</title>
-        &module_specs.Zend_Registry;
-    </chapter>
-    -->
 
     <chapter id="zend.rest">
         <title>Zend_Rest</title>
-        &module_specs.Zend_Rest;
-        &module_specs.Zend_Rest_Client;
-        &module_specs.Zend_Rest_Server;
+        <xi:include href="module_specs/Zend_Rest.xml" />
+        <xi:include href="module_specs/Zend_Rest_Client.xml" />
+        <xi:include href="module_specs/Zend_Rest_Server.xml" />
     </chapter>
 
     <chapter id="zend.service">
         <title>Zend_Service</title>
         <!--
-        &module_specs.Zend_Service_Audioscrobbler;
+        <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
         -->
-        &module_specs.Zend_Service_Delicious;
-        <!--
-        &module_specs.Zend_Service_Simpy;
-        -->
-    </chapter>
-
-    <chapter id="zend.timesync">
-        <title>Zend_TimeSync</title>
-        &module_specs.Zend_TimeSync;
-        &module_specs.Zend_TimeSync-Queries;
+        <xi:include href="module_specs/Zend_Service_Delicious.xml" />
+        <xi:include href="module_specs/Zend_Service_Simpy.xml" />
     </chapter>
 
     <!--
     <chapter id="zend.soap">
         <title>Zend_Soap</title>
-        &module_specs.Zend_Soap_Wsdl;
+        <xi:include href="module_specs/Zend_Soap_Wsdl.xml" />
     </chapter>
     -->
 
-    <!--
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
-        &module_specs.Zend_TimeSync;
+        <xi:include href="module_specs/Zend_TimeSync.xml" />
+        <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
     </chapter>
-    -->
 
     <chapter id="zend.translate">
         <title>Zend_Translate</title>
-        &module_specs.Zend_Translate;
+        <xi:include href="module_specs/Zend_Translate.xml" xpointer="xpointer(book/*)" />
     </chapter>
 
     <chapter id="zend.validate">
         <title>Zend_Validate</title>
-        &module_specs.Zend_Validate;
-        &module_specs.Zend_Validate-ValidatorChains;
-        &module_specs.Zend_Validate-WritingValidators;
+        <xi:include href="module_specs/Zend_Validate.xml" />
+        <xi:include href="module_specs/Zend_Validate-ValidatorChains.xml" />
+        <xi:include href="module_specs/Zend_Validate-WritingValidators.xml" />
     </chapter>
 
-    <!-- &ref.faq; -->
+    <!--
+    <xi:include href="ref/faq.xml" />
+    -->
     <appendix id="appendix.codingstandard">
         <title>Zend Framework PHP Coding Standard</title>
-        &ref.Coding_Standard-Overview;
-        &ref.Coding_Standard-Formatting;
-        &ref.Coding_Standard-Naming;
-        &ref.Coding_Standard-Style;
+        <xi:include href="ref/Coding_Standard-Overview.xml" />
+        <xi:include href="ref/Coding_Standard-Formatting.xml" />
+        <xi:include href="ref/Coding_Standard-Naming.xml" />
+        <xi:include href="ref/Coding_Standard-Style.xml" />
     </appendix>
     <appendix id="appendix.copyright">
         <title>Copyright Information</title>
-        &ref.copyrights;
+        <xi:include href="ref/copyrights.xml" />
     </appendix>
     <index id="the.index" />
 </book>

@@ -71,17 +71,10 @@
 -->
 <project name="ZendFramework" default="dist" basedir=".">
 
-  <path id="zf.class.path">
-    <pathelement dir="${project.basedir}/phing/tasks" />
-  </path>
-  <taskdef name="entitynames" classname="zend.docbook.EntityNamesTask">
-    <classpath refid="zf.class.path" />
-  </taskdef>
-
   <property name="zf.src.default" value="${project.basedir}/.." />
   <property name="zf.product.name" value="Zend Framework" />
   <property name="zf.productname" value="ZendFramework" />
-  <property name="zf.version" value="0.6.0" />
+  <property name="zf.version" value="0.8.0" />
   <property name="svn.url" value="http://framework.zend.com/svn" />
   <property name="zf.svn.url" value="${svn.url}/framework/trunk" />
   <property name="zf.svn.tag" value="HEAD" />
@@ -97,8 +90,10 @@
   <target name="dist" depends="build"
     description="Stage product, build docs, create tarball and zip archives.  This is the default target.">
     <echo message="Creating tar and zip archives..." />
+    <!--
     <tar destfile="${zf.tarball}.gz" basedir="${zf.stage.dir}" compression="gzip" />
     <zip destfile="${zf.zipball}" basedir="${zf.stage.dir}" />
+    -->
   </target>
 
   <target name="build" depends="stage,docs"
@@ -108,6 +103,7 @@
   <target name="stage" depends="prepare,source.export"
     description="">
     <echo msg="Staging files from ${zf.src} to ${zf.stage.dir}" />
+    <!--
     <copy todir="${zf.stage.dir}">
       <fileset dir="${zf.src}">
         <exclude name="**/.svn/**" />
@@ -119,6 +115,7 @@
         <exclude name="tests/TestConfiguration.php" />
       </fileset>
     </copy>
+    -->
     <echo file="${zf.stage.dir}/VERSION.txt">
 ${zf.product.name} Preview Release ${zf.version} (build ${zf.svn.revision})
     </echo>
@@ -183,19 +180,19 @@ ${zf.product.name} Preview Release ${zf.version} (build ${zf.svn.revision})
   <target name="build.manual.lang" if="zf.lang.exists">
     <echo msg="Building manual for tree: ${zf.tree}, language: ${zf.lang}..." />
 
-    <echo msg="Generating XML entities..." />
-    <entitynames outputfile="${zf.manual.src.dir}/entities.ent">
-      <filelist dir="${zf.manual.src.dir}" files="ref,module_specs" />
-    </entitynames>
-
     <mkdir dir="${zf.manual.dest.dir}" />
-    <!-- @TODO: make xslt task work with external entities
-    <xslt todir="${zf.manual.dest.dir}" style="${zf.manual.src.dir}/../.build/html.xsl">
-      <fileset dir=".">
+    <echo msg="Rendering manual using Xinclude and XSLT..." />
+    <copy todir="${zf.manual.dest.dir}">
+      <filterchain>
+        <xincludefilter basedir="${zf.manual.src.dir}" />
+        <xsltfilter style="${zf.manual.src.dir}/html.xsl">
+          <param name="base.dir" expression="${zf.manual.dest.dir}/" />
+        </xsltfilter>
+      </filterchain>
+      <fileset dir="${zf.manual.src.dir}">
         <include name="manual.xml" />
       </fileset>
-    </xslt>
-    -->
+    </copy>
     <echo msg="done." />
   </target>
 

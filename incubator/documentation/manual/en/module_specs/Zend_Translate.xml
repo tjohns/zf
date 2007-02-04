@@ -1,3 +1,4 @@
+<book>
 <sect1 id="zend.translate.introduction">
     <title>Introduction</title>
     <para>
@@ -359,3 +360,4 @@ echo $lang->_('Message 2');
         </para>
     </sect2>
 </sect1>
+</book>
