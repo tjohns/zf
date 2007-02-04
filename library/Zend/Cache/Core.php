@@ -369,7 +369,7 @@ class Zend_Cache_Core
             Zend_Cache::throwException('"internal-*" ids or tags are reserved');
         }
         if (!preg_match('~^[\w]+$~', $string)) {
-            Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-A0-9_]');
+            Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-Z0-9_]');
         }
     }
     
