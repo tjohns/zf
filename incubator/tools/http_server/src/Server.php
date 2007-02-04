@@ -38,6 +38,7 @@ class Server
 	private $connections = array();
 
 	public $handler = "DefaultHandler";
+	public $handler_options = array();
 	public $document_root = "";
 
 	private $connection_timeout = 30; // Connection timeout in seconds
@@ -199,7 +200,7 @@ class Server
 
 					if( $request->isComplete() )
 					{
-						$handler = new $this->handler( $request );
+						$handler = new $this->handler( $request, $this->handler_options );
 
 						$response = $handler->handle();
 						socket_write( $socket, $response->asString() );

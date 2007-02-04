@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/bin/env php
 <?php
 /**
  * Zend Framework
@@ -44,7 +44,10 @@
 
 	$args = $_SERVER[ "argv" ];
 
-	array_shift( $args );
+	$script = array_shift( $args );
+
+	$help = false;
+	$rewrite = false;
 
 	while( count( $args ) > 0 )
 	{
@@ -66,7 +69,28 @@
 			{
 				$document_root = trim( array_shift( $args ) );
 			} break;
+
+			case "--help":
+			{
+				$help = true;
+			} break;
+
+			case "--rewrite":
+			{
+				$rewrite = true;
+			} break;
 		}
+	}
+
+	if( $help )
+	{
+		print "Usage: {$script} [-p port] [-h host] [-d document_root] [--rewrite] [--help]\n";
+		print "\nCurrent settings:\n";
+		print "* Host          - {$address}\n";
+		print "* Port          - {$port}\n";
+		print "* Document Root - {$document_root}\n";
+		print "* Rewrite Rule  - " . ( $rewrite ? "On" : "Off" ) . "\n";
+		exit;
 	}
 
 	// Strip any trailing slash from the document root
@@ -74,6 +98,10 @@
 
 	$server = new Server( $address, $port );
 	$server->document_root = $document_root;
+	if( $rewrite )
+	{
+		$server->handler_options[ "rewrite" ] = true;
+	}
 	$server->listen();
 
 ?>

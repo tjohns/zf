@@ -37,6 +37,7 @@ abstract class AbstractHandler
 	 * @var Request
 	 */
 	protected $request;
+	protected $options;
 
 	/**
 	 * Class Constructor, sets the request object
@@ -44,9 +45,10 @@ abstract class AbstractHandler
 	 * @param  Request $request
 	 * @return void
 	 */
-	public function __construct( Request $request )
+	public function __construct( Request $request, $options = array() )
 	{
 		$this->request = $request;
+		$this->options = $options;
 	}
 
 	/**

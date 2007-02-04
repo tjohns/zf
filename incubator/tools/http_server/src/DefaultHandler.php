@@ -47,7 +47,7 @@ class DefaultHandler extends AbstractHandler
 				"" => "text/plain",
 			);
 
-		$real_file = $this->applyRewriteRules();
+		$real_file = $this->options[ "rewrite" ] ? $this->applyRewriteRules() : $this->request->path . "/" . $this->request->file;
 
 		$extension = array_pop( explode( ".", basename( $real_file ) ) );
 
@@ -144,13 +144,12 @@ class DefaultHandler extends AbstractHandler
 
 			For now, put in just the rule neccessary for Zend_Controller_RewriteRouter to work
 		*/
-
-/*
 		if( !preg_match( "!\.(js|ico|gif|jpg|png|css)$!", $this->request->file ) )
 		{
 			return "/index.php";
 		}
-*/
+
+		return $this->request->path . "/" . $this->request->file;
 	}
 
 
