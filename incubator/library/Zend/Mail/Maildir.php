@@ -97,50 +97,52 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      */
     public function getMessage($id)
     {
-        if(!isset($this->_files[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
-        }
-
-        return new Zend_Mail_Message(file_get_contents($this->_files[$id - 1]['filename']));
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRaw($id, 'header')));
     }
 
-
-    /**
-     * Get a message with only header and $bodyLines lines of body
-     *
-     * @param  int $id            number of message
-     * @param  int $bodyLines     also retrieve this number of body lines
-     * @return Zend_Mail_Message
-     */
-    public function getHeader($id, $bodyLines = 0)
+    public function getRaw($id, $part)
     {
         if(!isset($this->_files[$id - 1])) {
             throw new Zend_Mail_Exception('id does not exist');
         }
 
-        $inHeader = true;
-        $message = '';
         $fh = fopen($this->_files[$id - 1]['filename'], 'r');
-        while(!feof($fh) && ($inHeader || $bodyLines--)) {
-            $line = fgets($fh);
-            if ($inHeader && !trim($line)) {
-                if (!$bodyLines) {
-                    break;
-                } else {
-                    $inHeader = false;
+        $content = null;
+
+        // TODO: indexes for header and content should be changed to negative numbers
+        switch($part) {
+            case 'header':
+                $content = '';
+                while (!feof($fh)) {
+                    $line = fgets($fh);
+                    if (!trim($line)) {
+                        break;
+                    }
+                    $content .= $line;
                 }
-            }
-            $message .= $line;
+                break;
+            case 'content':
+                $content = '';
+                while (!feof($fh)) {
+                    $line = fgets($fh);
+                    if(!trim($line)) {
+                        break;
+                    }
+                }
+                $content = stream_get_contents($fh);
+                break;
+            default:
+                // fall through
         }
+
         fclose($fh);
-
-        if (!$inHeader) {
-            return new Zend_Mail_Message($message);
-        } else {
-            return new Zend_Mail_Message('', $message);
+        if($content !== null) {
+            return $content;
         }
-    }
 
+        // TODO: check for number or mime type
+        throw new Zend_Mail_Exception('part not found');
+    }
 
     /**
      * Create instance with parameters

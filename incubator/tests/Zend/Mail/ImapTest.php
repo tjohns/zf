@@ -235,7 +235,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Imap($this->_params);
 
-        $subject = $mail->getHeader(1)->subject;
+        $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
     }
 
@@ -407,8 +407,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Imap($this->_params);
 
         $mail->selectFolder('subfolder/test');
-        $subject = $mail->getHeader(1)->subject;
+        $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
-
 }

@@ -21,7 +21,7 @@
  * Zend_Mail_Exception
  */
 require_once 'Zend/Mail/Exception.php';
- 
+
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -30,43 +30,43 @@ require_once 'Zend/Mail/Exception.php';
 abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIterator
 {
     /**
-     * class capabilities with default values 
+     * class capabilities with default values
      */
-    protected $_has = array('folder'   => false,
-                            'uniqueid' => false,
-                            'delete'   => false,
-                            'create'   => false,
-                            'top'      => false);
-    
+    protected $_has = array('uniqueid'  => false,
+                            'delete'    => false,
+                            'create'    => false,
+                            'top'       => false,
+                            'fetchPart' => true);
+
     /**
      * current iteration position
      */
     protected $_iterationPos = 0;
-    
+
     /**
      * maximum iteration position (= message count)
      */
     protected $_iterationMax = null;
 
     /**
-     * Getter for has-properties. The standard has properties 
+     * Getter for has-properties. The standard has properties
      * are: hasFolder, hasUniqueid, hasDelete, hasCreate, hasTop
-     * 
+     *
      * The valid values for the has-properties are:
      *   - true if a feature is supported
      *   - false if a feature is not supported
      *   - null is it's not yet known or it can't be know if a feature is supported
-     * 
+     *
      * @param  string $var  property name
      * @return bool         supported or not
      */
-    public function __get($var) 
+    public function __get($var)
     {
         if(strpos($var, 'has') === 0) {
             $var = strtolower(substr($var, 3));
             return isset($this->_has[$var]) ? $this->_has[$var] : null;
         }
-        
+
         throw new Zend_Mail_Exception($var . ' not found');
     }
 
@@ -76,16 +76,16 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      *
      * @return array list of features as array(featurename => true|false[|null])
      */
-    public function getCapabilities() 
+    public function getCapabilities()
     {
         return $this->_has;
     }
 
-    
+
     /**
      * Count messages with a flag or all messages in current box/folder
      * Flags might not be supported by all mail libs (exceptions is thrown)
-     * 
+     *
      * @param  int $flags  filter by flags
      * @throws Zend_Mail_Exception
      * @return int number of messages
@@ -100,7 +100,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      * @return int|array      size of given message of list with all messages as array(num => size)
      */
     abstract public function getSize($id = 0);
-    
+
 
     /**
      * Get a message with headers and body
@@ -110,17 +110,10 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      */
     abstract public function getMessage($id);
 
-    
-    /**
-     * Get a message with only header and $bodyLines lines of body
-     *
-     * @param  int $id            number of message
-     * @param  int $bodyLines     also retrieve this number of body lines
-     * @return Zend_Mail_Message 
-     */
-    abstract public function getHeader($id, $bodyLines = 0);
 
-    
+    abstract public function getRaw($id, $part);
+
+
     /**
      * Create instance with parameters
      *
@@ -128,16 +121,16 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      * @throws Zend_Mail_Exception
      */
     abstract public function __construct($params);
-    
+
 
     /**
      * Destructor calls close() and therefore closes the resource.
      */
-    public function __destruct() 
+    public function __destruct()
     {
         $this->close();
     }
-        
+
 
     /**
      * Close resource for mail lib. If you need to control, when the resource
@@ -145,7 +138,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      */
     abstract public function close();
 
-    
+
     /**
      * Keep the resource alive.
      */
@@ -167,22 +160,22 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      {
         return $this->countMessages();
      }
-     
-     
+
+
      /**
       * ArrayAccess::offsetExists()
       * @internal
       * @param    int     $id
       * @return   boolean
       */
-     public function offsetExists($id) 
+     public function offsetExists($id)
      {
         try {
-            if ($this->getHeader($id)) {
+            if ($this->getMessage($id)) {
                 return true;
             }
         } catch(Zend_Mail_Exception $e) {}
-        
+
         return false;
      }
 
@@ -191,14 +184,14 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       * ArrayAccess::offsetGet()
       * @internal
       * @param    int $id
-      * @return   Zend_Mail_Message message object 
+      * @return   Zend_Mail_Message message object
       */
-     public function offsetGet($id) 
+     public function offsetGet($id)
      {
         return $this->getMessage($id);
      }
-     
-     
+
+
      /**
       * ArrayAccess::offsetSet()
       * @internal
@@ -207,24 +200,24 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       * @throws   Zend_Mail_Exception
       * @return   void
       */
-     public function offsetSet($id, $value) 
+     public function offsetSet($id, $value)
      {
         throw new Zend_Mail_Exception('cannot write mail messages via array access');
      }
-     
-     
+
+
      /**
       * ArrayAccess::offsetUnset()
       * @internal
       * @param    int   $id
-      * @return   boolean success 
+      * @return   boolean success
       */
-     public function offsetUnset($id) 
+     public function offsetUnset($id)
      {
         return $this->removeMessage($id);
      }
-     
-     
+
+
      /**
       * Iterator::rewind()
       *
@@ -235,60 +228,60 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       * @internal
       * @return   void
       */
-     public function rewind() 
+     public function rewind()
      {
         $this->_iterationMax = $this->countMessages();
         $this->_iterationPos = 1;
      }
-     
-     
+
+
      /**
       * Iterator::current()
       * @internal
       * @return   Zend_Mail_Message current message
       */
-     public function current() 
+     public function current()
      {
         return $this->getMessage($this->_iterationPos);
      }
-     
-     
+
+
      /**
       * Iterator::key()
       * @internal
       * @return   int id of current position
       */
-     public function key() 
+     public function key()
      {
         return $this->_iterationPos;
      }
-     
-     
+
+
      /**
       * Iterator::next()
       * @internal
       * @return   void
       */
-     public function next() 
+     public function next()
      {
         ++$this->_iterationPos;
      }
-     
-     
+
+
      /**
       * Iterator::valid()
       * @internal
       * @return   boolean
       */
-     public function valid() 
+     public function valid()
      {
         if($this->_iterationMax === null) {
-          $this->_iterationMax = $this->countMessages();        
+          $this->_iterationMax = $this->countMessages();
         }
         return $this->_iterationPos && $this->_iterationPos <= $this->_iterationMax;
      }
-     
-     
+
+
      /**
       * SeekableIterator::seek()
       * @internal
@@ -298,7 +291,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      public function seek($pos)
      {
         if($this->_iterationMax === null) {
-          $this->_iterationMax = $this->countMessages();        
+          $this->_iterationMax = $this->countMessages();
         }
 
         if ($pos > $this->_iterationMax) {

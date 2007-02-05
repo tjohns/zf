@@ -129,10 +129,11 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
 
-        $subject = $mail->getHeader(1)->subject;
+        $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
     }
 
+/*
     public function testFetchTopBody()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -140,7 +141,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $content = $mail->getHeader(3, 1)->getContent();
         $this->assertEquals('Fair river! in thy bright, clear flow', trim($content));
     }
-
+*/
     public function testFetchMessageHeader()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -169,19 +170,6 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         }
 
         $this->fail('no exception raised while getting size for message 0');
-    }
-
-    public function testFetchWrongHeader()
-    {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
-
-        try {
-            $mail->getHeader(0);
-        } catch (Exception $e) {
-            return; // test ok
-        }
-
-        $this->fail('no exception raised while fetching headers for message 0');
     }
 
     public function testFetchWrongMessageBody()

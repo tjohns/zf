@@ -100,26 +100,28 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract implements Zend_Mail_Folder_Inte
      */
     public function getMessage($id)
     {
-        $message = $this->_protocol->fetch(array('RFC822.HEADER', 'RFC822.TEXT'), $id);
-        return new Zend_Mail_Message($message['RFC822.TEXT'], $message['RFC822.HEADER']);
+        $header = $this->_protocol->fetch('RFC822.HEADER', $id);
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header));
     }
 
-    /**
-     *
-     * get a message with only header and $bodyLines lines of body
-     *
-     * @param int number of message
-     * @param int also retrieve this number of body lines
-     * @return Zend_Mail_Message
-     */
-    public function getHeader($id, $bodyLines = 0)
+    public function getRaw($id, $part)
     {
-        if($bodyLines) {
-            throw new Zend_Mail_Exception('body lines not yet supported');
+        // TODO: indexes for header and content should be changed to negative numbers
+        switch($part) {
+            case 'header':
+                return $this->_protocol->fetch('RFC822.HEADER', $id);
+                break;
+            case 'content':
+                return $this->_protocol->fetch('RFC822.TEXT', $id);
+                break;
+            default:
+                // fall through
         }
-        $message = $this->_protocol->fetch('RFC822.HEADER', $id);
-        return new Zend_Mail_Message('', $message);
+
+        // TODO: check for number or mime type
+        throw new Zend_Mail_Exception('part not found');
     }
+
 
     /**
      *
@@ -147,12 +149,14 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract implements Zend_Mail_Folder_Inte
             return;
         }
 
-        if(!isset($params['host']) || !isset($params['user'])) {
-            throw new Zend_Mail_Exception('need at least a host an user in params');
+        if(!isset($params['user'])) {
+            throw new Zend_Mail_Exception('need at least user in params');
         }
+
+        $params['host']     = isset($params['host'])     ? $params['host']     : 'localhost';
         $params['password'] = isset($params['password']) ? $params['password'] : '';
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
-        $params['ssl']      = isset($params['ssl']) ? $params['ssl'] : false;
+        $params['ssl']      = isset($params['ssl'])      ? $params['ssl']      : false;
 
         $this->_protocol = new Zend_Mail_Transport_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);

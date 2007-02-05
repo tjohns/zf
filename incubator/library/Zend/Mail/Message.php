@@ -16,8 +16,8 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
- 
+
+
 /**
  * Zend_Mime_Decode
  */
@@ -27,89 +27,45 @@ require_once 'Zend/Mime/Decode.php';
  * Zend_Mail_Exception
  */
 require_once 'Zend/Mail/Exception.php';
- 
+
+/**
+ * Zend_Mail_Part
+ */
+require_once 'Zend/Mail/Part.php';
+
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Message 
+class Zend_Mail_Message extends Zend_Mail_Part
 {
-    /**
-     * headers of message as array
-     */
-    protected $_headers;
-    
-    /**
-     * raw message body
-     */
-    protected $_content;
-
-
     /**
      * Public constructor
      *
      * @param string $rawMessage  full message with or without headers
-     * @param array  $headers     optional headers already seperated from body
      */
-    public function __construct($rawMessage, $headers = null) 
+    public function __construct(array $params)
     {
-        if($headers) {
-            if(is_array($headers)) {
-                $this->_headers = $headers;
-                $this->_content = $rawMessage;
+        if(isset($params['file'])) {
+            if(!is_resource($params['file'])) {
+                $params['raw'] = file_get_contents($params['file']);
+                if($params['raw'] === false) {
+                    throw new Zend_Mail_Exception('could not open file');
+                }
             } else {
-                Zend_Mime_Decode::splitMessage($headers, $this->_headers, $null);
-                $this->_content = $rawMessage;
+                $params['raw'] = '';
+                while(!feof($params['file'])) {
+                    $params['raw'] = fgets($params['file']);
+                }
             }
-        } else {
-            Zend_Mime_Decode::splitMessage($rawMessage, $this->_headers, $this->_content);
         }
+
+        parent::__construct($params);
     }
 
-
-    /**
-     * Body of message
-     *
-     * @return string body
-     */
-    public function getContent() 
+    public function getTopLines()
     {
-        return $this->_content;
-    }
-    
-    
-    /**
-     * Get all headers
-     *
-     * @return array headers
-     */
-    public function getHeaders() 
-    {
-        $result = array();
-        
-        foreach ($this->_headers as $name => $value) {
-            $result .= $name . ': '. $value . Zend_Mime::LINEEND; 
-        }
-        
-        return $result;
-    }
-    
-    
-    /**
-     * Getter for mail headers - name is matched in lowercase
-     *
-     * @param  string $name         header name
-     * @throws Zend_Mail_Exception
-     * @return string|array         header line or array of headers if header exists more than once
-     */
-    public function __get($name) 
-    {
-        $name = strtolower($name);
-        if (!isset($this->_headers[$name])) {
-            throw new Zend_Mail_Exception("no Header with Name $name found");           
-        }
-        
-        return $this->_headers[$name];
+        return $this->_topLines;
     }
 }

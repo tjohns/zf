@@ -128,49 +128,60 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function getMessage($id)
     {
-        $endPos = $this->_goto($id);
+        $bodyLines = 0; // TODO: need a way to change that
 
-        $message = '';
-        while (ftell($this->_fh) < $endPos) {
-            $message .= fgets($this->_fh);
+        $message = $this->getRaw($id, 'header');
+        // file pointer is after headers now
+        if($bodyLines) {
+            $message .= "\n";
+            while($bodyLines-- && ftell($this->_fh) < $this->_positions[$id - 1][1]) {
+                $message .= fgets($this->_fh);
+            }
         }
 
-        return new Zend_Mail_Message($message);
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $message));
     }
 
-
-    /**
-     * Get a message with only header and $bodyLines lines of body
-     *
-     * @param  int $id            number of message
-     * @param  int $bodyLines     also retrieve this number of body lines
-     * @return Zend_Mail_Message
-     */
-    public function getHeader($id, $bodyLines = 0)
+    public function getRaw($id, $part)
     {
         $endPos = $this->_goto($id);
 
-        $inHeader = true;
-        $message = '';
-        while (ftell($this->_fh) < $endPos && ($inHeader || $bodyLines--)) {
-            $line = fgets($this->_fh);
-            if ($inHeader && !trim($line)) {
-                if (!$bodyLines) {
-                    break;
-                } else {
-                    $inHeader = false;
+        // TODO: indexes for header and content should be changed to negative numbers
+        switch($part) {
+            // TODO: save header end position in _positions, we could then use stream_get_contents()
+            case 'header':
+                $part = '';
+                while (ftell($this->_fh) < $endPos) {
+                    $line = fgets($this->_fh);
+                    if (!trim($line)) {
+                        break;
+                    }
+                    $part .= $line;
                 }
-            }
-            $message .= $line;
+                return $part;
+                break;
+            case 'content':
+                $inHeader = true;
+                $part = '';
+                while (ftell($this->_fh) < $endPos) {
+                    $line = fgets($this->_fh);
+                    if ($inHeader && !trim($line)) {
+                        $inHeader = false;
+                        continue;
+                    }
+                    if(!$inHeader) {
+                        $part .= $line;
+                    }
+                }
+                return $part;
+                break;
+            default:
+                // fall through
         }
 
-        if (!$inHeader) {
-            return new Zend_Mail_Message($message);
-        } else {
-            return new Zend_Mail_Message('', $message);
-        }
+        // TODO: check for number or mime type
+        throw new Zend_Mail_Exception('part not found');
     }
-
 
     /**
      * Create instance with parameters

@@ -232,7 +232,11 @@ class Zend_Mime_Decode
                     // then assume no headers at all
                     $inHeader = false;
                 } else {
-                    $headers[$lastheader] .= $EOL . trim($line);
+                    if(is_array($headers[$lastheader])) {
+                        $headers[$lastheader][count($headers[$lastheader]) - 1] .= $EOL . trim($line);
+                    } else {
+                        $headers[$lastheader] .= $EOL . trim($line);
+                    }
                 }
             } else if(!strpos($line, ':')) {
                 // headers do not start with an ordinary header line?

@@ -227,11 +227,11 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Folder_Mbox($this->_params);
 
-        $subject = $mail->getHeader(1)->subject;
+        $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
 
         $mail->selectFolder('/subfolder/test.mbox');
-        $subject = $mail->getHeader(1)->subject;
+        $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
 }
