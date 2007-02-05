@@ -66,9 +66,13 @@ class Zend_Controller_Front
 
     /**
      * Singleton instance
-     * @var self 
+     *
+     * Marked only as protected to allow extension of the class. To extend, 
+     * simply override {@link getInstance()}.
+     * 
+     * @var Zend_Controller_Front
      */
-    private static $_instance = null;
+    protected static $_instance = null;
 
     /**
      * Array of invocation parameters to use when instantiating action
