@@ -8,6 +8,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Rest/ServerTest.php';
 require_once 'Zend/Rest/ClientTest.php';
+require_once 'Zend/Rest/ResultTest.php';
 
 class Zend_Rest_AllTests
 {
@@ -22,6 +23,7 @@ class Zend_Rest_AllTests
 
         $suite->addTestSuite('Zend_Rest_ServerTest');
         $suite->addTestSuite('Zend_Rest_ClientTest');
+        $suite->addTestSuite('Zend_Rest_ResultTest');
        
         return $suite;
     }

@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
+class Zend_Rest_Client_Result implements IteratorAggregate {
 	/**
 	 * @var SimpleXMLElement
 	 */
@@ -46,7 +46,7 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 	 * Get Property Overload
 	 *
 	 * @param string $name
-	 * @return mixed
+	 * @return null|string|array Null if not found, string if only one value found, array of results otherwise
 	 */
 	public function __get($name)
 	{
@@ -55,13 +55,14 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 		}
 		
 		$result = $this->_sxml->xpath("//$name");
+        $count  = count($result);
 		
-		if (sizeof($result) == 0) {
+		if ($count == 0) {
 			return null;
-		} elseif (sizeof($result) == 1) {
+		} elseif ($count == 1) {
 			return (string) $result[0];
 		} else {
-			return (string) $result;
+			return $result;
 		}
 	}
 	
@@ -105,50 +106,12 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 	 */
 	public function __call($method, $args)
 	{
-		return call_user_func_array(array($this->_sxml, $method), $args);
-	}
-	
-	/**
-	 * Implement ArrayAccess::offsetExists
-	 *
-	 * @param string|int $offset Array key
-	 * @return boolean
-	 */
-	public function offsetExists($offset)
-	{
-		return isset($this->_sxml[$offset]);
-	}
-	
-	/**
-	 * Implement ArrayAccess::offsetGet
-	 *
-	 * @param string|int $offset Array key
-	 * @return boolean
-	 */
-	public function offsetGet($offset)
-	{
-		return $this->_sxml[$offset];
-	}
-	
-	/**
-	 * Implement ArrayAccess::offsetSet
-	 *
-	 * @param string|int $offset Array Key
-	 * @param mixed $value Value
-	 */
-	public function offsetSet($offset, $value)
-	{
-		$this->_sxml[$offset] = $value;
-	}
-	
-	/**
-	 * Implement ArrayAccess::offsetUnset
-	 *
-	 * @param string|int $offset Array Key
-	 */
-	public function offsetUnset($offset)
-	{
-		unset($this->_sxml[$offset]);
+        if (method_exists($this->_sxml, $method)) {
+            return call_user_func_array(array($this->_sxml, $method), $args);
+        }
+
+        require_once 'Zend/Rest/Client/Exception.php';
+        throw new Zend_Rest_Client_Exception('Invalid method requested');
 	}
 	
 	/**
