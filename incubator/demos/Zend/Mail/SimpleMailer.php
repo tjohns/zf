@@ -24,14 +24,14 @@
 require_once 'Zend.php';
 
 /**
- * A simple web-mailer based on Zend_Mail_Read classes.
+ * A simple web-mailer based on Zend_Mail_Storage classes.
  *
  * This simple mailer demonstrates the most important features of the mail reading classes. You can
  * use the test mbox and maildir files or a Pop3 or Imap server. It's meant to be run in a web enviroment
  * and CLI is not supported. Copy the files to a directory in your webroot and make sure the Zend Framework
  * is in your include path (including incubator!).
  *
- * SSL and TLS are supported by Zend_Mail_[Pop3|Imap], but not shown here). You'd need to add
+ * SSL and TLS are supported by Zend_Mail_Storage_[Pop3|Imap], but not shown here). You'd need to add
  *   'ssl' => 'SSL'
  * or
  *   'ssl' => 'TLS'
@@ -96,26 +96,26 @@ class Demo_Zend_Mail_SimpleMailer
 
         switch($this->type) {
             case 'mbox':
-                $this->mail = new Zend_Mail_Mbox(array('filename' => $this->param));
+                $this->mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->param));
                 break;
             case 'mbox-folder':
-                $this->mail = new Zend_Mail_Folder_Mbox(array('rootdir' => $this->param));
+                $this->mail = new Zend_Mail_Storage_Folder_Mbox(array('rootdir' => $this->param));
                 break;
             case 'maildir':
-                $this->mail = new Zend_Mail_Maildir(array('dirname' => $this->param));
+                $this->mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->param));
                 break;
             case 'maildir-folder':
-                $this->mail = new Zend_Mail_Folder_Maildir(array('dirname' => $this->param));
+                $this->mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => $this->param));
                 break;
             case 'pop3':
-                $this->mail = new Zend_Mail_Pop3(array('host'     => $this->param,
-                                                       'user'     => $_SERVER['PHP_AUTH_USER'],
-                                                       'password' => $_SERVER['PHP_AUTH_PW']));
+                $this->mail = new Zend_Mail_Storage_Pop3(array('host'     => $this->param,
+                                                               'user'     => $_SERVER['PHP_AUTH_USER'],
+                                                               'password' => $_SERVER['PHP_AUTH_PW']));
                 break;
             case 'imap':
-                $this->mail = new Zend_Mail_Imap(array('host'     => $this->param,
-                                                       'user'     => $_SERVER['PHP_AUTH_USER'],
-                                                       'password' => $_SERVER['PHP_AUTH_PW']));
+                $this->mail = new Zend_Mail_Storage_Imap(array('host'     => $this->param,
+                                                               'user'     => $_SERVER['PHP_AUTH_USER'],
+                                                               'password' => $_SERVER['PHP_AUTH_PW']));
                 break;
             default:
                 $this->mail = null;
@@ -147,12 +147,12 @@ class Demo_Zend_Mail_SimpleMailer
      */
     function loadClasses()
     {
-        $classname = array('mbox'           => 'Zend_Mail_Mbox',
-                           'mbox-folder'    => 'Zend_Mail_Folder_Mbox',
-                           'maildir'        => 'Zend_Mail_Maildir',
-                           'maildir-folder' => 'Zend_Mail_Folder_Maildir',
-                           'pop3'           => 'Zend_Mail_Pop3',
-                           'imap'           => 'Zend_Mail_Imap');
+        $classname = array('mbox'           => 'Zend_Mail_Storage_Mbox',
+                           'mbox-folder'    => 'Zend_Mail_Storage_Folder_Mbox',
+                           'maildir'        => 'Zend_Mail_Storage_Maildir',
+                           'maildir-folder' => 'Zend_Mail_Storage_Folder_Maildir',
+                           'pop3'           => 'Zend_Mail_Storage_Pop3',
+                           'imap'           => 'Zend_Mail_Storage_Imap');
 
         if(isset($classname[$this->type])) {
             Zend::loadClass($classname[$this->type]);
@@ -192,7 +192,7 @@ class Demo_Zend_Mail_SimpleMailer
             return;
         }
 
-        if($this->mail instanceof Zend_Mail_Folder_Interface && $this->folder) {
+        if($this->mail instanceof Zend_Mail_Storage_Folder_Interface && $this->folder) {
             // could also be done in constructor of $this->mail with parameter 'folder' => '...'
             $this->mail->selectFolder($this->folder);
         }
@@ -337,7 +337,7 @@ class Demo_Zend_Mail_SimpleMailer
 
         echo '</table>';
 
-        if($this->mail instanceof Zend_Mail_Folder_Interface) {
+        if($this->mail instanceof Zend_Mail_Storage_Folder_Interface) {
             $this->showFolders();
         }
 

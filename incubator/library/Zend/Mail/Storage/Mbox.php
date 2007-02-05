@@ -19,9 +19,9 @@
 
 
 /**
- * Zend_Mail_Abstract
+ * Zend_Mail_Storage_Abstract
  */
-require_once 'Zend/Mail/Abstract.php';
+require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
  * Zend_Mail_Message
@@ -29,9 +29,9 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend_Mail_Storage_Exception
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend/Mail/Storage/Exception.php';
 
 
 /**
@@ -39,7 +39,7 @@ require_once 'Zend/Mail/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Mbox extends Zend_Mail_Abstract
+class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
 {
     /**
      * file handle to mbox file
@@ -67,13 +67,13 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      * Flags are not supported (exceptions is thrown)
      *
      * @param  int $flags           filter by flags
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      * @return int                  number of messages
      */
     public function countMessages($flags = null)
     {
         if ($flags) {
-            throw new Zend_Mail_Exception('mbox does not support flags');
+            throw new Zend_Mail_Storage_Exception('mbox does not support flags');
         }
         return count($this->_positions);
     }
@@ -110,7 +110,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     private function _goto($id)
     {
         if(!isset($this->_positions[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
+            throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
         $pos = $this->_positions[$id - 1];
@@ -180,7 +180,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
         }
 
         // TODO: check for number or mime type
-        throw new Zend_Mail_Exception('part not found');
+        throw new Zend_Mail_Storage_Exception('part not found');
     }
 
     /**
@@ -189,12 +189,12 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      *   - filename filename of mbox file
      *
      * @param  $params              array mail reader specific parameters
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
     {
         if (!isset($params['filename']) /* || Zend::isReadable($params['filename']) */) {
-            throw new Zend_Mail_Exception('no valid filename given in params');
+            throw new Zend_Mail_Storage_Exception('no valid filename given in params');
         }
 
         $this->_openMboxFile($params['filename']);
@@ -239,7 +239,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      * open given file as current mbox file
      *
      * @param string $filename filename of mbox file
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     protected function _openMboxFile($filename)
     {
@@ -249,14 +249,14 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
 
         $this->_fh = @fopen($filename, 'r');
         if (!$this->_fh) {
-            throw new Zend_Mail_Exception('cannot open mbox file');
+            throw new Zend_Mail_Storage_Exception('cannot open mbox file');
         }
         $this->_filename = $filename;
         $this->_filemtime = filemtime($this->_filename);
 
         if(!$this->_isMboxFile($this->_fh, false)) {
             @fclose($this->_fh);
-            throw new Zend_Mail_Exception('file is not a valid mbox format');
+            throw new Zend_Mail_Storage_Exception('file is not a valid mbox format');
         }
 
         $messagePos = array(ftell($this->_fh), 0);
@@ -301,7 +301,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function removeMessage($id)
     {
-        throw new Zend_Mail_Exception('mbox is read-only');
+        throw new Zend_Mail_Storage_Exception('mbox is read-only');
     }
 
     /**
@@ -330,7 +330,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
         } else {
             $this->_fh = @fopen($this->_filename, 'r');
             if (!$this->_fh) {
-                throw new Zend_Mail_Exception('cannot open mbox file');
+                throw new Zend_Mail_Storage_Exception('cannot open mbox file');
             }
         }
     }

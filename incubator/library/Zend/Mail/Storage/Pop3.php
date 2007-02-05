@@ -19,9 +19,9 @@
 
 
 /**
- * Zend_Mail_Abstract
+ * Zend_Mail_Storage_Abstract
  */
-require_once 'Zend/Mail/Abstract.php';
+require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
  * Zend_Mail_Transport_Pop3
@@ -34,16 +34,16 @@ require_once 'Zend/Mail/Transport/Pop3.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend_Mail_Storage_Exception
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend/Mail/Storage/Exception.php';
 
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Pop3 extends Zend_Mail_Abstract
+class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
 {
     private $_protocol;
 
@@ -55,12 +55,12 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
      *
      * @param int filter by flags
      * @return int number of messages
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function countMessages($flags = null)
     {
         if($flags) {
-            throw new Zend_Mail_Exception('POP3 does not support flags');
+            throw new Zend_Mail_Storage_Exception('POP3 does not support flags');
         }
         $this->_protocol->status($count, $null);
         return (int)$count;
@@ -112,7 +112,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
         }
 
         // TODO: check for number or mime type
-        throw new Zend_Mail_Exception('part not found');
+        throw new Zend_Mail_Storage_Exception('part not found');
     }
 
 
@@ -127,7 +127,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
      *   - ssl 'SSL' or 'TLS' for secure sockets
      *
      * @param  $params array  mail reader specific parameters
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
     {
@@ -139,7 +139,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
         }
 
         if(!isset($params['user'])) {
-            throw new Zend_Mail_Exception('need at least user in params');
+            throw new Zend_Mail_Storage_Exception('need at least user in params');
         }
 
         $params['host']     = isset($params['host'])     ? $params['host']     : 'localhost';
@@ -201,7 +201,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
      * Special handling for hasTop. The headers of the first message is
      * retrieved if Top wasn't needed/tried yet.
      *
-     * @see Zend_Mail_Abstract:__get()
+     * @see Zend_Mail_Storage_Abstract:__get()
      */
     public function __get($var)
     {

@@ -8,9 +8,9 @@
 
 
 /**
- * Zend_Mail_Folder_Mbox
+ * Zend_Mail_Storage_Folder_Mbox
  */
-require_once 'Zend/Mail/Folder/Mbox.php';
+require_once 'Zend/Mail/Storage/Folder/Mbox.php';
 
 /**
  * PHPUnit test case
@@ -37,7 +37,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function testLoadOk()
     {
         try {
-            $mail = new Zend_Mail_Folder_Mbox($this->_params);
+            $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         } catch (Exception $e) {
             $this->fail('exception raised while loading mbox folder');
         }
@@ -46,7 +46,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function testNoParams()
     {
         try {
-            $mail = new Zend_Mail_Folder_Mbox(array());
+            $mail = new Zend_Mail_Storage_Folder_Mbox(array());
         } catch (Exception $e) {
             return; // test ok
         }
@@ -58,7 +58,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         try {
             // filename is not allowed in this subclass
-            $mail = new Zend_Mail_Folder_Mbox(array('filename' => 'foobar'));
+            $mail = new Zend_Mail_Storage_Folder_Mbox(array('filename' => 'foobar'));
         } catch (Exception $e) {
             return; // test ok
         }
@@ -69,7 +69,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function testLoadFailure()
     {
         try {
-            $mail = new Zend_Mail_Folder_Mbox(array('rootdir' => 'This/Folder/Does/Not/Exist'));
+            $mail = new Zend_Mail_Storage_Folder_Mbox(array('rootdir' => 'This/Folder/Does/Not/Exist'));
         } catch (Exception $e) {
             return; // test ok
         }
@@ -81,7 +81,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $this->_params['folder'] = 'UnknownFolder';
         try {
-            $mail = new Zend_Mail_Folder_Mbox($this->_params);
+            $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         } catch (Exception $e) {
             return; // test ok
         }
@@ -91,7 +91,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testChangeFolder()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
             $mail->selectFolder('/subfolder/test.mbox');
         } catch (Exception $e) {
@@ -103,7 +103,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testChangeFolderUnselectable()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
             $mail->selectFolder('/subfolder');
         } catch (Exception $e) {
@@ -115,7 +115,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testUnknownFolder()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
             $mail->selectFolder('/Unknown/Folder/');
         } catch (Exception $e) {
@@ -127,7 +127,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testGlobalName()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
             $this->assertEquals((string)$mail->getFolders()->subfolder, '/subfolder');
         } catch (Exception $e) {
@@ -137,7 +137,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testLocalName()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
             $this->assertEquals($mail->getFolders()->subfolder->key(), 'test.mbox');
         } catch (Exception $e) {
@@ -147,7 +147,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testIterator()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
         $search_folders = array('/subfolder'           => 'subfolder',
@@ -168,7 +168,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testKeyLocalName()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
         $search_folders = array('/subfolder'           => 'subfolder',
@@ -189,7 +189,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testSelectable()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
 
         foreach($iterator as $localName => $folder) {
@@ -200,7 +200,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testCount()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
 
         $count = $mail->countMessages();
         $this->assertEquals(5, $count);
@@ -212,7 +212,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testSize()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $shouldSizes = array(1 => 397, 89, 694, 452, 497);
 
         $sizes = $mail->getSize();
@@ -225,7 +225,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testFetchHeader()
     {
-        $mail = new Zend_Mail_Folder_Mbox($this->_params);
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
 
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);

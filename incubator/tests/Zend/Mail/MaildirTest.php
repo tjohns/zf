@@ -8,9 +8,9 @@
 
 
 /**
- * Zend_Mail_Maildir
+ * Zend_Mail_Storage_Maildir
  */
-require_once 'Zend/Mail/Maildir.php';
+require_once 'Zend/Mail/Storage/Maildir.php';
 
 /**
  * PHPUnit test case
@@ -35,7 +35,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testLoadOk()
     {
         try {
-            $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+            $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
         } catch (Exception $e) {
             $this->fail('exception raised while loading maildir');
         }
@@ -44,7 +44,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testLoadFailure()
     {
         try {
-            $mail = new Zend_Mail_Maildir(array('dirname' => '/This/Dir/Does/Not/Exist'));
+            $mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/This/Dir/Does/Not/Exist'));
         } catch (Exception $e) {
             return; // test ok
         }
@@ -55,7 +55,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testLoadInvalid()
     {
         try {
-            $mail = new Zend_Mail_Maildir(array('dirname' => dirname(__FILE__)));
+            $mail = new Zend_Mail_Storage_Maildir(array('dirname' => dirname(__FILE__)));
         } catch (Exception $e) {
             return; // test ok
         }
@@ -65,7 +65,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testClose()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         try {
             $mail->close();
@@ -76,21 +76,21 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testHasTop()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $this->assertTrue($mail->hasTop);
     }
 
     public function testHasCreate()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $this->assertFalse($mail->hasCreate);
     }
 
     public function testNoop()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         try {
             $mail->noop();
@@ -101,7 +101,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testCount()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $count = $mail->countMessages();
         $this->assertEquals(5, $count);
@@ -109,7 +109,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testSize()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
         $shouldSizes = array(1 => 397, 89, 694, 452, 497);
 
 
@@ -119,7 +119,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testSingleSize()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $size = $mail->getSize(2);
         $this->assertEquals(89, $size);
@@ -127,7 +127,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testFetchHeader()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
@@ -136,7 +136,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 /*
     public function testFetchTopBody()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $content = $mail->getHeader(3, 1)->getContent();
         $this->assertEquals('Fair river! in thy bright, clear flow', trim($content));
@@ -144,7 +144,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 */
     public function testFetchMessageHeader()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
@@ -152,7 +152,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testFetchMessageBody()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         $content = $mail->getMessage(3)->getContent();
         list($content, ) = explode("\n", $content, 2);
@@ -161,7 +161,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testFetchWrongSize()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         try {
             $mail->getSize(0);
@@ -174,7 +174,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testFetchWrongMessageBody()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         try {
             $mail->getMessage(0);
@@ -187,7 +187,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
     public function testFailedRemove()
     {
-        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
 
         try {
             $mail->removeMessage(1);

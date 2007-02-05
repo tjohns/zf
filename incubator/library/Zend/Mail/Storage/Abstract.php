@@ -20,14 +20,14 @@
 /**
  * Zend_Mail_Exception
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend/Mail/Storage/Exception.php';
 
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIterator
+abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, SeekableIterator
 {
     /**
      * class capabilities with default values
@@ -67,7 +67,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
             return isset($this->_has[$var]) ? $this->_has[$var] : null;
         }
 
-        throw new Zend_Mail_Exception($var . ' not found');
+        throw new Zend_Mail_Storage_Exception($var . ' not found');
     }
 
 
@@ -87,7 +87,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      * Flags might not be supported by all mail libs (exceptions is thrown)
      *
      * @param  int $flags  filter by flags
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      * @return int number of messages
      */
     abstract public function countMessages($flags = null);
@@ -118,7 +118,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
      * Create instance with parameters
      *
      * @param  array $params  mail reader specific parameters
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     abstract public function __construct($params);
 
@@ -174,7 +174,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
             if ($this->getMessage($id)) {
                 return true;
             }
-        } catch(Zend_Mail_Exception $e) {}
+        } catch(Zend_Mail_Storage_Exception $e) {}
 
         return false;
      }
@@ -197,12 +197,12 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       * @internal
       * @param    id     $id
       * @param    mixed  $value
-      * @throws   Zend_Mail_Exception
+      * @throws   Zend_Mail_Storage_Exception
       * @return   void
       */
      public function offsetSet($id, $value)
      {
-        throw new Zend_Mail_Exception('cannot write mail messages via array access');
+        throw new Zend_Mail_Storage_Exception('cannot write mail messages via array access');
      }
 
 

@@ -19,9 +19,9 @@
 
 
 /**
- * Zend_Mail_Abstract
+ * Zend_Mail_Storage_Abstract
  */
-require_once 'Zend/Mail/Abstract.php';
+require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
  * Zend_Mail_Message
@@ -29,9 +29,9 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend_Mail_Storage_Exception
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend/Mail/Storage/Exception.php';
 
 
 /**
@@ -39,7 +39,7 @@ require_once 'Zend/Mail/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Maildir extends Zend_Mail_Abstract
+class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 {
     private $_files = array();
     private static $_knownFlags = array('P' => 'Passed',
@@ -54,7 +54,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      * Flags are not supported (exceptions is thrown)
      *
      * @param  int $flags           filter by flags
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      * @return int                  number of messages
      */
     public function countMessages($flags = null)
@@ -74,7 +74,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
         if($id !== null) {
             if(!isset($this->_files[$id - 1])) {
-                throw new Zend_Mail_Exception('id does not exist');
+                throw new Zend_Mail_Storage_Exception('id does not exist');
              }
             return filesize($this->_files[$id - 1]['filename']);
         }
@@ -103,7 +103,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function getRaw($id, $part)
     {
         if(!isset($this->_files[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
+            throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
         $fh = fopen($this->_files[$id - 1]['filename'], 'r');
@@ -141,7 +141,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
         }
 
         // TODO: check for number or mime type
-        throw new Zend_Mail_Exception('part not found');
+        throw new Zend_Mail_Storage_Exception('part not found');
     }
 
     /**
@@ -150,16 +150,16 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      *   - filename filename of mbox file
      *
      * @param  $params              array mail reader specific parameters
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
     {
         if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
-            throw new Zend_Mail_Exception('no valid dirname given in params');
+            throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
         if(!$this->_isMaildir($params['dirname'])) {
-            throw new Zend_Mail_Exception('invalid maildir given');
+            throw new Zend_Mail_Storage_Exception('invalid maildir given');
         }
 
         $this->_has['top'] = true;
@@ -181,7 +181,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      * open given dir as current maildir
      *
      * @param string $dirname name of maildir
-     * @throws Zend_Mail_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     protected function _openMaildir($dirname)
     {
@@ -191,7 +191,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
         $dh = @opendir($dirname . '/cur/');
         if(!$dh) {
-            throw new Zend_Mail_Exception('cannot open maildir');
+            throw new Zend_Mail_Storage_Exception('cannot open maildir');
         }
         while(($entry = readdir($dh)) !== false) {
             if($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
@@ -246,7 +246,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      */
     public function removeMessage($id)
     {
-        throw new Zend_Mail_Exception('maildir is (currently) read-only');
+        throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
     }
 
 }

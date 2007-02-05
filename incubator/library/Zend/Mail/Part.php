@@ -67,7 +67,7 @@ class Zend_Mail_Part
     public function __construct(array $params)
     {
         if(isset($params['handler'])) {
-            if(!$params['handler'] instanceof Zend_Mail_Abstract) {
+            if(!$params['handler'] instanceof Zend_Mail_Storage_Abstract) {
                 throw new Zend_Mail_Exception('handler is not a valid mail handler');
             }
             if(!isset($params['id'])) {
