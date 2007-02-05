@@ -32,7 +32,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                    	Notes: Get, Create
+                    	Notes: Get, Create, Delete
                     </para>
                 </listitem>
                 <listitem>
@@ -144,7 +144,7 @@
 				$simpy->deleteLink('http://framework.zend.com');
 				
 				/* A really easy way to do spring cleaning on your links ;) */
-				$linkSet = $this->_simpy->getLinks(new Zend_Service_Simpy_LinkQuery());
+				$linkSet = $this->_simpy->getLinks();
 		        foreach ($linkSet as $link) {
 		            $this->_simpy->deleteLink($link->getUrl());
 		        }				
@@ -206,10 +206,8 @@
     <sect2 id="zend.service.simpy.notes">
         <title>Notes</title>
 		<para>
-			At the present time, notes can only be saved and retrieved. The 
-			lead developer of Simpy has communicated via the developer 
-			mailing list that the lack of a method to delete notes was an 
-			oversight on his part and should be added in the near future.
+			Notes can be saved, retrieved, and deleted. They are uniquely 
+			identified by a numeric ID value.
 		</para>
 		<example>
 			<title>Working With Notes</title>
@@ -244,7 +242,10 @@
 				
 				/* Search for all notes with 'PHP' in the title and 
 				without 'framework' in the description */
-				$noteSet = $simpy->getNotes('+title:PHP -description:framework');				
+				$noteSet = $simpy->getNotes('+title:PHP -description:framework');
+				
+				/* Delete a note */
+				$simpy->deleteNote($note->getId());				
 				]]>
 			</programlisting>
 		</example>
