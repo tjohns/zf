@@ -66,7 +66,7 @@
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $index->find($query);
 
@@ -174,7 +174,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
 
@@ -203,7 +203,7 @@ foreach ($hits as $hit) {
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
 foreach ($hits as $hit) {
