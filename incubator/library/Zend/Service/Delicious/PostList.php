@@ -81,7 +81,7 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
     private function _constructFromArray($postList)
     {
         foreach ($postList as $f_post) {
-	        $this->_addPost(new Zend_Service_Delicious_SimplePost($f_post));
+            $this->_addPost(new Zend_Service_Delicious_SimplePost($f_post));
         }
     }
     /**

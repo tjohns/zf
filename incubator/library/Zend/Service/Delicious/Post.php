@@ -19,6 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Date
+ */
+include_once 'Zend/Date.php';
+
 
 /**
  * Zend_Service_Delicious is a concrete implementation of the del.icio.us web service
@@ -132,6 +137,19 @@ class Zend_Service_Delicious_Post extends Zend_Service_Delicious_SimplePost {
         return $this;
     }
     /**
+     * Remove a tag
+     *
+     * @param string $tag
+     * @return Zend_Service_Delicious_Post
+     */
+    public function removeTag($tag)
+    {
+        $this->_tags = array_diff($this->_tags, array((string) $tag));
+
+        return $this;
+    }
+    
+    /**
      * Getter for date
      *
      * @return Zend_Date
@@ -139,18 +157,6 @@ class Zend_Service_Delicious_Post extends Zend_Service_Delicious_SimplePost {
     public function getDate()
     {
         return $this->_date;
-    }
-    /**
-     * Setter for date
-     *
-     * @param Zend_Date $date
-     * @return Zend_Service_Delicious_Post
-     */
-    public function setDate(Zend_Date $date)
-    {
-        $this->_date = $date;
-
-        return $this;
     }
     /**
      * Getter for others
@@ -213,9 +219,11 @@ class Zend_Service_Delicious_Post extends Zend_Service_Delicious_SimplePost {
             'tags'       => implode(' ', (array) $this->_tags),
             'replace'    => 'yes'
         );
+        /*
         if ($this->_date instanceof Zend_Date) {
             $parms['dt'] = $this->_date->get('Y-m-d\TH:i:s\Z');
         }
+        */
 
         return $this->_service->makeRequest(Zend_Service_Delicious::PATH_POSTS_ADD, $parms);
     }
@@ -228,7 +236,7 @@ class Zend_Service_Delicious_Post extends Zend_Service_Delicious_SimplePost {
             'url'   => $node->getAttribute('href'),
             'title' => $node->getAttribute('description'),
             'notes' => $node->getAttribute('extended'),
-            'others'=> $node->getAttribute('others'),
+            'others'=> (int) $node->getAttribute('others'),
             'tags'  => explode(' ', $node->getAttribute('tag')),
             /* @todo replace strtotime() with Zend_Date equivalent */
             'date'  => new Zend_Date(strtotime($node->getAttribute('time'))),

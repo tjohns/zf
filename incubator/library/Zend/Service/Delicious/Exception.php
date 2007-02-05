@@ -19,6 +19,18 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Service_Exception
+ */
+include_once 'Zend/Service/Exception.php';
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Service
+ * @subpackage Delicious
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Service_Delicious_Exception extends Zend_Service_Exception
 {}

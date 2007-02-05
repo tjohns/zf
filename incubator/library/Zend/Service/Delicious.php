@@ -20,9 +20,9 @@
  */
 
 /**
- * Zend_Http_Client
+ * Zend_Service_Rest
  */
-include_once 'Zend/Http/Client.php';
+include_once 'Zend/Service/Rest.php';
 
 /**
  * Zend_Json
@@ -30,9 +30,9 @@ include_once 'Zend/Http/Client.php';
 include_once 'Zend/Json.php';
 
 /**
- * Zend_Service_Exception
+ * Zend_Service_Delicious_Exception
  */
-include_once 'Zend/Service/Exception.php';
+include_once 'Zend/Service/Delicious/Exception.php';
 
 /**
  * Zend_Service_Delicious_SimplePost
@@ -82,11 +82,23 @@ class Zend_Service_Delicious
     const JSON_FANS    = '/feeds/json/fans/%s';
 
     /**
-     * Zend_Http_Client instance
+     * Zend_Service_Rest instance
      *
-     * @var Zend_Http_Client
+     * @var Zend_Service_Rest
      */
-    protected $_http;
+    protected $_rest;
+    /**
+     * Username
+     *
+     * @var string
+     */
+    protected $_auth_uname;
+    /**
+     * Password
+     *
+     * @var string
+     */
+    protected $_auth_pass;
     /**
      * Microtime of last request
      *
@@ -103,7 +115,8 @@ class Zend_Service_Delicious
      */
     public function __construct($uname = null, $pass = null)
     {
-        $this->_http = new Zend_Http_Client();
+        $this->_rest = new Zend_Service_Rest();
+        $this->_rest->getHttpClient()->setConfig(array('ssltransport'=>'ssl'));
         $this->setAuth($uname, $pass);
     }
     /**
@@ -115,7 +128,8 @@ class Zend_Service_Delicious
      */
     public function setAuth($uname, $pass)
     {
-        $this->_http->setAuth($uname, $pass);
+        $this->_auth_uname = $uname;
+        $this->_auth_pass = $pass;
     }
     /**
      * Get time of the last update
@@ -155,7 +169,7 @@ class Zend_Service_Delicious
      */
     public function renameTag($old, $new)
     {
-        $response = $this->makeRequest(self::PATH_TAG_RENAME, array('old'=>$old,'new'=>$new));
+        $response = $this->makeRequest(self::PATH_TAG_RENAME, array('old' => $old, 'new' => $new));
 
         return self::_evalXmlResult($response);
     }
@@ -179,7 +193,7 @@ class Zend_Service_Delicious
      * Adds a new bundle
      *
      * @param string $bundle Name of new bundle
-     * @param array $tags Array of tags separated by spaces
+     * @param array $tags Array of tags
      */
     public function addBundle($bundle, $tags)
     {
@@ -220,7 +234,9 @@ class Zend_Service_Delicious
     public function getDates($tag = null)
     {
         $parms = array();
-        if($tag) $parms['tag'] = $tag;
+        if($tag) {
+            $parms['tag'] = $tag;
+        }
 
         $response = $this->makeRequest(self::PATH_DATES, $parms);
 
@@ -237,8 +253,12 @@ class Zend_Service_Delicious
     public function getPosts($tag = null, $dt = null, $url = null)
     {
         $parms = array();
-        if ($tag) $parms['tag'] = $tag;
-        if ($url) $parms['url'] = $url;
+        if ($tag) {
+            $parms['tag'] = $tag;
+        }
+        if ($url) {
+            $parms['url'] = $url;
+        }
         if ($dt) {
             if (!$dt instanceof Zend_Date) {
                 throw new Zend_Service_Delicious_Exception('Second argument has to be a instance of Zend_Date');
@@ -259,7 +279,9 @@ class Zend_Service_Delicious
     public function getAllPosts($tag = null)
     {
         $parms = array();
-        if ($tag) $parms['tag'] = $tag;
+        if ($tag) {
+            $parms['tag'] = $tag;
+        }
 
         $response = $this->makeRequest(self::PATH_POSTS_ALL, $parms);
 
@@ -276,8 +298,12 @@ class Zend_Service_Delicious
     public function getRecentPosts($tag = null, $count = 15)
     {
         $parms = array();
-        if ($tag) $parms['tag'] = $tag;
-        if ($count) $parms['count'] = $count;
+        if ($tag) {
+            $parms['tag'] = $tag;
+        }
+        if ($count) {
+            $parms['count'] = $count;
+        }
 
         $response = $this->makeRequest(self::PATH_POSTS_RECENT, $parms);
 
@@ -303,7 +329,9 @@ class Zend_Service_Delicious
     public function getUserPosts($user, $count = null, $tag = null)
     {
         $parms = array();
-        if ($count) $parms['count'] = $count;
+        if ($count) {
+            $parms['count'] = $count;
+        }
 
         $path = sprintf(self::JSON_POSTS, $user, $tag);
         $res = $this->makeRequest($path, $parms, 'json');
@@ -375,27 +403,23 @@ class Zend_Service_Delicious
         if ($timeDiff < 1) {
             usleep((1 - $timeDiff) * 1000000);
         }
-
-        $this->_http->resetParameters();
-
-        foreach ($parms as $f_parm => $f_value) {
-            $this->_http->setParameterGet($f_parm, $f_value);
-        }
+        
+        $this->_rest->getHttpClient()->setAuth($this->_auth_uname, $this->_auth_pass);
 
         switch ($type) {
             case 'xml':
-                $this->_http->setUri(self::API_URI.$path);
+                $this->_rest->setUri(self::API_URI);
                 break;
             case 'json':
-                $this->_http->setUri(self::JSON_URI.$path);
-                $this->_http->setParameterGet('raw', true);
+                $parms['raw'] = true;
+                $this->_rest->setUri(self::JSON_URI);
                 break;
             default:
                 throw new Zend_Service_Delicious_Exception('Unknown request type');
         }
 
         self::$_lastRequestTime = microtime(true);
-        $response = $this->_http->request(Zend_Http_Client::GET);
+        $response = $this->_rest->restGet($path, $parms);
 
         if (!$response->isSuccessful()) {
             throw new Zend_Service_Delicious_Exception("Http client reported an error: '{$response->getMessage()}'");
