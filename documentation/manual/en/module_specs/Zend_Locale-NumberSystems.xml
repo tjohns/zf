@@ -3,7 +3,7 @@
     <title>Numeral System Conversion</title>
 
     <para>
-        <code>Zend_Locale_Format::toNumberSystem()</code> converts digits between different
+        <code>Zend_Locale_Format::convertNumerals()</code> converts digits between different
         <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">numeral systems</ulink>
         , including the standard Arabic/European numeral system (0,1,2,3,4,5,6,7,8,9), not to be confused with
         <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Eastern Arabic numerals</ulink>
@@ -16,18 +16,18 @@
     <para>
         Suppose a web form collected a numeric input expressed using arabic digits "١‎٠٠". Most software and PHP
         functions expect input using Arabic numerals. Fortunately, converting this input to it's equivalent Arabic
-        numerals "100" requires little effort using <code>toNumberSystem($input, $sourceNumeralSystem,
+        numerals "100" requires little effort using <code>convertNumerals($inputNumeralString, $sourceNumeralSystem,
         $destNumeralSystem)</code>, which returns the <code>$input</code> with numerals in
         <code>$sourceNumeralSystem</code> converted to <code>$destNumeralSystem</code>.
     </para>
 
     <example>
-        <title>Converting numerals to Arabic/European</title>
+        <title>Converting numerals from Arabic to European/Latin</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $string = "١‎٠٠";   // Arabic for 100
-$normal = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Euro');
+$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Default');
 
 print "\nOriginal: ".$string;
 print "\nNormalized:".$normal;
@@ -39,12 +39,12 @@ print "\nNormalized:".$normal;
     </para>
 
     <example>
-        <title>Converting numerals from Arabic/European</title>
+        <title>Converting numerals from European/Latin to Arabic</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $string = '123';
-$local = Zend_Locale_Format::toNumberSystem($string, 'Euro', 'Arab');
+$local = Zend_Locale_Format::convertNumerals($string, 'Default', 'Arab');
 
 print "\nOriginal: ".$string;
 print "\nLocalize:".$local;
