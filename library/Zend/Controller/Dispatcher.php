@@ -203,7 +203,7 @@ class Zend_Controller_Dispatcher extends Zend_Controller_Dispatcher_Abstract
      * Attempts to load the controller class file from {@link getControllerDirectory()}.
      *
      * @param string $className 
-     * @return void
+     * @return string Class name loaded
      */
     public function loadClass($className)
     {
