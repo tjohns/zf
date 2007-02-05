@@ -175,31 +175,6 @@ class Zend_Measure_Cooking_VolumeTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testCooking_VolumeSerialize()
-    {
-        $value = new Zend_Measure_Cooking_Volume('string -100.100,200',Zend_Measure_Cooking_Volume::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Cooking_Volume not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testCooking_VolumeUnSerialize()
-    {
-        $value = new Zend_Measure_Cooking_Volume('string -100.100,200',Zend_Measure_Cooking_Volume::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Cooking_Volume not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

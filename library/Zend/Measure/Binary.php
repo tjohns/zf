@@ -78,7 +78,7 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
     const YOTTA_BINARY_BYTE= 'YOTTA_BINARY_BYTE';
     const YOTTABYTE_SI     = 'YOTTABYTE_SI';
 
-    private static $_UNITS = array(
+    protected $_UNITS = array(
         'BIT'              => array('0.125',                     'b'),
         'CRUMB'            => array('0.25',                      'crumb'),
         'NIBBLE'           => array('0.5',                       'nibble'),
@@ -114,135 +114,7 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
         'YOTTABYTE'        => array('1208925819614629174706176', 'YB'),
         'YOBIBYTE'         => array('1208925819614629174706176', 'YiB'),
         'YOTTA_BINARY_BYTE'=> array('1208925819614629174706176', 'YiB'),
-        'YOTTABYTE_SI'     => array('1000000000000000000000000', 'YB.')
+        'YOTTABYTE_SI'     => array('1000000000000000000000000', 'YB.'),
+        'STANDARD'         => 'BYTE'
     );
-
-    private $_Locale = null;
-
-    /**
-     * Zend_Measure_Binary provides an locale aware class for
-     * conversion and formatting of Binary values
-     *
-     * Zend_Measure $input can be a locale based input string
-     * or a value. $locale can be used to define that the
-     * input is made in a different language than the actual one.
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Binary Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function __construct($value, $type = null, $locale = null)
-    {
-        $this->setValue($value, $type, $locale);
-    }
-
-
-    /**
-     * Compare if the value and type is equal
-     *
-     * @param  Zend_Measure_Binary  $object  Binary object to compare
-     * @return boolean
-     */
-    public function equals($object)
-    {
-        if ($object->toString() == $this->toString()) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Set a new value
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Binary Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function setValue($value, $type = null, $locale = null)
-    {
-        if ($locale === null) {
-            $locale = $this->_Locale;
-        }
-
-        if (!$locale = Zend_Locale::isLocale($locale, true)) {
-            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
-        }
-
-        if ($type === null) {
-            $type = self::STANDARD;
-        }
-
-        try {
-            $value = Zend_Locale_Format::getNumber($value, $locale);
-        } catch(Exception $e) {
-            throw new Zend_Measure_Exception($e->getMessage());
-        }
-
-        if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown binary");
-        }
-
-        parent::setValue($value, $type, $locale);
-        parent::setType( $type );
-    }
-
-
-    /**
-     * Set a new type, and convert the value
-     *
-     * @param  string  $type  New type to set
-     * @throws Zend_Measure_Exception
-     */
-    public function setType($type)
-    {
-        if (empty( self::$_UNITS[$type] )) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown binary");
-        }
-
-        // Convert to standard value
-        $value = parent::getValue();
-        $value = call_user_func(Zend_Locale_Math::$mul, $value, self::$_UNITS[parent::getType()][0], 25);
-
-        // Convert to expected value
-        $value = call_user_func(Zend_Locale_Math::$div, $value, self::$_UNITS[$type][0]);
-        parent::setValue($value, $type, $this->_Locale);
-        parent::setType( $type );
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
-
-
-    /**
-     * Returns the conversion list
-     * 
-     * @return array
-     */
-    public function getConversionList()
-    {
-        return self::$_UNITS;
-    }
 }

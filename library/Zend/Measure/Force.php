@@ -79,7 +79,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
     const ZEPTONEWTON     = 'ZEPTONEWTON';
     const ZETTANEWTON = 'ZETTANEWTON';
 
-    private static $_UNITS = array(
+    protected $_UNITS = array(
         'ATTONEWTON'      => array(1.0e-18,     'aN'),
         'CENTINEWTON'     => array(0.01,        'cN'),
         'DECIGRAM_FORCE'  => array(0.000980665, 'dgf'),
@@ -117,135 +117,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
         'YOCTONEWTON'     => array(1.0e-24,     'yN'),
         'YOTTANEWTON'     => array(1.0e+24,     'YN'),
         'ZEPTONEWTON'     => array(1.0e-21,     'zN'),
-        'ZETTANEWTON'     => array(1.0e+21,     'ZN')
+        'ZETTANEWTON'     => array(1.0e+21,     'ZN'),
+        'STANDARD'        => 'NEWTON'
     );
-
-    private $_Locale = null;
-
-    /**
-     * Zend_Measure_Force provides an locale aware class for
-     * conversion and formatting of force values
-     *
-     * Zend_Measure $input can be a locale based input string
-     * or a value. $locale can be used to define that the
-     * input is made in a different language than the actual one.
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Force Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function __construct($value, $type = null, $locale = null)
-    {
-        $this->setValue($value, $type, $locale);
-    }
-
-
-    /**
-     * Compare if the value and type is equal
-     *
-     * @param  Zend_Measure_Force  $object  Force object to compare
-     * @return boolean
-     */
-    public function equals($object)
-    {
-        if ($object->toString() == $this->toString()) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Set a new value
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Force Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function setValue($value, $type = null, $locale = null)
-    {
-        if ($locale === null) {
-            $locale = $this->_Locale;
-        }
-
-        if (!$locale = Zend_Locale::isLocale($locale, true)) {
-            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
-        }
-
-        if ($type === null) {
-            $type = self::STANDARD;
-        }
-
-        try {
-            $value = Zend_Locale_Format::getNumber($value, $locale);
-        } catch(Exception $e) {
-            throw new Zend_Measure_Exception($e->getMessage());
-        }
-
-        if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown force");
-        }
-
-        parent::setValue($value, $type, $locale);
-        parent::setType($type);
-    }
-
-
-    /**
-     * Set a new type, and convert the value
-     *
-     * @param  string  $type  New type to set
-     * @throws Zend_Measure_Exception
-     */
-    public function setType($type)
-    {
-        if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown force");
-        }
-
-        // Convert to standard value
-        $value = parent::getValue();
-        $value = $value * (self::$_UNITS[parent::getType()][0]);
-
-        // Convert to expected value
-        $value = $value / (self::$_UNITS[$type][0]);
-        parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
-
-
-    /**
-     * Returns the conversion list
-     * 
-     * @return array
-     */
-    public function getConversionList()
-    {
-        return self::$_UNITS;
-    }
 }

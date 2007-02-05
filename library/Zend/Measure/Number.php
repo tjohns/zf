@@ -40,34 +40,35 @@ require_once 'Zend/Locale.php';
 class Zend_Measure_Number extends Zend_Measure_Abstract
 {
     // Number definitions
-    const STANDARD = 'Number::DECIMAL';
+    const STANDARD = 'DECIMAL';
 
-    const BINARY      = 'Number::BINARY';
-    const TERNARY     = 'Number::TERNARY';
-    const QUATERNARY  = 'Number::QUATERNARY';
-    const QUINARY     = 'Number::QUINARY';
-    const SENARY      = 'Number::SENARY';
-    const SEPTENARY   = 'Number::SEPTENARY';
-    const OCTAL       = 'Number::OCTAL';
-    const NONARY      = 'Number::NONARY';
-    const DECIMAL     = 'Number::DECIMAL';
-    const DUODECIMAL  = 'Number::DUODECIMAL';
-    const HEXADECIMAL = 'Number::HEXADECIMAL';
-    const ROMAN       = 'Number::ROMAN';
+    const BINARY      = 'BINARY';
+    const TERNARY     = 'TERNARY';
+    const QUATERNARY  = 'QUATERNARY';
+    const QUINARY     = 'QUINARY';
+    const SENARY      = 'SENARY';
+    const SEPTENARY   = 'SEPTENARY';
+    const OCTAL       = 'OCTAL';
+    const NONARY      = 'NONARY';
+    const DECIMAL     = 'DECIMAL';
+    const DUODECIMAL  = 'DUODECIMAL';
+    const HEXADECIMAL = 'HEXADECIMAL';
+    const ROMAN       = 'ROMAN';
 
-    private static $_UNITS = array(
-        'Number::BINARY'      => array(2,  '⑵'),
-        'Number::TERNARY'     => array(3,  '⑶'),
-        'Number::QUATERNARY'  => array(4,  '⑷'),
-        'Number::QUINARY'     => array(5,  '⑸'),
-        'Number::SENARY'      => array(6,  '⑹'),
-        'Number::SEPTENARY'   => array(7,  '⑺'),
-        'Number::OCTAL'       => array(8,  '⑻'),
-        'Number::NONARY'      => array(9,  '⑼'),
-        'Number::DECIMAL'     => array(10, '⑽'),
-        'Number::DUODECIMAL'  => array(12, '⑿'),
-        'Number::HEXADECIMAL' => array(16, '⒃'),
-        'Number::ROMAN'       => array(99, '')
+    protected $_UNITS = array(
+        'BINARY'      => array(2,  '⑵'),
+        'TERNARY'     => array(3,  '⑶'),
+        'QUATERNARY'  => array(4,  '⑷'),
+        'QUINARY'     => array(5,  '⑸'),
+        'SENARY'      => array(6,  '⑹'),
+        'SEPTENARY'   => array(7,  '⑺'),
+        'OCTAL'       => array(8,  '⑻'),
+        'NONARY'      => array(9,  '⑼'),
+        'DECIMAL'     => array(10, '⑽'),
+        'DUODECIMAL'  => array(12, '⑿'),
+        'HEXADECIMAL' => array(16, '⒃'),
+        'ROMAN'       => array(99, ''),
+        'STANDARD'    => 'DECIMAL'
     );
 
 
@@ -123,46 +124,44 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         '/SU/' => '/Z/'
     );
 
-    private $_Locale;
 
     /**
-     * Zend_Measure_Number provides an locale aware class for
-     * conversion and formatting of number values
-     *
-     * Zend_Measure $input can be a locale based input string
-     * or a value. $locale can be used to define that the
-     * input is made in a different language than the actual one.
+     * Zend_Measure_Abstract is an abstract class for the different measurement types
      *
      * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Number Type
+     * @param  $type   type   - OPTIONAL a Zend_Measure_Area Type
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type = null, $locale = null)
+    public function __construct($value, $type, $locale = null)
     {
-        if (empty($locale)) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
+        if (Zend_Locale::isLocale($type)) {
+            $locale = $type;
+            $type = null;
         }
 
+        if ($locale === null) {
+            $locale = new Zend_Locale();
+        }
+
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
+        }
+
+        if (!$this->_Locale = Zend_Locale::isLocale($locale, true)) {
+            throw new Zend_Measure_Exception("Language ($locale) is unknown");
+        }
+
+        $this->_Locale = $locale;
+
+        if ($type === null) {
+            $type = $this->_UNITS['STANDARD'];
+        }
+
+        if (!array_key_exists($type, $this->_UNITS)) {
+            throw new Zend_Measure_Exception("Type ($type) is unknown");
+        }
         $this->setValue($value, $type, $this->_Locale);
-    }
-
-
-    /**
-     * Compare if the value and type is equal
-     *
-     * @param  $object  object to compare equality
-     * @return boolean
-     */
-    public function equals( $object )
-    {
-        if ($object->toString() == $this->toString()) {
-            return true;
-        }
-
-        return false;
     }
 
 
@@ -180,52 +179,52 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $locale = $this->_Locale;
         }
 
-        if (empty(self::$_UNITS[$type])) {
+        if (empty($this->_UNITS[$type])) {
             throw new Zend_Measure_Exception('unknown type of number:' . $type);
         }
 
         switch( $type ) {
-            case 'Number::BINARY' :
+            case 'BINARY' :
                 preg_match('/[01]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::TERNARY' :
+            case 'TERNARY' :
                 preg_match('/[012]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::QUATERNARY' :
+            case 'QUATERNARY' :
                 preg_match('/[0123]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::QUINARY' :
+            case 'QUINARY' :
                 preg_match('/[01234]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::SENARY' :
+            case 'SENARY' :
                 preg_match('/[012345]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::SEPTENARY' :
+            case 'SEPTENARY' :
                 preg_match('/[0123456]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::OCTAL' :
+            case 'OCTAL' :
                 preg_match('/[01234567]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::NONARY' :
+            case 'NONARY' :
                 preg_match('/[012345678]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::DUODECIMAL' :
+            case 'DUODECIMAL' :
                 preg_match('/[0123456789AB]+/', strtoupper( $value ), $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::HEXADECIMAL' :
+            case 'HEXADECIMAL' :
                 preg_match('/[0123456789ABCDEF]+/', strtoupper( $value ), $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::ROMAN' :
+            case 'ROMAN' :
                 preg_match('/[IVXLCDM_]+/', strtoupper( $value ), $ergebnis);
                 $value = $ergebnis[0];
                 break;
@@ -241,8 +240,8 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 break;
         }
 
-        parent::setValue($value, $type, $locale);
-        parent::setType( $type );
+        $this->_value = $value;
+        $this->_type  = $type;
     }
 
 
@@ -257,7 +256,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     {
         $value = "";
         // Convert base xx values
-        if (self::$_UNITS[$type][0] <= 16) {
+        if ($this->_UNITS[$type][0] <= 16) {
 
             $split = str_split( $input );
             $length = strlen( $input );
@@ -265,12 +264,12 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 $split[$X] = hexdec( $split[$X] );
                 $value = call_user_func(Zend_Locale_Math::$add, $value, 
                             call_user_func(Zend_Locale_Math::$mul, $split[$X], 
-                            call_user_func(Zend_Locale_Math::$pow, self::$_UNITS[$type][0], ($length - $X - 1))));
+                            call_user_func(Zend_Locale_Math::$pow, $this->_UNITS[$type][0], ($length - $X - 1))));
             }
         }
 
         // Convert roman numbers
-        if ($type == 'Number::ROMAN') {
+        if ($type == 'ROMAN') {
 
             $input = strtoupper( $input );
             $input = preg_replace( array_keys(self::$_ROMANCONVERT), array_values(self::$_ROMANCONVERT), $input);
@@ -298,17 +297,17 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      */
     private function fromDecimal($value, $type)
     {
-        if (self::$_UNITS[$type][0] <= 16) {
+        if ($this->_UNITS[$type][0] <= 16) {
             $newvalue = "";
             while(call_user_func(Zend_Locale_Math::$comp, $value, 0) != 0) {
-                $target = call_user_func(Zend_Locale_Math::$mod, $value, self::$_UNITS[$type][0]);
+                $target = call_user_func(Zend_Locale_Math::$mod, $value, $this->_UNITS[$type][0]);
                 $target = strtoupper( dechex($target) );
                 $newvalue = $target . $newvalue;
-                $value = call_user_func(Zend_Locale_Math::$div, $value, self::$_UNITS[$type][0], 0);
+                $value = call_user_func(Zend_Locale_Math::$div, $value, $this->_UNITS[$type][0], 0);
             }
         }
 
-        if ($type == 'Number::ROMAN') {
+        if ($type == 'ROMAN') {
             $i = 0;
             $newvalue = "";
             $romanval = array_values( array_reverse(self::$_ROMAN) );
@@ -337,47 +336,14 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      */
     public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception('unknown type of number:' . $type);
+        if (empty($this->_UNITS[$type])) {
+            throw new Zend_Measure_Exception('Unknown type of number:' . $type);
         }
 
-        $value = $this->toDecimal(parent::getValue(), parent::getType());
+        $value = $this->toDecimal($this->getValue(), $this->getType());
         $value = $this->fromDecimal($value, $type);
 
-        parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return parent::getValue();
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
-
-
-    /**
-     * Returns the conversion list
-     * 
-     * @return array
-     */
-    public function getConversionList()
-    {
-        return self::$_UNITS;
+        $this->_value = $value;
+        $this->_type  = $type;
     }
 }

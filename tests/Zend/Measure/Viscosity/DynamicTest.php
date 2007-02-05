@@ -175,31 +175,6 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testViscosity_DynamicSerialize()
-    {
-        $value = new Zend_Measure_Viscosity_Dynamic('string -100.100,200',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Viscosity_Dynamic not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testViscosity_DynamicUnSerialize()
-    {
-        $value = new Zend_Measure_Viscosity_Dynamic('string -100.100,200',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Viscosity_Dynamic not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

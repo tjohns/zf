@@ -192,31 +192,6 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testWeightSerialize()
-    {
-        $value = new Zend_Measure_Weight('string -100.100,200',Zend_Measure_Weight::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Weight not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testWeightUnSerialize()
-    {
-        $value = new Zend_Measure_Weight('string -100.100,200',Zend_Measure_Weight::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Weight not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

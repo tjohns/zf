@@ -175,31 +175,6 @@ class Zend_Measure_Flow_MassTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testFlow_MassSerialize()
-    {
-        $value = new Zend_Measure_Flow_Mass('string -100.100,200',Zend_Measure_Flow_Mass::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Flow_Mass not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testFlow_MassUnSerialize()
-    {
-        $value = new Zend_Measure_Flow_Mass('string -100.100,200',Zend_Measure_Flow_Mass::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Flow_Mass not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

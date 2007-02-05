@@ -192,31 +192,6 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testFrequencySerialize()
-    {
-        $value = new Zend_Measure_Frequency('string -100.100,200',Zend_Measure_Frequency::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Frequency not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testFrequencyUnSerialize()
-    {
-        $value = new Zend_Measure_Frequency('string -100.100,200',Zend_Measure_Frequency::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Frequency not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

@@ -40,7 +40,8 @@ class Zend_Locale_Format
 {
 
     private static $_signs = array(
-        'Decimal'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Decimal
+        'Default'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Default == Latin
+        'Latin'=> array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Latin == Default
         'Arab' => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669 arabic
         'Deva' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F devanagari
         'Beng' => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF bengali
@@ -68,10 +69,10 @@ class Zend_Locale_Format
      * 'Decimal' representated the stardard numbers 0-9, if a script does not exist
      * an exception will be thrown.
      *
-     * Examples for input:
-     *   toNumberSystem('١١٠ Tests', 'Arab'); -> returns '100 Tests'
-     * Example for not supported script
-     *   toNumberSystem('١١٠ Tests', 'Decimal'); -> returns '100 Tests'
+     * Examples for conversion from Arabic to Latin numerals:
+     *   convertNumerals('١١٠ Tests', 'Arab'); -> returns '100 Tests'
+     * Example for conversion from Latin to Arabic numerals:
+     *   convertNumerals('100 Tests', 'Latin', 'Arab'); -> returns '١١٠ Tests'
      * 
      * @param  string  $input   String to convert
      * @param  string  $locale  Script to parse, see Zend_Locale->getScriptList() for details
@@ -79,13 +80,13 @@ class Zend_Locale_Format
      * @return string  Returns the converted input
      * @throws Zend_Locale_Exception
      */
-    public static function toNumberSystem($input, $from, $to = null)
+    public static function convertNumerals($input, $from, $to = null)
     {
         if (!array_key_exists($from, self::$_signs)) {
-            throw new Zend_Locale_Exception("script ($from) is no known script, use 'Decimal' for 0-9");
+            throw new Zend_Locale_Exception("script ($from) is no known script, use 'Latin' for 0-9");
         }
         if (($to !== null) and (!array_key_exists($to, self::$_signs))) {
-            throw new Zend_Locale_Exception("script ($to) is no known script, use 'Decimal' for 0-9");
+            throw new Zend_Locale_Exception("script ($to) is no known script, use 'Latin' for 0-9");
         }
         
         if (isset(self::$_signs[$from])) {
@@ -176,23 +177,95 @@ class Zend_Locale_Format
      * Returns a locale formatted number
      * 
      * @param  string              $value      Number to localize
-     * @param  integer             $precision  OPTIONAL Precision of a float value, not touched if null
+     * @param  integer             $precision  OPTIONAL Precision of a float value, not touched if null or 0, -1 erased
      * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
      * @return string  locale formatted number
      */
     public static function toNumber($value, $precision = null, $locale = null)
     {
         if (Zend_Locale::isLocale($precision)) {
-            $locale    = $precision;
+            $locale = $precision;
             $precision = null;
+        }
+
+        $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
+        $format  = $format['default'];
+
+        // seperate negative format pattern when avaiable 
+        if (iconv_strpos($format, ';') !== false) {
+            if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
+            } else {
+                $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
+            }
+        }
+
+        if (is_int($precision)) {
+            $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
+            $format = substr($format, 0, strpos($format, '.'));
+            if ((int) $precision > 0) {
+                $format .= ".";
+                $format = str_pad($format, strlen($format) + $precision, "0");
+                $value = round($value, $precision);
+            }
+            if (($rest != '0') and ($rest != '#')) {
+                $format .= $rest;
+            }
+            if ($precision == -1) {
+                $value = round($value);
+            }
+        }
+        
+        return self::toNumberFormat($value, $format, $locale);
+    }
+        
+    /**
+     * Returns a self formatted number
+     * The seperation and fraction sign is used from the set locale
+     * ##0.#  -> 12345.12345 -> 12345.12345
+     * ##0.00 -> 12345.12345 -> 12345.12
+     * ##,##0.00 -> 12345.12345 -> 12,345.12
+     * 
+     * @param  string              $value      Number to localize
+     * @param  integer             $format     OPTIONAL Format to use
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing
+     * @return string  locale formatted number
+     */
+    public static function toNumberFormat($value, $format = null, $locale = null)
+    {
+        if (Zend_Locale::isLocale($format)) {
+            $locale = $format;
+            $format = null;
+        }
+
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
         }
 
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
-        $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
-        $format  = $format['default'];
         iconv_set_encoding('internal_encoding', 'UTF-8');
 
+        // Get format
+        if ($format === null) {
+            $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
+            $format  = $format['default'];
+            $precision = null;
+        } else {
+            if (strpos($format, '.')) {
+                $precision = substr($format, strpos($format, '.') + 1);
+                if (is_numeric($precision)) {
+                    $precision = strlen($precision);
+                    $format = substr($format, 0, strpos($format, '.') + 1);
+                    $format .= '###';
+                } else {
+                    $precision = null;
+                }
+            } else {
+                $value = round($value);
+            }
+        }
+        
         // seperate negative format pattern when avaiable 
         if (iconv_strpos($format, ';') !== false) {
             if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
@@ -221,10 +294,10 @@ class Zend_Locale_Format
         } else {
             $precision = '';
         }
-
         // get fraction and format lengths
         call_user_func(Zend_Locale_Math::$scale, iconv_strlen($precision));
         $prec = call_user_func(Zend_Locale_Math::$sub, $value, call_user_func(Zend_Locale_Math::$sub, $value, '0', 0));
+
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
@@ -234,42 +307,39 @@ class Zend_Locale_Format
         }
         $group  = iconv_strrpos($format, ',');
         $group2 = iconv_strpos ($format, ',');
-        $point  = iconv_strpos ($format, '.');
-
+        $point  = iconv_strpos ($format, '0');
         // Add fraction
         if ($prec == 0) {
-            $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 1);
+            $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal'] . iconv_substr($prec, 2).
                       iconv_substr($format, iconv_strrpos($format, '#') + 1);
         }
-
         // Add seperation
         if ($group == 0) {
             // no seperation
             $format = $number . iconv_substr($format, $point);
-            
+
         } else if ($group == $group2) {
-            
             // only 1 seperation
-            $seperation = ($point - $group - 1);
-            for ($x = iconv_strlen($number); $x > $group2; $x -= $seperation) {
+            $seperation = ($point - $group);
+            for ($x = iconv_strlen($number); $x > $seperation; $x -= $seperation) {
                 if (iconv_substr($number, 0, $x - $seperation) !== "") {
-                     $number = iconv_substr($number, 0, $x - $seperation) . $symbols['group']
+                    $number = iconv_substr($number, 0, $x - $seperation) . $symbols['group']
                              . iconv_substr($number, $x - $seperation);
                 }
             }
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
-            
+
         } else {
             
             // 2 seperations
-            if (iconv_strlen($number) > ($point - $group - 1)) { 
-                $seperation = ($point - $group - 1);
+            if (iconv_strlen($number) > ($point - $group)) { 
+                $seperation = ($point - $group);
                 $number = iconv_substr($number, 0, iconv_strlen($number) - $seperation) . $symbols['group']
                         . iconv_substr($number, iconv_strlen($number) - $seperation);
 
-                if ((iconv_strlen($number) - 1) > ($point - $group)) {
+                if ((iconv_strlen($number) - 1) > ($point - $group + 1)) {
                     $seperation2 = ($group - $group2 - 1);
                     
                     for ($x = iconv_strlen($number) - $seperation2 - 2; $x > $seperation2; $x -= $seperation2) {
@@ -280,7 +350,7 @@ class Zend_Locale_Format
 
             }
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
-            
+
         }
 
         return (string) $format;        
@@ -383,7 +453,7 @@ class Zend_Locale_Format
      */
     public static function toInteger($value, $locale = null)
     {
-        return self::toNumber($value, 0, $locale);
+        return self::toNumber($value, -1, $locale);
     }
 
 
@@ -417,6 +487,7 @@ class Zend_Locale_Format
         $hour  = iconv_strpos($format, 'H');
         $min   = iconv_strpos($format, 'm');
         $sec   = iconv_strpos($format, 's');
+        $am    = null;
         if ($hour === false) {
             $hour = iconv_strpos($format, 'h');
         }
@@ -460,6 +531,16 @@ class Zend_Locale_Format
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
             } else {
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+            }
+        }
+
+        // get daytime
+        if (iconv_strpos($format, ' a') !== false) {
+            $daytime = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+            if (iconv_strpos(strtoupper($number), strtoupper($daytime['am']))) {
+                $am = true;
+            } else if (iconv_strpos(strtoupper($number), strtoupper($daytime['pm']))) {
+                $am = false;
             }
         }
 
@@ -567,6 +648,15 @@ class Zend_Locale_Format
                     }
                     ++$cnt;
                     break;
+            }
+        }
+
+        // AM/PM correction
+        if ($hour !== false) {
+            if (($am === true) and ($result['hour'] == 12)){
+                $result['hour'] = 0;
+            } else if (($am === false) and ($result['hour'] != 12)) {
+                $result['hour'] += 12;
             }
         }
 

@@ -192,31 +192,6 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testLengthSerialize()
-    {
-        $value = new Zend_Measure_Length('string -100.100,200',Zend_Measure_Length::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Length not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testLengthUnSerialize()
-    {
-        $value = new Zend_Measure_Length('string -100.100,200',Zend_Measure_Length::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Length not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

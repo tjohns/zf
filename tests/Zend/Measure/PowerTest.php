@@ -192,31 +192,6 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testPowerSerialize()
-    {
-        $value = new Zend_Measure_Power('string -100.100,200',Zend_Measure_Power::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Power not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testPowerUnSerialize()
-    {
-        $value = new Zend_Measure_Power('string -100.100,200',Zend_Measure_Power::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Power not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

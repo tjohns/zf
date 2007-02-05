@@ -25,6 +25,7 @@
  * Zend_Measure_Acceleration
  */
 require_once 'Zend/Measure/Acceleration.php';
+require_once 'Zend/Locale.php';
 
 /**
  * PHPUnit test case
@@ -40,145 +41,68 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * test for acceleration initialisation
+     * test for new object
      * expected instance
      */
     public function testAccelerationInit()
     {
         $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertTrue($value instanceof Zend_Measure_Acceleration,'Zend_Measure_Acceleration Object not returned');
-    }
-
-
-    /**
-     * test for exception unknown type
-     * expected exception
-     */
-    public function testAccelerationUnknownType()
-    {
+        $this->assertEquals(100, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
+        // no type
+        $value = new Zend_Measure_Acceleration('100','de');
+        $this->assertTrue($value instanceof Zend_Measure_Acceleration,'Zend_Measure_Acceleration Object not returned');
+        // unknown type
         try {
             $value = new Zend_Measure_Acceleration('100','Acceleration::UNKNOWN','de');
             $this->fail('Exception expected because of unknown type');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
-
-
-    /**
-     * test for exception unknown value
-     * expected exception
-     */
-    public function testAccelerationUnknownValue()
-    {
+        // no value
         try {
             $value = new Zend_Measure_Acceleration('novalue',Zend_Measure_Acceleration::STANDARD,'de');
             $this->fail('Exception expected because of empty value');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
-
-
-    /**
-     * test for exception unknown locale
-     * expected root value
-     */
-    public function testAccelerationUnknownLocale()
-    {
+        // false locale
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'nolocale');
             $this->fail('Exception expected because of unknown locale');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
-
-
-    /**
-     * test for standard locale
-     * expected integer
-     */
-    public function testAccelerationNoLocale()
-    {
+        // no locale
         $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD);
         $this->assertEquals(100, $value->getValue(),'Zend_Measure_Acceleration value expected');
-    }
 
-
-    /**
-     * test for positive value
-     * expected integer
-     */
-    public function testAccelerationValuePositive()
-    {
-        $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
-        $this->assertEquals(100, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
-    }
-
-
-    /**
-     * test for negative value
-     * expected integer
-     */
-    public function testAccelerationValueNegative()
-    {
-        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        // negative value
+        $locale = new Zend_Locale('de');
+        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,$locale);
         $this->assertEquals(-100, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a negative integer');
-    }
-
-
-    /**
-     * test for decimal value
-     * expected float
-     */
-    public function testAccelerationValueDecimal()
-    {
-        $value = new Zend_Measure_Acceleration('-100,200',Zend_Measure_Acceleration::STANDARD,'de');
+        // seperated value
+        $value = new Zend_Measure_Acceleration('-100,200',Zend_Measure_Acceleration::STANDARD,$locale);
         $this->assertEquals(-100.200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a decimal value');
-    }
-
-
-    /**
-     * test for decimal seperated value
-     * expected float
-     */
-    public function testAccelerationValueDecimalSeperated()
-    {
-        $value = new Zend_Measure_Acceleration('-100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
+        // negative seperated value
+        $value = new Zend_Measure_Acceleration('-100.100,200',Zend_Measure_Acceleration::STANDARD,$locale);
         $this->assertEquals(-100100.200, $value->getValue(),'Zend_Measure_Acceleration Object not returned');
-    }
-
-
-    /**
-     * test for string with integrated value
-     * expected float
-     */
-    public function testAccelerationValueString()
-    {
+        // value with string
         $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(-100100.200, $value->getValue(),'Zend_Measure_Acceleration Object not returned');
     }
 
 
     /**
-     * test for equality
+     * test for equals()
      * expected true
      */
-    public function testAccelerationEquality()
+    public function testAccelerationEquals()
     {
         $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $newvalue = new Zend_Measure_Acceleration('otherstring -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertTrue($value->equals($newvalue),'Zend_Measure_Acceleration Object should be equal');
-    }
 
-
-    /**
-     * test for no equality
-     * expected false
-     */
-    public function testAccelerationNoEquality()
-    {
         $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $newvalue = new Zend_Measure_Acceleration('otherstring -100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertFalse($value->equals($newvalue),'Zend_Measure_Acceleration Object should be not equal');
@@ -186,128 +110,45 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testAccelerationSerialize()
-    {
-        $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Acceleration not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testAccelerationUnSerialize()
-    {
-        $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Acceleration not unserialized');
-    }
-
-
-    /**
-     * test for set positive value
+     * test for setvalue()
      * expected integer
      */
-    public function testAccelerationSetPositive()
+    public function testAccelerationSetValue()
     {
         $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
         $value->setValue('200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
-    }
 
-
-    /**
-     * test for set negative value
-     * expected integer
-     */
-    public function testAccelerationSetNegative()
-    {
-        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        $locale = new Zend_Locale('de_AT');
+        $value->setValue('200',$locale);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
+        $value->setValue('200','de');
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
         $value->setValue('-200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(-200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a negative integer');
-    }
-
-
-    /**
-     * test for set decimal value
-     * expected float
-     */
-    public function testAccelerationSetDecimal()
-    {
-        $value = new Zend_Measure_Acceleration('-100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $value->setValue('-200,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(-200.200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a decimal value');
-    }
-
-
-    /**
-     * test for set decimal seperated value
-     * expected float
-     */
-    public function testAccelerationSetDecimalSeperated()
-    {
-        $value = new Zend_Measure_Acceleration('-100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $value->setValue('-200.200,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(-200200.200, $value->getValue(),'Zend_Measure_Acceleration Object not returned');
-    }
-
-
-    /**
-     * test for set string with integrated value
-     * expected float
-     */
-    public function testAccelerationSetString()
-    {
-        $value = new Zend_Measure_Acceleration('string -100.100,200',Zend_Measure_Acceleration::STANDARD,'de');
         $value->setValue('otherstring -200.200,200',Zend_Measure_Acceleration::STANDARD,'de');
         $this->assertEquals(-200200.200, $value->getValue(),'Zend_Measure_Acceleration Object not returned');
-    }
+        $value->setValue('200', Zend_Measure_Acceleration::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
 
-
-    /**
-     * test for exception unknown type
-     * expected exception
-     */
-    public function testAccelerationSetUnknownType()
-    {
         try {
-            $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('otherstring -200.200,200','Acceleration::UNKNOWN','de');
             $this->fail('Exception expected because of unknown type');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
 
-
-    /**
-     * test for exception unknown value
-     * expected exception
-     */
-    public function testAccelerationSetUnknownValue()
-    {
         try {
-            $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('novalue',Zend_Measure_Acceleration::STANDARD,'de');
             $this->fail('Exception expected because of empty value');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
 
-
-    /**
-     * test for exception unknown locale
-     * expected exception
-     */
-    public function testAccelerationSetUnknownLocale()
-    {
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('200',Zend_Measure_Acceleration::STANDARD,'nolocale');
@@ -315,18 +156,6 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-    }
-
-
-    /**
-     * test for exception unknown locale
-     * expected exception
-     */
-    public function testAccelerationSetWithNoLocale()
-    {
-        $value = new Zend_Measure_Acceleration('100', Zend_Measure_Acceleration::STANDARD, 'de');
-        $value->setValue('200', Zend_Measure_Acceleration::STANDARD);
-        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Acceleration value expected to be a positive integer');
     }
 
 
@@ -339,39 +168,15 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
         $value->setType(Zend_Measure_Acceleration::GRAV);
         $this->assertEquals($value->getType(), Zend_Measure_Acceleration::GRAV, 'Zend_Measure_Acceleration type expected');
-    }
 
-
-    /**
-     * test setting computed type
-     * expected new type
-     */
-    public function testAccelerationSetComputedType1()
-    {
         $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE,'de');
         $value->setType(Zend_Measure_Acceleration::GRAV);
         $this->assertEquals($value->getType(), Zend_Measure_Acceleration::GRAV, 'Zend_Measure_Acceleration type expected');
-    }
 
-
-    /**
-     * test setting computed type
-     * expected new type
-     */
-    public function testAccelerationSetComputedType2()
-    {
         $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::GRAV,'de');
         $value->setType(Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE);
         $this->assertEquals($value->getType(), Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE, 'Zend_Measure_Acceleration type expected');
-    }
 
-
-    /**
-     * test setting unknown type
-     * expected new type
-     */
-    public function testAccelerationSetTypeFailed()
-    {
         try {
             $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setType('Acceleration::UNKNOWN');
@@ -413,5 +218,58 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
         $unit  = $value->getConversionList();
         $this->assertTrue(is_array($unit), 'Array expected');
+    }
+
+
+    /**
+     * test convertTo
+     * expected array
+     */
+    public function testAccelerationConvertTo()
+    {
+        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        $unit  = $value->convertTo(Zend_Measure_Acceleration::GRAV);
+        $this->assertEquals($value->getType(), Zend_Measure_Acceleration::GRAV, 'Zend_Measure_Acceleration type expected');
+    }
+
+
+    /**
+     * test add
+     * expected array
+     */
+    public function testAccelerationAdd()
+    {
+        $value  = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        $value2 = new Zend_Measure_Acceleration('200',Zend_Measure_Acceleration::STANDARD,'de');
+        $value->add($value2);
+        $this->assertEquals($value->getValue(), 100, 'value 100 expected');
+    }
+
+
+    /**
+     * test add
+     * expected array
+     */
+    public function testAccelerationSub()
+    {
+        $value  = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        $value2 = new Zend_Measure_Acceleration('200',Zend_Measure_Acceleration::STANDARD,'de');
+        $value->sub($value2);
+        $this->assertEquals($value->getValue(), -300, 'value -300 expected');
+    }
+
+
+    /**
+     * test add
+     * expected array
+     */
+    public function testAccelerationCompare()
+    {
+        $value  = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
+        $value2 = new Zend_Measure_Acceleration('200',Zend_Measure_Acceleration::STANDARD,'de');
+        $value3 = new Zend_Measure_Acceleration('200',Zend_Measure_Acceleration::STANDARD,'de');
+        $this->assertEquals($value->compare($value2), -1);
+        $this->assertEquals($value2->compare($value), 1);
+        $this->assertEquals($value2->compare($value3), 0);
     }
 }

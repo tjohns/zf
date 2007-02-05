@@ -84,6 +84,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'keylist')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'typelist')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'type', 'calendar')), 'array expected');
+        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'territorylist')), 'array expected');
 
         $value = Zend_Locale_Data::getContent('de', 'language', 'de');
         $this->assertEquals($value['de'], 'Deutsch', 'wrong content');
@@ -99,6 +100,10 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
 
         $value = Zend_Locale_Data::getContent('de_AT', 'type', 'chinese');
         $this->assertEquals($value['chinese'], 'Chinesischer Kalender', 'wrong value');
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'territory', 'AT');
+        $this->assertEquals($value['AT'], 'Österreich', 'wrong content');
+
     }
 
 
@@ -151,13 +156,15 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'timezonedaylight')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'timezonedaylightshort')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'timezoneformat')), 'array expected');
+        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'numbersymbols')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'decimalnumberformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'scientificnumberformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'percentnumberformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencyformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencynames')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencysymbols')), 'array expected');
-        
+        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'questionstrings')), 'array expected');
+
         $value = Zend_Locale_Data::getContent('de_AT', 'month', array('gregorian', 'format', 'wide', 12));
         $this->assertEquals($value['12'], 'Dezember', 'wrong value');
 

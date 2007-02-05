@@ -192,31 +192,6 @@ class Zend_Measure_PressureTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testPressureSerialize()
-    {
-        $value = new Zend_Measure_Pressure('string -100.100,200',Zend_Measure_Pressure::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Pressure not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testPressureUnSerialize()
-    {
-        $value = new Zend_Measure_Pressure('string -100.100,200',Zend_Measure_Pressure::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Pressure not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

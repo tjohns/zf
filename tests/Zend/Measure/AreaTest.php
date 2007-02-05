@@ -192,31 +192,6 @@ class Zend_Measure_AreaTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testAreaSerialize()
-    {
-        $value = new Zend_Measure_Area('string -100.100,200',Zend_Measure_Area::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Area not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testAreaUnSerialize()
-    {
-        $value = new Zend_Measure_Area('string -100.100,200',Zend_Measure_Area::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Area not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

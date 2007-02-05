@@ -192,31 +192,6 @@ class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testLightnessSerialize()
-    {
-        $value = new Zend_Measure_Lightness('string -100.100,200',Zend_Measure_Lightness::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Lightness not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testLightnessUnSerialize()
-    {
-        $value = new Zend_Measure_Lightness('string -100.100,200',Zend_Measure_Lightness::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Lightness not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

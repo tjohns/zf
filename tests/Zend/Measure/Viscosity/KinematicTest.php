@@ -175,31 +175,6 @@ class Zend_Measure_Viscosity_KinematicTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testViscosity_KinematicSerialize()
-    {
-        $value = new Zend_Measure_Viscosity_Kinematic('string -100.100,200',Zend_Measure_Viscosity_Kinematic::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Viscosity_Kinematic not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testViscosity_KinematicUnSerialize()
-    {
-        $value = new Zend_Measure_Viscosity_Kinematic('string -100.100,200',Zend_Measure_Viscosity_Kinematic::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Viscosity_Kinematic not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

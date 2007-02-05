@@ -651,7 +651,13 @@ class Zend_Locale_Data
 
             case 'currencyforregion':
                 self::_getFile('supplementalData', '/supplementalData/currencyData/region[@iso3166=\''
-                             . $value . '\']/currency', 'iso4217', 'currency');
+                             . $value . '\']/currency', 'iso4217');
+                $_temp = self::$_list;
+                self::$_list = array();
+                foreach ($_temp as $key => $keyvalue) {
+                    self::_getFile('supplementalData', '/supplementalData/currencyData/region[@iso3166=\''
+                             . $value . '\']/currency[@iso4217=\'' . $key . '\']', 'from', $key);
+                }
                 break;
 
             case 'currencyforregionlist':

@@ -119,7 +119,7 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
     const TONNE_PER_MILLILITER      = 'TONNE_PER_MILLILITER';
     const WATER                     = 'WATER';
 
-    private static $_UNITS = array(
+    protected $_UNITS = array(
         'ALUMINIUM'                 => array(2643,           'aluminium'),
         'COPPER'                    => array(8906,           'copper'),
         'GOLD'                      => array(19300,          'gold'),
@@ -197,135 +197,7 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
         'TONNE_PER_CUBIC_METER'     => array(1000,           't/m³'),
         'TONNE_PER_LITER'           => array(1000000,        't/l'),
         'TONNE_PER_MILLILITER'      => array(1.0e+9,         't/ml'),
-        'WATER'                     => array(1000,           'water')
+        'WATER'                     => array(1000,           'water'),
+        'STANDARD'                  => 'KILOGRAM_PER_CUBIC_METER'
     );
-
-    private $_Locale = null;
-
-    /**
-     * Zend_Measure_Density provides an locale aware class for
-     * conversion and formatting of density values
-     *
-     * Zend_Measure $input can be a locale based input string
-     * or a value. $locale can be used to define that the
-     * input is made in a different language than the actual one.
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Density Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function __construct($value, $type = null, $locale = null)
-    {
-        $this->setValue($value, $type, $locale);
-    }
-
-
-    /**
-     * Compare if the value and type is equal
-     *
-     * @param  Zend_Measure_Density  $object  Density object to compare
-     * @return boolean
-     */
-    public function equals($object)
-    {
-        if ($object->toString() == $this->toString()) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Set a new value
-     *
-     * @param  integer|string      $value   Value as string, integer, real or float
-     * @param  string              $type    OPTIONAL A Zend_Measure_Density Type
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing numbers
-     * @throws Zend_Measure_Exception
-     */
-    public function setValue($value, $type = null, $locale = null)
-    {
-        if ($locale === null) {
-            $locale = $this->_Locale;
-        }
-
-        if (!$locale = Zend_Locale::isLocale($locale, true)) {
-            throw new Zend_Measure_Exception("language ($locale) is a unknown language");
-        }
-
-        if ($type === null) {
-            $type = self::STANDARD;
-        }
-
-        try {
-            $value = Zend_Locale_Format::getNumber($value, $locale);
-        } catch(Exception $e) {
-            throw new Zend_Measure_Exception($e->getMessage());
-        }
-
-        if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown density");
-        }
-
-        parent::setValue($value, $type, $locale);
-        parent::setType($type);
-    }
-
-
-    /**
-     * Set a new type, and convert the value
-     *
-     * @param  string  $type  New type to set
-     * @throws Zend_Measure_Exception
-     */
-    public function setType($type)
-    {
-        if (empty(self::$_UNITS[$type])) {
-            throw new Zend_Measure_Exception("type ($type) is a unknown density");
-        }
-
-        // Convert to standard value
-        $value = parent::getValue();
-        $value = $value * (self::$_UNITS[parent::getType()][0]);
-
-        // Convert to expected value
-        $value = $value / (self::$_UNITS[$type][0]);
-        parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
-    }
-
-
-    /**
-     * Returns a string representation
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
-
-
-    /**
-     * Returns the conversion list
-     * 
-     * @return array
-     */
-    public function getConversionList()
-    {
-        return self::$_UNITS;
-    }
 }

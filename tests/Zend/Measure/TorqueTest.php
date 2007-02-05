@@ -192,31 +192,6 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testTorqueSerialize()
-    {
-        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Torque not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testTorqueUnSerialize()
-    {
-        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Torque not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */

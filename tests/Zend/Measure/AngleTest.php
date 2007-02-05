@@ -192,31 +192,6 @@ class Zend_Measure_AngleTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test for serialization
-     * expected string
-     */
-    public function testAngleSerialize()
-    {
-        $value = new Zend_Measure_Angle('string -100.100,200',Zend_Measure_Angle::STANDARD,'de');
-        $serial = $value->serialize();
-        $this->assertTrue(!empty($serial),'Zend_Measure_Angle not serialized');
-    }
-
-
-    /**
-     * test for unserialization
-     * expected object
-     */
-    public function testAngleUnSerialize()
-    {
-        $value = new Zend_Measure_Angle('string -100.100,200',Zend_Measure_Angle::STANDARD,'de');
-        $serial = $value->serialize();
-        $newvalue = unserialize($serial);
-        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Angle not unserialized');
-    }
-
-
-    /**
      * test for set positive value
      * expected integer
      */
