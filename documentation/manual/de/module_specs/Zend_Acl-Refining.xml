@@ -37,7 +37,8 @@
             geerbt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[// Die neue Marketing Gruppe erbt Genehmigungen der Mitarbeiter
+        <programlisting role="php"><![CDATA[
+// Die neue Marketing Gruppe erbt Genehmigungen der Mitarbeiter
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
         <para>
@@ -46,7 +47,8 @@ $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
             wir die Ressourcen hinzu:
         </para>
 
-        <programlisting role="php"><![CDATA[// Ressourcen für die Regeln erstellen
+        <programlisting role="php"><![CDATA[
+// Ressourcen für die Regeln erstellen
 require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('newsletter'));           // Newsletter
 $acl->add(new Zend_Acl_Resource('news'));                 // Nachrichten
@@ -58,7 +60,8 @@ $acl->add(new Zend_Acl_Resource('announcement'), 'news'); // Bekanntmachung]]></
             Zielbereiche der ACL:
         </para>
 
-        <programlisting role="php"><![CDATA[// Marketing muss Newsletter und die neuesten Nachrichten veröffentlichen und archivieren können
+        <programlisting role="php"><![CDATA[
+// Marketing muss Newsletter und die neuesten Nachrichten veröffentlichen und archivieren können
 $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
 
 // Staff (und Marketing durch die Vererbung), wird die Erlaubnis verweigert, die neuesten Nachrichten überarbeiten zu können
@@ -71,7 +74,8 @@ $acl->deny(null, 'announcement', 'archive');]]></programlisting>
             Wir können nun die ACL abfragen hinsichtlich der letzten Änderungen
         </para>
 
-        <programlisting role="php"><![CDATA[echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
+        <programlisting role="php"><![CDATA[
+echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
      "allowed" : "denied"; // verweigert
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
@@ -108,7 +112,8 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
             übergeben, um die Anwendung auf alle Rollen, Ressourcen und / oder Rechte anzuzeigen:
         </para>
 
-        <programlisting role="php"><![CDATA[// Entferne die Verweigerung, die letzten Nachrichten zu überarbeiten für die Mitarbeiter (und Marketing durch die Vererbung)
+        <programlisting role="php"><![CDATA[
+// Entferne die Verweigerung, die letzten Nachrichten zu überarbeiten für die Mitarbeiter (und Marketing durch die Vererbung)
 $acl->removeDeny('staff', 'latest', 'revise');
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
@@ -128,7 +133,8 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
             <code>null</code> Wert für die Rechte überschreibt solche schrittweisen Änderungen:
         </para>
 
-        <programlisting role="php"><![CDATA[// Erlaube dem Marketing alle Rechte für die neuesten Nachrichten
+        <programlisting role="php"><![CDATA[
+// Erlaube dem Marketing alle Rechte für die neuesten Nachrichten
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
