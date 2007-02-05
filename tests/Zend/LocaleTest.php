@@ -219,6 +219,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($list), 'Script List not returned');
 
         $list = $value->getScriptDisplay('Arab');
+        $this->assertEquals($list, '', 'Unexpected Script returned for root locale');
+
+        $value->setLocale('de');
+        $list = $value->getScriptDisplay('Arab');
         $this->assertEquals($list, 'Arabisch', 'Script Display not returned');
 
         $list = $value->getScriptDisplay('Arab', 'en');
