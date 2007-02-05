@@ -118,7 +118,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
 
                 if (is_array($opt_label)) {
                     $list[] = '<optgroup '
-                            . 'name="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') .'">';
+                            . 'label="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') .'">';
                     foreach ($opt_label as $val => $lab) {
                         $list[] = $this->_build($val, $lab, $value);
                     }
