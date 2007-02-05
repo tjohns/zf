@@ -81,6 +81,12 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
 ?>]]></programlisting>
+        <note><para>
+            zauważ, że metoda <code>save()</code> akceptuje opcjonalny czwarty
+            argument : <code>$specificLifeTime</code> (jeśli jego wartość jest 
+            inna od false, ustawiany jest określony czas ważności dla 
+            konkretnego rekordu bufora.
+        </para></note>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Czyszczenie bufora</title>

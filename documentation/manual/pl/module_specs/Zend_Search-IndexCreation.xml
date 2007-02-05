@@ -15,8 +15,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Setting the second argument to TRUE creates a new index
-$index = new Zend_Search_Lucene('/data/my-index', true);
+// Create index
+$index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
@@ -45,7 +45,7 @@ $index->addDocument($doc);
 
         <programlisting role="php"><![CDATA[<?php
 // Open existing index
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 // Store document URL to identify it in search result.
@@ -143,7 +143,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Open existing index
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 // Optimize index.
 $index->optimize();
