@@ -73,11 +73,11 @@ class Zend_Rest_ResultTest extends PHPUnit_Framework_TestCase
         $xml = file_get_contents(self::$path ."returnObject.xml");
         // <foo>bar</foo><baz>1</baz><bat>123</bat><qux>0</qux><status>success</status>
         $client = new Zend_Rest_Client_Result($xml);
-        $this->assertEquals("bar", $client->foo);
-        $this->assertEquals("1", $client->baz);
-        $this->assertEquals("123", $client->bat);
-        $this->assertEquals("0", $client->qux);
-        $this->assertEquals("success", $client->status);
+        $this->assertEquals("bar", $client->foo());
+        $this->assertEquals(1, $client->baz());
+        $this->assertEquals(123, $client->bat());
+        $this->assertEquals(0, $client->qux());
+        $this->assertEquals("success", $client->status());
     }
     
     public function testResponseTrue()
@@ -91,14 +91,14 @@ class Zend_Rest_ResultTest extends PHPUnit_Framework_TestCase
     {
         $xml = file_get_contents(self::$path ."returnFalse.xml");
         $client = new Zend_Rest_Client_Result($xml);
-        $this->assertFalse((bool)$client->response);
+        $this->assertFalse((bool) $client->response());
     }
     
     public function testResponseVoid()
     {
         $xml = file_get_contents(self::$path . "returnVoid.xml");
         $client = new Zend_Rest_Client_Result($xml);
-        $this->assertEquals(null, $client->response);
+        $this->assertEquals(null, $client->response());
     }
     
     public function testResponseException()
@@ -112,7 +112,7 @@ class Zend_Rest_ResultTest extends PHPUnit_Framework_TestCase
     {
         $xml = file_get_contents(self::$path . DIRECTORY_SEPARATOR . 'returnNestedArray.xml');
         $result = new Zend_Rest_Client_Result($xml);
-        $key_1 = $result->key_1;
+        $key_1 = $result->key_1();
         $this->assertEquals(0, $key_1);
     }
 
@@ -159,24 +159,7 @@ class Zend_Rest_ResultTest extends PHPUnit_Framework_TestCase
     {
         $xml = file_get_contents(self::$path . DIRECTORY_SEPARATOR . 'returnNestedArray.xml');
         $result = new Zend_Rest_Client_Result($xml);
-        try {
-            $returned = $result->asXML();
-        } catch (Exception $e) {
-            $this->fail('asXML() should not raise an exception');
-        }
-
-        $this->assertTrue(is_string($returned));
-    }
-
-    public function testCallThrowsExceptionOnInvalidMethod()
-    {
-        $xml = file_get_contents(self::$path . DIRECTORY_SEPARATOR . 'returnNestedArray.xml');
-        $result = new Zend_Rest_Client_Result($xml);
-        try {
-            $returned = $result->asRestObject();
-            $this->fail('Invalid SimpleXML methods should raise exceptions');
-        } catch (Exception $e) {
-            // success
-        }
+        $returned = $result->key_1();
+        $this->assertEquals(0, $returned);
     }
 }
