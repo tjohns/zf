@@ -296,7 +296,8 @@ class Zend_Locale_Format
         }
         // get fraction and format lengths
         call_user_func(Zend_Locale_Math::$scale, iconv_strlen($precision));
-        $prec = call_user_func(Zend_Locale_Math::$sub, $value, call_user_func(Zend_Locale_Math::$sub, $value, '0', 0));
+        $preg = call_user_func(Zend_Locale_Math::$sub, $value, '0', 0);
+        $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, iconv_strlen($precision));
 
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
@@ -332,7 +333,7 @@ class Zend_Locale_Format
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
 
         } else {
-            
+
             // 2 seperations
             if (iconv_strlen($number) > ($point - $group)) { 
                 $seperation = ($point - $group);

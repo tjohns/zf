@@ -64,7 +64,7 @@ function Zend_Locale_Math_Add($op1, $op2)
     return $result;
 }
 
-function Zend_Locale_Math_Sub($op1, $op2)
+function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
 {
     if (empty($op1)) {
         $op1 = 0;
@@ -72,6 +72,9 @@ function Zend_Locale_Math_Sub($op1, $op2)
     $result = $op1 - $op2;
     if ((string)($result + $op2) != (string)$op1) {
         throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $result", $op1, $op2, $result);
+    }
+    if ($op3 !== null) {
+        $result = round($result, $op3);
     }
     return $result;
 }
