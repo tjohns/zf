@@ -692,7 +692,7 @@ class Zend_Locale {
      * Return the accepted charset of the client
      * @todo verify working
      */
-    public function getHTTPCharset()
+    public function getHttpCharset()
     {
         $httpcharsets = getenv("HTTP_ACCEPT_CHARSET");
 
