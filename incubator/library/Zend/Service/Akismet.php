@@ -326,7 +326,7 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
     /**
      * Submit spam
      *
-     * Takes the same arguments as { @link commentCheck()}. 
+     * Takes the same arguments as {@link isSpam()}. 
      *
      * Submits known spam content to Akismet to help train it.
      *
@@ -349,15 +349,15 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
     /**
      * Submit ham
      *
-     * Takes the same arguments as { @link commentCheck()}.
+     * Takes the same arguments as {@link isSpam()}.
      *
      * Submits a comment that has been falsely categorized as spam by Akismet 
      * as a false positive, telling Akismet's filters not to filter such 
      * comments as spam in the future.
      *
-     * Unlike submitSpam and commentCheck, a valid API key is never necessary; 
-     * as a result, this method never throws an exception (unless an exception 
-     * happens with the HTTP client layer).
+     * Unlike {@link submitSpam()} and {@link isSpam()}, a valid API key is 
+     * never necessary; as a result, this method never throws an exception 
+     * (unless an exception happens with the HTTP client layer).
      *
      * this method implements Akismet's submit-ham REST method.
      * 
