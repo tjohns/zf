@@ -21,6 +21,7 @@ require_once 'Zend/Mail/MaildirFolderTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
 require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
+require_once 'Zend/Mail/MessageTest.php';
 
 class Zend_Mail_AllTests
 {
@@ -33,6 +34,7 @@ class Zend_Mail_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Mail');
 
+        $suite->addTestSuite('Zend_Mail_MessageTest');
         $suite->addTestSuite('Zend_Mail_InterfaceTest');
         $suite->addTestSuite('Zend_Mail_MboxTest');
         $suite->addTestSuite('Zend_Mail_MboxFolderTest');

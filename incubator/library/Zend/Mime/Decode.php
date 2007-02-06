@@ -231,6 +231,7 @@ class Zend_Mime_Decode
                     // headers do not start with an ordinary header line?
                     // then assume no headers at all
                     $inHeader = false;
+                    $body .= $line . $EOL;
                 } else {
                     if(is_array($headers[$lastheader])) {
                         $headers[$lastheader][count($headers[$lastheader]) - 1] .= $EOL . trim($line);
@@ -242,6 +243,7 @@ class Zend_Mime_Decode
                 // headers do not start with an ordinary header line?
                 // then assume no headers at all
                 $inHeader = false;
+                $body .= $line . $EOL;
             } else {
                 list($key, $value) = explode(':', $line, 2);
                 $key = strtolower(trim($key));
@@ -326,7 +328,7 @@ class Zend_Mime_Decode
         if(strpos($string, '=') === false) {
             return $string;
         }
-        if(!preg_match_all('%=\?([^?]+)\?(?:[Qq]\?)?(.*?)\?=\s*%', $string, $matches)) {
+        if(!preg_match_all('%=\?([^?]+)\?(?:[Qq]\?)?(.*?)\?=(\s*$)?%', $string, $matches)) {
             return $string;
         }
 

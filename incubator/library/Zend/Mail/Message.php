@@ -49,14 +49,14 @@ class Zend_Mail_Message extends Zend_Mail_Part
     {
         if(isset($params['file'])) {
             if(!is_resource($params['file'])) {
-                $params['raw'] = file_get_contents($params['file']);
+                $params['raw'] = @file_get_contents($params['file']);
                 if($params['raw'] === false) {
                     throw new Zend_Mail_Exception('could not open file');
                 }
             } else {
                 $params['raw'] = '';
                 while(!feof($params['file'])) {
-                    $params['raw'] = fgets($params['file']);
+                    $params['raw'] .= fgets($params['file']);
                 }
             }
         }

@@ -79,7 +79,7 @@ class Zend_Mail_Part
         }
 
         if(isset($params['raw'])) {
-            Zend_Mime_Decode::splitMessage($rawMessage, $this->_headers, $this->_content);
+            Zend_Mime_Decode::splitMessage($params['raw'], $this->_headers, $this->_content);
         } else if(isset($params['headers'])) {
             if(is_array($params['headers'])) {
                 $this->_headers = $params['headers'];
