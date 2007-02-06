@@ -372,15 +372,15 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetHttpCharset()
     {
-        putenv("HTTP_ACCEPT_CHARSET=,iso-8859-1, utf-8, utf-16, *;q=0.1");
-        $value = new Zend_Locale();
-        $list = $value->getHttpCharset();
-        $this->assertTrue(isset($list['utf-8']), 'language array not returned');
-
         putenv("HTTP_ACCEPT_CHARSET=");
         $value = new Zend_Locale();
         $list = $value->getHttpCharset();
         $this->assertTrue(empty($list), 'language array must be empty');
+
+        putenv("HTTP_ACCEPT_CHARSET=,iso-8859-1, utf-8, utf-16, *;q=0.1");
+        $value = new Zend_Locale();
+        $list = $value->getHttpCharset();
+        $this->assertTrue(isset($list['utf-8']), 'language array not returned');
     }
 
 
