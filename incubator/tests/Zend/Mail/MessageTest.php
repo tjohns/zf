@@ -13,6 +13,11 @@
 require_once 'Zend/Mail/Message.php';
 
 /**
+ * Zend_Mime_Decode
+ */
+require_once 'Zend/Mime/Decode.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -113,6 +118,72 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $message = new Zend_Mail_Message(array('file' => __FILE__));
 
         $this->assertEquals(substr($message->getContent(), 0, 5), '<?php');
+
+        $raw = file_get_contents(__FILE__);
+        $raw = "\t" . $raw;
+        $message = new Zend_Mail_Message(array('raw' => $raw));
+
+        $this->assertEquals(substr($message->getContent(), 0, 6), "\t<?php");
+    }
+
+    public function testMultipleHeader()
+    {
+        $raw = file_get_contents($this->_file);
+        $raw = "sUBject: test\nSubJect: test2\n" . $raw;
+        $message = new Zend_Mail_Message(array('raw' => $raw));
+
+        $this->assertEquals($message->getHeader('subject', 'string'),  "test\r\ntest2\r\nmultipart");
+        $this->assertEquals($message->getHeader('subject'),  array('test', 'test2', 'multipart'));
+    }
+
+    public function testContentTypeDecode()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+
+        $this->assertEquals(Zend_Mime_Decode::splitContentType($message->getHeader('Content-Type')),
+                            array('type' => 'multipart/alternative', 'boundary' => 'crazy-multipart'));
+    }
+
+    public function testSplitEmptyMessage()
+    {
+        $this->assertEquals(Zend_Mime_Decode::splitMessageStruct('', 'xxx'), null);
+    }
+
+    public function testSplitInvalidMessage()
+    {
+        try {
+            Zend_Mime_Decode::splitMessageStruct("--xxx\n", 'xxx');
+        } catch (Zend_Exception $e) {
+            return; // ok
+        }
+
+        $this->fail('no exception raised while decoding invalid message');
+    }
+
+    public function testInvalidMailHandler()
+    {
+        try {
+            $message = new Zend_Mail_Message(array('handler' => 1));
+        } catch (Zend_Exception $e) {
+            return; // ok
+        }
+
+        $this->fail('no exception raised while using invalid mail handler');
+
+    }
+
+    public function testMissingId()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => dirname(__FILE__) . '/_files/test.mbox'));
+
+        try {
+            $message = new Zend_Mail_Message(array('handler' => $mail));
+        } catch (Zend_Exception $e) {
+            return; // ok
+        }
+
+        $this->fail('no exception raised while mail handler without id');
+
     }
 
 }
