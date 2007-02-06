@@ -24,11 +24,10 @@
         <example>
             <title>Creation using integer variables</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Length.php';
 
 $integer = 1234;
-$unit = new Zend_Measure($integer,Zend_Measure::LENGTH);
+$unit = new Zend_Measure_Length($integer,Zend_Measure_Length::STANDARD);
 
 echo $unit;
 // outputs '1234 m'
@@ -67,12 +66,10 @@ echo $unit;
         <example>
             <title>Creation using strings</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Measure_Number');
+require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
-$unit = new Zend_Measure($mystring,Zend_Measure_Number::BINARY);
+$unit = new Zend_Measure_Number($mystring,Zend_Measure_Number::BINARY);
 
 echo $unit;
 ?>]]></programlisting>
@@ -87,11 +84,10 @@ echo $unit;
         <example>
             <title>Arbitrary texts</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size";
-$unit = new Zend_Measure($mystring,Zend_Measure::AREA);
+$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
 
 echo $unit;
 ?>]]></programlisting>
@@ -100,11 +96,10 @@ echo $unit;
         <example>
             <title>Arbitrary texts</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
-$unit = new Zend_Measure($mystring,Zend_Measure::AREA);
+$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
 
 echo $unit;
 ?>]]></programlisting>
@@ -128,12 +123,11 @@ echo $unit;
         <example>
             <title>Localized string</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH, $locale);
+$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
 
 echo $unit;
 ?>]]></programlisting>

@@ -168,13 +168,13 @@
         <title>Kontroler frontowy</title>
 
         <para>
-            Zend_Controller_Front implementuje kontroler frontowy. Additionally,
-            it is a singleton class, meaning only one instance of it may be
-            available at any given point.
+            Zend_Controller_Front implementuje kontroler frontowy. Dodatkowo
+            ta klasa jest singletonem, co oznacza, że podczas wywołania będzie
+            dostępna tylko jedna instancja tej klasy.
         </para>
 
         <para>
-            Aby rozszerzyć tą klasę, musisz przynajmniej nadpisać metodę
+            Aby rozszerzyć tę klasę, musisz przynajmniej nadpisać metodę
             <code>getInstance()</code>:
         </para>
 
@@ -193,76 +193,79 @@ class My_Controller_Front extends Zend_Controller_Front
 ]]></programlisting>
 
         <para>
-            Overriding the getInstance() method ensures that subsequent calls to
-            <code>Zend_Controller_Front::getInstance()</code> will return an
-            instance of your new subclass instead of a Zend_Controller_Front
-            instance -- this is particularly useful for some of the alternate
-            routers and view helpers. 
+            Nadpisanie metody getInstance() gwarantuje to, że wywołania metody
+            <code>Zend_Controller_Front::getInstance()</code> będą zwracać
+            instancję twojej nowej podklasy zamiast instancji 
+            Zend_Controller_Front -- jest to szczególnie przydatne dla 
+            niektórych alternatywnych routerów oraz klas pomocników widoków.
         </para>
 
         <para>
-            In addition to getInstance(), there are many other methods you may
-            override:
+            Oprócz metody getInstance() jest jeszcze wiele metod, ktore możesz 
+            nadpisać:
         </para>
 
         <programlisting role="php"><![CDATA[
     /**
-     * Resets all object properties of the singleton instance
+     * Resetuje wszystkie właściwości instancji obiektu
      *
-     * Primarily used for testing; could be used to chain front controllers.
+     * Głownie używane do teestowania; może być użyta do łańcuchowego 
+     * wywoływania kontrolerów frontowych.
      * 
      * @return void
      */
     public function resetInstance();
 
     /**
-     * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
+     * Wygodna funkcjonalność, wywołuje setControllerDirectory()->setRouter()->dispatch()
      *
-     * In PHP 5.1.x, a call to a static method never populates $this -- so run() 
-     * may actually be called after setting up your front controller.
+     * W PHP 5.1.x, wywołanie metody statycznej nigdy nie tworzy $this -- więc 
+     * metoda run() może być aktualnie wywołana po ustawieniu kontrolera frontowego
      *
-     * @param string|array $controllerDirectory Path to Zend_Controller_Action 
-     * controller classes or array of such paths
+     * @param string|array $controllerDirectory Ścieżka do klas kontrolerów 
+     * Zend_Controller_Action lub tablica tych ścieżek
      * @return void
-     * @throws Zend_Controller_Exception if called from an object instance
+     * @throws Zend_Controller_Exception jeśli wywołana z instancji obiektu
      */
     static public function run($controllerDirectory);
 
     /**
-     * Add a controller directory to the controller directory stack
+     * Dodaje ścieżkę kontrolerów na stos ścieżek kontrolerów
      *
-     * If $args is presented and is a string, uses it for the array key mapping 
-     * to the directory specified.
+     * Jeśli $args jest łańcuchem znaków, używany jest on jako klucz odpowiadający
+     * danej ścieżce
      * 
      * @param string $directory 
-     * @param mixed $args Optional argument; if string value, used as array key map
+     * @param mixed $args Argument opcjonalny; jeśli wartość jest łańcuchem znaków
+     * używany jest on jako klucz tablicy
      * @return Zend_Controller_Front
      */
     public function addControllerDirectory($directory, $args = null);
 
     /**
-     * Set controller directory
+     * Ustawia ścieżkę kontrolerów
      *
-     * Stores controller directory to pass to dispatcher. May be an array of 
-     * directories or a string containing a single directory.
+     * Ustawia ścieżkę kontrolerów w celu przekazania jej do obiektu 
+     * uruchamiającego. Może być tablicą ścieżek lub łańcuchem znaków
+     * zawierającym pojedynczą ścieżkę.
      *
-     * @param string|array $directory Path to Zend_Controller_Action controller 
-     * classes or array of such paths
+     * @param string|array $directory Ścieżka do klas kontrolerów 
+     * Zend_Controller_Action lub tablica tych ścieżek
      * @return Zend_Controller_Front
      */
     public function setControllerDirectory($directory);
 
     /**
-     * Retrieve controller directory
+     * Pobiera ścieżkę kontrolerów
      *
-     * Retrieves stored controller directory
+     * Pobiera ustawioną ścieżkę kontrolerów
      *
      * @return string|array
      */
     public function getControllerDirectory();
 
     /**
-     * Set the default controller (unformatted string)
+     * Ustawia nazwę domyślnego kontrolera (niesformatowany łańcuch znaków)
      *
      * @param string $controller
      * @return Zend_Controller_Front
@@ -270,14 +273,14 @@ class My_Controller_Front extends Zend_Controller_Front
     public function setDefaultController($controller);
 
     /**
-     * Retrieve the default controller (unformatted string)
+     * Pobiera nazwę domyślnego kontrolera (niesformatowany łańcuch znaków)
      *
      * @return string
      */
     public function getDefaultController();
 
     /**
-     * Set the default action (unformatted string)
+     * Ustawia nazwę domyślnej akcji (niesformatowany łańcuch znaków)
      *
      * @param string $action
      * @return Zend_Controller_Front
@@ -285,89 +288,90 @@ class My_Controller_Front extends Zend_Controller_Front
     public function setDefaultAction($action);
 
     /**
-     * Retrieve the default action (unformatted string)
+     * Pobiera nazwę domyślnej akcji (niesformatowany łańcuch znaków)
      *
      * @return string
      */
     public function getDefaultAction();
 
     /**
-     * Set request class/object
+     * Ustawia klasę/obiekt żądania
      *
-     * Set the request object.  The request holds the request environment.
+     * Ustawia obiekt żądania. Obiekt żądania przechowuje środowisko żądania
      *
-     * If a class name is provided, it will instantiate it
+     * Jeśli podano nazwę klasy, zostanie utworzona jej instancja
      *
      * @param string|Zend_Controller_Request_Abstract $request
-     * @throws Zend_Controller_Exception if invalid request class
+     * @throws Zend_Controller_Exception jeśli podano nieprawidłową klasę żądania
      * @return Zend_Controller_Front
      */
     public function setRequest($request);
 
     /**
-     * Return the request object.
+     * Zwraca obiekt żądania.
      *
      * @return null|Zend_Controller_Request_Abstract
      */
     public function getRequest();
 
     /**
-     * Set router class/object
+     * Ustawia klasę/obiekt routera
      *
-     * Set the router object.  The router is responsible for mapping
-     * the request to a controller and action.
+     * Ustawia obiekt routera. Router jest odpowiedzialny za mapowanie żądania
+     * do nazwy kontrolera oraz akcji
      *
-     * If a class name is provided, instantiates router with any parameters
-     * registered via {@link setParam()} or {@link setParams()}.
+     * Jeśli podana jest nazwa klasy, tworzona jest instancja routera z
+     * wszystkimi parametrami zarejestrowanymi za pomocą {@link setParam()} 
+     * lub {@link setParams()}.
      *
      * @param string|Zend_Controller_Router_Interface $router
-     * @throws Zend_Controller_Exception if invalid router class
+     * @throws Zend_Controller_Exception jeśli podano nieprawidłową klasę kontrolera
      * @return Zend_Controller_Front
      */
     public function setRouter($router);
 
     /**
-     * Return the router object.
+     * Zwraca obiekt routera.
      *
-     * Instantiates a Zend_Controller_Router object if no router currently set.
+     * Tworzy instancję obiektu Zend_Controller_Router jeśli żaden nie jest ustawiony.
      *
      * @return null|Zend_Controller_Router_Interface
      */
     public function getRouter();
 
     /**
-     * Set the base URL used for requests
+     * Ustawia bazowy adres URL dla żądań
      *
-     * Use to set the base URL segment of the REQUEST_URI to use when 
-     * determining PATH_INFO, etc. Examples:
+     * Używana do ustawienia bazowej części adresu URL dla REQUEST_URI w celu
+     * określenia ścieżki PATH_INFO, itp. Przykłady:
      * - /admin
      * - /myapp
      * - /subdir/index.php
      *
-     * Note that the URL should not include the full URI. Do not use:
+     * Zauważ, że ten adres URL nie powinien zawierać całego adresu URI. Nie używaj:
      * - http://example.com/admin
      * - http://example.com/myapp
      * - http://example.com/subdir/index.php
      *
-     * If a null value is passed, this can be used as well for autodiscovery (default).
+     * Jeśli przekazana jest wartość null, może być ona wykryta (domyślnie).
      * 
      * @param string $base
      * @return Zend_Controller_Front
-     * @throws Zend_Controller_Exception for non-string $base
+     * @throws Zend_Controller_Exception dla zmiennej $base która nie jest łańcuchem znaków
      */
     public function setBaseUrl($base = null);
 
     /**
-     * Retrieve the currently set base URL
+     * Pobiera obecnie ustawiony bazowy URL
      * 
      * @return string
      */
     public function getBaseUrl();
 
     /**
-     * Set the dispatcher object.  The dispatcher is responsible for
-     * taking a Zend_Controller_Dispatcher_Token object, instantiating the controller, and
-     * call the action method of the controller.
+     * Ustawia obiekt uruchamiający. Jest on odpowiedzialny za 
+     * pobranie obiektu Zend_Controller_Dispatcher_Token, tworzenie instancji
+     * kontrolera, oraz wywoływanie metody akcji tego kontrolera.
      *
      * @param Zend_Controller_Dispatcher_Interface $dispatcher
      * @return Zend_Controller_Front
@@ -375,35 +379,35 @@ class My_Controller_Front extends Zend_Controller_Front
     public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher);
 
     /**
-     * Return the dispatcher object.
+     * Zwraca obiekt uruchamiający.
      *
      * @return Zend_Controller_DispatcherInteface
      */
     public function getDispatcher();
 
     /**
-     * Set response class/object
+     * Ustawia klasę/obiekt odpowiedzi
      *
-     * Set the response object.  The response is a container for action
-     * responses and headers. Usage is optional.
+     * Ustawia obiekt odpowiedzi. Obiekt odpowiedzi jest pojemnikiemn na
+     * odpowiedź akcji oraz nagłówki. Użycie jest opcjonalne.
      *
-     * If a class name is provided, instantiates a response object.
+     * Jeśli podano nazwę klasy, zostanie utworzona jej instancja
      *
      * @param string|Zend_Controller_Response_Abstract $response
-     * @throws Zend_Controller_Exception if invalid response class
+     * @throws Zend_Controller_Exception jeśli klasa odpowiedzi jest nieprawidłowa
      * @return Zend_Controller_Front
      */
     public function setResponse($response);
 
     /**
-     * Return the response object.
+     * Zwraca obiekt odpowiedzi.
      *
      * @return null|Zend_Controller_Response_Abstract
      */
     public function getResponse();
 
     /**
-     * Add or modify a parameter to use when instantiating an action controller
+     * Dodaje lub modyfikuje parametr do użycia przez kontrolery akcji
      *
      * @param string $name
      * @param mixed $value
@@ -412,7 +416,7 @@ class My_Controller_Front extends Zend_Controller_Front
     public function setParam($name, $value);
 
     /**
-     * Set parameters to pass to action controller constructors
+     * Ustawia parametry do przekazania do konstruktorów kontrolerów akcji
      *
      * @param array $params
      * @return Zend_Controller_Front
@@ -420,7 +424,7 @@ class My_Controller_Front extends Zend_Controller_Front
     public function setParams(array $params);
 
     /**
-     * Retrieve a single parameter from the controller parameter stack
+     * Odbiera pojedynczy parametr ze stosu parametrów kontrolera
      * 
      * @param string $name 
      * @return mixed
@@ -428,26 +432,26 @@ class My_Controller_Front extends Zend_Controller_Front
     public function getParam($name);
 
     /**
-     * Retrieve action controller instantiation parameters
+     * Odbiera parametry wywołania kontrolera
      *
      * @return array
      */
     public function getParams();
 
     /**
-     * Clear the controller parameter stack
+     * Czyści stos parametrów kontrolera
      *
-     * By default, clears all parameters. If a parameter name is given, clears 
-     * only that parameter; if an array of parameter names is provided, clears 
-     * each.
+     * Domyślnie czyści wszystkie parametry. Jeśli podana została nazwa parametru,
+     * czyści tylko ten parametr; jeśli podana została tablica nazw, czyści
+     * wszystkie podane parametry.
      * 
-     * @param null|string|array single key or array of keys for params to clear
+     * @param null|string|array pojedynczy klucz lub tablica kluczy dla parametrów do wyczyszczenia
      * @return Zend_Controller_Front
      */
     public function clearParams($name = null);
 
     /**
-     * Register a plugin.
+     * Rejestruje wtyczkę.
      *
      * @param Zend_Controller_Plugin_Abstract $plugin
      * @return Zend_Controller_Front
@@ -455,7 +459,7 @@ class My_Controller_Front extends Zend_Controller_Front
     public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin);
 
     /**
-     * Unregister a plugin.
+     * Wyrejestrowuje wtyczkę.
      *
      * @param Zend_Controller_Plugin_Abstract $plugin
      * @return Zend_Controller_Front
@@ -463,50 +467,49 @@ class My_Controller_Front extends Zend_Controller_Front
     public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin);
 
     /**
-     * Set whether exceptions encounted in the dispatch loop should be thrown 
-     * or caught and trapped in the response object
+     * Ustawia czy wyjątki napotkane w pętli uruchomieniowej mają być wyrzucane
+     * czy mają być łapane w obiekcie odpowiedzi
      *
-     * Default behaviour is to trap them in the response object; call this 
-     * method to have them thrown.
+     * Domyślnym zachowaniem jest złapanie ich w obiekcie odpowiedzi; wywołaj 
+     * tę metodę aby spowodować wyrzucenie ich
      * 
-     * @param boolean $flag Defaults to true
-     * @return boolean Returns current setting
+     * @param boolean $flag Domyślnie ma wartość true
+     * @return boolean Zwraca obecne ustawienie
      */
     public function throwExceptions($flag = null);
 
     /**
-     * Set whether {@link dispatch()} should return the response without first 
-     * rendering output. By default, output is rendered and dispatch() returns 
-     * nothing.
+     * Ustawia czy {@link dispatch()} ma zwracać odpowiedź bez wcześniejszego
+     * renderowania danych wyjściowych. Domyślnie dane wyjsciowe są renderowane
+     * a metoda dispatch() nie zwraca nic.
      * 
      * @param boolean $flag 
-     * @return boolean Returns current setting
+     * @return boolean Zwraca obecne ustawienie
      */
     public function returnResponse($flag = null);
 
     /**
-     * Dispatch an HTTP request to a controller/action.
+     * Uruchamia żądanie HTTP do kontrolera/akcji.
      *
      * @param Zend_Controller_Request_Abstract|null $request
      * @param Zend_Controller_Response_Abstract|null $response
-     * @return void|Zend_Controller_Response_Abstract Returns response object if returnResponse() is true
+     * @return void|Zend_Controller_Response_Abstract Zwraca obiekt odpowiedzi jeśli returnResponse() zwraca true
      */
     public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
 ]]></programlisting>
 
         <para>
-            The purpose of the front controller is to setup the request
-            environment, route the incoming request, and then dispatch any
-            discovered actions. Finally, it aggregates any responses and returns
-            them.
+            Zastosowaniem kontrolera frontowego jest ustawienie środowiska
+            żądania, dopasowanie tras dla żądania, oraz uruchomienie wszystkich
+            akcji. Ostatecznie przechowuje on odpowiedzi i następnie je zwraca.
         </para>
 
         <para>
-            The main reasons to extend the front controller would be to change
-            the logic for one of the accessor methods (for instance, to load a
-            different default router or dispatcher, or to specify different
-            logic for how controller directories are handled), or to change how
-            routing and dispatching occur.
+            Głównym powodem rozszerzenia kontrolera frontowego może być potrzeba
+            zmiany logiki dla jednej z metod dostępowych (na przykład, aby
+            załadować inny domyślny router lub obiekt uruchamiający, lub aby
+            określić inną logikę obsługi ścieżek kontrolerów), lub potrzeba
+            zmiany działania routingu lub procesu uruchomienia.
         </para>
     </sect2>
 
