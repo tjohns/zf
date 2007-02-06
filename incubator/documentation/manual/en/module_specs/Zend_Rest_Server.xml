@@ -11,8 +11,10 @@
 
     <sect2 id="zend.rest.server.usage">
         <title>REST Server Usage</title>
+
 		<example>
 			<title>Basic Zend_Rest_Server Usage - Classes</title>
+
         	<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 require_once 'My/Service/Class.php';
@@ -23,11 +25,20 @@ $server->handle();
 ?>]]>
 			</programlisting>
 		</example>
+
 		<example>
 			<title>Basic Zend_Rest_Server Usage - Functions</title>
+
 			<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
+/**
+ * Say Hello
+ *
+ * @param string $who
+ * @param string $when
+ * @return string
+ */
 function sayHello($who, $when)
 {
 	return "Hello $who, Good $when";
@@ -43,42 +54,60 @@ $server->handle();
 
 	<sect2 id="zend.rest.server.args">
 		<title>Calling a Zend_Rest_Server Service</title>
+
 		<para>
-			To call a <code>Zend_Rest_Server</code> service, you must supply a GET/POST <code>method</code> argument
-			with a value that is the method you wish to call. You can then follow that up with any number of arguments
-			using either the name of the argument (i.e. "who") or using <code>arg</code> following by the numeric position
-			of the argument (i.e. "arg1").
+            To call a <code>Zend_Rest_Server</code> service, you must supply a
+            GET/POST <code>method</code> argument with a value that is the
+            method you wish to call. You can then follow that up with any number
+            of arguments using either the name of the argument (i.e. "who") or
+            using <code>arg</code> following by the numeric position of the
+            argument (i.e. "arg1").
 		</para>
+
         <note>
             <title>Numeric index</title>
     	    <para>
                 Numeric arguments use a 1-based index.
             </para>
         </note>
+
 		<para>
 			To call <code>sayHello</code> from the example above, you can use either:
 		</para>
+
 		<para>
 			<code>?method=sayHello&amp;who=Davey&amp;when=Day</code>
 		</para>
+
 		<para>
 			or:
 		</para>
+
 		<para>
 			<code>?method=sayHello&amp;arg1=Davey&amp;arg2=Day</code>
 		</para>
     </sect2>
 
 	<sect2 id="zend.rest.server.customstatus">
-		<title>Sending Custom Statuses</title>
+		<title>Sending A Custom Status</title>
+
 		<para>
-			When returning values, to return a custom status, you may return an array with a <code>status</code> key.
+            When returning values, to return a custom status, you may return an
+            array with a <code>status</code> key.
 		</para>
+
 		<example>
-			<title>Returning Custom Statuses</title>
+			<title>Returning Custom Status</title>
 			<programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
+/**
+ * Say Hello
+ *
+ * @param string $who
+ * @param string $when
+ * @return array
+ */
 function sayHello($who, $when)
 {
 	return array('msg' => "An Error Occurred", 'status' => false);
@@ -91,17 +120,29 @@ $server->handle();
 			</programlisting>
 		</example>
 	</sect2>
+
 	<sect2 id="zend.rest.server.customxml">
 		<title>Returning Custom XML Responses</title>
+
 		<para>
-			If you wish to return custom XML, simply return a <code>DomDocument</code>, <code>DomElement</code> or <code>SimpleXMLElement</code>
-			object.
+            If you wish to return custom XML, simply return a
+            <code>DOMDocument</code>, <code>DOMElement</code> or
+            <code>SimpleXMLElement</code> object.
 		</para>
+
 		<example>
 			<title>Return Custom XML</title>
+
 			<programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
+/**
+ * Say Hello
+ *
+ * @param string $who
+ * @param string $when
+ * @return SimpleXMLElement
+ */
 function sayHello($who, $when)
 {
 	$xml ='<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -121,11 +162,14 @@ $server->handle();
 ?>]]>
 			</programlisting>
 		</example>
+
 		<para>
-			The response from the service will be returned without modification to the client.
+            The response from the service will be returned without modification
+            to the client.
 		</para>
 	</sect2>			
 </sect1>
+
 <!--
 vim:se ts=4 sw=4 et:
 -->
