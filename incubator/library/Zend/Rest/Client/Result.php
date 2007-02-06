@@ -41,17 +41,29 @@ class Zend_Rest_Client_Result implements IteratorAggregate {
 	{
 		$this->_sxml = simplexml_load_string($data);
 	}
+
+    /**
+     * Casts a node to its appropriate PHP value
+     *
+     * @param SimpleXMLElement $value 
+     * @return mixed
+     */
+    protected function _castReturnValue(SimpleXMLElement $value)
+    {
+        $node = dom_import_simplexml($value);
+        return $node->nodeValue;
+    }
 	
 	/**
 	 * Get Property Overload
 	 *
 	 * @param string $name
-	 * @return null|string|array Null if not found, string if only one value found, array of results otherwise
+	 * @return mixed Null if not found, PHP value if only one value found, array of SimplXMLElement nodes otherwise
 	 */
 	public function __get($name)
 	{
 		if (isset($this->_sxml->{$name})) {
-			return (string) $this->_sxml->{$name};
+			return $this->_castReturnValue($this->_sxml->{$name});
 		}
 		
 		$result = $this->_sxml->xpath("//$name");
@@ -60,7 +72,7 @@ class Zend_Rest_Client_Result implements IteratorAggregate {
 		if ($count == 0) {
 			return null;
 		} elseif ($count == 1) {
-			return (string) $result[0];
+			return $this->_castReturnValue($result[0]);
 		} else {
 			return $result;
 		}
