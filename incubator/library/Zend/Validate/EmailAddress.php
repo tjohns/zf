@@ -84,9 +84,12 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
     /**
      * Defined by Zend_Validate_Interface
      *
-     * Returns true if and only if $value is a valid email address
-     *
-     * @param  string $value
+     * Returns true if and only if $value is a valid email address 
+     * according to RFC2822 
+     * 
+     * @link http://www.ietf.org/rfc/rfc2822.txt RFC2822
+     * @link http://www.columbia.edu/kermit/ascii.html US-ASCII characters
+     * @param string $value
      * @return boolean
      */
     public function isValid($value)
@@ -98,7 +101,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
             $localPart	= $matches[1];
             $hostname 	= $matches[2];
             
-           /**
+            /**
              * @todo ZF-42 check isHostname against RFC spec
              * @todo ZF-42 implement basic MX check on hostname via dns_get_record()
              */
@@ -116,44 +119,36 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
             // First try to match the local part on the common dot-atom format
             $localResult = false;
             
-            // Dot-atom characters are:
-            // ALPHA / DIGIT / and "!", "#", "$", "%", "&", "'", "*", "+", 
-            // "-", "/", "=", "?", "^", "_", "`", "{", "|", "}", "~", "."
-            // Dot character "." must be surrounded by other non-dot characters
-            $dotAtom = '[a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f\x3d';
-            $dotAtom .= '\x3f\x5e\x5f\x60\x7b\x7c\x7d\x7e\x2e]';
-            if ( (preg_match('/^' . $dotAtom . '+$/', $localPart)) && 
-                 (strpos($localPart, '.') !== 0) && 
-                 (strrpos($localPart, '.') !== strlen($localPart) - 1) ) {
+            // Dot-atom characters are: 1*atext *("." 1*atext)
+            // atext: ALPHA / DIGIT / and "!", "#", "$", "%", "&", "'", "*", 
+            //        "-", "/", "=", "?", "^", "_", "`", "{", "|", "}", "~"
+            $atext = 'a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f';
+            $atext .= '\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d';
+            if (preg_match('/^[' . $atext . ']+(\x2e+[' . $atext . ']+)*$/', $localPart)) {
                 $localResult = true;
             }
             
-            /**
-             * @todo ZF-42 check Quoted-string character class
-             */ 
             // If not matched, try quoted string format
             if (!$localResult) {
-                // Quoted-string characters are:
-                // Any US-ASCII characters except "\" or double-quote "
                 
-                // DQUOTE *([FWS] qcontent) [FWS] DQUOTE
-                $quoted = '\x22[^\x5c\x22]+\x22';
-                
-                if (preg_match('/^' . $quoted . '$/', $localPart)) {
+                // Quoted-string characters are: DQUOTE *([FWS] qtext/quoted-pair) [FWS] DQUOTE
+                // Folding White Space: ([*WSP CRLF] 1*WSP)
+                // qtext: Non white space controls, and the rest of the US-ASCII characters not 
+                //   including "\" or the quote character
+                // quoted-pair: "\" characters
+                $wsp        = '\x09\x20';
+                $clrf       = '\x0d\x0a';
+                $fws        = '(([' . $wsp . ']|' . $clrf . ')?[' . $wsp . ']+)?';
+                $qtext      = '\x01-\x08\x0b\x0c\x0e-\x1f\x7f';
+                $qtext      .= '\x21\x23-\x5b\x5d-\x7e';
+                $quotedPair = '\x22\x5c\x22';
+                if (preg_match('/^\x22(' . $fws . '|[' . $qtext . ']|' . $quotedPair . ')*' . $fws . '*\x22$/', $localPart)) {
                     $localResult = true;
                 }
             }
             
-            /**
-             * @todo ZF-42 check character class, dummy if else statement below to populate error messages
-             */ 
-            // If not matched, try obsolete format
             if (!$localResult) {
-                if (true === 0) {
-                    
-                } else {
-                    $this->_messages[] = "'$localPart' is not a valid local-part according to RFC 2822 for email address '$value'";
-                }
+                 $this->_messages[] = "'$localPart' is not a valid local part for email address '$value'";
             }
             
             // If both parts valid, return true
@@ -164,7 +159,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
             }
             
         } else {
-            $this->_messages[] = "'$value' is not in the valid email address format local-part@hostname";
+            $this->_messages[] = "'$value' is not a valid email address in the basic format local-part@hostname";
             return false;
         }
     }
