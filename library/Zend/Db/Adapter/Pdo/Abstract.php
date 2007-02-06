@@ -130,6 +130,28 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Special handling for PDO query().
+     * All bind parameter names must begin with ':'
+     *
+     * @param string|Zend_Db_Select $sql The SQL statement with placeholders.
+     * @param array $bind An array of data to bind to the placeholders.
+     * @return Zend_Db_Pdo_Statement
+     */
+    public function query($sql, $bind = array())
+    {
+        if (is_array($bind)) {
+            foreach ($bind as $name => $value) {
+                if (!is_int($name) && !preg_match('/^:/', $name)) {
+                    $newName = ":$name";
+                    unset($bind[$name]);
+                    $bind[$newName] = $value;
+                }
+            }
+        }
+        return parent::query($sql, $bind);
+    }
+
+    /**
      * Begin a transaction.
      */
     protected function _beginTransaction()
