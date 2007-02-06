@@ -131,18 +131,14 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
             // If not matched, try quoted string format
             if (!$localResult) {
                 
-                // Quoted-string characters are: DQUOTE *([FWS] qtext/quoted-pair) [FWS] DQUOTE
-                // Folding White Space: ([*WSP CRLF] 1*WSP)
+                // Quoted-string characters are: DQUOTE *(qtext/quoted-pair) DQUOTE
                 // qtext: Non white space controls, and the rest of the US-ASCII characters not 
                 //   including "\" or the quote character
                 // quoted-pair: "\" characters
-                $wsp        = '\x09\x20';
-                $clrf       = '\x0d\x0a';
-                $fws        = '(([' . $wsp . ']|' . $clrf . ')?[' . $wsp . ']+)?';
                 $qtext      = '\x01-\x08\x0b\x0c\x0e-\x1f\x7f';
                 $qtext      .= '\x21\x23-\x5b\x5d-\x7e';
                 $quotedPair = '\x22\x5c\x22';
-                if (preg_match('/^\x22(' . $fws . '|[' . $qtext . ']|' . $quotedPair . ')*' . $fws . '*\x22$/', $localPart)) {
+                if (preg_match('/^\x22([' . $qtext . ']|' . $quotedPair . ')*\x22$/', $localPart)) {
                     $localResult = true;
                 }
             }
