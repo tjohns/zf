@@ -192,8 +192,8 @@ if ($unit->equals($unit2)) {
 
         <para>
             To determine if a measurement is less than or greater than another, use <code>compare()</code>, which
-            returns 0, -1 or 1 depending on the difference between the two objects. Identical measurements will return 0.
-            Lesser ones will return a negative, greater ones a positive value.
+            returns 0, -1 or 1 depending on the difference between the two objects. Identical measurements will return
+            0. Lesser ones will return a negative, greater ones a positive value.
         </para>
 
         <para>
