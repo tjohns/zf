@@ -28,7 +28,9 @@ require_once 'Zend/Db.php';
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Util/Filter.php';
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @package    Zend_Db_Adapter_Pdo_Common

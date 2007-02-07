@@ -1,4 +1,8 @@
 <?php
+require_once 'PHPUnit/Util/Filter.php';
+
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 $content = $this->render($this->content);
 require_once 'Zend/Log.php';
 require_once 'Zend/Log/Adapter/File.php';
