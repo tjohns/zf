@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Filter
+ * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -22,16 +22,32 @@
 
 
 /**
- * @see Zend_Exception
- */
-require_once 'Zend/Exception.php';
-
-
-/**
  * @category   Zend
- * @package    Zend_Filter
+ * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Exception extends Zend_Exception
-{}
+interface Zend_Validate_Interface
+{
+    /**
+     * Returns true if and only if $value meets the validation requirements
+     *
+     * If $value fails validation, then this method returns false, and $messages will contain an array of
+     * messages that explain why the validation failed.
+     *
+     * @param  mixed $value
+     * @throws Zend_Valid_Exception If validation of $value is impossible
+     * @return boolean
+     */
+    public function isValid($value);
+
+    /**
+     * Returns an array of messages that explain why a previous isValid() call returned false
+     *
+     * If isValid() was never called or if the most recent isValid() call returned true, then
+     * this method returns an empty array.
+     *
+     * @return array
+     */
+    public function getMessages();
+}

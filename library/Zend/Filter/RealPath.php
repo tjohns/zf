@@ -22,9 +22,9 @@
 
 
 /**
- * @see Zend_Exception
+ * @see Zend_Filter_Interface
  */
-require_once 'Zend/Exception.php';
+require_once 'Zend/Filter/Interface.php';
 
 
 /**
@@ -33,5 +33,18 @@ require_once 'Zend/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Exception extends Zend_Exception
-{}
+class Zend_Filter_RealPath implements Zend_Filter_Interface
+{
+    /**
+     * Defined by Zend_Filter_Interface
+     *
+     * Returns realpath($value)
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    public function filter($value)
+    {
+        return realpath($value);
+    }
+}
