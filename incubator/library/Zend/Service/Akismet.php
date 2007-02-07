@@ -93,11 +93,13 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
      * 
      * @param string $blogUrl
      * @return Zend_Service_Akismet
+     * @throws Zend_Service_Exception if invalid URL provided
      */
     public function setBlogUrl($blogUrl)
     {
         require_once 'Zend/Uri.php';
         if (!Zend_Uri::check($blogUrl)) {
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception('Invalid url provided for blog');
         }
 
@@ -164,11 +166,12 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
      * 
      * @param int $port 
      * @return Zend_Service_Akismet
-     * @throws Zend_Service_Exception
+     * @throws Zend_Service_Exception if non-integer value provided
      */
     public function setPort($port)
     {
         if (!is_int($port)) {
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception('Invalid port');
         }
 
@@ -188,16 +191,19 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
 
     /**
      * Set User Agent 
+     *
+     * Should be of form "Some user agent/version | Akismet/version"
      * 
      * @param string $userAgent 
      * @return Zend_Service_Akismet
-     * @throws Zend_Service_Exception
+     * @throws Zend_Service_Exception with invalid user agent string
      */
     public function setUserAgent($userAgent)
     {
         if (!is_string($userAgent)
             || !preg_match(":^[^\n/]*/[^ ]* \| Akismet/[0-9\.]*$:i", $userAgent))
         {
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception('Invalid User Agent string; must be of format "Application name/version | Akismet/version"');
         }
 
@@ -263,11 +269,13 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
      * @param string $path
      * @param array $params 
      * @return Zend_Http_Response
+     * @throws Zend_Service_Exception if missing user_ip or user_agent fields
      */
     protected function _makeApiCall($path, $params)
     {
         if (empty($params['user_ip']) || empty($params['user_agent'])) {
-            throw new Zend_Service_Exception('Missing required Akismet fields');
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('Missing required Akismet fields (user_ip and user_agent are required)');
         }
 
         if (!isset($params['blog'])) {
