@@ -33,13 +33,9 @@ require_once 'Zend/AuthTest.php';
 require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Console/GetoptTest.php';
 //require_once 'Zend/Currency/AllTests.php';
-require_once 'Zend/FilterTest.php';
-require_once 'Zend/Filter/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/ValidateTest.php';
-require_once 'Zend/Validate/AllTests.php';
 require_once 'Zend/TranslateTest.php';
 require_once 'Zend/Translate/AllTests.php';
 
@@ -68,8 +64,6 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_Console_GetoptTest');
 // Do not include Zend_Currency as empty testbeds can cause phpunit to crash
 //        $suite->addTest(Zend_Currency_AllTests::suite());
-        $suite->addTestSuite('Zend_FilterTest');
-        $suite->addTest(Zend_Filter_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
         /*
          * To run the unit tests for Zend_Session*:
@@ -78,8 +72,6 @@ class Zend_AllTests
          */
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
-        $suite->addTestSuite('Zend_ValidateTest');
-        $suite->addTest(Zend_Validate_AllTests::suite());
         $suite->addTestSuite('Zend_TranslateTest');
         $suite->addTest(Zend_Translate_AllTests::suite());
 
