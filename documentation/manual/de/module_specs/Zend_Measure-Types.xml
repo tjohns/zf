@@ -1,312 +1,315 @@
 <sect1 id="zend.measure.types">
+
     <title>Types of measurements</title>
 
     <para>
-        Here you can find a list of all supported measurement types and an example of the
-        standard useage for such measurements.
+        Here you can find a list of all supported measurement types and an example of the standard useage for such
+        measurements.
     </para>
 
-        <table>
-            <title>List of measurement types</title>
-            <tgroup cols="4">
-                <thead>
-                    <row>
-                        <entry>Typ</entry>
-                        <entry>Class</entry>
-                        <entry>Standardunit</entry>
-                        <entry>Description</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry>Acceleration</entry>
-                        <entry>Zend_Measure_Acceleration</entry>
-                        <entry>Meter per square second | <code>m/s²</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Acceleration</code> covers the 
+    <table>
+        <title>List of measurement types</title>
+        <tgroup cols="4">
+            <thead>
+                <row>
+                    <entry>Typ</entry>
+                    <entry>Class</entry>
+                    <entry>Standardunit</entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>Acceleration</entry>
+                    <entry>Zend_Measure_Acceleration</entry>
+                    <entry>Meter per square second | <code>m/s²</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Acceleration</code> covers the 
                             physical factor of acceleration.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Angle</entry>
-                        <entry>Zend_Measure_Angle</entry>
-                        <entry>Radiant | <code>rad</code></entry>
-                        <entry><code>Zend_Measure_Angle</code> covers angular dimensions.</entry>
-                    </row>
-                    <row>
-                        <entry>Area</entry>
-                        <entry>Zend_Measure_Area</entry>
-                        <entry>Square meter | <code>m²</code></entry>
-                        <entry><code>Zend_Measure_Area</code> covers square measures.</entry>
-                    </row>
-                    <row>
-                        <entry>Binaray</entry>
-                        <entry>Zend_Measure_Binary</entry>
-                        <entry>Byte | <code>b</code></entry>
-                        <entry><code>Zend_Measure_Binary</code> covers binary convertions.</entry>
-                    </row>
-                    <row>
-                        <entry>Capacitance</entry>
-                        <entry>Zend_Measure_Capacitance</entry>
-                        <entry>Farad | <code>F</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Capacitance</code> covers physical factor of capacitance.
+                </row>
+                <row>
+                    <entry>Angle</entry>
+                    <entry>Zend_Measure_Angle</entry>
+                    <entry>Radiant | <code>rad</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Angle</code> covers angular dimensions.</entry>
+                </row>
+                <row>
+                    <entry>Area</entry>
+                    <entry>Zend_Measure_Area</entry>
+                    <entry>Square meter | <code>m²</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Area</code> covers square measures.</entry>
+                </row>
+                <row>
+                    <entry>Binaray</entry>
+                    <entry>Zend_Measure_Binary</entry>
+                    <entry>Byte | <code>b</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Binary</code> covers binary convertions.</entry>
+                </row>
+                <row>
+                    <entry>Capacitance</entry>
+                    <entry>Zend_Measure_Capacitance</entry>
+                    <entry>Farad | <code>F</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Capacitance</code> covers physical factor of capacitance.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Cooking volumes</entry>
-                        <entry>Zend_Measure_Cooking_Volume</entry>
-                        <entry>Cubic meter | <code>m³</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Cooking_Volume</code> covers volumes 
+                </row>
+                <row>
+                    <entry>Cooking volumes</entry>
+                    <entry>Zend_Measure_Cooking_Volume</entry>
+                    <entry>Cubic meter | <code>m³</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Cooking_Volume</code> covers volumes 
                             which are used for cooking or written in cookbooks.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Cooking weights</entry>
-                        <entry>Zend_Measure_Cooking_Weight</entry>
-                        <entry>Gram | <code>g</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Cooking_Weight</code> covers the weights 
+                </row>
+                <row>
+                    <entry>Cooking weights</entry>
+                    <entry>Zend_Measure_Cooking_Weight</entry>
+                    <entry>Gram | <code>g</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Cooking_Weight</code> covers the weights 
                             which are used for cooking or written in cookbooks.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Current</entry>
-                        <entry>Zend_Measure_Current</entry>
-                        <entry>Ampere | <code>A</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Current</code> covers the physical factor of current.
+                </row>
+                <row>
+                    <entry>Current</entry>
+                    <entry>Zend_Measure_Current</entry>
+                    <entry>Ampere | <code>A</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Current</code> covers the physical factor of current.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Density</entry>
-                        <entry>Zend_Measure_Density</entry>
-                        <entry>Kilogram per cubic meter | <code>kg/m³</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Density</code> covers the physical factor of density.
+                </row>
+                <row>
+                    <entry>Density</entry>
+                    <entry>Zend_Measure_Density</entry>
+                    <entry>Kilogram per cubic meter | <code>kg/m³</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Density</code> covers the physical factor of density.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Energy</entry>
-                        <entry>Zend_Measure_Energy</entry>
-                        <entry>Joule | <code>J</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Energy</code> covers the physical factor of energy.
+                </row>
+                <row>
+                    <entry>Energy</entry>
+                    <entry>Zend_Measure_Energy</entry>
+                    <entry>Joule | <code>J</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Energy</code> covers the physical factor of energy.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Force</entry>
-                        <entry>Zend_Measure_Force</entry>
-                        <entry>Newton | <code>N</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Force</code> covers the physical factor of force.
+                </row>
+                <row>
+                    <entry>Force</entry>
+                    <entry>Zend_Measure_Force</entry>
+                    <entry>Newton | <code>N</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Force</code> covers the physical factor of force.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Flow (mass)</entry>
-                        <entry>Zend_Measure_Flow_Mass</entry>
-                        <entry>Kilogram per second | <code>kg/s</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Flow_Mass</code> covers the physical factor of flow rate.
+                </row>
+                <row>
+                    <entry>Flow (mass)</entry>
+                    <entry>Zend_Measure_Flow_Mass</entry>
+                    <entry>Kilogram per second | <code>kg/s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Flow_Mass</code> covers the physical factor of flow rate.
                             The weight of the flowing mass is used as reference point within this class.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Flow (mole)</entry>
-                        <entry>Zend_Measure_Flow_Mole</entry>
-                        <entry>Mole per second | <code>mol/s</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Flow_Mole</code> covers the physical factor of flow rate.
+                </row>
+                <row>
+                    <entry>Flow (mole)</entry>
+                    <entry>Zend_Measure_Flow_Mole</entry>
+                    <entry>Mole per second | <code>mol/s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Flow_Mole</code> covers the physical factor of flow rate.
                             The density of the flowing mass is used as reference point within this class.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Flow (volume)</entry>
-                        <entry>Zend_Measure_Flow_Volume</entry>
-                        <entry>Cubic meter per second | <code>m³/s</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Flow_Volume</code> covers the physical factor of flow rate.
+                </row>
+                <row>
+                    <entry>Flow (volume)</entry>
+                    <entry>Zend_Measure_Flow_Volume</entry>
+                    <entry>Cubic meter per second | <code>m³/s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Flow_Volume</code> covers the physical factor of flow rate.
                             The volume of the flowing mass is used as reference point within this class.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Frequency</entry>
-                        <entry>Zend_Measure_Frequency</entry>
-                        <entry>Hertz | <code>Hz</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Frequency</code> covers the physical factor of frequency.
+                </row>
+                <row>
+                    <entry>Frequency</entry>
+                    <entry>Zend_Measure_Frequency</entry>
+                    <entry>Hertz | <code>Hz</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Frequency</code> covers the physical factor of frequency.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Illumination</entry>
-                        <entry>Zend_Measure_Illumination</entry>
-                        <entry>Lux | <code>lx</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Illumination</code> covers the physical factor of light density.
+                </row>
+                <row>
+                    <entry>Illumination</entry>
+                    <entry>Zend_Measure_Illumination</entry>
+                    <entry>Lux | <code>lx</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Illumination</code> covers the physical factor of light density.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Length</entry>
-                        <entry>Zend_Measure_Length</entry>
-                        <entry>Meter | <code>m</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Length</code> covers the physical factor of length.
+                </row>
+                <row>
+                    <entry>Length</entry>
+                    <entry>Zend_Measure_Length</entry>
+                    <entry>Meter | <code>m</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Length</code> covers the physical factor of length.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Lightness</entry>
-                        <entry>Zend_Measure_Lightness</entry>
-                        <entry>Candela per square meter | <code>cd/m²</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Ligntness</code> covers the physical factor of light energy.
+                </row>
+                <row>
+                    <entry>Lightness</entry>
+                    <entry>Zend_Measure_Lightness</entry>
+                    <entry>Candela per square meter | <code>cd/m²</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Ligntness</code> covers the physical factor of light energy.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Number</entry>
-                        <entry>Zend_Measure_Number</entry>
-                        <entry>Decimal | <code>(10)</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Number</code> converts between number formats.
+                </row>
+                <row>
+                    <entry>Number</entry>
+                    <entry>Zend_Measure_Number</entry>
+                    <entry>Decimal | <code>(10)</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Number</code> converts between number formats.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Power</entry>
-                        <entry>Zend_Measure_Power</entry>
-                        <entry>Watt | <code>W</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Power</code> covers the physical factor of power.
+                </row>
+                <row>
+                    <entry>Power</entry>
+                    <entry>Zend_Measure_Power</entry>
+                    <entry>Watt | <code>W</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Power</code> covers the physical factor of power.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Pressure</entry>
-                        <entry>Zend_Measure_Pressure</entry>
-                        <entry>Newton per square meter | <code>N/m²</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Pressure</code> covers the physical factor of pressure.
+                </row>
+                <row>
+                    <entry>Pressure</entry>
+                    <entry>Zend_Measure_Pressure</entry>
+                    <entry>Newton per square meter | <code>N/m²</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Pressure</code> covers the physical factor of pressure.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Speed</entry>
-                        <entry>Zend_Measure_Speed</entry>
-                        <entry>Meter per second | <code>m/s</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Speed</code> covers the physical factor of speed.
+                </row>
+                <row>
+                    <entry>Speed</entry>
+                    <entry>Zend_Measure_Speed</entry>
+                    <entry>Meter per second | <code>m/s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Speed</code> covers the physical factor of speed.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Temperature</entry>
-                        <entry>Zend_Measure_Temperature</entry>
-                        <entry>Kelvin | <code>K</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Temperature</code> covers the physical factor of temperature.
+                </row>
+                <row>
+                    <entry>Temperature</entry>
+                    <entry>Zend_Measure_Temperature</entry>
+                    <entry>Kelvin | <code>K</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Temperature</code> covers the physical factor of temperature.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Torque</entry>
-                        <entry>Zend_Measure_Torque</entry>
-                        <entry>Newton meter | <code>Nm</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Torque</code> covers the physical factor of torque.
+                </row>
+                <row>
+                    <entry>Torque</entry>
+                    <entry>Zend_Measure_Torque</entry>
+                    <entry>Newton meter | <code>Nm</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Torque</code> covers the physical factor of torque.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Viscosity (dynamic)</entry>
-                        <entry>Zend_Measure_Viscosity_Dynamic</entry>
-                        <entry>Kilogram per meter second | <code>kg/ms</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Viscosity_Dynamic</code> covers the physical factor of viscosity.
+                </row>
+                <row>
+                    <entry>Viscosity (dynamic)</entry>
+                    <entry>Zend_Measure_Viscosity_Dynamic</entry>
+                    <entry>Kilogram per meter second | <code>kg/ms</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Viscosity_Dynamic</code> covers the physical factor of viscosity.
                             The weight of the fluid is used as reference point within this class.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Viscosity (kinematic)</entry>
-                        <entry>Zend_Measure_Viscosity_Kinematic</entry>
-                        <entry>Square meter per second | <code>m²/s</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Viscosity_Kinematic</code> covers the physical factor of viscosity.
+                </row>
+                <row>
+                    <entry>Viscosity (kinematic)</entry>
+                    <entry>Zend_Measure_Viscosity_Kinematic</entry>
+                    <entry>Square meter per second | <code>m²/s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Viscosity_Kinematic</code> covers the physical factor of viscosity.
                             The distance of the flown fluid is used as reference point within this class.
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Volume</entry>
-                        <entry>Zend_Measure_Volume</entry>
-                        <entry>Cubic meter | <code>m³</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Volume</code> covers the physical factor of volume (content).
+                </row>
+                <row>
+                    <entry>Volume</entry>
+                    <entry>Zend_Measure_Volume</entry>
+                    <entry>Cubic meter | <code>m³</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Volume</code> covers the physical factor of volume (content).
                         </entry>
-                    </row>
-                    <row>
-                        <entry>Weight</entry>
-                        <entry>Zend_Measure_Weight</entry>
-                        <entry>Kilogram | <code>kg</code></entry>
-                        <entry>
-                            <code>Zend_Measure_Weight</code> covers the physical factor of weight.
+                </row>
+                <row>
+                    <entry>Weight</entry>
+                    <entry>Zend_Measure_Weight</entry>
+                    <entry>Kilogram | <code>kg</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Weight</code> covers the physical factor of weight.
                         </entry>
-                    </row>
-                </tbody>
-            </tgroup>
-        </table>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
 
+    <para>
+        Hints for Zend_Measure_Binary :
+    </para>
+
+    <note>
+        <title>Binary conventions</title>
         <para>
-            Hints for Zend_Measure_Binary :
+            The terms kilo-, mega-, giga and so on... have to be seen, in the normal language use, for 1000 or 10³.
         </para>
+        <para>
+            In the binary format for computers the terms kilo-, mega-, giga- and so on have to be seen for a convertion
+            factor of 1024 instead of 1000.
+        </para>
+        <para>
+            To preclude confusions a few years ago the notation BI was introduced. Instead of kilobyte, kibibyte for
+            kilo-binary-byte should be used.
+        </para>
+        <para>
+            In the class BINARY both notations can be found.
+        </para>
+        <para>
+            KILOBYTE = 1024 - binary conputer conversion KIBIBYTE = 1024 - new notation KILO_BINARY_BYTE = 1024 - new
+            notation, long format KILOBYTE_SI = 1000 - SI notation for kilo (1000)
+        </para>
+        <para>
+            DVDs for example are marked with the SI-notation, but almost all harddisks are marked in computer binary
+            notation.
+        </para>
+    </note>
 
+    <para>
+        Hints for Zend_Measure_Number :
+    </para>
+
+    <para>
+        The best known number format is the decimal system.
+    </para>
+
+    <para>
+        Additionaly this class covers the octal system, the hexadecimal system, the binary system, the roman number
+        format and a few not so familiar systems.
         <note>
-            <title>Binary conventions</title>
+            <title>Be aware</title>
             <para>
-                The terms kilo-, mega-, giga and so on... have to be seen, in the normal language use, for 1000 or 10³.
-            </para>
-            <para>
-                In the binary format for computers the terms kilo-, mega-, giga- and so on have to be seen for a
-                convertion factor of 1024 instead of 1000.
-            </para>
-            <para>
-                To preclude confusions a few years ago the notation BI was introduced. Instead of kilobyte, kibibyte for
-                kilo-binary-byte should be used.
-            </para>
-            <para>
-                In the class BINARY both notations can be found.
-            </para>
-            <para>
-                KILOBYTE = 1024 - binary conputer conversion KIBIBYTE = 1024 - new notation KILO_BINARY_BYTE = 1024 -
-                new notation, long format KILOBYTE_SI = 1000 - SI notation for kilo (1000)
-            </para>
-            <para>
-                DVDs for example are marked with the SI-notation, but almost all harddisks are marked in computer binary
-                notation.
+                Be aware that only the decimal part of numbers is handled. The fractional part will be stripped.
             </para>
         </note>
+    </para>
 
+    <note>
+        <title>Roman numbers</title>
         <para>
-            Hints for Zend_Measure_Number :
+            For the roman numbersystem digits greater 4000 are supported. In reality these digits are shown with a
+            crossbeam on top of the digit.
         </para>
-
-        
         <para>
-            The best known number format is the decimal system.
+            As the crossbeam can not be shown within the computer, an underline has to be used instead of it.
         </para>
-
-        <para>
-            Additionaly this class covers the octal system, the hexadecimal system, the binary system, the roman number
-            format and a few not so familiar systems.
-            <note>
-                <title>Be aware</title>
-                <para>
-                    Be aware that only the decimal part of numbers is handled. The fractional part will be stripped.
-                </para>
-            </note>
-        </para>
-
-        <note>
-            <title>Roman numbers</title>
-            <para>
-                For the roman numbersystem digits greater 4000 are supported. In reality these digits are shown with a
-                crossbeam on top of the digit.
-            </para>
-            <para>
-                As the crossbeam can not be shown within the computer, an underline has to be used instead of it.
-            </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
@@ -317,10 +320,9 @@ $unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
 // convert to the decimal system
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
 ?>]]></programlisting>
-        </note>
-    </sect2>
+    </note>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->
-        
