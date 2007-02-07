@@ -22,6 +22,7 @@ require_once 'Zend/Mail/Pop3Test.php';
 require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
 require_once 'Zend/Mail/MessageTest.php';
+require_once 'Zend/Mail/SmtpTest.php';
 
 class Zend_Mail_AllTests
 {
@@ -43,6 +44,9 @@ class Zend_Mail_AllTests
         }
         if(TESTS_ZEND_MAIL_IMAP_ENABLED) {
             $suite->addTestSuite('Zend_Mail_ImapTest');
+        }
+        if(TESTS_ZEND_MAIL_SMTP_ENABLED) {
+            $suite->addTestSuite('Zend_Mail_SmtpTest');
         }
         if(TESTS_ZEND_MAIL_MAILDIR_ENABLED) {
             if(file_exists(dirname(__FILE__) . '/_files/test.maildir/maildir.tar')) {

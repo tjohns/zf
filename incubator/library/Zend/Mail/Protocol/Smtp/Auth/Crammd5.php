@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Client
+ * @subpackage Protocol
  * @version    $Id$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -22,80 +22,47 @@
 
 
 /**
- * Zend_Mail_Client_Smtp
+ * Zend_Mail_Protocol_Smtp
  */
-require_once 'Zend/Mail/Client/Smtp.php';
+require_once 'Zend/Mail/Protocol/Smtp.php';
 
 
 /**
- * Zend_Mail_Client_Exception
+ * Zend_Mail_Protocol_Exception
  */
-require_once 'Zend/Mail/Client/Exception.php';
+require_once 'Zend/Mail/Protocol/Exception.php';
 
 
 /**
- * Performs LOGIN authentication
+ * Performs CRAM-MD5 authentication
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Client
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Client_Smtp_Auth_Login extends Zend_Mail_Client_Smtp
+class Zend_Mail_Protocol_Smtp_Auth_Crammd5 extends Zend_Mail_Protocol_Smtp
 {
-    /**
-     * LOGIN username
-     *
-     * @var string
-     */
-    protected $_username;
-    
-    
-    /**
-     * LOGIN password
-     *
-     * @var string
-     */
-    protected $_password;
-
-    
     /**
      * Constructor.
      *
      * @param string $host   (Default: 127.0.0.1)
      * @param int    $port   (Default: null)
      * @param array  $config Auth-specific parameters
+     * @todo Parse $config with Auth-specific parameters
      */
     public function __construct($host = '127.0.0.1', $port = null, $config = null)
     {
-        if (is_array($config)) {
-            if (isset($config['username'])) {
-                $this->_username = $config['username'];
-            }
-            if (isset($config['password'])) {
-                $this->_password = $config['password'];
-            }
-        }
-        
         parent::__construct($host, $port);
     }
 
     
     /**
-     * Perform LOGIN authentication with supplied credentials
+     * @todo Perform CRAM-MD5 authentication with supplied credentials
      */
     public function auth()
     {
-        // Ensure AUTH has not already been initiated.
-        parent::auth();
-        
-        $this->_send('AUTH LOGIN');
-        $this->_expect(334);
-        $this->_send(base64_encode($this->_username));
-        $this->_expect(334);
-        $this->_send(base64_encode($this->_password));
-        $this->_expect(235);
-        $this->_auth = true;
+        throw new Zend_Mail_Protocol_Exception('CRAM-MD5 Not yet implemented.');
     }
 }

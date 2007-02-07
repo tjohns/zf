@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Client
+ * @subpackage Protocol
  * @version    $Id$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -22,30 +22,30 @@
 
 
 /**
- * Zend_Mail_Client_Smtp
+ * Zend_Mail_Protocol_Smtp
  */
-require_once 'Zend/Mail/Client/Smtp.php';
+require_once 'Zend/Mail/Protocol/Smtp.php';
 
 
 /**
- * Zend_Mail_Client_Exception
+ * Zend_Mail_Protocol_Exception
  */
-require_once 'Zend/Mail/Client/Exception.php';
+require_once 'Zend/Mail/Protocol/Exception.php';
 
 
 /**
- * Performs PLAIN authentication
+ * Performs LOGIN authentication
  *
  * @category   Zend
  * @package    Zend_Mail
- * @subpackage Client
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Client_Smtp_Auth_Plain extends Zend_Mail_Client_Smtp
+class Zend_Mail_Protocol_Smtp_Auth_Login extends Zend_Mail_Protocol_Smtp
 {
     /**
-     * PLAIN username
+     * LOGIN username
      *
      * @var string
      */
@@ -53,7 +53,7 @@ class Zend_Mail_Client_Smtp_Auth_Plain extends Zend_Mail_Client_Smtp
     
     
     /**
-     * PLAIN password
+     * LOGIN password
      *
      * @var string
      */
@@ -77,22 +77,24 @@ class Zend_Mail_Client_Smtp_Auth_Plain extends Zend_Mail_Client_Smtp
                 $this->_password = $config['password'];
             }
         }
-
+        
         parent::__construct($host, $port);
     }
 
     
     /**
-     * Perform PLAIN authentication with supplied credentials
+     * Perform LOGIN authentication with supplied credentials
      */
     public function auth()
     {
         // Ensure AUTH has not already been initiated.
         parent::auth();
         
-        $this->_send('AUTH PLAIN');
+        $this->_send('AUTH LOGIN');
         $this->_expect(334);
-        $this->_send(base64_encode(chr(0) . $this->_username . chr(0) . $this->_password));
+        $this->_send(base64_encode($this->_username));
+        $this->_expect(334);
+        $this->_send(base64_encode($this->_password));
         $this->_expect(235);
         $this->_auth = true;
     }

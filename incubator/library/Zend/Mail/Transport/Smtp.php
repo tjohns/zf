@@ -23,9 +23,9 @@
 
 
 /**
- * Zend_Mail_Client_Smtp
+ * Zend_Mail_Protocol_Smtp
  */
-require_once 'Zend/Mail/Client/Smtp.php';
+require_once 'Zend/Mail/Protocol/Smtp.php';
 
 
 /**
@@ -37,7 +37,7 @@ require_once 'Zend/Mail/Transport/Abstract.php';
 /**
  * SMTP connection object
  * 
- * Loads an instance of Zend_Mail_Client_Smtp and forwards smtp transactions
+ * Loads an instance of Zend_Mail_Protocol_Smtp and forwards smtp transactions
  *
  * @category   Zend
  * @package    Zend_Mail
@@ -88,11 +88,11 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
 
     
     /**
-     * Instance of Zend_Mail_Client_Smtp
+     * Instance of Zend_Mail_Protocol_Smtp
      *
-     * @var Zend_Mail_Client_Smtp
+     * @var Zend_Mail_Protocol_Smtp
      */
-    protected $_client;
+    protected $_connection;
 
     
     /**
@@ -123,9 +123,9 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
      */
     public function __destruct()
     {
-        if ($this->_client instanceof Zend_Mail_Client_Smtp) {
-            $this->_client->quit();
-            $this->_client->disconnect();
+        if ($this->_connection instanceof Zend_Mail_Protocol_Smtp) {
+            $this->_connection->quit();
+            $this->_connection->disconnect();
         }
     }
     
@@ -133,22 +133,22 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     /**
      * Sets the client object
      * 
-     * @param Zend_Mail_Client $client
+     * @param Zend_Mail_Protocol_Abstract $client
      */
-    public function setClient(Zend_Mail_Client $client)
+    public function setConnection(Zend_Mail_Protocol_Abstract $connection)
     {
-        $this->_client = $client;
+        $this->_connection = $connection;
     }
     
     
     /**
      * Gets the client object
      * 
-     * @return Zend_Mail_Client|null
+     * @return Zend_Mail_Protocol|null
      */
-    public function getClient()
+    public function getConnection()
     {
-        return $this->_client;
+        return $this->_connection;
     }
 
     /**
@@ -157,32 +157,32 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     public function _sendMail()
     {
         // If sending multiple messages per session use existing adapter
-        if (!($this->_client instanceof Zend_Mail_Client_Smtp)) {
+        if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
             
             // Check if authentication is required
             if ($this->_auth) {
-                $class = 'Zend_Mail_Client_Smtp_Auth_' . ucwords($this->_auth);
+                $class = 'Zend_Mail_Protocol_Smtp_Auth_' . ucwords($this->_auth);
                 Zend::loadClass($class);
-                $this->setClient(new $class($this->_host, $this->_port, $this->_config));
+                $this->setConnection(new $class($this->_host, $this->_port, $this->_config));
             } else {
-                $this->setClient(new Zend_Mail_Client_Smtp($this->_host, $this->_port));
+                $this->setConnection(new Zend_Mail_Protocol_Smtp($this->_host, $this->_port));
             }           
-            $this->_client->connect();
-            $this->_client->helo($this->_name);
+            $this->_connection->connect();
+            $this->_connection->helo($this->_name);
         } else {
             // Reset connection to ensure reliable transaction
-            $this->_client->rset();
+            $this->_connection->rset();
         }
 
         // Set mail return path from sender email address
-        $this->_client->mail($this->_mail->getReturnPath());
+        $this->_connection->mail($this->_mail->getReturnPath());
 
         // Set recipient forward paths
         foreach ($this->_mail->getRecipients() as $recipient) {
-            $this->_client->rcpt($recipient);
+            $this->_connection->rcpt($recipient);
         }
 
         // Issue DATA command to client
-        $this->_client->data($this->header . $this->EOL . $this->body);
+        $this->_connection->data($this->header . $this->EOL . $this->body);
     }
 }
