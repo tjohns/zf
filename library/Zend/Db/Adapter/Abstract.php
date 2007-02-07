@@ -295,7 +295,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
-    public function fetchAll($sql, $bind = null)
+    public function fetchAll($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchAll($this->_fetchMode);
@@ -312,7 +312,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
-    public function fetchAssoc($sql, $bind = null)
+    public function fetchAssoc($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $data = array();
@@ -332,7 +332,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
-    public function fetchCol($sql, $bind = null)
+    public function fetchCol($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchAll(Zend_Db::FETCH_COLUMN, 0);
@@ -349,7 +349,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
-    public function fetchPairs($sql, $bind = null)
+    public function fetchPairs($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $data = array();
@@ -366,7 +366,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return string
      */
-    public function fetchOne($sql, $bind = null)
+    public function fetchOne($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchColumn(0);
@@ -380,7 +380,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param array $bind Data to bind into SELECT placeholders.
      * @return array
      */
-    public function fetchRow($sql, $bind = null)
+    public function fetchRow($sql, $bind = array())
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetch($this->_fetchMode);
