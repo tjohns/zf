@@ -37,19 +37,6 @@ require_once 'Zend/Gdata/AuthSub.php';
  */
 $uri = Zend_Gdata_Base::BASE_FEED_URI;
 
-/**
- * Developer Key - you need to enter your developer key to make this demo work
- * See http://code.google.com/apis/base/signup.html to get a developer key.
- */
-/*
-$key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-if (preg_match('/^X*$/', $key)) {
-    echo "<h1>Configuration incomplete</h1>\n";
-    echo "<p>You need to edit the script and enter your <b>Google developer key</b> to make this demo work.</p>\n";
-    echo "<p>See <a href='http://code.google.com/apis/base/signup.html'>http://code.google.com/apis/base/signup.html</a> to get a developer key.</p>\n";
-    exit();
-}
- */
 session_start();
 
 if (!isset($_SESSION['base_token'])) {
@@ -86,13 +73,8 @@ if (isset($_GET['q']) && $_GET['q']) {
         $q = stripslashes($q);
     }
     $gdata = new Zend_Gdata_Base($client);
-    /* @todo delete:
-     * Google Base requires developer key
-    $gdata->setDeveloperKey($key);
-    $feed = $gdata->getFeed($uri . '?bq=' . urlencode($q) . '&max-results=' . urlencode($_GET['maxresults']));
-     */
     $gdata->setQuery($q);
-    $feed = $gdata->getFeed();
+    $feed = $gdata->getBaseFeed();
 }
 
 /**
