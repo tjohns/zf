@@ -280,4 +280,113 @@ else {
 
     </sect2>
 
+    <sect2 id="zend.session.modifyingarray">
+
+        <title>Working with Arrays in Namespaces</title>
+
+        <para>
+            Modifying an array inside a namespace does not work. The simplest solution is to store arrays after all
+            desired values have been set.
+            <ulink url="http://framework.zend.com/issues/browse/ZF-800">ZF-800</ulink>
+            documents a known issue affecting many PHP applications using magic methods and arrays.
+            <example>
+                <title>Known problem with arrays</title>
+<programlisting role="php">
+<![CDATA[<?php
+            $sessionNamespace = new Zend_Session_Namespace('Foo');
+            $sessionNamespace->array = array();
+            $sessionNamespace->array['testKey'] = 1; // does not work before PHP 5.2.1
+?>]]></programlisting>
+            </example>
+        </para>
+
+        <para>
+            If you need to modify the array after assigning it to a session namespace key, fetch the array, then
+            <example>
+                <title>Workaround: fetch, modify, save</title>
+<programlisting role="php">
+<![CDATA[<?php
+            $sessionNamespace = new Zend_Session_Namespace('Foo');
+            $sessionNamespace->array = array('tree' => 'apple');
+            $tmp = $sessionNamespace->array;
+            $tmp['fruit'] = 'peach';
+            $sessionNamespace->array = $tmp;
+?>]]></programlisting>
+            </example>
+        </para>
+
+        <para>
+            Alternatively, store an array containing a reference to the desired array, and then access it indirectly.
+            <example>
+                <title>Workaround: store array containing reference</title>
+<programlisting role="php">
+<![CDATA[<?php
+            $myNamespace = new Zend_Session_Namespace('mySpace');
+
+            // works, even for broken versions of PHP
+            $a = array(1,2,3);
+            $myNamespace->someArray = array( & $a ) ;
+            $a['foo'] = 'bar';
+?>]]></programlisting>
+            </example>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.auth">
+
+        <title>Using Sessions with Authentication</title>
+
+        <para>
+            If you allow <code>Zend_Auth</code> to persist authentication tokens using Zend Framework sessions. In order
+            to access the authentication token on subsequent requests, you would need to:
+            <example>
+                <title>Workaround: accessing authentication tokens in sessions</title>
+<programlisting role="php">
+<![CDATA[<?php
+// chicken-and-egg... you must know which token class before looking :(
+require_once 'Zend/Auth/Digest/Token.php';
+require_once 'Zend/Session.php';
+Zend_Session::start();
+require_once 'Zend/Auth/Digest/Adapter.php';
+require_once 'Zend/Auth.php';
+$auth = new Zend_Auth(new Zend_Auth_Digest_Adapter('someDigestFilename'));
+$token = $auth->getToken();
+echo "Valid: ",
+    (empty($token->isValid()) ? 'No' : 'Yes'), "\n"';
+echo "Identity: ",
+    (empty($token->getIdentity()) ? 'unknown' : $token->getIdentity()), "\n"';
+echo "Messages: ",
+    (empty($token->getMessages()) ? 'none' : $token->getMessages()), "\n"';
+?>]]></programlisting>
+            </example>
+        </para>
+
+        <para>
+            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, and then manually store
+            the authorization id to the session, then just use well-known locations in a session namespace. Also, this
+            avoids persisting authentication error messages in the session. (Note: Some community members are working on
+            a "flash message" system for Zend sessions.)
+            <example>
+                <title>Workaround: simpler access for authorization ids</title>
+<programlisting role="php">
+<![CDATA[<?php
+require 'Zend/Session.php';
+Zend_Session::start();
+$namespace = Zend_Session_Namespace('Zend_Auth');
+
+echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
+echo "Authorization / user Id: ",
+    (empty($namespace->authorizationId) ? 'none' : $namespace->authorizationId), "\n"';
+echo "Authentication attempts: ",
+    (empty($namespace->attempts) ? '0' : $namespace->attempts), "\n"';
+echo "Authenticated on: ",
+    (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
+?>]]></programlisting>
+            </example>
+            I would leave where to store credentials used (if any) and "identity" up to each application.
+        </para>
+
+    </sect2>
+
 </sect1>
