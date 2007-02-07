@@ -2,8 +2,11 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 [
+<!ENTITY % xinclude SYSTEM "xinclude.mod">
+%xinclude;
 ]>
-<book id="manual" lang="en" xmlns:xi="http://www.w3.org/2001/XInclude">
+<!-- $Id: $ -->
+<book id="manual" lang="en">
     <bookinfo>
         <title>Programmer's Reference Guide</title>
         <subtitle>Zend Framework</subtitle>
@@ -43,9 +46,9 @@
 
     <chapter id="zend.console">
         <title>Zend_Console_Getopt</title>
-        <!--
-        <xi:include href="module_specs/Zend_Console_Getopt.xml" />
-        -->
+        <xi:include href="module_specs/Zend_Console_Getopt.xml" >
+            <xi:fallback>Zend_Console_Getopt.xml NOT PRESENT</xi:fallback>
+        </xi:include>
     </chapter>
 
     <chapter id="zend.filter">
