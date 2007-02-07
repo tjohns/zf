@@ -56,6 +56,10 @@ date_default_timezone_set('America/Los_Angeles'); // カリフォルニアのア
 date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用のタイムゾーン
 ?>]]></programlisting>
             </example>
+            <emphasis role="strong">Zend_Date のインスタンスを作成すると、
+            そのタイムゾーンは自動的に現在のデフォルトタイムゾーンになります!</emphasis>
+            したがって、そのタイムゾーン設定は夏時間も事実上考慮したものになるでしょう。
+            明示的に夏時間を指定する必要はありません。
         </para>
 
     </sect2>

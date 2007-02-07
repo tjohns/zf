@@ -33,14 +33,10 @@
             値としては、整数や浮動小数点数だけでなく文字列も使用できます。
         </para>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-
-// Length クラスは、定数を使うために必要となります
-Zend::loadClass('Zend_Measure_Length');
+require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('en');
-$unit = new Zend_Measure(100,Zend_Measure_Length::METER, $locale);
+$unit = new Zend_Measure_Length(100,Zend_Measure_Length::METER, $locale);
 
 // メートルをヤードに変換します
 echo $unit->convertTo(Zend_Measure_Length::YARD);
