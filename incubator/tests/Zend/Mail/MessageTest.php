@@ -66,7 +66,7 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
     {
         $message = new Zend_Mail_Message(array('file' => $this->_file));
 
-        $this->assertEquals($message->from, iconv('UTF-8', iconv_get_encoding('internal_encoding'), 
+        $this->assertEquals($message->from, iconv('UTF-8', iconv_get_encoding('internal_encoding'),
                                                                    '"Peter Müller" <peter-mueller@example.com>'));
     }
 
@@ -141,7 +141,7 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
     {
         $message = new Zend_Mail_Message(array('file' => $this->_file));
 
-        $this->assertEquals(Zend_Mime_Decode::splitContentType($message->getHeader('Content-Type')),
+        $this->assertEquals(Zend_Mime_Decode::splitContentType($message->ContentType),
                             array('type' => 'multipart/alternative', 'boundary' => 'crazy-multipart'));
     }
 

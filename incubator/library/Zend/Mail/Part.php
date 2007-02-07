@@ -99,7 +99,7 @@ class Zend_Mail_Part
     public function isMultipart()
     {
         try {
-            return strpos($this->getHeader('content-type', 'string'), 'multipart/') === 0;
+            return strpos($this->contentType, 'multipart/') === 0;
         } catch(Zend_Mail_Exception $e) {
             return false;
         }
@@ -145,7 +145,7 @@ class Zend_Mail_Part
         }
 
         // split content in parts
-        $boundary = Zend_Mime_Decode::splitContentType($this->getHeader('content-type', 'string'), 'boundary');
+        $boundary = Zend_Mime_Decode::splitContentType($this->contentType, 'boundary');
         if(!$boundary) {
             throw new Zend_Mail_Exception('no boundary found in content type to split message');
         }
@@ -185,15 +185,19 @@ class Zend_Mail_Part
 
     public function getHeader($name, $format = null)
     {
-        $name = strtolower($name);
-
         if($this->_headers === null) {
             $this->getHeaders();
         }
 
-        if (!isset($this->_headers[$name])) {
-            throw new Zend_Mail_Exception("no Header with Name $name found");
+        $lowerName = strtolower($name);
+
+        if (!isset($this->_headers[$lowerName])) {
+            $lowerName = strtolower(preg_replace('%([a-z])([A-Z])%', '\1-\2', $name));
+            if(!isset($this->_headers[$lowerName])) {
+                throw new Zend_Mail_Exception("no Header with Name $name found");
+            }
         }
+        $name = $lowerName;
 
         $header = $this->_headers[$name];
 
