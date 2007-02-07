@@ -122,6 +122,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
             return;
         }
 
+        if (!extension_loaded('oci8')) {
+            throw new Zend_DB_Adapter_Oracle_Exception('The OCI8 extension is required for this adapter but not loaded');
+        }
+
         if (isset($this->_config['dbname'])) {
             $this->_connection = oci_connect(
                 $this->_config['username'],

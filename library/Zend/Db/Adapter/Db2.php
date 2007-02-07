@@ -144,6 +144,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             return;
         }
 
+        if (!extension_loaded('ibm_db2')) {
+            throw new Zend_DB_Adapter_Db2_Exception('The IBM DB2 extension is required for this adapter but not loaded');
+        }
+
         if ($this->_config['persistent']) {
             // use persistent connection
             $conn_func_name = 'db2_pconnect';
