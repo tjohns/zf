@@ -7,26 +7,31 @@
 ]>
 <!-- $Id: $ -->
 <sect1 id="zend.translate.introduction">
+
     <title>Introduction</title>
+
     <para>
         Zend_Translate is the answer of the Zend Framework to the problem of multilingual sites.
     </para>
+
     <para>
-        Multilingual sites are having the problem that the content has to be translated into several 
-        languages and depending on the users language the proper content has to be displayed.
-        PHP itself offers already several ways to handle such problems.
+        Multilingual sites are having the problem that the content has to be translated into several languages and
+        depending on the users language the proper content has to be displayed. PHP itself offers already several ways
+        to handle such problems.
     </para>
+
     <para>
         Actual problems of PHP are:
     </para>
+
     <itemizedlist mark='opencircle'>
         <listitem>
             <para>
                 No API
             </para>
             <para>
-                There is no API for the different source formats. The useage of gettext for example is for a
-                beginner very complicated.
+                There is no API for the different source formats. The useage of gettext for example is for a beginner
+                very complicated.
             </para>
         </listitem>
         <listitem>
@@ -34,8 +39,8 @@
                 Only gettext and array native supported
             </para>
             <para>
-                PHP itself offers only support for array or gettext. All other source formats have to be coded
-                per hand, as there is no native support.
+                PHP itself offers only support for array or gettext. All other source formats have to be coded per hand,
+                as there is no native support.
             </para>
         </listitem>
         <listitem>
@@ -43,8 +48,8 @@
                 No detection of the default language
             </para>
             <para>
-                The default language of the user can not be detected without deeper knowledge of the beackgrounds
-                for the different web browsers.
+                The default language of the user can not be detected without deeper knowledge of the beackgrounds for
+                the different web browsers.
             </para>
         </listitem>
         <listitem>
@@ -52,24 +57,25 @@
                 Gettext is not thread save
             </para>
             <para>
-                PHP's gettext library is not tread save. So PHP's gettext library should not be used in a 
-                multithreaded environment. This is due to problems with gettext itself, not PHP, but it is 
-                an existing problem.
+                PHP's gettext library is not tread save. So PHP's gettext library should not be used in a multithreaded
+                environment. This is due to problems with gettext itself, not PHP, but it is an existing problem.
             </para>
         </listitem>
     </itemizedlist>
+
     <para>
-        Zend_Translate itself does not have these problems. This is why we announce anyone to use Zend_Translate
-        instead of PHP's native functions. The benefits are:
+        Zend_Translate itself does not have these problems. This is why we announce anyone to use Zend_Translate instead
+        of PHP's native functions. The benefits are:
     </para>
+
     <itemizedlist mark='opencircle'>
         <listitem>
             <para>
                 Multiple source formats supported
             </para>
             <para>
-                Multiple different source formats are supported within Zend_Translate. So when the format 
-                of the source files change from Gettext to Tmx the only thing to do is just change one line.
+                Multiple different source formats are supported within Zend_Translate. So when the format of the source
+                files change from Gettext to Tmx the only thing to do is just change one line.
             </para>
         </listitem>
         <listitem>
@@ -77,8 +83,8 @@
                 Threadsave gettext
             </para>
             <para>
-                The gettext reader of Zend_Translate is threadsave. There will be no problems by using it in 
-                multithreaded environments. 
+                The gettext reader of Zend_Translate is threadsave. There will be no problems by using it in
+                multithreaded environments.
             </para>
         </listitem>
         <listitem>
@@ -86,8 +92,8 @@
                 Easy and generic API
             </para>
             <para>
-                The API of Zend_Translate is very simple and supports only a hand full of functions.
-                So it's easy to learn and easy to maintain. All source formats are handled the same way.
+                The API of Zend_Translate is very simple and supports only a hand full of functions. So it's easy to
+                learn and easy to maintain. All source formats are handled the same way.
             </para>
         </listitem>
         <listitem>
@@ -99,13 +105,22 @@
             </para>
         </listitem>
     </itemizedlist>
+
     <sect2 id="zend.translate.introduction.adapters">
+
         <title>Starting multilingual</title>
+
         <para>
             So let's get started with Multilingual business.
         </para>
+
         <para>
             So let's get started with Multilingual business.
         </para>
+
     </sect2>
+
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
