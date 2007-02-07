@@ -279,9 +279,11 @@ class Zend_Mail_Protocol_Smtp extends Zend_Mail_Protocol_Abstract
      */
     public function quit()
     {
-        $this->_send('QUIT');
-        $this->_expect(221, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
-        $this->_stopSession();
+        if ($this->_sess) {
+            $this->_send('QUIT');
+            $this->_expect(221, 300); // Timeout set for 5 minutes as per RFC 2821 4.5.3.2
+            $this->_stopSession();
+        }
     }
 
 
