@@ -215,13 +215,11 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
      */
     protected function _post($host, $path, array $params)
     {
+        $uri    = 'http://' . $host . ':' . $this->getPort() . $path;
         $client = self::getHttpClient();
-        $client->setUri('http://' . $host . $path);
+        $client->setUri($uri);
         $client->setConfig(array(
-            'maxredirects' => 0,
-            'timeout'      => 3,
             'useragent'    => $this->getUserAgent(),
-            'httpversion'  => '1.0'
         ));
 
         $client->setHeaders(array(
