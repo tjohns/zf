@@ -99,8 +99,8 @@ class Zend_Auth
 
         if ($this->_useSession) {
             require_once 'Zend/Session.php';
-            $session = new Zend_Session($this->_sessionNamespace);
-            $session->{$this->_sessionTokenName} = $token;
+            $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
+            $authSpace->{$this->_sessionTokenName} = $token;
         }
 
         return $token;
@@ -186,9 +186,9 @@ class Zend_Auth
     public function getToken()
     {
         require_once 'Zend/Session.php';
-        $session = new Zend_Session($this->_sessionNamespace);
-        if (isset($session->{$this->_sessionTokenName})) {
-            return $session->{$this->_sessionTokenName};
+        $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
+        if (isset($authSpace->{$this->_sessionTokenName})) {
+            return $authSpace->{$this->_sessionTokenName};
         }
         return null;
     }
@@ -217,9 +217,9 @@ class Zend_Auth
     public function logout()
     {
         require_once 'Zend/Session.php';
-        $session = new Zend_Session($this->_sessionNamespace);
-        if (isset($session->{$this->_sessionTokenName})) {
-            unset($session->{$this->_sessionTokenName});
+        $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
+        if (isset($authSpace->{$this->_sessionTokenName})) {
+            unset($authSpace->{$this->_sessionTokenName});
         }
     }
 
