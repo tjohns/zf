@@ -45,10 +45,8 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
 
     /**
      * Documents vector.
-     * Bitset or array of document IDs
-     * (depending from Bitset extension availability).
      *
-     * @var mixed
+     * @var array
      */
     private $_docVector = null;
 
@@ -111,6 +109,39 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     }
 
     /**
+     * Execute query in context of index reader
+     * It also initializes necessary internal structures
+     *
+     * @param Zend_Search_Lucene $reader
+     */
+    public function execute($reader)
+    {
+        $this->_docVector = array_flip($reader->termDocs($this->_term));
+        $this->_termPositions = $reader->termPositions($this->_term);
+
+        // Initialize weight if it's not done yet
+        $this->_initWeight($reader);
+    }
+
+    /**
+     * Get next document id matching the query
+     * null means the end of result set
+     *
+     * @param integer $docId
+     * @param Zend_Search_Lucene $reader
+     * @return integer|null
+     */
+    public function next()
+    {
+        if (($current = each($this->_docVector)) === false) {
+            // end of result set
+            return null;
+        } else {
+            return $current[0];
+        }
+    }
+
+    /**
      * Score specified document
      *
      * @param integer $docId
@@ -119,20 +150,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
      */
     public function score( $docId, $reader )
     {
-        if($this->_docVector===null) {
-            if (extension_loaded('bitset')) {
-                $this->_docVector = bitset_from_array( $reader->termDocs($this->_term) );
-            } else {
-                $this->_docVector = array_flip($reader->termDocs($this->_term));
-            }
-
-            $this->_termPositions = $reader->termPositions($this->_term);
-            $this->_initWeight($reader);
-        }
-
-        $match = extension_loaded('bitset') ?  bitset_in($this->_docVector, $docId) :
-                                               isset($this->_docVector[$docId]);
-        if ($match) {
+        if (isset($this->_docVector[$docId])) {
             return $reader->getSimilarity()->tf(count($this->_termPositions[$docId]) ) *
                    $this->_weight->getValue() *
                    $reader->norm($docId, $this->_term->field) *

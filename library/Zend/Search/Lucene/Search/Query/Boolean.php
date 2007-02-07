@@ -250,6 +250,63 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     }
 
     /**
+     * Execute query in context of index reader
+     * It also initializes necessary internal structures
+     *
+     * @param Zend_Search_Lucene $reader
+     */
+    public function execute($reader)
+    {
+        // Initialize weight if it's not done yet
+        $this->_initWeight($reader);
+
+        foreach ($this->_subqueries as $subquery) {
+            $subquery->execute($reader);
+        }
+
+        if ($this->_signs === null) {
+            // All subqueries are required
+            foreach ($this->_subqueries as $subquery) {
+                // Prepare priority queue
+                /** @todo implementation */
+            }
+        } else {
+            // Prepare priority queue
+            /** @todo implementation */
+        }
+
+        // While queue is not used
+        $this->_matchedDocs = array();
+        for ($count = 0; $count < $reader->maxDoc(); $count++) {
+            $this->_matchedDocs[$count] = $count;
+        }
+
+        reset($this->_matchedDocs);
+    }
+
+
+
+    /**
+     * Get next document id matching the query
+     * null means the end of result set
+     *
+     * @param integer $docId
+     * @param Zend_Search_Lucene $reader
+     * @return integer|null
+     */
+    public function next()
+    {
+        /** @todo implementation*/
+        // While queue is not used
+        if (($current = each($this->_matchedDocs)) === false) {
+            // end of result set
+            return null;
+        } else {
+            return $current[0];
+        }
+    }
+
+    /**
      * Score specified document
      *
      * @param integer $docId
@@ -258,10 +315,6 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      */
     public function score($docId, $reader)
     {
-        if($this->_weight === null) {
-            $this->_initWeight($reader);
-        }
-
         if ($this->_signs === null) {
             return $this->_conjunctionScore($docId, $reader);
         } else {

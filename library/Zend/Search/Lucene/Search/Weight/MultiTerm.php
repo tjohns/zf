@@ -72,10 +72,10 @@ class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Sear
 
         $signs = $query->getSigns();
 
-        foreach ($query->getTerms() as $num => $term) {
-            if ($signs === null || $signs[$num] === null || $signs[$num]) {
-                $this->_weights[$num] = new Zend_Search_Lucene_Search_Weight_Term($term, $query, $reader);
-                $query->setWeight($num, $this->_weights[$num]);
+        foreach ($query->getTerms() as $id => $term) {
+            if ($signs === null || $signs[$id] === null || $signs[$id]) {
+                $this->_weights[$id] = new Zend_Search_Lucene_Search_Weight_Term($term, $query, $reader);
+                $query->setWeight($id, $this->_weights[$id]);
             }
         }
     }

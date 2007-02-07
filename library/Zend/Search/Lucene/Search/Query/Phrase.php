@@ -79,10 +79,8 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
     /**
      * Result vector.
-     * Bitset or array of document IDs
-     * (depending from Bitset extension availability).
      *
-     * @var mixed
+     * @var array
      */
     private $_resVector = null;
 
@@ -255,44 +253,6 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
 
     /**
-     * Calculate result vector
-     *
-     * @param Zend_Search_Lucene $reader
-     */
-    private function _calculateResult($reader)
-    {
-        if (extension_loaded('bitset')) {
-            foreach( $this->_terms as $termId=>$term ) {
-                if($this->_resVector === null) {
-                    $this->_resVector = bitset_from_array($reader->termDocs($term));
-                } else {
-                    $this->_resVector = bitset_intersection(
-                                $this->_resVector,
-                                bitset_from_array($reader->termDocs($term)) );
-                }
-
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
-            }
-        } else {
-            foreach( $this->_terms as $termId=>$term ) {
-                if($this->_resVector === null) {
-                    $this->_resVector = array_flip($reader->termDocs($term));
-                } else {
-                    $termDocs = array_flip($reader->termDocs($term));
-                    foreach($this->_resVector as $key=>$value) {
-                        if (!isset( $termDocs[$key] )) {
-                            unset( $this->_resVector[$key] );
-                        }
-                    }
-                }
-
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
-            }
-        }
-    }
-
-
-    /**
      * Score calculator for exact phrase queries (terms sequence is fixed)
      *
      * @param integer $docId
@@ -413,6 +373,58 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         return $freq;
     }
 
+    /**
+     * Execute query in context of index reader
+     * It also initializes necessary internal structures
+     *
+     * @param Zend_Search_Lucene $reader
+     */
+    public function execute($reader)
+    {
+        $this->_resVector = null;
+
+        if (count($this->_terms) == 0) {
+            $this->_resVector = array();
+        }
+
+        foreach( $this->_terms as $termId=>$term ) {
+            if($this->_resVector === null) {
+                $this->_resVector = array_flip($reader->termDocs($term));
+            } else {
+                $this->_resVector = array_intersect_key($this->_resVector, array_flip($reader->termDocs($term)));
+            }
+
+            if (count($this->_resVector) == 0) {
+                // Empty result set, we don't need to check other terms
+                break;
+            }
+
+            $this->_termsPositions[$termId] = $reader->termPositions($term);
+        }
+
+        ksort($this->_resVector, SORT_NUMERIC);
+
+        // Initialize weight if it's not done yet
+        $this->_initWeight($reader);
+    }
+
+    /**
+     * Get next document id matching the query
+     * null means the end of result set
+     *
+     * @param integer $docId
+     * @param Zend_Search_Lucene $reader
+     * @return integer|null
+     */
+    public function next()
+    {
+        if (($current = each($this->_resVector)) === false) {
+            // end of result set
+            return null;
+        } else {
+            return $current[0];
+        }
+    }
 
     /**
      * Score specified document
@@ -423,17 +435,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      */
     public function score($docId, $reader)
     {
-        // optimize zero-term case
-        if (count($this->_terms) == 0) {
-            return 0;
-        }
-
-        if($this->_resVector === null) {
-            $this->_calculateResult($reader);
-            $this->_initWeight($reader);
-        }
-
-        if (extension_loaded('bitset') ?  bitset_in($this->_resVector, $docId) : isset($this->_resVector[$docId])) {
+        if (isset($this->_resVector[$docId])) {
             if ($this->_slop == 0) {
                 $freq = $this->_exactPhraseFreq($docId);
             } else {
@@ -448,7 +450,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 return $tf * $weight * $norm * $this->getBoost();
             }
 
-            // Included in result, but culculated freq is sero
+            // Included in result, but culculated freq is zero
             return 0;
         } else {
             return 0;

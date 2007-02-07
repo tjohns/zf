@@ -496,16 +496,17 @@ class Zend_Search_Lucene
 
         $query = $query->rewrite($this)->optimize($this);
 
-        $docNum = $this->count();
-        for( $count=0; $count < $docNum; $count++ ) {
-            $docScore = $query->score( $count, $this);
+        $query->execute($this);
+
+        while (($id = $query->next()) !== null) {
+            $docScore = $query->score($id, $this);
             if( $docScore != 0 ) {
                 $hit = new Zend_Search_Lucene_Search_QueryHit($this);
-                $hit->id = $count;
+                $hit->id = $id;
                 $hit->score = $docScore;
 
                 $hits[]   = $hit;
-                $ids[]    = $count;
+                $ids[]    = $id;
                 $scores[] = $docScore;
             }
         }
@@ -586,8 +587,6 @@ class Zend_Search_Lucene
             // Do sort
             call_user_func_array('array_multisort', $sortArgs);
         }
-
-        $query->reset();
 
         return $hits;
     }

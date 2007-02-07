@@ -59,10 +59,8 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
     /**
      * Result vector.
-     * Bitset or array of document IDs
-     * (depending from Bitset extension availability).
      *
-     * @var mixed
+     * @var array
      */
     private $_resVector = null;
 
@@ -247,34 +245,28 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      */
     private function _calculateConjunctionResult($reader)
     {
-        if (extension_loaded('bitset')) {
-            foreach( $this->_terms as $termId=>$term ) {
-                if($this->_resVector === null) {
-                    $this->_resVector = bitset_from_array($reader->termDocs($term));
-                } else {
-                    $this->_resVector = bitset_intersection(
-                                $this->_resVector,
-                                bitset_from_array($reader->termDocs($term)) );
-                }
+        $this->_resVector = null;
 
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
-            }
-        } else {
-            foreach( $this->_terms as $termId=>$term ) {
-                if($this->_resVector === null) {
-                    $this->_resVector = array_flip($reader->termDocs($term));
-                } else {
-                    $termDocs = array_flip($reader->termDocs($term));
-                    foreach($this->_resVector as $key=>$value) {
-                        if (!isset( $termDocs[$key] )) {
-                            unset( $this->_resVector[$key] );
-                        }
-                    }
-                }
-
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
-            }
+        if (count($this->_terms) == 0) {
+            $this->_resVector = array();
         }
+
+        foreach( $this->_terms as $termId=>$term ) {
+            if($this->_resVector === null) {
+                $this->_resVector = array_flip($reader->termDocs($term));
+            } else {
+                $this->_resVector = array_intersect_key($this->_resVector, array_flip($reader->termDocs($term)));
+            }
+
+            if (count($this->_resVector) == 0) {
+                // Empty result set, we don't need to check other terms
+                break;
+            }
+
+            $this->_termsPositions[$termId] = $reader->termPositions($term);
+        }
+
+        ksort($this->_resVector, SORT_NUMERIC);
     }
 
 
@@ -286,85 +278,41 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      */
     private function _calculateNonConjunctionResult($reader)
     {
-        if (extension_loaded('bitset')) {
-            $required   = null;
-            $neither    = bitset_empty();
-            $prohibited = bitset_empty();
+        $required   = null;
+        $optional   = array();
+        $prohibited = array();
 
-            foreach ($this->_terms as $termId => $term) {
-                $termDocs = bitset_from_array($reader->termDocs($term));
+        foreach ($this->_terms as $termId => $term) {
+            $termDocs = array_flip($reader->termDocs($term));
 
-                if ($this->_signs[$termId] === true) {
-                    // required
-                    if ($required !== null) {
-                        $required = bitset_intersection($required, $termDocs);
-                    } else {
-                        $required = $termDocs;
-                    }
-                } elseif ($this->_signs[$termId] === false) {
-                    // prohibited
-                    $prohibited = bitset_union($prohibited, $termDocs);
+            if ($this->_signs[$termId] === true) {
+                // required
+                if ($required !== null) {
+                    // array intersection
+                    $required = array_intersect_key($required, $termDocs);
                 } else {
-                    // neither required, nor prohibited
-                    $neither = bitset_union($neither, $termDocs);
+                    $required = $termDocs;
                 }
-
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
+            } elseif ($this->_signs[$termId] === false) {
+                // prohibited
+                // array union
+                $prohibited += $termDocs;
+            } else {
+                // neither required, nor prohibited
+                // array union
+                $optional += $termDocs;
             }
 
-            if ($required === null) {
-                $required = $neither;
-            }
-            $this->_resVector = bitset_intersection( $required,
-                                                     bitset_invert($prohibited, $reader->count()) );
-        } else {
-            $required   = null;
-            $neither    = array();
-            $prohibited = array();
-
-            foreach ($this->_terms as $termId => $term) {
-                $termDocs = array_flip($reader->termDocs($term));
-
-                if ($this->_signs[$termId] === true) {
-                    // required
-                    if ($required !== null) {
-                        // substitute for bitset_intersection
-                        foreach ($required as $key => $value) {
-                            if (!isset( $termDocs[$key] )) {
-                                unset($required[$key]);
-                            }
-                        }
-                    } else {
-                        $required = $termDocs;
-                    }
-                } elseif ($this->_signs[$termId] === false) {
-                    // prohibited
-                    // substitute for bitset_union
-                    foreach ($termDocs as $key => $value) {
-                        $prohibited[$key] = $value;
-                    }
-                } else {
-                    // neither required, nor prohibited
-                    // substitute for bitset_union
-                    foreach ($termDocs as $key => $value) {
-                        $neither[$key] = $value;
-                    }
-                }
-
-                $this->_termsPositions[$termId] = $reader->termPositions($term);
-            }
-
-            if ($required === null) {
-                $required = $neither;
-            }
-
-            foreach ($required as $key=>$value) {
-                if (isset( $prohibited[$key] )) {
-                    unset($required[$key]);
-                }
-            }
-            $this->_resVector = $required;
+            $this->_termsPositions[$termId] = $reader->termPositions($term);
         }
+
+        if ($required === null) {
+            $required = $optional;
+        }
+
+        $this->_resVector = array_diff_key($required, $prohibited);
+
+        ksort($this->_resVector, SORT_NUMERIC);
     }
 
 
@@ -437,6 +385,37 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     }
 
     /**
+     * Execute query in context of index reader
+     * It also initializes necessary internal structures
+     *
+     * @param Zend_Search_Lucene $reader
+     */
+    public function execute($reader)
+    {
+        if ($this->_signs === null) {
+            $this->_calculateConjunctionResult($reader);
+        } else {
+            $this->_calculateNonConjunctionResult($reader);
+        }
+
+        // Initialize weight if it's not done yet
+        $this->_initWeight($reader);
+    }
+
+    /**
+     * Get next document id matching the query
+     * null means the end of result set
+     *
+     * @param integer $docId
+     * @param Zend_Search_Lucene $reader
+     * @return integer|null
+     */
+    public function next()
+    {
+        return null;
+    }
+
+    /**
      * Score specified document
      *
      * @param integer $docId
@@ -445,19 +424,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      */
     public function score($docId, $reader)
     {
-        if($this->_resVector === null) {
-            if ($this->_signs === null) {
-                $this->_calculateConjunctionResult($reader);
-            } else {
-                $this->_calculateNonConjunctionResult($reader);
-            }
-
-            $this->_initWeight($reader);
-        }
-
-        if ( (extension_loaded('bitset')) ?
-                bitset_in($this->_resVector, $docId) :
-                isset($this->_resVector[$docId])  ) {
+        if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
                 return $this->_conjunctionScore($docId, $reader);
             } else {
