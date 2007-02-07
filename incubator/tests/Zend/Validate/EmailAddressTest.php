@@ -143,4 +143,96 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($messages[2]));
         $this->assertContains('not a valid local part', $messages[2]);
     }
+
+    /**
+     * Ensures that the validator follows expected behavior for valid email addresses
+     *
+     * @return void
+     */
+    public function testBasicValid ()
+    {
+        $emailAddresses = array(
+            'bob@domain.com',
+            'bob.jones@domain.co.uk',
+            'bob.jones.smythe@domain.co.uk',
+            'BoB@domain.museum',
+            'bobjones@domain.info',
+            "B.O'Callaghan@domain.com",
+            'bob+jones@domain.us',
+            'bob+jones@domain.co.uk',
+            'Bob@212.212.20.4',
+            'bob@some.domain.uk.com',
+            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com',
+            'bob@bürger.de'
+            );
+        foreach ($emailAddresses as $input) {
+            $this->assertTrue($this->_validator->isValid($input));
+        }
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior for invalid email addresses
+     *
+     * @return void
+     */
+    public function testBasicInvalid ()
+    {
+        $emailAddresses = array(
+            '',
+            'bob
+
+            @domain.com',
+            'bob jones@domain.com',
+            '.bobJones@studio24.com',
+            'bobJones.@studio24.com',
+            'bob.Jones.@studio24.com',
+            '"bob%jones@domain.com',
+            'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com',
+            'bob+domain.com',
+            'bob.domain.com',
+            'bob @domain.com',
+            'bob@ domain.com',
+            'bob @ domain.com'
+            );
+        foreach ($emailAddresses as $input) {
+            $this->assertFalse($this->_validator->isValid($input));
+        }
+    }
+
+   /**
+     * Ensures that the validator follows expected behavior for valid email addresses with complex local parts
+     *
+     * @return void
+     */
+    public function testComplexLocalValid ()
+    {
+        $emailAddresses = array(
+            'Bob.Jones@domain.com',
+            'Bob.Jones!@domain.com',
+            'Bob&Jones@domain.com',
+            '/Bob.Jones@domain.com',
+            '#Bob.Jones@domain.com',
+            'Bob.Jones?@domain.com',
+            '"bob%jones"@domain.com',
+            '"bob"\"jones"@domain.com'
+            );
+        foreach ($emailAddresses as $input) {
+            $this->assertTrue($this->_validator->isValid($input));
+        }
+    }
+
+    /**
+     * @todo Unit test for complex hostnames
+     * @todo Unit test for DNS testing valid hostnames
+     */
+
+    /**
+     * Ensures that getMessages() returns expected default value (an empty array)
+     *
+     * @return void
+     */
+    public function testGetMessages()
+    {
+        $this->assertEquals(array(), $this->_validator->getMessages());
+    }
 }
