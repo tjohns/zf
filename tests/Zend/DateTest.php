@@ -4344,7 +4344,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         }
 
         $date->set(10, 'de');
-        $this->assertSame($date->getTimestamp(), '10');
+        $this->assertEquals($date->getTimestamp(), 10);
 
         try {
             $date->add(null, Zend_Date::YEAR);
@@ -4354,7 +4354,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         }
 
         $date->add(10, 'de');
-        $this->assertSame($date->getTimestamp(), '20');
+        $this->assertEquals($date->getTimestamp(), 20);
 
         try {
             $date->sub(null, Zend_Date::YEAR);
@@ -4364,7 +4364,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         }
 
         $date->sub(10, 'de');
-        $this->assertSame($date->getTimestamp(), '10');
+        $this->assertEquals($date->getTimestamp(), 10);
 
         try {
             $date->compare(null, Zend_Date::YEAR);
