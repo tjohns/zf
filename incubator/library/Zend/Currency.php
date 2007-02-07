@@ -174,7 +174,7 @@ class Zend_Currency {
                     throw new Zend_Currency_Exception('many currency names passed');
                 }
             //get the script name
-            } else if (is_string($param) && (strlen($param) == 4 || $param == 'Decimal') ) {
+            } else if (is_string($param) && (strlen($param) == 4 || $param == 'Latin') ) {
                 
                 if (empty($this->_numberScript)) {
                     $this->_setNumberScript($param);
@@ -217,7 +217,14 @@ class Zend_Currency {
         //getting the short name of the currency
         $data = Zend_Locale_Data::getContent('','currencyforregion',substr($locale, strpos($locale, '_')+1));
         
-        $this->_shortName = $data['currency'];
+        if (!empty($this->_shortName)) {
+        
+            if (!isset($data[$this->_shortName])) {
+                $this->_shortName = key($data);
+            }
+        } else {
+            $this->_shortName = key($data);
+        }
         
         return $this;
     }
@@ -334,9 +341,9 @@ class Zend_Currency {
         
         //localize the number digits
         if (!empty($script)) {
-            $value = Zend_Locale_Format::toNumberSystem($value, 'Decimal', $script);
+            $value = Zend_Locale_Format::convertNumerals($value, 'Latin', $script);
         } else if (!empty($this->_numberScript)) {
-            $value = Zend_Locale_Format::toNumberSystem($value, 'Decimal', $this->_numberScript);
+            $value = Zend_Locale_Format::convertNumerals($value, 'Latin', $this->_numberScript);
         }
         
         
@@ -441,12 +448,16 @@ class Zend_Currency {
         //get the available currencies for this country
         $data = Zend_Locale_Data::getContent($locale,'currencyforregion',$country);
         
-        if(isset($data['currency'])) {
-            $shortName = $data['currency'];
-        } else if (isset($data[$currency])) {
-            $shortName = $currency;
+        if (!empty($currency)) {
+        
+            if (isset($data[$currency])) {
+                $shortName = $currency;
+            } else {
+                return key($data);
+            }
+            
         } else {
-            return $shortName;
+            $shortName = key($data);
         }
         
         
@@ -488,13 +499,19 @@ class Zend_Currency {
         //get the available currencies for this country
         $data = Zend_Locale_Data::getContent($locale,'currencyforregion',$country);
         
-        if(isset($data['currency'])) {
-            $shortName = $data['currency'];
-        } else if (isset($data[$currency])) {
-            $shortName = $currency;
+        
+        if (!empty($currency)) {
+        
+            if (isset($data[$currency])) {
+                $shortName = $currency;
+            } else {
+                return key($data);
+            }
+            
         } else {
-            return $shortName;
+            $shortName = key($data);
         }
+        
         
         //get the name
         $names = Zend_Locale_Data::getContent($locale, 'currencynames', $country);
@@ -608,10 +625,10 @@ class Zend_Currency {
      */
     private function _setNumberScript($script)
     {
-        if (is_string($script) && (strlen($script) == 4 || $script == 'Decimal') ) {
+        if (is_string($script) && (strlen($script) == 4 || $script == 'Latin')) {
             $this->_numberScript = $script ;
         } else {
-            throw new Zend_Currency_Exception('invalid script name');
+            throw new Zend_Currency_Exception('invalid script name  "' . $script . '"');
         }
     }
 

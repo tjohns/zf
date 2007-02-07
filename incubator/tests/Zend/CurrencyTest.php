@@ -159,7 +159,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $USD->setFormat(null, 'Arab', 'de_AT');
         $this->assertSame($USD->toCurrency(253292.1832), '$ ٢٥٣.٢٩٢,١٨٣٢');
         
-        $USD->setFormat(null, 'Decimal', 'de_AT');
+        $USD->setFormat(null, 'Latin', 'de_AT');
         $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
         
         
