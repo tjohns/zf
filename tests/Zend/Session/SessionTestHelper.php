@@ -23,7 +23,6 @@
 // http://en.wikipedia.org/wiki/White_box_testing
 
 require_once 'PathHelper.php';
-require_once 'Zend.php';
 require_once 'Zend/Session.php';
 
 if ($argc < 2) {
@@ -72,21 +71,20 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
 
     public function _ZF_expireAll($args)
     {
-        Zend_Session_Core::setOptions(array('remember_me_seconds' => 15, 'gc_probability' => 2));
+        Zend_Session::setOptions(array('remember_me_seconds' => 15, 'gc_probability' => 2));
         session_id($args[0]);
         if (isset($args[1]) && !empty($args[1])) {
-            $s = new Zend_Session($args[1]);
+            $s = new Zend_Session_Namespace($args[1]);
         }
         else {
-            $s = new Zend_Session();
+            $s = new Zend_Session_Namespace();
         }
         $result = '';
         foreach ($s->getIterator() as $key => $val) {
             $result .= "$key === $val;";
         }
-        $core = Zend_Session_Core::getInstance();
-        $core->expireSessionCookie();
-        $core->writeClose();
+        Zend_Session::expireSessionCookie();
+        Zend_Session::writeClose();
         echo $result;
     }
 
@@ -94,16 +92,20 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
     {
         $GLOBALS['fpc'] = 'set';
         session_id($args[0]);
-        $s = new Zend_Session($args[1]);
+        $s = new Zend_Session_Namespace($args[1]);
         array_shift($args);
-        $_SESSION['foo'] = array('one'=>'A');
-        $_SESSION['foo']['two'] = 'B'; // This shows adding elements to an array works using $_SESSION
         $s->astring = 'happy';
+
+        // works, even for broken versions of PHP
+        // $s->someArray = array( & $args ) ;
+        // $args['OOOOOOOOOOOOOOOO'] = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYY';
+
         $s->someArray = $args;
-        $s->someArray['bee'] = 'honey'; // for PHP 5.1.6, repeating this line twice "solves" the problem
+        $s->someArray['bee'] = 'honey'; // Repeating this line twice "solves" the problem for some versions of PHP,
+        $s->someArray['bee'] = 'honey'; // but PHP 5.2.1 has the real fix for ZF-800.
         $s->someArray['ant'] = 'sugar';
         $s->someArray['dog'] = 'cat';
-        file_put_contents('out.sessiontest.set', (str_replace(array("\n", ' '),array(';',''), print_r($_SESSION, true))) );
+        // file_put_contents('out.sessiontest.set', (str_replace(array("\n", ' '),array(';',''), print_r($_SESSION, true))) );
         $s->serializedArray = serialize($args);
 
         $result = '';
@@ -111,8 +113,7 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
             $result .= "$key === ". (print_r($val,true)) .';';
         }
 
-        $core = Zend_Session_Core::getInstance();
-        $core->writeClose();
+        Zend_Session::writeClose();
     }
 
     public function _ZF_getArray($args)
@@ -120,20 +121,17 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         $GLOBALS['fpc'] = 'get';
         session_id($args[0]);
         if (isset($args[1]) && !empty($args[1])) {
-            $s = new Zend_Session($args[1]);
+            $s = new Zend_Session_Namespace($args[1]);
         }
         else {
-            $s = new Zend_Session();
+            $s = new Zend_Session_Namespace();
         }
         $result = '';
         foreach ($s->getIterator() as $key => $val) {
             $result .= "$key === ". (str_replace(array("\n", ' '),array(';',''), print_r($val, true))) .';';
         }
-        $core = Zend_Session_Core::getInstance();
-        // Note the "foo" array found in out.sessiontest.get contains both elements, showing adding
-        // elements to an array in $_SESSION works.
-        file_put_contents('out.sessiontest.get', (str_replace(array("\n", ' '),array(';',''), print_r($_SESSION, true))) );
-        $core->writeClose();
+        // file_put_contents('out.sesstiontest.get', print_r($s->someArray, true));
+        Zend_Session::writeClose();
         echo $result;
     }
 } 
