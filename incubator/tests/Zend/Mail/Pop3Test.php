@@ -264,4 +264,22 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
         $this->fail('no exception raised while requesting after closing connection');
     }
+
+    public function testServerCapa()
+    {
+        $mail = new Zend_Mail_Transport_Pop3($this->_params['host']);
+        $this->assertTrue(is_array($mail->capa()));
+    }
+
+    public function testServerUidl()
+    {
+        $mail = new Zend_Mail_Transport_Pop3($this->_params['host']);
+        $mail->login($this->_params['user'], $this->_params['password']);
+
+        $uids = $mail->uniqueid();
+        $this->assertEquals(count($uids), 5);
+
+        $this->assertEquals($uids[1], $mail->uniqueid(1));
+    }
+
 }

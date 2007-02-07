@@ -306,7 +306,10 @@ class Zend_Mail_Transport_Pop3
         $result = explode("\n", $result);
         $messages = array();
         foreach ($result as $line) {
-            list($no, $id) = explode(' ', $line);
+            if(!$line) {
+                continue;
+            }
+            list($no, $id) = explode(' ', trim($line), 2);
             $messages[(int)$no] = $id;
         }
 

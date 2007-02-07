@@ -183,4 +183,35 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
 
         $this->fail('no exception raised while deleting message (mbox is read-only)');
     }
+
+    public function testCapa()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+        $capa = $mail->getCapabilities();
+        $this->assertTrue(isset($capa['uniqueid']));
+    }
+
+    public function testValid()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+
+        $this->assertFalse($mail->valid());
+        $mail->rewind();
+        $this->assertTrue($mail->valid());
+    }
+
+
+    public function testOutOfBounds()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+
+        try {
+            $mail->seek(INF);
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while seeking to not invalid id');
+    }
+
 }

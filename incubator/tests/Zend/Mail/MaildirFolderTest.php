@@ -162,6 +162,25 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($search_folders, $found_folders);
     }
 
+    public function testInboxEquals()
+    {
+        $mail = new Zend_Mail_Storage_Folder_Maildir($this->_params);
+        $iterator = new RecursiveIteratorIterator($mail->getFolders('INBOX.subfolder'), RecursiveIteratorIterator::SELF_FIRST);
+        // we search for this folder because we can't assume a order while iterating
+        $search_folders = array('subfolder.test' => 'test');
+        $found_folders = array();
+
+        foreach($iterator as $localName => $folder) {
+            if(!isset($search_folders[$folder->getGlobalName()])) {
+                continue;
+            }
+
+            $found_folders[(string)$folder] = $localName;
+        }
+
+        $this->assertEquals($search_folders, $found_folders);
+    }
+
     public function testSelectable()
     {
         $mail = new Zend_Mail_Storage_Folder_Maildir($this->_params);
@@ -209,4 +228,5 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
+
 }
