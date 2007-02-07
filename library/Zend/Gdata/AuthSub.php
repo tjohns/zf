@@ -99,13 +99,13 @@ class Zend_Gdata_AuthSub
         $client->setUri(self::AUTHSUB_SESSION_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
-        ob_start();
+
         try {
             $response = $client->request('GET');
         } catch (Zend_Http_Client_Exception $e) {
             throw new Zend_Gdata_HttpException($e->getMessage(), $e);
         }
-        ob_end_clean();
+
         // Parse Google's response
         if ($response->isSuccessful()) {
             $goog_resp = array();
