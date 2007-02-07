@@ -15,10 +15,10 @@
 
         <para>
             Wenn beim Erzeugen der Zend_Session-Instanz kein Namespace angegeben wird, werden alle Daten im
-            <code>'Default'</code>-Namespace gespeichert. Das Beispiel unten demonstriert die Nutzung des
-            <code>'Default'</code>-Namespace und zeigt, wie man die Anzahl der Seitenaufrufe auf einer Website durch
-            einen Nutzer zählen kann. Erweitern Sie Ihren ZF-Bootstrap-Bereich um folgenden Code (mit Ausnahme des 
-            <code>echo</code>):
+            <code>'Default'</code>-Namespace gespeichert. Das Beispiel unten demonstriert die Nutzung dieses
+            Standard-Namespace und zeigt, wie man die Anzahl der Seitenaufrufe auf einer Website durch
+            einen Nutzer zählen kann. Um dies zu testen, erweitern Sie Ihren ZF-Bootstrap-Bereich um 
+            folgenden Code:
         </para>
 
         <example>
@@ -26,15 +26,15 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
-    $session = new Zend_Session();
-    $session->numberOfPageRequests++; // wird bei jedem Aufruf erhöht.
-    echo "Seitenaufrufe in dieser Session: ", $session->numberOfPageRequests;
+    $defaultNamespace = new Zend_Session_Namespace('Default');
+    $defaultNamespace->numberOfPageRequests++; // wird bei jedem Aufruf erhöht.
+    echo "Seitenaufrufe in dieser Session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
 
         <para>
-            Einer der vielen Vorteile von Zend_Session ist, dass mehrere Module Zend_Session nutzen können und ihre
-            Daten dadurch zu einem gewissen Grad voneinander abgekapselt werden. Zend_Session kann über den Konstruktor
+            Einer der vielen Vorteile von Zend_Session_Namespace ergibt sich, wenn mehrere Module Zend_Session_Namespace
+            nutzen und ihre Session Daten kapseln. Zend_Session kann über den Konstruktor
             ein optionales <code>$namespace</code>-Argument übergeben werden, welches dazu führt, dass die Daten anderer
             Komponenten, Module oder entwicklerspezifischer Code-Teile durch eine Trennung zwischen den Daten-Bereichen
             vor versehentlichem Überschreiben geschützt sind. Die Verwendung von Namespaces ist ein populäres Mittel,
@@ -47,22 +47,20 @@
             <title>Neuer Weg: Kollisionen durch Namespaces vermeiden</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // in der Zend-Auth Komponente
+    // in der Zend_Auth Komponente
     require_once 'Zend/Session.php';
-    $auth_session = new Zend_Session('Zend_Auth');
-    $auth_session->user = "myusername";
+    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace->user = "myusername";
 
     // in einer Web-Services-Komponente
-    $web_service_session = new Zend_Session('Irgendein_Web_Service');
-    $web_service_session->user = "mywebusername";
+    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
 
         <para>
             Das obige Beispiel erzielt den selbst Effekt wie der Code unten, mit dem Unterschied, dass das Session-Objekt
-            oben die Kapselung der Session-Daten in ihrem jeweiligen Namensbereich aufrecht erhält. Diverse Überprüfungen
-            und die Verwendung eines Singleton-Patterns in Zend_Session_Core sind dafür verantwortlich, dass diese
-            Kapselung erzwungen wird.
+            oben die Kapselung der Session-Daten in ihrem jeweiligen Namensbereich aufrecht erhält. 
         </para>
 
         <example>
@@ -81,7 +79,7 @@
         <title>Schleife über Session-Namespaces</title>
 
         <para>
-            Zend_Session stellt das volle
+            <code>Zend_Session_Namespace</code> stellt das volle
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate-Interface</ulink>
             zur Verfügung, einschließlich der Unterstützung des <code>foreach</code> Statements:
         </para>
@@ -92,9 +90,9 @@
 <![CDATA[<?php
     // Zend_Session kann in Schritten durchlaufen werden
     require_once 'Zend/Session.php';
-    $my_session = new Zend_Session();
-    foreach ($my_session as $name => $value) {
-        ....
+    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    foreach ($aNamespace as $index => $value) {
+        echo "aNamespace->$index = '$value';\n";
     }
 ?>]]></programlisting>
         </example>

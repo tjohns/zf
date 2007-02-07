@@ -17,26 +17,35 @@
         bestimmten Client (zum Beispiel einem Web-Browser). Zend_Session hilft beim Verwalten und Aufbewahren
         von Session-Daten, der logischen Ergänzung zu Cookie-Daten, über mehrere Seitenaufrufe eines Clients hinweg.
         Anders als die in Cookies gespeicherten Daten werden die Session-Daten nicht client-seitig gespeichert und
-        stehen dem Client nur zur Verfügung, wenn das server-seitige Script die Daten durch eine Antwort auf eine
+        stehen dem Client nur zur Verfügung, wenn das server-seitige Script freiwillig die Daten durch eine Antwort auf eine
         Anfrage des Clients verfügbar macht. Im Umfeld der Zend_Session-Komponente und in dieser Dokumentation
         steht der Begriff Session-Daten für server-seitige Daten, die durch Zend_Session verwaltet werden.
+        <emphasis role="bold">Session Namensräume</emphasis> stellen einen Zugriff auf die Sessiondaten 
+        unter Verwendung klassischer 
+        <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">Namensräume</ulink>,
+        die logisch als benannte Gruppen mit assoziativen Arrays mit Schlüsselstrings (ähnlich wie 
+        normale PHP Arrays) implementiert wurden.
     </para>
 
     <para>
-        Die <code>Zend_Session_Core</code> ist ein Wrapper für das bestehende PHP ext/session mit
+        Die <code>Zend_Session</code> ist ein Wrapper für das bestehende PHP ext/session mit
         einem Administrations- und Verwaltungsinterface sowie der Bereitstellung einer API für
-        <code>Zend_Session</code>, um Namensräume beizubehalten. <code>Zend_Session</code> stellt
+        <code>Zend_Session_Namespace</code>, um Session Namensräume beizubehalten. 
+        <code>Zend_Session_Namespace</code> stellt
         eine standardisierte, objektorientierte Schnittstelle für den Umgang mit Namensräumen, die
         innerhalb des Standard Session Mechanismus von PHP bereit gehalten werden. Unterstützung
         besteht sowohl für anonymen und authentifizierten Sessions. Zend_Auth, die 
-        Authentifizierungs-Komponente des Zend Frameworks, verwendet Zend_Session, um einige 
+        Authentifizierungs-Komponente des Zend Frameworks, verwendet Zend_Session_Namespace, um einige 
         Informationen im Zusammenhang mit authentifizieren Benutzer im "Zend_Auth" Namensraum zu
-        speichern. Da Zend_Session intern die normalen Session-Funktionen von PHP verwendet, sind 
+        speichern. Da <code>Zend_Session</code> intern die normalen ext/session Funktionen von PHP verwendet, sind 
         alle regulären Konfigurations-Optionen und -Einstellungen nutzbar (siehe
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Eine Standard Session-Id, entweder in einem Cookie oder den URLs gespeichert, hält also 
-        die Verbindung zwischen einem Client und bestehenden Session-Daten aufrecht.
+        ), mit dem Bonus des Komforms über ein objektorientiertes Interface and Standardwerte, um
+        sowohl die beste Lösung und eine reibungslose Integration in das Zend Framework 
+        bereitzustellen. Eine Standard Session-Id, entweder in einem Client Cookie oder den URLs 
+        gespeichert, hält also die Verbindung zwischen einem Client und bestehenden Session-Daten 
+        aufrecht.
     </para>
 
     <para>
@@ -49,7 +58,8 @@
         Server gespeichert werden. Eine Liste zusätzlicher, geeigneter Speicher-Module wird zur Verfügung gestellt werden
         wenn diese verfügbar sind. Mitglieder der Community werden ermutigt, Speicher-Module in der
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Liste 
-        vorzuschlagen und einzusenden.
+        vorzuschlagen und einzusenden. Ein Zend_Db kompatibles Speicher-Modul wurde in der Liste 
+        bereits veröffentlicht.
     </para>
 
 </sect1>
