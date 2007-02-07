@@ -289,6 +289,7 @@ else {
             desired values have been set.
             <ulink url="http://framework.zend.com/issues/browse/ZF-800">ZF-800</ulink>
             documents a known issue affecting many PHP applications using magic methods and arrays.
+        </para>
             <example>
                 <title>Known problem with arrays</title>
 <programlisting role="php">
@@ -298,10 +299,10 @@ else {
     $sessionNamespace->array['testKey'] = 1; // does not work before PHP 5.2.1
 ?>]]></programlisting>
             </example>
-        </para>
 
         <para>
             If you need to modify the array after assigning it to a session namespace key, fetch the array, then
+        </para>
             <example>
                 <title>Workaround: fetch, modify, save</title>
 <programlisting role="php">
@@ -313,7 +314,6 @@ else {
     $sessionNamespace->array = $tmp;
 ?>]]></programlisting>
             </example>
-        </para>
 
         <para>
             Alternatively, store an array containing a reference to the desired array, and then access it indirectly.

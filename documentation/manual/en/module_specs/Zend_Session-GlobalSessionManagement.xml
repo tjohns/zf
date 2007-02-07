@@ -34,6 +34,7 @@
 
         <para>
             To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
+        </para>
             <example>
                 <title>Using Zend_Config to Configure Zend_Session</title>
 <programlisting role="php"><![CDATA[<?php
@@ -42,7 +43,10 @@ require_once 'Zend/Session.php';
 Zend_Session::setOptions($config->asArray()); 
 ?>]]></programlisting>
             </example>
+
+        <para>
             The corresponding "myapp.ini" file:
+        </para>
             <example>
                 <title>myapp.ini</title>
 <programlisting role="php">
@@ -88,7 +92,6 @@ use_only_cookies = on
 remember_me_seconds = 864000
 ]]></programlisting>
             </example>
-        </para>
 
     </sect2>
 
