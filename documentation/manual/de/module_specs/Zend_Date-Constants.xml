@@ -18,7 +18,7 @@
             differently when in different parts of the world, the object's timezone will automatically be used to
             compute the correct value, even though the internal timestamp is the same for the same moment in time,
             regardless of the user's physical location in the world. Regardless of the units involved, output must be
-            expressed either as GMT/UTC or localized to a locale. The example output below reflect localization to
+            expressed either as GMT/UTC or localized to a locale. The example output below reflects localization to
             Europe/GMT+1 hour (e.g. Germany, Austria, France).
         </para>
 

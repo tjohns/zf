@@ -29,14 +29,10 @@
             even a string.
         </para>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-
-// The Length class is needed when using the constants
-Zend::loadClass('Zend_Measure_Length');
+require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('en');
-$unit = new Zend_Measure(100,Zend_Measure_Length::METER, $locale);
+$unit = new Zend_Measure_Length(100,Zend_Measure_Length::METER, $locale);
 
 // Convert meters to yards
 echo $unit->convertTo(Zend_Measure_Length::YARD);

@@ -18,17 +18,12 @@
                 must be used. The display unit is <code>m</code>.
             </para>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-// loading the Length class
-Zend::loadClass('Zend_Measure_Length');
+require_once 'Zend/Measure/Length.php';
 
-echo Zend_Measure::LENGTH;           // outputs 'Zend_Measure::LENGTH'
 echo Zend_Measure_Length::STANDARD;  // outputs 'Length::METER'
 echo Zend_Measure_Length::KILOMETER; // outputs 'Length::KILOMETER'
 
-$locale = new Zend_Locale('en');
-$unit = new Zend_Measure(100,Zend_Measure_Length::METER,$locale);
+$unit = new Zend_Measure_Length(100,'METER');
 echo $unit;
 // outputs '100 m'
 ?>]]></programlisting>
