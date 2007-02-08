@@ -433,9 +433,9 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
     public function testSetConfigInConstructor()
     {
-        $scriptPath = dirname(__FILE__) . '/View/_templates/';
-        $helperPath = dirname(__FILE__) . '/View/_stubs/HelperDir1/';
-        $filterPath = dirname(__FILE__) . '/View/_stubs/HelperDir1/';
+        $scriptPath = $this->normalizePath(dirname(__FILE__) . '/View/_templates/');
+        $helperPath = $this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
+        $filterPath = $this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
 
         $config = array(
             'escape'     => 'strip_tags',
