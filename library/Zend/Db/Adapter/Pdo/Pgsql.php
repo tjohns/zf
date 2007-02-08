@@ -129,8 +129,13 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         $desc = array();
         foreach ($result as $key => $row) {
             if ($row['type'] == 'varchar') {
-                preg_match('/character varying\((\d+)\)/', $row['complete_type'], $matches);
-                $row['length'] = $matches[1];
+                if (preg_match('/character varying(?:\((\d+)\))?/', $row['complete_type'], $matches)) {
+                    if (isset($matches[1])) {
+                        $row['length'] = $matches[1];
+                    } else {
+                        $row['length'] = null; // unlimited
+                    }
+                }
             }
             $desc[$row['colname']] = array(
                 'SCHEMA_NAME' => null,
@@ -141,8 +146,8 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 'DEFAULT'     => $row['default_value'],
                 'NULLABLE'    => (bool) ($row['notnull'] != 't'),
                 'LENGTH'      => $row['length'],
-                'SCALE'       => null,
-                'PRECISION'   => null,
+                'SCALE'       => null, // @todo
+                'PRECISION'   => null, // @todo
                 'UNSIGNED'    => null, // @todo
                 'PRIMARY'     => (bool) $row['pri']
             );
