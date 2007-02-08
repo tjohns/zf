@@ -95,6 +95,11 @@ class Zend_Filter_RealPathTest extends PHPUnit_Framework_TestCase
      */
     public function testFileNonexistent()
     {
-        $this->assertFalse($this->_filter->filter('/path/to/nonexistent'));
+        $path = '/path/to/nonexistent';
+        if (false !== strpos(`uname`, 'BSD')) {
+            $this->assertEquals($path, $this->_filter->filter($path));
+        } else {
+            $this->assertEquals(false, $this->_filter->filter($path));
+        }
     }
 }
