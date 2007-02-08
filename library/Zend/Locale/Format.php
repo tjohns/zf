@@ -536,7 +536,7 @@ class Zend_Locale_Format
         }
 
         // get daytime
-        if (iconv_strpos($format, ' a') !== false) {
+        if (iconv_strpos($format, 'a') !== false) {
             $daytime = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
             if (iconv_strpos(strtoupper($number), strtoupper($daytime['am']))) {
                 $am = true;
