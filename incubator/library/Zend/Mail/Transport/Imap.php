@@ -102,7 +102,7 @@ class Zend_Mail_Transport_Imap
      */
     private function _nextLine()
     {
-        $line = fgets($this->_socket);
+        $line = @fgets($this->_socket);
         if($line === false) {
             throw new Zend_Mail_Transport_Exception('cannot read - connection closed?');
         }
@@ -302,21 +302,25 @@ class Zend_Mail_Transport_Imap
             $tag = 'TAG' . rand(100, 999);
         }
 
-        fputs($this->_socket, $tag . ' ' . $command);
+		$line = $tag . ' ' . $command;
 
         foreach($tokens as $token) {
             if(is_array($token)) {
-                fputs($this->_socket, ' ' . $token[0] . "\r\n");
+		        if(@fputs($this->_socket, $line . ' ' . $token[0] . "\r\n") === false) {
+        		    throw new Zend_Mail_Transport_Exception('cannot write - connection closed?');
+        		}
                 if(!$this->_assumedNextLine('+ OK')) {
                     throw new Zend_Mail_Transport_Exception('cannot send literal string');
                 }
-                fputs($this->_socket, $token[1]);
+                $line .= $token[1];
             } else {
-                fputs($this->_socket, ' ' . $token);
+                $line .= ' ' . $token;
             }
         }
 
-        fputs($this->_socket, "\r\n");
+        if(@fputs($this->_socket, $line . "\r\n") === false) {
+            throw new Zend_Mail_Transport_Exception('cannot write - connection closed?');
+        }
     }
 
     /**

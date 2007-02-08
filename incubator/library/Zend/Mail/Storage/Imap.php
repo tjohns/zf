@@ -144,7 +144,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
             try {
                 $this->selectFolder('INBOX');
             } catch(Zend_Mail_Storage_Exception $e) {
-                throw Zend_Mail_Storage_Exception('cannot select INBOX, is this a valid transport?');
+                throw new Zend_Mail_Storage_Exception('cannot select INBOX, is this a valid transport?');
             }
             return;
         }

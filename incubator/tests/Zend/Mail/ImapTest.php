@@ -150,6 +150,30 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($transport);
     }
 
+    public function testWithNotConnectedInstance()
+    {
+        $transport = new Zend_Mail_Transport_Imap();
+        try {
+	        $mail = new Zend_Mail_Storage_Imap($transport);
+        } catch (Zend_Mail_Transport_Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception while using not connected low-level class');
+    }
+
+    public function testWithNotLoggedInstance()
+    {
+        $transport = new Zend_Mail_Transport_Imap($this->_params['host']);
+        try {
+	        $mail = new Zend_Mail_Storage_Imap($transport);
+        } catch (Zend_Mail_Storage_Exception $e) {
+            return; // test ok
+        }
+        
+        $this->fail('no exception while using not logged in low-level class');
+    }
+
     public function testWrongFolder()
     {
         $this->_params['folder'] = 'this folder does not exist on your server';
