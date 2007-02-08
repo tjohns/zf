@@ -160,15 +160,14 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param string $tableName   name of table associated with sequence
-     * @param string $primaryKey  not used in this adapter
+     * @param string $sequenceName   Name of sequence to query.
      * @return integer
-     * @throws Zend_Db_Adapter_Exception
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
-    public function lastInsertId($sequenceName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null)
     {
         if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Oracle_Exception('You must specify a sequence name with lastInsertId()');
+            throw new Zend_Db_Adapter_Oracle_Exception('You must specify a sequence to lastInsertId() in this adapter');
         }
         $this->_connect();
         $data = $this->fetchOne("SELECT $sequenceName.CURRVAL FROM DUAL");
@@ -223,7 +222,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, DATA_DEFAULT, NULLABLE, DATA_LENGTH, DATA_SCALE, DATA_PRECISION
             FROM ALL_TAB_COLUMNS
             WHERE TABLE_NAME = '$tableName'";
-        $result = $this->fetchAll($sql);
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         $desc = array();
         foreach ($result as $key => $row) {
             $desc[$row['COLUMN_NAME']] = array(

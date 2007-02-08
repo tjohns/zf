@@ -72,7 +72,8 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
             $dsn[$key] = "$key=$val";
         }
 
-        $dsn = $this->_pdoType . ':' . implode(';', $dsn);
+        // $dsn = $this->_pdoType . ':' . implode(';', $dsn);
+        $dsn = 'dblib' . ':' . implode(';', $dsn);
         return $dsn;
     }
 
@@ -140,10 +141,12 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     public function describeTable($tableName, $schemaName = null)
     {
         $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($tableName);
-        $result = $this->fetchAll($sql);
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
 
         $sql = "exec sp_pkeys @table_name = " . $this->quoteIdentifier($tableName);
-        $primaryKeysResult = $this->fetchAll($sql);
+        $stmt = $this->query($sql);
+        $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         foreach ($primaryKeysResult as $row) {
             $primaryKeyColumn[$row['column_name']] = true;
         }
@@ -221,12 +224,15 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   OPTIONAL not used in this adapter
-     * @param  string $primaryKey  OPTIONAL not used in this adapter
+     * @param  string $sequenceName Not used in this adapter.
      * @return integer
+     * @throws Zend_Db_Adapter_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null)
     {
+        if ($sequenceName != null) {
+            throw new Zend_Db_Adapter_Exception('You must not specify a sequence to lastInsertId() in this adapter');
+        }
         $sql = 'SELECT @@IDENTITY';
         return (int)$this->fetchOne($sql);
     }

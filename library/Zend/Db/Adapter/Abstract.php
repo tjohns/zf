@@ -290,6 +290,7 @@ abstract class Zend_Db_Adapter_Abstract
 
     /**
      * Fetches all SQL result rows as a sequential array.
+     * Uses the current fetchMode for the adapter.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
@@ -375,6 +376,7 @@ abstract class Zend_Db_Adapter_Abstract
 
     /**
      * Fetches the first row of the SQL result.
+     * Uses the current fetchMode for the adapter.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param array $bind Data to bind into SELECT placeholders.
@@ -519,11 +521,10 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param string $tableName   Name of table (or sequence) associated with sequence.
-     * @param string $primaryKey  Primary key in $tableName.
+     * @param string $sequenceName   Name of sequence from which to get the last value generated.
      * @return integer
      */
-    abstract public function lastInsertId($tableName = null, $primaryKey = null);
+    abstract public function lastInsertId($sequenceName = null);
 
     /**
      * Begin a transaction.

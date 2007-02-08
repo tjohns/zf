@@ -119,12 +119,14 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   OPTIONAL table or sequence name needed for some PDO drivers
-     * @param  string $primaryKey  OPTIONAL primary key in $tableName need for some PDO drivers
+     * @param  string $sequenceName  Table or sequence name needed for some PDO drivers
      * @return integer
      */
-    public function lastInsertId($tableName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null)
     {
+        if ($sequenceName != null) {
+            throw new Zend_Db_Adapter_Exception('You must not specify a sequence to lastInsertId() in this adapter');
+        }
         $this->_connect();
         return $this->_connection->lastInsertId();
     }

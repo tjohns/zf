@@ -103,7 +103,8 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
             'precision' => null,
             'unsigned'  => null
         );
-        $result = $this->fetchAll($sql);
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         $desc = array();
         foreach ($result as $key => $row) {
             $row = array_merge($row_defaults, $row);

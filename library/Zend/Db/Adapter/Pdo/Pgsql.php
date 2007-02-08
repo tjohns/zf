@@ -124,9 +124,10 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 LEFT OUTER JOIN pg_attrdef AS d ON d.adrelid = c.oid AND d.adnum = a.attnum
             WHERE c.relname = '$tableName' AND a.attnum > 0";
 
-        $result = $this->query($sql);
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         $desc = array();
-        while ($row = $result->fetch()) {
+        foreach ($result as $key => $row) {
             if ($row['type'] == 'varchar') {
                 preg_match('/character varying\((\d+)\)/', $row['complete_type'], $matches);
                 $row['length'] = $matches[1];
@@ -181,14 +182,13 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   OPTIONAL table or sequence name needed for some PDO drivers
-     * @param  string $primaryKey  OPTIONAL primary key in $tableName need for some PDO drivers
+     * @param  string $sequenceName  Sequence name needed for some PDO drivers
      * @return integer
      */
-    public function lastInsertId($sequenceName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null)
     {
         if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Exception('You must specify a sequence name with lastInsertId()');
+            throw new Zend_Db_Adapter_Exception('You must specify a sequence to lastInsertId() in this adapter');
         }
         $this->_connect();
         return $this->_connection->lastInsertId($sequenceName);

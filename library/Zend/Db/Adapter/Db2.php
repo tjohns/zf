@@ -326,7 +326,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
 
         $desc = array();
-        $result = $this->fetchAll($sql);
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         foreach ($result as $key => $row) {
             $desc[$row['COLNAME']] = array(
                 'SCHEMA_NAME' => $row['TABSCHEMA'],
@@ -349,42 +350,31 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
     /**
      * Gets the last inserted ID.
+     * The IDENTITY_VAL_LOCAL() function gives the last generated
+     * identity value in the current process, even if it was for a
+     * GENERATED column.  The parameters to this function are
+     * not significant.
      *
-     * @todo   can we skip the select COLNAME query, if primaryKey is available?
-     *
-     * @param string $tableName OPTIONAL name of table associated with sequence
-     * @param string $primaryKey OPTIONAL primary key in $tableName (not used in this adapter)
+     * @param string $sequenceName Not used in this adapter.
      * @return integer
+     * @throws Zend_Db_Adapter_Db2_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = null)
+    public function lastInsertId($sequenceName = null)
     {
-        // we must know the name of the table
-        if (!$tableName) {
-            $tableName = $this->_lastInsertTable;
-        }
-
-        if (!$tableName) {
-            return -1;
-        }
-
         if (!$this->_connection) {
             $this->_connect();
         }
-
-        $sql = "SELECT COLNAME FROM SYSCAT.COLIDENTATTRIBUTES WHERE TABNAME='" . strtoupper($tableName) . "'";
-        $result = $this->fetchAll($sql);
-        if ($result) {
-            $identCol = $result[0]['COLNAME'];
-        } else {
-            $identCol = 'ID';
+        if ($sequenceName != null) {
+            throw new Zend_Db_Adapter_Db2_Exception('You must not specify the sequence to lastInsertId() in this adapter');
         }
 
-        $sql = "SELECT MAX($identCol) AS MAX FROM $tableName";
-        $result = $this->fetchAll($sql);
+        $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         if ($result) {
-            return $result[0]['MAX'];
+            return $result[0]['VAL'];
         } else {
-            return -1;
+            return null;
         }
     }
 
