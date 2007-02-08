@@ -263,6 +263,7 @@ class Zend_Locale_Format
                 }
             } else {
                 $value = round($value);
+                $precision = 0;
             }
         }
         
@@ -287,17 +288,30 @@ class Zend_Locale_Format
         // get number parts
         if (iconv_strpos($value, '.') !== false) {
             if ($precision === null) {
-                $precision = iconv_substr($value, iconv_strpos($value, '.') + 1);
+                $precstr = iconv_substr($value, iconv_strpos($value, '.') + 1);
             } else {
-                $precision = iconv_substr($value, iconv_strpos($value, '.') + 1, $precision);
+                $precstr = iconv_substr($value, iconv_strpos($value, '.') + 1, $precision);
+                if (iconv_strlen($precstr) < $precision) {
+                    $precstr = $precstr . str_pad("0", ($precision - iconv_strlen($precstr)), "0");
+                }
             }
         } else {
-            $precision = '';
+            if ($precision > 0) {
+                $precstr = str_pad("0", ($precision), "0");
+            }
         }
+        if ($precision === null) {
+            if (isset($precstr)) {
+                $precision = iconv_strlen($precstr);
+            } else {
+                $precision = 0;
+            }
+        }
+
         // get fraction and format lengths
-        call_user_func(Zend_Locale_Math::$scale, iconv_strlen($precision));
+        call_user_func(Zend_Locale_Math::$scale, $precision);
         $preg = call_user_func(Zend_Locale_Math::$sub, $value, '0', 0);
-        $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, iconv_strlen($precision));
+        $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, $precision);
 
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
@@ -310,7 +324,7 @@ class Zend_Locale_Format
         $group2 = iconv_strpos ($format, ',');
         $point  = iconv_strpos ($format, '0');
         // Add fraction
-        if ($prec == 0) {
+        if ($precision == '0') {
             $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal'] . iconv_substr($prec, 2).
