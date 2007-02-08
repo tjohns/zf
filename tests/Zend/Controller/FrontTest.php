@@ -401,7 +401,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $body = ob_get_clean();
 
         $actual = $this->_controller->getResponse()->getBody();
-        $this->assertEquals($actual, $body);
+        $this->assertContains($actual, $body);
     }
 
     public function testRunStatically()
