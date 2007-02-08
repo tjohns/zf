@@ -37,6 +37,17 @@ require_once 'Zend/Controller/Response/Abstract.php';
 class Zend_Controller_Response_Cli extends Zend_Controller_Response_Abstract
 {
     /**
+     * Flag; if true, when header operations are called after headers have been 
+     * sent, an exception will be raised; otherwise, processing will continue 
+     * as normal. Defaults to false.
+     * 
+     * @see canSendHeaders()
+     * @var boolean
+     */
+    public $headersSentThrowsException = false;
+
+
+    /**
      * Magic __toString functionality
      *
      * @return string

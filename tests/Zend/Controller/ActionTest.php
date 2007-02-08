@@ -139,12 +139,13 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
     public function testRedirect()
     {
+        $response = $this->_controller->getResponse();
+        $response->headersSentThrowsException = false;
         $this->_controller->redirect('/baz/foo');
         $this->_controller->redirect('/foo/bar');
-        $response = $this->_controller->getResponse();
-        $headers  = $response->getHeaders();
-        $found    = 0;
-        $url      = '';
+        $headers = $response->getHeaders();
+        $found   = 0;
+        $url     = '';
         foreach ($headers as $header) {
             if ('Location' == $header['name']) {
                 ++$found;

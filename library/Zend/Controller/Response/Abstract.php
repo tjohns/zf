@@ -18,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend_Controller_Response_Abstract
  *
@@ -42,15 +41,6 @@ abstract class Zend_Controller_Response_Abstract
      * @var Exception
      */
     protected $_exceptions = array();
-
-    /**
-     * Controller instance
-     *
-     * No type hinting here, as implementation will not care what kind of 
-     * controller is used.
-     * @var mixed
-     */
-    protected $_controller;
 
     /**
      * Array of headers. Each header is an array with keys 'name' and 'value'
@@ -78,40 +68,14 @@ abstract class Zend_Controller_Response_Abstract
     protected $_renderExceptions = false;
 
     /**
-     * Set controller
-     *
-     * Current implementation checks that controller is either a front or 
-     * action controller instance.
+     * Flag; if true, when header operations are called after headers have been 
+     * sent, an exception will be raised; otherwise, processing will continue 
+     * as normal. Defaults to true.
      * 
-     * @param Zend_Controller_Action|Zend_Controller_Front $controller 
-     * @return Zend_Controller_Response_Abstract
+     * @see canSendHeaders()
+     * @var boolean
      */
-    public function setController($controller)
-    {
-        if (!is_object($controller)) {
-            require_once 'Zend/Controller/Response/Exception.php';
-            throw new Zend_Controller_Response_Exception('Controller must be a Zend_Controller_Front or Zend_Controller_Action instance');
-        }
-        if ((!$controller instanceof Zend_Controller_Front) && 
-            (!$controller instanceof Zend_Controller_Action))
-        {
-            require_once 'Zend/Controller/Response/Exception.php';
-            throw new Zend_Controller_Response_Exception('Controller must be a Zend_Controller_Front or Zend_Controller_Action instance');
-        }
-
-        $this->_controller = $controller;
-        return $this;
-    }
-
-    /**
-     * Return current controller instance
-     * 
-     * @return Zend_Controller_Action|Zend_Controller_Front
-     */
-    public function getController()
-    {
-        return $this->_controller;
-    }
+    public $headersSentThrowsException = true;
 
     /**
      * Set a header
@@ -126,6 +90,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function setHeader($name, $value, $replace = false)
     {
+        $this->canSendHeaders(true);
         $name  = (string) $name;
         $value = (string) $value;
 
@@ -157,6 +122,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function setRedirect($url, $code = 302)
     {
+        $this->canSendHeaders(true);
         $this->setHeader('Location', $url, true)
              ->setHttpResponseCode($code);
 
@@ -195,6 +161,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function setRawHeader($value)
     {
+        $this->canSendHeaders(true);
         $this->_headersRaw[] = (string) $value;
         return $this;
     }
@@ -259,6 +226,24 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Can we send headers?
+     * 
+     * @param boolean $throw Whether or not to throw an exception if headers have been sent; defaults to false
+     * @return boolean
+     * @throws Zend_Controller_Response_Exception
+     */
+    public function canSendHeaders($throw = false)
+    {
+        $ok = headers_sent();
+        if ($throw && $this->headersSentThrowsException) {
+            require_once 'Zend/Controller/Response/Exception.php';
+            throw new Zend_Controller_Response_Exception('Cannot send headers; headers already sent');
+        }
+
+        return $ok;
+    }
+
+    /**
      * Send all headers
      *
      * Sends any headers specified. If an {@link setHttpResponseCode() HTTP response code} 
@@ -268,23 +253,23 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function sendHeaders()
     {
-        if (!headers_sent()) {
-            $httpCodeSent = false;
-            foreach ($this->_headersRaw as $header) {
-                if (!$httpCodeSent && $this->_httpResponseCode) {
-                    header($header, true, $this->_httpResponseCode);
-                    $httpCodeSent = true;
-                } else {
-                    header($header);
-                }
+        $this->canSendHeaders(true);
+
+        $httpCodeSent = false;
+        foreach ($this->_headersRaw as $header) {
+            if (!$httpCodeSent && $this->_httpResponseCode) {
+                header($header, true, $this->_httpResponseCode);
+                $httpCodeSent = true;
+            } else {
+                header($header);
             }
-            foreach ($this->_headers as $header) {
-                if (!$httpCodeSent && $this->_httpResponseCode) {
-                    header($header['name'] . ': ' . $header['value'], false, $this->_httpResponseCode);
-                    $httpCodeSent = true;
-                } else {
-                    header($header['name'] . ': ' . $header['value'], false);
-                }
+        }
+        foreach ($this->_headers as $header) {
+            if (!$httpCodeSent && $this->_httpResponseCode) {
+                header($header['name'] . ': ' . $header['value'], false, $this->_httpResponseCode);
+                $httpCodeSent = true;
+            } else {
+                header($header['name'] . ': ' . $header['value'], false);
             }
         }
 
