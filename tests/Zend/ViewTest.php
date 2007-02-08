@@ -499,6 +499,17 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir2/', $path['dir']);
     }
 
+    public function testHelperPathWithPrefixAndRelativePath()
+    {
+        $view = new Zend_View();
+        $status = $view->addHelperPath('Zend/View/_stubs/HelperDir1/', 'My_View_Helper');
+        $this->assertSame($view, $status);
+        $helperPaths = $view->getHelperPaths();
+        $path = $helperPaths[0];
+        $this->assertEquals('My_View_Helper_', $path['prefix']);
+        $this->assertContains('Zend/View/_stubs/HelperDir1/', $path['dir']);
+    }
+
     public function testFilterPathWithPrefix()
     {
         $view = new Zend_View();
