@@ -67,6 +67,18 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
+    function testGetConnection()
+    {
+        $db = Zend_Db::factory('pdo_sqlite',
+            array(
+                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
+            )
+        );
+        $conn = $db->getConnection();
+        $this->assertThat($conn, $this->isInstanceOf('PDO'));
+        $conn = null; // close the connection
+    }
+
     function testGetFetchMode()
     {
         $db = Zend_Db::factory('pdo_sqlite',

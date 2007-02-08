@@ -109,13 +109,14 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Returns the underlying database connection object or resource.  If not
-     * presently connected, this may return null.
+     * Returns the underlying database connection object or resource.
+     * If not presently connected, this initiates the connection.
      *
      * @return object|resource|null
      */
     public function getConnection()
     {
+        $this->_connect();
         return $this->_connection;
     }
 
