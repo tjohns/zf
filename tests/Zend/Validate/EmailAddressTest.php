@@ -166,7 +166,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
             'bob@bürger.de'
             );
         foreach ($emailAddresses as $input) {
-            $this->assertTrue($this->_validator->isValid($input));
+            $this->assertTrue($this->_validator->isValid($input), "$input failed to pass validation:\n"
+                            . implode("\n", $this->_validator->getMessages()));
         }
     }
 
