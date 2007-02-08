@@ -60,6 +60,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      * Creates a PDO object and connects to the database.
      *
      * @return void
+     * @throws Zend_Db_Adapter_Exception
      */
     protected function _connect()
     {
@@ -70,12 +71,12 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
         // check for PDO extension
         if (!extension_loaded('pdo')) {
-            throw new Zend_DB_Adapter_Exception('The PDO extension is required for this adapter but not loaded');
+            throw new Zend_Db_Adapter_Exception('The PDO extension is required for this adapter but not loaded');
         }
 
         // check the PDO driver is available
         if (!in_array($this->_pdoType, PDO::getAvailableDrivers())) {
-            throw new Zend_DB_Adapter_Exception('The ' . $this->_pdoType . ' driver is not currently installed');
+            throw new Zend_Db_Adapter_Exception('The ' . $this->_pdoType . ' driver is not currently installed');
         }
 
         // create PDO connection
@@ -98,7 +99,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
             /** @todo Are there other portability attribs to consider? */
         } catch (PDOException $e) {
-            throw new Zend_DB_Adapter_Exception($e->getMessage(), $e->getCode());
+            throw new Zend_Db_Adapter_Exception($e->getMessage(), $e->getCode());
         }
 
     }
