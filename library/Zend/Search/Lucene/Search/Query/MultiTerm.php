@@ -306,11 +306,11 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             $this->_termsPositions[$termId] = $reader->termPositions($term);
         }
 
-        if ($required === null) {
-            $required = $optional;
+        if ($required !== null) {
+            $this->_resVector = array_diff_key($required, $prohibited);
+        } else {
+            $this->_resVector = array_diff_key($optional, $prohibited);
         }
-
-        $this->_resVector = array_diff_key($required, $prohibited);
 
         ksort($this->_resVector, SORT_NUMERIC);
     }
@@ -403,16 +403,15 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     }
 
     /**
-     * Get next document id matching the query
-     * null means the end of result set
+     * Get document ids likely matching the query
      *
-     * @param integer $docId
-     * @param Zend_Search_Lucene $reader
-     * @return integer|null
+     * It's an array with document ids as keys (performance considerations)
+     *
+     * @return array
      */
-    public function next()
+    public function matchedDocs()
     {
-        return null;
+        return $this->_resVector;
     }
 
     /**

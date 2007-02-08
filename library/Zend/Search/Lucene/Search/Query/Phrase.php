@@ -409,21 +409,15 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
     }
 
     /**
-     * Get next document id matching the query
-     * null means the end of result set
+     * Get document ids likely matching the query
      *
-     * @param integer $docId
-     * @param Zend_Search_Lucene $reader
-     * @return integer|null
+     * It's an array with document ids as keys (performance considerations)
+     *
+     * @return array
      */
-    public function next()
+    public function matchedDocs()
     {
-        if (($current = each($this->_resVector)) === false) {
-            // end of result set
-            return null;
-        } else {
-            return $current[0];
-        }
+        return $this->_resVector;
     }
 
     /**

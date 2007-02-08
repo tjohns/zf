@@ -60,19 +60,6 @@ class Zend_Search_Lucene_Search_Query_Empty extends Zend_Search_Lucene_Search_Qu
     }
 
     /**
-     * Get next document id matching the query
-     * null means the end of result set
-     *
-     * @param integer $docId
-     * @param Zend_Search_Lucene $reader
-     * @return integer|null
-     */
-    public function next()
-    {
-        return null;
-    }
-
-    /**
      * Execute query in context of index reader
      * It also initializes necessary internal structures
      *
@@ -81,6 +68,18 @@ class Zend_Search_Lucene_Search_Query_Empty extends Zend_Search_Lucene_Search_Qu
     public function execute($reader)
     {
         // Do nothing
+    }
+
+    /**
+     * Get document ids likely matching the query
+     *
+     * It's an array with document ids as keys (performance considerations)
+     *
+     * @return array
+     */
+    public function matchedDocs()
+    {
+        return array();
     }
 
     /**

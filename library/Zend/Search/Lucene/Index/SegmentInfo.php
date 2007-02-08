@@ -422,13 +422,47 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
     /**
+     * TermInfo cache
+     *
+     * Size is 1024.
+     * Numbers are used instead of class constants because of performance considerations
+     *
+     * @var array
+     */
+    private $_termInfoCache = array();
+
+    private function _cleanUpTermInfoCache()
+    {
+        // Clean 256 term infos
+        foreach ($this->_termInfoCache as $key => $termInfo) {
+            unset($this->_termInfoCache[$key]);
+
+            // leave 768 last used term infos
+            if (count($this->_termInfoCache) == 768) {
+                break;
+            }
+        }
+    }
+
+    /**
      * Scans terms dictionary and returns term info
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @return Zend_Search_Lucene_Index_TermInfo
      */
-    public function getTermInfo($term)
+    public function getTermInfo(Zend_Search_Lucene_Index_Term $term)
     {
+        $termKey = $term->key();
+        if (isset($this->_termInfoCache[$termKey])) {
+            $termInfo = $this->_termInfoCache[$termKey];
+
+            // Move termInfo to the end of cache
+            unset($this->_termInfoCache[$termKey]);
+            $this->_termInfoCache[$termKey] = $termInfo;
+
+            return $termInfo;
+        }
+
         $this->_loadDictionary();
 
         $searchField = $this->getFieldNum($term->field);
@@ -468,7 +502,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $prevPosition = $highIndex;
         $prevTerm = $this->_termDictionary[$prevPosition];
-        $prevTermInfo = $this->_termDictionaryInfos[ $prevPosition ];
+        $prevTermInfo = $this->_termDictionaryInfos[$prevPosition];
 
         $tisFile = $this->openCompoundFile('.tis');
         $tiVersion = $tisFile->readInt();
@@ -508,10 +542,19 @@ class Zend_Search_Lucene_Index_SegmentInfo
         }
 
         if ($termFieldNum == $searchField && $termValue == $term->text) {
-            return new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipOffset);
+            $termInfo = new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipOffset);
         } else {
-            return null;
+            $termInfo = null;
         }
+
+        // Put loaded termInfo into cache
+        $this->_termInfoCache[$termKey] = $termInfo;
+
+        if (count($this->_termInfoCache) == 1024) {
+            $this->_cleanUpTermInfoCache();
+        }
+
+        return $termInfo;
     }
 
     /**

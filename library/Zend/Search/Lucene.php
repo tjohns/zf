@@ -498,7 +498,7 @@ class Zend_Search_Lucene
 
         $query->execute($this);
 
-        while (($id = $query->next()) !== null) {
+        foreach ($query->matchedDocs() as $id => $num) {
             $docScore = $query->score($id, $this);
             if( $docScore != 0 ) {
                 $hit = new Zend_Search_Lucene_Search_QueryHit($this);

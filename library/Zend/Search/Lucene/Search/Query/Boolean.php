@@ -58,6 +58,13 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     private $_signs = array();
 
     /**
+     * Result vector.
+     *
+     * @var array
+     */
+    private $_resVector = null;
+
+    /**
      * A score factor based on the fraction of all query subqueries
      * that a document contains.
      * float for conjunction queries
@@ -178,6 +185,75 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
 
     /**
+     * Calculate result vector for Conjunction query
+     * (like '<subquery1> AND <subquery2> AND <subquery3>')
+     */
+    private function _calculateConjunctionResult()
+    {
+        $this->_resVector = null;
+
+        if (count($this->_subqueries) == 0) {
+            $this->_resVector = array();
+        }
+
+        foreach ($this->_subqueries as $subquery) {
+            if($this->_resVector === null) {
+                $this->_resVector = $subquery->matchedDocs();
+            } else {
+                $this->_resVector = array_intersect_key($this->_resVector, $subquery->matchedDocs());
+            }
+
+            if (count($this->_resVector) == 0) {
+                // Empty result set, we don't need to check other terms
+                break;
+            }
+        }
+
+        ksort($this->_resVector, SORT_NUMERIC);
+    }
+
+
+    /**
+     * Calculate result vector for non Conjunction query
+     * (like '<subquery1> AND <subquery2> AND NOT <subquery3> OR <subquery4>')
+     */
+    private function _calculateNonConjunctionResult()
+    {
+        $required   = null;
+        $optional   = array();
+
+        foreach ($this->_subqueries as $subqueryId => $subquery) {
+            $docs = $subquery->matchedDocs();
+
+            if ($this->_signs[$subqueryId] === true) {
+                // required
+                if ($required !== null) {
+                    // array intersection
+                    $required = array_intersect_key($required, $docs);
+                } else {
+                    $required = $docs;
+                }
+            } elseif ($this->_signs[$subqueryId] === false) {
+                // prohibited
+                // Do nothing. matchedDocs() may include non-matching id's
+            } else {
+                // neither required, nor prohibited
+                // array union
+                $optional += $docs;
+            }
+        }
+
+        if ($required !== null) {
+            $this->_resVector = &$required;
+        } else {
+            $this->_resVector = &$optional;
+        }
+
+        ksort($this->_resVector, SORT_NUMERIC);
+    }
+
+
+    /**
      * Score calculator for conjunction queries (all subqueries are required)
      *
      * @param integer $docId
@@ -265,45 +341,24 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         }
 
         if ($this->_signs === null) {
-            // All subqueries are required
-            foreach ($this->_subqueries as $subquery) {
-                // Prepare priority queue
-                /** @todo implementation */
-            }
+            $this->_calculateConjunctionResult();
         } else {
-            // Prepare priority queue
-            /** @todo implementation */
+            $this->_calculateNonConjunctionResult();
         }
-
-        // While queue is not used
-        $this->_matchedDocs = array();
-        for ($count = 0; $count < $reader->maxDoc(); $count++) {
-            $this->_matchedDocs[$count] = $count;
-        }
-
-        reset($this->_matchedDocs);
     }
 
 
 
     /**
-     * Get next document id matching the query
-     * null means the end of result set
+     * Get document ids likely matching the query
      *
-     * @param integer $docId
-     * @param Zend_Search_Lucene $reader
-     * @return integer|null
+     * It's an array with document ids as keys (performance considerations)
+     *
+     * @return array
      */
-    public function next()
+    public function matchedDocs()
     {
-        /** @todo implementation*/
-        // While queue is not used
-        if (($current = each($this->_matchedDocs)) === false) {
-            // end of result set
-            return null;
-        } else {
-            return $current[0];
-        }
+        return $this->_resVector;
     }
 
     /**
@@ -315,10 +370,14 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      */
     public function score($docId, $reader)
     {
-        if ($this->_signs === null) {
-            return $this->_conjunctionScore($docId, $reader);
+        if (isset($this->_resVector[$docId])) {
+            if ($this->_signs === null) {
+                return $this->_conjunctionScore($docId, $reader);
+            } else {
+                return $this->_nonConjunctionScore($docId, $reader);
+            }
         } else {
-            return $this->_nonConjunctionScore($docId, $reader);
+            return 0;
         }
     }
 

@@ -97,18 +97,19 @@ abstract class Zend_Search_Lucene_Search_Query
     abstract public function score($docId, $reader);
 
     /**
-     * Get next document id matching the query
-     * null means the end of result set
+     * Get document ids likely matching the query
      *
-     * @param integer $docId
-     * @param Zend_Search_Lucene $reader
-     * @return integer|null
+     * It's an array with document ids as keys (performance considerations)
+     *
+     * @return array
      */
-    abstract public function next();
+    abstract public function matchedDocs();
 
     /**
      * Execute query in context of index reader
      * It also initializes necessary internal structures
+     *
+     * Query specific implementation
      *
      * @param Zend_Search_Lucene $reader
      */
