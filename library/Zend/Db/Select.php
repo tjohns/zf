@@ -442,16 +442,16 @@ class Zend_Db_Select
     public function order($spec)
     {
         if (is_string($spec)) {
-            $spec = explode(',', $spec);
+            $spec = array($spec);
         } else {
             settype($spec, 'array');
         }
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $key => $val) {
-            $asc  = (strtoupper(substr($val, -4)) == ' ASC');
-            $desc = (strtoupper(substr($val, -5)) == ' DESC');
-            if (! $asc && ! $desc) {
+            if (preg_match('/\b(ASC|DESC)\s*$/i', $val, $matches)) {
+                $direction = $matches[1];
+            } else {
                 $val .= ' ASC';
             }
             $this->_parts['order'][] = trim($val);
