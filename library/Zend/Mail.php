@@ -373,7 +373,7 @@ class Zend_Mail extends Zend_Mime_Message
         $email = strtr($email,"\r\n\t",'???');
         $this->_addRecipient($email, ('To' == $headerName) ? true : false);
         if ($name != '') {
-            $name = $this->_encodeHeader('"' .$name. '" ');
+            $name = '"' . $this->_encodeHeader($name) . '" ';
         }
 
         $this->_storeHeader($headerName, $name .'<'. $email . '>', true);
