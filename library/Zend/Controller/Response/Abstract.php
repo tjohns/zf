@@ -256,6 +256,7 @@ abstract class Zend_Controller_Response_Abstract
         $this->canSendHeaders(true);
 
         $httpCodeSent = false;
+
         foreach ($this->_headersRaw as $header) {
             if (!$httpCodeSent && $this->_httpResponseCode) {
                 header($header, true, $this->_httpResponseCode);
@@ -264,6 +265,7 @@ abstract class Zend_Controller_Response_Abstract
                 header($header);
             }
         }
+
         foreach ($this->_headers as $header) {
             if (!$httpCodeSent && $this->_httpResponseCode) {
                 header($header['name'] . ': ' . $header['value'], false, $this->_httpResponseCode);
@@ -271,6 +273,11 @@ abstract class Zend_Controller_Response_Abstract
             } else {
                 header($header['name'] . ': ' . $header['value'], false);
             }
+        }
+
+        if (!$httpCodeSent) {
+            header('HTTP/1.1 ' . $this->_httpResponseCode);
+            $httpCodeSent = true;
         }
 
         return $this;
