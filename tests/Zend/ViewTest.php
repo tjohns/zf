@@ -29,6 +29,11 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 	{
 		$this->_testDefaultPath('script', false);
 	}
+
+    public function normalizePath($path)
+    {
+        return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+    }
     
     
 	/**
@@ -446,7 +451,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $helperPaths = $view->getHelperPaths();
         $filterPaths = $view->getFilterPaths();
 
-        $this->assertContains($scriptPath, $scriptPaths);
+        $this->assertContains($this->normalizePath($scriptPath), $scriptPaths);
 
         $found = false;
         foreach ($helperPaths as $pathInfo) {
@@ -490,13 +495,13 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $helperPaths = $view->getHelperPaths();
         $path = $helperPaths[0];
         $this->assertEquals('My_View_Helper_', $path['prefix']);
-        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir1/', $path['dir']);
+        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), $path['dir']);
 
         $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Helper');
         $helperPaths = $view->getHelperPaths();
         $path = $helperPaths[0];
         $this->assertEquals('Other_View_Helper_', $path['prefix']);
-        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir2/', $path['dir']);
+        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), $path['dir']);
     }
 
     public function testHelperPathWithPrefixAndRelativePath()
@@ -507,7 +512,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $helperPaths = $view->getHelperPaths();
         $path = $helperPaths[0];
         $this->assertEquals('My_View_Helper_', $path['prefix']);
-        $this->assertContains('Zend/View/_stubs/HelperDir1/', $path['dir']);
+        $this->assertContains($this->normalizePath('Zend/View/_stubs/HelperDir1/'), $path['dir']);
     }
 
     public function testFilterPathWithPrefix()
@@ -518,13 +523,13 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $filterPaths = $view->getFilterPaths();
         $path = $filterPaths[0];
         $this->assertEquals('My_View_Filter_', $path['prefix']);
-        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir1/', $path['dir']);
+        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), $path['dir']);
 
         $view->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Filter');
         $filterPaths = $view->getFilterPaths();
         $path = $filterPaths[0];
         $this->assertEquals('Other_View_Filter_', $path['prefix']);
-        $this->assertEquals(dirname(__FILE__) . '/View/_stubs/HelperDir2/', $path['dir']);
+        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), $path['dir']);
     }
 
     public function testAssignThrowsExceptionsOnBadValues()
