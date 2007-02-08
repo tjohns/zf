@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Filter_Basename
+ * @see Zend_Filter_BaseName
  */
-require_once 'Zend/Filter/Basename.php';
+require_once 'Zend/Filter/BaseName.php';
 
 
 /**
@@ -41,23 +41,23 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_BasenameTest extends PHPUnit_Framework_TestCase
+class Zend_Filter_BaseNameTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_Basename object
+     * Zend_Filter_BaseName object
      *
-     * @var Zend_Filter_Basename
+     * @var Zend_Filter_BaseName
      */
     protected $_filter;
 
     /**
-     * Creates a new Zend_Filter_Basename object for each test method
+     * Creates a new Zend_Filter_BaseName object for each test method
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_filter = new Zend_Filter_Basename();
+        $this->_filter = new Zend_Filter_BaseName();
     }
 
     /**

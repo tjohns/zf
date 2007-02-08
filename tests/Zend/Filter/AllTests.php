@@ -52,9 +52,9 @@ require_once 'Zend/Filter/AlphaTest.php';
 
 
 /**
- * @see Zend_Filter_BasenameTest
+ * @see Zend_Filter_BaseNameTest
  */
-require_once 'Zend/Filter/BasenameTest.php';
+require_once 'Zend/Filter/BaseNameTest.php';
 
 
 /**
@@ -141,7 +141,7 @@ class Zend_Filter_AllTests
 
         $suite->addTestSuite('Zend_Filter_AlnumTest');
         $suite->addTestSuite('Zend_Filter_AlphaTest');
-        $suite->addTestSuite('Zend_Filter_BasenameTest');
+        $suite->addTestSuite('Zend_Filter_BaseNameTest');
         $suite->addTestSuite('Zend_Filter_DigitsTest');
         $suite->addTestSuite('Zend_Filter_DirTest');
         $suite->addTestSuite('Zend_Filter_HtmlEntitiesTest');
