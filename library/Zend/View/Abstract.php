@@ -625,9 +625,10 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         foreach ((array) $path as $dir) {
             // attempt to strip any possible separator and
             // append the system directory separator
-            $dir = rtrim($dir, '\\/' . DIRECTORY_SEPARATOR) 
-                . DIRECTORY_SEPARATOR;
-
+            $dir = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dir);
+            $dir = rtrim($dir, DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR) 
+                 . DIRECTORY_SEPARATOR;
+            
             switch ($type) {
                 case 'script':
                     // add to the top of the stack.
