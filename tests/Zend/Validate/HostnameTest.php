@@ -73,12 +73,12 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             array(Zend_Validate_Hostname::ALLOW_DNS, true, array('example.com', 'example.museum')),
             array(Zend_Validate_Hostname::ALLOW_DNS, false, array('localhost', 'localhost.localdomain', '1.2.3.4')),
             array(Zend_Validate_Hostname::ALLOW_LOCAL, true, array('localhost', 'localhost.localdomain', 'example.com')),
-            array(Zend_Validate_Hostname::ALLOW_ALL, true, array('localhost', 'example.com', '1.2.3.4'))
+            array(Zend_Validate_Hostname::ALLOW_ALL, true, array('localhost', 'example.com', '1.2.3.4', 'bürger.de'))
             );
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input));
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
     }
