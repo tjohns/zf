@@ -23,21 +23,15 @@
  
 
 /**
- * Zend_Mail_Protocol_Exception
- */
-require_once('Zend/Mail/Protocol/Exception.php');
-
-
-/**
  * Zend_Validate
  */
-require_once('Zend/Validate.php');
+require_once 'Zend/Validate.php';
 
 
 /**
  * Zend_Validate_Hostname
  */
-require_once('Zend/Validate/Hostname.php');
+require_once 'Zend/Validate/Hostname.php';
 
 
 /**
@@ -126,9 +120,10 @@ abstract class Zend_Mail_Protocol_Abstract
     /**
      * Constructor.
      *
-     * @param string  $host OPTIONAL Hostname of remote connection (default: 127.0.0.1)
-     * @param integer $port OPTIONAL Port number (default: null)
+     * @param  string  $host OPTIONAL Hostname of remote connection (default: 127.0.0.1)
+     * @param  integer $port OPTIONAL Port number (default: null)
      * @throws Zend_Mail_Protocol_Exception
+     * @return void
      */
     public function __construct($host = '127.0.0.1', $port = null)
     {
@@ -136,6 +131,7 @@ abstract class Zend_Mail_Protocol_Abstract
         $this->_validHost->addValidator(new Zend_Validate_Hostname());
 
         if (!$this->_validHost->isValid($host)) {
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception(join(', ', $this->_validHost->getMessage()));
         }
         
@@ -146,6 +142,8 @@ abstract class Zend_Mail_Protocol_Abstract
     
     /**
      * Class destructor to cleanup open resources
+     *
+     * @return void
      */
     public function __destruct()
     {
@@ -157,9 +155,6 @@ abstract class Zend_Mail_Protocol_Abstract
      * Create a connection to the remote host
      * 
      * Concrete adapters for this class will implement their own unique connect scripts, using the _connect() method to create the socket resource.
-     *
-     *
-     * @throws Zend_Mail_Transport_Exception
      */
     abstract public function connect();
     
@@ -199,6 +194,8 @@ abstract class Zend_Mail_Protocol_Abstract
 
     /**
      * Reset the transaction log
+     *
+     * @return void
      */
     public function resetLog()
     {
@@ -211,9 +208,9 @@ abstract class Zend_Mail_Protocol_Abstract
      * 
      * An example $remote string may be 'tcp://mail.example.com:25' or 'ssh://hostname.com:2222'
      *
-     * @param string $remote Remote
-     * @return boolean
+     * @param  string $remote Remote
      * @throws Zend_Mail_Protocol_Exception
+     * @return boolean
      */
     protected function _connect($remote)
     {
@@ -225,13 +222,15 @@ abstract class Zend_Mail_Protocol_Abstract
 
         if ($this->_socket === false) {
             if ($errorNum == 0) {
-                $errorStr = 'Could not open socket.';
+                $errorStr = 'Could not open socket';
             }
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception($errorStr);
         }
         
         if (($result = stream_set_timeout($this->_socket, self::TIMEOUT_CONNECTION)) === false) {
-            throw new Zend_Mail_Protocol_Exception('Could not set Stream Timeout.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('Could not set stream timeout');
         }
         
         return $result;
@@ -240,6 +239,8 @@ abstract class Zend_Mail_Protocol_Abstract
 
     /**
      * Disconnect from remote host and free resource
+     *
+     * @return void
      */
     protected function _disconnect()
     {
@@ -252,14 +253,15 @@ abstract class Zend_Mail_Protocol_Abstract
     /**
      * Send the given request followed by a LINEEND to the server.
      *
-     * @param string $request
-     * @return integer|boolean Number of bytes written to remote host
+     * @param  string $request
      * @throws Zend_Mail_Protocol_Exception
+     * @return integer|boolean Number of bytes written to remote host
      */
     protected function _send($request)
     {
         if (!is_resource($this->_socket)) {
-            throw new Zend_Mail_Protocol_Exception('No connection has been established to ' . $this->_host . '.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('No connection has been established to ' . $this->_host);
         }
         
         $this->_request = $request;
@@ -270,7 +272,8 @@ abstract class Zend_Mail_Protocol_Abstract
         $this->_log .= $request . self::EOL;
 
         if ($result === false) {
-            throw new Zend_Mail_Protocol_Exception('Could not send request to ' . $this->_host . '.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('Could not send request to ' . $this->_host);
         }
         
         return $result;
@@ -281,13 +284,14 @@ abstract class Zend_Mail_Protocol_Abstract
      * Get a line from the stream.
      *
      * @var    integer $timeout Per-request timeout value if applicable
-     * @return string
      * @throws Zend_Mail_Protocol_Exception
+     * @return string
      */
     protected function _receive($timeout = null)
     {
         if (!is_resource($this->_socket)) {
-            throw new Zend_Mail_Protocol_Exception('No connection has been established to ' . $this->_host . '.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('No connection has been established to ' . $this->_host);
         }
 
         // Adapters may wish to supply per-commend timeouts according to appropriate RFC
@@ -305,11 +309,13 @@ abstract class Zend_Mail_Protocol_Abstract
         $info = stream_get_meta_data($this->_socket);
         
         if (!empty($info['timed_out'])) {
-            throw new Zend_Mail_Protocol_Exception($this->_host . ' has timed out.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception($this->_host . ' has timed out');
         }
         
         if ($reponse === false) {
-            throw new Zend_Mail_Protocol_Exception('Could not read from ' . $this->_host . '.');
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('Could not read from ' . $this->_host);
         }
 
         return $reponse;
@@ -322,9 +328,9 @@ abstract class Zend_Mail_Protocol_Abstract
      * Read the response from the stream and check for expected return code.
      * Throws a Zend_Mail_Protocol_Exception if an unexpected code is returned.
      *
-     * @param string|array $code One or more codes that indicate a successful response
-     * @return string Last line of response string
+     * @param  string|array $code One or more codes that indicate a successful response
      * @throws Zend_Mail_Protocol_Exception
+     * @return string Last line of response string
      */
     protected function _expect($code, $timeout = null)
     {
@@ -341,6 +347,7 @@ abstract class Zend_Mail_Protocol_Abstract
             sscanf($result, $this->_template, $cmd, $msg);
             
             if ($cmd === null || !in_array($cmd, $code)) {
+                require_once 'Zend/Mail/Protocol/Exception.php';
                 throw new Zend_Mail_Protocol_Exception($result);
             }
 

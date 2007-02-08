@@ -28,12 +28,6 @@ require_once 'Zend/Mail/Protocol/Smtp.php';
 
 
 /**
- * Zend_Mail_Protocol_Exception
- */
-require_once 'Zend/Mail/Protocol/Exception.php';
-
-
-/**
  * Performs PLAIN authentication
  *
  * @category   Zend
@@ -63,9 +57,10 @@ class Zend_Mail_Protocol_Smtp_Auth_Plain extends Zend_Mail_Protocol_Smtp
     /**
      * Constructor.
      *
-     * @param string $host   (Default: 127.0.0.1)
-     * @param int    $port   (Default: null)
-     * @param array  $config Auth-specific parameters
+     * @param  string $host   (Default: 127.0.0.1)
+     * @param  int    $port   (Default: null)
+     * @param  array  $config Auth-specific parameters
+     * @return void
      */
     public function __construct($host = '127.0.0.1', $port = null, $config = null)
     {
@@ -78,12 +73,14 @@ class Zend_Mail_Protocol_Smtp_Auth_Plain extends Zend_Mail_Protocol_Smtp
             }
         }
 
-        parent::__construct($host, $port);
+        parent::__construct($host, $port, $config);
     }
 
     
     /**
      * Perform PLAIN authentication with supplied credentials
+     *
+     * @return void
      */
     public function auth()
     {

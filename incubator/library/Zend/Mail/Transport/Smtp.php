@@ -98,8 +98,9 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     /**
      * Constructor.
      *
-     * @param string $host OPTIONAL (Default: 127.0.0.1)
-     * @param array|null $config OPTIONAL (Default: null)
+     * @param  string $host OPTIONAL (Default: 127.0.0.1)
+     * @param  array|null $config OPTIONAL (Default: null)
+     * @return void
      */
     public function __construct($host = '127.0.0.1', Array $config = array())
     {
@@ -120,6 +121,8 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
 
     /**
      * Class destructor to ensure all open connections are closed
+     *
+     * @return void
      */
     public function __destruct()
     {
@@ -131,9 +134,11 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     
     
     /**
-     * Sets the client object
+     * Sets the connection protocol instance
      * 
      * @param Zend_Mail_Protocol_Abstract $client
+     *
+     * @return void
      */
     public function setConnection(Zend_Mail_Protocol_Abstract $connection)
     {
@@ -142,7 +147,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     
     
     /**
-     * Gets the client object
+     * Gets the connection protocol instance
      * 
      * @return Zend_Mail_Protocol|null
      */
@@ -152,21 +157,24 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     }
 
     /**
-     * Send an email via the SMTP client adapter
+     * Send an email via the SMTP connection protocol
+     *
+     * The connection via the protocol adapter is made just-in-time to allow a 
+     * developer to add a custom adapter if required before mail is sent.
+     *
+     * @return void
      */
     public function _sendMail()
     {
         // If sending multiple messages per session use existing adapter
         if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
-            
-            // Check if authentication is required
+            // Check if authentication is required and determine required class
+            $connectionClass = 'Zend_Mail_Protocol_Smtp';
             if ($this->_auth) {
-                $class = 'Zend_Mail_Protocol_Smtp_Auth_' . ucwords($this->_auth);
-                Zend::loadClass($class);
-                $this->setConnection(new $class($this->_host, $this->_port, $this->_config));
-            } else {
-                $this->setConnection(new Zend_Mail_Protocol_Smtp($this->_host, $this->_port));
+                $connectionClass .= '_Auth_' . ucwords($this->_auth);
             }           
+            Zend::loadClass($connectionClass);
+            $this->setConnection(new $connectionClass($this->_host, $this->_port, $this->_config));
             $this->_connection->connect();
             $this->_connection->helo($this->_name);
         } else {
