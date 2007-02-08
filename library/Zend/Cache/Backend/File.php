@@ -206,6 +206,11 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     public function save($data, $id, $tags = array(), $specificLifeTime = false)
     {
+        if ((!is_dir($this->_options['cacheDir'])) or (!is_writable($this->_options['cacheDir']))) {
+            if ($this->_directives['logging']) {
+                Zend_Log::log("Zend_Cache_Backend_File::save() : cacheDir doesn't exist or is not writable", Zend_Log::LEVEL_WARNING);
+            }
+        }
         $this->remove($id); // to avoid multiple files with the same cache id
         $lifeTime = $this->getLifeTime($specificLifeTime);
         $expire = $this->_expireTime($lifeTime);
