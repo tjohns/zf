@@ -235,12 +235,12 @@ abstract class Zend_Controller_Response_Abstract
     public function canSendHeaders($throw = false)
     {
         $ok = headers_sent();
-        if ($throw && $this->headersSentThrowsException) {
+        if ($ok && $throw && $this->headersSentThrowsException) {
             require_once 'Zend/Controller/Response/Exception.php';
             throw new Zend_Controller_Response_Exception('Cannot send headers; headers already sent');
         }
 
-        return $ok;
+        return !$ok;
     }
 
     /**
