@@ -352,7 +352,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             return $expire;
         }
         if (time() <= $expire) {
-            return $expire;
+            return @filemtime($file);
         }
         return false;
     }
