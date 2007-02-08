@@ -1,22 +1,17 @@
 <sect1 id="zend.validate.writing_validators">
 
-    <title>Writing Validators</title>
+    <title>写校验器</title>
 
     <para>
-        Zend_Validate supplies a set of commonly needed validators, but inevitably, developers will wish to
-        write custom validators for their particular needs. The task of writing a custom validator is
-        facilitated by implementing <code>Zend_Validate_Interface</code>.
+        尽管提供了一组通用的校验器，但不可避免地，开发者还将为他们特定的需求来写定制的校验器。通过实现<code>Zend_Validate_Interface</code>写校验器将变得容易。
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> defines two methods, <code>isValid()</code> and
-        <code>getMessages()</code>, that may be implemented by user classes. An object that implements this
-        interface may be added to a validator chain with <code>Zend_Validate::addValidator()</code>.
+        <code>Zend_Validate_Interface</code> 定义了两个方法， <code>isValid()</code> 和 <code>getMessages()</code>, 它可以在用户的类里被实现。用 <code>Zend_Validate::addValidator()</code> 可以把一个实现这个接口的对象添加到校验器链。
     </para>
 
     <para>
-        The following example demonstrates how a custom validator might be written:
-
+        下面的例子示范如何写定制的校验器：
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Interface.php';
 
@@ -47,7 +42,7 @@ class MyValidator implements Zend_Validate_Interface
     </para>
 
     <para>
-        To add an instance of the above validator to a validator chain:
+        把上面校验器的实例添加到校验器链：
 
         <programlisting role="php"><![CDATA[<?php
 $validatorChain = new Zend_Validate();

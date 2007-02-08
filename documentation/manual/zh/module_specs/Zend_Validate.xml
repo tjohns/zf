@@ -1,50 +1,35 @@
 <sect1 id="zend.validate.introduction">
 
-    <title>Introduction</title>
+    <title>简介</title>
 
     <para>
-        The Zend_Validate component provides a set of commonly needed validators. It also provides a simple
-        validator chaining mechanism by which multiple validators may be applied to a single datum in a
-        user-defined order.
+        Zend_Validate 组件提供一组通用的校验器。它也提供了一个简单的校验器链机制，即在用户定义的顺序下，多个校验器可以被用于单个的数据。
     </para>
 
     <para>
-        <emphasis role="strong">What is a validator?</emphasis>
+        <emphasis role="strong">什么是校验器（validator）?</emphasis>
     </para>
 
     <para>
-        A validator examines its input with respect to some requirements and produces a boolean result -
-        whether the input successfully validates against the requirements. If the input does not meet the
-        requirements, a validator may additionally provide information about which requirement(s) the input
-        does not meet.
+        校验器根据要求检查它的输入并产生一个布尔结果--是否输入被成功校验。如果输入不符合要求，校验器另外地提供信息来说明输入不符合要求。
     </para>
 
     <para>
-        For example, a web application might require that a username be between six and twelve characters in
-        length and may only contain alphanumeric characters. A validator can be used for ensuring that
-        usernames meet these requirements. If a chosen username does not meet one or both of the requirements,
-        it would be useful to know which of the requirements the username fails to meet.
+        例如，一个 web 应用可能要求一个用户名的长度在6 到12个字符并只包含数字和文字。一个校验器可以被用来确保用户名符合要求。如果一个用户名不符合一个或者全部两个要求，知道它到底不符合哪个要求将非常有用。
     </para>
 
     <para>
-        Having defined validation in this way provides the foundation for
-        <code>Zend_Validate_Interface</code>, which defines two methods, <code>isValid()</code> and
-        <code>getMessages()</code>. The <code>isValid()</code> method performs validation upon the provided
-        value, returning <code>true</code> if and only if the value passes against the validation criteria. If
-        <code>isValid()</code> returns <code>false</code>, the <code>getMessages()</code> is provided to
-        return an array of messages explaining the reason(s) for validation failure.
+        用这种方法定义校验为<code>Zend_Validate_Interface</code>提供了基础，它定义了两个方法，<code>isValid()</code> 和 <code>getMessages()</code>。<code>isValid()</code>方法根据提供的值来校验，当且仅当这个值通过校验条件，它返回<code>true</code>。如果<code>isValid()</code>返回<code>false</code>，<code>getMessages()</code> 返回一个信息数组来解释校验失败的原因。    
     </para>
 
     <note>
         <para>
-            The <code>getMessages()</code> returns validation failure messages for the most recent
-            <code>isValid()</code> call only, since <code>isValid()</code> clears any messages existing from a previous <code>isValid()</code> call.
+            <code>getMessages()</code> 只为最近的<code>isValid()</code>调用返回校验失败信息，因为 <code>isValid()</code> 清楚先前 <code>isValid</code> 调用的任何信息。
         </para>
     </note>
 
     <para>
-        The following example illustrates validation of an e-mail address:
-
+        下面的例子示例一个e-mail地址的校验：
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
