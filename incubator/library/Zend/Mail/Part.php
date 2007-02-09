@@ -66,11 +66,11 @@ class Zend_Mail_Part
      */
     public function __construct(array $params)
     {
-        if(isset($params['handler'])) {
-            if(!$params['handler'] instanceof Zend_Mail_Storage_Abstract) {
+        if (isset($params['handler'])) {
+            if (!$params['handler'] instanceof Zend_Mail_Storage_Abstract) {
                 throw new Zend_Mail_Exception('handler is not a valid mail handler');
             }
-            if(!isset($params['id'])) {
+            if (!isset($params['id'])) {
                 throw new Zend_Mail_Exception('need a message id with a handler');
             }
 
@@ -78,19 +78,19 @@ class Zend_Mail_Part
             $this->_messageNum = $params['id'];
         }
 
-        if(isset($params['raw'])) {
+        if (isset($params['raw'])) {
             Zend_Mime_Decode::splitMessage($params['raw'], $this->_headers, $this->_content);
-        } else if(isset($params['headers'])) {
-            if(is_array($params['headers'])) {
+        } else if (isset($params['headers'])) {
+            if (is_array($params['headers'])) {
                 $this->_headers = $params['headers'];
             } else {
-                if(!empty($params['noToplines'])) {
+                if (!empty($params['noToplines'])) {
                     Zend_Mime_Decode::splitMessage($params['headers'], $this->_headers, $null);
                 } else {
                     Zend_Mime_Decode::splitMessage($params['headers'], $this->_headers, $this->_topLines);
                 }
             }
-            if(isset($params['content'])) {
+            if (isset($params['content'])) {
                 $this->_content = $params['content'];
             }
         }
@@ -113,11 +113,11 @@ class Zend_Mail_Part
      */
     public function getContent()
     {
-        if($this->_content !== null) {
+        if ($this->_content !== null) {
             return $this->_content;
         }
 
-        if($this->_mail) {
+        if ($this->_mail) {
             return $this->_mail->getRaw($this->_messageNum, 'content');
         } else {
             throw new Zend_Mail_Exception('no content');
@@ -126,36 +126,36 @@ class Zend_Mail_Part
 
     public function getPart($num)
     {
-        if(isset($this->_parts[$num])) {
+        if (isset($this->_parts[$num])) {
             return $this->_parts[$num];
         }
 
-        if(!$this->_mail && $this->_content === null) {
+        if (!$this->_mail && $this->_content === null) {
             throw new Zend_Mail_Exception('part not found');
         }
 
-        if($this->_mail && $this->_mail->hasFetchPart) {
+        if ($this->_mail && $this->_mail->hasFetchPart) {
             // TODO: fetch part
             // return
         }
 
         // caching content if we can't fetch parts
-        if($this->_content === null) {
+        if ($this->_content === null) {
             $this->_content = $this->_mail->getRaw($this->_messageNum, 'content');
         }
 
         // split content in parts
         $boundary = Zend_Mime_Decode::splitContentType($this->contentType, 'boundary');
-        if(!$boundary) {
+        if (!$boundary) {
             throw new Zend_Mail_Exception('no boundary found in content type to split message');
         }
         $parts = Zend_Mime_Decode::splitMessageStruct($this->_content, $boundary);
         $counter = 1;
-        foreach($parts as $part) {
+        foreach ($parts as $part) {
             $this->_parts[$counter++] = new self(array('headers' => $part['header'], 'content' => $part['body']));
         }
 
-        if(!isset($this->_parts[$num])) {
+        if (!isset($this->_parts[$num])) {
             throw new Zend_Mail_Exception('part not found');
         }
 
@@ -170,8 +170,8 @@ class Zend_Mail_Part
      */
     public function getHeaders()
     {
-        if($this->_headers === null) {
-            if(!$this->_mail) {
+        if ($this->_headers === null) {
+            if (!$this->_mail) {
                 $this->_headers = array();
             } else {
                 $part = $this->_mail->getRaw($this->_messageNum, 'header');
@@ -185,7 +185,7 @@ class Zend_Mail_Part
 
     public function getHeader($name, $format = null)
     {
-        if($this->_headers === null) {
+        if ($this->_headers === null) {
             $this->getHeaders();
         }
 
@@ -193,7 +193,7 @@ class Zend_Mail_Part
 
         if (!isset($this->_headers[$lowerName])) {
             $lowerName = strtolower(preg_replace('%([a-z])([A-Z])%', '\1-\2', $name));
-            if(!isset($this->_headers[$lowerName])) {
+            if (!isset($this->_headers[$lowerName])) {
                 throw new Zend_Mail_Exception("no Header with Name $name found");
             }
         }
@@ -201,9 +201,9 @@ class Zend_Mail_Part
 
         $header = $this->_headers[$name];
 
-        switch($format) {
+        switch ($format) {
             case 'string':
-                if(is_array($header)) {
+                if (is_array($header)) {
                     $header = implode(Zend_Mime::LINEEND, $header);
                 }
                 break;

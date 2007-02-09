@@ -70,7 +70,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function countMessages($flags = null)
     {
-        if(!$this->_currentFolder) {
+        if (!$this->_currentFolder) {
             throw new Zend_Mail_Storage_Exception('No selected folder to count');
         }
         $result = $this->_protocol->examine($this->_currentFolder);
@@ -85,7 +85,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function getSize($id = 0)
     {
-        if($id) {
+        if ($id) {
             return $this->_protocol->fetch('RFC822.SIZE', $id);
         }
         return $this->_protocol->fetch('RFC822.SIZE', 1, INF);
@@ -107,7 +107,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     public function getRaw($id, $part)
     {
         // TODO: indexes for header and content should be changed to negative numbers
-        switch($part) {
+        switch ($part) {
             case 'header':
                 return $this->_protocol->fetch('RFC822.HEADER', $id);
                 break;
@@ -139,7 +139,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function __construct($params)
     {
-        if($params instanceof Zend_Mail_Transport_Imap) {
+        if ($params instanceof Zend_Mail_Transport_Imap) {
             $this->_protocol = $params;
             try {
                 $this->selectFolder('INBOX');
@@ -149,7 +149,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
             return;
         }
 
-        if(!isset($params['user'])) {
+        if (!isset($params['user'])) {
             throw new Zend_Mail_Storage_Exception('need at least user in params');
         }
 
@@ -160,7 +160,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
 
         $this->_protocol = new Zend_Mail_Transport_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
-        if(!$this->_protocol->login($params['user'], $params['password'])) {
+        if (!$this->_protocol->login($params['user'], $params['password'])) {
             throw new Zend_Mail_Storage_Exception('cannot login, user or password wrong');
         }
         $this->selectFolder(isset($params['folder']) ? $params['folder'] : 'INBOX');
@@ -236,7 +236,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     public function getFolders($rootFolder = null)
     {
         $folders = $this->_protocol->listMailbox((string)$rootFolder);
-        if(!$folders) {
+        if (!$folders) {
             throw new Zend_Mail_Storage_Exception('folder not found');
         }
 
@@ -247,11 +247,11 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
         $parentFolder = $root;
         $parent = '';
 
-        foreach($folders as $globalName => $data) {
+        foreach ($folders as $globalName => $data) {
             do {
-                if(!$parent || strpos($globalName, $parent) === 0) {
+                if (!$parent || strpos($globalName, $parent) === 0) {
                     $pos = strrpos($globalName, $data['delim']);
-                    if($pos === false) {
+                    if ($pos === false) {
                         $localName = $globalName;
                     } else {
                         $localName = substr($globalName, $pos + 1);
@@ -265,12 +265,12 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
                     array_push($folderStack, $parentFolder);
                     $parentFolder = $folder;
                     break;
-                } else if($stack) {
+                } else if ($stack) {
                     $parent = array_pop($stack);
                     $parentFolder = array_pop($folderStack);
                 }
-            } while($stack);
-            if(!$stack) {
+            } while ($stack);
+            if (!$stack) {
                 throw new Zend_Mail_Storage_Exception('error while constructing folder tree');
             }
         }
@@ -289,7 +289,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     public function selectFolder($globalName)
     {
         $this->_currentFolder = $globalName;
-        if(!$this->_protocol->select($this->_currentFolder)) {
+        if (!$this->_protocol->select($this->_currentFolder)) {
             $this->_currentFolder = '';
             throw new Zend_Mail_Storage_Exception('cannot change folder, maybe it does not exist');
         }

@@ -72,15 +72,15 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     public function getSize($id = null)
     {
 
-        if($id !== null) {
-            if(!isset($this->_files[$id - 1])) {
+        if ($id !== null) {
+            if (!isset($this->_files[$id - 1])) {
                 throw new Zend_Mail_Storage_Exception('id does not exist');
              }
             return filesize($this->_files[$id - 1]['filename']);
         }
 
         $result = array();
-        foreach($this->_files as $num => $pos) {
+        foreach ($this->_files as $num => $pos) {
             $result[$num + 1] = filesize($this->_files[$num]['filename']);
         }
 
@@ -102,7 +102,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
     public function getRaw($id, $part)
     {
-        if(!isset($this->_files[$id - 1])) {
+        if (!isset($this->_files[$id - 1])) {
             throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
@@ -110,7 +110,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         $content = null;
 
         // TODO: indexes for header and content should be changed to negative numbers
-        switch($part) {
+        switch ($part) {
             case 'header':
                 $content = '';
                 while (!feof($fh)) {
@@ -125,7 +125,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
                 $content = '';
                 while (!feof($fh)) {
                     $line = fgets($fh);
-                    if(!trim($line)) {
+                    if (!trim($line)) {
                         break;
                     }
                 }
@@ -136,7 +136,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         }
 
         fclose($fh);
-        if($content !== null) {
+        if ($content !== null) {
             return $content;
         }
 
@@ -158,7 +158,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
             throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        if(!$this->_isMaildir($params['dirname'])) {
+        if (!$this->_isMaildir($params['dirname'])) {
             throw new Zend_Mail_Storage_Exception('invalid maildir given');
         }
 
@@ -185,26 +185,26 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     protected function _openMaildir($dirname)
     {
-        if($this->_files) {
+        if ($this->_files) {
             $this->close();
         }
 
         $dh = @opendir($dirname . '/cur/');
-        if(!$dh) {
+        if (!$dh) {
             throw new Zend_Mail_Storage_Exception('cannot open maildir');
         }
-        while(($entry = readdir($dh)) !== false) {
-            if($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
+        while (($entry = readdir($dh)) !== false) {
+            if ($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
                 continue;
             }
             list($uniq, $info) = explode(':', $entry, 2);
             list($version, $flags) = explode(',', $info, 2);
-            if($version != 2) {
+            if ($version != 2) {
                 $flags = '';
             } else {
                 $named_flags = array();
                 $length = strlen($flags);
-                for($i = 0; $i < $length; ++$i) {
+                for ($i = 0; $i < $length; ++$i) {
                     $flag = $flags[$i];
                     $named_flags[$flag] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : '';
                 }

@@ -62,7 +62,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      */
     public function __get($var)
     {
-        if(strpos($var, 'has') === 0) {
+        if (strpos($var, 'has') === 0) {
             $var = strtolower(substr($var, 3));
             return isset($this->_has[$var]) ? $this->_has[$var] : null;
         }
@@ -275,7 +275,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
       */
      public function valid()
      {
-        if($this->_iterationMax === null) {
+        if ($this->_iterationMax === null) {
           $this->_iterationMax = $this->countMessages();
         }
         return $this->_iterationPos && $this->_iterationPos <= $this->_iterationMax;
@@ -290,7 +290,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
       */
      public function seek($pos)
      {
-        if($this->_iterationMax === null) {
+        if ($this->_iterationMax === null) {
           $this->_iterationMax = $this->countMessages();
         }
 

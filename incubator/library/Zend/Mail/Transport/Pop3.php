@@ -104,10 +104,10 @@ class Zend_Mail_Transport_Pop3
             $this->_timestamp = '<' . $this->_timestamp . '>';
         }
 
-        if($ssl === 'TLS') {
+        if ($ssl === 'TLS') {
             $this->request('STLS');
             $result = stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-            if(!$result) {
+            if (!$result) {
                 throw new Zend_Mail_Transport_Exception('cannot enable TLS');
             }
         }
@@ -190,7 +190,7 @@ class Zend_Mail_Transport_Pop3
      */
     public function logout()
     {
-        if(!$this->_socket) {
+        if (!$this->_socket) {
             return;
         }
 
@@ -276,7 +276,7 @@ class Zend_Mail_Transport_Pop3
         $result = $this->request('LIST', true);
         $messages = array();
         $line = strtok($result, "\n");
-        while($line) {
+        while ($line) {
             list($no, $size) = explode(' ', trim($line));
             $messages[(int)$no] = (int)$size;
             $line = strtok("\n");
@@ -306,7 +306,7 @@ class Zend_Mail_Transport_Pop3
         $result = explode("\n", $result);
         $messages = array();
         foreach ($result as $line) {
-            if(!$line) {
+            if (!$line) {
                 continue;
             }
             list($no, $id) = explode(' ', trim($line), 2);

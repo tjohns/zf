@@ -59,7 +59,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      */
     public function countMessages($flags = null)
     {
-        if($flags) {
+        if ($flags) {
             throw new Zend_Mail_Storage_Exception('POP3 does not support flags');
         }
         $this->_protocol->status($count, $null);
@@ -97,7 +97,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     public function getRaw($id, $part)
     {
         // TODO: indexes for header and content should be changed to negative numbers
-        switch($part) {
+        switch ($part) {
             case 'header':
                 return $this->_protocol->top($id, 0, true);
                 break;
@@ -133,12 +133,12 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     {
         $this->_has['fetchPart'] = false;
 
-        if($params instanceof Zend_Mail_Transport_Pop3) {
+        if ($params instanceof Zend_Mail_Transport_Pop3) {
             $this->_protocol = $params;
             return;
         }
 
-        if(!isset($params['user'])) {
+        if (!isset($params['user'])) {
             throw new Zend_Mail_Storage_Exception('need at least user in params');
         }
 
@@ -205,8 +205,8 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      */
     public function __get($var)
     {
-        if(strtolower($var) == 'hastop') {
-            if($this->_protocol->hasTop === null) {
+        if (strtolower($var) == 'hastop') {
+            if ($this->_protocol->hasTop === null) {
                 // need to make a real call, because not all server are honest in their capas
                 try {
                     $this->_protocol->top(1, 0, false);

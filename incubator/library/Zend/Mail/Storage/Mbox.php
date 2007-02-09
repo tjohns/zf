@@ -109,7 +109,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     private function _goto($id)
     {
-        if(!isset($this->_positions[$id - 1])) {
+        if (!isset($this->_positions[$id - 1])) {
             throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
@@ -132,9 +132,9 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
 
         $message = $this->getRaw($id, 'header');
         // file pointer is after headers now
-        if($bodyLines) {
+        if ($bodyLines) {
             $message .= "\n";
-            while($bodyLines-- && ftell($this->_fh) < $this->_positions[$id - 1][1]) {
+            while ($bodyLines-- && ftell($this->_fh) < $this->_positions[$id - 1][1]) {
                 $message .= fgets($this->_fh);
             }
         }
@@ -147,7 +147,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         $endPos = $this->_goto($id);
 
         // TODO: indexes for header and content should be changed to negative numbers
-        switch($part) {
+        switch ($part) {
             // TODO: save header end position in _positions, we could then use stream_get_contents()
             case 'header':
                 $part = '';
@@ -169,7 +169,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
                         $inHeader = false;
                         continue;
                     }
-                    if(!$inHeader) {
+                    if (!$inHeader) {
                         $part .= $line;
                     }
                 }
@@ -212,9 +212,9 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     protected function _isMboxFile($file, $fileIsString = true)
     {
-        if($fileIsString) {
+        if ($fileIsString) {
             $file = @fopen($file, 'r');
-            if(!$file) {
+            if (!$file) {
                 return false;
             }
         } else {
@@ -224,11 +224,11 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         $result = false;
 
         $line = fgets($file);
-        if(strpos($line, 'From ') === 0) {
+        if (strpos($line, 'From ') === 0) {
             $result = true;
         }
 
-        if($fileIsString) {
+        if ($fileIsString) {
             @fclose($file);
         }
 
@@ -243,7 +243,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     protected function _openMboxFile($filename)
     {
-        if($this->_fh) {
+        if ($this->_fh) {
             $this->close();
         }
 
@@ -254,7 +254,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         $this->_filename = $filename;
         $this->_filemtime = filemtime($this->_filename);
 
-        if(!$this->_isMboxFile($this->_fh, false)) {
+        if (!$this->_isMboxFile($this->_fh, false)) {
             @fclose($this->_fh);
             throw new Zend_Mail_Storage_Exception('file is not a valid mbox format');
         }
@@ -324,7 +324,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     public function __wakeup()
     {
-        if($this->_filemtime != filemtime($this->_filename)) {
+        if ($this->_filemtime != filemtime($this->_filename)) {
             $this->close();
             $this->_openMboxFile($this->_filename);
         } else {
