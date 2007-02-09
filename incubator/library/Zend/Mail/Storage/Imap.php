@@ -24,9 +24,9 @@
 require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * Zend_Mail_Transport_Imap
+ * Zend_Mail_Protocol_Imap
  */
-require_once 'Zend/Mail/Transport/Imap.php';
+require_once 'Zend/Mail/Protocol/Imap.php';
 
 /**
  * Zend_Mail_Storage_Folder_Interface
@@ -139,7 +139,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function __construct($params)
     {
-        if ($params instanceof Zend_Mail_Transport_Imap) {
+        if ($params instanceof Zend_Mail_Protocol_Imap) {
             $this->_protocol = $params;
             try {
                 $this->selectFolder('INBOX');
@@ -158,7 +158,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
         $params['ssl']      = isset($params['ssl'])      ? $params['ssl']      : false;
 
-        $this->_protocol = new Zend_Mail_Transport_Imap();
+        $this->_protocol = new Zend_Mail_Protocol_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
         if (!$this->_protocol->login($params['user'], $params['password'])) {
             throw new Zend_Mail_Storage_Exception('cannot login, user or password wrong');

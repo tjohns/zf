@@ -13,9 +13,9 @@
 require_once 'Zend/Mail/Storage/Imap.php';
 
 /**
- * Zend_Mail_Transport_Imap
+ * Zend_Mail_Protocol_Imap
  */
-require_once 'Zend/Mail/Transport/Imap.php';
+require_once 'Zend/Mail/Protocol/Imap.php';
 
 
 /**
@@ -144,18 +144,18 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
     public function testWithInstanceConstruction()
     {
-        $transport = new Zend_Mail_Transport_Imap($this->_params['host']);
-        $transport->login($this->_params['user'], $this->_params['password']);
-        // if $transport is invalid the constructor fails while selecting INBOX
-        $mail = new Zend_Mail_Storage_Imap($transport);
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        // if $protocol is invalid the constructor fails while selecting INBOX
+        $mail = new Zend_Mail_Storage_Imap($protocol);
     }
 
     public function testWithNotConnectedInstance()
     {
-        $transport = new Zend_Mail_Transport_Imap();
+        $protocol = new Zend_Mail_Protocol_Imap();
         try {
-            $mail = new Zend_Mail_Storage_Imap($transport);
-        } catch (Zend_Mail_Transport_Exception $e) {
+            $mail = new Zend_Mail_Storage_Imap($protocol);
+        } catch (Zend_Mail_Protocol_Exception $e) {
             return; // test ok
         }
 
@@ -164,9 +164,9 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
     public function testWithNotLoggedInstance()
     {
-        $transport = new Zend_Mail_Transport_Imap($this->_params['host']);
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
         try {
-            $mail = new Zend_Mail_Storage_Imap($transport);
+            $mail = new Zend_Mail_Storage_Imap($protocol);
         } catch (Zend_Mail_Storage_Exception $e) {
             return; // test ok
         }

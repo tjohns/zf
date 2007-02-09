@@ -13,9 +13,9 @@
 require_once 'Zend/Mail/Storage/Pop3.php';
 
 /**
- * Zend_Mail_Transport_Pop3
+ * Zend_Mail_Protocol_Pop3
  */
-require_once 'Zend/Mail/Transport/Pop3.php';
+require_once 'Zend/Mail/Protocol/Pop3.php';
 
 /**
  * PHPUnit test case
@@ -240,8 +240,8 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
     public function testWithInstanceConstruction()
     {
-        $transport = new Zend_Mail_Transport_Pop3($this->_params['host']);
-        $mail = new Zend_Mail_Storage_Pop3($transport);
+        $protocol = new Zend_Mail_Protocol_Pop3($this->_params['host']);
+        $mail = new Zend_Mail_Storage_Pop3($protocol);
         try {
             // because we did no login this has to throw an exception
             $mail->getMessage(1);
@@ -267,13 +267,13 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
     public function testServerCapa()
     {
-        $mail = new Zend_Mail_Transport_Pop3($this->_params['host']);
+        $mail = new Zend_Mail_Protocol_Pop3($this->_params['host']);
         $this->assertTrue(is_array($mail->capa()));
     }
 
     public function testServerUidl()
     {
-        $mail = new Zend_Mail_Transport_Pop3($this->_params['host']);
+        $mail = new Zend_Mail_Protocol_Pop3($this->_params['host']);
         $mail->login($this->_params['user'], $this->_params['password']);
 
         $uids = $mail->uniqueid();

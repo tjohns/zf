@@ -161,7 +161,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
 ]]></programlisting>
 
         <para>
-            Both constructors can throw <code>Zend_Mail_Exception</code> or <code>Zend_Mail_Transport_Exception</code>
+            Both constructors can throw <code>Zend_Mail_Exception</code> or <code>Zend_Mail_Protocol_Exception</code>
             (extends <code>Zend_Mail_Exception</code>), depending on the type of error.
         </para>
 
@@ -484,17 +484,17 @@ $cache->set($cache_id, $mail);
 
         </sect3>
         <sect3>
-            <title>Extending Transport Classes</title>
+            <title>Extending Protocol Classes</title>
 
             <para>
                 Remote storages use two classes: <code>Zend_Mail_Storage_&lt;Name&gt;</code> and
-                <code>Zend_Mail_Transport_&lt;Name&gt;</code>. The transport class translates the protocol commands and
+                <code>Zend_Mail_Protocol_&lt;Name&gt;</code>. The protocol class translates the protocol commands and
                 responses from and to PHP, like methods for the commands or variables with different structures for
                 data. The other/main class implements the common interface.
             </para>
 
             <para>
-                If you need additional protocol features you can extend the transport class and use it in the
+                If you need additional protocol features you can extend the protocol class and use it in the
                 constructor of the main class. As an example assume we need to knock different ports before we can
                 connect to POP3.
             </para>
@@ -507,11 +507,11 @@ class Example_Mail_Exception extends Zend_Mail_Exception
 {
 }
 
-class Example_Mail_Transport_Exception extends Zend_Mail_Transport_Exception
+class Example_Mail_Protocol_Exception extends Zend_Mail_Protocol_Exception
 {
 }
 
-class Example_Mail_Transport_Pop3_Knock extends Zend_Mail_Transport_Pop3
+class Example_Mail_Protocol_Pop3_Knock extends Zend_Mail_Protocol_Pop3
 {
     private $host, $port;
 
@@ -547,19 +547,19 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
     public function __construct(array $params)
     {
         // ... check $params here! ...
-        $transport = new Example_Mail_Transport_Pop3_Knock($params['host']);
+        $protocol = new Example_Mail_Protocol_Pop3_Knock($params['host']);
 
         // do our "special" thing
         foreach ((array)$params['knock_ports'] as $port) {
-            $transport->knock($port);
+            $protocol->knock($port);
         }
 
         // get to correct state
-        $transport->connect($params['host'], $params['port']);
-        $transport->login($params['user'], $params['password']);
+        $protocol->connect($params['host'], $params['port']);
+        $protocol->login($params['user'], $params['password']);
 
         // initialize parent
-        parent::__construct($transport);
+        parent::__construct($protocol);
     }
 }
 
@@ -571,7 +571,7 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
 
             <para>
                 As you see we always assume we're connected, logged in and, if supported, a folder is selected in the
-                constructor of the main class. Thus if you assign your own transport class you always need to make sure
+                constructor of the main class. Thus if you assign your own protocol class you always need to make sure
                 that's done or the next method will fail if the server doesn't allow it in the current state.
             </para>
 

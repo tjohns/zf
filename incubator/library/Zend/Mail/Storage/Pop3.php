@@ -24,9 +24,9 @@
 require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * Zend_Mail_Transport_Pop3
+ * Zend_Mail_Protocol_Pop3
  */
-require_once 'Zend/Mail/Transport/Pop3.php';
+require_once 'Zend/Mail/Protocol/Pop3.php';
 
 /**
  * Zend_Mail_Message
@@ -133,7 +133,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     {
         $this->_has['fetchPart'] = false;
 
-        if ($params instanceof Zend_Mail_Transport_Pop3) {
+        if ($params instanceof Zend_Mail_Protocol_Pop3) {
             $this->_protocol = $params;
             return;
         }
@@ -147,7 +147,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
         $params['ssl']      = isset($params['ssl']) ? $params['ssl'] : false;
 
-        $this->_protocol = new Zend_Mail_Transport_Pop3();
+        $this->_protocol = new Zend_Mail_Protocol_Pop3();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
         $this->_protocol->login($params['user'], $params['password']);
     }
