@@ -83,7 +83,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'localhost',
                                  'password' => 'test'));
 
 echo $mail->countMessages() . " messages found\n";
-foreach($mail as $message) {
+foreach ($mail as $message) {
     echo "Mail from '{$message->from}': {$message->subject}\n";
 }
 ]]></programlisting>
@@ -190,7 +190,7 @@ $message = $mail[$messageNum];
         <para>For iterating over all messages the Iterator interface is implemented:</para>
 
         <programlisting role="php"><![CDATA[<?php
-foreach($mail as $messageNum => $message) {
+foreach ($mail as $messageNum => $message) {
     // do stuff ...
 }
 ]]></programlisting>
@@ -224,10 +224,10 @@ unset($mail[$messageNum]);
 
         <para>After you fetched the messages with <code>getMessage()</code> you want to fetch headers, the content
         or single parts of a multipart message. All headers can be accessed via properties or the method
-        <code>getHeader()</code> if you want more control or have unusual header names. The header names are 
-        lower-cased internally, thus the case of the header name in the mail message doesn't matter. Also headers 
+        <code>getHeader()</code> if you want more control or have unusual header names. The header names are
+        lower-cased internally, thus the case of the header name in the mail message doesn't matter. Also headers
         with a dash can be written in camel-case.</para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // get the message object
 $message = $mail->getMessage(1);
@@ -239,7 +239,7 @@ echo $message->subject . "\n";
 $type = $message->contentType;
 ]]></programlisting>
 
-        <para>If you have multiple headers with the same name i.e. the Received headers you might want it as array 
+        <para>If you have multiple headers with the same name i.e. the Received headers you might want it as array
         instead of a string, which is possible with the <code>getHeader()</code> method.</para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -251,36 +251,36 @@ $received = $message->getHeader('received', 'string');
 
 // better an array with a single entry for every occurrences
 $received = $message->getHeader('received', 'array');
-foreach($received as $line) {
+foreach ($received as $line) {
     // do stuff
 }
 
 // if you don't define a format you'll get the internal representation (string for single headers, array for multiple)
 $received = $message->getHeader('received');
-if(is_string($received)) {
+if (is_string($received)) {
     // only one received header found in message
 }
 ]]></programlisting>
 
         <para>The method <code>getHeaders()</code> returns all headers as array with the lower-cased name as
         key and the value as array for multiple headers or as string for single headers.</para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // dump all headers
-foreach($message->getHeaders as $name => $value) {
-    if(is_string($value)) {
+foreach ($message->getHeaders as $name => $value) {
+    if (is_string($value)) {
         echo "$name: $value\n";
         continue;
     }
-    foreach($value as $entry) {
+    foreach ($value as $entry) {
         echo "$name: $entry\n";
     }
 }
 ]]></programlisting>
 
-        <para>If you don't have a multipart message fetching the content is easy done via 
+        <para>If you don't have a multipart message fetching the content is easy done via
         <code>getContent()</code>. Unlike the headers the content is only fetched when needed (aka late-fetch).</para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // output message content for HTML
 echo '<pre>';
@@ -290,14 +290,14 @@ echo '</pre>';
 
         <para>Checking for a multipart message is done with the method <code>isMultipart()</code>. If you have
         multipart message you can get an instance of <code>Zend_Mail_Part</code> with the method
-        <code>getPart()</code>. <code>Zend_Mail_Part</code> is the base class of <code>Zend_Mail_Message</code>, 
+        <code>getPart()</code>. <code>Zend_Mail_Part</code> is the base class of <code>Zend_Mail_Message</code>,
         so you have the same methods: <code>getHeader()</code>, <code>getHeaders()</code>, <code>getContent()</code>,
         <code>getPart()</code>, <code>isMultipart</code> and the properties for headers.</para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // get the first none multipart part
 $part = $message;
-while($part->isMultipart()) {
+while ($part->isMultipart()) {
     $part = $message->getPart(1);
 }
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
@@ -393,10 +393,10 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
 $folders = new RecursiveIteratorIterator($this->mail->getFolders(),
                                          RecursiveIteratorIterator::SELF_FIRST);
 echo '<select name="folder">';
-foreach($folders as $localName => $folder) {
+foreach ($folders as $localName => $folder) {
     $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT) . $localName;
     echo '<option';
-    if(!$folder->isSelectable()) {
+    if (!$folder->isSelectable()) {
         echo ' disabled="disabled"';
     }
     echo ' value="' . htmlspecialchars($folder) . '">'
@@ -436,7 +436,7 @@ $mail->selectFolder($folder);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-foreach($mail as $message) {
+foreach ($mail as $message) {
 
     // do some calculations ...
 
@@ -471,7 +471,7 @@ $mbox_basedir = '/home/test/mail/';
 $cache_id = 'example mail cache ' . $mbox_basedir . $signal_file;
 
 $cache = new Your_Cache_Class();
-if(!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($cache_id)) {
+if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($cache_id)) {
     $mail = new Zend_Mail_Storage_Folder_Pop3(array('dirname' => $mbox_basedir));
 } else {
     $mail = $cache->get($cache_id);
@@ -525,17 +525,17 @@ class Example_Mail_Transport_Pop3_Knock extends Zend_Mail_Transport_Pop3
     public function knock($port)
     {
         $sock = @fsockopen($this->host, $port);
-        if($sock) {
+        if ($sock) {
             fclose($sock);
         }
     }
 
     public function connect($host = null, $port = null, $ssl = false)
     {
-        if($host === null) {
+        if ($host === null) {
             $host = $this->host;
         }
-        if($port === null) {
+        if ($port === null) {
             $port = $this->port;
         }
         parent::connect($host, $port);
@@ -550,7 +550,7 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
         $transport = new Example_Mail_Transport_Pop3_Knock($params['host']);
 
         // do our "special" thing
-        foreach((array)$params['knock_ports'] as $port) {
+        foreach ((array)$params['knock_ports'] as $port) {
             $transport->knock($port);
         }
 
