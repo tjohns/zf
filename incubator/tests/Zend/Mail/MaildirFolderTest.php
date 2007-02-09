@@ -130,8 +130,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
                                 'INBOX'          => 'INBOX');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -151,8 +151,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
                                 'INBOX'          => 'INBOX');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -170,8 +170,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         $search_folders = array('subfolder.test' => 'test');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -186,7 +186,7 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Maildir($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach($iterator as $localName => $folder) {
+        foreach ($iterator as $localName => $folder) {
             $this->assertEquals($localName, $folder->getLocalName());
         }
     }

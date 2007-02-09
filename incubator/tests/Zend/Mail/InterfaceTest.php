@@ -80,7 +80,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $pos = 1;
-        foreach($list as $key => $message) {
+        foreach ($list as $key => $message) {
             $this->assertEquals($key, $pos, "wrong key in iteration $pos");
             ++$pos;
         }
@@ -90,7 +90,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
     {
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
-        foreach($list as $key => $message) {
+        foreach ($list as $key => $message) {
             $this->assertTrue($message instanceof Zend_Mail_Message, 'value in iteration is not a mail message');
         }
     }
@@ -100,7 +100,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = 0;
-        foreach($list as $key => $message) {
+        foreach ($list as $key => $message) {
             ++$count;
         }
 
@@ -112,7 +112,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = 0;
-        foreach(new LimitIterator($list, 1, 3) as $key => $message) {
+        foreach (new LimitIterator($list, 1, 3) as $key => $message) {
             ++$count;
         }
 
@@ -124,7 +124,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = 0;
-        foreach(new LimitIterator($list, 3, 5) as $key => $message) {
+        foreach (new LimitIterator($list, 3, 5) as $key => $message) {
             ++$count;
         }
 

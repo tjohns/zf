@@ -155,8 +155,8 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
                                 '/test.mbox'           => 'test.mbox');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -176,8 +176,8 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
                                 '/test.mbox'           => 'test.mbox');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -192,7 +192,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach($iterator as $localName => $folder) {
+        foreach ($iterator as $localName => $folder) {
             $this->assertEquals($localName, $folder->getLocalName());
         }
     }

@@ -74,7 +74,7 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
     public function testConnectSSL()
     {
-        if(!TESTS_ZEND_MAIL_POP3_SSL) {
+        if (!TESTS_ZEND_MAIL_POP3_SSL) {
             return;
         }
 
@@ -88,7 +88,7 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
     public function testConnectTLS()
     {
-        if(!TESTS_ZEND_MAIL_POP3_TLS) {
+        if (!TESTS_ZEND_MAIL_POP3_TLS) {
             return;
         }
 

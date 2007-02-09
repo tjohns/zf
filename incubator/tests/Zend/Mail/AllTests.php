@@ -3,7 +3,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Mail_AllTests::main');
 }
 
-if(!defined('TESTS_ZEND_MAIL_POP3_ENABLED')) {
+if (!defined('TESTS_ZEND_MAIL_POP3_ENABLED')) {
     if (is_readable('TestConfiguration.php')) {
         require_once 'TestConfiguration.php';
     } else {
@@ -39,17 +39,17 @@ class Zend_Mail_AllTests
         $suite->addTestSuite('Zend_Mail_InterfaceTest');
         $suite->addTestSuite('Zend_Mail_MboxTest');
         $suite->addTestSuite('Zend_Mail_MboxFolderTest');
-        if(TESTS_ZEND_MAIL_POP3_ENABLED) {
+        if (TESTS_ZEND_MAIL_POP3_ENABLED) {
             $suite->addTestSuite('Zend_Mail_Pop3Test');
         }
-        if(TESTS_ZEND_MAIL_IMAP_ENABLED) {
+        if (TESTS_ZEND_MAIL_IMAP_ENABLED) {
             $suite->addTestSuite('Zend_Mail_ImapTest');
         }
-        if(TESTS_ZEND_MAIL_SMTP_ENABLED) {
+        if (TESTS_ZEND_MAIL_SMTP_ENABLED) {
             $suite->addTestSuite('Zend_Mail_SmtpTest');
         }
-        if(TESTS_ZEND_MAIL_MAILDIR_ENABLED) {
-            if(file_exists(dirname(__FILE__) . '/_files/test.maildir/maildir.tar')) {
+        if (TESTS_ZEND_MAIL_MAILDIR_ENABLED) {
+            if (file_exists(dirname(__FILE__) . '/_files/test.maildir/maildir.tar')) {
                 // TODO: I couldn't find a method to add an error or warning in TestSuite. But
                 // I also don't like throwing this simple exception and make the whole suite fail.
                 throw new Exception('You have to unpack and remove maildir.tar in the maildir '.

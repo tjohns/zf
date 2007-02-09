@@ -76,7 +76,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
     public function testConnectSSL()
     {
-        if(!TESTS_ZEND_MAIL_IMAP_SSL) {
+        if (!TESTS_ZEND_MAIL_IMAP_SSL) {
             return;
         }
 
@@ -90,7 +90,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
     public function testConnectTLS()
     {
-        if(!TESTS_ZEND_MAIL_IMAP_TLS) {
+        if (!TESTS_ZEND_MAIL_IMAP_TLS) {
             return;
         }
 
@@ -154,7 +154,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
     {
         $transport = new Zend_Mail_Transport_Imap();
         try {
-	        $mail = new Zend_Mail_Storage_Imap($transport);
+            $mail = new Zend_Mail_Storage_Imap($transport);
         } catch (Zend_Mail_Transport_Exception $e) {
             return; // test ok
         }
@@ -166,11 +166,11 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
     {
         $transport = new Zend_Mail_Transport_Imap($this->_params['host']);
         try {
-	        $mail = new Zend_Mail_Storage_Imap($transport);
+            $mail = new Zend_Mail_Storage_Imap($transport);
         } catch (Zend_Mail_Storage_Exception $e) {
             return; // test ok
         }
-        
+
         $this->fail('no exception while using not logged in low-level class');
     }
 
@@ -386,8 +386,8 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
                                 'INBOX'          => 'INBOX');
         $found_folders = array();
 
-        foreach($iterator as $localName => $folder) {
-            if(!isset($search_folders[$folder->getGlobalName()])) {
+        foreach ($iterator as $localName => $folder) {
+            if (!isset($search_folders[$folder->getGlobalName()])) {
                 continue;
             }
 
@@ -402,7 +402,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach($iterator as $localName => $folder) {
+        foreach ($iterator as $localName => $folder) {
             $this->assertEquals($localName, $folder->getLocalName());
         }
     }
