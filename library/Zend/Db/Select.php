@@ -674,9 +674,9 @@ class Zend_Db_Select
     public function reset($part = null)
     {
         if ($part == null) {
-            $this->_parts = $this->_partsInit;
-        } else if (array_key_exists($part, $this->_partsInit)) {
-            $this->_parts[$part] = $this->_partsInit[$part];
+            $this->_parts = self::$_partsInit;
+        } else if (array_key_exists($part, self::$_partsInit)) {
+            $this->_parts[$part] = self::$_partsInit[$part];
         }
     } 
 
