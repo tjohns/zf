@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+<!ENTITY % xinclude SYSTEM "../xinclude.mod">
+%xinclude;
+]>
+<!-- $Id: $ -->
+<sect1 id="zend.translate.adapter">
+
+    <title>Adapters for Zend_Translate</title>
+
+    <para>
+        Zend_Translate can handle different adapters for translation. Each adapter has it's own pros and cons.
+        So the decission which adapter to use is different depending on your or your customers needs.
+    </para>
+
+    <table>
+        <title>Adapters for Zend_Translate</title>
+        <tgroup cols="3">
+            <thead>
+                <row>
+                    <entry>Adapter</entry>
+                    <entry>Description</entry>
+                    <entry>Useage</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>Array</entry>
+                    <entry>Use php arrays</entry>
+                    <entry>Small pages, simplest useage, only for programmers</entry>
+                </row>
+                <row>
+                    <entry>Gettext</entry>
+                    <entry>Use binary gettext (*.mo) files</entry>
+                    <entry>Gnu standard for linux, very fast, threadsave, needs tools for translation</entry>
+                </row>
+                <row>
+                    <entry>Csv</entry>
+                    <entry>Use comma seperated (*.csv/*.txt) files</entry>
+                    <entry>Simple text file format, very fast, possible problems with unicode characters</entry>
+                </row>
+                <row>
+                    <entry>Tmx</entry>
+                    <entry>Use tmx (*.tmx) files</entry>
+                    <entry>Industry standard for inter application translation, xml format, human readable</entry>
+                </row>
+                <row>
+                    <entry>Others</entry>
+                    <entry>*.xliff, *.sql, *.tbx, *.qt</entry>
+                    <entry>Different other adapters are supposed to be implemented in the future but not ready for now</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+
+    <sect2 id="zend.translate.adapter.array">
+    
+        <title>Zend_Translate Array Adapter</title>
+        
+        <para>
+            The array adapter is the simplest of our translation adapters. And it is the simplest in it's useage.
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

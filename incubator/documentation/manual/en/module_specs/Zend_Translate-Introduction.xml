@@ -111,11 +111,32 @@
         <title>Starting multilingual</title>
 
         <para>
-            So let's get started with Multilingual business.
+            So let's get started with Multilingual business. What we want to do is translating our string
+            output so the view produces the translated output. Otherwise we would have to write one view
+            per every language, and no one would like to do this. Principially multilingual sites are very
+            simple in their design. There are only 4 steps you would have to do...
         </para>
 
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    Decide which adaptor you want to use
+                </para>
+                <para>
+                    Create your view and integrate Zend_Translate in your code
+                </para>
+                <para>
+                    Create the source file from your code
+                </para>
+                <para>
+                    Translate your source file to the wished language
+                </para>
+            </listitem>
+        </itemizedlist>
+
         <para>
-            So let's get started with Multilingual business.
+            We will guide you through all 4 steps so just read through the next few pages to create your
+            own multilingual site.
         </para>
 
     </sect2>
