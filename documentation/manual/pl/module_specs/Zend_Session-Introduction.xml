@@ -15,24 +15,28 @@
         one-to-one connection between server-side, persistent state data and a particular user agent client (e.g. web
         browser). Zend_Session helps manage and preserve session data, a logical complement of cookie data, across
         multiple page requests by the same client. Unlike cookie data, session data is not stored on the client side,
-        and it is only shared with the client when server-side source code makes the data available via a response to a
-        request from the client. For the purposes of this component and documentation, session data refers to the
-        server-side data managed by Zend_Session.
+        and it is only shared with the client when server-side source code voluntarily makes the data available via a
+        response to a request from the client. For the purposes of this component and documentation, session data refers
+        to the server-side data managed by Zend_Session. <emphasis role="bold">Session namespaces</emphasis> provide
+        access to session data using classic
+        <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">namespaces</ulink>
+        implemented logically as named groups of associative arrays, keyed by strings (similar to normal PHP arrays).
     </para>
 
     <para>
-        The <code>Zend_Session_Core</code> component wraps the existing PHP ext/session with an administration and
-        management interface, as well as providing an API for <code>Zend_Session</code> to persist namespaces.
-        <code>Zend_Session</code> provides a standardized, object-oriented interface for working with namespaces
-        persisted inside PHP's standard session mechanism. Support exists for both anonymous and "login" sessions.
-        <code>Zend_Auth</code>, the authentication component of the ZF uses <code>Zend_Session</code> to store some
-        information associated with authenticated users in the "Zend_Auth" namespace. Since
-        <code>Zend_Session_Core</code> uses the normal PHP session functions internally, and all the familiar
-        configuration options and settings apply (see
+        The <code>Zend_Session</code> component wraps the existing PHP ext/session with an administration and management
+        interface, as well as providing an API for <code>Zend_Session_Namespace</code> to persist session namespaces.
+        <code>Zend_Session_Namespace</code> provides a standardized, object-oriented interface for working with
+        namespaces persisted inside PHP's standard session mechanism. Support exists for both anonymous and "login"
+        session namespaces. <code>Zend_Auth</code>, the authentication component of the ZF uses
+        <code>Zend_Session_Namespace</code> to store some information associated with authenticated users in the
+        "Zend_Auth" namespace. Since <code>Zend_Session</code> uses the normal PHP ext/session functions internally, and
+        all the familiar configuration options and settings apply (see
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ). Thus, a standard session id, stored either in a cookie or embedded in URLs, maintains the association between
-        a client and session state data.
+        ), with the bonus of convenience through an object-oriented interface and defaults providing both best practices
+        and smooth integration with the Zend Framework. Thus, a standard PHP session id, stored either in a client's
+        cookie or embedded in URLs, maintains the association between a client and session state data.
     </para>
 
     <para>
@@ -45,7 +49,7 @@
         handlers will be provided, when available. Community members are encouraged to suggest and submit save handlers
         to the
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
-        list.
+        list. A Zend_Db compatible save handler has been posted to the list.
     </para>
 
 </sect1>

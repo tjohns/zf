@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.exceptions">
-    <title>MVC Exceptions</title>
+    <title>Wyjątki MVC</title>
 
 	<sect2 id="zend.controller.exceptions.introduction">
-		<title>Introduction</title>
+		<title>Wprowadzenie</title>
 
         <para>
             The MVC components in Zend Framework utilize a Front Controller,
@@ -23,7 +23,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>How can you handle exceptions?</title>
+        <title>W jaki sposób możesz obsługiwać wyjątki?</title>
 
         <para>
             Several mechanisms are built in to the MVC components already to
@@ -46,7 +46,7 @@ $front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
-    // handle exceptions yourself
+    // sam obsłuż wyjątki
 }
 ]]></programlisting>
 
@@ -69,7 +69,7 @@ try {
             </listitem>
 
             <listitem>
-                <para>Zend_Controller_Front::returnResponse() and
+                <para>Zend_Controller_Front::returnResponse() oraz
                     Zend_Controller_Response_Abstract::isException()</para>
 
                 <para>
@@ -87,7 +87,7 @@ $front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
-    // handle exceptions ...
+    // obsługa wyjątków ...
 } else {
     $response->sendHeaders();
     $response->outputBody();
@@ -105,7 +105,7 @@ if ($response->isException()) {
     </sect2>
 
     <sect2 id="zend.controller.exceptions.internal">
-        <title>MVC Exceptions You May Encounter</title>
+        <title>Wyjątki MVC które możesz napotkać</title>
 
         <para>
             The various MVC components -- request, router, dispatcher, action
@@ -127,17 +127,17 @@ if ($response->isException()) {
 
                 <itemizedlist>
                     <listitem>
-                        <para>Set the 'useDefaultControllerAlways' parameter.</para>
+                        <para>Ustaw parametr 'useDefaultControllerAlways'.</para>
 
                         <para>
-                            In your front controller, or your dispatcher, add
-                            the following directive:
+                            W twoim kontrolerze frontowym, lub w obiekcie 
+                            uruchamiającym, dodaj poniższą dyrektywę:
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php
 $front->setParam('useDefaultControllerAlways', true);
 
-// or
+// lub
 $dispatcher->setParam('useDefaultControllerAlways', true);
 ]]></programlisting>
 
@@ -277,7 +277,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                         </para>
 
                         <para>
-                            As an example:
+                            Przykład:
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php

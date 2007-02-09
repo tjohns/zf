@@ -54,13 +54,12 @@ echo $server->handle();]]></programlisting>
         </para>
 
         <para>
-            <code>Zend_XmlRpc_Server::handle()</code> then attempts to
-            dispatch to the appropriate handler based on the method
-            requested. It then returns either a
-            <code>Zend_XmlRpc_Response</code>-based object or a
-            <code>Zend_XmlRpc_Server_Fault</code>object. These objects both have
-            <code>__toString()</code> methods that create valid XML-RPC XML
-            responses, allowing them to be directly echoed.
+            <code>Zend_XmlRpc_Server::handle()</code> próbuje wtedy uruchomić
+            odpowiednią klasę obsługującą, zależnie od użytej metody dostępu.
+            Zwraca wtedy obiekt oparty na <code>Zend_XmlRpc_Response</code> lub
+            obiekt <code>Zend_XmlRpc_Server_Fault</code>. Oba te obiekty mają
+            dostępne metody <code>__toString()</code>, ktore tworzą poprawne
+            odpowiedzi XML-RPC, pozwalając na bezpośrednie ich wyświetlenie.
         </para>
     </sect2>
 
@@ -107,9 +106,10 @@ function myFunc($val1, $val2, $val3)
 }]]></programlisting>
 
         <para>
-            PhpDocumentor does no validation of the types specified for params
-            or return values, so this will have no impact on your API
-            documentation. Providing the hinting is necessary, however, when the
+            PhpDocumentor nie przeprowadza walidacji typów określonych dla
+            parametrów lub zwracanych wartości, więc nie będzie to miało wpływu
+            na twoją dokumentację API
+            Providing the hinting is necessary, however, when the
             server is validating the parameters provided to the method call.
         </para>
 
@@ -199,11 +199,12 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         <title>Własne odpowiedzi</title>
 
         <para>
-            Similar to request objects, Zend_XmlRpc_Server can return custom
-            response objects; by default, a Zend_XmlRpc_Response_Http object is
-            returned, which sends an appropriate Content-Type HTTP header for
-            use with XML-RPC. Possible uses of a custom object would be to log
-            responses, or to send responses back to STDOUT.
+            Podobnie jak obiekty żądania, Zend_XmlRpc_Server może zwracać własne
+            obiekty odpowiedzi; domyślnie zwracany jest obiekt 
+            Zend_XmlRpc_Response_Http, który wysyła odpowiedni nagłówek HTPP
+            Content-Type do użycia z XML-RPC. Możliwym powodem użycia własnego
+            obiektu może być potrzeba logowania odpowiedzi, lub wysyłanie 
+            odpowiedzi spowrotem do STDOUT.
         </para>
 
         <para>
