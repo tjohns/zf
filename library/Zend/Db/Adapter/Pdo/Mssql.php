@@ -230,9 +230,6 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function lastInsertId($sequenceName = null)
     {
-        if ($sequenceName != null) {
-            throw new Zend_Db_Adapter_Exception('You must not specify a sequence to lastInsertId() in this adapter');
-        }
         $sql = 'SELECT @@IDENTITY';
         return (int)$this->fetchOne($sql);
     }

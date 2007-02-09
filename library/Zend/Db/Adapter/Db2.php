@@ -364,9 +364,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         if (!$this->_connection) {
             $this->_connect();
         }
-        if ($sequenceName != null) {
-            throw new Zend_Db_Adapter_Db2_Exception('You must not specify the sequence to lastInsertId() in this adapter');
-        }
 
         $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
         $stmt = $this->query($sql);

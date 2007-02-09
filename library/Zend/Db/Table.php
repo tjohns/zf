@@ -230,7 +230,7 @@ abstract class Zend_Db_Table
      *
      * @param array $data Column-value pairs.
      * @param string $where An SQL WHERE clause.
-     * @return int The last insert ID.
+     * @return void
      */
     public function insert(&$data)
     {
@@ -238,7 +238,6 @@ abstract class Zend_Db_Table
             $this->_name,
             $data
         );
-        return $this->_db->lastInsertId($this->_name, $this->_primary);
     }
 
     /**

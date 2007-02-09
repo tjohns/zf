@@ -125,9 +125,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      */
     public function lastInsertId($sequenceName = null)
     {
-        if ($sequenceName != null) {
-            throw new Zend_Db_Adapter_Exception('You must not specify a sequence to lastInsertId() in this adapter');
-        }
         $this->_connect();
         return $this->_connection->lastInsertId();
     }
