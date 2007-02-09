@@ -123,7 +123,7 @@ class Zend_Db_Select
         if ($this->_parts[self::FOR_UPDATE]) {
             $sql .= " FOR UPDATE";
         }
-        $sql .= "\t";
+        $sql .= "\n\t";
 
         // add columns
         if ($this->_parts[self::COLUMNS]) {
@@ -304,7 +304,7 @@ class Zend_Db_Select
 
             $this->_parts[self::FROM][$correlationName] = array(
                 'joinType' => $type,
-                'tableName' => $name,
+                'tableName' => $tableName,
                 'joinCondition' => $cond
             );
         }
@@ -383,7 +383,9 @@ class Zend_Db_Select
      * Add a FULL OUTER JOIN table and colums to the query.
      * A full outer join is like combining a left outer join
      * and a right outer join.  All rows from both tables are
-     * included, 
+     * included, paired with each other on the same row of the
+     * result set if they satisfy the join condition, and otherwise
+     * paired with NULLs in place of columns from the other table.
      *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
@@ -678,6 +680,6 @@ class Zend_Db_Select
         } else if (array_key_exists($part, self::$_partsInit)) {
             $this->_parts[$part] = self::$_partsInit[$part];
         }
-    } 
+    }
 
 }
