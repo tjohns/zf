@@ -290,16 +290,17 @@ print_r ($date);
         </note>
 
         <para>
-            <code>getDate()</code> automatically detects and corrects some kinds of problems with input, such as
-            misplacing the year:
+            The method <code>getFixedDate()</code> uses simple tests to determine if the day or month is not valid, and
+            then applies heuristics to try and correct any detected problems. <code>getDate()</code> automatically
+            detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
 
         <example>
-            <title>Correction for date normalizing</title>
+            <title>Automatic correction of input dates</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getFixedDate('41.10.20', 'ddMMyy');
 
 // instead of 41 for the day, the 41 will be returned as year value
 print_r ($date);
@@ -313,7 +314,9 @@ print_r ($date);
         <title>Testing Dates</title>
 
         <para>
-            Use <code>isDate()</code> to check if a given string contains a valid date.
+            Use <code>isDate()</code> to check if a given string contains a valid date. The <code>isDate()</code> method
+            uses <code>getDate()</code>, not <code>getFixedDate()</code> to avoid returning true when the input fails to
+            conform to the date format.
         </para>
 
         <example>

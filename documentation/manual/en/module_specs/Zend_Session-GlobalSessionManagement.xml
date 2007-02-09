@@ -35,20 +35,22 @@
         <para>
             To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
         </para>
-            <example>
-                <title>Using Zend_Config to Configure Zend_Session</title>
+
+        <example>
+            <title>Using Zend_Config to Configure Zend_Session</title>
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
 Zend_Session::setOptions($config->asArray()); 
 ?>]]></programlisting>
-            </example>
+        </example>
 
         <para>
             The corresponding "myapp.ini" file:
         </para>
-            <example>
-                <title>myapp.ini</title>
+
+        <example>
+            <title>myapp.ini</title>
 <programlisting role="php">
 <![CDATA[
 ;  Defaults for our live servers
@@ -91,7 +93,7 @@ use_only_cookies = on
 ; When persisting session id cookies, request a TTL of 10 days
 remember_me_seconds = 864000
 ]]></programlisting>
-            </example>
+        </example>
 
     </sect2>
 
