@@ -486,16 +486,19 @@ class Zend_Locale_Format
 
 
     /**
-     * Split numbers in proper array fields
+     * Parse date and split in named array fields
      *
-     * @param string              $number  Number to parse
+     * @param string              $date    Date string to parse
      * @param string              $format  Format to parse. Only single-letter codes (H, m, s, y, M, d),
      *                                     and MMMM and EEEE are supported.
      * @param Zend_Locale|string  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
-     * @return array                       possible array members: day, month, year, hour, minute, second
+     * @return array                       possible array members: day, month, year, hour, minute, second, fixed, format
      */
-    private static function _parseDate($number, $format, $locale)
+    private static function _parseDate($date, $format, $locale, $fix = null)
     {
+        $number = $date; // working copy
+        $result['format'] = $format; // save the format used to normalize $number (convenience)
+
         $day   = iconv_strpos($format, 'd');
         $month = iconv_strpos($format, 'M');
         $year  = iconv_strpos($format, 'y');
@@ -524,7 +527,7 @@ class Zend_Locale_Format
         }
 
         if (empty($parse)) {
-            throw new Zend_Locale_Exception('unknown format, neither date nor time in ' . $format . ' found');
+            throw new Zend_Locale_Exception("unknown format, neither date nor time in '$format' found");
         }
         ksort($parse);
 
@@ -582,7 +585,7 @@ class Zend_Locale_Format
         preg_match_all('/\d+/u', $number, $splitted);
 
         if (count($splitted[0]) == 0) {
-            throw new Zend_Locale_Exception('No date part in ' . $number . ' found');
+            throw new Zend_Locale_Exception("No date part in '$date' found.");
         }
 
         if (count($splitted[0]) == 1) {
@@ -675,45 +678,81 @@ class Zend_Locale_Format
             }
         }
 
+        if ($fix) {
+            $result['fixed'] = 0; // nothing has been "fixed" by swapping date parts around (yet)
+        }
         if ($day !== false) {
             // fix false month
             if (isset($result['day']) and isset($result['month'])) {
                 if (($position !== false) && ($position != $month)) {
+                    if ($fix !== true) {
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                    }
                     $temp = $result['day'];
                     $result['day']   = $result['month'];
                     $result['month'] = $temp;
+                    $result['fixed'] = 1;
                 }
             }
 
             // fix switched values d <> y
             if (isset($result['day']) and isset($result['year'])) {
                 if ($result['day'] > 31) {
+                    if ($fix !== true) {
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                    }
                     $temp = $result['year'];
                     $result['year'] = $result['day'];
                     $result['day']  = $temp;
+                    $result['fixed'] = 2;
                 }
             }
 
             // fix switched values M <> y
             if (isset($result['month']) and isset($result['year'])) {
                 if ($result['month'] > 31) {
+                    if ($fix !== true) {
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                    }
                     $temp = $result['year'];
                     $result['year']  = $result['month'];
                     $result['month'] = $temp;
+                    $result['fixed'] = 3;
                 }
             }
 
-            // fix switched values M <> y
+            // fix switched values M <> d
             if (isset($result['month']) and isset($result['day'])) {
                 if ($result['month'] > 12) {
+                    if ($fix !== true || $result['month'] > 31) {
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                    }
                     $temp = $result['day'];
                     $result['day']   = $result['month'];
                     $result['month'] = $temp;
+                    $result['fixed'] = 4;
                 }
             }
         }
         return $result;
     }
+
+
+    /**
+     * Returns the default date format for $locale.
+     *
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return string  format
+     */
+    public static function getDateFormat($locale = null)
+    {
+        $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
+        $format = $format['default'];
+
+        $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $format));
+        return $format['pattern'];
+    }
+
 
 
     /**
@@ -727,21 +766,45 @@ class Zend_Locale_Format
      * @param  string              $format  OPTIONAL Date type CLDR format to parse. 
      *                                      Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
-     * @return array                        Possible array members: day, month, year, hour, minute, second
+     * @return array                        Possible array members: day, month, year, hour, minute, second, format
      */
     public static function getDate($date, $format = null, $locale = null)
     {
         if (empty($format)) {
-            $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
-            $format = $format['default'];
-
-            $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $format));
-            $format = $format['pattern'];
+            $format = self::getDateFormat($locale);
         }
 
-        $date = self::_parseDate($date, $format, $locale);
-        return $date;
+        return self::_parseDate($date, $format, $locale, false);
     }
+
+
+    /**
+     * Returns an array with the normalized date from an locale date
+     * a input of 10.01.2006 without a $locale would return:
+     * array ('day' => 10, 'month' => 1, 'year' => 2006)
+     * The optional $locale parameter is only used to convert human readable day
+     * and month names to their numeric equivalents.
+     * Some forms of invalid dates are automatically fixed, such as a $date string
+     * where month and days are swapped, and one of the two is larger than 12,
+     * or when a month or larger than 31.  However, such dates are often ambiguous,
+     * so the "fixed" results might not be truly fixed.  If the date was "fixed",
+     * then the return array element "fixed" will contain a non-zero value.
+     *
+     * @param  string              $date    Date string
+     * @param  string              $format  OPTIONAL Date type CLDR format to parse. 
+     *                                      Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array                        Possible array members: day, month, year, hour, minute, second, fixed, format
+     */
+    public static function getFixedDate($date, $format = null, $locale = null)
+    {
+        if (empty($format)) {
+            $format = self::getDateFormat($locale);
+        }
+
+        return self::_parseDate($date, $format, $locale, true);
+    }
+
 
     /**
      * Returns if the given string is a date
@@ -755,7 +818,7 @@ class Zend_Locale_Format
     public static function isDate($date, $format = null, $locale = null)
     {
         try {
-            $date = self::getDate($date, $format, $locale);
+            $date = self::getDate($date, $format, $locale, false);
         } catch (Exception $e) {
             return false;
         }

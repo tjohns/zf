@@ -252,7 +252,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
         $this->assertEquals(is_array(Zend_Locale_Format::getDate('10.10.06')), true, "array expected");
-        $this->assertEquals(count(Zend_Locale_Format::getDate('10.10.06','dd.MM.yy')), 3, "array with 3 tags expected");
+        $this->assertEquals(count(Zend_Locale_Format::getDate('10.10.06','dd.MM.yy')), 4, "array with 4 tags expected");
 
         $value = Zend_Locale_Format::getDate('10.11.06','dd.MM.yy');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
@@ -264,12 +264,27 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertSame($value['month'], 11, 'Month 11 expected');
         $this->assertSame($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006.13.01','dd.MM.yy');
+        try {
+            $value = Zend_Locale_Format::getDate('2006.13.01','dd.MM.yy');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006.13.01','dd.MM.yy');
         $this->assertEquals($value['day'], 13, 'Day 13 expected');
         $this->assertEquals($value['month'], 1, 'Month 1 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006.01.13','dd.MM.yy');
+
+        try {
+            $value = Zend_Locale_Format::getDate('2006.01.13','dd.MM.yy');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006.01.13','dd.MM.yy');
         $this->assertEquals($value['day'], 13, 'Day 13 expected');
         $this->assertEquals($value['month'], 1, 'Month 1 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
@@ -294,17 +309,40 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('November 10 2006','dd.MMM.yy', 'de_AT');
+        try {
+            $value = Zend_Locale_Format::getDate('November 10 2006','dd.MMM.yy', 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('November 10 2006','dd.MMM.yy', 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('Nov 10 2006','dd.MMM.yy', 'de_AT');
+
+        try {
+            $value = Zend_Locale_Format::getDate('Nov 10 2006','dd.MMM.yy', 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('Nov 10 2006','dd.MMM.yy', 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006 10 Nov','dd.MMM.yy', 'de_AT');
+
+        try {
+            $value = Zend_Locale_Format::getDate('2006 10 Nov','dd.MMM.yy', 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006 10 Nov','dd.MMM.yy', 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
@@ -335,12 +373,27 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006.13.01', false, 'de_AT');
+
+        try {
+            $value = Zend_Locale_Format::getDate('2006.13.01', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006.13.01', false, 'de_AT');
         $this->assertEquals($value['day'], 13, 'Day 13 expected');
         $this->assertEquals($value['month'], 1, 'Month 1 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006.01.13', false, 'de_AT');
+        try {
+            $value = Zend_Locale_Format::getDate('2006.01.13', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006.01.13', false, 'de_AT');
         $this->assertEquals($value['day'], 13, 'Day 13 expected');
         $this->assertEquals($value['month'], 1, 'Month 1 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
@@ -365,22 +418,51 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('November 10 2006', false, 'de_AT');
+        try {
+            $value = Zend_Locale_Format::getDate('November 10 2006', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('November 10 2006', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('April 10 2006', false, 'de_AT');
+        try {
+            $value = Zend_Locale_Format::getDate('April 10 2006', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('April 10 2006', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 4, 'Month 4 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('Nov 10 2006', false, 'de_AT');
+        try {
+            $value = Zend_Locale_Format::getDate('Nov 10 2006', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('Nov 10 2006', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-        $value = Zend_Locale_Format::getDate('2006 10 Nov', false, 'de_AT');
+
+        try {
+            $value = Zend_Locale_Format::getDate('Nov 10 2006', false, 'de_AT');
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertRegexp('/unable.to.parse/i', $e->getMessage());
+            // success
+        }
+        $value = Zend_Locale_Format::getFixedDate('2006 10 Nov', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
@@ -429,7 +511,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
-        $this->assertEquals(count(Zend_Locale_Format::getTime('13:14:55','HH:mm:ss')), 3, "array with 3 tags expected");
+        $this->assertEquals(count(Zend_Locale_Format::getTime('13:14:55','HH:mm:ss')), 4, "array with 4 tags expected");
 
         $value = Zend_Locale_Format::getTime('13:14:55','HH:mm:ss');
         $this->assertEquals($value['hour'], 13, 'Hour 13 expected');
@@ -449,9 +531,12 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testIsDate()
     {
-        $this->assertTrue(Zend_Locale_Format::isDate('13.Nov.2006',false,'de_AT'), "true expected");
-        $this->assertTrue(Zend_Locale_Format::isDate('13.XXX.2006', false, 'ar_EG'), "true expected");
+        $this->assertTrue(Zend_Locale_Format::isDate('13.Nov.2006', null, 'de_AT'), "true expected");
+        $this->assertFalse(Zend_Locale_Format::isDate('13.XXX.2006', null, 'ar_EG'), "false expected");
         $this->assertFalse(Zend_Locale_Format::isDate('nodate'), "false expected");
+
+        $this->assertFalse(Zend_Locale_Format::isDate('20.01.2006', 'M-d-y'), "false expected");
+        $this->assertTrue(Zend_Locale_Format::isDate('20.01.2006', 'd-M-y'), "true expected");
     }
 
 
@@ -490,6 +575,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab'), '110', "110 expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab', 'Deva'), '११०', "११० expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latin', 'Arab'), '١١٠', "١١٠ expected");
+        $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567, '#,##0.00', 'de_AT'), '1.234.567,00', "value 1234567,00 expected");
     }
     
     /**
@@ -517,6 +603,5 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567.12345, '#,#0.00', 'de_AT'), '1.23.45.67,12', "value 1234567 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(-1234567.12345, '##0;##0-', 'de_AT'), '1234567-', "string -1.234.567,12345 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567.12345, '##0;##0-', 'de_AT'), '1234567', "string -1.234.567,12345 expected");
-        $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567, '#,##0.00', 'de_AT'), '1.234.567,00', "value 1234567,00 expected");
     }
 }
