@@ -202,8 +202,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->delete(self::TABLE_NAME, 'id = 2');
         $this->assertEquals(1, $result);
 
-        $select = $this->_db->select();
-        $select->from(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME);
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(1, count($result));
@@ -494,7 +494,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $select = $this->_db->select()
             ->distinct()
-            ->from(self::TABLE_NAME, 327);
+            ->from(self::TABLE_NAME, array())
+            ->from('', 327);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
@@ -516,8 +517,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable2();
         $select = $this->_db->select()
             ->from(self::TABLE_NAME)
-            ->join(self::TABLE_NAME_2,
-                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+            ->join(self::TABLE_NAME_2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -533,8 +533,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable2();
         $select = $this->_db->select()
             ->from(self::TABLE_NAME)
-            ->joinInner(self::TABLE_NAME_2,
-                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+            ->joinInner(self::TABLE_NAME_2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -552,8 +551,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable2();
         $select = $this->_db->select()
             ->from(self::TABLE_NAME)
-            ->joinLeft(self::TABLE_NAME_2,
-                self::TABLE_NAME.'.id = '.self::TABLE_NAME_2.'.news_id');
+            ->joinLeft(self::TABLE_NAME_2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(4, count($result));
@@ -613,13 +611,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGroupByClause()
     {
+        // @todo: fix ZF-884
+        if ($this->getDriver() == 'pdo_Sqlite') {
+            $this->markTestIncomplete('Pending fix for ZF-884');
+            return;
+        }
+
         $userId = $this->getIdentifier('user_id');
         $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, 'user_id')
+            ->from('', 'count(*) as thecount')
             ->group('user_id')
             ->order('user_id');
         $stmt = $this->_db->query($select);
@@ -631,7 +636,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $result[1][$count]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from('', 'count(*) as thecount')
             ->group(array('user_id', 'user_id'))
             ->order('user_id');
         $stmt = $this->_db->query($select);
@@ -649,13 +655,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectHavingClause()
     {
+        // @todo: fix ZF-884
+        if ($this->getDriver() == 'pdo_Sqlite') {
+            $this->markTestIncomplete('Pending fix for ZF-884');
+            return;
+        }
+
         $userId = $this->getIdentifier('user_id');
         $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from('', 'count(*) as thecount')
             ->group('user_id')
             ->having('count(*) > 1');
         $stmt = $this->_db->query($select);
@@ -665,7 +678,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $result[0][$count]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from('', 'count(*) as thecount')
             ->group('user_id')
             ->having('count(*) > 1')
             ->having('count(*) = 1');
@@ -680,13 +694,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrHavingClause()
     {
+        // @todo: fix ZF-884
+        if ($this->getDriver() == 'pdo_Sqlite') {
+            $this->markTestIncomplete('Pending fix for ZF-884');
+            return;
+        }
+
         $userId = $this->getIdentifier('user_id');
         $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from('', 'count(*) as thecount')
             ->group('user_id')
             ->orHaving('count(*) > 1')
             ->orHaving('count(*) = 1')
@@ -700,7 +721,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $result[1][$count]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id', 'count(*) as thecount'))
+            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from('', 'count(*) as thecount')
             ->group('user_id')
             ->orHaving('count(*) > 1')
             ->orHaving('count(*) = 1')

@@ -34,6 +34,24 @@ require_once 'Zend/Db/Adapter/Abstract.php';
 class Zend_Db_Select
 {
 
+    const DISTINCT     = 'distinct';
+    const FOR_UPDATE   = 'forUpdate';
+    const COLUMNS      = 'columns';
+    const FROM         = 'from';
+    const JOIN         = 'join';
+    const  INNER       = 'inner';
+    const  LEFT        = 'left';
+    const  RIGHT       = 'right';
+    const  FULL        = 'full';
+    const  CROSS       = 'cross';
+    const  NATURAL     = 'natural';
+    const WHERE        = 'where';
+    const GROUP        = 'group';
+    const HAVING       = 'having';
+    const ORDER        = 'order';
+    const LIMIT_COUNT  = 'limitCount';
+    const LIMIT_OFFSET = 'limitOffset';
+
     /**
      * Zend_Db_Adapter_Abstract object.
      *
@@ -42,23 +60,31 @@ class Zend_Db_Select
     protected $_adapter;
 
     /**
-     * The component parts of a SELECT statement.
+     * The initial values for the $_parts array.
      *
      * @var array
      */
-    protected $_parts = array(
-        'distinct'    => false,
-        'forUpdate'   => false,
-        'cols'        => array(),
-        'from'        => array(),
-        'join'        => array(),
-        'where'       => array(),
-        'group'       => array(),
-        'having'      => array(),
-        'order'       => array(),
-        'limitCount'  => null,
-        'limitOffset' => null,
+    protected static $_partsInit = array(
+        self::DISTINCT     => false,
+        self::FOR_UPDATE   => false,
+        self::COLUMNS      => array(),
+        self::FROM         => array(),
+        self::JOIN         => array(),
+        self::WHERE        => array(),
+        self::GROUP        => array(),
+        self::HAVING       => array(),
+        self::ORDER        => array(),
+        self::LIMIT_COUNT  => null,
+        self::LIMIT_OFFSET => null,
     );
+
+    /**
+     * The component parts of a SELECT statement.
+     * Initialized to the $_partsInit array in the constructor.
+     *
+     * @var array
+     */
+    protected $_parts = array();
 
     /**
      * Tracks which columns are being select from each table and join.
@@ -75,6 +101,7 @@ class Zend_Db_Select
     public function __construct(Zend_Db_Adapter_Abstract $adapter)
     {
         $this->_adapter = $adapter;
+        $this->_parts = self::$_partsInit;
     }
 
     /**
@@ -90,84 +117,102 @@ class Zend_Db_Select
     {
         // initial SELECT [DISTINCT] [FOR UPDATE]
         $sql = "SELECT";
-        if ($this->_parts['distinct']) {
+        if ($this->_parts[self::DISTINCT]) {
             $sql .= " DISTINCT";
         }
-        if ($this->_parts['forUpdate']) {
+        if ($this->_parts[self::FOR_UPDATE]) {
             $sql .= " FOR UPDATE";
         }
-        $sql .= "\n\t";
+        $sql .= "\t";
 
         // add columns
-        if ($this->_parts['cols']) {
-            $sql .= implode(",\n\t", $this->_parts['cols']) . "\n";
+        if ($this->_parts[self::COLUMNS]) {
+            $columns = array();
+            foreach ($this->_parts[self::COLUMNS] as $correlationName => $columnList) {
+                if (empty($correlationName)) {
+                    foreach ($columnList as $expr) {
+                        $columns[] = "$expr";
+                    }
+                } else {
+                    foreach ($columnList as $columnName) {
+                        $columns[] = "$correlationName.$columnName";
+                    }
+                }
+            }
+            $sql .= implode(",\n\t", $columns);
         }
 
-        // from these tables
-        if ($this->_parts['from']) {
-            $sql .= "FROM ";
-            $sql .= implode(", ", array_keys($this->_parts['from'])) . "\n";
-        }
-
-        // joined to these tables
-        if ($this->_parts['join']) {
-            $list = array();
-            foreach ($this->_parts['join'] as $join) {
+        // from these joined tables
+        if ($this->_parts[self::FROM]) {
+            $from = array();
+            // array_pop()
+            foreach ($this->_parts[self::FROM] as $correlationName => $table) {
                 $tmp = '';
-                // add the type (LEFT, INNER, etc)
-                if (! empty($join['type'])) {
-                    $tmp .= strtoupper($join['type']) . ' ';
+                if (empty($from)) {
+                    // First table is named alone ignoring join information
+                    $tmp .= $table['tableName'] . ' ' . $correlationName;
+                } else {
+                    // Subsequent tables may have joins
+                    if (! empty($table['joinType'])) {
+                        $tmp .= strtoupper($table['joinType']);
+                    }
+                    $tmp .= ' JOIN ' .  $table['tableName'] . ' ' . $correlationName;
+                    if (! empty($table['joinCondition'])) {
+                        $tmp .= ' ON ' . $table['joinCondition'];
+                    }
                 }
                 // add the table name and condition
-                $tmp .= 'JOIN ' . $join['name'];
-                $tmp .= ' ON ' . $join['cond'];
                 // add to the list
-                $list[] = $tmp;
+                $from[] = $tmp;
             }
             // add the list of all joins
-            $sql .= implode("\n", $list) . "\n";
-        }
+            if (!empty($from)) {
+                $sql .= "\nFROM " . implode("\n", $from);
+            }
 
-        // with these where conditions
-        if ($this->_parts['where']) {
-            $sql .= "WHERE\n\t";
-            $sql .= implode("\n\t", $this->_parts['where']) . "\n";
-        }
+            // with these where conditions
+            if ($this->_parts[self::WHERE]) {
+                $sql .= "\nWHERE\n\t";
+                $sql .= implode("\n\t", $this->_parts[self::WHERE]);
+            }
 
-        // grouped by these columns
-        if ($this->_parts['group']) {
-            $sql .= "GROUP BY\n\t";
-            $sql .= implode(",\n\t", $this->_parts['group']) . "\n";
-        }
+            // grouped by these columns
+            if ($this->_parts[self::GROUP]) {
+                $sql .= "\nGROUP BY\n\t";
+                $sql .= implode(",\n\t", $this->_parts[self::GROUP]);
+            }
 
-        // having these conditions
-        if ($this->_parts['having']) {
-            $sql .= "HAVING\n\t";
-            $sql .= implode("\n\t", $this->_parts['having']) . "\n";
+            // having these conditions
+            if ($this->_parts[self::HAVING]) {
+                $sql .= "\nHAVING\n\t";
+                $sql .= implode("\n\t", $this->_parts[self::HAVING]);
+            }
+
         }
 
         // ordered by these columns
-        if ($this->_parts['order']) {
-            $sql .= "ORDER BY\n\t";
-            $sql .= implode(",\n\t", $this->_parts['order']) . "\n";
+        if ($this->_parts[self::ORDER]) {
+            $sql .= "\nORDER BY\n\t";
+            $sql .= implode(",\n\t", $this->_parts[self::ORDER]);
         }
 
         // determine offset
         $count = 0;
         $offset = 0;
-        if (!empty($this->_parts['limitOffset'])) {
-            $offset = (int) $this->_parts['limitOffset'];
+        if (!empty($this->_parts[self::LIMIT_OFFSET])) {
+            $offset = (int) $this->_parts[self::LIMIT_OFFSET];
             // this should be reduced to the max integer PHP can support
             $count = intval(9223372036854775807);
         }
 
         // determine count
-        if (!empty($this->_parts['limitCount'])) {
-            $count = (int) $this->_parts['limitCount'];
+        if (!empty($this->_parts[self::LIMIT_COUNT])) {
+            $count = (int) $this->_parts[self::LIMIT_COUNT];
         }
 
         // add limits clause
         if ($count > 0) {
+            $sql .= "\n";
             $sql = trim($this->_adapter->limit($sql, $count, $offset));
         }
 
@@ -182,7 +227,7 @@ class Zend_Db_Select
      */
     public function distinct($flag = true)
     {
-        $this->_parts['distinct'] = (bool) $flag;
+        $this->_parts[self::DISTINCT] = (bool) $flag;
         return $this;
     }
 
@@ -194,7 +239,7 @@ class Zend_Db_Select
      */
     public function forUpdate($flag = true)
     {
-        $this->_parts['forUpdate'] = (bool) $flag;
+        $this->_parts[self::FOR_UPDATE] = (bool) $flag;
         return $this;
     }
 
@@ -207,12 +252,7 @@ class Zend_Db_Select
      */
     public function from($name, $cols = '*')
     {
-        // add the table to the 'from' list
-        $this->_parts['from'][$name] = null;
-
-        // add to the columns from this table
-        $this->_tableCols($name, $cols);
-        return $this;
+        return $this->_join(self::CROSS, $name, null, $cols);
     }
 
     /**
@@ -227,21 +267,50 @@ class Zend_Db_Select
      * @param string $cond Join on this condition
      * @param array|string $cols The columns to select from the joined table
      * @return Zend_Db_Select This Zend_Db_Select object
+     * @throws Zend_Db_Select_Exception
      */
     protected function _join($type, $name, $cond, $cols)
     {
-        if (!in_array($type, array('left', 'inner'))) {
-            $type = null;
+        if (!in_array($type, array(self::INNER, self::LEFT, self::RIGHT, self::FULL, self::CROSS, self::NATURAL))) {
+            throw new Zend_Db_Select_Exception("Invalid join type '$type'");
         }
 
-        $this->_parts['join'][] = array(
-            'type' => $type,
-            'name' => $name,
-            'cond' => $cond
-        );
+        if (is_array($name)) {
+            // Must be array($tableName => $correlationName)
+            foreach ($name as $_tableName => $_correlationName) {
+                $tableName = $_tableName;
+                $correlationName = $_correlationName;
+                break;
+            }
+        } else if (empty($name)) {
+            $correlationName = $tableName = '';
+        } else {
+            // Generate a correlation name like $tableName_1, $tableName_2, etc.
+            // We can assume no more than 64 tables in a join.
+            $correlationName = $tableName = $name;
+            for ($i = 1; $i <= 64; ++$i) {
+                $c = $correlationName . '_' . (string) $i;
+                if (!array_key_exists($c, $this->_parts[self::FROM])) {
+                    $correlationName = $c;
+                    break;
+                }
+            }
+        }
+
+        if (!empty($correlationName)) {
+            if (array_key_exists($correlationName, $this->_parts[self::FROM])) {
+                throw new Zend_Db_Select_Exception("You cannot define a correlation name '$correlationName' more than once");
+            }
+
+            $this->_parts[self::FROM][$correlationName] = array(
+                'joinType' => $type,
+                'tableName' => $name,
+                'joinCondition' => $cond
+            );
+        }
 
         // add to the columns from this joined table
-        $this->_tableCols($name, $cols);
+        $this->_tableCols($correlationName, $cols);
         return $this;
     }
 
@@ -253,35 +322,107 @@ class Zend_Db_Select
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function join($name, $cond, $cols = null)
+    public function join($name, $cond, $cols = '*')
     {
-        return $this->_join(null, $name, $cond, $cols);
-    }
-
-    /**
-     * Add a LEFT JOIN table and colums to the query
-     *
-     * @param string $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
-     * @return Zend_Db_Select This Zend_Db_Select object.
-     */
-    public function joinLeft($name, $cond, $cols = null)
-    {
-        return $this->_join('left', $name, $cond, $cols);
+        return $this->joinInner($name, $cond, $cols);
     }
 
     /**
      * Add an INNER JOIN table and colums to the query
+     * Rows in both tables are matched according to the expression
+     * in the $cond argument.  The result set is comprised
+     * of all cases where rows from the left table match
+     * rows from the right table.
      *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinInner($name, $cond, $cols = null)
+    public function joinInner($name, $cond, $cols = '*')
     {
-        return $this->_join('inner', $name, $cond, $cols);
+        return $this->_join(self::INNER, $name, $cond, $cols);
+    }
+
+    /**
+     * Add a LEFT OUTER JOIN table and colums to the query
+     * All rows from the left operand table are included,
+     * matching rows from the right operand table included,
+     * and the columns from the right operand table are filled
+     * with NULLs if no row exists matching the left table.
+     *
+     * @param string $name The table name.
+     * @param string $cond Join on this condition.
+     * @param array|string $cols The columns to select from the joined table.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinLeft($name, $cond, $cols = '*')
+    {
+        return $this->_join(self::LEFT, $name, $cond, $cols);
+    }
+
+    /**
+     * Add a RIGHT OUTER JOIN table and colums to the query.
+     * Right outer join is the complement of left outer join.
+     * All rows from the right operand table are included,
+     * matching rows from the left operand table included,
+     * and the columns from the left operand table are filled
+     * with NULLs if no row exists matching the right table.
+     *
+     * @param string $name The table name.
+     * @param string $cond Join on this condition.
+     * @param array|string $cols The columns to select from the joined table.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinRight($name, $cond, $cols = '*')
+    {
+        return $this->_join(self::RIGHT, $name, $cond, $cols);
+    }
+
+    /**
+     * Add a FULL OUTER JOIN table and colums to the query.
+     * A full outer join is like combining a left outer join
+     * and a right outer join.  All rows from both tables are
+     * included, 
+     *
+     * @param string $name The table name.
+     * @param string $cond Join on this condition.
+     * @param array|string $cols The columns to select from the joined table.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinFull($name, $cond, $cols = '*')
+    {
+        return $this->_join(self::FULL, $name, $cond, $cols);
+    }
+
+    /**
+     * Add a CROSS JOIN table and colums to the query.
+     * A cross join is a cartesian product; there is no join condition.
+     *
+     * @param string $name The table name.
+     * @param string $cond Join on this condition.
+     * @param array|string $cols The columns to select from the joined table.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinCross($name, $cols = '*')
+    {
+        return $this->_join(self::CROSS, $name, null, $cols);
+    }
+
+    /**
+     * Add a NATURAL JOIN table and colums to the query.
+     * A natural join assumes an equi-join across any column(s)
+     * that appear with the same name in both tables.
+     * Only natural inner joins are supported by this API,
+     * even though SQL permits natural outer joins as well.
+     *
+     * @param string $name The table name.
+     * @param array|string $cols The columns to select from the joined table.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinNatural($name, $cols = '*')
+    {
+        return $this->_join(self::NATURAL, $name, null, $cols);
     }
 
     /**
@@ -322,10 +463,10 @@ class Zend_Db_Select
             $cond = $this->_adapter->quoteInto($cond, $val);
         }
 
-        if ($this->_parts['where']) {
-            $this->_parts['where'][] = "AND $cond";
+        if ($this->_parts[self::WHERE]) {
+            $this->_parts[self::WHERE][] = "AND $cond";
         } else {
-            $this->_parts['where'][] = $cond;
+            $this->_parts[self::WHERE][] = $cond;
         }
 
         return $this;
@@ -349,10 +490,10 @@ class Zend_Db_Select
             $cond = $this->_adapter->quoteInto($cond, $val);
         }
 
-        if ($this->_parts['where']) {
-            $this->_parts['where'][] = "OR $cond";
+        if ($this->_parts[self::WHERE]) {
+            $this->_parts[self::WHERE][] = "OR $cond";
         } else {
-            $this->_parts['where'][] = $cond;
+            $this->_parts[self::WHERE][] = $cond;
         }
 
         return $this;
@@ -366,14 +507,10 @@ class Zend_Db_Select
      */
     public function group($spec)
     {
-        if (is_string($spec)) {
-            $spec = explode(',', $spec);
-        } else {
-            settype($spec, 'array');
-        }
+        settype($spec, 'array');
 
         foreach ($spec as $val) {
-            $this->_parts['group'][] = trim($val);
+            $this->_parts[self::GROUP][] = trim($val);
         }
 
         return $this;
@@ -397,10 +534,10 @@ class Zend_Db_Select
             $cond = $this->_adapter->quoteInto($cond, $val);
         }
 
-        if ($this->_parts['having']) {
-            $this->_parts['having'][] = "AND $cond";
+        if ($this->_parts[self::HAVING]) {
+            $this->_parts[self::HAVING][] = "AND $cond";
         } else {
-            $this->_parts['having'][] = $cond;
+            $this->_parts[self::HAVING][] = $cond;
         }
 
         return $this;
@@ -424,10 +561,10 @@ class Zend_Db_Select
             $cond = $this->_adapter->quoteInto($cond, $val);
         }
 
-        if ($this->_parts['having']) {
-            $this->_parts['having'][] = "OR $cond";
+        if ($this->_parts[self::HAVING]) {
+            $this->_parts[self::HAVING][] = "OR $cond";
         } else {
-            $this->_parts['having'][] = $cond;
+            $this->_parts[self::HAVING][] = $cond;
         }
 
         return $this;
@@ -441,11 +578,7 @@ class Zend_Db_Select
      */
     public function order($spec)
     {
-        if (is_string($spec)) {
-            $spec = array($spec);
-        } else {
-            settype($spec, 'array');
-        }
+        settype($spec, 'array');
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $key => $val) {
@@ -454,7 +587,7 @@ class Zend_Db_Select
             } else {
                 $val .= ' ASC';
             }
-            $this->_parts['order'][] = trim($val);
+            $this->_parts[self::ORDER][] = trim($val);
         }
 
         return $this;
@@ -469,8 +602,8 @@ class Zend_Db_Select
      */
     public function limit($count = null, $offset = null)
     {
-        $this->_parts['limitCount']  = (int) $count;
-        $this->_parts['limitOffset'] = (int) $offset;
+        $this->_parts[self::LIMIT_COUNT]  = (int) $count;
+        $this->_parts[self::LIMIT_OFFSET] = (int) $offset;
         return $this;
     }
 
@@ -485,8 +618,8 @@ class Zend_Db_Select
     {
         $page     = ($page > 0)     ? $page     : 1;
         $rowCount = ($rowCount > 0) ? $rowCount : 1;
-        $this->_parts['limitCount']  = (int) $rowCount;
-        $this->_parts['limitOffset'] = (int) $rowCount * ($page - 1);
+        $this->_parts[self::LIMIT_COUNT]  = (int) $rowCount;
+        $this->_parts[self::LIMIT_OFFSET] = (int) $rowCount * ($page - 1);
         return $this;
     }
 
@@ -495,20 +628,56 @@ class Zend_Db_Select
      *
      * @param string $tbl The table/join the columns come from.
      * @param string|array $cols The list of columns; preferably as
-     * an array, but possibly as a comma-separated string.
+     * an array, but possibly as a string containing one column.
      * @return void
      */
-    protected function _tableCols($tbl, $cols)
+    protected function _tableCols($correlationName, $cols)
     {
-        if (is_string($cols)) {
-            $cols = explode(',', $cols);
-        } else {
-            settype($cols, 'array');
-        }
+        settype($cols, 'array');
 
         foreach ($cols as $col) {
-            $this->_parts['cols'][] = trim($col);
+            $this->_parts[self::COLUMNS][$correlationName][] = trim($col);
         }
     }
+
+    /**
+     * Get part of the structured information for the currect query.
+     *
+     * @param string $part
+     * @return mixed
+     */
+    public function getPart($part)
+    {
+        return $this->_parts[ strtolower($part) ];
+    }
+
+    /**
+     * @param integer $fetchMode OPTIONAL
+     * @return PDO_Statement|Zend_Db_Statement
+     */
+    public function query($fetchMode = null)
+    {
+        $stmt = $this->_adapter->query($this);
+        if ($fetchMode == null) {
+            $fetchMode = $this->_adapter->getFetchMode();
+        }
+        $stmt->setFetchMode($fetchMode);
+        return $stmt;
+    }
+
+    /**
+     * Clear parts of the Select object, or an individual part.
+     *
+     * @param string $part OPTIONAL
+     * @return void
+     */
+    public function reset($part = null)
+    {
+        if ($part == null) {
+            $this->_parts = $this->_partsInit;
+        } else if (array_key_exists($part, $this->_partsInit)) {
+            $this->_parts[$part] = $this->_partsInit[$part];
+        }
+    } 
 
 }
