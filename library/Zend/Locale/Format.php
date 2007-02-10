@@ -817,7 +817,31 @@ class Zend_Locale_Format
     public static function isDate($date, $format = null, $locale = null)
     {
         try {
-            $date = self::getDate($date, $format, $locale, false);
+            $date = self::getDate($date, $format, $locale);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Returns if the given string is a date
+     * Some forms of invalid dates are automatically fixed, such as a $date string
+     * where month and days are swapped, and one of the two is larger than 12,
+     * or when a month or larger than 31.  However, such dates are often ambiguous,
+     * so the "fixed" results might not be truly fixed.
+     *
+     * @param  string              $date    Date string
+     * @param  string              $format  Date type CLDR format to parse. 
+     *                                      Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing the date string
+     * @return boolean
+     */
+    public static function isFixedDate($date, $format = null, $locale = null)
+    {
+        try {
+            $date = self::getFixedDate($date, $format, $locale);
         } catch (Exception $e) {
             return false;
         }
