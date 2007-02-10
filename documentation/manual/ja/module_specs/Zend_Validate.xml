@@ -1,0 +1,73 @@
+<sect1 id="zend.validate.introduction">
+
+    <title>導入</title>
+
+    <para>
+        Zend_Validate コンポーネントは、一般的に必要となるバリデータを提供します。
+        シンプルなバリデータチェイン機能も持っており、
+        ひとつのデータに対して複数のバリデータを指定した順に適用することができます。
+    </para>
+
+    <para>
+        <emphasis role="strong">バリデータとは?</emphasis>
+    </para>
+
+    <para>
+        バリデータは、入力が何らかの要件を満たしているかどうかを調べ、
+        結果を boolean 値で返します。これは、入力が要件を満たしているかどうかを表します。
+        入力が要件を満たさなかった場合、バリデータは
+        その入力がどのように要件を満たさなかったのかについての追加情報も提供します。
+    </para>
+
+    <para>
+        たとえば、あるウェブアプリケーションでは
+        「ユーザ名は 6 文字から 12 文字、かつ英数字のみが使用可能」
+        という要件があるものとします。
+        このような場合に入力がそれを満たしているかどうかを調べるために
+        バリデータを使用できます。
+        選択したユーザ名がいずれかひとつあるいは両方の要件を満たしていない場合に、
+        どちらの条件に反していたのかを知ることができるので便利です。
+    </para>
+
+    <para>
+        ここで考えたバリデータについての定義をもとにして
+        <code>Zend_Validate_Interface</code> が作成されました。これは、
+        <code>isValid()</code> および <code>getMessages()</code>
+        のふたつのメソッドを定義するものです。
+        <code>isValid()</code> メソッドは指定した値に対する検証を行います。
+        値が検証条件を満たしている場合にのみ <code>true</code> を返します。
+        <code>isValid()</code> が <code>false</code> を返した場合、
+        <code>getMessages()</code> がメッセージの配列を提供します。
+        ここには検証が失敗した理由が含まれます。
+    </para>
+
+    <note>
+        <para>
+            <code>getMessages()</code> が返す検証エラーメッセージは、
+            直近の <code>isValid()</code> コールに関するもののみです。
+            <code>isValid()</code> をコールすると、それまでに実行された
+            <code>isValid()</code> によるメッセージはすべて消去されます。
+        </para>
+    </note>
+
+    <para>
+        以下の例では、電子メールアドレスの検証方法を説明します。
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/EmailAddress.php';
+$validator = new Zend_Validate_EmailAddress();
+if ($validator->isValid($email)) {
+    // email は妥当な形式です
+} else {
+    // email は無効な形式です。理由を表示します
+    foreach ($validator->getMessages() as $message) {
+        echo "$message\n";
+    }
+}]]></programlisting>
+
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

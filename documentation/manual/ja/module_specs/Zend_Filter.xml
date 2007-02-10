@@ -1,62 +1,65 @@
-<sect1 id="zend.filter.filter">
-    <title>Zend_Filter</title>
-    
-    <sect2 id="zend.filter.filter.introduction">
-        <title>導入</title>
-        <para>
-        <literal>Zend_Filter</literal> は、
-        データをフィルタリングするための静的メソッドのライブラリを提供します。
-        入力のフィルタリングには <xref linkend="zend.filter.input" /> を代わりに使用すべきです。
-        なぜなら、これは <literal>Zend_Filter</literal>
-        が提供するメソッドを用いて入力をフィルタリングするフレームワークだからです。
-        しかし、<literal>Zend_Filter_Input</literal> は主として配列を対象にして設計されているので、
-        スカラー値をフィルタリングするには <literal>Zend_Filter</literal>
-        が便利でしょう。こちらは PHP の文字列関数と同様に扱えます。
-        </para>
-        <programlisting>
-    <![CDATA[<?php
-    
-    $alphaUsername = Zend_Filter::getAlpha('John123Doe');
-    
-    /* $alphaUsername = 'JohnDoe'; */
-    
-    ?>]]>
-        </programlisting>
-    </sect2>
-    <sect2 id="zend.filter.filter.usecases">
-        <title>使用例</title>
-        <para>以下の使用例での <literal>$value</literal> は、任意のスカラー値を表します。</para>
-        <para>ホワイトリストフィルタリング</para>
-        <programlisting>
-    <![CDATA[<?php
-    
-    if (Zend_Filter::isEmail($value)) {
-        /* $value は email 形式として有効です。 */
-    } else {
-        /* $value は email 形式ではありません。 */
-    }
-    
-    ?>]]>
-        </programlisting>
-        <para>ブラインドフィルタリング</para>
-        <programlisting>
-    <![CDATA[<?php
-    
-    $alphaName = Zend_Filter::getAlpha($value);
-    
-    ?>]]>
-        </programlisting>
-        <para>ブラックリストフィルタリング</para>
-        <programlisting>
-    <![CDATA[<?php
-    
-    $taglessComment = Zend_Filter::noTags($value);
-    
-    ?>]]>
-        </programlisting>
-    </sect2>
+<sect1 id="zend.filter.introduction">
+
+    <title>導入</title>
+
+    <para>
+        Zend_Filter コンポーネントは、データのフィルタリングに必要となる一般的な機能を提供します。
+        シンプルなフィルタチェイン機能も持っており、
+        ひとつのデータに対して複数のフィルタを指定した順に適用することができます。
+    </para>
+
+    <para>
+        <emphasis role="strong">フィルタとは?</emphasis>
+    </para>
+
+    <para>
+        自然界におけるフィルタの典型的な使用法は、
+        入力から不要な部分を除去して必要なものだけを出力することです (例: コーヒーのフィルタ)。
+        このような場合、フィルタは入力の一部を取り出すための演算子となります。
+        この型のフィルタリングはウェブアプリケーションで有用です。
+        たとえば不正な入力を除去したり、余分な空白を除去したりといったことが考えられます。
+    </para>
+
+    <para>
+        この基本的なフィルタの定義を拡張して、入力に一般的な変換を加える処理もフィルタに含めることにしましょう。
+        ウェブアプリケーションでよくある変換は、HTML エンティティのエスケープ処理です。
+        たとえば (ウェブブラウザなどからの) 信頼できない入力をもとにして
+        フォームのフィールドに値を自動的に埋め込む場合は、その値には
+        HTML エンティティが含まれてはいけません。あるいはもし含むならそれをエスケープしておかなければなりません。
+        これにより、予期せぬ振る舞いを起こすことを防ぎ、
+        セキュリティ上の脆弱性も防ぎます。
+        この要求を満たすには、入力に含まれる HTML
+        エンティティを削除あるいはエスケープしなければなりません。
+        もちろん、どちらの方式が適切かはその場の状況に依存します。
+        HTML エンティティを除去するフィルタは、最初に定義したフィルタの考え方
+        - 入力の一部を取り出すための演算子 - にもとづくものです。
+        一方、HTML エンティティをエスケープするフィルタは、入力を変換するタイプのものです
+        (たとえば "<code>&amp;</code>" は "<code>&amp;amp;</code>" に変換されます)。
+        これらの例のような処理はウェブ開発者にとって重要です。
+        Zend_Filter で "フィルタリングする" という場合、
+        それは入力データに対して何らかの変換を行うことを意味します。
+    </para>
+
+    <para>
+        ここで考えたフィルタについての定義をもとにして
+        <code>Zend_Filter_Interface</code> が作成されました。
+        これは、フィルタクラスに対して <code>filter()</code>
+        という名前のメソッドを実装するよう強制するものです。
+    </para>
+
+    <para>
+        以下の例は、アンパサンド (<code>&amp;</code>) およびダブルクォート (<code>&quot;</code>)
+        の二つの入力データに対してフィルタを適用するものです。
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Filter/HtmlEntities.php';
+$htmlEntities = new Zend_Filter_HtmlEntities();
+echo $htmlEntities->filter('&'); // &amp;
+echo $htmlEntities->filter('"'); // &quot;]]></programlisting>
+
+    </para>
+
 </sect1>
-    
 <!--
 vim:se ts=4 sw=4 et:
 -->

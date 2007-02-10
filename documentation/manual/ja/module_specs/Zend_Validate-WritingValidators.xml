@@ -1,0 +1,65 @@
+<sect1 id="zend.validate.writing_validators">
+
+    <title>バリデータの書き方</title>
+
+    <para>
+        Zend_Validate には、よく使うバリデータ群が付属しています。しかし、
+        特定の目的のために使用する独自のバリデータを書くことは避けられないでしょう。
+        独自のバリデータを作成するには、
+        <code>Zend_Validate_Interface</code> を実装します。
+    </para>
+
+    <para>
+        <code>Zend_Validate_Interface</code> では、ふたつのメソッド
+        <code>isValid()</code> および <code>getMessages()</code>
+        を定義しています。これらを自分のクラスで実装します。
+        このインターフェイスを実装したクラスは、
+        <code>Zend_Validate::addValidator()</code>
+        でバリデータチェインに追加することができます。
+    </para>
+
+    <para>
+        以下の例で、独自のバリデータを作成する方法を説明します。
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Interface.php';
+
+class MyValidator implements Zend_Validate_Interface
+{
+    protected $_messages = array();
+
+    public function isValid($value)
+    {
+        $this->_messages = array();
+
+        // $requirement にもとづく検証を行います
+
+        if (!$requirement) {
+            $this->_messages[] = "Reason validation failed";
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getMessages()
+    {
+        return $this->_messages;
+    }
+}]]></programlisting>
+
+    </para>
+
+    <para>
+        このバリデータのインスタンスをバリデータチェインに追加するには、次のようにします。
+
+        <programlisting role="php"><![CDATA[<?php
+$validatorChain = new Zend_Validate();
+$validatorChain->addValidator(new MyValidator());]]></programlisting>
+
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
