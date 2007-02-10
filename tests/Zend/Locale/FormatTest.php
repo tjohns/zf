@@ -575,7 +575,6 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab'), '110', "110 expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab', 'Deva'), '११०', "११० expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latin', 'Arab'), '١١٠', "١١٠ expected");
-        $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567, '#,##0.00', 'de_AT'), '1.234.567,00', "value 1234567,00 expected");
     }
     
     /**
@@ -603,5 +602,6 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567.12345, '#,#0.00', 'de_AT'), '1.23.45.67,12', "value 1234567 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(-1234567.12345, '##0;##0-', 'de_AT'), '1234567-', "string -1.234.567,12345 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567.12345, '##0;##0-', 'de_AT'), '1234567', "string -1.234.567,12345 expected");
+        $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567, '#,##0.00', 'de_AT'), '1.234.567,00', "value 1234567,00 expected");
     }
 }

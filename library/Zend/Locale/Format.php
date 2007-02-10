@@ -258,6 +258,7 @@ class Zend_Locale_Format
                     $precision = strlen($precision);
                     $format = substr($format, 0, strpos($format, '.') + 1);
                     $format .= '###';
+                    $value = round($value, $precision);
                 } else {
                     $precision = null;
                 }
@@ -309,10 +310,8 @@ class Zend_Locale_Format
         }
 
         // get fraction and format lengths
-        call_user_func(Zend_Locale_Math::$scale, $precision);
         $preg = call_user_func(Zend_Locale_Math::$sub, $value, '0', 0);
         $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, $precision);
-
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
@@ -850,7 +849,7 @@ class Zend_Locale_Format
             $format = $format['pattern'];
         }
 
-        $time = self::_parseDate($time, $format, $locale);
+        $time = self::_parseDate($time, $format, $locale, false);
 
         return $time;
     }
