@@ -71,7 +71,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Механизм, предоставляемый
+                        Механизм, предлагаемый
                         <code>Zend_Controller_Dispatcher</code>
                         является неподходящим. Конфигурация по умолчанию
                         предполагает, что контроллеры являются классами, а
@@ -283,6 +283,393 @@
         </sect3>
     </sect2>
 
+    <sect2 id="zend.controller.front">
+        <title>Фронт-контроллер<!--Front Controller--></title>
+
+        <para>
+            Zend_Controller_Front - класс фронт-контроллера. Он является
+            классом-синглетоном, это означает, что в любой точке выполнения кода
+            может быть доступен только один его экземпляр.
+<!--
+            Zend_Controller_Front implements a Front Controller. Additionally,
+            it is a singleton class, meaning only one instance of it may be
+            available at any given point.
+-->
+        </para>
+
+        <para>
+            При создании его подкласса, нужно, как минимум, переопределить его 
+            метод <code>getInstance()</code>.
+<!--
+            To subclass it, at the very minimum you will need to override the
+            <code>getInstance()</code> method:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class My_Controller_Front extends Zend_Controller_Front
+{
+    public static function getInstance()
+    {
+        if (null === self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+}
+]]></programlisting>
+
+        <para>
+            Переопределение метода getInstance() необходимо для того, чтобы
+            последующие вызовы <code>Zend_Controller_Front::getInstance()</code>
+            возвращали экземпляры вашего нового подкласса вместо экземпляра
+            Zend_Controller_Front - это особенно полезно для некоторых
+            альтернативных маршрутизаторов и помощников представления
+            (view helpers).
+<!--
+            Overriding the getInstance() method ensures that subsequent calls to
+            <code>Zend_Controller_Front::getInstance()</code> will return an
+            instance of your new subclass instead of a Zend_Controller_Front
+            instance - this is particularly useful for some of the alternate
+            routers and view helpers.
+-->
+        </para>
+
+        <para>
+            Кроме getInstance(), есть много методов, которые можно 
+            переопределить:
+<!--
+            In addition to getInstance(), there are many other methods you may
+            override:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * Удаляет все свойства экземпляра синглетона
+     *
+     * Используется в основном для тестирования; может использоваться для
+     * цепочки фронт-контроллеров
+     * 
+     * @return void
+     */
+    public function resetInstance();
+
+    /**
+     * Функция для удобства, вызывает setControllerDirectory()->setRouter()->dispatch()      
+     *
+     * В PHP 5.1.x, вызов статического метода никогда не заполняет $this,
+     * поэтому run() может вызываться после настройки своего фронт-контроллера
+     *      
+     * @param string|array $controllerDirectory Путь ко классам контроллеров
+     * или массив таких путей
+     * @return void
+     * @throws Zend_Controller_Exception если вызывается из объекта
+     */
+    static public function run($controllerDirectory);
+
+    /**
+     * Добавляет директорию контроллеров в стек директорий контроллеров
+     *
+     * Если передан агрумент $args и он является строкой, то он исползуется
+     * как ключ массива для данной директории
+     * 
+     * @param string $directory 
+     * @param mixed $args Необязательный аргумент; Если является строкой,
+     * то используется как ключ массива
+     * @return Zend_Controller_Front
+     */
+    public function addControllerDirectory($directory, $args = null);
+
+    /**
+     * Устанавливает директорию контроллеров
+     *
+     * Сохраняет директорию контроллеров для передачи диспетчеру. Параметром
+     * могут быть массив или строка, содержащая единственную директорию
+     *
+     * @param string|array $directory Путь ко классам контроллеров или массив
+     * таких путей
+     * @return Zend_Controller_Front
+     */
+    public function setControllerDirectory($directory);
+
+    /**
+     * Возвращает директории контроллеров
+     *
+     * Возвращает сохраненные директории контроллеров
+     *
+     * @return string|array
+     */
+    public function getControllerDirectory();
+
+    /**
+     * Устанавливает контроллер, используемый по умолчанию (неформатированная строка)
+     *
+     * @param string $controller
+     * @return Zend_Controller_Front
+     */
+    public function setDefaultController($controller);
+
+    /**
+     * Возвращает контроллер, используемый по умолчанию (неформатированная строка)
+     *
+     * @return string
+     */
+    public function getDefaultController();
+
+    /**
+     * Устанавливает действие, используемое по умолчанию (неформатированная строка)
+     *
+     * @param string $action
+     * @return Zend_Controller_Front
+     */
+    public function setDefaultAction($action);
+
+    /**
+     * Возвращает действие, используемое по умолчанию (неформатированная строка)
+     *
+     * @return string
+     */
+    public function getDefaultAction();
+
+    /**
+     * Устанавливает класс/объект запроса
+     *
+     * Устанавливает объект запроса. Объект запроса содержит переменные запроса.
+     *
+     * If a class name is provided, it will instantiate it
+     *
+     * @param string|Zend_Controller_Request_Abstract $request
+     * @throws Zend_Controller_Exception Генерируется в случае неверного класса запроса
+     * @return Zend_Controller_Front
+     */
+    public function setRequest($request);
+
+    /**
+     * Возвращает объект запроса
+     *
+     * @return null|Zend_Controller_Request_Abstract
+     */
+    public function getRequest();
+
+    /**
+     * Устанавливает объект/класс маршрутизатора
+     *
+     * Устанавливает объект маршрутизатора. Маршрутизатор должен обрабатывать
+     * запросы на нахождение соответствующих контроллера и действия
+     *
+     * Если передано имя класса, то инстанцируется маршрутизатор с любыми
+     * параметрами, зарегистрированными через {@link setParam()} или
+     * {@link setParams()}.
+     *
+     * @param string|Zend_Controller_Router_Interface $router
+     * @throws Zend_Controller_Exception Генерируется в случае неверного класса маршрутизатора
+     * @return Zend_Controller_Front
+     */
+    public function setRouter($router);
+
+    /**
+     * Возвращает объект маршрутизатора.
+     *
+     * Инстанцирует Zend_Controller_Router, если маршрутизатор не был установлен.
+     *
+     * @return null|Zend_Controller_Router_Interface
+     */
+    public function getRouter();
+
+    /**
+     * Устанавливает базовый URL, используемый для запросов
+     *
+     * Используется для установки базовой части URL в REQUEST_URI, которая
+     * используется позднее при определении PATH_INFO и т.д., Примеры:
+     * - /admin
+     * - /myapp
+     * - /subdir/index.php
+     *
+     * URL не должне включать полный URI. Не используйте:
+     * - http://example.com/admin
+     * - http://example.com/myapp
+     * - http://example.com/subdir/index.php
+     *
+     * Если передано значение null, то используется автоопределение (по умолчанию).
+     * 
+     * @param string $base
+     * @return Zend_Controller_Front
+     * @throws Zend_Controller_Exception для $base, не являющегося строкой
+     */
+    public function setBaseUrl($base = null);
+
+    /**
+     * Возвращает установленный на данный момент базовый URL
+     * 
+     * @return string
+     */
+    public function getBaseUrl();
+
+    /**
+     * Устанавливает объект диспетчера. Диспетчер должен принимать объект
+     * запроса, инстанцировать контроллер, и вызывать метод действия в этом
+     * контроллере
+     *
+     * @param Zend_Controller_Dispatcher_Interface $dispatcher
+     * @return Zend_Controller_Front
+     */
+    public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher);
+
+    /**
+     * Возвращает объект диспетчера.
+     *
+     * @return Zend_Controller_DispatcherInteface
+     */
+    public function getDispatcher();
+
+    /**
+     * Устанавливает объект/класс ответа
+     *
+     * Устанавливает объект ответа. Объект ответа является контейнером для
+     * ответа действия и заголовков.
+     *
+     * Если передано имя класса, то инстанцируется объект ответа.
+     *
+     * @param string|Zend_Controller_Response_Abstract $response
+     * @throws Zend_Controller_Exception если передан неверный класс ответа
+     * @return Zend_Controller_Front
+     */
+    public function setResponse($response);
+
+    /**
+     * Возвращает объект ответа.
+     *
+     * @return null|Zend_Controller_Response_Abstract
+     */
+    public function getResponse();
+
+    /**
+     * Добавляет или изменяет параметр, используемый при инстанцировании
+     * контроллера действий
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return Zend_Controller_Front
+     */
+    public function setParam($name, $value);
+
+    /**
+     * Устанавливает параметры для передачи конструктору контроллера действий
+     *
+     * @param array $params
+     * @return Zend_Controller_Front
+     */
+    public function setParams(array $params);
+
+    /**
+     * Возвращает один параметр из стека параметров контроллера
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
+     * Возвращает параметры инстанцирования контроллера действий.
+     *
+     * @return array
+     */
+    public function getParams();
+
+    /**
+     * Очищает стек параметров контроллера действий.
+     *
+     * По умолчанию удаляет все параметры. Если передано имя параметра, то
+     * удаляется только этот параметр; если передан массив имен параметров, то
+     * удаляются все эти параметры.
+     * 
+     * @param null|string|array один ключ или массив ключей параметров
+     * для удаления
+     * @return Zend_Controller_Front
+     */
+    public function clearParams($name = null);
+
+    /**
+     * Регистрирует плагин.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return Zend_Controller_Front
+     */
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin);
+
+    /**
+     * Отменяет регистрацию плагина.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return Zend_Controller_Front
+     */
+    public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin);
+
+    /**
+     * Устанавливает, должны ли исключения, происходящие в цикле
+     * диспетчеризации, генерироваться как обычно или отлавливаться и включаться
+     * в объект ответа.
+     *
+     * Поведение по умолчанию - отлов исключений и включение в объект ответа;
+     * вызывайте этот метод, чтобы они генерировались как обычно.
+     *
+     * @param boolean $flag По умолчанию равно true
+     * @return boolean Возвращает текущую установку
+     */
+    public function throwExceptions($flag = null);
+
+    /**
+     * Устанавливает, должен ли {@link dispatch()} возвращать объект ответа без
+     * вывода. По умолчанию вывод производится автоматически и метод dispatch()
+     * ничего не возвращает.
+     * 
+     * @param boolean $flag 
+     * @return boolean Возвращает текущую установку
+     */
+    public function returnResponse($flag = null);
+
+    /**
+     * Производит обработку HTTP запроса 
+     *
+     * @param Zend_Controller_Request_Abstract|null $request
+     * @param Zend_Controller_Response_Abstract|null $response
+     * @return void|Zend_Controller_Response_Abstract Возвращает объект ответа,
+     * если returnResponse() == true
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
+]]></programlisting>
+
+        <para>
+            Назначение фронт-контроллера состоит в том, чтобы установить
+            переменные запроса, произвести маршрутизацию поступившего запроса и
+            запустить действия, соответствующие этому запросу. В конце
+            фронт-контроллер собирает все ответы и возвращает их.
+<!--
+            The purpose of the front controller is to setup the request
+            environment, route the incoming request, and then dispatch any
+            discovered actions. Finally, it aggregates any responses and returns
+            them.
+-->
+        </para>
+
+        <para>
+            Основной целью расширения класса фронт-контроллера может быть
+            изменение логики одного из методов доступа (например, загрузка
+            другого маршрутизатори и диспетчера по умолчанию или определение
+            другой логики обработки директории контроллеров) или переопределение
+            того, как должны происходить маршрутизация и диспетчеризация.  
+<!--
+            The main reasons to extend the front controller would be to change
+            the logic for one of the accessor methods (for instance, to load a
+            different default router or dispatcher, or to specify different
+            logic for how controller directories are handled), or to change how
+            routing and dispatching occur.
+-->
+        </para>
+    </sect2>
+    
     <sect2 id="zend.controller.request.abstract">
         <title>Абстрактный класс запроса</title>
 
@@ -383,8 +770,8 @@
             контроллеров нужно знать только то, как устанавливать и извлекать
             контроллер, действие, необязательные параметры и флаг
             диспетчеризации. По умолчанию запрос будет искать в своих
-            параметрах для определения контроллера и действия, используя ключи
-            контроллера или действия .
+            параметрах определение контроллера и действия, используя ключи
+            контроллера или действия.
 <!--
             The request object is a container for the request environment. The
             controller chain really only needs to know how to set and retrieve the
@@ -418,13 +805,13 @@
 ?>]]>   </programlisting>
 
         <para>
-            Маршрутизация производится только один раз: когда запрос впервые
-            получен системой. Назначением маршрутизатора является определение
-            контроллера, действия и необязательных параметров, основываясь на
-            переменных запроса, и установка их в запросе. Объект запроса затем
-            передается диспетчеру. Если не найден маршрут, соответствующий
-            запросу, то маршрутизатор ничего не должен делать с объектом 
-            запроса.
+            Маршрутизация производится только один раз - в то время,
+            когда запрос получен системой. Назначением маршрутизатора является
+            определение контроллера, действия и необязательных параметров,
+            основываясь на переменных запроса, и установка их в запросе. Объект
+            запроса затем передается диспетчеру. Если не найден маршрут,
+            соответствующий запросу, то маршрутизатор ничего не должен делать с
+            объектом запроса.
 <!--
             Routing only occurs once: when the request is first received into
             the system.  The purpose of the router is to determine the
@@ -865,7 +1252,7 @@ $controller->run();
             показывающее, было ли сгенерировано исключение или нет.
             <code>renderExceptions()</code> используется для определения того,
             должен ли метод <code>__toString()</code> выводить исключение, если
-            оно было поймано.  
+            оно было поймано.
 <!--
             The response object is also where action controller exceptions are
             finally caught and registered (unless
