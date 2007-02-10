@@ -3,12 +3,12 @@
     <title>高度な使用法</title>
 
     <para>
-        基本的な使用法の例で Zend_Session を完全に使用することができますが、
+        基本的な使用法の例で Zend Framework のセッションを完全に使用することができますが、
         よりよい方法もあります。
         <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> のサンプル</link>
-        を見てみましょう。これは、デフォルトで Zend_Session を使用することにより、
+        を見てみましょう。これは、デフォルトで Zend_Session_Namespace を使用することにより、
         認証トークンを持続的に保持している例です。
-        この例は、Zend_Session および Zend_Auth
+        この例は、Zend_Session_Namespace および Zend_Auth
         を手早く簡単に統合するためのひとつの方法を示すものです。
     </para>
 
@@ -17,7 +17,7 @@
         <title>セッションの開始</title>
 
         <para>
-            すべてのリクエストで Zend_Session を使用してセッション管理したい場合は、
+            すべてのリクエストで Zend Framework のセッションを使用してセッション管理したい場合は、
             起動ファイルでセッションを開始します。
         </para>
 
@@ -27,7 +27,7 @@
 <![CDATA[<?php
 ...
 require_once 'Zend/Session.php';
-Zend_Session_Core::start();
+Zend_Session::start();
 ...
 ?>]]></programlisting>
         </example>
@@ -36,7 +36,7 @@ Zend_Session_Core::start();
             起動ファイルでセッションを開始する際には、
             ヘッダがブラウザに送信される前に確実にセッションが始まるようにします。
             そうしないと例外が発生してしまい、おそらくユーザが見るページは崩れてしまうでしょう。
-            さまざまな高度な機能を使用するには、まず <code>Zend_Session_Core::start()</code>
+            さまざまな高度な機能を使用するには、まず <code>Zend_Session::start()</code>
             が必要です (高度な機能の詳細については後で説明します)。
         </para>
 
@@ -59,19 +59,20 @@ Zend_Session_Core::start();
 v            </listitem>
             <listitem>
                 <para>
-                    2. 間違い: <code>session_start()</code> (<code>
+                    2. 間違い: PHP の <code>
                     <ulink url="http://www.php.net/session_start">session_start()</ulink>
-                    </code> を参照ください) を直接使用してはいけません
-                    <code>session_start()</code> を直接使用した後で Zend_Session を使用すると、
+                    </code> 関数を直接使用してはいけません。
+                    <code>session_start()</code> を直接使用した後で Zend_Session_Namespace を使用すると、
                     <code>Zend_Session::start()</code> が例外 ("session has already been started")
-                    をスローします。Zend_Session を開始した後で
+                    をスローします。Zend_Session_Namespace を使用するか
+                    明示的に <code>Zend_Session::start()</code> で開始した後で
                     <code>session_start()</code> をコールすると、E_NOTICE
                     が発生し、そのコールは無視されます。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    3. 正解: <code>Zend_Session_Core::start()</code> を使用します。
+                    3. 正解: <code>Zend_Session::start()</code> を使用します。
                     すべてのリクエストでセッションを使用したい場合は、
                     この関数コールを ZF の起動コードの最初のほうで無条件に記述します。
                     セッションにはある程度のオーバーヘッドがあります。
@@ -82,7 +83,7 @@ v            </listitem>
                         <para>
                             起動コード内で、無条件にオプション <code>strict</code> を true にします (
                             <link
-                        linkend="zend.session.startingasession"><code>Zend_Session_Core::setOptions()</code>
+                        linkend="zend.session.startingasession"><code>Zend_Session::setOptions()</code>
                             </link> を参照ください
                             )。
                         </para>
@@ -90,29 +91,29 @@ v            </listitem>
                     <listitem>
                         <para>
                             セッションを必要とするリクエスト内で、
-                            最初に <code>new Zend_Session()</code>
-                            をコールする前に、<code>Zend_Session_Core::start()</code> をコールします。
+                            最初に <code>new Zend_Session_Namespace()</code>
+                            をコールする前に、<code>Zend_Session::start()</code> をコールします。
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            通常とおり、必要に応じて <code>new Zend_Session()</code>
-                            を使用します。事前に <code>Zend_Session_Core::start()</code>
+                            通常どおり、必要に応じて <code>new Zend_Session_Namespace()</code>
+                            を使用します。事前に <code>Zend_Session::start()</code>
                             がコールされていることを確認しておきましょう。
                         </para>
                     </listitem>
                 </itemizedlist>
                 <para>
-                    <code>strict</code> オプションにより、<code>new Zend_Session()</code>
-                    が自動的に Zend_Session_Core を開始することがなくなります。
+                    <code>strict</code> オプションにより、<code>new Zend_Session_Namespace()</code>
+                    が自動的に <code>Zend_Session::start()</code> でセッションを開始することがなくなります。
                     したがって、このオプションを使用すると、ZF アプリケーションの開発者が
                     特定のリクエストにはセッションを使用しないという設計をおこなうことができます。
                     このオプションを使用すると、明示的に
-                    <code>Zend_Session_Core::start()</code> をコールする前に Zend_Session 
+                    <code>Zend_Session::start()</code> をコールする前に Zend_Session_Namespace
                     のインスタンスを作成しようとしたときに例外がスローされます。
-                    ZF のコアのコードではこのオプションを使用しないでください。
+                    ZF のコアライブラリのコードではこのオプションを使用しないでください。
                     このような設計上の決断をくだすのは、アプリケーションの開発者だからです。
-                    同様に、"ライブラリ" の開発者も、<code>Zend_Session_Core::setOptions()</code>
+                    同様に、"ライブラリ" の開発者も、<code>Zend_Session::setOptions()</code>
                     の使用がユーザにどれだけの影響を与えるかを注意するようにしましょう。
                     これらのオプションは
                     (もととなる ext/session のオプションと同様)、
@@ -121,19 +122,18 @@ v            </listitem>
             </listitem>
             <listitem>
                 <para>
-                    4. 正解: 必要に応じて <code>new Zend_Session()</code> を使用します。
-                    セッションは、Zend_Session_Core の内部で自動的に開始されます。
+                    4. 正解: 必要に応じて <code>new Zend_Session_Namespace()</code> を使用します。
+                    セッションは、Zend_Session の内部で自動的に開始されます。
                     これはもっともシンプルな使用法で、たいていの場合にうまく動作します。
-                    しかし、デフォルトであるクッキーベースのセッション (推奨)
+                    しかし、デフォルトであるクッキーベースのセッション (強く推奨します)
                     を使用している場合には、PHP がクライアントに何らかの出力
                     (<ulink url="http://www.php.net/headers_sent">HTTP ヘッダ</ulink> など)
                     をする <emphasis role="strong">前に</emphasis>、確実に
-                    最初の <code>new Zend_Session()</code> をコールしなければなりません。
+                    最初の <code>new Zend_Session_Namespace()</code> をコールしなければなりません。
                     <ulink url="http://php.net/outcontrol">出力バッファリング</ulink>
                     を使用すると、この問題を解決することができ、パフォーマンスも向上させることができるでしょう。
                     たとえば、<code>php.ini</code> で "<code>output_buffering = 65535</code>"
                     とすると、出力バッファリング用のバッファが 64K になります。
-                    buffer.
                 </para>
             </listitem>
         </itemizedlist>
@@ -147,7 +147,8 @@ v            </listitem>
         <para>
             セッション名前空間をロックし、
             それ以降その名前空間のデータに手を加えられないようにすることができます。
-            名前空間を読み取り専用にするには <code>lock()</code> を、そして
+            特定の名前空間を読み取り専用にするには
+            Zend_Session_Namespace の <code>lock()</code> を、そして
             読み取り専用の名前空間を読み書きできるようにするには <code>unLock()</code>
             を使用します。<code>isLocked()</code> を使用すると、
             その名前空間がロックされているかどうかを調べることができます。
@@ -155,8 +156,8 @@ v            </listitem>
             名前空間をロックしても、その名前空間に保存されているオブジェクトの
             セッターメソッドには何の影響も及ぼしません。
             しかし、名前空間自体のセッターメソッドは使用できず、
-            オブジェクトの削除や置換ができなくなります。同様に、
-            Zend_Session の名前空間をロックしたとしても、
+            名前空間に直接格納されたオブジェクトの削除や置換ができなくなります。同様に、
+            Zend_Session_Namespace の名前空間をロックしたとしても、
             同じデータをさすシンボルテーブルの使用をとめることはできません
             (<ulink url="http://www.php.net/references">PHP
             のリファレンスについての説明</ulink>も参照ください)。
@@ -167,14 +168,14 @@ v            </listitem>
 <programlisting role="php">
 <![CDATA[<?php
     // このように仮定します
-    $my_session = new Zend_Session('my_session');
+    $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
     // このセッションに読み取り専用ロックをかけます
-    $my_session->lock();
+    $userProfileNamespace->lock();
 
     // 読み取り専用ロックを解除します
-    if ($my_session->isLocked()) {
-        $my_session->unLock();
+    if ($userProfileNamespace->isLocked()) {
+        $userProfileNamespace->unLock();
     }
 ?>]]></programlisting>
         </example>
@@ -197,17 +198,17 @@ class FooModule_View extends Zend_View
 {
     public function show($name)
     {
-        if (!isset($this->session)) {
-            $this->session = Zend::registry('FooModule');
+        if (!isset($this->mySessionNamespace)) {
+            $this->mySessionNamespace = Zend::registry('FooModule');
         }
 
-        if ($this->session->isLocked()) {
+        if ($this->mySessionNamespace->isLocked()) {
             return parent::render($name);
         }
 
-        $this->session->lock();
+        $this->mySessionNamespace->lock();
         $return = parent::render($name);
-        $this->session->unLock();
+        $this->mySessionNamespace->unLock();
 
         return $return;
     }
@@ -226,8 +227,6 @@ class FooModule_View extends Zend_View
             変数の汚染を防ぐこともできます。
             たとえば、'Zend_Auth' コントローラでは、そのセッション状態データを
             他のコントローラとは別に管理することになるでしょう。
-            そのような場合は、セッションの getInstance
-            で取得したデータになんらかの名前空間を指定して管理します。
         </para>
 
         <example>
@@ -236,16 +235,17 @@ class FooModule_View extends Zend_View
 <![CDATA[<?php
 require_once 'Zend/Session.php';
 // 質問を表示するコントローラ
-$test_session = new Zend_Session('test');
-$test_session->setExpirationSeconds(300, "accept_answer"); // この変数だけに有効期限を設定します
-$test_session->accept_answer = true;
+$testSpace = new Zend_Session_Namespace('testSpace');
+$testSpace->setExpirationSeconds(300, "accept_answer"); // $test_session->setExpirationSeconds(300, "accept_answer"); // この変数にだけ有効期限を設定します
+$testSpace->accept_answer = true;
+
 
 -- 
 
 // 回答を処理するコントローラ
-$test_session = new Zend_Session('test');
+$testSpace = new Zend_Session('testSpace');
 
-if ($test_session->accept_answer === true) {
+if ($testSpace->accept_answer === true) {
     // 時間内
 }
 else {
@@ -258,19 +258,20 @@ else {
 
     <sect2 id="zend.session.limitinginstances">
 
-        <title>名前空間内での Zend_Session のインスタンスをひとつに制限する</title>
+        <title>名前空間内での Zend_Session_Namespace のインスタンスをひとつに制限する</title>
 
         <para>
             ここで説明する機能を使用するよりも、セッションのロック (上を参照ください)
             を使うことを推奨します。ここで説明する機能は、
-            アクセスが必要なすべての関数およびオブジェクトに Zend_Session
-            のインスタンスを渡さなければならず、開発者への負担が大きくなります。
+            各名前空間へのアクセスが必要なすべての関数およびオブジェクトに
+            Zend_Session_Namespace のインスタンスを渡さなければならず、
+            開発者への負担が大きくなります。
         </para>
 
         <para>
-            特定の名前空間用に Zend_Session の最初のインスタンスを作成する際に、
-            その名前空間ではこれ以上別の Zend_Session を作成しないよう指示することができます。
-            こうすると、その後同じ名前空間で Zend_Session
+            特定の名前空間用に Zend_Session_Namespace の最初のインスタンスを作成する際に、
+            その名前空間ではこれ以上別の Zend_Session_Namespace を作成しないよう指示することができます。
+            こうすると、その後同じ名前空間で Zend_Session_Namespace
             のインスタンスを作成しようとした際にエラーが発生します。
             これはオプションの設定であり、デフォルトではありません。ひとつの名前空間に対しては
             ひとつのインスタンスだけを使用したいという人のために残しています。
@@ -278,8 +279,8 @@ else {
             コンポーネントが不意に書き換えてしまう危険性を減らします。
             セッションへのアクセスが容易ではなくなるからです。
             しかし、名前空間に対してひとつのインスタンスに限定してしまうと、
-            コードの量が増え、より複雑になってしまいます。なぜなら、便利は
-            <code>$session = new Zend_Session('aNamespace');</code>
+            コードの量が増え、より複雑になってしまいます。なぜなら、便利な
+            <code>$aNamespace = new Zend_Session_Namespace('aNamespace');</code>
             が最初の一度しか使えなくなるからです。それ以降は、以下の例のようになります。
         </para>
 
@@ -288,33 +289,158 @@ else {
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
-    $authSessionAccessor1 = new Zend_Session('Zend_Auth');
-    $authSessionAccessor2 = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
-    $authSessionAccessor1->foo = 'bar';
-    assert($authSessionAccessor2->foo, 'bar'); // 通過します
-    doSomething($options, $authSessionAccessor2); // 必要に応じてアクセサを渡します
+    $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
+    $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', Zend_Session_Namespace::SINGLE_INSTANCE);
+    $authSpaceAccessor1->foo = 'bar';
+    assert($authSpaceAccessor2->foo, 'bar'); // 通過します
+    doSomething($options, $authSpaceAccessor2); // 必要に応じてアクセサを渡します
     .
     .
     .
-    $aSessionObject = new Zend_Session('Zend_Auth'); // これはエラーとなります
+    $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth'); // これはエラーとなります
 ?>]]></programlisting>
         </example>
 
         <para>
-            上の例で Zend_Session のコンストラクタの第二パラメータで指定しているのは、
+            上の例で Zend_Session_Namespace のコンストラクタの第二パラメータで指定しているのは、
             今後 'Zend_Auth' 名前空間で新たに Zend_Session を作成することができないということです。
             作成しようとすると、例外がスローされます。
-            上のコードを実行した後は <code>new Zend_Session('Zend_Auth')</code> 
+            上のコードを実行した後は <code>new Zend_Session_Namespace('Zend_Auth')</code> 
             ができなくなります。そのため、
             同一リクエスト内でその名前空間のセッションを使用するには、
             最初に作成したインスタンス
-            (上の例では <code>$componentAuthState</code>)
+            (上の例では <code>$authSpaceAccessor2</code>)
             をどこかに保存しておく必要があります。
             たとえば静的変数にこのインスタンスを格納したり、
             この名前空間のセッションを必要とするメソッドに直接渡したりします。
             セッションのロック (上を参照ください) のほうが、
             名前空間へのアクセスを制限する方法としてはより便利で簡単です。
         </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.modifyingarray">
+
+        <title>名前空間での配列の使用</title>
+
+        <para>
+            名前空間内の配列を変更することはできません。
+            最も簡単な対応法は、必要な値をすべて設定してから配列を保存することです。
+            <ulink url="http://framework.zend.com/issues/browse/ZF-800">ZF-800</ulink>
+            で、マジックメソッドと配列を使用している多くの PHP
+            アプリケーションに影響する既知の問題を説明しています。
+        </para>
+
+        <example>
+            <title>配列に関する既知の問題</title>
+<programlisting role="php">
+<![CDATA[<?php
+    $sessionNamespace = new Zend_Session_Namespace('Foo');
+    $sessionNamespace->array = array();
+    $sessionNamespace->array['testKey'] = 1; // PHP 5.2.1 より前のバージョンでは動作しません
+?>]]></programlisting>
+        </example>
+
+        <para>
+            セッション名前空間に代入した後で配列を変更する必要が出てきた場合は、
+            まずいったん配列を取得します。
+        </para>
+
+        <example>
+            <title>回避策: 取得して変更し、そして保存する</title>
+<programlisting role="php">
+<![CDATA[<?php
+    $sessionNamespace = new Zend_Session_Namespace('Foo');
+    $sessionNamespace->array = array('tree' => 'apple');
+    $tmp = $sessionNamespace->array;
+    $tmp['fruit'] = 'peach';
+    $sessionNamespace->array = $tmp;
+?>]]></programlisting>
+        </example>
+
+        <para>
+            あるいは、目的の配列への参照を保持する配列をセッションに保存し、
+            間接的にアクセスします。
+        </para>
+
+        <example>
+            <title>回避策: 参照を含む配列を保存する</title>
+<programlisting role="php">
+<![CDATA[<?php
+    $myNamespace = new Zend_Session_Namespace('mySpace');
+
+    // バグのあるバージョンの PHP でも動作します
+    $a = array(1,2,3);
+    $myNamespace->someArray = array( & $a ) ;
+    $a['foo'] = 'bar';
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.auth">
+
+        <title>セッションと認証の共用</title>
+
+        <para>
+            <code>Zend_Auth</code> の認証トークンを、
+            Zend Framework のセッションで持続させることができます。
+            それ以降のリクエストで認証トークンにアクセスできるようにするには、
+            次のようにする必要があります。
+        </para>
+
+        <example>
+            <title>回避策: セッション内で認証トークンにアクセスする</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // ニワトリが先かタマゴが先か ...
+    // どのトークンクラスを使用するのかを、事前に知っておかなければなりません (;_;)
+    require_once 'Zend/Auth/Digest/Token.php';
+    require_once 'Zend/Session.php';
+    Zend_Session::start();
+    require_once 'Zend/Auth/Digest/Adapter.php';
+    require_once 'Zend/Auth.php';
+    $auth = new Zend_Auth(new Zend_Auth_Digest_Adapter('someDigestFilename'));
+    $token = $auth->getToken();
+    echo "Valid: ",
+    (empty($token->isValid()) ? 'No' : 'Yes'), "\n"';
+    echo "Identity: ",
+        (empty($token->getIdentity()) ? 'unknown' : $token->getIdentity()), "\n"';
+    echo "Messages: ",
+        (empty($token->getMessages()) ? 'none' : $token->getMessages()), "\n"';
+?>]]></programlisting>
+        </example>
+
+        <para>
+            <code>Zend_Auth</code> に対して認証トークンをセッション間で持続させないよう指示し、
+            手動で認証 ID をセッションに格納することもできます。
+            そうすれば、セッション名前空間内のよく知られた場所を使用できます。
+            また、これにより、認証エラーのメッセージをセッション間で持続させてしまうことも防げます
+            (注意: 現在、Zend セッション用の "フラッシュメッセージ"
+            機能を開発しているメンバーがいます)。
+            アプリケーションによっては、使用する権限情報や認証情報を
+            特定の場所に保存しなければならないこともあるでしょう。
+            多くのアプリケーションは、認証時の ID (たとえばユーザ名)
+            を特定の ID (一意に割り当てた整数値など) に関連付けています。
+        </para>
+
+        <example>
+            <title>回避策: 認証 ID に対するシンプルなアクセス</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require 'Zend/Session.php';
+    Zend_Session::start();
+    $namespace = Zend_Session_Namespace('Zend_Auth');
+
+    echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
+    echo "Authorization / user Id: ",
+        (empty($namespace->authorizationId) ? 'none' : $namespace->authorizationId), "\n"';
+    echo "Authentication attempts: ",
+        (empty($namespace->attempts) ? '0' : $namespace->attempts), "\n"';
+    echo "Authenticated on: ",
+        (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
+?>]]></programlisting>
+        </example>
 
     </sect2>
 

@@ -3,10 +3,16 @@
     <title>基本的な使用法</title>
 
     <para>
-        Zend_Session は、ext/session およびスーパーグローバル変数 <code>$_SESSION</code>
+        <code>Zend_Session_Namespace</code> 
+        がコンテナのインスタンスを作成します。これが、Zend Framework
+        のセッションデータを操作するための基本的な API を提供します。
+        名前空間を使用するとセッションデータを個別に扱うことができますが、
+        セッションデータ全体をひとつの名前空間で扱いたい人のためのデフォルト名前空間も用意されています。
+        <code>Zend_Session_Namespace</code> は、ext/session およびスーパーグローバル変数 <code>$_SESSION</code>
         を使用して、セッション状態のデータを保存します。
         <code>$_SESSION</code> はグローバルにアクセス可能ですが、
-        開発者はこれに対して直接アクセスするのはやめるべきです。Zend_Session を用いることで、
+        開発者はこれに対して直接アクセスするのはやめるべきです。
+        <code>Zend_Session</code> および <code>Zend_Session_Namespace</code> を用いることで、
         セッション関連の機能をより効率的かつ安全に使用できるようになります。
     </para>
 
@@ -16,11 +22,11 @@
 
         <para>
             何も名前空間をしていせずに Zend_Session のインスタンスを作成すると、
-            すべてのデータは透過的に <code>'Default'</code> 名前空間に保存されます。
-            以下の例は、<code>'Default'</code> 名前空間を使用して
+            すべてのデータは透過的に <code>'Default'</code> という名前の名前空間に保存されます。
+            以下の例は、このデフォルトの名前空間を使用して
             ユーザがそのページを何回閲覧したかを数える方法を示すものです。
-            以下のコード (のうち <code>echo</code> 以外の部分)
-            を、ZF の起動ファイル内に記述します
+            実際に試してみたい場合は、
+            以下のコードを ZF の起動ファイル内に記述します
         </para>
 
         <example>
@@ -28,16 +34,16 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
-    $session = new Zend_Session();
-    $session->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
-    echo "このセッションでページがリクエストされた回数: ", $session->numberOfPageRequests;
+    $defaultNamespace = new Zend_Session_Namespace('Default');
+    $defaultNamespace->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
+    echo "このセッションでページがリクエストされた回数: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
 
         <para>
-            Zend_Session の数多くの利点のうちのひとつに、
+            Zend_Session_Namespace の数多くの利点のうちのひとつに、
             複数のモジュールがそれぞれ異なるレベルのカプセル化を行えるという点があります。
-            Zend_Session のコンストラクタには、オプションの引数
+            Zend_Session_Namespace のコンストラクタには、オプションの引数
             $namespace を渡すことができます。これを使用することで、
             あるコンポーネントやモジュール、コードのデータが
             他のコンポーネントやモジュール、コードから守られるようになります。
@@ -53,23 +59,20 @@
             <title>新しい方法: 名前空間の衝突を避ける</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // Zend-Auth コンポーネント用
+    // Zend_Auth コンポーネント用
     require_once 'Zend/Session.php';
-    $auth_session = new Zend_Session('Zend_Auth');
-    $auth_session->user = "myusername";
+    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace->user = "myusername";
 
     // ウェブサービスコンポーネント用
-    $web_service_session = new Zend_Session('Some_Web_Service');
-    $web_service_session->user = "mywebusername";
+    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
 
         <para>
             上の例は、この下のコードと同じ結果になります。
             ただ、上の例ではセッションデータがそれぞれの名前空間でカプセル化されています。
-            さまざまなチェックを Zend_Session_Core
-            のシングルトンパターンと組み合わせることで、
-            カプセル化を行います。
         </para>
 
         <example>
@@ -88,7 +91,7 @@
         <title>セッション名前空間の順次処理</title>
 
         <para>
-            Zend_Session は
+            <code>Zend_Session_Namespace</code> は
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate インターフェイス</ulink>
             を完全に実装しており、<code>foreach</code> 文をサポートしています。
         </para>
@@ -99,9 +102,9 @@
 <![CDATA[<?php
     // Zend_Session は順次処理が可能です
     require_once 'Zend/Session.php';
-    $my_session = new Zend_Session();
-    foreach ($my_session as $name => $value) {
-        ....
+    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    foreach ($aNamespace as $index => $value) {
+        echo "aNamespace->$index = '$value';\n";
     }
 ?>]]></programlisting>
         </example>

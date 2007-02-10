@@ -20,26 +20,34 @@
         同一クライアントからの複数ページにわたるリクエストを扱います。
         クッキーのデータと異なり、セッションデータはクライアント側には保存されません。
         セッションデータがクライアントと共有されるのは、
-        クライアントからのリクエストへの応答として
-        サーバ側のソースコードで使用可能に設定した場合のみです。
+        サーバ側のソースコードの脆弱性のために
+        クライアントからのリクエストへの応答として使用できるようになった場合のみです。
         このコンポーネントのドキュメントにおいて「セッションデータ」は、
         Zend_Session が管理するサーバ側のデータをさすものとします。
+        <emphasis role="bold">セッション名前空間</emphasis>
+        により、セッションデータに対して昔ながらの
+        <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">名前空間</ulink>
+        を使用したアクセスが可能となります。
+        これは、文字列をキーとした連想配列形式で実装されています。
+        (通常の PHP の配列と同じです)。
     </para>
 
     <para>
-        <code>Zend_Session_Core</code> コンポーネントは、PHP の既存の
+        <code>Zend_Session</code> コンポーネントは、PHP の既存の
         ext/session をラップして管理用インターフェイスを提供します。また、
-        <code>Zend_Session</code> の名前空間を持続させるための API も提供します。
-        <code>Zend_Session</code> は、標準化されたオブジェクト指向のインターフェイスで
+        <code>Zend_Session_Namespace</code> のセッション名前空間を持続させるための API も提供します。
+        <code>Zend_Session_Namespace</code> は、標準化されたオブジェクト指向のインターフェイスで
         名前空間を扱います。これは、PHP 標準のセッションの仕組みを使用しています。
-        匿名セッションおよび "ログイン" セッションの両方をサポートしています。
+        匿名セッションおよび "ログイン" セッション名前空間の両方をサポートしています。
         ZF の認証コンポーネントである <code>Zend_Auth</code> は、
-        <code>Zend_Session</code> を使用して "Zend_Auth"
+        <code>Zend_Session_Namespace</code> を使用して "Zend_Auth"
         名前空間に認証済みユーザの情報を保存します。
         <code>Zend_Session_Core</code> が内部で使用しているのは通常の PHP
-        セッション関数なので、おなじみのオプションや設定が適用されます
+        ext/session 関数なので、おなじみのオプションや設定が適用されます
         (<ulink url="http://www.php.net/session">http://www.php.net/session</ulink>
-        を参照ください)。したがって、クッキーに記録したり URL に埋め込まれたりする
+        を参照ください)。これは、オブジェクト指向で扱えたりデフォルトをサポートしていたりという点で
+        Zend Framework とうまく組み合わせることができます。
+        したがって、クッキーに記録したり URL に埋め込まれたりする
         標準のセッション ID を用いて、クライアントとセッション状態データの関連付けが行われます。
     </para>
 
@@ -54,6 +62,7 @@
         保存ハンドラの案を出したり実際に作成したりした場合は、メーリングリスト
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
         にお知らせください。
+        Zend_Db 互換の保存ハンドラは、このメーリングリストに投稿されます。
     </para>
 
 </sect1>
