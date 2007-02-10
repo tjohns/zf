@@ -260,6 +260,10 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Query the timeserver list using the fallback mechanism
+     * 
+     * If there are multiple servers listed, this method will act as a 
+     * facade and will try to return the date from the first server that 
+     * returns a valid result.
      *
      * @param   $locale - OPTIONAL locale
      * @return  object

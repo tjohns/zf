@@ -40,7 +40,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
      * @var int
      */
     protected $_port = 123;
-    
+
     /**
      * Class constructor, sets the timeserver and port number
      *
