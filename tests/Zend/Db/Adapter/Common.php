@@ -455,8 +455,25 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
 
         $select->from(self::TABLE_NAME);
-        $result = $this->_db->query($select);
-        $row = $result->fetch();
+        $stmt = $this->_db->query($select);
+        $row = $stmt->fetch();
+        $this->assertEquals(5, count($row)); // correct number of fields
+        $this->assertEquals('1', $row[$id]); // correct data
+    }
+
+    /**
+     * Test basic use of the Zend_Db_Select class.
+     */
+    public function testSelectQuery()
+    {
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select();
+        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
+
+        $select->from(self::TABLE_NAME);
+        $stmt = $select->query();
+        $row = $stmt->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
         $this->assertEquals('1', $row[$id]); // correct data
     }
@@ -528,6 +545,23 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      * Test adding an INNER JOIN to a Zend_Db_Select object.
      * This should be exactly the same as the plain JOIN clause.
      */
+    public function testSelectJoinClauseWithCorrelationName()
+    {
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from( array(self::TABLE_NAME => 'xyz1') )
+            ->join( array(self::TABLE_NAME_2 => 'xyz2'), 'xyz1.id = xyz2.news_id')
+            ->where('xyz1.id = 1');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(10, count($result[0]));
+    }
+
+    /**
+     * Test adding an INNER JOIN to a Zend_Db_Select object.
+     * This should be exactly the same as the plain JOIN clause.
+     */
     public function testSelectJoinInnerClause()
     {
         $this->createTestTable2();
@@ -543,7 +577,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     /**
      * Test adding an outer join to a Zend_Db_Select object.
      */
-    public function testSelectLeftJoinClause()
+    public function testSelectJoinLeftClause()
     {
         $id = $this->getIdentifier('id');
         $newsId = $this->getIdentifier('news_id');
@@ -558,6 +592,54 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, count($result[0]));
         $this->assertEquals(2, $result[3][$id]);
         $this->assertNull($result[3][$newsId]);
+    }
+
+    /**
+     * Test adding an outer join to a Zend_Db_Select object.
+     */
+    public function testSelectJoinRightClause()
+    {
+        if ($this->getDriver() == 'pdo_Sqlite') {
+            $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
+            return;
+        }
+
+        $id = $this->getIdentifier('id');
+        $newsId = $this->getIdentifier('news_id');
+
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME_2)
+            ->joinRight(self::TABLE_NAME, 'id = news_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(4, count($result));
+        $this->assertEquals(10, count($result[0]));
+        $this->assertEquals(2, $result[3][$id]);
+        $this->assertNull($result[3][$newsId]);
+    }
+
+    /**
+     * Test adding a cross join to a Zend_Db_Select object.
+     */
+    public function testSelectJoinCrossClause()
+    {
+        if ($this->getDriver() == 'Db2') {
+            $this->markTestSkipped('DB2 does not support CROSS JOIN');
+            return;
+        }
+
+        $id = $this->getIdentifier('id');
+        $newsId = $this->getIdentifier('news_id');
+
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->joinCross(self::TABLE_NAME_2);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(6, count($result));
+        $this->assertEquals(10, count($result[0]));
     }
 
     /**
@@ -825,6 +907,26 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(2, $result[0][$id]);
+    }
+
+    /**
+     * Test the getPart() and reset() methods of a Zend_Db_Select object.
+     */
+    public function testSelectGetPartAndReset()
+    {
+        $select = $this->_db->select()
+            ->from(self::TABLE_NAME)
+            ->limit(1);
+        $count = $select->getPart(Zend_Db_Select::LIMIT_COUNT);
+        $this->assertEquals(1, $count);
+
+        $select->reset(Zend_Db_Select::LIMIT_COUNT);
+        $count = $select->getPart(Zend_Db_Select::LIMIT_COUNT);
+        $this->assertNull($count);
+
+        $select->reset(); // reset the whole object
+        $from = $select->getPart(Zend_Db_Select::FROM);
+        $this->assertTrue(empty($from));
     }
 
     /**
