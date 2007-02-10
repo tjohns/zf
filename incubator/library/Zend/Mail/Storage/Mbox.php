@@ -125,6 +125,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      *
      * @param  int $id            number of message
      * @return Zend_Mail_Message
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getMessage($id)
     {
@@ -142,6 +143,9 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $message));
     }
 
+    /**
+     * @throws Zend_Mail_Storage_Exception
+     */
     public function getRaw($id, $part)
     {
         $endPos = $this->_goto($id);
@@ -239,6 +243,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      * open given file as current mbox file
      *
      * @param string $filename filename of mbox file
+     * @return null
      * @throws Zend_Mail_Storage_Exception
      */
     protected function _openMboxFile($filename)
@@ -298,6 +303,8 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
 
     /**
      * stub for not supported message deletion
+     * @return null
+     * @throws Zend_Mail_Storage_Exception
      */
     public function removeMessage($id)
     {
@@ -321,6 +328,8 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      *
      * with this method you can cache the mbox class
      * for cache validation the mtime of the mbox file is used
+     * @return null
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __wakeup()
     {

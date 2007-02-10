@@ -95,6 +95,8 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      * Result is save in Zend_Mail_Storage_Folder instances with the root in $this->_rootFolder.
      * $parentFolder and $parentGlobalName are only used internally for recursion.
      *
+     * @return null
+     * @throws Zend_Mail_Storage_Exception
      */
     private function _buildFolderTree()
     {
@@ -153,6 +155,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      *
      * @param string $rootFolder get folder structure for given folder, else root
      * @return Zend_Mail_Storage_Folder root or wanted folder
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getFolders($rootFolder = null)
     {
@@ -186,6 +189,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      * folder must be selectable!
      *
      * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @return null
      * @throws Zend_Mail_Storage_Exception
      */
     public function selectFolder($globalName)

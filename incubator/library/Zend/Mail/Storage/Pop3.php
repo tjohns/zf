@@ -56,6 +56,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * @param int filter by flags
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function countMessages($flags = null)
     {
@@ -71,6 +72,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      *
      * @param int number of message
      * @return int|array size of given message of list with all messages as array(num => size)
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getSize($id = 0)
     {
@@ -84,6 +86,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      *
      * @param int number of message
      * @return Zend_Mail_Message
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getMessage($id)
     {
@@ -94,6 +97,10 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
                                            'noToplines' => $bodyLines < 1));
     }
 
+    /*
+     * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
+     */
     public function getRaw($id, $part)
     {
         // TODO: indexes for header and content should be changed to negative numbers
@@ -128,6 +135,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      *
      * @param  $params array  mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function __construct($params)
     {
@@ -167,6 +175,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
      *
+     * @return null
      */
     public function close()
     {
@@ -177,6 +186,8 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      *
      * Keep the server busy.
      *
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function noop()
     {
@@ -190,6 +201,8 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * identify the message.
      *
      * @param int number of message
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function removeMessage($id)
     {
@@ -202,6 +215,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * retrieved if Top wasn't needed/tried yet.
      *
      * @see Zend_Mail_Storage_Abstract:__get()
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __get($var)
     {
@@ -210,7 +224,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
                 // need to make a real call, because not all server are honest in their capas
                 try {
                     $this->_protocol->top(1, 0, false);
-                } catch(Exception $e) {
+                } catch(Zend_Mail_Exception $e) {
                     // ignoring error
                 }
             }

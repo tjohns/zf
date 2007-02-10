@@ -68,6 +68,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      *
      * @param  int        $id  number of message
      * @return int|array      size of given message of list with all messages as array(num => size)
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getSize($id = null)
     {
@@ -94,12 +95,17 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      *
      * @param  int $id            number of message
      * @return Zend_Mail_Message
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getMessage($id)
     {
         return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRaw($id, 'header')));
     }
 
+    /**
+     *
+     * @throws Zend_Mail_Storage_Exception
+     */
     public function getRaw($id, $part)
     {
         if (!isset($this->_files[$id - 1])) {
@@ -181,6 +187,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      * open given dir as current maildir
      *
      * @param string $dirname name of maildir
+     * @return null
      * @throws Zend_Mail_Storage_Exception
      */
     protected function _openMaildir($dirname)
@@ -243,6 +250,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
     /**
      * stub for not supported message deletion
+     * @return null
+     * @throws Zend_Mail_Storage_Exception
      */
     public function removeMessage($id)
     {

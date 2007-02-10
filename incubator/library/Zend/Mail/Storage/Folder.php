@@ -99,6 +99,7 @@ class Zend_Mail_Storage_Folder implements RecursiveIterator
 
     /**
      * implements Iterator::next()
+     * @return null
      */
     public function next()
     {
@@ -127,6 +128,7 @@ class Zend_Mail_Storage_Folder implements RecursiveIterator
 
     /**
      * implements Iterator::rewind()
+     * @return null
      */
     public function rewind()
     {
@@ -154,6 +156,7 @@ class Zend_Mail_Storage_Folder implements RecursiveIterator
      *
      * @param string $name local name of subfolder
      * @param Zend_Mail_Storage_Folder instance for new subfolder
+     * @return null
      */
     public function __set($name, Zend_Mail_Storage_Folder $folder)
     {

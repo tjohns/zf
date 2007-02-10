@@ -52,6 +52,7 @@ class Zend_Mail_Protocol_Pop3
      * @param string $host  hostname of IP address of POP3 server, if given connect() is called
      * @param int    $port  port of POP3 server, default is 110 (995 for ssl)
      * @param bool   $ssl   use ssl?
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function __construct($host = '', $port = null, $ssl = false)
     {
@@ -120,6 +121,8 @@ class Zend_Mail_Protocol_Pop3
      * Send a request
      *
      * @param string $request  your request without newline
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function sendRequest($request)
     {
@@ -177,6 +180,7 @@ class Zend_Mail_Protocol_Pop3
      * @param  string $request    request
      * @param  bool   $multiline  multiline response?
      * @return string             result from readResponse()
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function request($request, $multiline = false)
     {
@@ -187,6 +191,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * End communication with POP3 server (also closes socket)
+     * @return null
      */
     public function logout()
     {
@@ -209,6 +214,7 @@ class Zend_Mail_Protocol_Pop3
      * Get capabilities from POP3 server
      *
      * @return array list of capabilities
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function capa()
     {
@@ -224,6 +230,7 @@ class Zend_Mail_Protocol_Pop3
      * @param  string $password  password
      * @param  bool   $try_apop  should APOP be tried?
      * @return void
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function login($user, $password, $tryApop = true)
     {
@@ -247,6 +254,7 @@ class Zend_Mail_Protocol_Pop3
      * @param  int $messages  out parameter with count of messages
      * @param  int $octets    out parameter with size in octects of messages
      * @return void
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function status(&$messages, &$octets)
     {
@@ -263,6 +271,7 @@ class Zend_Mail_Protocol_Pop3
      *
      * @param  int $msgno  number of message
      * @return int|array   size of given message or list with array(num => size)
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getList($msgno = null)
     {
@@ -291,6 +300,7 @@ class Zend_Mail_Protocol_Pop3
      *
      * @param  int $msgno    number of message
      * @return string|array  uniqueid of message or list with array(num => uniqueid)
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function uniqueid($msgno = null)
     {
@@ -329,6 +339,7 @@ class Zend_Mail_Protocol_Pop3
      * @param int  $lines     number of wanted body lines (empty line is inserted after header lines)
      * @param bool $fallback  fallback with full retrieve if top is not supported
      * @return string message headers with wanted body lines
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function top($msgno, $lines = 0, $fallback = false)
     {
@@ -367,6 +378,7 @@ class Zend_Mail_Protocol_Pop3
      *
      * @param  int     $msgno  message number
      * @return string          message
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function retrive($msgno)
     {
@@ -377,6 +389,8 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make a NOOP call, maybe needed for keeping the server happy
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function noop()
     {
@@ -386,6 +400,8 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make a DELE count to remove a message
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function delete($msgno)
     {
@@ -395,6 +411,8 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make RSET call, which rollbacks delete requests
+     * @return null
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function undelete()
     {

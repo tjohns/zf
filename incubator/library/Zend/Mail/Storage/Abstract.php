@@ -59,6 +59,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      *
      * @param  string $var  property name
      * @return bool         supported or not
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __get($var)
     {
@@ -135,17 +136,20 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
     /**
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
+     * @return null
      */
     abstract public function close();
 
 
     /**
      * Keep the resource alive.
+     * @return null
      */
     abstract public function noop();
 
     /**
      * delete a message from current box/folder
+     * @return null
      */
     abstract public function removeMessage($id);
 
@@ -287,6 +291,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
       * @internal
       * @param  int $pos
       * @return void
+      * @throws OutOfBoundsException
       */
      public function seek($pos)
      {

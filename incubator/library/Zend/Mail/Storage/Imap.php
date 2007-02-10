@@ -67,6 +67,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      * @param int filter by flags
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function countMessages($flags = null)
     {
@@ -82,6 +83,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * @param int number of message
      * @return int|array size of given message of list with all messages as array(num => size)
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getSize($id = 0)
     {
@@ -97,6 +99,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * @param int number of message
      * @return Zend_Mail_Message
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getMessage($id)
     {
@@ -104,6 +107,10 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
         return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header));
     }
 
+    /*
+     * @throws Zend_Mail_Protocol_Exception
+     * @throws Zend_Mail_Storage_Exception
+     */
     public function getRaw($id, $part)
     {
         // TODO: indexes for header and content should be changed to negative numbers
@@ -136,6 +143,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * @param  $params array  mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function __construct($params)
     {
@@ -181,6 +189,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
      *
+     * @return null
      */
     public function close()
     {
@@ -192,6 +201,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * Keep the server busy.
      *
+     * @return null
      */
     public function noop()
     {
@@ -207,6 +217,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      * identify the message.
      *
      * @param int number of message
+     * @return null
      */
     public function removeMessage($id)
     {
@@ -232,6 +243,8 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * @param string $rootFolder get folder structure for given folder, else root
      * @return Zend_Mail_Storage_Folder root or wanted folder
+     * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function getFolders($rootFolder = null)
     {
@@ -284,7 +297,9 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      * folder must be selectable!
      *
      * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @return null
      * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function selectFolder($globalName)
     {
