@@ -46,50 +46,58 @@ class Zend_Date extends Zend_Date_DateObject {
     // Class wide Date Constants
     // day formats
     const DAY            = 'DAY';            // d - 2 digit day of month, 01-31
-    const WEEKDAY_SHORT  = 'WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
     const DAY_SHORT      = 'DAY_SHORT';      // j - 1,2 digit day of month, 1-31
-    const WEEKDAY        = 'WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
-    const WEEKDAY_8601   = 'WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
+
     const DAY_SUFFIX     = 'DAY_SUFFIX';     // S - english suffix day of month, st-th
-    const WEEKDAY_DIGIT  = 'WEEKDAY_DIGIT';  // w - weekday, 0-6 0=sunday, 6=saturday
     const DAY_OF_YEAR    = 'DAY_OF_YEAR';    // z - Number of day of year
 
+    const WEEKDAY        = 'WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
+    const WEEKDAY_SHORT  = 'WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
     const WEEKDAY_NARROW = 'WEEKDAY_NARROW'; // --- 1 letter day name - locale aware, M-S
     const WEEKDAY_NAME   = 'WEEKDAY_NAME';   // --- 2 letter day name - locale aware,Mo-Su
+
+    const WEEKDAY_8601   = 'WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
+    const WEEKDAY_DIGIT  = 'WEEKDAY_DIGIT';  // w - weekday, 0-6 0=sunday, 6=saturday
 
     // week formats
     const WEEK           = 'WEEK';           // W - number of week ISO8601, 1-53
 
     // month formats
-    const MONTH          = 'MONTH';          // F - full month name - locale aware, January-December
-    const MONTH_SHORT    = 'MONTH_SHORT';    // m - 2 digit month, 01-12
-    const MONTH_NAME     = 'MONTH_NAME';     // M - 3 letter monthname - locale aware, Jan-Dec
-    const MONTH_DIGIT    = 'MONTH_DIGIT';    // n - 1 digit month, no leading zeros, 1-12
+    const MONTH          = 'MONTH';          // m - 2 digit month, 01-12
+    const MONTH_SHORT    = 'MONTH_SHORT';    // n - 1 digit month, no leading zeros, 1-12
+
     const MONTH_DAYS     = 'MONTH_DAYS';     // t - Number of days this month
 
-    const MONTH_NARROW   = 'MONTH_NARROW';   // --- 1 letter month name - locale aware, J-D
+    const MONTH_NAME        = 'MONTH_NAME';         // F - full month name - locale aware, January-December
+    const MONTH_NAME_SHORT  = 'MONTH_NAME_SHORT';  // M - 3 letter monthname - locale aware, Jan-Dec
+    const MONTH_NAME_NARROW = 'MONTH_NAME_NARROW'; // --- 1 letter month name - locale aware, J-D
 
     // year formats
-    const LEAPYEAR       = 'LEAPYEAR';       // L - is leapyear ?, 0-1
-    const YEAR_8601      = 'YEAR_8601';      // o - number of year ISO8601
     const YEAR           = 'YEAR';           // Y - 4 digit year
     const YEAR_SHORT     = 'YEAR_SHORT';     // y - 2 digit year, leading zeros 00-99
 
+    const YEAR_8601      = 'YEAR_8601';      // o - number of year ISO8601
     const YEAR_SHORT_8601= 'YEAR_SHORT_8601';// --- 2 digit number of year ISO8601
+
+    const LEAPYEAR       = 'LEAPYEAR';       // L - is leapyear ?, 0-1
 
     // time formats
     const MERIDIEM       = 'MERIDIEM';       // A,a - AM/PM - locale aware, AM/PM
     const SWATCH         = 'SWATCH';         // B - Swatch Internet Time
-    const HOUR_SHORT_AM  = 'HOUR_SHORT_AM';  // g - 1 digit hour, no leading zero, 1-12 am/pm
-    const HOUR_SHORT     = 'HOUR_SHORT';     // G - 1 digit hour, no leading zero, 0-23
-    const HOUR_AM        = 'HOUR_AM';        // h - 2 digit hour, leading zeros, 01-12 am/pm
-    const HOUR           = 'HOUR';           // H - 2 digit hour, leading zeros, 00-23
-    const MINUTE         = 'MINUTE';         // i - 2 digit minute, leading zeros, 00-59
-    const SECOND         = 'SECOND';         // s - 2 digit second, leading zeros, 00-59
-    const MILLISECOND    = 'MILLISECOND';    // --- milliseconds
 
+    const HOUR           = 'HOUR';           // H - 2 digit hour, leading zeros, 00-23
+    const HOUR_SHORT     = 'HOUR_SHORT';     // G - 1 digit hour, no leading zero, 0-23
+
+    const HOUR_AM        = 'HOUR_AM';        // h - 2 digit hour, leading zeros, 01-12 am/pm
+    const HOUR_SHORT_AM  = 'HOUR_SHORT_AM';  // g - 1 digit hour, no leading zero, 1-12 am/pm
+
+    const MINUTE         = 'MINUTE';         // i - 2 digit minute, leading zeros, 00-59
     const MINUTE_SHORT   = 'MINUTE_SHORT';   // --- 1 digit minute, no leading zero, 0-59
+
+    const SECOND         = 'SECOND';         // s - 2 digit second, leading zeros, 00-59
     const SECOND_SHORT   = 'SECOND_SHORT';   // --- 1 digit second, no leading zero, 0-59
+
+    const MILLISECOND    = 'MILLISECOND';    // --- milliseconds
 
     // timezone formats
     const TIMEZONE_NAME  = 'TIMEZONE_NAME';  // e - timezone string
@@ -378,23 +386,23 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 // months
                 case 'MMMMM' :
-                    $output[$i] = substr($this->get(Zend_Date::MONTH_NARROW, $locale), 0, 1);
+                    $output[$i] = substr($this->get(Zend_Date::MONTH_NAME_NARROW, $locale), 0, 1);
                     break;
 
                 case 'MMMM' :
-                    $output[$i] = $this->get(Zend_Date::MONTH, $locale);
-                    break;
-
-                case 'MMM' :
                     $output[$i] = $this->get(Zend_Date::MONTH_NAME, $locale);
                     break;
 
+                case 'MMM' :
+                    $output[$i] = $this->get(Zend_Date::MONTH_NAME_SHORT, $locale);
+                    break;
+
                 case 'MM' :
-                    $output[$i] = $this->get(Zend_Date::MONTH_SHORT, $locale);
+                    $output[$i] = $this->get(Zend_Date::MONTH, $locale);
                     break;
 
                 case 'M' :
-                    $output[$i] = $this->get(Zend_Date::MONTH_DIGIT, $locale);
+                    $output[$i] = $this->get(Zend_Date::MONTH_SHORT, $locale);
                     break;
 
 
@@ -557,7 +565,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 if (($output[$i][0] !== "'") and (preg_match('/A+/', $output[$i]))) {
                     $length     = strlen($output[$i]);
                     $seconds    = $this->get(Zend_Date::TIMESTAMP,   $locale);
-                    $month      = $this->get(Zend_Date::MONTH_DIGIT, $locale);
+                    $month      = $this->get(Zend_Date::MONTH_SHORT, $locale);
                     $day        = $this->get(Zend_Date::DAY_SHORT,   $locale);
                     $year       = $this->get(Zend_Date::YEAR,        $locale);
 
@@ -685,23 +693,23 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // month formats
-            case Zend_Date::MONTH :
+            case Zend_Date::MONTH_NAME :
                 $month = $this->date('n', $this->getUnixTimestamp(), false);
                 $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'wide', $month));
                 return $mon[$month];
                 break;
 
-            case Zend_Date::MONTH_SHORT :
+            case Zend_Date::MONTH :
                 return $this->date('m', $this->getUnixTimestamp(), false);
                 break;
 
-            case Zend_Date::MONTH_NAME :
+            case Zend_Date::MONTH_NAME_SHORT :
                 $month = $this->date('n', $this->getUnixTimestamp(), false);
                 $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'abbreviated', $month));
                 return $mon[$month];
                 break;
 
-            case Zend_Date::MONTH_DIGIT :
+            case Zend_Date::MONTH_SHORT :
                 return $this->date('n', $this->getUnixTimestamp(), false);
                 break;
 
@@ -710,7 +718,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
 
-            case Zend_Date::MONTH_NARROW :
+            case Zend_Date::MONTH_NAME_NARROW :
                 $month = $this->date('n', $this->getUnixTimestamp(), false);
                 $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'abbreviated', $month));
                 return substr($mon[$month], 0, 1);
@@ -1173,7 +1181,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         // create date parts
         $year   = $this->get(Zend_Date::YEAR);
-        $month  = $this->get(Zend_Date::MONTH_DIGIT);
+        $month  = $this->get(Zend_Date::MONTH_SHORT);
         $day    = $this->get(Zend_Date::DAY_SHORT);
         $hour   = $this->get(Zend_Date::HOUR_SHORT);
         $minute = $this->get(Zend_Date::MINUTE_SHORT);
@@ -1341,9 +1349,51 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // month formats
-            case Zend_Date::MONTH :
+            case Zend_Date::MONTH_NAME :
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
+                $cnt = 0;
+                foreach ($monthlist as $key => $value) {
+                    if (strtoupper($value) == strtoupper($date)) {
+                        $found = $key;
+                        break;
+                    }
+                    ++$cnt;
+                }
+
+                // Monthname found
+                if ($cnt < 12) {
+                    if ($calc == 'set') {
+                        --$found;
+                        --$monthnr;
+                    } else {
+                        $year = 1970;
+                    }
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1 + $found,   1, $year, true),
+                                                 $this->mktime(0, 0, 0, 1 + $monthnr, 1, $year, true));
+                }
+
+                // Monthname not found
+                throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
+                break;
+
+            case Zend_Date::MONTH :
+                if (is_numeric($date)) {
+                    if ($calc == 'set') {
+                        --$date;
+                        --$month;
+                    } else {
+                        $year = 1970;
+                    }
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1 + intval($date), 1, $year, true),
+                                                 $this->mktime(0, 0, 0, 1 + $month,        1, $year, true));
+                }
+                throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
+                break;
+
+            case Zend_Date::MONTH_NAME_SHORT :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
                     if (strtoupper($value) == strtoupper($date)) {
@@ -1383,56 +1433,14 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
 
-            case Zend_Date::MONTH_NAME :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale));
-                $cnt = 0;
-                foreach ($monthlist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
-                        $found = $key;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Monthname found
-                if ($cnt < 12) {
-                    if ($calc == 'set') {
-                        --$found;
-                        --$monthnr;
-                    } else {
-                        $year = 1970;
-                    }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1 + $found,   1, $year, true),
-                                                 $this->mktime(0, 0, 0, 1 + $monthnr, 1, $year, true));
-                }
-
-                // Monthname not found
-                throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
-                break;
-
-            case Zend_Date::MONTH_DIGIT :
-                if (is_numeric($date)) {
-                    if ($calc == 'set') {
-                        --$date;
-                        --$month;
-                    } else {
-                        $year = 1970;
-                    }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1 + intval($date), 1, $year, true),
-                                                 $this->mktime(0, 0, 0, 1 + $month,        1, $year, true));
-                }
-                throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
-                break;
-
             case Zend_Date::MONTH_DAYS :
                 throw new Zend_Date_Exception('month days not supported', $date);
                 break;
 
 
-            case Zend_Date::MONTH_NARROW :
+            case Zend_Date::MONTH_NAME_NARROW :
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
                     if (strtoupper(substr($value, 0, 1)) == strtoupper($date)) {
@@ -2464,7 +2472,7 @@ class Zend_Date extends Zend_Date_DateObject {
             $parsed = Zend_Locale_Format::getFixedDate($date, $format, $locale);
             $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR);
-            $date->set($parsed['month'], Zend_Date::MONTH_SHORT);
+            $date->set($parsed['month'], Zend_Date::MONTH);
             $date->set($parsed['day'], Zend_Date::DAY);
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         }
@@ -3142,7 +3150,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getMonth($locale = null)
     {
-        return $this->copyPart(Zend_Date::MONTH_SHORT, $locale);
+        return $this->copyPart(Zend_Date::MONTH, $locale);
     }
 
 
@@ -3167,7 +3175,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if ($month instanceof Zend_Date) {
             // extract month from object
-            $found = $month->get(Zend_Date::MONTH_DIGIT, $locale);
+            $found = $month->get(Zend_Date::MONTH_SHORT, $locale);
         } else {
             if (is_numeric($month)) {
                 $found = $month;
@@ -3200,7 +3208,7 @@ class Zend_Date extends Zend_Date_DateObject {
             }
         }
 
-        $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_DIGIT, $locale);
+        $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_SHORT, $locale);
         if ($calc != 'cmp') {
             return $this;
         }
