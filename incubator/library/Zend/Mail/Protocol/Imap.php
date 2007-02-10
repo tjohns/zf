@@ -573,8 +573,8 @@ class Zend_Mail_Protocol_Imap
      *
      * this method can't be named after the IMAP command 'LIST', as list is a reserved keyword
      *
-     * @params string $reference mailbox reference for list
-     * @params string $mailbox   mailbox name match with wildcards
+     * @param  string $reference mailbox reference for list
+     * @param  string $mailbox   mailbox name match with wildcards
      * @return array mailboxes that matched $mailbox as array(globalName => array('delim' => .., 'flags' => ..))
      * @throws Zend_Mail_Protocol_Exception
      */
