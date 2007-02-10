@@ -1,48 +1,49 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>Общее управление сессиями - Zend_Session_Core<!--Global Session Management--></title>
+    <title>Общее управление сессиями<!--Global Session Management--></title>
 
     <para>
         Поведение сессий, принятое по умолчанию, можно изменить, используя
-        статические методы класса Zend_Session_Core. Все управление производится
-        посредством Zend_Session_Core, включая конфигурирование
+        статические методы класса Zend_Session. Все управление производится
+        посредством Zend_Session, включая конфигурирование
         <ulink url="http://www.php.net/session#session.configuration">через
         опции, предоставляемые расширением ext/session</ulink>, с использованием
-        метода <code>Zend_Session_Core::setOptions()</code>.
+        метода <code>Zend_Session::setOptions()</code>.
 <!--
-        The default behavior of sessions can be modified using the static methods in Zend_Session_Core. All management
-        and manipulation of global session management occurs using Zend_Session_Core, including configuration of the
+        The default behavior of sessions can be modified using the static methods in Zend_Session. All management and
+        manipulation of global session management occurs using Zend_Session, including configuration of the
         <ulink url="http://www.php.net/session#session.configuration">usual options provided by ext/session</ulink>
-        , using <code>Zend_Session_Core::setOptions()</code>.
+        , using <code>Zend_Session::setOptions()</code>. For example, failure to insure the use of a safe save_path or a
+        unique cookie name by ext/session using <code>Zend_Session::setOptions()</code> may result in security issues.
 -->
     </para>
 
     <sect2 id="zend.session.setoptions">
 
-        <title>Zend_Session_Core::setOptions()</title>
+        <title>Zend_Session::setOptions()</title>
 
         <para>
             Когда запрашивается первое пространство имен, то автоматически
-            запустится Zend_Session_Core, если только оно не было запущено ранее
+            запустится Zend_Session, если только оно не было запущено ранее
             через метод
-            <link linkend="zend.session.startingasession"><code>Zend_Session_Core::start()</code></link>.
+            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code></link>.
             Встроенный в PHP механизм сессий будет использовать принятые по
-            умолчанию настройки из Zend_Session_Core, пока они не будут изменены
-            через метод <code>Zend_Session_Core::setOptions()</code>.
+            умолчанию настройки из Zend_Session, пока они не будут изменены
+            через метод <code>Zend_Session::setOptions()</code>.
 <!--
-            When the first session namespace is requested, Zend_Session_Core will autostart itself, unless already
-            started explicitly by using
-            <link linkend="zend.session.startingasession"><code>Zend_Session_Core::start()</code>
+            When the first session namespace is requested, Zend_Session will autostart itself, unless already started
+            explicitly by using
+            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code>
             </link>
-            . The underlying PHP session will use defaults from Zend_Session_Core, unless modified first by
-            <code>Zend_Session_Core::setOptions()</code>.
+            . The underlying PHP session will use defaults from Zend_Session, unless modified first by
+            <code>Zend_Session::setOptions()</code>.
 -->
         </para>
 
         <para>
             Для того, чтобы передать опции, просто передайте базовое имя (без
             приставки <code>session.</code>) как часть массива методу
-            <code>Zend_Session_Core::setOptions()</code>. Если опции не были
+            <code>Zend_Session::setOptions()</code>. Если опции не были
             установлены, то Zend_Session будет сначала использовать
             рекомендуемые опции, затем установки по умолчанию из php.ini.
             Предложения по оптимизации работы с опциями отправляйте в список
@@ -50,8 +51,9 @@
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.    
 <!--
             To pass the options just pass the basename (the non <code>session.</code> part) as part of an array to
-            setOptions. Without setting any options, Zend_Session will utilize the recommended options first, then the
-            default php.ini settings. Community feedback about best practices for these options should be sent to
+            <code>Zend_Session::setOptions()</code>. Without setting any options, Zend_Session will utilize the
+            recommended options first, then the default php.ini settings. Community feedback about best practices for
+            these options should be sent to
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
             .
 -->
@@ -68,7 +70,7 @@
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
-Zend_Session_Core::setOptions($config->asArray()); 
+Zend_Session::setOptions($config->asArray()); 
 ?>]]></programlisting>
             </example>
             Используемый файл "myapp.ini":
@@ -141,11 +143,11 @@ remember_me_seconds = 864000
                 <listitem>
                     <para>
                         boolean <code>strict</code> - отключает автоматический
-                        запуск <code>Zend_Session_Core</code> при использовании
-                        <code>new Zend_Session()</code>.
+                        запуск <code>Zend_Session</code> при использовании
+                        <code>new Zend_Session_Namespace()</code>.
 <!--
-                        boolean <code>strict</code> - disables automatic starting of <code>Zend_Session_Core</code> when
-                        using <code>new Zend_Session()</code>.
+                        boolean <code>strict</code> - disables automatic starting of <code>Zend_Session</code> when
+                        using <code>new Zend_Session_Namespace()</code>.
 -->
                     </para>
                 </listitem>
@@ -386,7 +388,7 @@ remember_me_seconds = 864000
 
             <para>
                 Когда использовать regenerateId(): Добавление
-                <code>Zend_Session_Core::regenerateId()</code> в файл загрузки
+                <code>Zend_Session::regenerateId()</code> в файл загрузки
                 Zend Framework является одним из самых безопасных и надежных
                 способов регенерации идентификаторов сессии в куках агента
                 пользователя. Само по себе отсутствие условной логики,
@@ -409,7 +411,7 @@ remember_me_seconds = 864000
                 сайте, используйте <code>rememberMe()</code> вместо
                 <code>regenerateId()</code>.
 <!--
-                When to use regenerateId(): Adding <code>Zend_Session_Core::regenerateId()</code> to your Zend Framework
+                When to use regenerateId(): Adding <code>Zend_Session::regenerateId()</code> to your Zend Framework
                 bootstrap yields one of the safest and most secure ways to regenerate session id's in user agent
                 cookies. If there is no conditional logic to determine when to regenerate the session id, then there are
                 no flaws in that logic. Although regenerating on every request prevents several possible avenues of
@@ -479,7 +481,7 @@ remember_me_seconds = 864000
             </para>
 
             <para>
-                Сам по себе вызов <code>Zend_Session_Core::regenerateId()</code>
+                Сам по себе вызов <code>Zend_Session::regenerateId()</code>
                 в то время, как сессия еще только начинает использоваться, не
                 предотвращает атаку через фиксацию сессии, за исключением
                 того случая, когда вы можете отличить сессию, созданную
@@ -494,7 +496,7 @@ remember_me_seconds = 864000
                 (работает в том случае, если
                 <code>use_only_cookies = off</code>).
 <!--
-                By itself, calling <code>Zend_Session_Core::regenerateId()</code> when the user's session is first used,
+                By itself, calling <code>Zend_Session::regenerateId()</code> when the user's session is first used,
                 does not prevent session fixation attacks, unless you can distinguish between a session originated by an
                 attacker emulating the victim. At first, this might sound contradictory to previous statement above,
                 until we consider an attacker who first initiates a real session on your website. The session is "first
@@ -562,12 +564,12 @@ remember_me_seconds = 864000
                 <title>Анонимная сессия и фиксация сессии<!--Anonymous Sessions and Session Fixation--></title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
-$session = new Zend_Session();
+$defaultNamespace = new Zend_Session_Namespace();
  
-if (!isset($session->initialized))
+if (!isset($defaultNamespace->initialized))
 { 
-    Zend_Session_Core::regenerateId(); 
-    $session->initialized = true;
+    Zend_Session::regenerateId(); 
+    $defaultNamespace->initialized = true;
 } 
 ?>]]></programlisting>
             </example>
@@ -587,11 +589,11 @@ if (!isset($session->initialized))
             понадобиться хранить его сессию 24 часа и больше. Программное
             обеспечение форумов обычно предоставляет пользователю возможность
             выбирать, сколько времени должна храниться сессиия.  Используйте
-            <code>Zend_Session_Core::rememberMe()</code> для отправки
+            <code>Zend_Session::rememberMe()</code> для отправки
             обновленной сессионной куки агенту пользователя со временем жизни,
             по умолчанию равному <code>remember_me_seconds</code>, который равен
             2 неделям до тех пор, пока вы не измените это значение через метод
-            <code>Zend_Session_Core::setOptions()</code>. Для того, чтобы
+            <code>Zend_Session::setOptions()</code>. Для того, чтобы
             помешать угону или фиксации сессии, используйте эту функцию, когда
             пользователь успешно прошел аутентификацию и ваше приложение
             выполнило "регистрацию"
@@ -599,9 +601,9 @@ if (!isset($session->initialized))
             Ordinarily, sessions end when the user agent ends its "session", such as when an end user closes their
             browser window. However, when a user logs in to your website, they might want their virtual session to last
             for 24 hours, or even longer. Forum software commonly gives the user a choice for how long their session
-            should last. Use <code>Zend_Session_Core::rememberMe()</code> to send an updated session cookie to the user
+            should last. Use <code>Zend_Session::rememberMe()</code> to send an updated session cookie to the user
             agent with a lifetime defaulting to <code>remember_me_seconds</code>, which is set to 2 weeks, unless you
-            modify that value using <code>Zend_Session_Core::setOptions()</code>. To help thwart session fixation/hijacking, use this
+            modify that value using <code>Zend_Session::setOptions()</code>. To help thwart session fixation/hijacking, use this
             function when a user successfully authenticates and you application performs a "login".
 -->
         </para>
@@ -634,10 +636,10 @@ if (!isset($session->initialized))
             Используйте этот метод для определения того, есть ли уже сессия для
             текущего агента пользователя/запроса. Он может использоваться до
             старта сессии и независимо от всех других методов Zend_Session и
-            Zend_Session_Core.
+            Zend_Session_Namespace.
 <!--
             Use this method to determine if a session already exists for the current user agent/request. It may be used
-            before starting a session, and independently of all other Zend_Session and Zend_Session_Core methods.
+            before starting a session, and independently of all other Zend_Session and Zend_Session_Namespace methods.
 -->
         </para>
 
@@ -648,23 +650,23 @@ if (!isset($session->initialized))
         <title>destroy(bool $remove_cookie = true, bool $readonly = true)</title>
 
         <para>
-            <code>Zend_Session_Core::destroy()</code> уничтожает все постоянные
+            <code>Zend_Session::destroy()</code> уничтожает все постоянные
             данные, связанные с текущей сессией. Это не влияет на переменные в
             PHP, поэтому ваши сессии с пространствами имен (экземпляры
-            <code>Zend_Session</code>) остаются доступными для чтения. Для
-            выхода из системы установите необязательный параметр в
+            <code>Zend_Session_Namespace</code>) остаются доступными для чтения.
+            Для выхода из системы установите необязательный параметр в
             <code>true</code> (по умолчанию он равен <code>true</code>), при
             этом будет удалена кука с идентификатором сессии в агенте
             пользователя. Установленный в <code>true</code> необязательный
             параметр <code>$readonly</code> блокирует возможность записи в
-            данные сессии (т.е. в $_SESSION) для экземпляров Zend_Session и
-            методов Zend_Session_Core.
+            данные сессии (т.е. в $_SESSION) для экземпляров 
+            Zend_Session_Namespace и методов Zend_Session.
 <!--
-            <code>Zend_Session_Core::destroy()</code> destroys all of the persistent data associated with the current
+            <code>Zend_Session::destroy()</code> destroys all of the persistent data associated with the current
             session. However, no variables in PHP are affected, so your namespaced sessions (instances of
-            <code>Zend_Session</code>) remain readable. To complete a "logout", set the optional parameter to true
-            (default is true) to also delete the user agent's session id cookie. The optinal <code>$readonly</code>
-            parameter removes the ability for Zend_Session instances, and Zend_Session_Core methods to write to the
+            <code>Zend_Session_Namespace</code>) remain readable. To complete a "logout", set the optional parameter to
+            true (default is true) to also delete the user agent's session id cookie. The optinal <code>$readonly</code>
+            parameter removes the ability for Zend_Session_Namespace instances, and Zend_Session methods to write to the
             session data store (i.e. $_SESSION).
 -->
         </para>
@@ -690,21 +692,22 @@ if (!isset($session->initialized))
 
         <para>
             Этот метод не делает ничего, кроме переключения флага в
-            Zend_Session_Core для предотвращения дальнейшей записи в хранилище
+            Zend_Session для предотвращения дальнейшей записи в хранилище
             данных сессии (т.е.<code>$_SESSION</code>). Одним из вариантов его
             использования является временное отключение возможности записи в
-            хранилище данных сессии через экземпляры <code>Zend_Session</code>
-            или методы <code>Zend_Session_Core</code> во время выполнения кода,
+            хранилище данных сессии через экземпляры
+            <code>Zend_Session_Namespace</code> или методы
+            <code>Zend_Session</code> во время выполнения кода,
             связанного с отображением вида.
             Попытка выполнить действия, подразумевающие запись через эти
             экземпляры или методы вызовет генерацию исключения.
 <!--
-            This method does absolutely nothing more than toggle a flag in Zend_Session_Core to prevent further writing
-            to the session data store (i.e. <code>$_SESSION</code>). We are specifically requesting feedback on this
-            feature. Potential uses/abuses might include temporarily disabling the use of <code>Zend_Session</code>
-            instances or <code>Zend_Session_Core</code> methods to write to the session data store, while execution is
-            transfered to view-related code. Attempts to perform actions involving writes via these instances or methods
-            will throw an error.
+            This method does absolutely nothing more than toggle a flag in Zend_Session to prevent further writing to
+            the session data store (i.e. <code>$_SESSION</code>). We are specifically requesting feedback on this
+            feature. Potential uses/abuses might include temporarily disabling the use of
+            <code>Zend_Session_Namespace</code> instances or <code>Zend_Session</code> methods to write to the session
+            data store, while execution is transfered to view-related code. Attempts to perform actions involving writes
+            via these instances or methods will throw an error.
 -->
         </para>
 
@@ -719,12 +722,12 @@ if (!isset($session->initialized))
             средства хранения на сервере. Это завершит внутреннее преобразование
             данных для данного запроса. Необязательный параметр булевого типа
             $readonly позволяет отключить возможность записи (т.е. генерация
-            исключения при попытке записи через любой метод Zend_Session или
-            Zend_Session_Core).
+            исключения при попытке записи через любые методы
+            Zend_Session_Namespace или Zend_Session).
 <!--
             Shutdown the sesssion, close writing and detach $_SESSION from the back-end storage mechanism. This will
             complete the internal data transformation on this request. The optional $readonly boolean parameter can
-            remove write access (i.e. throw error if any Zend_Session or Zend_Session_Core methods attempt writes).
+            remove write access (i.e. throw error if any Zend_Session_Namespace or Zend_Session methods attempt writes).
 -->
         </para>
 
@@ -781,25 +784,9 @@ if (!isset($session->initialized))
 
     </sect2>
 
-    <sect2 id="zend.session.getinstance">
-
-        <title>getInstance($instanceMustExist = false)</title>
-
-        <para>
-            Zend_Session использует этот метод для слабой связи экземпляров с
-            сиглетоном Zend_Session_Core через нектоторую форму добавления
-            зависимости.
-<!--
-            Zend_Session uses this method to loosely couple instances with the Zend_Session_Core singleton via a form of
-            dependency injection.
--->
-        </para>
-
-    </sect2>
-
     <sect2 id="zend.session.namespaceisset">
 
-        <title>namespaceIsset($namespace, $name = null)</title>
+        <title>namespaceIsset($namespace)</title>
 
         <para>
             Используйте этот метод для определения того, существует ли
@@ -814,11 +801,11 @@ if (!isset($session->initialized))
         <note>
             <title>Исключения<!--Throws--></title>
             <para>
-                Если Zend_Session_Core не был помечен как доступный для чтения
-                (например, до того, как Zend_Session_Core был запущен), то будет
+                Если Zend_Session не был помечен как доступный для чтения
+                (например, до того, как Zend_Session был запущен), то будет
                 сгенерировано исключение.
 <!--
-                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session
                 has been started).
 -->
             </para>
@@ -828,31 +815,30 @@ if (!isset($session->initialized))
 
     <sect2 id="zend.session.namespaceunset">
 
-        <title>namespaceUnset($namespace, $name = null)</title>
+        <title>namespaceUnset($namespace)</title>
 
         <para>
-            Вместо создания экземпляра Zend_Session для пространства имен и
-            итерации по его содержимому для удаления каждой отдельной записи
-            используйте метод <code>namespaceUnset($namespace)</code> для
+            Вместо создания экземпляра Zend_Session_Namespace для пространства
+            имен и итерации по его содержимому для удаления каждой отдельной
+            записи используйте метод <code>namespaceUnset($namespace)</code> для
             быстрого удаления всего пространства имен и его содержимого. Как это
             справедливо для всех массивов в PHP, если переменная, содержащая
             массив, уничтожена, и этот массив содержал другие объекты, то эти
-            объекты не уничтожаются, если они были сохранены в других
+            объекты не уничтожаются, если они были сохранены по ссылке в других
             массивах/объектах. Это означает, что они остаются доступными через
-            другие переменные. Поэтому не следует рассчитывать, что
-            <code>namespaceUnset()</code> действительно сделает "глубокое"
-            удаление содержимого записей в пространстве имен. За более подробной
-            информацией обращайтесь к разделу
+            другие переменные. Поэтому <code>namespaceUnset()</code> не
+            производит "глубокое" удаление содержимого записей в пространстве
+            имен. За более подробной информацией обращайтесь к разделу
             <ulink url="http://php.net/references">References Explained</ulink>
             в документации по PHP.
 <!--
             Instead of creating a Zend_Session instance for a namespace, and iterating over its contents to unset each
-            entry, use <code>namespaceUnset($namespace)</code> to efficiently unset (remove) an entire namespace and its
-            contents. As with all arrays in PHP, if a variable containing an array is unset, and the array contains
-            other objects, those objects will remain available, if they were also stored in other array/objects that
-            remain accessible via other variables. So do not expect <code>namespaceUnset()</code> to actually do a
-            "deep" unsetting/deleting of the contents of the entries in the namespace. For a more detailed explanation,
-            please see
+            entry, use <code>Zend_Session::namespaceUnset($namespace)</code> to efficiently unset (remove) an entire
+            namespace and its contents. As with all arrays in PHP, if a variable containing an array is unset, and the
+            array contains other objects, those objects will remain available, if they were also stored by reference in
+            other array/objects that remain accessible via other variables. So <code>namespaceUnset()</code> does not
+            perform a "deep" unsetting/deleting of the contents of the entries in the namespace. For a more detailed
+            explanation, please see
             <ulink url="http://php.net/references">References Explained</ulink>
             in the PHP manual.
 -->
@@ -871,59 +857,23 @@ if (!isset($session->initialized))
 
     </sect2>
 
-    <sect2 id="zend.session.namespaceset">
-
-        <title>namespaceSet($namespace, $name, $value)</title>
-
-        <para>
-            Zend_Session использует этот внутренний метод для добавления записей
-            в пространство имен. Этот метод позднее может быть определен как
-            закрытый. Если у вас есть разумные причины оставить этот метод
-            открытым вместо использования Zend_Session, то, пожалуйста, пишите в
-            список рассылки
-            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
-<!--
-            Zend_Session uses this internal method to add entries to a namespace. This method might not remain public.
-            If you have logical reasons to keep this method publicly accessible, instead of using Zend_Session, please
-            provide feedback to the
-            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
-            mail list.
--->
-        </para>
-
-        <note>
-            <title>Исключения<!--Throws--></title>
-            <para>
-                Если Zend_Session_Core не был помечен как доступный для чтения
-                (например, до того, как Zend_Session_Core был запущен), то будет
-                сгенерировано исключение.
-<!--
-                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
-                has been started).
--->
-            </para>
-        </note>
-
-    </sect2>
-
     <sect2 id="zend.session.namespaceget">
 
-        <title>namespaceGet($namespace, $name = null)</title>
+        <title>namespaceGet($namespace)</title>
 
         <para>
-            Zend_Session использует этот внутренний метод для получения значения
-            <code>$name</code> в пространстве имен <code>$namespace</code> или
-            массива содержимого пространства имен <code>$namespace</code>. Этот
-            метод позднее может быть определен как закрытый. Если у вас есть
-            разумные причины оставить этот метод открытым вместо использования
-            Zend_Session, то, пожалуйста, пишите в список рассылки
+            Не рекомендуется к использованию: Используйте
+            <code>getIterator()</code> в Zend_Session_Namespace. Этот метод
+            возвращает массив содержимого пространства имен
+            <code>$namespace</code>. Этот метод позднее может быть определен как
+            закрытый. Если вы считаете, что есть разумные причины оставить этот
+            метод открытым, то пишите в список рассылки
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
             Участие в связанных темах также приветствуется :)
 <!--
-            Zend_Session uses this internal method to get either the value of <code>$name</code> in
-            <code>$namespace</code>, or an array of the contents of <code>$namespace</code>. This method might not
-            remain public. If you have logical reasons to keep this method publicly accessible, instead of using
-            Zend_Session, please provide feedback to the
+            DEPRECATED: Use <code>getIterator()</code> in Zend_Session_Namespace. This method returns an array of the
+            contents of <code>$namespace</code>. If you have logical reasons to keep this method publicly accessible,
+            please provide feedback to the
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
             mail list. Actually, all participation on any relevant topic is welcome :)
 -->
@@ -932,11 +882,11 @@ if (!isset($session->initialized))
         <note>
             <title>Исключения<!--Throws--></title>
             <para>
-                Если Zend_Session_Core не был помечен как доступный для чтения
-                (например, до того, как Zend_Session_Core был запущен), то будет
+                Если Zend_Session не был помечен как доступный для чтения
+                (например, до того, как Zend_Session был запущен), то будет
                 сгенерировано исключение.
 <!--
-                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session
                 has been started).
 -->
             </para>
@@ -960,12 +910,11 @@ if (!isset($session->initialized))
         <example>
             <title>Уничтожение всех пространств имен<!--Unsetting All Namespaces--></title>
 <programlisting role="php"><![CDATA[<?php
-$core = Zend_Session_Core::getInstance();
-foreach(Zend_Session_Core::getIterator() as $space) {
+foreach(Zend_Session::getIterator() as $space) {
     try {
         $core->namespaceUnset($space);
     } catch (Zend_Session_Exception $e) {
-        return; // possible if Zend_Session_Core::stop() has been executed
+        return; // possible if Zend_Session::stop() has been executed
     }
 }
 
@@ -975,11 +924,11 @@ foreach(Zend_Session_Core::getIterator() as $space) {
         <note>
             <title>Исключения<!--Throws--></title>
             <para>
-                Если Zend_Session_Core не был помечен как доступный для чтения
-                (например, до того, как Zend_Session_Core был запущен), то будет
+                Если Zend_Session не был помечен как доступный для чтения
+                (например, до того, как Zend_Session был запущен), то будет
                 сгенерировано исключение.
 <!--
-                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session
                 has been started).
 -->
             </para>

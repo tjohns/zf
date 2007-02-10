@@ -12,13 +12,54 @@
         <title>Normalizing Dates and Times</title>
 
         <para>
-            <code>getDate()</code> parses strings containing dates in localized formats. The results are returned in a
-            structured array, with well-defined keys for each part of the date. Since a localized date string may not
-            contain all parts of a date/time, the key-value pairs are optional. For example, if only the year, month,
-            and day is given, then all time values are supressed from the returned array, and vice-versa if only hour,
-            minute, and second were given as input. If no date or time can be found within the given input, an exception
-            will be thrown.
+            The <code>getDate()</code> method parses strings containing dates in localized formats. The results are
+            returned in a structured array, with well-defined keys for each part of the date. In addition, the array
+            will contain a key 'format' showing the format string used to parse the input date string. Since a localized
+            date string may not contain all parts of a date/time, the key-value pairs are optional. For example, if only
+            the year, month, and day is given, then all time values are supressed from the returned array, and
+            vice-versa if only hour, minute, and second were given as input. If no date or time can be found within the
+            given input, an exception will be thrown.
         </para>
+
+        <para>
+            Also, the sister method <code>getFixedDate()</code> adds a key 'fixed' with a whole number value indicating
+            if the input date string required "fixing" by rearranging the day, month, or year in the input to fit the
+            format used.
+        </para>
+
+        <table>
+            <title>'fixed' key values</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>value</entry>
+                        <entry>meaning</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>0</entry>
+                        <entry>nothing to fix</entry>
+                    </row>
+                    <row>
+                        <entry>1</entry>
+                        <entry>fixed false month</entry>
+                    </row>
+                    <row>
+                        <entry>2</entry>
+                        <entry>swapped day and year</entry>
+                    </row>
+                    <row>
+                        <entry>3</entry>
+                        <entry>swapped month and year</entry>
+                    </row>
+                    <row>
+                        <entry>4</entry>
+                        <entry>swapped month and day</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <para>
             The following return values are possible, when the BCMath extension is available:
@@ -82,13 +123,37 @@ require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
 
-print_r ($date);
+print_r($date); // outputs:
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+)
+
+// alternatively, some types of problems with input data can be automatically corrected
+$date2 = Zend_Locale_Format::getFixedDate('04.13.2006', 'dd.MM.yyyy');
+
+print_r($date); // outputs:
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+    [fixed] => 4
+)
 ?>]]></programlisting>
         </example>
 
         <para>
             Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
-            strings adhering to that locale's format.
+            strings adhering to that locale's format. The method <code>getFixedDate()</code> uses simple tests to
+            determine if the day or month is not valid, and then applies heuristics to try and correct any detected
+            problems.
         </para>
 
         <example>
@@ -225,16 +290,17 @@ print_r ($date);
         </note>
 
         <para>
-            <code>getDate()</code> automatically detects and corrects some kinds of problems with input, such as
-            misplacing the year:
+            The method <code>getFixedDate()</code> uses simple tests to determine if the day or month is not valid, and
+            then applies heuristics to try and correct any detected problems. <code>getDate()</code> automatically
+            detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
 
         <example>
-            <title>Correction for date normalizing</title>
+            <title>Automatic correction of input dates</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getFixedDate('41.10.20', 'ddMMyy');
 
 // instead of 41 for the day, the 41 will be returned as year value
 print_r ($date);
@@ -248,7 +314,9 @@ print_r ($date);
         <title>Testing Dates</title>
 
         <para>
-            Use <code>isDate()</code> to check if a given string contains a valid date.
+            Use <code>isDate()</code> to check if a given string contains a valid date. The <code>isDate()</code> method
+            uses <code>getDate()</code>, not <code>getFixedDate()</code> to avoid returning true when the input fails to
+            conform to the date format.
         </para>
 
         <example>
