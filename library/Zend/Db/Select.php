@@ -35,22 +35,23 @@ class Zend_Db_Select
 {
 
     const DISTINCT     = 'distinct';
-    const FOR_UPDATE   = 'forUpdate';
+    const FOR_UPDATE   = 'forupdate';
     const COLUMNS      = 'columns';
     const FROM         = 'from';
     const JOIN         = 'join';
-    const  INNER       = 'inner';
-    const  LEFT        = 'left';
-    const  RIGHT       = 'right';
-    const  FULL        = 'full';
-    const  CROSS       = 'cross';
-    const  NATURAL     = 'natural';
     const WHERE        = 'where';
     const GROUP        = 'group';
     const HAVING       = 'having';
     const ORDER        = 'order';
-    const LIMIT_COUNT  = 'limitCount';
-    const LIMIT_OFFSET = 'limitOffset';
+    const LIMIT_COUNT  = 'limitcount';
+    const LIMIT_OFFSET = 'limitoffset';
+
+    const INNER_JOIN   = 'inner join';
+    const LEFT_JOIN    = 'left join';
+    const RIGHT_JOIN   = 'right join';
+    const FULL_JOIN    = 'full join';
+    const CROSS_JOIN   = 'cross join';
+    const NATURAL_JOIN = 'natural join';
 
     /**
      * Zend_Db_Adapter_Abstract object.
@@ -154,9 +155,9 @@ class Zend_Db_Select
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
-                        $tmp .= strtoupper($table['joinType']);
+                        $tmp .= ' ' . strtoupper($table['joinType']) . ' ';
                     }
-                    $tmp .= ' JOIN ' .  $table['tableName'] . ' ' . $correlationName;
+                    $tmp .= $table['tableName'] . ' ' . $correlationName;
                     if (! empty($table['joinCondition'])) {
                         $tmp .= ' ON ' . $table['joinCondition'];
                     }
@@ -252,7 +253,7 @@ class Zend_Db_Select
      */
     public function from($name, $cols = '*')
     {
-        return $this->_join(self::CROSS, $name, null, $cols);
+        return $this->joinInner($name, null, $cols);
     }
 
     /**
@@ -271,7 +272,8 @@ class Zend_Db_Select
      */
     protected function _join($type, $name, $cond, $cols)
     {
-        if (!in_array($type, array(self::INNER, self::LEFT, self::RIGHT, self::FULL, self::CROSS, self::NATURAL))) {
+        if (!in_array($type, array(self::INNER_JOIN, self::LEFT_JOIN,
+            self::RIGHT_JOIN, self::FULL_JOIN, self::CROSS_JOIN, self::NATURAL_JOIN))) {
             throw new Zend_Db_Select_Exception("Invalid join type '$type'");
         }
 
@@ -341,7 +343,7 @@ class Zend_Db_Select
      */
     public function joinInner($name, $cond, $cols = '*')
     {
-        return $this->_join(self::INNER, $name, $cond, $cols);
+        return $this->_join(self::INNER_JOIN, $name, $cond, $cols);
     }
 
     /**
@@ -358,7 +360,7 @@ class Zend_Db_Select
      */
     public function joinLeft($name, $cond, $cols = '*')
     {
-        return $this->_join(self::LEFT, $name, $cond, $cols);
+        return $this->_join(self::LEFT_JOIN, $name, $cond, $cols);
     }
 
     /**
@@ -376,7 +378,7 @@ class Zend_Db_Select
      */
     public function joinRight($name, $cond, $cols = '*')
     {
-        return $this->_join(self::RIGHT, $name, $cond, $cols);
+        return $this->_join(self::RIGHT_JOIN, $name, $cond, $cols);
     }
 
     /**
@@ -394,7 +396,7 @@ class Zend_Db_Select
      */
     public function joinFull($name, $cond, $cols = '*')
     {
-        return $this->_join(self::FULL, $name, $cond, $cols);
+        return $this->_join(self::FULL_JOIN, $name, $cond, $cols);
     }
 
     /**
@@ -408,7 +410,7 @@ class Zend_Db_Select
      */
     public function joinCross($name, $cols = '*')
     {
-        return $this->_join(self::CROSS, $name, null, $cols);
+        return $this->_join(self::CROSS_JOIN, $name, null, $cols);
     }
 
     /**
@@ -424,7 +426,7 @@ class Zend_Db_Select
      */
     public function joinNatural($name, $cols = '*')
     {
-        return $this->_join(self::NATURAL, $name, null, $cols);
+        return $this->_join(self::NATURAL_JOIN, $name, null, $cols);
     }
 
     /**
@@ -647,10 +649,15 @@ class Zend_Db_Select
      *
      * @param string $part
      * @return mixed
+     * @throws Zend_Db_Select_Exception
      */
     public function getPart($part)
     {
-        return $this->_parts[ strtolower($part) ];
+        $part = strtolower($part);
+        if (!array_key_exists($part, $this->_parts)) {
+            throw new Zend_Db_Select_Exception("Invalid Select part '$part'");
+        }
+        return $this->_parts[ $part ];
     }
 
     /**
