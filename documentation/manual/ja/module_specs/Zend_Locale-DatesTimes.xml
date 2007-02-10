@@ -13,14 +13,57 @@
         <title>日付および時刻の正規化</title>
 
         <para>
-            <code>getDate()</code> は、地域化された書式の日付を含む文字列をパースします。
+            <code>getDate()</code> メソッドは、地域化された書式の日付を含む文字列をパースします。
             結果は構造化された配列で返されます。この配列のキーが、日付の各部分を表します。
+            さらに、この配列には 'format' というキーがあり、
+            入力日付文字列をパースする際に使用する書式文字列がここに含まれます。
             地域化された日付文字列が日付/時刻のすべての要素を含んでいるとは限らないので、
             配列のすべてのキーが存在するとは限りません。
             たとえば年月日のみが指定された場合は、時刻に関する情報は配列から取り除かれます。
             逆に時分秒のみが指定された場合も同様です。
             入力に日付や時刻が含まれない場合は、例外がスローされます。
         </para>
+
+        <para>
+            また、姉妹メソッドである <code>getFixedDate()</code> は
+            'fixed' というキーを追加します。ここには数値が格納され、
+            入力の日付文字列の年月日の順序を入れ替えたりして
+            使用する書式にあわせるための情報を表します。
+        </para>
+
+        <table>
+            <title>'fixed' キーの値</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>値</entry>
+                        <entry>意味</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>0</entry>
+                        <entry>なにも修正しません。</entry>
+                    </row>
+                    <row>
+                        <entry>1</entry>
+                        <entry>無効な月を修正します。</entry>
+                    </row>
+                    <row>
+                        <entry>2</entry>
+                        <entry>日付と年の位置を入れ替えます。</entry>
+                    </row>
+                    <row>
+                        <entry>3</entry>
+                        <entry>月と年の位置を入れ替えます。</entry>
+                    </row>
+                    <row>
+                        <entry>4</entry>
+                        <entry>月と日の位置を入れ替えます。</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <para>
             BCMath 拡張モジュールが有効な場合に、
@@ -85,7 +128,29 @@ require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
 
-print_r ($date);
+print_r($date); // 出力は、このようになります
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+)
+
+// 入力値に何らかの問題がある場合に、自動的に修正します
+$date2 = Zend_Locale_Format::getFixedDate('04.13.2006', 'dd.MM.yyyy');
+
+print_r($date); // 出力は、このようになります
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+    [fixed] => 4
+)
 ?>]]></programlisting>
         </example>
 
@@ -93,6 +158,9 @@ print_r ($date);
             <code>getDate()</code> は "ロケール対応" なので、
             <code>$locale</code> を指定することで
             そのロケールの書式の日付文字列を使用できます。
+            <code>getFixedDate()</code> は簡単なテストを行って
+            日付や月の妥当性を確認します。問題が見つかったら、
+            経験則によってそれを何とか修正しようとします。
         </para>
 
         <example>
@@ -231,17 +299,20 @@ print_r ($date);
         </note>
 
         <para>
+            <code>getFixedDate()</code> は簡単なテストを行って
+            日付や月の妥当性を確認します。問題が見つかったら、
+            経験則によってそれを何とか修正しようとします。
             <code>getDate()</code> は、
             入力に問題がある場合にそれを自動で検出し、訂正します。
             たとえば年の位置が違っている場合などがこれにあたります。
         </para>
 
         <example>
-            <title>日付の正規化時の訂正処理</title>
+            <title>入力された日付の訂正処理</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getFixedDate('41.10.20', 'ddMMyy');
 
 // 41 は、日付ではなく年として返されます
 print_r ($date);
@@ -257,6 +328,9 @@ print_r ($date);
         <para>
             <code>isDate()</code> を使用して、
             指定した文字列が有効な日付を含むかどうかを調べます。
+            <code>isDate()</code> メソッドは <code>getDate()</code> を使用します。
+            <code>getFixedDate()</code> を使用すると、
+            入力が日付書式を満たしていない場合にも true を返してしまうので、これは使用しません。
         </para>
 
         <example>

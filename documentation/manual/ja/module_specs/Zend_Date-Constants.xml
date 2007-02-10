@@ -337,15 +337,15 @@
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
                         <entry>Hour (1-12, one or two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">2</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
-                        <entry>Hour (01-12, one or two digit)</entry>
+                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>Hour (01-12, two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">02</emphasis>
                         </entry>
@@ -440,14 +440,14 @@
                     </row>
                     <row>
                         <entry>Zend_Date::GMT_DIFF_SEP</entry>
-                        <entry>Differenz to GMT in seconds (string, separated)</entry>
+                        <entry>Difference to GMT in seconds (string, separated)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
-                        <entry>2009-02-06T14:53:27<emphasis role="strong">+01:00</emphasis>
+                        <entry><emphasis role="strong">+01:00</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>Zend_Date::DAYLIGHT</entry>
-                        <entry>Summertime or wintertime? (TRUE or FALSE)</entry>
+                        <entry>Summer time or Winter time? (TRUE or FALSE)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">FALSE</emphasis>
                         </entry>
