@@ -30,7 +30,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_params = array();
-        $this->_params['rootdir'] = dirname(__FILE__) . '/_files/';
+        $this->_params['dirname'] = dirname(__FILE__) . '/_files/';
         $this->_params['folder']  = 'test.mbox';
     }
 
@@ -69,12 +69,12 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function testLoadFailure()
     {
         try {
-            $mail = new Zend_Mail_Storage_Folder_Mbox(array('rootdir' => 'This/Folder/Does/Not/Exist'));
+            $mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => 'This/Folder/Does/Not/Exist'));
         } catch (Exception $e) {
             return; // test ok
         }
 
-        $this->fail('no exception raised while loading unknown rootdir');
+        $this->fail('no exception raised while loading unknown dirname');
     }
 
     public function testLoadUnkownFolder()

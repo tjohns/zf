@@ -64,7 +64,7 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
      * Disallowed parameters are:
      *   - filename use Zend_Mail_Storage_Mbox for a single file
      * Supported parameters are:
-     *   - rootdir rootdir of mbox structure
+     *   - dirname rootdir of mbox structure
      *   - folder intial selected folder, default is 'INBOX'
      *
      * @param  $params              array mail reader specific parameters
@@ -76,11 +76,11 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
             throw new Zend_Mail_Storage_Exception('use Zend_Mail_Storage_Mbox for a single file');
         }
 
-        if (!isset($params['rootdir']) || !is_dir($params['rootdir'])) {
-            throw new Zend_Mail_Storage_Exception('no valid rootdir given in params');
+        if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
+            throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        $this->_rootdir = rtrim($params['rootdir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->_rootdir = rtrim($params['dirname'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $this->_buildFolderTree($this->_rootdir);
         $this->selectFolder(!empty($params['folder']) ? $params['folder'] : 'INBOX');

@@ -33,7 +33,7 @@ require_once 'Zend/Mail/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Part
+class Zend_Mail_Part implements RecursiveIterator
 {
     /**
      * headers of part as array
@@ -47,7 +47,11 @@ class Zend_Mail_Part
 
     protected $_topLines;
 
-    protected $_parts;
+    protected $_parts = array();
+
+    protected $_countParts;
+
+    protected $_iterationPos = 1;
 
     /**
      * mail handler
@@ -118,9 +122,32 @@ class Zend_Mail_Part
         }
 
         if ($this->_mail) {
-            return $this->_mail->getRaw($this->_messageNum, 'content');
+            return $this->_mail->getRawContent($this->_messageNum);
         } else {
             throw new Zend_Mail_Exception('no content');
+        }
+    }
+
+    public function _cacheContent()
+    {
+        // caching content if we can't fetch parts
+        if ($this->_content === null) {
+            $this->_content = $this->_mail->getRawContent($this->_messageNum);
+        }
+
+        if (!$this->isMultipart()) {
+            return;
+        }
+
+        // split content in parts
+        $boundary = Zend_Mime_Decode::splitContentType($this->contentType, 'boundary');
+        if (!$boundary) {
+            throw new Zend_Mail_Exception('no boundary found in content type to split message');
+        }
+        $parts = Zend_Mime_Decode::splitMessageStruct($this->_content, $boundary);
+        $counter = 1;
+        foreach ($parts as $part) {
+            $this->_parts[$counter++] = new self(array('headers' => $part['header'], 'content' => $part['body']));
         }
     }
 
@@ -139,27 +166,35 @@ class Zend_Mail_Part
             // return
         }
 
-        // caching content if we can't fetch parts
-        if ($this->_content === null) {
-            $this->_content = $this->_mail->getRaw($this->_messageNum, 'content');
-        }
-
-        // split content in parts
-        $boundary = Zend_Mime_Decode::splitContentType($this->contentType, 'boundary');
-        if (!$boundary) {
-            throw new Zend_Mail_Exception('no boundary found in content type to split message');
-        }
-        $parts = Zend_Mime_Decode::splitMessageStruct($this->_content, $boundary);
-        $counter = 1;
-        foreach ($parts as $part) {
-            $this->_parts[$counter++] = new self(array('headers' => $part['header'], 'content' => $part['body']));
-        }
+        $this->_cacheContent();
 
         if (!isset($this->_parts[$num])) {
             throw new Zend_Mail_Exception('part not found');
         }
 
         return $this->_parts[$num];
+    }
+
+    public function countParts()
+    {
+        if ($this->_countParts) {
+            return $this->_countParts;
+        }
+
+        $this->_countParts = count($this->_parts);
+        if ($this->_countParts) {
+            return $this->_countParts;
+        }
+
+        if ($this->_mail && $this->_mail->hasFetchPart) {
+            // TODO: fetch part
+            // return
+        }
+
+        $this->_cacheContent();
+
+        $this->_countParts = count($this->_parts);
+        return $this->_countParts;
     }
 
 
@@ -174,7 +209,7 @@ class Zend_Mail_Part
             if (!$this->_mail) {
                 $this->_headers = array();
             } else {
-                $part = $this->_mail->getRaw($this->_messageNum, 'header');
+                $part = $this->_mail->getRawHeader($this->_messageNum);
                 Zend_Mime_Decode::splitMessage($part, $this->_headers, $null);
             }
         }
@@ -227,5 +262,83 @@ class Zend_Mail_Part
     public function __get($name)
     {
         return $this->getHeader($name, 'string');
+    }
+
+    public function __toString()
+    {
+        return $this->getContent();
+    }
+
+    /**
+     * implements RecursiveIterator::hasChildren()
+     *
+     * @return bool current element has children
+     */
+    public function hasChildren()
+    {
+        $current = $this->current();
+        return $current && $current instanceof Zend_Mail_Part && $current->isMultipart();
+    }
+
+    /**
+     * implements RecursiveIterator::getChildren()
+     *
+     * @return Zend_Mail_Storage_Folder same as self::current()
+     */
+    public function getChildren()
+    {
+        return $this->current();
+    }
+
+    /**
+     * implements Iterator::valid()
+     *
+     * @return bool check if there's a current element
+     */
+    public function valid()
+    {
+        if ($this->_countParts === null) {
+            $this->countParts();
+        }
+        return $this->_iterationPos && $this->_iterationPos <= $this->_countParts;
+    }
+
+    /**
+     * implements Iterator::next()
+     * @return null
+     */
+    public function next()
+    {
+        ++$this->_iterationPos;
+    }
+
+    /**
+     * implements Iterator::key()
+     *
+     * @return string key/local name of current element
+     */
+    public function key()
+    {
+        return $this->_iterationPos;
+    }
+
+    /**
+     * implements Iterator::current()
+     *
+     * @return Zend_Mail_Storage_Folder current folder
+     */
+    public function current()
+    {
+        return $this->getPart($this->_iterationPos);
+    }
+
+    /**
+     * implements Iterator::rewind()
+     * @return null
+     */
+    public function rewind()
+    {
+        $this->countParts();
+        $this->_iterationPos = 1;
     }
 }

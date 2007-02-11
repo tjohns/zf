@@ -103,30 +103,35 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function getMessage($id)
     {
-        $header = $this->_protocol->fetch('RFC822.HEADER', $id);
+        $header = $this->getRawHeader($id);
         return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header));
+    }
+
+    /*
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawHeader($id, $topLines = 0)
+    {
+        // TODO: toplines
+        return $this->_protocol->fetch('RFC822.HEADER', $id);
+    }
+
+    /*
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawContent($id)
+    {
+        return $this->_protocol->fetch('RFC822.TEXT', $id);
     }
 
     /*
      * @throws Zend_Mail_Protocol_Exception
      * @throws Zend_Mail_Storage_Exception
      */
-    public function getRaw($id, $part)
+    public function getRawPart($id, $part)
     {
-        // TODO: indexes for header and content should be changed to negative numbers
-        switch ($part) {
-            case 'header':
-                return $this->_protocol->fetch('RFC822.HEADER', $id);
-                break;
-            case 'content':
-                return $this->_protocol->fetch('RFC822.TEXT', $id);
-                break;
-            default:
-                // fall through
-        }
-
-        // TODO: check for number or mime type
-        throw new Zend_Mail_Storage_Exception('part not found');
+        // TODO: implement
+        throw new Zend_Mail_Storage_Exception('not implemented');
     }
 
 

@@ -187,4 +187,14 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testIterator()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        foreach (new RecursiveIteratorIterator($message) as $num => $part) {
+            if ($num == 1) {
+                $this->assertEquals(substr($part, 0, 14), 'The first part');
+            }
+        }
+        $this->assertEquals($part->contentType, 'text/x-vertical');
+    }
 }

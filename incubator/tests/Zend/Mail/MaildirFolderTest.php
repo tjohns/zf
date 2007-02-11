@@ -30,7 +30,7 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_params = array();
-        $this->_params['rootdir'] = dirname(__FILE__) . '/_files/test.maildir';
+        $this->_params['dirname'] = dirname(__FILE__) . '/_files/test.maildir';
     }
 
     public function testLoadOk()
@@ -56,12 +56,12 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
     public function testLoadFailure()
     {
         try {
-            $mail = new Zend_Mail_Storage_Folder_Maildir(array('rootdir' => 'This/Folder/Does/Not/Exist'));
+            $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => 'This/Folder/Does/Not/Exist'));
         } catch (Exception $e) {
             return; // test ok
         }
 
-        $this->fail('no exception raised while loading unknown rootdir');
+        $this->fail('no exception raised while loading unknown dirname');
     }
 
     public function testLoadUnkownFolder()

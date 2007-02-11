@@ -98,30 +98,33 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawHeader($id, $topLines = 0)
+    {
+        return $this->_protocol->top($id, 0, true);
+    }
+
+    /*
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawContent($id)
+    {
+        $content = $this->_protocol->retrive($id);
+        // TODO: find a way to avoid decoding the headers
+        Zend_Mime_Decode::splitMessage($content, $null, $body);
+        return $body;
+    }
+
+    /*
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRaw($id, $part)
+    public function getRawPart($id, $part)
     {
-        // TODO: indexes for header and content should be changed to negative numbers
-        switch ($part) {
-            case 'header':
-                return $this->_protocol->top($id, 0, true);
-                break;
-            case 'content':
-                $content = $this->_protocol->retrive($id);
-                // TODO: find a way to avoid decoding the headers
-                Zend_Mime_Decode::splitMessage($content, $null, $body);
-                return $body;
-                break;
-            default:
-                // fall through
-        }
-
-        // TODO: check for number or mime type
-        throw new Zend_Mail_Storage_Exception('part not found');
+        // TODO: implement
+        throw new Zend_Mail_Storage_Exception('not implemented');
     }
-
 
     /**
      *

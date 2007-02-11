@@ -89,12 +89,12 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     {
         if ($id) {
             $pos = $this->_positions[$id - 1];
-            return $pos[1] - $pos[0];
+            return $pos['end'] - $pos['start'];
         }
 
         $result = array();
         foreach ($this->_positions as $num => $pos) {
-            $result[$num + 1] = $pos[1] - $pos[0];
+            $result[$num + 1] = $pos['end'] - $pos['start'];
         }
 
         return $result;
@@ -102,21 +102,15 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
 
 
     /**
-     * move file position to start of message and return end position
-     *
      * @param int $id number of message
-     * @return int end position
      */
-    private function _goto($id)
+    private function _getPos($id)
     {
         if (!isset($this->_positions[$id - 1])) {
             throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
-        $pos = $this->_positions[$id - 1];
-        fseek($this->_fh, $pos[0]);
-
-        return $pos[1];
+        return $this->_positions[$id - 1];
     }
 
 
@@ -131,11 +125,11 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     {
         $bodyLines = 0; // TODO: need a way to change that
 
-        $message = $this->getRaw($id, 'header');
+        $message = $this->getRawHeader($id);
         // file pointer is after headers now
         if ($bodyLines) {
             $message .= "\n";
-            while ($bodyLines-- && ftell($this->_fh) < $this->_positions[$id - 1][1]) {
+            while ($bodyLines-- && ftell($this->_fh) < $this->_positions[$id - 1]['end']) {
                 $message .= fgets($this->_fh);
             }
         }
@@ -143,48 +137,33 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $message));
     }
 
-    /**
-     * @throws Zend_Mail_Storage_Exception
+    /*
+     * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRaw($id, $part)
+    public function getRawHeader($id, $topLines = 0)
     {
-        $endPos = $this->_goto($id);
+        $messagePos = $this->_getPos($id);
+        // TODO: toplines
+        return stream_get_contents($this->_fh, $messagePos['separator'] - $messagePos['start'], $messagePos['start']);
+    }
 
-        // TODO: indexes for header and content should be changed to negative numbers
-        switch ($part) {
-            // TODO: save header end position in _positions, we could then use stream_get_contents()
-            case 'header':
-                $part = '';
-                while (ftell($this->_fh) < $endPos) {
-                    $line = fgets($this->_fh);
-                    if (!trim($line)) {
-                        break;
-                    }
-                    $part .= $line;
-                }
-                return $part;
-                break;
-            case 'content':
-                $inHeader = true;
-                $part = '';
-                while (ftell($this->_fh) < $endPos) {
-                    $line = fgets($this->_fh);
-                    if ($inHeader && !trim($line)) {
-                        $inHeader = false;
-                        continue;
-                    }
-                    if (!$inHeader) {
-                        $part .= $line;
-                    }
-                }
-                return $part;
-                break;
-            default:
-                // fall through
-        }
+    /*
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawContent($id)
+    {
+        $messagePos = $this->_getPos($id);
+        return stream_get_contents($this->_fh, $messagePos['end'] - $messagePos['separator'], $messagePos['separator']);
+    }
 
-        // TODO: check for number or mime type
-        throw new Zend_Mail_Storage_Exception('part not found');
+    /*
+     * @throws Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function getRawPart($id, $part)
+    {
+        // TODO: implement
+        throw new Zend_Mail_Storage_Exception('not implemented');
     }
 
     /**
@@ -264,16 +243,25 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
             throw new Zend_Mail_Storage_Exception('file is not a valid mbox format');
         }
 
-        $messagePos = array(ftell($this->_fh), 0);
+        $messagePos = array('start' => ftell($this->_fh), 'separator' => 0, 'end' => 0);
         while (($line = fgets($this->_fh)) !== false) {
             if (strpos($line, 'From ') === 0) {
-                $messagePos[1] = ftell($this->_fh) - strlen($line) - 2; // + newline
+                $messagePos['end'] = ftell($this->_fh) - strlen($line) - 2; // + newline
+                if (!$messagePos['separator']) {
+                    $messagePos['separator'] = $messagePos['end'];
+                }
                 $this->_positions[] = $messagePos;
-                $messagePos = array(ftell($this->_fh), 0);
+                $messagePos = array('start' => ftell($this->_fh), 'separator' => 0, 'end' => 0);
+            }
+            if (!$messagePos['separator'] && !trim($line)) {
+                $messagePos['separator'] = ftell($this->_fh);
             }
         }
 
-        $messagePos[1] = ftell($this->_fh);
+        $messagePos['end'] = ftell($this->_fh);
+        if (!$messagePos['separator']) {
+            $messagePos['separator'] = $messagePos['end'];
+        }
         $this->_positions[] = $messagePos;
     }
 

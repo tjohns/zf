@@ -62,6 +62,26 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         return count($this->_files);
     }
 
+    /**
+     *
+     * @throws Zend_Mail_Storage_Exception
+     */
+    protected function _getFileData($id, $field = null)
+    {
+        if (!isset($this->_files[$id - 1])) {
+            throw new Zend_Mail_Storage_Exception('id does not exist');
+        }
+
+        if (!$field) {
+            return $this->_files[$id - 1];
+        }
+
+        if (!isset($this->_files[$id - 1][$field])) {
+            throw new Zend_Mail_Storage_Exception('field does not exist');
+        }
+
+        return $this->_files[$id - 1][$field];
+    }
 
     /**
      * Get a list of messages with number and size
@@ -72,12 +92,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function getSize($id = null)
     {
-
         if ($id !== null) {
-            if (!isset($this->_files[$id - 1])) {
-                throw new Zend_Mail_Storage_Exception('id does not exist');
-             }
-            return filesize($this->_files[$id - 1]['filename']);
+            return filesize($this->_getFileData($id, 'filename'));
         }
 
         $result = array();
@@ -99,55 +115,55 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function getMessage($id)
     {
-        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRaw($id, 'header')));
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRawHeader($id)));
     }
 
-    /**
-     *
+    /*
      * @throws Zend_Mail_Storage_Exception
      */
-    public function getRaw($id, $part)
+    public function getRawHeader($id, $topLines = 0)
     {
-        if (!isset($this->_files[$id - 1])) {
-            throw new Zend_Mail_Storage_Exception('id does not exist');
-        }
+        $fh = fopen($this->_getFileData($id, 'filename'), 'r');
 
-        $fh = fopen($this->_files[$id - 1]['filename'], 'r');
-        $content = null;
-
-        // TODO: indexes for header and content should be changed to negative numbers
-        switch ($part) {
-            case 'header':
-                $content = '';
-                while (!feof($fh)) {
-                    $line = fgets($fh);
-                    if (!trim($line)) {
-                        break;
-                    }
-                    $content .= $line;
-                }
+        $content = '';
+        while (!feof($fh)) {
+            $line = fgets($fh);
+            if (!trim($line)) {
                 break;
-            case 'content':
-                $content = '';
-                while (!feof($fh)) {
-                    $line = fgets($fh);
-                    if (!trim($line)) {
-                        break;
-                    }
-                }
-                $content = stream_get_contents($fh);
-                break;
-            default:
-                // fall through
+            }
+            $content .= $line;
         }
 
         fclose($fh);
-        if ($content !== null) {
-            return $content;
+        return $content;
+    }
+
+    /*
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getRawContent($id)
+    {
+        $fh = fopen($this->_getFileData($id, 'filename'), 'r');
+
+        while (!feof($fh)) {
+            $line = fgets($fh);
+            if (!trim($line)) {
+                break;
+            }
         }
 
-        // TODO: check for number or mime type
-        throw new Zend_Mail_Storage_Exception('part not found');
+        $content = stream_get_contents($fh);
+        fclose($fh);
+        return $content;
+    }
+
+    /*
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getRawPart($id, $part)
+    {
+        // TODO: implement
+        throw new Zend_Mail_Storage_Exception('not implemented');
     }
 
     /**

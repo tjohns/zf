@@ -62,8 +62,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
     /**
      * Create instance with parameters
      * Supported parameters are:
-     *   - rootdir rootdir of maildir structure
-     *   - dirname alias for rootdir
+     *   - dirname rootdir of maildir structure
      *   - delim   delim char for folder structur, default is '.'
      *   - folder intial selected folder, default is 'INBOX'
      *
@@ -72,15 +71,11 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      */
     public function __construct($params)
     {
-        if (isset($params['dirname']) && !isset($params['rootdir'])) {
-            $params['rootdir'] = $params['dirname'];
+        if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
+            throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        if (!isset($params['rootdir']) || !is_dir($params['rootdir'])) {
-            throw new Zend_Mail_Storage_Exception('no valid rootdir given in params');
-        }
-
-        $this->_rootdir = rtrim($params['rootdir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->_rootdir = rtrim($params['dirname'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $this->_delim = isset($params['delim']) ? $params['delim'] : '.';
 
