@@ -208,7 +208,8 @@ class Zend_Search_Lucene
         }
 
         // read version
-        $segmentsFile->readLong();
+        // $segmentsFile->readLong();
+        $segmentsFile->readInt(); $segmentsFile->readInt();
 
         // read segment name counter
         $segmentsFile->readInt();

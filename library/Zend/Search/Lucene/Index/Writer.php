@@ -181,8 +181,13 @@ class Zend_Search_Lucene_Index_Writer
             }
             $segmentsFile = $this->_directory->createFile('segments');
             $segmentsFile->writeInt((int)0xFFFFFFFF);
-            // write version
-            $segmentsFile->writeLong(0);
+
+            // write version (is initialized by current time
+            // $segmentsFile->writeLong((int)microtime(true));
+            $version = microtime(true);
+            $segmentsFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
+            $segmentsFile->writeInt((int)($version & 0xFFFFFFFF));
+
             // write name counter
             $segmentsFile->writeInt(0);
             // write segment counter
@@ -323,9 +328,16 @@ class Zend_Search_Lucene_Index_Writer
 
         // Write index version
         $segmentsFile->seek(4, SEEK_CUR);
-        $version = $segmentsFile->readLong() + $this->_versionUpdate;
+        // $version = $segmentsFile->readLong() + $this->_versionUpdate;
+        // Process version on 32-bit platforms
+        $versionHigh = $segmentsFile->readInt();
+        $versionLow  = $segmentsFile->readInt();
+        $version = $versionHigh * ((double)0xFFFFFFFF + 1) +
+                   (($versionLow < 0)? (double)0xFFFFFFFF - (-1 - $versionLow) : $versionLow);
+        $version += $this->_versionUpdate;
         $this->_versionUpdate = 0;
-        $newSegmentFile->writeLong($version);
+        $newSegmentFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
+        $newSegmentFile->writeInt((int)($version & 0xFFFFFFFF));
 
         // Write segment name counter
         $newSegmentFile->writeInt($segmentsFile->readInt());
