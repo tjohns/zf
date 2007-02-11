@@ -131,7 +131,6 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
     /**
      * Re-write queries into primitive queries
-     * Also used for query optimization and binding to the index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
@@ -147,6 +146,267 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         }
 
         return $query;
+    }
+
+    /**
+     * Optimize query in the context of specified index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function optimize(Zend_Search_Lucene $index)
+    {
+        $subqueries = array();
+        $signs      = array();
+
+        // Optimize all subqueries
+        foreach ($this->_subqueries as $id => $subquery) {
+            $subqueries[] = $subquery->optimize($index);
+            $signs[]      = ($this->_signs === null)? true : $this->_signs[$id];
+        }
+
+        // Check for empty subqueries
+        foreach ($subqueries as $id => $subquery) {
+            if ($subquery instanceof Zend_Search_Lucene_Search_Query_Empty) {
+                if ($signs[$id] === true) {
+                    // Matching is required, but is actually empty
+                    return new Zend_Search_Lucene_Search_Query_Empty();
+                } else {
+                    // Matching is optional or prohibited, but is empty
+                    // Remove it from subqueries and signs list
+                    unset($subqueries[$id]);
+                    unset($signs[$id]);
+                }
+            }
+        }
+
+
+        // Check if all non-empty subqueries are prohibited
+        $allProhibited = true;
+        foreach ($signs as $sign) {
+            if ($sign !== false) {
+                $allProhibited = false;
+                break;
+            }
+        }
+        if ($allProhibited) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+
+        // Check, if reduced subqueries list has only one entry
+        if (count($subqueries) == 1) {
+            // It's a query with only one required or optional clause
+            // (it's already checked, that it's not a prohibited clause)
+
+            if ($this->getBoost() == 1) {
+                return reset($subqueries);
+            }
+
+            $optimizedQuery = clone reset($subqueries);
+            $optimizedQuery->setBoost($optimizedQuery->getBoost()*$this->getBoost());
+
+            return $optimizedQuery;
+        }
+
+
+        // Check, if reduced subqueries list is empty
+        if (count($subqueries) == 0) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+
+        // Prepare first candidate for optimized query
+        $optimizedQuery = new Zend_Search_Lucene_Search_Query_Boolean($subqueries, $signs);
+        $optimizedQuery->setBoost($this->getBoost());
+
+
+        $terms        = array();
+        $tsigns       = array();
+        $boostFactors = array();
+
+        // Try to decompose term and multi-term subqueries
+        foreach ($subqueries as $id => $subquery) {
+            if ($subquery instanceof Zend_Search_Lucene_Search_Query_Term) {
+                $terms[]        = $subquery->getTerm();
+                $tsigns[]       = $signs[$id];
+                $boostFactors[] = $subquery->getBoost();
+
+                // remove subquery from a subqueries list
+                unset($subqueries[$id]);
+                unset($signs[$id]);
+           } else if ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
+                $subTerms = $subquery->getTerms();
+                $subSigns = $subquery->getSigns();
+
+                if ($signs[$id] === true) {
+                    // It's a required multi-term subquery.
+                    // Something like '... +(+term1 -term2 term3 ...) ...'
+
+                    // Multi-term required subquery can be decomposed only if it contains
+                    // required terms and doesn't contain prohibited terms:
+                    // ... +(+term1 term2 ...) ... => ... +term1 term2 ...
+                    //
+                    // Check this
+                    $hasRequired   = false;
+                    $hasProhibited = false;
+                    if ($subSigns === null) {
+                        // All subterms are required
+                        $hasRequired = true;
+                    } else {
+                        foreach ($subSigns as $sign) {
+                            if ($sign === true) {
+                                $hasRequired   = true;
+                            } else if ($sign === false) {
+                                $hasProhibited = true;
+                                break;
+                            }
+                        }
+                    }
+                    // Continue if subquery has prohibited terms or doesn't have required terms
+                    if ($hasProhibited  ||  !$hasRequired) {
+                        continue;
+                    }
+
+                    foreach ($subTerms as $termId => $term) {
+                        $terms[]        = $term;
+                        $tsigns[]       = ($subSigns === null)? true : $subSigns[$termId];
+                        $boostFactors[] = $subquery->getBoost();
+                    }
+
+                    // remove subquery from a subqueries list
+                    unset($subqueries[$id]);
+                    unset($signs[$id]);
+
+                } else { // $signs[$id] === null  ||  $signs[$id] === false
+                    // It's an optional or prohibited multi-term subquery.
+                    // Something like '... (+term1 -term2 term3 ...) ...'
+                    // or
+                    // something like '... -(+term1 -term2 term3 ...) ...'
+
+                    // Multi-term optional and required subqueries can be decomposed
+                    // only if all terms are optional.
+                    //
+                    // Check if all terms are optional.
+                    $onlyOptional = true;
+                    if ($subSigns === null) {
+                        // All subterms are required
+                        $onlyOptional = false;
+                    } else {
+                        foreach ($subSigns as $sign) {
+                            if ($sign !== null) {
+                                $onlyOptional = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Continue if non-optional terms are presented in this multi-term subquery
+                    if (!$onlyOptional) {
+                        continue;
+                    }
+
+                    foreach ($subTerms as $termId => $term) {
+                        $terms[]  = $term;
+                        $tsigns[] = ($signs[$id] === null)? null  /* optional */ :
+                                                            false /* prohibited */;
+                        $boostFactors[] = $subquery->getBoost();
+                    }
+
+                    // remove subquery from a subqueries list
+                    unset($subqueries[$id]);
+                    unset($signs[$id]);
+                }
+            }
+        }
+
+
+        // Check, if there are no decomposed subqueries
+        if (count($terms) == 0 ) {
+            // return prepared candidate
+            return $optimizedQuery;
+        }
+
+
+        // Check, if all subqueries have been decomposed and all terms has the same boost factor
+        if (count($subqueries) == 0  &&  count(array_unique($boostFactors)) == 1) {
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $tsigns);
+            $optimizedQuery->setBoost(reset($boostFactors)*$this->getBoost());
+
+            return $optimizedQuery;
+        }
+
+
+        // This boolean query can't be transformed to Term/MultiTerm query and still contains
+        // several subqueries
+
+        // Separate prohibited terms
+        $prohibitedTerms        = array();
+        foreach ($terms as $id => $term) {
+            if ($tsigns[$id] === false) {
+                $prohibitedTerms[]        = $term;
+
+                unset($terms[$id]);
+                unset($tsigns[$id]);
+                unset($boostFactors[$id]);
+            }
+        }
+
+        if (count($terms) == 1) {
+            $clause = new Zend_Search_Lucene_Search_Query_Term(reset($terms));
+            $clause->setBoost(reset($boostFactors));
+
+            $subqueries[] = $clause;
+            $signs[]      = reset($tsigns);
+
+            // Clear terms list
+            $terms = array();
+        } else if (count($terms) > 1  &&  count(array_unique($boostFactors)) == 1) {
+            $clause = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $tsigns);
+            $clause->setBoost(reset($boostFactors));
+
+            $subqueries[] = $clause;
+            // Clause sign is 'required' if clause contains required terms. 'Optional' otherwise.
+            $signs[]      = (in_array(true, $tsigns))? true : null;
+
+            // Clear terms list
+            $terms = array();
+        }
+
+        if (count($prohibitedTerms) == 1) {
+            // (boost factors are not significant for prohibited clauses)
+            $subqueries[] = new Zend_Search_Lucene_Search_Query_Term(reset($prohibitedTerms));
+            $signs[]      = false;
+
+            // Clear prohibited terms list
+            $prohibitedTerms = array();
+        } else if (count($prohibitedTerms) > 1) {
+            // prepare signs array
+            $prohibitedSigns = array();
+            foreach ($prohibitedTerms as $id => $term) {
+                // all prohibited term are grouped as optional into multi-term query
+                $prohibitedSigns[$id] = null;
+            }
+
+            // (boost factors are not significant for prohibited clauses)
+            $subqueries[] = new Zend_Search_Lucene_Search_Query_MultiTerm($prohibitedTerms, $prohibitedSigns);
+            // Clause sign is 'prohibited'
+            $signs[]      = false;
+
+            // Clear terms list
+            $prohibitedTerms = array();
+        }
+
+        /** @todo Group terms with the same boost factors together */
+
+        // Check, that all terms are processed
+        // Replace candidate for optimized query
+        if (count($terms) == 0  &&  count($prohibitedTerms) == 0) {
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_Boolean($subqueries, $signs);
+            $optimizedQuery->setBoost($this->getBoost());
+        }
+
+        return $optimizedQuery;
     }
 
     /**

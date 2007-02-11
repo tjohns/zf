@@ -142,7 +142,7 @@ abstract class Zend_Search_Lucene_Search_Query
     }
 
     /**
-     * Bind query to the index
+     * Re-write query into primitive queries in the context of specified index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
@@ -150,17 +150,12 @@ abstract class Zend_Search_Lucene_Search_Query
     abstract public function rewrite(Zend_Search_Lucene $index);
 
     /**
-     * Optimize query
-     *
-     * Do nothing by default
+     * Optimize query in the context of specified index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
      */
-    public function optimize(Zend_Search_Lucene $index)
-    {
-        return $this;
-    }
+    abstract public function optimize(Zend_Search_Lucene $index);
 
     /**
      * Reset query, so it can be reused within other queries or

@@ -182,8 +182,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
 
     /**
-     * Re-write queries into primitive queries
-     * Also used for query optimization and binding to the index
+     * Re-write query into primitive queries in the context of specified index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
@@ -215,6 +214,36 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         }
     }
 
+    /**
+     * Optimize query in the context of specified index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function optimize(Zend_Search_Lucene $index)
+    {
+        // Check, that index contains all phrase terms
+        foreach ($this->_terms as $term) {
+            if (!$index->hasTerm($term)) {
+                return new Zend_Search_Lucene_Search_Query_Empty();
+            }
+        }
+
+        if (count($this->_terms) == 1) {
+            // It's one term query
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_Term(reset($this->_terms));
+            $optimizedQuery->setBoost($this->getBoost());
+
+            return $optimizedQuery;
+        }
+
+        if (count($this->_terms) == 0) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+
+        return $this;
+    }
 
     /**
      * Returns query term

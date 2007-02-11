@@ -71,8 +71,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     }
 
     /**
-     * Re-write queries into primitive queries
-     * Also used for query optimization and binding to the index
+     * Re-write query into primitive queries in the context of specified index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
@@ -93,6 +92,22 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
 
             return $query->rewrite($index);
         }
+    }
+
+    /**
+     * Optimize query in the context of specified index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function optimize(Zend_Search_Lucene $index)
+    {
+        // Check, that index contains specified term
+        if (!$index->hasTerm($this->_term)) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+        return $this;
     }
 
 
@@ -162,6 +177,26 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     public function getQueryTerms()
     {
         return array($this->_term);
+    }
+
+    /**
+     * Return query term
+     *
+     * @return Zend_Search_Lucene_Index_Term
+     */
+    public function getTerm()
+    {
+        return $this->_term;
+    }
+
+    /**
+     * Returns query term
+     *
+     * @return array
+     */
+    public function getTerms()
+    {
+        return $this->_terms;
     }
 
     /**

@@ -675,6 +675,25 @@ class Zend_Search_Lucene
 
 
     /**
+     * Returns true if index contain documents with specified term.
+     *
+     * Is used for query optimization.
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @return boolean
+     */
+    public function hasTerm(Zend_Search_Lucene_Index_Term $term)
+    {
+        foreach ($this->_segmentInfos as $segInfo) {
+            if ($segInfo->getTermInfo($term) instanceof Zend_Search_Lucene_Index_TermInfo) {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    /**
      * Returns an array of all the documents which contain term.
      *
      * @param Zend_Search_Lucene_Index_Term $term

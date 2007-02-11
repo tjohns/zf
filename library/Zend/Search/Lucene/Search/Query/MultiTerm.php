@@ -151,8 +151,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
 
     /**
-     * Re-write queries into primitive queries
-     * Also used for query optimization and binding to the index
+     * Re-write query into primitive queries in the context of specified index
      *
      * @param Zend_Search_Lucene $index
      * @return Zend_Search_Lucene_Search_Query
@@ -189,6 +188,72 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             return $query;
         }
     }
+
+    /**
+     * Optimize query in the context of specified index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function optimize(Zend_Search_Lucene $index)
+    {
+        $terms = $this->_terms;
+        $signs = $this->_signs;
+
+        foreach ($terms as $id => $term) {
+            if (!$index->hasTerm($term)) {
+                if ($signs === null  ||  $signs[$id] === true) {
+                    // Term is required
+                    return new Zend_Search_Lucene_Search_Query_Empty();
+                } else {
+                    // Term is optional or prohibited
+                    // Remove it from terms and signs list
+                    unset($terms[$id]);
+                    unset($signs[$id]);
+                }
+            }
+        }
+
+        // Check if all presented terms are prohibited
+        $allProhibited = true;
+        if ($signs === null) {
+            $allProhibited = false;
+        } else {
+            foreach ($signs as $sign) {
+                if ($sign !== false) {
+                    $allProhibited = false;
+                    break;
+                }
+            }
+        }
+        if ($allProhibited) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+        /**
+         * @todo make an optimization for repeated terms
+         * (they may have different signs)
+         */
+
+        if (count($terms) == 1) {
+            // It's already checked, that it's not a prohibited term
+
+            // It's one term query with one required or optional element
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_Term(reset($terms));
+            $optimizedQuery->setBoost($this->getBoost());
+
+            return $optimizedQuery;
+        }
+
+        if (count($terms) == 0) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+        $optimizedQuery = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $signs);
+        $optimizedQuery->setBoost($this->getBoost());
+        return $optimizedQuery;
+    }
+
 
     /**
      * Returns query term
@@ -507,6 +572,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 $query .= $term->field . ':';
             }
             $query .= $term->text;
+        }
+
+        if ($this->getBoost() != 1) {
+            $query = '(' . $query . ')^' . $this->getBoost();
         }
 
         return $query;
