@@ -218,28 +218,28 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry>Month (Name of the month, localized, complete)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry>Month (Name of the month, localized, abbreviated, three digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry>Month (Name of the month, localized, abbreviated, one digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry>Month (Number of the month, two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry>2009-<emphasis role="strong">02</emphasis>-06T14:53:27+01:00 (02)</entry>
@@ -800,28 +800,28 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     <row>
                         <entry>MM</entry>
                         <entry>Month, two digit</entry>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry><emphasis role="strong">02</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMM</entry>
                         <entry>Month, localized, abbreviated</entry>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMM</entry>
                         <entry>Month, localized, complete</entry>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMMM</entry>
                         <entry>Month, localized, abbreviated, one digit</entry>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>
