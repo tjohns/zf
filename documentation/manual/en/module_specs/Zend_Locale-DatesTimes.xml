@@ -63,58 +63,65 @@
 
         <para>
             The following return values are possible, when the BCMath extension is available:
-            <table>
-                <title>Return values</title>
-                <tgroup cols='4'>
-                    <thead>
-                        <row>
-                            <entry>Array key</entry>
-                            <entry>Returned value</entry>
-                            <entry>Minimum</entry>
-                            <entry>Maximum</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>day</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>31</entry>
-                        </row>
-                        <row>
-                            <entry>month</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>12</entry>
-                        </row>
-                        <row>
-                            <entry>year</entry>
-                            <entry>integer</entry>
-                            <entry>no limit</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>hour</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>minute</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                        <row>
-                            <entry>second</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
         </para>
+
+        <table>
+            <title>Return values</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>getDate() format character</entry>
+                        <entry>Array key</entry>
+                        <entry>Returned value</entry>
+                        <entry>Minimum</entry>
+                        <entry>Maximum</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d</entry>
+                        <entry>day</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>31</entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>month</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>12</entry>
+                    </row>
+                    <row>
+                        <entry>y</entry>
+                        <entry>integer</entry>
+                        <entry>no limit</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>hour</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>minute</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>second</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <example>
             <title>Normalizing a date</title>
@@ -203,83 +210,85 @@ print_r ($date);
 
         <para>
             The format can include the following signs :
-            <table>
-                <title>Format definition</title>
-                <tgroup cols='2'>
-                    <thead>
-                        <row>
-                            <entry>Format Letter</entry>
-                            <entry>Description</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>d or dd</entry>
-                            <entry>1 or 2 digit day</entry>
-                        </row>
-                        <row>
-                            <entry>M or MM</entry>
-                            <entry>1 or 2 digit month</entry>
-                        </row>
-                        <row>
-                            <entry>y or yy</entry>
-                            <entry>1 or 2 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>yyyy</entry>
-                            <entry>4 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>h</entry>
-                            <entry>1 or 2 digit hour</entry>
-                        </row>
-                        <row>
-                            <entry>m</entry>
-                            <entry>1 or 2 digit minute</entry>
-                        </row>
-                        <row>
-                            <entry>s</entry>
-                            <entry>1 or 2 digit second</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
         </para>
+
+        <table>
+            <title>Format definition</title>
+            <tgroup cols='2'>
+                <thead>
+                    <row>
+                        <entry>Format Letter</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d or dd</entry>
+                        <entry>1 or 2 digit day</entry>
+                    </row>
+                    <row>
+                        <entry>M or MM</entry>
+                        <entry>1 or 2 digit month</entry>
+                    </row>
+                    <row>
+                        <entry>y or yy</entry>
+                        <entry>1 or 2 digit year</entry>
+                    </row>
+                    <row>
+                        <entry>yyyy</entry>
+                        <entry>4 digit year</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>1 or 2 digit hour</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>1 or 2 digit minute</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>1 or 2 digit second</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <para>
             Examples for proper formats are
-            <table>
-                <title>Example formats</title>
-                <tgroup cols='3'>
-                    <thead>
-                        <row>
-                            <entry>Formats</entry>
-                            <entry>Input</entry>
-                            <entry>Output</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 1,
+        </para>
+
+        <table>
+            <title>Example formats</title>
+            <tgroup cols='3'>
+                <thead>
+                    <row>
+                        <entry>Formats</entry>
+                        <entry>Input</entry>
+                        <entry>Output</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 1,
                                    ['month'] => 4, 
                                    ['year'] => 6</entry>
-                        </row>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>01.04.2006</entry>
-                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
-                        </row>
-                        <row>
-                            <entry>yyyyMMdd</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
+                    </row>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>01.04.2006</entry>
+                        <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
+                    </row>
+                    <row>
+                        <entry>yyyyMMdd</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <note>
             <title>Database date format</title>
