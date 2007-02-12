@@ -8,7 +8,7 @@
 
         <para>
             Klasa <literal>Zend_Filter_Input</literal> dostarcza metody, które zapewniają 
-            strukturalne podejście do filtrowania danych przychodzących. Jej przeznaczenie 
+            uporządkowane podejście do filtrowania danych przychodzących. Jej przeznaczenie 
             jest różnorodne, ponieważ zaspokaja ona potrzeby trzech różnych grup ludzi:
         </para>
 
@@ -58,13 +58,16 @@
         <title>Opis działania</title>
 
         <para>
-            In order to provide a structured approach to input filtering, by default,
-            <literal>Zend_Filter_Input</literal> attempts to enforce controlled access to input by setting the
-            reference to the source data array to <code>null</code>.
+            W celu zapewnienia uporządkowanego dostępu do filtrowania danych
+            wejściowych, domyślnie <literal>Zend_Filter_Input</literal> próbuje
+            forsować kontrolowany dostęp do danych wejściowych ustawiając 
+            wartość źródłowej tablicy na <code>null</code>.
         </para>
 
         <para>
-            In the default (strict) approach, a single argument is passed to the constructor - an array of data to filter. Unfiltered data may only be accessed through the <code>getRaw()</code> method:
+            W podejściu domyślnym (ścisłym), do konstruktora przekazywany jest
+            jeden argument - tablica danych do filtrowania. Niefiltrowane dane
+            są dostępnę tylko za pomocą metody <code>getRaw()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -81,15 +84,16 @@ echo null === $_POST ? 'yes' : 'no'; // wyświetla 'yes'
 echo $filterPost->getRaw('email'); // wyświetla 'webmaster@example.com']]></programlisting>
 
         <para>
-            <literal>Zend_Filter_Input</literal> sets the array that is passed (<literal>$_POST</literal>) to
-            <literal>null</literal>, so direct access is no longer possible. (The raw data are only available
-            through the <literal>getRaw()</literal> method, which is much easier to monitor and/or avoid
-            altogether.)
+            <literal>Zend_Filter_Input</literal> ustawia wartość przekazanej 
+            tablicy (<literal>$_POST</literal>) na <literal>null</literal>, więc
+            bezpośredni do niej dostęp nie jest już możliwy. (Dane niefiltrowane
+            są wciąż dostępne za pomocą metody <literal>getRaw()</literal>, która
+            jest łatwiejsza do monitorowania)
         </para>
 
         <para>
-            In the optional (non-strict) approach, <literal>false</literal> is passed as the second argument
-            to the constructor:
+            W podejściu opcjnalnym (nieścisłym), wartość <literal>false</literal>
+            jest przekazywana jako drugi argument do konstruktora:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -106,17 +110,22 @@ echo null === $_POST ? 'yes' : 'no'; // wyświetla 'no'
 echo $filterPost->getRaw('email'); // wyświetla 'webmaster@example.com']]></programlisting>
 
         <para>
-            The use of the filter is exactly the same, but <literal>Zend_Filter_Input</literal> does not set
-            the original array (<literal>$_POST</literal>) to <literal>null</literal>, so developers can
-            still access it directly. This approach is discouraged in favor of the strict approach.
+            Użycie filtra jest dokładnie takie same, ale 
+            <literal>Zend_Filter_Input</literal> nie ustawia wartości 
+            oryginalnej tablicy (<literal>$_POST</literal>) na 
+            <literal>null</literal>, więc programiści wciąż mają do niej 
+            bezpośredni dostęp. Te podejście jest odradzane na rzecz podejścia
+            ścisłego.
         </para>
 
         <para>
-            <literal>Zend_Filter_Input</literal> is designed primarily with arrays in mind. Many sources of
-            input are already covered by PHP's superglobal arrays (<literal>$_GET</literal>,
-            <literal>$_POST</literal>, <literal>$_COOKIE</literal>, etc.), and arrays are a common construct
-            used to store input from other sources. If you need to filter a scalar, see
-            <xref linkend="zend.filter" />.
+            <literal>Zend_Filter_Input</literal> jest zaprojektowany do pracy
+            z tablicami. Wiele źródeł danych wejścioywych jest oparta na 
+            superglobalnych tablicach PHP (<literal>$_GET</literal>, 
+            <literal>$_POST</literal>, <literal>$_COOKIE</literal>, itp.), a
+            tablice są główną konstrukcją używaną do przechowywania danych
+            wejściowych z innych źródeł. Jeśli potrzebujesz filtrować dane
+            skalarne, zobacz <xref linkend="zend.filter" />.
         </para>
 
     </sect2>

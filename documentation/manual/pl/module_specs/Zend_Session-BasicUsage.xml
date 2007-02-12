@@ -3,13 +3,13 @@
     <title>Basic Usage</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> creates instances of containers providing the primary API for manipulating
-        session data in the Zend Framework. Namespaces are used to segregate all session data, although a default
-        namespace exists for those who only want one namespace for all their session data. <code>Zend_Session</code>
-        utilizes ext/session and its special <code>$_SESSION</code> superglobal as the storage mechanism for session
-        state data. While <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain
-        from directly accessing it, so that <code>Zend_Session</code> and <code>Zend_Session_Namespace</code> can most
-        effectively and securely provide its suite of session related functionality.
+        <code>Zend_Session_Namespace</code> instances provide the primary API for manipulating session data in the Zend
+        Framework. Namespaces are used to segregate all session data, although a default namespace exists for those who
+        only want one namespace for all their session data. <code>Zend_Session</code> utilizes ext/session and its
+        special <code>$_SESSION</code> superglobal as the storage mechanism for session state data. While
+        <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain from directly
+        accessing it, so that <code>Zend_Session</code> and <code>Zend_Session_Namespace</code> can most effectively and
+        securely provide its suite of session related functionality.
     </para>
 
     <sect2 id="zend.session.basicexamples">

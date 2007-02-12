@@ -26,8 +26,8 @@
         <title>W jaki sposób możesz obsługiwać wyjątki?</title>
 
         <para>
-            Several mechanisms are built in to the MVC components already to
-            allow you to handle exceptions.
+            Obecnie w komponentach MVC wbudowanych jest kilka mechanizmów
+            pozwalających na obsługę wyjątków
         </para>
 
         <itemizedlist>
@@ -35,10 +35,10 @@
                 <para>Zend_Controller_Front::throwExceptions()</para>
 
                 <para>
-                    By passing a boolean true value to this method, you can tell
-                    the front controller that instead of aggregating exceptions
-                    in the response object, you'd rather handle them yourself.
-                    As an example:
+                    Przekazująć logiczną wartość true do tej metody, możesz 
+                    nakazać kontrolerowi frontowemu aby zamiast składować
+                    wyjątki w obiekcie odpowiedzi, wyrzucił je, żebyś mógł
+                    obsłużyć je samodzielnie. Na przykład:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -51,8 +51,9 @@ try {
 ]]></programlisting>
 
                 <para>
-                    This method is probably the easiest way to add custom
-                    exception handling to your front controller application.
+                    Ta metoda jest najprawdopodobniej najłatwiejszym sposobem
+                    dodania własnej obsługi wyjątków do twojej aplikacji 
+                    używającej kontrolera frontowego.
                 </para>
             </listitem>
 
@@ -60,11 +61,11 @@ try {
                 <para>Zend_Controller_Response_Abstract::renderExceptions()</para>
 
                 <para>
-                    By passing a boolean true value to this method, you tell the
-                    response object that it should render an exception message
-                    and backtrace when rendering itself. In this scenario, any
-                    exception raised by your application will be displayed. This
-                    is only recommended for non-production environments.
+                    Przekazując logiczną wartość true do tej metody, możesz
+                    nakazać obiektowi odpowiedzi aby renderował on wyjątki gdy
+                    sam będzie renderowany. W takim scenariuszu, każdy wyjątek
+                    wyrzucony w twojej aplikacji będzie wyświetlony. To jest 
+                    jedynie rekomendowane dla nieprodukcyjnych środowisk.
                 </para>
             </listitem>
 
@@ -73,13 +74,13 @@ try {
                     Zend_Controller_Response_Abstract::isException()</para>
 
                 <para>
-                    By passing a boolean true to
-                    Zend_Controller_Front::returnResponse(),
-                    Zend_Controller_Front::dispatch() will not render the
-                    response, but instead return it. Once you have the response,
-                    you may then test to see if any exceptions were trapped using
-                    its isException() method, and retrieving the exceptions via
-                    the getException() method. As an example:
+                    Przekazanie wartości logicznej true do metody 
+                    Zend_Controller_Front::returnResponse(), spowoduje, że 
+                    obiekt Zend_Controller_Front::dispatch() nie będzie 
+                    renderował odpowiedzi, a zamiast tego ją zwróci. Gdy już
+                    masz odpowiedź, możesz sprawdzić czy są w niej wyjątki
+                    używając metody isException(), a następnie odebrać wyjątki
+                    używając metody getException(). Na przykład:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -120,14 +121,14 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    Zend_Controller_Dispatcher::dispatch() will, by default,
-                    throw an exception if an invalid controller is requested.
-                    There are two recommended ways to deal with this.
+                    Zend_Controller_Dispatcher::dispatch() domyślnie wyrzuci
+                    wyjątek jeśli zażądano nieprawidłowego kontrolera. Są dwa
+                    zalecane sposoby na obsłużenie tego:
                 </para>
 
                 <itemizedlist>
                     <listitem>
-                        <para>Ustaw parametr 'useDefaultControllerAlways'.</para>
+                        <para>Ustawienie parametru 'useDefaultControllerAlways'.</para>
 
                         <para>
                             W twoim kontrolerze frontowym, lub w obiekcie 
@@ -142,25 +143,25 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 ]]></programlisting>
 
                         <para>
-                            When this flag is set, the dispatcher will use the
-                            default controller and action instead of throwing an
-                            exception. The disadvantage to this method is that
-                            any typos a user makes when accessing your site will
-                            still resolve and display your home page, which can
-                            wreak havoc with search engine optimization.
+                            Gdy ta flaga jest ustawiona, obiekt uruchamiający, 
+                            użyje domyślnego kontrolera oraz akcji zamiast
+                            wyrzucania wyjątku. Minusem użycia tej metody jest 
+                            to, że jakikolwiek błąd literowy w adresie 
+                            dostępowym do twojej strony spowoduje wyświetlenie
+                            strony głównej, co może źle wpłynąć na optymalizację
+                            serwisu dla wyszukiwarek internetowych.
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            The exception thrown by dispatch() is a
-                            Zend_Controller_Dispatcher_Exception containing the
-                            text 'Invalid controller specified'. Use one of the
-                            methods outlined in <xref
-                                linkend="zend.controller.exceptions.handling">the
-                            previous section</xref> to catch the exception, and
-                            then redirect to a generic error page or the home
-                            page.
+                            Wyjątek wyrzucany przez metodę dispatch() jest
+                            wyjątkiem Zend_Controller_Dispatcher_Exception 
+                            zawierającym tekst 'Invalid controller specified'. 
+                            Użyj jednej z metod opisanych w <xref 
+                            linkend="zend.controller.exceptions.handling">poprzedniej
+                            sekcji</xref> aby złapać wyjątek, a następnie 
+                            przekierować do strony błędu lub do strony głownej.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -177,8 +178,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Subclass Zend_Controller_Action and override the
-                            __call() method. As an example:
+                            Rozszerzenie klasy Zend_Controller_Action i 
+                            nadpisanie metody __call(). Na przykład:
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php
@@ -305,10 +306,10 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 ]]></programlisting>
                         
                         <para>
-                            In this example, we check to see if the action
-                            requested is available in the controller. If not, we
-                            redirect to the default action in the controller,
-                            and exit script execution immediately.
+                            W tym przykładzie sprawdzamy czy zażądana akcja 
+                            jest dostępna w kontrolerze. Jeśli nie, 
+                            przekierujemy żądanie do domyślnej akcji w 
+                            kontrolerze, i kończymy wykonywanie skryptu.
                         </para>
                     </listitem>
                 </itemizedlist>

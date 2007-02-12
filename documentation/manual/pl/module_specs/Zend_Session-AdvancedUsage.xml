@@ -395,4 +395,39 @@ else {
 
     </sect2>
 
+    <sect2 id="zend.session.testing">
+
+        <title>Using Sessions with Unit Tests</title>
+
+        <para>
+            The Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
+            suite of unit tests to cover the code in their applications. The exception
+            "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>" is thrown while
+            performing unit tests, if any write-related methods are used after ending the session. However, unit tests
+            using Zend_Session require extra attention, because closing (<code>Zend_Session::writeClose()</code>), or
+            destroying a session (<code>Zend_Session::destroy()</code>) prevents any further setting or unsetting of
+            keys in any Zend_Session_Namespace. This behavior is a direct result of the underlying ext/session mechanism
+            and PHP's <code>session_destroy()</code> and <code>session_write_close()</code>, which has no "undo"
+            mechanism to facilitate setup/teardown with unit tests.
+        </para>
+
+        <para>
+            To work around this, see the unit test <code>testSetExpirationSeconds()</code> in
+            <code>tests/Zend/Session/SessionTest.php and SessionTestHelper.php</code>, which make use of PHP's
+            <code>exec()</code> to launch a separate process. The new process more accurately simulates a second,
+            successive request from a browser. The separate process begins with a "clean" session, just like any PHP
+            script execution for a web request. Also, any changes to <code>$_SESSION[]</code> made in the calling
+            process become available to the child process, provided the parent closed the session before using
+            <code>exec()</code>
+        </para>
+
+        <example>
+            <title>Workaround: accessing authentication tokens in sessions</title>
+<programlisting role="php">
+<![CDATA[<?php
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
 </sect1>

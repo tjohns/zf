@@ -107,7 +107,7 @@ $front->setRouter(new Zend_Controller_ModuleRouter())
 ]]></programlisting>
 
         <para>
-            Od tego momentu możesz uruchamwiać kontroler frontowy w ten sam
+            Od tego momentu możesz uruchamiać kontroler frontowy w ten sam
             sposób co zwykle:
         </para>
 
