@@ -126,6 +126,9 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $port)
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong proxy server");
 
+        // Save request method for later
+        $this->method = $method;
+        
         // Build request headers
         $request = "{$method} {$uri->__toString()} HTTP/{$http_ver}\r\n";
         

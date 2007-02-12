@@ -61,6 +61,13 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     );
     
     /**
+     * Request method - will be set by write() and might be used by read()
+     *
+     * @var string
+     */
+    protected $method = null;
+    
+    /**
      * Adapter constructor, currently empty. Config is set using setConfig()
      *
      */
@@ -142,6 +149,9 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
             throw new Zend_Http_Client_Adapter_Exception('Trying to write but we are connected to the wrong host');
 
+        // Save request method for later
+        $this->method = $method;
+        
         // Build request headers
         $path = $uri->getPath();
         if ($uri->getQuery()) $path .= '?' . $uri->getQuery();
@@ -183,6 +193,9 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         // Handle 100 and 101 responses internally by restarting the read again
         if (Zend_Http_Response::extractCode($response) == 100 ||  
             Zend_Http_Response::extractCode($response) == 101) return $this->read();
+        
+        // If this was a HEAD request, return after reading the header (no need to read body)
+        if ($this->method == Zend_Http_Client::HEAD) return $response;
         
         // Check headers to see what kind of connection / transfer encoding we have
         $headers = Zend_Http_Response::extractHeaders($response);
