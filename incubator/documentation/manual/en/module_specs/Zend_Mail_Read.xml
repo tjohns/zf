@@ -44,10 +44,10 @@
                 </row>
                 <row>
                     <entry>Fetch mime-part</entry>
-                    <entry>todo</entry>
-                    <entry>todo</entry>
-                    <entry>No</entry>
-                    <entry>todo</entry>
+                    <entry>emulated</entry>
+                    <entry>emulated</entry>
+                    <entry>emulated</entry>
+                    <entry>emulated</entry>
                 </row>
                 <row>
                     <entry>Folders</entry>
@@ -79,8 +79,8 @@
 
         <programlisting role="php"><![CDATA[<?php
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'localhost',
-                                 'user'     => 'test',
-                                 'password' => 'test'));
+                                         'user'     => 'test',
+                                         'password' => 'test'));
 
 echo $mail->countMessages() . " messages found\n";
 foreach ($mail as $message) {
@@ -303,6 +303,29 @@ while ($part->isMultipart()) {
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
 echo "Content:\n";
 echo $part->getContent();
+]]></programlisting>
+
+        <para>Zend_Mail_Part also implements RecursiveIterator, which makes it easy to scan through all parts. And
+        for easy output it also implements the magic method __toString(), which returns the content.</para>
+
+        <programlisting role="php"><![CDATA[<?php
+// output first text/plain part
+$foundPart = null;
+foreach (RecursiveIteratorIterator($mail->getMessage(1)) as $part) {
+    try {
+        if (strtok($part->contentType, ';') == 'text/plain') {
+            $foundPart = $part;
+            break;
+        }
+    } catch (Zend_Mail_Exception $e) {
+        // ignore
+    }
+}
+if (!$foundPart) {
+    echo 'no plain text part found';
+} else {
+    echo "plain text part: \n" . $foundPart;
+}
 ]]></programlisting>
 
     </sect2>
