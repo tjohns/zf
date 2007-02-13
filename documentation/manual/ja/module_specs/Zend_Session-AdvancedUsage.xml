@@ -444,4 +444,45 @@ else {
 
     </sect2>
 
+    <sect2 id="zend.session.testing">
+
+        <title>ユニットテストでのセッションの使用</title>
+
+        <para>
+            Zend Framework 自体のテストには PHPUnit を使用しています。
+            多くの開発者は、このテストスイートを拡張して自分のアプリケーションのコードをテストしています。
+            ユニットテスト中で、セッションの終了後に書き込み関連のメソッドを使用すると
+            "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>"
+            という例外がスローされます。しかし、Zend_Session を使用するユニットテストには要注意です。
+            セッションを閉じたり (<code>Zend_Session::writeClose()</code>)
+            破棄したり (<code>Zend_Session::destroy()</code>) したら、
+            それ以降は Zend_Session_Namespace へのキーの設定や削除ができなくなります。
+            これは、ext/session や、PHP の
+            PHP <code>session_destroy()</code> および <code>session_write_close()</code>
+            の仕様によるものです, これらには、ユニットテストの setup/teardown
+            時に使用できるような、いわゆる "undo" 機能が備わっていないのです。
+        </para>
+
+        <para>
+            この問題の回避策は、
+            <code>tests/Zend/Session/SessionTest.php および SessionTestHelper.php</code>
+            のユニットテストテスト <code>testSetExpirationSeconds()</code> を参照ください。
+            これは、PHP の <code>exec()</code> によって別プロセスを起動しています。
+            新しいプロセスが、ブラウザからの二番目以降のリクエストをシミュレートします。
+            この別プロセスの開始時にはセッションを "初期化" します。
+            ちょうど、ふつうの PHP スクリプトがウェブリクエストを実行する場合と同じような動作です。
+            また、呼び出し元のプロセスで <code>$_SESSION[]</code> を変更すると、
+            子プロセスでそれが反映されます。親側では
+            <code>exec()</code> を使用する前にセッションを閉じています。
+        </para>
+
+        <example>
+            <title>回避策: セッション内の認証トークンへのアクセス</title>
+<programlisting role="php">
+<![CDATA[<?php
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
 </sect1>

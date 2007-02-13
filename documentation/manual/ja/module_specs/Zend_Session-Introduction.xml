@@ -16,14 +16,16 @@
         を使用してサーバ側 (状態を保持するデータ)
         とクライアント側 (特定のユーザエージェント。たとえばウェブブラウザ)
         の論理的な一対一の関係を表します。
-        Zend_Session はセッションデータの管理と保持を行い、クッキーのデータを論理的に補完し、
+        <code>Zend_Session</code> はセッションデータの管理と保持を行い、クッキーのデータを論理的に補完し、
         同一クライアントからの複数ページにわたるリクエストを扱います。
         クッキーのデータと異なり、セッションデータはクライアント側には保存されません。
         セッションデータがクライアントと共有されるのは、
         サーバ側のソースコードの脆弱性のために
         クライアントからのリクエストへの応答として使用できるようになった場合のみです。
         このコンポーネントのドキュメントにおいて「セッションデータ」は、
-        Zend_Session が管理するサーバ側のデータをさすものとします。
+        <code>$_SESSION[]</code> に保存されたり <code>Zend_Session</code> で管理されたり、
+        独立して <code>Zend_Session_Namespace</code> のアクセス用オブジェクトで管理されたりする
+        サーバ側のデータをさすものとします。
         <emphasis role="bold">セッション名前空間</emphasis>
         により、セッションデータに対して昔ながらの
         <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">名前空間</ulink>
@@ -33,6 +35,8 @@
     </para>
 
     <para>
+        <code>Zend_Session_Namespace</code> は、<code>$_SESSION[]</code>
+        の一部を切り取って名前空間つきでアクセスするためのオブジェクトのインスタンスを作成します。
         <code>Zend_Session</code> コンポーネントは、PHP の既存の
         ext/session をラップして管理用インターフェイスを提供します。また、
         <code>Zend_Session_Namespace</code> のセッション名前空間を持続させるための API も提供します。
