@@ -65,13 +65,18 @@
                         action of that controller, should receive the request.
                         This controller, action, and optional parameters are
                         then set in the request object to be processed by
-                        <code>Zend_Controller_Dispatcher</code>.  Routing occurs
-                        only once: when the request is initially received and
-                        before the first controller is dispatched.
+                        <code>Zend_Controller_Dispatcher_Standard</code>.
+                        Routing occurs only once: when the request is initially
+                        received and before the first controller is dispatched.
                     </para>
 
                     <para>
-                        The default router, <code>Zend_Controller_Router</code>,
+                        The default router is
+                        <code>Zend_Controller_Router_Rewrite</code>.
+                    </para>
+
+                    <para>
+                        The default router, <code>Zend_Controller_Router_Rewrite</code>,
                         takes a URI endpoint as specified in
                         <code>Zend_Controller_Request_Http</code> and decomposes
                         it into a controller, action, and parameters based on
@@ -81,6 +86,14 @@
                         <code>bar</code> action, and specify a parameter
                         <code>key</code> with a value of <code>value</code>.
 					</para>
+
+                    <para>
+                        <code>Zend_Controller_Router_Rewrite</code> can also be
+                        used to match arbitrary paths; see <xref
+                            linkend="zend.controller.providedsubclasses.rewriterouter">the
+                        Rewrite Router documentation</xref> for more
+                        information.
+                    </para>
 				</listitem>
 
 				<listitem>
@@ -109,7 +122,7 @@
 
                     <para>
                         The default dispatcher is
-                        <code>Zend_Controller_Dispatcher</code>. It defines
+                        <code>Zend_Controller_Dispatcher_Standard</code>. It defines
                         controllers as CamelCasedClasses ending in the word
                         Controller, and action methods as camelCasedMethods
                         ending in the word Action:
@@ -148,16 +161,16 @@
 
             The workflow of <code>Zend_Controller</code> is relatively simple.
             A request is received by <code>Zend_Controller_Front</code>, which
-            in turn calls <code>Zend_Controller_Router</code> to determine which
-            controller (and action in that controller) to dispatch.
-            <code>Zend_Controller_Router</code> decomposes the URI in order to
-            set the controller and action names in the request.
-            <code>Zend_Controller_Front</code> then enters a dispatch loop.  It
-            calls <code>Zend_Controller_Dispatcher</code>, passing it the
-            request, to dispatch to the controller and action specified in the
-            request (or use defaults).  After the controller has finished,
-            control returns to <code>Zend_Controller_Front</code>.  If the
-            controller has indicated that another controller should be
+            in turn calls <code>Zend_Controller_Router_Rewrite</code> to
+            determine which controller (and action in that controller) to
+            dispatch.  <code>Zend_Controller_Router_Rewrite</code> decomposes
+            the URI in order to set the controller and action names in the
+            request.  <code>Zend_Controller_Front</code> then enters a dispatch
+            loop.  It calls <code>Zend_Controller_Dispatcher_Standard</code>,
+            passing it the request, to dispatch to the controller and action
+            specified in the request (or use defaults).  After the controller
+            has finished, control returns to <code>Zend_Controller_Front</code>.
+            If the controller has indicated that another controller should be
             dispatched by resetting the dispatched status of the request, the
             loop continues and another dispatch is performed.  Otherwise, the
             process ends.
@@ -224,25 +237,28 @@
 		<para>
             Before your first controller can be built, you need to understand
             how the routing process works as it is implemented in
-            <code>Zend_Controller_Router</code>.  Remember that the workflow is
-            divided into routing, which occurs only once, and dispatching, which
-            occurs thereafter in a loop.
+            <code>Zend_Controller_Router_Rewrite</code>.  Remember that the
+            workflow is divided into routing, which occurs only once, and
+            dispatching, which occurs thereafter in a loop.
 		</para>
 
 		<para>
             <code>Zend_Controller_Front</code> calls
-            <code>Zend_Controller_Router</code> (or another registered router)
+            <code>Zend_Controller_Router_Rewrite</code> (or another registered router)
             to map a URI to a controller -- and an action within that
-            controller.  <code>Zend_Controller_Router</code> retrieves the URI
-            from the request object and decomposes it to determine the
-            controller, action, and any other URL parameters passed in the path
-            and sets these in the request object. 
+            controller.  <code>Zend_Controller_Router_Rewrite</code> retrieves the URI
+            from the request object and passes it to the Route objects in its
+            chain; by default, it uses
+            <code>Zend_Controller_Router_Route_Module</code> to match incoming
+            URLs. The route object then decomposes the URL to determine the
+            controller, action, and any other URL parameters passed in the path;
+            the router itself then sets these in the request object. 
 		</para>
 
 		<para>
-            <code>Zend_Controller_Router</code> uses a very simple mapping to
-            determine the name of the controller and the name of the action
-            within that controller:
+            <code>Zend_Controller_Router_Route_Module</code> uses a very simple
+            mapping to determine the name of the controller and the name of the
+            action within that controller:
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
@@ -262,10 +278,10 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 
         <para>
             If either the controller or action are missing from the URI path,
-            <code>Zend_Controller_Dispatcher</code> will try and grab the value
-            from the request object's parameters, and, if not found, use default
-            values. In both cases, the default values are "<code>index</code>".
-            These examples illustrate:
+            <code>Zend_Controller_Dispatcher_Standard</code> will try and grab
+            the value from the request object's parameters, and, if not found,
+            use default values. In both cases, the default values are
+            "<code>index</code>".  These examples illustrate:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -286,7 +302,8 @@ Action    : index]]>
 		    <title>Flexibility</title>
 		    <para>
                 If you want more flexible capabilities, you may want to check out
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter">the
+                Rewrite Router documentation</xref>.
             </para>
 		</note>
 
@@ -294,7 +311,8 @@ Action    : index]]>
             The controller name, the action name within that controller, and any
             optional parameters are set in the request object.  When
             <code>Zend_Controller_Front</code> enters the dispatch loop, the
-            request object will be passed to <code>Zend_Controller_Dispatcher</code>.
+            request object will be passed to
+            <code>Zend_Controller_Dispatcher_Standard</code>.
 		</para>
 	</sect2>
 
@@ -307,7 +325,7 @@ Action    : index]]>
             controller name, action name, and optional parameters contained in it,
             and then instantiating a controller and calling an action of that
             controller. If no controller or action are found, it will use
-            default values for them. <code>Zend_Controller_Dispatcher</code>
+            default values for them. <code>Zend_Controller_Dispatcher_Standard</code>
             specifies <code>index</code> for each of these defaults, but allows
             the developer to change them using the
             <code>setDefaultController()</code> and
@@ -366,16 +384,12 @@ $front->throwExceptions(true);
 ]]></programlisting>
 
         <para>
-            Since the response object implements <code>__toString()</code>, it
-            may be safely echoed. This allows for the following usage:
+            To send the response output, including headers, use
+            <code>sendOutput()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->getResponse();
-
-// or
-$response = $controller->getResponse();
-echo $response;
+$response->sendOutput();
 ]]></programlisting>
         
         <para>
@@ -427,7 +441,7 @@ $response = $front->dispatch();
 // do some processing...
 
 // finally, echo the response
-echo $response;
+$response->sendResponse();
 ]]></programlisting>
 
         <para>
@@ -444,7 +458,7 @@ $front->dispatch($request, $response);
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
-echo $response;
+$response->sendOutput();
 
 // or:
 $front->throwExceptions(true);

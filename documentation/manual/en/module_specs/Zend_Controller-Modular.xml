@@ -62,14 +62,13 @@ application/
             With setControllerDirectory(), you will need to pass an associative
             array and specify key/value pairs of module name/directory paths.
             The special key 'default' will be used for global controllers (those
-            not needing a module namespace), and can contain an array of paths.
-            All others need a string key pointing to a single path. As an
-            example:
+            not needing a module namespace).  All entries should contain a
+            string key pointing to a single path. As an example:
         </para>
 
         <programlisting role="php"><![CDATA[
 $front->setControllerDirectory(array(
-      'default' => array('/path/to/application/controllers'),
+      'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));
 ]]></programlisting>
@@ -86,38 +85,26 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 ]]></programlisting>
     </sect2>
 
-    <sect2 id="zend.controller.modular.directories">
-        <title>ModuleRouter, ModuleRewriteRouter, and ModuleDispatcher</title>
+    <sect2 id="zend.controller.modular.router">
+        <title>Routing to modules</title>
 
         <para>
-            In addition to changing how you specify the controller directories,
-            you will also need to use a module-aware router and dispatcher. You
-            can choose either Zend_Controller_ModuleRouter or
-            Zend_Controller_ModuleRewriteRouter for the router, and
-            Zend_Controller_ModuleDispatcher for the dispatcher. To do so,
-            modify your front controller bootstrap slightly:
+            The default route in <code>Zend_Controller_Router_Rewrite</code> is
+            an object of type <code>Zend_Controller_Router_Route_Module</code>.
+            This route expects one of the following routing schemas:
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/ModuleRouter.php';
-require_once 'Zend/Controller/ModuleDispatcher.php';
-
-$front->setRouter(new Zend_Controller_ModuleRouter())
-      ->setDispatcher(new Zend_Controller_ModuleDispatcher())
-]]></programlisting>
+        <itemizedlist>
+            <listitem><para><code>:module/:controller/:action/*</code></para></listitem>
+            <listitem><para><code>:controller/:action/*</code></para></listitem>
+        </itemizedlist>
 
         <para>
-            From this point forward, dispatch the front controller as normal:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-$front->dispatch();
-]]></programlisting>
-        
-        <para>
-            Zend_Controller_ModuleRouter will only match a module if a matching
-            key exists in the controller directory array; otherwise, it falls
-            back on the default behaviour of matching /controller/action.
+            In other words, it will match a controller and action by themselves
+            or with a preceding module. The rules for matching specify that a
+            module will only be matched if a key of the same name exists in the
+            controller directory array passed to the front controller and
+            dispatcher.
         </para>
     </sect2>
 
@@ -126,16 +113,16 @@ $front->dispatch();
 
         <para>
             In the default router, if a controller was not specified in the URL,
-            a default controller is used (IndexController, unless otherwise
-            requested). With modular controllers, if a module has been specified
-            but no controller, the dispatcher first looks for this default
-            controller in the module path, and then falls back on the default
-            controller found in the 'default', global, namespace.
+            a default controller is used (<code>IndexController</code>, unless
+            otherwise requested). With modular controllers, if a module has been
+            specified but no controller, the dispatcher first looks for this
+            default controller in the module path, and then falls back on the
+            default controller found in the 'default', global, namespace.
         </para>
 
         <para>
             If you wish to always default to the global namespace, set the
-            'useGlobalDefault' parameter in the front controller:
+            <code>useGlobalDefault</code> parameter in the front controller:
         </para>
 
         <programlisting role="php"><![CDATA[
