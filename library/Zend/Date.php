@@ -1832,7 +1832,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::DATES :
                 try {
-                    $parsed = Zend_Locale_Format::getFixedDate($date, false, $locale);
+                    $parsed = Zend_Locale_Format::getFixedDate($date, null, $locale);
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2216,12 +2216,23 @@ class Zend_Date extends Zend_Date_DateObject {
             default :
                 if (!is_numeric($date)) {
                     try {
-                        $parsed = Zend_Locale_Format::getFixedDate($date, null, $locale);
-
+                        $parsed = Zend_Locale_Format::getFixedDate($date, $part, $locale);
                         if ($calc == 'set') {
-                            --$parsed['month'];
-                            --$parsed['day'];
-                            $parsed['year'] -= 1970;
+                            if (isset($parsed['month'])) {
+                                --$parsed['month'];
+                            } else {
+                                $parsed['month'] = 0;
+                            }
+                            if (isset($parsed['day'])) {
+                                --$parsed['day'];
+                            } else {
+                                $parsed['day'] = 0;
+                            }
+                            if (isset($parsed['year'])) {
+                                $parsed['year'] -= 1970;
+                            } else {
+                                $parsed['year'] = 0;
+                            }
                         }
                         return $this->_assign($calc, $this->mktime(
                             isset($parsed['hour']) ? $parsed['hour'] : 0,
