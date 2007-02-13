@@ -61,11 +61,11 @@
 <![CDATA[<?php
     // Zend_Auth コンポーネント用
     require_once 'Zend/Session.php';
-    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace = new Zend_Session_Namespace('Zend_Auth');
     $authNamespace->user = "myusername";
 
     // ウェブサービスコンポーネント用
-    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
     $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
@@ -102,7 +102,7 @@
 <![CDATA[<?php
     // Zend_Session は順次処理が可能です
     require_once 'Zend/Session.php';
-    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
     foreach ($aNamespace as $index => $value) {
         echo "aNamespace->$index = '$value';\n";
     }

@@ -243,7 +243,7 @@ $testSpace->accept_answer = true;
 -- 
 
 // 回答を処理するコントローラ
-$testSpace = new Zend_Session('testSpace');
+$testSpace = new Zend_Session_Namespace('testSpace');
 
 if ($testSpace->accept_answer === true) {
     // 時間内
