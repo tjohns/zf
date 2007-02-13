@@ -178,25 +178,37 @@ class Zend_Mime_Decode
      * @param  string $wantedPart the wanted part, else an array with all parts is returned
      * @param  string $firstName  key name for the first part
      * @return string|array wanted part or all parts as array($firstName => firstPart, partname => value)
+     * @throws Zend_Exception
      */
     public static function splitHeaderField($field, $wantedPart = null, $firstName = 0)
     {
-        $split = array();
-        $field = explode(';', $field);
-        // this is already prepared for a
-        $split[$firstName] = array_shift($field);
-        foreach ($field as $part) {
-            $part = trim($part);
-            list($key, $value) = explode('=', $part);
-            if ($value[0] == '"') {
-                $value = substr($value, 1, -1);
-            }
-            $split[$key] = $value;
+        $field = $firstName . '=' . $field;
+        if (!preg_match_all('%([^=]+)=("[^"]+"|[^;]+)(;\s*|$)%', $field, $matches)) {
+            throw new Zend_Exception('not a valid header field');
         }
 
         if ($wantedPart) {
-            return isset($split[$wantedPart]) ? $split[$wantedPart] : null;
+            foreach ($matches[1] as $key => $name) {
+                if ($name != $wantedPart) {
+                    continue;
+                }
+                if ($matches[2][$key][0] != '"') {
+                    return $matches[2][$key];
+                }
+                return substr($matches[2][$key], 1, -1);
+            }
+            return null;
         }
+
+        $split = array();
+        foreach ($matches[1] as $key => $name) {
+            if ($matches[2][$key][0] == '"') {
+                $split[$name] = substr($matches[2][$key], 1, -1);
+            } else {
+                $split[$name] = $matches[2][$key];
+            }
+        }
+
         return $split;
     }
 

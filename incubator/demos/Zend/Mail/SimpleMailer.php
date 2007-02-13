@@ -89,17 +89,17 @@ class Demo_Zend_Mail_SimpleMailer
         $this->whitelistParam();
 
         // we use http auth for username and password or mail storage
-        if(($this->type == 'pop3' || $this->type == 'imap') && !isset($_SERVER['PHP_AUTH_USER'])) {
+        if (($this->type == 'pop3' || $this->type == 'imap') && !isset($_SERVER['PHP_AUTH_USER'])) {
             $this->needAuth();
             return;
         }
 
-        switch($this->type) {
+        switch ($this->type) {
             case 'mbox':
                 $this->mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->param));
                 break;
             case 'mbox-folder':
-                $this->mail = new Zend_Mail_Storage_Folder_Mbox(array('rootdir' => $this->param));
+                $this->mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => $this->param));
                 break;
             case 'maildir':
                 $this->mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->param));
@@ -135,7 +135,7 @@ class Demo_Zend_Mail_SimpleMailer
                            'pop3'           => array(),
                            'imap'           => array());
 
-        if($this->type === null || @$whitelist[$this->type] === array() || @in_array($this->param, $whitelist[$this->type])) {
+        if ($this->type === null || @$whitelist[$this->type] === array() || @in_array($this->param, $whitelist[$this->type])) {
             return;
         }
 
@@ -154,7 +154,7 @@ class Demo_Zend_Mail_SimpleMailer
                            'pop3'           => 'Zend_Mail_Storage_Pop3',
                            'imap'           => 'Zend_Mail_Storage_Imap');
 
-        if(isset($classname[$this->type])) {
+        if (isset($classname[$this->type])) {
             Zend::loadClass($classname[$this->type]);
         }
     }
@@ -188,27 +188,27 @@ class Demo_Zend_Mail_SimpleMailer
      */
     function run()
     {
-        if($this->noRun) {
+        if ($this->noRun) {
             return;
         }
 
-        if($this->mail instanceof Zend_Mail_Storage_Folder_Interface && $this->folder) {
+        if ($this->mail instanceof Zend_Mail_Storage_Folder_Interface && $this->folder) {
             // could also be done in constructor of $this->mail with parameter 'folder' => '...'
             $this->mail->selectFolder($this->folder);
         }
 
         $message = null;
         try {
-            if($this->messageNum) {
+            if ($this->messageNum) {
                 $message = $this->mail->getMessage($this->messageNum);
             }
         } catch(Zend_Mail_Exception $e) {
             // ignored, $message is still null and we display the list
         }
 
-        if(!$this->mail) {
+        if (!$this->mail) {
             $this->showChooseType();
-        } else if($message) {
+        } else if ($message) {
             $this->showMessage($message);
         } else {
             $this->showList();
@@ -228,7 +228,10 @@ class Demo_Zend_Mail_SimpleMailer
               table {border: 1px solid black; border-collapse: collapse}
               td, th {border: 1px solid black; padding: 3px; text-align: left}
               th {text-align: right; background: #eee}
-              .message {white-space: pre; font-family: monospace}
+              .message {white-space: pre; font-family: monospace; padding: 0.5em}
+              dl dt {font-style: italic; padding: 1em 0; border-top: 1px #888 dashed}
+              dl dd {padding-bottom: 1em}
+              dl dt:first-child {border: none; padding-top: 0}
               </style>
               </head><body><h1>{$title}</h1>";
     }
@@ -292,22 +295,32 @@ class Demo_Zend_Mail_SimpleMailer
             $subject = '(unknown)';
         }
 
-        $content = htmlentities($message->getContent());
-
         $this->showHeader($subject);
 
         echo "<table>
               <tr><th>From:</td><td>$from</td></tr>
               <tr><th>Subject:</td><td>$subject</td></tr>
-              <tr><th>To:</td><td>$to</td></tr>
-              <tr><td colspan='2' class='message'>$content</td></tr>
-              </table><a href='?{$this->queryString}'>back to list</a>";
+              <tr><th>To:</td><td>$to</td></tr><tr><td colspan='2' class='message'>";
 
-        if($this->messageNum > 1) {
+        if ($message->isMultipart()) {
+            echo '<dl>';
+            foreach (new RecursiveIteratorIterator($message) as $part) {
+                echo "<dt>Part with type {$part->contentType}:</dt><dd>";
+                echo htmlentities($part);
+                echo '</dd>';
+            }
+            echo '</dl>';
+        } else {
+            echo htmlentities($message->getContent());
+        }
+
+        echo "</td></tr></table><a href='?{$this->queryString}'>back to list</a>";
+
+        if ($this->messageNum > 1) {
             echo " - <a href=\"?{$this->queryString}&message=", $this->messageNum - 1, '">prev</a>';
         }
 
-        if($this->messageNum < $this->mail->countMessages()) {
+        if ($this->messageNum < $this->mail->countMessages()) {
             echo " - <a href=\"?{$this->queryString}&message=", $this->messageNum + 1, '">next</a>';
         }
 
@@ -323,7 +336,7 @@ class Demo_Zend_Mail_SimpleMailer
 
         echo '<table><tr><td></td><th>From</th><th>To</th><th>Subject</th></tr>';
 
-        foreach($this->mail as $num => $message) {
+        foreach ($this->mail as $num => $message) {
             echo "<tr><td><a href='?{$this->queryString}&message=$num'>read</a></td>";
 
             try {
@@ -337,7 +350,7 @@ class Demo_Zend_Mail_SimpleMailer
 
         echo '</table>';
 
-        if($this->mail instanceof Zend_Mail_Storage_Folder_Interface) {
+        if ($this->mail instanceof Zend_Mail_Storage_Folder_Interface) {
             $this->showFolders();
         }
 
@@ -354,9 +367,9 @@ class Demo_Zend_Mail_SimpleMailer
 
         $folders = new RecursiveIteratorIterator($this->mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
 
-        foreach($folders as $localName => $folder) {
+        foreach ($folders as $localName => $folder) {
             echo '<option ';
-            if(!$folder->isSelectable()) {
+            if (!$folder->isSelectable()) {
                 echo 'disabled="disabled" ';
             }
             $localName = str_pad('', $folders->getDepth() * 12, '&nbsp;', STR_PAD_LEFT) . $localName;
