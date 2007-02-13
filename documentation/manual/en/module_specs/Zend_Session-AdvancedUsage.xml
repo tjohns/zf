@@ -215,7 +215,7 @@ $testSpace->accept_answer = true;
 -- 
 
 // answer processing controller
-$testSpace = new Zend_Session('testSpace');
+$testSpace = new Zend_Session_Namespace('testSpace');
 
 if ($testSpace->accept_answer === true) {
     // within time
