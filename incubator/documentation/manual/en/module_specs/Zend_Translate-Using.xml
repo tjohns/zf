@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+<!ENTITY % xinclude SYSTEM "../xinclude.mod">
+%xinclude;
+]>
+<!-- $Id: $ -->
+<sect1 id="zend.translate.using">
+
+    <title>Using translation Adapters</title>
+
+    <para>
+        The next step will be to use the adapter within your code. So let's look at a small example.
+    </para>
+
+    <para><programlisting role="php"><![CDATA[<?php
+print "Example\n";
+print "=======\n";
+print "Here is line one\n";
+print "Today is the " . date("d.m.Y") . "\n";
+print "\n";
+print "Fix language here is line two\n";
+?>]]></programlisting>
+    </para>    
+
+    <para>
+        You will probably write your code in your native language. Our example shows some output.
+        Generally you will not only translate the output but also error or log messages.
+    </para>
+
+    <para>
+        The next step will be to include Zend Translate into your existing code. Of course it will be
+        much easier if you are writing your code already by using Zend Translate instead of changing 
+        your code afterwards...
+    </para>
+
+    <para><programlisting role="php"><![CDATA[<?php
+require_once("Zend/Translate.php");
+
+$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
+$translate->addTranslation('//my/path/fr-source.mo', 'fr');
+
+print $translate->_("Example")."\n";
+print "=======\n";
+print $translate->_("Here is line one")."\n";
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+print "\n";
+
+$translation->setLanguage('fr');
+print $translate->_("Fix language here is line two") . "\n";
+?>]]></programlisting>
+    </para>    
+
+    <para>
+        Now lets get a deeper look into what has been done and how to integrate Zend Translate into your code.
+    </para>
+
+    <para>
+        First of all you will have to create a new Translation Object and define the base adapter.
+
+<programlisting role="php"><![CDATA[<?php
+require_once("Zend/Translate.php");
+
+$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
+?>]]></programlisting>
+
+        In our example we decided the <emphasis role="strong">Gettext Adapter</emphasis>.
+        We will place our file <emphasis role="strong">source-de.mo</emphasis> into the directory 
+        <emphasis role="strong">/my/path</emphasis>. The gettext file will have german translation 
+        included. And we also added another language source for french.
+    </para>
+
+    <para>
+        The next step is to wrap all strings which will be translated. The simplest approach is to have
+        only simple strings or sentences like this:
+
+<programlisting role="php"><![CDATA[<?php
+print $translate->_("Example")."\n";
+print "=======\n";
+print $translate->_("Here is line one")."\n";
+?>]]></programlisting>
+
+        Of course some strings will not needed to be translated... a seperating line is always a seperated line,
+        even in other languages.
+    </para>
+
+    <para>
+        Having informations integrated into a translation string is also no big issue.
+        
+<programlisting role="php"><![CDATA[<?php
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+?>]]></programlisting>
+
+        Instead of print use the printf function and exclude all informations with %1\$s parts.
+        The first is %1\$s, the second %2\$s and so on. This way a translation can be done without knowing 
+        the exact information. In our example the date is always the actual day, but the string can be translated
+        without the knowledge of the actual day.
+    </para>
+
+    <para>
+        Having informations integrated into a translation string is also no big issue.
+        
+<programlisting role="php"><![CDATA[<?php
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+?>]]></programlisting>
+
+        Instead of print use the printf function and exclude all informations with %1\$s parts.
+        The first is %1\$s, the second %2\$s and so on. This way a translation can be done without knowing 
+        the exact information. In our example the date is always the actual day, but the string can be translated
+        without the knowledge of the actual day.
+    </para>
+
+    <para>
+        Of course you can also use message id's instead of strings. In the above examples the message id's are
+        identical with the strings. So we could also do it like this:
+
+<programlisting role="php"><![CDATA[<?php
+print $translate->_(1)."\n";
+print "=======\n";
+print $translate->_(2)."\n";
+?>]]></programlisting>
+
+        But doing so has several disadvantages.
+    </para>
+
+    <para>
+        You will not be able to see what your code should output just by viewing your code.
+    </para>
+
+    <para>
+        Also you will get problems if some strings are not translated. You always must imagine how
+        translation works. First Zend Translate looks if the set language has a translation for the 
+        given message id / string. If no translation string has been found it refers to the next lower 
+        language as defined within Zend Locale. So <emphasis role="strong">de_AT</emphasis> will become
+        <emphasis role="strong">de</emphasis> only. And if also for <emphasis role="strong">de</emphasis>
+        there is no translation found the original message id will be returned. This way you will always
+        have an output. Zend Translate will never throw an error or exception when translating strings.
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
