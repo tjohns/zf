@@ -1,37 +1,41 @@
 <sect1 id="zend.filter.filter_chains">
 
-    <title>Filter Chains</title>
+    <title>Łańcuchy filtrów</title>
 
     <para>
-        Often multiple filters should be applied to some value in a particular order. For example, a
-        login form accepts a username that should be only lowercase, alphabetic characters.
-        <code>Zend_Filter</code> provides a simple method by which filters may be chained together. The
-        following code illustrates how to chain together two filters for the submitted username:
+        Często do pewnej wartości potrzebujemy zastosować wiele filtrów w 
+        określonej kolejności. Przykładem może być formularz logowania 
+        akceptujący jedynie małe znaki alfabetu. <code>Zend_Filter</code> 
+        zapewnia prostą metodę dzięki której filtry mogą być wywoływane 
+        łańcuchowo. Poniższy kod ilustruje łańcuchowe wywołanie dwóch filtrów
+        dla wysłanej nazwy użytkownika:
 
         <programlisting role="php"><![CDATA[<?php
-// Provides filter chaining capability
+// Zapewnia możliwość łańcuchowego wywoływania filtrów
 require_once 'Zend/Filter.php';
 
-// Filters needed for the example
+// Filtry użyte w przykładzie
 require_once 'Zend/Filter/Alpha.php';
 require_once 'Zend/Filter/StringToLower.php';
 
-// Create a filter chain and add filters to the chain
+// Tworzymy łańcuch filtrów i dodajemy filtry do łańcucha
 $filterChain = new Zend_Filter();
 $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());
 
-// Filter the username
+// Filtrujemy nazwę użytkownika
 $username = $filterChain->filter($_POST['username']);]]></programlisting>
 
-        Filters are run in the order they were added to <code>Zend_Filter</code>. In the above example, the
-        username is first removed of any non-alphabetic characters, and then any uppercase characters are
-        converted to lowercase.
+        Filtry są uruchamiane w takiej kolejności, w jakiej zostają dodane do
+        <code>Zend_Filter</code>. W powyższym przykładzie z nazwy użytkownika
+        wpierw są usuwane wszystkie niealfabetyczne znaki, a następnie wszystkie
+        wielkie litery są zamieniane na małe.
 
     </para>
 
     <para>
-        Any object that implements <code>Zend_Filter_Interface</code> may be used in a filter chain.
+        W łańcuchu filtrów może być użyty dowolny obiekt, który implementuje
+        interfejs <code>Zend_Filter_Interface</code>.
     </para>
 
 </sect1>

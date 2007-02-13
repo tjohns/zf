@@ -1,52 +1,61 @@
 <sect1 id="zend.validate.validator_chains">
 
-    <title>Validator Chains</title>
+    <title>Łańcuchy walidatorów</title>
 
     <para>
-        Often multiple validations should be applied to some value in a particular order. The following code
-        demonstrates a way to solve the example from the
-        <link linkend="zend.validate.introduction">introduction</link>, where a username must be between 6 and
-        12 alphanumeric characters:
+        Często do pewnej wartości potrzebujemy zastosować wiele walidatorów w 
+        określonej kolejności. Poniższy kod demonstruje sposób rozwiązania 
+        przykładu z 
+        <link linkend="zend.validate.introduction">wprowadzenia</link>, gdzie
+        nazwa użytkownika musi mieć długość między 6 a 12 alfanumerycznych
+        znaków:
 
         <programlisting role="php"><![CDATA[<?php
-// Provides validator chaining capability
+// Zapewnia możliwość łańcuchowego wywoływania walidatorów
 require_once 'Zend/Validate.php';
 
-// Validators needed for the example
+// Walidatory użyte w przykładzie
 require_once 'Zend/Validate/StringLength.php';
 require_once 'Zend/Validate/Alnum.php';
 
-// Create a validator chain and add validators to it
+// Tworzymy łańcuch walidatorów i dodajemy do niego walidatory
 $validatorChain = new Zend_Validate();
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12))
                ->addValidator(new Zend_Validate_Alnum());
 
-// Validate the username
+// Sprawdzamy nazwę użytkownika
 if ($validatorChain->isValid($username)) {
-    // username passed validation
+    // nazwa użytkownika jest poprawna
 } else {
-    // username failed validation; print reasons
+    // nazwa użytkownika nie jest poprawna; wyświetlamy komunikaty
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
 }]]></programlisting>
 
-        Validators are run in the order they were added to <code>Zend_Validate</code>. In the above example,
-        the username is first checked to ensure that its length is between 6 and 12 characters, and then it is
-        checked to ensure that it contains only alphanumeric characters. The second validation, for
-        alphanumeric characters, is performed regardless of whether the first validation, for length between 6
-        and 12 characters, succeeds. This means that if both validations fail, <code>getMessages()</code> will
-        return failure messages from both validators.
+        Walidatory są uruchamiane w takiej kolejności, w jakiej zostały dodane
+        do <code>Zend_Validate</code>. W powyższym przykładzie, wpierw jest 
+        sprawdzane jest to, czy długość nazwy użytkownika mieści się miedzy 6 a
+        12 znaków, a następnie sprawdzane jest czy zawiera ona tylko znaki 
+        alfanumeryczne. Druga walidacja, dla alfanumerycznych znaków, jest 
+        przeprowadzana niezależnie od tego, czy pierwsza walidacja, dla długości
+        pomiędzy 6 a 12 znaków udała się. Oznacza to, że jeśli nie udadzą się
+        obie walidacje, to metoda <code>getMessages()</code> zwróci wiadomości
+        błędów pochodzące od obu walidatorów.
     </para>
 
     <para>
-        In some cases it makes sense to have a validator break the chain if its validation process
-        fails. <code>Zend_Validate</code> supports such use cases with the second parameter to the
-        <code>addValidator()</code> method. By setting <code>$breakChainOnFailure</code> to <code>true</code>,
-        the added validator will break the chain execution upon failure, which avoids running any other
-        validations that are determined to be unnecessary or inappropriate for the situation. If the above
-        example were written as follows, then the alphanumeric validation would not occur if the string length
-        validation fails:
+        W niektórych przypadkach sensowna może być możliwość przerwania
+        łańcucha walidatorów w przypadku, gdy proces walidacji nie uda się. 
+        <code>Zend_Validate</code> obsługuje takie przypadki za pomocą 
+        ustawienia drugiego parametru w metodzie <code>addValidator()</code>. 
+        Ustawiając wartość zmiennej <code>$breakChainOnFailure</code> na 
+        <code>true</code>, dodany walidator przerwie łańcuchowe wywoływanie 
+        przy wystąpieniu błędu, co zapobiegnie uruchamianiu innych walidacji,
+        które w danej sytuacji zostaną uznane za bezużyteczne. Jeśli powyższy 
+        przykład byłby napisany tak jak poniżej, wtedy walidacja znaków 
+        alfanumerycznych nie byłaby przeprowadzona jeśli długość łańcucha znaków 
+        byłaby nieodpowiednia:
 
         <programlisting role="php"><![CDATA[<?php
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
@@ -55,7 +64,8 @@ $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
     <para>
-        Any object that implements <code>Zend_Validate_Interface</code> may be used in a validator chain.
+        W łańcuchu walidatorów może być użyty dowolny obiekt, który implementuje
+        interfejs <code>Zend_Validate_Interface</code>.
     </para>
 
 </sect1>

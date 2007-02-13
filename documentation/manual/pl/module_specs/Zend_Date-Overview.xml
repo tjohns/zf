@@ -466,7 +466,7 @@ print $date;
                                 Returns an integer representation of the selected date <code>$part</code> according to
                                 the conventions of the object's locale. Returns <code>false</code> when
                                 <code>$part</code> selects a non-numeric value, such as
-                                <code>Zend_Date::MONTH_NAME</code>. <emphasis role="strong">NOTE:</emphasis> This method
+                                <code>Zend_Date::MONTH_NAME_SHORT</code>. <emphasis role="strong">NOTE:</emphasis> This method
                                 calls
                                 <link linkend="id.date.basic.operations"><code>get()</code>
                                 </link>

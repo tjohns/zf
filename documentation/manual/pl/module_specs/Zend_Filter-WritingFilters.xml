@@ -1,21 +1,24 @@
 <sect1 id="zend.filter.writing_filters">
 
-    <title>Writing Filters</title>
+    <title>Pisanie filtrów</title>
 
     <para>
-        Zend_Filter supplies a set of commonly needed filters, but developers will often need to write custom
-        filters for their particular use cases. The task of writing a custom filter is facilitated by
-        implementing <code>Zend_Filter_Interface</code>.
+        Zend_Filter zapewnia zestaw najczęściej potrzebnych filtrów, ale 
+        programiści często potrzebują napisać własne filtry dla ich szczególnych
+        zastosowań. Zadanie pisania własnego filtru jest ułatwione przez 
+        implementację interfejsu <code>Zend_Filter_Interface</code>.
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> defines a single method, <code>filter()</code>, that may be
-        implemented by user classes. An object that implements this interface may be added to a filter chain
-        with <code>Zend_Filter::addFilter()</code>.
+        <code>Zend_Filter_Interface</code> definiuje jedną metodę, 
+        <code>filter()</code>, która może być implementowana przez klasy
+        użytkownika. Obiekt, który implementuje ten interfejs może być dodany
+        do łańcucha filtrów za pomocą metody 
+        <code>Zend_Filter::addFilter()</code>.
     </para>
 
     <para>
-        The following example demonstrates how to write a custom filter:
+        Poniższy przykład pokazuje w jaki sposób pisze się własny filtr:
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/Interface.php';
@@ -24,7 +27,7 @@ class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
     {
-        // perform some transformation upon $value to arrive on $valueFiltered
+        // przeprowadź jakieś transformacje zmiennej $value do $valueFiltered
 
         return $valueFiltered;
     }
@@ -33,7 +36,7 @@ class MyFilter implements Zend_Filter_Interface
     </para>
 
     <para>
-        To add an instance of the above filter to a filter chain:
+        Aby dodać instancję powyższego filtra do łańcucha filtrów:
 
         <programlisting role="php"><![CDATA[<?php
 $filterChain = new Zend_Filter();

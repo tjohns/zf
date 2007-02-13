@@ -1,47 +1,60 @@
 <sect1 id="zend.filter.introduction">
 
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
 
     <para>
-        The Zend_Filter component provides a set of commonly needed data filters. It also provides a simple
-        filter chaining mechanism by which multiple filters may be applied to a single datum in a
-        user-defined order.
+        Komponent Zend_Filter zapewnia zestaw najczęściej potrzebnych filtrów 
+        danych. Zapewnia też prosty mechanizm łańcuchowego wywoływania filtrów,
+        dzięki ktoremu wiele filtrów może być dodanych do jednej danej w 
+        kolejności zdefiniowanej przez programistę.
     </para>
 
     <para>
-        <emphasis role="strong">What is a filter?</emphasis>
+        <emphasis role="strong">Czym jest filtr?</emphasis>
     </para>
 
     <para>
-        In the physical world, a filter is typically used for removing unwanted portions of input, and the
-        desired portion of the input passes through as filter output (e.g., coffee). In such scenarios, a
-        filter is an operator that produces a subset of the input. This type of filtering is useful for web
-        applications - removing illegal input, trimming unnecessary white space, etc.
+        W fizycznym świecie, filtr najczęściej jest używany do usuwania 
+        niechcianych części danych wejściowych, a żądana część danych 
+        wejściowych przechodzi przez filtr jako dane wyjściowe (np. kawa). W
+        takim scenariuszu filtr jest operatorem który tworzy podzbiór danych
+        wejściowych. Ten typ filtrowania jest użyteczny w aplikacjach web 
+        - usuwanie niedozwolonych danych wejściowych, usuwanie niepotrzebnych
+        białych znaków itp.
     </para>
 
     <para>
-        This basic definition of a filter may be extended to include generalized transformations upon input.
-        A common transformation applied in web applications is the escaping of HTML entities. For example, if
-        a form field is automatically populated with untrusted input (e.g., from a web browser), this value
-        should either be free of HTML entities or contain only escaped HTML entities, in order to prevent
-        undesired behavior and security vulnerabilities. To meet this requirement, HTML entities that appear
-        in the input must either be removed or escaped. Of course, which approach is more appropriate depends
-        on the situation. A filter that removes the HTML entities operates within the scope of the first
-        definition of filter - an operator that produces a subset of the input. A filter that escapes the
-        HTML entities, however, transforms the input (e.g., "<code>&amp;</code>" is transformed to
-        "<code>&amp;amp;</code>"). Supporting such use cases for web developers is important, and "to
-        filter," in the context of using Zend_Filter, means to perform some transformations upon input data.
+        Ta podstawowa definicja filtra może być rozszerzona, aby zawierała
+        uogólnione transformacje na danych wejściowych. Pospolitą transformacją
+        stosowaną w aplikacjach web jest zabezpieczanie przed encjami HTML.
+        Na przykład, jeśli pole formularza jest automatycznie wypełniane
+        niefiltrowanymi danymi wejściowymi (np., z przeglądarki internetowej), 
+        ta wartość nie może zawierać encji HTML lub posiadać jedynie 
+        zabezpieczone encje HTML, w celu zapobiegania niechcianemu zachowaniu
+        aplikacji oraz słabym punktom bezpieczeństwa. Aby sprostać tym 
+        wymaganiom, encje HTML, ktore znajdują się w danych wejściowych muszą 
+        być usunięte lub zabezpieczone. Oczywiście to, ktore podejście jest
+        bardziej odpowiednie zależy od sytuacji. Filtr, który usuwa encje HTML
+        działa w kontekście pierwszej definicji filtra - operator który tworzy
+        podzbiór danych wejściowych. Filtr, ktory zabezpiecza encje HTML
+        natomiast przekształca dane wejściowe (np. znak "<code>&amp;</code>" 
+        jest zamieniany na "<code>&amp;amp;</code>"). Wspieranie programistów
+        przy takich przypadkach użycia jest ważne, i "filtrowanie" w kontekście
+        użycia Zend_Filter oznacza przeprowadzanie pewnych transformacji na
+        danych wejściowych.
     </para>
 
     <para>
-        Having this filter definition established provides the foundation for
-        <code>Zend_Filter_Interface</code>, which requires a single method named <code>filter()</code> to be
-        implemented by a filter class.
+        Mająć ustaloną w ten sposób definicję filtra, możemy zapewnić podstawę
+        dla interfejsu <code>Zend_Filter_Interface</code>, który wymaga 
+        zaimplementowania przez klasę filtra jednej metody nazwanej 
+        <code>filter()</code>.
     </para>
 
     <para>
-        Following is a basic example of using a filter upon two input data, the ampersand (<code>&amp;</code>)
-        and double quote (<code>&quot;</code>) characters:
+        Poniżej jest podstawowy przykład użycia filtra na dwóch danych 
+        wyjściowych, na znaku Et (<code>&amp;</code>) oraz na znaku podwójnego 
+        cudzysłowu (<code>&quot;</code>):
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/HtmlEntities.php';

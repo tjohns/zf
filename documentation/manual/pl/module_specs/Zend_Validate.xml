@@ -1,57 +1,67 @@
 <sect1 id="zend.validate.introduction">
 
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
 
     <para>
-        The Zend_Validate component provides a set of commonly needed validators. It also provides a simple
-        validator chaining mechanism by which multiple validators may be applied to a single datum in a
-        user-defined order.
+        Komponent Zend_Filter zapewnia zestaw najczęściej potrzebnych 
+        walidatorów. Zapewnia też prosty mechanizm łańcuchowego wywoływania 
+        walidatorów, dzięki ktoremu wiele filtrów może być dodanych do jednej 
+        danej w kolejności zdefiniowanej przez programistę.
     </para>
 
     <para>
-        <emphasis role="strong">What is a validator?</emphasis>
+        <emphasis role="strong">Czym jest walidator?</emphasis>
     </para>
 
     <para>
-        A validator examines its input with respect to some requirements and produces a boolean result -
-        whether the input successfully validates against the requirements. If the input does not meet the
-        requirements, a validator may additionally provide information about which requirement(s) the input
-        does not meet.
+        Walidator bada dane wejściowe w oparciu o pewne wymagania i tworzy
+        wynik w postaci wartości logicznej - wartość ta mówi czy dane wejściowe 
+        spełniają te wymagania. Jeśli dane wejściowe nie spełniają wymagań, 
+        walidator może dodatkowo przekazać informacje o tym, które z wymagań nie 
+        zostały spełnione.
     </para>
 
     <para>
-        For example, a web application might require that a username be between six and twelve characters in
-        length and may only contain alphanumeric characters. A validator can be used for ensuring that
-        usernames meet these requirements. If a chosen username does not meet one or both of the requirements,
-        it would be useful to know which of the requirements the username fails to meet.
+        Na przykład, aplikacja web może wymagać, aby długość nazwy użytkownika 
+        mieściła się pomiędzy sześcioma a dwunastoma znakami, a znaki te były
+        jedynie z grupy znaków alfanumerycznych. Walidator może być użyty do
+        sprawdzenia czy nazwa użytkownika spełnia te wymagania. Jeśli wybrana
+        nazwa użytkownika nie spełni jednego lub obu tych wymagań, użytecznie
+        by było wiedzieć, które z wymagań nie zostało spełnione.
     </para>
 
     <para>
-        Having defined validation in this way provides the foundation for
-        <code>Zend_Validate_Interface</code>, which defines two methods, <code>isValid()</code> and
-        <code>getMessages()</code>. The <code>isValid()</code> method performs validation upon the provided
-        value, returning <code>true</code> if and only if the value passes against the validation criteria. If
-        <code>isValid()</code> returns <code>false</code>, the <code>getMessages()</code> is provided to
-        return an array of messages explaining the reason(s) for validation failure.
+        Mająć ustaloną w ten sposób definicję walidacji, możemy zapewnić 
+        podstawę dla interfejsu <code>Zend_Validate_Interface</code>, który 
+        wymaga zaimplementowania przez klasę walidatora dwóch metod,  
+        <code>isValid()</code> oraz <code>getMessages()</code>. Metoda
+        <code>isValid()</code> przeprowadza walidację podanej wartości, 
+        zwracając <code>true</code> wtedy i tylko wtedy, gdy wartość 
+        spełnia kryteria walidacji. Jeśli metoda <code>isValid()</code> zwróci
+        <code>false</code>, za pomocą metody <code>getMessages()</code> można
+        pobrać tablicę wiadomości wyjaśniających powody niepowodzenia walidacji.
     </para>
 
     <note>
         <para>
-            The <code>getMessages()</code> returns validation failure messages for the most recent
-            <code>isValid()</code> call only, since <code>isValid()</code> clears any messages existing from a previous <code>isValid()</code> call.
+            Metoda <code>getMessages()</code> zwraca wiadomości nieudanej 
+            walidacji tylko dla ostatniego wywołania metody
+            <code>isValid()</code>, ponieważ metoda <code>isValid()</code> 
+            czyści wszystkie wiadomości pochodzące z poprzednich wywołań metody 
+            <code>isValid()</code>.
         </para>
     </note>
 
     <para>
-        The following example illustrates validation of an e-mail address:
+        Poniższy przykład ilustruje walidację adresu e-mail:
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
-    // email appears to be valid
+    // email jest prawidłowy
 } else {
-    // email is invalid; print the reasons
+    // email nie jest prawidłowy; wyświetl powody
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
