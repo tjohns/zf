@@ -222,28 +222,28 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry>月 (地域化された完全な月名)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry>月 (地域化された月名の短縮形。三文字)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry>月 (地域化された月名の短縮形。一文字)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry>月 (二桁の月番号)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry>2009-<emphasis role="strong">02</emphasis>-06T14:53:27+01:00 (02)</entry>
@@ -807,28 +807,28 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     <row>
                         <entry>MM</entry>
                         <entry>月 (二桁)</entry>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry><emphasis role="strong">02</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMM</entry>
                         <entry>月 (地域化された省略形)</entry>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMM</entry>
                         <entry>月 (地域化された完全形)</entry>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMMM</entry>
                         <entry>月 (地域化された省略形、一桁)</entry>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>

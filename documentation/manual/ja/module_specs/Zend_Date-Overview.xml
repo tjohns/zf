@@ -562,7 +562,7 @@ print $date;
                             <para>
                                 指定した日付要素 <code>$part</code> の、
                                 そのオブジェクトのロケールにもとづいた整数表現を返します。
-                                <code>$part</code> で <code>Zend_Date::MONTH_NAME</code>
+                                <code>$part</code> で <code>Zend_Date::MONTH_NAME_SHORT</code>
                                 のような非数値要素を選択した場合は、
                                 <code>false</code> を返します。
                                 <emphasis role="strong">注意:</emphasis> このメソッドは
