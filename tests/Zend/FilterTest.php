@@ -178,7 +178,7 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
     public function testisDate()
     {
         $this->assertTrue(Zend_Filter::isDate('1997-07-16'), '"1997-07-16" is a valid date');
-        $this->assertTrue(Zend_Filter::isDate('1977-20-08'), '"1977-20-08" is a valid date');
+        $this->assertFalse(Zend_Filter::isDate('1977-20-08'), '"1977-20-08" is not a valid date');
     }
 
     /**
