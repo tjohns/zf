@@ -45,10 +45,10 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
 {
-	/**
-	 * protocol handler
-	 * @var null|Zend_Mail_Protocol_Pop3
-	 */
+    /**
+     * protocol handler
+     * @var null|Zend_Mail_Protocol_Pop3
+     */
     protected $_protocol;
 
 
@@ -95,11 +95,11 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw header of message
-	 *
-	 * @param  int $id       number of message
-	 * @param  int $topLines include this many lines with header (after an empty line)
-	 * @return string raw header
+     * Get raw header of message
+     *
+     * @param  int $id       number of message
+     * @param  int $topLines include this many lines with header (after an empty line)
+     * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -108,10 +108,10 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of message
-	 *
-	 * @param  int $id number of message
-	 * @return string raw content
+     * Get raw content of message
+     *
+     * @param  int $id number of message
+     * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawContent($id)
@@ -123,13 +123,13 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of part.
-	 *
-	 * If class does not support fetchPart this method won't work
-	 *
-	 * @param  int $id number of message
-	 * @param  mixed $part
-	 * @return string raw content of message
+     * Get raw content of part.
+     *
+     * If class does not support fetchPart this method won't work
+     *
+     * @param  int $id number of message
+     * @param  mixed $part
+     * @return string raw content of message
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */

@@ -41,12 +41,12 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 {
-	/**
-	 * data of found message files in maildir dir
-	 * @var array
-	 */
+    /**
+     * data of found message files in maildir dir
+     * @var array
+     */
     protected $_files = array();
-    
+
     /**
      * known flag chars in filenames
      * @var array
@@ -60,7 +60,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
     /**
      * Count messages all messages in current box
-	 *
+     *
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
      */
@@ -130,11 +130,11 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw header of message
-	 *
-	 * @param  int $id       number of message
-	 * @param  int $topLines include this many lines with header (after an empty line)
-	 * @return string raw header
+     * Get raw header of message
+     *
+     * @param  int $id       number of message
+     * @param  int $topLines include this many lines with header (after an empty line)
+     * @return string raw header
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -155,10 +155,10 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of message
-	 *
-	 * @param  int $id number of message
-	 * @return string raw content
+     * Get raw content of message
+     *
+     * @param  int $id number of message
+     * @return string raw content
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawContent($id)
@@ -178,13 +178,13 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of part.
-	 *
-	 * If class does not support fetchPart this method won't work
-	 *
-	 * @param  int $id number of message
-	 * @param  mixed $part
-	 * @return string raw content of message
+     * Get raw content of part.
+     *
+     * If class does not support fetchPart this method won't work
+     *
+     * @param  int $id number of message
+     * @param  mixed $part
+     * @return string raw content of message
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawPart($id, $part)

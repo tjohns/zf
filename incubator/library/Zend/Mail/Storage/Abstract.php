@@ -113,32 +113,32 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
     abstract public function getMessage($id);
 
 
-	/**
-	 * Get raw header of message
-	 *
-	 * @param  int $id       number of message
-	 * @param  int $topLines include this many lines with header (after an empty line)
-	 * @return string raw header
-	 */
+    /**
+     * Get raw header of message
+     *
+     * @param  int $id       number of message
+     * @param  int $topLines include this many lines with header (after an empty line)
+     * @return string raw header
+     */
     abstract public function getRawHeader($id, $topLines = 0);
 
-	/**
-	 * Get raw content of message
-	 *
-	 * @param  int $id number of message
-	 * @return string raw content
-	 */
+    /**
+     * Get raw content of message
+     *
+     * @param  int $id number of message
+     * @return string raw content
+     */
     abstract public function getRawContent($id);
 
-	/**
-	 * Get raw content of part.
-	 *
-	 * If class does not support fetchPart this method won't work
-	 *
-	 * @param  int $id number of message
-	 * @param  mixed $part
-	 * @return string raw content of message
-	 */
+    /**
+     * Get raw content of part.
+     *
+     * If class does not support fetchPart this method won't work
+     *
+     * @param  int $id number of message
+     * @param  mixed $part
+     * @return string raw content of message
+     */
     abstract public function getRawPart($id, $part);
 
     /**

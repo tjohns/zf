@@ -55,12 +55,12 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_Mail_Storage_Folder_Interface
 {
-	/**
-	 * protocol handler
-	 * @var null|Zend_Mail_Protocol_Imap
-	 */
+    /**
+     * protocol handler
+     * @var null|Zend_Mail_Protocol_Imap
+     */
     protected $_protocol;
-    
+
     /**
      * name of current folder
      * @var string
@@ -80,7 +80,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
         if (!$this->_currentFolder) {
             throw new Zend_Mail_Storage_Exception('No selected folder to count');
         }
-        
+
         // TODO: check usage of examine
         $result = $this->_protocol->examine($this->_currentFolder);
         return $result['exists'];
@@ -115,11 +115,11 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
-	 * Get raw header of message
-	 *
-	 * @param  int $id       number of message
-	 * @param  int $topLines include this many lines with header (after an empty line)
-	 * @return string raw header
+     * Get raw header of message
+     *
+     * @param  int $id       number of message
+     * @param  int $topLines include this many lines with header (after an empty line)
+     * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -129,10 +129,10 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
-	 * Get raw content of message
-	 *
-	 * @param  int $id number of message
-	 * @return string raw content
+     * Get raw content of message
+     *
+     * @param  int $id number of message
+     * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawContent($id)
@@ -141,13 +141,13 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
-	 * Get raw content of part.
-	 *
-	 * If class does not support fetchPart this method won't work
-	 *
-	 * @param  int $id number of message
-	 * @param  mixed $part
-	 * @return string raw content of message
+     * Get raw content of part.
+     *
+     * If class does not support fetchPart this method won't work
+     *
+     * @param  int $id number of message
+     * @param  mixed $part
+     * @return string raw content of message
      * @throws Zend_Mail_Protocol_Exception
      * @throws Zend_Mail_Storage_Exception
      */

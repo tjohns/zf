@@ -104,7 +104,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      * Get positions for mail message or throw exeption if id is invalid
      *
      * @param int $id number of message
-     * @return array positions as in _positions 
+     * @return array positions as in _positions
      * @throws Zend_Mail_Storage_Exception
      */
     protected function _getPos($id)
@@ -141,11 +141,11 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw header of message
-	 *
-	 * @param  int $id       number of message
-	 * @param  int $topLines include this many lines with header (after an empty line)
-	 * @return string raw header
+     * Get raw header of message
+     *
+     * @param  int $id       number of message
+     * @param  int $topLines include this many lines with header (after an empty line)
+     * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -156,10 +156,10 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of message
-	 *
-	 * @param  int $id number of message
-	 * @return string raw content
+     * Get raw content of message
+     *
+     * @param  int $id number of message
+     * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawContent($id)
@@ -169,13 +169,13 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     }
 
     /*
-	 * Get raw content of part.
-	 *
-	 * If class does not support fetchPart this method won't work
-	 *
-	 * @param  int $id number of message
-	 * @param  mixed $part
-	 * @return string raw content of message
+     * Get raw content of part.
+     *
+     * If class does not support fetchPart this method won't work
+     *
+     * @param  int $id number of message
+     * @param  mixed $part
+     * @return string raw content of message
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */

@@ -47,28 +47,28 @@ class Zend_Mail_Part implements RecursiveIterator
      */
     protected $_content;
 
-	/**
-	 * toplines as fetched with headers
-	 * @var string
-	 */
+    /**
+     * toplines as fetched with headers
+     * @var string
+     */
     protected $_topLines = '';
 
-	/**
-	 * parts of multipart message
-	 * @var array
-	 */
+    /**
+     * parts of multipart message
+     * @var array
+     */
     protected $_parts = array();
 
-	/**
-	 * count of parts of a multipart message
-	 * @var null|int
-	 */
+    /**
+     * count of parts of a multipart message
+     * @var null|int
+     */
     protected $_countParts;
 
-	/**
-	 * current position of iterator
-	 * @var int
-	 */
+    /**
+     * current position of iterator
+     * @var int
+     */
     protected $_iterationPos = 1;
 
     /**
@@ -128,11 +128,11 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
-	/**
-	 * Check if part is a multipart message
-	 *
-	 * @return bool if part is multipart
-	 */
+    /**
+     * Check if part is a multipart message
+     *
+     * @return bool if part is multipart
+     */
     public function isMultipart()
     {
         try {
@@ -148,7 +148,7 @@ class Zend_Mail_Part implements RecursiveIterator
      *
      * If part is multipart the raw content of this part with all sub parts is returned
      *
-     * @return string body 
+     * @return string body
      * @throws Zend_Mail_Exception
      */
     public function getContent()
@@ -164,12 +164,12 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
-	/**
-	 * Cache content and split in parts if multipart
-	 * 
-	 * @return null
-	 * @throws Zend_Mail_Exception
-	 */
+    /**
+     * Cache content and split in parts if multipart
+     *
+     * @return null
+     * @throws Zend_Mail_Exception
+     */
     protected function _cacheContent()
     {
         // caching content if we can't fetch parts
@@ -193,13 +193,13 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
-	/**
-	 * Get part of multipart message
-	 * 
-	 * @param  int $num number of part starting with 1 for first part
-	 * @return Zend_Mail_Part wanted part
-	 * @throws Zend_Mail_Exception
-	 */
+    /**
+     * Get part of multipart message
+     *
+     * @param  int $num number of part starting with 1 for first part
+     * @return Zend_Mail_Part wanted part
+     * @throws Zend_Mail_Exception
+     */
     public function getPart($num)
     {
         if (isset($this->_parts[$num])) {
@@ -224,11 +224,11 @@ class Zend_Mail_Part implements RecursiveIterator
         return $this->_parts[$num];
     }
 
-	/**
-	 * Count parts of a multipart part
-	 *
-	 * @return int number of sub-parts
-	 */
+    /**
+     * Count parts of a multipart part
+     *
+     * @return int number of sub-parts
+     */
     public function countParts()
     {
         if ($this->_countParts) {
@@ -257,7 +257,7 @@ class Zend_Mail_Part implements RecursiveIterator
      *
      * The returned headers are as saved internally. All names are lowercased. The value is a string or an array
      * if a header with the same name occurs more than once.
-     * 
+     *
      * @return array headers as array(name => value)
      */
     public function getHeaders()
@@ -274,17 +274,17 @@ class Zend_Mail_Part implements RecursiveIterator
         return $this->_headers;
     }
 
-	/**
-	 * Get a header in specificed format
-	 *
-	 * Internally headers that occur more than once are saved as array, all other as string. If $format
-	 * is set to string implode is used to concat the values (with Zend_Mime::LINEEND as delim).
-	 *
-	 * @param  string $name   name of header, matches case-insensitive, but camel-case is replaced with dashes
-	 * @param  string $format change type of return value to 'string' or 'array'
-	 * @return string|array value of header in wanted or internal format
-	 * @throws Zend_Mail_Exception
-	 */
+    /**
+     * Get a header in specificed format
+     *
+     * Internally headers that occur more than once are saved as array, all other as string. If $format
+     * is set to string implode is used to concat the values (with Zend_Mime::LINEEND as delim).
+     *
+     * @param  string $name   name of header, matches case-insensitive, but camel-case is replaced with dashes
+     * @param  string $format change type of return value to 'string' or 'array'
+     * @return string|array value of header in wanted or internal format
+     * @throws Zend_Mail_Exception
+     */
     public function getHeader($name, $format = null)
     {
         if ($this->_headers === null) {
@@ -321,7 +321,7 @@ class Zend_Mail_Part implements RecursiveIterator
 
     /**
      * Getter for mail headers - name is matched in lowercase
-     * 
+     *
      * This getter is short for Zend_Mail_Part::getHeader($name, 'string')
      *
      * @see Zend_Mail_Part::getHeader()
@@ -335,11 +335,11 @@ class Zend_Mail_Part implements RecursiveIterator
         return $this->getHeader($name, 'string');
     }
 
-	/**
-	 * magic method to get content of part
-	 *
-	 * @return string content
-	 */
+    /**
+     * magic method to get content of part
+     *
+     * @return string content
+     */
     public function __toString()
     {
         return $this->getContent();
@@ -381,7 +381,7 @@ class Zend_Mail_Part implements RecursiveIterator
 
     /**
      * implements Iterator::next()
-     * 
+     *
      * @return null
      */
     public function next()

@@ -60,11 +60,11 @@ class Zend_Mail_Message extends Zend_Mail_Part
         parent::__construct($params);
     }
 
-	/**
-	 * return toplines as found after headers
-	 *
-	 * @return string toplines
-	 */
+    /**
+     * return toplines as found after headers
+     *
+     * @return string toplines
+     */
     public function getTopLines()
     {
         return $this->_topLines;
