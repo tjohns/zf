@@ -32,26 +32,29 @@ class Zend_Mail_Protocol_Pop3
 {
     /**
      * saves if server supports top
+     * @var null|bool
      */
     public $hasTop = null;
 
     /**
      * socket to pop3
+     * @var null|resource
      */
-    private $_socket;
+    protected $_socket;
 
     /**
      * greeting timestamp for apop
+     * @var null|string
      */
-    private $_timestamp;
+    protected $_timestamp;
 
 
     /**
      * Public constructor
      *
-     * @param string $host  hostname of IP address of POP3 server, if given connect() is called
-     * @param int    $port  port of POP3 server, default is 110 (995 for ssl)
-     * @param bool   $ssl   use ssl?
+     * @param  string      $host  hostname of IP address of POP3 server, if given connect() is called
+     * @param  int|null    $port  port of POP3 server, null for default (110 or 995 for ssl)
+     * @param  bool|string $ssl   use ssl? 'SSL', 'TLS' or false
      * @throws Zend_Mail_Protocol_Exception
      */
     public function __construct($host = '', $port = null, $ssl = false)
@@ -74,11 +77,11 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Open connection to POP3 server
      *
-     * @param  string $host  hostname of IP address of POP3 server
-     * @param  int    $port  of POP3 server, default is 110 (995 for ssl)
-     * @param  string $ssl   use 'SSL' or 'TLS'
-     * @throws Zend_Mail_Protocol_Exception
+     * @param  string      $host  hostname of IP address of POP3 server
+     * @param  int|null    $port  of POP3 server, default is 110 (995 for ssl)
+     * @param  string|bool $ssl   use 'SSL', 'TLS' or false
      * @return string welcome message
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function connect($host, $port = null, $ssl = false)
     {
@@ -120,7 +123,7 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Send a request
      *
-     * @param string $request  your request without newline
+     * @param string $request your request without newline
      * @return null
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -134,12 +137,11 @@ class Zend_Mail_Protocol_Pop3
 
 
     /**
-     *
      * read a response
      *
-     * @param  boolean response has multiple lines and should be read until "<nl>.<nl>"
-     * @throws Zend_Mail_Protocol_Exception
+     * @param  boolean $multiline response has multiple lines and should be read until "<nl>.<nl>"
      * @return string response
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function readResponse($multiline = false)
     {
@@ -175,6 +177,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Send request and get resposne
+     *
      * @see sendRequest(), readResponse()
      *
      * @param  string $request    request
@@ -191,6 +194,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * End communication with POP3 server (also closes socket)
+     *
      * @return null
      */
     public function logout()
@@ -269,8 +273,8 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Make LIST call for size of message(s)
      *
-     * @param  int $msgno  number of message
-     * @return int|array   size of given message or list with array(num => size)
+     * @param  int|null $msgno number of message, null for all
+     * @return int|array size of given message or list with array(num => size)
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getList($msgno = null)
@@ -298,8 +302,8 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Make UIDL call for getting a uniqueid
      *
-     * @param  int $msgno    number of message
-     * @return string|array  uniqueid of message or list with array(num => uniqueid)
+     * @param  int|null $msgno number of message, null for all
+     * @return string|array uniqueid of message or list with array(num => uniqueid)
      * @throws Zend_Mail_Protocol_Exception
      */
     public function uniqueid($msgno = null)
@@ -335,9 +339,9 @@ class Zend_Mail_Protocol_Pop3
      * The fallback makes normale RETR call, which retrieves the whole message. Additional
      * lines are not removed.
      *
-     * @param int  $msgno     number of message
-     * @param int  $lines     number of wanted body lines (empty line is inserted after header lines)
-     * @param bool $fallback  fallback with full retrieve if top is not supported
+     * @param  int  $msgno    number of message
+     * @param  int  $lines    number of wanted body lines (empty line is inserted after header lines)
+     * @param  bool $fallback fallback with full retrieve if top is not supported
      * @return string message headers with wanted body lines
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -376,8 +380,8 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Make a RETR call for retrieving a full message with headers and body
      *
-     * @param  int     $msgno  message number
-     * @return string          message
+     * @param  int $msgno  message number
+     * @return string message
      * @throws Zend_Mail_Protocol_Exception
      */
     public function retrive($msgno)
@@ -389,6 +393,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make a NOOP call, maybe needed for keeping the server happy
+     *
      * @return null
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -400,6 +405,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make a DELE count to remove a message
+     *
      * @return null
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -411,6 +417,7 @@ class Zend_Mail_Protocol_Pop3
 
     /**
      * Make RSET call, which rollbacks delete requests
+     *
      * @return null
      * @throws Zend_Mail_Protocol_Exception
      */

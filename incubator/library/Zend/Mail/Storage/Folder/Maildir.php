@@ -41,21 +41,25 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
 {
     /**
      * Zend_Mail_Storage_Folder root folder for folder structure
+     * @var Zend_Mail_Storage_Folder
      */
     protected $_rootFolder;
 
     /**
      * rootdir of folder structure
+     * @var string
      */
     protected $_rootdir;
 
     /**
      * name of current folder
+     * @var string
      */
     protected $_currentFolder;
 
     /**
      * delim char for subfolders
+     * @var string
      */
     protected $_delim;
 
@@ -66,7 +70,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      *   - delim   delim char for folder structur, default is '.'
      *   - folder intial selected folder, default is 'INBOX'
      *
-     * @param  $params              array mail reader specific parameters
+     * @param  $params array mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
@@ -93,7 +97,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */
-    private function _buildFolderTree()
+    protected function _buildFolderTree()
     {
         $this->_rootFolder = new Zend_Mail_Storage_Folder('/', '/', false);
         $this->_rootFolder->INBOX = new Zend_Mail_Storage_Folder('INBOX', 'INBOX', true);
@@ -183,7 +187,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      *
      * folder must be selectable!
      *
-     * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @param Zend_Mail_Storage_Folder|string $globalName global name of folder or instance for subfolder
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */

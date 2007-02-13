@@ -37,36 +37,64 @@ class Zend_Mail_Part implements RecursiveIterator
 {
     /**
      * headers of part as array
+     * @var null|array
      */
     protected $_headers;
 
     /**
      * raw part body
+     * @var null|string
      */
     protected $_content;
 
-    protected $_topLines;
+	/**
+	 * toplines as fetched with headers
+	 * @var string
+	 */
+    protected $_topLines = '';
 
+	/**
+	 * parts of multipart message
+	 * @var array
+	 */
     protected $_parts = array();
 
+	/**
+	 * count of parts of a multipart message
+	 * @var null|int
+	 */
     protected $_countParts;
 
+	/**
+	 * current position of iterator
+	 * @var int
+	 */
     protected $_iterationPos = 1;
 
     /**
-     * mail handler
+     * mail handler, if late fetch is active
+     * @var null|Zend_Mail_Storage_Abstract
      */
     protected $_mail;
 
     /**
      * message number for mail handler
+     * @var int
      */
-    protected $_messageNum;
+    protected $_messageNum = 0;
 
     /**
      * Public constructor
      *
-     * @param string $rawMessage  full message with or without headers
+     * Zend_Mail_Part supports different sources for content. The possible params are:
+     * - handler    a instance of Zend_Mail_Storage_Abstract for late fetch
+     * - id         number of message for handler
+     * - raw        raw content with header and body as string
+     * - headers    headers as array (name => value) or string, if a content part is found it's used as toplines
+     * - noToplines ignore content found after headers in param 'headers'
+     * - content    content as string
+     *
+     * @param array $params  full message with or without headers
      */
     public function __construct(array $params)
     {
@@ -100,6 +128,11 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
+	/**
+	 * Check if part is a multipart message
+	 *
+	 * @return bool if part is multipart
+	 */
     public function isMultipart()
     {
         try {
@@ -111,9 +144,12 @@ class Zend_Mail_Part implements RecursiveIterator
 
 
     /**
-     * Body of message
+     * Body of part
      *
-     * @return string body
+     * If part is multipart the raw content of this part with all sub parts is returned
+     *
+     * @return string body 
+     * @throws Zend_Mail_Exception
      */
     public function getContent()
     {
@@ -128,7 +164,13 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
-    public function _cacheContent()
+	/**
+	 * Cache content and split in parts if multipart
+	 * 
+	 * @return null
+	 * @throws Zend_Mail_Exception
+	 */
+    protected function _cacheContent()
     {
         // caching content if we can't fetch parts
         if ($this->_content === null) {
@@ -151,6 +193,13 @@ class Zend_Mail_Part implements RecursiveIterator
         }
     }
 
+	/**
+	 * Get part of multipart message
+	 * 
+	 * @param  int $num number of part starting with 1 for first part
+	 * @return Zend_Mail_Part wanted part
+	 * @throws Zend_Mail_Exception
+	 */
     public function getPart($num)
     {
         if (isset($this->_parts[$num])) {
@@ -175,6 +224,11 @@ class Zend_Mail_Part implements RecursiveIterator
         return $this->_parts[$num];
     }
 
+	/**
+	 * Count parts of a multipart part
+	 *
+	 * @return int number of sub-parts
+	 */
     public function countParts()
     {
         if ($this->_countParts) {
@@ -201,7 +255,10 @@ class Zend_Mail_Part implements RecursiveIterator
     /**
      * Get all headers
      *
-     * @return array headers
+     * The returned headers are as saved internally. All names are lowercased. The value is a string or an array
+     * if a header with the same name occurs more than once.
+     * 
+     * @return array headers as array(name => value)
      */
     public function getHeaders()
     {
@@ -217,7 +274,17 @@ class Zend_Mail_Part implements RecursiveIterator
         return $this->_headers;
     }
 
-
+	/**
+	 * Get a header in specificed format
+	 *
+	 * Internally headers that occur more than once are saved as array, all other as string. If $format
+	 * is set to string implode is used to concat the values (with Zend_Mime::LINEEND as delim).
+	 *
+	 * @param  string $name   name of header, matches case-insensitive, but camel-case is replaced with dashes
+	 * @param  string $format change type of return value to 'string' or 'array'
+	 * @return string|array value of header in wanted or internal format
+	 * @throws Zend_Mail_Exception
+	 */
     public function getHeader($name, $format = null)
     {
         if ($this->_headers === null) {
@@ -254,16 +321,25 @@ class Zend_Mail_Part implements RecursiveIterator
 
     /**
      * Getter for mail headers - name is matched in lowercase
+     * 
+     * This getter is short for Zend_Mail_Part::getHeader($name, 'string')
      *
-     * @param  string $name         header name
+     * @see Zend_Mail_Part::getHeader()
+     *
+     * @param  string $name header name
+     * @return string value of header
      * @throws Zend_Mail_Exception
-     * @return string|array         header line or array of headers if header exists more than once
      */
     public function __get($name)
     {
         return $this->getHeader($name, 'string');
     }
 
+	/**
+	 * magic method to get content of part
+	 *
+	 * @return string content
+	 */
     public function __toString()
     {
         return $this->getContent();
@@ -272,7 +348,7 @@ class Zend_Mail_Part implements RecursiveIterator
     /**
      * implements RecursiveIterator::hasChildren()
      *
-     * @return bool current element has children
+     * @return bool current element has children/is multipart
      */
     public function hasChildren()
     {
@@ -283,7 +359,7 @@ class Zend_Mail_Part implements RecursiveIterator
     /**
      * implements RecursiveIterator::getChildren()
      *
-     * @return Zend_Mail_Storage_Folder same as self::current()
+     * @return Zend_Mail_Part same as self::current()
      */
     public function getChildren()
     {
@@ -305,6 +381,7 @@ class Zend_Mail_Part implements RecursiveIterator
 
     /**
      * implements Iterator::next()
+     * 
      * @return null
      */
     public function next()
@@ -315,7 +392,7 @@ class Zend_Mail_Part implements RecursiveIterator
     /**
      * implements Iterator::key()
      *
-     * @return string key/local name of current element
+     * @return string key/number of current part
      */
     public function key()
     {
@@ -325,7 +402,7 @@ class Zend_Mail_Part implements RecursiveIterator
     /**
      * implements Iterator::current()
      *
-     * @return Zend_Mail_Storage_Folder current folder
+     * @return Zend_Mail_Part current part
      */
     public function current()
     {
@@ -334,6 +411,7 @@ class Zend_Mail_Part implements RecursiveIterator
 
     /**
      * implements Iterator::rewind()
+     *
      * @return null
      */
     public function rewind()

@@ -55,25 +55,33 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_Mail_Storage_Folder_Interface
 {
-    private $_protocol;
-    private $_currentFolder = '';
+	/**
+	 * protocol handler
+	 * @var null|Zend_Mail_Protocol_Imap
+	 */
+    protected $_protocol;
+    
+    /**
+     * name of current folder
+     * @var string
+     */
+    protected $_currentFolder = '';
 
 
     /**
-     *
      * Count messages all messages in current box
-     * No flags are supported by POP3 (exceptions is thrown)
      *
-     * @param int filter by flags
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function countMessages($flags = null)
+    public function countMessages()
     {
         if (!$this->_currentFolder) {
             throw new Zend_Mail_Storage_Exception('No selected folder to count');
         }
+        
+        // TODO: check usage of examine
         $result = $this->_protocol->examine($this->_currentFolder);
         return $result['exists'];
     }
@@ -81,7 +89,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     /**
      * get a list of messages with number and size
      *
-     * @param int number of message
+     * @param int $id number of message
      * @return int|array size of given message of list with all messages as array(num => size)
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -94,10 +102,9 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /**
+     * Fetch a message
      *
-     * get a message with headers and body
-     *
-     * @param int number of message
+     * @param int $id number of message
      * @return Zend_Mail_Message
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -108,6 +115,11 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
+	 * Get raw header of message
+	 *
+	 * @param  int $id       number of message
+	 * @param  int $topLines include this many lines with header (after an empty line)
+	 * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -117,6 +129,10 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
+	 * Get raw content of message
+	 *
+	 * @param  int $id number of message
+	 * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawContent($id)
@@ -125,6 +141,13 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
+	 * Get raw content of part.
+	 *
+	 * If class does not support fetchPart this method won't work
+	 *
+	 * @param  int $id number of message
+	 * @param  mixed $part
+	 * @return string raw content of message
      * @throws Zend_Mail_Protocol_Exception
      * @throws Zend_Mail_Storage_Exception
      */
@@ -136,17 +159,16 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
 
 
     /**
-     *
      * create instance with parameters
      * Supported paramters are
-     *   - host hostname or ip address of IMAP server
      *   - user username
+     *   - host hostname or ip address of IMAP server [optional, default = 'localhost']
      *   - password password for user 'username' [optional, default = '']
      *   - port port for IMAP server [optional, default = 110]
      *   - ssl 'SSL' or 'TLS' for secure sockets
      *   - folder select this folder [optional, default = 'INBOX']
      *
-     * @param  $params array  mail reader specific parameters
+     * @param  array $params mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -179,18 +201,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
         $this->selectFolder(isset($params['folder']) ? $params['folder'] : 'INBOX');
     }
 
-
     /**
-     *
-     * public destructor
-     */
-    public function __destruct()
-    {
-        $this->close();
-    }
-
-    /**
-     *
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
      *
@@ -203,7 +214,6 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /**
-     *
      * Keep the server busy.
      *
      * @return null
@@ -216,12 +226,11 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /**
-     *
      * Remove a message from server. If you're doing that from a web enviroment
      * you should be careful and use a uniqueid as parameter if possible to
      * identify the message.
      *
-     * @param int number of message
+     * @param int $id number of message
      * @return null
      */
     public function removeMessage($id)
@@ -232,21 +241,9 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /**
-     *
-     * Special handling for hasTop. The headers of the first message is
-     * retrieved if Top wasn't needed/tried yet.
-     *
-     * @see Zend_Mail_Storage_Abstract:__get()
-     */
-    public function __get($var)
-    {
-        return parent::__get($var);
-    }
-
-    /**
      * get root folder or given folder
      *
-     * @param string $rootFolder get folder structure for given folder, else root
+     * @param  string $rootFolder get folder structure for given folder, else root
      * @return Zend_Mail_Storage_Folder root or wanted folder
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
@@ -301,7 +298,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      *
      * folder must be selectable!
      *
-     * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @param  Zend_Mail_Storage_Folder|string $globalName global name of folder or instance for subfolder
      * @return null
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception

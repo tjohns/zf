@@ -19,11 +19,6 @@
 
 
 /**
- * Zend_Mime_Decode
- */
-require_once 'Zend/Mime/Decode.php';
-
-/**
  * Zend_Mail_Exception
  */
 require_once 'Zend/Mail/Exception.php';
@@ -43,7 +38,11 @@ class Zend_Mail_Message extends Zend_Mail_Part
     /**
      * Public constructor
      *
-     * @param string $rawMessage  full message with or without headers
+     * In addition to the parameters of Zend_Mail_Part::__construct() this constructor supports:
+     * - file filename or file handle of a file with raw message content
+     *
+     * @param  string $rawMessage  full message with or without headers
+     * @throws Zend_Mail_Exception
      */
     public function __construct(array $params)
     {
@@ -54,16 +53,18 @@ class Zend_Mail_Message extends Zend_Mail_Part
                     throw new Zend_Mail_Exception('could not open file');
                 }
             } else {
-                $params['raw'] = '';
-                while (!feof($params['file'])) {
-                    $params['raw'] .= fgets($params['file']);
-                }
+                $params['raw'] = stream_get_contents($params['file']);
             }
         }
 
         parent::__construct($params);
     }
 
+	/**
+	 * return toplines as found after headers
+	 *
+	 * @return string toplines
+	 */
     public function getTopLines()
     {
         return $this->_topLines;

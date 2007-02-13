@@ -36,9 +36,10 @@ class Zend_Mime_Decode
      *
      * Parts consist of the header and the body of each MIME part.
      *
-     * @param string $body
-     * @param string $boundary
-     * @return array
+     * @param  string $body     raw body of message
+     * @param  string $boundary boundary as found in content-type
+     * @return array parts with content of each part, empty if no parts found
+     * @throws Zend_Exception
      */
     public static function splitMime($body, $boundary)
     {
@@ -79,10 +80,11 @@ class Zend_Mime_Decode
      * decodes a mime encoded String and returns a
      * struct of parts with header and body
      *
-     * @param string $message
-     * @param string $boundary
-     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
-     * @return array
+     * @param  string $message  raw message content
+     * @param  string $boundary boundary as found in content-type
+     * @param  string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
+     * @return array|null parts as array('header' => array(name => value), 'body' => content), null if no parts found
+     * @throws Zend_Exception
      */
     public static function splitMessageStruct($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
@@ -103,10 +105,13 @@ class Zend_Mime_Decode
      * split a message in header and body part, if no header or an
      * invalid header is found $headers is empty
      *
-     * @param string $message
-     * @param mixed $headers, output param, out type is array
-     * @param mixed $body, output param, out type is string
-     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
+     * The charset of the returned headers depend on your iconv settings.
+     *
+     * @param  string $message raw message with header and optional content
+     * @param  array  $headers output param, array with headers as array(name => value)
+     * @param  string $body    output param, content of message
+     * @param  string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
+     * @return null
      */
     public static function splitMessage($message, &$headers, &$body, $EOL = Zend_Mime::LINEEND)
     {
@@ -155,13 +160,11 @@ class Zend_Mime_Decode
     }
 
     /**
-     * split a content type in its different parts - maybe that could
-     * get a more generic name and code as many fields use this format
+     * split a content type in its different parts
      *
-     * @param string content-type
-     * @param string the wanted part, else an array with all parts is returned
-     *
-     * @return string|array wanted part or all parts
+     * @param  string $type       content-type
+     * @param  string $wantedPart the wanted part, else an array with all parts is returned
+     * @return string|array wanted part or all parts as array('type' => content-type, partname => value)
      */
     public static function splitContentType($type, $wantedPart = null)
     {
@@ -171,19 +174,18 @@ class Zend_Mime_Decode
     /**
      * split a header field like content type in its different parts
      *
-     * @param string header field
-     * @param string the wanted part, else an array with all parts is returned
-     * @param string key name for the first field
-     *
-     * @return string|array wanted part or all parts
+     * @param  string $type       header field
+     * @param  string $wantedPart the wanted part, else an array with all parts is returned
+     * @param  string $firstName  key name for the first part
+     * @return string|array wanted part or all parts as array($firstName => firstPart, partname => value)
      */
-    public static function splitHeaderField($type, $wantedPart = null, $firstName = 0)
+    public static function splitHeaderField($field, $wantedPart = null, $firstName = 0)
     {
         $split = array();
-        $type = explode(';', $type);
+        $field = explode(';', $field);
         // this is already prepared for a
-        $split[$firstName] = array_shift($type);
-        foreach ($type as $part) {
+        $split[$firstName] = array_shift($field);
+        foreach ($field as $part) {
             $part = trim($part);
             list($key, $value) = explode('=', $part);
             if ($value[0] == '"') {
@@ -199,10 +201,11 @@ class Zend_Mime_Decode
     }
 
     /**
-     *
      * decode a quoted printable encoded string
      *
-     * @param string encoded string
+     * The charset of the returned string depends on your iconv settings.
+     *
+     * @param  string encoded string
      * @return string decoded string
      */
     public static function decodeQuotedPrintable($string)

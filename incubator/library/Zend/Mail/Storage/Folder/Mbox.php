@@ -46,28 +46,32 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
 {
     /**
      * Zend_Mail_Storage_Folder root folder for folder structure
+     * @var Zend_Mail_Storage_Folder
      */
     protected $_rootFolder;
 
     /**
      * rootdir of folder structure
+     * @var string
      */
     protected $_rootdir;
 
     /**
      * name of current folder
+     * @var string
      */
     protected $_currentFolder;
 
     /**
      * Create instance with parameters
+     *
      * Disallowed parameters are:
      *   - filename use Zend_Mail_Storage_Mbox for a single file
      * Supported parameters are:
      *   - dirname rootdir of mbox structure
      *   - folder intial selected folder, default is 'INBOX'
      *
-     * @param  $params              array mail reader specific parameters
+     * @param  $params array mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
@@ -99,7 +103,7 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */
-    private function _buildFolderTree($currentDir, $parentFolder = null, $parentGlobalName = '')
+    protected function _buildFolderTree($currentDir, $parentFolder = null, $parentGlobalName = '')
     {
         if (!$parentFolder) {
             $this->_rootFolder = new Zend_Mail_Storage_Folder('/', '/', false);
@@ -166,7 +170,7 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
      *
      * folder must be selectable!
      *
-     * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @param Zend_Mail_Storage_Folder|string $globalName global name of folder or instance for subfolder
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */
@@ -216,6 +220,7 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
      * magic method for unserialize()
      *
      * with this method you can cache the mbox class
+     *
      * @return null
      */
     public function __wakeup()

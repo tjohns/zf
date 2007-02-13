@@ -45,24 +45,22 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
 {
-    private $_protocol;
+	/**
+	 * protocol handler
+	 * @var null|Zend_Mail_Protocol_Pop3
+	 */
+    protected $_protocol;
 
 
     /**
-     *
      * Count messages all messages in current box
-     * No flags are supported by POP3 (exceptions is thrown)
      *
-     * @param int filter by flags
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function countMessages($flags = null)
+    public function countMessages()
     {
-        if ($flags) {
-            throw new Zend_Mail_Storage_Exception('POP3 does not support flags');
-        }
         $this->_protocol->status($count, $null);
         return (int)$count;
     }
@@ -70,7 +68,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     /**
      * get a list of messages with number and size
      *
-     * @param int number of message
+     * @param int $id number of message
      * @return int|array size of given message of list with all messages as array(num => size)
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -81,10 +79,9 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /**
+     * Fetch a message
      *
-     * get a message with headers and body
-     *
-     * @param int number of message
+     * @param int $id number of message
      * @return Zend_Mail_Message
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -98,6 +95,11 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw header of message
+	 *
+	 * @param  int $id       number of message
+	 * @param  int $topLines include this many lines with header (after an empty line)
+	 * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -106,6 +108,10 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw content of message
+	 *
+	 * @param  int $id number of message
+	 * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
     public function getRawContent($id)
@@ -117,6 +123,13 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw content of part.
+	 *
+	 * If class does not support fetchPart this method won't work
+	 *
+	 * @param  int $id number of message
+	 * @param  mixed $part
+	 * @return string raw content of message
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -127,7 +140,6 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /**
-     *
      * create instance with parameters
      * Supported paramters are
      *   - host hostname or ip address of POP3 server
@@ -163,18 +175,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
         $this->_protocol->login($params['user'], $params['password']);
     }
 
-
     /**
-     *
-     * public destructor
-     */
-    public function __destruct()
-    {
-        $this->close();
-    }
-
-    /**
-     *
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
      *
@@ -186,7 +187,6 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /**
-     *
      * Keep the server busy.
      *
      * @return null
@@ -198,12 +198,11 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /**
-     *
      * Remove a message from server. If you're doing that from a web enviroment
      * you should be careful and use a uniqueid as parameter if possible to
      * identify the message.
      *
-     * @param int number of message
+     * @param  int $id number of message
      * @return null
      * @throws Zend_Mail_Protocol_Exception
      */
@@ -213,11 +212,12 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /**
-     *
      * Special handling for hasTop. The headers of the first message is
      * retrieved if Top wasn't needed/tried yet.
      *
      * @see Zend_Mail_Storage_Abstract:__get()
+     * @param  string $var
+     * @return string
      * @throws Zend_Mail_Storage_Exception
      */
     public function __get($var)

@@ -41,29 +41,40 @@ require_once 'Zend/Mail/Storage/Exception.php';
  */
 class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 {
-    private $_files = array();
-    private static $_knownFlags = array('P' => 'Passed',
-                               'R' => 'Replied',
-                               'S' => 'Seen',
-                               'T' => 'Trashed',
-                               'D' => 'Draft',
-                               'F' => 'Flagged');
+	/**
+	 * data of found message files in maildir dir
+	 * @var array
+	 */
+    protected $_files = array();
+    
+    /**
+     * known flag chars in filenames
+     * @var array
+     */
+    protected static $_knownFlags = array('P' => 'Passed',
+                                          'R' => 'Replied',
+                                          'S' => 'Seen',
+                                          'T' => 'Trashed',
+                                          'D' => 'Draft',
+                                          'F' => 'Flagged');
 
     /**
      * Count messages all messages in current box
-     * Flags are not supported (exceptions is thrown)
-     *
-     * @param  int $flags           filter by flags
+	 *
+     * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
-     * @return int                  number of messages
      */
-    public function countMessages($flags = null)
+    public function countMessages()
     {
         return count($this->_files);
     }
 
     /**
+     * Get one or all fields from file structure. Also checks if message is valid
      *
+     * @param  int         $id    message number
+     * @param  string|null $field wanted field
+     * @return string|array wanted field or all fields as array
      * @throws Zend_Mail_Storage_Exception
      */
     protected function _getFileData($id, $field = null)
@@ -86,8 +97,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     /**
      * Get a list of messages with number and size
      *
-     * @param  int        $id  number of message
-     * @return int|array      size of given message of list with all messages as array(num => size)
+     * @param  int|null $id number of message or null for all messages
+     * @return int|array size of given message of list with all messages as array(num => size)
      * @throws Zend_Mail_Storage_Exception
      */
     public function getSize($id = null)
@@ -107,9 +118,9 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
 
     /**
-     * Get a message with headers and body
+     * Fetch a message
      *
-     * @param  int $id            number of message
+     * @param  int $id number of message
      * @return Zend_Mail_Message
      * @throws Zend_Mail_Storage_Exception
      */
@@ -119,6 +130,11 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw header of message
+	 *
+	 * @param  int $id       number of message
+	 * @param  int $topLines include this many lines with header (after an empty line)
+	 * @return string raw header
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawHeader($id, $topLines = 0)
@@ -139,6 +155,10 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw content of message
+	 *
+	 * @param  int $id number of message
+	 * @return string raw content
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawContent($id)
@@ -158,6 +178,13 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     }
 
     /*
+	 * Get raw content of part.
+	 *
+	 * If class does not support fetchPart this method won't work
+	 *
+	 * @param  int $id number of message
+	 * @param  mixed $part
+	 * @return string raw content of message
      * @throws Zend_Mail_Storage_Exception
      */
     public function getRawPart($id, $part)
@@ -169,9 +196,9 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     /**
      * Create instance with parameters
      * Supported parameters are:
-     *   - filename filename of mbox file
+     *   - dirname dirname of mbox file
      *
-     * @param  $params              array mail reader specific parameters
+     * @param  $params array mail reader specific parameters
      * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
@@ -266,6 +293,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
     /**
      * stub for not supported message deletion
+     *
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */

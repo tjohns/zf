@@ -38,7 +38,7 @@ interface Zend_Mail_Storage_Folder_Interface
      *
      * folder must be selectable!
      *
-     * @param Zend_Mail_Storage_Folder|string global name of folder or instance for subfolder
+     * @param Zend_Mail_Storage_Folder|string $globalName global name of folder or instance for subfolder
      * @return null
      * @throws Zend_Mail_Storage_Exception
      */
