@@ -95,7 +95,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         $bodyNodes = $xpath->query('/html/body');
         foreach ($bodyNodes as $bodyNode) {
             // body should always have only one entry, but we process all nodeset entries
-            $docBody .= $bodyNode->textContent;
+            $this->_retrieveNodeText($bodyNode, $docBody);
         }
         if ($storeContent) {
             $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, $this->_doc->actualEncoding));
@@ -120,6 +120,25 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         $this->_headerLinks = array_unique($this->_headerLinks);
     }
 
+    /**
+     * Get node text
+     *
+     * We should exclude scripts, which may be not included into comment tags, CDATA sections,
+     *
+     * @param DOMNode $node
+     * @param string &$text
+     */
+    private function _retrieveNodeText(DOMNode $node, &$text)
+    {
+        if ($node->nodeType == XML_TEXT_NODE) {
+            $text .= $node->nodeValue ;
+            $text .= ' ';
+        } else if ($node->nodeType == XML_ELEMENT_NODE  &&  $node->nodeName != 'script') {
+            foreach ($node->childNodes as $childNode) {
+                $this->_retrieveNodeText($childNode, $text);
+            }
+        }
+    }
 
     /**
      * Get document HREF links
@@ -227,7 +246,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                 // process node later to leave childNodes structure untouched
                 $textNodes[] = $childNode;
             } else {
-                $this->_highlightNode($childNode, $wordsToHighlight, $color);
+                // Skip script nodes
+                if ($childNode->nodeName != 'script') {
+                    $this->_highlightNode($childNode, $wordsToHighlight, $color);
+                }
             }
         }
 
