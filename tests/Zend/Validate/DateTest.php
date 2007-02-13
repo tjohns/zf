@@ -70,16 +70,18 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             '2007-01-01' => true,
             '2007-02-28' => true,
-            '2007-02-29' => true,
-            '2007-02-30' => true,
-            '2007-02-99' => true,
-            '9999-99-99' => true,
-            0            => true,
-            999999999999 => true,
-            'Jan 1 2007' => true
+            '2007-02-29' => false,
+            '2008-02-29' => true,
+            '2007-02-30' => false,
+            '2007-02-99' => false,
+            '9999-99-99' => false,
+            0            => false,
+            999999999999 => false,
+            'Jan 1 2007' => false
             );
         foreach ($valuesExpected as $input => $result) {
-            $this->assertEquals($result, $this->_validator->isValid($input));
+            $this->assertEquals($result, $this->_validator->isValid($input),
+                                "'$input' expected to be " . ($result ? '' : 'in') . 'valid');
         }
     }
 
@@ -91,45 +93,5 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
     public function testGetMessages()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
-    }
-
-    /**
-     * Ensures that getFormat() returns expected default value
-     *
-     * @return void
-     */
-    public function testGetFormat()
-    {
-        $this->assertEquals(null, $this->_validator->getFormat());
-    }
-
-    /**
-     * Ensures that getLocale() returns expected default value
-     *
-     * @return void
-     */
-    public function testGetLocale()
-    {
-        $this->assertTrue(is_string($this->_validator->getLocale()));
-    }
-
-    /**
-     * Ensures that setLocale() follows expected behavior
-     *
-     * @return void
-     */
-    public function testSetLocale()
-    {
-        /**
-         * @see Zend_Locale
-         */
-        require_once 'Zend/Locale.php';
-        $this->assertTrue(is_string($this->_validator->setLocale(new Zend_Locale())->getLocale()));
-        $this->assertEquals('en_US', $this->_validator->setLocale('en_US')->getLocale());
-    }
-
-    public function testInvalidDate()
-    {
-        $this->assertFalse($this->_validator->isValid('invalid'));
     }
 }

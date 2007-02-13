@@ -36,22 +36,6 @@ require_once 'Zend/Validate/Interface.php';
 class Zend_Validate_Date implements Zend_Validate_Interface
 {
     /**
-     * Date format option
-     *
-     * Date type CLDR format to parse. Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
-     *
-     * @var string
-     */
-    protected $_format;
-
-    /**
-     * Date locale option
-     *
-     * @var Zend_Locale
-     */
-    protected $_locale;
-
-    /**
      * Array of validation failure messages
      *
      * @var array
@@ -59,78 +43,9 @@ class Zend_Validate_Date implements Zend_Validate_Interface
     protected $_messages = array();
 
     /**
-     * Sets validator options
-     *
-     * @param  string             $format
-     * @param  Zend_Locale|string $locale
-     * @return void
-     */
-    public function __construct($format = null, $locale = null)
-    {
-        $this->setFormat($format);
-        $this->setLocale($locale);
-    }
-
-    /**
-     * Returns the format option
-     *
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->_format;
-    }
-
-    /**
-     * Sets the format option
-     *
-     * @param  string $format
-     * @return Zend_Validate_Date Provides a fluent interface
-     */
-    public function setFormat($format)
-    {
-        $this->_format = $format;
-        return $this;
-    }
-
-    /**
-     * Returns the locale option
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->_locale;
-    }
-
-    /**
-     * Sets the locale option
-     *
-     * @param  mixed $locale
-     * @return Zend_Validate_Date Provides a fluent interface
-     */
-    public function setLocale($locale)
-    {
-        /**
-         * @see Zend_Locale
-         */
-        require_once 'Zend/Locale.php';
-        if (!Zend_Locale::isLocale($locale)) {
-            $locale = new Zend_Locale();
-        }
-        if ($locale instanceof Zend_Locale) {
-            $this->_locale = $locale->toString();
-        } else {
-            $this->_locale = $locale;
-        }
-
-        return $this;
-    }
-
-    /**
      * Defined by Zend_Validate_Interface
      *
-     * Returns true if and only if $value is a valid date
+     * Returns true if and only if $value is a valid date of the format YYYY-MM-DD
      *
      * @param  mixed $value
      * @return boolean
@@ -138,20 +53,19 @@ class Zend_Validate_Date implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        do {
-            if (is_numeric($value)) {
-                break;
-            }
-            /**
-             * @see Zend_Locale_Format
-             */
-            require_once 'Zend/Locale/Format.php';
-            if (Zend_Locale_Format::isDate($value, $this->_format, $this->_locale)) {
-                break;
-            }
+
+        if (!preg_match('/\d{4}-\d{2}-\d{2}/', $value)) {
+            $this->_messages[] = "'$value' is not of the format YYYY-MM-DD";
+            return false;
+        }
+
+        list($year, $month, $day) = sscanf($value, '%d-%d-%d');
+
+        if (!checkdate($month, $day, $year)) {
             $this->_messages[] = "'$value' does not appear to be a valid date";
             return false;
-        } while (false);
+        }
+
         return true;
     }
 
