@@ -115,48 +115,43 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     }
 
     /*
-     * Get raw header of message
+     * Get raw header of message or part
      *
-     * @param  int $id       number of message
+     * @param  int               $id       number of message
+     * @param  null|array|string $part     path to part or null for messsage header
+     * @param  int               $topLines include this many lines with header (after an empty line)
      * @param  int $topLines include this many lines with header (after an empty line)
      * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRawHeader($id, $topLines = 0)
+    public function getRawHeader($id, $part = null, $topLines = 0)
     {
+        if ($part !== null) {
+            // TODO: implement
+            throw new Zend_Mail_Storage_Exception('not implemented');
+        }
+
         // TODO: toplines
         return $this->_protocol->fetch('RFC822.HEADER', $id);
     }
 
     /*
-     * Get raw content of message
+     * Get raw content of message or part
      *
-     * @param  int $id number of message
+     * @param  int               $id   number of message
+     * @param  null|array|string $part path to part or null for messsage content
      * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRawContent($id)
+    public function getRawContent($id, $part = null)
     {
+        if ($part !== null) {
+            // TODO: implement
+            throw new Zend_Mail_Storage_Exception('not implemented');
+        }
+
         return $this->_protocol->fetch('RFC822.TEXT', $id);
     }
-
-    /*
-     * Get raw content of part.
-     *
-     * If class does not support fetchPart this method won't work
-     *
-     * @param  int $id number of message
-     * @param  mixed $part
-     * @return string raw content of message
-     * @throws Zend_Mail_Protocol_Exception
-     * @throws Zend_Mail_Storage_Exception
-     */
-    public function getRawPart($id, $part)
-    {
-        // TODO: implement
-        throw new Zend_Mail_Storage_Exception('not implemented');
-    }
-
 
     /**
      * create instance with parameters

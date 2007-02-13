@@ -95,48 +95,43 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
     }
 
     /*
-     * Get raw header of message
+     * Get raw header of message or part
      *
-     * @param  int $id       number of message
-     * @param  int $topLines include this many lines with header (after an empty line)
+     * @param  int               $id       number of message
+     * @param  null|array|string $part     path to part or null for messsage header
+     * @param  int               $topLines include this many lines with header (after an empty line)
      * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRawHeader($id, $topLines = 0)
+    public function getRawHeader($id, $part = null, $topLines = 0)
     {
+        if ($part !== null) {
+            // TODO: implement
+            throw new Zend_Mail_Storage_Exception('not implemented');
+        }
+
         return $this->_protocol->top($id, 0, true);
     }
 
     /*
-     * Get raw content of message
+     * Get raw content of message or part
      *
-     * @param  int $id number of message
+     * @param  int               $id   number of message
+     * @param  null|array|string $part path to part or null for messsage content
      * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function getRawContent($id)
+    public function getRawContent($id, $part = null)
     {
+        if ($part !== null) {
+            // TODO: implement
+            throw new Zend_Mail_Storage_Exception('not implemented');
+        }
+
         $content = $this->_protocol->retrive($id);
         // TODO: find a way to avoid decoding the headers
         Zend_Mime_Decode::splitMessage($content, $null, $body);
         return $body;
-    }
-
-    /*
-     * Get raw content of part.
-     *
-     * If class does not support fetchPart this method won't work
-     *
-     * @param  int $id number of message
-     * @param  mixed $part
-     * @return string raw content of message
-     * @throws Zend_Mail_Storage_Exception
-     * @throws Zend_Mail_Protocol_Exception
-     */
-    public function getRawPart($id, $part)
-    {
-        // TODO: implement
-        throw new Zend_Mail_Storage_Exception('not implemented');
     }
 
     /**
