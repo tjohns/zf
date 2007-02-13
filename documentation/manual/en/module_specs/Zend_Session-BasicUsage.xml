@@ -51,11 +51,11 @@
 <![CDATA[<?php
     // in the Zend_Auth component
     require_once 'Zend/Session.php';
-    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace = new Zend_Session_Namespace('Zend_Auth');
     $authNamespace->user = "myusername";
 
     // in a web services component
-    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
     $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
@@ -92,7 +92,7 @@
 <![CDATA[<?php
     // Zend_Session is iteratable
     require_once 'Zend/Session.php';
-    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
     foreach ($aNamespace as $index => $value) {
         echo "aNamespace->$index = '$value';\n";
     }
