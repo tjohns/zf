@@ -42,6 +42,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     const TABLE_NAME_2 = 'zf_test_table2';
 
     protected $_resultSetUppercase = false;
+    protected $_schemaUppercase = false;
     protected $_textDataType = 'text';
 
     abstract public function getDriver();
@@ -61,6 +62,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      * current adapter.
      */
     public function getIdentifier($name)
+    {
+        if ($this->_schemaUppercase) {
+            return strtoupper($name);
+        } else {
+            return $name;
+        }
+    }
+
+    /**
+     * @param string The name of the identifier, to be transformed.
+     * @return string The name of a column or table, transformed for the
+     * current adapter.
+     */
+    public function getResultSetKey($name)
     {
         if ($this->_resultSetUppercase) {
             return strtoupper($name);
@@ -93,15 +108,17 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     protected function createTestTable()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $sql = $this->getCreateTableSQL();
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . "
+        $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table) . "
             (title, subTitle, body, date_created)
             VALUES ('News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . "
+        $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table) . "
             (title, subTitle, body, date_created)
             VALUES ('News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
@@ -113,20 +130,22 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     protected function createTestTable2()
     {
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+
         $sql = $this->getCreateTableSQL2();
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+        $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
             (news_id, user_id, commentTitle, commentBody, date_posted)
             VALUES (1, 101, 'I agree', 'This is comment 1', '2006-05-01 13:13:13')";
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+        $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
             (news_id, user_id, commentTitle, commentBody, date_posted)
             VALUES (1, 102, 'I disagree', 'This is comment 2', '2006-05-01 14:14:14')";
         $this->_db->query($sql);
 
-        $sql = 'INSERT INTO ' . self::TABLE_NAME_2 . "
+        $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
             (news_id, user_id, commentTitle, commentBody, date_posted)
             VALUES (1, 101, 'I still agree', 'This is comment 3', '2006-05-01 15:15:15')";
         $this->_db->query($sql);
@@ -197,19 +216,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testDelete()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
-        $result = $this->_db->delete(self::TABLE_NAME, 'id = 2');
+        $result = $this->_db->delete($table, 'id = 2');
         $this->assertEquals(1, $result);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME);
+            ->from($table);
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(1, count($result));
         $this->assertEquals(1, $result[0][$id]);
 
-        $result = $this->_db->delete(self::TABLE_NAME, 'id = 327');
+        $result = $this->_db->delete($table, 'id = 327');
         $this->assertEquals(0, $result);
     }
 
@@ -219,10 +239,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testDescribeTable()
     {
-        $desc = $this->_db->describeTable(self::TABLE_NAME);
+        $bodyKey = $this->getResultSetKey('body');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
-        $bodyKey = $this->getIdentifier('body');
-        $tableName = $this->getIdentifier(self::TABLE_NAME);
+        $desc = $this->_db->describeTable($table);
 
         $this->assertThat($desc, $this->arrayHasKey($bodyKey));
 
@@ -239,7 +259,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('UNSIGNED'));
         $this->assertThat($desc[$bodyKey], $this->arrayHasKey('PRIMARY'));
 
-        $this->assertEquals($tableName, $desc[$bodyKey]['TABLE_NAME']);
+        $this->assertEquals($table, $desc[$bodyKey]['TABLE_NAME']);
         $this->assertEquals($bodyKey, $desc[$bodyKey]['COLUMN_NAME']);
         $this->assertEquals($this->_textDataType, $desc[$bodyKey]['DATA_TYPE']);
         $this->assertEquals('', $desc[$bodyKey]['DEFAULT']);
@@ -254,9 +274,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchAll()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $result = $this->_db->fetchAll(
-            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id ASC',
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id ASC',
             array('2006-01-01')
         );
         $this->assertEquals(2, count($result));
@@ -268,9 +290,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchAssoc()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $result = $this->_db->fetchAssoc(
-            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id DESC',
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id DESC',
             array('2006-01-01')
         );
         foreach ($result as $idKey => $row) {
@@ -283,9 +307,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchCol()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $result = $this->_db->fetchCol(
-            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id',
             array('2006-01-01')
         );
         $this->assertEquals(2, count($result)); // count rows
@@ -298,9 +324,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchOne()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $title = 'News Item 1';
         $result = $this->_db->fetchOne(
-            'SELECT title FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            'SELECT title FROM ' . $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id',
             array('2006-01-01')
         );
         $this->assertEquals($title, $result);
@@ -311,9 +339,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchPairs()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $title = 'News Item 1';
         $result = $this->_db->fetchPairs(
-            'SELECT id, title FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            'SELECT id, title FROM ' . $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id',
             array('2006-01-01')
         );
         $this->assertEquals(2, count($result)); // count rows
@@ -325,10 +355,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testAdapterFetchRow()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $result = $this->_db->fetchRow(
-            'SELECT * FROM ' . self::TABLE_NAME . ' WHERE date_created > ? ORDER BY id',
+            'SELECT * FROM ' .  $this->_db->quoteIdentifier($table) . ' WHERE date_created > ? ORDER BY id',
             array('2006-01-01')
         );
         $this->assertEquals(5, count($result)); // count columns
@@ -340,9 +371,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testStatementFetchAll()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $stmt = $this->_db->query(
-            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . " WHERE date_created > '2006-01-01' ORDER BY id"
         );
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
@@ -355,8 +388,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testStatementFetchColumn()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $stmt = $this->_db->query(
-            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . " WHERE date_created > '2006-01-01' ORDER BY id"
         );
         $result = $stmt->fetchColumn();
         $this->assertEquals(1, $result);
@@ -369,10 +404,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testStatementFetchObject()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $title = 'News Item 1';
-        $titleCol = $this->getIdentifier('title');
+        $titleCol = $this->getResultSetKey('title');
         $stmt = $this->_db->query(
-            'SELECT * FROM ' . self::TABLE_NAME . " WHERE date_created > '2006-01-01' ORDER BY id"
+            'SELECT * FROM ' . $this->_db->quoteIdentifier($table) . " WHERE date_created > '2006-01-01' ORDER BY id"
         );
         $result = $stmt->fetchObject();
         $this->assertThat($result, $this->isInstanceOf('stdClass'));
@@ -387,13 +424,14 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testInsert()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
         $row = array (
             'title'        => 'News Item 3',
             'subTitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
         );
-        $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
+        $rows_affected = $this->_db->insert($table, $row);
         $last_insert_id = $this->_db->lastInsertId();
         $this->assertEquals('3', (string) $last_insert_id); // correct id has been set
     }
@@ -404,9 +442,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testLimit()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
-        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
+        $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 1);
 
         $result = $this->_db->query($sql);
         $result = $result->fetchAll();
@@ -414,7 +453,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(5, count($result[0]));
         $this->assertEquals(1, $result[0][$id]);
 
-        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
+        $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 1, 1);
 
         $result = $this->_db->query($sql);
         $result = $result->fetchAll();
@@ -430,10 +469,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testListTables()
     {
-        $tableName = $this->getIdentifier(self::TABLE_NAME);
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $tables = $this->_db->listTables();
-        $this->assertContains($tableName, $tables);
+        $this->assertContains($table, $tables);
     }
 
     /**
@@ -449,12 +488,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelect()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select();
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
 
-        $select->from(self::TABLE_NAME);
+        $select->from($table);
         $stmt = $this->_db->query($select);
         $row = $stmt->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
@@ -466,12 +506,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectQuery()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select();
         $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
 
-        $select->from(self::TABLE_NAME);
+        $select->from($table);
         $stmt = $select->query();
         $row = $stmt->fetch();
         $this->assertEquals(5, count($row)); // correct number of fields
@@ -483,23 +524,26 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectColumns()
     {
+        $titleKey = $this->getResultSetKey('title');
+        $subtitleKey = $this->getResultSetKey('subtitle');
+        $table = $this->getIdentifier(self::TABLE_NAME);
         $title = $this->getIdentifier('title');
         $subtitle = $this->getIdentifier('subtitle');
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME, $title); // scalar
+            ->from($table, $title); // scalar
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result[0]));
-        $this->assertThat($result[0], $this->arrayHasKey($title));
+        $this->assertThat($result[0], $this->arrayHasKey($titleKey));
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME, array($title, $subtitle)); // array
+            ->from($table, array($title, $subtitle)); // array
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result[0]));
-        $this->assertThat($result[0], $this->arrayHasKey($title));
-        $this->assertThat($result[0], $this->arrayHasKey($subtitle));
+        $this->assertThat($result[0], $this->arrayHasKey($titleKey));
+        $this->assertThat($result[0], $this->arrayHasKey($subtitleKey));
     }
 
     /**
@@ -507,11 +551,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectDistinctModifier()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select()
             ->distinct()
-            ->from(self::TABLE_NAME, array())
+            ->from($table, array())
             ->from('', 327);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -531,10 +576,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinClause()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
-            ->join(self::TABLE_NAME_2, 'id = news_id');
+            ->from($table)
+            ->join($table2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -547,10 +595,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinClauseWithCorrelationName()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from( array(self::TABLE_NAME => 'xyz1') )
-            ->join( array(self::TABLE_NAME_2 => 'xyz2'), 'xyz1.id = xyz2.news_id')
+            ->from( array($table => 'xyz1') )
+            ->join( array($table2 => 'xyz2'), 'xyz1.id = xyz2.news_id')
             ->where('xyz1.id = 1');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -564,10 +615,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinInnerClause()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
-            ->joinInner(self::TABLE_NAME_2, 'id = news_id');
+            ->from($table)
+            ->joinInner($table2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -579,13 +633,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinLeftClause()
     {
-        $id = $this->getIdentifier('id');
-        $newsId = $this->getIdentifier('news_id');
+        $id = $this->getResultSetKey('id');
+        $newsId = $this->getResultSetKey('news_id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
 
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
-            ->joinLeft(self::TABLE_NAME_2, 'id = news_id');
+            ->from($table)
+            ->joinLeft($table2, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(4, count($result));
@@ -604,13 +660,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             return;
         }
 
-        $id = $this->getIdentifier('id');
-        $newsId = $this->getIdentifier('news_id');
+        $id = $this->getResultSetKey('id');
+        $newsId = $this->getResultSetKey('news_id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
 
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2)
-            ->joinRight(self::TABLE_NAME, 'id = news_id');
+            ->from($table2)
+            ->joinRight($table, 'id = news_id');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(4, count($result));
@@ -629,13 +687,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             return;
         }
 
-        $id = $this->getIdentifier('id');
-        $newsId = $this->getIdentifier('news_id');
+        $id = $this->getResultSetKey('id');
+        $newsId = $this->getResultSetKey('news_id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
 
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
-            ->joinCross(self::TABLE_NAME_2);
+            ->from($table)
+            ->joinCross($table2);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(6, count($result));
@@ -648,10 +708,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectWhereClause()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->where('id = 2');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -661,7 +722,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         // test adding more WHERE conditions,
         // which should be combined with AND by default.
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->where('id = 2')
             ->where('id = 1');
         $stmt = $this->_db->query($select);
@@ -675,10 +736,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrWhereClause()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->orWhere('id = 1')
             ->orWhere('id = 2');
         $stmt = $this->_db->query($select);
@@ -699,36 +761,38 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             return;
         }
 
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
         $userId = $this->getIdentifier('user_id');
-        $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, 'user_id')
+            ->from($table2, $userId)
             ->from('', 'count(*) as thecount')
-            ->group('user_id')
-            ->order('user_id');
+            ->group($userId)
+            ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
-        $this->assertEquals(101, $result[0][$userId]);
-        $this->assertEquals(2, $result[0][$count]);
-        $this->assertEquals(102, $result[1][$userId]);
-        $this->assertEquals(1, $result[1][$count]);
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from($table2, array($userId))
             ->from('', 'count(*) as thecount')
-            ->group(array('user_id', 'user_id'))
-            ->order('user_id');
+            ->group(array($userId, $userId))
+            ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
-        $this->assertEquals(101, $result[0][$userId]);
-        $this->assertEquals(2, $result[0][$count]);
-        $this->assertEquals(102, $result[1][$userId]);
-        $this->assertEquals(1, $result[1][$count]);
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -743,26 +807,28 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             return;
         }
 
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
         $userId = $this->getIdentifier('user_id');
-        $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from($table2, array($userId))
             ->from('', 'count(*) as thecount')
-            ->group('user_id')
+            ->group($userId)
             ->having('count(*) > 1');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
-        $this->assertEquals(101, $result[0][$userId]);
-        $this->assertEquals(2, $result[0][$count]);
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from($table2, array($userId))
             ->from('', 'count(*) as thecount')
-            ->group('user_id')
+            ->group($userId)
             ->having('count(*) > 1')
             ->having('count(*) = 1');
         $stmt = $this->_db->query($select);
@@ -782,40 +848,42 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             return;
         }
 
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
         $userId = $this->getIdentifier('user_id');
-        $count = $this->getIdentifier('thecount');
 
         $this->createTestTable2();
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from($table2, array($userId))
             ->from('', 'count(*) as thecount')
-            ->group('user_id')
+            ->group($userId)
             ->orHaving('count(*) > 1')
             ->orHaving('count(*) = 1')
-            ->order('user_id');
+            ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
-        $this->assertEquals(101, $result[0][$userId]);
-        $this->assertEquals(2, $result[0][$count]);
-        $this->assertEquals(102, $result[1][$userId]);
-        $this->assertEquals(1, $result[1][$count]);
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME_2, array('user_id'))
+            ->from($table2, array($userId))
             ->from('', 'count(*) as thecount')
-            ->group('user_id')
+            ->group($userId)
             ->orHaving('count(*) > 1')
             ->orHaving('count(*) = 1')
-            ->order('user_id');
+            ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
-        $this->assertEquals(101, $result[0][$userId]);
-        $this->assertEquals(2, $result[0][$count]);
-        $this->assertEquals(102, $result[1][$userId]);
-        $this->assertEquals(1, $result[1][$count]);
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -823,35 +891,37 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrderByClause()
     {
+        $idKey = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->order($id);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(1, $result[0][$idKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->order(array($id, $id));
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(1, $result[0][$idKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->order("$id ASC");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(1, $result[0][$idKey]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->order("$id DESC");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(2, $result[0][$id]);
+        $this->assertEquals(2, $result[0][$idKey]);
     }
 
     /**
@@ -859,17 +929,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectLimitClause()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limit(); // no limit
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limit(1);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -877,7 +948,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $result[0][$id]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limit(1, 1);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -890,10 +961,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectLimitPage()
     {
-        $id = $this->getIdentifier('id');
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limitPage(1, 1); // first page, length 1
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -901,7 +973,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $result[0][$id]);
 
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limitPage(2, 1); // second page, length 1
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -914,8 +986,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGetPartAndReset()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $select = $this->_db->select()
-            ->from(self::TABLE_NAME)
+            ->from($table)
             ->limit(1);
         $count = $select->getPart(Zend_Db_Select::LIMIT_COUNT);
         $this->assertEquals(1, $count);
@@ -953,16 +1027,17 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testUpdate()
     {
-        $id = $this->getIdentifier('id');
-        $title = $this->getIdentifier('title');
-        $subtitle = $this->getIdentifier('subtitle');
+        $idKey = $this->getResultSetKey('id');
+        $titleKey = $this->getResultSetKey('title');
+        $subtitleKey = $this->getResultSetKey('subtitle');
+        $table = $this->getIdentifier(self::TABLE_NAME);
 
         $newTitle = 'New News Item 2';
         $newSubTitle = 'New Sub title 2';
 
         // Test that we can change the values in
         // an existing row.
-        $result = $this->_db->update(self::TABLE_NAME,
+        $result = $this->_db->update($table,
             array(
                 'title'        => $newTitle,
                 'subTitle'     => $newSubTitle
@@ -973,18 +1048,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         // Query the row to see if we have the new values.
         $select = $this->_db->select();
-        $select->from(self::TABLE_NAME);
+        $select->from($table);
         $select->where('id = 2');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
 
-        $this->assertEquals(2, $result[0][$id]);
-        $this->assertEquals($newTitle, $result[0][$title]);
-        $this->assertEquals($newSubTitle, $result[0][$subtitle]);
+        $this->assertEquals(2, $result[0][$idKey]);
+        $this->assertEquals($newTitle, $result[0][$titleKey]);
+        $this->assertEquals($newSubTitle, $result[0][$subtitleKey]);
 
         // Test that update affects no rows if the WHERE
         // clause matches none.
-        $result = $this->_db->update(self::TABLE_NAME,
+        $result = $this->_db->update($table,
             array(
                 'title'        => $newTitle,
                 'subTitle'     => $newSubTitle,
@@ -996,9 +1071,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testExceptionInvalidLimitArgument()
     {
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
         $exceptionSeen = false;
         try {
-            $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 0);
+            $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 0);
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
             $exceptionSeen = true;
@@ -1007,7 +1084,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $exceptionSeen = false;
         try {
-            $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, -1);
+            $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 1, -1);
         } catch (Zend_Db_Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
             $exceptionSeen = true;

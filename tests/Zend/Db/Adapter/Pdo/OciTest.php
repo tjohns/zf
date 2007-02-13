@@ -32,9 +32,10 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 {
     const TABLE_NAME    = 'ZF_TEST_TABLE';
-    const TABLE_NAME_2    = 'ZF_TEST_TABLE2';
+    const TABLE_NAME_2  = 'ZF_TEST_TABLE2';
     const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
     protected $_textDataType = 'VARCHAR2';
+    protected $_schemaUppercase = true;
 
     public function getDriver()
     {
@@ -162,10 +163,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
     public function testLimit()
     {
-        $colName = 'id';
-        if ($this->_resultSetUppercase) {
-            $colName = strtoupper($colName);
-        }
+        $id = $this->getResultSetKey('id');
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
 
@@ -174,7 +172,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
         $this->assertEquals(1, count($rows));
         $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(1, $rows[0][$colName]);
+        $this->assertEquals(1, $rows[0][$id]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
 
@@ -182,7 +180,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         $rows = $result->fetchAll();
         $this->assertEquals(1, count($rows));
         $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(2, $rows[0][$colName]);
+        $this->assertEquals(2, $rows[0][$id]);
     }
 
     public function testListTables()

@@ -402,7 +402,9 @@ abstract class Zend_Db_Adapter_Abstract
     public function quote($value)
     {
         $this->_connect();
-        if (is_array($value)) {
+        if ($value instanceof Zend_Db_Expr) {
+            return $value->__toString();
+        } else if (is_array($value)) {
             foreach ($value as &$val) {
                 $val = $this->quote($val);
             }
@@ -437,11 +439,14 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Quotes an identifier.
      *
-     * @param string $ident The identifier.
+     * @param string|Zend_Db_Expr $ident The identifier.
      * @return string The quoted identifier.
      */
     public function quoteIdentifier($ident)
     {
+        if ($ident instanceof Zend_Db_Expr) {
+            return $ident->__toString();
+        }
         $q = $this->getQuoteIdentifierSymbol();
         $ident = str_replace("$q", "$q$q", $ident);
         return $q . $ident . $q;

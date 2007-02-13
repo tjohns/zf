@@ -19,8 +19,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Db_Adapter_Abstract */
+/**
+ * Zend_Db_Adapter_Abstract
+ */
 require_once 'Zend/Db/Adapter/Abstract.php';
+
+/**
+ * Zend_Db_Expr
+ */
+require_once 'Zend/Db/Expr.php';
 
 /**
  * Class for SQL SELECT generation and results.
@@ -135,8 +142,15 @@ class Zend_Db_Select
                         $columns[] = "$expr";
                     }
                 } else {
-                    foreach ($columnList as $columnName) {
-                        $columns[] = "$correlationName.$columnName";
+                    foreach ($columnList as $column) {
+                        if ($column instanceof Zend_Db_Expr) {
+                            $columns[] = $column->__toString();
+                        } else {
+                            if ($column != '*') {
+                                $column = $this->_adapter->quoteIdentifier($column);
+                            }
+                            $columns[] = $correlationName . '.' . $column;
+                        }
                     }
                 }
             }
@@ -151,13 +165,13 @@ class Zend_Db_Select
                 $tmp = '';
                 if (empty($from)) {
                     // First table is named alone ignoring join information
-                    $tmp .= $table['tableName'] . ' ' . $correlationName;
+                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName']) . ' ' . $correlationName;
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
                         $tmp .= ' ' . strtoupper($table['joinType']) . ' ';
                     }
-                    $tmp .= $table['tableName'] . ' ' . $correlationName;
+                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName']) . ' ' . $correlationName;
                     if (! empty($table['joinCondition'])) {
                         $tmp .= ' ON ' . $table['joinCondition'];
                     }
@@ -180,7 +194,15 @@ class Zend_Db_Select
             // grouped by these columns
             if ($this->_parts[self::GROUP]) {
                 $sql .= "\nGROUP BY\n\t";
-                $sql .= implode(",\n\t", $this->_parts[self::GROUP]);
+                $l = array();
+                foreach ($this->_parts[self::GROUP] as $term) {
+                    if ($term instanceof Zend_Db_Expr) {
+                        $l[] = $term->__toString();
+                    } else {
+                        $l[] = $this->_adapter->quoteIdentifier($term);
+                    }
+                }
+                $sql .= implode(",\n\t", $l);
             }
 
             // having these conditions
@@ -194,7 +216,15 @@ class Zend_Db_Select
         // ordered by these columns
         if ($this->_parts[self::ORDER]) {
             $sql .= "\nORDER BY\n\t";
-            $sql .= implode(",\n\t", $this->_parts[self::ORDER]);
+            $l = array();
+            foreach ($this->_parts[self::ORDER] as $term) {
+                if ($term instanceof Zend_Db_Expr) {
+                    $l[] = $term->__toString();
+                } else if (is_array($term)) {
+                    $l[] = $this->_adapter->quoteIdentifier($term[0]) . ' ' . $term[1];
+                }
+            }
+            $sql .= implode(",\n\t", $l);
         }
 
         // determine offset
@@ -247,8 +277,23 @@ class Zend_Db_Select
     /**
      * Adds a FROM table and optional columns to the query.
      *
-     * @param string $name The table name.
-     * @param array|string $cols The columns to select from this table.
+     * The first parameter $name can be a simple string, in which case the
+     * correlation name is generated automatically.  If you want to specify
+     * the correlation name, the first parameter must be an associative
+     * array in which the key is the physical table name, and the value is
+     * the correlation name.  For example, array('table' => 'alias').
+     * The correlation name is prepended to all columns fetched for this
+     * table.
+     *
+     * The second parameter can be a single string or Zend_Db_Expr object,
+     * or else an array of strings or Zend_Db_Expr objects.
+     *
+     * The first parameter can be null or an empty string, in which case 
+     * no correlation name is generated or prepended to the columns named
+     * in the second parameter.
+     *
+     * @param mixed $name The table name or an associative array relating table name to correlation name.
+     * @param array|string|Zend_Db_Expr $cols The columns to select from this table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function from($name, $cols = '*')
@@ -260,6 +305,9 @@ class Zend_Db_Select
      * Populate the {@link $_parts} 'join' key
      *
      * Does the dirty work of populating the join key.
+     *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
      *
      * @access protected
      * @param null|string $type Type of join; inner, left, and null are
@@ -287,16 +335,14 @@ class Zend_Db_Select
         } else if (empty($name)) {
             $correlationName = $tableName = '';
         } else {
-            // Generate a correlation name like $tableName_1, $tableName_2, etc.
-            // We can assume no more than 64 tables in a join.
+            // Generate a correlation name matching {$tableName},
+            // {$tableName}_2, {$tableName}_3, etc.
             $correlationName = $tableName = $name;
-            for ($i = 1; $i <= 64; ++$i) {
+            $c = $correlationName;
+            for ($i = 2; array_key_exists($c, $this->_parts[self::FROM]); ++$i) {
                 $c = $correlationName . '_' . (string) $i;
-                if (!array_key_exists($c, $this->_parts[self::FROM])) {
-                    $correlationName = $c;
-                    break;
-                }
             }
+            $correlationName = $c;
         }
 
         if (!empty($correlationName)) {
@@ -319,6 +365,9 @@ class Zend_Db_Select
     /**
      * Adds a JOIN table and columns to the query.
      *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
+     *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
@@ -336,6 +385,9 @@ class Zend_Db_Select
      * of all cases where rows from the left table match
      * rows from the right table.
      *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
+     *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
@@ -352,6 +404,9 @@ class Zend_Db_Select
      * matching rows from the right operand table included,
      * and the columns from the right operand table are filled
      * with NULLs if no row exists matching the left table.
+     *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
      *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
@@ -371,6 +426,9 @@ class Zend_Db_Select
      * and the columns from the left operand table are filled
      * with NULLs if no row exists matching the right table.
      *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
+     *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
@@ -389,6 +447,9 @@ class Zend_Db_Select
      * result set if they satisfy the join condition, and otherwise
      * paired with NULLs in place of columns from the other table.
      *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
+     *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
@@ -402,6 +463,9 @@ class Zend_Db_Select
     /**
      * Add a CROSS JOIN table and colums to the query.
      * A cross join is a cartesian product; there is no join condition.
+     *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
      *
      * @param string $name The table name.
      * @param string $cond Join on this condition.
@@ -419,6 +483,9 @@ class Zend_Db_Select
      * that appear with the same name in both tables.
      * Only natural inner joins are supported by this API,
      * even though SQL permits natural outer joins as well.
+     *
+     * The $name and $cols parameters follow the same logic
+     * as described in the from() method.
      *
      * @param string $name The table name.
      * @param array|string $cols The columns to select from the joined table.
@@ -585,13 +652,17 @@ class Zend_Db_Select
         settype($spec, 'array');
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
-        foreach ($spec as $key => $val) {
-            if (preg_match('/\b(ASC|DESC)\s*$/i', $val, $matches)) {
-                $direction = $matches[1];
+        foreach ($spec as $val) {
+            if ($val instanceof Zend_Db_Expr) {
+                $this->_parts[self::ORDER][] = $val;
             } else {
-                $val .= ' ASC';
+                $direction = 'ASC';
+                if (preg_match('/(.*)\s+(ASC|DESC)\s*$/i', $val, $matches)) {
+                    $val = trim($matches[1]);
+                    $direction = $matches[2];
+                }
+                $this->_parts[self::ORDER][] = array(trim($val), $direction);
             }
-            $this->_parts[self::ORDER][] = trim($val);
         }
 
         return $this;
@@ -638,6 +709,9 @@ class Zend_Db_Select
     protected function _tableCols($correlationName, $cols)
     {
         settype($cols, 'array');
+        if ($correlationName == null) {
+            $correlationName = '';
+        }
 
         foreach ($cols as $col) {
             $this->_parts[self::COLUMNS][$correlationName][] = trim($col);

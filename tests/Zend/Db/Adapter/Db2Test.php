@@ -32,6 +32,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 {
     protected $_resultSetUppercase = true;
+    protected $_schemaUppercase = true;
     protected $_textDataType = 'VARCHAR';
     const TABLE_NAME = 'ZF_TEST_TABLE';
     const TABLE_NAME_2 = 'ZF_TEST_TABLE2';
