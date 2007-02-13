@@ -24,14 +24,11 @@
         <title>整数および浮動小数点数からの計測値の作成</title>
 
         <para>
-            In addition to integer data values, floating point types may be used, but
-            <ulink url="http://www.php.net/float">"simple decimal fractions like 0.1 or 0.7 cannot be converted into their internal binary counterparts without a little loss of precision,"</ulink>
-            sometimes giving surprising results. Also, do not compare two "float" type numbers for equality.
-                整数ではなく浮動小数点数を使用することもできます。しかし、
-                <ulink url="http://www.php.net/float">"0.1 や 0.7 のようなシンプルな小数であっても、
-                それを内部的な二進数表現に変換する際には、どうしても多少精度が落ちてしまいます。"</ulink>
-                そのため、予期せぬ結果を引き起こすことがあります。
-                また、ふたつの "浮動小数点数" が等しいかどうかを調べないようにしましょう。
+            整数に加えて、浮動小数点数を使用することもできます。しかし、
+            <ulink url="http://www.php.net/float">"0.1 や 0.7 のようなシンプルな小数であっても、
+            それを内部的な二進数表現に変換する際には、どうしても多少精度が落ちてしまいます。"</ulink>
+            そのため、予期せぬ結果を引き起こすことがあります。
+            また、ふたつの "浮動小数点数" が等しいかどうかを調べないようにしましょう。
         </para>
 
         <example>
