@@ -32,7 +32,7 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Controller_Router_StaticRoute implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route_Static implements Zend_Controller_Router_Route_Interface
 {
 
     protected $_route = null;

@@ -72,7 +72,10 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->_request->setParam('foo', 'bar');
 
         foreach ($_ENV as $envKey => $expected) {
-            break;
+            if (isset($_ENV[$envKey]) && !empty($_ENV[$envKey])) {
+                $expEnvKey = $envKey;
+                break;
+            }
         }
 
         $this->assertEquals('bar', $this->_request->foo);
@@ -80,9 +83,11 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('boo', $this->_request->baz);
         $this->assertEquals('peen', $this->_request->bal);
         $this->assertEquals($_SERVER['REQUEST_TIME'], $this->_request->REQUEST_TIME);
-        $this->assertEquals($expected, $this->_request->$envKey);
         $this->assertEquals($this->_request->getPathInfo(), $this->_request->PATH_INFO, $this->_request->PATH_INFO);
         $this->assertEquals($this->_request->getRequestUri(), $this->_request->REQUEST_URI, $this->_request->REQUEST_URI);
+        if (isset($expEnvKey)) {
+            $this->assertEquals($expected, $this->_request->$expEnvKey);
+        }
     }
 
     public function testGetIsAlias()
@@ -107,7 +112,10 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->_request->setParam('foo', 'bar');
 
         foreach ($_ENV as $envKey => $expected) {
-            break;
+            if (isset($_ENV[$envKey]) && !empty($_ENV[$envKey])) {
+                $expEnvKey = $envKey;
+                break;
+            }
         }
 
         $this->assertTrue(isset($this->_request->foo));
@@ -115,8 +123,10 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->_request->baz));
         $this->assertTrue(isset($this->_request->bal));
         $this->assertTrue(isset($this->_request->REQUEST_TIME));
-        $this->assertTrue(isset($this->_request->$envKey));
         $this->assertFalse(isset($this->_request->bogosity));
+        if (isset($expEnvKey)) {
+            $this->assertTrue(isset($this->_request->$expEnvKey));
+        }
     }
 
     public function testHasIsAlias()

@@ -6,7 +6,7 @@
  */
 
 /** Zend_Controller_Router_Route */
-require_once 'Zend/Controller/Router/StaticRoute.php';
+require_once 'Zend/Controller/Router/Route/Static.php';
 
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -16,12 +16,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
+class Zend_Controller_Router_Route_StaticTest extends PHPUnit_Framework_TestCase
 {
 
     public function testStaticMatch()
     {
-        $route = new Zend_Controller_Router_StaticRoute('users/all');
+        $route = new Zend_Controller_Router_Route_Static('users/all');
         $values = $route->match('users/all');
 
         $this->assertType('array', $values);
@@ -29,7 +29,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testStaticMatchFailure()
     {
-        $route = new Zend_Controller_Router_StaticRoute('archive/2006');
+        $route = new Zend_Controller_Router_Route_Static('archive/2006');
         $values = $route->match('users/all');
 
         $this->assertSame(false, $values);
@@ -37,7 +37,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testStaticMatchWithDefaults()
     {
-        $route = new Zend_Controller_Router_StaticRoute('users/all', 
+        $route = new Zend_Controller_Router_Route_Static('users/all', 
                     array('controller' => 'ctrl', 'action' => 'act'));
         $values = $route->match('users/all');
 
@@ -48,7 +48,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testStaticUTFMatch()
     {
-        $route = new Zend_Controller_Router_StaticRoute('żółć');
+        $route = new Zend_Controller_Router_Route_Static('żółć');
         $values = $route->match('żółć');
 
         $this->assertType('array', $values);
@@ -56,7 +56,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testRootRoute()
     {
-        $route = new Zend_Controller_Router_StaticRoute('/');
+        $route = new Zend_Controller_Router_Route_Static('/');
         $values = $route->match('');
 
         $this->assertSame(array(), $values);
@@ -64,7 +64,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testAssemble()
     {
-        $route = new Zend_Controller_Router_StaticRoute('/about');
+        $route = new Zend_Controller_Router_Route_Static('/about');
         $url = $route->assemble();
 
         $this->assertSame('about', $url);
@@ -72,7 +72,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testGetDefaults()
     {
-        $route = new Zend_Controller_Router_StaticRoute('users/all', 
+        $route = new Zend_Controller_Router_Route_Static('users/all', 
                     array('controller' => 'ctrl', 'action' => 'act'));
 
         $values = $route->getDefaults();
@@ -84,7 +84,7 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
 
     public function testGetDefault()
     {
-        $route = new Zend_Controller_Router_StaticRoute('users/all', 
+        $route = new Zend_Controller_Router_Route_Static('users/all', 
                     array('controller' => 'ctrl', 'action' => 'act'));
 
         $this->assertSame('ctrl', $route->getDefault('controller'));

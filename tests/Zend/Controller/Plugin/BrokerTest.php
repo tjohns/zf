@@ -4,7 +4,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
-require_once 'Zend/Controller/Router.php';
 
 class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +28,6 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $controller->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');
         $request = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
         $controller->setResponse(new Zend_Controller_Response_Cli());
-        $controller->setRouter(new Zend_Controller_Router());
         $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
         $controller->registerPlugin($plugin);
         $controller->returnResponse(true);

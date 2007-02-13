@@ -236,6 +236,32 @@ abstract class Zend_Controller_Request_Abstract
     }
 
     /**
+     * Retrieve only user params (i.e, any param specific to the object and not the environment)
+     * 
+     * @return array
+     */
+    public function getUserParams()
+    {
+        return $this->_params;
+    }
+
+    /**
+     * Retrieve a single user param (i.e, a param specific to the object and not the environment)
+     * 
+     * @param string $key
+     * @param string $default Default value to use if key not found
+     * @return mixed
+     */
+    public function getUserParam($key, $default = null)
+    {
+        if (isset($this->_params[$key])) {
+            return $this->_params[$key];
+        }
+
+        return $default;
+    }
+
+    /**
      * Set an action parameter
      * 
      * @param string $key 

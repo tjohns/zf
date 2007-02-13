@@ -16,7 +16,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
+class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 {
 
     public function testStaticMatch()

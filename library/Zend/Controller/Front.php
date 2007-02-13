@@ -193,11 +193,8 @@ class Zend_Controller_Front
      */
     static public function run($controllerDirectory)
     {
-        require_once 'Zend/Controller/Router.php';
-        $frontController = self::getInstance();
-        $frontController
+        self::getInstance()
             ->setControllerDirectory($controllerDirectory)
-            ->setRouter(new Zend_Controller_Router())
             ->dispatch();
     }
 
@@ -208,16 +205,16 @@ class Zend_Controller_Front
      * to the directory specified.
      * 
      * @param string $directory 
-     * @param mixed $args Optional argument; if string value, used as array key map
+     * @param string $module Optional argument; module with which to associate directory. If none provided, assumes 'defualt'
      * @return Zend_Controller_Front
      */
-    public function addControllerDirectory($directory, $args = null)
+    public function addControllerDirectory($directory, $module = 'default')
     {
-        if (is_string($args) && !empty($args)) {
-            $this->_controllerDir[$args] = $directory;
-        } else {
-            $this->_controllerDir[] = $directory;
+        if (empty($module) || is_numeric($module) || !is_string($module)) {
+            $module = 'default';
         }
+
+        $this->_controllerDir[$module] = $directory;
 
         return $this;
     }
@@ -261,10 +258,10 @@ class Zend_Controller_Front
      * @param string $controller
      * @return Zend_Controller_Front
      */
-    public function setDefaultController($controller)
+    public function setDefaultControllerName($controller)
     {
         $dispatcher = $this->getDispatcher();
-        $dispatcher->setDefaultController($controller);
+        $dispatcher->setDefaultControllerName($controller);
         return $this;
     }
 
@@ -273,9 +270,9 @@ class Zend_Controller_Front
      *
      * @return string
      */
-    public function getDefaultController()
+    public function getDefaultControllerName()
     {
-        return $this->getDispatcher()->getDefaultController();
+        return $this->getDispatcher()->getDefaultControllerName();
     }
 
     /**
@@ -354,7 +351,7 @@ class Zend_Controller_Front
     {
         if (is_string($router)) {
             Zend::loadClass($router);
-            $router = new $router($this->getParams());
+            $router = new $router();
         }
         if (!$router instanceof Zend_Controller_Router_Interface) {
             throw new Zend_Controller_Exception('Invalid router class');
@@ -368,15 +365,15 @@ class Zend_Controller_Front
     /**
      * Return the router object.
      *
-     * Instantiates a Zend_Controller_Router object if no router currently set.
+     * Instantiates a Zend_Controller_Router_Rewrite object if no router currently set.
      *
      * @return null|Zend_Controller_Router_Interface
      */
     public function getRouter()
     {
         if (null == $this->_router) {
-            require_once 'Zend/Controller/Router.php';
-            $this->setRouter(new Zend_Controller_Router());
+            require_once 'Zend/Controller/Router/Rewrite.php';
+            $this->setRouter(new Zend_Controller_Router_Rewrite());
         }
 
         return $this->_router;
@@ -448,8 +445,8 @@ class Zend_Controller_Front
          * Instantiate the default dispatcher if one was not set.
          */
         if (!$this->_dispatcher instanceof Zend_Controller_Dispatcher_Interface) {
-            require_once 'Zend/Controller/Dispatcher.php';
-            $this->_dispatcher = new Zend_Controller_Dispatcher();
+            require_once 'Zend/Controller/Dispatcher/Standard.php';
+            $this->_dispatcher = new Zend_Controller_Dispatcher_Standard();
         }
         return $this->_dispatcher;
     }
@@ -673,8 +670,8 @@ class Zend_Controller_Front
          * Register request and response objects with plugin broker
          */
         $this->_plugins
-            ->setRequest($request)
-            ->setResponse($response);
+             ->setRequest($request)
+             ->setResponse($response);
 
         // Begin dispatch
         try {
@@ -706,11 +703,11 @@ class Zend_Controller_Front
             /**
              * Add params, controller directories, and response to dispatcher
              */
-            $dispatcher->setParams($this->getParams());
-            foreach ($this->getControllerDirectory() as $key => $dir) {
-                $dispatcher->addControllerDirectory($dir, $key);
+            $dispatcher->setParams($this->getParams())
+                       ->setResponse($response);
+            foreach ($this->getControllerDirectory() as $module => $dir) {
+                $dispatcher->addControllerDirectory($dir, $module);
             }
-            $dispatcher->setResponse($response);
 
             /**
              *  Attempt to dispatch the controller/action. If the $request

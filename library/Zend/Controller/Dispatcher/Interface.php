@@ -129,9 +129,10 @@ interface Zend_Controller_Dispatcher_Interface
      * Add a controller directory to the controller directory stack
      * 
      * @param string $path 
+     * @param string $args
      * @return Zend_Controller_Dispatcher_Interface
      */
-    public function addControllerDirectory($path);
+    public function addControllerDirectory($path, $args = null);
 
     /**
      * Set the directory where controller files are stored
