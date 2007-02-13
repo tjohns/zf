@@ -46,12 +46,9 @@
 
     <chapter id="zend.console">
         <title>Zend_Console_Getopt</title>
-        <para>TODO</para>
-        <!-- missing files causes major slowness in some of the PHP DOM extension functions :(
         <xi:include href="module_specs/Zend_Console_Getopt.xml" >
             <xi:fallback>Zend_Console_Getopt.xml NOT PRESENT</xi:fallback>
         </xi:include>
-        -->
     </chapter>
 
     <chapter id="zend.http.server">
