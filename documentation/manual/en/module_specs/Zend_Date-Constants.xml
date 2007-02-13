@@ -24,7 +24,7 @@
 
         <table>
             <title>Operations involving Zend_Date::HOUR</title>
-            <tgroup cols="2">
+            <tgroup cols="4">
                 <thead>
                     <row>
                         <entry>Function/input</entry>
