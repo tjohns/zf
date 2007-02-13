@@ -600,7 +600,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
     {
         $fieldNum = $this->getFieldNum($fieldName);
 
-        if ( !($this->_fields[$fieldNum]->isIndexed) ) {
+        if ($fieldNum == -1  ||  !($this->_fields[$fieldNum]->isIndexed)) {
             $similarity = Zend_Search_Lucene_Search_Similarity::getDefault();
 
             return str_repeat(chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) )),
