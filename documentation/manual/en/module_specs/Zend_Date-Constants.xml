@@ -550,6 +550,14 @@
             </tgroup>
         </table>
 
+        <para>
+            Especially note <code>Zend_Date::DATES</code>, since this format specifier has a unique property within
+            <code>Zend_Date</code> as an <emphasis role="strong">input</emphasis> format specifier. When used as an
+            input format for <code>$part</code>, this constant provides the most flexible acceptance of a variety of
+            similar date formats. Heuristics are used to automatically extract dates from an input string and then "fix"
+            simple errors in dates (if any), such as swapping of years, months, and days, when possible.
+        </para>
+
         <table>
             <title>Date and Time Formats (format varies by locale)</title>
             <tgroup cols="4">
@@ -575,8 +583,9 @@
                         <entry><emphasis role="strong">anno domini</emphasis> (anno Domini)</entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::DATES</entry>
-                        <entry>Standard date (string, localized, default value)</entry>
+                        <entry><emphasis role="strong">Zend_Date::DATES</emphasis>
+                        </entry>
+                        <entry>Standard date (string, localized, default value).</entry>
                         <entry>2009-02-13T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">13.02.2009</emphasis>
                         </entry>
@@ -652,7 +661,7 @@
 
     <sect2 id="zend.date.constants.selfdefinedformats">
 
-        <title>Self-Defined Formats</title>
+        <title>Self-Defined OUTPUT Formats</title>
 
         <para>
             All formats which need to be self-defined correspond to the ISO 8601 norm. However, not all formats defined
