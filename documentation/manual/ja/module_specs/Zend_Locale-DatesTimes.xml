@@ -68,58 +68,65 @@
         <para>
             BCMath 拡張モジュールが有効な場合に、
             以下のような値が返されます。
-            <table>
-                <title>返り値</title>
-                <tgroup cols='4'>
-                    <thead>
-                        <row>
-                            <entry>配列のキー</entry>
-                            <entry>返される値</entry>
-                            <entry>最小値</entry>
-                            <entry>最大値</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>day</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>31</entry>
-                        </row>
-                        <row>
-                            <entry>month</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>12</entry>
-                        </row>
-                        <row>
-                            <entry>year</entry>
-                            <entry>integer</entry>
-                            <entry>無制限</entry>
-                            <entry>無制限</entry>
-                        </row>
-                        <row>
-                            <entry>hour</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>無制限</entry>
-                        </row>
-                        <row>
-                            <entry>minute</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                        <row>
-                            <entry>second</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
         </para>
+
+        <table>
+            <title>返り値</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>getDate() 書式文字</entry>
+                        <entry>配列のキー</entry>
+                        <entry>返される値</entry>
+                        <entry>最小値</entry>
+                        <entry>最大値</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d</entry>
+                        <entry>day</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>31</entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>month</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>12</entry>
+                    </row>
+                    <row>
+                        <entry>y</entry>
+                        <entry>integer</entry>
+                        <entry>無制限</entry>
+                        <entry>PHP の整数型の最大値</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>hour</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP の整数型の最大値</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>minute</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP の整数型の最大値</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>second</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP の整数型の最大値</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <example>
             <title>日付の正規化</title>
@@ -212,83 +219,85 @@ print_r ($date);
 
         <para>
             書式には次の記号が使用できます。
-            <table>
-                <title>書式定義</title>
-                <tgroup cols='2'>
-                    <thead>
-                        <row>
-                            <entry>書式指定文字</entry>
-                            <entry>説明</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>d あるいは dd</entry>
-                            <entry>1 桁あるいは 2 桁の日</entry>
-                        </row>
-                        <row>
-                            <entry>M あるいは MM</entry>
-                            <entry>1 桁あるいは 2 桁の月</entry>
-                        </row>
-                        <row>
-                            <entry>y あるいは yy</entry>
-                            <entry>1 桁あるいは 2 桁の年</entry>
-                        </row>
-                        <row>
-                            <entry>yyyy</entry>
-                            <entry>4 桁の年</entry>
-                        </row>
-                        <row>
-                            <entry>h</entry>
-                            <entry>1 桁あるいは 2 桁の時</entry>
-                        </row>
-                        <row>
-                            <entry>m</entry>
-                            <entry>1 桁あるいは 2 桁の分</entry>
-                        </row>
-                        <row>
-                            <entry>s</entry>
-                            <entry>1 桁あるいは 2 桁の秒</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
         </para>
+
+        <table>
+            <title>書式定義</title>
+            <tgroup cols='2'>
+                <thead>
+                    <row>
+                        <entry>書式指定文字</entry>
+                        <entry>説明</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d あるいは dd</entry>
+                        <entry>1 桁あるいは 2 桁の日</entry>
+                    </row>
+                    <row>
+                        <entry>M あるいは MM</entry>
+                        <entry>1 桁あるいは 2 桁の月</entry>
+                    </row>
+                    <row>
+                        <entry>y あるいは yy</entry>
+                        <entry>1 桁あるいは 2 桁の年</entry>
+                    </row>
+                    <row>
+                        <entry>yyyy</entry>
+                        <entry>4 桁の年</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>1 桁あるいは 2 桁の時</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>1 桁あるいは 2 桁の分</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>1 桁あるいは 2 桁の秒</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <para>
             適切な書式の例は、次のようになります。
-            <table>
-                <title>書式の例</title>
-                <tgroup cols='3'>
-                    <thead>
-                        <row>
-                            <entry>書式</entry>
-                            <entry>入力</entry>
-                            <entry>出力</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 1,
+        </para>
+
+        <table>
+            <title>書式の例</title>
+            <tgroup cols='3'>
+                <thead>
+                    <row>
+                        <entry>書式</entry>
+                        <entry>入力</entry>
+                        <entry>出力</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 1,
                                    ['month'] => 4, 
                                    ['year'] => 6</entry>
-                        </row>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>01.04.2006</entry>
-                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
-                        </row>
-                        <row>
-                            <entry>yyyyMMdd</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
+                    </row>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>01.04.2006</entry>
+                        <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
+                    </row>
+                    <row>
+                        <entry>yyyyMMdd</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <note>
             <title>データベースの日付書式</title>

@@ -5,7 +5,7 @@
     <para>
         入力のパースと正規化、そしてローカライズされた表記での出力により、
         さまざまなロケールのユーザがデータにアクセスできるようになります。
-        <code>Zend_Measure</code> コンポーネントには
+        <code>Zend_Measure_*</code> コンポーネントには
         それ以外にもさまざまなメソッドがあり、
         正規化されたデータを操作することができます。
     </para>
@@ -73,6 +73,8 @@ $mystring = "1.234.567,89";
 $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 
 print "Kilo:".$unit->convertTo('KILOGRAM');
+
+// 文字列を使うより定数で指定するほうが "よりよい方法" です
 print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 ?>]]></programlisting>
         </example>
@@ -101,13 +103,13 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 require_once 'Zend/Measure/Length.php';
 
 // オブジェクトを定義します
-$unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 // $unit2 を $unit に足します
 $sum = $unit->add($unit2);
 
-echo $sum;
+echo $sum; // "300 cm" と出力します
 ?>]]></programlisting>
             </example>
         </para>
@@ -132,8 +134,8 @@ echo $sum;
 require_once 'Zend/Measure/Length.php';
 
 // オブジェクトを定義します
-$unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 // $unit2 を $unit から引きます
 $sum = $unit->sub($unit2);
@@ -162,8 +164,8 @@ echo $sum;
 require_once 'Zend/Measure/Length.php';
 
 // 値を定義します
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 if ($unit->equals($unit2)) {
     print "これらは同じです";
@@ -178,8 +180,8 @@ if ($unit->equals($unit2)) {
 require_once 'Zend/Measure/Length.php';
 
 // 値を定義します
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 $unit2->setType(Zend_Measure_Length::CENTIMETER);
 
@@ -212,9 +214,9 @@ if ($unit->equals($unit2)) {
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
-$unit3 = new Zend_Measure_Length(1.2,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
+$unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
 print "Equal:".$unit2->compare($unit);
 print "Greater:".$unit2->compare($unit3);
@@ -246,10 +248,10 @@ $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
 $unit->setValue(1.2);
 echo $unit;
 
-$unit->setValue(1.2,Zend_Measure_Length::KILOMETER);
+$unit->setValue(1.2, Zend_Measure_Length::KILOMETER);
 echo $unit;
 
-$unit->setValue("1.234,56",Zend_Measure_Length::MILLIMETER,$locale);
+$unit->setValue("1.234,56", Zend_Measure_Length::MILLIMETER,$locale);
 echo $unit;
 ?>]]></programlisting>
             </example>
@@ -272,13 +274,10 @@ echo $unit;
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+echo $unit; // "1 m" と出力します
 
-// 出力: 1 m
-echo $unit;
-
-// 出力: 1 km
 $unit->setType(Zend_Measure_Length::KILOMETER);
-echo $unit;
+echo $unit; // "1000 km" と出力します
 ?>]]></programlisting>
         </example>
 

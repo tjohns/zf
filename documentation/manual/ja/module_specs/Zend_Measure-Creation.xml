@@ -4,7 +4,7 @@
 
     <para>
         計測値を表すオブジェクトを作成する際には、
-        <code>Zend_Measure</code> のメソッドの最初のパラメータに
+        <code>Zend_Measure_*</code> のメソッドの最初のパラメータに
         入力値あるいは元の値を指定します。これは、
         <link linkend="zend.measure.creation.number"><code>数値の引数</code>
         </link>
@@ -16,45 +16,48 @@
         </link>
         のいずれかとなります。
         二番目の引数には、計測値の型を指定します。どちらのパラメータも必須です。
-        三番目のパラメータは任意で、言語を指定します。
+        言語は、任意で三番目のパラメータとして指定します。
     </para>
 
     <sect2 id="zend.measure.creation.number">
 
-        <title>変数をもとにした計測値</title>
+        <title>整数および浮動小数点数からの計測値の作成</title>
 
-        <example>
-            <title>整数値を使用しての作成</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Length.php';
-
-$integer = 1234;
-$unit = new Zend_Measure_Length($integer,Zend_Measure_Length::STANDARD);
-
-echo $unit;
-// 出力は '1234 m' となります
-?>]]></programlisting>
-        </example>
-
-        <note>
-            <title>浮動小数点数の使用</title>
-            <para>
+        <para>
+            In addition to integer data values, floating point types may be used, but
+            <ulink url="http://www.php.net/float">"simple decimal fractions like 0.1 or 0.7 cannot be converted into their internal binary counterparts without a little loss of precision,"</ulink>
+            sometimes giving surprising results. Also, do not compare two "float" type numbers for equality.
                 整数ではなく浮動小数点数を使用することもできます。しかし、
                 <ulink url="http://www.php.net/float">"0.1 や 0.7 のようなシンプルな小数であっても、
                 それを内部的な二進数表現に変換する際には、どうしても多少精度が落ちてしまいます。"</ulink>
                 そのため、予期せぬ結果を引き起こすことがあります。
                 また、ふたつの "浮動小数点数" が等しいかどうかを調べないようにしましょう。
-            </para>
-        </note>
+        </para>
+
+        <example>
+            <title>整数および浮動小数点数を使用しての作成</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Measure/Length.php';
+
+$measurement = 1234.7;
+$unit = new Zend_Measure_Length((integer)$measurement, Zend_Measure_Length::STANDARD);
+echo $unit;
+// 出力は '1234 m' (メートル) となります
+
+$unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
+echo $unit;
+// 出力は '1234.7 m' (メートル) となります
+?>]]></programlisting>
+        </example>
 
     </sect2>
 
     <sect2 id="zend.measure.creation.string">
 
-        <title>文字列をもとにした計測値</title>
+        <title>文字列からの計測値の作成</title>
 
         <para>
-            ZF アプリケーションが入力として受け取って <code>Zend_Measure</code>
+            ZF アプリケーションが入力として受け取って <code>Zend_Measure_*</code>
             クラスに渡す値の多くは、文字列としてしか渡せません。
             たとえば
             <ulink url="http://en.wikipedia.org/wiki/Roman_numerals">ローマ数字</ulink>
@@ -75,40 +78,32 @@ echo $unit;
 require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
-$unit = new Zend_Measure_Number($mystring,Zend_Measure_Number::BINARY);
+$unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
 echo $unit;
 ?>]]></programlisting>
         </example>
 
         <para>
-            計測値が、任意の文字列の中の一部であってもかまいません。通常は
-            <code>Zend_Measure</code> が自動的に計測値を抽出します。
-            数値として認識可能な値が最初に見つかった時点で、それを用いて値を作成します。
+            通常は、任意の文字列に埋め込まれた計測値を
+            <code>Zend_Measure_*</code> が自動的に抽出します。
+            標準の European/Latin 数値 (0,1,2,3,4,5,6,7,8,9)
+            として認識可能な値が最初に見つかった時点で、それを用いて値を作成します。
             文字列内に数値が複数あった場合は、それ以降のものは無視されます。
         </para>
 
         <example>
-            <title>任意のテキスト</title>
+            <title>計測値を含む任意の入力テキスト</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size";
-$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
-
-echo $unit;
-?>]]></programlisting>
-        </example>
-
-        <example>
-            <title>任意のテキスト</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Area.php';
+$unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
+echo $unit; // 出力は "125 m² in size" となります
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
-$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
-
-echo $unit;
+$unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
+echo $unit; // 出力は "125 m² in size" となります
 ?>]]></programlisting>
         </example>
 
@@ -125,7 +120,7 @@ echo $unit;
             を用いるのは英語では一般的です。しかし、その他の言語でもそうだとは限りません。
             例えば、英語の "1,234.50" は、ドイツ語では "1.2345" という意味になります。
             このような問題に対処するために、ロケールを考慮した
-            <code>Zend_Measure</code> 系のクラスが用意されています。
+            <code>Zend_Measure_*</code> 系のクラスが用意されています。
             これは、言語や地域を指定することによって入力内容の曖昧さをなくし、
             意図した値として適切に解釈されるようにします。
         </para>
@@ -134,13 +129,16 @@ echo $unit;
             <title>ローカライズされた文字列</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
-Zend::loadClass('Zend_Measure');
 
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$mystring = "The boat is 1,234.50 long.";
+$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, $locale);
+echo $unit; // 出力は "1.234 m" となります
 
-echo $unit;
+
+$mystring = "The boat is 1,234.50 long.";
+$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
+echo $unit; // 出力は "1234.50 m" となります
 ?>]]></programlisting>
         </example>
 

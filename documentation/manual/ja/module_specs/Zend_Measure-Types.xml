@@ -3,8 +3,8 @@
     <title>計測値の型</title>
 
     <para>
-        ここでは、サポートするすべての計測値の型の一覧と
-        標準的な使用例を説明します。
+        サポートするすべての計測値の型の一覧を以下にまとめます。
+        それぞれについて、標準的な使用例も示します。
     </para>
 
     <table>
@@ -248,68 +248,56 @@
         </tgroup>
     </table>
 
-    <para>
-        Zend_Measure_Binary についてのヒントです。
-    </para>
+    <sect2 id="zend.measure.types.binary">
 
-    <note>
-        <title>バイナリ変換</title>
+        <title>Zend_Measure_Binary のヒント</title>
+
         <para>
-            キロ、メガ、ギガ、... という言葉は、通常はそれぞれ
-            1000 あるいは 10³ を表します。
-        </para>
-        <para>
-            コンピュータの世界のバイナリフォーマットでは、
-            キロ、メガ、ギガ、... という言葉は 1000 ではなく 1024 を表します。
-        </para>
-        <para>
+            よく使われるバイナリの規約では、キロ、メガ、ギガ
+            といった単位は十進法で扱います。つまり 1000 あるいは 10³ といった具合です。
+            しかし、コンピュータの世界のバイナリフォーマットでは、
+            これらの用語を 1000 ではなく 1024 をさすものとして扱います。
             このような混乱を避けるため、数年前に BI 記法が生まれました。
             キロバイトのかわりに、キビバイト (kibibyte) というのです。
             これは、キロ-バイナリ-バイト (kilo-binary-byte) を略したものです。
         </para>
+
         <para>
-            BINARY クラスでは、両方の表記を使用しています。
-        </para>
-        <para>
-            KILOBYTE = 1024 - バイナリコンピュータの世界の形式、KIBIBYTE = 1024 - 新しい記法、KILO_BINARY_BYTE = 1024 -
-            新しい記法 (長い形式)、KILOBYTE_SI = 1000 - SI 記法によるキロ (1000)
-        </para>
-        <para>
+            BINARY クラスでは、両方の表記を使用しています。すなわち
+            <code>KILOBYTE = 1024 - バイナリコンピュータ形式、
+            KIBIBYTE = 1024 - 新しい記法、KILO_BINARY_BYTE = 1024 - 新しい記法の長い形式</code>、
+            <code>KILOBYTE_SI = 1000 - SI 記法でのキロ (1000)</code>。
             たとえば DVD は SI 記法が使用されていますが、
             ほとんどすべてのハードディスクではバイナリ記法が使用されています。
         </para>
-    </note>
 
-    <para>
-        Zend_Measure_Number についてのヒントです。
-    </para>
+    </sect2>
 
-    <para>
-        いちばんよく知られている形式は、十進法です。
-    </para>
+    <sect2 id="zend.measure.types.decimal">
 
-    <para>
-        それ以外に、このクラスでは八進数、十六進数、二進数、
-        ローマ数字そしてあまり知られていないその他の形式を扱っています。
-        <note>
-            <title>注意</title>
-            <para>
-                整数部分のみが処理の対象となることに注意しましょう。
-                小数部分は捨てられます。
-            </para>
-        </note>
-    </para>
+        <title>Zend_Measure_Number のヒント</title>
 
-    <note>
+        <para>
+            いちばんよく知られている形式は、十進法です。
+            それ以外に、このクラスでは八進数、十六進数、二進数、
+            ローマ数字そしてあまり知られていないその他の形式を扱っています。
+            整数部分のみが処理の対象となることに注意しましょう。
+            小数部分は捨てられます。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.measure.types.roman">
+
         <title>ローマ数字</title>
+
         <para>
             ローマ数字では 4000 以上の数字もサポートしています。
             実際は、これらの数字を現す際には数字の上に横線を引きます。
-        </para>
-        <para>
             コンピュータ上では上線は表示できないので、
             その代わりに下線を使用します。
         </para>
+
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
@@ -320,7 +308,8 @@ $unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
 十進数に変換します
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
 ?>]]></programlisting>
-    </note>
+
+    </sect2>
 
 </sect1>
 <!--

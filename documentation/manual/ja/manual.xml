@@ -172,7 +172,6 @@
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
         &module_specs.Zend_Measure-Introduction;
-        &module_specs.Zend_Measure-Writing;
         &module_specs.Zend_Measure-Creation;
         &module_specs.Zend_Measure-Output;
         &module_specs.Zend_Measure-Edit;
