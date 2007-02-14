@@ -503,17 +503,42 @@ abstract class Zend_Controller_Action
      * rather than "ArticleController".  The dispatcher will do the
      * appropriate formatting when the request is received.
      *
-     * @param string $controllerName
-     * @param string $actionName
+     * If only an action name is provided, forwards to that action in this 
+     * controller.
+     *
+     * If an action and controller are specified, forwards to that action and 
+     * controller in this module.
+     *
+     * Specifying an action, controller, and module is the most specific way to 
+     * forward.
+     *
+     * A fourth argument, $params, will be used to set the request parameters. 
+     * If either the controller or module are unnecessary for forwarding, 
+     * simply pass null values for them before specifying the parameters.
+     *
+     * @param string $action
+     * @param string $controller
+     * @param string $module
      * @param array $params
      * @return void
      */
-    final protected function _forward($controllerName, $actionName, $params=array())
+    final protected function _forward($action, $controller = null, $module = null, array $params = null)
     {
-        $this->getRequest()->setParams($params)
-            ->setControllerName($controllerName)
-            ->setActionName($actionName)
-            ->setDispatched(false);
+        $request = $this->getRequest();
+
+        if (null !== $params) {
+            $request->setParams($params);
+        }
+
+        if (null !== $module) {
+            $request->setModuleName($module);
+        }
+
+        if (null !== $controller) {
+            $request->setControllerName($controller);
+        }
+
+        $request->setActionName($action);
     }
 
 

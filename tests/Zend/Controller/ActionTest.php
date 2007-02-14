@@ -73,11 +73,53 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertSame('baz', $this->_controller->getInvokeArg('bar'));
     }
 
-    public function testForward()
+    public function testForwardActionOnly()
     {
-        $this->_controller->forward();
-        $this->assertEquals('baz', $this->_controller->getRequest()->getControllerName());
+        $this->_controller->forward('forwarded');
         $this->assertEquals('forwarded', $this->_controller->getRequest()->getActionName());
+    }
+
+    public function testForwardActionKeepsController()
+    {
+        $request = $this->_controller->getRequest();
+        $request->setControllerName('foo')
+                ->setActionName('bar');
+        $this->_controller->forward('forwarded');
+        $this->assertEquals('forwarded', $request->getActionName());
+        $this->assertEquals('foo', $request->getControllerName());
+    }
+
+    public function testForwardActionAndController()
+    {
+        $request = $this->_controller->getRequest();
+        $request->setControllerName('foo')
+                ->setActionName('bar');
+        $this->_controller->forward('forwarded', 'bar');
+        $this->assertEquals('forwarded', $request->getActionName());
+        $this->assertEquals('bar', $request->getControllerName());
+    }
+
+    public function testForwardActionControllerAndModule()
+    {
+        $request = $this->_controller->getRequest();
+        $request->setControllerName('foo')
+                ->setActionName('bar')
+                ->setModuleName('admin');
+        $this->_controller->forward('forwarded', 'bar');
+        $this->assertEquals('forwarded', $request->getActionName());
+        $this->assertEquals('bar', $request->getControllerName());
+        $this->assertEquals('admin', $request->getModuleName());
+    }
+
+    public function testForwardCanSetParams()
+    {
+        $request = $this->_controller->getRequest();
+        $request->setParams(array('admin' => 'batman'));
+        $this->_controller->forward('forwarded', null, null, array('foo' => 'bar'));
+        $this->assertEquals('forwarded', $request->getActionName());
+        $received = $request->getParams();
+        $this->assertTrue(isset($received['foo']));
+        $this->assertEquals('bar', $received['foo']);
     }
 
     public function testRun()
@@ -202,9 +244,9 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
         $this->getResponse()->setBody("Should never see this\n");
     }
 
-    public function forward()
+    public function forward($action, $controller = null, $module = null, array $params = null)
     {
-        $this->_forward('baz', 'forwarded');
+        $this->_forward($action, $controller, $module, $params);
     }
 
     public function hasParam($param)
