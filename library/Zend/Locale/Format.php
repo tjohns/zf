@@ -850,6 +850,22 @@ class Zend_Locale_Format
 
 
     /**
+     * Returns the default time format for $locale.
+     *
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return string  format
+     */
+    public static function getTimeFormat($locale = null)
+    {
+        $format = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
+        $format = $format['default'];
+
+        $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $format));
+        return $format['pattern'];
+    }
+
+
+    /**
      * Returns an array with 'hour', 'minute', and 'second' elements extracted from $time
      * according to the order described in $format.  For a format of 'H:m:s', and
      * an input of 11:20:55, getTime() would return:
@@ -866,16 +882,10 @@ class Zend_Locale_Format
     public static function getTime($time, $format = null, $locale = null)
     {
         if (empty($format)) {
-            $format = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
-            $format = $format['default'];
-
-            $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $format));
-            $format = $format['pattern'];
+            $format = self::getTimeFormat($locale);
         }
 
-        $time = self::_parseDate($time, $format, $locale, false);
-
-        return $time;
+        return self::_parseDate($time, $format, $locale);
     }
 
 

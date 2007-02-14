@@ -311,14 +311,7 @@ class Zend_Date extends Zend_Date_DateObject {
         }
 
         if ($format === null) {
-            $date = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
-            $time = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
-            $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $date['default']));
-            $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $time['default']));
-
-            $format  = $date['pattern'];
-            $format .= " ";
-            $format .= $time['pattern'];
+            $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
         }
 
         // get format tokens
@@ -863,9 +856,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::DATES :
-                $default = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
-                $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $default['default']));
-                return $this->toString($date['pattern'], $locale);
+                return $this->toString(Zend_Locale_Format::getDateFormat($locale), $locale);
                 break;
 
             case Zend_Date::DATE_FULL :
@@ -889,9 +880,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::TIMES :
-                $default = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
-                $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $default['default']));
-                return $this->toString($time['pattern'], $locale);
+                return $this->toString(Zend_Locale_Format::getTimeFormat($locale), $locale);
                 break;
 
             case Zend_Date::TIME_FULL :
