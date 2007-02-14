@@ -5,20 +5,20 @@
 		<title>Wprowadzenie</title>
 
         <para>
-            The MVC components in Zend Framework utilize a Front Controller,
-            which means that all requests to a given site will go through a
-            single entry point. As a result, all exceptions bubble up to the
-            Front Controller eventually, allowing the developer to handle them
-            in a single location.
+            Komponenty MVC w Zend Framework używają kontrolera frontowego, co
+            oznacza, że wszystkie żądania do danej strony przechodzą przez
+            pojedynczy punkt. W rezultacie wszystkie wyjątki ostatecznie 
+            zbierane są w kontrolerze frontowym, pozwalając programiście na 
+            obsłużenie ich w jednym miejscu.
         </para>
 
         <para>
-            However, exception messages and backtrace information often contain
-            sensitive system information, such as SQL statements, file
-            locations, and more. To help protect your site, by default
-            Zend_Controller_Front catches all exceptions and registers them with
-            the response object; in turn, by default, the response object does
-            not display exception messages.
+            Jakkolwiek, wiadomości o wyjątkach oraz informacje o backtrace 
+            często zawierają wrażliwe informacje o systemie, jak np. zapytania 
+            SQL, informacje o lokacjach plików i wiele innych. Aby pomóc ci 
+            chronić swój serwis, domyślnie Zend_Controller_Front łapie wszystkie 
+            wyjątki i rejestruje je w obiekcie odpowiedzi; z kolei, obiekt 
+            odpowiedzi domyślnie nie wyświetla wiadomości o wyjątkach.
         </para>
     </sect2>
 
@@ -96,10 +96,9 @@ if ($response->isException()) {
 ]]></programlisting>
                 
                 <para>
-                    The primary advantage this method offers over
-                    Zend_Controller_Front::throwExceptions() is to allow you to
-                    conditionally render the response after handling the
-                    exception.
+                    Główną zaletą, dzięki której ta metoda umożliwia więcej niż
+                    Zend_Controller_Front::throwExceptions(), jest to, że możesz
+                    warunkowo wyświetlać odpowiedź po obsłudze wyjątków.
                 </para>
             </listitem>
         </itemizedlist>
@@ -109,14 +108,14 @@ if ($response->isException()) {
         <title>Wyjątki MVC które możesz napotkać</title>
 
         <para>
-            The various MVC components -- request, router, dispatcher, action
-            controller, and response objects -- each may throw exceptions on
-            occasion. Some exceptions may be conditionally overridden, and
-            others are used to indicate the developer may need to consider
-            their application structure.
+            Różne komponenty MVC -- obiekt żądania, router, obiekt uruchamiający, 
+            kontrolery akcji, oraz obiekt odpowiedzi -- każdy może z różnych 
+            przyczyn wyrzucać wyjątki. Niektóre wyjątki mogą być warunkowo
+            nadpisane, a inne są używane aby wskazać programiście potrzebę
+            poprawienia aplikacji.
         </para>
 
-        <para>As some examples:</para>
+        <para>Kilka przykładów:</para>
 
         <itemizedlist>
             <listitem>
@@ -169,10 +168,11 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    Zend_Controller_Action::__call() will throw an exception if
-                    it cannot dispatch a non-existent action to a method. Most
-                    likely, you will want to use some default action in the
-                    controller in cases like this. Ways to achieve this include:
+                    Metoda Zend_Controller_Action::__call() wyrzuci wyjątek
+                    jeśli nie może uruchomić nieistniejącej metody akcji. 
+                    Najczęściej będziesz chciał użyć jakiejś domyślnej akcji
+                    w kontrolerze w tego typu sprawach. Przykładowe metody 
+                    za pomocą których możesz to osiśgnąć:
                 </para>
 
                 <itemizedlist>
@@ -198,17 +198,17 @@ class My_Controller_Action extends Zend_Controller_Action
 }
 ]]></programlisting>
                         <para>
-                            The example above intercepts any undefined action
-                            method called and redirects it to the default action
-                            in the controller.
+                            Powyższa metoda przechwytuje wszystkie wywołane
+                            niezdefiniowane akcje i przekierowuje żądanie do 
+                            domyślnej akcji w kontrolerze.
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Subclass Zend_Controller_Dispatcher and override the
-                            getAction() method to verify the action exists.
-                            As an example:
+                            Rozszerzenie klasy Zend_Controller_Dispatcher o
+                            nadpisanie metody getAction(), ktora sprawdza czy
+                            akcja istnieje. Na przykład:
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php
@@ -237,44 +237,46 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 ]]></programlisting>
 
                         <para>
-                            The above code checks to see that the requested
-                            action exists in the controller class; if not, it
-                            resets the action to the default action.
+                            Powyższy kod sprawdza czy zażądana akcja istnieje w
+                            klasie kontrolera; jeśli nie, resetuje akcję do
+                            akcji domyślnej.
                         </para>
 
                         <para>
-                            This method is nice as you can transparently alter
-                            the action prior to final dispatch. However, it also
-                            means that typos in the URL may still dispatch
-                            correctly, which is not great for search engine
-                            optimization.
+                            Ta metoda jest wygodna ponieważ możesz w niewidoczny 
+                            sposób zmienić akcję przed ostatecznym uruchomieniem.
+                            Jednak to także oznacza, że jakikolwiek błąd literowy
+                            w adresie URL może wciąż uruchomić żądanie poprawnie,
+                            co nie jest zbyt dobre dla optymalizacji dla 
+                            wyszukiwarek internetowych.
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Use Zend_Controller_Action::preDispatch() or 
-                            Zend_Controller_Plugin_Abstract::preDispatch() to
-                            identify invalid actions.
+                            Użycie metody Zend_Controller_Action::preDispatch() 
+                            lub Zend_Controller_Plugin_Abstract::preDispatch() 
+                            do zidentyfikowania nieprawidłowych akcji.
                         </para>
 
                         <para>
-                            By subclassing Zend_Controller_Action and modifying
-                            preDispatch(), you can modify all of your
-                            controllers to forward to another action or redirect
-                            prior to actually dispatching the action. The code
-                            for this will look similar to the code for
-                            overriding __call(), above.
+                            Rozszerzając klasę Zend_Controller_Action i
+                            modyfikując metodę preDispatch(), możesz 
+                            zmodyfikować wszystkie twoje kontrolery w taki 
+                            sposób, aby przenosiły one żądanie do innej akcji
+                            lub przekierowywały zamiast uruchamiać akcję.
+                            Kod wyglądałby podobnie kod nadpisujący metodę 
+                            __call(), który został przedstawiony wyżej.
                         </para>
 
                         <para>
-                            Alternatively, you can check this information in a
-                            global plugin. This has the advantage of being
-                            action controller independent; if your application
-                            consists of a variety of action controllers, and not
-                            all of them inherit from the same class, this method
-                            can add consistency in handling your various
-                            classes.
+                            Alternatywnie, możesz sprawdzać te informacje we
+                            wtyczce globalnej. Zaletą tego rozwiązania jest to,
+                            że kontroler akcji staje się niezależny; jeśli twoja
+                            aplikacja składa się z różnorodnych kontrolerów 
+                            akcji i nie wszystkie dziedziczą z tej samej klasy, 
+                            ta metoda może dodać konsekwencji w obsłudze różnych
+                            klas.
                         </para>
 
                         <para>

@@ -7,6 +7,71 @@
         aby przeprowadzić migrację swoich skryptów aby używały nowej architektury.
     </para>
 
+    <sect2 id="zend.controller.migration.fromzerosix">
+        <title>Migracja z wersji 0.6.0 do 0.8.0</title>
+
+        <para>
+            Od czasu poprzednich zmian, najbardziej podstawowe użycie 
+            komponentów MVC pozostaje takie same:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Controller/Front.php';
+Zend_Controller_Front::run('/path/to/controllers');
+]]></programlisting>
+
+        <para>
+            Jakkolwiek, struktura katalogów została przebudowana, kilka
+            komponentów usunięto, kilku innym zmieniono nazwy, a także kilka
+            dodano. Zmiany to:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Klasa <code>Zend_Controller_Router</code> została usunięta
+                    na rzecz rewrite routera.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Nazwa klasy <code>Zend_Controller_RewriteRouter</code> 
+                    została zmieniona na <code>Zend_Controller_Router_Rewrite</code>
+                    i awansowała ona na standardowy router dostarczany z frameworkiem;
+                    <code>Zend_Controller_Front</code> użyje go domyślnie, jeśli 
+                    żaden inny router nie zostanie ustawiony.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Nowa klasa trasy doa użycia z rewrite routerem została 
+                    przedstawiona, jest to
+                    <code>Zend_Controller_Router_Route_Module</code>; kryje
+                    ona w sobie domyślną trasę używaną przez MVC i wspiera <xref
+                        linkend="zend.controller.modular">moduły
+                        kontrolerów</xref>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Nazwa klasy <code>Zend_Controller_Router_StaticRoute</code> 
+                    została zmieniona na 
+                    <code>Zend_Controller_Router_Route_Static</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Nazwa klasy <code>Zend_Controller_Dispatcher</code> została
+                    zmieniona na <code>Zend_Controller_Dispatcher_Standard</code>.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzerotwo">
         <title>Migracja z wersji 0.2.0 lub z poprzednich do 0.6.0</title>
 

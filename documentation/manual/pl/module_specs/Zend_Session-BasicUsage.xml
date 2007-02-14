@@ -1,72 +1,87 @@
 <sect1 id="zend.session.basicusage">
 
-    <title>Basic Usage</title>
+    <title>Podstawowe użycie</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> instances provide the primary API for manipulating session data in the Zend
-        Framework. Namespaces are used to segregate all session data, although a default namespace exists for those who
-        only want one namespace for all their session data. <code>Zend_Session</code> utilizes ext/session and its
-        special <code>$_SESSION</code> superglobal as the storage mechanism for session state data. While
-        <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain from directly
-        accessing it, so that <code>Zend_Session</code> and <code>Zend_Session_Namespace</code> can most effectively and
-        securely provide its suite of session related functionality.
+        Instancje <code>Zend_Session_Namespace</code> zapewniają główne API do
+        manipulowania danymi sesji w Zend Framework. Przestrzenie nazw są 
+        używane do segregowania wszystkich danych sesji, chociaż dla tych, 
+        którzy potrzebują tylko jednej przestrzeni nazw dla wszystkich danych 
+        sesji, istnieje domyślna przestrzeń nazw. <code>Zend_Session</code> 
+        używa rozszerzenia session i jego specjalnej superglobalnej tablicy
+        <code>$_SESSION</code> jako mechanizmu składowania danych stanu sesji.
+        Dopóki tablica <code>$_SESSION</code> jest wciąż dostępna w globalnej
+        przestrzeni nazw PHP, programiści powinni wystrzegać się uzyskiwania
+        bezpośredniego dostępu do niej, więc dlatego <code>Zend_Session</code> 
+        oraz <code>Zend_Session_Namespace</code> mogą najbardziej efektywnie
+        i bezpiecznie zapewniać zbiór funkcjonalności związanych z sesją.
     </para>
 
     <sect2 id="zend.session.basicexamples">
 
-        <title>Tutorial Examples</title>
+        <title>Przykłady</title>
 
         <para>
-            If no namespace is specified when instantiating Zend_Session, all data will be transparently stored in a
-            namespace called "<code>Default</code>". The example below demonstrates use of this default namespace,
-            showing how to count the number of times a user views pages on your website. To test this example, add the
-            following code to your ZF bootstrap area:
+            Jeśli przestrzeń nazw nie zostanie określona przy tworzeniu
+            instancji Zend_Session, wszystkie dane będą przechowywane w 
+            przestrzeni nazw "<code>Default</code>". Poniższy przykład 
+            demonstruje użycie tej domyślnej przestrzeni nazw, pokazując jak
+            obliczyć ile razy użytkownik oglądał strony w twoim serwisie.
+            Aby przetestować ten przykład, dodaj poniższy kod do twojego pliku
+            ładującego ZF:
         </para>
 
         <example>
-            <title>Counting Page Views</title>
+            <title>Zliczanie odsłon stron</title>
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+    $defaultNamespace->numberOfPageRequests++; // to będzie inkrementowane po każdym przeładowaniu strony
     echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
 
         <para>
-            One of the many benefits of Zend_Session_Namespace results when multiple modules use Zend_Session_Namespace
-            and obtain data encapsulation for their session data. Zend_Session can be passed an optional $namespace
-            argument in the constructor, which allows other components, modules, and developer specific code to be
-            assured that their data is protected by a partition between data areas used by other components, modules,
-            and developer code. Namespacing provides an effective and popular way to "secure" a subset of session state
-            data against accidental changes. Namespace names are restricted to character sequences represented as
-            non-empty PHP strings that do not begin with an underscore ('_') character. Only core components included in
-            the Zend Framework should use namespace names starting with 'Zend_'.
+            Jedną z wielu zalet klasy Zend_Session_Namespace widać wtedy, gdy
+            wiele modułów używa Zend_Session_Namespace i uzyskuje dostęp do 
+            hermetyzacji danych sesji. Do konstruktora Zend_Session można 
+            przekazać opcjonalny argument $namespace, który pozwala innym 
+            komponentom, modułom oraz specyficznemu kodowi programisty na 
+            uzyskanie gwarancji tego, że ich dane będą zabezpieczone przegrodą 
+            od obszarów danych używanych przez inne komponenty, moduły oraz 
+            inny kod programisty. Przestrzenie nazw zapewniają efektywny i 
+            popularny sposób do zabezpieczenia podzbiorów danych stanu sesji 
+            przed przypadkowymi zmianami. Nazwy przestrzeni nazw mogą składać 
+            się tylko z niepustych łańcuchów znaków PHP, ktęre nie zaczynają się 
+            od znaku podkreślnika ('_'). Jedynie rdzenne komponenty zawarte w 
+            Zend Framework powinny używać przestrzeni nazw o nazwach 
+            zaczynających się od 'Zend_'.
         </para>
 
         <example>
-            <title>New Way: Namespaces Avoid Collisions</title>
+            <title>Nowy sposób: Przestrzenie nazw zapobiegają kolizjom</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // in the Zend_Auth component
+    // w komponencie Zend_Auth
     require_once 'Zend/Session.php';
-    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace = new Zend_Session_Namespace('Zend_Auth');
     $authNamespace->user = "myusername";
 
-    // in a web services component
-    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    // w komponencie serwisów web
+    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
     $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
 
         <para>
-            The example above achieves the same effect as the code below, except that the session objects above preserve
-            encapsulation of session data within their respective namespaces.
+            Powyższy przykład daje ten sam efekt jak kod poniżej, z wyjątkiem
+            tego, że obiekt sesji utrzymuje hermetyzację danych sesji wewnątrz
+            odpowiadającej mu przestrzeni nazw.
         </para>
 
         <example>
-            <title>Old Way: PHP Session Access</title>
+            <title>Stary sposób: Dostęp do sesji PHP</title>
 <programlisting role="php">
 <![CDATA[<?php
     $_SESSION['Zend_Auth']['user'] = "myusername";
@@ -78,21 +93,21 @@
 
     <sect2 id="zend.session.iteration">
 
-        <title>Iterating Over Session Namespaces</title>
+        <title>Iteracja poprzez przestrzenie nazw sesji</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> provides the full
-            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate interface</ulink>
-            , including support for the <code>foreach</code> statement:
+            <code>Zend_Session_Namespace</code> zapewnia pełny
+            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">interfejs IteratorAggregate</ulink>
+            , właczając w to obsługę wyrażenia <code>foreach</code>:
         </para>
 
         <example>
-            <title>Session Iteration</title>
+            <title>Iteracja sesji</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // Zend_Session is iteratable
+    // Zend_Session możemy iterować
     require_once 'Zend/Session.php';
-    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
     foreach ($aNamespace as $index => $value) {
         echo "aNamespace->$index = '$value';\n";
     }
@@ -103,16 +118,18 @@
 
     <sect2 id="zend.session.accessors">
 
-        <title>Accessors for Session Namespaces</title>
+        <title>Metody dostępowe do przestrzeni nazw sesji</title>
 
         <para>
-            The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods. The
-            magic methods should not be used directly, except from within a subclass of Zend_Session. Instead, use the
-            normal operators to invoke these magic methods, such as:
+            Standardowe metody dostępowe są dostępne za pomocą magicznych metod
+            __set(), __unset(), __isset(), oraz __get(). Magiczne metody nie 
+            powinny być używane bezpośrednio, z wyjątkiem wnętrza klasy
+            rozszerzającej Zend_Session. Zamiast tego, używaj normalnych 
+            operatorów aby wywoływać te magiczne metody, na przykład:
         </para>
 
         <example>
-            <title>Accessing Session Data</title>
+            <title>Uzyskiwanie dostępu do danych sesji</title>
 <programlisting role="php">
 <![CDATA[<?php
             $object->property = $value; echo

@@ -65,14 +65,20 @@
                         kontroler i która akcja tego kontrolera powinny odebrać
                         żądanie. Nazwa tego kontrolera, akcji oraz opcjonalnych
                         parametrów są ustawione w obiekcie żądania a następnie
-                        przetwarzane przez <code>Zend_Controller_Dispatcher</code>.  
+                        przetwarzane przez 
+                        <code>Zend_Controller_Dispatcher_Standard</code>. 
                         Routing przeprowadzany jest tylko raz: wtedy kiedy
                         żądanie jest po raz pierwszy odebrane, a przed 
                         uruchomieniem pierwszego kontrolera.
                     </para>
 
                     <para>
-                        Domyślny router, <code>Zend_Controller_Router</code>,
+                        Domyślnym routerem jest
+                        <code>Zend_Controller_Router_Rewrite</code>.
+                    </para>
+
+                    <para>
+                        Domyśłny router, <code>Zend_Controller_Router_Rewrite</code>,
                         pobiera adres URI, który jest określony w obiekcie
                         <code>Zend_Controller_Request_Http</code> i wyciąga z
                         niego informacje o kontrolerze, akcji oraz parametrach
@@ -82,6 +88,14 @@
                         akcja <code>bar</code>, i parametr <code>key</code> 
                         o wartości <code>value</code>.
 					</para>
+					
+                    <para>
+                        <code>Zend_Controller_Router_Rewrite</code> może być 
+                        także użyty do dopasowania bezwzlędnych ścieżek; zobacz <xref
+                        linkend="zend.controller.providedsubclasses.rewriterouter">
+                        dokumentację rewrite routera</xref> aby dowiedzieć się
+                        więcej.
+                    </para>
 				</listitem>
 				
 				<listitem>
@@ -111,7 +125,7 @@
 
                     <para>
                         Domyślną klasą uruchamiającą jest
-                        <code>Zend_Controller_Dispatcher</code>. Definiuje ona
+                        <code>Zend_Controller_Dispatcher_Standard</code>. Definiuje ona
                         kontroler jako CamelCasedClasses zakończone słowem
                         Controller, oraz metody akcji jako camelCasedMethods
                         zakończone słowem Action:
@@ -152,12 +166,12 @@
 
 			Przestrzeń systemu <code>Zend_Controller</code> jest stosunkowo 
 			prosta. Żądanie jest odbierane przez obiekt <code>Zend_Controller_Front</code>, 
-			który wywołuje <code>Zend_Controller_Router</code> w celu określenia 
+			który wywołuje <code>Zend_Controller_Router_Rewrite</code> w celu określenia 
 			kontrolera (i akcji w tym kontrolerze) do uruchomienia. 
-			<code>Zend_Controller_Router</code> rozkłada adres URI na części 
+			<code>Zend_Controller_Router_Rewrite</code> rozkłada adres URI na części 
 			w celu określenia nazwy kontrolera i akcji w żądaniu.
 			Wtedy <code>Zend_Controller_Front</code> rozpoczyna pętlę uruchamiania 
-			akcji z kontrolerów. Uruchamia <code>Zend_Controller_Dispatcher</code>,
+			akcji z kontrolerów. Uruchamia <code>Zend_Controller_Dispatcher_Standard</code>,
 			przekazując mu żądanie w celu uruchomienia kontrolera i akcji, 
 			określonych w żądaniu (lub domyślnych). Gdy kontroler kończy działanie, 
 			kontrola wraca do obiektu <code>Zend_Controller_Front</code>. Jeśli 
@@ -230,24 +244,28 @@
 		<para>
 		    Zanim zbudujesz swój pierwszy kontroler, powinieneś zrozumieć jak 
 		    działa proces routingu który jest zaimplementowany jako 
-		    <code>Zend_Controller_Router</code>. Pamiętaj, że przestrzeń 
+		    <code>Zend_Controller_Router_Rewrite</code>. Pamiętaj, że przestrzeń 
 		    działania jest podzielona na routing, który ma miejsce tylko raz 
 		    oraz na proces dispatchingu, który odbywa się w pętli.
 		</para>
 
 		<para>
 			<code>Zend_Controller_Front</code> wywołuje 
-			<code>Zend_Controller_Router</code> (lub inny zarejestrowany router)
-			aby zmapować adres URI do kontrolera oraz do akcji wewnątrz 
-			kontrolera. <code>Zend_Controller_Router</code> pobiera adres URI z 
-			obiektu żądania a następnie rozkłada go na części aby określić nazwę 
-			kontrolera, akcji i inne parametry z adresu URL a następnie ustawia 
-			je w obiekcie żądania.
+			<code>Zend_Controller_Router_Rewrite</code> (lub inny zarejestrowany 
+			router) aby zmapować adres URI do kontrolera oraz do akcji wewnątrz 
+			kontrolera. <code>Zend_Controller_Router_Rewrite</code> pobiera 
+			adres URI z obiektu żądania i przekazuje go do obiektów tras w jego 
+			łańcuchu; domyślnie używa on 
+			<code>Zend_Controller_Router_Route_Module</code> do dopasowania
+            adresów URL. Obiekt trasy następnie rozkłada URL na części aby 
+            określić nazwę kontrolera, akcji i inne parametry z adresu URL a 
+            następnie ustawia je w obiekcie żądania.
 		</para>
 
 		<para>
-		    <code>Zend_Controller_Router</code>	używa bardzo prostego mapowania 
-		     w celu określenia nazwy kontrolera oraz akcji wewnątrz kontrolera:
+		    <code>Zend_Controller_Router_Route_Module</code> używa bardzo 
+		    prostego mapowania w celu określenia nazwy kontrolera oraz akcji 
+		    wewnątrz kontrolera:
         </para>
 
 		<programlisting role="php"><![CDATA[
@@ -268,10 +286,11 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 
 		<para>
 			Jeśli w adresie URI brakuje informacji o kontrolerze lub akcji
-			<code>Zend_Controller_Dispatcher</code> spróbuje pobrać wartości
-			z parametrów obiektu żądania i jeśli nie zostaną w nim znalezione, 
-			użyje domyślnych wartości. Zarówno dla kontrolera jak i dla akcji
-			domyślną wartością jest "<code>index</code>". Pokazuje to ten przykład:
+			<code>Zend_Controller_Dispatcher_Standard</code> spróbuje pobrać 
+			wartości z parametrów obiektu żądania i jeśli nie zostaną w nim 
+			znalezione, użyje domyślnych wartości. Zarówno dla kontrolera jak i 
+			dla akcji domyślną wartością jest "<code>index</code>". Pokazuje to 
+			ten przykład:
         </para>
 	    <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -291,7 +310,8 @@ Akcja    : index]]>
 		    <title>Elastyczność</title>
 		    <para>
                 Jeśli chcesz bardziej elastyczne możliwości, możesz sprawdzić
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
+              <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>dokumentację
+                Rewrite Routera</xref>.
             </para>
 		</note>
 
@@ -300,7 +320,7 @@ Akcja    : index]]>
             są ustawione w obiekcie żądania. Kiedy kontroler frontowy
             <code>Zend_Controller_Front</code> wchodzi w pętlę uruchomieniową, 
             obiekt żądania będzie przekazany do obiektu
-            <code>Zend_Controller_Dispatcher</code>.
+            <code>Zend_Controller_Dispatcher_Standard</code>.
 		</para>
 	</sect2>
 
@@ -313,7 +333,7 @@ Akcja    : index]]>
             nazwy kontrolera, nazwy akcji oraz opcjonalnych parametrów zawartych
             w nim, następnie tworzenia instancji kontrolera i uruchamiania akcji
             tego kontrolera. Jeśli kontroler lub akcja nie zostaną znalezione,
-            zostaną użyte wartości domyślne. <code>Zend_Controller_Dispatcher</code>
+            zostaną użyte wartości domyślne. <code>Zend_Controller_Dispatcher_Standard</code>
             ustawi wartość <code>index</code> zarówno dla kontrolera jak i akcji,
             ale pozwala programiście zmienić domyślne wartości używając metod 
             <code>setDefaultController()</code> oraz
@@ -372,16 +392,12 @@ $front->throwExceptions(true);
 ]]></programlisting>
 
         <para>
-            Z tego względu, że obiekt odpowiedzi implementuje <code>__toString()</code>, 
-            może on być bezpiecznie wyświetlony. To pozwala na takie użycie:
+            Aby wysłać obiekt odpowiedzi, włączając w to nagłówki, użyj metody
+            <code>sendOutput()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->getResponse();
-
-// lub
-$response = $controller->getResponse();
-echo $response;
+$response->sendOutput();
 ]]></programlisting>
         
         <para>
@@ -433,13 +449,30 @@ $response = $front->dispatch();
 // coś przetwarzaj...
 
 // ostatecznie wyświetl odpowiedź
-echo $response;
+$response->sendOutput();
 ]]></programlisting>
 
         <para>
             Domyślnie komunikaty wyjątków nie są wyświetlane. Te zachowanie może
-            być zmienione przez wywołanie metody <code>renderException()</code>.
+            być zmienione przez wywołanie metody <code>renderException()</code>, 
+            lub włączenie w kontrolerze frontowym opcji throwExceptions(), tak
+            jak pokazano niżej:
         </para>
+
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// lub:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+$response->sendOutput();
+
+// lub:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
 	</sect2>
 </sect1>
 

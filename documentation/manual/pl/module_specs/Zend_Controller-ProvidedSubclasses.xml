@@ -67,7 +67,7 @@
 
             <para>
                 Klasa <code>Zend_Controller_Request_Http</code> pozwala na użycie 
-                klasy Zend_Controller_RewriteRouter w podkatalogach. 
+                klasy Zend_Controller_Router_Rewrite w podkatalogach. 
                 Zend_Controller_Request_Http spróbuje automatycznie wykryć twój 
                 bazowy adres URL i ustawi go odpowiednio.
             </para>
@@ -109,7 +109,7 @@
 /** 
  * Uruchom żądanie z własnym bazowym URL za pomocą Zend_Controller_Front.
  */
-$router     = new Zend_Controller_RewriteRouter();
+$router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
@@ -119,24 +119,24 @@ $response   = $controller->dispatch();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.rewriterouter">
-        <title>Zend_Controller_RewriteRouter</title>
+        <title>Zend_Controller_Router_Rewrite</title>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.introduction">
             <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Controller_RewriteRouter</code> jest nową wersją 
-                routera we frameworku. Routing jest procesem pobrania adresu URI 
-                i rozłożenia go w celu ustalenia jaki kontroler i jaka akcja 
+                <code>Zend_Controller_Router_Rewrite</code> jest standardowym
+                routerem we frameworku. Routing jest procesem pobrania adresu 
+                URI i rozłożenia go w celu ustalenia jaki kontroler i jaka akcja 
                 powinny otrzymać żądanie. Ta informacja o kontrolerze, akcji i 
                 opcjonalnych parametrach jest pakowana do obiektu 
                 <code>Zend_Controller_Request_Http</code>, który jest potem 
-                przetwarzany przez Zend_Controller_Dispatcher. Routing ma 
-                miejsce tylko raz: wtedy gdy żądanie jest po raz pierwszy 
-                otrzymane, przed wywołaniem pierwszego kontrolera.
+                przetwarzany przez <code>Zend_Controller_Dispatcher_Standard</code>. 
+                Routing ma miejsce tylko raz: wtedy gdy żądanie jest po raz 
+                pierwszy otrzymane, przed wywołaniem pierwszego kontrolera.
             </para>
 
             <para>
-                <code>Zend_Controller_RewriteRouter</code> jest zaprojektowany w 
+                <code>Zend_Controller_Router_Rewrite</code> jest zaprojektowany w 
                 celu uzyskania w czystym PHP takiej funkcjonalności jak w 
                 mod_rewrite. Jest to luźno wzorowane na routingu Ruby on Rails i 
                 nie wymaga żadnej wiedzy o przepisywaniu adresów przez serwer 
@@ -159,7 +159,7 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
             
             <para>
-                RewriteRouter może być także użyty z serwerem IIS, jeśli moduł
+                Rewrite router może być także użyty z serwerem IIS, jeśli moduł
                 <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 jest zainstalowany jako rozszerzenie Isapi, z taką regułą 
                 przepisywania:
@@ -190,7 +190,7 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <title>Użycie routera</title>
 
             <para>
-                Aby prawidłowo użyć RewriteRoutera musisz utworzyć jego 
+                Aby prawidłowo użyć rewrite routera musisz utworzyć jego 
                 instancję, zdefiniować jakieś trasy i przekazać ten obiekt do 
                 kontrolera. Poniższy kod pokazuje tą procedurę:
             </para>
@@ -198,16 +198,12 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <programlisting role="php"><![CDATA[
 /* Utwórz router */
 
-$router = new Zend_Controller_RewriteRouter();
+$router = $ctrl->getRouter(); // domyślnie zwraca rewrite router
 $router->addRoute(
 	'user',
 	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
-
-/* Ustaw go w kontrolerze */
-
-$ctrl = Zend_Controller_Front::getInstance();
-$ctrl->setRouter($router);]]></programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
@@ -376,17 +372,16 @@ $router->addRoute(
             <title>Bazowy adres URL i podkatalogi</title>
 
             <para>
-                W przeciwieństwie do oryginalnego routera, obecny RewriteRouter 
-                może być użyty w podkatalogach. Jednak oryginalna metoda 
-                RewriteRoutera setRewriteBase() nie jest już dostępna. Zamiast
-                niej, bazowy adres URL zostanie automatycznie wykryty przez
-                obiekt Zend_Controller_Request_Http.
+                Rewrite router może być użyty w podkatalogach, a bazowy adres 
+                URL zostanie automatycznie wykryty przez obiekt 
+                <code>Zend_Controller_Request_Http</code>.
             </para>
 
             <para>
                 Jeśli bazowy adres URL jest wykrywany nieprawidłowo, możesz
-                go nadpisać w obiekcie Zend_Controller_Request_Http wywołując metodę
-                setBaseUrl() (zobacz <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
+                go nadpisać w obiekcie <code>Zend_Controller_Request_Http</code> 
+                wywołując metodę <code>setBaseUrl()</code> (zobacz 
+                <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
             </para>
 
         </sect3>
@@ -395,28 +390,75 @@ $router->addRoute(
             <title>Domyślne trasy</title>
 
             <para>
-                Zend_Controller_RewriteRouter jest skonfigurowany z jedną domyślną
-                trasą w celu zapewnienia kompatybilności z pierwsza wersją routera.
-                Dopasuje on adresy w zakresie kontrolera i akcji, a także domyślnie
-                dopasuje dodatkowe parametry dołączone do adresu URI. Jest
-                skonfigurowany w ten sposób:
+                Zend_Controller_Router_Rewrite jest skonfigurowany z jedną domyślną
+                trasą. Dopasuje on adresy w postaci <code>'controller/action'</code> .
+                Dodatkowo, nazwa modułu może być określoa jako pierwszy element
+                ścieżki, pozwalając na użycie adresów w postaci
+                <code>'module/controller/action</code>. Ostatecznie domyślnie
+                dopasuje dodatkowe parametry dołączone do adresu URI.
+            </para>
+
+            <para>
+                Kilka przykładów doopasowania tras:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Zakładając poniższe:
+// $ctrl->setControllerDirectory(array(
+//     'default' => '/path/to/default/controllers',
+//     'news'    => '/path/to/blog/controllers',
+//     'blog'    => '/path/to/blog/controllers'
+// ));
+
+Tylko moduł:
+http://example/news
+    module == news
+
+Nieprawidłowy moduł mapuje do nazwy kontrolera:
+http://example/foo
+    controller == foo
+
+Moduł oraz kontroler:
+http://example/blog/archive
+    module     == blog
+    controller == archive
+
+Moduł, kontroler oraz akcja:
+http://example/blog/archive/list
+    module     == blog
+    controller == archive
+    action     == list
+
+Moduł, kontroler, akcja oraz parametry:
+http://example/blog/archive/list/sort/alpha/date/desc
+    module     == blog
+    controller == archive
+    action     == list
+    sort       == alpha
+    date       == desc
+]]></programlisting>
+
+            <para>
+                Domyślną trasą jest obiekt
+                <code>Zend_Controller_Router_Route_Module</code> utworzony
+                bez żadnych domyślnych parametrów:
             </para>
 
             <programlisting role="php"><![CDATA[
 // Trasa kompatybilna z pierwszą wersja routera
-$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$compat = new Zend_Controller_Router_Route_Module();
 $this->addRoute('default', $compat);]]></programlisting>
 
             <note>
                 <title>Dopasowanie adresów URI</title>
                 <para>
-                    Zend_Controller_RewriteRouter jest skonfigurowany z 
-                    kompatybilnością wsteczną. Automatycznie dopasuje 
+                    <code>Zend_Controller_Router_Rewrite</code> jest 
+                    skonfigurowany z kompatybilnością wsteczną. Automatycznie dopasuje 
                     kontroler i akcję z adresu wraz z dodatkowymi parametrami.
                     Dodatkowe parametry nie wymagają dodawania nowych tras, o ile
                     nie chcemy zdefiniować dla nich domyślnych wartości lub wymagań.
                     Te dodatkowe parametry będą dostępne za pomocą metody
-                    Zend_Controller_Action::_getParam.
+                    <code>Zend_Controller_Action::_getParam()</code>.
                 </para>
             </note>
 
@@ -443,7 +485,7 @@ $router->removeDefaultRoutes();]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$loginRoute = new Zend_Controller_Router_StaticRoute('login', array('controller' => 'login', 'action' => 'form'));
+$loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
 $router->addRoute('login', $static);
 ]]></programlisting>
         </sect3>
@@ -468,13 +510,13 @@ $router->addRoute('login', $static);
  * routes.archive.defaults.year = 2000
  * routes.archive.reqs.year = "\d+"
  * 
- * routes.news.type = "Zend_Controller_Router_StaticRoute"
+ * routes.news.type = "Zend_Controller_Router_Route_Static"
  * routes.news.route = "news"
  * routes.news.defaults.controller = "news"
  * routes.news.defaults.action = "list"
  */
 $config = new Zend_Config_Ini($file);
-$router = new Zend_Controller_RewriteRouter();
+$router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
 ]]></programlisting>
 
@@ -492,25 +534,7 @@ $router->addConfig($config, 'routes');
                 klasy, która ma być użyta dla danej trasy; domyślnie używana jest
                 klasa <code>Zend_Controller_Router_Route</code>. W powyższym 
                 przykładzie, trasa 'news' jest zdefiniowana aby używała
-                <code>Zend_Controller_Router_StaticRoute</code>.
-            </para>
-        </sect3>
-        
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
-            <title>Użycie RewriteRoutera z modularnymi komponentami MVC components</title>
-
-            <para>
-                Wersja RewriteRoutera działająca z modułami jest także dostępna, 
-                jest to Zend_Controller_ModuleRewriteRouter. Działa ona 
-                dokładnie w ten sam sposób co Zend_Controller_ModuleRewriteRouter, 
-                z tym wyjątkiem, że jej domyślna trasa jest zdefiniowana jako
-                ':module/:controller/:action/*'.
-            </para>
-
-            <para>
-                Zobacz <xref linkend="zend.controller.modular">dokumentację
-                konwencjonalnej modularnej struktury katalogów</xref> aby 
-                uzyskać więcej informacji.
+                <code>Zend_Controller_Router_Route_Static</code>.
             </para>
         </sect3>
 

@@ -1,26 +1,28 @@
 <sect1 id="zend.session.advancedusage">
 
-    <title>Advanced Usage</title>
+    <title>Użycie zaawansowane</title>
 
     <para>
-        While the basic usage examples are a perfectly acceptable way to utilize Zend Framework sessions, there are some
-        best practices to consider. Consider the
+        While the basic usage examples are a perfectly acceptable way to utilize 
+        Zend Framework sessions, there are some best practices to consider. 
+        Consider the
         <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> example</link>
-        that transparently uses Zend_Session_Namespace by default to persist authentication tokens. This example shows
-        one approach to quickly and easily integrate Zend_Session_Namespace and Zend_Auth.
+        that transparently uses Zend_Session_Namespace by default to persist 
+        authentication tokens. This example shows one approach to quickly and 
+        easily integrate Zend_Session_Namespace and Zend_Auth.
     </para>
 
     <sect2 id="zend.session.startingasession">
 
-        <title>Starting a Session</title>
+        <title>Rozpoczynanie sesji</title>
 
         <para>
-            If you want all requests to have a session and use Zend Framework sessions, then start the session in the
-            bootstrap file:
+            Jeśli chcesz aby wszystkie żądania używały sesji i używały sesji
+            Zend Framework, to rozpocznik sesję w pliku ładującym:
         </para>
 
         <example>
-            <title>Starting the Global Session</title>
+            <title>Rozpoczynanie globalnej sesji</title>
 <programlisting role="php">
 <![CDATA[<?php
 ...
@@ -31,14 +33,17 @@ Zend_Session::start();
         </example>
 
         <para>
-            By starting the session in the bootstrap file, you avoid the possibility that your session might be started
-            after headers have been sent to the browser, which results in an exception, and possibly a broken page for
-            website viewers. Various advanced features require <code>Zend_Session::start()</code> first. (More on
+            By starting the session in the bootstrap file, you avoid the 
+            possibility that your session might be started after headers have 
+            been sent to the browser, which results in an exception, and 
+            possibly a broken page for website viewers. Various advanced 
+            features require <code>Zend_Session::start()</code> first. (More on 
             advanced features later.)
         </para>
 
         <para>
-            There are four ways to start a session, when using Zend_Session. Two are wrong.
+            Są cztery sposoby rozpoczęcia sesji, gdy używamy Zend_Session. Dwa
+            są złe.
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -144,7 +149,7 @@ Zend_Session::start();
             <title>Locking Session Namespaces</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // assuming:
+    // zakładając:
     $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
     // marking session as read only locked
@@ -158,10 +163,13 @@ Zend_Session::start();
         </example>
 
         <para>
-            There are numerous ideas for how to manage models in MVC paradigms for the Web, including creating
-            presentation models for use by views. Sometimes existing data, whether part of your domain model or not, is
-            adequate for the task. To discourage views from applying any processing logic to alter such data, consider
-            locking session namespaces before permitting views to access this subset of your "presentation" model.
+            There are numerous ideas for how to manage models in MVC paradigms 
+            for the Web, including creating presentation models for use by 
+            views. Sometimes existing data, whether part of your domain model or 
+            not, is adequate for the task. To discourage views from applying any 
+            processing logic to alter such data, consider locking session 
+            namespaces before permitting views to access this subset of your 
+            "presentation" model.
         </para>
 
         <example>
@@ -197,9 +205,10 @@ class FooModule_View extends Zend_View
         <title>Session Encapsulation and Controllers</title>
 
         <para>
-            Namespaces can also be used to separate session access by controllers to protect variables from
-            contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all
-            other controllers.
+            Namespaces can also be used to separate session access by 
+            controllers to protect variables from contamination. For example, 
+            the 'Zend_Auth' controller might keep its session state data 
+            separate from all other controllers.
         </para>
 
         <example>
@@ -215,7 +224,7 @@ $testSpace->accept_answer = true;
 -- 
 
 // answer processing controller
-$testSpace = new Zend_Session('testSpace');
+$testSpace = new Zend_Session_Namespace('testSpace');
 
 if ($testSpace->accept_answer === true) {
     // within time
