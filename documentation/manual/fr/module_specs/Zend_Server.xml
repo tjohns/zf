@@ -1,20 +1,20 @@
 <sect1 id="zend.server.introduction">
     <title>Introduction</title>
     <para>
-        The <code>Zend_Server</code> family of classes provides functionality
-        for the various server classes, including
+        La famille de classes <code>Zend_Server</code> fournit des fonctionnalités
+        pour les différentes classes serveur, notamment
         <code>Zend_XmlRpc_Server</code>, <code>Zend_Rest_Server</code>,
-        <code>Zend_Json_Server</code> and <code>Zend_Soap_Wsdl</code>.
-        <code>Zend_Server_Interface</code> provides an interface that mimics PHP
-        5's <code>SoapServer</code> class; all server classes should implement
-        this interface in order to provide a standard server API.
+        <code>Zend_Json_Server</code> et <code>Zend_Soap_Wsdl</code>.
+        <code>Zend_Server_Interface</code> fournit une interface qui imite la classe
+        <code>SoapServer</code> de PHP5; toutes les classes serveur devraient implémenter
+        cette interface de manière à fournir une API serveur standard.
     </para>
     <para>
-        The <code>Zend_Server_Reflection</code> tree provides a standard
-        mechanism for performing function and class introspection for use as
-        callbacks with the server classes, and provides data suitable for use
-        with <code>Zend_Server_Interface</code>'s <code>getFunctions()</code>
-        and <code>loadFunctions()</code> methods.
+        L'arbre <code>Zend_Server_Reflection</code> fournit un mécanisme standard
+        permettant de réaliser l'introspection de fonctions et de classes afin de s'en
+        servir comme callback avec les classes serveur, et fournit des données appropriées
+        pour les méthodes <code>getFunctions()</code> et <code>loadFunctions()</code>
+        de <code>Zend_Server_Interface</code>.
     </para>
 </sect1>
 <!--
