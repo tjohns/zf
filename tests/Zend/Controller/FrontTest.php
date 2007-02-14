@@ -421,4 +421,18 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->setRequest($request);
         $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
+
+    public function testModulePathDispatched()
+    {
+        $this->_controller->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . '/Admin', 'admin');
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('foo')
+                ->setActionName('bar')
+                ->setModuleName('admin');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $response = $this->_controller->dispatch($request);
+
+        $body = $response->getBody();
+        $this->assertContains('Admin_Foo::bar action called', $body, $body);
+    }
 }
