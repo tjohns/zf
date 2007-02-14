@@ -351,8 +351,8 @@ http://framework.zend.com/
 public function myAction()
 {
     // 何かの処理をして...
-    // 別のアクション FooController::barAction() に転送します
-    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+    // 現在のモジュール内の別のアクション FooController::barAction() に転送します
+    $this->_forward('bar', 'foo', null, array('baz' => 'bogus'));
 }
 ]]></programlisting>
     </sect2>

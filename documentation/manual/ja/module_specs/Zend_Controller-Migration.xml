@@ -66,6 +66,29 @@ Zend_Controller_Front::run('/path/to/controllers');
                     <code>Zend_Controller_Dispatcher_Standard</code> という名前に変わりました。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Action::_forward()</code> の引数が変わりました。
+                    新しいシグネチャは次のとおりです。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]></programlisting>
+
+                <para>
+                    <code>$action</code> は常に必須です。
+                    コントローラを指定しなかった場合は、
+                    現在のコントローラ内のアクションであるとみなされます。
+                    <code>$controller</code> を指定しなかった場合は、
+                    <code>$module</code> は常に無視されます。
+                    最後に、<code>$params</code> で指定した任意の値が
+                    リクエストオブジェクトに追加されます。
+                    コントローラやモジュールは不要だがパラメータは渡したいという場合は、
+                    コントローラやモジュールに null を指定します。
+                </para>
+            </listitem>
         </itemizedlist>
     </sect2>
 
