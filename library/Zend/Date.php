@@ -1470,8 +1470,8 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $year - $date;
                         $calc = 'set';
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1, intval($date), true),
-                                                 $this->mktime(0, 0, 0, 1, 1, $year,         true));
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $month, $day, intval($date), true),
+                                                 $this->mktime(0, 0, 0, $month, $day, $year,         true));
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
@@ -1485,8 +1485,10 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $year - $date;
                         $calc = 'set';
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1, intval($date), true),
-                                                 $this->mktime(0, 0, 0, 1, 1, $year,         true));
+print "\nOLD:$date";
+print "\nNEW:$year";
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $month, $day, intval($date), true),
+                                                 $this->mktime(0, 0, 0, $month, $day, $year,         true));
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
@@ -1507,8 +1509,8 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $year - $date;
                         $calc = 'set';
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1, $date, true),
-                                                 $this->mktime(0, 0, 0, 1, 1, $year, true));
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $month, $day, $date, true),
+                                                 $this->mktime(0, 0, 0, $month, $day, $year, true));
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
@@ -1530,8 +1532,8 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $year - $date;
                         $calc = 'set';
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1, $date, true),
-                                                 $this->mktime(0, 0, 0, 1, 1, $year, true));
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $month, $day, $date, true),
+                                                 $this->mktime(0, 0, 0, $month, $day, $year, true));
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
