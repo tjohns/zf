@@ -82,7 +82,6 @@
         -->
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
-        <xi:include href="module_specs/Zend_Service_Akismet.xml" />
     </chapter>
 
     <!--

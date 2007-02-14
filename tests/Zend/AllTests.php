@@ -29,6 +29,7 @@ require_once 'Zend/Mime/AllTests.php';
 require_once 'Zend/Pdf/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
 require_once 'Zend/Server/AllTests.php';
+require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ValidateTest.php';
