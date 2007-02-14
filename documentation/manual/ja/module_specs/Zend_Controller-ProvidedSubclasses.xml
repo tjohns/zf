@@ -65,7 +65,7 @@
 
             <para>
                 <code>Zend_Controller_Request_Http</code> は、
-                サブディレクトリで Zend_Controller_RewriteRouter を使用することができます。
+                サブディレクトリで Zend_Controller_Router_Rewrite を使用することができます。
                 Zend_Controller_Request_Http は自動的にベース URL を検出し、
                 それを適切に設定します。
             </para>
@@ -106,7 +106,7 @@
 /** 
  * Zend_Controller_Front で独自のベース URL を指定することによるリクエストのディスパッチ
  */
-$router     = new Zend_Controller_RewriteRouter();
+$router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
@@ -116,24 +116,24 @@ $response   = $controller->dispatch();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.rewriterouter">
-        <title>Zend_Controller_RewriteRouter</title>
+        <title>Zend_Controller_Router_Rewrite</title>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.introduction">
             <title>導入</title>
             <para>
-                Zend_Controller_RewriteRouter は、新しいバージョンのルータです。
+                <code>Zend_Controller_Router_Rewrite</code> は、標準のルータです。
                 ルーティングとは、URI (ベース URL から取得した URI の一部)
                 を展開し、どのコントローラのどのアクションが
                 リクエストを処理するのかを決める処理のことです。
                 コントローラの値やアクション、そしてその他のパラメータが
                 <code>Zend_Controller_Request_Http</code> オブジェクトにまとめられます。
-                このオブジェクトを処理するのが <code>Zend_Controller_Dispatcher</code> です。
+                このオブジェクトを処理するのが <code>Zend_Controller_Dispatcher_Standard</code> です。
                 ルーティングが行われるのは一度だけ、すなわちリクエストを最初に受け取ってから
                 最初のコントローラに処理が渡される際だけです。
             </para>
 
             <para>
-                <code>Zend_Controller_RewriteRouter</code> は、mod_rewrite 風の機能を
+                <code>Zend_Controller_Router_Rewrite</code> は、mod_rewrite 風の機能を
                 PHP だけで実現できるように設計されています。
                 この処理は Ruby on Rails のルーティングを多少参考にしており、
                 ウェブサーバの URL 書き換えに関する前提知識を必要としません。
@@ -155,7 +155,7 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
             
             <para>
-                RewriteRouter は IIS ウェブサーバで使用するには
+                Rewrite ルータを IIS ウェブサーバで使用するには
                 <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 を Isapi 拡張モジュールとしてインストールします。そして次のようなルールを記述します。
             </para>
@@ -184,7 +184,7 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <title>ルータの使用法</title>
 
             <para>
-                RewriteRouter を適切に使用するには、まずそのインスタンスを作成し、
+                Rewrite ルータを適切に使用するには、まずそのインスタンスを作成し、
                 次にユーザ定義のルーティングを追加し、それをコントローラに注入しなければなりません。
                 以下にコードの例を示します。
             </para>
@@ -192,16 +192,12 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <programlisting role="php"><![CDATA[
 /* ルータを作成します */
 
-$router = new Zend_Controller_RewriteRouter();
+$router = $ctrl->getRouter(); // デフォルトで rewrite ルータを返します
 $router->addRoute(
 	'user',
 	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
-
-/* それをコントローラに設定します */
-
-$ctrl = Zend_Controller_Front::getInstance();
-$ctrl->setRouter($router);]]></programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
@@ -367,15 +363,14 @@ $router->addRoute(
             <title>ベース URL およびサブディレクトリ</title>
 
             <para>
-                もとのルータとは異なり、現在の RewriteRouter はサブディレクトリ内でも使用可能です。
-                もとのルータの setRewriteBase() メソッドは、現在は使用できなくなっています。
-                そのかわりに、ベース URL の自動検出が Zend_Controller_Request_Http
+                Rewrite ルータはサブディレクトリ内でも使用可能です。
+                ベース URL の自動検出が <code>Zend_Controller_Request_Http</code>
                 によって行われます。
             </para>
 
             <para>
                 ベース URL の検出に失敗する場合は、
-                Zend_Controller_Request_Http のメソッド setBaseUrl()
+                <code>Zend_Controller_Request_Http</code> のメソッド <code>setBaseUrl()</code>
                 を使用してベースパスを上書き指定することができます
                 (<xref linkend="zend.controller.providedsubclasses.request.http.baseurl" /> を参照ください)。
             </para>
@@ -386,27 +381,74 @@ $router->addRoute(
             <title>デフォルトのルート</title>
 
             <para>
-                Zend_Controller_RewriteRouter では、デフォルトのルートがひとつ事前に定義されています。
-                このルートは、以前のバージョンのルータとの互換性を保つために提供されています。
+                Zend_Controller_Router_Rewrite では、デフォルトのルートがひとつ事前に定義されています。
                 これは <code>'controller/action'</code> 形式の URI にマッチします。
-                また、URI に追加されたパラメータにもマッチします。設定内容は以下のとおりです。
+                さらに、モジュール名を最初のパス要素として指定することができます。これにより、
+                <code>'module/controller/action</code> 形式の URI が使用できます。
+                また、URI に追加されたパラメータにもデフォルトでマッチします。
+            </para>
+
+            <para>
+                ルートがどのようにマッチするのか、例を見てみましょう。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// 以下のようになっているものとします
+// $ctrl->setControllerDirectory(array(
+//     'default' => '/path/to/default/controllers',
+//     'news'    => '/path/to/blog/controllers',
+//     'blog'    => '/path/to/blog/controllers'
+// ));
+
+モジュールのみ:
+http://example/news
+    module == news
+
+無効なモジュールとコントローラとの対応:
+http://example/foo
+    controller == foo
+
+モジュール + コントローラ:
+http://example/blog/archive
+    module     == blog
+    controller == archive
+
+モジュール + コントローラ + アクション:
+http://example/blog/archive/list
+    module     == blog
+    controller == archive
+    action     == list
+
+モジュール + コントローラ + アクション + パラメータ:
+http://example/blog/archive/list/sort/alpha/date/desc
+    module     == blog
+    controller == archive
+    action     == list
+    sort       == alpha
+    date       == desc
+]]></programlisting>
+
+            <para>
+                デフォルトのルータは、
+                <code>Zend_Controller_Router_Route_Module</code>
+                オブジェクトに何も設定せずに作成したインスタンスです。
             </para>
 
             <programlisting role="php"><![CDATA[
 // ルータ v1 との互換性のためのルート
-$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$compat = new Zend_Controller_Router_Route_Module();
 $this->addRoute('default', $compat);]]></programlisting>
 
             <note>
                 <title>マッチする URI</title>
                 <para>
-                    Zend_Controller_RewriteRouter は、過去との互換性を考慮して設定されています。
+                    <code>Zend_Controller_Router_Rewrite</code> は、過去との互換性を考慮して設定されています。
                     <code>controller/action</code> 形式の URI
                     にパラメータが付加されたパターンにも自動的にマッチします。
                     デフォルト値や必須値を持っている限り、
                     パラメータを付加したからといって新しいルートを追加する必要はありません。
                     これらの追加パラメータにアクセスするには
-                    Zend_Controller_Action::_getParam メソッドを使用します。
+                    <code>Zend_Controller_Action::_getParam()</code> メソッドを使用します。
                 </para>
             </note>
 
@@ -433,7 +475,7 @@ $router->removeDefaultRoutes();]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$loginRoute = new Zend_Controller_Router_StaticRoute('login', array('controller' => 'login', 'action' => 'form'));
+$loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
 $router->addRoute('login', $static);
 ]]></programlisting>
         </sect3>
@@ -458,13 +500,13 @@ $router->addRoute('login', $static);
  * routes.archive.defaults.year = 2000
  * routes.archive.reqs.year = "\d+"
  * 
- * routes.news.type = "Zend_Controller_Router_StaticRoute"
+ * routes.news.type = "Zend_Controller_Router_Route_Static"
  * routes.news.route = "news"
  * routes.news.defaults.controller = "news"
  * routes.news.defaults.action = "list"
  */
 $config = new Zend_Config_Ini($file);
-$router = new Zend_Controller_RewriteRouter();
+$router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
 ]]></programlisting>
 
@@ -480,25 +522,8 @@ $router->addConfig($config, 'routes');
                 特定のルートで使用するルートクラスの型を指定できます。デフォルトでは、これは
                 <code>Zend_Controller_Router_Route</code> となります。上の例では、
                 'news' ルートで
-                <code>Zend_Controller_Router_StaticRoute</code>
+                <code>Zend_Controller_Router_Route_Static</code>
                 を使用するようにしています。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
-            <title>RewriteRouter の、モジュラー MVC コンポーネントでの使用</title>
-
-            <para>
-                モジュール対応版の RewriteRouter である、
-                Zend_Controller_ModuleRewriteRouter も使用できます。
-                これは Zend_Controller_RewriteRouter とまったく同様に動作しますが、
-                デフォルトルートのパスが ':module/:controller/:action/*' となります。
-            </para>
-
-            <para>
-                詳細な情報は、<xref linkend="zend.controller.modular">
-                モジュラーディレクトリ構造の規約についてのドキュメント</xref>
-                を参照ください。
             </para>
         </sect3>
     </sect2>

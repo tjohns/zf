@@ -8,6 +8,67 @@
         新しい仕組みに対応させてください。
     </para>
 
+    <sect2 id="zend.controller.migration.fromzerosix">
+        <title>0.6.0 から 0.8.0 への移行</title>
+
+        <para>
+            前回変更された、もっとも基本的な MVC コンポーネントの使用法は、そのまま同じです。
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Controller/Front.php';
+Zend_Controller_Front::run('/path/to/controllers');
+]]></programlisting>
+
+        <para>
+            しかし、ディレクトリ構造を見直し、いくつかのコンポーネントが削除されました。
+            また、名前が変更されたり新たに追加されたものもあります。以下にそれらをまとめます。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Router</code> は削除されました。
+                    かわりに rewrite ルータを使用してください。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_RewriteRouter</code> は
+                    <code>Zend_Controller_Router_Rewrite</code> という名前に変わり、
+                    このフレームワークの標準ルータに格上げされました。
+                    <code>Zend_Controller_Front</code> は、
+                    特に別のルータを指定しない限りこのルータをデフォルトで使用します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    rewrite ルータで使用する、新しいルートクラスが追加されました。名前は
+                    <code>Zend_Controller_Router_Route_Module</code> です。
+                    これは MVC で使用するデフォルトのルートのほかに、<xref
+                        linkend="zend.controller.modular">コントローラモジュール
+                        </xref> をサポートしています。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Router_StaticRoute</code> は
+                    <code>Zend_Controller_Router_Route_Static</code> という名前に変わりました。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Dispatcher</code> は
+                    <code>Zend_Controller_Dispatcher_Standard</code> という名前に変わりました。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzerotwo">
         <title>0.2.0 以前のバージョンから 0.6.0 への移行</title>
 

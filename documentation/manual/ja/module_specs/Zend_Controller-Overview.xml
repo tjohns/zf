@@ -58,14 +58,19 @@
                         ルーティングとは、リクエストの内容を調べて、
                         そのリクエストを処理するコントローラとアクションを決定する処理のことです。
                         このコントローラとアクション、そしてリクエストパラメータがリクエストオブジェクトに設定され、
-                        <code>Zend_Controller_Dispatcher</code> で処理されます。
+                        <code>Zend_Controller_Dispatcher_Standard</code> で処理されます。
                         ルーティングが発生するのは一度だけ、
                         つまり最初にリクエストを受け取ってから
                         最初のコントローラにディスパッチされるまでの間だけです。
                     </para>
 
                     <para>
-                        デフォルトのルータである <code>Zend_Controller_Router</code> は、
+                        デフォルトのルータは
+                        <code>Zend_Controller_Router_Rewrite</code> です。
+                    </para>
+
+                    <para>
+                        デフォルトのルータである <code>Zend_Controller_Router_Rewrite</code> は、
                         <code>Zend_Controller_Request_Http</code> で指定された URI
                         を受け取ってそれを分解し、コントローラや
                         アクション、そして URL に含まれたパスのパラメータを取得します。
@@ -73,6 +78,15 @@
                         のような URL の場合は <code>foo</code> がコントローラ、
                         <code>bar</code> がアクション、そしてパラメータ
                         <code>key</code> の値として <code>value</code> を取得します。
+                    </para>
+
+                    <para>
+                        <code>Zend_Controller_Router_Rewrite</code>
+                        は、任意のパスにマッチさせることもできます。
+                        詳細は <xref
+                            linkend="zend.controller.providedsubclasses.rewriterouter">
+                        Rewrite Router のドキュメント</xref>
+                        を参照ください。
                     </para>
                 </listitem>
 
@@ -100,7 +114,7 @@
 
                     <para>
                         デフォルトのディスパッチャは
-                        <code>Zend_Controller_Dispatcher</code> です。
+                        <code>Zend_Controller_Dispatcher_Standard</code> です。
                         これは、CamelCasedClasses 形式の名前の最後に
                         Controller がついたクラスをコントローラとして使用し、
                         アクションメソッドの名前は camelCasedMethods
@@ -139,12 +153,12 @@
 
             <code>Zend_Controller</code> の処理の流れは比較的シンプルです。
             <code>Zend_Controller_Front</code> がリクエストを受け取り、
-            <code>Zend_Controller_Router</code> をコールして、
+            <code>Zend_Controller_Router_Rewrite</code> をコールして、
             配送先となるコントローラ (そしてコントローラ内のアクション)
-            を決定します。<code>Zend_Controller_Router</code> は URI
+            を決定します。<code>Zend_Controller_Router_Rewrite</code> は URI
             を分解し、リクエストからコントローラ名とアクション名を取得します。
             その後、<code>Zend_Controller_Front</code> はディスパッチループに突入します。
-            まず <code>Zend_Controller_Dispatcher</code> をコールしてそこにリクエストを渡し、
+            まず <code>Zend_Controller_Dispatcher_Standard</code> をコールしてそこにリクエストを渡し、
             リクエストで指定されたコントローラとアクションを取得します
             (あるいはデフォルトを使用します)。
             コントローラが終了すると、処理は <code>Zend_Controller_Front</code>
@@ -214,21 +228,24 @@
 
         <para>
             はじめてのコントローラを作り始める前に、ルーティング処理が
-            <code>Zend_Controller_Router</code> でどのように実装されているのかを知る必要があるでしょう。
+            <code>Zend_Controller_Router_Rewrite</code> でどのように実装されているのかを知る必要があるでしょう。
             処理手順として、一度だけ発生するルーティングと繰り返し発生するディスパッチがあることを覚えておきましょう。
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> は <code>Zend_Controller_Router</code>
+            <code>Zend_Controller_Front</code> は <code>Zend_Controller_Router_Rewrite</code>
             (あるいは別に登録されたルータ) をコールし、
             URI をコントローラとアクションに対応させます。
-            <code>Zend_Controller_Router</code> は URI を受け取ってそれを分解し、
-            コントローラとアクション、そしてパスに含まれた URL
-            パラメータを取得します。そしてそれらをリクエストオブジェクトに格納します。
+            <code>Zend_Controller_Router</code> は URI を受け取り、
+            チェイン内のルータオブジェクトに渡します。
+            デフォルトでは、<code>Zend_Controller_Router_Route_Module</code>
+            を使用して入力 URL のマッチを行います。ルータオブジェクトは
+            URL を分解し、コントローラとアクション、そしてパスに含まれた URL
+            パラメータを取得します。そしてルータがそれらをリクエストオブジェクトに格納します。
         </para>
 
         <para>
-            <code>Zend_Controller_Router</code> は、
+            <code>Zend_Controller_Router_Route_Module</code> は、
             非常にシンプルな対応ルールでコントローラ名とアクション名を取得します。
         </para>
         <programlisting role="php"><![CDATA[
@@ -249,7 +266,7 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 
         <para>
             コントローラやアクションが URI パスに含まれない場合は、
-            <code>Zend_Controller_Dispatcher</code>
+            <code>Zend_Controller_Dispatcher_Standard</code>
             はリクエストオブジェクトのパラメータから値を取得しようとします。
             それも見つからなかった場合はデフォルト値を使用します。
             デフォルト値は、コントローラもアクションも "<code>index</code>"
@@ -274,7 +291,8 @@ http://framework.zend.com/
             <title>柔軟性</title>
             <para>
                 より柔軟な機能を使用したい場合は、
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter">
+                Rewrite Router のドキュメント</xref>
                 を調べてみましょう。
             </para>
         </note>
@@ -284,7 +302,9 @@ http://framework.zend.com/
             そしてオプションのパラメータの内容が、
             リクエストオブジェクトにまとめられます。
             <code>Zend_Controller_Front</code> がディスパッチループに入ると、
-            リクエストオブジェクトが <code>Zend_Controller_Dispatcher</code> に渡されます。
+            リクエストオブジェクトが
+            <code>Zend_Controller_Dispatcher_Standard</code>
+            に渡されます。
         </para>
     </sect2>
 
@@ -296,7 +316,7 @@ http://framework.zend.com/
             そこに含まれる情報 (コントローラ名、アクション名およびオプションのパラメータ)
             を展開し、コントローラのインスタンスを作成してそのコントローラのアクションをコールします。
             コントローラやアクションが見つからない場合は、
-            デフォルト値を使用します。<code>Zend_Controller_Dispatcher</code>
+            デフォルト値を使用します。<code>Zend_Controller_Dispatcher_Standard</code>
             では、コントローラとアクションのデフォルトはどちらも
             <code>index</code> です。しかし、
             <code>setDefaultController()</code> メソッドや
@@ -354,16 +374,12 @@ $front->throwExceptions(true);
 ]]></programlisting>
 
         <para>
-            レスポンスオブジェクトは <code>__toString()</code> を実装しているので、
-            安全に出力することができます。つまり次のように使用できるということです。
+            ヘッダを含むレスポンス出力を送信するには、
+            <code>sendOutput()</code> を使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->getResponse();
-
-// あるいは
-$response = $controller->getResponse();
-echo $response;
+$response->sendOutput();
 ]]></programlisting>
         
         <para>
@@ -416,7 +432,7 @@ $response = $front->dispatch();
 // 何かの処理...
 
 // 最後に結果を表示します
-echo $response;
+$response->sendResponse();
 ]]></programlisting>
 
         <para>
@@ -434,7 +450,7 @@ $front->dispatch($request, $response);
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
-echo $response;
+$response->sendOutput();
 
 // あるいは
 $front->throwExceptions(true);
