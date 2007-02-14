@@ -29,8 +29,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/AuthTest.php';
-require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Console/GetoptTest.php';
 //require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';

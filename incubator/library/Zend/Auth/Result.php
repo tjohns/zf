@@ -22,72 +22,65 @@
 
 
 /**
- * Zend_Auth_Token_Interface
- */
-require_once 'Zend/Auth/Token/Interface.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Auth
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_Digest_Token implements Zend_Auth_Token_Interface
+class Zend_Auth_Result
 {
     /**
-     * Whether or not this token represents a successful authentication attempt
+     * Whether the result represents a successful authentication attempt
      *
      * @var boolean
      */
-    protected $_valid;
+    protected $_isValid;
 
     /**
-     * Array containing the username and realm from the authentication attempt
+     * The identity used in the authentication attempt
      *
-     * @var array
+     * @var mixed
      */
     protected $_identity;
 
     /**
-     * Message from the authentication adapter describing authentication failure
+     * An array of string reasons why the authentication attempt was unsuccessful
      *
-     * @var string|null
+     * If authentication was successful, this should be an empty array.
+     *
+     * @var array
      */
-    protected $_message;
+    protected $_messages;
 
     /**
-     * Sets the token values, as appropriate
+     * @todo
      *
-     * @param  boolean $valid
-     * @param  array   $identity
-     * @param  string  $message
+     * @param  boolean $isValid
+     * @param  mixed   $identity
+     * @param  array   $messages
      * @return void
      */
-    public function __construct($valid, $identity, $message = null)
+    public function __construct($isValid, $identity, array $messages = array())
     {
-        $this->_valid    = $valid;
+        $this->_isValid  = (boolean) $isValid;
         $this->_identity = $identity;
-        $this->_message  = $message;
+        $this->_messages = $messages;
     }
 
     /**
-     * Defined by Zend_Auth_Token_Interface
+     * Returns whether the result represents a successful authentication attempt
      *
      * @return boolean
      */
     public function isValid()
     {
-        return $this->_valid;
+        return $this->_isValid;
     }
 
     /**
-     * Defined by Zend_Auth_Token_Interface
+     * Returns the identity used in the authentication attempt
      *
-     * Returns an array having keys of 'realm' and 'username', having string values that
-     * correspond to those provided in the authentication request.
-     *
-     * @return array
+     * @return mixed
      */
     public function getIdentity()
     {
@@ -95,13 +88,14 @@ class Zend_Auth_Digest_Token implements Zend_Auth_Token_Interface
     }
 
     /**
-     * Defined by Zend_Auth_Token_Interface
+     * Returns an array of string reasons why the authentication attempt was unsuccessful
      *
-     * @return string|null
+     * If authentication was successful, this method returns an empty array.
+     *
+     * @return array
      */
-    public function getMessage()
+    public function getMessages()
     {
-        return $this->_message;
+        return $this->_messages;
     }
-
 }

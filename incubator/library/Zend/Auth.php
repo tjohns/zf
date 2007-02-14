@@ -30,197 +30,133 @@
 class Zend_Auth
 {
     /**
-     * Default session namespace
-     */
-    const SESSION_NAMESPACE_DEFAULT = 'Zend_Auth';
-
-    /**
-     * Default session variable name for authentication token
-     */
-    const SESSION_TOKEN_NAME_DEFAULT = 'token';
-
-    /**
-     * Authentication adapter
+     * Singleton instance
      *
-     * @var Zend_Auth_Adapter
+     * @var Zend_Auth
      */
-    protected $_adapter;
+    protected static $_instance = null;
 
     /**
-     * Whether or not to automatically use the session for persisting authentication token
+     * Persistent storage handler
      *
-     * @var boolean
+     * @var Zend_Auth_Storage_Interface
      */
-    protected $_useSession;
+    protected $_storage = null;
 
     /**
-     * Session namespace used for storing authentication token
+     * Singleton pattern implementation makes "new" unavailable
      *
-     * @var string
-     */
-    protected $_sessionNamespace;
-
-    /**
-     * Member name for authentication token
-     */
-    protected $_sessionTokenName;
-
-    /**
-     * Sets the authentication adapter
-     *
-     * @param  Zend_Auth_Adapter $adapter
-     * @param  boolean           $useSession
-     * @param  string            $sessionNamespace
-     * @param  string            $sessionToken
      * @return void
      */
-    public function __construct(Zend_Auth_Adapter $adapter, $useSession = true,
-                                $sessionNamespace = self::SESSION_NAMESPACE_DEFAULT,
-                                $sessionTokenName = self::SESSION_TOKEN_NAME_DEFAULT)
-    {
-        $this->_adapter = $adapter;
-        $this->setUseSession($useSession);
-        $this->setSessionNamespace($sessionNamespace);
-        $this->setSessionTokenName($sessionTokenName);
-    }
+    private function __construct()
+    {}
 
     /**
-     * Authenticates against the attached adapter
+     * Singleton pattern implementation makes "clone" unavailable
      *
-     * All parameters are passed along to the adapter's authenticate() method.
-     *
-     * @param  array $options
-     * @uses   Zend_Auth_Adapter::authenticate()
-     * @return Zend_Auth_Token_Interface
+     * @return void
      */
-    public function authenticate($options)
-    {
-        $token = $this->_adapter->authenticate($options);
-
-        if ($this->_useSession) {
-            require_once 'Zend/Session.php';
-            $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
-            $authSpace->{$this->_sessionTokenName} = $token;
-        }
-
-        return $token;
-    }
+    private function __clone()
+    {}
 
     /**
-     * Returns whether or not the session is used automatically
+     * Returns an instance of Zend_Auth
      *
-     * @return boolean
-     */
-    public function getUseSession()
-    {
-        return $this->_useSession;
-    }
-
-    /**
-     * Set whether or not to use the session automatically
+     * Singleton pattern implementation
      *
-     * @param  booolean $useSession
      * @return Zend_Auth Provides a fluent interface
      */
-    public function setUseSession($useSession)
+    public static function getInstance()
     {
-        $this->_useSession = (boolean) $useSession;
+        if (null === self::$_instance) {
+            self::$_instance = new self();
+        }
 
+        return self::$_instance;
+    }
+
+    /**
+     * Returns the persistent storage handler
+     *
+     * Session storage is used by default unless a different storage adapter has been set.
+     *
+     * @return Zend_Auth_Storage_Interface
+     */
+    public function getStorage()
+    {
+        if (null === $this->_storage) {
+            /**
+             * @see Zend_Auth_Storage_Session
+             */
+            require_once 'Zend/Auth/Storage/Session.php';
+            $this->setStorage(new Zend_Auth_Storage_Session());
+        }
+
+        return $this->_storage;
+    }
+
+    /**
+     * Sets the persistent storage handler
+     *
+     * @param  Zend_Auth_Storage_Interface $storage
+     * @return Zend_Auth Provides a fluent interface
+     */
+    public function setStorage(Zend_Auth_Storage_Interface $storage)
+    {
+        $this->_storage = $storage;
         return $this;
     }
 
     /**
-     * Returns the session namespace used for storing authentication token
+     * Authenticates against the supplied adapter
      *
-     * @return string
+     * @param  Zend_Auth_Adapter_Interface $adapter
+     * @return Zend_Auth_Result
      */
-    public function getSessionNamespace()
+    public function authenticate(Zend_Auth_Adapter_Interface $adapter)
     {
-        return $this->_sessionNamespace;
-    }
+        $result = $adapter->authenticate();
 
-    /**
-     * Sets the session namespace used for storing authentication token
-     *
-     * @param  string $sessionNamespace
-     * @return Zend_Auth Provides a fluent interface
-     */
-    public function setSessionNamespace($sessionNamespace)
-    {
-        $this->_sessionNamespace = (string) $sessionNamespace;
-    }
-
-    /**
-     * Returns the name of the session object member where the authentication token is located
-     *
-     * @return string
-     */
-    public function getSessionTokenName()
-    {
-        return $this->_sessionTokenName;
-    }
-
-    /**
-     * Sets the name of the session object member where the authentication token is located
-     *
-     * @param  string $sessionTokenName
-     * @return Zend_Auth Provides a fluent interface
-     */
-    public function setSessionTokenName($sessionTokenName)
-    {
-        $this->_sessionTokenName = (string) $sessionTokenName;
-
-        return $this;
-    }
-
-
-    /**
-     * Returns an existing authentication token from the session, or null if there is no token
-     * in the session
-     *
-     * The location in the session of the token determined by the session namespace and token
-     * member name currently set for this object.
-     *
-     * @return Zend_Auth_Token_Interface|null
-     */
-    public function getToken()
-    {
-        require_once 'Zend/Session.php';
-        $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
-        if (isset($authSpace->{$this->_sessionTokenName})) {
-            return $authSpace->{$this->_sessionTokenName};
+        if ($result->isValid()) {
+            $this->getStorage()->write($result->getIdentity());
         }
-        return null;
+
+        return $result;
     }
 
     /**
-     * Returns true if and only if an existing authentication token exists at the location
-     * determined by the session namespace and token member name currently set for this object
-     * and the token represents a successful authentication attempt
+     * Returns true if and only if an identity is available from storage
      *
      * @return boolean
      */
-    public function isLoggedIn()
+    public function hasIdentity()
     {
-        if (null !== ($token = $this->getToken())) {
-            return $token->isValid();
-        }
-        return false;
+        return !$this->getStorage()->isEmpty();
     }
 
     /**
-     * Removes an existing authentication token from the location determined by the session
-     * namespace and token member name currently set for this object
+     * Returns the identity from storage or null if no identity is available
+     *
+     * @return mixed|null
+     */
+    public function getIdentity()
+    {
+        $storage = $this->getStorage();
+
+        if ($storage->isEmpty()) {
+            return null;
+        }
+
+        return $storage->read();
+    }
+
+    /**
+     * Clears the identity from persistent storage
      *
      * @return void
      */
-    public function logout()
+    public function clearIdentity()
     {
-        require_once 'Zend/Session.php';
-        $authSpace = new Zend_Session_Namespace($this->_sessionNamespace);
-        if (isset($authSpace->{$this->_sessionTokenName})) {
-            unset($authSpace->{$this->_sessionTokenName});
-        }
+        $this->getStorage()->clear();
     }
-
 }

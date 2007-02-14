@@ -22,9 +22,9 @@
 
 
 /**
- * Zend_Auth_Adapter_Exception
+ * @see Zend_Auth_Result
  */
-require_once 'Zend/Auth/Adapter/Exception.php';
+require_once 'Zend/Auth/Result.php';
 
 
 /**
@@ -33,5 +33,13 @@ require_once 'Zend/Auth/Adapter/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_Digest_Exception extends Zend_Auth_Adapter_Exception
-{}
+interface Zend_Auth_Adapter_Interface
+{
+    /**
+     * Performs an authentication attempt
+     *
+     * @throws Zend_Auth_Adapter_Exception If authentication cannot be performed
+     * @return Zend_Auth_Result
+     */
+    public function authenticate();
+}

@@ -23,14 +23,8 @@
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_AllTests::main');
 }
-
-
-/**
- * Start output buffering to prevent problems using session
- */
-ob_start();
 
 
 /**
@@ -46,15 +40,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
- * @see Zend_AuthTest
+ * @see Zend_Auth_Adapter_DigestTest
  */
-require_once 'Zend/Auth/AuthTest.php';
-
-
-/**
- * @see Zend_Auth_Adapter_AllTests
- */
-require_once 'Zend/Auth/Adapter/AllTests.php';
+require_once 'Zend/Auth/Adapter/DigestTest.php';
 
 
 /**
@@ -64,7 +52,7 @@ require_once 'Zend/Auth/Adapter/AllTests.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_AllTests
+class Zend_Auth_Adapter_AllTests
 {
     /**
      * Runs this test suite
@@ -83,15 +71,14 @@ class Zend_Auth_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth Adapters');
 
-        $suite->addTestSuite('Zend_AuthTest');
-        $suite->addTest(Zend_Auth_Adapter_AllTests::suite());
+        $suite->addTestSuite('Zend_Auth_Adapter_DigestTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Auth_AllTests::main') {
-    Zend_Auth_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_AllTests::main') {
+    Zend_Auth_Adapter_AllTests::main();
 }
