@@ -41,19 +41,34 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     /**
      * @const string URI delimiter
      */
-    const URI_DELIMITER   = '/';
+    const URI_DELIMITER = '/';
     
     /**
      * Default values for module, controller, and action
      * @var array
      */
-    protected $_defaults = array('module'=> 'default');
+    protected $_defaults;
 
     /**
      * Front controller instance
      * @var Zend_Controller_Front
      */
     protected $_frontController;
+
+    /**#@+
+     * Array keys to use for module, controller, and action
+     * @var string
+     */
+    protected $_moduleKey     = 'module';
+    protected $_controllerKey = 'controller';
+    protected $_actionKey     = 'action';
+    /**#@-*/
+
+    /**
+     * Request object, if any registered
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
 
     /**
      * Get front controller instance
@@ -71,14 +86,24 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     }
 
     /**
-     * Prepares the route for mapping by splitting (exploding) it 
-     * to a corresponding atomic parts. These parts are assigned 
-     * a position which is later used for matching and preparing values.  
+     * Constructor
+     *
+     * Determines the current module, action, and controller keys, and uses 
+     * them to set defaults.
      *
      * @param array Defaults for map variables with keys as variable names
      */
     public function __construct(array $defaults = array())
     {
+        $request = $this->getFrontController()->getRequest();
+        if (null !== $request) {
+            $this->_request       = $request;
+            $this->_moduleKey     = $request->getModuleKey();
+            $this->_controllerKey = $request->getControllerKey();
+            $this->_actionKey     = $request->getActionKey();
+        }
+
+        $this->_defaults = array($this->_moduleKey => 'default');
         $this->_defaults = array_merge($this->_defaults, $defaults);
     }
 
@@ -91,7 +116,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     public function isValidModule($module)
     {
         require_once 'Zend/Controller/Front.php';
-        $controllerDirs = $this->getFrontController()->getDispatcher()->getControllerDirectory();
+        $controllerDirs = $this->getFrontController()->getControllerDirectory();
         return isset($controllerDirs[$module]);
     }
 
@@ -99,8 +124,12 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      * Matches a user submitted path with parts defined by a map. Assigns and 
      * returns an array of variables on a successful match.  
      *
+     * If a request object is registered, it uses its setModuleName(), 
+     * setControllerName(), and setActionName() accessors to set those values. 
+     * Always returns the values as an array.
+     *
      * @param string Path used to match against this routing map 
-     * @return array|false An array of assigned values or a false on a mismatch
+     * @return array An array of assigned values or a false on a mismatch
      */
     public function match($path)
     {
@@ -113,25 +142,25 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
         
             // Module
             if (count($path) && $this->isValidModule($path[0])) {
-                $values['module'] = array_shift($path);
-            } elseif ('default' != $this->_defaults['module']
-                && $this->isValidModule($this->_defaults['module']))
+                $values[$this->_moduleKey] = array_shift($path);
+            } elseif ('default' != $this->_defaults[$this->_moduleKey]
+                && $this->isValidModule($this->_defaults[$this->_moduleKey]))
             {
-                $values['module'] = $this->_defaults['module'];
+                $values[$this->_moduleKey] = $this->_defaults[$this->_moduleKey];
             }
 
             // Controller
             if (count($path) && !empty($path[0])) {
-                $values['controller'] = array_shift($path);
-            } elseif (isset($this->_defaults['controller'])) {
-                $values['controller'] = $this->_defaults['controller'];
+                $values[$this->_controllerKey] = array_shift($path);
+            } elseif (isset($this->_defaults[$this->_controllerKey])) {
+                $values[$this->_controllerKey] = $this->_defaults[$this->_controllerKey];
             }
 
             // Action
             if (count($path) && !empty($path[0])) {
-                $values['action'] = array_shift($path);
-            } elseif (isset($this->_defaults['action'])) {
-                $values['action'] = $this->_defaults['action'];
+                $values[$this->_actionKey] = array_shift($path);
+            } elseif (isset($this->_defaults[$this->_actionKey])) {
+                $values[$this->_actionKey] = $this->_defaults[$this->_actionKey];
             }
 
             // Path info
@@ -145,6 +174,18 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
             }
         }
         
+        if (null !== $this->_request) {
+            if (isset($values[$this->_moduleKey])) {
+                $this->_request->setModuleName($values[$this->_moduleKey]);
+            }
+            if (isset($values[$this->_controllerKey])) {
+                $this->_request->setControllerName($values[$this->_controllerKey]);
+            }
+            if (isset($values[$this->_actionKey])) {
+                $this->_request->setActionName($values[$this->_actionKey]);
+            }
+        } 
+
         $values = array_merge($params, $values);
 
         return $values;
@@ -160,18 +201,18 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     {
         $url = array();
 
-        if (isset($data['module']) && $this->isValidModule($data['module'])) {
-            $url[] = $data['module'];
-            unset($data['module']);
+        if (isset($data[$this->_moduleKey]) && $this->isValidModule($data[$this->_moduleKey])) {
+            $url[] = $data[$this->_moduleKey];
+            unset($data[$this->_moduleKey]);
         }
 
-        if (isset($data['controller'])) {
-            $url[] = $data['controller'];
-            unset($data['controller']);
+        if (isset($data[$this->_controllerKey])) {
+            $url[] = $data[$this->_controllerKey];
+            unset($data[$this->_controllerKey]);
 
-            if (isset($data['action'])) {
-                $url[] = $data['action'];
-                unset($data['action']);
+            if (isset($data[$this->_actionKey])) {
+                $url[] = $data[$this->_actionKey];
+                unset($data[$this->_actionKey]);
 
                 foreach ($data as $key => $value) {
                     $url[] = $key;

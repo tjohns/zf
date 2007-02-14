@@ -63,21 +63,23 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      * 
      * @param string $path 
      * @param string $module
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Standard
      */
     public function addControllerDirectory($path, $module = 'default')
     {
-        if (empty($module) || is_numeric($module) || !is_string($module)) {
-            $module = 'default';
-        }
+        $this->getFrontController()->addControllerDirectory($path, $module);
+        return $this;
+    }
 
-        if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
-            require_once 'Zend/Controller/Dispatcher/Exception.php';
-            throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
-        }
-
-        $this->_directories[$module] = rtrim($path, '/\\');
-
+    /**
+     * Set controller directory
+     * 
+     * @param array|string $directory 
+     * @return Zend_Controller_Dispatcher_Standard
+     */
+    public function setControllerDirectory($directory)
+    {
+        $this->getFrontController()->setControllerDirectory($directory);
         return $this;
     }
 
@@ -93,11 +95,13 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      */
     public function getControllerDirectory($module = null)
     {
+        $directories = $this->getFrontController()->getControllerDirectory();
+
         if ((null !== $module) && (isset($this->_directories['module']))) {
-            return $this->_directories[$module];
+            return $directories[$module];
         }
 
-        return $this->_directories;
+        return $directories;
     }
 
     /**
@@ -145,50 +149,6 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $dispatchDir = $this->getDispatchDirectory();
         $test        = $dispatchDir . DIRECTORY_SEPARATOR . $fileSpec;
         return Zend::isReadable($test);
-    }
-
-    /**
-     * Set the default controller (minus any formatting)
-     * 
-     * @param string $controller 
-     * @return Zend_Controller_Dispatcher
-     */
-    public function setDefaultControllerName($controller)
-    {
-        $this->_defaultController = (string) $controller;
-        return $this;
-    }
-
-    /**
-     * Retrive the default controller name (minus formatting)
-     * 
-     * @return string
-     */
-    public function getDefaultControllerName()
-    {
-        return $this->_defaultController;
-    }
-
-    /**
-     * Set the default action (minus any formatting)
-     * 
-     * @param string $action 
-     * @return Zend_Controller_Dispatcher
-     */
-    public function setDefaultAction($action)
-    {
-        $this->_defaultAction = (string) $action;
-        return $this;
-    }
-
-    /**
-     * Retrive the default action name (minus formatting)
-     * 
-     * @return string
-     */
-    public function getDefaultAction()
-    {
-        return $this->_defaultAction;
     }
 
     /**

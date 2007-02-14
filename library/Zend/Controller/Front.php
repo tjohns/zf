@@ -163,6 +163,7 @@ class Zend_Controller_Front
             switch ($name) {
                 case '_instance':
                     break;
+                case '_controllerDir':
                 case '_invokeParams':
                     $this->{$name} = array();
                     break;
@@ -207,6 +208,7 @@ class Zend_Controller_Front
      * @param string $directory 
      * @param string $module Optional argument; module with which to associate directory. If none provided, assumes 'defualt'
      * @return Zend_Controller_Front
+     * @throws Zend_Controller_Exception if directory not found or readable
      */
     public function addControllerDirectory($directory, $module = 'default')
     {
@@ -214,7 +216,12 @@ class Zend_Controller_Front
             $module = 'default';
         }
 
-        $this->_controllerDir[$module] = $directory;
+        if (!is_string($directory) || !is_dir($directory) || !is_readable($directory)) {
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception("Directory \"$directory\" not found or not readable");
+        }
+
+        $this->_controllerDir[$module] = rtrim($directory, '/\\');
 
         return $this;
     }
@@ -233,8 +240,8 @@ class Zend_Controller_Front
     {
         $this->_controllerDir = array();
 
-        foreach ((array) $directory as $key => $value) {
-            $this->addControllerDirectory($value, $key);
+        foreach ((array) $directory as $module => $path) {
+            $this->addControllerDirectory($path, $module);
         }
 
         return $this;
@@ -245,7 +252,7 @@ class Zend_Controller_Front
      *
      * Retrieves stored controller directory
      *
-     * @return string|array
+     * @return array
      */
     public function getControllerDirectory()
     {
@@ -642,7 +649,9 @@ class Zend_Controller_Front
         /**
          * Instantiate default request object (HTTP version) if none provided
          */
-        if ((null === $request) && (null === ($request = $this->getRequest()))) {
+        if (null !== $request) {
+            $this->setRequest($request);
+        } elseif ((null === $request) && (null === ($request = $this->getRequest()))) {
             require_once 'Zend/Controller/Request/Http.php';
             $request = new Zend_Controller_Request_Http();
             $this->setRequest($request);
@@ -660,7 +669,9 @@ class Zend_Controller_Front
         /**
          * Instantiate default response object (HTTP version) if none provided
          */
-        if ((null === $response) && (null === ($response = $this->getResponse()))) {
+        if (null !== $response) {
+            $this->setResponse($response);
+        } elseif ((null === $response) && (null === ($response = $this->getResponse()))) {
             require_once 'Zend/Controller/Response/Http.php';
             $response = new Zend_Controller_Response_Http();
             $this->setResponse($response);
@@ -673,13 +684,24 @@ class Zend_Controller_Front
              ->setRequest($request)
              ->setResponse($response);
 
+        /**
+         * Initialize router
+         */
+        $router = $this->getRouter();
+        $router->setParams($this->getParams());
+
+        /**
+         * Initialize dispatcher
+         */
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setParams($this->getParams())
+                   ->setResponse($response);
+
         // Begin dispatch
         try {
             /**
              * Route request to controller/action, if a router is provided
              */
-            $router = $this->getRouter();
-            $router->setParams($this->getParams());
 
             /**
             * Notify plugins of router startup
@@ -697,17 +719,6 @@ class Zend_Controller_Front
              * Notify plugins of dispatch loop startup
              */
             $this->_plugins->dispatchLoopStartup($request);
-
-            $dispatcher = $this->getDispatcher();
-
-            /**
-             * Add params, controller directories, and response to dispatcher
-             */
-            $dispatcher->setParams($this->getParams())
-                       ->setResponse($response);
-            foreach ($this->getControllerDirectory() as $module => $dir) {
-                $dispatcher->addControllerDirectory($dir, $module);
-            }
 
             /**
              *  Attempt to dispatch the controller/action. If the $request

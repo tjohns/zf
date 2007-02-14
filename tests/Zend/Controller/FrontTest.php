@@ -33,7 +33,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->resetInstance();
         $this->assertNull($this->_controller->getParam('bar'));
         $this->assertSame(array(), $this->_controller->getParams());
-        $this->assertSame(array(), $this->_controller->getDispatcher()->getControllerDirectory());
+        $this->assertSame(array(), $this->_controller->getControllerDirectory());
     }
 
     public function testSetGetRequest()

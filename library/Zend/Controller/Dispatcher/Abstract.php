@@ -53,10 +53,10 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
     protected $_defaultController = 'index';
 
     /**
-     * Directories where Zend_Controller_Action files are stored.
-     * @var array
+     * Front Controller instance
+     * @var Zend_Controller_Front
      */
-    protected $_directories = array();
+    protected $_frontController;
 
     /**
      * Array of invocation parameters to use when instantiating action 
@@ -175,7 +175,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * single string or an array of strings.
      * 
      * @param string|array $spec 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setWordDelimiter($spec)
     {
@@ -203,7 +203,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * an array of strings.
      * 
      * @param string|array $spec 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setPathDelimiter($spec)
     {
@@ -254,6 +254,11 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      */
     public function getFrontController()
     {
+        if (null === $this->_frontController) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_frontController = Zend_Controller_Front::getInstance();
+        }
+
         return $this->_frontController;
     }
 
@@ -261,68 +266,12 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set front controller instance
      * 
      * @param Zend_Controller_Front $controller 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setFrontController(Zend_Controller_Front $controller)
     {
-        $this->setParams($controller->getParams());
-        $controllerDirectory = $controller->getControllerDirectory();
-        if (!empty($controllerDirectory)) {
-            foreach ($controllerDirectory as $key => $dir)
-            {
-                $this->addControllerDirectory($dir, $key);
-            }
-        }
         $this->_frontController = $controller;
         return $this;
-    }
-
-    /**
-     * Add a single path to the controller directory stack
-     * 
-     * @param string $path 
-     * @param mixed $args Optional arguments
-     * @return Zend_Controller_Dispatcher
-     */
-    public function addControllerDirectory($path, $args = null)
-    {
-        foreach ((array) $path as $dir) {
-            if (!is_string($dir) || !is_dir($dir) || !is_readable($dir)) {
-                require_once 'Zend/Controller/Dispatcher/Exception.php';
-                throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
-            }
-            $this->_directories[] = rtrim($dir, '/\\');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Sets the directory(ies) where the Zend_Controller_Action class files are stored.
-     *
-     * @param string|array $path
-     * @return Zend_Controller_Dispatcher
-     */
-    public function setControllerDirectory($path)
-    {
-        $this->_directories = array();
-
-        foreach ((array) $path as $key => $dir) {
-            $this->addControllerDirectory($dir, $key);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Return the currently set directory for Zend_Controller_Action class 
-     * lookup
-     * 
-     * @return array
-     */
-    public function getControllerDirectory()
-    {
-        return $this->_directories;
     }
 
     /**
@@ -330,7 +279,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * 
      * @param string $name
      * @param mixed $value 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setParam($name, $value)
     {
@@ -343,7 +292,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set parameters to pass to action controller constructors
      * 
      * @param array $params 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setParams(array $params)
     {
@@ -384,7 +333,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function clearParams($name = null)
     {
@@ -407,7 +356,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set response object to pass to action controllers
      * 
      * @param Zend_Controller_Response_Abstract|null $response 
-     * @return Zend_Controller_Dispatcher
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setResponse(Zend_Controller_Response_Abstract $response = null)
     {
@@ -423,5 +372,49 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
     public function getResponse()
     {
         return $this->_response;
+    }
+
+    /**
+     * Set the default controller (minus any formatting)
+     * 
+     * @param string $controller 
+     * @return Zend_Controller_Dispatcher_Standard
+     */
+    public function setDefaultControllerName($controller)
+    {
+        $this->_defaultController = (string) $controller;
+        return $this;
+    }
+
+    /**
+     * Retrieve the default controller name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultControllerName()
+    {
+        return $this->_defaultController;
+    }
+
+    /**
+     * Set the default action (minus any formatting)
+     * 
+     * @param string $action 
+     * @return Zend_Controller_Dispatcher_Standard
+     */
+    public function setDefaultAction($action)
+    {
+        $this->_defaultAction = (string) $action;
+        return $this;
+    }
+
+    /**
+     * Retrieve the default action name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultAction()
+    {
+        return $this->_defaultAction;
     }
 }

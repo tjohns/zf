@@ -11,9 +11,13 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        $front->setControllerDirectory(array(
+            'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
+            'admin'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin'
+        ));
         $this->_dispatcher = new Zend_Controller_Dispatcher_Standard();
-        $this->_dispatcher->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files');
-        $this->_dispatcher->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin', 'admin');
     }
 
     public function tearDown()

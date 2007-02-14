@@ -313,7 +313,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     
     public function testDefaultRouteMatchedWithModules()
     {
-        Zend_Controller_Front::getInstance()->getDispatcher()->setControllerDirectory(array(
+        Zend_Controller_Front::getInstance()->setControllerDirectory(array(
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin',
         ));
@@ -338,7 +338,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     
     public function testDefaultRouteWithEmptyControllerAndAction()
     {
-        Zend_Controller_Front::getInstance()->getDispatcher()->setControllerDirectory(array(
+        Zend_Controller_Front::getInstance()->setControllerDirectory(array(
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin',
         ));
