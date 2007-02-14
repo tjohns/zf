@@ -573,15 +573,17 @@ class Zend_Db_Select
     /**
      * Adds grouping to the query.
      *
-     * @param string|array $spec The column(s) to group by.
+     * @param mixed $spec The column(s) to group by.
      * @return void
      */
     public function group($spec)
     {
-        settype($spec, 'array');
+        if (!is_array($spec)) {
+            $spec = array($spec);
+        }
 
         foreach ($spec as $val) {
-            $this->_parts[self::GROUP][] = trim($val);
+            $this->_parts[self::GROUP][] = $val;
         }
 
         return $this;
@@ -644,12 +646,14 @@ class Zend_Db_Select
     /**
      * Adds a row order to the query.
      *
-     * @param string|array $spec The column(s) and direction to order by.
+     * @param mixed $spec The column(s) and direction to order by.
      * @return void
      */
     public function order($spec)
     {
-        settype($spec, 'array');
+        if (!is_array($spec)) {
+            $spec = array($spec);
+        }
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $val) {
@@ -702,19 +706,21 @@ class Zend_Db_Select
      * Adds to the internal table-to-column mapping array.
      *
      * @param string $tbl The table/join the columns come from.
-     * @param string|array $cols The list of columns; preferably as
+     * @param mixed $cols The list of columns; preferably as
      * an array, but possibly as a string containing one column.
      * @return void
      */
     protected function _tableCols($correlationName, $cols)
     {
-        settype($cols, 'array');
+        if (!is_array($cols)) {
+            $cols = array($cols);
+        }
         if ($correlationName == null) {
             $correlationName = '';
         }
 
         foreach ($cols as $col) {
-            $this->_parts[self::COLUMNS][$correlationName][] = trim($col);
+            $this->_parts[self::COLUMNS][$correlationName][] = $col;
         }
     }
 
