@@ -72,13 +72,13 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     /**
      * Load translation data (MO file reader)
      *
+     * @param  string  $filename  MO file to add, full path must be given for access
      * @param  string  $locale    New Locale/Language to set, identical with locale identifier,
      *                            see Zend_Locale for more information
-     * @param  string  $filename  MO file to add, full path must be given for access
      * @param  boolean $option    Not used for gettext
      * @throws Zend_Translation_Exception
      */
-    protected function _loadTranslationData($locale, $filename, $option = null)
+    protected function _loadTranslationData($filename, $locale, $option = null)
     {
         if ($option  ||  !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();

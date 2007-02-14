@@ -52,12 +52,12 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
     /**
      * Load translation data
      *
+     * @param  string|array  $data
      * @param  string        $locale  Locale/Language to add data for, identical with locale identifier,
      *                                see Zend_Locale for more information
-     * @param  string|array  $data
      * @param  boolean       $option  OPTIONAL  If true, the Translation is erased before adding it
      */
-    protected function _loadTranslationData($locale, $data, $option = null)
+    protected function _loadTranslationData($data, $locale, $option = null)
     {
         if ($option  ||  !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();

@@ -176,11 +176,11 @@ abstract class Zend_Translate_Adapter {
     /**
      * Load translation data
      *
-     * @param  string|Zend_Locale  $locale
      * @param  mixed               $data
+     * @param  string|Zend_Locale  $locale
      * @param  mixed               $option
      */
-    abstract protected function _loadTranslationData($locale, $data, $option = null);
+    abstract protected function _loadTranslationData($data, $locale, $option = null);
 
     /**
      * Add translation data
@@ -189,13 +189,13 @@ abstract class Zend_Translate_Adapter {
      * If $clear parameter is true, then translation data for specified
      * language is replaced and added otherwise
      *
+     * @param  array|string          $data    Translation data
      * @param  string|Zend_Locale    $locale  Locale/Language to add data for, identical with locale identifier,
      *                                        see Zend_Locale for more information
-     * @param  array|string          $data    Translation data
-     * @param  boolean|string|array  $clear   Option for this Adapter
+     * @param  boolean|string|array  $clear   OPTIONAL Option for this Adapter
      * @throws Zend_Translate_Exception
      */
-    public function addTranslation($locale, $data, $option = null)
+    public function addTranslation($data, $locale, $option = null)
     {
         if (!$locale = Zend_Locale::isLocale($locale)) {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
@@ -205,7 +205,7 @@ abstract class Zend_Translate_Adapter {
             $this->_languages[$locale] = $locale;
         }
 
-        $this->_loadTranslationData($locale, $data, $option);
+        $this->_loadTranslationData($data, $locale, $option);
     }
 
 

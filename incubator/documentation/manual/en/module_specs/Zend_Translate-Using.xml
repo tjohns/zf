@@ -138,6 +138,272 @@ print $translate->_(2)."\n";
         have an output. Zend Translate will never throw an error or exception when translating strings.
     </para>
 
+    <sect2 id="zend.translate.using.structure">
+
+        <title>Translation Source structures</title>
+
+        <para>
+            Your next step will be to create the translation sources for the several languages you want to 
+            translate to. Every adapter is created it's own way as described here. But there are some general
+            feature which are relevant for all adapters.
+        </para>
+
+        <para>
+            First of all you should know where to store your translation source files. With Zend_Translate you
+            are not bundled to any restriction. The following structures are preferable:
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    Single structured source
+                </para>
+
+                <programlisting role="php"><![CDATA[
+/application
+/languages
+  lang.en
+  lang.de
+/library
+]]></programlisting>
+
+                <para>
+                    Positive: All source files for every languages can be found in one directory. 
+                    No splitting of related files.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Language structured source
+                </para>
+
+                <programlisting role="php"><![CDATA[
+/application
+/languages
+  /en
+    lang.en
+    other.en
+  /de
+    lang.de
+    other.de
+/library
+]]></programlisting>
+
+                <para>
+                    Positive: Every language is based in one directory. Easy translation as only one directory 
+                    has to be translated by a language team. Also the useage of multiple files is transparent.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Application structured source
+                </para>
+
+                <programlisting role="php"><![CDATA[
+/application
+  /languages
+    lang.en
+    lang.de
+    other.en
+    other.de
+]]></programlisting>
+
+                <para>
+                    Positive: All source files for every languages can be found in one directory. 
+                    No splitting of related files.
+                </para>
+
+                <para>
+                    Negative: Having multiple files for the same language is problematic.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Gettext structured source
+                </para>
+
+                <programlisting role="php"><![CDATA[
+/languages
+  /de
+    /LC_MESSAGES
+      lang.mo
+      other.mo
+  /en
+    /LC_MESSAGES
+      lang.mo
+      other.mo
+]]></programlisting>
+
+                <para>
+                    Positive: Old gettext sources can be used without changing structure.
+                </para>
+
+                <para>
+                    Negative: Having sub-sub directories is for people which have not used gettext
+                    before problematic.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                   File structured source
+                </para>
+
+                <programlisting role="php"><![CDATA[
+/application
+  /models
+    mymodel.php
+    mymodel.de
+    mymodel.en
+  /views
+  /controllers
+    mycontroller.de
+/document_root
+  /images
+  /styles
+  .htaccess
+  index.php
+  index.de
+/library
+  /Zend
+]]></programlisting>
+                <para>
+                    Positive: Every file is realted to its own translation source.
+                </para>
+
+                <para>
+                    Negative: Multiple small translation source files makes it harder to translate.
+                    Also every file has to be added as translation source.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Single structured and language structured source files are most useable for Zend_Translate.
+        </para>
+
+        <para>
+            So now, that we know which structure we want to have, we should create our translation source files.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.array">
+
+        <title>Creating array source files</title>
+
+        <para>
+            Array source files are just arrays. But you have to define them manually as there is no tool
+            for this. But because they are so simple, it's the fastest way to look if your code works as
+            expected and it's the best adapter to get started with translation business.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$english = array('message1' => 'message1',
+                 'message2' => 'message2',
+                 'message3' => 'message3');
+$german = array('message1' => 'Nachricht1',
+                'message2' => 'Nachricht2',
+                'message3' => 'Nachricht3');
+
+$translate = new Zend_Translate('array', $english, 'en');
+$translate->addTranslation($deutsch, 'de');
+]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.gettext">
+
+        <title>Creating gettext source files</title>
+
+        <para>
+            Gettext source files are created by GNU's gettext library. There are several free tools avaiable 
+            which can parse your code files and create the needed gettext source files. These files have the 
+            ending <emphasis role="strong">*.mo</emphasis> and are binary files. A freeware tool for creating
+            the files is for example poEdit (http://www.poedit.net). This tool also supports you for the
+            translation process itself. 
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// We expect that we have created the mo files and translated them
+$translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
+$translate->addTranslation('path/to/german.mo', 'de');
+]]></programlisting>
+
+        <para>
+            As you can see the adapters are used exactly the same way, with only just one small difference.
+            We changed 'array' to 'gettext'... all other useages are exactly the same as with all other
+            adapters. So with the gettext adapter you have no longer be aware of gettext's standard 
+            directory structure, bindtextdomain and textdomain. Just give the path and filename to the adapter
+            and that's it.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.tmx">
+
+        <title>Creating tmx source files</title>
+
+        <para>
+            Tmx source files are a new industry standard. They have the advantage to be xml files and
+            so they are readable by every editor and of course human readable. You can eighter create TMX
+            files manually or use a tool. But most tools are not freeware.
+        </para>
+
+        <para>
+            Example tmx file:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?xml version="1.0" ?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+ <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en-us" srclang="de-at" o-tmf="abc" creationtool="XYZTool" >
+ </header>
+ <body>
+  <tu tuid='message1'>
+   <tuv xml:lang="de"><seg>Nachricht1</seg></tuv>
+   <tuv xml:lang="en"><seg>message1</seg></tuv>
+  </tu>
+  <tu tuid='message2'>
+   <tuv xml:lang="en"><seg>message2</seg></tuv>
+   <tuv xml:lang="de"><seg>Nachricht2</seg></tuv>
+  </tu>
+]]></programlisting>
+
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
+// TMX can have several languages within one Tmx file.
+]]></programlisting>
+
+        <para>
+            Tmx files can have several languages within the same file. All other included languages
+            will be added automatically, so you will not have to call addLanguage();
+        </para>
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.csv">
+
+        <title>Creating csv source files</title>
+
+        <para>
+            Csv source files are small and human readable. If your customers want to translate their own,
+            you will probably use the csv adapter.
+        </para>
+
+        <para>
+            Example csv file:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+﻿#Example csv file
+message1;Nachricht1
+message2;Nachricht2
+]]></programlisting>
+
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
+$translate->addTranslation('path/to/other.csv', 'fr');
+]]></programlisting>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

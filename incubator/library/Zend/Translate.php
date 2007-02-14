@@ -95,10 +95,14 @@ class Zend_Translate {
                 require_once('Zend/Translate/Adapter/Csv.php');
                 $this->_adapter = new Zend_Translate_Adapter_Csv($options, $locale);
                 break;
+            case 'xliff':
+                /** Zend_Translate_Adapter_Xliff */
+//                require_once('Zend/Translate/Adapter/Xliff.php');
+//                $this->_adapter = new Zend_Translate_Adapter_Xliff($options, $locale);
+//                break;
             case 'qt':
             case 'sql':
             case 'tbx':
-            case 'xliff':
             case 'xmltm':
                 throw new Zend_Translate_Exception("adapter '$adapter' is not supported for now");
                 break;
@@ -127,13 +131,13 @@ class Zend_Translate {
      * If $clear parameter is true, then translation data for specified
      * language is replaced and added otherwise
      *
-     * @param  string|Zend_Locale  $locale   Locale/Language to add to this adapter
      * @param  string|array        $options  Option for this adapter, depends on the adapter
+     * @param  string|Zend_Locale  $locale   Locale/Language to add to this adapter
      * @param  boolean             $clear    If true the new translation is added to the existing one
      */
-    public function addTranslation($locale, $options, $clear = false)
+    public function addTranslation($options, $locale, $clear = false)
     {
-        $this->_adapter->addTranslation($locale, $options, $clear);
+        $this->_adapter->addTranslation($options, $locale, $clear);
     }
 
 
