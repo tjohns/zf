@@ -334,14 +334,9 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      * Determines whether the default controller to use lies within the 
      * requested module, or if the global default should be used.
      *
-     * By default, will only use the module default unless the developer has 
-     * specified to use the global default:
-     * <code>
-     * $dispatcher->setParam('useGlobalDefault', true);
-     *
-     * // OR
-     * $front->setParam('useGlobalDefault', true);
-     * </code>
+     * By default, will only use the module default unless that controller does 
+     * not exist; if this is the case, it falls back to the default controller 
+     * in the default module.
      * 
      * @param Zend_Controller_Request_Abstract $request 
      * @return string
@@ -353,13 +348,11 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $request->setControllerName($controller)
                 ->setActionName(null);
 
-        $useGlobalDefault = $this->getParam('useGlobalDefault');
-
         $module              = $request->getModuleName();
         $controllerDirs      = $this->getControllerDirectory();
         $this->_curModule    = 'default';
         $this->_curDirectory = $controllerDirs['default'];
-        if (!$useGlobalDefault && $this->_isValidModule($module)) {
+        if ($this->_isValidModule($module)) {
             $moduleDir = $controllerDirs[$module];
             $fileSpec  = $moduleDir . DIRECTORY_SEPARATOR . $this->classToFilename($default);
             if (Zend::isReadable($fileSpec)) {

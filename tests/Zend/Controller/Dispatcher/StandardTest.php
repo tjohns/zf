@@ -264,22 +264,6 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertContains("Admin_Foo::index action called", $body, $body);
     }
 
-    public function testUseGlobalDefaultController()
-    {
-        $this->_dispatcher->setParam('useGlobalDefault', true)
-             ->setParam('useDefaultControllerAlways', true);
-
-        $request = new Zend_Controller_Request_Http();
-        $request->setModuleName('admin');
-
-        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
-
-        $response = new Zend_Controller_Response_Cli();
-        $this->_dispatcher->dispatch($request, $response);
-        $body = $this->_dispatcher->getResponse()->getBody();
-        $this->assertContains("Index action called", $body, $body);
-    }
-
     public function testNoModuleOrControllerDefaultsCorrectly()
     {
         $request = new Zend_Controller_Request_Http('http://example.com/');
