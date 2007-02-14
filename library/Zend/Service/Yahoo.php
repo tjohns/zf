@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Service_Rest
+ * Zend_Rest_Client
  */
-require_once 'Zend/Service/Rest.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * Zend_Service_YahooResult
@@ -93,7 +93,8 @@ require_once 'Zend/Filter.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Yahoo {
+class Zend_Service_Yahoo 
+{
     /**
      * Yahoo Developer Application ID
      *
@@ -102,9 +103,9 @@ class Zend_Service_Yahoo {
     public $appId;
 
     /**
-     * Zend_Service_Rest instance
+     * Zend_Rest_Client instance
      *
-     * @var Zend_Service_Rest
+     * @var Zend_Rest_Client
      */
     protected $_rest;
 
@@ -116,8 +117,7 @@ class Zend_Service_Yahoo {
     public function __construct($appid)
     {
         $this->appId = $appid;
-        $this->_rest = new Zend_Service_Rest();
-        $this->_rest->setUri("http://api.search.yahoo.com");
+        $this->_rest = new Zend_Rest_Client('http://api.search.yahoo.com');
     }
 
 
@@ -150,10 +150,7 @@ class Zend_Service_Yahoo {
 
         $this->_validateImageSearch($options);
 
-        $this->_rest = new Zend_Service_Rest;
-
-        $this->_rest->setUri('api.search.yahoo.com');
-
+        $this->_rest->setUri('http://api.search.yahoo.com');
         $response = $this->_rest->restGet('/ImageSearchService/V1/imageSearch', $options);
 
         if ($response->isError()) {
@@ -207,8 +204,7 @@ class Zend_Service_Yahoo {
 
         $this->_validateLocalSearch($options);
 
-        $this->_uri->setHost('api.local.yahoo.com');
-
+        $this->_rest->setUri('http://api.local.yahoo.com');
         $response = $this->_rest->restGet('/LocalSearchService/V1/localSearch', $options);
 
         if ($response->isError()) {
@@ -250,8 +246,7 @@ class Zend_Service_Yahoo {
 
         $this->_validateNewsSearch($options);
 
-        $this->_uri->setHost('api.search.yahoo.com');
-
+        $this->_rest->setUri('http://api.search.yahoo.com');
         $response = $this->_rest->restGet('/NewsSearchService/V1/newsSearch', $options);
 
         if ($response->isError()) {
@@ -299,8 +294,7 @@ class Zend_Service_Yahoo {
         $options = $this->_prepareOptions($query, $options, $default_options);
         $this->_validateWebSearch($options);
 
-        $this->_uri->setHost('api.search.yahoo.com');
-
+        $this->_rest->setUri('http://api.search.yahoo.com');
         $response = $this->_rest->restGet('/WebSearchService/V1/webSearch', $options);
 
         if ($response->isError()) {

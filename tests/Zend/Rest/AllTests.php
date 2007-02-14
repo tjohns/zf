@@ -1,6 +1,9 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Rest_AllTests::main');
+
+    set_include_path(dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' . PATH_SEPARATOR
+                 . get_include_path());
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';

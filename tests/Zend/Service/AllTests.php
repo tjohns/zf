@@ -15,7 +15,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'AkismetTest.php';
 
 
-class Zend_Controller_AllTests
+class Zend_Service_AllTests
 {
     public static function main()
     {

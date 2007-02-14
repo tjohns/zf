@@ -26,10 +26,14 @@ require_once 'Zend/Service/Abstract.php';
 
 
 /**
+ * Zend_Service_Rest has been deprecated in favor of Zend_Rest_Client
+ *
  * @category   Zend
  * @package    Zend_Service
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @see        Zend_Rest_Client
+ * @deprecated
  */
 class Zend_Service_Rest extends Zend_Service_Abstract
 {
@@ -40,6 +44,15 @@ class Zend_Service_Rest extends Zend_Service_Abstract
      */
     protected $_uri = null;
 
+    /**
+     * Report this class as deprecated
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        trigger_error('Zend_Service_Rest is deprecated as of release 0.8.0; please use Zend_Rest_Client', E_USER_NOTICE);
+    }
 
 	/**
 	 * Call a remote REST web service URI and return the Zend_Http_Response object

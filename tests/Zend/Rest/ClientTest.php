@@ -225,7 +225,7 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
         $response = $this->rest->get('/rest/');
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $this->assertTrue($response->isSuccess());
-        $this->assertEquals('string', $response->response);
+        $this->assertEquals('string', $response->response());
     }
 
     public function testCallAsObjectMethodReturnsClient()
@@ -263,6 +263,6 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
 
         $response = $this->rest->doStuff('why', 'not')->get();
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
-        $this->assertEquals('string', $response->response);
+        $this->assertEquals('string', $response->response());
     }
 }

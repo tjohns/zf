@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Service_Rest
+ * Zend_Rest_Client
  */
-require_once 'Zend/Service/Rest.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * Zend_Service_Exception
@@ -838,9 +838,9 @@ class Zend_Service_Amazon
                                     'CA' => 'http://webservices.amazon.ca');
 
     /**
-     * Zend_Service_Rest Object
+     * Zend_Rest_Client Object
      *
-     * @var Zend_Service_Rest
+     * @var Zend_Rest_Client
      */
     protected $_rest;
 
@@ -862,8 +862,7 @@ class Zend_Service_Amazon
         }
 
         $this->_array = array();
-        $this->_rest = new Zend_Service_Rest();
-        $this->_rest->setUri($this->_baseUriList[$countryCode]);
+        $this->_rest = new Zend_Rest_Client($this->_baseUriList[$countryCode]);
     }
 
 

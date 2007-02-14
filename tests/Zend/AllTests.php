@@ -28,6 +28,7 @@ require_once 'Zend/MimeTest.php';
 require_once 'Zend/Mime/AllTests.php';
 require_once 'Zend/Pdf/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
+require_once 'Zend/Rest/AllTests.php';
 require_once 'Zend/Server/AllTests.php';
 require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/UriTest.php';
@@ -70,6 +71,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Mime_AllTests::suite());
         $suite->addTest(Zend_Pdf_AllTests::suite());
         $suite->addTest(Zend_Registry_AllTests::suite());
+        $suite->addTest(Zend_Rest_AllTests::suite());
         $suite->addTest(Zend_Server_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());

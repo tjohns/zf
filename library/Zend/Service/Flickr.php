@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Service_Rest
+ * Zend_Rest_Client
  */
-require_once 'Zend/Service/Rest.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * Zend_Service_Exception
@@ -68,9 +68,9 @@ class Zend_Service_Flickr
     public $apiKey;
 
     /**
-     * Zend_Service_Rest Object
+     * Zend_Rest_Client Object
      *
-     * @var Zend_Service_Rest
+     * @var Zend_Rest_Client
      */
     protected $_rest;
 
@@ -86,8 +86,7 @@ class Zend_Service_Flickr
         iconv_set_encoding('internal_encoding', 'UTF-8');
 
         $this->apiKey = $apiKey;
-        $this->_rest = new Zend_Service_Rest();
-        $this->_rest->setUri('http://www.flickr.com');
+        $this->_rest = new Zend_Rest_Client('http://www.flickr.com');
         $this->_array = array();
     }
 
