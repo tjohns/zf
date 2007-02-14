@@ -360,8 +360,9 @@ Action    : index]]>
 public function myAction()
 {
     // do some processing...
-    // forward to another action, FooController::barAction():
-    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+    // forward to another action, FooController::barAction(), in the current
+    // module:
+    $this->_forward('bar', 'foo', null, array('baz' => 'bogus'));
 }
 ]]></programlisting>
 	</sect2>

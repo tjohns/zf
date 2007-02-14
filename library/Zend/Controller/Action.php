@@ -530,12 +530,13 @@ abstract class Zend_Controller_Action
             $request->setParams($params);
         }
 
-        if (null !== $module) {
-            $request->setModuleName($module);
-        }
-
         if (null !== $controller) {
             $request->setControllerName($controller);
+
+            // Module should only be reset if controller has been specified
+            if (null !== $module) {
+                $request->setModuleName($module);
+            }
         }
 
         $request->setActionName($action);

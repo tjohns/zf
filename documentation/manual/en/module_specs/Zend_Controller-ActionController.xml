@@ -171,7 +171,8 @@ $this->getResponse()->appendBody($content);
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis>_forward($controller, $action, $params = array())</emphasis>: 
+                    <emphasis>_forward($action, $controller = null, $module =
+                        null, array $params = null)</emphasis>: 
                     perform another action. If called in preDispatch(), the
                     currently requested action will be skipped in favor of the
                     new one. Otherwise, after the current action is processed,
