@@ -265,7 +265,7 @@ class Zend_Db_Select
     /**
      * Makes the query SELECT FOR UPDATE.
      *
-     * @param bool $flag Whether or not the SELECT is DISTINCT (default true).
+     * @param bool $flag Whether or not the SELECT is FOR UPDATE (default true).
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function forUpdate($flag = true)

@@ -59,7 +59,7 @@ class Zend_Db_Expr
      *
      * @param string $expression The string containing a SQL expression.
      */
-    public function __construct(string $expression)
+    public function __construct($expression)
     {
         $this->_expression = $expression;
     }
