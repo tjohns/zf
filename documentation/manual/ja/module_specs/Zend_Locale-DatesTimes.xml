@@ -5,7 +5,15 @@
     <para>
         <code>Zend_Locale_Format</code> では、日付や時刻を扱うためのメソッドを提供しています。
         これらを使用して、さまざまなロケールのさまざまな書式間での変換や正規化を行います。
-        日付の操作には <code>Zend_Date</code> を使用します。
+        日付データや
+        <link linkend="zend.date.constants">
+          <code>Zend_Date</code> がサポートする、さまざまな標準書式や地域化された日付書式
+        </link>
+        を満たす日付文字列の操作には <code>Zend_Date</code> を使用します。
+        既存の定義済み書式を使用すると、「十分にテストされたコードが使用できる」
+        「(一般的な使用法に従う限り) 可搬性や相互運用性を保証できる」といった利点があります。
+        以下の例は、ここで推奨した内容に従っていません。しかし、
+        非標準の書式を使用することで、これらの例は不必要にわかりにくくなってしまっています。
     </para>
 
     <sect2 id="zend.locale.date.normalize">
@@ -99,6 +107,7 @@
                     </row>
                     <row>
                         <entry>y</entry>
+                        <entry>year</entry>
                         <entry>integer</entry>
                         <entry>無制限</entry>
                         <entry>PHP の整数型の最大値</entry>
@@ -134,6 +143,7 @@
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
+$dateObject = Zend_Date('13.04.2006', 'dd.MM.yyyy'); // この日付に対応する Zend_Date オブジェクトを作成します
 
 print_r($date); // 出力は、このようになります
 

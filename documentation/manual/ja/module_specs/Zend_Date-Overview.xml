@@ -39,8 +39,28 @@
             これらの定数は、以下のすべての関数で使用できます。使用可能なすべての定数の一覧は
             <xref linkend="zend.date.constants.list" /> にあります。
             <code>$part</code> を省略した場合は、<code>Zend_Date::TIMESTAMP</code>
-            が指定されたものとみなします。
+            が指定されたものとみなします。また、ユーザ定義の書式を
+            <code>$part</code> で使用することもできます。ここには、
+            <link linkend="zend.locale.date.normalize"><code>Zend_Locale_Format::getDate()</code>
+            </link>
+            と同様のコードを使用します。
+            日付オブジェクトが明らかに無効な値を用いて作成された場合 (たとえば月が 12 より大きいなど) は、
+            <code>Zend_Date</code> は例外をスローします。ただし、特定の日付フォーマットが指定されている場合、
+            つまり <code>$part</code> が <code>null</code> あるいは <code>Zend_Date::DATES</code> ("あいまいな" フォーマット)
+            のいずれかである場合は別です。
         </para>
+
+        <example>
+            <title>ユーザ定義の入力日付書式</title>
+<programlisting role="php"><![CDATA[<?php
+$date1 = Zend_Date('Feb 31, 2007');
+echo $date1, "\n";
+$date2 = Zend_Date('Feb 31, 2007', Zend_Date::DATES);
+echo $date2, "\n";
+$date3 = Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // 指定したフォーマットで解釈するように強制します
+echo $date3, "\n";
+?>]]></programlisting>
+        </example>
 
         <para>
             オプションのパラメータ <code>$locale</code> を指定すると、
@@ -550,6 +570,9 @@ print $date;
                                 <code>toString()</code> メソッドは、自動的にオブジェクトの値の書式を設定します。
                                 この書式は、オブジェクトのロケールか、あるいはオプションで指定した
                                 <code>$locale</code> にもとづいて決まります。
+                                サポートする書式コードの一覧は、
+                                <xref linkend="zend.date.constants.selfdefinedformats" />
+                                を参照ください。
                             </para>
                         </entry>
                     </row>

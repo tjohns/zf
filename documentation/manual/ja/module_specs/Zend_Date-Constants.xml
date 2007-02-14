@@ -28,7 +28,7 @@
 
         <table>
             <title>Zend_Date::HOUR を使用した操作</title>
-            <tgroup cols="2">
+            <tgroup cols="4">
                 <thead>
                     <row>
                         <entry>関数/入力</entry>
@@ -554,6 +554,16 @@
             </tgroup>
         </table>
 
+        <para>
+            特に注意すべきなのは <code>Zend_Date::DATES</code> です。これは、
+            <code>Zend_Date</code> で <emphasis role="strong">入力</emphasis>
+            フォーマットを指定する際に使用すると、特別な働きをします。
+            入力フォーマットとして <code>$part</code> で使用すると、
+            この定数は、さまざまな類似日付書式をできるだけ受け入れようとします。
+            経験則にもとづいて入力日付文字列を自動的に分解し、単純なエラーを (もしあれば)
+            できるだけ修正します。たとえば年、月、日の順序がおかしい場合などです。
+        </para>
+
         <table>
             <title>日付および時刻フォーマットに関する定数 (ロケールによって変化する書式)</title>
             <tgroup cols="4">
@@ -579,7 +589,8 @@
                         <entry><emphasis role="strong">anno domini</emphasis> (紀元後)</entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::DATES</entry>
+                        <entry><emphasis role="strong">Zend_Date::DATES</emphasis>
+                        </entry>
                         <entry>標準の日付 (地域化された文字列、デフォルト値)</entry>
                         <entry>2009-02-13T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">13.02.2009</emphasis>
@@ -656,7 +667,7 @@
 
     <sect2 id="zend.date.constants.selfdefinedformats">
 
-        <title>自分で定義するフォーマット</title>
+        <title>自分で定義する出力フォーマット</title>
 
         <para>
             たいていのフォーマットについては ISO 8601 形式で対応できるでしょう。
