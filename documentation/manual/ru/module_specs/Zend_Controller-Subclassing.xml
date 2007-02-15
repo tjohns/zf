@@ -11,6 +11,7 @@
             классов <code>Zend_Controller_Request_Abstract</code>,
             <code>Zend_Controller_Response_Abstract</code> и
             <code>Zend_Controller_Action</code>.
+
 <!--
             The <code>Zend_Controller</code> system was built with extensibility
             in mind, either by subclassing the existing classes or writing new
@@ -37,6 +38,7 @@
                         собственные соглашения по маршрутизации, которые не
                         совместимы с механизмом маршрутизации, предоставляемым
                         Zend Framework.
+
 <!--
                         The existing URI routing system is not suitable in some
                         way, such as integrating into an existing website that
@@ -68,6 +70,7 @@
                         arguments.
 -->
                     </para>
+
                 </listitem>
                 <listitem>
                     <para>
@@ -91,6 +94,7 @@
 -->
                     </para>
                 </listitem>
+
                 <listitem>
                     <para>
                         Вы хотите обеспечить дополнительные возможности, которые
@@ -111,6 +115,7 @@
                         <code>Zend_Controller_Router</code> or
                         <code>Zend_Controller_Dispatcher</code>.
 -->
+
                     </para>
                 </listitem>
                 <listitem>
@@ -129,6 +134,7 @@
                         exceptions, log them, and then redirect to an error
                         page.
 -->
+
                     </para>
                 </listitem>
             </itemizedlist>
@@ -192,6 +198,7 @@
         </sect3>
 
         <sect3 id="zend.controller.directory.layout">
+
             <title>Структура категорий</title>
 
             <para>
@@ -234,6 +241,7 @@
                 custom router might look like this:
 -->
             </para>
+
             
             <programlisting role="php"><![CDATA[
 /library
@@ -252,6 +260,7 @@
                 может быть либо подклассом <code>Zend_Controller_Router</code>,
                 либо замещать его, реализуя интерфейс
                 <code>Zend_Controller_Router_Interface</code>.
+
 <!--
                 Notice in this example that the <code>Widget/Controller/</code>
                 directory mirrors the <code>Zend/Controller/</code> directory
@@ -280,6 +289,7 @@
                 explain your changes and how they work.
 -->
             </para>
+
         </sect3>
     </sect2>
 
@@ -323,6 +333,7 @@ class My_Controller_Front extends Zend_Controller_Front
         <para>
             Переопределение метода getInstance() необходимо для того, чтобы
             последующие вызовы <code>Zend_Controller_Front::getInstance()</code>
+
             возвращали экземпляры вашего нового подкласса вместо экземпляра
             Zend_Controller_Front - это особенно полезно для некоторых
             альтернативных маршрутизаторов и помощников представления
@@ -669,6 +680,7 @@ class My_Controller_Front extends Zend_Controller_Front
 -->
         </para>
     </sect2>
+
     
     <sect2 id="zend.controller.request.abstract">
         <title>Абстрактный класс запроса</title>
@@ -805,6 +817,7 @@ class My_Controller_Front extends Zend_Controller_Front
 ?>]]>   </programlisting>
 
         <para>
+
             Маршрутизация производится только один раз - в то время,
             когда запрос получен системой. Назначением маршрутизатора является
             определение контроллера, действия и необязательных параметров,
@@ -829,7 +842,6 @@ class My_Controller_Front extends Zend_Controller_Front
         <title>Интерфейс диспетчера</title>
 
         <para>
-        
             <code>Zend_Controller_Front</code> сначала вызывает
             маршрутизатор для получения первого доступного диспетчеризации
             действия в запросе. Затем он входит в цикл диспетчеризации
@@ -1038,6 +1050,7 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
             Рекомендуется использовать эти аргументы для передачи в такие
             объекты, как объект вида, аутентификации/авторизации или реестра
             объектов. Например:  
+
 <!--
             Any configuration arguments passed to the constructor are later
             accessible using <code>getInvokeArg()</code> and
@@ -1076,6 +1089,7 @@ class FooController extends Zend_Controller_Action
             <code>postDispatch()</code> methods, respectively. By default, they
             are empty and do nothing.
 -->
+
         </para>
 
         <para>
@@ -1098,6 +1112,7 @@ class FooController extends Zend_Controller_Action
             является методом действия. Таким образом, URL
             <code>http://framework.zend.com/foo/bar</code> будет вызывать
             действие <code>FooController::barAction()</code>.
+
 <!--
             The default naming convention for action methods is lowercaseAction,
             where 'lowercase' specifies the name of the action, and 'Action'
@@ -1127,6 +1142,7 @@ $controller->run();
         
         <note>
             <title>Использование фронт-контроллера и контроллеров действии<!--Use Front-/Action Controller--></title>
+
             <para>
                 Мы рекомендуем использовать комбинацию фронт-контроллера и
                 контроллеров действии вместо контроллера страниц для содействия
@@ -1237,6 +1253,7 @@ $controller->run();
             использовать вместо него метод <code>appendBody()</code>.
             <code>__toString()</code> должен выводить весь контент и отправлять
             все заголовки. 
+
 <!--
             <code>setBody()</code> will replace all body content; we encourage using
             <code>appendBody()</code> instead. <code>__toString()</code> should
@@ -1253,6 +1270,7 @@ $controller->run();
             <code>renderExceptions()</code> используется для определения того,
             должен ли метод <code>__toString()</code> выводить исключение, если
             оно было поймано.
+
 <!--
             The response object is also where action controller exceptions are
             finally caught and registered (unless

@@ -106,12 +106,12 @@
 
             <para>
                 <code>Zend_Controller_Request_Http</code> позволяет использовать
-                Zend_Controller_RewriteRouter в поддиректориях.
+                Zend_Controller_Router_Rewrite в поддиректориях.
                 Zend_Controller_Request_Http будет пытаться автоматически 
                 определить ваш базовый URL и установить его.
 <!--
                 <code>Zend_Controller_Request_Http</code> allows
-                Zend_Controller_RewriteRouter to be used in subdirectories.
+                Zend_Controller_Router_Rewrite to be used in subdirectories.
                 Zend_Controller_Request_Http will attempt to automatically
                 detect your base URL and set it accordingly.
 -->
@@ -183,7 +183,7 @@
             </para>
 
             <programlisting role="php"><![CDATA[
-$router     = new Zend_Controller_RewriteRouter();
+$router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
@@ -193,40 +193,38 @@ $response   = $controller->dispatch();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.rewriterouter">
-        <title>Zend_Controller_RewriteRouter</title>
+        <title>Zend_Controller_Router_Rewrite</title>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.introduction">
             <title>Введение</title>
             <para>
-                <code>Zend_Controller_RewriteRouter</code> является новой
-                версией маршрутизатора фреймворка. Маршрутизация является
+                <code>Zend_Controller_Router_Rewrite</code> является стандартным 
+                маршрутизатором фреймворка. Маршрутизация является
                 процессом принятия конечной точки URI (той части URI, которая
                 идет после базового URL) и ее разложения на параметры
                 для определения того, какой контроллер и какое действие этого
                 контроллера должны получить запрос. Значения контроллера,
                 действия и необязательных параметров упаковывается в объект
                 <code>Zend_Controller_Request_Http</code>, который затем
-                обрабатывается <code>Zend_Controller_Dispatcher</code>.
+                обрабатывается <code>Zend_Controller_Dispatcher_Standard</code>.
                 Маршрутизация производится только один раз – когда вначале
                 получен запрос и до того, как первый контроллер будет запущен.
 <!--
-                <code>Zend_Controller_RewriteRouter</code> is a new
-                version of the framework
-                router. Routing is the process of taking a URI endpoint (that 
-                part of the URI which comes after the base URL) and
-                decomposing it into parameters to determine which
-                controller and action of that
-                controller should receive the request. This value of the
-                controller, action and other parameters is packaged into a
-                <code>Zend_Controller_Request_Http</code> object which is
-                then processed by <code>Zend_Controller_Dispatcher</code>.
-                Routing occurs only once: when the request is initially
-                received and before the first controller is dispatched.
+                <code>Zend_Controller_Router_Rewrite</code> is the standard
+                framework router. Routing is the process of taking a URI
+                endpoint (that part of the URI which comes after the base URL)
+                and decomposing it into parameters to determine which controller
+                and action of that controller should receive the request. This
+                value of the controller, action and other parameters is packaged
+                into a <code>Zend_Controller_Request_Http</code> object which is
+                then processed by <code>Zend_Controller_Dispatcher_Standard</code>.
+                Routing occurs only once: when the request is initially received
+                and before the first controller is dispatched.
 -->
             </para>
 
             <para>
-                <code>Zend_Controller_RewriteRouter</code> предназначен для
+                <code>Zend_Controller_Router_Rewrite</code> предназначен для
                 того, чтобы обеспечить функциональность, подобную mod_rewrite,
                 с применением чистого php. Он отчасти основан на маршрутизации
                 в Ruby on Rails и не требует каких-либо предварительных знаний
@@ -234,7 +232,7 @@ $response   = $controller->dispatch();]]></programlisting>
                 единственным правилом mod_rewrite, пример которого приведен
                 ниже:
 <!--
-                <code>Zend_Controller_RewriteRouter</code> is designed to allow
+                <code>Zend_Controller_Router_Rewrite</code> is designed to allow
                 for mod_rewrite like functionality using pure php structures. It
                 is very loosely based on Ruby on Rails routing and does not
                 require any prior knowledge of webserver URL rewriting. It is
@@ -257,13 +255,13 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
             
             <para>
-                RewriteRouter может также использоваться с веб-сервером IIS,
+                Rewrite Router может также использоваться с веб-сервером IIS,
                 если
                 <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 был установлен как расширение Isapi со следующими правилами
                 перезаписи: 
 <!--
-                The RewriteRouter can also be used with the IIS webserver if
+                The rewrite router can also be used with the IIS webserver if
                 <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 has been installed as an Isapi extension with the following
                 rewrite rule:
@@ -307,14 +305,14 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.usage">
-            <title>Использование роутера<!--Using a router--></title>
+            <title>Использование маршрутизатора<!--Using a router--></title>
 
             <para>
-                Чтобы использовать RewriteRouter, нужно инстанцировать его,
+                Чтобы использовать Rewrite Router, нужно инстанцировать его,
                 добавить маршруты и установить его в контроллере. Следующий код
-                иллюстрирует эту процедуру:
+                демонстрирует эту процедуру:
 <!--
-                To properly use the RewriteRouter you have to instantiate it,
+                To properly use the rewrite router you have to instantiate it,
                 add some user defined routes and inject it into the controller.
                 The following code illustrates the procedure:
 -->
@@ -323,16 +321,14 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <programlisting role="php"><![CDATA[
 /* Создание маршрутизатора */
 
-$router = new Zend_Controller_RewriteRouter();
+// возвращает используемый по умолчанию маршрутизатор
+$router = $ctrl->getRouter();
+
 $router->addRoute(
 	'user',
 	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
-
-/* Установка его в контроллере */
-
-$ctrl = Zend_Controller_Front::getInstance();
-$ctrl->setRouter($router);]]></programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
@@ -608,30 +604,23 @@ $router->addRoute(
             <title>Базовый URL и поддиректории<!--Base URL and subdirectories--></title>
 
             <para>
-                В отличие от основного маршрутизатора Router,
-                RewriteRouter может использоваться в поддиректориях.
-                Существовавший ранее метод setRewriteBase() теперь не
-                доступен. Вместо этого базовый URL автоматически
-                определяется в Zend_Controller_Request_Http.     
+                Rewrite Router может использоваться в поддиректориях, базовый URL автоматически определяется в Zend_Controller_Request_Http.     
 <!--
-                Unlike the original Router, the current RewriteRouter can be 
-                used in subdirectories. The original RewriteRouter's
-                setRewriteBase() method is no longer available however.
-                Instead the base URL will be automatically detected by
-                Zend_Controller_Request_Http.
+                The rewrite router can be used in subdirectories, and the base
+                URL will be automatically detected by
+                <code>Zend_Controller_Request_Http</code>.
 -->
             </para>
 
             <para>
                 Если базовый URL определяется некорректно, то вы можете
-                переопределить его через метод setBaseUrl() объекта
-                Zend_Controller_Request_Http (см.
+                переопределить его через метод <code>setBaseUrl()</code> объекта
+                <code>Zend_Controller_Request_Http</code> (см.
                 <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
 <!--
                 Should the base URL be detected incorrectly you can override it
-                with your own base path with the help of
-                Zend_Controller_Request_Http by calling the setBaseUrl() method
-                (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
+                with your own base path with the help of <code>Zend_Controller_Request_Http</code>
+                by calling the <code>setBaseUrl()</code> method (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
 -->
             </para>
 
@@ -641,45 +630,100 @@ $router->addRoute(
             <title>Маршруты по умолчанию<!--Default routes--></title>
 
             <para>
-                <code>Zend_Controller_RewriteRouter</code> изначально
-                сконфигурирован с одним маршрутом по умолчанию для обеспечения
-                совместимости с первой версией маршрутизатора. Он будет
-                соответствовать URI вида <code>'controller/action'</code> и по
-                умолчанию будет также соответствовать любым дополнительным
-                параметрам, добавленным в конец URI. Он сконфигурирован как:
+                <code>Zend_Controller_Router_Rewrite</code> изначально
+                сконфигурирован с одним маршрутом по умолчанию. Он будет
+                соответствовать URI вида <code>'controller/action'</code>. Кроме
+                этого, имя модуля может быть определено как первый элемент пути,
+                что позволяет использовать URI вида
+                <code>'module/controller/action</code>.
+                Он будет также соответствовать любым дополнительным
+                параметрам, по умолчанию добавляемым в конец URI.
 <!--
-                Zend_Controller_RewriteRouter is preconfigured with one default
-                route to provide compatibility with the first version of the 
-                router. It will match URIs in the shape of
-                <code>'controller/action'</code>  and will also match any
-                additional parameters appended to the URI by default.
-                It is configured as:
+                Zend_Controller_Router_Rewrite is preconfigured with one default.
+                It will match URIs in the shape of <code>'controller/action'</code> 
+                Additionally, a module name may be specified as the first path
+                element, allowing URIs of the form
+                <code>'module/controller/action</code>.
+                Finally, it will also match any additional parameters appended
+                to the URI by default.
+-->
+            </para>
+
+            <para>
+                Некоторые примеры того, как сопоставляются маршруты:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Допустим следующее:
+// $ctrl->setControllerDirectory(array(
+//     'default' => '/path/to/default/controllers',
+//     'news'    => '/path/to/blog/controllers',
+//     'blog'    => '/path/to/blog/controllers'
+// ));
+
+Только модуль:
+http://example/news
+    module == news
+
+Если модуль неверный, то считается, что это имя контроллера:
+http://example/foo
+    controller == foo
+
+Модуль + контроллер:
+http://example/blog/archive
+    module     == blog
+    controller == archive
+
+Модуль + контроллер + действие:
+http://example/blog/archive/list
+    module     == blog
+    controller == archive
+    action     == list
+
+Модуль + контроллер + действие + параметры:
+http://example/blog/archive/list/sort/alpha/date/desc
+    module     == blog
+    controller == archive
+    action     == list
+    sort       == alpha
+    date       == desc
+]]></programlisting>
+
+
+            <para>
+                Маршрутом, используемым по умолчанию, является объект
+                <code>Zend_Controller_Router_Route_Module</code>,
+                инстанцированный без значений по умолчанию.  
+<!--
+                The default route is a
+                <code>Zend_Controller_Router_Route_Module</code> object
+                instantiated without any defaults:
 -->
             </para>
 
             <programlisting role="php"><![CDATA[
 // Маршрут для совместимости с первой версией маршрутизатора
-$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$compat = new Zend_Controller_Router_Route_Module();
 $this->addRoute('default', $compat);]]></programlisting>
 
             <note>
                 <title>Сопоставление URI<!--Matching URIs--></title>
                 <para>
-                    Zend_Controller_RewriteRouter сконфигурирован для обратной
-                    совместимости. Он будет автоматически использовать маршрут
+                    <code>Zend_Controller_Router_Rewrite</code> сконфигурирован c учетом обратной совместимости. Он будет автоматически использовать маршрут
                     <code>controller/action</code> с дополнительными
                     параметрами. Дополнительные параметры не требуют добавления
                     новых маршрутов, если они не должны иметь значений по
                     умолчанию или требований к переменным. Эти дополнительные
                     параметры будут доступны через метод
-                    Zend_Controller_Action::_getParam.
+                    <code>Zend_Controller_Action::_getParam</code>.
 <!--
-                    Zend_Controller_RewriteRouter is configured for backwards
+                    <code>Zend_Controller_Router_Rewrite</code> is configured for backwards
                     compatibility. It will automatically match <code>controller/action</code>
+
                     URIs with additional parameters. The additional parameters do not
                     require the addition of new routes unless they must have default values
                     or variable requirements. These additional parameters will be accessible
-                    from the Zend_Controller_Action::_getParam method.
+                    from the <code>Zend_Controller_Action::_getParam()</code> method.
 -->
                 </para>
             </note>
@@ -720,7 +764,7 @@ $router->removeDefaultRoutes();]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$loginRoute = new Zend_Controller_Router_StaticRoute('login', array('controller' => 'login', 'action' => 'form'));
+$loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
 $router->addRoute('login', $static);
 ]]></programlisting>
         </sect3>
@@ -752,13 +796,13 @@ $router->addRoute('login', $static);
  * routes.archive.defaults.year = 2000
  * routes.archive.reqs.year = "\d+"
  * 
- * routes.news.type = "Zend_Controller_Router_StaticRoute"
+ * routes.news.type = "Zend_Controller_Router_Route_Static"
  * routes.news.route = "news"
  * routes.news.defaults.controller = "news"
  * routes.news.defaults.action = "list"
  */
 $config = new Zend_Config_Ini($file);
-$router = new Zend_Controller_RewriteRouter();
+$router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
 ]]></programlisting>
 
@@ -776,7 +820,7 @@ $router->addConfig($config, 'routes');
                 используемого для данного маршрута, по умолчанию используется
                 класс <code>Zend_Controller_Router_Route</code>. В примере выше
                 для маршрута 'news' должен использоваться класс
-                <code>Zend_Controller_Router_StaticRoute</code>.    
+                <code>Zend_Controller_Router_Route_Static</code>.    
                 
 <!--
                 In the above example, we tell the router to use the 'routes'
@@ -796,33 +840,6 @@ $router->addConfig($config, 'routes');
             </para>
         </sect3>
     
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.modules">
-            <title>Использование RewriteRouter с модульными компонентами MVC<!--Using RewriteRouter with modular MVC components--></title>
-
-            <para>
-                Также доступна версия RewriteRouter с учетом использования
-                модулей. Она работает в точности так же, как 
-                Zend_Controller_RewriteRouter, но имеет путь
-                ':module/:controller/:action/*' для маршрута, используемого по
-                умолчанию.   
-<!--
-                A module aware version of the RewriteRouter is also available,
-                Zend_Controller_ModuleRewriteRouter. It works in precisely the
-                same fashion as Zend_Controller_RewriteRouter, but has for the
-                default route the path ':module/:controller/:action/*'.
--->
-            </para>
-
-            <para>
-                За более подробной информацией см.
-                <xref linkend="zend.controller.modular">документацию по модульной структуре директорий</xref>.
-<!--
-                See the <xref linkend="zend.controller.modular">Conventional
-                Modular directory structure documentation</xref> for more
-                information.
---> 
-            </para>
-        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.response.http">
