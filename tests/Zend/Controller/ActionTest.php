@@ -77,6 +77,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
     {
         $this->_controller->forward('forwarded');
         $this->assertEquals('forwarded', $this->_controller->getRequest()->getActionName());
+        $this->assertFalse($this->_controller->getRequest()->isDispatched());
     }
 
     public function testForwardActionKeepsController()
@@ -87,6 +88,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->_controller->forward('forwarded');
         $this->assertEquals('forwarded', $request->getActionName());
         $this->assertEquals('foo', $request->getControllerName());
+        $this->assertFalse($request->isDispatched());
     }
 
     public function testForwardActionAndController()
@@ -97,6 +99,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->_controller->forward('forwarded', 'bar');
         $this->assertEquals('forwarded', $request->getActionName());
         $this->assertEquals('bar', $request->getControllerName());
+        $this->assertFalse($request->isDispatched());
     }
 
     public function testForwardActionControllerAndModule()
@@ -109,6 +112,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('forwarded', $request->getActionName());
         $this->assertEquals('bar', $request->getControllerName());
         $this->assertEquals('admin', $request->getModuleName());
+        $this->assertFalse($request->isDispatched());
     }
 
     public function testForwardCanSetParams()
@@ -120,6 +124,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $received = $request->getParams();
         $this->assertTrue(isset($received['foo']));
         $this->assertEquals('bar', $received['foo']);
+        $this->assertFalse($request->isDispatched());
     }
 
     public function testRun()
