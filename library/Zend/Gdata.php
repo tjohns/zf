@@ -202,12 +202,17 @@ class Zend_Gdata
      * Delete an entry by its ID uri
      *
      * @param string $uri
+     * @throws Zend_Gdata_HttpException
      */
     public function delete($uri)
     {
         $feed = $this->getFeed($uri);
         $entry = $feed->current();
-        $entry->delete();
+        try {
+            $entry->delete();
+        } catch (Zend_Feed_Exception $e) {
+            throw new Zend_Gdata_HttpException($e->getMessage(), $e);
+        }
         return true;
     }
 
