@@ -67,22 +67,22 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('msg4'), 'msg4');
 
-        $adapter->addTranslation('en', array('msg4' => 'Message 4 (en)',
-                                             'msg5' => 'Message 5 (en)',
-                                             'msg6' => 'Message 6 (en)'
-                                            ));
+        $adapter->addTranslation(array('msg4' => 'Message 4 (en)',
+                                       'msg5' => 'Message 5 (en)',
+                                       'msg6' => 'Message 6 (en)'
+                                      ),'en');
         $this->assertEquals($adapter->translate('msg5'), 'Message 5 (en)');
 
-        $adapter->addTranslation('ru', array('msg1' => 'Message 1 (ru)',
-                                             'msg2' => 'Message 2 (ru)',
-                                             'msg3' => 'Message 3 (ru)'
-                                            ));
+        $adapter->addTranslation(array('msg1' => 'Message 1 (ru)',
+                                       'msg2' => 'Message 2 (ru)',
+                                       'msg3' => 'Message 3 (ru)'
+                                      ), 'ru');
         $this->assertEquals($adapter->translate('msg1', 'ru'), 'Message 1 (ru)');
 
-        $adapter->addTranslation('ru', array('msg4' => 'Message 4 (ru)',
-                                             'msg5' => 'Message 5 (ru)',
-                                             'msg6' => 'Message 6 (ru)'
-                                            ),
+        $adapter->addTranslation(array('msg4' => 'Message 4 (ru)',
+                                       'msg5' => 'Message 5 (ru)',
+                                       'msg6' => 'Message 6 (ru)'
+                                      ), 'ru',
                                  true);
         $this->assertEquals($adapter->translate('msg2', 'ru'), 'msg2');
         $this->assertEquals($adapter->translate('msg4', 'ru'), 'Message 4 (ru)');

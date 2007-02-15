@@ -55,8 +55,8 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
         $this->assertEquals($adapter->translate('Message 2', 'ru'), 'Message 2');
 
-        $adapter->addTranslation('ru', dirname(__FILE__) . '/_files/testmsg_ru(koi8-r).mo');
-        $this->assertEquals($adapter->translate('Message 2', 'ru'), 'óÏÏÂİÅÎÉÅ 2 (ru)');
+        $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_ru(koi8-r).mo', 'ru');
+        $this->assertEquals($adapter->translate('Message 2', 'ru'), 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2 (ru)');
 
         $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
         $this->assertEquals($adapter->translate('Message 5', 'ru'), 'Message 5');
