@@ -168,6 +168,7 @@
         &module_specs.Zend_Mail-CharacterSets;
         &module_specs.Zend_Mail-Encoding;
         &module_specs.Zend_Mail-SmtpAuthentication;
+        &module_specs.Zend_Mail-SmtpSecure;
         &module_specs.Zend_Mail_Read;
     </chapter>
     <chapter id="zend.measure">
