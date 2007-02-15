@@ -72,8 +72,8 @@ $result = $db->fetchAll($sql);
 // druga alternatywa: możesz przekazać sam obiekt $select;
 $result = $db->fetchAll($select);
 
-// trzecia alternatywa: produce a Zend_Db_Statement
-// or PDOStatement directly from the $select object:
+// trzecia alternatywa: tworzysz obiekt Zend_Db_Statement
+// lub PDOStatement bezpośrednio z obiektu $select:
 $stmt = $select->query();
 $result = $stmt->fetchAll();
 
@@ -136,29 +136,30 @@ $select->from(array('foo' => 'bar'), 'col');
 ?>]]></programlisting>
 
         <para>
-            The second argument to the from() method is a scalar
-            to name a single column, or an array to name multiple
-            columns.  The scalar or element of the array can be
-            a string, which is interpreted as a plain column name,
-            and is quoted and prepended with the table alias.
-            If you omit the second argument, it defaults to <code>'*'</code>,
-            which is not quoted but is prepended with the table alias.
-            If you want no columns from this table to be in the result
-            set, use an empty <code>array()</code>.
+            Drugi argument do metody from() jest wartością skalarną dla 
+            pojedynczej nazwy kolumny, lub tablicą dla wielu nazw kolumn. 
+            Wartość skalarna lub element tablicy może być łańcuchem znaków,
+            który jest interpretowany jako prosta nazwa kolmny i jest ona 
+            cytowana, a na początek nazwy dołączany jest alias tabeli. Jeśli
+            pominiesz drugi argument, przyjęta zostanie jego domyślna wartość
+            <code>'*'</code>, co nie jest cytowane, ale do tej wartości też
+            zostanie dołączony alias tabeli. Jeśli nie chcesz by kolumny z tej
+            tabeli znajdowały się w zestawie wyników, użyj pustej tablicy 
+            <code>array()</code>.
         </para>
 
         <para>
-            Do not specify multiple columns as a single string of
-            comma-separated column names.  This syntax used in
-            earlier preview releases of Zend_Db is no longer supported.
-            Use an array instead.
+            Nie określaj wielu kolumn jako pojedynczego łańcucha znaków z 
+            nazwami kolumn oddzielonymi przecinkami. Taka składnia była używana
+            we wcześniejszych wydaniach Zend_Db i nie jest ona już obsługiwana.
+            Użyj zamiast tego tablicy.
         </para>
 
         <para>
-            The table alias is applied to every string element of the
-            second argument, but if the element is an object of type
-            Zend_Db_Expr, its string value is used without quoting
-            or prepending with the table alias.
+            Alias tabeli jest dołączany do każdego elementu będącego łańcuchem 
+            znaków znajdującym się w drugim argumencie, ale jeśli element jest
+            obiektem typu Zend_Db_Expr, to jego wartość w postaci łańcucha
+            znaków jest używana bez cytowania oraz dodawania alisu tabeli.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -176,16 +177,16 @@ $select->from('bar', new Zend_Db_Expr('bar.col AS col2'));
 ?>]]></programlisting>
 
         <para>
-            Use an associative array to declare table aliases.
-            The key is the table name and the value is the alias.
-            If you specify a table as a simple string instead of an associative
-            array to declare the alias, Zend_Db_Select generates a table alias.
-            By default, the generated table alias is spelled the same as each
-            table name, as if you had written a SQL query
-            "<code>SELECT foo.* FROM `foo` foo</code>".
-            If you add the same table more than once, for example in a
-            self-join, Zend_Db_Select declares unique aliases for each table
-            instance, like "<code>foo_1</code>", "<code>foo_2</code>", etc.
+            Użyj tablicy asocjacyjnej aby zadeklarować aliasy dla tabel. Klucz
+            tablicy jest nazwą tabeli, a wartośc jest aliasem. Jeśli zamiast
+            tego określisz nazwę tabeli jako zwykły łańcuch znaków, a nie jako 
+            asocjacyjną tablicę, to Zend_Db_Select wygeneruje alias dla tabeli.
+            Domyślnie generowany jest alias o tej samej nazwie jak tabela, czyli
+            tak jak na przykład w zapytaniu SQL 
+            "<code>SELECT foo.* FROM `foo` foo</code>". Jeśli dodasz tę samą
+            tabelę więcej niż raz, na przykład w złączeniu SELF JOIN, 
+            Zend_Db_Select zadeklaruje unikalny alias dla każdej instancji 
+            tabeli, jak np. "<code>foo_1</code>", "<code>foo_2</code>", itd.
         </para>
 
     </sect2>
@@ -216,88 +217,90 @@ $select->join('bar', 'foo.id = bar.id');
 ?>]]></programlisting>
 
         <para>
-            The first argument to the join() method is a table specifier.
-            This is the same as the first argument of the from() method,
-            in that it can be a string that names a table, or it can be an
-            associative array mapping the table name to an alias name.
+            Pierwszy argument dla metody join() określa tabelę. Działa to
+            analogicznie jak pierwszy argument metody from(), w którym nazwa
+            tabeli może być łańcuchem znaków lub asocjacyjną tablicą mapującą
+            nazwę tabeli do aliasu.
         </para>
 
         <para>
-            The second argument to the join() method is an expression that
-            forms the join condition.  You can use table aliases here, but 
-            remember that unless you specified the table alias, Zend_Db_Select
-            generates one.  If you omit the join condition, this is
-            equivalent to a CROSS JOIN or cartesian product.
+            Drugi argument dla metody join() jest wyrażeniem tworzącym warunek
+            złączenia. Możesz tu użyć aliasów tabel, ale pamiętaj, że jeśli nie 
+            określiłeś aliasów tabel, to Zend_Db_Select sam je wygeneruje.
+            Jeśli pominiesz warunek złączenia, będzie to odpowiadało użyciu
+            złączenia krzyżowego CROSS JOIN lub iloczynu kartezjańskiego.
         </para>
 
         <para>
-            The third argument to the join() method is a list of columns from
-            the joined table to include in the select-list.  This is the same
-            as the second argument of the from() method, in that it can be
-            a scalar that names a column, or an array of scalars to name
-            multiple columns.  Each scalar can be either a string or an object
-            of type Zend_Db_Expr.  If you omit the columns argument, the default
-            is <code>'*'</code>.  If you want no columns from this table to
-            be in the result set, use an empty <code>array()</code>.
+            Trzeci argument dla metody join()jest listą kolumn ze złączonej 
+            tabeli, które mają być dołączone do listy wyników. Działa to
+            analogicznie jak drugi argument dla metody from(), w którym może
+            być wartość skalarna z nazwą tabeli, lub tablica wartości 
+            skalarnych w celu wybrania wielu kolumn. Każda wartość skalarna może
+            być łańcuchem znakow lub obiektem typu Zend_Db_Expr. Jeśli pominiesz
+            ten argument, jako wartość domyślna zostanie przyjęty znak 
+            <code>'*'</code>. Jeśli nie chcesz by kolumny z dołączonej
+            tabeli znajdowały się w zestawie wyników, użyj pustej tablicy 
+            <code>array()</code>.
         </para>
 
         <para>
-            Do not specify multiple columns as a single string of
-            comma-separated column names.  This syntax used in
-            earlier preview releases of Zend_Db is no longer supported.
-            Use an array instead.
+            Nie określaj wielu kolumn jako pojedynczego łańcucha znaków z 
+            nazwami kolumn oddzielonymi przecinkami. Taka składnia była używana
+            we wcześniejszych wydaniach Zend_Db i nie jest ona już obsługiwana.
+            Użyj zamiast tego tablicy.
         </para>
 
         <para>
-            The following join types are supported:
+            Obsługiwane są następujące typy złączeń:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <command>INNER JOIN</command> with the
-                    <code>join()</code> or <code>joinInner()</code> methods.
-                    All RDBMS brands support this join type.
+                    <command>INNER JOIN</command> za pomocą metody
+                    <code>join()</code> lub <code>joinInner()</code>.
+                    Wszystkie rodzaje RDBMS obsługują ten typ złączeń.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>LEFT JOIN</command> with the
-                    <code>joinLeft()</code> method.
-                    All RDBMS brands support this join type.
+                    <command>LEFT JOIN</command> za pomocą metody
+                    <code>joinLeft()</code>.
+                    Wszystkie rodzaje RDBMS obsługują ten typ złączeń.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>RIGHT JOIN</command> with the
-                    <code>joinRight()</code> method.
-                    Some RDBMS brands do not support this join type.
+                    <command>RIGHT JOIN</command> za pomocą metody
+                    <code>joinRight()</code>.
+                    Niektóre rodzaje RDBMS nie obsługują tego typu złączeń.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>FULL JOIN</command> with the
-                    <code>joinFull()</code> method.
-                    Some RDBMS brands do not support this join type.
+                    <command>FULL JOIN</command> za pomocą metody
+                    <code>joinFull()</code>.
+                    Niektóre rodzaje RDBMS nie obsługują tego typu złączeń.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>CROSS JOIN</command> with the
-                    <code>joinCross()</code> method.
-                    There is no parameter for this method to specify 
-                    the join condition.
-                    Some RDBMS brands do not support this join type.
+                    <command>CROSS JOIN</command> za pomocą metody
+                    <code>joinCross()</code>.
+                    Nie ma żadnego parametru dla tej metody do określania
+                    warunku złączenia.
+                    Niektóre rodzaje RDBMS nie obsługują tego typu złączeń.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>NATURAL JOIN</command> with the
-                    <code>joinNatural()</code> method.
-                    There is no parameter for this method to specify 
-                    the join condition; a natural join assumes an
-                    equi-join on columns of the same name in the
-                    two tables.
-                    Only NATURAL INNER JOIN is supported.
+                    <command>NATURAL JOIN</command> za pomocą metody
+                    <code>joinNatural()</code>.
+                    Nie ma żadnego parametru dla tej metody do określania
+                    warunku złączenia; przy złączeniu naturalnym zakładane jest,
+                    że jest tworzone równościowe złączenie kolumn o tej samej 
+                    nazwie w obu tabelach.
+                    Obsługiwane jest jedynie złączenie NATURAL INNER JOIN.
                 </para>
             </listitem>
         </itemizedlist>
@@ -347,15 +350,15 @@ $select->orWhere('id IN(?)', array(1, 2, 3));
 ?>]]></programlisting>
 
         <para>
-            Zend_Db_Select does not apply quoting or table aliases to
-            columns named in WHERE clauses.  If you combine PHP 
-            variables into the string for a WHERE expression, you
-            should use the Zend_Db_Adapter quoteIdentifier() method
-            to protect against illegal syntax.
+            Zend_Db_Select nie stosuje cytowania oraz aliasów tabeli dla 
+            nazwanych kolumn w wyrażeniach WHERE. Jeśli zmiennych PHP używasz
+            do tworzenia łańcucha znaków dla wyyrażenia WHERE, powinienes użyć
+            metody Zend_Db_Adapter quoteIdentifier() aby ochronić twoje 
+            zapytania przed niedozwoloną składnią.
         </para>
         <programlisting role="php"><![CDATA[<?php
 ...
-$columnName = 'bar'; // or set by an untrusted source
+$columnName = 'bar'; // lub ustawione przez niezaufane źródło
 $whereExpr = $db->quoteIdentifier($columnName) . ' = ?';
 $select->where($whereExpr, 'baz');
 ?>]]></programlisting>
@@ -389,16 +392,17 @@ $select->group(array('bar', 'baz'));
 ?>]]></programlisting>
 
         <para>
-            Do not specify multiple columns as a single string of
-            comma-separated column names.  This syntax used in
-            earlier preview releases of Zend_Db is no longer supported.
-            Use an array instead.
+            Nie określaj wielu kolumn jako pojedynczego łańcucha znaków z 
+            nazwami kolumn oddzielonymi przecinkami. Taka składnia była używana
+            we wcześniejszych wydaniach Zend_Db i nie jest ona już obsługiwana.
+            Użyj zamiast tego tablicy.
         </para>
 
         <para>
-            Quoting is applied to every string element of the
-            group() argument, but if the element is an object of type
-            Zend_Db_Expr, its string value is used without quoting.
+            Cytowanie jest stosowane do każdego elementu będącego łańcuchem
+            znakow, znajdującym się argumencie dla group(), ale jeśli element
+            ten jest obiektem typu Zend_Db_Expr, jego wartość jest używana bez
+            cytowania.
         </para>
 
     </sect2>
@@ -441,7 +445,7 @@ $select->having('count_id > ?', 1);
         </para>
         <programlisting role="php"><![CDATA[<?php
 ...
-$columnName = 'count_id'; // or set by an untrusted source
+$columnName = 'count_id'; // lub ustawione przez niezaufane źródło
 $havingExpr = $db->quoteIdentifier($columnName) . ' > ?';
 $select->having($havingExpr, 1);
 ?>]]></programlisting>
@@ -475,16 +479,17 @@ $select->order(array('noble_title DESC', 'first_name'));
 ?>]]></programlisting>
 
         <para>
-            Do not specify multiple columns as a single string of
-            comma-separated column names.  This syntax used in
-            earlier preview releases of Zend_Db is no longer supported.
-            Use an array instead.
+            Nie określaj wielu kolumn jako pojedynczego łańcucha znaków z 
+            nazwami kolumn oddzielonymi przecinkami. Taka składnia była używana
+            we wcześniejszych wydaniach Zend_Db i nie jest ona już obsługiwana.
+            Użyj zamiast tego tablicy.
         </para>
 
         <para>
-            Quoting is applied to every string element of the
-            order() argument, but if the element is an object of type
-            Zend_Db_Expr, its string value is used without quoting.
+            Cytowanie jest stosowane do każdego elementu będącego łańcuchem
+            znakow, znajdującym się argumencie dla order(), ale jeśli element
+            ten jest obiektem typu Zend_Db_Expr, jego wartość jest używana bez
+            cytowania.
         </para>
 
     </sect2>
@@ -597,11 +602,11 @@ $select->limitPage(3, 10);
     </sect2>
 
     <sect2>
-        <title>Other methods</title>
+        <title>Inne metody</title>
 
         <para>
-            The distinct() method enables you to add the DISTINCT
-            keyword to your SQL query.
+            Metoda distinct() pozwala dodać słowo kluczowe DISTINCT do twojego
+            zapytania SQL.
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -615,8 +620,8 @@ $select->from('foo', 'non_unique_column');
 ?>]]></programlisting>
 
         <para>
-            The forUpdate() method enables you to add the FOR UPDATE
-            keywords to your SQL query.
+            Metoda forUpdate() pozwala dodać ci słowa kluczowe FOR UPDATE do
+            twojego zapytania SQL.
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -630,10 +635,9 @@ $select->from('foo');
 ?>]]></programlisting>
 
         <para>
-            The query() method is like the query() method of
-            the Zend_Db_Adapter.  It returns an object of type
-            Zend_Db_Statement or PDOStatement, depending on the
-            adapter type.
+            Metoda query() działa podobnie jak metoda query() obiektu klasy
+            Zend_Db_Adapter. Zwraca ona obiekt typu Zend_Db_Statement lub 
+            PDOStatement, zależnie od typu używanego sterownika.
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -642,7 +646,7 @@ $select->from('foo');
 $stmt = $select->query();
 $result = $stmt->fetchAll();
 
-// This is equivalent to the following:
+// Jest to równoznaczne z poniższym:
 $select = $db->select();
 $select->from('foo');
 $stmt = $db->query($select);
@@ -651,10 +655,9 @@ $result = $stmt->fetchAll();
 ?>]]></programlisting>
 
         <para>
-            The getPart() method returns the data you provided
-            for part of the SQL query.  The Zend_Db_Select class
-            includes constant definitions that you can use for
-            parts of the SQL query.
+            Metoda getPart() zwraca dane, ktore przypisałeś do części zapytania
+            SQL. Klasa Zend_Db_Select zawiera definicje stałych, których możesz
+            użyć dla części zapytania SQL.
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -671,9 +674,9 @@ print_r( $select->getPart( Zend_Db_Select::ORDER ) );
 ?>]]></programlisting>
 
         <para>
-            The reset() method enables you to clear one specified
-            part of the SQL query, or else clear all parts of
-            the SQL query if you omit the argument.
+            Metoda reset() pozwala ci na wyczyszczenie jednej określonej części
+            zapytania SQL, lub na wyczyszczenie wszystkich części zapytania SQL,
+            jeśli pominiesz argument podczas wywołania.
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -685,17 +688,17 @@ $select = $db->select();
 $select->from('foo');
 $select->order('column1');
 
-// Instead we want a different order criterion:
+// Chcemy zmienić kryteria sortowania
 //
 // SELECT foo.*
 // FROM `foo` foo
 // ORDER BY `column2`
 
-// Clear one part so we can redefine it
+// Czyścimy jedną część aby zdefiniować ją ponownie
 $select->reset( Zend_Db_Select::ORDER );
 $select->order('column2');
 
-// Clear all parts of the query
+// Czyścimy wszystkie części zapytania
 $select->reset();
 
 ?>]]></programlisting>

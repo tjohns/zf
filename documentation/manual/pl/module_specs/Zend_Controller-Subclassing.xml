@@ -370,7 +370,7 @@ class My_Controller_Front extends Zend_Controller_Front
 
     /**
      * Ustawia obiekt uruchamiający. Jest on odpowiedzialny za 
-     * pobranie obiektu Zend_Controller_Dispatcher_Token, tworzenie instancji
+     * pobranie obiektu Zend_Controller_Request_Abstract, tworzenie instancji
      * kontrolera, oraz wywoływanie metody akcji tego kontrolera.
      *
      * @param Zend_Controller_Dispatcher_Interface $dispatcher

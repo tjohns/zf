@@ -72,8 +72,9 @@ Zend_Controller_Front::run('/path/to/controllers');
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::_forward()</code>'s arguments
-                    have changed. The signature is now:
+                    Zmieniłi się argumenty metody
+                    <code>Zend_Controller_Action::_forward()</code>. Sygnatura
+                    wygląda teraz następująco:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -81,14 +82,15 @@ final protected function _forward($action, $controller = null, $module = null, a
 ]]></programlisting>
 
                 <para>
-                    <code>$action</code> is always required; if no controller is
-                    specified, an action in the current controller is assumed.
-                    <code>$module</code> is always ignored unless
-                    <code>$controller</code> is specified. Finally, any
-                    <code>$params</code> provided will be appended to the
-                    request object. If you do not require the controller or
-                    module, but still need to pass parameters, simply specify
-                    null for those values.
+                    Parametr <code>$action</code> jest zawsze wymagany; jeśli
+                    kontroler nie jest określony, to brana pod uwagę jest akcja
+                    z obecnego kontrolera. Parametr <code>$module</code> jest
+                    zawsze ignorowany, o ile parametr <code>$controller</code> 
+                    nie jest określony. Ostatecznie każdy z parametrów w
+                    tablicy <code>$params</code> będzie dołączony do obiektu
+                    żądania. Jeśli nie potrzebujesz określić kontrolera lub 
+                    modułu, ale potrzebujesz przekazać parametry, po prostu
+                    określij te wartości jako null.
                 </para>
             </listitem>
         </itemizedlist>
