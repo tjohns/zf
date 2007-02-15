@@ -1,0 +1,81 @@
+<sect1 id="zend.validate.validator_chains">
+
+    <title>Validating Hostnames</title>
+
+    <para>
+        Zend_Validate_Hostname allows you to validate a hostname against a set of known specifications. 
+        It is possible to check for three different types of hostnames: a DNS Hostname (i.e. 
+        domain.com), IP address (i.e. 1.2.3.4), and Local hostnames (i.e. localhost). By default only
+        DNS hostnames are matched.
+    </para>
+    <para>
+        
+    </para>
+    
+    <para>
+        <emphasis role="strong">Basic usage</emphasis>
+    </para>
+    
+    <para>
+        A basic example of usage is below:
+        
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Hostname.php';
+$validator = new Zend_Validate_Hostname();
+if ($validator->isValid($hostname)) {
+    // ostname appears to be valid
+} else {
+    // hostname is invalid; print the reasons
+    foreach ($validator->getMessages() as $message) {
+        echo "$message\n";
+    }
+}]]></programlisting>
+
+        This will match the hostname <code>$hostname</code> and on failure populate 
+        <code>$validator->getMessages()</code> with useful error messages.
+        
+    </para>
+   
+    <para>
+        <emphasis role="strong">Validating different types of hostnames</emphasis>
+    </para>
+    
+    <para>
+        You may find you also want to match IP addresses, Local hostnames, or a combination of all
+        allowed types. This can be done by passing a parameter to Zend_Validate_Hostname when you 
+        instantiate it. The paramter should be an integer which determines what types of hostnames
+        are allowed. You are encouraged to use the Zend_Validate_Hostname constants to do this.
+    </para>
+    
+    <para>
+        The Zend_Validate_Hostname constants are: <code>ALLOW_DNS</code> to allow only DNS hostnames,
+        <code>ALLOW_IP</code> to allow IP addresses, <code>ALLOW_LOCAL</code> to allow local network
+        names, and <code>ALLOW_ALL</code> to allow all three types. To just check for IP addresses
+        you can use the example below:
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Hostname.php';
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
+if ($validator->isValid($hostname)) {
+    // ostname appears to be valid
+} else {
+    // hostname is invalid; print the reasons
+    foreach ($validator->getMessages() as $message) {
+        echo "$message\n";
+    }
+}]]></programlisting>
+    </para>   
+    
+    <para>
+        As well as using <code>ALLOW_ALL</code> to accept all hostnames types you can combine 
+        these types to allow for combinations. For example, to accept DNS and Local hostnames
+        instantiate your Zend_Validate_Hostname object as so:
+        <![CDATA[<?php
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+}]]></programlisting>
+    
+    </para>  
+    
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

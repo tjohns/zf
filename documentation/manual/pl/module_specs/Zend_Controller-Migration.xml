@@ -69,6 +69,28 @@ Zend_Controller_Front::run('/path/to/controllers');
                     zmieniona na <code>Zend_Controller_Dispatcher_Standard</code>.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Action::_forward()</code>'s arguments
+                    have changed. The signature is now:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]></programlisting>
+
+                <para>
+                    <code>$action</code> is always required; if no controller is
+                    specified, an action in the current controller is assumed.
+                    <code>$module</code> is always ignored unless
+                    <code>$controller</code> is specified. Finally, any
+                    <code>$params</code> provided will be appended to the
+                    request object. If you do not require the controller or
+                    module, but still need to pass parameters, simply specify
+                    null for those values.
+                </para>
+            </listitem>
         </itemizedlist>
     </sect2>
 

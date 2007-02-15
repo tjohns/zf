@@ -368,8 +368,9 @@ Akcja    : index]]>
 public function myAction()
 {
     // coś przetwarzaj...
-    // przenieś do innej akcji, FooController::barAction():
-    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+    // przenieś do innej akcji, FooController::barAction(), w obecnym 
+    // module:
+    $this->_forward('bar', 'foo', null, array('baz' => 'bogus'));
 }
 ]]></programlisting>
 	</sect2>
