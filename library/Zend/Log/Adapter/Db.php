@@ -142,36 +142,10 @@ class Zend_Log_Adapter_Db implements Zend_Log_Adapter_Interface
 	    }
 
 	    /**
-	     * Build an array of field names and values for the SQL statement.
-	     */
-        $fieldNames = array();
-	    foreach ($fields as $key=>&$value) {
-	        /**
-	         * @todo needs to be updated for new database adapters
-	         */
-	        $fieldNames[] = "`" .$this->_dbAdapter->quote($key). "`";
-	        $value = "'" .$this->_dbAdapter->quote($value). "'";
-	        if ($value=="''") {
-	            $value = "NULL";
-	        }
-	    }
-
-	    /**
-	     * INSERT the log line into the database.  XXX Replace with Prepared Statement
-	     */
-        /**
-         * @todo needs to be updated for new database adapters
-         */
-	    $sql = "INSERT INTO `" .$this->_dbAdapter->quote($this->_tableName). "` ("
-	         . implode(', ', $fieldNames) . ') VALUES ('
-	         . implode(', ', $fields) .')';
-
-	    // The database adapter will raise an exception if any problems occur.
-        /**
-         * @todo needs to be updated for new database adapters
-         */
-	    $this->_dbAdapter->insert($sql);
-        return true;
+             * INSERT the log line into the database
+             */
+	    $this->_dbAdapter->insert($this->_tableName, $fields);
+            return true;
 	}
 
 
