@@ -14,7 +14,14 @@
 		</para>
 
 		<para>
-            Для того, чтобы использовать Zend_Controller_Action, нужно создать его подкласс в действующей директории контроллеров (или расширить его для создания своего базового класса контроллеров действий). Базовыми действиями являются создание подкласса Zend_Controller_Action и написание методов действий, которые соответствуют различным действиям, которыми должен управлять контроллер. Маршрутизатор и диспетчер компоненты Zend_Controller будут рассматривать любые методы в вашем классе с именем, заканчивающимся на 'Action', как возможные действия контроллеров.
+            Для того, чтобы использовать Zend_Controller_Action, нужно создать
+            его подкласс в действующей директории контроллеров (или расширить
+            его для создания своего базового класса контроллеров действий).
+            Подкласс может содержать методы действий, которые соответствуют
+            различным действиям, которыми должен управлять контроллер.
+            Маршрутизатор и диспетчер компоненты Zend_Controller будут
+            рассматривать любые методы в классе контроллера с именем,
+            заканчивающимся на 'Action', как возможные действия контроллеров.
 <!--
             To use Zend_Controller_Action, you will need to subclass it in your
             actual action controllers (or subclass it to create your own base
@@ -50,7 +57,8 @@ class FooController extends Zend_Controller_Action
 ]]></programlisting>
             
         <para>
-            Приведенный выше класс FooController (контроллер 'foo') определяет два действия - 'bar' и 'baz'.
+            Приведенный выше класс FooController (контроллер 'foo') определяет
+            два действия - 'bar' и 'baz'.
 <!--
             The above FooController class (controller 'foo') defines two
             actions, 'bar' and 'baz'.
@@ -58,7 +66,10 @@ class FooController extends Zend_Controller_Action
         </para>
 
         <para>
-            Класс может быть дополнен инициализирующим методом, методом, используемым по умолчанию (если не был вызван метод, либо вызван несуществующий метод), перехватчиками pre- и post-dispatch и различными вспомогательными методами.
+            Класс может быть дополнен инициализирующим методом, методом,
+            используемым по умолчанию (если не был вызван метод, либо вызван
+            несуществующий метод), перехватчиками pre- и post-dispatch и
+            различными вспомогательными методами.
 <!--
             There's much more that can be accomplished than this, such as custom
             initialization actions, default actions to call should no action (or
@@ -73,7 +84,13 @@ class FooController extends Zend_Controller_Action
         <title>Инициализация объекта<!--Object initialization--></title>
 
         <para>
-            Несмотря на то, что вы всегда можете переопределить конструктор контроллера действий, мы не рекомендуем делать этого. Zend_Controller_Action::__construct() выполняет некоторые важные задачи, такие, как регистрация объектов запроса и ответа, аргументов вызова, переданных из фронт-контроллера. Если необходимо переопределить контроллер, то всегда вызывайте конструктор родительского класса parent::__construct($request, $response,
+            Несмотря на то, что вы всегда можете переопределить конструктор
+            контроллера действий, мы не рекомендуем делать этого.
+            Zend_Controller_Action::__construct() выполняет некоторые важные
+            задачи, такие, как регистрация объектов запроса и ответа, аргументов
+            вызова, переданных из фронт-контроллера. Если необходимо
+            переопределить контроллер, то всегда вызывайте конструктор
+            родительского класса parent::__construct($request, $response,
             $invokeArgs) в конструкторе подкласса.
 <!--
             While you can always override the action controller's constructor,
@@ -87,9 +104,10 @@ class FooController extends Zend_Controller_Action
         </para>
 
         <para>
-            Более подходящим средством выполнения инстанцирования является метод
-            init(), который вызывается в конце __construct(). Например, если вы
-            хотите устанавливать соединение с БД при инстанцировании:
+            Для осуществления своего инстанцирования более подходящим
+            является метод init(), который вызывается в конце __construct().
+            Например, если вы хотите устанавливать соединение с БД при
+            инстанцировании:
 <!--
             The more appropriate way to customize instantiation is to use the
             init() method, which is called as the last task of __construct().
@@ -118,7 +136,13 @@ class FooController extends Zend_Controller_Action
         <title>Перехватчики Pre- и Post-Dispatch<!--Pre- and Post-Dispatch Hooks--></title>
 
         <para>
-            Zend_Controller_Action определяет два метода, которые вызываются до и после требуемого действия, preDispatch() и postDispatch(). Они могут быть полезны во многих случаях: проверка аутентификации и прав пользователя до запуска действия (действие может быть пропущено через вызов _forward() в preDispatch()) или размещение сгенерированного содержимого в боковой части сайта (метод postDispatch()).
+            Zend_Controller_Action определяет два метода, которые вызываются до
+            и после требуемого действия, preDispatch() и postDispatch(). Они
+            могут быть полезны во многих случаях: проверка аутентификации и прав
+            пользователя до запуска действия (действие может быть пропущено
+            через вызов _forward() в preDispatch()) или размещение
+            сгенерированного содержимого в боковой части сайта (метод
+            postDispatch()).
 <!--
             Zend_Controller_Action specifies two methods that may be called to
             bookend a requested action, preDispatch() and postDispatch(). These
@@ -226,7 +250,9 @@ $this->getResponse()->appendBody($content);
         <title>Вспомогательные методы<!--Utility Methods--></title>
 
         <para>
-            Кроме методов доступа, Zend_Controller_Action имеет несколько вспомогательных методов для выполнения некотрорых общих задач в методах действий (или в pre-/post-dispatch).
+            Кроме методов доступа, Zend_Controller_Action имеет несколько
+            вспомогательных методов для выполнения некотрорых общих задач в
+            методах действий (или в pre-/post-dispatch).
 <!--
             Besides the accessors, Zend_Controller_Action has several utility
             methods for performing common tasks from within your action methods
@@ -238,7 +264,12 @@ $this->getResponse()->appendBody($content);
             <listitem>
                 <para>
                     <emphasis>_forward($action, $controller = null, $module =
-                        null, array $params = null)</emphasis>: выполняет другое действие. Если этоот метод вызывается в preDispatch(), то текущее действие будет пропущено, вместо этого начинает выполняться другое действие. В остальных случаях выполнение этого действия начинается только после выполнения текущего действия.
+                        null, array $params = null)</emphasis>: выполняет другое
+                        действие. Если этоот метод вызывается в preDispatch(),
+                        то текущее действие будет пропущено, вместо этого
+                        начинает выполняться другое действие. В остальных
+                        случаях выполнение этого действия начинается только
+                        после выполнения текущего действия.
 <!--
                     <emphasis>_forward($action, $controller = null, $module =
                         null, array $params = null)</emphasis>: 
@@ -252,7 +283,11 @@ $this->getResponse()->appendBody($content);
 
             <listitem>
                 <para>
-                    <emphasis>_redirect($url, $code = 302)</emphasis>:  производит перенаправление по другому адресу. Этот метод принимает URL и код статуса HTTP (необязательный параметр). Перенаправление производится сразу и выполнение программы прерывается.
+                    <emphasis>_redirect($url, $code = 302)</emphasis>:
+                    производит перенаправление по другому адресу. Этот метод
+                    принимает URL и код статуса HTTP (необязательный параметр).
+                    Перенаправление производится сразу и выполнение программы
+                    прерывается.
 <!--
                     <emphasis>_redirect($url, $code = 302)</emphasis>: redirect
                     to another location. This method takes a URL and an optional
@@ -262,7 +297,8 @@ $this->getResponse()->appendBody($content);
                 </para>
 
                 <para>
-                    Если был задан код статуса, то он будет передан команде PHP header() при произведении перенаправления.
+                    Если был задан код статуса, то он будет передан команде PHP
+                    header() при произведении перенаправления.
 <!--
                     If a status code is provided, it will be passed to the PHP
                     header() command when the redirect is performed.
