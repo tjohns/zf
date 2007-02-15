@@ -193,6 +193,12 @@
         &module_specs.Zend_Pdf-Drawing;
         &module_specs.Zend_Pdf-Usage;
     </chapter>
+    <chapter id="zend.rest">
+        <title>Zend_Rest</title>
+        &module_specs.Zend_Rest;
+        &module_specs.Zend_Rest_Client;
+        &module_specs.Zend_Rest_Server;
+    </chapter>
     <chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
@@ -212,7 +218,6 @@
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
-        &module_specs.Zend_Service_Rest;
         &module_specs.Zend_Service_Amazon;
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
