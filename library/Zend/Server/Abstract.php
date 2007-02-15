@@ -18,29 +18,42 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Server_Interface */
 require_once 'Zend/Server/Interface.php';
 
-abstract class Zend_Server_Abstract implements Zend_Server_Interface {
+/**
+ * Zend_Server_Abstract
+ * 
+ * @category Zend
+ * @package  Zend_Server
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version $Id$
+ */
+abstract class Zend_Server_Abstract implements Zend_Server_Interface 
+{
 	/**
      * @var array PHP's Magic Methods, these are ignored
      */
     static protected $magic_methods = array(
-                                '__construct',
-                                '__destruct',
-                                '__get',
-                                '__set',
-                                '__call',
-                                '__sleep',
-                                '__wakeup',
-                                '__isset',
-                                '__unset',
-                                '__tostring',
-                                '__clone',
-                                '__set_state',
-                                );
+        '__construct',
+        '__destruct',
+        '__get',
+        '__set',
+        '__call',
+        '__sleep',
+        '__wakeup',
+        '__isset',
+        '__unset',
+        '__tostring',
+        '__clone',
+        '__set_state',
+    );
 
    	/**
 	 * Lowercase a string
+     *
+     * Lowercase's a string by reference
 	 *
 	 * @param string $value
 	 * @param string $key
