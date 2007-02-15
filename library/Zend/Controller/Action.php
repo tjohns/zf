@@ -539,7 +539,8 @@ abstract class Zend_Controller_Action
             }
         }
 
-        $request->setActionName($action);
+        $request->setActionName($action)
+                ->setDispatched(false);
     }
 
 
