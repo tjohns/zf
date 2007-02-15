@@ -11,24 +11,29 @@
     <title>Introduction</title>
 
     <para>
-    Zend_Auth provides an API for authentication and includes concrete authentication adapters for
-    common use case scenarios.
+        Zend_Auth provides an API for authentication and includes concrete authentication adapters for
+        common use case scenarios.
     </para>
 
     <note>
         <para>
-        Zend_Auth currently includes a <link linkend="zend.auth.digest">digest authentication adapter</link>
-        as a simple proof-of-concept for the design. Additional adapters are planned for development.
-        Interested in using a particular adapter? Your
-        <ulink url="http://framework.zend.com/wiki/x/qx4">voting for an adapter</ulink> and
-        <ulink url="http://framework.zend.com/wiki/x/GgE">contributions</ulink> are most welcome!
+            Zend_Auth currently includes a
+            <link linkend="zend.auth.adapter.digest">digest authentication adapter</link>
+            as a simple proof-of-concept for the design. Additional adapters are planned for development.
+            Interested in using a particular adapter? Your
+            <ulink url="http://framework.zend.com/wiki/x/qx4">voting for an adapter</ulink> and
+            <ulink url="http://framework.zend.com/wiki/x/GgE">contributions</ulink> are most welcome!
         </para>
     </note>
 
     <para>
-    Zend_Auth is concerned only with <emphasis role="strong">authentication</emphasis> and not with
-    <emphasis role="strong">authorization</emphasis>. Authentication is loosely defined as determining whether an entity actually is what it purports to be (i.e., identification), based on some set of credentials. Authorization, the process of deciding whether to allow an entity access to, or to perform operations upon, other entities is out of scope with respect to Zend_Auth. For more information about authorization and access control with the Zend Framework, please see
-    <link linkend="zend.acl">Zend_Acl</link>.
+        Zend_Auth is concerned only with <emphasis role="strong">authentication</emphasis> and not with
+        <emphasis role="strong">authorization</emphasis>. Authentication is loosely defined as determining
+        whether an entity actually is what it purports to be (i.e., identification), based on some set of
+        credentials. Authorization, the process of deciding whether to allow an entity access to, or to
+        perform operations upon, other entities is outside the scope of Zend_Auth. For more information about
+        authorization and access control with the Zend Framework, please see
+        <link linkend="zend.acl">Zend_Acl</link>.
     </para>
 
     <sect2 id="zend.auth.introduction.adapters">
@@ -36,101 +41,125 @@
         <title>Adapters</title>
 
         <para>
-        Each Zend_Auth authentication adapter extends the abstract class <code>Zend_Auth_Adapter</code>.
-        This abstract class provides two methods, <code>staticAuthenticate()</code> and
-        <code>authenticate()</code>, that the extending adapter class may implement for authentication
-        purposes. Each of these methods accepts a single array parameter, <code>$options</code>, which
-        contains the options specific to an authentication attempt for the particular adapter (e.g.,
-        login credentials such as a username and password combination):
+            A Zend_Auth adapter is used to authenticate against a particular type of authentication service,
+            such as LDAP, RDBMS, or file-based storage. Different adapters are likely to have vastly different
+            options and behaviors, but some basic things are common among adapters. For example, accepting
+            authentication credentials (including a purported identity), authenticating, and returning some
+            result are common to Zend_Auth adapter.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter.php';
+        <para>
+            Each Zend_Auth authentication adapter class implements <code>Zend_Auth_Adapter_Interface</code>.
+            This interface defines one method, <code>authenticate()</code>, that an adapter class implements
+            for authentication purposes. Each adapter class must be prepared prior to calling
+            <code>authenticate()</code>. This means that each adapter provides the ability to set up
+            credentials (e.g., username and password) and to define values for adapter-specific options, such
+            as database connection settings for a database table adapter.
+        </para>
 
-class MyAuthAdapter extends Zend_Auth_Adapter
+        <para>
+            The following is an example authentication adapter that requires a username and password to be set
+            for authentication. Other details, such as how the authentication service is queried, have been
+            omitted for brevity:
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Auth/Adapter/Interface.php';
+
+class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
-    public function authenticate($options)
+    /**
+     * Sets username and password for authentication
+     *
+     * @return void
+     */
+    public function __construct($username, $password)
+    {
+        // ...
+    }
+
+    /**
+     * Performs an authentication attempt
+     *
+     * @throws Zend_Auth_Adapter_Exception If authentication cannot be performed
+     * @return Zend_Auth_Result
+     */
+    public function authenticate()
     {
         // ...
     }
 }]]></programlisting>
 
-        <para>
-        Both <code>staticAuthenticate()</code> and <code>authenticate()</code> must return an instance of
-        a class that implements <code>Zend_Auth_Token_Interface</code> unless they throw an exception that
-        derives from <code>Zend_Auth_Adapter_Exception</code>.
-        </para>
-    </sect2>
-
-    <sect2 id="zend.auth.introduction.tokens">
-
-        <title>Tokens</title>
-
-        <para>
-        In Zend_Auth, a token is used to represent the results of an authentication attempt. A token from
-        one authentication adapter could contain very different information than a token from another
-        adapter. Certainly applications will also have varying needs for what is contained in an
-        authentication token.
-        </para>
-
-        <para>
-        To accommodate these varied needs, <code>Zend_Auth_Token_Interface</code> is available for providing
-        a very basic set of common functionality, and it defines three methods:
-        <itemizedlist>
-            <listitem>
-                <para>
-                <code>isValid()</code> - returns whether the token represents a successful authentication
-                attempt
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                <code>getIdentity()</code> - returns the identity of the authentication attempt
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                <code>getMessage()</code> - returns a message regarding a failed authentication attempt
-                </para>
-            </listitem>
-        </itemizedlist>
-        </para>
-
-        <para>
-        Because each authentication mechanism varies, each concrete adapter provides its own token class.
-        For example, the <link linkend="zend.auth.digest">digest authentication adapter</link> provides
-        <code>Zend_Auth_Digest_Token</code>.
-        </para>
-
-        <para>
-        Of course, developers can extend such token classes to suit their particular needs. For example, the
-        date and time of the authentication attempt is a typically useful piece of information to have
-        recorded in the token object.
+            As indicated in its docblock, <code>authenticate()</code> must return an instance of
+            <code>Zend_Auth_Result</code> (or a class derived from <code>Zend_Auth_Result</code>). If for some
+            reason performing an authentication query is impossible, <code>authenticate()</code> should throw
+            an exception that derives from <code>Zend_Auth_Adapter_Exception</code>.
         </para>
 
     </sect2>
 
-    <sect2 id="zend.auth.introduction.token_persistence">
+    <sect2 id="zend.auth.introduction.results">
 
-        <title>Token Persistence</title>
+        <title>Results</title>
 
         <para>
-        HTTP is a stateless protocol, and techniques such as cookies and sessions have been developed in
-        order to facilitate maintaining state across multiple requests in server-side web applications.
-        <link linkend="zend.session">Zend_Session</link> is used within Zend_Auth to provide persistence
-        of authentication tokens using the PHP session.
+            Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
+            <code>authenticate()</code> in order to represent the results of an authentication attempt.
+            Adapters populate the <code>Zend_Auth_Result</code> object upon construction, so that the
+            following three methods provide a basic set of operations common to the results of Zend_Auth
+            adapters:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>isValid()</code> - returns true if and only if the result represents a
+                        successful authentication attempt
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getIdentity()</code> - returns the identity of the authentication attempt
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getMessages()</code> - returns an array of messages regarding a failed
+                        authentication attempt
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.auth.introduction.persistence">
+
+        <title>Identity Persistence</title>
+
+        <para>
+            Authenticating a request that includes authentication credentials is useful per se, but it is also
+            important to support maintaining the authenticated identity without having to present the
+            authentication credentials with each request.
         </para>
 
         <para>
-        This feature is on by default, but may be disabled for situations in which it may not be needed.
+            HTTP is a stateless protocol, however, and techniques such as cookies and sessions have been
+            developed in order to facilitate maintaining state across multiple requests in server-side web
+            applications. <link linkend="zend.session">Zend_Session</link> is used by default within Zend_Auth
+            to provide persistent storage of the identity from a successful authentication attempt using the
+            PHP session.
         </para>
 
         <para>
-        Upon an authentication attempt, Zend_Auth stores the resulting authentication token into the session
-        using <link linkend="zend.session">Zend_Session</link>. By default, the token is stored into a
-        session namespace of "<code>Zend_Auth</code>" and has a token member name of "<code>token</code>",
-        but these values are configurable where developers may need to store multiple tokens organized
-        in various ways.
+            Upon a successful authentication attempt, <code>Zend_Auth::authenticate()</code> stores the
+            identity from the authentication result into persistent storage. By default,
+            <code>Zend_Auth</code> uses a storage class based on
+            <link linkend="zend.session">Zend_Session</link>. The storage class may be changed by providing a
+            different storage object to <code>Zend_Auth::setStorage()</code>.
+        </para>
+
+        <para>
+            If automatic persistent storage of the identity is not appropriate for a particular use case, then
+            developers may forgo using the <code>Zend_Auth</code> class altogether, instead using an adapter
+            class directly.
         </para>
 
     </sect2>
@@ -140,64 +169,91 @@ class MyAuthAdapter extends Zend_Auth_Adapter
         <title>Using Zend_Auth</title>
 
         <para>
-        There are two main ways to use Zend_Auth adapters:
-        <orderedlist>
-        <listitem>
-            <para>
-            indirectly, through <code>Zend_Auth</code>
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-            directly, through the adapter
-            </para>
-        </listitem>
-        </orderedlist>
-        The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
-        <code>Zend_Auth</code>:
+            There are two provided ways to use Zend_Auth adapters:
+            <orderedlist>
+            <listitem>
+                <para>
+                    indirectly, through <code>Zend_Auth::authenticate()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    directly, through the adapter's <code>authenticate()</code> method
+                </para>
+            </listitem>
+            </orderedlist>
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <para>
+            The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
+            the <code>Zend_Auth</code> class:
 
-// create a new authentication object against MyAuth_Adapter
+            <programlisting role="php"><![CDATA[<?php
+// Get a reference to the Singleton instance of Zend_Auth
 require_once 'Zend/Auth.php';
-$auth = new Zend_Auth(new MyAuth_Adapter());
+$auth = Zend_Auth::getInstance();
 
-// setup authentication options
-$options = array(
-    'username' => 'someUser',
-    'password' => 'somePassword'
-    );
+// Set up the authentication adapter
+$authAdapter = new MyAuthAdapter($username, $password);
 
-// authentication attempt; token is also saved in the session
-$token = $auth->authenticate($options);
+// Attempt authentication, saving the result
+$result = $auth->authenticate($authAdapter);
 
-if (!$token->isValid()) {
-    // authentication failed
-    throw new Exception($token->getMessage());
+if (!$result->isValid()) {
+    // Authentication failed; print the reasons why
+    foreach ($result->getMessages() as $message) {
+        echo "$message\n";
+    }
 } else {
-    // authentication succeeded
-}
-
-// save the identity associated with the authentication attempt
-$identity = $token->getIdentity();
-]]></programlisting>
-
-        <para>
-        Once authentication has been attempted, as in the above example, it is a simple matter to see
-        whether a valid authentication token exists in the session:
-        </para>
-
-        <programlisting role="php"><![CDATA[if ($auth->isLoggedIn()) {
-    // valid authentication token exists; get it
-    $token = $auth->getToken();
+    // Authentication succeeded; the identity ($username) is stored in the session
+    // $result->getIdentity() === $auth->getIdentity()
+    // $result->getIdentity() === $username
 }]]></programlisting>
-
-        <para>
-        To remove a session token completely, just use the <code>logout()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[$auth->logout()]]></programlisting>
+        <para>
+            Once authentication has been attempted in a request, as in the above example, it is a simple
+            matter to check whether a successfully authenticated identity exists:
+            <programlisting role="php"><![CDATA[<?php
+$auth = Zend_Auth::getInstance();
+if ($auth->hasIdentity()) {
+    // Identity exists; get it
+    $identity = $auth->getIdentity();
+}]]></programlisting>
+        </para>
+
+        <para>
+            To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
+            This typically would be used for implementing an application "logout" operation:
+            <programlisting role="php"><![CDATA[<?php
+Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+        </para>
+
+        <para>
+            When the automatic use of persistent storage is inappropriate for a particular use case, a
+            developer may simply bypass the use of the <code>Zend_Auth</code> class, using an adapter class
+            directly. Direct use of an adapter class involves configuring and preparing an adapter object and
+            then calling its <code>authenticate()</code> method. Adapter-specific details are discussed in the
+            documentation for each adapter. The following example directly utilizes
+            <code>MyAuthAdapter</code>:
+
+            <programlisting role="php"><![CDATA[<?php
+// Set up the authentication adapter
+$authAdapter = new MyAuthAdapter($username, $password);
+
+// Attempt authentication, saving the result
+$result = $authAdapter->authenticate();
+
+if (!$result->isValid()) {
+    // Authentication failed; print the reasons why
+    foreach ($result->getMessages() as $message) {
+        echo "$message\n";
+    }
+} else {
+    // Authentication succeeded
+    // $result->getIdentity() === $username
+}]]></programlisting>
+        </para>
 
     </sect2>
 
