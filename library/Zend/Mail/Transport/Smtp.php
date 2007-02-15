@@ -15,9 +15,16 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+
+/**
+ * Zend_Mail_Protocol_Smtp
+ */
+require_once 'Zend/Mail/Protocol/Smtp.php';
 
 
 /**
@@ -28,8 +35,8 @@ require_once 'Zend/Mail/Transport/Abstract.php';
 
 /**
  * SMTP connection object
- * minimum implementation according to RFC2821:
- * EHLO, MAIL FROM, RCPT TO, DATA, RSET, NOOP, QUIT
+ * 
+ * Loads an instance of Zend_Mail_Protocol_Smtp and forwards smtp transactions
  *
  * @category   Zend
  * @package    Zend_Mail
@@ -37,360 +44,152 @@ require_once 'Zend/Mail/Transport/Abstract.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
-
-    const CONNECTION_TIMEOUT = 300;
-    const COMMUNICATION_TIMEOUT = 300;
-    const DEBUG = false;
-
+class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
+{
+    /**
+     * Remote smtp hostname or i.p.
+     *
+     * @var string
+     */
     protected $_host;
+    
+    
+    /**
+     * Port number
+     *
+     * @var integer|null
+     */
     protected $_port;
-    protected $_myName;
-
+    
+    
     /**
-     * Last Response from the SMTP server, 1 Array Element per line
+     * Local client hostname or i.p.
      *
-     * @var array of strings
+     * @var string
      */
-    public $lastResponse = array();
-
+    protected $_name = 'localhost';
+    
+    
     /**
-     * Stream to SMTP Server
+     * Authentication type OPTIONAL
      *
-     * @var Stream
+     * @var string
      */
-    protected $_con = null;
+    protected $_auth;
+    
+    
+    /**
+     * Config options for authentication
+     *
+     * @var array
+     */
+    protected $_config;
 
+    
+    /**
+     * Instance of Zend_Mail_Protocol_Smtp
+     *
+     * @var Zend_Mail_Protocol_Smtp
+     */
+    protected $_connection;
+
+    
     /**
      * Constructor.
      *
-     * @param string $host
-     * @param int $port
-     * @param string $myName  (for use with HELO)
+     * @param  string $host OPTIONAL (Default: 127.0.0.1)
+     * @param  array|null $config OPTIONAL (Default: null)
+     * @return void
      */
-    public function __construct($host = '127.0.0.1',
-                                $port = null,
-                                $myName = '127.0.0.1')
+    public function __construct($host = '127.0.0.1', Array $config = array())
     {
-        if ($port === null) {
-            if (($port = ini_get('smtp_port')) == '') {
-                $port = 25;
-            }
+        if (isset($config['name'])) {
+            $this->_name = $config['name'];
+        }
+        if (isset($config['port'])) {
+            $this->_port = $config['port'];
+        }
+        if (isset($config['auth'])) {
+            $this->_auth = $config['auth'];
         }
 
         $this->_host = $host;
-        $this->_port = $port;
-        $this->_myName = $myName;
+        $this->_config = $config;
     }
 
 
     /**
-     * Connect to the server with the parameters given
-     * in the constructor and send "HELO". The connection
-     * is immediately closed if an error occurs.
+     * Class destructor to ensure all open connections are closed
      *
-     * @throws Zend_Mail_Transport_Exception
+     * @return void
      */
-    public function connect()
+    public function __destruct()
     {
-        $errno  = null;
-        $errstr = null;
-
-        // open connection
-        $fp = stream_socket_client('tcp://' . $this->_host .':'.$this->_port, $errno, $errstr, self::CONNECTION_TIMEOUT);
-
-        if ($fp===false) {
-            if ($errno==0) {
-                $msg = 'Could not open socket';
-            } else {
-                $msg = $errstr;
-            }
-            throw new Zend_Mail_Transport_Exception($msg);
-        }
-
-        $this->_con = $fp;
-
-        try {
-            $res = stream_set_timeout($this->_con, self::COMMUNICATION_TIMEOUT );
-            if ($res === false) {
-                throw new Zend_Mail_Transport_Exception('Could not set Stream Timeout');
-            }
-
-            /**
-             * Now the connection is open. Wait for the welcome message:
-             *   welcome message has error code 220
-             */
-            $this->_expect(220);
-            $this->helo($this->_myName);
-        } catch (Zend_Mail_Transport_Exception $e) {
-            fclose($fp);
-            throw $e;
+        if ($this->_connection instanceof Zend_Mail_Protocol_Smtp) {
+            $this->_connection->quit();
+            $this->_connection->disconnect();
         }
     }
-
-
+    
+    
     /**
-     * Sends EHLO along with the given machine name and
-     * validates server response. If EHLO fails, HELO is
-     * sent for compatibility with older MTAs.
+     * Sets the connection protocol instance
+     * 
+     * @param Zend_Mail_Protocol_Abstract $client
      *
-     * @param string $myname
-     * @throws Zend_Mail_Transport_Exception
+     * @return void
      */
-    public function helo($myname)
+    public function setConnection(Zend_Mail_Protocol_Abstract $connection)
     {
-        $this->_send('EHLO '.$myname);
-
-        try {
-            $this->_expect(250);  // Hello OK is code 250
-        } catch (Zend_Mail_Transport_Exception $e) {
-            // propably wrong status code, RFC 2821 requires sending HELO in this case:
-            $this->_send('HELO '.$myname);
-            $this->_expect(250); // if we get an exception here, we give up...
-        }
+        $this->_connection = $connection;
     }
-
-
+    
+    
     /**
-     * sends a MAIL command for the senders address
-     * and validates the response.
-     *
-     * @param string $from_email
-     * @throws Zend_Mail_Transport_Exception
+     * Gets the connection protocol instance
+     * 
+     * @return Zend_Mail_Protocol|null
      */
-    public function mail_from($from_email)
+    public function getConnection()
     {
-        $this->_send('MAIL FROM:<' . $from_email . '>');
-        $this->_expect(250);
+        return $this->_connection;
     }
 
     /**
-     * sends a RCPT command for a recipient address
-     * and validates the response.
+     * Send an email via the SMTP connection protocol
      *
-     * @param string $to
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function rcpt_to($to)
-    {
-        $this->_send('RCPT TO:<' . $to . '>');
-        $this->_expect(250,251);
-    }
-
-    /**
-     * sends the DATA command followed by the
-     * email content (headers plus body) folowed
-     * by a dot and validates the response of the
-     * server.
+     * The connection via the protocol adapter is made just-in-time to allow a 
+     * developer to add a custom adapter if required before mail is sent.
      *
-     * @param string $data
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function data($data)
-    {
-        $this->_send('DATA');
-        $this->_expect(354);
-        foreach(explode($this->EOL, $data) as $line) {
-            if (strpos($line, '.') === 0) {
-                // Escape lines prefixed with a '.'
-                $line = '.' . $line;
-            }
-            $this->_send($line);
-        }
-        $this->_send('.');
-        $this->_expect(250);
-    }
-
-
-    /**
-     * Sends the RSET command end validates answer
-     * Not used by Zend_Mail, can be used to restore a clean
-     * smtp communication state when a transaction has
-     * been cancelled.
-     *
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function rset()
-    {
-        $this->_send('RSET');
-        $this->_expect(250);
-    }
-
-
-    /**
-     * Sends the NOOP command end validates answer
-     * Not used by Zend_Mail, could be used to keep a connection
-     * alive or check if it is still open.
-     *
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function noop()
-    {
-        $this->_send('NOOP');
-        $this->_expect(250);
-    }
-
-
-    /**
-     * Sends the VRFY command end validates answer
-     * The calling method needs to evaluate $this->lastResponse
-     * This function was implemented for completeness only.
-     * It is not used by Zend_Mail.
-     *
-     * @param string $user User Name or eMail to verify
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function vrfy($user)
-    {
-        $this->_send('VRFY ' . $user);
-        $this->_expect(250,251,252);
-    }
-
-
-    /**
-     * Sends the QUIT command and validates answer
-     *
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function quit()
-    {
-        $this->_send('QUIT');
-        $this->_expect(221);
-    }
-
-
-    /**
-     * close an existing connection.
-     * sends QUIT and closes stream.
-     *
-     * @throws Zend_Mail_Transport_Exception
-     */
-    public function disconnect()
-    {
-        $this->quit();
-        fclose($this->_con);
-        $this->_con = NULL;
-    }
-
-
-    /**
-     * Read the response from the stream and
-     * check for expected return code. throws
-     * a Zend_Mail_Transport_Exception if an unexpected code
-     * is returned
-     *
-     * @param int $val1
-     * @param int $val2
-     * @param int $val3
-     * @throws Zend_Mail_Transport_Exception
-     */
-    protected function _expect($val1, $val2=null, $val3=null)
-    {
-        /**
-         * according to the new RFC2821, a multiline response can be sent
-         * so we now check if it is the case here.
-         * a multiline response is structured as follows:
-         *   250-ok welcome 127.0.0.1
-         *   250-PIPELINING
-         *   250 HELP
-         * normal answer would be:
-         *
-         * 250 ok.
-         */
-        $this->lastResponse = array();
-
-        do {
-            // blocking
-            $res = $this->_receive();
-
-            // we might need this later
-            $this->lastResponse[] = $res;
-
-            // returncode is always 3 digits at the beginning of the line
-            $errorcode = substr($res,0,3);
-            if ($errorcode === NULL || ( ($errorcode!=$val1) && ($errorcode!=$val2) && ($errorcode!=$val3)) ) {
-                throw new Zend_Mail_Transport_Exception($res);
-            }
-        } while($res[3]=='-');
-    }
-
-
-    /**
-     * Get a line from the stream. includes error checking and debugging
-     *
-     * @return string
-     * @throws Zend_Mail_Transport_Exception
-     */
-    protected function _receive()
-    {
-        $res = fgets($this->_con, 1024);
-
-        if ($res === false) {
-            throw new Zend_Mail_Transport_Exception('Could not read from SMTP server');
-        }
-
-        if (self::DEBUG) {
-            echo "R: $res<br>\n";
-        }
-
-        return $res;
-    }
-
-
-    /**
-     * Send the given string followed by a LINEEND to the server
-     *
-     * @param string $str
-     * @throws Zend_Mail_Transport_Exception
-     */
-    protected function _send($str)
-    {
-        $res = fwrite($this->_con, $str . $this->EOL);
-        if ($res === false) {
-            throw new Zend_Mail_Transport_Exception('Could not write to SMTP server');
-        }
-
-        if (self::DEBUG) {
-            echo "S: $str<br>\n";
-        }
-    }
-
-    /**
-     * Send an email
-     *
-     * @param array $to
+     * @return void
      */
     public function _sendMail()
     {
-        // Check if connection already present
-        $wasConnected = ($this->_con !== null);
-        if (!$wasConnected) {
-            // establish a connection
-            $this->connect();
+        // If sending multiple messages per session use existing adapter
+        if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
+            // Check if authentication is required and determine required class
+            $connectionClass = 'Zend_Mail_Protocol_Smtp';
+            if ($this->_auth) {
+                $connectionClass .= '_Auth_' . ucwords($this->_auth);
+            }           
+            Zend::loadClass($connectionClass);
+            $this->setConnection(new $connectionClass($this->_host, $this->_port, $this->_config));
+            $this->_connection->connect();
+            $this->_connection->helo($this->_name);
         } else {
-            // reset conection
-            $this->rset();
+            // Reset connection to ensure reliable transaction
+            $this->_connection->rset();
         }
 
-        try {
-            $this->mail_from($this->_mail->getReturnPath());
-            foreach ($this->_mail->getRecipients() as $recipient) {
-                $this->rcpt_to($recipient);
-            }
-            $this->data($this->header . $this->EOL . $this->body);
-        } catch (Zend_Mail_Transport_Exception $e) {
-            // remove connection if we made one
-            if (!$wasConnected) {
-                $this->disconnect();
-            }
+        // Set mail return path from sender email address
+        $this->_connection->mail($this->_mail->getReturnPath());
 
-            // rethrow
-            throw $e;
+        // Set recipient forward paths
+        foreach ($this->_mail->getRecipients() as $recipient) {
+            $this->_connection->rcpt($recipient);
         }
 
-        // remove connection if we made one
-        if(!$wasConnected) {
-            $this->disconnect();
-        }
+        // Issue DATA command to client
+        $this->_connection->data($this->header . $this->EOL . $this->body);
     }
-}
+

@@ -22,6 +22,7 @@ require_once 'Zend/Mail/Pop3Test.php';
 require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
 require_once 'Zend/Mail/MessageTest.php';
+require_once 'Zend/Mail/SmtpTest.php';
 
 class Zend_Mail_AllTests
 {
@@ -53,6 +54,9 @@ class Zend_Mail_AllTests
             }
             $suite->addTestSuite('Zend_Mail_MaildirTest');
             $suite->addTestSuite('Zend_Mail_MaildirFolderTest');
+        }
+        if (TESTS_ZEND_MAIL_SMTP_ENABLED) {
+            $suite->addTestSuite('Zend_Mail_SmtpTest');
         }
 
         return $suite;

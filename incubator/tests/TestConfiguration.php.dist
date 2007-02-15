@@ -12,20 +12,6 @@
  */
 
 /**
- * Zend_Mail_Transport_Smtp
- *
- * @todo TO be implemented
- */
-define('TESTS_ZEND_MAIL_SMTP_ENABLED', true);
-define('TESTS_ZEND_MAIL_SMTP_HOST', 'localhost');
-define('TESTS_ZEND_MAIL_SMTP_PORT', 25);
-define('TESTS_ZEND_MAIL_SMTP_USER', 'testuser');
-define('TESTS_ZEND_MAIL_SMTP_PASSWORD', 'testpassword');
-define('TESTS_ZEND_MAIL_SMTP_AUTH', false);
-// AUTH can be set to false or a string of AUTH method (e.g. LOGIN, PLAIN, CRAMMD5 or DIGESTMD5)
-
-
-/**
  * Zend_Rest_Client test
  *
  * Before enabling these tests, you must get relevant API keys
