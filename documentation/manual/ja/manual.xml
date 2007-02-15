@@ -218,6 +218,7 @@
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
+        &module_specs.Zend_Service_Akismet;
         &module_specs.Zend_Service_Amazon;
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
