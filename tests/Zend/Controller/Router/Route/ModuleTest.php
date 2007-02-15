@@ -37,7 +37,9 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
             'module'     => 'default'
         );
         
-        $this->route = new Zend_Controller_Router_Route_Module($defaults);
+        $request = $front->getRequest();
+        
+        $this->route = new Zend_Controller_Router_Route_Module($defaults, $dispatcher, $request);
     }
 
     public function testModuleMatch()

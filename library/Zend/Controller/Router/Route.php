@@ -48,7 +48,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     protected $_staticCount = 0;
     protected $_vars = array();
     protected $_params = array();
-    protected $_values = null;
+    protected $_values = array();
 
     /**
      * Prepares the route for mapping by splitting (exploding) it 
@@ -88,6 +88,22 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
     }
 
+    protected function _getWildcardData($parts, $unique) 
+    {
+        $pos = count($parts);
+        if ($pos % 2) {
+            $parts[] = null;
+        }
+        foreach(array_chunk($parts, 2) as $part) {
+            list($var, $value) = $part;
+            $var = urldecode($var);
+            if (!array_key_exists($var, $unique)) {
+                $this->_params[$var] = urldecode($value);
+                $unique[$var] = true;
+            }
+        }
+    }
+
     /**
      * Matches a user submitted path with parts defined by a map. Assigns and 
      * returns an array of variables on a successful match.  
@@ -121,18 +137,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 
                 if ($this->_parts[$pos]['regex'] == '\*') {
                     $parts = array_slice($path, $pos);
-                    $pos = count($parts);
-                    if ($pos % 2) {
-                        $parts[] = null;
-                    }
-                    foreach(array_chunk($parts, 2) as $part) {
-                        list($var, $value) = $part;
-                        $var = urldecode($var);
-                        if (!array_key_exists($var, $unique)) {
-                            $this->_params[$var] = urldecode($value);
-                            $unique[$var] = true;
-                        }
-                    }
+                    $this->_getWildcardData($parts, $unique);
                     break;
                 }
                 
@@ -148,7 +153,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 
                 if ($name !== null) {
                     // It's a variable. Setting a value
-                    $this->_params[$name] = $pathPart;
+                    $this->_values[$name] = $pathPart;
                     $unique[$name] = true;
                 } else {
                     $pathStaticCount++;
@@ -158,7 +163,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             
         }
         
-        $this->_values = $this->_params + $defaults;
+        $return = $this->_values + $this->_params + $this->_defaults;
 
         // Check if all static mappings have been met
         if ($this->_staticCount != $pathStaticCount) {
@@ -167,12 +172,12 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         
         // Check if all map variables have been initialized
         foreach ($this->_vars as $var) {
-            if (!array_key_exists($var, $this->_values)) {
+            if (!array_key_exists($var, $return)) {
                 return false;
             }
         }
 
-        return $this->_values;
+        return $return;
 
     }
 
@@ -187,10 +192,6 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         $url = array();
         
-        if (!$reset) {
-            $data += $this->_params;
-        }
-
         foreach ($this->_parts as $key => $part) {
             
             if (isset($part['name'])) {
@@ -200,6 +201,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     unset($data[$part['name']]);
                 } elseif (isset($this->_values[$part['name']])) {
                     $url[$key] = $this->_values[$part['name']];
+                } elseif (!$reset && isset($this->_params[$part['name']])) {
+                    $url[$key] = $this->_params[$part['name']];
                 } elseif (isset($this->_defaults[$part['name']])) {
                     $url[$key] = $this->_defaults[$part['name']];
                 } else

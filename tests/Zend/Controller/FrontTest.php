@@ -176,8 +176,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
+        $request = new Zend_Controller_Request_Http('http://example.com/index');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
 
@@ -189,9 +188,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch1()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
-        $request->setActionName('index');
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
 
@@ -203,9 +200,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch2()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
-        $request->setActionName('foo');
+        $request = new Zend_Controller_Request_Http('http://example.com/index/foo');
 
         try {
             $this->_controller->dispatch($request);
@@ -220,8 +215,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch3()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('baz');
+        $request = new Zend_Controller_Request_Http('http://example.com/baz');
 
         try {
             $this->_controller->dispatch($request);
@@ -251,9 +245,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch5()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
-        $request->setActionName('args');
+        $request = new Zend_Controller_Request_Http('http://example.com/index/args');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $this->_controller->setParam('foo', 'bar');
         $this->_controller->setParam('baz', 'bat');
@@ -406,18 +398,14 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 
     public function testRunStatically()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
-        $request->setActionName('index');
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
         $this->_controller->setRequest($request);
         Zend_Controller_Front::run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
 
     public function testRunDynamically()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('index');
-        $request->setActionName('index');
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
         $this->_controller->setRequest($request);
         $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
@@ -425,10 +413,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     public function testModulePathDispatched()
     {
         $this->_controller->addControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . '/Admin', 'admin');
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('foo')
-                ->setActionName('bar')
-                ->setModuleName('admin');
+        $request = new Zend_Controller_Request_Http('http://example.com/admin/foo/bar');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
 

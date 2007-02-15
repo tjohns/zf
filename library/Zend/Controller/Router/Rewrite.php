@@ -58,26 +58,18 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     protected $_currentRoute = null;
 
     /** 
-     * Get the route defaults (eg. controller, action names) out of the Dispatcher
-     */
-    protected function getRouteDefaults()
-    {
-        $dispatcher = $this->getFrontController()->getDispatcher();
-        return array(
-            'controller' => $dispatcher->getDefaultController(), 
-            'action'     => $dispatcher->getDefaultAction(),
-            'module'     => 'default'
-        );
-    }
-
-    /** 
      * Add default routes which are used to mimic basic router behaviour
      */
     protected function addDefaultRoutes()
     {
         if (!$this->hasRoute('default')) {
+
+            $dispatcher = $this->getFrontController()->getDispatcher();
+            $request = $this->getFrontController()->getRequest();
+
             require_once 'Zend/Controller/Router/Route/Module.php';
-            $compat = new Zend_Controller_Router_Route_Module();
+            $compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+            
             $this->_routes = array_merge(array('default' => $compat), $this->_routes);
         }
     }
@@ -249,9 +241,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         /** Find the matching route */
         foreach (array_reverse($this->_routes) as $name => $route) {
             if ($params = $route->match($pathInfo)) {
-                foreach ($params as $param => $value) {
-                    $request->setParam($param, $value);
-                }
+                $this->_setRequestParams($request, $params);
                 $this->_currentRoute = $name;
                 break;
             }
@@ -259,6 +249,25 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         
         return $request;
 
+    }
+    
+    protected function _setRequestParams($request, $params)
+    {
+        foreach ($params as $param => $value) {
+
+            $request->setParam($param, $value);
+            
+            if ($param == $request->getModuleKey()) {
+                $request->setModuleName($value);
+            }
+            if ($param == $request->getControllerKey()) {
+                $request->setControllerName($value);
+            }
+            if ($param == $request->getActionKey()) {
+                $request->setActionName($value);
+            }
+                     
+        }
     }
 
 }

@@ -160,7 +160,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $token = $this->_router->route($request);
 
         $this->assertSame('ctrl', $token->getControllerName());
-        $this->assertNull($token->getActionName());
+        $this->assertSame('defact', $token->getActionName());
     }
 
     public function testEmptyRoute()
@@ -229,9 +229,9 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/ctrl');
 
         $token = $this->_router->route($request);
-
+        
         $this->assertSame('ctrl', $token->getControllerName());
-        $this->assertNull($token->getActionName());
+        $this->assertSame('defact', $token->getActionName());
     }
 
     public function testFirstRouteMatched()
@@ -331,9 +331,9 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         
         $token = $this->_router->route($request);
 
-        $this->assertNull($token->getModuleName());
-        $this->assertNull($token->getControllerName());
-        $this->assertNull($token->getActionName());
+        $this->assertSame('default', $token->getModuleName());
+        $this->assertSame('defctrl', $token->getControllerName());
+        $this->assertSame('defact', $token->getActionName());
     }
     
     public function testDefaultRouteWithEmptyControllerAndAction()
@@ -347,8 +347,8 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $token = $this->_router->route($request);
 
         $this->assertSame('mod', $token->getModuleName());
-        $this->assertNull($token->getControllerName());
-        $this->assertNull($token->getActionName());
+        $this->assertSame('defctrl', $token->getControllerName());
+        $this->assertSame('defact', $token->getActionName());
     }
 }
 
