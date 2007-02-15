@@ -47,21 +47,21 @@ $select = $db->select();
         <programlisting role="php"><![CDATA[<?php
 	
 //
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
+// SELECT round_table.*
+// FROM `round_table` round_table
+// WHERE `noble_title` = 'Sir'
+// ORDER BY `first_name`
+// LIMIT 10 OFFSET 20
 //
 
 // 順に指定していくこともできますし、
-$select->from('round_table', '*');
+$select->from('round_table');
 $select->where('noble_title = ?', 'Sir');
 $select->order('first_name');
 $select->limit(10,20);
 
 // 一連の流れで指定することもできます
-$select->from('round_table', '*')
+$select->from('round_table')
        ->where('noble_title = ?', 'Sir')
        ->order('first_name')
        ->limit(10,20);
@@ -71,9 +71,12 @@ $sql = $select->__toString();
 $result = $db->fetchAll($sql);
 
 // 別のやり方として、$select オブジェクト自身を渡すこともできます。
-// Zend_Db_Adapter は、Zend_Db_Select オブジェクトの __toString()
-// をコールして、クエリ文字列を取得します。
 $result = $db->fetchAll($select);
+
+// もうひとつの方法は、$select オブジェクトから直接 Zend_Db_Statement
+// や PDOStatement を作成するものです。
+$stmt = $select->query();
+$result = $stmt->fetchAll();
 
 ?>]]></programlisting>
 
@@ -85,11 +88,11 @@ $result = $db->fetchAll($select);
         <programlisting role="php"><![CDATA[<?php
 	
 //
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
+// SELECT round_table.*
+// FROM `round_table` round_table
+// WHERE noble_title = 'Sir'
+// ORDER BY `first_name`
+// LIMIT 10 OFFSET 20
 //
 
 $select->from('round_table', '*')
@@ -121,19 +124,72 @@ $result = $db->fetchAll($select, $params);
 // $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
 $select = $db->select();
 
-// SELECT a, b, c FROM some_table
-$select->from('some_table', 'a, b, c');
-// 上と等価です
-$select->from('some_table', array('a', 'b', 'c');
+// SELECT some_table.`a`, some_table.`b`, some_table.`c`
+// FROM `some_table` some_table
 
-// SELECT bar.col FROM foo AS bar
-$select->from('foo AS bar', 'bar.col');
+$select->from('some_table', array('a', 'b', 'c'));
 
-// SELECT foo.col AS col1, bar.col AS col2 FROM foo, bar
-$select->from('foo', 'foo.col AS col1');
-$select->from('bar', 'bar.col AS col2');
+// SELECT bar.`col`
+// FROM `foo` bar
+
+$select->from(array('foo' => 'bar'), 'col');
 
 ?>]]></programlisting>
+
+        <para>
+            from() メソッドの二番目の引数は、
+            カラム名を表すスカラー値あるいは複数のカラム名の配列となります。
+            スカラーの値あるいは配列の要素は文字列で、
+            これがカラム名として解釈されます。そして、
+            クォートされてテーブルのエイリアスが前につけられます。
+            二番目の引数を省略した場合のデフォルトは <code>'*'</code>
+            となります。これはクォートされませんが、
+            前にテーブルのエイリアスがつなげられます。
+            このテーブルからは結果セットにカラムを取得したくない場合は、
+            空の <code>array()</code> を使用します。
+        </para>
+
+        <para>
+            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
+            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
+            現在はサポートしていません。配列形式を使用してください。
+        </para>
+
+        <para>
+            テーブルのエイリアスは、第二引数のすべての文字列要素に付加されます。
+            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
+            その文字列値をそのまま使用します。
+            クォート処理やテーブルエイリアスの付加は行いません。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select();
+
+// SELECT foo.col AS col1, bar.col AS col2
+// FROM foo, bar
+$select->from('foo', array(
+    new Zend_Db_Expr('foo.col AS col1'),
+    new Zend_Db_Expr('CURDATE()')
+);
+$select->from('bar', new Zend_Db_Expr('bar.col AS col2'));
+
+?>]]></programlisting>
+
+        <para>
+            連想配列を用いて、テーブルのエイリアスを指定します。
+            テーブル名がキー、そしてその値がエイリアスとなります。
+            連想配列ではなく通常の文字列としてエイリアスを指定した場合は、
+            Zend_Db_Select がテーブルエイリアスを作成します。
+            デフォルトでは、作成されるテーブルエイリアスはそのテーブル名と同じになります。
+            つまり、まるで SQL クエリを
+            "<code>SELECT foo.* FROM `foo` foo</code>"
+            のように書いたのと同じことになります。
+            同じテーブルを複数回使用した場合、たとえば自己結合などの場合は、
+            Zend_Db_Select は各テーブルに対して一意なエイリアスを宣言します。つまり
+            "<code>foo_1</code>"、"<code>foo_2</code>" といったようになります。
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.select.joincols">
@@ -152,20 +208,100 @@ $select->from('bar', 'bar.col AS col2');
 // $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
 $select = $db->select();
 
-//
 // SELECT foo.*, bar.*
-//     FROM foo
-//     JOIN bar ON foo.id = bar.id
-//
-$select->from('foo', '*');
-$select->join('bar', 'foo.id = bar.id', '*');
+// FROM `foo` foo
+// JOIN `bar` bar ON foo.id = bar.id
+
+$select->from('foo');
+$select->join('bar', 'foo.id = bar.id');
 
 ?>]]></programlisting>
 
         <para>
-            現在は、LEFT JOIN や RIGHT JOIN などの JOIN 構文のみをサポートしています。
-            将来のリリースでは、データベースに依存しない形式をサポートする予定です。
+            join() メソッドの最初の引数で、テーブルを指定します。
+            これは from() メソッドの最初の引数と同じ形式です。つまり
+            テーブル名を表す文字列、あるいはテーブル名とエイリアス名を
+            対応させた連想配列となります。
         </para>
+
+        <para>
+            join() メソッドの二番目の引数は、結合条件となる式です。
+            ここではテーブルのエイリアスを指定できます。ただ、
+            自分でエイリアスを指定しない限りは Zend_Db_Select
+            が自動的にエイリアスを作成することに注意しましょう。
+            結合条件を省略した場合は、CROSS JOIN
+            あるいはデカルト積と同等の扱いとなります。
+        </para>
+
+        <para>
+            join() メソッドの三番目の引数は、
+            結合するテーブルのカラムの中で select 結果に含めるものを指定します。
+            これは from() メソッドの二番目の引数と同じ形式です。つまり
+            カラム名を表すスカラー値あるいは複数のカラム名の配列となります。
+            各スカラー値は、文字列あるいは
+            Zend_Db_Expr 型のオブジェクトとなります。
+            この引数を省略した場合のデフォルトは <code>'*'</code> です。
+            このテーブルからは結果セットにカラムを取得したくない場合は、
+            空の <code>array()</code> を使用します。
+        </para>
+
+        <para>
+            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
+            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
+            現在はサポートしていません。配列形式を使用してください。
+        </para>
+
+        <para>
+            以下の結合形式をサポートしています。
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <command>INNER JOIN</command> は
+                    <code>join()</code> あるいは <code>joinInner()</code>
+                    メソッドで指定します。すべての RDBMS
+                    でこの結合形式をサポートしています。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <command>LEFT JOIN</command> は
+                    <code>joinLeft()</code> メソッドで指定します。
+                    すべての RDBMS でこの結合形式をサポートしています。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <command>RIGHT JOIN</command> は
+                    <code>joinRight()</code> メソッドで指定します。
+                    RDBMS によっては、この結合形式をサポートしていないものもあります。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <command>FULL JOIN</command> は
+                    <code>joinFull()</code> メソッドで指定します。
+                    RDBMS によっては、この結合形式をサポートしていないものもあります。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <command>CROSS JOIN</command> は
+                    <code>joinCross()</code> メソッドで指定します。
+                    結合条件パラメータには何も指定しません。
+                    RDBMS によっては、この結合形式をサポートしていないものもあります。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <command>NATURAL JOIN</command> は
+                    <code>joinNatural()</code> メソッドで指定します。
+                    結合条件パラメータには何も指定しません。
+                    自然結合とは、ふたつのテーブルの同名のカラムを連結するものです。
+                    NATURAL INNER JOIN のみをサポートしています。
+                </para>
+            </listitem>
+        </itemizedlist>
 
     </sect2>
 
@@ -190,26 +326,38 @@ $select->join('bar', 'foo.id = bar.id', '*');
 // $db オブジェクトを作成し、SELECT ツールを取得します
 $select = $db->select();
 
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     AND favorite_color = "yellow"
-//
-$select->from('round_table', '*');
-$select->where('noble_title = "Sir"'); // 値を埋め込む形式
+// SELECT r.*
+// FROM `round_table` r
+// WHERE noble_title = 'Sir'
+//   AND favorite_color = 'yellow'
+
+$select->from(array('round_table' => 'r'));
+$select->where("noble_title = 'Sir'"); // 値を埋め込む形式
 $select->where('favorite_color = ?', 'yellow'); // 値をクォートする形式
 
-//
-// SELECT *
-//     FROM foo
-//     WHERE bar = "baz"
-//     OR id IN("1", "2", "3")
-//
-$select->from('foo', '*');
-$select->where('bar = ?', 'baz');
-$select->orWhere('id IN(?)', array(1, 2, 3);
+// SELECT foo.*
+//     FROM `foo` foo
+//     WHERE bar = 'baz'
+//     OR id IN('1', '2', '3')
 
+$select->from('foo');
+$select->where('bar = ?', 'baz');
+$select->orWhere('id IN(?)', array(1, 2, 3));
+
+?>]]></programlisting>
+
+        <para>
+            Zend_Db_Select は、WHERE 句のカラムに対しては
+            クォートやエイリアスの連結を適用しません。
+            PHP の変数を WHERE 句の文字列として使用する場合は、
+            Zend_Db_Adapter の quoteIdentifier()
+            メソッドで無効な構文を防ぐようにしましょう。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+...
+$columnName = 'bar'; // あるいは、他の信頼できない入力元から設定します
+$whereExpr = $db->quoteIdentifier($columnName) . ' = ?';
+$select->where($whereExpr, 'baz');
 ?>]]></programlisting>
 
     </sect2>
@@ -227,22 +375,30 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
 // $db オブジェクトを作成し、SELECT ツールを取得します
 $select = $db->select();
 
-//
 // SELECT COUNT(id)
-//     FROM foo
-//     GROUP BY bar, baz
-//
-$select->from('foo', 'COUNT(id)');
+// FROM `foo` foo
+// GROUP BY `bar`, `baz`
+
+$select->from('foo', new Zend_Db_Expr('COUNT(id)'));
 $select->group('bar');
 $select->group('baz');
 
 // 上と等価な group() のコール方法
-$select->group('bar, baz');
-
-// もうひとつ、上と等価な group() のコール方法
 $select->group(array('bar', 'baz'));
 
 ?>]]></programlisting>
+
+        <para>
+            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
+            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
+            現在はサポートしていません。配列形式を使用してください。
+        </para>
+
+        <para>
+            group() の引数のすべての文字列に対してクォートが行われます。
+            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
+            文字列値をクォートせずにそのまま使用します。
+        </para>
 
     </sect2>
 
@@ -264,17 +420,31 @@ $select->group(array('bar', 'baz'));
 // $db オブジェクトを作成し、SELECT ツールを取得します
 $select = $db->select();
 
-//
 // SELECT COUNT(id) AS count_id
-//     FROM foo
-//     GROUP BY bar, baz
-//     HAVING count_id > "1"
-//
-$select->from('foo', 'COUNT(id) AS count_id');
-$select->group('bar, baz');
+//     FROM `foo` foo
+//     GROUP BY `bar`, `baz`
+//     HAVING count_id > '1'
+
+$select->from('foo', new Zend_Db_Expr('COUNT(id) AS count_id'));
+$select->group(array('bar', 'baz'));
 $select->having('count_id > ?', 1);
 
 ?>]]></programlisting>
+
+        <para>
+            Zend_Db_Select は、HAVING 句のカラムに対しては
+            クォートやエイリアスの連結を適用しません。
+            PHP の変数を HAVING 句の文字列として使用する場合は、
+            Zend_Db_Adapter の quoteIdentifier()
+            メソッドで無効な構文を防ぐようにしましょう。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+...
+$columnName = 'count_id'; // or set by an untrusted source
+$havingExpr = $db->quoteIdentifier($columnName) . ' > ?';
+$select->having($havingExpr, 1);
+?>]]></programlisting>
+
     </sect2>
 
     <sect2 id="zend.db.select.order">
@@ -290,21 +460,30 @@ $select->having('count_id > ?', 1);
 // $db オブジェクトを作成し、SELECT ツールを取得します
 $select = $db->select();
 
-//
-// SELECT * FROM round_table
-//     ORDER BY noble_title DESC, first_name ASC
-//
-$select->from('round_table', '*');
+// SELECT r.*
+// FROM `round_table` r
+// ORDER BY `noble_title` DESC, `first_name` ASC
+
+$select->from('round_table');
 $select->order('noble_title DESC');
 $select->order('first_name');
 
 // 上と等価な order() のコール方法
-$select->order('noble_title DESC, first_name');
-
-// もうひとつ、上と等価な order() のコール方法
 $select->order(array('noble_title DESC', 'first_name'));
 
 ?>]]></programlisting>
+
+        <para>
+            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
+            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
+            現在はサポートしていません。配列形式を使用してください。
+        </para>
+
+        <para>
+            order() の引数のすべての文字列に対してクォートが行われます。
+            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
+            文字列値をクォートせずにそのまま使用します。
+        </para>
 
     </sect2>
 
@@ -319,13 +498,14 @@ $select->order(array('noble_title DESC', 'first_name'));
         </para>
 
         <para>
-            その他のデータベース、例えば Microsoft SQL や Oracle
-            では、ちょっと面倒です。というのもこれらは LIMIT
-            句をサポートしていないのです。MS-SQL は TOP 句しかサポートしていませんし、
-            Oracle の場合は特別な形式のクエリを書かないと LIMIT
-            と同等の機能を実現できません。Zend_Db_Select の内部動作によって、
-            前述のオープンソースデータベースの LIMIT
-            機能と同等の動作をするように SELECT 文をその場で書き換えることができます。
+            その他のデータベースの中には、ちょっと面倒なものもあります。
+            というのも、これらは LIMIT 句をサポートしていないのです。
+            MS-SQL は TOP 句しかサポートしていませんし、
+            Microsoft SQL Server の場合は TOP 句を使用すると同じ結果が得られます。
+            Oracle や DB2 は、クエリを特別な形式に書き直して LIMIT
+            をエミュレートする必要があります。
+            Zend_Db_Select は、データベースアダプタにあわせて SELECT
+            文を適切に書き換え、LIMIT 機能を実現しています。
         </para>
 
         <para>
@@ -337,23 +517,22 @@ $select->order(array('noble_title DESC', 'first_name'));
 	
 // まずは単純な "LIMIT :count"
 $select = $db->select();
-$select->from('foo', '*');
+$select->from('foo');
 $select->order('id');
 $select->limit(10);
 
-//
 // MySQL/PostgreSQL/SQLite では、以下のように変換されます
 //
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10
+// SELECT foo.*
+// FROM "foo" foo
+// ORDER BY "id" ASC
+// LIMIT 10
 //
-// しかし Microsoft SQL では、このようになります
+// しかし Microsoft SQL Server では、このようになります
 //
-// SELECT TOP 10 * FROM FOO
-//     ORDER BY id ASC
-//
-//
+// SELECT TOP 10 foo.*
+// FROM [foo] foo
+// ORDER BY [id] ASC
 
 // 今度は、ちょっと複雑な "LIMIT :count OFFSET :offset"
 $select = $db->select();
@@ -361,24 +540,25 @@ $select->from('foo', '*');
 $select->order('id');
 $select->limit(10, 20);
 
-//
 // MySQL/PostgreSQL/SQLite では、以下のように変換されます
 //
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
+// SELECT foo.*
+// FROM "foo" foo
+// ORDER BY "id" ASC
+// LIMIT 10 OFFSET 20
 //
-// しかし Microsoft SQL では、オフセットはサポートされていないので
+// Microsoft SQL Server ではオフセットはサポートされていないので
 // このようになります
 //
 // SELECT * FROM (
 //     SELECT TOP 10 * FROM (
-//         SELECT TOP 30 * FROM foo ORDER BY id DESC
+//         SELECT TOP 30 *
+//         FROM [foo] foo
+//         ORDER BY [id] DESC
 //     ) ORDER BY id ASC
 // )
 //
 // Zend_Db_Adapter は、クエリの変換を自動的に行います。
-//
 
 ?>]]></programlisting>
 
@@ -399,21 +579,126 @@ $select->limit(10, 20);
 	
 // 基本的な select を作成します
 $select = $db->select();
-$select->from('foo', '*');
+$select->from('foo');
 $select->order('id');
 
 // そして、1 ページあたり 10 件とした場合の 3 ページ目のみを取得します
 $select->limitPage(3, 10);
 
-//
 // MySQL/PostgreSQL/SQLite では、以下のように変換されます
 //
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
-//
+// SELECT foo.*
+// FROM `foo` foo
+// ORDER BY `id` ASC
+// LIMIT 10 OFFSET 20
 
 ?>]]></programlisting>
+    </sect2>
+
+    <sect2>
+        <title>その他のメソッド</title>
+
+        <para>
+            distinct() メソッドは、DISTINCT
+            キーワードを SQL クエリに追加します。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// SELECT DISTINCT foo.`non_unique_column`
+// FROM `foo` foo
+
+$select = $db->select();
+$select->distinct();
+$select->from('foo', 'non_unique_column');
+
+?>]]></programlisting>
+
+        <para>
+            forUpdate() メソッドは、FOR UPDATE
+            キーワードを SQL クエリに追加します。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// SELECT FOR UPDATE foo.*
+// FROM `foo` foo
+
+$select = $db->select();
+$select->forUpdate();
+$select->from('foo');
+
+?>]]></programlisting>
+
+        <para>
+            query() メソッドは、
+            Zend_Db_Adapter の query() メソッドと似ています。
+            アダプタの型に応じて、Zend_Db_Statement 型
+            あるいは PDOStatement 型のオブジェクトを返します。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select();
+$select->from('foo');
+$stmt = $select->query();
+$result = $stmt->fetchAll();
+
+// これは、以下と同等です
+$select = $db->select();
+$select->from('foo');
+$stmt = $db->query($select);
+$result = $stmt->fetchAll();
+
+?>]]></programlisting>
+
+        <para>
+            getPart() メソッドは、SQL クエリの一部として指定したデータを返します。
+            The Zend_Db_Select クラスでは、SQL クエリの一部を表す際に
+            使用する定数が定義されています。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// SELECT foo.*
+// FROM `foo` foo
+// ORDER `keyColumn`
+
+$select = $db->select();
+$select->from('foo');
+$select->order('keyColumn');
+
+print_r( $select->getPart( Zend_Db_Select::ORDER ) );
+
+?>]]></programlisting>
+
+        <para>
+            reset() メソッドは、
+            SQL クエリの指定した部分をクリアします。
+            あるいは引数を省略した場合は、SQL
+            クエリのすべての部分をクリアします。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// SELECT foo.*
+// FROM `foo` foo
+// ORDER BY `column1`
+
+$select = $db->select();
+$select->from('foo');
+$select->order('column1');
+
+// 別の order 条件を指定します
+//
+// SELECT foo.*
+// FROM `foo` foo
+// ORDER BY `column2`
+
+// いったん削除してから定義しなおします
+$select->reset( Zend_Db_Select::ORDER );
+$select->order('column2');
+
+// クエリのすべての部分を削除します
+$select->reset();
+
+?>]]></programlisting>
+
     </sect2>
 
 </sect1>
