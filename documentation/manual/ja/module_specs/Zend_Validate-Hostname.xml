@@ -9,17 +9,14 @@
         そしてローカルホスト名 (たとえば localhost) の検証が可能です。
         デフォルトでは DNS ホスト名のみが有効となります。
     </para>
-    <para>
-        
-    </para>
-    
+
     <para>
         <emphasis role="strong">基本的な使用法</emphasis>
     </para>
-    
+
     <para>
        基本的な使用法は、以下のようになります。
-        
+
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname();
@@ -35,20 +32,20 @@ if ($validator->isValid($hostname)) {
         これは、ホスト名 <code>$hostname</code> を検証し、失敗した場合は
         その原因を表す便利なエラーメッセージを
         <code>$validator->getMessages()</code> で取得します。
-        
+
     </para>
-   
+
     <para>
         <emphasis role="strong">さまざまな形式のホスト名の検証</emphasis>
     </para>
-    
+
     <para>
         IP アドレスやローカルホスト名、あるいはその両方を正しいホスト名として認めたいこともあるでしょう。
         その場合は、Zend_Validate_Hostname のインスタンスを作成する際にパラメータを渡します。
         このパラメータには、どの形式のホスト名を許可するのかを表す整数値を指定しなければなりません。
         できるだけ、Zend_Validate_Hostname の定数を使用するようにしましょう。
     </para>
-    
+
     <para>
         Zend_Validate_Hostname の定数は次のとおりです。<code>ALLOW_DNS</code> は DNS ホスト名のみを許可し、
         <code>ALLOW_IP</code> は IP アドレスを許可します。また <code>ALLOW_LOCAL</code>
@@ -65,19 +62,19 @@ if ($validator->isValid($hostname)) {
         echo "$message\n";
     }
 }]]></programlisting>
-    </para>   
-    
+    </para>
+
     <para>
         <code>ALLOW_ALL</code> を使用してすべての形式を許可するほかに、
         これらの形式を組み合わせることもできます。
         たとえば、DNS およびローカルホスト名を許可するには、
         Zend_Validate_Hostname のインスタンスを次のように作成します。
-        <![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
 }]]></programlisting>
-    
-    </para>  
-    
+
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
