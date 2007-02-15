@@ -235,9 +235,6 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
                     // Keep label regex short to avoid issues with long patterns when matching IDN hostnames
                     $labelChars = 'a-zA-Z0-9';
                     $regexLabel = '/^[' . $labelChars . '\x2d]{1,63}$/';
-                    if ($utf8) {
-                        $regexLabel .= 'u';
-                    }
                     
                     // Check each hostname part
                     $valid = true;
