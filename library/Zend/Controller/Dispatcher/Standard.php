@@ -268,7 +268,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $this->_curModule    = 'default';
         $this->_curDirectory = $controllerDirs['default'];
         $module = $request->getModuleName();
-        if ($this->_isValidModule($module)) {
+        if ($this->isValidModule($module)) {
             $this->_curModule    = $module;
             $this->_curDirectory = $controllerDirs[$module];
         }
@@ -282,7 +282,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      * @param string $module 
      * @return bool
      */
-    protected function _isValidModule($module)
+    public function isValidModule($module)
     {
         $controllerDir = $this->getControllerDirectory();
         return ((null !== $module) && ('default' != $module) && isset($controllerDir[$module]));
@@ -312,7 +312,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $controllerDirs      = $this->getControllerDirectory();
         $this->_curModule    = 'default';
         $this->_curDirectory = $controllerDirs['default'];
-        if ($this->_isValidModule($module)) {
+        if ($this->isValidModule($module)) {
             $moduleDir = $controllerDirs[$module];
             $fileSpec  = $moduleDir . DIRECTORY_SEPARATOR . $this->classToFilename($default);
             if (Zend::isReadable($fileSpec)) {
