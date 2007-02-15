@@ -83,7 +83,6 @@ class Zend_Auth_Storage_Session implements Zend_Auth_Storage_Interface
         $this->_namespace = $namespace;
         $this->_member    = $member;
         $this->_session   = new Zend_Session_Namespace($this->_namespace);
-        $this->clear();
     }
 
     /**
@@ -113,7 +112,7 @@ class Zend_Auth_Storage_Session implements Zend_Auth_Storage_Interface
      */
     public function isEmpty()
     {
-        return null === $this->_session->{$this->_member};
+        return !isset($this->_session->{$this->_member});
     }
 
     /**
@@ -144,6 +143,6 @@ class Zend_Auth_Storage_Session implements Zend_Auth_Storage_Interface
      */
     public function clear()
     {
-        $this->_session->{$this->_member} = null;
+        unset($this->_session->{$this->_member});
     }
 }
