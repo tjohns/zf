@@ -56,7 +56,7 @@ Zend_Session::start();
                     </listitem>
                     <listitem>
                         <para>
-                            在需要使用会话的页面请求中，首次调用<code> new Zend_Session_Namespace()之前调用<code>Zend_Session::start()</code>。
+                            在需要使用会话的页面请求中，首次调用<code>new Zend_Session_Namespace()</code>之前调用<code>Zend_Session::start()</code>。
                         </para>
                     </listitem>
                     <listitem>
@@ -178,7 +178,7 @@ else {
         </para>
 
         <para>
-            当你构造第一个<code>Zend_Session_Namespace实例并把它绑定到一个具体的命名空间上时，你可以指出不允许在该命名空间下构造更多的<code>Zend_Session_Namespace实例。因此，任何试图再次构造该命名空间下的<code>Zend_Session_Namespace</code>实例都将抛出一个异常。这样的行为是可选的，且不是默认的行为，是留给喜欢为每个命名空间传递一个单一实例的人用的。这增强了保护，免受来自其他组件的非法变更，因为他们很难访问。然而，限制一个命名空间只能有一个实例可能会导致编写更多的代码或使得代码复杂化，同时在第一个实例创建后，将不能调用<code>$aNamespace = new Zend_Session_Namespace('aNamespace');</code>，就像下面例子中所述的：
+            当你构造第一个<code>Zend_Session_Namespace</code>实例并把它绑定到一个具体的命名空间上时，你可以指出不允许在该命名空间下构造更多的<code>Zend_Session_Namespace</code>实例。因此，任何试图再次构造该命名空间下的<code>Zend_Session_Namespace</code>实例都将抛出一个异常。这样的行为是可选的，且不是默认的行为，是留给喜欢为每个命名空间传递一个单一实例的人用的。这增强了保护，免受来自其他组件的非法变更，因为他们很难访问。然而，限制一个命名空间只能有一个实例可能会导致编写更多的代码或使得代码复杂化，同时在第一个实例创建后，将不能调用<code>$aNamespace = new Zend_Session_Namespace('aNamespace');</code>，就像下面例子中所述的：
         </para>
 
         <example>
@@ -255,8 +255,6 @@ else {
         </example>
 
     </sect2>
-
-    <sect2 id="zend.session.auth">
 
     <sect2 id="zend.session.auth">
 
