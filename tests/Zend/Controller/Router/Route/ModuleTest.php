@@ -23,11 +23,21 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
     {
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
-        $front->getDispatcher()->setControllerDirectory(array(
+
+        $dispatcher = $front->getDispatcher();
+        
+        $dispatcher->setControllerDirectory(array(
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin',
         ));
-        $this->route = new Zend_Controller_Router_Route_Module();
+        
+        $defaults = array(
+            'controller' => 'defctrl', 
+            'action'     => 'defact',
+            'module'     => 'default'
+        );
+        
+        $this->route = new Zend_Controller_Router_Route_Module($defaults);
     }
 
     public function testModuleMatch()
@@ -115,7 +125,7 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
             'foo'    => 'bar'
         );
         $url = $this->route->assemble($params);
-        $this->assertTrue(empty($url));
+        $this->assertEquals('defctrl/act/foo/bar', $url);
     }
 
     public function testAssembleControllerOnly()
@@ -126,6 +136,7 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
             'controller' => 'con'
         );
         $url = $this->route->assemble($params);
+        
         $this->assertEquals('con/act/foo/bar', $url);
     }
 
@@ -141,7 +152,7 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('mod/con/act/foo/bar', $url);
     }
 
-    public function testAssembleModuleNoController()
+    public function testAssembleNoController()
     {
         $params = array(
             'foo'        => 'bar',
@@ -149,7 +160,92 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
             'module'     => 'mod'
         );
         $url = $this->route->assemble($params);
-        $this->assertEquals('mod', $url);
+        $this->assertEquals('mod/defctrl/act/foo/bar', $url);
+    }
+
+    public function testAssembleNoAction()
+    {
+        $params = array(
+            'module'     => 'mod',
+            'controller' => 'ctrl'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('mod/ctrl', $url);
+    }
+
+    public function testAssembleNoActionWithParams()
+    {
+        $params = array(
+            'foo'		 => 'bar',
+            'module'     => 'mod',
+            'controller' => 'ctrl'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('mod/ctrl/defact/foo/bar', $url);
+    }
+
+    public function testAssembleNoModuleOrControllerMatched()
+    {
+        $this->route->match('');
+        
+        $params = array(
+            'action' => 'act',
+            'foo'    => 'bar'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('defctrl/act/foo/bar', $url);
+    }
+    
+    public function testAssembleControllerOnlyMatched()
+    {
+        $this->route->match('ctrl');
+        
+        $params = array(
+            'foo'        => 'bar',
+            'action'     => 'act',
+            'controller' => 'con'
+        );
+        $url = $this->route->assemble($params);
+        
+        $this->assertEquals('con/act/foo/bar', $url);
+    }
+
+    public function testAssembleModuleAndControllerMatched()
+    {
+        $this->route->match('mod/ctrl');
+        
+        $params = array(
+            'foo'        => 'bar',
+            'action'     => 'act',
+            'module'     => 'm'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('m/ctrl/act/foo/bar', $url);
+    }
+
+    public function testAssembleNoControllerMatched()
+    {
+        $this->route->match('mod');
+        
+        $params = array(
+            'foo'        => 'bar',
+            'action'     => 'act',
+            'module'     => 'mod'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('mod/defctrl/act/foo/bar', $url);
+    }
+
+    public function testAssembleNoActionMatched()
+    {
+        $this->route->match('mod/ctrl');
+        
+        $params = array(
+            'module'     => 'def',
+            'controller' => 'con'
+        );
+        $url = $this->route->assemble($params);
+        $this->assertEquals('def/con', $url);
     }
 
 }
