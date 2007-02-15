@@ -1,19 +1,17 @@
 <sect1 id="zend.validate.validating_email_addresses">
 
-    <title>Validating Email Addresses</title>
+    <title>校验 Email 地址</title>
 
     <para>
-        Zend_Validate_Email allows you to validate an email address. The validator first splits the email 
-        address on local-part @ hostname and attempts to match these against known specifications for 
-        email addresses and hostnames.
+        Zend_Validate_Email允许你校验一个email地址。首先校验器把email地址分成local-part和@hostname并试图按照email地址和主机名的规范来匹配它。
     </para>
     
     <para>
-        <emphasis role="strong">Basic usage</emphasis>
+        <emphasis role="strong">基本用法</emphasis>
     </para>
     
     <para>
-        A basic example of usage is below:
+        一个基本用法的例子如下：
         
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
@@ -27,38 +25,27 @@ if ($validator->isValid($email)) {
     }
 }]]></programlisting>
 
-        This will match the email address <code>$email</code> and on failure populate 
-        <code>$validator->getMessages()</code> with useful error messages.
-        
+        这个例子匹配email地址<code>$email</code>并在匹配失败的时候用<code>$validator->getMessages()</code>来获得有用的错误信息。
+                
     </para>
     
     
     <para>
-        <emphasis role="strong">Complex local parts</emphasis>
+        <emphasis role="strong">复杂的local parts</emphasis>
     </para>    
     
     <para>
-        Zend_Validate_Email will match any valid email address according to RFC2822. For example, 
-        valid emails include <code>bob@domain.com</code>, <code>bob+jones@domain.us</code>, 
-        <code>"bob@jones"@domain.com</code> and <code>"bob jones"@domain.com</code>
-        
-        Some obsolete email formats will not currently validate (i.e. carriage returns or a 
-        "\" character in an email address).
+        Zend_Validate_Email根据RFC2822l来匹配任何有效的email地址。例如，有效的email地址包括<code>bob@domain.com</code>, <code>bob+jones@domain.us</code>, <code>"bob@jones"@domain.com</code> 和 <code>"bob jones"@domain.com</code>。一些过时的email格式目前不再校验（例如email地址中的回车符或"\"符）。
     </para>
     
     <para>
-        <emphasis role="strong">Validating different types of hostnames</emphasis>
+        <emphasis role="strong">校验不同类型的主机名</emphasis>
     </para>
     
     <para>
-        The hostname part of an email address is validated against Zend_Validate_Hostname. By default 
-        only DNS hostnames of the form <code>domain.com</code> are accepted, though if you wish you 
-        can accept IP addresses and Local hostnames too. 
-        
-        To do this you need to instantiate Zend_Validate_EmailAddress passing a parameter to indicate
-        the type of hostnames you want to accept. More details are included in Zend_Validate_Hostname 
-        though an example of how to accept both DNS and Local hostnames appears below:
-        
+        Email地址中的主机名部分依靠Zend_Validate_Hostname来校验。尽管你希望IP地址和本地主机名也被接受，但缺省地只有像<code>domain.com</code>格式的DNS主机名被接受。
+        当然如果你想如愿，需要实例化Zend_Validate_EmailAddress并传递一个参数来指明哪种主机名你想接受。更多的细节包含在Zend_Validate_Hostname中。
+        下面的例子显示如何同时接受DNS和本地主机名：
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);

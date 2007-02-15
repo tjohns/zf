@@ -1,20 +1,17 @@
 <sect1 id="zend.validate.validating_hostnames">
 
-    <title>Validating Hostnames</title>
+    <title>校验主机名</title>
 
     <para>
-        Zend_Validate_Hostname allows you to validate a hostname against a set of known specifications.
-        It is possible to check for three different types of hostnames: a DNS Hostname (i.e.
-        domain.com), IP address (i.e. 1.2.3.4), and Local hostnames (i.e. localhost). By default only
-        DNS hostnames are matched.
+        Zend_Validate_Hostname允许你根据一组已知的规范来校验主机名。它检查三种不同的主机名：DNS主机名（例如domain.com），IP地址（例如1.2.3.4），和本地主机名（例如localhost）。缺省地，只有DNS主机名被匹配。
     </para>
 
     <para>
-        <emphasis role="strong">Basic usage</emphasis>
+        <emphasis role="strong">基本用法</emphasis>
     </para>
 
     <para>
-        A basic example of usage is below:
+        一个基本用法的例子如下：
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
@@ -28,27 +25,22 @@ if ($validator->isValid($hostname)) {
     }
 }]]></programlisting>
 
-        This will match the hostname <code>$hostname</code> and on failure populate
-        <code>$validator->getMessages()</code> with useful error messages.
+        这个例子匹配主机名<code>$hostname</code>并在匹配失败的时候用<code>$validator->getMessages()</code>来获得有用的错误信息。
 
     </para>
 
     <para>
-        <emphasis role="strong">Validating different types of hostnames</emphasis>
+        <emphasis role="strong">校验不同类型的主机名</emphasis>
     </para>
 
     <para>
-        You may find you also want to match IP addresses, Local hostnames, or a combination of all
-        allowed types. This can be done by passing a parameter to Zend_Validate_Hostname when you
-        instantiate it. The paramter should be an integer which determines what types of hostnames
-        are allowed. You are encouraged to use the Zend_Validate_Hostname constants to do this.
+        你可能发现你也想匹配IP地址，本地主机名，或者是所有允许类型的组合。这个可以在当你实例化它的时候通过传递参数给Zend_Validate_Hostname来实现。 参数应该是一个整型数，它来决定哪种主机名被允许。我们鼓励你使用常量。
     </para>
 
     <para>
-        The Zend_Validate_Hostname constants are: <code>ALLOW_DNS</code> to allow only DNS hostnames,
-        <code>ALLOW_IP</code> to allow IP addresses, <code>ALLOW_LOCAL</code> to allow local network
-        names, and <code>ALLOW_ALL</code> to allow all three types. To just check for IP addresses
-        you can use the example below:
+        Zend_Validate_Hostname 常量是： <code>ALLOW_DNS</code> 允许DNS主机名，
+        <code>ALLOW_IP</code> 允许IP地址， <code>ALLOW_LOCAL</code> 允许本地网络名，和<code>ALLOW_ALL</code> 允许所有三种类型。 你可以用下面的例子仅仅检查IP地址：
+        
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
@@ -63,11 +55,9 @@ if ($validator->isValid($hostname)) {
     </para>
 
     <para>
-        As well as using <code>ALLOW_ALL</code> to accept all hostnames types you can combine
-        these types to allow for combinations. For example, to accept DNS and Local hostnames
-        instantiate your Zend_Validate_Hostname object as so:
+        你可以用这些类型的组合，也可以用<code>ALLOW_ALL</code>来接受所有主机名类型。例如，你可以通过如下例子实例化Zend_Validate_Hostname对象来接受DNS和本地主机名:
         <programlisting role="php"><![CDATA[<?php
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 }]]></programlisting>
 
     </para>
