@@ -39,23 +39,30 @@ class Zend_View_Helper_Url {
      * 
      * @return string Url for the link href attribute.
      */
-    public function url($urlOptions = array(), $name = null)
+    public function url($urlOptions = array(), $name = null, $reset = false)
     {
         
         $ctrl = Zend_Controller_Front::getInstance();
+        
         $router = $ctrl->getRouter();
         
         if (empty($name)) {
-            $route = $router->getCurrentRoute();
-        } else {
-            $route = $router->getRoute($name);
-        }
+            try {
+                $name = $router->getCurrentRouteName();
+            } catch (Zend_Controller_Router_Exception $e) {
+                if ($router->hasRoute('default')) {
+                    $name = 'default';
+                }
+            }
+        } 
+
+        $route = $router->getRoute($name);
         
         $request = $ctrl->getRequest();
         
         $url = rtrim($request->getBaseUrl(), '/') . '/';
-        $url .= $route->assemble($urlOptions);
-         
+        $url .= $route->assemble($urlOptions, $reset);
+        
         return $url;
         
     }
