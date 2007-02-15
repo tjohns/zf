@@ -105,6 +105,8 @@
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
+        &module_specs.Zend_Filter-FilterChains;
+        &module_specs.Zend_Filter-WritingFilters;
         &module_specs.Zend_Filter_Input;
     </chapter>
     <chapter id="zend.gdata">
@@ -226,6 +228,12 @@
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
         &module_specs.Zend_Uri;
+    </chapter>
+    <chapter id="zend.validate">
+        <title>Zend_Validate</title>
+        &module_specs.Zend_Validate;
+        &module_specs.Zend_Validate-ValidatorChains;
+        &module_specs.Zend_Validate-WritingValidators;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
