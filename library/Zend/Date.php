@@ -1485,8 +1485,6 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $year - $date;
                         $calc = 'set';
                     }
-print "\nOLD:$date";
-print "\nNEW:$year";
                     return $this->_assign($calc, $this->mktime(0, 0, 0, $month, $day, intval($date), true),
                                                  $this->mktime(0, 0, 0, $month, $day, $year,         true));
                 }
