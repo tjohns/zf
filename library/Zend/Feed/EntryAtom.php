@@ -72,18 +72,28 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
 
         // DELETE
         $client = Zend_Feed::getHttpClient();
-        $client->setUri($deleteUri);
-        if (Zend_Feed::getHttpMethodOverride()) {
-            $client->setHeader('X-HTTP-Method-Override', 'DELETE');
-            $response = $client->request('POST');
-        } else {
-            $response = $client->request('DELETE');
-        }
-        if (!($response->getStatus() >= 200 && $response->getStatus() <= 299)) {
-            throw new Zend_Feed_Exception('Expected response code 2xx, got ' . $response->getStatus());
-        }
-
-        return true;
+        do {
+            $client->setUri($deleteUri);
+            if (Zend_Feed::getHttpMethodOverride()) {
+                $client->setHeader('X-HTTP-Method-Override', 'DELETE');
+                $response = $client->request('POST');
+            } else {
+                $response = $client->request('DELETE');
+            }
+            $httpStatus = $response->getStatus();
+            switch ((int) $httpStatus / 100) {
+                // Success
+                case 2:
+                    return true;
+                // Redirect
+                case 3:
+                    $deleteUri = $response->getHeader('Location');
+                    continue;
+                // Error
+                default:
+                    throw new Zend_Feed_Exception("Expected response code 2xx, got $httpStatus");
+            }
+        } while (true);
     }
 
 
