@@ -4,7 +4,14 @@
 
     <para>
         <code>Zend_Locale_Format</code> provides several methods for working with dates and times to help convert and
-        normalize between different formats for different locales. Use <code>Zend_Date</code> for manipulating dates.
+        normalize between different formats for different locales. Use <code>Zend_Date</code> for manipulating dates,
+        and working with date strings that already conform to
+        <link linkend="zend.date.constants">one of the many internationally recognized standard formats, or one of the localized date formats supported by <code>Zend_Date</code>
+        </link>
+        . Using an existing, pre-defined format offers advantages, including the use of well-tested code, and the
+        assurance of some degree of portability and interoperability (depending on the standard used). The examples
+        below do not follow these recommendations, since using non-standard date formats would needlessly increase the
+        difficulty of understanding these examples.
     </para>
 
     <sect2 id="zend.locale.date.normalize">
@@ -94,6 +101,7 @@
                     </row>
                     <row>
                         <entry>y</entry>
+                        <entry>year</entry>
                         <entry>integer</entry>
                         <entry>no limit</entry>
                         <entry>PHP integer's maximum</entry>
@@ -129,6 +137,7 @@
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
+$dateObject = Zend_Date('13.04.2006', 'dd.MM.yyyy'); // creates a Zend_Date object for this date
 
 print_r($date); // outputs:
 
