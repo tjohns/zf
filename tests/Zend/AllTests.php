@@ -23,6 +23,7 @@ require_once 'Zend/JsonTest.php';
 require_once 'Zend/LocaleTest.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/MailTest.php';
+require_once 'Zend/Mail/AllTests.php';
 require_once 'Zend/Measure/AllTests.php';
 require_once 'Zend/MimeTest.php';
 require_once 'Zend/Mime/AllTests.php';
@@ -66,6 +67,8 @@ class Zend_AllTests
         $suite->addTest(Zend_Gdata_AllTests::suite());
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
+        $suite->addTestSuite('Zend_MailTest');
+        $suite->addTest(Zend_Mail_AllTests::suite());
         $suite->addTest(Zend_Measure_AllTests::suite());
         $suite->addTestSuite('Zend_MimeTest');
         $suite->addTest(Zend_Mime_AllTests::suite());

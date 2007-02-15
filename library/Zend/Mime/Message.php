@@ -36,7 +36,8 @@ require_once 'Zend/Mime/Part.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mime_Message {
+class Zend_Mime_Message
+{
 
     protected $_parts = array();
     protected $_mime = null;
@@ -240,42 +241,10 @@ class Zend_Mime_Message {
      */
     public static function createFromMessage($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
-        $partsStr = self::_disassembleMime($message, $boundary);
-        if (count($partsStr)<=0) return null;
+        $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary, $EOL);
 
         $res = new Zend_Mime_Message();
-        foreach($partsStr as $part) {
-            // separate header and body
-            $header = true;  // expecting header lines first
-            $headersfound = array();
-            $body = '';
-            $lastheader = '';
-            $lines = explode("\n", $part);
-            
-            // read line by line
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if ($header) {
-                    if ($line == '') {
-                        $header=false;
-                    } elseif (strpos($line, ':')) {
-                        list($key, $value) = explode(':', $line, 2);
-                        $headersfound[trim($key)] = trim($value);
-                        $lastheader = trim($key);
-                    } else {
-                        if ($lastheader!='') {
-                            $headersfound[$lastheader] .= ' '.trim($line);
-                        } else {
-                            // headers do not start with an ordinary header line?
-                            // then assume no headers at all
-                            $header = false; 
-                        }
-                    }
-                } else {
-                    $body .= $line . $EOL;
-                }
-            }
-
+        foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
             $newPart = new Zend_Mime_Part($body);
             foreach ($headersfound as $key => $value) {
@@ -299,7 +268,7 @@ class Zend_Mime_Message {
                         $newPart->description = $value;
                         break;
                     default:
-                        throw new Zend_Exception('Unknown header ignored for MimePart:'.$key);
+                        throw new Zend_Exception('Unknown header ignored for MimePart:' . $key);
                 }
             }
             $res->addPart($newPart);
