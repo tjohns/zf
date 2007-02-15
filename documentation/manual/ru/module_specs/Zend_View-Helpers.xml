@@ -39,7 +39,7 @@
         <para>
             <code>Zend_View</code> снабжен начальным набором вспомогательных
             классов, все они имеют отношение к генерации элементов форм.
-            Каждый из них автоматически выполняет соответствующую экранизацию
+            Каждый из них автоматически выполняет соответствующее экранирование
             выходных данных. Это:   
 <!--
             Zend_View comes with an initial set of helper classes, all of
@@ -372,7 +372,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             <listitem><para>
                 Обычно класс не должен выполнять вывод, вместо этого
                 он должен возвращать значение для вывода. Возвращаемое значение
-                должно быть экранизировано должным образом. 
+                должно быть экранировано должным образом. 
 <!--
                 In general, the class should not echo or print or otherwise
                 generate output.  Instead, it should return values to be

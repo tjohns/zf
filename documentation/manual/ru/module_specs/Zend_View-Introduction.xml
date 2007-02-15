@@ -6,8 +6,7 @@
         <code>Zend_View</code> является классом для работы с частью view (вид)
         паттерна MVC (model-view-controller). То есть он предназначен для
         того, чтобы помочь держать скрипты видов отдельно от
-        скриптов модели и контроллера. Он предоставляет систему вспомогательных классов,
-        фильтрации вывода и экранизации переменных.
+        скриптов модели и контроллера. Он предоставляет систему вспомогательных классов, фильтрации вывода и экранирования переменных.
 <!--
         Zend_View is a class for working with the "view" portion of
         the model-view-controller pattern.  That is, it exists to
@@ -147,7 +146,7 @@ echo $view->render('booklist.php');
         
         <para>
             Обратите внимание, что мы используем метод <code>escape()</code>
-            для экранизации переменных.
+            для экранирования переменных.
 <!--
             Note how we use the "escape()" method to apply output
             escaping to variables.
