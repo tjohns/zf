@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.validator_chains">
+<sect1 id="zend.validate.validating_email_addresses">
 
     <title>メールアドレスの検証</title>
 
@@ -68,7 +68,7 @@ if ($validator->isValid($email)) {
         
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS + Zend_Validate_Hostname::ALLOW_LOCAL);
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // メールアドレスは正しい形式のようです
 } else {
