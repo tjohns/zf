@@ -48,6 +48,11 @@
         &module_specs.Zend_Acl-Refining;
         &module_specs.Zend_Acl-Advanced;
     </chapter>
+    <chapter id="zend.auth">
+        <title>Zend_Auth</title>
+        &module_specs.Zend_Auth;
+        &module_specs.Zend_Auth_Adapter_Digest;
+    </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
         &module_specs.Zend_Cache-Introduction;
