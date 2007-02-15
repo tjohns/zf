@@ -72,7 +72,7 @@ Zend_Controller_Front::run('/path/to/controllers');
 
             <listitem>
                 <para>
-                    Zmieniłi się argumenty metody
+                    Zmieniły się argumenty metody
                     <code>Zend_Controller_Action::_forward()</code>. Sygnatura
                     wygląda teraz następująco:
                 </para>
@@ -90,7 +90,7 @@ final protected function _forward($action, $controller = null, $module = null, a
                     tablicy <code>$params</code> będzie dołączony do obiektu
                     żądania. Jeśli nie potrzebujesz określić kontrolera lub 
                     modułu, ale potrzebujesz przekazać parametry, po prostu
-                    określij te wartości jako null.
+                    określ te wartości jako null.
                 </para>
             </listitem>
         </itemizedlist>
@@ -100,8 +100,8 @@ final protected function _forward($action, $controller = null, $module = null, a
         <title>Migracja z wersji 0.2.0 lub z poprzednich do 0.6.0</title>
 
         <para>
-            Najbardziej podstawowe użycie komponentów MVC nie zmieniło się; 
-            możesz nadal zrobić jak poniżej:
+            Podstawowy sposób korzystania z komponentów MVC nie zmienił się; 
+            nadal możesz użyć poniższego kodu:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -138,7 +138,7 @@ echo $ctrl->dispatch();
             i nagłówków. To pozwala na bardziej elastyczne zmiany formatu danych
             wyjściowych (na przykład JSON lub XML zamiast XHTML) w twoich
             aplikacjach. Domyślnie metoda <code>dispatch()</code> zrenderuje
-            całą odpowiedź, wyśle nagłówki i cała zawartość. Możesz także
+            całą odpowiedź, wyśle nagłówki i całą zawartość. Możesz także
             użyć kontrolera frontowego aby zwrócił zawartość za pomocą metody
             <code>returnResponse()</code>, a potem zrenderować odpowiedź używając
             twojej własnej logiki. Przyszłe wersje kontrolera frontowego mogą 
@@ -152,8 +152,8 @@ echo $ctrl->dispatch();
         </para>
 
         <para>
-            Główne zmiany na które będziesz musiał uważać znajdziesz gdy będziesz
-            tworzył klasy pochodne różnych kompnentów. Kluczowe zmiany to:
+            Główne zmiany, na które musisz uważać, nastąpiły przy tworzeniu klas 
+            pochodnych komponentów. Te zmiany to:
         </para>
 
         <itemizedlist>
@@ -161,8 +161,8 @@ echo $ctrl->dispatch();
                 <para>
                     <code>Zend_Controller_Front::dispatch()</code> domyślnie
                     łapie wyjątki w obiekcie odpowiedzi i nie renderuje ich
-                    aby zapobiec wyświetleniu ważnych informacji systemowych.
-                    Możesz nadpisać to na kilka sposobów:
+                    aby zapobiec wyświetlaniu ważnych informacji systemowych.
+                    Możesz zmienić to zachowanie na kilka sposobów:
                 </para>
 
                 <itemizedlist>
@@ -198,13 +198,13 @@ echo $response;
 
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
-                teraz przyjmuje i zwraca obiekt <xref linkend="zend.controller.overview.request" />
-                zamiast tokena dispatchera.
+                zamiast tokena dispatchera przyjmuje i zwraca teraz 
+                obiekt <xref linkend="zend.controller.overview.request" />.
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
-                teraz przyjmuje i zwraca obiekt <xref linkend="zend.controller.overview.request" />
+                przyjmuje i zwraca obiekt <xref linkend="zend.controller.overview.request" />
                 zamiast tokena dispatchera.
             </para></listitem>
 
@@ -227,7 +227,7 @@ echo $response;
                     </para></listitem>
 
                     <listitem><para>
-                        <code>run()</code> nie jest już zdefiniowana jako finalna, 
+                        Metoda <code>run()</code> nie jest już zdefiniowana jako finalna, 
                         ale nie jest też już używana przez kontroler frontowy; 
                         Jej jedynym celem jest użycie klasy jako kontrolera strony.
                         Przyjmuje ona teraz dwa opcjonalne argumenty, 
@@ -316,7 +316,7 @@ public function __call($method, $args)
 
             <listitem><para>
                 Akcja <code>Zend_Controller_RewriteRouter::setRewriteBase()</code>
-                została usunięta. Zamiast niej użyj 
+                została usunięta. W zamian użyj 
                 <code>Zend_Controller_Front::setBaseUrl()</code> 
                 (lub Zend_Controller_Request_Http::setBaseUrl(), jeśli używasz
                 tej klasy).
