@@ -56,12 +56,8 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     const ALLOW_ALL   = 7;
 
     /**
-     * Default regular expression for Internet domain name validation
-     */
-    const REGEX_DNS_DEFAULT = '/^(?:[^\W_]((?:[^\W_]|-){0,61}[^\W_])?\.)+[a-zA-Z]{2,6}\.?$/';
-
-    /**
      * Default regular expression for local network name validation
+     * @todo 0.9 Check allowed characters for a local hostname and possibly deprecate this constant
      */
     const REGEX_LOCAL_DEFAULT = '/^(?:[^\W_](?:[^\W_]|-){0,61}[^\W_]\.)*(?:[^\W_](?:[^\W_]|-){0,61}[^\W_])\.?$/';
 
@@ -77,8 +73,7 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
      *
      * @var array
      */
-    protected $_regex = array(
-        'dns'   => self::REGEX_DNS_DEFAULT,
+     protected $_regex = array(
         'local' => self::REGEX_LOCAL_DEFAULT
         );
 
@@ -90,12 +85,47 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     protected $_messages = array();
 
     /**
+     * Array of valid top-level-domains
+     *
+     * @var array
+     * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
+     */
+    protected $_validTlds = array(
+        'ac', 'ad', 'ae', 'aero', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
+        'aq', 'ar', 'arpa', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb',
+        'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'biz', 'bj', 'bm', 'bn', 'bo',
+        'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cat', 'cc', 'cd',
+        'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'com', 'coop',
+        'cr', 'cu', 'cv', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm', 'do',
+        'dz', 'ec', 'edu', 'ee', 'eg', 'er', 'es', 'et', 'eu', 'fi', 'fj',
+        'fk', 'fm', 'fo', 'fr', 'ga', 'gb', 'gd', 'ge', 'gf', 'gg', 'gh',
+        'gi', 'gl', 'gm', 'gn', 'gov', 'gp', 'gq', 'gr', 'gs', 'gt', 'gu',
+        'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu', 'id', 'ie', 'il',
+        'im', 'in', 'info', 'int', 'io', 'iq', 'ir', 'is', 'it', 'je', 'jm',
+        'jo', 'jobs', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn', 'kr', 'kw',
+        'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk', 'lr', 'ls', 'lt', 'lu',
+        'lv', 'ly', 'ma', 'mc', 'md', 'mg', 'mh', 'mil', 'mk', 'ml', 'mm',
+        'mn', 'mo', 'mobi', 'mp', 'mq', 'mr', 'ms', 'mt', 'mu', 'museum', 'mv',
+        'mw', 'mx', 'my', 'mz', 'na', 'name', 'nc', 'ne', 'net', 'nf', 'ng',
+        'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om', 'org', 'pa', 'pe',
+        'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr', 'pro', 'ps', 'pt',
+        'pw', 'py', 'qa', 're', 'ro', 'ru', 'rw', 'sa', 'sb', 'sc', 'sd',
+        'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl', 'sm', 'sn', 'so', 'sr',
+        'st', 'su', 'sv', 'sy', 'sz', 'tc', 'td', 'tf', 'tg', 'th', 'tj',
+        'tk', 'tl', 'tm', 'tn', 'to', 'tp', 'tr', 'travel', 'tt', 'tv', 'tw',
+        'tz', 'ua', 'ug', 'uk', 'um', 'us', 'uy', 'uz', 'va', 'vc', 've',
+        'vg', 'vi', 'vn', 'vu', 'wf', 'ws', 'ye', 'yt', 'yu', 'za', 'zm',
+        'zw'
+        );
+
+    /**
      * Sets validator options
      *
      * @param  integer $allow
      * @return void
+     * @see http://www.iana.org/cctld/specifications-policies-cctlds-01apr02.htm  Technical Specifications for ccTLDs
      */
-    public function __construct($allow = self::ALLOW_ALL)
+    public function __construct($allow = self::ALLOW_DNS)
     {
         $this->setAllow($allow);
     }
@@ -159,68 +189,137 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     {
         $this->_messages = array();
 
-        do {
-            // Check input against IP address schema
-            /**
-             * @see Zend_Validate_Ip
-             */
-            require_once 'Zend/Validate/Ip.php';
-            $ip = new Zend_Validate_Ip();
-            if ($ip->isValid($value)) {
-                if (!($this->_allow & self::ALLOW_IP)) {
-                    $this->_messages[] = "'$value' appears to be an IP address but IP addresses are not allowed";
-                    return false;
-                } else{
-                    break;
+        // Check input against IP address schema
+        /**
+         * @see Zend_Validate_Ip
+         */
+        require_once 'Zend/Validate/Ip.php';
+        $ip = new Zend_Validate_Ip();
+        if ($ip->isValid($value)) {
+            if (!($this->_allow & self::ALLOW_IP)) {
+                $this->_messages[] = "'$value' appears to be an IP address but IP addresses are not allowed";
+                return false;
+            } else{
+                return true;
+            }
+        }
+
+        // Check input against DNS hostname schema
+        $domainParts = explode('.', $value);
+        if ((count($domainParts) > 1) && (strlen($value) >= 4) && (strlen($value) <= 254)) {
+            $status = false;
+            
+            do {
+                // First check TLD
+                if (preg_match('/([a-z]{2,10})$/i', end($domainParts), $matches)) {
+
+                    reset($domainParts);
+
+                    // Hostname characters are: *(label dot)(label dot label); max 254 chars
+                    // label: id-prefix [*ldh{61} id-prefix]; max 63 chars
+                    // id-prefix: alpha / digit
+                    // ldh: alpha / digit / dash
+
+                    // Match TLD against known list
+                    $valueTld = strtolower($matches[1]);
+                    if (!in_array($valueTld, $this->_validTlds)) {
+                        $this->_messages[] = "'$value' appears to be a DNS hostname but cannot match TLD against known list";
+                        $status = false;
+                        break;
+                    }
+
+                    /**
+                     * @todo 0.9 ZF-881 Implement UTF-8 support for IDN characters allowed in some TLD hostnames, i.e. bürger.de
+                     */
+                    
+                    // Keep label regex short to avoid issues with long patterns when matching IDN hostnames
+                    $labelChars = 'a-zA-Z0-9';
+                    $regexLabel = '/^[' . $labelChars . '\x2d]{1,63}$/';
+                    if ($utf8) {
+                        $regexLabel .= 'u';
+                    }
+                    
+                    // Check each hostname part
+                    $valid = true;
+                    foreach ($domainParts as $domainPart) {
+
+                        // Check dash (-) does not start, end or appear in 3rd and 4th positions
+                        if (strpos($domainPart, '-') === 0 || 
+                        (strlen($domainPart) > 2 && strpos($domainPart, '-', 2) == 2 && strpos($domainPart, '-', 3) == 3) ||
+                        strrpos($domainPart, '-') === strlen($domainPart) - 1) {
+
+                            $this->_messages[] = "'$value' appears to be a DNS hostname but contains a dash(-) " .  
+                                                 "in an invalid position";
+                            $status = false;
+                            break 2;
+                        }
+
+                        // Check each domain part
+                        $status = @preg_match($regexLabel, strtolower($domainPart));
+                        if ($status === false) {
+                            /**
+                             * Regex error
+                             * @see Zend_Validate_Exception
+                             */
+                            require_once 'Zend/Validate/Exception.php';
+                            throw new Zend_Validate_Exception('Internal error: DNS validation failed');
+                        } elseif ($status === 0) {
+                            $valid = false;
+                        }
+                    }
+
+                    // If all labels didn't match, the hostname is invalid
+                    if (!$valid) {
+                        $this->_messages[] = "'$value' appears to be a DNS hostname but cannot match against " .  
+                                             "hostname schema for TLD '$valueTld'";
+                        $status = false;
+                    }
+
+                } else {
+                    // Hostname not long enough
+                    $this->_messages[] = "'$value' appears to be a DNS hostname but cannot extract TLD part";
+                    $status = false;
                 }
-            }
-
-            // Check input against domain name schema
-    		$status = @preg_match($this->_regex['dns'], $value);
-            if (false === $status) {
-                /**
-                 * @see Zend_Validate_Exception
-                 */
-                require_once 'Zend/Validate/Exception.php';
-                throw new Zend_Validate_Exception('Internal error: DNS validation failed');
-            }
-
+            } while (false);
+            
             // If the input passes as an Internet domain name, and domain names are allowed, then the hostname
             // passes validation
             if ($status && ($this->_allow & self::ALLOW_DNS)) {
-                break;
+                return true;
             }
+        } else {
+            $this->_messages[] = "'$value' does not match the expected structure for a DNS hostname";
+        }
+        
+        // Check input against local network name schema; last chance to pass validation
+        $status = @preg_match($this->_regex['local'], $value);
+        if (false === $status) {
+            /**
+             * Regex error
+             * @see Zend_Validate_Exception
+             */
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Internal error: local network name validation failed');
+        }
 
-            // Check input against local network name schema; last chance to pass validation
-            $status = @preg_match($this->_regex['local'], $value);
-            if (false === $status) {
-                /**
-                 * @see Zend_Validate_Exception
-                 */
-                require_once 'Zend/Validate/Exception.php';
-                throw new Zend_Validate_Exception('Internal error: local network name validation failed');
-            }
+        // If the input passes as a local network name, and local network names are allowed, then the
+        // hostname passes validation
+        $allowLocal = $this->_allow & self::ALLOW_LOCAL;
+        if ($status && $allowLocal) {
+            return true;
+        }
 
-            // If the input passes as a local network name, and local network names are allowed, then the
-            // hostname passes validation
-            $allowLocal = $this->_allow & self::ALLOW_LOCAL;
-            if ($status && $allowLocal) {
-                break;
-            }
+        // If the input does not pass as a local network name, add a message
+        if (!$status) {
+            $this->_messages[] = "'$value' does not appear to be a valid local network name";
+        }
 
-            // If the input does not pass as a local network name, add a message
-            if (!$status) {
-                $this->_messages[] = "'$value' does not appear to be a valid local network name";
-            }
+        // If local network names are not allowed, add a message
+        if (!$allowLocal) {
+            $this->_messages[] = "'$value' appears to be a local network name but but local network names are not allowed";
+        }
 
-            // If local network names are not allowed, add a message
-            if (!$allowLocal) {
-                $this->_messages[] = "Local network names are not allowed";
-            }
-
-            return false;
-        } while (false);
-        return true;
+        return false;
     }
 
     /**

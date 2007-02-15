@@ -26,6 +26,7 @@
  */
 require_once 'Zend/Validate/Interface.php';
 
+
 /**
  * @see Zend_Validate_Hostname
  */
@@ -53,20 +54,24 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      * @var Zend_Validate_Hostname
      */
     protected $_hostnameValidator;
-
+    
     /**
      * Instantiates hostname validator for local use
+     * 
+     * You can pass a bitfield to determine what types of hostnames are allowed. 
+     * These bitfields are defined by the ALLOW_* constants in Zend_Validate_Hostname
+     * The default is to allow DNS hostnames only
      *
+     * @see Zend_Validate_Hostname
+     * @param integer $allow
      * @return void
      */
-    public function __construct()
+    public function __construct($allow = Zend_Validate_Hostname::ALLOW_DNS)
     {
-        /**
-         * @todo ZF-42 Check what hostnames are allowed via RFC 2822
-         */
-        $this->_hostnameValidator = new Zend_Validate_Hostname();
+        // Initialise Zend_Validate_Hostnames
+        $this->_hostnameValidator = new Zend_Validate_Hostname($allow);
     }
-
+    
     /**
      * Defined by Zend_Validate_Interface
      *
@@ -83,7 +88,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         $this->_messages = array();
 
         // Split email address up
-        if (!preg_match('/^([^@]+)@([^@]+)$/', $value, $matches)) {
+        if (!preg_match('/^(.+)@([^@]+)$/', $value, $matches)) {
             $this->_messages[] = "'$value' is not a valid email address in the basic format local-part@hostname";
             return false;
         }
@@ -92,9 +97,9 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         $hostname 	= $matches[2];
 
         /**
-         * @todo ZF-42 check isHostname against RFC spec
-         * @todo ZF-42 implement basic MX check on hostname via dns_get_record()
+         * @todo 0.9 ZF-42 implement basic MX check on hostname via dns_get_record()
          */
+        
         // Match hostname part
         $hostnameResult = $this->_hostnameValidator->isValid($hostname);
         if (!$hostnameResult) {
@@ -116,20 +121,23 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         $atext .= '\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d';
         if (preg_match('/^[' . $atext . ']+(\x2e+[' . $atext . ']+)*$/', $localPart)) {
             $localResult = true;
+        } else {
+             $this->_messages[] = "'$localPart' not matched against dot-atom format";
         }
-
+        
         // If not matched, try quoted string format
         if (!$localResult) {
 
-            // Quoted-string characters are: DQUOTE *(qtext/quoted-pair) DQUOTE
+            // Quoted-string characters are: DQUOTE *([FWS] qtext/quoted-pair) [FWS] DQUOTE
             // qtext: Non white space controls, and the rest of the US-ASCII characters not
             //   including "\" or the quote character
-            // quoted-pair: "\" characters
-            $qtext      = '\x01-\x08\x0b\x0c\x0e-\x1f\x7f';
-            $qtext      .= '\x21\x23-\x5b\x5d-\x7e';
-            $quotedPair = '\x22\x5c\x22';
-            if (preg_match('/^\x22([' . $qtext . ']|' . $quotedPair . ')*\x22$/', $localPart)) {
+            $noWsCtl    = '\x01-\x08\x0b\x0c\x0e-\x1f\x7f';
+            $qtext      = $noWsCtl . '\x21\x23-\x5b\x5d-\x7e';
+            $ws         = '\x20\x09';
+            if (preg_match('/^\x22([' . $ws . $qtext . '])*[$ws]?\x22$/', $localPart)) {
                 $localResult = true;
+            } else {
+                $this->_messages[] = "'$localPart' not matched against quoted-string format";
             }
         }
 

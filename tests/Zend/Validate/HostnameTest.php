@@ -21,6 +21,11 @@
  * @version    $Id$
  */
 
+/**
+ * Temp setup to enable PHPUnit 3 usage for on SRJ Sony Vaio
+ */
+set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\Subversion\ZendFramework-trunk\library');
+class HostnameTest extends Zend_Validate_HostnameTest {}
 
 /**
  * @see Zend_Validate_Hostname
@@ -70,10 +75,44 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             array(Zend_Validate_Hostname::ALLOW_IP, true, array('1.2.3.4', '10.0.0.1', '255.255.255.255')),
             array(Zend_Validate_Hostname::ALLOW_IP, false, array('0.0.0.0', '0.0.0.256')),
-            array(Zend_Validate_Hostname::ALLOW_DNS, true, array('example.com', 'example.museum')),
-            array(Zend_Validate_Hostname::ALLOW_DNS, false, array('localhost', 'localhost.localdomain', '1.2.3.4')),
+            array(Zend_Validate_Hostname::ALLOW_DNS, true, array('example.com', 'example.museum', 'd.hatena.ne.jp')),
+            array(Zend_Validate_Hostname::ALLOW_DNS, false, array('localhost', 'localhost.localdomain', '1.2.3.4', 'domain.invalid')),
             array(Zend_Validate_Hostname::ALLOW_LOCAL, true, array('localhost', 'localhost.localdomain', 'example.com')),
-            array(Zend_Validate_Hostname::ALLOW_ALL, true, array('localhost', 'example.com', '1.2.3.4', 'bürger.de'))
+            array(Zend_Validate_Hostname::ALLOW_ALL, true, array('localhost', 'example.com', '1.2.3.4'))
+            );
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_Hostname($element[0]);
+            foreach ($element[2] as $input) {
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }
+    
+    public function testCombination()
+    {
+        $valuesExpected = array(
+            array(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL, true, array('domain.com', 'localhost', 'local.localhost')),
+            array(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL, false, array('1.2.3.4', '255.255.255.255')),
+            array(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP, true, array('1.2.3.4', '255.255.255.255')),
+            array(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP, false, array('localhost', 'local.localhost'))
+            );
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_Hostname($element[0]);
+            foreach ($element[2] as $input) {
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }
+
+    /**
+     * Ensure the dash character tests work as expected
+     *
+     */
+    public function testDashes()
+    {
+        $valuesExpected = array(
+            array(Zend_Validate_Hostname::ALLOW_DNS, true, array('domain.com', 'doma-in.com')),
+            array(Zend_Validate_Hostname::ALLOW_DNS, false, array('-domain.com', 'domain-.com', 'do--main.com'))
             );
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_Hostname($element[0]);
@@ -100,7 +139,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAllow()
     {
-        $this->assertEquals(Zend_Validate_Hostname::ALLOW_ALL, $this->_validator->getAllow());
+        $this->assertEquals(Zend_Validate_Hostname::ALLOW_DNS, $this->_validator->getAllow());
     }
 
     /**
@@ -110,28 +149,12 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRegex()
     {
-        $this->assertEquals(Zend_Validate_Hostname::REGEX_DNS_DEFAULT, $this->_validator->getRegex('dns'));
         $this->assertEquals(Zend_Validate_Hostname::REGEX_LOCAL_DEFAULT, $this->_validator->getRegex('local'));
         try {
             $this->_validator->getRegex('does not exist');
             $this->fail('Expected Zend_Validate_Exception not thrown for unknown regex type');
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains('must be one of', $e->getMessage());
-        }
-    }
-
-    /**
-     * Ensures that an exception is thrown when a bad DNS regex is supplied
-     *
-     * @return void
-     */
-    public function testBadRegexDNS()
-    {
-        try {
-            $this->_validator->setRegex('dns', '/')->isValid('anything');
-            $this->fail('Expected Zend_Validate_Exception not thrown for bad DNS regex');
-        } catch (Zend_Validate_Exception $e) {
-            $this->assertContains('DNS validation failed', $e->getMessage());
         }
     }
 
