@@ -49,7 +49,12 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Term Dictionary Index
-     * Array of the Zend_Search_Lucene_Index_Term objects
+     *
+     * Array of arrays (Zend_Search_Lucene_Index_Term objects are represented as arrays because
+     * of performance considerations)
+     * [0] -> $termValue
+     * [1] -> $termFieldNum
+     *
      * Corresponding Zend_Search_Lucene_Index_TermInfo object stored in the $_termDictionaryInfos
      *
      * @var array
@@ -58,7 +63,14 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Term Dictionary Index TermInfos
-     * Array of the Zend_Search_Lucene_Index_TermInfo objects
+     *
+     * Array of arrays (Zend_Search_Lucene_Index_TermInfo objects are represented as arrays because
+     * of performance considerations)
+     * [0] -> $docFreq
+     * [1] -> $freqPointer
+     * [2] -> $proxPointer
+     * [3] -> $skipOffset
+     * [4] -> $indexPointer
      *
      * @var array
      */
@@ -435,18 +447,22 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
             $indexPointer += $tiiFile->readVInt();
 
-            $this->_termDictionary[] =  new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
+            // $this->_termDictionary[] =  new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
+            $this->_termDictionary[] = array($termFieldNum, $termValue);
+
             $this->_termDictionaryInfos[] =
-                new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
+                 // new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
+                 array($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
+
             $prevTerm = $termValue;
         }
 
         // Check special index entry mark
-        if ($this->_termDictionary[0]->field != (int)0xFFFFFFFF) {
+        if ($this->_termDictionary[0][0] != (int)0xFFFFFFFF) {
             throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
         } else if (PHP_INT_SIZE > 4){
             // Treat 64-bit 0xFFFFFFFF as -1
-            $this->_termDictionary[0]->field = -1;
+            $this->_termDictionary[0][0] = -1;
         }
     }
 
@@ -521,10 +537,10 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $mid = ($highIndex + $lowIndex) >> 1;
             $midTerm = $this->_termDictionary[$mid];
 
-            $fieldNum = $this->_getFieldPosition($midTerm->field);
+            $fieldNum = $this->_getFieldPosition($midTerm[0] /* field */);
             $delta = $searchDicField - $fieldNum;
             if ($delta == 0) {
-                $delta = strcmp($term->text, $midTerm->text);
+                $delta = strcmp($term->text, $midTerm[1] /* text */);
             }
 
             if ($delta < 0) {
@@ -532,7 +548,14 @@ class Zend_Search_Lucene_Index_SegmentInfo
             } elseif ($delta > 0) {
                 $lowIndex  = $mid+1;
             } else {
-                return $this->_termDictionaryInfos[$mid]; // We got it!
+                // return $this->_termDictionaryInfos[$mid]; // We got it!
+                $a = $this->_termDictionaryInfos[$mid];
+                $termInfo = new Zend_Search_Lucene_Index_TermInfo($a[0], $a[1], $a[2], $a[3], $a[4]);
+
+                // Put loaded termInfo into cache
+                $this->_termInfoCache[$termKey] = $termInfo;
+
+                return $termInfo;
             }
         }
 
@@ -555,12 +578,12 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $indexInterval = $tisFile->readInt();
         $skipInterval  = $tisFile->readInt();
 
-        $tisFile->seek($prevTermInfo->indexPointer - 20 /* header size*/, SEEK_CUR);
+        $tisFile->seek($prevTermInfo[4] /* indexPointer */ - 20 /* header size*/, SEEK_CUR);
 
-        $termValue    = $prevTerm->text;
-        $termFieldNum = $prevTerm->field;
-        $freqPointer = $prevTermInfo->freqPointer;
-        $proxPointer = $prevTermInfo->proxPointer;
+        $termValue    = $prevTerm[1] /* text */;
+        $termFieldNum = $prevTerm[0] /* field */;
+        $freqPointer = $prevTermInfo[1] /* freqPointer */;
+        $proxPointer = $prevTermInfo[2] /* proxPointer */;
         for ($count = $prevPosition*$indexInterval + 1;
              $count <= $termCount &&
              ( $this->_getFieldPosition($termFieldNum) < $searchDicField ||
