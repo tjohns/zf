@@ -1,0 +1,86 @@
+<sect1 id="zend.validate.validator_chains">
+
+    <title>メールアドレスの検証</title>
+
+    <para>
+        Zend_Validate_Email は、メールアドレスの検証を行います。
+        このバリデータは、まずメールアドレスを
+        local-part @ hostname
+        に分割し、メールアドレスやホスト名の仕様にあわせて検証します。
+    </para>
+    
+    <para>
+        <emphasis role="strong">基本的な使用法</emphasis>
+    </para>
+    
+    <para>
+        基本的な使用法は、以下のようになります。
+        
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/EmailAddress.php';
+$validator = new Zend_Validate_EmailAddress();
+if ($validator->isValid($email)) {
+    // メールアドレスは正しい形式のようです
+} else {
+    // 不正な形式なので、理由を表示します
+    foreach ($validator->getMessages() as $message) {
+        echo "$message\n";
+    }
+}]]></programlisting>
+
+        これは、メールアドレス <code>$email</code> を検証し、失敗した場合は
+        その原因を表す便利なエラーメッセージを
+        <code>$validator->getMessages()</code> で取得します。
+        
+    </para>
+    
+    
+    <para>
+        <emphasis role="strong">複雑なローカルパート</emphasis>
+    </para>    
+    
+    <para>
+        Zend_Validate_Email は、メールアドレスの検証を
+        RFC2822 にもとづいて行います。たとえば、妥当な形式のメールアドレスとしては
+        <code>bob@domain.com</code>、<code>bob+jones@domain.us</code>、
+        <code>"bob@jones"@domain.com</code> および <code>"bob jones"@domain.com</code>
+        などがあります。
+        
+        かつて使われていたものの、現在は有効とはみなされないフォーマットもあります
+        (たとえば、メールアドレスに改行文字や "\" を使用するなど)。
+    </para>
+    
+    <para>
+        <emphasis role="strong">さまざまな形式のホスト名の検証</emphasis>
+    </para>
+    
+    <para>
+        メールアドレスのホスト名部分の検証は、Zend_Validate_Hostname
+        で行います。デフォルトでは、<code>domain.com</code>
+        形式の DNS ホスト名のみが有効となります。しかし、
+        IP アドレスやローカルホスト名も有効にしたいこともあるでしょう。
+        
+        その場合は、Zend_Validate_EmailAddress
+        のインスタンスを作成する際にパラメータを渡さなければなりません。
+        このパラメータで、認めたいホスト名の形式を指定します。
+        詳細は Zend_Validate_Hostname を参照ください。
+        たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
+        
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/EmailAddress.php';
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS + Zend_Validate_Hostname::ALLOW_LOCAL);
+if ($validator->isValid($email)) {
+    // メールアドレスは正しい形式のようです
+} else {
+    // 不正な形式なので、理由を表示します
+    foreach ($validator->getMessages() as $message) {
+        echo "$message\n";
+    }
+}]]></programlisting>
+
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
