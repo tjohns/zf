@@ -89,6 +89,14 @@ class Zend_Search_Lucene_Index_SegmentInfo
     private $_segFiles;
 
     /**
+     * Associative array where the key is the file name and the value is file size (.csf).
+     *
+     * @var array
+     */
+    private $_segFileSizes;
+
+
+    /**
      * File system adapter.
      *
      * @var Zend_Search_Lucene_Storage_Directory_Filesystem
@@ -145,8 +153,14 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
             for ($count = 0; $count < $segFilesCount; $count++) {
                 $dataOffset = $cfsFile->readLong();
+                if ($count != 0) {
+                    $this->_segFileSizes[$fileName] = $dataOffset - end($this->_segFiles);
+                }
                 $fileName = $cfsFile->readString();
                 $this->_segFiles[$fileName] = $dataOffset;
+            }
+            if ($count != 0) {
+                $this->_segFileSizes[$fileName] = $this->_directory->fileLength($name . '.cfs') - $dataOffset;
             }
         }
 
@@ -233,6 +247,29 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $file = $this->_directory->getFileObject($this->_name . '.cfs', $shareHandler);
         $file->seek($this->_segFiles[$filename]);
         return $file;
+    }
+
+    /**
+     * Get compound file length
+     *
+     * @param string $extension
+     * @return integer
+     */
+    public function compoundFileLength($extension)
+    {
+        $filename = $this->_name . $extension;
+
+        // Try to get common file first
+        if ($this->_directory->fileExists($filename)) {
+            return $this->_directory->fileLength($filename);
+        }
+
+        if( !isset($this->_segFileSizes[$filename]) ) {
+            throw new Zend_Search_Lucene_Exception('Index compound file doesn\'t contain '
+                                       . $filename . ' file.' );
+        }
+
+        return $this->_segFileSizes[$filename];
     }
 
     /**
@@ -359,7 +396,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_termDictionary = array();
         $this->_termDictionaryInfos = array();
 
-        $tiiFile = $this->openCompoundFile('.tii');
+        // Prefetch dictionary index data
+        $tiiFileSource = $this->openCompoundFile('.tii');
+        $tiiFile = new Zend_Search_Lucene_Storage_File_Memory(
+                                       $tiiFileSource->readBytes($this->compoundFileLength('.tii')) );
+
         $tiVersion = $tiiFile->readInt();
         if ($tiVersion != (int)0xFFFFFFFE) {
             throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');

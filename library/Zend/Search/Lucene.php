@@ -31,6 +31,9 @@ require_once 'Zend/Search/Lucene/Document/Html.php';
 /** Zend_Search_Lucene_Storage_Directory */
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 
+/** Zend_Search_Lucene_Storage_File_Memory */
+require_once 'Zend/Search/Lucene/Storage/File/Memory.php';
+
 /** Zend_Search_Lucene_Index_Term */
 require_once 'Zend/Search/Lucene/Index/Term.php';
 
