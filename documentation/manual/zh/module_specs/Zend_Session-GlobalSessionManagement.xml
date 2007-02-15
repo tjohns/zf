@@ -1,34 +1,37 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>全局会话管理 - Zend_Session_Core</title>
+    <title>全局会话管</title>
 
     <para>
-	    会话的默认行为可以由Zend_Session_Core中的一些静态方法来改变。使用Zend_Session_Core来处理和操作所有的全局会话管理，包括使用<code>Zend_Session_Core::setOptions()</code>方法对<ulink url="http://www.php.net/session#session.configuration">PHP内置的会话模块提供的常用配置选项</ulink>的设置。
+	    会话的默认行为可以由<code>Zend_Session</code>中的一些静态方法来改变。使用Zend_Session来处理和操作所有的全局会话管理，包括使用<code>Zend_Session_Core::setOptions()</code>方法对<ulink url="http://www.php.net/session#session.configuration">PHP内置的会话模块提供的常用配置选项</ulink>的配置。例如，不能确保使用安全的save_path和PHP会话模块使用的唯一的cookie名，那么使用<code>Zend_Session::setOptions()</code>会引发安全问题。
     </para>
 
     <sect2 id="zend.session.setoptions">
 
-        <title>Zend_Session_Core::setOptions()</title>
+        <title>Zend_Session::setOptions()</title>
 
         <para>
-		    当第一个会话命名空间被请求时，Zend_Session_Core就会被自动调用，除非已经明确调用过<link linkend="zend.session.startingasession"><code>Zend_Session_Core::start()</code></link>了。内部PHP的会话将会按照Zend_Session_Core的默认配置开启，除非先前调用过<code>Zend_Session_Core::setOptions()</code>修改了配置。
+		    当第一个会话命名空间被请求时，Zend_Session就会被自动调用，除非已经明确调用过<link linkend="zend.session.startingasession"><code>Zend_Session::start()</code></link>了。内部PHP的会话将会按照Zend_Session的默认配置开启，除非先前调用过<code>Zend_Session::setOptions()</code>修改了配置。
         </para>
 
         <para>
-		    传递给<code>Zend_Session_Core::setOptions()</code>方法的参数是基本名（也就是不包含"<code>session.</code>前缀"）及其值组成的数组。要是没有设置过选项，Zend_Session首先会利用推荐的选项设置，也就是php.ini中的默认设置。有关选项设置的最佳实践，可以反馈到：<ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>。
+		    传递给<code>Zend_Session::setOptions()</code>方法的参数是基本名（也就是不包含"<code>session.</code>前缀"）及其值组成的数组。要是没有设置过选项，Zend_Session首先会利用推荐的选项设置，也就是php.ini中的默认设置。有关选项设置的最佳实践，可以反馈到：<ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>。
         </para>
 
         <para>
             可以使用Zend_Config_Ini组件的".ini"配置文件来自动地配置Zend_Session组件：
+        </para>
             <example>
                 <title>使用Zend_Config组件配置Zend_Session组件</title>
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
-Zend_Session_Core::setOptions($config->asArray()); 
+Zend_Session::setOptions($config->asArray()); 
 ?>]]></programlisting>
             </example>
+		<para>
             对应"myapp.ini"的文件内容：
+		</para>
             <example>
                 <title>myapp.ini</title>
 <programlisting role="php">
@@ -74,7 +77,6 @@ use_only_cookies = on
 remember_me_seconds = 864000
 ]]></programlisting>
             </example>
-        </para>
 
     </sect2>
 
@@ -88,7 +90,7 @@ remember_me_seconds = 864000
                 <listitem>
                     <para>
                         boolean <code>strict</code> -
-						开启了该选项，构造<code>Zend_Session</code>对象实例时不自动去调用<code>Zend_Session_Core</code>开启会话。
+						开启了该选项，构造<code>Zend_Session_Namespace</code>实例时不自动去调用<code>Zend_Session</code>开启会话。
                     </para>
                 </listitem>
                 <listitem>
@@ -148,7 +150,7 @@ remember_me_seconds = 864000
             <title>简介: 会话标识符</title>
 
             <para>
-                简介：在基于ZF的应用程序中有关会话使用的问题，提倡使用浏览器的cookie是最佳的实践，而不是把会话的标识符跟在URL后面的方式来追踪用户。 Zend_Session组件默认的只有cookie才能保持会话标识符。cookie的值是浏览器会话的唯一标识符。PHP内置的会话模块使用这个标识符以保持站点访问者与每个访问者的持久会话数据之间一对一的关系。Zend_Session组件包装了会话存储器（<code>$_SESSION</code>）并提供了一个面向对象的接口。不幸的是，如果攻击者能访问受害者的cookie值（会话标识符）的访问，攻击者就能劫持受害者的会话。这个问题不仅在PHP中存在，在Zend Framework中也存在。<code>regenerateId()</code>方法能使应用程序更新会话标识符（存储在访问者的cookie中），标识符为一个随机的、不可预计的值。注意：虽然“用户代理(user agent)”和“Web浏览器(web browser)”不相同，为了使得本章节更易读，我们使用的这两个术语可以互换。
+                简介：在基于ZF的应用程序中有关会话使用的问题，提倡使用浏览器的cookie是最佳的实践，而不是把会话的标识符跟在URL后面的方式来追踪用户。Zend_Session组件默认的只有cookie才能保持会话标识符。cookie的值是浏览器会话的唯一标识符。PHP内置的会话模块使用这个标识符以保持站点访问者与每个访问者的持久会话数据之间一对一的关系。Zend_Session组件包装了会话存储器（<code>$_SESSION</code>）并提供了一个面向对象的接口。不幸的是，如果攻击者能访问受害者的cookie值（会话标识符），攻击者就能劫持受害者的会话。这个问题不仅在PHP中存在，在Zend Framework中也存在。<code>regenerateId()</code>方法能使应用程序重新生成会话标识符（储存在访问者的cookie中），标识符为一个随机的、不可预计的值。注意：虽然“用户代理(user agent)”和“Web浏览器(web browser)”不相同，为了使得本章节更易读，我们使用的这两个术语可以互换。
             </para>
 
             <para>
@@ -156,7 +158,7 @@ remember_me_seconds = 864000
             </para>
 
             <para>
-                何时使用<code>regenerateId()</code>：在你的程序引导文件中增加<code>Zend_Session_Core::regenerateId ()</code>，以最安全的方式重新生成用户代理cookie中的会话标识符。如果不需要有条件的判定何时重新生成会话标识符，那么这样的方式就没什么缺陷。虽然在每个请求中重新生成会话标识预防了几种攻击的途径，但是不是每个请求需要这么做。因此，应用程序通常设法动态的确定在有较大风险的情况下，重新生成会话标识符。当站点的访问者权限上升时（比如，访问者在编辑你的个人信息前，要重新验证用户）或者敏感的会话参数发生改变时，可以考虑使用<code>regenerateId()</code>创建新的会话标识符。如果你调用了<code>rememberMe()</code>之后，就不需要调用<code>regeneraterId()</code>，因为前者已经调用了后者。如果用户成功登录了站点，调用<code>rememberMe()</code>方法来替代<code>regenerateId()</code>方法。
+                何时使用<code>regenerateId()</code>：在你的Zend框架程序引导文件中添加<code>Zend_Session::regenerateId ()</code>，以最安全的方式重新生成用户Web浏览器cookie中的会话标识符。如果不需要有条件的判定何时重新生成会话标识符，那么这样的方式就没什么缺陷。虽然在每个请求中重新生成会话标识预防了几种攻击的途径，但是不是每个请求需要这么做。因此，应用程序通常设法动态的确定在有较大风险的情况下，重新生成会话标识符。当站点的访问者权限上升时（比如，访问者在编辑你的个人信息前，要重新验证用户）或者敏感的会话参数发生改变时，可以考虑使用<code>regenerateId()</code>创建新的会话标识符。如果你调用了<code>rememberMe()</code>之后，就不需要调用<code>regeneraterId()</code>，因为前者已经调用了后者。如果用户成功登录了站点，调用<code>rememberMe()</code>方法来取代调用<code>regenerateId()</code>方法。
             </para>
 
         </sect3>
@@ -170,7 +172,7 @@ remember_me_seconds = 864000
             </para>
 
             <para>
-                当第一次使用用户会话时，调用<code>Zend_Session_Core::regenerateId()</code>不能防止会话固定攻击，除非你能辨别最初的会话是否是攻击者伪装成受害者。初听，这个跟前面所描述的是自相矛盾的，直到我们认为攻击者首先在你的站点上开始了一个真实的会话。如果会话第一次是被攻击者开启的，那么攻击者也就知道了初始化(<code>regenerateId()</code>)后的结果（新的会话标识）。攻击者在XSS漏洞中使用这个新的会话标识，或者通过攻击者站点上的链接注入这个新的会话标识（只在<code>use_only_cookies = off</code>时有效）。
+                当第一次使用用户会话时，调用<code>Zend_Session::regenerateId()</code>不能防止会话固定攻击，除非你能辨别最初的会话是否是攻击者伪装成受害者。初听，这个跟前面所描述的是自相矛盾的，直到我们认为攻击者首先在你的站点上发起了一个真实的会话。如果会话第一次是被攻击者开启的，那么攻击者也就知道了初始化(<code>regenerateId()</code>)后的结果（新的会话标识）。攻击者在XSS漏洞中使用这个新的会话标识，或者通过攻击者站点上的链接注入这个新的会话标识（只在<code>use_only_cookies = off</code>时有效）。
             </para>
 
             <para>
@@ -199,12 +201,12 @@ remember_me_seconds = 864000
                 <title>匿名会话和会话固定</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
-$session = new Zend_Session();
+$defaultNamespace = new Zend_Session_Namespace();
  
-if (!isset($session->initialized))
+if (!isset($defaultNamespace->initialized))
 { 
-    Zend_Session_Core::regenerateId(); 
-    $session->initialized = true;
+    Zend_Session::regenerateId(); 
+    $defaultNamespace->initialized = true;
 } 
 ?>]]></programlisting>
             </example>
@@ -218,7 +220,7 @@ if (!isset($session->initialized))
         <title>rememberMe(integer $seconds)</title>
 
         <para>
-            通常，当用户代理结束时，会话也就结束了，比如当用户关闭了浏览器窗口。然而，当用户登录你的站点之后，他们会希望他们会话能保持24个小时，甚至更久。论坛软件通常给出一个选项，让用户选择他们的会话将持续多长时间。使用<code>Zend_Session_Core::rememberMe()</code>向用户代理发送最新的带有生命期的会话cookie，默认的生命期为2个星期，除非你使用了<code>Zend_Session_Core::setOptions()</code>方法修改了生命期值。当用户身份成功鉴定后或登录后使用该函数，有利于阻碍会话劫持、固定。
+            通常，当用户代理结束时，会话也就结束了，比如当用户关闭了浏览器窗口。然而，当用户登录你的站点之后，他们会希望他们会话能保持24个小时，甚至更久。论坛软件通常给出一个选项，让用户选择他们的会话将持续多长时间。使用<code>Zend_Session::rememberMe()</code>向用户代理发送最新的带有生命期的会话cookie，默认的生命期为2个星期，除非你使用了<code>Zend_Session::setOptions()</code>方法修改了生命期值。当用户身份成功鉴定后或登录后使用该函数，有利于阻碍会话劫持、固定。
         </para>
 
     </sect2>
@@ -238,7 +240,7 @@ if (!isset($session->initialized))
         <title>sessionExists()</title>
 
         <para>
-            这个方法用来确定当前用户请求是否已经存在会话。这个方法可在会话开启之前使用，且这个方法独立于与Zend_Session和Zend_Session_Core的其他方法。
+            这个方法用来确定当前用户请求是否已经存在会话。这个方法可在会话开启之前使用，且这个方法独立于与Zend_Session和Zend_Session_Namespace的其他方法。
         </para>
 
     </sect2>
@@ -248,7 +250,7 @@ if (!isset($session->initialized))
         <title>destroy(bool $remove_cookie = true, bool $readonly = true)</title>
 
         <para>
-            <code>Zend_Session_Core::destroy()</code>，删除当前会话的所有数据。然而，PHP中的变量还未知情，所以你的会话命名空间（<code>Zend_Session</code>的实例）还是可读的。为了完成“登出”动作，设置可选的参数<code>$remove_cookie</code>为true（默认为true）来删除用户代理端的会话cookie。设置可选的参数<code>$readonly</code>为true，使Zend_Session实例和<code>Zend_Session_Core</code>中的方法失去写会话数据的能力。
+            <code>Zend_Session::destroy()</code>，删除当前会话的所有数据。然而，PHP中的变量还未知情，所以你的会话命名空间（<code>Zend_Session</code>的实例）还是可读的。为了完成“登出”动作，设置可选的参数<code>$remove_cookie</code>为true（默认为true）来删除用户代理端的会话cookie。设置可选的参数<code>$readonly</code>为true，使Zend_Session实例和<code>Zend_Session_Core</code>中的方法失去写会话数据的能力。
         </para>
 
         <note>
@@ -265,7 +267,7 @@ if (!isset($session->initialized))
         <title>stop()</title>
 
         <para>
-            这个方法只是更改了<code>Zend_Session_Core</code>中的一个标志位，以阻止之后向会话数据存储器（也就是<code>$_SESSION</code>）中写数据。我们特别希望您能反馈关于这个特性的看法。当程序的执行转移到视图相关的代码上时，以免滥用，临时关闭<code>Zend_Session</code>实例和<code>Zend_Session_Core</code>中的方法向会话数据存储器写数据的能力，试图通过这些实例或方法向会话数据存储器写数据的动作，都将会抛出一个异常。
+            这个方法只是更改了<code>Zend_Session</code>中的一个标志位，以阻止之后向会话数据存储器（也就是<code>$_SESSION</code>）中写数据。我们特别希望您能反馈关于这个特性的看法。当程序的执行转移到视图相关的代码上时，以免滥用，临时关闭<code>Zend_Session_Namespace</code>实例和<code>Zend_Session</code>中的方法向会话数据存储器写数据的能力，试图通过这些实例或方法向会话数据存储器写数据的动作，都将会抛出一个异常。
         </para>
 
     </sect2>
@@ -275,7 +277,7 @@ if (!isset($session->initialized))
         <title>writeClose($readonly = true)</title>
 
         <para>
-            关闭会话，把$_SESSION数组中的数据写到后台的存储器中（文件、数据库），完成内部数据的转换。可选参数$readonly可去除写的能力（也就是，之后Zend_Session或Zend_Session_Core试图向会话数据存储器写数据，都会抛出一个异常）。
+            关闭会话，把$_SESSION数组中的数据写到后台的存储器中（文件、数据库），完成内部数据的转换。可选参数$readonly可移除写的能力（也就是，之后Zend_Session_Namespace或Zend_Session试图向会话数据存储器写数据，都会抛出一个异常）。
         </para>
 
         <note>
@@ -307,16 +309,6 @@ if (!isset($session->initialized))
 
     </sect2>
 
-    <sect2 id="zend.session.getinstance">
-
-        <title>getInstance($instanceMustExist = false)</title>
-
-        <para>
-            Zend_Session通过使Zend_Session_Core单一的实例成为它的一个属性，使用这个方法来获取该实例，实现了与Zend_Session_Core实例的解耦。
-        </para>
-
-    </sect2>
-
     <sect2 id="zend.session.namespaceisset">
 
         <title>namespaceIsset($namespace, $name = null)</title>
@@ -328,7 +320,7 @@ if (!isset($session->initialized))
         <note>
             <title>Throws</title>
             <para>
-                如果Zend_Session_Core没有被标记为可读（比如在Zend_Session_Core开启之前），将会抛出一个异常。
+                如果Zend_Session没有被标记为可读（比如在Zend_Session开启之前），将会抛出一个异常。
             </para>
         </note>
 
@@ -351,35 +343,18 @@ if (!isset($session->initialized))
 
     </sect2>
 
-    <sect2 id="zend.session.namespaceset">
-
-        <title>namespaceSet($namespace, $name, $value)</title>
-
-        <para>
-            Zend_Session使用这个内部的方法来增加命名空间下的数据条目。此方法不应直接访问。如果你有合理的理由认为该方法是可直接访问的，而不是通过使用Zend_Session访问，请反馈到我们的邮<ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>。
-        </para>
-
-        <note>
-            <title>Throws</title>
-            <para>
-                如果Zend_Session_Core没有被标记为可读（比如在Zend_Session_Core开启之前），将会抛出一个异常。
-            </para>
-        </note>
-
-    </sect2>
-
     <sect2 id="zend.session.namespaceget">
 
         <title>namespaceGet($namespace, $name = null)</title>
 
         <para>
-		    Zend_Session使用这个内部方法获得<code>$namespace</code>命名空间下<code>$name</code>索引的值，或整个<code>$namespace</code>命名空间下数据的数组。此方法不应直接访问。如果你有合理的理由认为该方法是可直接访问的，而不是通过使用Zend_Session访问，请反馈到我们的邮件列表：<ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>。实际上，所有参与相关话题讨论的，我们都是欢迎的。
+		    这个方法返回<code>$namespace</code>命名空间的内容数组<code>$name</code>。如果你有合理的理由认为该方法是公有的，请反馈到我们的邮件列表：<ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>。实际上，所有参与相关话题讨论的，我们都是欢迎的。
         </para>
 
         <note>
             <title>Throws</title>
             <para>
-                如果Zend_Session_Core没有被标记为可读（比如在Zend_Session_Core开启之前），将会抛出一个异常。
+                如果Zend_Session没有被标记为可读（比如在Zend_Session开启之前），将会抛出一个异常。
             </para>
         </note>
 
@@ -396,12 +371,11 @@ if (!isset($session->initialized))
         <example>
             <title>注销所有的命名空间</title>
 <programlisting role="php"><![CDATA[<?php
-$core = Zend_Session_Core::getInstance();
-foreach(Zend_Session_Core::getIterator() as $space) {
+foreach(Zend_Session::getIterator() as $space) {
     try {
         $core->namespaceUnset($space);
     } catch (Zend_Session_Exception $e) {
-        return; // possible if Zend_Session_Core::stop() has been executed
+        return; // possible if Zend_Session::stop() has been executed
     }
 }
 
