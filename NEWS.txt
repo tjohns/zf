@@ -1,6 +1,171 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.8.0 / 16-Feb-2007=
+- Documentation
+    ZF-709 Deleted documentation chapters are not erased in wiki
+- Zend
+    ZF-341 Zend::dump() different charsets support
+    ZF-695 Unnecessary operation in Zend::loadClass
+- Zend_Auth
+    Moved from incubator to core.
+    ZF-801 Implement Singleton Pattern
+    ZF-802 Abstract Storage into Interface
+    ZF-804 Write Zend_Session Storage Class
+    ZF-806 Credentials Revisited and Arbitrary Authentication Conditions
+    ZF-807 Login vs. Identity
+    ZF-808 Authentication Failure Messages
+    ZF-916 Zend_Auth_Storage_Session session storage broken
+- Zend_Cache
+    ZF-176 Possible to intervalize timeLife
+    ZF-457 Add ability to specify the lifetime of individual cache entries
+- Zend_Console_Getopt
+    Moved from incubator to core.
+- Zend_Controller / Zend_View
+    New regular expression route class (incubator).
+    ZF-769 Failures in Zend_Controller unit tests ActionTest and DispatcherTest
+    ZF-775 Zend_Controller_Dispatcher::isDispatchable() always returns true
+    ZF-776 Check HTTP_X_REWRITE_URL before REQUEST_URI 
+    ZF-794 Error with dirs when using modules with default module
+    ZF-798 Modular directory support in MVC
+    ZF-809 Make dispatcher methods public
+    ZF-815 Add a getHeader() method to Zend_Controller_Request_Http
+    ZF-816 Fixes a minor bug in Zend_Controller_Response_Abstract::sendHeaders()
+    ZF-819 Zend_View / Framework fluent interface improvements.
+    ZF-832 Zend_Controller_Response_Abstract::sendHeaders()
+    ZF-861 Outdated docblock - there is no more token
+    ZF-874 Use Zend::isReadable() in Zend_View's path methods
+    ZF-878 Logic error in Zend_Controller_Response_Abstract::canSendHeaders()
+    ZF-909 Unit Tests fail (Zend/Service/AllTests.php)
+    ZF-910 new _forward method does not set dispatched to false
+    ZF-917 Zend_Controller Unit Tests failing
+- Zend_Date
+    ZF-779 Adding a year in a leap year only adds 365 days
+    ZF-784 Support using default date formats to create dates
+    ZF-785 Incorrect date results from using Zend_Date::DATES
+    ZF-790 camelCase for SunRise/SunSet
+    ZF-795 Zend_Measure failed type extraction
+    ZF-823 isTomorrow() and isYesterday() do not work as expected
+    ZF-828 Extreme Date Values
+    ZF-838 Basic Zend_Date construction per Manual fails
+    ZF-863 testLoose(Zend_DateTest) failing
+    ZF-886 DAY_SHORT, MONTH_SHORT - consistency problem
+    ZF-899 new Zend_Date() fails to throw errors 
+    ZF-912 Zend_Date Unit Tests failing
+- Zend_Db
+    Improved unit tests.
+    ZF-31 PostgreSQL: implement describeTable() method
+    ZF-36 Specify fetch mode for internal Zend_Db queries
+    ZF-49 Zend_DB_Adapter_Abstract should has a function like checkConnection()
+    ZF-147 Need getConnection() to create and return connection 
+    ZF-189 Oracle: Zend_Db_Adapter_Oracle->listTables() has undefined variable
+    ZF-192 Zend_Db_Adapter_Oracle->describeTable() bad sql request
+    ZF-223 Zend_Db_Adapter_Pdo Bind problems
+    ZF-279 Zend_Db_Statement::fetchColumn() fetches all rows 
+    ZF-409 Zend_Db_Adapters should verify extensions are loaded 
+    ZF-787 MS SQL Server: bug in Zend_Db_Adapter_Pdo_Mssql::limit()
+    ZF-825 Zend_Db_Adapter_Pdo_Mysql not compatible with Zend_Db_Adapter_Abstract
+    ZF-826 Doesn't work Zend_Db_Adapter_Pdo_Mysql::describeTable()
+    ZF-831 MySQL describeTable still doesn't work correctly
+    ZF-839 Notices in Zend_Db_Adapter_Pdo_Mysql::describeTable()
+    ZF-840 Microsoft: describeTable() references invalid fields
+    ZF-848 DB2 adapter fetchAssoc() is just like fetchAll()
+    ZF-849 DB2 statement fetchAll() fetches only last row
+    ZF-855 PostgreSQL: a notice in describeTable()
+    ZF-871 DB2 lastInsertId() gives wrong results in concurrent environment
+    ZF-876 Zend_Db_Table->insert() causes an exception in lastInsertId()
+    ZF-898 PostgreSQL: quoteIdentifier() is wrong!
+- Zend_Db_Adapter_Xml
+    ZF-510 Zend_Db_Xml docblock missing @category, incorrect @package
+- Zend_Db_Select
+    Improved unit tests and documentation.
+    ZF-28 won't select table-specific columns
+    ZF-197 new method reset()
+    ZF-204 Properly supporting table aliases in Zend_Db_Select
+    ZF-464 incorrectly splits ORDER string that contain commas
+    ZF-635 getter methods to return individual parts
+    ZF-873 Query directly from object
+    ZF-887 support for queries without a FROM clause
+    ZF-888 support for joins without a condition in the ON clause
+    ZF-889 support join types RIGHT, FULL, CROSS, and NATURAL
+    ZF-890 eliminate SQL-89 join syntax
+    ZF-891 incorrectly splits GROUP BY that contain commas
+    ZF-896 wrong resulting SQL query string
+- Zend_Environment
+    New component to give diagnostic information about PHP (incubator).
+- Zend_Feed
+    ZF-911 Feed delete() method does not handle redirects
+- Zend_Filter / Zend_Validate
+    Moved new object-oriented design from incubator to core.
+    ZF-84 Zend_Filter::isHostname does not support one character parts
+    ZF-366 Unit Tests for Zend_Filter_Input
+    ZF-487 [Coding Standard] TRUE, FALSE, NULL
+    ZF-730 Test for Content Length for Zend_Filter_Input
+    ZF-774 function isLengthBetween (for strings)
+    ZF-872 Unit Tests failing - File not found
+    ZF-895 Various Date related Unit Tests failing
+    ZF-918 Notice: Undefined variable for Zend_Validate Unit Tests
+- Zend_Gdata
+    ZF-750 ob capturing can be removed from getAuthSubSessionToken
+    ZF-852 GData Google Base sample crashes on getFeed() 
+- Zend_Http_Client
+    ZF-789 Spaces in Set-Cookie Header
+    ZF-901 Zend_Http_Client_Adapter_Socket::request causes infinite loop 
+- Zend_Locale
+    ZF-702 Zend_Locale_Format : supporting number scripts 
+    ZF-731 Define own formats
+    ZF-756 toNumberSystem() does not detect spelling mistakes in $from and $to
+    ZF-770 Zend_Locale unit tests crash
+    ZF-772 API method name improvement: toNumberSystem() => convertNumerals()
+    ZF-793 formating fails using toNumber()
+    ZF-856 Zend_LocaleTest Test failing
+    ZF-883 getDate() / _parseDate() automatically attempt to fix invalid dates
+    ZF-894 Zend_Locale_FormatTest failing
+- Zend_Log
+    New object-oriented design for this class (incubator)
+    ZF-728 Wrong use of Zend_Db_Adapter_Abstract::insert() 
+- Zend_Mail
+    New Zend_Mail_Read features moved from incubator to core.
+    ZF-788 Call to undefined function Zend_Mail_Exception()
+    ZF-857 parse error in Zend_Mail_Client_Smtp_Auth_Crammd5
+- Zend_Measure
+    ZF-854 Zend_Measure_NumberTest tests failing
+- Zend_Pdf
+    ZF-18 Translate font changes in Zend_Pdf English documentation 
+- Zend_Rest_Client / Zend_Rest_Server
+    Moved from incubator to core.
+    ZF-125 _prepareRest in Zend_Service_Rest has too many required arguments 
+    ZF-200 restPost doesn't set argument 2 for _prepareRest() 
+    ZF-648 Support proxy servers
+    ZF-650 Resolve redundant REST client class
+    ZF-754 Zend_Rest_Server::_handleStruct() should be recursive
+- Zend_Search_Lucene
+    New feature to index HTML files.
+    ZF-76 Zend_Search_Lucene don't index polish chars in UTF-8 (TRAC#83)
+    ZF-90 memory segmen storage provider
+    ZF-265 Document character escaping query parser feature (Changeset [220])
+    ZF-336 Detected an illegal character in input string
+    ZF-549 Can't create proper _0.cfs file
+    ZF-821 Default query parser boolean operator
+    ZF-865 Boolean queries search optimization.
+    ZF-866 Query optimization
+    ZF-919 Dictionary index file prefetching may improve performance.
+    ZF-920 Performance improvement
+- Zend_Service_(all)
+    ZF-649 Support proxy servers
+- Zend_Service_Akismet
+    New web service component.
+- Zend_Session
+    Refactored design.
+    ZF-799 Zend_Session_Core::setId() does not report failure 
+    ZF-906 $_SESSION might be modified after Zend_Session::writeClose()
+- Zend_Translate
+    Moved from incubator to core.
+- Zend_XmlRpc_Client / Zend_XmlRpc_Server
+    ZF-771 XmlRpc value encoding can cause conflicts with server and client
+- Total of 119 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 0.7.0 / 18-Jan-2007=
 - Zend.php:
     ZF-35 ZF Version check
