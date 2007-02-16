@@ -149,8 +149,8 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($mock->called);
         $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
         $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail2@example.com>', $mock->header);
-        $this->assertContains('Cc: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail3@example.com>', $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail2@example.com>', $mock->header);
+        $this->assertContains('Cc: "=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail3@example.com>', $mock->header);
         $this->assertContains('Subject: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
         $this->assertContains('X-MyTest:', $mock->header);
         $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
@@ -181,14 +181,14 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($mock->called);
         $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
         $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('Cc: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail3@example.com>', $mock->header);
+        $this->assertContains('Cc: "=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail3@example.com>', $mock->header);
         $this->assertContains('X-MyTest:', $mock->header);
         $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
         $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
 
         $this->assertNotContains('Subject: ', $mock->header);
         $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->subject);
-        $this->assertContains('=?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail2@example.com>', $mock->recipients);
+        $this->assertContains('"=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail2@example.com>', $mock->recipients, $mock->recipients);
     }
 
     /**
@@ -217,12 +217,12 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // check body
         // search for first boundary
         $p1 = strpos($mock->body, "--$boundary\n");
-        $this->assertNotEquals(null, $p1);
+        $this->assertNotNull($p1, $boundary . ': ' . $mock->body);
 
         // cut out first (Text) part
         $start1 = $p1 + 3 + strlen($boundary);
         $p2 = strpos($mock->body, "--$boundary\n", $start1);
-        $this->assertNotEquals(null, $p2);
+        $this->assertNotNull($p2);
 
         $partBody1 = substr($mock->body, $start1, ($p2 - $start1));
         $this->assertContains('Content-Type: text/plain', $partBody1);
@@ -232,7 +232,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // search for end boundary
         $start2 = $p2 + 3 + strlen($boundary);
         $p3 = strpos($mock->body, "--$boundary--");
-        $this->assertNotEquals(null, $p3);
+        $this->assertNotNull($p3);
 
         $partBody2 = substr($mock->body, $start2, ($p3 - $start2));
         $this->assertContains('Content-Type: text/html', $partBody2);
@@ -267,12 +267,12 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // check body
         // search for first boundary
         $p1 = strpos($mock->body, "--$boundary\n");
-        $this->assertNotEquals(null, $p1);
+        $this->assertNotNull($p1);
 
         // cut out first (Text) part
         $start1 = $p1 + 3 + strlen($boundary);
         $p2 = strpos($mock->body, "--$boundary\n", $start1);
-        $this->assertNotEquals(null, $p2);
+        $this->assertNotNull($p2);
 
         $partBody1 = substr($mock->body, $start1, ($p2 - $start1));
         $this->assertContains('Content-Type: text/plain', $partBody1);
@@ -282,7 +282,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // search for end boundary
         $start2 = $p2 + 3 + strlen($boundary);
         $p3 = strpos($mock->body, "--$boundary--");
-        $this->assertNotEquals(null, $p3);
+        $this->assertNotNull($p3);
 
         $partBody2 = substr($mock->body, $start2, ($p3 - $start2));
         $this->assertContains('Content-Type: image/gif', $partBody2);
@@ -321,12 +321,12 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // check body
         // search for first boundary
         $p1 = strpos($mock->body, "--$boundary\n");
-        $this->assertNotEquals(null, $p1);
+        $this->assertNotNull($p1);
 
         // cut out first (multipart/alternative) part
         $start1 = $p1 + 3 + strlen($boundary);
         $p2 = strpos($mock->body, "--$boundary\n", $start1);
-        $this->assertNotEquals(null, $p2);
+        $this->assertNotNull($p2);
 
         $partBody1 = substr($mock->body, $start1, ($p2 - $start1));
         $this->assertContains('Content-Type: multipart/alternative', $partBody1);
@@ -339,7 +339,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // search for end boundary
         $start2 = $p2 + 3 + strlen($boundary);
         $p3 = strpos($mock->body, "--$boundary--");
-        $this->assertNotEquals(null, $p3);
+        $this->assertNotNull($p3);
 
         $partBody2 = substr($mock->body, $start2, ($p3 - $start2));
         $this->assertContains('Content-Type: image/gif', $partBody2);
