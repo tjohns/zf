@@ -11,7 +11,7 @@
         <title>教程实例</title>
 
         <para>
-		    在初始化Zend_Session时，如果没有指定命名空间，所有的数据将被储存在<code>'Default'</code>命名空间下。下面的例子，演示了默认命名空间<code>'Default'</code>的使用，和怎样计算用户访问页面的次数。为了测试一下这个例子，把下面的代码添加到你的ZF应用程序的引导(bootstrap)文件中：
+		    在初始化Zend_Session时，如果没有指定命名空间，所有的数据将被储存在<code>'Default'</code>命名空间下。<code>Zend_Session</code>不打算直接处理会话命名空间容器的内容，我们可以使用<code>Zend_Session_Namespace</code>。下面的例子，演示了默认命名空间<code>'Default'</code>的使用，和怎样计算用户访问页面的次数。为了测试一下这个例子，把下面的代码添加到你的ZF应用程序的引导(bootstrap)文件中：
         </para>
 
         <example>
@@ -19,8 +19,16 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
+
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+
+    // use the magic method __isset() in Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // first time
+    }
+
     echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
