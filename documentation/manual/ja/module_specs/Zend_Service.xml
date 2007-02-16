@@ -1,18 +1,18 @@
 <sect1 id="zend.service.introduction">
     <title>導入</title>
     <para>
-        <code>Zend_Service</code> は、(XML-RPC などの)
-        ウェブサービスの実装の基盤となる抽象クラスです。
+        <code>Zend_Service</code> は、SOAP や REST
+        などのウェブサービスの実装基盤となる抽象クラスです。
     </para>
     <para>
-        <code>Zend_Service</code> では、
-        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>
-        を使用した REST ベースのウェブサービスをサポートすることができます。
+        汎用的な XML ベースの REST サービスのサポートが必要なら、
+        <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link> を参照ください。
     </para>
     <para>
-        <code>Zend_Service</code> を継承したクラスや <code>Zend_Service_Rest</code>
+        <code>Zend_Service</code> を継承したクラスや <code>Zend_Rest_Client</code>
         を使用して REST ベースのウェブサービスにアクセスすることに加え、
         Zend では有名なウェブサービスもサポートしています。たとえば
+        <link linkend="zend.service.akismet">Akismet</link>、
         <link linkend="zend.service.amazon">Amazon</link>、
         <link linkend="zend.service.flickr">Flickr</link> および
         <link linkend="zend.service.yahoo">Yahoo!</link> などです。
