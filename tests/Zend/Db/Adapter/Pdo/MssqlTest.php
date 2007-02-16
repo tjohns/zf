@@ -41,11 +41,13 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME,
-            'port'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT,
             'username' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME,
             'password' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD,
             'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE
         );
+        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT')) {
+            $params['port'] = constant('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT');
+        }
 
         return $params;
     }
