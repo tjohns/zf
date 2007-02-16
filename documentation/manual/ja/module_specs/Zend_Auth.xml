@@ -1,58 +1,70 @@
 <sect1 id="zend.auth.introduction">
 
-    <title>Introduction</title>
+    <title>導入</title>
 
     <para>
-        Zend_Auth provides an API for authentication and includes concrete authentication adapters for
-        common use case scenarios.
+        Zend_Auth は、認証のための API を提供します。
+        また、一般的な使用例に対応する具象認証アダプタも用意しています。
     </para>
 
     <note>
         <para>
-            Zend_Auth currently includes a
-            <link linkend="zend.auth.adapter.digest">digest authentication adapter</link>
-            as a simple proof-of-concept for the design. Additional adapters are planned for development.
-            Interested in using a particular adapter? Your
-            <ulink url="http://framework.zend.com/wiki/x/qx4">voting for an adapter</ulink> and
-            <ulink url="http://framework.zend.com/wiki/x/GgE">contributions</ulink> are most welcome!
+            Zend_Auth には、
+            <link linkend="zend.auth.adapter.digest">ダイジェスト認証用のアダプタ</link>
+            だけが含まれています。これは、Zend_Auth の考え方を説明するためのシンプルな設計のアダプタです。
+            今後、さらにいろいろなアダプタを開発する予定です。
+            「こんなアダプタがほしい」っていう方はいますか? そんな皆さんは、ぜひ
+            <ulink url="http://framework.zend.com/wiki/x/qx4">投票に参加</ulink>
+            してください。あるいは、
+            <ulink url="http://framework.zend.com/wiki/x/GgE">自分でつくってしまう</ulink>
+            のも大歓迎です!
         </para>
     </note>
 
     <para>
-        Zend_Auth is concerned only with <emphasis role="strong">authentication</emphasis> and not with
-        <emphasis role="strong">authorization</emphasis>. Authentication is loosely defined as determining
-        whether an entity actually is what it purports to be (i.e., identification), based on some set of
-        credentials. Authorization, the process of deciding whether to allow an entity access to, or to
-        perform operations upon, other entities is outside the scope of Zend_Auth. For more information about
-        authorization and access control with the Zend Framework, please see
-        <link linkend="zend.acl">Zend_Acl</link>.
+        Zend_Auth が扱うのはあくまでも <emphasis role="strong">認証 (authentication)</emphasis>
+        であり、<emphasis role="strong">承認 (authorization)</emphasis> ではありません。
+        認証 (authentication) とはつまり、あるエンティティが何者であるのかを示す
+        (識別する) ことです。これを、なんらかの条件にもとづいて行います。
+        承認 (authorization) とは、あるエンティティが他のエンティティに対して
+        アクセスしたり何らかの操作をしたりする権限があるかどうかを判定する処理です。
+        これは Zend_Auth の対象外となります。
+        Zend Framework における認証やアクセス制御の詳細については、
+        <link linkend="zend.acl">Zend_Acl</link> を参照ください。
     </para>
 
     <sect2 id="zend.auth.introduction.adapters">
 
-        <title>Adapters</title>
+        <title>アダプタ</title>
 
         <para>
-            A Zend_Auth adapter is used to authenticate against a particular type of authentication service,
-            such as LDAP, RDBMS, or file-based storage. Different adapters are likely to have vastly different
-            options and behaviors, but some basic things are common among adapters. For example, accepting
-            authentication credentials (including a purported identity), authenticating, and returning some
-            result are common to Zend_Auth adapter.
+            Zend_Auth アダプタの使用目的は、
+            LDAP や RDBMS あるいはファイル
+            のような特定の型の認証サービスに対する認証を行うことです。
+            アダプタによってそのオプションや挙動は大きくことなるでしょうが、
+            いくつかの基本処理は、あらゆるアダプタで共通となります。
+            たとえば認証条件 (いわゆる ID) を受け取り、認証を行い、
+            何らかの結果を返すという処理は、すべての Zend_Auth アダプタで共通です。
         </para>
 
         <para>
-            Each Zend_Auth authentication adapter class implements <code>Zend_Auth_Adapter_Interface</code>.
-            This interface defines one method, <code>authenticate()</code>, that an adapter class implements
-            for authentication purposes. Each adapter class must be prepared prior to calling
-            <code>authenticate()</code>. This means that each adapter provides the ability to set up
-            credentials (e.g., username and password) and to define values for adapter-specific options, such
-            as database connection settings for a database table adapter.
+            各 Zend_Auth 認証アダプタは、<code>Zend_Auth_Adapter_Interface</code>
+            を実装しています。このインターフェイスで定義されているメソッドが
+            <code>authenticate()</code> で、アダプタクラスはこれを実装して認証を行います。
+            各アダプタクラスは、<code>authenticate()</code>
+            をコールする前に準備を済ませておく必要があります。
+            つまり、アダプタ側で用意しなければならない機能としては
+            認証条件 (ユーザ名およびパスワードなど) の取得や
+            アダプタ固有のオプションの設定
+            (データベースのテーブルを使用するアダプタならデータベースへの接続設定など)
+            があるということです。
         </para>
 
         <para>
-            The following is an example authentication adapter that requires a username and password to be set
-            for authentication. Other details, such as how the authentication service is queried, have been
-            omitted for brevity:
+            以下にあげるのは認証アダプタのサンプルで、
+            これはユーザ名とパスワードを受け取って認証を行います。
+            その他の詳細、例えば認証サービスへの実際の問い合わせなどは、
+            例を簡潔にするため省略しています。
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Interface.php';
@@ -60,7 +72,7 @@ require_once 'Zend/Auth/Adapter/Interface.php';
 class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
     /**
-     * Sets username and password for authentication
+     * 認証用のユーザ名とパスワードを設定します
      *
      * @return void
      */
@@ -70,9 +82,9 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * Performs an authentication attempt
+     * 認証を試みます
      *
-     * @throws Zend_Auth_Adapter_Exception If authentication cannot be performed
+     * @throws Zend_Auth_Adapter_Exception が、認証処理をできなかった場合に発生します
      * @return Zend_Auth_Result
      */
     public function authenticate()
@@ -81,40 +93,43 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     }
 }]]></programlisting>
 
-            As indicated in its docblock, <code>authenticate()</code> must return an instance of
-            <code>Zend_Auth_Result</code> (or a class derived from <code>Zend_Auth_Result</code>). If for some
-            reason performing an authentication query is impossible, <code>authenticate()</code> should throw
-            an exception that derives from <code>Zend_Auth_Adapter_Exception</code>.
+            docblock コメントで説明しているとおり、
+            <code>authenticate()</code> は
+            <code>Zend_Auth_Result</code> (あるいは <code>Zend_Auth_Result</code> の派生クラス)
+            のインスタンスを返す必要があります。何らかの理由で認証の問い合わせができなかった場合は、
+            <code>authenticate()</code> は
+            <code>Zend_Auth_Adapter_Exception</code>
+            から派生した例外をスローしなければなりません。
         </para>
 
     </sect2>
 
     <sect2 id="zend.auth.introduction.results">
 
-        <title>Results</title>
+        <title>結果</title>
 
         <para>
-            Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
-            <code>authenticate()</code> in order to represent the results of an authentication attempt.
-            Adapters populate the <code>Zend_Auth_Result</code> object upon construction, so that the
-            following three methods provide a basic set of operations common to the results of Zend_Auth
-            adapters:
+            Zend_Auth アダプタは、<code>authenticate()</code> の結果として
+            <code>Zend_Auth_Result</code> のインスタンスを返します。
+            これにより、認証を試みた結果を表します。アダプタのインスタンスを作成した際に
+            <code>Zend_Auth_Result</code> オブジェクトが作成され、
+            以下の三つのメソッドで Zend_Auth アダプタの結果に対する共通の操作ができます。
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>isValid()</code> - returns true if and only if the result represents a
-                        successful authentication attempt
+                        <code>isValid()</code> - その結果が
+                        認証の成功を表している場合にのみ true を返します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getIdentity()</code> - returns the identity of the authentication attempt
+                        <code>getIdentity()</code> - 認証を試みた ID 情報を返します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getMessages()</code> - returns an array of messages regarding a failed
-                        authentication attempt
+                        <code>getMessages()</code> - 認証に失敗した場合に、
+                        関連するメッセージの配列を返します。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -124,125 +139,130 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 
     <sect2 id="zend.auth.introduction.persistence">
 
-        <title>Identity Persistence</title>
+        <title>ID の永続性</title>
 
         <para>
-            Authenticating a request that includes authentication credentials is useful per se, but it is also
-            important to support maintaining the authenticated identity without having to present the
-            authentication credentials with each request.
+            認証情報 (パスワードなど) を含む認証を要求するのは便利なものですが、
+            リクエストごとにいちいち認証情報を引き回すのではなく、
+            認証済みの ID を保持し続けることも重要です。
         </para>
 
         <para>
-            HTTP is a stateless protocol, however, and techniques such as cookies and sessions have been
-            developed in order to facilitate maintaining state across multiple requests in server-side web
-            applications. <link linkend="zend.session">Zend_Session</link> is used by default within Zend_Auth
-            to provide persistent storage of the identity from a successful authentication attempt using the
-            PHP session.
+            HTTP はステートレスなプロトコルです。しかし、
+            クッキーやセッションといった技術によって、
+            サーバサイドのウェブアプリケーションでも
+            複数リクエスト間でステート (状態) を保持し続けられるようになりました。
+            Zend_Auth は、デフォルトで
+            <link linkend="zend.session">Zend_Session</link> を使用しており、
+            認証に成功した後の ID 情報を PHP のセッションで永続管理するようにしています。
         </para>
 
         <para>
-            Upon a successful authentication attempt, <code>Zend_Auth::authenticate()</code> stores the
-            identity from the authentication result into persistent storage. By default,
-            <code>Zend_Auth</code> uses a storage class based on
-            <link linkend="zend.session">Zend_Session</link>. The storage class may be changed by providing a
-            different storage object to <code>Zend_Auth::setStorage()</code>.
+            認証に成功すると、<code>Zend_Auth::authenticate()</code> は
+            認証結果の ID を永続ストレージに保存します。デフォルトでは、
+            <code>Zend_Auth</code> が使用するストレージクラスは
+            <link linkend="zend.session">Zend_Session</link> にもとづいたものとなります。
+            ストレージクラスを変更するには、
+            <code>Zend_Auth::setStorage()</code> でストレージオブジェクトを指定します。
         </para>
 
         <para>
-            If automatic persistent storage of the identity is not appropriate for a particular use case, then
-            developers may forgo using the <code>Zend_Auth</code> class altogether, instead using an adapter
-            class directly.
+            自動的に永続ストレージに ID を保存するのはまずい場合もあるでしょう。
+            そんな場合は、<code>Zend_Auth</code> クラスを使用せずに
+            アダプタクラスを直接利用します。
         </para>
 
     </sect2>
 
     <sect2 id="zend.auth.introduction.using">
 
-        <title>Using Zend_Auth</title>
+        <title>Zend_Auth の使用法</title>
 
         <para>
-            There are two provided ways to use Zend_Auth adapters:
+            Zend_Auth の使用法には、次の二通りがあります。
             <orderedlist>
             <listitem>
                 <para>
-                    indirectly, through <code>Zend_Auth::authenticate()</code>
+                    間接的に <code>Zend_Auth::authenticate()</code> 経由で使用する
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    directly, through the adapter's <code>authenticate()</code> method
+                    直接、アダプタの <code>authenticate()</code> メソッドを使用する
                 </para>
             </listitem>
             </orderedlist>
         </para>
 
         <para>
-            The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
-            the <code>Zend_Auth</code> class:
+            次の例は、Zend_Auth アダプタを間接的に
+            <code>Zend_Auth</code> クラスから使用するものです。
 
             <programlisting role="php"><![CDATA[<?php
-// Get a reference to the Singleton instance of Zend_Auth
+// Zend_Auth のシングルトンインスタンスへの参照を取得します
 require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
-// Set up the authentication adapter
+// 認証アダプタを設定します
 $authAdapter = new MyAuthAdapter($username, $password);
 
-// Attempt authentication, saving the result
+// 認証を試み、その結果を取得します
 $result = $auth->authenticate($authAdapter);
 
 if (!$result->isValid()) {
-    // Authentication failed; print the reasons why
+    // 認証に失敗したので、原因を表示します
     foreach ($result->getMessages() as $message) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded; the identity ($username) is stored in the session
+    // 認証に成功しました。ID ($username) がセッションに保存されます
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
 }]]></programlisting>
         </para>
 
         <para>
-            Once authentication has been attempted in a request, as in the above example, it is a simple
-            matter to check whether a successfully authenticated identity exists:
+            上の例においてリクエスト内で認証が行われると、
+            認証に成功した際にその ID を取得するのは簡単なことです。
             <programlisting role="php"><![CDATA[<?php
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
-    // Identity exists; get it
+    // ID があるのでそれを取得します
     $identity = $auth->getIdentity();
 }]]></programlisting>
         </para>
 
         <para>
-            To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
-            This typically would be used for implementing an application "logout" operation:
+            永続ストレージから認証 ID を削除するには、単純に
+            <code>clearIdentity()</code> メソッドを使用します。
+            これは、アプリケーションの "ログアウト" 処理を実装するためのものです。
             <programlisting role="php"><![CDATA[<?php
 Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
-            When the automatic use of persistent storage is inappropriate for a particular use case, a
-            developer may simply bypass the use of the <code>Zend_Auth</code> class, using an adapter class
-            directly. Direct use of an adapter class involves configuring and preparing an adapter object and
-            then calling its <code>authenticate()</code> method. Adapter-specific details are discussed in the
-            documentation for each adapter. The following example directly utilizes
-            <code>MyAuthAdapter</code>:
+            自動的に永続ストレージが用いられるのがまずい場合もあるでしょう。
+            そんな場合は、<code>Zend_Auth</code> クラスをバイパスして
+            アダプタクラスを直接使用します。
+            アダプタクラスを直接使用するとは、アダプタオブジェクトの設定と準備を行い、
+            その <code>authenticate()</code> メソッドをコールするということです。
+            アダプタ固有の詳細情報については、各アダプタのドキュメントで説明します。
+            以下の例は、<code>MyAuthAdapter</code> を直接使用するものです。
 
             <programlisting role="php"><![CDATA[<?php
-// Set up the authentication adapter
+// 認証アダプタを設定します
 $authAdapter = new MyAuthAdapter($username, $password);
 
-// Attempt authentication, saving the result
+// 認証を試み、その結果を取得します
 $result = $authAdapter->authenticate();
 
 if (!$result->isValid()) {
-    // Authentication failed; print the reasons why
+    // 認証に失敗したので、原因を表示します
     foreach ($result->getMessages() as $message) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded
+    // 認証に成功しました
     // $result->getIdentity() === $username
 }]]></programlisting>
         </para>
