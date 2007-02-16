@@ -17,7 +17,7 @@
         </para>
         <example>
             <title>Get all posts</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
@@ -26,40 +26,47 @@ foreach ($posts as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.retrieving_posts">
         <title>Retrieving posts</title>
-        <table>
-            <title>Methods for retrieving posts</title>
-            <tgroup cols="2">
-                <thead>
-                    <row>
-                        <entry>Name</entry>
-                        <entry>Description</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry>getAllPosts</entry>
-                        <entry>Get all posts</entry>
-                    </row>
-                    <row>
-                        <entry>getRecentPosts</entry>
-                        <entry>Get recent posts</entry>
-                    </row>
-                    <row>
-                        <entry>getPosts</entry>
-                        <entry>Get post by given date</entry>
-                    </row>
-                </tbody>
-            </tgroup>
-        </table>
         <para>
-            All of these methods return <code>Zend_Service_Delicious_PostList</code> object
-            with retrieving posts in it.
+            Class provides three methods for post retrieving: <code>getPosts</code>, 
+            <code>getRecentPosts</code> and <code>getAllPosts</code>. All of these 
+            methods return <code>Zend_Service_Delicious_PostList</code> object which 
+            holds all retrieved posts.
         </para>
+        <programlisting role="php"><![CDATA[
+/**
+ * Get posts matching the arguments. If no date or url is given, most recent date will be used.
+ *
+ * @param string $tag Optional filtering by tag
+ * @param Zend_Date $dt Optional filtering by date
+ * @param string $url Optional filtering by url
+ * @return Zend_Service_Delicious_PostList
+ */
+public function getPosts($tag = null, $dt = null, $url = null);
+            ]]></programlisting>
+            <programlisting role="php"><![CDATA[
+/**
+ * Get recent posts
+ *
+ * @param string $tag   Optional filtering by tag
+ * @param string $count Maximal number of posts to be returned (default 15)
+ * @return Zend_Service_Delicious_PostList
+ */
+public function getRecentPosts($tag = null, $count = 15);
+        ]]></programlisting>
+        <programlisting role="php"><![CDATA[
+/**
+ * Get all posts
+ *
+ * @param string $tag Optional filtering by tag
+ * @return Zend_Service_Delicious_PostList
+ */
+public function getAllPosts($tag = null);
+        ]]></programlisting>
     </sect2>
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
@@ -69,7 +76,7 @@ foreach ($posts as $post) {
         </para>
         <example>
             <title>Accessing post lists</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
@@ -78,14 +85,14 @@ echo count($posts);
 
 // iterate over posts
 foreach ($posts as $post) {
-	echo "--\n";
-	echo "Title: {$post->getTitle()}\n";
-	echo "Url: {$post->getUrl()}\n";
+    echo "--\n";
+    echo "Title: {$post->getTitle()}\n";
+    echo "Url: {$post->getUrl()}\n";
 }
 
 // get post as from the array
 echo $posts[0]->getTitle();
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
         <note>
             <para>
@@ -99,7 +106,7 @@ echo $posts[0]->getTitle();
         <title>Editing posts</title>
         <example>
             <title>Post editing</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
@@ -107,21 +114,21 @@ $posts = $delicious->getPosts();
 $posts[0]->setTitle('New title');
 // save changes
 $posts[0]->save();
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
         <para>
            Every setter method returns the post so you can chain method calls.
         </para>
         <example>
             <title>Method call chaining</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('New title')
          ->setNotes('New notes')
          ->save();
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.deleting_posts">
@@ -132,7 +139,7 @@ $posts[0]->setTitle('New title')
         </para>
         <example>
             <title>Deleting posts</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // by specifying date
@@ -144,7 +151,7 @@ $posts[0]->delete();
 
 // the second way actually does this
 $delicious->deletePost($posts[0]->getUrl());
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.adding_posts">
@@ -156,21 +163,26 @@ $delicious->deletePost($posts[0]->getUrl());
         </para>
         <example>
             <title>Adding a post</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 
-// create a new post
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
-$newPost->setNotes('Zend Framework Home page');
-$newPost->save();
-?>]]>       </programlisting>
+// create a new post and save it (with method call chaining)
+$delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
+          ->setNotes('Zend Framework Homepage')
+          ->save();
+
+// create a new post and save it  (without method call chaining)
+$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com'); 
+$newPost->setNotes('Zend Framework Homepage'); 
+$newPost->save(); 
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.tags">
         <title>Tags</title>
         <example>
             <title>Tags</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all tags
@@ -178,14 +190,14 @@ print_r($delicious->getTags());
 
 // rename tag ZF to zendFramework
 $delicious->renameTag('ZF', 'zendFramework');
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.bundles">
         <title>Bundles</title>
         <example>
             <title>Bundles</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all bundles
@@ -196,8 +208,7 @@ $delicious->deleteBundle('someBundle');
 
 // add bundle
 $delicious->addBundle('newBundle', array('tag1', 'tag2'));
-
-?>]]>       </programlisting>
+            ]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.public_data">
@@ -212,24 +223,29 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
                     <row>
                         <entry>Name</entry>
                         <entry>Description</entry>
+                        <entry>Return type</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>getUserFans</entry>
                         <entry>Retrieves fans of a user</entry>
+                        <entry>Array</entry>
                     </row>
                     <row>
                         <entry>getUserNetwork</entry>
                         <entry>Retrieves network of a user</entry>
+                        <entry>Array</entry>
                     </row>
                     <row>
                         <entry>getUserPosts</entry>
                         <entry>Retrieves posts of a user</entry>
+                        <entry>Zend_Service_Delicious_PostList</entry>
                     </row>
                     <row>
                         <entry>getUserTags</entry>
                         <entry>Retrieves tags of a user</entry>
+                        <entry>Array</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -242,19 +258,19 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
         </note>
         <example>
             <title>Retrieving public data</title>
-            <programlisting><![CDATA[<?php
+            <programlisting><![CDATA[
 // username and password are not required
 $delicious = new Zend_Service_Delicious();
 
 // get fans of user someUser
-print_r($delicious-> getUserFans('someUser'));
+print_r($delicious->getUserFans('someUser'));
 
 // get network of user someUser
-print_r($delicious-> getUserNetwork('someUser'));
+print_r($delicious->getUserNetwork('someUser'));
 
 // get tags of user someUser
-print_r($delicious-> getUserTags('someUser'));
-?>]]>       </programlisting>
+print_r($delicious->getUserTags('someUser'));
+            ]]></programlisting>
         </example>
         <sect3 id="zend.service.delicious.public_data.posts">
             <title>Public posts</title>
