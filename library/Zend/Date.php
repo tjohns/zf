@@ -1821,7 +1821,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::DATES :
                 try {
-                    $parsed = Zend_Locale_Format::getFixedDate($date, null, $locale);
+                    $parsed = Zend_Locale_Format::getCorrectableDate($date, null, $locale);
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2205,7 +2205,7 @@ class Zend_Date extends Zend_Date_DateObject {
             default :
                 if (!is_numeric($date)) {
                     try {
-                        $parsed = Zend_Locale_Format::getFixedDate($date, $part, $locale);
+                        $parsed = Zend_Locale_Format::getCorrectableDate($date, $part, $locale);
                         if ($calc == 'set') {
                             if (isset($parsed['month'])) {
                                 --$parsed['month'];
@@ -2469,7 +2469,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         } else {
-            $parsed = Zend_Locale_Format::getFixedDate($date, $format, $locale);
+            $parsed = Zend_Locale_Format::getCorrectableDate($date, $format, $locale);
             $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR);
             $date->set($parsed['month'], Zend_Date::MONTH);

@@ -795,7 +795,7 @@ class Zend_Locale_Format
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array                        Possible array members: day, month, year, hour, minute, second, fixed, format
      */
-    public static function getFixedDate($date, $format = null, $locale = null)
+    public static function getCorrectableDate($date, $format = null, $locale = null)
     {
         if (empty($format)) {
             $format = self::getDateFormat($locale);
@@ -838,10 +838,10 @@ class Zend_Locale_Format
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing the date string
      * @return boolean
      */
-    public static function isFixedDate($date, $format = null, $locale = null)
+    public static function isCorrectableDate($date, $format = null, $locale = null)
     {
         try {
-            $date = self::getFixedDate($date, $format, $locale);
+            $date = self::getCorrectableDate($date, $format, $locale);
         } catch (Exception $e) {
             return false;
         }

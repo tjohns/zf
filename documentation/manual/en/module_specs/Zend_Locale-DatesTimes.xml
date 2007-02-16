@@ -29,7 +29,7 @@
         </para>
 
         <para>
-            Also, the sister method <code>getFixedDate()</code> adds a key 'fixed' with a whole number value indicating
+            Also, the sister method <code>getCorrectableDate()</code> adds a key 'fixed' with a whole number value indicating
             if the input date string required "fixing" by rearranging the day, month, or year in the input to fit the
             format used.
         </para>
@@ -150,7 +150,7 @@ Array
 )
 
 // alternatively, some types of problems with input data can be automatically corrected
-$date2 = Zend_Locale_Format::getFixedDate('04.13.2006', 'dd.MM.yyyy');
+$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', 'dd.MM.yyyy');
 
 print_r($date); // outputs:
 
@@ -167,7 +167,7 @@ Array
 
         <para>
             Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
-            strings adhering to that locale's format. The method <code>getFixedDate()</code> uses simple tests to
+            strings adhering to that locale's format. The method <code>getCorrectableDate()</code> uses simple tests to
             determine if the day or month is not valid, and then applies heuristics to try and correct any detected
             problems.
         </para>
@@ -308,7 +308,7 @@ print_r ($date);
         </note>
 
         <para>
-            The method <code>getFixedDate()</code> uses simple tests to determine if the day or month is not valid, and
+            The method <code>getCorrectableDate()</code> uses simple tests to determine if the day or month is not valid, and
             then applies heuristics to try and correct any detected problems. <code>getDate()</code> automatically
             detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
@@ -318,7 +318,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getFixedDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getCorrectableDate('41.10.20', 'ddMMyy');
 
 // instead of 41 for the day, the 41 will be returned as year value
 print_r ($date);
@@ -333,7 +333,7 @@ print_r ($date);
 
         <para>
             Use <code>isDate()</code> to check if a given string contains a valid date. The <code>isDate()</code> method
-            uses <code>getDate()</code>, not <code>getFixedDate()</code> to avoid returning true when the input fails to
+            uses <code>getDate()</code>, not <code>getCorrectableDate()</code> to avoid returning true when the input fails to
             conform to the date format.
         </para>
 
