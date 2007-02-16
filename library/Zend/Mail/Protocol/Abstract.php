@@ -128,11 +128,11 @@ abstract class Zend_Mail_Protocol_Abstract
     public function __construct($host = '127.0.0.1', $port = null)
     {
         $this->_validHost = new Zend_Validate();
-        $this->_validHost->addValidator(new Zend_Validate_Hostname());
+        $this->_validHost->addValidator(new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_ALL));
 
         if (!$this->_validHost->isValid($host)) {
             require_once 'Zend/Mail/Protocol/Exception.php';
-            throw new Zend_Mail_Protocol_Exception(join(', ', $this->_validHost->getMessage()));
+            throw new Zend_Mail_Protocol_Exception(join(', ', $this->_validHost->getMessages()));
         }
         
         $this->_host = $host;
