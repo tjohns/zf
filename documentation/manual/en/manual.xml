@@ -67,6 +67,13 @@
         &module_specs.Zend_Config_Ini;
         &module_specs.Zend_Config_Xml;
     </chapter>
+    <chapter id="zend.console.getopt">
+        <title>Zend_Console_Getopt</title>
+        &module_specs.Zend_Console_Getopt-Introduction;
+        &module_specs.Zend_Console_Getopt-Rules;
+        &module_specs.Zend_Console_Getopt-Fetching;
+        &module_specs.Zend_Console_Getopt-Configuration;
+    </chapter>
     <chapter id="zend.controller">
         <title>Zend_Controller</title>
         &module_specs.Zend_Controller-Overview;

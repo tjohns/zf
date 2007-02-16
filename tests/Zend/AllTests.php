@@ -11,6 +11,7 @@ require_once 'Zend/Cache/AllTests.php';
 require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/ConfigTest.php';
 require_once 'Zend/Config/AllTests.php';
+require_once 'Zend/Console/GetoptTest.php';
 require_once 'Zend/Controller/AllTests.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
@@ -56,6 +57,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Db_AllTests::suite());
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());
+        $suite->addTestSuite('Zend_Console_GetoptTest');
         $suite->addTest(Zend_Controller_AllTests::suite());
         $suite->addTestSuite('Zend_DateTest');
         $suite->addTest(Zend_Date_AllTests::suite());
