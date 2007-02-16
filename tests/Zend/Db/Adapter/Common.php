@@ -1017,6 +1017,63 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
      */
 
+    public function testTable()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $tab1 = new Zend_Db_Table_ZfTestTable(array('db' => $this->_db));
+
+        $info = $tab1->info();
+        $this->assertThat($info, $this->arrayHasKey('name'));
+        $this->assertThat($info, $this->arrayHasKey('cols'));
+        $this->assertThat($info, $this->arrayHasKey('primary'));
+        $this->assertEquals(self::TABLE_NAME, $this->getIdentifier($info['name']));
+
+        $this->assertThat($info['cols'], $this->arrayHasKey('id'));
+        $this->assertThat($info['cols'], $this->arrayHasKey('title'));
+        $this->assertThat($info['cols'], $this->arrayHasKey('subTitle'));
+        $this->assertThat($info['cols'], $this->arrayHasKey('body'));
+        $this->assertThat($info['cols'], $this->arrayHasKey('date_created'));
+
+        $this->assertEquals('id', $info['primary']);
+    }
+
+    public function testTableFind()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $tab1 = new Zend_Db_Table_ZfTestTable(array('db' => $this->_db));
+
+        $row1 = $tab1->find(1);
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
+
+        $rows = $tab1->find(array(1, 2));
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'));
+    }
+
+    public function testTableRowset()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $tab1 = new Zend_Db_Table_ZfTestTable(array('db' => $this->_db));
+
+        $rows = $tab1->find(array(1, 2));
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'));
+
+        $this->assertTrue($rows->exists());
+
+        $this->assertEquals(2, $rows->count());
+
+        $a = $rows->toArray();
+        $this->assertTrue(is_array($a));
+    }
+
+    public function testTableRow()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $tab1 = new Zend_Db_Table_ZfTestTable(array('db' => $this->_db));
+
+        $row1 = $tab1->find(1);
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
+    }
+
     /**
      * Test the Adapter's update() method.
      * Update a single row and verify that the change was made.
