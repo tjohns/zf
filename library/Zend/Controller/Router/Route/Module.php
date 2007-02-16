@@ -49,8 +49,9 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      */
     protected $_defaults;
 
-    protected $_values = array();
+    protected $_values      = array();
     protected $_moduleValid = false;
+    protected $_keysSet     = false;
     
     /**#@+
      * Array keys to use for module, controller, and action. Should be taken out of request.
@@ -60,6 +61,16 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     protected $_controllerKey = 'controller';
     protected $_actionKey     = 'action';
     /**#@-*/    
+
+    /**
+     * @var Zend_Controller_Dispatcher_Interface
+     */
+    protected $_dispatcher;
+
+    /**
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
 
     /**
      * Constructor
@@ -75,20 +86,32 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
         $this->_defaults = $defaults;
 
         if (isset($request)) {
-            $this->_moduleKey     = $request->getModuleKey();
-            $this->_controllerKey = $request->getControllerKey();
-            $this->_actionKey     = $request->getActionKey();
+            $this->_request = $request;
         }
         
         if (isset($dispatcher)) {
-            $this->_defaults += array(
-                $this->_controllerKey => $dispatcher->getDefaultControllerName(), 
-                $this->_actionKey     => $dispatcher->getDefaultAction(),
-                $this->_moduleKey     => 'default'
-            );
             $this->_dispatcher = $dispatcher;
         }
+    }
 
+    /**
+     * Set request keys based on values in request object
+     * 
+     * @return void
+     */
+    protected function _setRequestKeys()
+    {
+        $this->_moduleKey     = $this->_request->getModuleKey();
+        $this->_controllerKey = $this->_request->getControllerKey();
+        $this->_actionKey     = $this->_request->getActionKey();
+
+        $this->_defaults += array(
+            $this->_controllerKey => $this->_dispatcher->getDefaultControllerName(), 
+            $this->_actionKey     => $this->_dispatcher->getDefaultAction(),
+            $this->_moduleKey     => 'default'
+        );
+
+        $this->_keysSet = true;
     }
 
     /**
@@ -104,6 +127,8 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      */
     public function match($path)
     {
+        $this->_setRequestKeys();
+
         $values = array();
         $params = array();
         $path   = trim($path, self::URI_DELIMITER);
@@ -147,7 +172,10 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      */
     public function assemble($data = array(), $reset = false)
     {
-        
+        if (!$this->_keysSet) {
+            $this->_setRequestKeys();
+        }
+
         $params = $data + $this->_values + $this->_defaults;
         
         $url = '';
