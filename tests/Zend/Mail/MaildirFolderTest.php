@@ -104,7 +104,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Maildir($this->_params);
         try {
-            $this->assertEquals((string)$mail->getFolders()->subfolder, 'subfolder');
+            // explicit call of __toString() needed for PHP < 5.2
+            $this->assertEquals($mail->getFolders()->subfolder->__toString(), 'subfolder');
         } catch (Exception $e) {
             $this->fail('exception raised while selecting existing folder and getting global name');
         }
@@ -135,7 +136,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $found_folders[(string)$folder] = $localName;
+            // explicit call of __toString() needed for PHP < 5.2
+            $found_folders[$folder->__toString()] = $localName;
         }
 
         $this->assertEquals($search_folders, $found_folders);
@@ -156,7 +158,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $found_folders[(string)$folder] = $localName;
+            // explicit call of __toString() needed for PHP < 5.2
+            $found_folders[$folder->__toString()] = $localName;
         }
 
         $this->assertEquals($search_folders, $found_folders);
@@ -175,7 +178,8 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $found_folders[(string)$folder] = $localName;
+            // explicit call of __toString() needed for PHP < 5.2
+            $found_folders[$folder->__toString()] = $localName;
         }
 
         $this->assertEquals($search_folders, $found_folders);

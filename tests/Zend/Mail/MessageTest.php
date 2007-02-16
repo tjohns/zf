@@ -192,7 +192,8 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $message = new Zend_Mail_Message(array('file' => $this->_file));
         foreach (new RecursiveIteratorIterator($message) as $num => $part) {
             if ($num == 1) {
-                $this->assertEquals(substr($part, 0, 14), 'The first part');
+            	// explicit call of __toString() needed for PHP < 5.2
+                $this->assertEquals(substr($part->__toString(), 0, 14), 'The first part');
             }
         }
         $this->assertEquals($part->contentType, 'text/x-vertical');

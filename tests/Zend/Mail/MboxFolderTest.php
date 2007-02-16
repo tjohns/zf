@@ -129,8 +129,9 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
-            $this->assertEquals((string)$mail->getFolders()->subfolder, '/subfolder');
-        } catch (Exception $e) {
+            // explicit call of __toString() needed for PHP < 5.2
+            $this->assertEquals($mail->getFolders()->subfolder->__toString(), DIRECTORY_SEPARATOR . 'subfolder');
+        } catch (Zend_Mail_Exception $e) {
             $this->fail('exception raised while selecting existing folder and getting global name');
         }
     }
@@ -150,9 +151,9 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
-        $search_folders = array('/subfolder'           => 'subfolder',
-                                '/subfolder/test.mbox' => 'test.mbox',
-                                '/test.mbox'           => 'test.mbox');
+        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                     => 'subfolder',
+                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox' => 'test.mbox',
+                                DIRECTORY_SEPARATOR . 'test.mbox'                                     => 'test.mbox');
         $found_folders = array();
 
         foreach ($iterator as $localName => $folder) {
@@ -160,7 +161,8 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $found_folders[(string)$folder] = $localName;
+            // explicit call of __toString() needed for PHP < 5.2
+            $found_folders[$folder->__toString()] = $localName;
         }
 
         $this->assertEquals($search_folders, $found_folders);
@@ -171,9 +173,9 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
-        $search_folders = array('/subfolder'           => 'subfolder',
-                                '/subfolder/test.mbox' => 'test.mbox',
-                                '/test.mbox'           => 'test.mbox');
+        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                     => 'subfolder',
+                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox' => 'test.mbox',
+                                DIRECTORY_SEPARATOR . 'test.mbox'                                     => 'test.mbox');
         $found_folders = array();
 
         foreach ($iterator as $localName => $folder) {
@@ -181,7 +183,8 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $found_folders[(string)$folder] = $localName;
+            // explicit call of __toString() needed for PHP < 5.2
+            $found_folders[$folder->__toString()] = $localName;
         }
 
         $this->assertEquals($search_folders, $found_folders);
