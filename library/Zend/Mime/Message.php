@@ -241,32 +241,32 @@ class Zend_Mime_Message
      */
     public static function createFromMessage($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
+        require_once 'Zend/Mime/Decode.php';
         $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary, $EOL);
 
         $res = new Zend_Mime_Message();
         foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
             $newPart = new Zend_Mime_Part($part);
-            $headersfound = $newPart->getHeadersArray();
-            foreach ($headersfound as $header) {
+            foreach ($part['header'] as $key => $value) {
                 /**
                  * @todo check for characterset and filename
                  */
-                list($key, $value) = $header;
+                // list($key, $value) = $header;
                 switch($key) {
-                    case 'Content-Type':
+                    case 'content-type':
                         $newPart->type = $value;
                         break;
-                    case 'Content-Transfer-Encoding':
+                    case 'content-transfer-encoding':
                         $newPart->encoding = $value;
                         break;
-                    case 'Content-ID':
+                    case 'content-id':
                         $newPart->id = trim($value,'<>');
                         break;
                     case 'Content-Disposition':
                         $newPart->disposition = $value;
                         break;
-                    case 'Content-Description':
+                    case 'content-description':
                         $newPart->description = $value;
                         break;
                     default:
