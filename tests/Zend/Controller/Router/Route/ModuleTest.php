@@ -18,15 +18,19 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
 {
-
+    
+    protected $_request; 
+    protected $_dispatcher; 
+    protected $route; 
+    
     public function setUp()
     {
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
 
-        $dispatcher = $front->getDispatcher();
+        $this->_dispatcher = $front->getDispatcher();
         
-        $dispatcher->setControllerDirectory(array(
+        $this->_dispatcher->setControllerDirectory(array(
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin',
         ));
@@ -37,14 +41,17 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
             'module'     => 'default'
         );
         
-        $request = $front->getRequest();
+        require_once 'Zend/Controller/Request/Http.php';
+        $this->_request = new Zend_Controller_Request_Http();
+        $front->setRequest($this->_request);
         
-        $this->route = new Zend_Controller_Router_Route_Module($defaults, $dispatcher, $request);
+        $this->route = new Zend_Controller_Router_Route_Module($defaults, $this->_dispatcher, $this->_request);
     }
 
     public function testModuleMatch()
     {
         $values = $this->route->match('mod');
+        
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -120,6 +127,36 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($values['foo']));
     }
 
+    public function testModuleMatchWithControlKeysChange()
+    {
+        $this->_request->setModuleKey('m');
+        $this->_request->setControllerKey('c');
+        $this->_request->setActionKey('a');
+        
+        $this->route = new Zend_Controller_Router_Route_Module(array(), $this->_dispatcher, $this->_request);
+        
+        $values = $this->route->match('mod/ctrl');
+        
+        $this->assertType('array', $values);
+        $this->assertSame('mod', $values['m']);
+        $this->assertSame('ctrl', $values['c']);
+        $this->assertSame('index', $values['a']);
+    }
+    
+    public function testModuleMatchWithLateControlKeysChange()
+    {
+        $this->_request->setModuleKey('m');
+        $this->_request->setControllerKey('c');
+        $this->_request->setActionKey('a');
+        
+        $values = $this->route->match('mod/ctrl');
+        
+        $this->assertType('array', $values);
+        $this->assertSame('mod', $values['m']);
+        $this->assertSame('ctrl', $values['c']);
+        $this->assertSame('index', $values['a']);
+    }
+    
     public function testAssembleNoModuleOrController()
     {
         $params = array(
