@@ -35,7 +35,6 @@
         &module_specs.Zend-Introduction;
         &module_specs.Zend-LoadFile;
         &module_specs.Zend-LoadClass;
-        &module_specs.Zend-LoadInterface;
         &module_specs.Zend-IsReadable;
         &module_specs.Zend-Exception;
         &module_specs.Zend-Dump;
@@ -48,6 +47,11 @@
         &module_specs.Zend_Acl;
         &module_specs.Zend_Acl-Refining;
         &module_specs.Zend_Acl-Advanced;
+    </chapter>
+    <chapter id="zend.auth">
+        <title>Zend_Auth</title>
+        &module_specs.Zend_Auth;
+        &module_specs.Zend_Auth_Adapter_Digest;
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
@@ -63,6 +67,13 @@
         &module_specs.Zend_Config_Ini;
         &module_specs.Zend_Config_Xml;
     </chapter>
+    <chapter id="zend.console.getopt">
+        <title>Zend_Console_Getopt</title>
+        &module_specs.Zend_Console_Getopt-Introduction;
+        &module_specs.Zend_Console_Getopt-Rules;
+        &module_specs.Zend_Console_Getopt-Fetching;
+        &module_specs.Zend_Console_Getopt-Configuration;
+    </chapter>
 	<chapter id="zend.controller">
 		<title>Zend_Controller</title>
 		&module_specs.Zend_Controller-Overview;
@@ -71,6 +82,8 @@
         &module_specs.Zend_Controller-ProvidedSubclasses;
         &module_specs.Zend_Controller-ActionController;
 		&module_specs.Zend_Controller-Plugins;
+        &module_specs.Zend_Controller-Modular;
+        &module_specs.Zend_Controller-Exceptions;
         &module_specs.Zend_Controller-Migration;
 	</chapter>
     <chapter id="zend.date">
@@ -79,8 +92,6 @@
         &module_specs.Zend_Date-Basic;
         &module_specs.Zend_Date-Theory;
         &module_specs.Zend_Date-Overview;
-        &module_specs.Zend_Date-Output;
-        &module_specs.Zend_Date-Others;
         &module_specs.Zend_Date-Constants;
     </chapter>
     <chapter id="zend.db">
@@ -106,6 +117,8 @@
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
+        &module_specs.Zend_Filter-FilterChains;
+        &module_specs.Zend_Filter-WritingFilters;
         &module_specs.Zend_Filter_Input;
     </chapter>
     <chapter id="zend.gdata">
@@ -167,11 +180,12 @@
         &module_specs.Zend_Mail-CharacterSets;
         &module_specs.Zend_Mail-Encoding;
         &module_specs.Zend_Mail-SmtpAuthentication;
+        &module_specs.Zend_Mail-SmtpSecure;
+        &module_specs.Zend_Mail_Read;
     </chapter>
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
         &module_specs.Zend_Measure-Introduction;
-        &module_specs.Zend_Measure-Writing;
         &module_specs.Zend_Measure-Creation;
         &module_specs.Zend_Measure-Output;
         &module_specs.Zend_Measure-Edit;
@@ -193,6 +207,12 @@
         &module_specs.Zend_Pdf-Drawing;
         &module_specs.Zend_Pdf-Usage;
     </chapter>
+    <chapter id="zend.rest">
+        <title>Zend_Rest</title>
+        &module_specs.Zend_Rest;
+        &module_specs.Zend_Rest_Client;
+        &module_specs.Zend_Rest_Server;
+    </chapter>
 	<chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
@@ -212,7 +232,7 @@
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
-        &module_specs.Zend_Service_Rest;
+        &module_specs.Zend_Service_Akismet;
         &module_specs.Zend_Service_Amazon;
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
@@ -228,6 +248,14 @@
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
         &module_specs.Zend_Uri;
+    </chapter>
+    <chapter id="zend.validate">
+        <title>Zend_Validate</title>
+        &module_specs.Zend_Validate;
+        &module_specs.Zend_Validate-ValidatorChains;
+        &module_specs.Zend_Validate-WritingValidators;
+        &module_specs.Zend_Validate-EmailAddress;
+        &module_specs.Zend_Validate-Hostname;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
