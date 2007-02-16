@@ -101,15 +101,19 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      */
     protected function _setRequestKeys()
     {
-        $this->_moduleKey     = $this->_request->getModuleKey();
-        $this->_controllerKey = $this->_request->getControllerKey();
-        $this->_actionKey     = $this->_request->getActionKey();
+        if (null !== $this->_request) {
+            $this->_moduleKey     = $this->_request->getModuleKey();
+            $this->_controllerKey = $this->_request->getControllerKey();
+            $this->_actionKey     = $this->_request->getActionKey();
+        }
 
-        $this->_defaults += array(
-            $this->_controllerKey => $this->_dispatcher->getDefaultControllerName(), 
-            $this->_actionKey     => $this->_dispatcher->getDefaultAction(),
-            $this->_moduleKey     => 'default'
-        );
+        if (null !== $this->_dispatcher) {
+            $this->_defaults += array(
+                $this->_controllerKey => $this->_dispatcher->getDefaultControllerName(), 
+                $this->_actionKey     => $this->_dispatcher->getDefaultAction(),
+                $this->_moduleKey     => 'default'
+            );
+        }
 
         $this->_keysSet = true;
     }
