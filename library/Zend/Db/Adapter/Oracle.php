@@ -164,14 +164,14 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Oracle_Exception
      */
-    public function lastInsertId($sequenceName = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Oracle_Exception('You must specify a sequence to lastInsertId() in this adapter');
+        if (!$tableName) {
+            throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
         }
         $this->_connect();
-        $data = $this->fetchOne("SELECT $sequenceName.CURRVAL FROM DUAL");
-        return $data;
+        $data = $this->fetchCol("SELECT $tableName.currval FROM dual");
+        return $data[0]; //we can't fail here, right? if the sequence doesn't exist we should fail earlier.
     }
 
     /**

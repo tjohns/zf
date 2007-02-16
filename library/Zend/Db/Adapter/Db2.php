@@ -359,7 +359,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Db2_Exception
      */
-    public function lastInsertId($sequenceName = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         if (!$this->_connection) {
             $this->_connect();

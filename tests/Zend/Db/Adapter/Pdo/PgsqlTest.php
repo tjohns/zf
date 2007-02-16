@@ -38,6 +38,16 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         return 'pdo_Pgsql';
     }
 
+    /**
+     * @param string The name of the identifier, to be transformed.
+     * @return string The name of a column or table, transformed for the
+     * current adapter.
+     */
+    public function getIdentifier($name)
+    {
+        return strtolower($name);
+    }
+
     function getParams()
     {
         $params = array (
@@ -134,7 +144,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
             'date_created' => '2006-05-03 13:13:13'
         );
         $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
-        $last_insert_id = $this->_db->lastInsertId(self::SEQUENCE_NAME);
+        $last_insert_id = $this->_db->lastInsertId(self::TABLE_NAME);
         $this->assertEquals(3, $last_insert_id); // correct id has been set
     }
 
@@ -180,6 +190,35 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_"_name');
         $this->assertEquals('"table_""_name"', $value);
+    }
+
+    public function testTableInsert()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $tab1 = new Zend_Db_Table_ZfTestTable(
+            array(
+                'db' => $this->_db,
+                'name' => $table,
+                'primary' => $id
+            )
+        );
+
+        $nextId = $this->_db->fetchOne("SELECT nextval('" . self::SEQUENCE_NAME . "')");
+        $row = array (
+            'id'           => $nextId,
+            'title'        => 'News Item 3',
+            'subTitle'     => 'Sub title 3',
+            'body'         => 'This is body 1',
+            'date_created' => '2006-05-03 13:13:13'
+        );
+        $insertResult = $tab1->insert($row);
+        $last_insert_id = $this->_db->lastInsertId($table);
+
+        $this->assertEquals($insertResult, (string) $last_insert_id);
+        $this->assertEquals(3, (string) $last_insert_id);
     }
 
     public function testExceptionInvalidLoginCredentials()

@@ -155,14 +155,15 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Exception
      */
-    public function lastInsertId($sequenceName = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Exception('You must specify a sequence to lastInsertId() in this adapter');
+        if (!$tableName) {
+            throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
         }
-
-        $result = $this->fetchOne("SELECT $sequenceName.CURRVAL FROM DUAL");
-        return $result;
+        $this->_connect();
+        $sequenceName = $tableName . '_seq';
+        $data = $this->fetchCol("SELECT $sequenceName.currval FROM dual");
+        return $data[0]; //we can't fail here, right? if the sequence doesn't exist we should fail earlier.
     }
 
     /**

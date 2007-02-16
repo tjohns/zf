@@ -187,15 +187,17 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $sequenceName  Sequence name needed for some PDO drivers
+     * @param  string $tableName   table or sequence name needed for some PDO drivers
+     * @param  string $primaryKey  primary key in $tableName need for some PDO drivers
      * @return integer
      */
-    public function lastInsertId($sequenceName = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        if ($sequenceName == null) {
-            throw new Zend_Db_Adapter_Exception('You must specify a sequence to lastInsertId() in this adapter');
+        if (!$tableName) {
+            throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
         }
         $this->_connect();
+        $sequenceName = $tableName . '_seq';
         return $this->_connection->lastInsertId($sequenceName);
     }
 

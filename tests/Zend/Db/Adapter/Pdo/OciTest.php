@@ -157,7 +157,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
             'date_created' => '2006-05-03 13:13:13'
         );
         $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
-        $last_insert_id = $this->_db->lastInsertId(self::SEQUENCE_NAME);
+        $last_insert_id = $this->_db->lastInsertId(self::TABLE_NAME);
         $this->assertEquals(3, $last_insert_id); // correct id has been set
     }
 
@@ -230,6 +230,35 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
         $this->assertEquals("id = 'St John''s Wort'", $value);
+    }
+
+    public function testTableInsert()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $tab1 = new Zend_Db_Table_ZfTestTable(
+            array(
+                'db' => $this->_db,
+                'name' => $table,
+                'primary' => $id
+            )
+        );
+
+        $nextId = $this->_db->fetchOne('SELECT ' . self::SEQUENCE_NAME . '.NEXTVAL FROM DUAL');
+        $row = array (
+            'id'           => $nextId,
+            'title'        => 'News Item 3',
+            'subTitle'     => 'Sub title 3',
+            'body'         => 'This is body 1',
+            'date_created' => '2006-05-03 13:13:13'
+        );
+        $insertResult = $tab1->insert($row);
+        $last_insert_id = $this->_db->lastInsertId($table);
+
+        $this->assertEquals($insertResult, (string) $last_insert_id);
+        $this->assertEquals(3, (string) $last_insert_id);
     }
 
     public function testExceptionInvalidLoginCredentials()

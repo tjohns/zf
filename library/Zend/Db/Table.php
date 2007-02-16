@@ -94,7 +94,7 @@ abstract class Zend_Db_Table
      * @param array $config Array of user-specified config options.
      * @throws Zend_Db_Table_Exception
      */
-    public function __construct($config = null)
+    public function __construct($config = array())
     {
         // set a custom Zend_Db_Adapter connection
         if (! empty($config['db'])) {
@@ -120,7 +120,7 @@ abstract class Zend_Db_Table
         self::$_inflector = new Zend_Db_Inflector();
 
         // continue with automated setup
-        $this->_setup();
+        $this->_setup($config);
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class Zend_Db_Table
      * @return void
      * @throws Zend_Db_Table_Exception
      */
-    protected function _setup()
+    protected function _setup($config = array())
     {
         // get the database adapter
         if (! $this->_db) {
@@ -177,6 +177,9 @@ abstract class Zend_Db_Table
         }
 
         // get the table name
+        if (isset($config['name'])) {
+            $this->_name = $config['name'];
+        }
         if (! $this->_name) {
             $this->_name = self::$_inflector->underscore(get_class($this));
         }
@@ -190,11 +193,15 @@ abstract class Zend_Db_Table
         }
 
         // primary key
+        if (isset($config['primary'])) {
+            $this->_primary = $config['primary'];
+        }
         if (! $this->_primary) {
             // none specified
             $table = $this->_name;
             throw new Zend_Db_Table_Exception("primary key not specified for table '$table'");
-        } elseif (! array_key_exists($this->_primary, $this->_cols)) {
+        } 
+        if (! array_key_exists($this->_primary, $this->_cols)) {
             // wrong name
             $key = $this->_primary;
             $table = $this->_name;
@@ -230,7 +237,7 @@ abstract class Zend_Db_Table
      *
      * @param array $data Column-value pairs.
      * @param string $where An SQL WHERE clause.
-     * @return void
+     * @return int The last insert ID.
      */
     public function insert(&$data)
     {
@@ -238,6 +245,7 @@ abstract class Zend_Db_Table
             $this->_name,
             $data
         );
+        return $this->_db->lastInsertId($this->_name, $this->_primary);
     }
 
     /**
