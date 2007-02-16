@@ -378,7 +378,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set the default controller (minus any formatting)
      * 
      * @param string $controller 
-     * @return Zend_Controller_Dispatcher_Standard
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setDefaultControllerName($controller)
     {
@@ -400,7 +400,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set the default action (minus any formatting)
      * 
      * @param string $action 
-     * @return Zend_Controller_Dispatcher_Standard
+     * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setDefaultAction($action)
     {

@@ -161,4 +161,12 @@ interface Zend_Controller_Dispatcher_Interface
      * @return Zend_Controller_Request_Abstract|boolean
      */
     public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+
+    /**
+     * Whether or not a given module is valid
+     * 
+     * @param string $module 
+     * @return boolean
+     */
+    public function isValidModule($module);
 }
