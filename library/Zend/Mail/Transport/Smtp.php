@@ -193,3 +193,4 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
         $this->_connection->data($this->header . $this->EOL . $this->body);
     }
 
+}

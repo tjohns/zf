@@ -145,8 +145,8 @@ define('TESTS_ZEND_MAIL_POP3_PASSWORD', '');
 // test SSL connections if enabled in your test server
 define('TESTS_ZEND_MAIL_POP3_SSL', true);
 define('TESTS_ZEND_MAIL_POP3_TLS', true);
-// wrong port should be an existing server port, invalid a non  
-existing (each on defined host)
+// WRONG_PORT should be an existing server port,
+// INVALID_PORT should be a non existing (each on defined host)
 define('TESTS_ZEND_MAIL_POP3_WRONG_PORT', 80);
 define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);
 
@@ -163,8 +163,8 @@ define('TESTS_ZEND_MAIL_IMAP_PASSWORD', '');
 // test SSL connections if enabled in your test server
 define('TESTS_ZEND_MAIL_IMAP_SSL', true);
 define('TESTS_ZEND_MAIL_IMAP_TLS', true);
-// wrong port should be an existing server port, invalid a non  
-existing (each on defined host)
+// WRONG_PORT should be an existing server port,
+// INVALID_PORT should be a non-existing (each on defined host)
 define('TESTS_ZEND_MAIL_IMAP_WRONG_PORT', 80);
 define('TESTS_ZEND_MAIL_IMAP_INVALID_PORT', 3141);
 

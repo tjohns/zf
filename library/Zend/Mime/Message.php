@@ -246,11 +246,13 @@ class Zend_Mime_Message
         $res = new Zend_Mime_Message();
         foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
-            $newPart = new Zend_Mime_Part($body);
-            foreach ($headersfound as $key => $value) {
+            $newPart = new Zend_Mime_Part($part);
+            $headersfound = $newPart->getHeadersArray();
+            foreach ($headersfound as $header) {
                 /**
                  * @todo check for characterset and filename
                  */
+                list($key, $value) = $header;
                 switch($key) {
                     case 'Content-Type':
                         $newPart->type = $value;
