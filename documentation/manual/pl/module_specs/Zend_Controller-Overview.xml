@@ -310,7 +310,7 @@ Akcja    : index]]>
 		    <title>Elastyczność</title>
 		    <para>
                 Jeśli chcesz bardziej elastyczne możliwości, możesz sprawdzić
-              <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>dokumentację
+              <xref linkend="zend.controller.providedsubclasses.rewriterouter">dokumentację
                 Rewrite Routera</xref>.
             </para>
 		</note>
