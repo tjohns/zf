@@ -22,7 +22,10 @@
 
         <para>
             何も名前空間をしていせずに Zend_Session のインスタンスを作成すると、
-            すべてのデータは透過的に <code>'Default'</code> という名前の名前空間に保存されます。
+            すべてのデータは透過的に "<code>Default</code>" という名前の名前空間に保存されます。
+            <code>Zend_Session</code> は、セッション名前空間コンテナの内容を
+			直接操作するためのものではあります。そのかわりとして
+            <code>Zend_Session_Namespace</code> を使用します。
             以下の例は、このデフォルトの名前空間を使用して
             ユーザがそのページを何回閲覧したかを数える方法を示すものです。
             実際に試してみたい場合は、
@@ -34,8 +37,16 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
+
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
+
+    // use the magic method __isset() in Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // 一回目
+    }
+
     echo "このセッションでページがリクエストされた回数: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>

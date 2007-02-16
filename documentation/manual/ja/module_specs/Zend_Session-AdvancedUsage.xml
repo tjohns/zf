@@ -383,60 +383,54 @@ else {
         <title>セッションと認証の共用</title>
 
         <para>
-            <code>Zend_Auth</code> の認証トークンを、
-            Zend Framework のセッションで持続させることができます。
-            それ以降のリクエストで認証トークンにアクセスできるようにするには、
-            次のようにする必要があります。
+            <code>Zend_Auth</code> 用の認証アダプタが返す認証結果がオブジェクトであって
+            (非推奨です) 配列ではなかった場合は、セッションを開始する前に
+            認証クラスを require しておく必要があります。
+            そのかわりに、セッション名前空間の既知のキーをもとに認証アダプタ内で計算した値を
+            保存しておくことを推奨します。
+            たとえば、<code>Zend_Auth</code> のデフォルトの動作は、
+            これを名前空間 'Zend_Auth' のキー 'storage' に配置します。
         </para>
-
-        <example>
-            <title>回避策: セッション内で認証トークンにアクセスする</title>
-<programlisting role="php">
-<![CDATA[<?php
-    // ニワトリが先かタマゴが先か ...
-    // どのトークンクラスを使用するのかを、事前に知っておかなければなりません (;_;)
-    require_once 'Zend/Auth/Digest/Token.php';
-    require_once 'Zend/Session.php';
-    Zend_Session::start();
-    require_once 'Zend/Auth/Digest/Adapter.php';
-    require_once 'Zend/Auth.php';
-    $auth = new Zend_Auth(new Zend_Auth_Digest_Adapter('someDigestFilename'));
-    $token = $auth->getToken();
-    echo "Valid: ",
-    (empty($token->isValid()) ? 'No' : 'Yes'), "\n"';
-    echo "Identity: ",
-        (empty($token->getIdentity()) ? 'unknown' : $token->getIdentity()), "\n"';
-    echo "Messages: ",
-        (empty($token->getMessages()) ? 'none' : $token->getMessages()), "\n"';
-?>]]></programlisting>
-        </example>
 
         <para>
             <code>Zend_Auth</code> に対して認証トークンをセッション間で持続させないよう指示し、
             手動で認証 ID をセッションに格納することもできます。
             そうすれば、セッション名前空間内のよく知られた場所を使用できます。
-            また、これにより、認証エラーのメッセージをセッション間で持続させてしまうことも防げます
-            (注意: 現在、Zend セッション用の "フラッシュメッセージ"
-            機能を開発しているメンバーがいます)。
             アプリケーションによっては、使用する権限情報や認証情報を
             特定の場所に保存しなければならないこともあるでしょう。
-            多くのアプリケーションは、認証時の ID (たとえばユーザ名)
-            を特定の ID (一意に割り当てた整数値など) に関連付けています。
+            多くのアプリケーションは、認証時
+            つまり Zend_Auth の <code>authenticate()</code> メソッド実行時の
+            ID (たとえばユーザ名) を特定の ID (一意に割り当てた整数値など) に関連付けています。
         </para>
 
         <example>
-            <title>回避策: 認証 ID に対するシンプルなアクセス</title>
+            <title>例: 単純化した認証 ID へのアクセス</title>
 <programlisting role="php">
 <![CDATA[<?php
-    require 'Zend/Session.php';
+    // 認証前のリクエスト
+    require_once 'Zend/Auth/Result.php';
+    require_once 'Zend/Auth/Adapter/Digest.php';
+    $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+    $result = $adapter->authenticate();
+    require_once 'Zend/Session/Namespace.php';
+    $namespace = Zend_Session_Namespace('Zend_Auth');
+    if ($result->isValid()) {
+        $namespace->authorizationId = $result->getIdentity();
+        $namespace->date = time();
+    } else {
+        $namespace->attempts++;
+    }
+
+    // それ以降のリクエスト
+    require_once 'Zend/Session.php';
     Zend_Session::start();
     $namespace = Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
-    echo "Authorization / user Id: ",
-        (empty($namespace->authorizationId) ? 'none' : $namespace->authorizationId), "\n"';
-    echo "Authentication attempts: ",
-        (empty($namespace->attempts) ? '0' : $namespace->attempts), "\n"';
+    echo "Authorization / user Id: ", (empty($namespace->authorizationId)
+        ? 'none' : print_r($namespace->authorizationId, true)), "\n"';
+    echo "Authentication attempts: ", (empty($namespace->attempts)
+        ? '0' : $namespace->attempts), "\n"';
     echo "Authenticated on: ",
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
 ?>]]></programlisting>
@@ -477,9 +471,50 @@ else {
         </para>
 
         <example>
-            <title>回避策: セッション内の認証トークンへのアクセス</title>
+            <title>PHPUnit による、Zend_Session* を使用したコードのテスト</title>
 <programlisting role="php">
 <![CDATA[<?php
+        // setExpirationSeconds() をテストします
+        require 'tests/Zend/Session/SessionTestHelper.php'; // trunk/ の SessionTest.php も参照ください
+        $script = 'SessionTestHelper.php';
+        $s = new Zend_Session_Namespace('space');
+        $s->a = 'apple';
+        $s->o = 'orange';
+        $s->setExpirationSeconds(5);
+
+        Zend_Session::regenerateId();
+        $id = Zend_Session::getId();
+        session_write_close(); // セッションを開放し、これ以降で使用できるようにします
+        sleep(4); // 無効となるほどの時間ではありません
+        exec($script . "expireAll $id expireAll", $result);
+        $result = $this->sortResult($result);
+        $expect = ';a === apple;o === orange;p === pear';
+        $this->assertTrue($result === $expect,
+            "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+
+        sleep(2); // 無効になります (全部で 6 秒待機していますが、有効期限は 5 秒です)
+        exec($script . "expireAll $id expireAll", $result);
+        $result = array_pop($result);
+        $this->assertTrue($result === '',
+            "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+        session_start(); // 人為的にサスペンドしたセッションを復活させます
+
+        // これを別のテストに分割するることもできます。しかし実際のところ、
+        // 上のテストの残骸が以下のテストに影響を及ぼすとしたら、それはバグでしょう。
+        // バグは、ここで発見しておくべきものです。
+        $s = new Zend_Session_Namespace('expireGuava');
+        $s->setExpirationSeconds(5, 'g'); // 名前空間内のキーひとつだけを無効にしようとします
+        $s->g = 'guava';
+        $s->p = 'peach';
+        $s->p = 'plum';
+
+        session_write_close(); // セッションを開放し、これ以降で使用できるようにします
+        sleep(6); // 無効となるほどの時間ではありません
+        exec($script . "expireAll $id expireGuava", $result);
+        $result = $this->sortResult($result);
+        session_start(); // 人為的にサスペンドしたセッションを復活させます
+        $this->assertTrue($result === ';p === plum',
+            "iteration over named Zend_Session namespace failed (result=$result)");
 ?>]]></programlisting>
         </example>
 
