@@ -18,9 +18,10 @@
 
         <para>
             If no namespace is specified when instantiating Zend_Session, all data will be transparently stored in a
-            namespace called "<code>Default</code>". The example below demonstrates use of this default namespace,
-            showing how to count the number of times a user views pages on your website. To test this example, add the
-            following code to your ZF bootstrap area:
+            namespace called "<code>Default</code>". <code>Zend_Session</code> is not intended to work directly on the
+            contents of session namespace containers. Instead, we use <code>Zend_Session_Namespace</code>. The example
+            below demonstrates use of this default namespace, showing how to count the number of times a user views
+            pages on your website. To test this example, add the following code to your ZF bootstrap area:
         </para>
 
         <example>
@@ -28,8 +29,16 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
+
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+
+    // use the magic method __isset() in Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // first time
+    }
+
     echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
