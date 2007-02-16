@@ -74,20 +74,21 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     {
         $this->_defaults = $defaults;
 
-        if (isset($dispatcher)) {
-            $this->_defaults += array(
-                    'controller' => $dispatcher->getDefaultControllerName(), 
-                    'action'     => $dispatcher->getDefaultAction(),
-                    'module'     => 'default'
-            );
-            $this->_dispatcher = $dispatcher;
-        }
-
         if (isset($request)) {
             $this->_moduleKey     = $request->getModuleKey();
             $this->_controllerKey = $request->getControllerKey();
             $this->_actionKey     = $request->getActionKey();
         }
+        
+        if (isset($dispatcher)) {
+            $this->_defaults += array(
+                $this->_controllerKey => $dispatcher->getDefaultControllerName(), 
+                $this->_actionKey     => $dispatcher->getDefaultAction(),
+                $this->_moduleKey     => 'default'
+            );
+            $this->_dispatcher = $dispatcher;
+        }
+
     }
 
     /**
