@@ -1,88 +1,85 @@
 <sect1 id="zend.console.getopt.configuration">
-    <title>Configuring Zend_Console_Getopt</title>
+    <title>Zend_Console_Getopt の設定</title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
-	<title>Adding Option Rules</title>
+	<title>オプションの規則の追加</title>
 	<para>
-	    You can add more option rules in addition to those you specified
-	    in the <code>Zend_Console_Getopt</code> constructor, using the
-	    <code>addRules()</code> method.  The argument to
-	    <code>addRules()</code> is the same as the first argument to the
-	    class constructor.  It is either a string in the format of the
-	    short syntax options specification, or else an associative array 
-	    in the format of a long syntax options specification.
-            See <link linkend="zend.console.getopt.rules">Declaring Getopt Rules</link>
-	    for details on the syntax for specifying options.
+	    <code>Zend_Console_Getopt</code> のコンストラクタで指定するもの以外にも、
+	    追加でオプションの規則を指定することができます。その際には
+	    <code>addRules()</code> メソッドを使用します。
+	    <code>addRules()</code> に渡す引数は、コンストラクタの最初の引数と同じです。
+	    短い形式のオプション指定を表す文字列、
+	    あるいは長い形式のオプション指定を表す連想配列となります。
+	    オプションを指定する構文の詳細は、
+            <link linkend="zend.console.getopt.rules">Getopt の規則の宣言</link>
+	    を参照ください。
 	</para>
 	<example>
-	    <title>Using addRules()</title>
+	    <title>addRules() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
-    'verbose|v' => 'Print verbose output'
+    'verbose|v' => '詳細な出力を表示する'
   )
 );
 ?>]]></programlisting>
 	</example>
 	<para>
-	    The example above shows adding the "<code>--verbose</code>" option
-	    with an alias of "<code>-v</code>" to a set of options 
-	    defined in the call to the constructor.  Notice that you can mix
-	    short format options and long format options in the same instance
-	    of <code>Zend_Console_Getopt</code>.
+	    上の例は、"<code>--verbose</code>" というオプションと
+	    そのエイリアス "<code>-v</code>" を
+	    コンストラクタで定義したオプションに追加しています。
+	    <code>Zend_Console_Getopt</code> のインスタンスには、
+	    短い形式のオプションと長い形式のオプションが共存可能であることに注意しましょう。
 	</para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addhelp">
-	<title>Adding Help Messages</title>
+	<title>ヘルプメッセージの追加</title>
 	<para>
-	    In addition to specifying the help strings when declaring option
-	    rules in the long format, you can associate help strings
-	    with option rules using the <code>setHelp()</code>
-	    method.  The argument to the <code>setHelp()</code> method is an
-	    associative array, in which the key is a flag, and the value is a
-	    corresponding help string.
+	    長い形式のオプション規則を宣言する際に指定するヘルプ文字列に加え、
+	    <code>setHelp()</code> メソッドでもヘルプ文字列を規則と関連付けることができます。
+	    <code>setHelp()</code> メソッドの引数は連想配列で、
+	    キーがフラグ名、値が対応するヘルプ文字列となります。
 	</para>
 	<example>
-	    <title>Using setHelp()</title>
+	    <title>setHelp() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-	'a' => 'This option chooses apple, with no parameter',
-	'b' => 'This option chooses banana, with required integer parameter',
-	'p' => 'This option chooses pear, with optional string parameter'
+	'a' => 'このオプションはリンゴを選択します。パラメータは不要です。',
+	'b' => 'このオプションはバナナを選択します。整数パラメータが必須です。',
+	'p' => 'このオプションは洋ナシを選択します。オプションで文字列パラメータを指定します。'
     )
 );
 ?>]]></programlisting>
 	</example>
 	<para>
-	    If you declared options with aliases, you can use any of the 
-	    aliases as the key of the associative array.
+	    エイリアスつきでオプションを宣言した場合は、
+	    どのエイリアスでも連想配列のキーに使用できます。
 	</para>
 	<para>
-	    The <code>setHelp()</code> method is the only way to define help
-	    strings if you declared the options using the short syntax.
+	    オプションを短い構文で宣言した場合、ヘルプ文字列を設定するには
+	    <code>setHelp()</code> メソッドが唯一の手段となります。
 	</para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addaliases">
-	<title>Adding Option Aliases</title>
+	<title>オプションのエイリアスの追加</title>
 	<para>
-	    You can declare aliases for options using the <code>setAliases</code>
-	    method.  The argument is an associative array, whose key is
-	    a flag string declared previously, and whose value is a new
-	    alias for that flag.  These aliases are merged with any existing
-	    aliases.  In other words, aliases you declared earlier are
-	    still in effect.
+	    オプションのエイリアスを宣言するには <code>setAliases</code>
+	    メソッドを使用します。引数は連想配列で、
+	    先ほど宣言したフラグがキー、そしてそのフラグのエイリアスが値となります。
+	    ここで指定したエイリアスが、既存のエイリアスにマージされます。
+	    言い換えると、もともと定義されていたエイリアスもそのまま有効であるということです。
 	</para>
 	<para>
-	    An alias may be declared only once.  If you try to redefine
-	    an alias, a <code>Zend_Console_Getopt_Exception</code> is thrown.
+	    エイリアスは一度しか宣言できません。既存のエイリアスを再定義しようとすると
+	    <code>Zend_Console_Getopt_Exception</code> がスローされます。
 	</para>
 	<example>
-	    <title>Using setAliases()</title>
+	    <title>setAliases() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
@@ -95,133 +92,133 @@ $opts->setAliases(
 ?>]]></programlisting>
 	</example>
 	<para>
-            In the example above, after declaring these aliases,
-            "<code>-a</code>", "<code>--apple</code>" and
-            "<code>--apfel</code>" are aliases for each other.
-            Also "<code>-p</code>" and "<code>--pear</code>" are aliases
-            for each other.
+            上の例では
+            "<code>-a</code>"、"<code>--apple</code>" および
+            "<code>--apfel</code>" をお互いエイリアス指定した後で、
+            "<code>-p</code>" と "<code>--pear</code>"
+            もエイリアスとしています。
         </para>
 	<para>
-	    The <code>setAliases()</code> method is the only way to define aliases
-	    if you declared the options using the short syntax.
+	    オプションを短い構文で宣言した場合、エイリアスを定義するには
+	    <code>setAliases()</code> メソッドが唯一の手段となります。
 	</para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addargs">
-	<title>Adding Argument Lists</title>
+	<title>引数リストの追加</title>
 	<para>
-	    By default, <code>Zend_Console_Getopt</code> uses
-	    <code>$_SERVER['argv']</code> for the array of command-line
-	    arguments to parse.  You can alternatively specify the array of
-	    arguments as the second constructor argument.  Finally, you
-	    can append more arguments to those already used using the
-	    <code>addArguments()</code> method, or you can replace the current
-	    array of arguments using the <code>setArguments()</code> method.
-	    In both cases, the parameter to these methods is a simple array of
-	    strings.  The former method appends the array to the current
-	    arguments, and the latter method substitutes the array for the
-	    current arguments.
+	    デフォルトでは、<code>Zend_Console_Getopt</code> は
+	    <code>$_SERVER['argv']</code> の配列を使用して
+	    コマンドライン引数をパースします。
+	    コンストラクタの二番目の引数として、引数を含む別の配列を指定することもできます。
+	    さらに、もっと別の引数を追加するには
+	    <code>addArguments()</code> メソッドを使用し、
+	    既存の引数配列を置き換えるには <code>setArguments()</code>
+	    メソッドを使用します。どちらの場合についても、
+	    これらのメソッドのパラメータは単純な文字列の配列となります。
+	    <code>addArguments()</code> は現在の引数にその配列を追加し、
+	    <code>setArguments()</code> は現在の引数をその配列で置き換えます。
 	</para>
 	<example>
-	    <title>Using addArguments() and setArguments()</title>
+	    <title>addArguments() および setArguments() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
-// By default, the constructor uses $_SERVER['argv']
+// デフォルトでは、コンストラクタは $_SERVER['argv'] を使用します
 $opts = new Zend_Console_Getopt('abp:');
 
-// Append an array to the existing arguments
+// 既存の引数に配列を追加します
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg));
 
-// Substitute a new array for the existing arguments
+// 新しい配列で既存の引数を置き換えます
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg));
 ?>]]></programlisting>
 	</example>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
-	<title>Adding Configuration</title>
+	<title>設定の追加</title>
 	<para>
-	    The third parameter to the <code>Zend_Console_Getopt</code>
-	    constructor is an array of configuration options that affect
-	    the behavior of the object instance returned. You can also
-	    specify configuration options using the <code>setOptions()</code>
-	    method, or you can set an individual option using the
-	    <code>setOption()</code> method.
+	    <code>Zend_Console_Getopt</code> コンストラクタの
+	    三番目の引数は、設定オプションの配列です。
+	    これは、返り値となるオブジェクトのインスタンスの挙動を設定するものです。
+	    設定オプションを指定するために <code>setOptions()</code>
+	    メソッドを指定することもできます。あるいは、
+	    オプションを個別に設定するには
+	    <code>setOption()</code> メソッドを使用します。
 	</para>
         <note>
-            <title>Clarifying the term "option"</title>
-            The term "option" is used for configuration of the
-            <code>Zend_Console_Getopt</code> class to match terminology 
-            used elsewhere in the Zend Framework.  These are not the same
-            things as the command-line options that are parsed by
-            the <code>Zend_Console_Getopt</code> class.
+            <title>"オプション" という用語について</title>
+            ここでいう "オプション" は、
+            <code>Zend_Console_Getopt</code> クラスの設定に使用するもののことを指しています。
+            オプションという言葉の意味自体は、Zend Framework
+            のその他の部分で使用している意味と同じです。
+            <code>Zend_Console_Getopt</code> がパースする
+            コマンドラインオプションのことではありません。
         </note>
 	<para>
-	    The currently supported 
-	    options have const definitions in the class.  The options,
-	    their const identifiers (with literal values in parentheses)
-	    are listed below:
+	    現在サポートしているオプションには、
+	    クラス定数が定義されています。
+	    オプションとそれに対応する定数 (およびリテラル値)
+	    の一覧を以下にまとめます。
 	</para>
 	<itemizedlist>
 	    <listitem>
 		<para>
-		    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash"),
-		    if true, enables the special flag "<code>--</code>" to
-		    signify the end of flags.  Command-line arguments following
-		    the double-dash signifier are not interpreted as options,
-		    even if the arguments start with a dash.  This configuration
-		    option is true by default.
+		    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash")
+		    を true にすると、フラグの終了を表す特殊フラグ "<code>--</code>"
+		    を有効にします。ダブルダッシュの後に続くコマンドライン引数は、
+		    たとえダッシュで始まっていてもオプションとはみなされません。
+		    この設定オプションは、デフォルトで true となっています。
 		</para>
 	    </listitem>
 	    <listitem>
 		<para>
-		    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("ignoreCase"),
-		    if true, makes flags aliases of each other if they differ
-		    only in their case.  That is, "<code>-a</code>" and
-		    "<code>-A</code>" will be considered to be synonymous flags.
-		    This configuration option is false by default.
+		    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("ignoreCase")
+		    を true にすると、大文字小文字が違うだけのフラグをお互いエイリアスとして扱います。
+		    つまり、"<code>-a</code>" と
+		    "<code>-A</code>" は同じフラグとみなされます。
+		    この設定オプションは、デフォルトでは false となっています。
 		</para>
 	    </listitem>
 	    <listitem>
 		<para>
                     <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") may have values <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") and <code>Zend_Console_Getopt::MODE_GNU</code>
-                    ("gnu").  It should not be necessary to use this option
-		    unless you extend the class with additional syntax forms.
-		    The two modes supported in the base <code>Zend_Console_Getopt</code>
-		    class are unambiguous.  If the specifier is a string, the
-		    class assumes <code>MODE_GNU</code>, otherwise it assumes
-		    <code>MODE_ZEND</code>.  But if you extend the class and
-		    add more syntax forms, you may need to specify the mode
-		    using this option.
+                    ("ruleMode") には <code>Zend_Console_Getopt::MODE_ZEND</code>
+                    ("zend") あるいは <code>Zend_Console_Getopt::MODE_GNU</code>
+                    ("gnu")  のいずれかを指定します。
+		    独自の構文を使用するためにクラスを拡張する場合を除き、
+		    このオプションを使用する必要はありません。
+		    <code>Zend_Console_Getopt</code>
+		    でサポートされている二つのモードは明確です。
+		    文字列を指定した場合は <code>MODE_GNU</code>、
+		    それ以外の場合は <code>MODE_ZEND</code> とみなします。
+		    もしクラスを拡張して別の構文形式を追加した場合は、
+		    そのモードをこのオプションで指定する必要があります。
 		</para>
 	    </listitem>
 	</itemizedlist>
 	<para>
-	    More configuration options may be added as future enhancements
-	    of this class.
+	    将来は、さらに多くの設定オプションがこのクラスに追加される予定です。
 	</para>
 	<para>
-	    The two arguments to the <code>setOption()</code> method are
-	    a configuration option name and an option value.
+	    <code>setOption()</code>
+	    メソッドに渡す引数は、設定オプション名とその値のふたつです。
 	</para>
 	<example>
-	    <title>Using setOption()</title>
+	    <title>setOption() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
 ?>]]></programlisting>
 	</example>
 	<para>
-	    The argument to the <code>setOptions()</code> method is
-	    an associative array.  The keys of this array are the configuration
-	    option names, and the values are configuration values.
-	    This is also the array format used in the class constructor.
-            The configuration values you specify are merged with the current
-            configuration; you don't have to list all options.
+	    <code>setOptions()</code> メソッドに渡す引数は連想配列です。
+	    そのキーが設定オプション名、そして値として設定値を指定します。
+	    これは、クラスのコンストラクタで使用するフォーマットでもあります。
+            指定した設定項目が既存の設定にマージされるので、
+            すべてのオプションを指定する必要はありません。
 	</para>
 	<example>
-	    <title>Using setOptions()</title>
+	    <title>setOptions() の使用法</title>
 	    <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
