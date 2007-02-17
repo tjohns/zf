@@ -33,7 +33,7 @@
         </para>
 
         <para>
-            また、姉妹メソッドである <code>getFixedDate()</code> は
+            また、姉妹メソッドである <code>getCorrectableDate()</code> は
             'fixed' というキーを追加します。ここには数値が格納され、
             入力の日付文字列の年月日の順序を入れ替えたりして
             使用する書式にあわせるための情報を表します。
@@ -156,7 +156,7 @@ Array
 )
 
 // 入力値に何らかの問題がある場合に、自動的に修正します
-$date2 = Zend_Locale_Format::getFixedDate('04.13.2006', 'dd.MM.yyyy');
+$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', 'dd.MM.yyyy');
 
 print_r($date); // 出力は、このようになります
 
@@ -175,7 +175,7 @@ Array
             <code>getDate()</code> は "ロケール対応" なので、
             <code>$locale</code> を指定することで
             そのロケールの書式の日付文字列を使用できます。
-            <code>getFixedDate()</code> は簡単なテストを行って
+            <code>getCorrectableDate()</code> は簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
         </para>
@@ -318,7 +318,7 @@ print_r ($date);
         </note>
 
         <para>
-            <code>getFixedDate()</code> は簡単なテストを行って
+            <code>getCorrectableDate()</code> は簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
             <code>getDate()</code> は、
@@ -331,7 +331,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getFixedDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getCorrectableDate('41.10.20', 'ddMMyy');
 
 // 41 は、日付ではなく年として返されます
 print_r ($date);
@@ -348,7 +348,7 @@ print_r ($date);
             <code>isDate()</code> を使用して、
             指定した文字列が有効な日付を含むかどうかを調べます。
             <code>isDate()</code> メソッドは <code>getDate()</code> を使用します。
-            <code>getFixedDate()</code> を使用すると、
+            <code>getCorrectableDate()</code> を使用すると、
             入力が日付書式を満たしていない場合にも true を返してしまうので、これは使用しません。
         </para>
 
