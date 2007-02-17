@@ -57,7 +57,7 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
         return 'CREATE TABLE  '. self::TABLE_NAME . " (
             id           int IDENTITY,
             title        varchar(100),
-            subTitle     varchar (100),
+            subtitle     varchar (100),
             body         {$this->_textDataType},
             date_created datetime
         )";
@@ -66,11 +66,11 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
     function getCreateTableSQL2()
     {
         return 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id      int,
-            user_id      int,
-            commentTitle varchar (100),
-            commentBody  {$this->_textDataType},
-            date_posted  datetime
+            news_id       int,
+            user_id       int,
+            comment_title varchar (100),
+            comment_body  {$this->_textDataType},
+            date_posted   datetime
         )";
     }
 

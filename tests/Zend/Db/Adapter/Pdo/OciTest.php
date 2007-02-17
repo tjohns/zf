@@ -57,7 +57,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
             id           NUMBER(11) PRIMARY KEY,
-            subTitle     {$this->_textDataType}(100),
+            subtitle     {$this->_textDataType}(100),
             title        {$this->_textDataType}(100),
             body         {$this->_textDataType}(100),
             date_created {$this->_textDataType}(100)
@@ -68,11 +68,11 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL2()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id      NUMBER(11),
-            user_id      NUMBER(11),
-            commentTitle {$this->_textDataType}(100),
-            commentBody  {$this->_textDataType}(100),
-            date_posted  {$this->_textDataType}(100)
+            news_id       NUMBER(11),
+            user_id       NUMBER(11),
+            comment_title {$this->_textDataType}(100),
+            comment_body  {$this->_textDataType}(100),
+            date_posted   {$this->_textDataType}(100)
         )";
         return $sql;
     }

@@ -52,7 +52,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . "(
             id           INT NOT NULL AUTO_INCREMENT,
             title        VARCHAR(100),
-            subTitle     VARCHAR(100),
+            subtitle     VARCHAR(100),
             body         {$this->_textDataType},
             date_created DATETIME,
             PRIMARY KEY (id)
@@ -63,11 +63,11 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
     function getCreateTableSQL2()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . "(
-            news_id      INT NOT NULL,
-            user_id      INT NOT NULL,
-            commentTitle VARCHAR(100),
-            commentBody  {$this->_textDataType},
-            date_posted  DATETIME
+            news_id       INT NOT NULL,
+            user_id       INT NOT NULL,
+            comment_title VARCHAR(100),
+            comment_body  {$this->_textDataType},
+            date_posted   DATETIME
         )";
         return $sql;
     }

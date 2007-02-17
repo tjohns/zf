@@ -51,7 +51,7 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     {
         return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . " (
             id           INTEGER PRIMARY KEY,
-            subTitle     {$this->_textDataType},
+            subtitle     {$this->_textDataType},
             title        {$this->_textDataType},
             body         {$this->_textDataType},
             date_created {$this->_textDataType}
@@ -61,11 +61,11 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL2()
     {
         return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . " (
-            news_id      INTEGER,
-            user_id      INTEGER,
-            commentTitle {$this->_textDataType},
-            commentBody  {$this->_textDataType},
-            date_posted  {$this->_textDataType}
+            news_id       INTEGER,
+            user_id       INTEGER,
+            comment_title {$this->_textDataType},
+            comment_body  {$this->_textDataType},
+            date_posted   {$this->_textDataType}
         )";
     }
 

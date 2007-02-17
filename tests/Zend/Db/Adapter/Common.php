@@ -114,12 +114,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table) . "
-            (title, subTitle, body, date_created)
+            (title, subtitle, body, date_created)
             VALUES ('News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table) . "
-            (title, subTitle, body, date_created)
+            (title, subtitle, body, date_created)
             VALUES ('News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
     }
@@ -136,17 +136,17 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
-            (news_id, user_id, commentTitle, commentBody, date_posted)
+            (news_id, user_id, comment_title, comment_body, date_posted)
             VALUES (1, 101, 'I agree', 'This is comment 1', '2006-05-01 13:13:13')";
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
-            (news_id, user_id, commentTitle, commentBody, date_posted)
+            (news_id, user_id, comment_title, comment_body, date_posted)
             VALUES (1, 102, 'I disagree', 'This is comment 2', '2006-05-01 14:14:14')";
         $this->_db->query($sql);
 
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
-            (news_id, user_id, commentTitle, commentBody, date_posted)
+            (news_id, user_id, comment_title, comment_body, date_posted)
             VALUES (1, 101, 'I still agree', 'This is comment 3', '2006-05-01 15:15:15')";
         $this->_db->query($sql);
     }
@@ -427,7 +427,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $row = array (
             'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
+            'subtitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
         );
@@ -1023,11 +1023,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
         $title = $this->getIdentifier('title');
-        $subtitle = $this->getIdentifier('subTitle');
+        $subtitle = $this->getIdentifier('subtitle');
         $body = $this->getIdentifier('body');
         $dateCreated = $this->getIdentifier('date_created');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1035,7 +1035,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             )
         );
 
-        $info = $tab1->info();
+        $info = $dbTable->info();
         $this->assertThat($info, $this->arrayHasKey('name'));
         $this->assertThat($info, $this->arrayHasKey('cols'));
         $this->assertThat($info, $this->arrayHasKey('primary'));
@@ -1050,13 +1050,22 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals($id, $info['primary']);
     }
 
+    public function testTableSetAndGetAdapter()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Db_Table_ZfTestTable::setDefaultAdapter($this->_db);
+        $dbTable = new Zend_Db_Table_ZfTestTable();
+        $db = $dbTable->getAdapter();
+        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
+    }
+
     public function testTableFind()
     {
         Zend::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1064,10 +1073,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             )
         );
 
-        $row1 = $tab1->find(1);
+        $row1 = $dbTable->find(1);
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
 
-        $rows = $tab1->find(array(1, 2));
+        $rows = $dbTable->find(array(1, 2));
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'));
     }
 
@@ -1077,7 +1086,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1087,15 +1096,71 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $row = array (
             'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
+            'subtitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
         );
-        $insertResult = $tab1->insert($row);
+        $insertResult = $dbTable->insert($row);
         $last_insert_id = $this->_db->lastInsertId();
 
         $this->assertEquals($insertResult, (string) $last_insert_id);
         $this->assertEquals(3, (string) $last_insert_id);
+    }
+
+    public function testTableUpdate()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+        $title = $this->getIdentifier('title');
+        $subtitle = $this->getIdentifier('subtitle');
+
+        $dbTable = new Zend_Db_Table_ZfTestTable(
+            array(
+                'db' => $this->_db,
+                'name' => $table,
+                'primary' => $id
+            )
+        );
+
+        $newTitle = 'New News Item 2';
+        $newSubTitle = 'New Sub title 2';
+        $data = array(
+            $title    => $newTitle,
+            $subtitle => $newSubTitle
+        );
+        $result = $dbTable->update($data, 'id = 2');
+        $this->assertEquals(1, $result);
+
+        // Query the row to see if we have the new values.
+        $row = $dbTable->find(2);
+
+        $this->assertEquals(2, $row->{$id});
+        $this->assertEquals($newTitle, $row->{$title});
+        $this->assertEquals($newSubTitle, $row->subtitle);
+    }
+
+    public function testTableDelete()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $dbTable = new Zend_Db_Table_ZfTestTable(
+            array(
+                'db' => $this->_db,
+                'name' => $table,
+                'primary' => $id
+            )
+        );
+
+        $rows = $dbTable->find(array(1, 2));
+        $this->assertEquals(2, $rows->count());
+
+        $dbTable->delete('id = 2');
+
+        $rows = $dbTable->find(array(1, 2));
+        $this->assertEquals(1, $rows->count());
     }
 
     public function testTableRowset()
@@ -1104,7 +1169,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1112,15 +1177,50 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             )
         );
 
-        $rows = $tab1->find(array(1, 2));
+        $rows = $dbTable->find(array(1, 2));
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'));
-
         $this->assertTrue($rows->exists());
-
         $this->assertEquals(2, $rows->count());
+
+        // see if we're at the beginning
+        $this->assertEquals(0, $rows->key());
+
+        // get first row and see if it's the right one
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
+        $this->assertEquals(1, $row1->$id);
+
+        // advance to next row
+        $this->assertEquals(1, $rows->next());
+        $this->assertEquals(1, $rows->key());
+        $this->assertTrue($rows->valid());
+
+        // get second row and see if it's the right one
+        $row2 = $rows->current();
+        $this->assertThat($row2, $this->isInstanceOf('Zend_Db_Table_Row'));
+        $this->assertEquals(2, $row2->$id);
+
+        // advance beyond last row
+        $this->assertEquals(2, $rows->next());
+        $this->assertEquals(2, $rows->key());
+        $this->assertFalse($rows->valid());
+        $this->assertFalse($rows->current());
+
+        // rewind to beginning 
+        $rows->rewind();
+        $this->assertEquals(0, $rows->key());
+        $this->assertTrue($rows->valid());
+
+        // get row at beginning and compare it to 
+        // the one we got earlier
+        $row1Copy = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
+        $this->assertEquals(1, $row1->$id);
+        $this->assertSame($row1, $row1Copy);
 
         $a = $rows->toArray();
         $this->assertTrue(is_array($a));
+        $this->assertTrue(is_array($a[0]));
     }
 
     public function testTableRow()
@@ -1129,7 +1229,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1137,7 +1237,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             )
         );
 
-        $row1 = $tab1->find(1);
+        $row1 = $dbTable->find(1);
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
     }
 
@@ -1147,7 +1247,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
-        $tab1 = new Zend_Db_Table_ZfTestTable(
+        $dbTable = new Zend_Db_Table_ZfTestTable(
             array(
                 'db' => $this->_db,
                 'name' => $table,
@@ -1155,8 +1255,36 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             )
         );
 
-        $row1 = $tab1->fetchNew();
+        $row1 = $dbTable->fetchNew();
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'));
+    }
+
+    public function testTableExceptionNoAdapter()
+    {
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+
+        try {
+            $dbTable = new Zend_Db_Table_ZfTestTable(array('db' => 327));
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'));
+            $this->assertEquals($e->getMessage(), 'db object does not extend Zend_Db_Adapter_Abstract');
+        }
+
+        Zend::register('registered_db', 327);
+        try {
+            $dbTable = new Zend_Db_Table_ZfTestTable(array('db' => 'registered_db'));
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'));
+            $this->assertEquals($e->getMessage(), 'db object does not extend Zend_Db_Adapter_Abstract');
+        }
+
+        try {
+            Zend_Db_Table_ZfTestTable::setDefaultAdapter(327);
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'));
+            $this->assertEquals($e->getMessage(), 'db object does not extend Zend_Db_Adapter_Abstract');
+        }
+
     }
 
     /**
@@ -1173,6 +1301,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $titleKey = $this->getResultSetKey('title');
         $subtitleKey = $this->getResultSetKey('subtitle');
         $table = $this->getIdentifier(self::TABLE_NAME);
+        $title = $this->getIdentifier('title');
+        $subtitle = $this->getIdentifier('subtitle');
 
         $newTitle = 'New News Item 2';
         $newSubTitle = 'New Sub title 2';
@@ -1181,8 +1311,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         // an existing row.
         $result = $this->_db->update($table,
             array(
-                'title'        => $newTitle,
-                'subTitle'     => $newSubTitle
+                $title        => $newTitle,
+                $subtitle     => $newSubTitle
             ),
             'id = 2'
         );
@@ -1204,7 +1334,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $this->_db->update($table,
             array(
                 'title'        => $newTitle,
-                'subTitle'     => $newSubTitle,
+                'subtitle'     => $newSubTitle,
             ),
             'id = 327'
         );

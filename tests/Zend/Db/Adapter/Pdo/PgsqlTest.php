@@ -64,7 +64,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
             id           SERIAL,
             title        VARCHAR(100),
-            subTitle     VARCHAR(100),
+            subtitle     VARCHAR(100),
             body         {$this->_textDataType},
             date_created TIMESTAMP,
             PRIMARY KEY (id)
@@ -75,11 +75,11 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
     function getCreateTableSQL2()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id      INTEGER,
-            user_id      INTEGER,
-            commentTitle VARCHAR(100),
-            commentBody  {$this->_textDataType},
-            date_posted  TIMESTAMP
+            news_id       INTEGER,
+            user_id       INTEGER,
+            comment_title VARCHAR(100),
+            comment_body  {$this->_textDataType},
+            date_posted   TIMESTAMP
         )";
         return $sql;
     }
@@ -125,10 +125,10 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->_db->query($sql);
         $sql = $this->getCreateTableSQL();
         $this->_db->query($sql);
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subtitle, body, date_created)
                 VALUES (nextval('" . self::SEQUENCE_NAME . "'), 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
         $this->_db->query($sql);
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
+        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subtitle, body, date_created)
                 VALUES (nextval('" . self::SEQUENCE_NAME . "'), 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
         $this->_db->query($sql);
     }
@@ -139,7 +139,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $row = array (
             'id'           => $nextId,
             'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
+            'subtitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
         );
@@ -210,7 +210,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $row = array (
             'id'           => $nextId,
             'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
+            'subtitle'     => 'Sub title 3',
             'body'         => 'This is body 1',
             'date_created' => '2006-05-03 13:13:13'
         );
