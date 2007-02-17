@@ -28,7 +28,7 @@ require_once 'Zend/Uri.php';
 /**
  * Zend_Service_Rest
  */
-require_once 'Zend/Service/Rest.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * Zend_Service_Exception
@@ -102,7 +102,7 @@ class Zend_Service_Simpy
 		 * If the incubator version of Zend_Http_Client is being used, call its
 		 * HTTP authentication method, or else just use a temporary shorthand
 		 */
-		$this->_rest = new Zend_Service_Rest();
+		$this->_rest = new Zend_Rest_Client();
         $this->_rest->setUri(Zend_Uri::factory($this->_baseUri));
 		$http = $this->_rest->getHttpClient();
 
@@ -158,7 +158,7 @@ class Zend_Service_Simpy
 	 * decreasing order
 	 *
 	 * @param int $limit Limits the number of tags returned (optional)
-	 * @see http://www.simpy.com/simpy/service/api/rest/GetTags
+	 * @see http://www.simpy.com/doc/api/rest/GetTags
 	 * @throws Zend_Service_Exception
 	 * @return Zend_Service_Simpy_TagSet
 	 */
@@ -176,7 +176,7 @@ class Zend_Service_Simpy
 	 * Removes a tag.
 	 *
 	 * @param string $tag Tag to be removed
-	 * @see http://www.simpy.com/simpy/service/api/rest/RemoveTag
+	 * @see http://www.simpy.com/doc/api/rest/RemoveTag
 	 * @return void
 	 */
 	public function removeTag($tag)
@@ -193,7 +193,7 @@ class Zend_Service_Simpy
 	 *
 	 * @param string $fromTag Tag to be renamed
 	 * @param string $toTag New tag name
-	 * @see http://www.simpy.com/simpy/service/api/rest/RenameTag
+	 * @see http://www.simpy.com/doc/api/rest/RenameTag
 	 * @return void
 	 */
 	public function renameTag($fromTag, $toTag)
@@ -212,7 +212,7 @@ class Zend_Service_Simpy
 	 * @param string $fromTag1 First tag to merge.
 	 * @param string $fromTag2 Second tag to merge.
 	 * @param string $toTag Tag to merge the two tags into.
-	 * @see http://www.simpy.com/simpy/service/api/rest/MergeTags
+	 * @see http://www.simpy.com/doc/api/rest/MergeTags
 	 * @return void
 	 */
 	public function mergeTags($fromTag1, $fromTag2, $toTag)
@@ -232,7 +232,7 @@ class Zend_Service_Simpy
 	 * @param string $tag Tag to split
 	 * @param string $toTag1 First tag to split into
 	 * @param string $toTag2 Second tag to split into
-	 * @see http://www.simpy.com/simpy/service/api/rest/SplitTag
+	 * @see http://www.simpy.com/doc/api/rest/SplitTag
 	 * @return void
 	 */
 	public function splitTag($tag, $toTag1, $toTag2)
@@ -285,7 +285,7 @@ class Zend_Service_Simpy
 	 * @param string $note Free text note (optional)
 	 * @link Zend_Service_Simpy::ACCESSTYPE_PUBLIC
 	 * @link Zend_Service_Simpy::ACCESSTYPE_PRIVATE
-	 * @see http://www.simpy.com/simpy/service/api/rest/SaveLink.
+	 * @see http://www.simpy.com/doc/api/rest/SaveLink
 	 * @return void
 	 */
 	public function saveLink($title, $href, $accessType, $tags = null,
@@ -311,7 +311,7 @@ class Zend_Service_Simpy
 	 * Deletes a given link.
 	 *
 	 * @param string $href URL of the bookmark to delete
-	 * @see http://www.simpy.com/simpy/service/api/rest/DeleteLink
+	 * @see http://www.simpy.com/doc/api/rest/DeleteLink
 	 * @return void
 	 */
 	public function deleteLink($href)
@@ -327,7 +327,7 @@ class Zend_Service_Simpy
      * Return a list of watchlists and their meta-data, including the number
      * of new links added to each watchlist since last login.
      *
-     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlists
+     * @see http://www.simpy.com/doc/api/rest/GetWatchlists
      * @return Zend_Service_Simpy_WatchlistSet
      */
     public function getWatchlists()
@@ -340,7 +340,7 @@ class Zend_Service_Simpy
      * Returns the meta-data for a given watchlist.
      *
      * @param int $watchlistId ID of the watchlist to retrieve
-     * @see http://www.simpy.com/simpy/service/api/rest/GetWatchlist
+     * @see http://www.simpy.com/doc/api/rest/GetWatchlist
      * @return Zend_Service_Simpy_Watchlist
      */
     public function getWatchlist($watchlistId)
@@ -360,7 +360,7 @@ class Zend_Service_Simpy
      * @param string $q Query string formatted using Simpy search syntax
      *                  and search fields (optional)
      * @param int $limit Limits the number notes returned (optional)
-     * @see http://www.simpy.com/simpy/service/api/rest/GetNotes
+     * @see http://www.simpy.com/doc/api/rest/GetNotes
      * @see http://www.simpy.com/simpy/FAQ.do#searchSyntax
      * @see http://www.simpy.com/simpy/FAQ.do#searchFieldsLinks
      * @return Zend_Service_Simpy_NoteSet
@@ -383,7 +383,7 @@ class Zend_Service_Simpy
      * @param mixed $tags String containing a comma-separated list of tags
      *                    or array of strings containing tags (optional)
      * @param string $description Free-text note (optional)
-     * @see http://www.simpy.com/simpy/service/api/rest/SaveNote
+     * @see http://www.simpy.com/doc/api/rest/SaveNote
      * @return void
      */
     public function saveNote($title, $tags = null, $description = null)
@@ -405,7 +405,7 @@ class Zend_Service_Simpy
 	 * Deletes a given note.
 	 *
 	 * @param int $noteId ID of the note to delete
-	 * @see http://www.simpy.com/simpy/service/api/rest/DeleteNote
+	 * @see http://www.simpy.com/doc/api/rest/DeleteNote
 	 * @return void
 	 */
 	public function deleteNote($noteId)
