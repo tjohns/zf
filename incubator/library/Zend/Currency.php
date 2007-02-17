@@ -341,9 +341,9 @@ class Zend_Currency {
         
         //localize the number digits
         if (!empty($script)) {
-            $value = Zend_Locale_Format::convertNumerals($value, 'Latin', $script);
+            $value = Zend_Locale_Format::convertNumerals($value, 'Default', $script);
         } else if (!empty($this->_numberScript)) {
-            $value = Zend_Locale_Format::convertNumerals($value, 'Latin', $this->_numberScript);
+            $value = Zend_Locale_Format::convertNumerals($value, 'Default', $this->_numberScript);
         }
         
         
@@ -625,7 +625,7 @@ class Zend_Currency {
      */
     private function _setNumberScript($script)
     {
-        if (is_string($script) && (strlen($script) == 4 || $script == 'Latin')) {
+        if (is_string($script) && (strlen($script) == 4 || $script == 'Default')) {
             $this->_numberScript = $script ;
         } else {
             throw new Zend_Currency_Exception('invalid script name  "' . $script . '"');
