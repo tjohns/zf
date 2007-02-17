@@ -258,27 +258,18 @@ else {
 
     <sect2 id="zend.session.auth">
 
-        <title>Using Sessions with Authentication</title>
+        <title>在身份验证中使用会话</title>
 
         <para>
-            If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
-            is an object (not recommended), instead of an array, then make sure to require your authorization identity
-            class definition before starting the session. Instead, we recommend storing the authorization ids computed
-            within an authentication adapter inside a well-known key in the a session namespace. For example, the
-            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
+		    如果你的<code>Zend_Auth</code>身份验证的接配器返回的结果(<code>Zend_Auth_Result</code>)中授权标识(authorization identity)是个对象(不推荐)，而不是数组，那么请确保在开启会话之前包含会话标识类的定义。我们推荐在身份验证接配器中计算出来的授权标识储存到会话命名空间一个众所周知的键名下面。例如，默认<code>Zend_Auth</code>把授权标识储存到<code>'Zend_Auth'</code>命名空间的<code>'storage'</code>键名下。
         </para>
 
         <para>
-            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
-            store the authorization id to the session, in a well-known location in a session namespace of your choice.
-            Often, applications have specific needs about where to store credentials used (if any) and "authorization"
-            identity. Applications often map authentication identities (e.g. usernames) to authorization identities
-            (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth authentication
-            adapter's <code>authenticate()</code> method.
+		    如果你告诉<code>Zend_Auth</code>不持久化身份验证标识到会话中，那么你可以手动地储存授权标识到某个会话命名空间的某个众所周知的键名下。常常，应用程序需要知道哪里储存了授权标识及其相关信息。在身份验证期间，应用程序常常把身份验证标识（如，用户名）映射为授权标识（如，一个被分配的唯一的整数），这通常发生在<code>Zend_Auth</code>身份验证接配器的<code>authenticate()</code>方法中。
         </para>
 
         <example>
-            <title>Example: Simplified access of authorization ids</title>
+            <title>简化访问授权标识</title>
 <programlisting role="php">
 <![CDATA[<?php
     // pre-authentication request
@@ -314,32 +305,18 @@ else {
 
     <sect2 id="zend.session.testing">
 
-        <title>Using Sessions with Unit Tests</title>
+        <title>在单元测试中使用会话</title>
 
         <para>
-            The Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
-            suite of unit tests to cover the code in their applications. The exception
-            "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>" is thrown while
-            performing unit tests, if any write-related methods are used after ending the session. However, unit tests
-            using Zend_Session require extra attention, because closing (<code>Zend_Session::writeClose()</code>), or
-            destroying a session (<code>Zend_Session::destroy()</code>) prevents any further setting or unsetting of
-            keys in any Zend_Session_Namespace. This behavior is a direct result of the underlying ext/session mechanism
-            and PHP's <code>session_destroy()</code> and <code>session_write_close()</code>, which has no "undo"
-            mechanism to facilitate setup/teardown with unit tests.
+		    Zend Framework利用PHPUnit来促进自身代码的测试。大多数开发者在他们的应用程序中，扩展已有的一组单元测试，以覆盖测试他们的代码。在运行单元测试时，如果在结束会话之后使用了写相关的方法，那么会抛出"<emphasis role="strong">当前Zend_Session被标记为只读</emphasis>"的异常。在单元测试中使用Zend_Session需要额外的注意，因为在关闭会话(<code>Zend_Session::writeClose()</code>)，或者摧毁一个会话(<code>Zend_Session::destroy()</code>)之后，不允许再设置或注销任何一个Zend_Session_Namespace的键名了。 这样是由底层PHP的会话机制<code>session_destroy()</code>和<code>session_write_close()</code>所直接引起的，因为它未提供“撤销”机制以便单元测试setup/teardown。
         </para>
 
         <para>
-            To work around this, see the unit test <code>testSetExpirationSeconds()</code> in
-            <code>tests/Zend/Session/SessionTest.php and SessionTestHelper.php</code>, which make use of PHP's
-            <code>exec()</code> to launch a separate process. The new process more accurately simulates a second,
-            successive request from a browser. The separate process begins with a "clean" session, just like any PHP
-            script execution for a web request. Also, any changes to <code>$_SESSION[]</code> made in the calling
-            process become available to the child process, provided the parent closed the session before using
-            <code>exec()</code>
+		    围绕这一工作，参见单元测试tests/Zend/Session/SessionTest.php中的<code>testSetExpirationSeconds()</code>方法和SessionTestHelper.php，利用了PHP的<code>exec()</code>发起一个独立的过程。新的过程准确地模拟了一个来自浏览器的继上次之后的第二个请求。独立请求始于一个“干净”的会话，就像为任一请求执行PHP脚本。同时，要使$_SESSION[]在子过程中可更改，那么需要在父过程执行<code>exec()</code>之前关闭会话。
         </para>
 
         <example>
-            <title>Using PHPUnit to test code written using Zend_Session*</title>
+            <title>使用PHPUnit测试由Zend_Session*写成的代码</title>
 <programlisting role="php">
 <![CDATA[<?php
         // testing setExpirationSeconds()
