@@ -109,7 +109,7 @@ abstract class Zend_Db_Table
 
             // make sure it's a Zend_Db_Adapter
             if (! $db instanceof Zend_Db_Adapter_Abstract) {
-                throw new Zend_Db_Table_Exception('db object does not implement Zend_Db_Adapter_Abstract');
+                throw new Zend_Db_Table_Exception('db object does not extend Zend_Db_Adapter_Abstract');
             }
 
             // save the connection
@@ -173,7 +173,7 @@ abstract class Zend_Db_Table
         }
 
         if (! $this->_db instanceof Zend_Db_Adapter_Abstract) {
-            throw new Zend_Db_Table_Exception('db object does not implement Zend_Db_Adapter_Abstract');
+            throw new Zend_Db_Table_Exception('db object does not extend Zend_Db_Adapter_Abstract');
         }
 
         // get the table name
