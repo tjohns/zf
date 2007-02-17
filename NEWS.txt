@@ -40,6 +40,7 @@ Zend Framework                                                             NEWS
     ZF-910 new _forward method does not set dispatched to false
     ZF-917 Zend_Controller Unit Tests failing
 - Zend_Date
+    ZF-721 RFC822 Dates are not localized or GMT, are rejected by setArpa()
     ZF-779 Adding a year in a leap year only adds 365 days
     ZF-784 Support using default date formats to create dates
     ZF-785 Incorrect date results from using Zend_Date::DATES
@@ -91,6 +92,9 @@ Zend Framework                                                             NEWS
     ZF-890 eliminate SQL-89 join syntax
     ZF-891 incorrectly splits GROUP BY that contain commas
     ZF-896 wrong resulting SQL query string
+- Zend_Db_Table
+    ZF-862 Zend_Db_Table options for specifying table name and primary key
+    ZF-903 Zend_Db_Table save() does not set the new primary key
 - Zend_Environment
     New component to give diagnostic information about PHP (incubator).
 - Zend_Feed
@@ -119,6 +123,7 @@ Zend Framework                                                             NEWS
     ZF-772 API method name improvement: toNumberSystem() => convertNumerals()
     ZF-793 formating fails using toNumber()
     ZF-856 Zend_LocaleTest Test failing
+    ZF-882 isDate() accepts invalid dates
     ZF-883 getDate() / _parseDate() automatically attempt to fix invalid dates
     ZF-894 Zend_Locale_FormatTest failing
 - Zend_Log
@@ -126,8 +131,11 @@ Zend Framework                                                             NEWS
     ZF-728 Wrong use of Zend_Db_Adapter_Abstract::insert() 
 - Zend_Mail
     New Zend_Mail_Read features moved from incubator to core.
+    ZF-458 Adding Authentication to Zend_Mail_Transport_Smtp
+    ZF-575 cumulative recipient when mail generate with a foreach structure.
     ZF-788 Call to undefined function Zend_Mail_Exception()
     ZF-857 parse error in Zend_Mail_Client_Smtp_Auth_Crammd5
+    ZF-925 Zend_Mail_Protocol_Abstract does not allow IP addresses or localhost
 - Zend_Measure
     ZF-854 Zend_Measure_NumberTest tests failing
 - Zend_Pdf
@@ -141,6 +149,7 @@ Zend Framework                                                             NEWS
     ZF-754 Zend_Rest_Server::_handleStruct() should be recursive
 - Zend_Search_Lucene
     New feature to index HTML files.
+    Greatly improved performance.
     ZF-76 Zend_Search_Lucene don't index polish chars in UTF-8 (TRAC#83)
     ZF-90 memory segmen storage provider
     ZF-265 Document character escaping query parser feature (Changeset [220])
@@ -159,11 +168,9 @@ Zend Framework                                                             NEWS
     Refactored design.
     ZF-799 Zend_Session_Core::setId() does not report failure 
     ZF-906 $_SESSION might be modified after Zend_Session::writeClose()
-- Zend_Translate
-    Moved from incubator to core.
 - Zend_XmlRpc_Client / Zend_XmlRpc_Server
     ZF-771 XmlRpc value encoding can cause conflicts with server and client
-- Total of 119 issues resolved; for a detailed list, see the changelog
+- Total of 126 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.7.0 / 18-Jan-2007=
