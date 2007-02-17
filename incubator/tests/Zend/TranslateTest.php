@@ -65,10 +65,10 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($lang->_('msg2'), 'msg2');
 
-        $lang->addTranslation('en', array('msg2' => 'Message 2'));
+        $lang->addTranslation(array('msg2' => 'Message 2', 'en'));
         $this->assertEquals($lang->_('msg2'), 'Message 2');
 
-        $lang->addTranslation('en', array('msg3' => 'Message 3'), true);
+        $lang->addTranslation(array('msg3' => 'Message 3'), 'en', true);
         $this->assertEquals($lang->_('msg2'), 'msg2');
         $this->assertEquals($lang->_('msg3'), 'Message 3');
     }
@@ -82,7 +82,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testSetLocale()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
-        $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
+        $lang->addTranslation(array('msg1' => 'Message 1 (ru)', 'ru'));
 
         $this->assertEquals($lang->getLocale(), 'en');
 
@@ -93,7 +93,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testSetLanguage()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
-        $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
+        $lang->addTranslation(array('msg1' => 'Message 1 (ru)', 'ru'));
 
         $this->assertEquals($lang->getLocale(), 'en');
 
@@ -104,7 +104,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testGetLanguageList()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
-        $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
+        $lang->addTranslation(array('msg1' => 'Message 1 (ru)', 'ru'));
 
         $this->assertEquals(count($lang->getList()), 2);
         $this->assertTrue(in_array('en', $lang->getList()));
@@ -114,7 +114,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testIsAvailable()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
-        $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
+        $lang->addTranslation(array('msg1' => 'Message 1 (ru)', 'ru'));
 
         $this->assertTrue($lang->isAvailable('en'));
         $this->assertTrue($lang->isAvailable('ru'));
@@ -124,7 +124,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testTranslate()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1 (en)'), 'en');
-        $lang->addTranslation('ru', array('msg1' => 'Message 1 (ru)'));
+        $lang->addTranslation(array('msg1' => 'Message 1 (ru)', 'ru'));
 
         $this->assertEquals($lang->_('msg1'), 'Message 1 (en)');
         $this->assertEquals($lang->_('msg1', 'ru'), 'Message 1 (ru)');
