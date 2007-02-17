@@ -1,59 +1,36 @@
-<sect1 id="zend.auth.introduction">
+﻿<sect1 id="zend.auth.introduction">
 
-    <title>Introduction</title>
+    <title>简介</title>
 
     <para>
-        Zend_Auth provides an API for authentication and includes concrete authentication adapters for
-        common use case scenarios.
+        Zend_Auth 为认证（authentication）提供了一个API并包括了一些通用用例情景的具体认证适配器。
     </para>
 
     <note>
         <para>
-            Zend_Auth currently includes a
-            <link linkend="zend.auth.adapter.digest">digest authentication adapter</link>
-            as a simple proof-of-concept for the design. Additional adapters are planned for development.
-            Interested in using a particular adapter? Your
-            <ulink url="http://framework.zend.com/wiki/x/qx4">voting for an adapter</ulink> and
-            <ulink url="http://framework.zend.com/wiki/x/GgE">contributions</ulink> are most welcome!
+            Zend_Auth 当前为设计包含了<link linkend="zend.auth.adapter.digest">数字认证适配器</link>作为一个简单的 proof-of-concept。其他的适配器正计划开发。对使用特定的适配器感兴趣？非常欢迎你的<ulink url="http://framework.zend.com/wiki/x/qx4">为适配器投票</ulink> 和<ulink url="http://framework.zend.com/wiki/x/GgE">贡献</ulink>！
+            
         </para>
     </note>
 
     <para>
-        Zend_Auth is concerned only with <emphasis role="strong">authentication</emphasis> and not with
-        <emphasis role="strong">authorization</emphasis>. Authentication is loosely defined as determining
-        whether an entity actually is what it purports to be (i.e., identification), based on some set of
-        credentials. Authorization, the process of deciding whether to allow an entity access to, or to
-        perform operations upon, other entities is outside the scope of Zend_Auth. For more information about
-        authorization and access control with the Zend Framework, please see
-        <link linkend="zend.acl">Zend_Acl</link>.
+        Zend_Auth 只涉及 <emphasis role="strong">认证</emphasis>而不是<emphasis role="strong">授权</emphasis>。认证被宽松地定义为基于一些证书（credential）来确定一个实体（例如，身份）是否确实是它所声称的。授权是一个过程，它决定是否允许一个实体对其他实体进行访问、执行操作，它超出了Zend_Auth的范围。更多关于Zend Framework 授权和访问控制的信息，参见<link linkend="zend.acl">Zend_Acl</link>.
     </para>
 
     <sect2 id="zend.auth.introduction.adapters">
 
-        <title>Adapters</title>
+        <title>适配器</title>
 
         <para>
-            A Zend_Auth adapter is used to authenticate against a particular type of authentication service,
-            such as LDAP, RDBMS, or file-based storage. Different adapters are likely to have vastly different
-            options and behaviors, but some basic things are common among adapters. For example, accepting
-            authentication credentials (including a purported identity), authenticating, and returning some
-            result are common to Zend_Auth adapter.
+            Zend_Auth适配器被用来依靠特定的认证服务（例如LDAP、RDBMS或基于文件的存储）来认证。不同的适配器可能有不同的选项和行为，但有些基本的事情是通用的。例如，接受认证证书（包括声称实体）、认证、返回一些结果在Zend_Auth适配器中是通用的。
         </para>
 
         <para>
-            Each Zend_Auth authentication adapter class implements <code>Zend_Auth_Adapter_Interface</code>.
-            This interface defines one method, <code>authenticate()</code>, that an adapter class implements
-            for authentication purposes. Each adapter class must be prepared prior to calling
-            <code>authenticate()</code>. This means that each adapter provides the ability to set up
-            credentials (e.g., username and password) and to define values for adapter-specific options, such
-            as database connection settings for a database table adapter.
+            每个Zend_Auth 认证适配器类都实现<code>Zend_Auth_Adapter_Interface</code>.这个接口定义了一个方法，<code>authenticate()</code>, 适配器实现它来做认证。在调用<code>authenticate()</code>之前，每个适配器必需准备就绪。这就意味着每个适配器要提供设置证书（例如，用户名和密码）的能力并为适配器规范选项定义一些值，例如数据库表适配器的连接设置。
         </para>
 
         <para>
-            The following is an example authentication adapter that requires a username and password to be set
-            for authentication. Other details, such as how the authentication service is queried, have been
-            omitted for brevity:
-
+            下面是一个认证适配器的例子，它要求为认证设置用户名和密码。为简明扼要，其它的细节（如查询认证服务）被省略了。
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Interface.php';
 
@@ -81,40 +58,31 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     }
 }]]></programlisting>
 
-            As indicated in its docblock, <code>authenticate()</code> must return an instance of
-            <code>Zend_Auth_Result</code> (or a class derived from <code>Zend_Auth_Result</code>). If for some
-            reason performing an authentication query is impossible, <code>authenticate()</code> should throw
-            an exception that derives from <code>Zend_Auth_Adapter_Exception</code>.
+           如上面所示，<code>authenticate()</code>必需返回一个<code>Zend_Auth_Result</code>的实例（或从<code>Zend_Auth_Result</code>派生的一个类）。如果因为某些原因认证查询不能执行，<code>authenticate()</code>应该抛出一个由<code>Zend_Auth_Adapter_Exception</code>产生的异常。
         </para>
 
     </sect2>
 
     <sect2 id="zend.auth.introduction.results">
 
-        <title>Results</title>
+        <title>结果</title>
 
         <para>
-            Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
-            <code>authenticate()</code> in order to represent the results of an authentication attempt.
-            Adapters populate the <code>Zend_Auth_Result</code> object upon construction, so that the
-            following three methods provide a basic set of operations common to the results of Zend_Auth
-            adapters:
+            为了表示一个认证尝试的结果，Zend_Auth适配器返回一个带有<code>authenticate()</code>的<code>Zend_Auth_Result</code>的实例。适配器基于结构组成<code>Zend_Auth_Result</code>对象，下面三个方法提供了一组基本的通用Zend_Auth适配器结果的操作：
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>isValid()</code> - returns true if and only if the result represents a
-                        successful authentication attempt
+                        <code>isValid()</code> - 返回 true 当且仅当结果表示一个成功的认证尝试
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getIdentity()</code> - returns the identity of the authentication attempt
+                        <code>getIdentity()</code> - 返回认证尝试的身份
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getMessages()</code> - returns an array of messages regarding a failed
-                        authentication attempt
+                        <code>getMessages()</code> - 返回关于认证尝试失败的数组
                     </para>
                 </listitem>
             </itemizedlist>
@@ -124,62 +92,48 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 
     <sect2 id="zend.auth.introduction.persistence">
 
-        <title>Identity Persistence</title>
+        <title>身份的持久（Persistence）</title>
 
         <para>
-            Authenticating a request that includes authentication credentials is useful per se, but it is also
-            important to support maintaining the authenticated identity without having to present the
-            authentication credentials with each request.
+            实质上，认证一个包含认证证书的请求很有用，但是维护已认证的身份并在每次请求时不需要出示认证证书也同样很重要。
         </para>
 
         <para>
-            HTTP is a stateless protocol, however, and techniques such as cookies and sessions have been
-            developed in order to facilitate maintaining state across multiple requests in server-side web
-            applications. <link linkend="zend.session">Zend_Session</link> is used by default within Zend_Auth
-            to provide persistent storage of the identity from a successful authentication attempt using the
-            PHP session.
+            HTTP是一个无连接的协议，然而，象cookie和session这样的技术已经被开发出来使在服务器端的web应用维护多请求状态变得容易。<link linkend="zend.session">Zend_Session</link>被Zend_Auth缺省地使用，它用PHP session为一个成功认证尝试的身份提供持久存储空间。
         </para>
 
         <para>
-            Upon a successful authentication attempt, <code>Zend_Auth::authenticate()</code> stores the
-            identity from the authentication result into persistent storage. By default,
-            <code>Zend_Auth</code> uses a storage class based on
-            <link linkend="zend.session">Zend_Session</link>. The storage class may be changed by providing a
-            different storage object to <code>Zend_Auth::setStorage()</code>.
+            基于成功的认证尝试，<code>Zend_Auth::authenticate()</code> 把身份从认证结果存储到持久存储空间。缺省地，<code>Zend_Auth</code> 使用基于 <link linkend="zend.session">Zend_Session</link> 的存储类。存储类可以通过 <code>Zend_Auth::setStorage()</code> 提供不同的存储对象来被改变。
         </para>
 
         <para>
-            If automatic persistent storage of the identity is not appropriate for a particular use case, then
-            developers may forgo using the <code>Zend_Auth</code> class altogether, instead using an adapter
-            class directly.
+            如果自动的身份持久存储对特定的用例来说不合适，那么开发者可以完全地放弃使用<code>Zend_Auth</code>，取而代之，直接使用适配器类。
         </para>
 
     </sect2>
 
     <sect2 id="zend.auth.introduction.using">
 
-        <title>Using Zend_Auth</title>
+        <title>使用Zend_Auth</title>
 
         <para>
-            There are two provided ways to use Zend_Auth adapters:
+            这里提供了两种方法使用Zend_Auth适配器：
             <orderedlist>
             <listitem>
                 <para>
-                    indirectly, through <code>Zend_Auth::authenticate()</code>
+                    非直接地，通过<code>Zend_Auth::authenticate()</code>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    directly, through the adapter's <code>authenticate()</code> method
+                    直接地，通过适配器的 <code>authenticate()</code> 方法
                 </para>
             </listitem>
             </orderedlist>
         </para>
 
         <para>
-            The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
-            the <code>Zend_Auth</code> class:
-
+            下面的例子通过<code>Zend_Auth</code>类来示例如何非直接地使用Zend_Auth适配器：
             <programlisting role="php"><![CDATA[<?php
 // Get a reference to the Singleton instance of Zend_Auth
 require_once 'Zend/Auth.php';
@@ -204,8 +158,7 @@ if (!$result->isValid()) {
         </para>
 
         <para>
-            Once authentication has been attempted in a request, as in the above example, it is a simple
-            matter to check whether a successfully authenticated identity exists:
+            一旦在一个请求里的认证被尝试，如上面的例子，检查一个成功的被认证的身份是否存在就是一个简单的匹配：
             <programlisting role="php"><![CDATA[<?php
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
@@ -215,20 +168,13 @@ if ($auth->hasIdentity()) {
         </para>
 
         <para>
-            To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
-            This typically would be used for implementing an application "logout" operation:
+            从持久存储空间出去一个身份，可简单地使用<code>clearIdentity()</code>方法。这将被典型地用作“logout”操作。
             <programlisting role="php"><![CDATA[<?php
 Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
-            When the automatic use of persistent storage is inappropriate for a particular use case, a
-            developer may simply bypass the use of the <code>Zend_Auth</code> class, using an adapter class
-            directly. Direct use of an adapter class involves configuring and preparing an adapter object and
-            then calling its <code>authenticate()</code> method. Adapter-specific details are discussed in the
-            documentation for each adapter. The following example directly utilizes
-            <code>MyAuthAdapter</code>:
-
+            当自动使用持久存储空间对特定的用例不合适，开发者可简单地忽略<code>Zend_Auth</code>类，直接使用适配器类。直接使用适配器类需要配置和准备适配器对象和调用它的<code>authenticate()</code>方法。适配器规范细节将在每个适配器的文档中讨论。下面的例子直接使用 <code>MyAuthAdapter</code>：  
             <programlisting role="php"><![CDATA[<?php
 // Set up the authentication adapter
 $authAdapter = new MyAuthAdapter($username, $password);
