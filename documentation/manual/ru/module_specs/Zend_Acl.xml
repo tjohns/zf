@@ -1,50 +1,91 @@
 <sect1 id="zend.acl.introduction">
-    <title>Introduction</title>
+    <title>Введение</title>
 
     <para>
-        Zend_Acl provides lightweight and flexible access control list (ACL) functionality
+    	Zend_Acl предоставляет легкую и гибкую функциональность списка прав доступа (ACL) и управления привилегиями.
+	Вообще, приложение может использовать данную функциональность для контроля доступа одних объектов к другим - защищенным.
+<!--
+	Zend_Acl provides lightweight and flexible access control list (ACL) functionality
         and privileges management. In general, an application may utilize such functionality
         to control access to certain protected objects by other requesting objects.
+-->
     </para>
 
     <para>
-        For the purposes of this documentation,
+    	В рамках данной документации,
+<!--
+	For the purposes of this documentation,
+-->
 
         <itemizedlist>
             <listitem>
                 <para>
+		<emphasis role="strong">Ресурс</emphasis> - объект, доступ к которому контролируется.
+<!--
                     a <emphasis role="strong">Resource</emphasis> is an object
                     to which access is controlled.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
+		<emphasis role="strong">Роль</emphasis> - объект, который может запросить доступ к Ресурсу.
+<!--
                     a <emphasis role="strong">Role</emphasis> is an object
                     that may request access to a Resource.
+-->
                 </para>
             </listitem>
         </itemizedlist>
-
+	Попросту говоря, <emphasis role="strong">Роли запрашивают доступ к Ресурсу</emphasis>.
+	Например, если человек запрашивает доступ к автомобилю, тогда человек - это Роль, а автомобиль - Ресурс, 
+	до тех пор пока доступ к автомобилю под контролем.
+<!-- 
         Put simply, <emphasis role="strong">Roles request access to Resources</emphasis>.
         For example, if a person requests access to a car, then the person is the requesting Role,
         and the car is the Resource, since access to the car is under control.
+-->
     </para>
 
     <para>
+    	Благодаря спецификации и использованию списка прав доступа(ACL), 
+	приложение получает контроль над тем, как запращивающие объекты (Роли) получают доступ к защищенным объектам (Ресурсам).
+<!--     
         Through the specification and use of an access control list (ACL), an application may control
         how requesting objects (Roles) are granted access to protected objects (Resources).
-    </para>
+	
+ -->    </para>
 
     <sect2 id="zend.acl.introduction.resources">
-        <title>About Resources</title>
+        <title>О Ресурсах
+	<!-- About Resources -->
+	</title>
         <para>
+	    В Zend_Acl создавать Ресурс очень просто. Zend_Acl предоставляет
+            <code>Zend_Acl_Resource_Interface</code>, чтобы облегчить разработчикам процесс создания Ресурса. Класс должен только 
+	    реализовать этот интерфейс, который состоит из одного метода, <code>getResourceId()</code>,
+            для того, чтобы Zend_Acl рассматривал объект как Ресурс. Дополнительно, Zend_Acl также содержит <code>Zend_Acl_Resource</code>, 
+	    как базовый класс, который разработчики могут расширять по желанию.
+<!-- 	
             In Zend_Acl, creating a Resource is very simple. Zend_Acl provides
             <code>Zend_Acl_Resource_Interface</code> to facilitate developers' creating Resources. A class need only
             implement this interface, which consists of a single method, <code>getResourceId()</code>, in order
             for Zend_Acl to consider the object to be a Resource. Additionally, <code>Zend_Acl_Resource</code> is
             included with Zend_Acl as a basic Resource implementation for developers to extend where desirable.
+-->
         </para>
         <para>
+	    Zend_Acl предусматривает структуру в виде дерева, в которое могут добавляться 
+	    многочисленные Ресурсы (или "подконтрольные зоны"). Как только Русурсы добавлены в такую структуру, 
+	    они могут быть организованы от общих (в направлении корня дерева) к специфическим (в направлении листьев дерева).
+	    При запросах к определенным ресурсам, в иерархии будет выполнен автоматический поиск правил относящихся к Ресурсам-предкам,
+	    позволяя простейшее наследование правил. Например, если некое общее правило должно действовать в каждом здании города, 
+	    то проще прикрепить его к городу, нежели крепить к каждому зданию в городе. 
+	    Однако, для некоторых зданий потребуются исключения из этого правила, в Zend_Acl это достигается путем 
+	    закрепления исключений из правила за каждым зданием, которое нуждается в этом.
+	    Ресурс может наследоваться только от одного родительского Ресурса, однако сам родительский Ресурс может, 
+	    в свою очередь, наследоваться от своего родительского Ресурса и т.д. 
+<!-- 	
             Zend_Acl provides a tree structure to which multiple Resources (or "areas under access control")
             can be added. Since Resources are stored in such a tree structure, they can be organized from the
             general (toward the tree root) to the specific (toward the tree leaves). Queries upon
@@ -55,10 +96,15 @@
             rule, however, and this is achieved easily in Zend_Acl by assigning such exception rules to
             each such building that requires an exception to the rule. a Resource may inherit from only one
             parent Resource, though this parent Resource can have its own parent Resource, and so on.
+ -->	    
         </para>
         <para>
+	    Zend_Acl также поддерживает права доступа к Ресурсам (например, "создание", "чтение", "обновление", "удаление"), и
+            разработчик может закреплять правила, которые будут влиять на все или определенные права доступа к Ресурсу. 
+<!-- 	
             Zend_Acl also supports privileges upon Resources (e.g., "create", "read", "update", "delete"), and
             the developer can assign rules that affect all privileges or specific privileges upon a Resource.
+ -->	    
         </para>
     </sect2>
 
