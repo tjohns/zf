@@ -99,19 +99,6 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
     </para>
 
     <para>
-        Having informations integrated into a translation string is also no big issue.
-        
-<programlisting role="php"><![CDATA[<?php
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
-?>]]></programlisting>
-
-        Instead of print use the printf function and exclude all informations with %1\$s parts.
-        The first is %1\$s, the second %2\$s and so on. This way a translation can be done without knowing 
-        the exact information. In our example the date is always the actual day, but the string can be translated
-        without the knowledge of the actual day.
-    </para>
-
-    <para>
         Of course you can also use message id's instead of strings. In the above examples the message id's are
         identical with the strings. So we could also do it like this:
 
@@ -335,6 +322,13 @@ $translate->addTranslation('path/to/german.mo', 'de');
             directory structure, bindtextdomain and textdomain. Just give the path and filename to the adapter
             and that's it.
         </para>
+
+        <note>
+            <para>
+                The Gettext Adapter only supports UTF-8 sources. So when creating the source files you have
+                to select the source encoding to be UTF-8 otherwise the output will be errorous.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
