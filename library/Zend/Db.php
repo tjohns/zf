@@ -142,7 +142,7 @@ class Zend_Db {
     const PARAM_STR = 2;
 
     /**
-     * Factory for Zend_Db_Adapter classes.
+     * Factory for Zend_Db_Adapter_Abstract classes.
      *
      * Additional keys are processed as key-value pairs for the adapter config array.
      *

@@ -44,9 +44,9 @@ abstract class Zend_Db_Table
 {
 
     /**
-     * Default Zend_Db_Adapter object.
+     * Default Zend_Db_Adapter_Abstract object.
      *
-     * @var Zend_Db_Adapter
+     * @var Zend_Db_Adapter_Abstract
      */
     static protected $_defaultDb;
 
@@ -58,9 +58,9 @@ abstract class Zend_Db_Table
     static protected $_inflector;
 
     /**
-     * Zend_Db_Adapter object.
+     * Zend_Db_Adapter_Abstract object.
      *
-     * @var Zend_Db_Adapter
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
 
@@ -96,7 +96,7 @@ abstract class Zend_Db_Table
      */
     public function __construct($config = array())
     {
-        // set a custom Zend_Db_Adapter connection
+        // set a custom Zend_Db_Adapter_Abstract connection
         if (! empty($config['db'])) {
 
             // convenience variable
@@ -107,7 +107,7 @@ abstract class Zend_Db_Table
                 $db = Zend::registry($db);
             }
 
-            // make sure it's a Zend_Db_Adapter
+            // make sure it's a Zend_Db_Adapter_Abstract
             if (! $db instanceof Zend_Db_Adapter_Abstract) {
                 throw new Zend_Db_Table_Exception('db object does not extend Zend_Db_Adapter_Abstract');
             }
@@ -124,15 +124,15 @@ abstract class Zend_Db_Table
     }
 
     /**
-     * Sets the default Zend_Db_Adapter for all Zend_Db_Table objects.
+     * Sets the default Zend_Db_Adapter_Abstract for all Zend_Db_Table objects.
      *
-     * @param Zend_Db_Adapter $db A Zend_Db_Adapter object.
+     * @param Zend_Db_Adapter_Abstract $db A Zend_Db_Adapter_Abstract object.
      * @return void
      * @throws Zend_Db_Table_Exception
      */
     static public final function setDefaultAdapter($db)
     {
-        // make sure it's a Zend_Db_Adapter
+        // make sure it's a Zend_Db_Adapter_Abstract
         if (! $db instanceof Zend_Db_Adapter_Abstract) {
             throw new Zend_Db_Table_Exception('db object does not extend Zend_Db_Adapter_Abstract');
         }
@@ -140,7 +140,7 @@ abstract class Zend_Db_Table
     }
 
     /**
-     * Gets the default Zend_Db_Adapter for all Zend_Db_Table objects.
+     * Gets the default Zend_Db_Adapter_Abstract for all Zend_Db_Table objects.
      *
      * @return Zend_Db_Adapter_Abstract
      */
@@ -150,7 +150,7 @@ abstract class Zend_Db_Table
     }
 
     /**
-     * Gets the Zend_Db_Adapter for this particular Zend_Db_Table object.
+     * Gets the Zend_Db_Adapter_Abstract for this particular Zend_Db_Table object.
      *
      * @return Zend_Db_Adapter_Abstract
      */
@@ -313,13 +313,13 @@ abstract class Zend_Db_Table
     /**
      * Fetches all rows.
      *
-     * Honors the Zend_Db_Adapter fetch mode.
+     * Honors the Zend_Db_Adapter_Abstract fetch mode.
      *
      * @param string|array $where  OPTIONAL An SQL WHERE clause.
      * @param string|array $order  OPTIONAL An SQL ORDER clause.
      * @param int          $count  OPTIONAL An SQL LIMIT count.
      * @param int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return Zend_Db_Table_Rowset The row results per the Zend_Db_Adapter fetch mode.
+     * @return Zend_Db_Table_Rowset The row results per the Zend_Db_Adapter_Abstract fetch mode.
      */
     public function fetchAll($where = null, $order = null, $count = null,
         $offset = null)
@@ -334,11 +334,11 @@ abstract class Zend_Db_Table
     /**
      * Fetches one row.
      *
-     * Honors the Zend_Db_Adapter fetch mode.
+     * Honors the Zend_Db_Adapter_Abstract fetch mode.
      *
      * @param string|array $where OPTIONAL An SQL WHERE clause.
      * @param string|array $order OPTIONAL An SQL ORDER clause.
-     * @return Zend_Db_Table_Row The row results per the Zend_Db_Adapter fetch mode.
+     * @return Zend_Db_Table_Row The row results per the Zend_Db_Adapter_Abstract fetch mode.
      */
     public function fetchRow($where = null, $order = null)
     {
@@ -373,7 +373,7 @@ abstract class Zend_Db_Table
      * @param string|array $order  OPTIONAL An SQL ORDER clause.
      * @param int          $count  OPTIONAL An SQL LIMIT count.
      * @param int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return mixed The row results per the Zend_Db_Adapter fetch mode.
+     * @return mixed The row results per the Zend_Db_Adapter_Abstract fetch mode.
      */
     protected function _fetch($type, $where = null, $order = null, $count = null,
         $offset = null)

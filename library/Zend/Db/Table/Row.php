@@ -41,9 +41,9 @@ class Zend_Db_Table_Row
     protected $_data = array();
 
     /**
-     * Zend_Db_Adapter object from the table interface.
+     * Zend_Db_Adapter_Abstract object from the table interface.
      *
-     * @var Zend_Db_Adapter
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
 
