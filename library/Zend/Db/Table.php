@@ -72,7 +72,7 @@ abstract class Zend_Db_Table
     protected $_name;
 
     /**
-     * The table column names derived from Zend_Db_Adapter_*::describeTable().
+     * The table column names derived from Zend_Db_Adapter_Abstract::describeTable().
      *
      * The key is the underscore format, and the value is the camelized
      * format.
