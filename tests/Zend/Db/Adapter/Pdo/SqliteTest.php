@@ -100,10 +100,10 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("'1'", $value);
 
         $value = $this->_db->quote(1);
-        $this->assertEquals("'1'", $value);
+        $this->assertEquals("1", $value);
 
         $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("'1', '2', '3'", $value);
+        $this->assertEquals("1, '2', 3", $value);
     }
 
     public function testQuoteInto()

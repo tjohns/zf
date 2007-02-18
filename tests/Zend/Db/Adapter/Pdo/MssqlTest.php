@@ -89,11 +89,14 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("'it''s', 'all', 'right!'", $value);
 
         // test numeric
-        $value = $this->_db->quote(1);
+        $value = $this->_db->quote('1');
         $this->assertEquals("'1'", $value);
 
-        $value = $this->_db->quote(array('1'));
-        $this->assertEquals("'1'", $value);
+        $value = $this->_db->quote(1);
+        $this->assertEquals("1", $value);
+
+        $value = $this->_db->quote(array(1, '2', 3));
+        $this->assertEquals("1, '2', 3", $value);
     }
 
     public function testQuoteInto()

@@ -69,11 +69,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     public function getCreateTableSQL2()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id      INT NOT NULL,
-            user_id      INT NOT NULL,
-            commentTitle {$this->_textDataType}(100),
-            commentBody  {$this->_textDataType}(100),
-            date_posted  {$this->_textDataType}(100)
+            news_id       INT NOT NULL,
+            user_id       INT NOT NULL,
+            comment_title {$this->_textDataType}(100),
+            comment_body  {$this->_textDataType}(100),
+            date_posted   {$this->_textDataType}(100)
         )";
         return $sql;
     }
@@ -150,10 +150,10 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         $this->assertEquals("'1'", $value);
 
         $value = $this->_db->quote(1);
-        $this->assertEquals("'1'", $value);
+        $this->assertEquals("1", $value);
 
         $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("'1', '2', '3'", $value);
+        $this->assertEquals("1, '2', 3", $value);
     }
 
     public function testQuoteInto()
