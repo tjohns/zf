@@ -410,7 +410,11 @@ abstract class Zend_Db_Adapter_Abstract
             }
             return implode(', ', $value);
         } else {
-            return $this->_quote($value);
+            if (is_int($value)) {
+                return $value;
+            } else {
+                return $this->_quote($value);
+            }
         }
     }
 
