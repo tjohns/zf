@@ -72,7 +72,7 @@ class Zend_Db_Table_Row
         $this->_table = $config['table'];
         $this->_info  = $this->_table->info();
 
-        if ($config['data'] === false) {
+        if (!isset($config['data']) || $config['data'] === false) {
             // empty row, use blanks
             $cols = array_keys($this->_info['cols']);
             $data = array_fill(0, count($cols), null);
