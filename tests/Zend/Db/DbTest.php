@@ -46,17 +46,6 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    function testFactoryProfilerOption()
-    {
-        $db = Zend_Db::factory('pdo_sqlite',
-            array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE,
-                'profiler' => true
-            )
-        );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
-    }
-
     function testConstructorWithoutFactory()
     {
         $db = new Zend_Db_Adapter_Pdo_Sqlite(
