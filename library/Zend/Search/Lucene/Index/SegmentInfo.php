@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Search_Lucene_Index_DictionaryLoader */
+require_once 'Zend/Search/Lucene/Index/DictionaryLoader.php';
+
 
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';
@@ -395,79 +398,6 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
-     * Loads Term dictionary from TermInfoIndex file
-     *
-     * @throws Zend_Search_Lucene_Exception
-     */
-    protected function _loadDictionary()
-    {
-        if ($this->_termDictionary !== null) {
-            return;
-        }
-
-        $this->_termDictionary = array();
-        $this->_termDictionaryInfos = array();
-
-        // Prefetch dictionary index data
-        $tiiFileSource = $this->openCompoundFile('.tii');
-        $tiiFile = new Zend_Search_Lucene_Storage_File_Memory(
-                                       $tiiFileSource->readBytes($this->compoundFileLength('.tii')) );
-
-        $tiVersion = $tiiFile->readInt();
-        if ($tiVersion != (int)0xFFFFFFFE) {
-            throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
-        }
-
-        $indexTermCount = $tiiFile->readLong();
-                          $tiiFile->readInt();  // IndexInterval
-        $skipInterval   = $tiiFile->readInt();
-
-        if ($indexTermCount < 1) {
-            throw new Zend_Search_Lucene_Exception('Wrong number of terms in a term dictionary index');
-        }
-
-        $prevTerm     = '';
-        $freqPointer  =  0;
-        $proxPointer  =  0;
-        $indexPointer =  0;
-        for ($count = 0; $count < $indexTermCount; $count++) {
-            $termPrefixLength = $tiiFile->readVInt();
-            $termSuffix       = $tiiFile->readString();
-            $termValue        = Zend_Search_Lucene_Index_Term::getPrefix($prevTerm, $termPrefixLength) . $termSuffix;
-
-            $termFieldNum     = $tiiFile->readVInt();
-            $docFreq          = $tiiFile->readVInt();
-            $freqPointer     += $tiiFile->readVInt();
-            $proxPointer     += $tiiFile->readVInt();
-            if( $docFreq >= $skipInterval ) {
-                $skipDelta = $tiiFile->readVInt();
-            } else {
-                $skipDelta = 0;
-            }
-
-            $indexPointer += $tiiFile->readVInt();
-
-            // $this->_termDictionary[] =  new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
-            $this->_termDictionary[] = array($termFieldNum, $termValue);
-
-            $this->_termDictionaryInfos[] =
-                 // new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
-                 array($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
-
-            $prevTerm = $termValue;
-        }
-
-        // Check special index entry mark
-        if ($this->_termDictionary[0][0] != (int)0xFFFFFFFF) {
-            throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
-        } else if (PHP_INT_SIZE > 4){
-            // Treat 64-bit 0xFFFFFFFF as -1
-            $this->_termDictionary[0][0] = -1;
-        }
-    }
-
-
-    /**
      * Return segment name
      *
      * @return string
@@ -520,7 +450,18 @@ class Zend_Search_Lucene_Index_SegmentInfo
             return $termInfo;
         }
 
-        $this->_loadDictionary();
+
+        if ($this->_termDictionary === null) {
+            // Prefetch dictionary index data
+            $tiiFile = $this->openCompoundFile('.tii');
+            $tiiFileData = $tiiFile->readBytes($this->compoundFileLength('.tii'));
+
+            // Load dictionary index data
+            list($this->_termDictionary, $this->_termDictionaryInfos) =
+                        Zend_Search_Lucene_Index_DictionaryLoader::load($tiiFileData);
+        }
+
+
 
         $searchField = $this->getFieldNum($term->field);
 
