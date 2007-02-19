@@ -325,8 +325,14 @@ $translate->addTranslation('path/to/german.mo', 'de');
 
         <note>
             <para>
-                The Gettext Adapter only supports UTF-8 sources. So when creating the source files you have
-                to select the source encoding to be UTF-8 otherwise the output will be errorous.
+                You should always use UTF-8 as source encoding. Otherwise you will have problems if you are 
+                using two different source encodings. Expect you have one source file with ISO-8815-11 and
+                one with CP815. But you can only set one encoding for your source file. So one of your languages
+                will probably not be displayed correct. 
+            </para>
+            <para>
+                UTF-8 is a portable format which supports all languages. So you will not have problems with 
+                different languages by using it.
             </para>
         </note>
     </sect2>
