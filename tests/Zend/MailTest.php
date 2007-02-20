@@ -403,7 +403,8 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
      */
     protected function _getHeader(Zend_Mail_Transport_Abstract $mock, $type = 'To')
     {
-        $headers = explode("\r\n", $mock->header);
+        $headers = str_replace("\r\n", "\n", $mock->header);
+        $headers = explode("\n", $mock->header);
         $return  = '';
         foreach ($headers as $header) {
             if (!empty($return)) {
@@ -446,7 +447,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->send($mock);
         $to  = $this->_getHeader($mock);
         $bcc = $this->_getHeader($mock, 'Bcc');
-        $this->assertContains('to.address@email.com', $to, $to);
+        $this->assertContains('to.address@email.com', $to, $mock->header);
         $this->assertNotContains('second.bcc@email.com', $to, $bcc);
     }
 }

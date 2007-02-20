@@ -108,7 +108,6 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
 
             unset($headers['To']['append']);
             $this->recipients = implode(',', $headers['To']);
-            unset($headers['To']);
         }
 
         // Remove subject header, if present
