@@ -450,4 +450,19 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $this->assertContains('to.address@email.com', $to, $mock->header);
         $this->assertNotContains('second.bcc@email.com', $to, $bcc);
     }
+
+    public function testZf927BlankLinesShouldPersist()
+    {
+        $mail = new Zend_Mail();
+        $mail->setSubject('my subject');
+        $mail->setBodyText("my body\r\n\r\n...after two newlines");
+        $mail->setFrom('test@email.com');
+        $mail->addTo('test@email.com');
+
+        // test with generic transport
+        $mock = new Zend_Mail_Transport_Sendmail_Mock();
+        $mail->send($mock);
+        $body = $mock->body;
+        $this->assertContains("\r\n\r\n..after", $body, $body);
+    }
 }
