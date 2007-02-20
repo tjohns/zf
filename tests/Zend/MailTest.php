@@ -462,7 +462,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         // test with generic transport
         $mock = new Zend_Mail_Transport_Sendmail_Mock();
         $mail->send($mock);
-        $body = $mock->body;
-        $this->assertContains("\r\n\r\n..after", $body, $body);
+        $body = quoted_printable_decode($mock->body);
+        $this->assertContains("\r\n\r\n...after", $body, $body);
     }
 }

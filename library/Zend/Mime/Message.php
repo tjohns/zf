@@ -135,7 +135,7 @@ class Zend_Mime_Message
     {
         if (! $this->isMultiPart()) {
             $body = array_shift($this->_parts);
-            $body = $body->getContent();
+            $body = $body->getContent($EOL);
         } else {
             $mime = $this->getMime();
 

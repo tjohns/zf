@@ -143,12 +143,12 @@ class Zend_Mime_Part {
      *
      * @return String
      */
-    public function getContent()
+    public function getContent($EOL = Zend_Mime::LINEEND)
     {
         if ($this->_isStream) {
             return stream_get_contents($this->getEncodedStream());
         } else {
-            return Zend_Mime::encode($this->_content, $this->encoding);
+            return Zend_Mime::encode($this->_content, $this->encoding, $EOL);
         }
     }
 
