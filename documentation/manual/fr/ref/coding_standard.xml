@@ -661,7 +661,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Classes</title>
+                <title>Files</title>
 
                 <para>
                     Chaque fichier qui contient du code PHP doit avoir un bloc d'entête en haut du fichier qui contient

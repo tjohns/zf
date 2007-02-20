@@ -711,7 +711,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Classes</title>
+                <title>Files</title>
 
                 <para>
                     Every file that contains PHP code must have a header block at the top of the file that
@@ -735,7 +735,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
-                <title>Files</title>
+                <title>Classes</title>
 
                 <para>
                     Every class must have a docblock that contains these phpDocumentor tags at a minimum:
