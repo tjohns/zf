@@ -29,21 +29,25 @@
 
     <sect2 id="zend.session.basicexamples">
 
-        <title>Примеры<!--Tutorial Examples--></title>
+        <title>Учебные примеры<!--Tutorial Examples--></title>
 
         <para>
             Если при инстанцировании Zend_Session не было указано пространство
             имен, то все данные будут неявным образом сохранены в пространстве
-            имен "<code>Default</code>". Пример ниже демонстрирует использование
-            пространства имен по умолчанию и показывает, как подсчитывать
-            количество просмотров страниц пользователем на сайте.
+            имен "<code>Default</code>". <code>Zend_Session</code> не
+            предназначен для работы с содержимым контейнера пространства имен
+            сессии напрямую. Вместо этого мы используем
+            <code>Zend_Session_Namespace</code>. Пример ниже демонстрирует
+            использование пространства имен по умолчанию и показывает, как
+            подсчитывать количество просмотров страниц пользователем на сайте.
             Для тестирования этого примера добавьте следующий код в
             файл загрузки:    
 <!--
             If no namespace is specified when instantiating Zend_Session, all data will be transparently stored in a
-            namespace called "<code>Default</code>". The example below demonstrates use of this default namespace,
-            showing how to count the number of times a user views pages on your website. To test this example, add the
-            following code to your ZF bootstrap area:
+            namespace called "<code>Default</code>". <code>Zend_Session</code> is not intended to work directly on the
+            contents of session namespace containers. Instead, we use <code>Zend_Session_Namespace</code>. The example
+            below demonstrates use of this default namespace, showing how to count the number of times a user views
+            pages on your website. To test this example, add the following code to your ZF bootstrap area:
 -->
         </para>
 
@@ -52,9 +56,18 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
+
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
-    echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
+
+    // используется "магический" метод __isset() в Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        // будет увеличиваться на единицу при каждой загрузке страницы.
+        $defaultNamespace->numberOfPageRequests++; 
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // начальное значение
+    }
+
+    echo "Запросов к странице за эту сессию: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
 

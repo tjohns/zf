@@ -547,72 +547,74 @@ else {
         <title>Использование сессий вместе с аутентификацией<!--Using Sessions with Authentication--></title>
 
         <para>
-            Если вы позволяете <code>Zend_Auth</code> хранить метки
-            аутентификации с использованием сессий Zend Framework. Для того,
-            чтобы получить доступ к метке аутентификации в последующих запросах,
-            нужно: 
+            Если ваш адаптер аутентификации для <code>Zend_Auth</code>
+            возвращает результат, в котором идетификатором авторизации является
+            объект (не рекомендуется) вместо массива, то выполняйте проверку
+            класса идентификатора авторизации до того, как стартовать сессию.
+            Вместо этого мы рекомендуем хранить идентификаторы авторизации,
+            вычисленные в адаптере авторизации, под хорошо известным ключом в
+            пространстве имен сессии. Например, по умолчанию
+            <code>Zend_Auth</code> размещает идентификаторы под ключом 'storage'
+            пространства имен 'Zend_Auth'.
 <!--
-            If you allow <code>Zend_Auth</code> to persist authentication tokens using Zend Framework sessions. In order
-            to access the authentication token on subsequent requests, you would need to:
+            If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
+            is an object (not recommended), instead of an array, then make sure to require your authorization identity
+            class definition before starting the session. Instead, we recommend storing the authorization ids computed
+            within an authentication adapter inside a well-known key in the a session namespace. For example, the
+            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
 -->
         </para>
 
-        <example>
-            <title>Обходной путь: доступ к меткам аутентификации в сессиях<!--Workaround: accessing authentication tokens in sessions--></title>
-<programlisting role="php">
-<![CDATA[<?php
-    // курица и яйцо... вы должны знать класс метки до ее просмотра :(
-    require_once 'Zend/Auth/Digest/Token.php';
-    require_once 'Zend/Session.php';
-    Zend_Session::start();
-    require_once 'Zend/Auth/Digest/Adapter.php';
-    require_once 'Zend/Auth.php';
-    $auth = new Zend_Auth(new Zend_Auth_Digest_Adapter('someDigestFilename'));
-    $token = $auth->getToken();
-    echo "Valid: ",
-    (empty($token->isValid()) ? 'No' : 'Yes'), "\n"';
-    echo "Identity: ",
-        (empty($token->getIdentity()) ? 'unknown' : $token->getIdentity()), "\n"';
-    echo "Messages: ",
-        (empty($token->getMessages()) ? 'none' : $token->getMessages()), "\n"';
-?>]]></programlisting>
-        </example>
-
         <para>
             Если вы приказали <code>Zend_Auth</code> не сохранять метку сессии в
-            сессиях и затем вручную сохранили ID авторизации в сессии, то просто
-            используйте известное местонахождение в пространстве имен сессии.
-            Это также позволяет избежать сохранения сообщения об ошибке
-            аутентификации в сессии. Часто приложения имеют специфицеские
+            сессиях, то можете вручную сохранить ID авторизации под хорошо
+            известным ключом в любом пространстве имен сессии на ваш выбор.
+            Часто приложения имеют особые
             требования к тому, где хранить "мандат" (учетная запись с
             праметрами доступа пользователя) и идентификатор авторизации.
             Приложения часто устанавливают соответствие идентификаторов
             аутентификации (например, имена пользователей) и идентификаторов
             авторизации (например, присвоенное уникальное целое число) во время
-            аутентификации.
+            аутентификации, которая должна производится в методе
+            <code>authenticate()</code> адаптера аутентификации Zend_Auth.
 <!--
-            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, and then manually store
-            the authorization id to the session, then just use well-known locations in a session namespace. Also, this
-            avoids persisting authentication error messages in the session. (Note: Some community members are working on
-            a "flash message" system for Zend sessions.) Often, applications have specific needs about where to store
-            credentials used (if any) and "authorization" identity. Applications often map authentication identities
-            (e.g. usernames) to authorization identities (e.g. a uniquely assigned integer) during authentication.
+            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
+            store the authorization id to the session, in a well-known location in a session namespace of your choice.
+            Often, applications have specific needs about where to store credentials used (if any) and "authorization"
+            identity. Applications often map authentication identities (e.g. usernames) to authorization identities
+            (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth authentication
+            adapter's <code>authenticate()</code> method.
 -->
         </para>
 
         <example>
-            <title>Обходной путь: простое сохранение ID авторизации<!--Workaround: simpler access for authorization ids--></title>
+            <title>Пример: Простой доступ к ID авторизации<!--Example: Simplified access of authorization ids--></title>
 <programlisting role="php">
 <![CDATA[<?php
-    require 'Zend/Session.php';
+    // pre-authentication request
+    require_once 'Zend/Auth/Result.php';
+    require_once 'Zend/Auth/Adapter/Digest.php';
+    $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+    $result = $adapter->authenticate();
+    require_once 'Zend/Session/Namespace.php';
+    $namespace = Zend_Session_Namespace('Zend_Auth');
+    if ($result->isValid()) {
+        $namespace->authorizationId = $result->getIdentity();
+        $namespace->date = time();
+    } else {
+        $namespace->attempts++;
+    }
+
+    // subsequent requests
+    require_once 'Zend/Session.php';
     Zend_Session::start();
     $namespace = Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
-    echo "Authorization / user Id: ",
-        (empty($namespace->authorizationId) ? 'none' : $namespace->authorizationId), "\n"';
-    echo "Authentication attempts: ",
-        (empty($namespace->attempts) ? '0' : $namespace->attempts), "\n"';
+    echo "Authorization / user Id: ", (empty($namespace->authorizationId)
+        ? 'none' : print_r($namespace->authorizationId, true)), "\n"';
+    echo "Authentication attempts: ", (empty($namespace->attempts)
+        ? '0' : $namespace->attempts), "\n"';
     echo "Authenticated on: ",
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
 ?>]]></programlisting>
@@ -625,6 +627,23 @@ else {
         <title>Использование сессий с юнит-тестами<!--Using Sessions with Unit Tests--></title>
 
         <para>
+            Zend Framework использует PHPUnit для своего тестирования. Многие
+            разработчики расширяют существующие наборы
+            юнит-тестов для покрытия кода в своих приложениях. 
+            Если при выполнении юнит-тестирований после завершения сессии были
+            использованы любые связанные с записью методы, то генерируется
+            исключение "<emphasis role="strong">Zend_Session is currently marked
+            as read-only</emphasis>" ("Zend_Session помечен как доступный только
+            для чтения"). Тем не менее, юнит-тесты, использующие Zend_Session,
+            требуют особого внимания, поскольку закрытие
+            (<code>Zend_Session::writeClose()</code>) или уничтожение сессии
+            (<code>Zend_Session::destroy()</code>) не дает впоследствии
+            устанавливать или сбрасывать ключи в любом объекте
+            Zend_Session_Namespace. Это поведение является прямым следствием
+            использования лежащего в основе мехнанизма расширения ext/session
+            и функций <code>session_destroy()</code> и
+            <code>session_write_close()</code>, которые не имеют механизма
+            "отмены" для облегчения установки/демонтажа в юнит-тестировании.
 <!--
             The Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
             suite of unit tests to cover the code in their applications. The exception
@@ -639,6 +658,18 @@ else {
         </para>
 
         <para>
+            Чтобы обойти это, см. юнит-тест
+            <code>testSetExpirationSeconds()</code> в
+            <code>tests/Zend/Session/SessionTest.php</code> и
+            <code>SessionTestHelper.php</code>, которые используют
+            <code>exec()</code> для запуска отдельного процесса. Новый процесс
+            более точно имитирует второй, последующий, запрос из броузера.
+            Отдельный процесс начинается с "чистой" сессии, так же, как при
+            выполнении любого PHP-скрипта для веб-запроса. Кроме этого,
+            любые изменения в <code>$_SESSION[]</code>, произведенные при вызове
+            процесса, становятся доступными и в дочернем процессе, что дает
+            родительскому процессу возможность закрыть сессию до использования
+            <code>exec()</code>.
 <!--
             To work around this, see the unit test <code>testSetExpirationSeconds()</code> in
             <code>tests/Zend/Session/SessionTest.php and SessionTestHelper.php</code>, which make use of PHP's
@@ -651,9 +682,49 @@ else {
         </para>
 
         <example>
-            <title>Обходной путь: доступ к метку аутентификации в сессии<!--Workaround: accessing authentication tokens in sessions--></title>
+            <title>Использование PHPUnit для тестирования кода, написанного с использованием Zend_Session*<!--Using PHPUnit to test code written using Zend_Session*--></title>
 <programlisting role="php">
 <![CDATA[<?php
+        // testing setExpirationSeconds()
+        require 'tests/Zend/Session/SessionTestHelper.php'; // also see SessionTest.php in trunk/
+        $script = 'SessionTestHelper.php';
+        $s = new Zend_Session_Namespace('space');
+        $s->a = 'apple';
+        $s->o = 'orange';
+        $s->setExpirationSeconds(5);
+
+        Zend_Session::regenerateId();
+        $id = Zend_Session::getId();
+        session_write_close(); // release session so process below can use it
+        sleep(4); // not long enough for things to expire
+        exec($script . "expireAll $id expireAll", $result);
+        $result = $this->sortResult($result);
+        $expect = ';a === apple;o === orange;p === pear';
+        $this->assertTrue($result === $expect,
+            "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+
+        sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+        exec($script . "expireAll $id expireAll", $result);
+        $result = array_pop($result);
+        $this->assertTrue($result === '',
+            "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+        session_start(); // resume artificially suspended session
+
+        // We could split this into a separate test, but actually, if anything leftover from above
+        // contaminates the tests below, that is also a bug that we want to know about.
+        $s = new Zend_Session_Namespace('expireGuava');
+        $s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the keys in the namespace
+        $s->g = 'guava';
+        $s->p = 'peach';
+        $s->p = 'plum';
+
+        session_write_close(); // release session so process below can use it
+        sleep(6); // not long enough for things to expire
+        exec($script . "expireAll $id expireGuava", $result);
+        $result = $this->sortResult($result);
+        session_start(); // resume artificially suspended session
+        $this->assertTrue($result === ';p === plum',
+            "iteration over named Zend_Session namespace failed (result=$result)");
 ?>]]></programlisting>
         </example>
 
