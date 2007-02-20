@@ -393,4 +393,60 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
             $this->assertContains('No body specified', $e->getMessage());
         }
     }
+
+    /**
+     * Helper method for {@link testZf928ToAndBccHeadersShouldNotMix()}; extracts individual header lines
+     * 
+     * @param Zend_Mail_Transport_Abstract $mock 
+     * @param string $type 
+     * @return string
+     */
+    protected function _getHeader(Zend_Mail_Transport_Abstract $mock, $type = 'To')
+    {
+        $headers = explode("\r\n", $mock->header);
+        $return  = '';
+        foreach ($headers as $header) {
+            if (!empty($return)) {
+                // Check for header continuation
+                if (!preg_match('/^[a-z-]+:/i', $header)) {
+                    $return .= "\r\n" . $header;
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            if (preg_match('/^' . $type . ': /', $header)) {
+                $return = $header;
+            }
+        }
+
+        return $return;
+    }
+
+    public function testZf928ToAndBccHeadersShouldNotMix()
+    {
+        $mail = new Zend_Mail();
+        $mail->setSubject('my subject');
+        $mail->setBodyText('my body');
+        $mail->setFrom('info@onlime.ch');
+        $mail->addTo('to.address@email.com');
+        $mail->addBcc('first.bcc@email.com');
+        $mail->addBcc('second.bcc@email.com');
+
+        // test with generic transport
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+        $to  = $this->_getHeader($mock);
+        $bcc = $this->_getHeader($mock, 'Bcc');
+        $this->assertContains('to.address@email.com', $to, $to);
+        $this->assertNotContains('second.bcc@email.com', $to, $bcc);
+
+        // test with sendmail-like transport
+        $mock = new Zend_Mail_Transport_Sendmail_Mock();
+        $mail->send($mock);
+        $to  = $this->_getHeader($mock);
+        $bcc = $this->_getHeader($mock, 'Bcc');
+        $this->assertContains('to.address@email.com', $to, $to);
+        $this->assertNotContains('second.bcc@email.com', $to, $bcc);
+    }
 }
