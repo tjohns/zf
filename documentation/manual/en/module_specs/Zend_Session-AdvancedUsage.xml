@@ -390,6 +390,24 @@ else {
 ?>]]></programlisting>
         </example>
 
+        <para>
+            Authorization ids stored client-side are subject to privilege escalation vulnerabilities, if these ids are
+            used and trusted by the server, unless, for example, the id is duplicated on the server-side (e.g. in the
+            session) and then cross-checked with the authorization id claimed by the client for the in-effect session.
+            We are differentiating between "authentication ids" (e.g. usernames) and "authorization ids" (e.g. user id
+            #101 in the users DB table).
+        </para>
+
+        <para>
+            The latter is not uncommon for performance reasons, such as helping select from a pool of servers caching
+            session information to help solve chicken-and-egg problems. In my experience, often debates ensue about
+            whether to use the real authorization id in the cookie, or some substitute that aids in mapping to the real
+            authorization id (or session or server(s) holding the user's session/profile, etc.), as some system security
+            architects wish to prevent true "DB primary keys" from escaping into the wild to try and obtain some level
+            of protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone
+            uses auto-increment strategies for authorization ids.
+        </para>
+
     </sect2>
 
     <sect2 id="zend.session.testing">
