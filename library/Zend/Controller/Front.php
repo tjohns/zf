@@ -605,14 +605,16 @@ class Zend_Controller_Front
      * method to have them thrown.
      * 
      * @param boolean $flag Defaults to true
-     * @return boolean Returns current setting
+     * @return boolean|Zend_Controller_Front Used as a setter, returns object; as a getter, returns boolean
      */
     public function throwExceptions($flag = null)
     {
         if (true === $flag) {
             $this->_throwExceptions = true;
+            return $this;
         } elseif (false === $flag) {
             $this->_throwExceptions = false;
+            return $this;
         }
 
         return $this->_throwExceptions;
@@ -624,14 +626,16 @@ class Zend_Controller_Front
      * nothing.
      * 
      * @param boolean $flag 
-     * @return boolean Returns current setting
+     * @return boolean|Zend_Controller_Front Used as a setter, returns object; as a getter, returns boolean
      */
     public function returnResponse($flag = null)
     {
         if (true === $flag) {
             $this->_returnResponse = true;
+            return $this;
         } elseif (false === $flag) {
             $this->_returnResponse = false;
+            return $this;
         }
 
         return $this->_returnResponse;

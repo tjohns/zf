@@ -348,6 +348,12 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_controller->throwExceptions());
     }
 
+    public function testThrowExceptionsFluentInterface()
+    {
+        $result = $this->_controller->throwExceptions(true);
+        $this->assertSame($this->_controller, $result);
+    }
+
     /**
      * Test that with throwExceptions() set, an exception is thrown
      */
@@ -376,6 +382,12 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_controller->returnResponse());
         $this->_controller->returnResponse(false);
         $this->assertFalse($this->_controller->returnResponse());
+    }
+
+    public function testReturnResponseFluentInterface()
+    {
+        $result = $this->_controller->returnResponse(true);
+        $this->assertSame($this->_controller, $result);
     }
 
     /**
