@@ -39,6 +39,7 @@ Zend Framework                                                             NEWS
     ZF-909 Unit Tests fail (Zend/Service/AllTests.php)
     ZF-910 new _forward method does not set dispatched to false
     ZF-917 Zend_Controller Unit Tests failing
+    ZF-933 throwExceptions()/returnResponse() do not implement fluid interface
 - Zend_Date
     ZF-721 RFC822 Dates are not localized or GMT, are rejected by setArpa()
     ZF-779 Adding a year in a leap year only adds 365 days
@@ -50,6 +51,7 @@ Zend Framework                                                             NEWS
     ZF-828 Extreme Date Values
     ZF-838 Basic Zend_Date construction per Manual fails
     ZF-863 testLoose(Zend_DateTest) failing
+    ZF-885 Missing a constants for the very most popular date formats
     ZF-886 DAY_SHORT, MONTH_SHORT - consistency problem
     ZF-899 new Zend_Date() fails to throw errors 
     ZF-912 Zend_Date Unit Tests failing
@@ -58,6 +60,7 @@ Zend Framework                                                             NEWS
     ZF-31 PostgreSQL: implement describeTable() method
     ZF-36 Specify fetch mode for internal Zend_Db queries
     ZF-49 Zend_DB_Adapter_Abstract should has a function like checkConnection()
+    ZF-53 quote() quotes numeric values inappropriately.
     ZF-147 Need getConnection() to create and return connection 
     ZF-189 Oracle: Zend_Db_Adapter_Oracle->listTables() has undefined variable
     ZF-192 Zend_Db_Adapter_Oracle->describeTable() bad sql request
@@ -95,6 +98,7 @@ Zend Framework                                                             NEWS
 - Zend_Db_Table
     ZF-862 Zend_Db_Table options for specifying table name and primary key
     ZF-903 Zend_Db_Table save() does not set the new primary key
+    ZF-907 different exception messages for the same thing
 - Zend_Environment
     New component to give diagnostic information about PHP (incubator).
 - Zend_Feed
@@ -135,7 +139,10 @@ Zend Framework                                                             NEWS
     ZF-575 cumulative recipient when mail generate with a foreach structure.
     ZF-788 Call to undefined function Zend_Mail_Exception()
     ZF-857 parse error in Zend_Mail_Client_Smtp_Auth_Crammd5
+    ZF-923 Mime decode from message fails to detect content-type 
     ZF-925 Zend_Mail_Protocol_Abstract does not allow IP addresses or localhost
+    ZF-927 Zend_Mail strips down empty newlines in body message
+    ZF-928 Zend_Mail mixes To: and Bcc: headers on multiple Bcc
 - Zend_Measure
     ZF-854 Zend_Measure_NumberTest tests failing
 - Zend_Pdf
@@ -170,7 +177,7 @@ Zend Framework                                                             NEWS
     ZF-906 $_SESSION might be modified after Zend_Session::writeClose()
 - Zend_XmlRpc_Client / Zend_XmlRpc_Server
     ZF-771 XmlRpc value encoding can cause conflicts with server and client
-- Total of 126 issues resolved; for a detailed list, see the changelog
+- Total of 131 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.7.0 / 18-Jan-2007=
