@@ -53,12 +53,14 @@
         <example>
             <title>ユーザ定義の入力日付書式</title>
 <programlisting role="php"><![CDATA[<?php
-$date1 = Zend_Date('Feb 31, 2007');
-echo $date1, "\n";
-$date2 = Zend_Date('Feb 31, 2007', Zend_Date::DATES);
-echo $date2, "\n";
-$date3 = Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // 指定したフォーマットで解釈するように強制します
-echo $date3, "\n";
+$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+echo $date1, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
+
+$date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
+echo $date2, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
+
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // 指定したフォーマットで解釈するように強制します
+echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 ?>]]></programlisting>
         </example>
 

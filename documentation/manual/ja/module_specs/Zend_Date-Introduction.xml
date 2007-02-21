@@ -121,8 +121,15 @@ date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用
                     ISO_8601 の日付仕様をサポートしています。
                     ISO_8601 の日付仕様の一部にのみ準拠しているものについても識別できます。
                     これらの日付書式は、データベースを使用する際に特に有用です。
-                    たとえば、MsSQL と MySQL の日付書式は微妙に異なりますが、
-                    <code>Zend_Date</code> は両方ともサポートしています。
+                    たとえば、MsSQL と
+                    <ulink url="http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html">MySQL</ulink>
+                    の日付書式は微妙に異なりますが、
+                    <code>Zend_Date</code> は、書式指定定数
+                    <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>
+                    によって両方ともサポートしています。
+                    日付文字列が PHP の date() フォーマットトークンである
+                    "Y/m/d" や "Y-m-d H:i: s" といった形式になる場合は、
+                    Zend_Date が持つ ISO 8601 日付書式の組み込みサポートを使用します。
                 </para>
             </listitem>
             <listitem>
