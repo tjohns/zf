@@ -123,7 +123,7 @@ class Zend_Mime
      */
     static public function encodeQuotedPrintable($str,
         $lineLength = self::LINELENGTH, 
-        $lineEnd = PHP_EOL)
+        $lineEnd = self::LINEEND)
     {
         // Now let us break the string into different lines and encode line by line:
         $out = '';
@@ -209,14 +209,14 @@ class Zend_Mime
      * @param string $encoding
      * @return string
      */
-    static public function encode($str, $encoding, $EOL = Zend_Mime::LINEEND)
+    static public function encode($str, $encoding)
     {
         switch ($encoding) {
             case self::ENCODING_BASE64:
-                return self::encodeBase64($str, self::LINELENGTH, $EOL);
+                return self::encodeBase64($str);
                 
             case self::ENCODING_QUOTEDPRINTABLE:
-                return self::encodeQuotedPrintable($str, self::LINELENGTH, $EOL);
+                return self::encodeQuotedPrintable($str);
                 
             default:
                 /**
