@@ -46,12 +46,14 @@
         <example>
             <title>User-specified input date format</title>
 <programlisting role="php"><![CDATA[<?php
-$date1 = Zend_Date('Feb 31, 2007');
-echo $date1, "\n";
-$date2 = Zend_Date('Feb 31, 2007', Zend_Date::DATES);
-echo $date2, "\n";
-$date3 = Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // strictly restricts interpretation to specified format
-echo $date3, "\n";
+$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+
+$date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
+echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // strictly restricts interpretation to specified format
+echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 ?>]]></programlisting>
         </example>
 
