@@ -109,41 +109,80 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>About Roles</title>
+        <title>
+	О Ролях
+<!-- 	
+	About Roles
+-->
+	</title>
         <para>
+	    Как и в случае с Ресурсами, создавать Роль также очень просто. Zend_Acl предоставляет
+            <code>Zend_Acl_Role_Interface</code> чтобы облегчить разработчикам процесс создания Ролей. Класс должен только 
+	    реализовать этот интерфейс, который состоит из одного метода, <code>getRoleId()</code>,
+            для того, чтобы Zend_Acl рассматривал объект как Роль. Дополнительно, Zend_Acl также содержит <code>Zend_Acl_Role</code>, 
+	    как базовый класс, который разработчики могут расширять по желанию.
+<!-- 	
             Like with Resources, creating a Role is also very simple. Zend_Acl provides
             <code>Zend_Acl_Role_Interface</code> to facilitate developers' creating Roles. A class need only
             implement this interface, which consists of a single method, <code>getRoleId()</code>, in order
             for Zend_Acl to consider the object to be a Role. Additionally, <code>Zend_Acl_Role</code> is
             included with Zend_Acl as a basic Role implementation for developers to extend where desirable.
+ -->	    
         </para>
         <para>
-            In Zend_Acl, a Role may inherit from one or more Roles. This is to support inheritance of rules
+	    В Zend_Acl Роль может наследоваться от одной или от нескольких Ролей. Это реализовано для поддержки 
+	    наследования правил между Ролями. Например, пользовательская Роль, такая как "салли", 
+	    может принадлежать одной или нескольким родительским Ролям, таким как "редактор" и "администратор".
+	    Разработчик может привязывать правила к "редактору" и администратору раздельно, и "салли" будет наследовать 
+	    правила обоих Ролей. Нет необходимости привязывать правила непосредственно к "салли".
+<!--             
+	    In Zend_Acl, a Role may inherit from one or more Roles. This is to support inheritance of rules
             among Roles. For example, a user Role, such as "sally", may belong to one or more parent Roles,
             such as "editor" and "administrator". The developer can assign rules to "editor" and
             "administrator" separately, and "sally" would inherit such rules from both, without having to
             assign rules directly to "sally".
+ -->
         </para>
         <note>
             <para>
+	        Так как Zend_Acl поддерживает наследование правил от множества Ролей, существует вероятность возникновения
+		конфликтов между ними, таким образом возникает необходимость однозначного решения конфликтных ситуаций.
+		Zend_Acl решает такие конфликты присваивая наибольший приоритет Ролям, 
+		от которых Роль наследовалась в самую последнюю очередь. Поэтому, как только правило найдено для родительской Роли,
+		от которой произошло наследование в последний момент, никакие другие правила не рассматриваются, так как правило
+		с наибольшим приоритетом уже найдено.
+		
+<!-- 	    
                 Since Zend_Acl supports inheriting rules from multiple Roles, which may possibly
                 conflict with each other, a way to unambiguously resolve such conflicts is necessary. Zend_Acl
                 resolves such potential conflicts by considering the most recently inherited Role as highest
                 priority. That is, once a rule is found for a "parent" Role, starting at the most recently
                 inherited Role, no other rules are considered, since the highest priority rule has already been
-                reached.
+                reached. 
+-->
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>Creating the Access Control List (ACL)</title>
+        <title>
+	Создание списка контроля доступа (ACL)
+<!--
+	Creating the Access Control List (ACL)
+-->
+	</title>
 
         <para>
+	    ACL может представлять любое множество физических либо виртуальных объектов.
+	    В целях демонстрации, мы создадим базовую функциональность ACL для Системы Управления Контентом (CMS),
+	    которая будет поддерживать нескольких уровней групп к множеству областей. Для создания объекта ACL,
+	    мы будем использовать ACL без параметров:
+<!-- 	
             An ACL can represent any set of physical or virtual objects that you wish.
             For the purposes of demonstration, however, we will create a basic Content Management System ACL
             that maintains several tiers of groups over a wide variety of areas. To create a new ACL object,
             we instantiate the ACL with no parameters:
+ -->	    
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -153,17 +192,38 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
+	    	По умолчанию Zend_Acl реализует "белый список", это значит, что пока обратное не указано разработчиком, 
+		Zend_Acl запрещает доступ ко всем Ресурсам для всех Ролей
+<!-- 	    
                 Zend_Acl is a "whitelist" implementation by default, which means that unless otherwise
                 specified by the developer, Zend_Acl denies access to every privilege upon every Resource by
                 every Role.
+ -->		
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
-        <title>Registering Roles</title>
+        <title>
+	Регистрация Ролей
+<!-- 	
+	Registering Roles
+ -->	
+ 	</title>
 
         <para>
+	    Система Управления Контентом почти всегда нуждается в иерархии доступа для определения
+	    авторских возможностей своих пользователей. Это может быть группа "Гость", 
+	    предоставляющая ограниченный доступ для демонстрации, группа "Посетитель" - группа большинства пользователей CMS,
+	    которые производят каждодневные операции, группа "Редактор" - для тех кто публикует и редактирует,
+	    архивирует и удаляет контент, и, наконец, группа "Администратор", участники группы могут выполнять все те же операции, 
+	    что и участники других групп, а также управлять другой, специфической, информацией, пользователями,
+	    конфигурацией адинистративной части, а также делать резервное копирование/восстановление данных.
+	    Этот набор прав доступа может быть представлен в реестре Ролей, позволяя каждой группе наследовать привелегии
+	    родительской группы, при этом имея индивидуальные права доступа.
+	    Права доступа могут быть представлены в таком виде:
+ 	    
+<!-- 	
             Content Management Systems will nearly always require a hierarchy of permissions
             to determine the authoring capabilities of its users. There may be a 'Guest' group to
             allow limited access for demonstrations, a 'Staff' group for the majority of CMS users
@@ -174,47 +234,133 @@ $acl = new Zend_Acl();]]></programlisting>
             represented in a Role registry, allowing each group to inherit privileges from 'parent' groups,
             as well as providing distinct privileges for their unique group only.
             The permissions may be expressed as follows:
+ -->	    
         </para>
 
         <table>
-          <title>Access Controls for an Example CMS</title>
+          <title>
+	  Контроль доступа для демонстрационной CMS
+<!-- 	  
+	  Access Controls for an Example CMS
+ -->	  
+	  </title>
           <tgroup cols="3">
             <thead>
               <row>
-                <entry>Name</entry>
-                <entry>Unique permissions</entry>
-                <entry>Inherit permissions from</entry>
+                <entry>
+		Название
+<!-- 		
+		Name
+ -->		
+		</entry>
+                <entry>
+		Индивидуальные права
+<!-- 		
+		Unique permissions
+ -->		
+		</entry>
+                <entry>
+		Права унаследованные от
+<!-- 		
+		Inherit permissions from
+ -->		
+		</entry>
               </row>
             </thead>
             <tbody>
               <row>
-                <entry>Guest</entry>
-                <entry>View</entry>
-                <entry>N/A</entry>
+                <entry>
+		Гость
+<!-- 		
+		Guest
+ -->		
+		</entry>
+                <entry>
+		Просмотр
+<!-- 		
+		View
+ -->		
+		</entry>
+                <entry>
+		Не определено
+<!-- 		
+		N/A
+ -->		
+		</entry>
               </row>
               <row>
-                <entry>Staff</entry>
-                <entry>Edit, Submit, Revise</entry>
-                <entry>Guest</entry>
+                <entry>
+		Посетитель
+<!-- 		
+		Staff
+ -->		
+		</entry>
+                <entry>
+		Редактирование, предложение на публикацию, исправление
+<!-- 		
+		Edit, Submit, Revise
+ -->		
+		</entry>
+                <entry>
+		Гость
+<!-- 		
+		Guest
+ -->		
+		</entry>
               </row>
               <row>
-                <entry>Editor</entry>
-                <entry>Publish, Archive, Delete</entry>
-                <entry>Staff</entry>
+                <entry>
+		Редактор
+<!-- 		
+		Editor
+ -->		
+		</entry>
+                <entry>
+		Публикация, архивирование, удаление
+<!-- 		
+		Publish, Archive, Delete
+ -->		
+		</entry>
+                <entry>
+		Посетитель
+<!-- 		
+		Staff
+ -->		
+		</entry>
               </row>
               <row>
-                <entry>Administrator</entry>
-                <entry>(Granted all access)</entry>
-                <entry>N/A</entry>
+                <entry>
+		Администратор
+<!-- 		
+		Administrator
+ -->		
+		</entry>
+                <entry>
+		(Обладает всеми правами)
+<!-- 		
+		(Granted all access)
+ -->		
+		</entry>
+                <entry>
+		Не определено
+<!-- 		
+		N/A
+ -->		
+		</entry>
               </row>
             </tbody>
           </tgroup>
         </table>
 
         <para>
+	    Для этого примера мы используем <code>Zend_Acl_Role</code>, но можно было использовать любой класс,
+	    который реализует интерфейс <code>Zend_Acl_Role_Interface</code>. Эти группы могут быть добавлены в реест Ролей
+	    таким образом:
+<!-- 	
             For this example, <code>Zend_Acl_Role</code> is used, but any object that implements
             <code>Zend_Acl_Role_Interface</code> is acceptable. These groups can be added to the
             Role registry as follows:
+ -->	    
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -222,24 +368,43 @@ require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
+//Добавить группы в реестр Ролей используя Zend_Acl_Role
+<!-- 
 // Add groups to the Role registry using Zend_Acl_Role
+ -->
 require_once 'Zend/Acl/Role.php';
 
+// Гость не наследует управление доступом
+<!-- 
 // Guest does not inherit access controls
+ -->
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
 
+//Посетитель наследуется от Гостя
+<!-- 
 // Staff inherits from guest
+ -->
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
-/* alternatively, the above could be written:
+/*
+Альтернатива тому, что написано выше:
+<!-- 
+alternatively, the above could be written:
+ -->
 $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
+//Редактор наледуется от Посетителя
+<!-- 
 // Editor inherits from staff
+ -->
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
+//Администатор не наследует управление доступом
+<!-- 
 // Administrator does not inherit access controls
+ -->
 $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
 
     </sect2>
