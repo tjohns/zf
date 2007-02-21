@@ -448,9 +448,14 @@ class Zend_Http_Client
      * constants.
      *  
      * To enable authentication: 
-     *     @example $this->setAuth('shahar', 'secret', Zend_Http_Client::AUTH_BASIC);
+     * <code>
+     * $this->setAuth('shahar', 'secret', Zend_Http_Client::AUTH_BASIC);
+     * </code>
+     *
      * To disable authentication: 
-     *     @example $this->setAuth(false);
+     * <code>
+     * $this->setAuth(false);
+     * </code>
      *
      * @see http://www.faqs.org/rfcs/rfc2617.html
      * @param string|false $user User name or false disable authentication
