@@ -125,48 +125,35 @@ class Zend_Mime
         $lineLength = self::LINELENGTH, 
         $lineEnd = self::LINEEND)
     {
-        // Now let us break the string into different lines and encode line by line:
         $out = '';
-        $lines = explode($lineEnd, $str);
+        $str = str_replace('=', '=3D', $str);
+        $str = str_replace(self::$qpKeys, self::$qpReplaceValues, $str);
 
-        foreach ($lines as $line) {
-            /**
-             * now replace all unprintable characters by their encodings
-             * as defined in the lookup table:
-             */
-            $line = str_replace('=', '=3D', $line);
-            $line = str_replace(self::$qpKeys, self::$qpReplaceValues, $line);
-
-            // line break when line length>74
-            preg_match_all('/.{1,' . $lineLength . '}([^=]{0,2})?/', $line, $aMatch);
-
-            /**
-             * now check if there is a space at the end of the line and replace
-             * it by =20 and implode with =<CRLF>
-             */
-            for ($i = 0; $i < count($aMatch[0]); $i++) {
-                if (substr($aMatch[0][$i], -1) == ' ') {
-                    $line = substr($aMatch[0][$i], 0, -1) . '=20';
-                } else {
-                    $line = $aMatch[0][$i];
-                }
-
-                if ($i + 1 < count($aMatch[0])) {
-                    $line .= '=';
-                }
-
-                // single dot on a line is handled by
-                // Zend_Mail_Transport_Smtp::data().
-                $out .= $line . $lineEnd;
+        // Split encoded text into separate lines
+        while ($str) {
+            $ptr = strlen($str);
+            if ($ptr > $lineLength) {
+                $ptr = $lineLength;
             }
+
+            // Ensure we are not splitting across an encoded character
+            if (($pos = strrpos(substr($str, 0, $ptr), '=')) >= $ptr - 2) {
+                $ptr = $pos;
+            }
+
+            // Check if there is a space at the end of the line and rewind
+            if ($str[$ptr - 1] == ' ') {
+                --$ptr;
+            }
+
+            // Add string and continue
+            $out .= substr($str, 0, $ptr) . '=' . $lineEnd;
+            $str = substr($str, $ptr);
         }
 
-        if ($out == '') {
-            return '';
-        }
-
-        // cut LINEEND from last line
-        return substr($out, 0, -(strlen($lineEnd))); 
+        $out = rtrim($out, $lineEnd);
+        $out = rtrim($out, '=');
+        return $out;
     }
 
     /**

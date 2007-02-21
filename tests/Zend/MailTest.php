@@ -460,7 +460,6 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
 
     public function testZf927BlankLinesShouldPersist()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('still working on cross-platform tests');
         $mail = new Zend_Mail();
         $mail->setSubject('my subject');
         $mail->setBodyText("my body\r\n\r\n...after two newlines");
