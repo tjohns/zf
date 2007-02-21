@@ -738,11 +738,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinRightClause()
     {
-        if ($this->getDriver() == 'pdo_Sqlite') {
-            $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
-            return;
-        }
-
         $id = $this->getResultSetKey('id');
         $newsId = $this->getResultSetKey('news_id');
         $table = $this->getIdentifier(self::TABLE_NAME);
@@ -765,11 +760,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinCrossClause()
     {
-        if ($this->getDriver() == 'Db2') {
-            $this->markTestSkipped('DB2 does not support CROSS JOIN');
-            return;
-        }
-
         $id = $this->getResultSetKey('id');
         $newsId = $this->getResultSetKey('news_id');
         $table = $this->getIdentifier(self::TABLE_NAME);
