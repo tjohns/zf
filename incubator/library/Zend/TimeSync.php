@@ -269,7 +269,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
-    public function getDate($locale = false)
+    public function getDate($locale = null)
     {
         foreach ($this->_timeservers as $alias => $server) {
             $this->_current = $server;
