@@ -2,21 +2,21 @@
     <title>Einführung</title>
     <para>
         <code>Zend_Service</code> ist eine abstrakte Klasse welche die Grundlage für
-        Web Service Implementationen ist (z.B. XML-RPC).
+        Web Service Implementationen ist, wie SOAP oder REST.
     </para>
     <para>
-        <code>Zend_Service</code> bietet Unterstützung für jedes REST-basiertes 
-        Web Service durch
-        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>.
+        Wenn Unterstützung für generische, XML-basierte REST Services sucht, sollte sich den
+        <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link> anschauen.
     </para>
     <para>
         Zusätzlich zur Möglichkeit <code>Zend_Service</code> zu erweitern und 
-        <code>Zend_Service_Rest</code> für REST basierte Web Services zu benutzen,
+        <code>Zend_Rest_Client</code> für REST basierte Web Services zu benutzen,
         bietet Zend Unterstützung für populäre Web Services wie beispielsweise
+        <link linkend="zend.service.akismet">Akismet</link>,
         <link linkend="zend.service.amazon">Amazon</link>,
         <link linkend="zend.service.flickr">Flickr</link>, und 
         <link linkend="zend.service.yahoo">Yahoo!</link>. 
-        In naher Zukunft könnten noch mehr Services hinzugefügt werden.
+        In Zukunft werden weitere Services folgen.
     </para>
 </sect1>
 <!--
