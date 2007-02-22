@@ -19,7 +19,7 @@
 
             <para>
                 <code>Zend_Controller_Request_Http</code> provides a request object
-                for use in an HTTP environment. 
+                for use in an HTTP environment.
                 <code>Zend_Controller_Request_Http</code>
                 is the default request class utilised by
                 <code>Zend_Controller_Dispatcher</code>.
@@ -98,13 +98,13 @@
                 <code>setBaseUrl()</code> method of either the
                 <code>Zend_Controller_Request_Http</code> class, or the
                 <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>, 
+                method is to set it in <code>Zend_Controller_Front</code>,
                 which will proxy it into the request object. Example usage to
                 set a custom base URL:
             </para>
 
             <programlisting role="php"><![CDATA[
-/** 
+/**
  * Dispatch Request with custom base URL with Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
@@ -155,7 +155,7 @@ RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
-            
+
             <para>
                 The rewrite router can also be used with the IIS webserver
                 if <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
@@ -196,8 +196,8 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
 
 $router = $ctrl->getRouter(); // returns a rewrite router by default
 $router->addRoute(
-	'user',
-	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+    'user',
+    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
 ]]></programlisting>
         </sect3>
@@ -231,9 +231,9 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
                 constructor is a route that will be matched to a URL -
                 for example, the above route will match
                 <code>http://example.com/user/martel</code>. The colon in a
-                route marks a URL variable. After the successful routing, values 
+                route marks a URL variable. After the successful routing, values
                 of all defined variables will be injected to the Zend_Controller_Request.
-                After that they will be accessible through a Zend_Controller_Request::getParam or 
+                After that they will be accessible through a Zend_Controller_Request::getParam or
                 Zend_Controller_Action::_getParam methods. In our example a
                 parameter named username will be set to a value of 'martel'.
             </para>
@@ -269,8 +269,8 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             <note>
                 <title>Special variables</title>
                 <para>
-                    Names of these special variables may be different if you choose to 
-                    alter the defaults in <code>Zend_Controller_Request_Http</code> 
+                    Names of these special variables may be different if you choose to
+                    alter the defaults in <code>Zend_Controller_Request_Http</code>
                     by the means of setControllerKey and setActionKey methods.
                 </para>
             </note>
@@ -312,10 +312,10 @@ $router->addRoute(
             </para>
 
             <para>
-                The above example will only result in injecting a year variable 
-                to the request. No routing will take place since controller and 
-                action parameters are not set. To make it more usable you have to 
-                provide a valid controller and a valid action as defaults. 
+                The above example will only result in injecting a year variable
+                to the request. No routing will take place since controller and
+                action parameters are not set. To make it more usable you have to
+                provide a valid controller and a valid action as defaults.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -325,7 +325,7 @@ $router->addRoute(
 );]]></programlisting>
 
             <para>
-				This route will then result in dispatching to showAction of ArchiveController.
+                This route will then result in dispatching to showAction of ArchiveController.
             </para>
 
         </sect3>
@@ -334,7 +334,7 @@ $router->addRoute(
             <title>Variable requirements</title>
 
             <para>
-                One can add a third parameter to the 
+                One can add a third parameter to the
                 <code>Zend_Controller_Router_Route</code>
                 constructor where variable requirements can
                 be set. These are defined as regular expressions:
@@ -382,7 +382,7 @@ $router->addRoute(
 
             <para>
                 Zend_Controller_Router_Rewrite is preconfigured with one default.
-                It will match URIs in the shape of <code>'controller/action'</code> 
+                It will match URIs in the shape of <code>'controller/action'</code>
                 Additionally, a module name may be specified as the first path
                 element, allowing URIs of the form
                 <code>'module/controller/action</code>.
@@ -462,7 +462,7 @@ $this->addRoute('default', $compat);]]></programlisting>
 // Remove default compatability route
 $router->removeDefaultRoutes();]]></programlisting>
 
-        </sect3>    
+        </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
             <title>Static Routes</title>
@@ -494,19 +494,22 @@ $router->addRoute('login', $static);
 
             <programlisting role="php"><![CDATA[
 /**
- * Example INI:
+ * Example INI located at /path/to/config.ini:
+ *
+ * [production]
+ *
  * routes.archive.route = "archive/:year/*"
  * routes.archive.defaults.controller = archive
  * routes.archive.defaults.action = show
  * routes.archive.defaults.year = 2000
  * routes.archive.reqs.year = "\d+"
- * 
+ *
  * routes.news.type = "Zend_Controller_Router_Route_Static"
  * routes.news.route = "news"
  * routes.news.defaults.controller = "news"
  * routes.news.defaults.action = "list"
  */
-$config = new Zend_Config_Ini($file);
+$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
 ]]></programlisting>
@@ -519,7 +522,7 @@ $router->addConfig($config, 'routes');
                 route then requires, minimally a 'route' entry and one or more
                 'defaults' entries; optionally one or more 'reqs' (short for
                 'required') may be provided. All told, these correspond to the
-                three arguments provided to a <code>Zend_Controller_Router_Route_Interface</code> 
+                three arguments provided to a <code>Zend_Controller_Router_Route_Interface</code>
                 object. An option key, 'type', can be used to specify the route
                 class type to use for that particular route; by default, it uses
                 <code>Zend_Controller_Router_Route</code>. In the example above,
