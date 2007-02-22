@@ -359,8 +359,8 @@ class My_Controller_Front extends Zend_Controller_Front
 
     /**
      * Set the dispatcher object.  The dispatcher is responsible for
-     * taking a Zend_Controller_Dispatcher_Token object, instantiating the controller, and
-     * call the action method of the controller.
+     * taking a Zend_Controller_Request_Abstract object, instantiating the controller, and
+     * calling the action method of the controller.
      *
      * @param Zend_Controller_Dispatcher_Interface $dispatcher
      * @return Zend_Controller_Front

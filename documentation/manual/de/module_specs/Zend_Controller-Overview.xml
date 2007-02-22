@@ -60,20 +60,31 @@
 					    wird, um zu ermitteln, welcher Controller und welche Aktion dieses 
 					    Controllers diese Anfrage verarbeiten soll. Dieser Controller, diese Aktion
 					    und optionale Parameter werden dann im Request Object gesetzt, das vom 
-					    <code>Zend_Controller_Dispatcher</code> verarbeitet wird. Das Routing 
-					    wird nur einmal ausgeführt: wenn die Anfrage erhalten wird und bevor der 
-					    erste Controller aufgerufen wird.
+					    <code>Zend_Controller_Dispatcher_Standard</code> verarbeitet wird. Das 
+                        Routing wird nur einmal ausgeführt: wenn die Anfrage erhalten wird und 
+                        bevor der erste Controller aufgerufen wird.
                     </para>
 
                     <para>
-                        Der Standardrouter <code>Zend_Controller_Router</code> nimmt den URI 
-                        Endpunkt entgegen, der in <code>Zend_Controller_Request_Http</code> 
+                        Der Standardrouter ist <code>Zend_Controller_Router_Rewrite</code>.
+                    </para>
+
+                    <para>
+                        Der Standardrouter <code>Zend_Controller_Router_Rewrite</code> nimmt den 
+                        URI Endpunkt entgegen, der in <code>Zend_Controller_Request_Http</code> 
                         angegeben ist, und zerlegt ihn in einen Controller, eine Aktion und die
                         Parameter basierend auf den Pfadinformationen der URL. Zum Beispiel würde
                         die URL <code>http://localhost/foo/bar/key/value</code> übersetzt, um den 
                         <code>foo</code> Controller und die <code>bar</code> Aktion zu verwenden und
                         einen Parameter <code>key</code> mit dem Wert <code>value</code> anzugeben.
 					</para>
+                    
+                    <para>
+                        <code>Zend_Controller_Router_Rewrite</code> kann auch für beliebige Pfade 
+                        verwendet werden; man beachte <xref
+                            linkend="zend.controller.providedsubclasses.rewriterouter">die 
+                        Rewrite Router Dokumentation</xref> für weitere Informationen.
+                    </para>
 				</listitem>
 
 				<listitem>
@@ -98,8 +109,8 @@
                     </para>
 
                     <para>
-                        Der Standarddispatcher ist <code>Zend_Controller_Dispatcher</code>. Er
-                        definiert Controller als CamelCasedClasses, die auf das Wort Controller 
+                        Der Standarddispatcher ist <code>Zend_Controller_Dispatcher_Standard</code>. 
+                        Er definiert Controller als CamelCasedClasses, die auf das Wort Controller 
                         enden, und Aktionsmethoden als camelCasedMethods, die auf das Wort Action 
                         enden: <code>SomeFooController::barAction</code>. In diesem Fall wird auf
                         den Controller über <code>somefoo</code> und auf die Aktion über 
@@ -133,14 +144,14 @@
 			</itemizedlist>
 
 			Der Ablauf vom <code>Zend_Controller</code> ist relativ einfach. Eine Anfrage wird vom
-			<code>Zend_Controller_Front</code> empfangen, der wiederum <code>Zend_Controller_Router</code>
+			<code>Zend_Controller_Front</code> empfangen, der wiederum <code>Zend_Controller_Router_Rewrite</code>
 			aufruft, um zu ermitteln, welcher Controller (und welche Aktion in dem Controller) 
-			ausgeführt werden soll. <code>Zend_Controller_Router</code> zerteilt die URI um den
-			Namen des Controllers und der Aktion für den Request zu setzen. 
+			ausgeführt werden soll. <code>Zend_Controller_Router_Rewrite</code> zerteilt die URI um 
+            den Namen des Controllers und der Aktion für den Request zu setzen. 
 			<code>Zend_Controller_Front</code> durchläuft dann eine Dispatcher Schleife. Er ruft 
-			<code>Zend_Controller_Dispatcher</code> auf und übergibt den Request, um den Controller 
-			und die Aktion auszuführen, die im Request spezifiziert wurden (oder verwendet die 
-			Standardwerte). Wenn der Controller fertig ist, wird die Kontrolle wieder an 
+			<code>Zend_Controller_Dispatcher_Standard</code> auf und übergibt den Request, um den 
+            Controller und die Aktion auszuführen, die im Request spezifiziert wurden (oder 
+            verwendet die  Standardwerte). Wenn der Controller fertig ist, wird die Kontrolle wieder an 
 			<code>Zend_Controller_Front</code> übergeben. Wenn der Controller durch das Zurücksetzen 
 			des Dispatch Status des Requests angezeigt hat, dass ein weiterer Controller ausgeführt 
 			werden soll, wird der Durchlauf fortgesetzt und ein weiterer Dispatcher Prozess wird 
@@ -204,25 +215,28 @@
 
 		<para>
 		    Bevor dein erster Controller erstellt werden kann, musst du die Funkktionsweise des 
-			Routing Prozesses verstehen, wie er in <code>Zend_Controller_Router</code> implementiert 
-			worden ist. Denke daran, dass der Ablauf unterteilt ist in das Routing, das nur einmal 
-			ausgeführt wird, und das Dispatching, welches danach in einer Schleife durchlaufen wird.
+			Routing Prozesses verstehen, wie er in <code>Zend_Controller_Router_Rewrite</code> 
+            implementiert worden ist. Denke daran, dass der Ablauf unterteilt ist in das Routing, 
+            das nur einmal ausgeführt wird, und das Dispatching, welches danach in einer Schleife 
+            durchlaufen wird.
 		</para>
 
 		<para>
-		    <code>Zend_Controller_Front</code> ruft <code>Zend_Controller_Router</code> (oder 
-		    ein anderer registrierter Router) auf, um die URI auf einen Controller (und eine Aktion 
-		    in diesem Controller) abzubilden. 
-		    
-		    <code>Zend_Controller_Router</code> empfängt die URI fom Request Objekt und zerteilt 
-		    sie, um den Controller, die Aktion und andere, im Pfad übergebene URL Parameter zu 
-		    ermitteln, und legt diese im Request Objekt fest.  
+		    <code>Zend_Controller_Front</code> ruft <code>Zend_Controller_Router_Rewrite</code> 
+            (oder einen anderen registrierten Router) auf, um die URI auf einen Controller (und 
+            eine Aktion in diesem Controller) abzubilden. 
+		    <code>Zend_Controller_Router_Rewrite</code> empfängt die URI fom Request Objekt und 
+            übergibt sie an die Route Objekte in seiner Kette; standardmäßig verwendet er
+            <code>Zend_Controller_Router_Route_Module</code> um eingehende URLs zu zuordnen.
+            Das Route Objekt zerteilt die URL dann, um den Controller, die Aktion und andere, im 
+            Pfad übergebene URL Parameter zu ermitteln; der Router setzt diese dann im Request 
+            Objekt.
 		</para>
 
 		<para>
-		    <code>Zend_Controller_Router</code> verwendet eine sehr einfache Zuordnung, um den 
-		    Namen des Controllers und den Namen der Aktion innerhalb dieses Controllers zu 
-		    ermitteln.
+		    <code>Zend_Controller_Router_Route_Module</code> verwendet eine sehr einfache 
+            Zuordnung, um den Namen des Controllers und den Namen der Aktion innerhalb dieses 
+            Controllers zu ermitteln.
 		</para>
 			
 			<programlisting role="php"><![CDATA[
@@ -245,7 +259,7 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 
 		<para>
 		    Wenn weder der Controller noch die Aktion im URI Pfad vorhanden sind, versucht 
-		    <code>Zend_Controller_Dispatcher</code> die Werte aus des Parametern des Request 
+		    <code>Zend_Controller_Dispatcher_Standard</code> die Werte aus des Parametern des Request 
 		    Objektes zu bekommen und, falls nicht erfolgreich, die Standardwerte zu verwenden. In
 		    beiden Fällen sind die Standardwerte "<code>index</code>". Dieses Beispiel illustriert 
 		    dies:
@@ -269,7 +283,8 @@ Action    : index]]>
 		    <title>Flexibilität</title>
 		    <para>
                 Wenn man flexiblere Möglichkeiten benötigt, sollte man den 
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/> ausprobieren.
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter">die
+                Rewrite Router Dokumentation</xref> anschauen.
             </para>
 		</note>
 
@@ -277,7 +292,7 @@ Action    : index]]>
 		    Der Name des Controllers und der Aktion innerhalb dieses Controllers sowie weitere
 		    optionale Parameter werden im Request Objekt gesetzt. Wenn 
             <code>Zend_Controller_Front</code> die Dispatcher Schleife startet wird das Request 
-            Objekt an <code>Zend_Controller_Dispatcher</code> übergeben.
+            Objekt an <code>Zend_Controller_Dispatcher_Standard</code> übergeben.
 		</para>
 	</sect2>
 
@@ -290,7 +305,7 @@ Action    : index]]>
 		    Controller und Aktion Namen sowie die optionalen Parameter zu extrahieren und dann den
 		    Controller zu instanzieren und die Aktion dieses Controllers aufzurufen. Wenn kein
 		    Controller oder keine Aktion gefunden wurde, werden dafür Standardwerte verwendet. 
-		    <code>Zend_Controller_Dispatcher</code> legt <code>index</code> für beide als 
+		    <code>Zend_Controller_Dispatcher_Standard</code> legt <code>index</code> für beide als 
 		    Standardwert fest, aber erlaubt dem Entwickler auch, diese durch Verwendung der 
             <code>setDefaultController()</code> und
             <code>setDefaultAction()</code> Methoden zu verändern.
@@ -323,8 +338,8 @@ Action    : index]]>
 public function myAction()
 {
     // do some processing...
-    // forward to another action, FooController::barAction():
-    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+    // forward to another action, FooController::barAction(), in the current module:
+    $this->_forward('bar', 'foo', null, array('baz' => 'bogus'));
 }
 ]]></programlisting>
 	</sect2>
@@ -346,16 +361,12 @@ $front->throwExceptions(true);
 ]]></programlisting>
 
         <para>
-            Da das Response Objekt <code>__toString()</code> implementiert, kann es einfach 
-            ausgegeben werden. Dies ermöglicht die folgende Nutzung:
+            Um die Ausgabe der Response, inklusiver der gesetzten Header, zu senden, verwendet man
+            <code>sendOutput()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->getResponse();
-
-// or
-$response = $controller->getResponse();
-echo $response;
+$response->sendOutput();
 ]]></programlisting>
         
         <para>
@@ -405,7 +416,7 @@ $response = $front->dispatch();
 // mache irgend was...
 
 // zum Schluß, gebe die Antwort aus
-echo $response;
+$response->sendResponse();
 ]]></programlisting>
 
         <para>
@@ -422,7 +433,7 @@ $front->dispatch($request, $response);
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
-echo $response;
+$response->sendOutput();
 
 // oder:
 $front->throwExceptions(true);

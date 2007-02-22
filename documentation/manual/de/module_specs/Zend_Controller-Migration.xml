@@ -7,6 +7,92 @@
         neue Archtitekur verwenden..
     </para>
 
+    <sect2 id="zend.controller.migration.fromzerosix">
+        <title>Migrating from 0.6.0 to 0.8.0</title>
+
+        <para>
+            Per previous changes, the most basic usage of the MVC components
+            remains the same:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Controller/Front.php';
+Zend_Controller_Front::run('/path/to/controllers');
+]]></programlisting>
+
+        <para>
+            However, the directory structure underwent an overhaul, several
+            components were removed, and several others either renamed or added.
+            Changes include:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Router</code> was removed in favor of
+                    the rewrite router.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_RewriteRouter</code> was renamed to
+                    <code>Zend_Controller_Router_Rewrite</code>, and promoted to
+                    the standard router shipped with the framework;
+                    <code>Zend_Controller_Front</code> will use it by default if
+                    no other router is supplied.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    A new route class for use with the rewrite router was
+                    introduced,
+                    <code>Zend_Controller_Router_Route_Module</code>; it covers
+                    the default route used by the MVC, and has support for <xref
+                        linkend="zend.controller.modular">controller
+                        modules</xref>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Router_StaticRoute</code> was renamed
+                    to <code>Zend_Controller_Router_Route_Static</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Dispatcher</code> was renamed
+                    <code>Zend_Controller_Dispatcher_Standard</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Action::_forward()</code>'s arguments
+                    have changed. The signature is now:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]></programlisting>
+
+                <para>
+                    <code>$action</code> is always required; if no controller is
+                    specified, an action in the current controller is assumed.
+                    <code>$module</code> is always ignored unless
+                    <code>$controller</code> is specified. Finally, any
+                    <code>$params</code> provided will be appended to the
+                    request object. If you do not require the controller or
+                    module, but still need to pass parameters, simply specify
+                    null for those values.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzerotwo">
         <title>Migration von 0.2.0 oder früher nach 0.6.0</title>
 
