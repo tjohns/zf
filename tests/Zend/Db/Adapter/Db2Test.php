@@ -227,4 +227,9 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
     }
 
+    public function testSelectJoinCrossClause()
+    {
+        $this->markTestSkipped('DB2 does not support CROSS JOIN');
+    }
+
 }

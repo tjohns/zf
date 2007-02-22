@@ -22,6 +22,7 @@ documentation/manual/en/module_specs/Zend_Gdata_Calendar.xml
 documentation/manual/en/module_specs/Zend_Gdata_ClientLogin.xml
 documentation/manual/en/module_specs/Zend_Gdata_CodeSearch.xml
 documentation/manual/en/module_specs/Zend_Gdata_Data.xml
+documentation/manual/en/module_specs/Zend_Gdata_Exception.xml
 documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
 documentation/manual/en/configure.in
 documentation/manual/en/Makefile.in

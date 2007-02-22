@@ -1,7 +1,6 @@
 build-tools/
 documentation/
 incubator/documentation/
-incubator/library/Zend/Console/Args.php
 incubator/library/Zend/Currency.php
 incubator/library/Zend/Currency/
 library/Zend/Gdata/Spreadsheets.php

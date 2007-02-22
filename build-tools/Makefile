@@ -37,12 +37,12 @@
 # run 'php' with the phpdoc script as the argument, in Windows-style
 # path format, e.g.  "C:/php/phpdoc".  On UNIX/Linux you can just run
 # 'phpdoc' if that script is in your PATH.
-PHPDOC=php c:/xampp/php/phpdoc
+PHPDOC=php c:/xampp/php/PhpDocumentor/phpdoc
 
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=HEAD
+ZF_TAG=3548
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
@@ -132,7 +132,7 @@ phpdoc: phpdoc-core phpdoc-incubator
 phpdoc-core:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
-	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
 	    $(PHPDOC) --quiet off \
 	      --target $(ZF_STAGE_DIR)/documentation/api/core \
 	      --directory $(ZF_STAGE_DIR)/library \
@@ -145,7 +145,7 @@ phpdoc-core:
 phpdoc-incubator:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
-	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
 	    $(PHPDOC) --quiet off \
 	      --target $(ZF_STAGE_DIR)/documentation/api/incubator \
 	      --directory $(ZF_STAGE_DIR)/incubator/library \
