@@ -22,9 +22,10 @@
     </para>
 
     <para>
-	<code>Zend_Date</code> unterst&uuml;tzt auch abgek&uuml;rzte Monatesnamen in vielen Sprachen.
-	<code>Zend_Locale</code> erleichert die Normalisierung von Lokalisierten Monatsnamen und Wochentagen zu Zeitstempeln
-	die umgekehrt auch wieder Lokalisiert f&uuml;r andere Regionen &uuml;bersetzt werden k&ouml;nnen.
+	<code>Zend_Date</code> unterstützt auch abgekürzte Monatsnamen in vielen Sprachen.
+	<code>Zend_Locale</code> erleichert die Normalisierung von lokalisierten Monatsnamen 
+	und Wochentagen zu Zeitpunkten die umgekehrt auch wieder lokalisiert für andere Regionen
+	übersetzt werden können.
     </para>
 
     <sect2 id="zend.date.setdefaulttimezone">
@@ -32,24 +33,30 @@
         <title>Definieren Sie immer eine Standard-Zeitzone</title>
 
         <para>
-            Bevor Sie beliebige datumsrelevante Funktionen in PHP oder dem Zend Framework verwenden, sollten Sie sicherstellen,
-            dass die Standard-Zeitzone in Ihrer Anwendung korrekt definiert ist.
-            Das kann wahlweise mit dem Definieren einer TZ Umgebungsvariablen, der <code>date.timezone</code> Einstellung in
-            der php.ini oder durch die Funktion <ulink url="http://php.net/date_default_timezone_set">date_default_timezone_set()</ulink>
+            Bevor Sie beliebige datumsrelevante Funktionen in PHP oder dem Zend Framework verwenden,
+            sollten Sie sicherstellen, dass die Standard-Zeitzone in Ihrer Anwendung korrekt definiert ist.
+            Das kann wahlweise mit dem Definieren einer TZ Umgebungsvariablen, der <code>date.timezone</code> 
+            Einstellung in der php.ini oder durch die Funktion 
+            <ulink url="http://php.net/date_default_timezone_set">date_default_timezone_set()</ulink>
             erledigt werden.
 
-            Durch das Setzen einer Standard-Zeitzone k&ouml;nnen in PHP k&ouml;nnen alle datums- und zeitabh&auml;ngigen Funktionen f&uuml;r einen bestimmten Benutzer angepasst werden.
-	    Eine vollst&auml;ndige Auflistung der Zeitzoneneinstellungen finden Sie in der <ulink url="http://unicode.org/cldr/data/diff/supplemental/territory_containment_un_m_49.html">CLDR Timezone Identifier List</ulink> ( Englisch ).
+            Durch das Setzen einer Standard-Zeitzone können in PHP können alle datums- und zeitabhängigen
+            Funktionen für einen bestimmten Benutzer angepasst werden. Eine vollständige Auflistung 
+            der Zeitzoneneinstellungen finden Sie in der 
+            <ulink url="http://unicode.org/cldr/data/diff/supplemental/territory_containment_un_m_49.html">
+                CLDR Timezone Identifier List
+            </ulink> ( Englisch ).
             <example>
-                <title>Definieren eine Standard-Zeitzone</title>
-			<programlisting role="php">
-			<![CDATA[<?php
-				date_default_timezone_set('America/Los_Angeles'); // Zeitzone f&uuml;r die USA, Kalifornien
-				date_default_timezone_set('Europe/Berlin');       // Zeitzone f&uuml;r Deutschland
-			?>]]></programlisting>
+                <title>Definieren einer Standard-Zeitzone</title>
+                <programlisting role="php">
+    			<![CDATA[<?php
+	    			date_default_timezone_set('America/Los_Angeles'); // Zeitzone für die USA, Kalifornien
+		    		date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland
+			    ?>]]></programlisting>
             </example>
-            <emphasis role="strong">Wenn eine <code>Zend_Date</code> Instanz erzeugt wird, wird die Zeitzone des aktuellen Benutzers automatisch
-            als aktuelle Standardzeitzone &uuml;bernommen</emphasis> Das erspart das explizite setzen der Daylight Saving Zone (DST).
+            <emphasis role="strong">Wenn eine <code>Zend_Date</code> Instanz erzeugt wird, wird die
+            Zeitzone des aktuellen Benutzers automatisch als aktuelle Standardzeitzone übernommen</emphasis>.
+            Das erspart das explizite setzen der Sommer-/Winterzeitumstellung (DST).
         </para>
 
     </sect2>
