@@ -110,18 +110,10 @@ echo $unit->getType();
         <title>Output as localized string</title>
 
         <para>
-            Outputtig a string in a format common in the users' country is usually desirable.
+            Outputtig a string in a format common in the users' country is usually desirable. For example, the
+            measurement "1234567.8" would become "1.234.567,8" for Germany. This functionality will be supported in a
+            future release.
         </para>
-
-        <para>
-            For example, the measurement "1234567.8" would become "1.234.567,8" for Germany.
-        </para>
-
-        <note>
-            <para>
-                This functionality will be supported in a future release.
-            </para>
-        </note>
 
     </sect2>
 

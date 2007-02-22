@@ -1,10 +1,10 @@
 <sect1 id="zend.measure.edit">
 
-    <title>Manipulating measurements</title>
+    <title>Manipulating Measurements</title>
 
     <para>
         Parsing and normalization of input, combined with output to localized notations makes data accessible to users
-        in different locales. Many additional methods exist in <code>Zend_Measure</code> components to manipulate and
+        in different locales. Many additional methods exist in <code>Zend_Measure_*</code> components to manipulate and
         work with this data, after it has been normalized.
     </para>
 
@@ -54,8 +54,9 @@
         <para>
             Probably the most important feature is the conversion into different units of measurement. The conversion of
             a unit can be done any number of times using the method <code>convertTo()</code>. Units of measurement can
-            only be converted to other units of the same type. Therefore, it is not possible to convert (e.g.) a length
-            into a weight, which would allow bad programming practice and allow errors to propagate without exceptions.
+            only be converted to other units of the same type (class). Therefore, it is not possible to convert (e.g.) a
+            length into a weight, which would might encourage poor programming practices and allow errors to propagate
+            without exceptions.
         </para>
 
         <example>
@@ -68,6 +69,8 @@ $mystring = "1.234.567,89";
 $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 
 print "Kilo:".$unit->convertTo('KILOGRAM');
+
+// constants are considered "better practice" than strings
 print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 ?>]]></programlisting>
         </example>
@@ -93,13 +96,13 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 require_once 'Zend/Measure/Length.php';
 
 // Define objects
-$unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 // Add $unit2 to $unit 
 $sum = $unit->add($unit2);
 
-echo $sum;
+echo $sum; // outputs "300 cm"
 ?>]]></programlisting>
             </example>
         </para>
@@ -125,8 +128,8 @@ echo $sum;
 require_once 'Zend/Measure/Length.php';
 
 // Define objects
-$unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 // Subtract $unit2 from $unit
 $sum = $unit->sub($unit2);
@@ -154,8 +157,8 @@ echo $sum;
 require_once 'Zend/Measure/Length.php';
 
 // Define measurements
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 if ($unit->equals($unit2)) {
     print "Both measurements are identical";
@@ -170,8 +173,8 @@ if ($unit->equals($unit2)) {
 require_once 'Zend/Measure/Length.php';
 
 // Define measurements
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 $unit2->setType(Zend_Measure_Length::CENTIMETER);
 
@@ -202,9 +205,9 @@ if ($unit->equals($unit2)) {
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-$unit = new Zend_Measure_Length(100,Zend_Measure_Length::CENTIMETER);
-$unit2 = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
-$unit3 = new Zend_Measure_Length(1.2,Zend_Measure_Length::METER);
+$unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
+$unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
+$unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
 print "Equal:".$unit2->compare($unit);
 print "Greater:".$unit2->compare($unit3);
@@ -236,10 +239,10 @@ $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
 $unit->setValue(1.2);
 echo $unit;
 
-$unit->setValue(1.2,Zend_Measure_Length::KILOMETER);
+$unit->setValue(1.2, Zend_Measure_Length::KILOMETER);
 echo $unit;
 
-$unit->setValue("1.234,56",Zend_Measure_Length::MILLIMETER,$locale);
+$unit->setValue("1.234,56", Zend_Measure_Length::MILLIMETER,$locale);
 echo $unit;
 ?>]]></programlisting>
             </example>
@@ -261,13 +264,10 @@ echo $unit;
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
+echo $unit; // outputs "1 m"
 
-// output: 1 m
-echo $unit;
-
-// output: 1 km
 $unit->setType(Zend_Measure_Length::KILOMETER);
-echo $unit;
+echo $unit; // outputs "1000 km"
 ?>]]></programlisting>
         </example>
 

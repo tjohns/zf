@@ -3,8 +3,8 @@
     <title>Creation of Measurements</title>
 
     <para>
-        When creating a measurement object, <code>Zend_Measure</code> methods expect the input/original value as the
-        first parameter. This can be a
+        When creating a measurement object, <code>Zend_Measure_*</code> methods expect the input/original measurement
+        data value as the first parameter. This can be a
         <link linkend="zend.measure.creation.number"><code>numeric argument</code>
         </link>
         , a
@@ -13,44 +13,44 @@
         without units, or a
         <link linkend="zend.measure.creation.localized"><code>localized string</code> with unit(s) specified.
         </link>
-        . The second parameter defines the type of the measurement. Both parameters are mandatory. As an optional third
-        parameter, the language can be defined.
+        The second parameter defines the type of the measurement. Both parameters are mandatory. The language may
+        optionally be specified as the third parameter.
     </para>
 
     <sect2 id="zend.measure.creation.number">
 
-        <title>Measurements from variables</title>
+        <title>Creating measurements from integers and floats</title>
+
+        <para>
+            In addition to integer data values, floating point types may be used, but
+            <ulink url="http://www.php.net/float">"simple decimal fractions like 0.1 or 0.7 cannot be converted into their internal binary counterparts without a little loss of precision,"</ulink>
+            sometimes giving surprising results. Also, do not compare two "float" type numbers for equality.
+        </para>
 
         <example>
-            <title>Creation using integer variables</title>
+            <title>Creation using integer and floating values</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-$integer = 1234;
-$unit = new Zend_Measure_Length($integer,Zend_Measure_Length::STANDARD);
-
+$measurement = 1234.7;
+$unit = new Zend_Measure_Length((integer)$measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
-// outputs '1234 m'
+// outputs '1234 m' (meters)
+
+$unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
+echo $unit;
+// outputs '1234.7 m' (meters)
 ?>]]></programlisting>
         </example>
-
-        <note>
-            <title>Using floating point</title>
-            <para>
-                Instead of integer types, floating point types may be used, but
-                <ulink url="http://www.php.net/float">"simple decimal fractions like 0.1 or 0.7 cannot be converted into their internal binary counterparts without a little loss of precision,"</ulink>
-                sometimes giving surprising results. Also, do not compare two "float" type numbers for equality.
-            </para>
-        </note>
 
     </sect2>
 
     <sect2 id="zend.measure.creation.string">
 
-        <title>Measurements from strings</title>
+        <title>Creating measurements from strings</title>
 
         <para>
-            Many measurements received as input to ZF applications can only be passed to <code>Zend_Measure</code>
+            Many measurements received as input to ZF applications can only be passed to <code>Zend_Measure_*</code>
             classes as strings, such as numbers written using
             <ulink url="http://en.wikipedia.org/wiki/Roman_numerals">roman numerals</ulink>
             or extremely large binary values that exceed the precision of PHP's native integer and float types. Since
@@ -69,39 +69,31 @@ echo $unit;
 require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
-$unit = new Zend_Measure_Number($mystring,Zend_Measure_Number::BINARY);
+$unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
 echo $unit;
 ?>]]></programlisting>
         </example>
 
         <para>
-            Measurements can also be just a part of an arbitrary string. Usually, <code>Zend_Measure</code> can
-            automatically extract the desired measurement. Only the first identifiable number will be used for
-            measurement creation. If there are more numbers in the string, the rest will be ignored.
+            Usually, <code>Zend_Measure_*</code> can automatically extract the desired measurement embedded in an
+            arbitrary string. Only the first identifiable number denoted using standard European/Latin digits
+            (0,1,2,3,4,5,6,7,8,9) will be used for measurement creation. If there are more numerals later in the string,
+            the rest of these numerals will be ignored.
         </para>
 
         <example>
-            <title>Arbitrary texts</title>
+            <title>Arbitrary text input containing measurements</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size";
-$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
-
-echo $unit;
-?>]]></programlisting>
-        </example>
-
-        <example>
-            <title>Arbitrary texts</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Area.php';
+$unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
+echo $unit; // outputs "125 m²in size";
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
-$unit = new Zend_Measure_Area($mystring,Zend_Measure_Area::STANDARD);
-
-echo $unit;
+$unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
+echo $unit; // outputs "125 m² in size";
 ?>]]></programlisting>
         </example>
 
@@ -116,7 +108,7 @@ echo $unit;
             knowing the intended locale. The division of decimal digits with "." and grouping of thousands with "," is
             common in the English language, but not so in other languages. For example, the English number "1,234.50"
             would be interpreted as meaning "1.2345" in German. To deal with such problems, the locale-aware
-            <code>Zend_Measure</code> family of classes offer the possibility to specify a language or region to
+            <code>Zend_Measure_*</code> family of classes offer the possibility to specify a language or region to
             disambiguate the input data and properly interpret the intended semantic value.
         </para>
 
@@ -126,10 +118,14 @@ echo $unit;
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$mystring = "The boat is 1,234.50 long.";
+$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, $locale);
+echo $unit; // outputs "1.234 m"
 
-echo $unit;
+
+$mystring = "The boat is 1,234.50 long.";
+$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
+echo $unit; // outputs "1234.50 m"
 ?>]]></programlisting>
         </example>
 

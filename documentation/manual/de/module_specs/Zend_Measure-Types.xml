@@ -3,7 +3,7 @@
     <title>Types of measurements</title>
 
     <para>
-        Here you can find a list of all supported measurement types and an example of the standard useage for such
+        All supported measurement types are listed below, each with an example of the standard usage for such
         measurements.
     </para>
 
@@ -43,7 +43,7 @@
                     <entry><code>Zend_Measure_Area</code> covers square measures.</entry>
                 </row>
                 <row>
-                    <entry>Binaray</entry>
+                    <entry>Binary</entry>
                     <entry>Zend_Measure_Binary</entry>
                     <entry>Byte | <code>b</code>
                     </entry>
@@ -252,64 +252,48 @@
         </tgroup>
     </table>
 
-    <para>
-        Hints for Zend_Measure_Binary :
-    </para>
+    <sect2 id="zend.measure.types.binary">
 
-    <note>
-        <title>Binary conventions</title>
-        <para>
-            The terms kilo-, mega-, giga and so on... have to be seen, in the normal language use, for 1000 or 10³.
-        </para>
-        <para>
-            In the binary format for computers the terms kilo-, mega-, giga- and so on have to be seen for a convertion
-            factor of 1024 instead of 1000.
-        </para>
-        <para>
-            To preclude confusions a few years ago the notation BI was introduced. Instead of kilobyte, kibibyte for
-            kilo-binary-byte should be used.
-        </para>
-        <para>
-            In the class BINARY both notations can be found.
-        </para>
-        <para>
-            KILOBYTE = 1024 - binary conputer conversion KIBIBYTE = 1024 - new notation KILO_BINARY_BYTE = 1024 - new
-            notation, long format KILOBYTE_SI = 1000 - SI notation for kilo (1000)
-        </para>
-        <para>
-            DVDs for example are marked with the SI-notation, but almost all harddisks are marked in computer binary
-            notation.
-        </para>
-    </note>
+        <title>Hints for Zend_Measure_Binary</title>
 
-    <para>
-        Hints for Zend_Measure_Number :
-    </para>
+        <para>
+            Some popular binary conventions, include terms like kilo-, mega-, giga, etc. in normal language use imply
+            base 10, such as 1000 or 10³. However, in the binary format for computers these terms have to be seen for a
+            convertion factor of 1024 instead of 1000. To preclude confusions a few years ago the notation BI was
+            introduced. Instead of kilobyte, kibibyte for kilo-binary-byte should be used.
+        </para>
 
-    <para>
-        The best known number format is the decimal system.
-    </para>
+        <para>
+            In the class BINARY both notations can be found, such as <code>KILOBYTE = 1024 - binary conputer conversion
+            KIBIBYTE = 1024 - new notation KILO_BINARY_BYTE = 1024 - new</code>, or the notation, long format
+            <code>KILOBYTE_SI = 1000 - SI notation for kilo (1000)</code>. DVDs for example are marked with the
+            SI-notation, but almost all harddisks are marked in computer binary notation.
+        </para>
 
-    <para>
-        Additionaly this class covers the octal system, the hexadecimal system, the binary system, the roman number
-        format and a few not so familiar systems.
-        <note>
-            <title>Be aware</title>
-            <para>
-                Be aware that only the decimal part of numbers is handled. The fractional part will be stripped.
-            </para>
-        </note>
-    </para>
+    </sect2>
 
-    <note>
+    <sect2 id="zend.measure.types.decimal">
+
+        <title>Hints for Zend_Measure_Number</title>
+
+        <para>
+            The best known number format is the decimal system. Additionaly this class supports the octal system, the
+            hexadecimal system, the binary system, the roman number system and some other less popular systems. Note
+            that only the decimal part of numbers is handled. Any fractional part will be stripped.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.measure.types.roman">
+
         <title>Roman numbers</title>
+
         <para>
             For the roman numbersystem digits greater 4000 are supported. In reality these digits are shown with a
-            crossbeam on top of the digit.
+            crossbeam on top of the digit. As the crossbeam can not be shown within the computer, an underline has to be
+            used instead of it.
         </para>
-        <para>
-            As the crossbeam can not be shown within the computer, an underline has to be used instead of it.
-        </para>
+
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
@@ -320,7 +304,8 @@ $unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
 // convert to the decimal system
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
 ?>]]></programlisting>
-    </note>
+
+    </sect2>
 
 </sect1>
 <!--
