@@ -365,9 +365,9 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('U',6900000000),'6900003600');
         $this->assertSame($date->date('U',-7000000000),'-6999996400');
         $this->assertSame($date->date('d',-7000000000),'06');
-        $this->assertSame($date->date('D',-7000000000),'Wed');
+        $this->assertSame($date->date('D',-7000000000),'Thu');
         $this->assertSame($date->date('j',-7000000000),'6');
-        $this->assertSame($date->date('l',-7000000000),'Wednesday');
+        $this->assertSame($date->date('l',-7000000000),'Thursday');
         $this->assertSame($date->date('N',-7000000000),'3');
         $this->assertSame($date->date('S',-7000000000),'th');
         $this->assertSame($date->date('w',-7000000000),'3');
@@ -399,7 +399,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('T',-7000000000),'CET');
         $this->assertSame($date->date('Z',-7000000000),'3600');
         $this->assertSame($date->date('c',-7000000000),'1748-3-06T12:33:20+0100');
-        $this->assertSame($date->date('r',-7000000000),'Wed, 06 Mar 1748 12:33:20 +0100');
+        $this->assertSame($date->date('r',-7000000000),'Thu, 06 Mar 1748 12:33:20 +0100');
         $this->assertSame($date->date('U',-7000000000),'-6999996400');
         $this->assertSame($date->date('\\H',-7000000000),'H');
         $this->assertSame($date->date('.',-7000000000),'.');
@@ -548,8 +548,8 @@ class Zend_Date_DateObjectTestHelper extends Zend_Date
         return parent::getDateParts($timestamp, $fast);
     }
 
-    public function _getTime()
+    public function _getTime($sync = null)
     {
-        return parent::_getTime();
+        return parent::_getTime($sync);
     }
 }

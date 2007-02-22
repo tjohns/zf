@@ -3681,7 +3681,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date = new Zend_Date(1234567890,$locale);
         $result = $date->addArpa('Sat, 03 May 01 00:00:00 +0500');
-        $this->assertSame($result->get(Zend_Date::RFC_822),'Sat, 17 Jul 10 23:31:30 +0500');
+        $this->assertSame($result->get(Zend_Date::RFC_822),'Sun, 17 Jul 10 23:31:30 +0500');
         $this->assertSame($date->get(Zend_Date::W3C),'4010-07-17T23:31:30+05:00');
 
         $date = new Zend_Date(1234567890,$locale);
@@ -3707,7 +3707,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->subArpa('Sat, 03 May 01 00:00:00 +0500');
-        $this->assertSame($result->get(Zend_Date::RFC_822),'Wed, 16 Sep 7 09:31:30 +0500');
+        $this->assertSame($result->get(Zend_Date::RFC_822),'Thu, 16 Sep 7 09:31:30 +0500');
         $this->assertSame($date->get(Zend_Date::W3C),'7-09-16T09:31:30+05:00');
 
         $date = new Zend_Date(1234567890,$locale);
