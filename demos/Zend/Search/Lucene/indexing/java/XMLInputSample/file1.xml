@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xml>
-   <path stored="true">Document1</path>
-   <shortname type="keyword">file1</shortname>
-   <title>This is the title field.</title>
-   <body stored="true">This is the body field.</body>
-</xml>
