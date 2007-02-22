@@ -4,7 +4,14 @@
 
     <para>
         <code>Zend_Locale_Format</code> provides several methods for working with dates and times to help convert and
-        normalize between different formats for different locales. Use <code>Zend_Date</code> for manipulating dates.
+        normalize between different formats for different locales. Use <code>Zend_Date</code> for manipulating dates,
+        and working with date strings that already conform to
+        <link linkend="zend.date.constants">one of the many internationally recognized standard formats, or one of the localized date formats supported by <code>Zend_Date</code>
+        </link>
+        . Using an existing, pre-defined format offers advantages, including the use of well-tested code, and the
+        assurance of some degree of portability and interoperability (depending on the standard used). The examples
+        below do not follow these recommendations, since using non-standard date formats would needlessly increase the
+        difficulty of understanding these examples.
     </para>
 
     <sect2 id="zend.locale.date.normalize">
@@ -12,68 +19,117 @@
         <title>Normalizing Dates and Times</title>
 
         <para>
-            <code>getDate()</code> parses strings containing dates in localized formats. The results are returned in a
-            structured array, with well-defined keys for each part of the date. Since a localized date string may not
-            contain all parts of a date/time, the key-value pairs are optional. For example, if only the year, month,
-            and day is given, then all time values are supressed from the returned array, and vice-versa if only hour,
-            minute, and second were given as input. If no date or time can be found within the given input, an exception
-            will be thrown.
+            The <code>getDate()</code> method parses strings containing dates in localized formats. The results are
+            returned in a structured array, with well-defined keys for each part of the date. In addition, the array
+            will contain a key 'format' showing the format string used to parse the input date string. Since a localized
+            date string may not contain all parts of a date/time, the key-value pairs are optional. For example, if only
+            the year, month, and day is given, then all time values are supressed from the returned array, and
+            vice-versa if only hour, minute, and second were given as input. If no date or time can be found within the
+            given input, an exception will be thrown.
         </para>
 
         <para>
-            The following return values are possible, when the BCMath extension is available:
-            <table>
-                <title>Return values</title>
-                <tgroup cols='4'>
-                    <thead>
-                        <row>
-                            <entry>Array key</entry>
-                            <entry>Returned value</entry>
-                            <entry>Minimum</entry>
-                            <entry>Maximum</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>day</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>31</entry>
-                        </row>
-                        <row>
-                            <entry>month</entry>
-                            <entry>integer</entry>
-                            <entry>1</entry>
-                            <entry>12</entry>
-                        </row>
-                        <row>
-                            <entry>year</entry>
-                            <entry>integer</entry>
-                            <entry>no limit</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>hour</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>no limit</entry>
-                        </row>
-                        <row>
-                            <entry>minute</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                        <row>
-                            <entry>second</entry>
-                            <entry>integer</entry>
-                            <entry>0</entry>
-                            <entry>59</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            The <code>getCorrectableDate()</code> method adds a key 'fixed' with a whole number value indicating if the
+            input date string required "fixing" by rearranging the day, month, or year in the input to fit the format
+            used.
         </para>
+
+        <table>
+            <title>'fixed' key values for getCorrectableDate()</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>value</entry>
+                        <entry>meaning</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>0</entry>
+                        <entry>nothing to fix</entry>
+                    </row>
+                    <row>
+                        <entry>1</entry>
+                        <entry>fixed false month</entry>
+                    </row>
+                    <row>
+                        <entry>2</entry>
+                        <entry>swapped day and year</entry>
+                    </row>
+                    <row>
+                        <entry>3</entry>
+                        <entry>swapped month and year</entry>
+                    </row>
+                    <row>
+                        <entry>4</entry>
+                        <entry>swapped month and day</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <para>
+            The following return values are possible, when the BCMath extension is available:
+        </para>
+
+        <table>
+            <title>Return values</title>
+            <tgroup cols='4'>
+                <thead>
+                    <row>
+                        <entry>getDate() format character</entry>
+                        <entry>Array key</entry>
+                        <entry>Returned value</entry>
+                        <entry>Minimum</entry>
+                        <entry>Maximum</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d</entry>
+                        <entry>day</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>31</entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>month</entry>
+                        <entry>integer</entry>
+                        <entry>1</entry>
+                        <entry>12</entry>
+                    </row>
+                    <row>
+                        <entry>y</entry>
+                        <entry>year</entry>
+                        <entry>integer</entry>
+                        <entry>no limit</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>hour</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>minute</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>second</entry>
+                        <entry>integer</entry>
+                        <entry>0</entry>
+                        <entry>PHP integer's maximum</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <example>
             <title>Normalizing a date</title>
@@ -81,14 +137,39 @@
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
+$dateObject = Zend_Date('13.04.2006', 'dd.MM.yyyy'); // creates a Zend_Date object for this date
 
-print_r ($date);
+print_r($date); // outputs:
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+)
+
+// alternatively, some types of problems with input data can be automatically corrected
+$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', 'dd.MM.yyyy');
+
+print_r($date); // outputs:
+
+Array
+(
+    [format] => dd.MM.yyyy
+    [day] => 13
+    [month] => 4
+    [year] => 2006
+    [fixed] => 4
+)
 ?>]]></programlisting>
         </example>
 
         <para>
             Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
-            strings adhering to that locale's format.
+            strings adhering to that locale's format. The method <code>getCorrectableDate()</code> uses simple tests to
+            determine if the day or month is not valid, and then applies heuristics to try and correct any detected
+            problems.
         </para>
 
         <example>
@@ -138,83 +219,85 @@ print_r ($date);
 
         <para>
             The format can include the following signs :
-            <table>
-                <title>Format definition</title>
-                <tgroup cols='2'>
-                    <thead>
-                        <row>
-                            <entry>Format Letter</entry>
-                            <entry>Description</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>d or dd</entry>
-                            <entry>1 or 2 digit day</entry>
-                        </row>
-                        <row>
-                            <entry>M or MM</entry>
-                            <entry>1 or 2 digit month</entry>
-                        </row>
-                        <row>
-                            <entry>y or yy</entry>
-                            <entry>1 or 2 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>yyyy</entry>
-                            <entry>4 digit year</entry>
-                        </row>
-                        <row>
-                            <entry>h</entry>
-                            <entry>1 or 2 digit hour</entry>
-                        </row>
-                        <row>
-                            <entry>m</entry>
-                            <entry>1 or 2 digit minute</entry>
-                        </row>
-                        <row>
-                            <entry>s</entry>
-                            <entry>1 or 2 digit second</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
         </para>
+
+        <table>
+            <title>Format definition</title>
+            <tgroup cols='2'>
+                <thead>
+                    <row>
+                        <entry>Format Letter</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d or dd</entry>
+                        <entry>1 or 2 digit day</entry>
+                    </row>
+                    <row>
+                        <entry>M or MM</entry>
+                        <entry>1 or 2 digit month</entry>
+                    </row>
+                    <row>
+                        <entry>y or yy</entry>
+                        <entry>1 or 2 digit year</entry>
+                    </row>
+                    <row>
+                        <entry>yyyy</entry>
+                        <entry>4 digit year</entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>1 or 2 digit hour</entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>1 or 2 digit minute</entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>1 or 2 digit second</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <para>
             Examples for proper formats are
-            <table>
-                <title>Example formats</title>
-                <tgroup cols='3'>
-                    <thead>
-                        <row>
-                            <entry>Formats</entry>
-                            <entry>Input</entry>
-                            <entry>Output</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 1,
+        </para>
+
+        <table>
+            <title>Example formats</title>
+            <tgroup cols='3'>
+                <thead>
+                    <row>
+                        <entry>Formats</entry>
+                        <entry>Input</entry>
+                        <entry>Output</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 1,
                                    ['month'] => 4, 
                                    ['year'] => 6</entry>
-                        </row>
-                        <row>
-                            <entry>dd.MM.yy</entry>
-                            <entry>01.04.2006</entry>
-                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
-                        </row>
-                        <row>
-                            <entry>yyyyMMdd</entry>
-                            <entry>1.4.6</entry>
-                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </para>
+                    </row>
+                    <row>
+                        <entry>dd.MM.yy</entry>
+                        <entry>01.04.2006</entry>
+                        <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
+                    </row>
+                    <row>
+                        <entry>yyyyMMdd</entry>
+                        <entry>1.4.6</entry>
+                        <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
 
         <note>
             <title>Database date format</title>
@@ -225,16 +308,17 @@ print_r ($date);
         </note>
 
         <para>
-            <code>getDate()</code> automatically detects and corrects some kinds of problems with input, such as
-            misplacing the year:
+            The method <code>getCorrectableDate()</code> uses simple tests to determine if the day or month is not
+            valid, and then applies heuristics to try and correct any detected problems. <code>getDate()</code>
+            automatically detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
 
         <example>
-            <title>Correction for date normalizing</title>
+            <title>Automatic correction of input dates</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getCorrectableDate('41.10.20', 'ddMMyy');
 
 // instead of 41 for the day, the 41 will be returned as year value
 print_r ($date);
@@ -248,7 +332,11 @@ print_r ($date);
         <title>Testing Dates</title>
 
         <para>
-            Use <code>isDate()</code> to check if a given string contains a valid date.
+            Use <code>isDate($inputString, $format, $locale)</code> to check if a given string contains a valid date.
+            The <code>isDate()</code> method uses <code>getDate()</code>, not <code>getCorrectableDate()</code> to avoid
+            returning true when the input fails to conform to the date format. If errors are detected in the input, such
+            as swapped values for months and days, the <code>isCorrectableDate()</code> method will apply heuristics to
+            "correct" dates before determining their validity.
         </para>
 
         <example>
@@ -257,7 +345,8 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
+// using the default date format for 'de_AT', is this a valid date?
+if (Zend_Locale_Format::isDate('13.Apr.2006', null, $locale) {
     print "date";
 } else {
     print "not a date";
