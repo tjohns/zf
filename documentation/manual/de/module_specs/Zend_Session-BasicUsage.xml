@@ -3,10 +3,15 @@
     <title>Grundlegende Verwendung</title>
 
     <para>
-        Zend_Session verwendet ext/session und seine besondere superglobale Variable <code>$_SESSION</code> als
-        Speicher-Mechanismus für Session-Zustands-Daten. Auch wenn die Variable <code>$_SESSION</code> immernoch
-        global zugänglich ist, sollten Entwickler davon absehen direkt auf sie zuzugreifen, damit Zend_Session
-        effektiv und sicher seine Sammlung session-spezifischer Funktionalität zur Verfügung stellen kann.
+        <code>Zend_Session_Namespace</code> Instanzen stellen die primäre API für das Ändern von
+        Session Daten im Zend Framework bereit. Namensräume werden verwendet, um Session Daten zu
+        kapseln, auch wenn ein Standard Namensraum für diejenigen existiert, die nur einen 
+        Namensraum für ihre Session Daten verwenden möchten. Zend_Session verwendet ext/session und 
+        seine besondere superglobale Variable <code>$_SESSION</code> als Speicher-Mechanismus für 
+        Session-Zustands-Daten. Auch wenn die Variable <code>$_SESSION</code> immernoch global 
+        zugänglich ist, sollten Entwickler davon absehen direkt auf sie zuzugreifen, damit 
+        Zend_Session effektiv und sicher seine Sammlung session-spezifischer Funktionalität zur 
+        Verfügung stellen kann.
     </para>
 
     <sect2 id="zend.session.basicexamples">
@@ -14,11 +19,13 @@
         <title>Übungs-Beispiele</title>
 
         <para>
-            Wenn beim Erzeugen der Zend_Session-Instanz kein Namespace angegeben wird, werden alle Daten im
-            <code>'Default'</code>-Namespace gespeichert. Das Beispiel unten demonstriert die Nutzung dieses
-            Standard-Namespace und zeigt, wie man die Anzahl der Seitenaufrufe auf einer Website durch
-            einen Nutzer zählen kann. Um dies zu testen, erweitern Sie Ihren ZF-Bootstrap-Bereich um 
-            folgenden Code:
+            Wenn beim Erzeugen der Zend_Session-Instanz kein Namensraum angegeben wird, werden alle 
+            Daten im <code>'Default'</code>-Namespace gespeichert. <code>Zend_Session</code> hat 
+            nicht die Aufgabe, direkt auf die Inhalte der Container für die Session Namensräume 
+            zuzugreifen. Stattdessen verwenden wir <code>Zend_Session_Namespace</code>. Das 
+            Beispiel unten demonstriert die Nutzung dieses Standard-Namespace und zeigt, wie man 
+            die Anzahl der Seitenaufrufe auf einer Website durch einen Nutzer zählen kann. Um dies 
+            zu testen, erweitern Sie Ihren ZF-Bootstrap-Bereich um folgenden Code:
         </para>
 
         <example>
@@ -26,8 +33,16 @@
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
+
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // wird bei jedem Aufruf erhöht.
+
+    // verwende die magische Methode __isset() in Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // wird bei jedem Aufruf erhöht.
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // erstes Mal
+    }
+
     echo "Seitenaufrufe in dieser Session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
@@ -49,11 +64,11 @@
 <![CDATA[<?php
     // in der Zend_Auth Komponente
     require_once 'Zend/Session.php';
-    $authNamespace = new Zend_Session('Zend_Auth');
+    $authNamespace = new Zend_Session_Namespace('Zend_Auth');
     $authNamespace->user = "myusername";
 
     // in einer Web-Services-Komponente
-    $webServiceNamespace = new Zend_Session('Some_Web_Service');
+    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
     $webServiceNamespace->user = "mywebusername";
 ?>]]></programlisting>
         </example>
@@ -90,7 +105,7 @@
 <![CDATA[<?php
     // Zend_Session kann in Schritten durchlaufen werden
     require_once 'Zend/Session.php';
-    $aNamespace = new Zend_Session('some_namespace_with_data_present');
+    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
     foreach ($aNamespace as $index => $value) {
         echo "aNamespace->$index = '$value';\n";
     }

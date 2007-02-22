@@ -215,7 +215,7 @@ $testSpace->accept_answer = true;
 -- 
 
 // answer processing controller
-$testSpace = new Zend_Session('testSpace');
+$testSpace = new Zend_Session_Namespace('testSpace');
 
 if ($testSpace->accept_answer === true) {
     // within time
@@ -290,21 +290,23 @@ else {
             <ulink url="http://framework.zend.com/issues/browse/ZF-800">ZF-800</ulink>
             documents a known issue affecting many PHP applications using magic methods and arrays.
         </para>
-            <example>
-                <title>Known problem with arrays</title>
+
+        <example>
+            <title>Known problem with arrays</title>
 <programlisting role="php">
 <![CDATA[<?php
     $sessionNamespace = new Zend_Session_Namespace('Foo');
     $sessionNamespace->array = array();
     $sessionNamespace->array['testKey'] = 1; // does not work before PHP 5.2.1
 ?>]]></programlisting>
-            </example>
+        </example>
 
         <para>
             If you need to modify the array after assigning it to a session namespace key, fetch the array, then
         </para>
-            <example>
-                <title>Workaround: fetch, modify, save</title>
+
+        <example>
+            <title>Workaround: fetch, modify, save</title>
 <programlisting role="php">
 <![CDATA[<?php
     $sessionNamespace = new Zend_Session_Namespace('Foo');
@@ -313,7 +315,7 @@ else {
     $tmp['fruit'] = 'peach';
     $sessionNamespace->array = $tmp;
 ?>]]></programlisting>
-            </example>
+        </example>
 
         <para>
             Alternatively, store an array containing a reference to the desired array, and then access it indirectly.
@@ -339,55 +341,145 @@ else {
         <title>Using Sessions with Authentication</title>
 
         <para>
-            If you allow <code>Zend_Auth</code> to persist authentication tokens using Zend Framework sessions. In order
-            to access the authentication token on subsequent requests, you would need to:
+            If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
+            is an object (not recommended), instead of an array, then make sure to require your authorization identity
+            class definition before starting the session. Instead, we recommend storing the authorization ids computed
+            within an authentication adapter inside a well-known key in the a session namespace. For example, the
+            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
         </para>
-
-        <example>
-            <title>Workaround: accessing authentication tokens in sessions</title>
-<programlisting role="php">
-<![CDATA[<?php
-    // chicken-and-egg... you must know which token class before looking :(
-    require_once 'Zend/Auth/Digest/Token.php';
-    require_once 'Zend/Session.php';
-    Zend_Session::start();
-    require_once 'Zend/Auth/Digest/Adapter.php';
-    require_once 'Zend/Auth.php';
-    $auth = new Zend_Auth(new Zend_Auth_Digest_Adapter('someDigestFilename'));
-    $token = $auth->getToken();
-    echo "Valid: ",
-    (empty($token->isValid()) ? 'No' : 'Yes'), "\n"';
-    echo "Identity: ",
-        (empty($token->getIdentity()) ? 'unknown' : $token->getIdentity()), "\n"';
-    echo "Messages: ",
-        (empty($token->getMessages()) ? 'none' : $token->getMessages()), "\n"';
-?>]]></programlisting>
-        </example>
 
         <para>
-            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, and then manually store
-            the authorization id to the session, then just use well-known locations in a session namespace. Also, this
-            avoids persisting authentication error messages in the session. (Note: Some community members are working on
-            a "flash message" system for Zend sessions.) Often, applications have specific needs about where to store
-            credentials used (if any) and "authorization" identity. Applications often map authentication identities
-            (e.g. usernames) to authorization identities (e.g. a uniquely assigned integer) during authentication.
+            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
+            store the authorization id to the session, in a well-known location in a session namespace of your choice.
+            Often, applications have specific needs about where to store credentials used (if any) and "authorization"
+            identity. Applications often map authentication identities (e.g. usernames) to authorization identities
+            (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth authentication
+            adapter's <code>authenticate()</code> method.
         </para>
 
         <example>
-            <title>Workaround: simpler access for authorization ids</title>
+            <title>Example: Simplified access of authorization ids</title>
 <programlisting role="php">
 <![CDATA[<?php
-    require 'Zend/Session.php';
+    // pre-authentication request
+    require_once 'Zend/Auth/Result.php';
+    require_once 'Zend/Auth/Adapter/Digest.php';
+    $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+    $result = $adapter->authenticate();
+    require_once 'Zend/Session/Namespace.php';
+    $namespace = Zend_Session_Namespace('Zend_Auth');
+    if ($result->isValid()) {
+        $namespace->authorizationId = $result->getIdentity();
+        $namespace->date = time();
+    } else {
+        $namespace->attempts++;
+    }
+
+    // subsequent requests
+    require_once 'Zend/Session.php';
     Zend_Session::start();
     $namespace = Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
-    echo "Authorization / user Id: ",
-        (empty($namespace->authorizationId) ? 'none' : $namespace->authorizationId), "\n"';
-    echo "Authentication attempts: ",
-        (empty($namespace->attempts) ? '0' : $namespace->attempts), "\n"';
+    echo "Authorization / user Id: ", (empty($namespace->authorizationId)
+        ? 'none' : print_r($namespace->authorizationId, true)), "\n"';
+    echo "Authentication attempts: ", (empty($namespace->attempts)
+        ? '0' : $namespace->attempts), "\n"';
     echo "Authenticated on: ",
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Authorization ids stored client-side are subject to privilege escalation vulnerabilities, if these ids are
+            used and trusted by the server, unless, for example, the id is duplicated on the server-side (e.g. in the
+            session) and then cross-checked with the authorization id claimed by the client for the in-effect session.
+            We are differentiating between "authentication ids" (e.g. usernames) and "authorization ids" (e.g. user id
+            #101 in the users DB table).
+        </para>
+
+        <para>
+            The latter is not uncommon for performance reasons, such as helping select from a pool of servers caching
+            session information to help solve chicken-and-egg problems. In my experience, often debates ensue about
+            whether to use the real authorization id in the cookie, or some substitute that aids in mapping to the real
+            authorization id (or session or server(s) holding the user's session/profile, etc.), as some system security
+            architects wish to prevent true "DB primary keys" from escaping into the wild to try and obtain some level
+            of protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone
+            uses auto-increment strategies for authorization ids.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.testing">
+
+        <title>Using Sessions with Unit Tests</title>
+
+        <para>
+            The Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
+            suite of unit tests to cover the code in their applications. The exception
+            "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>" is thrown while
+            performing unit tests, if any write-related methods are used after ending the session. However, unit tests
+            using Zend_Session require extra attention, because closing (<code>Zend_Session::writeClose()</code>), or
+            destroying a session (<code>Zend_Session::destroy()</code>) prevents any further setting or unsetting of
+            keys in any Zend_Session_Namespace. This behavior is a direct result of the underlying ext/session mechanism
+            and PHP's <code>session_destroy()</code> and <code>session_write_close()</code>, which has no "undo"
+            mechanism to facilitate setup/teardown with unit tests.
+        </para>
+
+        <para>
+            To work around this, see the unit test <code>testSetExpirationSeconds()</code> in
+            <code>tests/Zend/Session/SessionTest.php and SessionTestHelper.php</code>, which make use of PHP's
+            <code>exec()</code> to launch a separate process. The new process more accurately simulates a second,
+            successive request from a browser. The separate process begins with a "clean" session, just like any PHP
+            script execution for a web request. Also, any changes to <code>$_SESSION[]</code> made in the calling
+            process become available to the child process, provided the parent closed the session before using
+            <code>exec()</code>
+        </para>
+
+        <example>
+            <title>Using PHPUnit to test code written using Zend_Session*</title>
+<programlisting role="php">
+<![CDATA[<?php
+        // testing setExpirationSeconds()
+        require 'tests/Zend/Session/SessionTestHelper.php'; // also see SessionTest.php in trunk/
+        $script = 'SessionTestHelper.php';
+        $s = new Zend_Session_Namespace('space');
+        $s->a = 'apple';
+        $s->o = 'orange';
+        $s->setExpirationSeconds(5);
+
+        Zend_Session::regenerateId();
+        $id = Zend_Session::getId();
+        session_write_close(); // release session so process below can use it
+        sleep(4); // not long enough for things to expire
+        exec($script . "expireAll $id expireAll", $result);
+        $result = $this->sortResult($result);
+        $expect = ';a === apple;o === orange;p === pear';
+        $this->assertTrue($result === $expect,
+            "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+
+        sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+        exec($script . "expireAll $id expireAll", $result);
+        $result = array_pop($result);
+        $this->assertTrue($result === '',
+            "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+        session_start(); // resume artificially suspended session
+
+        // We could split this into a separate test, but actually, if anything leftover from above
+        // contaminates the tests below, that is also a bug that we want to know about.
+        $s = new Zend_Session_Namespace('expireGuava');
+        $s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the keys in the namespace
+        $s->g = 'guava';
+        $s->p = 'peach';
+        $s->p = 'plum';
+
+        session_write_close(); // release session so process below can use it
+        sleep(6); // not long enough for things to expire
+        exec($script . "expireAll $id expireGuava", $result);
+        $result = $this->sortResult($result);
+        session_start(); // resume artificially suspended session
+        $this->assertTrue($result === ';p === plum',
+            "iteration over named Zend_Session namespace failed (result=$result)");
 ?>]]></programlisting>
         </example>
 
