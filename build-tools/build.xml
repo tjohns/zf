@@ -177,6 +177,11 @@ ${zf.product.name} Preview Release ${zf.version} (build ${zf.svn.revision})
     <echo msg="Building manual for tree: ${zf.tree}, language: ${zf.lang}..." />
 
     <mkdir dir="${zf.manual.dest.dir}" />
+    <copy todir="${zf.manual.dest.dir}">
+      <fileset dir="${zf.manual.src.dir}/html">
+        <include name="*.css" />
+      </fileset>
+    </copy>
     <echo msg="Rendering manual using Xinclude and XSLT..." />
     <copy todir="${zf.manual.dest.dir}">
       <filterchain>
