@@ -111,6 +111,8 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         // socket delay
         $time -= $this->_delay;
 
+        $this->_info['offset'] = $this->_delay;
+
         return $time;
     }
 }

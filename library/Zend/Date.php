@@ -169,7 +169,7 @@ class Zend_Date extends Zend_Date_DateObject {
             $this->setTimezone($zone);
         }
 
-        if (@constant("Zend_Date::".$date) !== null) {
+        if (is_string($date) && (@constant("Zend_Date::".$date) !== null)) {
             $part = $date;
             $date = null;
         }
@@ -177,6 +177,13 @@ class Zend_Date extends Zend_Date_DateObject {
         if (is_null($date)) {
             $date = Zend_Date::now();
             $date = $date->get($part);
+        }
+
+        if (($date instanceof Zend_TimeSync_Ntp) or 
+            ($date instanceof Zend_TimeSync_Sntp)) {
+            $date = $date->getInfo();
+            $date = $this->_getTime($date['offset']);
+            $part = null;
         }
 
         // set datepart
