@@ -1,25 +1,24 @@
 <sect1 id="zend.date.introduction">
 
-    <title>Einf&uuml;hrung</title>
+    <title>Einführung</title>
 
     <para>
-        Die <code>Zend_Date</code> Komponente bietet eine umfangreiche aber einfache API zur Manipulation von Datum und Zeit.
-    	Die Methoden verarbeiten eine gro�e Auswahl von Datentypen in vielen Kombinationen und erweitern die vorhandenen PHP
-    	Datumsfunktionen um eine Vielzahl von M&ouml;glichkeiten.
-        Die aktuellste version der Dokumentation finden Sie unter in unserer Online Dokumentation unter
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOCDEV/Home">. ( regelm&auml;ss mit SVN syncronisiert )
+        Die <code>Zend_Date</code> Komponente bietet eine umfangreiche aber einfache API zur Manipulation 
+        von Datum und Zeit.	Die Methoden verarbeiten eine große Auswahl von Datentypen in vielen
+        Kombinationen und erweitern die vorhandenen PHP Datumsfunktionen um eine Vielzahl von Möglichkeiten.
+        Die aktuellste Version der Dokumentation finden Sie unter in unserer Online Dokumentation unter
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOCDEV/Home">. ( regelmäßig mit SVN syncronisiert )
     </para>
 
     <para>
-        Auch wenn Einfachheit das h&ouml;chste Ziel bleibt, ist die Arbeit beim Umgang mit lokalisierten Datums- und Zeitangaben
-        unweigerlich mit einer gewissen Komplexit&auml;t verbunden. Daten als auch Zeitangaben werden in verschiedenen Datums-
-        und Zeitzonen oft unterschiedlich dargestellt.
-	Beispielsweise stellen manche die Monatsangabe voran, w&auml;hrend andere das Jahr an erste Stelle schreiben um ein
-	Kalenderdatum darzustellen.
+        Auch wenn Einfachheit das höchste Ziel bleibt, ist die Arbeit beim Umgang mit lokalisierten 
+        Datums- und Zeitangaben unweigerlich mit einer gewissen Komplexität verbunden. Daten als auch
+        Zeitangaben werden in verschiedenen Datums- und Zeitzonen oft unterschiedlich dargestellt.
+        Beispielsweise stellen manche die Monatsangabe voran, während andere das Jahr an erste Stelle
+        schreiben um ein Kalenderdatum darzustellen.
 
-	F&uuml;r mehr Informationen &uuml;ber die Handhabung von Lokalisierung und Normalisierung lesen Sie bitte im Abschnitt
-	<link linkend="zend.locale.date.datesandtimes"><code>Zend_Locale</code>
-        </link> nach.
+        Für mehr Informationen über die Handhabung von Lokalisierung und Normalisierung lesen Sie bitte
+        im Abschnitt <link linkend="zend.locale.date.datesandtimes"><code>Zend_Locale</code></link> nach.
     </para>
 
     <para>
@@ -91,7 +90,7 @@
                     20:45:54 GMT bis Di, 19. Jan 2038 03:14:07 GMT", erm&ouml;glicht <code>Zend_Date</code> mit Unterst&uuml;tzung der BCMath
                     Erweiterung eine fast unbegrenzte Zeitspanne. Wenn BCMath nicht verf&uuml;gbar ist, bietet <code>Zend_Date</code>
                     eine Spanne innerhalb des <code>float</code>-Datentyps auf Ihrem Server.
-                    "Die Gr&ouml;�e von float ist Plattformabh&auml;ngig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
+                    "Die Gr&ouml;�e von float ist Plattformabh&auml;ngig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
                     ca. 14 Dezimalstellen ein Standardwert. (das 64 bit IEEE Format)." [<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>]
                 </para>
             </listitem>
