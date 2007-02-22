@@ -369,42 +369,24 @@ require_once 'Zend/Acl.php';
 $acl = new Zend_Acl();
 
 //Добавить группы в реестр Ролей используя Zend_Acl_Role
-<!-- 
-// Add groups to the Role registry using Zend_Acl_Role
- -->
 require_once 'Zend/Acl/Role.php';
 
 // Гость не наследует управление доступом
-<!-- 
-// Guest does not inherit access controls
- -->
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
 
 //Посетитель наследуется от Гостя
-<!-- 
-// Staff inherits from guest
- -->
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
 /*
 Альтернатива тому, что написано выше:
-<!-- 
-alternatively, the above could be written:
- -->
 $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
 //Редактор наледуется от Посетителя
-<!-- 
-// Editor inherits from staff
- -->
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 //Администатор не наследует управление доступом
-<!-- 
-// Administrator does not inherit access controls
- -->
 $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
 
     </sect2>
