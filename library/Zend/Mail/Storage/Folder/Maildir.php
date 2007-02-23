@@ -86,6 +86,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
         $this->_buildFolderTree();
         $this->selectFolder(!empty($params['folder']) ? $params['folder'] : 'INBOX');
         $this->_has['top'] = true;
+        $this->_has['flags'] = true;
     }
 
     /**

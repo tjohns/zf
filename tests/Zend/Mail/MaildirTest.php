@@ -197,4 +197,23 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 
         $this->fail('no exception raised while deleting message (maildir is read-only)');
     }
+
+    public function testHasFlag()
+    {
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+
+        $this->assertFalse($mail->getMessage(5)->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertTrue($mail->getMessage(5)->hasFlag(Zend_Mail_Storage::FLAG_RECENT));
+        $this->assertTrue($mail->getMessage(2)->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED));
+        $this->assertFalse($mail->getMessage(2)->hasFlag(Zend_Mail_Storage::FLAG_ANSWERED));
+    }
+
+    public function testGetFlags()
+    {
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+
+        $flags = $mail->getMessage(1)->getFlags();
+        $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_SEEN]));
+        $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_SEEN, $flags));
+    }
 }

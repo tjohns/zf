@@ -37,7 +37,8 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
                             'delete'    => false,
                             'create'    => false,
                             'top'       => false,
-                            'fetchPart' => true);
+                            'fetchPart' => true,
+                            'flags'     => false);
 
     /**
      * current iteration position

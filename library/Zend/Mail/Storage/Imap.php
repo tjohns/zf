@@ -49,6 +49,11 @@ require_once 'Zend/Mail/Message.php';
 require_once 'Zend/Mail/Storage/Exception.php';
 
 /**
+ * Zend_Mail_Storage
+ */
+require_once 'Zend/Mail/Storage.php';
+
+/**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -67,6 +72,16 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     protected $_currentFolder = '';
 
+    /**
+     * imap flags to constants translation
+     * @var array
+     */
+    protected static $_knownFlags = array('\Passed'   => Zend_Mail_Storage::FLAG_PASSED,
+                                          '\Answered' => Zend_Mail_Storage::FLAG_ANSWERED,
+                                          '\Seen'     => Zend_Mail_Storage::FLAG_SEEN,
+                                          '\Deleted'  => Zend_Mail_Storage::FLAG_DELETED,
+                                          '\Draft'    => Zend_Mail_Storage::FLAG_DRAFT,
+                                          '\Flagged'  => Zend_Mail_Storage::FLAG_FLAGGED);
 
     /**
      * Count messages all messages in current box
@@ -110,8 +125,15 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function getMessage($id)
     {
-        $header = $this->getRawHeader($id);
-        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header));
+        $data = $this->_protocol->fetch(array('FLAGS', 'RFC822.HEADER'), $id);
+        $header = $data['RFC822.HEADER'];
+
+        $flags = array();
+        foreach ($data['FLAGS'] as $flag) {
+            $flags[] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : $flag;
+        }
+
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header, 'flags' => $flags));
     }
 
     /*
@@ -169,6 +191,8 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
      */
     public function __construct($params)
     {
+        $this->_has['flags'] = true;
+
         if ($params instanceof Zend_Mail_Protocol_Imap) {
             $this->_protocol = $params;
             try {

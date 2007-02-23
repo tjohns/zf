@@ -436,4 +436,20 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
+
+    public function testHasFlag()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $this->assertTrue($mail->getMessage(1)->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+    }
+
+    public function testGetFlags()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $flags = $mail->getMessage(1)->getFlags();
+        $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_SEEN]));
+        $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_SEEN, $flags));
+    }
 }

@@ -35,6 +35,12 @@ class Zend_Mail_Protocol_Imap
      */
     protected $_socket;
 
+    /**
+     * counter for request tag
+     * @var int
+     */
+    protected $_tagCount = 0;
+
 
     /**
      * Public constructor
@@ -304,7 +310,8 @@ class Zend_Mail_Protocol_Imap
     public function sendRequest($command, $tokens = array(), &$tag = null)
     {
         if (!$tag) {
-            $tag = 'TAG' . rand(100, 999);
+            ++$this->_tagCount;
+            $tag = 'TAG' . $this->_tagCount;
         }
 
         $line = $tag . ' ' . $command;
@@ -540,14 +547,30 @@ class Zend_Mail_Protocol_Imap
 
         $result = array();
         while (!$this->readLine($tokens, $tag)) {
+            // ignore other responses
             if ($tokens[1] != 'FETCH') {
                 continue;
             }
+            // ignore other messages
             if ($to === null && $tokens[0] != $from) {
                 continue;
             }
+            // if we only want one item we return that one directly
             if (count($items) == 1) {
-                $data = next($tokens[2]);
+                if ($tokens[2][0] == $items[0]) {
+                    $data = $tokens[2][1];
+                } else {
+                    // maybe the server send an other field we didn't wanted
+                    $count = count($tokens[2]);
+                    // we start with 2, because 0 was already checked
+                    for ($i = 2; $i < $count; $i += 2) {
+                        if ($tokens[2][$i] != $items[0]) {
+                            continue;
+                        }
+                        $data = $tokens[2][$i + 1];
+                        break;
+                    }
+                }
             } else {
                 $data = array();
                 while (key($tokens[2]) !== null) {
@@ -555,6 +578,7 @@ class Zend_Mail_Protocol_Imap
                     next($tokens[2]);
                 }
             }
+            // if we want only one message we can ignore everything else and just return
             if ($to === null && $tokens[0] == $from) {
                 return $data;
             }

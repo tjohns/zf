@@ -33,6 +33,11 @@ require_once 'Zend/Mail/Message.php';
  */
 require_once 'Zend/Mail/Storage/Exception.php';
 
+/**
+ * Zend_Mail_Storage
+ */
+require_once 'Zend/Mail/Storage.php';
+
 
 /**
  * @package    Zend_Mail
@@ -51,12 +56,12 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      * known flag chars in filenames
      * @var array
      */
-    protected static $_knownFlags = array('P' => 'Passed',
-                                          'R' => 'Replied',
-                                          'S' => 'Seen',
-                                          'T' => 'Trashed',
-                                          'D' => 'Draft',
-                                          'F' => 'Flagged');
+    protected static $_knownFlags = array('P' => Zend_Mail_Storage::FLAG_PASSED,
+                                          'R' => Zend_Mail_Storage::FLAG_ANSWERED,
+                                          'S' => Zend_Mail_Storage::FLAG_SEEN,
+                                          'T' => Zend_Mail_Storage::FLAG_DELETED,
+                                          'D' => Zend_Mail_Storage::FLAG_DRAFT,
+                                          'F' => Zend_Mail_Storage::FLAG_FLAGGED);
 
     /**
      * Count messages all messages in current box
@@ -126,7 +131,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function getMessage($id)
     {
-        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRawHeader($id)));
+        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $this->getRawHeader($id),
+                                           'flags'   => $this->_getFileData($id, 'flags')));
     }
 
     /*
@@ -208,6 +214,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         }
 
         $this->_has['top'] = true;
+        $this->_has['flags'] = true;
         $this->_openMaildir($params['dirname']);
     }
 
@@ -239,28 +246,48 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         if (!$dh) {
             throw new Zend_Mail_Storage_Exception('cannot open maildir');
         }
+        $this->_getMaildirFiles($dh, $dirname . '/cur/');
+        closedir($dh);
+
+        $dh = @opendir($dirname . '/new/');
+        if ($dh) {
+            $this->_getMaildirFiles($dh, $dirname . '/new/', array(Zend_Mail_Storage::FLAG_RECENT));
+            closedir($dh);
+        }
+    }
+
+    /**
+     * find all files in opened dir handle and add to maildir files
+     *
+     * @param resource $dh            dir handle used for search
+     * @param string   $dirname       dirname of dir in $dh
+     * @param array    $default_flags default flags for given dir
+     * @return null
+     */
+    protected function _getMaildirFiles($dh, $dirname, $default_flags = array())
+    {
         while (($entry = readdir($dh)) !== false) {
-            if ($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
+            if ($entry[0] == '.' || !is_file($dirname . $entry)) {
                 continue;
             }
-            list($uniq, $info) = explode(':', $entry, 2);
-            list($version, $flags) = explode(',', $info, 2);
+
+            @list($uniq, $info) = explode(':', $entry, 2);
+            @list($version, $flags) = explode(',', $info, 2);
             if ($version != 2) {
                 $flags = '';
-            } else {
-                $named_flags = array();
-                $length = strlen($flags);
-                for ($i = 0; $i < $length; ++$i) {
-                    $flag = $flags[$i];
-                    $named_flags[$flag] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : '';
-                }
+            }
+
+            $named_flags = $default_flags;
+            $length = strlen($flags);
+            for ($i = 0; $i < $length; ++$i) {
+                $flag = $flags[$i];
+                $named_flags[$flag] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : $flag;
             }
 
             $this->_files[] = array('uniq'     => $uniq,
                                     'flags'    => $named_flags,
-                                    'filename' => $dirname . '/cur/' . $entry);
+                                    'filename' => $dirname . $entry);
         }
-        closedir($dh);
     }
 
 

@@ -157,6 +157,8 @@ class Demo_Zend_Mail_SimpleMailer
         if (isset($classname[$this->type])) {
             Zend::loadClass($classname[$this->type]);
         }
+
+        Zend::loadClass('Zend_Mail_Storage');
     }
 
     /**
@@ -228,6 +230,9 @@ class Demo_Zend_Mail_SimpleMailer
               table {border: 1px solid black; border-collapse: collapse}
               td, th {border: 1px solid black; padding: 3px; text-align: left}
               th {text-align: right; background: #eee}
+              tr.unread td {font-weight: bold}
+              tr.flagged td {font-style: italic}
+              tr.new td {color: #800}
               .message {white-space: pre; font-family: monospace; padding: 0.5em}
               dl dt {font-style: italic; padding: 1em 0; border-top: 1px #888 dashed}
               dl dd {padding-bottom: 1em}
@@ -337,7 +342,27 @@ class Demo_Zend_Mail_SimpleMailer
         echo '<table><tr><td></td><th>From</th><th>To</th><th>Subject</th></tr>';
 
         foreach ($this->mail as $num => $message) {
-            echo "<tr><td><a href='?{$this->queryString}&message=$num'>read</a></td>";
+            if ($this->mail->hasFlags) {
+                $class = array();
+
+                if ($message->hasFlag(Zend_Mail_Storage::FLAG_RECENT)) {
+                    $class['unread'] = 'unread';
+                    $class['new']    = 'new';
+                }
+                if (!$message->hasFlag(Zend_Mail_Storage::FLAG_SEEN)) {
+                    $class['unread'] = 'unread';
+                }
+                if ($message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED)) {
+                    $class['flagged'] = 'flagged';
+                }
+
+                $class = implode(' ', $class);
+                echo "<tr class='$class'>";
+            } else {
+                echo '<tr>';
+            }
+
+            echo "<td><a href='?{$this->queryString}&message=$num'>read</a></td>";
 
             try {
                 echo "<td>{$message->from}</td><td>{$message->to}</td><td>{$message->subject}</td>";
