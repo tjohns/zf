@@ -3,11 +3,14 @@
     <sect2 id="zend.service.yahoo.introduction">
         <title>Wprowadzenie</title>
         <para>
-            <code>Zend_Service_Yahoo</code> jest prostym API do użycia z wieloma Yahoo! REST API.
-            <code>Zend_Service_Yahoo</code> pozwala ci na przeszukiwanie sieci za pomocą Yahoo! Web search, 
-            Yahoo! News, Yahoo! Local, Yahoo! Images. Aby użyć Yahoo! REST API, musisz posiadać Yahoo! Application ID. 
-            Aby otrzymać Application ID, proszę wypełnij i wyślij
-            <ulink url="http://api.search.yahoo.com/webservices/register_application">formularz rejestracji aplikacji</ulink>.
+            <code>Zend_Service_Yahoo</code> jest prostym API do użycia z wieloma 
+            Yahoo! REST API. <code>Zend_Service_Yahoo</code> pozwala ci na 
+            przeszukiwanie sieci za pomocą Yahoo! Web search, Yahoo! News, 
+            Yahoo! Local, Yahoo! Images. Aby użyć Yahoo! REST API, musisz 
+            posiadać Yahoo! Application ID. Aby otrzymać Application ID, proszę 
+            wypełnij i wyślij <ulink 
+            url="http://api.search.yahoo.com/webservices/register_application">formularz 
+            rejestracji aplikacji</ulink>.
         </para>
     </sect2>
     <sect2 id="zend.service.yahoo.websearch">

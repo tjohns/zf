@@ -24,8 +24,11 @@
         <para>
             Jeśli przestrzeń nazw nie zostanie określona przy tworzeniu
             instancji Zend_Session, wszystkie dane będą przechowywane w 
-            przestrzeni nazw "<code>Default</code>". Poniższy przykład 
-            demonstruje użycie tej domyślnej przestrzeni nazw, pokazując jak
+            przestrzeni nazw "<code>Default</code>". Klasa 
+            <code>Zend_Session</code> nie jest przeznaczona do bezpośredniej 
+            pracy z zawartością przestrzeni nazw sesji. Zamiast niej używamy 
+            klasy <code>Zend_Session_Namespace</code>. Poniższy przykład 
+            demonstruje użycie domyślnej przestrzeni nazw, pokazując jak
             obliczyć ile razy użytkownik oglądał strony w twoim serwisie.
             Aby przetestować ten przykład, dodaj poniższy kod do twojego pliku
             ładującego ZF:
@@ -37,7 +40,14 @@
 <![CDATA[<?php
     require_once 'Zend/Session.php';
     $defaultNamespace = new Zend_Session_Namespace('Default');
-    $defaultNamespace->numberOfPageRequests++; // to będzie inkrementowane po każdym przeładowaniu strony
+
+    // używamy magicznej metody __isset() w Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // to będzie inkrementowane po każdym przeładowaniu strony
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // pierwsze przeładowanie
+    }
+
     echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>

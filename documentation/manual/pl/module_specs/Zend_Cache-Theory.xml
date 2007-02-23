@@ -67,7 +67,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             nie będzie przynosiło oczekiwanych rezultatów.
         </para></note>
     </sect2>
-    
+
     <sect2 id="zend.cache.tags">
         <title>Nadawanie etykiet rekordom</title>
         <para>
@@ -77,9 +77,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             usuwania wszystkich rekordów bufora oznaczonych daną etykietą (lub etykietami):
         </para>
         <programlisting role="php"><![CDATA[<?php
-             
+
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
-            
+
 ?>]]></programlisting>
         <note><para>
             zauważ, że metoda <code>save()</code> akceptuje opcjonalny czwarty
@@ -95,9 +95,9 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             metody <code>remove()</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php 
-             
+
 $cache->remove('idToRemove');
-            
+
 ?>]]></programlisting>            
         <para>
             Aby usunąć/unieważnić wiele rekordów bufora za jednym razem, możesz 
@@ -111,7 +111,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // czyszczenie jedynie nieaktualnych rekordów
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
-            
+
 ?>]]>   </programlisting>    
         <para>
             Jeśli chcesz usunąć rekordy bufora oznaczone etykietami 'tagA' oraz 'tagC':

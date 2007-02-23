@@ -1,6 +1,6 @@
 <sect1 id="zend.cache.frontends">
     <title>Frontendy Zend_Cache</title>
-    
+
     <sect2 id="zend.cache.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.core.introduction">

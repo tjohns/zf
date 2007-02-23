@@ -55,7 +55,8 @@
         <example>
             <title>Przeszukiwanie Amazon używając tradycyjnego API</title>
             <para>
-                W tym przykładzie, szukamy książek o PHP w Amazon i przechodzimy przez nie w pętli, wyświetlając je.
+                W tym przykładzie, szukamy książek o PHP w Amazon i przechodzimy 
+                przez nie w pętli, wyświetlając je.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';

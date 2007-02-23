@@ -2,7 +2,7 @@
    <title>Zaawansowane logowanie: wiele dzienników</title>
    <para>
         Klasa <code>Zend_Log</code> umożliwia rejestrowanie do wielu dzienników. 
-        Może wysyłać wiadomośc do wszystkich dzienników lub do konkretnego dziennika.
+        Może wysyłać wiadomość do wszystkich dzienników lub do konkretnego dziennika.
    </para>
 
    <para>

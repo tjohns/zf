@@ -10,8 +10,8 @@
             <ulink url="http://www.flickr.com/services/api/">dokumentację Flickr API</ulink>.
         </para>
         <para>
-            W poniższym przykladzie, używamy metody <code>tagSearch()</code> do wyszukiwania zdjęć
-            zawierających etykietę "php".
+            W poniższym przykladzie, używamy metody <code>tagSearch()</code> do 
+            wyszukiwania zdjęć zawierających etykietę "php".
         </para>
         <example>
             <title>Proste wyszukiwanie zdjęć Flickr</title>
@@ -30,7 +30,8 @@ foreach ($results as $result) {
         <note>
             <title>Opcjonalny parametr</title>
             <para>
-                Metoda <code>tagSearch()</code> akceptuje tablicę opcji jako opcjonalny drugi parametr.
+                Metoda <code>tagSearch()</code> akceptuje tablicę opcji jako 
+                opcjonalny drugi parametr.
             </para>
         </note>
     </sect2>
@@ -51,19 +52,23 @@ foreach ($results as $result) {
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByUsername()</code>: Zwraca ID użytkownika powiązane z podaną nazwą użytkownika.
+                    <code>getIdByUsername()</code>: Zwraca ID użytkownika powiązane 
+                    z podaną nazwą użytkownika.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByEmail()</code>:Zwraca ID użytkownika powiązane z podanym adresem email.
+                    <code>getIdByEmail()</code>:Zwraca ID użytkownika powiązane z 
+                    podanym adresem email.
                 </para>
             </listitem>
         </itemizedlist>
         <example>
             <title>Wyszukiwanie użytkownika serwisu Flickr na podstawie adresu e-mail</title>
             <para>
-                W tym przykładzie, posiadamy adres e-mail użytkownika serwisu Flickr i pobierzemy informacje o użytkowniku używając metody <code>userSearch()</code>:
+                W tym przykładzie, posiadamy adres e-mail użytkownika serwisu 
+                Flickr i pobierzemy informacje o użytkowniku używając metody 
+                <code>userSearch()</code>:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -81,14 +86,15 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Pobieranie szczegółów zdjęcia Flickr</title>
         <para>
-            <code>Zend_Service_Flickr</code> ułatwia pobieranie informacji o zdjęciu
-            na podstawie podanego ID zdjęcia. Po prostu użyj metody 
+            <code>Zend_Service_Flickr</code> ułatwia pobieranie informacji o 
+            zdjęciu na podstawie podanego ID zdjęcia. Po prostu użyj metody 
             <code>getImageDetails()</code>, tak jak w poniższym przykładzie:
         </para>
         <example>
             <title>Pobieranie szczegółów zdjęcia Flickr</title>
             <para>
-                Jeśli posiadasz ID zdjęcia Flickr, pobranie informacji o zdjęciu jest bardzo proste:
+                Jeśli posiadasz ID zdjęcia Flickr, pobranie informacji o zdjęciu 
+                jest bardzo proste:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';

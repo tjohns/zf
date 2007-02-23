@@ -55,7 +55,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 if(!$result = $cache->load('myresult')) {
 
     // bufor nie istnieje; łączymy się z bazą
-    
+
     $db = Zend_Db::factory( [...] );
     
     $result = $db->fetchAll('SELECT * FROM huge_table');
