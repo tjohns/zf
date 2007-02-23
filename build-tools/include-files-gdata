@@ -41,7 +41,7 @@ library/Zend/Feed/Exception.php
 library/Zend/Feed/Rss.php
 library/Zend/Filter.php
 library/Zend/Filter/Exception.php
-library/Zend/Filter/Input.php
+library/Zend/Filter/Interface.php
 library/Zend/Http/Client.php
 library/Zend/Http/Cookie.php
 library/Zend/Http/CookieJar.php
@@ -70,10 +70,14 @@ library/Zend/Uri.php
 library/Zend/Uri/Exception.php
 library/Zend/Uri/Http.php
 library/Zend/Uri/Mailto.php
+library/Zend/Validate/Ip.php
+library/Zend/Validate/Hostname.php
+library/Zend/Validate/Interface.php
 tests/AllTests.php
 tests/ZendTest.php
 tests/TestConfiguration.php.dist
 tests/Zend/_files/_testDir1/Class1.php
+tests/Zend/_files/_testDir1/Class1/Subclass2.php
 tests/Zend/_files/_testDir1/ClassNonexistent.php
 tests/Zend/_files/_testDir1/Interface1.php
 tests/Zend/_files/_testDir2/Class2.php
