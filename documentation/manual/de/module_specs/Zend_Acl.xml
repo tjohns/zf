@@ -90,17 +90,68 @@
             getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass 
             "Sally" direkt Regeln zugeordnet werden müssen.
         </para>
-        <note>
+        <para>
+            Though the ability to inherit from multiple Roles is very useful, multiple inheritance also
+            introduces some degree of complexity. The following example illustrates the ambiguity condition and how Zend_Acl solves it.
+        </para>
+        <example>
+            <title>Multiple inheritance between Roles</title>
             <para>
-                Da Zend_Acl das Vererben von Regeln von mehreren Rollen erlaubt, die möglicherweise
-                miteinander in Konflikt stehen können, wird ein Weg benötigt, um diese Konflikte
-                eindeutig auflösen zu können. Zend_Acl löst solche möglichen Konflikte dadurch auf,
-                dass die zuletzt übernommende Rolle die höchste Priorität hat. Das heißt, sobald
-                eine Regel für eine übergeordnete Rolle gefunden wurde, wobei bei der zuletzt 
-                übernommenden Rolle begonnen wird, werden keine anderen Regeln mehr beachtet, weil 
-                die Regel mit der höchsten Priorität bereit erreicht wurde.
+                The following code defines three base Roles - "<code>guest</code>", "<code>member</code>", and
+                "<code>admin</code>" - from which other Roles may inherit. Then, a Role identified by
+                "<code>someUser</code>" is established and inherits from the three other Roles. The order in
+                which these Roles appear in the <code>$parents</code> array is important. When necessary,
+                Zend_Acl searches for access rules defined not only for the queried Role (herein,
+                "<code>someUser</code>"), but also upon the Roles from which the queried Role inherits
+                (herein, "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"):
             </para>
-        </note>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Acl.php';
+$acl = new Zend_Acl();
+
+require_once 'Zend/Acl/Role.php';
+$acl->addRole(new Zend_Acl_Role('guest'))
+    ->addRole(new Zend_Acl_Role('member'))
+    ->addRole(new Zend_Acl_Role('admin'));
+
+$parents = array('guest', 'member', 'admin');
+$acl->addRole(new Zend_Acl_Role('someUser'), $parents);
+
+require_once 'Zend/Acl/Resource.php';
+$acl->add(new Zend_Acl_Resource('someResource'));
+
+$acl->deny('guest', 'someResource');
+$acl->allow('member', someResource');
+
+echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+            <para>
+                Since there is no rule specifically defined for the "<code>someUser</code>" Role and
+                "<code>someResource</code>", Zend_Acl must search for rules that may be defined for Roles that
+                "<code>someUser</code>" inherits. First, the "<code>admin</code>" role is visited, and there
+                is no access rule defined for it. Next, the "<code>member</code>" role is visited, and
+                Zend_Acl finds that there is a rule specifying that "<code>member</code>" is allowed access to
+                "<code>someResource</code>".
+            </para>
+            <para>
+                If Zend_Acl were to continue examining the rules defined for other parent Roles, however, it
+                would find that "<code>guest</code>" is denied access to "<code>someResource</code>". This
+                fact introduces an ambiguity because now "<code>someUser</code>" is both denied and allowed
+                access to "<code>someResource</code>", by reason of having inherited conflicting rules from
+                different parent Roles.
+            </para>
+            <para>
+                Zend_Acl resolves this ambiguity by completing a query when it finds the first rule that is
+                directly applicable to the query. In this case, since the "<code>member</code>" Role is
+                examined before the "<code>guest</code>" Role, the example code would print
+                "<code>allowed</code>".
+            </para>
+            <note>
+                <para>
+                    When specifying multiple parents for a Role, keep in mind that the last parent listed is
+                    the first one searched for rules applicable to an authorization query.
+                </para>
+            </note>
+        </example>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">

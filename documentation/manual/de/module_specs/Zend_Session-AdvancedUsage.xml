@@ -212,7 +212,7 @@ $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, "accept_answer"); // expire only this variable
 $testSpace->accept_answer = true;
 
--- 
+--
 
 // answer processing controller
 $testSpace = new Zend_Session_Namespace('testSpace');
@@ -362,12 +362,11 @@ else {
 <programlisting role="php">
 <![CDATA[<?php
     // pre-authentication request
-    require_once 'Zend/Auth/Result.php';
     require_once 'Zend/Auth/Adapter/Digest.php';
     $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
     $result = $adapter->authenticate();
     require_once 'Zend/Session/Namespace.php';
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
     if ($result->isValid()) {
         $namespace->authorizationId = $result->getIdentity();
         $namespace->date = time();
@@ -378,7 +377,7 @@ else {
     // subsequent requests
     require_once 'Zend/Session.php';
     Zend_Session::start();
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
     echo "Authorization / user Id: ", (empty($namespace->authorizationId)
