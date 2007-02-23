@@ -255,7 +255,7 @@
         &module_specs.Zend_Validate-ValidatorChains;
         &module_specs.Zend_Validate-WritingValidators;
         &module_specs.Zend_Validate-EmailAddress;
- 	 	&module_specs.Zend_Validate-Hostname;
+        &module_specs.Zend_Validate-Hostname;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
