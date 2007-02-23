@@ -176,7 +176,9 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if (is_null($date)) {
             $date = Zend_Date::now();
-            $date = $date->get($part);
+            if (($part !== null && $part !== Zend_Date::TIMESTAMP) {
+                $date = $date->get($part);
+            }
         }
 
         if (($date instanceof Zend_TimeSync_Ntp) or 
