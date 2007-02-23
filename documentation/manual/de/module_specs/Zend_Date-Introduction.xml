@@ -66,7 +66,7 @@
         <title>Warum Zend_Date?</title>
 
         <para>
-            <code>Zend_Date</code> erweitert die M&ouml;glichkeiten der PHP Datumsfunktionen um folgende Features:
+            <code>Zend_Date</code> erweitert die Möglichkeiten der PHP Datumsfunktionen um folgende Features:
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -75,17 +75,17 @@
                     Einfache API
                 </para>
                 <para>
-                    <code>Zend_Date</code> bietet eine sehr einfache API, die das die besten Datums- und Zeitfunktionalit&auml;ten aus vier Programmiersprachen vereint.
-                    Beispielsweise ist es m&ouml;glich, in nur einer Zeile zwei Zeiten miteinander zu vergleichen oder zu addieren.
+                    <code>Zend_Date</code> bietet eine sehr einfache API, die das die besten Datums- und Zeitfunktionalitäten aus vier Programmiersprachen vereint.
+                    Beispielsweise ist es möglich, in nur einer Zeile zwei Zeiten miteinander zu vergleichen oder zu addieren.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Vollst&auml;ndig Internationalisiert
+                    Vollständig Internationalisiert
                 </para>
                 <para>
-                    Alle vollen und abgek&uuml;rzten Monatsnamen und Wochentage aus mehr als 130 Sprachen werden unterst&uuml;tzt.
-                    Die Methoden erm&ouml;glichen die Ein- und Ausgabe von Daten im Format der jeweiligen Lokalen.
+                    Alle vollen und abgekürzten Monatsnamen und Wochentage aus mehr als 130 Sprachen werden unterstützt.
+                    Die Methoden ermöglichen die Ein- und Ausgabe von Daten im Format der jeweiligen Lokalen.
                 </para>
             </listitem>
             <listitem>
@@ -93,26 +93,26 @@
                     Unlimitierte Zeitstempel
                 </para>
                 <para>
-                    Obwohl die PHP 5.2 Dokumentation erkl&auml;rt: "Die g&uuml;ltige Spanne eines Zeitstempels geht von Fr, 13. Dez 1901
-                    20:45:54 GMT bis Di, 19. Jan 2038 03:14:07 GMT", erm&ouml;glicht <code>Zend_Date</code> mit Unterst&uuml;tzung der BCMath
-                    Erweiterung eine fast unbegrenzte Zeitspanne. Wenn BCMath nicht verf&uuml;gbar ist, bietet <code>Zend_Date</code>
+                    Obwohl die PHP 5.2 Dokumentation erklärt: "Die gültige Spanne eines Zeitstempels geht von Fr, 13. Dez 1901
+                    20:45:54 GMT bis Di, 19. Jan 2038 03:14:07 GMT", ermöglicht <code>Zend_Date</code> mit Unterstützung der BCMath
+                    Erweiterung eine fast unbegrenzte Zeitspanne. Wenn BCMath nicht verfügbar ist, bietet <code>Zend_Date</code>
                     eine Spanne innerhalb des <code>float</code>-Datentyps auf Ihrem Server.
-                    "Die Gr&ouml;�e von float ist Plattformabh&auml;ngig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
+                    "Die Größe von float ist Plattformabhängig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
                     ca. 14 Dezimalstellen ein Standardwert. (das 64 bit IEEE Format)." [<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>]
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Unterst&uuml;tzung der ISO_8601 Datumsspezifikation
+                    Unterstützung der ISO_8601 Datumsspezifikation
                 </para>
                 <para>
-		    Die ISO_8601 Datumsspezifikationen werden unterst&uuml;tzt. Sogar teilkonforme ISO_8601 Datumsspezifikationen werden erkannt.
+		    						Die ISO_8601 Datumsspezifikationen werden unterstützt. Sogar teilkonforme ISO_8601 Datumsspezifikationen werden erkannt.
                     Diese Zeitformate sind vor allem bei der Arbeit mit Datenbanken sinnvoll.
                     Selbst wenn zum Beispiel MsSQL und <ulink url="http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html">MySQL</ulink>
-                    leicht unterschiedlich mit Datum und Zeit umgehen, werden beide von <code>Zend_Date</code> unterst&uuml;tzt,
+                    leicht unterschiedlich mit Datum und Zeit umgehen, werden beide von <code>Zend_Date</code> unterstützt,
                     wenn die <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link> Format Konstante verwendet wird.
-                    Wenn Datumszeichen mit den PHP date() Formaten "Y/m/d" oder "Y-m-d H:i:s" &uuml;bereinstimmen,
-                    verwenden Sie bitte die in <code>Zend_Date</code> eingebaute Unterst&uuml;tzung f&uuml;r ISO 8601 formatierte Daten.
+                    Wenn Datumszeichen mit den PHP date() Formaten "Y/m/d" oder "Y-m-d H:i:s" übereinstimmen,
+                    verwenden Sie bitte die in <code>Zend_Date</code> eingebaute Unterstützung für ISO 8601 formatierte Daten.
                 </para>
             </listitem>
             <listitem>
@@ -120,8 +120,8 @@
                     Sonnenauf- und Untergang errechnen
                 </para>
                 <para>
-                    Sie k&ouml;nnen Sonnenauf-und Untergang f&uuml;r jeden beliebigen Ort und Tag anzeigen, so dass Sie keine einzige Sekunde
-                    Tageslicht f&uuml;r Ihr Lieblings-PHP Projekt verpassen :) ( Ich dachte immer Freaks arbeiten ohne Tageslicht )
+                    Sie können Sonnenauf-und Untergang für jeden beliebigen Ort und Tag anzeigen, so dass Sie keine einzige Sekunde
+                    Tageslicht für Ihr Lieblings-PHP Projekt verpassen :) ( Ich dachte immer Freaks arbeiten ohne Tageslicht )
                 </para>
             </listitem>
         </itemizedlist>
