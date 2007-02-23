@@ -531,7 +531,7 @@ class Zend_Locale_Format
         ksort($parse);
 
         // erase day string
-        if (iconv_strpos($format, 'EEEE') !== false) {
+        if (!empty($locale) && $day) {
             $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
             foreach($daylist as $key => $name) {
                 if (iconv_strpos($number, $name) !== false) {
@@ -544,21 +544,8 @@ class Zend_Locale_Format
         $monthlist = false;
         if (!empty($locale) && $month) {
             // prepare to convert month name to their numeric equivalents, if requested, and we have a $locale
-            if (iconv_strpos($format, 'MMMM') !== false) {
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-            } else {
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-            }
-        }
-
-        // get daytime
-        if (iconv_strpos($format, 'a') !== false) {
-            $daytime = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
-            if (iconv_strpos(strtoupper($number), strtoupper($daytime['am']))) {
-                $am = true;
-            } else if (iconv_strpos(strtoupper($number), strtoupper($daytime['pm']))) {
-                $am = false;
-            }
+            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+            $monthabbr = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
         }
 
         $position = false;
@@ -576,6 +563,24 @@ class Zend_Locale_Format
                     $number   = str_replace($name, $key, $number);
                     break;
                 }
+                $abbrname = $monthabbr[$key];
+                if (($position = iconv_strpos($number, $abbrname)) !== false) {
+                    if ($key < 10) {
+                        $key = "0" . $key;
+                    }
+                    $number   = str_replace($abbrname, $key, $number);
+                    break;
+                }
+            }
+        }
+
+        // get daytime
+        if (iconv_strpos($format, 'a') !== false) {
+            $daytime = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+            if (iconv_strpos(strtoupper($number), strtoupper($daytime['am']))) {
+                $am = true;
+            } else if (iconv_strpos(strtoupper($number), strtoupper($daytime['pm']))) {
+                $am = false;
             }
         }
 
