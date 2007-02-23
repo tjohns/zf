@@ -56,8 +56,10 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($adapter->translate('Message 2', 'ru'), 'Message 2');
 
         $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_ru(koi8-r).mo', 'ru');
-        // unknown format KOI8-R, string has to be converted to UTF8 as this file is UTF8 and not KOI8-R
-//        $this->assertEquals($adapter->translate('Message 2', 'ru'), 'óÏÏÂÝÅÎÉÅ 2 (ru)');
+        // Original message is in KOI8-R.. as unit tests are done in UTF8 we have to convert
+        // the returned KOI8-R string into UTF-8
+        $translation = iconv("KOI8-R", "UTF-8", $adapter->translate('Message 2', 'ru'));
+        $this->assertEquals($translation, 'Сообщение 2 (ru)');
 
         $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
         $this->assertEquals($adapter->translate('Message 5', 'ru'), 'Message 5');
