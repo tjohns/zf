@@ -532,7 +532,7 @@ class Zend_Locale_Format
 
         // erase day string
         if (!empty($locale) && $day) {
-            $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+            $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
             foreach($daylist as $key => $name) {
                 if (iconv_strpos($number, $name) !== false) {
                     $number   = str_replace($name, "EEEE", $number);
@@ -544,8 +544,8 @@ class Zend_Locale_Format
         $monthlist = false;
         if (!empty($locale) && $month) {
             // prepare to convert month name to their numeric equivalents, if requested, and we have a $locale
-            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-            $monthabbr = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
+            $monthabbr = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
         }
 
         $position = false;

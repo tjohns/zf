@@ -350,8 +350,9 @@ class Zend_Locale_Data
 
             case 'monthlist':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value[0] . '\']/months/monthContext[@type=\'format\']/monthWidth[@type=\''
-                             . $value[1] . '\']/month', 'type');
+                             . $value[0] . '\']/months/monthContext[@type=\''
+                             . $value[1] . '\']/monthWidth[@type=\''
+                             . $value[2] . '\']/month', 'type');
                 break;
 
             case 'month':
@@ -368,14 +369,16 @@ class Zend_Locale_Data
 
             case 'daylist':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value[0] . '\']/days/dayContext[@type=\'format\']/dayWidth[@type=\''
-                             . $value[1] . '\']/day', 'type');
+                             . $value[0] . '\']/days/dayContext[@type=\''
+                             . $value[1] . '\']/dayWidth[@type=\''
+                             . $value[2] . '\']/day', 'type');
                 break;
 
             case 'day':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value[0] . '\']/days/dayContext[@type=\'format\']/dayWidth[@type=\''
-                             . $value[1] . '\']/day[@type=\'' . $value[2] . '\']', 'type');
+                             . $value[0] . '\']/days/dayContext[@type=\''
+                             . $value[1] . '\']/dayWidth[@type=\''
+                             . $value[2] . '\']/day[@type=\'' . $value[3] . '\']', 'type');
                 break;
 
             case 'week':
@@ -480,6 +483,7 @@ class Zend_Locale_Data
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''
                                  . $key . '\']/exemplarCity', '', $key);
                 }
+                self::_getFile($locale, '/ldml/dates/timeZoneNames/zone', 'type');
                 break;
 
             case 'timezone':
@@ -714,7 +718,9 @@ class Zend_Locale_Data
                                  . $key . '\']', 'territories', $key);
                 }
                 break;
-
+            default :
+                throw new Zend_Locale_Exception("Unknown detail ($path) for parsing locale data.");
+                break;
         }
         return self::$_list;
     }

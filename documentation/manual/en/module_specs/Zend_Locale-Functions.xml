@@ -169,30 +169,165 @@ print $locale->toString();
 
     </sect2>
 
-    <sect2 id="zend.locale.getlanguage">
+    <sect2 id="zend.locale.getdata">
 
-        <title>Obtaining localized name for languages, regions, and calendars</title>
+        <title>Obtaining localized strings</title>
 
         <para>
-            Use <code>getLanguageDisplay($language, $locale)</code> to obtain a string containing the translated name of
-            a language for a specific $locale (defaults to the current object's locale). Use
-            <code>getLanguageList($locale)</code> to obtain an array of all known language names translated to the
-            language associated with $locale (defaults to the current object's locale). language will be returned.
+            <code>getList</code> gives you access to localized informations of several types.
+            These information are usefull if you want to display localized data to a customer without the
+            need of translating it. They are already avaiable for your useage.
         </para>
 
+        <para>
+            You can receive this informations for all languages. But not all of the informations are 
+            completly avaiable for all languages. Some of these types are also avaiable through an
+            own function for simplicity. See this list for detailed informations.
+        </para>
+
+        <table>
+            <title>Details for Zend_Locale->getList</title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Type</entry>
+                        <entry>Additional Function</entry>
+                        <entry>Description</entry>
+                        <entry>Complete</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Language</entry>
+                        <entry>getLanguageList</entry>
+                        <entry>Localized list of all languages</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Script</entry>
+                        <entry>getScriptList</entry>
+                        <entry>Localized list of all scripts</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Country</entry>
+                        <entry>getCountryList</entry>
+                        <entry>Localized list of all countries</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Territory</entry>
+                        <entry>getTerritoryList</entry>
+                        <entry>Localized list of all territories</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Calendar</entry>
+                        <entry />
+                        <entry>Localized list of all calendar names</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Month</entry>
+                        <entry />
+                        <entry>Localized list of all month names</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Month_short</entry>
+                        <entry />
+                        <entry>Localized list of all abbreviated month names (commonly only 2-4 chars)</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Month_narrow</entry>
+                        <entry />
+                        <entry>Localized list of all narrowed month names (commonly only one char)</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Day</entry>
+                        <entry />
+                        <entry>Localized list of all day names</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Day_short</entry>
+                        <entry />
+                        <entry>Localized list of all abbreviated day names (commonly only 2-4 chars)</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Day_narrow</entry>
+                        <entry />
+                        <entry>Localized list of all narrowed day names (commonly only one char)</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Dateformat</entry>
+                        <entry />
+                        <entry>Localized list of all formats for dates</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Timeformat</entry>
+                        <entry />
+                        <entry>Localized list of all formats for times</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Timezone</entry>
+                        <entry />
+                        <entry>Localized list of all known timezones</entry>
+                        <entry>Incomplete, they differ between languages</entry>
+                    </row>
+                    <row>
+                        <entry>Currency</entry>
+                        <entry />
+                        <entry>Localized list of all known currencies</entry>
+                        <entry>Incomplete, they differ between languages</entry>
+                    </row>
+                    <row>
+                        <entry>Currency_sign</entry>
+                        <entry />
+                        <entry>Localized list of all known symbols for currencies</entry>
+                        <entry>Incomplete, they differ between languages</entry>
+                    </row>
+                    <row>
+                        <entry>Currency_detail</entry>
+                        <entry />
+                        <entry>List of all countries and the actually used currency within that country</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Territory_detail</entry>
+                        <entry />
+                        <entry>List of all territories and the countries which are included within that territory</entry>
+                        <entry>Complete</entry>
+                    </row>
+                    <row>
+                        <entry>Language_detail</entry>
+                        <entry />
+                        <entry>List of all countries and the known spoken language within these countries</entry>
+                        <entry>Complete</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
         <example>
-            <title>getLanguageDisplay</title>
+            <title>getList</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
-print $locale->getLanguageDisplay('de'); // echos "German"
+print_r $locale->getList('country', 'de'); // prints the names of all countries in german language
 ?>]]></programlisting>
         </example>
 
         <para>
             To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
-            try the example below in a web page. Similarly, <code>getRegionList()</code> and
+            try the example below in a web page. Similarly, <code>getCountryList()</code> and
             <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
             regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
             <code>getCalendarDisplay()</code> work identically. Use a <code>try .. catch</code> block to handle
@@ -248,39 +383,15 @@ print $locale->getScriptDisplay('Latn');
 
     </sect2>
 
-    <sect2 id="zend.locale.getscriptlist">
-
-        <title>Get a list of scripts</title>
-
-        <para>
-            Use <code>getScriptList()</code> to obtain an array of all known script names translated to the selected
-            $locale (defaults to the current object's locale). For L10N purposes, a script is the set of characters used
-            to display a language. For English, the script name is Latin, and the short form in ISO-15924 is "Latn".
-        </para>
-
-        <example>
-            <title>getScriptList</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// ScriptList
-print_r($locale->getScriptList());
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
     <sect2 id="zend.locale.getquestion">
 
         <title>Obtaining translations for "yes" and "no"</title>
 
         <para>
             Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
-            to obtain an array containing the correct word(s) to use for prompting the user in a particular $locale
-            (defaults to the current object's locale). The array will contain four key-value pairs, for "yes", "no", and
-            their abbreviations, as shown in the example below.
+            to obtain an array containing the correct word(s) or regex strings to use for prompting the user in a 
+            particular $locale (defaults to the current object's locale). The array will contain six key-value pairs,
+            for "yes", "no", their abbreviations, and regex string for proper parsing as shown in the example below.
         </para>
 
         <example>
@@ -291,16 +402,18 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale();
 
 // Question strings
-print_r($locale->getQuestion());
+print_r($locale->getQuestion('de'));
 
 - - - Output - - -
 
 Array
 (
-    [yes] => yes
-    [yesabbr] => y
-    [no] => no
-    [noabbr] => n
+    [yes]ja[/yes]
+    [no]nein[/no]
+    [yesabbr]j[/yesabbr]
+    [noabbr]n[/noabbr]
+    [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
+    [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
 )
 ?>]]></programlisting>
         </example>

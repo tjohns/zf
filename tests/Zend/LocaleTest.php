@@ -234,13 +234,13 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      * test getRegionList
      * expected true
      */
-    public function testgetRegionList()
+    public function testgetCountryList()
     {
         $value = new Zend_Locale();
-        $list = $value->getRegionList();
+        $list = $value->getCountryList();
         $this->assertTrue(is_array($list), 'Region List not returned');
 
-        $list = $value->getRegionList('de');
+        $list = $value->getCountryList('de');
         $this->assertTrue(is_array($list), 'Region List not returned');
     }
 
@@ -260,39 +260,6 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $list = $value->getRegionDisplay('xyz');
         $this->assertFalse(is_string($list), 'Region Display should be false');
-    }
-
-
-    /**
-     * test getCalendarList
-     * expected true
-     */
-    public function testgetCalendarList()
-    {
-        $value = new Zend_Locale();
-        $list = $value->getCalendarList();
-        $this->assertTrue(is_array($list), 'Calendar List not returned');
-
-        $list = $value->getCalendarList('de');
-        $this->assertTrue(is_array($list), 'Calendar List not returned');
-    }
-
-
-    /**
-     * test getCalendarDisplay
-     * expected true
-     */
-    public function testgetCalendarDisplay()
-    {
-        $value = new Zend_Locale('de');
-        $list = $value->getCalendarDisplay('chinese');
-        $this->assertEquals($list, 'Chinesischer Kalender', 'Calendar Display not returned');
-
-        $list = $value->getCalendarDisplay('chinese','en');
-        $this->assertEquals($list, 'Chinese Calendar', 'Calendar Display not returned');
-
-        $list = $value->getCalendarDisplay('xyz');
-        $this->assertFalse(is_string($list), 'Calendar Display should be false');
     }
 
 

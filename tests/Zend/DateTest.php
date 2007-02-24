@@ -68,7 +68,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testCreationDefaultFormat()
     {
-        $locale = 'de_AT';
         $date  = new Zend_Date('2006-01-01');
         $this->assertTrue($date instanceof Zend_Date);
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2006-01-01T00:00:00+05:00');

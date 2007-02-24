@@ -1203,7 +1203,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::WEEKDAY_SHORT :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
 
@@ -1234,7 +1234,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::WEEKDAY :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
 
@@ -1291,7 +1291,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::WEEKDAY_NARROW :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'abbreviated'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
                 foreach ($daylist as $key => $value) {
@@ -1313,7 +1313,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::WEEKDAY_NAME :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'abbreviated'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
                 foreach ($daylist as $key => $value) {
@@ -1348,7 +1348,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             // month formats
             case Zend_Date::MONTH_NAME :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
                 $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
@@ -1390,7 +1390,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::MONTH_NAME_SHORT :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
                 $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
@@ -1437,7 +1437,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             case Zend_Date::MONTH_NAME_NARROW :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
                 $monthnr = (int) ($this->get(Zend_Date::MONTH_SHORT, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
@@ -3189,8 +3189,8 @@ class Zend_Date extends Zend_Date_DateObject {
             if (is_numeric($month)) {
                 $found = $month;
             } else {
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-                $monthlist2 = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
+                $monthlist2 = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
 
                 $monthlist = array_merge($monthlist, $monthlist2);
                 $found = 0;
