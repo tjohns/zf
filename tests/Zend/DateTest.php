@@ -32,7 +32,7 @@ require_once 'Zend.php';
 require_once 'Zend/Date.php';
 require_once 'Zend/Locale.php';
 require_once 'Zend/Date/Cities.php';
-require_once 'Zend/TimeSync.php';
+// require_once 'Zend/TimeSync.php';
 
 /**
  * PHPUnit test case
@@ -4788,6 +4788,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
     public function testTimesync()
     {
+        // @todo: when the Zend_TimeSync adapter moves out of the incubator,
+        // the following hack to allow it to be loaded should be removed.
+        // see also ZF-954
+        $incubator = dirname(dirname(dirname(__FILE__)))
+            . DIRECTORY_SEPARATOR . 'incubator' . DIRECTORY_SEPARATOR . 'library';
+        $include_path = get_include_path();
+        set_include_path($include_path . PATH_SEPARATOR . $incubator);
+        try {
+            Zend::loadClass('Zend_TimeSync');
+            Zend::loadClass('Zend_TimeSync_Ntp');
+        } catch (Zend_Exception $e) {
+            $this->markTestIncomplete($e->getMessage());
+        }
+        set_include_path($include_path);
+        // @todo: end of hack
+
         try {
             $server = new Zend_TimeSync('ntp://pool.ntp.org', 'alias');
             $date1 = $server->getDate();
@@ -4802,7 +4818,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
                 $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
             }
         } catch (Zend_TimeSync_Exception $e) {
-            // timeserver not avaiable
+            $this->markTestIncomplete('NTP timeserver not available.');
         }
     }
 }
