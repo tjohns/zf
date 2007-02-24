@@ -56,7 +56,7 @@ Zend_Session::start();
                     という場合は、.htaccess ファイル (通常は HTML のドキュメントルートにあります)
                     に <code>php_value session.auto_start 0</code> を追加します。
                 </para>
-v            </listitem>
+            </listitem>
             <listitem>
                 <para>
                     2. 間違い: PHP の <code>
@@ -240,7 +240,7 @@ $testSpace->setExpirationSeconds(300, "accept_answer"); // $test_session->setExp
 $testSpace->accept_answer = true;
 
 
--- 
+--
 
 // 回答を処理するコントローラ
 $testSpace = new Zend_Session_Namespace('testSpace');
@@ -383,9 +383,9 @@ else {
         <title>セッションと認証の共用</title>
 
         <para>
-            <code>Zend_Auth</code> 用の認証アダプタが返す認証結果がオブジェクトであって
+            <code>Zend_Auth</code> 用の認証アダプタが返す承認結果がオブジェクトであって
             (非推奨です) 配列ではなかった場合は、セッションを開始する前に
-            認証クラスを require しておく必要があります。
+            承認クラスを require しておく必要があります。
             そのかわりに、セッション名前空間の既知のキーをもとに認証アダプタ内で計算した値を
             保存しておくことを推奨します。
             たとえば、<code>Zend_Auth</code> のデフォルトの動作は、
@@ -394,9 +394,9 @@ else {
 
         <para>
             <code>Zend_Auth</code> に対して認証トークンをセッション間で持続させないよう指示し、
-            手動で認証 ID をセッションに格納することもできます。
+            手動で承認 ID をセッションに格納することもできます。
             そうすれば、セッション名前空間内のよく知られた場所を使用できます。
-            アプリケーションによっては、使用する権限情報や認証情報を
+            アプリケーションによっては、使用する権限情報や承認情報を
             特定の場所に保存しなければならないこともあるでしょう。
             多くのアプリケーションは、認証時
             つまり Zend_Auth の <code>authenticate()</code> メソッド実行時の
@@ -404,16 +404,15 @@ else {
         </para>
 
         <example>
-            <title>例: 単純化した認証 ID へのアクセス</title>
+            <title>例: 単純化した承認 ID へのアクセス</title>
 <programlisting role="php">
 <![CDATA[<?php
     // 認証前のリクエスト
-    require_once 'Zend/Auth/Result.php';
     require_once 'Zend/Auth/Adapter/Digest.php';
     $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
     $result = $adapter->authenticate();
     require_once 'Zend/Session/Namespace.php';
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
     if ($result->isValid()) {
         $namespace->authorizationId = $result->getIdentity();
         $namespace->date = time();
@@ -424,7 +423,7 @@ else {
     // それ以降のリクエスト
     require_once 'Zend/Session.php';
     Zend_Session::start();
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
     echo "Authorization / user Id: ", (empty($namespace->authorizationId)
@@ -435,6 +434,30 @@ else {
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
 ?>]]></programlisting>
         </example>
+
+        <para>
+            承認 ID をクライアント側に保存すると、
+            それをサーバ側で使用する場合に権限昇格の脆弱性を引き起こします。
+            これを防ぐには、ID をサーバ側で複製し (セッションを利用するなどして)、
+            クライアントから送られた認証 ID との間でクロスチェックするなどの方法があります。
+            "認証 (authentication) ID" (たとえばユーザ名) と
+            "承認 (authorization) ID" (たとえばデータベースのユーザテーブルの ID 101 番)
+            をきちんと区別するようにしましょう。
+        </para>
+
+        <para>
+            後者については、パフォーマンス上の理由からそれほど珍しくありません。
+            つまり、サーバに保存しておいたセッション情報を取得することで、
+            いわゆる「ニワトリが先かタマゴが先か」の問題を解決するような場合です。
+            私の経験上、「クッキーに承認 ID そのものを保存するのか、
+            あるいは本物の承認 ID (またはユーザのセッション/
+            プロファイル情報を保持する何か) の代用となる別のものを保存するのか」
+            ということがよく議論の対象となります。
+            システムのセキュリティ担当者の中には、
+            SQL インジェクション脆弱性が発見された場合の被害を抑えるため、
+            「DB の主キー」が外部に漏らされることを好まない人たちもいるようです。
+            だれもが承認 ID に自動インクリメント形式を使用しているわけではありません。
+        </para>
 
     </sect2>
 
