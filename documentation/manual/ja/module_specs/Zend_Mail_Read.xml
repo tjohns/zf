@@ -61,9 +61,9 @@
                 <row>
                     <entry>フラグ</entry>
                     <entry>No</entry>
-                    <entry>対応予定</entry>
+                    <entry>Yes</entry>
                     <entry>No</entry>
-                    <entry>対応予定</entry>
+                    <entry>Yes</entry>
                 </row>
             </tbody>
         </tgroup>
@@ -348,6 +348,73 @@ if (!$foundPart) {
     echo 'プレーンテキストのパートがありません';
 } else {
     echo "プレーンテキストパート: \n" . $foundPart;
+}
+]]></programlisting>
+
+    </sect2>
+    <sect2 id="zend.mail.read-flags">
+        <title>フラグのチェック</title>
+
+        <para>Maildir および IMAP はフラグの保存をサポートしています。
+        Zend_Mail_Storage クラスには、maildir や IMAP
+        で使用するすべてのフラグに対応する定数が定義されています。これは
+        <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code> という名前です。
+        フラグをチェックするには、<code>Zend_Mail_Message</code>
+        の <code>hasFlag()</code> メソッドを使用します。
+        <code>getFlags()</code> で、設定されているすべてのフラグを取得することができます。</para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 未読メッセージを探します
+echo "未読メール\n";
+foreach ($mail as $message) {
+    if ($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN)) {
+        continue;
+    }
+    // 新着メールのマークをつけます
+    if ($message->hasFlag(Zend_Mail_Storage::FLAG_RECENT)) {
+        echo '! ';
+    } else {
+        echo '  ';
+    }
+    echo $message->subject . "\n";
+}
+
+
+// フラグをチェックします
+$flags = $message->getFlags();
+echo "Message is flagged as: ";
+foreach ($flags as $flag) {
+    switch ($flag) {
+        case Zend_Mail_Storage::FLAG_ANSWERED:
+            echo '返信済み ';
+            break;
+        case Zend_Mail_Storage::FLAG_FLAGGED:
+            echo 'フラグ設定済み ';
+            break;
+
+        // ...
+        // その他のフラグのチェック
+        // ...
+
+        default:
+            echo $flag . '(未知のフラグ) ';
+    }
+}
+]]></programlisting>
+
+        <para>IMAP ではユーザやクライアントが独自にフラグを設定することができます。
+        <code>Zend_Mail_Storage</code> で定数が定義されていない、
+        このようなフラグを取得することも可能です。これらは文字列として返され、
+        <code>hasFlag()</code> で同じようにチェックできます。</para>
+
+        <programlisting role="php"><![CDATA[<?php
+// クライアントで定義したフラグ $IsSpam, $SpamTested を調べます
+if (!$message->hasFlag('$SpamTested')) {
+    echo 'まだスパムチェックがすんでいません';
+} else if ($message->hasFlag('$IsSpam')) {
+    echo 'このメッセージはスパムです';
+} else {
+    echo 'このメッセージはハムです (スパムではありません)';
 }
 ]]></programlisting>
 
