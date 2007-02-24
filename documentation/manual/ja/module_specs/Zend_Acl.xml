@@ -98,18 +98,71 @@
             そして "sally" がその両方を継承することにします。
             "sally" に規則を直接定義する必要はありません。
         </para>
-        <note>
+        <para>
+            複数のロールからの継承は非常に便利ですが、
+            多重継承は複雑な問題を引き起こすこともあります。
+            次の例は、あいまいな条件になったときに Zend_Acl がそれをどう解決するかを示すものです。
+        </para>
+        <example>
+            <title>ロールの多重継承</title>
             <para>
-                Zend_Acl は複数ロールからの規則の継承をサポートしていますが、
-                お互いの規則が衝突する可能性もあります。
-                当然、この衝突は解消しなければなりません。
+                以下のコードでは、基本となる三つのロール "<code>guest</code>"、"<code>member</code>"
+                および "<code>admin</code>" を定義しています。他のロールはこれらを継承することになります。
+                次に、"<code>someUser</code>" というロールを作成してこれらの三つのロールを継承します。
+                これらのロールが配列 <code>$parents</code> にあらわれる順序が重要となります。
+                問い合わせ先のロール (ここでは "<code>someUser</code>" にアクセス規則が定義されていないが
+                その継承元 (ここでは "<code>guest</code>"、"<code>member</code>" および "<code>admin</code>")
+                には定義されているという場合、Zend_Acl はそちらを検索します。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Acl.php';
+$acl = new Zend_Acl();
+
+require_once 'Zend/Acl/Role.php';
+$acl->addRole(new Zend_Acl_Role('guest'))
+    ->addRole(new Zend_Acl_Role('member'))
+    ->addRole(new Zend_Acl_Role('admin'));
+
+$parents = array('guest', 'member', 'admin');
+$acl->addRole(new Zend_Acl_Role('someUser'), $parents);
+
+require_once 'Zend/Acl/Resource.php';
+$acl->add(new Zend_Acl_Resource('someResource'));
+
+$acl->deny('guest', 'someResource');
+$acl->allow('member', someResource');
+
+echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+            <para>
+                "<code>someUser</code>" ロールおよび
+                "<code>someResource</code>" に対する規則は定義されていないので、
+                Zend_Acl は、その規則が "<code>someUser</code>"
+                の継承元ロールで定義されているものとして検索します。
+                まず "<code>admin</code>" ロールを探しますが、ここではアクセス規則が定義されていません。
+                次に "<code>member</code>" ロールを探し、ここで Zend_Acl が規則を発見します。つまり
+                "<code>member</code>" は "<code>someResource</code>" へのアクセスを許可されているということです。
+            </para>
+            <para>
+                しかし、仮に Zend_Acl がさらに別の親に対しても規則の検索を続けたとすると、
+                "<code>guest</code>" は "<code>someResource</code>" へのアクセスが拒否されていることに気づくことでしょう。
+                これは問題となります。というのも、"<code>someUser</code>" は
+                "<code>someResource</code>" へのアクセスが許可されていると同時に拒否されているわけで、
+                それぞれ別の親ロールから取得した規則が衝突することになるからです。
+            </para>
+            <para>
                 Zend_Acl では、このような衝突の可能性を解決するために、
                 直近に継承されたロールの優先度が高くなるようにしています。
-                つまり、ある規則が "親の" ロール (直近の継承元) で見つかったら、
-                それを採用し、他の規則は使用しません。というのも、
-                これが最も優先度の高い規則となるからです。
+                今回の場合は、"<code>member</code>" のほうが
+                "<code>guest</code>" ロールより先に調べられ、例のコードの出力は
+                "<code>allowed</code>" となります。
             </para>
-        </note>
+            <note>
+                <para>
+                    複数の親をロールに指定する場合は、承認クエリでの規則の検索順を覚えておきましょう。
+                    最後に指定した親が最初に対象となります。
+                </para>
+            </note>
+        </example>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
