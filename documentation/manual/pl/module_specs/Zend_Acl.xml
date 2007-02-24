@@ -97,24 +97,24 @@
             "sally".
         </para>
         <para>
-            Though the ability to inherit from multiple Roles is very useful, 
-            multiple inheritance also introduces some degree of complexity. The 
-            following example illustrates the ambiguity condition and how 
-            Zend_Acl solves it.
+            Chociaż możliwość dziedziczenia po wielu rolach jest bardzo 
+            użyteczna, to takie dziedziczenie wprowadza pewien stopień 
+            złożoności. Poniższy przykład ilustruje niejasny przypadek 
+            dziedziczenia i pokazuje w jaki sposób Zend_Acl go rozwiązuje.
         </para>
         <example>
-            <title>Multiple inheritance between Roles</title>
+            <title>Dziedziczenie po wielu rolach</title>
             <para>
-                The following code defines three base Roles - "<code>guest</code>", 
-                "<code>member</code>", and "<code>admin</code>" - from which other 
-                Roles may inherit. Then, a Role identified by "<code>someUser</code>" 
-                is established and inherits from the three other Roles. The order 
-                in which these Roles appear in the <code>$parents</code> array is 
-                important. When necessary, Zend_Acl searches for access rules defined 
-                not only for the queried Role (herein, "<code>someUser</code>"), 
-                but also upon the Roles from which the queried Role inherits 
-                (herein, "<code>guest</code>", "<code>member</code>", and 
-                "<code>admin</code>"):
+                Poniższy kod definiuje trzy podstawowe role, po których inne role
+                mogą dziedziczyć - "<code>guest</code>", "<code>member</code>", 
+                oraz "<code>admin</code>". Następnie definiowana jest rola o 
+                nazwie "<code>someUser</code>", ktora dziedziczy po zdefiniowanych 
+                wcześniej trzech rolach. Ważna jest kolejność zdefiniowania tych
+                trzech ról w tablicy <code>$parents</code>. Gdy sprawdzamy 
+                reguły dostępu, Zend_Acl szuka reguł zdefiniowanych nie tylko dla
+                danej roli (w tym przypadku "<code>someUser</code>"), ale także
+                dla ról, po których ta rola dziedziczy (w tym przypadku 
+                "<code>guest</code>", "<code>member</code>" oraz "<code>admin</code>"):
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
@@ -136,33 +136,38 @@ $acl->allow('member', someResource');
 
 echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
-                Since there is no rule specifically defined for the "<code>someUser</code>" 
-                Role and "<code>someResource</code>", Zend_Acl must search for rules 
-                that may be defined for Roles that "<code>someUser</code>" inherits. 
-                First, the "<code>admin</code>" role is visited, and there is no 
-                access rule defined for it. Next, the "<code>member</code>" role is 
-                visited, and Zend_Acl finds that there is a rule specifying that 
-                "<code>member</code>" is allowed access to "<code>someResource</code>".
+                Z tego względu, że nie ma zdefiniowanych reguł konkretnie dla 
+                roli "<code>someUser</code>" oraz dla zasobu "<code>someResource</code>",
+                Zend_Acl musi szukać zasad, ktore mogą być zdefiniowane dla ról,
+                po których dziedziczy rola "<code>someUser</code>". Wpierw
+                sprawdzana jest rola "<code>admin</code>", a dla niej nie ma
+                zdefiniowanej żadnej reguły dostępu. Następnie sprawdzana jest 
+                rola "<code>member</code>" i Zend_Acl znajduje zdefiniowaną
+                regułę zezwalająca roli "<code>member</code>" na dostęp do zasobu
+                "<code>someResource</code>".
             </para>
             <para>
-                If Zend_Acl were to continue examining the rules defined for other 
-                parent Roles, however, it would find that "<code>guest</code>" is 
-                denied access to "<code>someResource</code>". This fact introduces
-                an ambiguity because now "<code>someUser</code>" is both denied and 
-                allowed access to "<code>someResource</code>", by reason of having 
-                inherited conflicting rules from different parent Roles.
+                Jeśli Zend_Acl kontynuowałby sprawdzanie reguł zdefiniowanych dla
+                innych ról rodziców, znalazłby regułę zabraniającą roli 
+                "<code>guest</code>" dostępu do zasobu "<code>someResource</code>". 
+                Ten fakt wprowadza niejaność, ponieważ teraz rola 
+                "<code>someUser</code>" ma zarówno dozwolony jak i zabroniony 
+                dostęp do zasobu "<code>someResource</code>", z tego powodu, że
+                posiada odziedziczone po dwóch rolach reguły, które są ze sobą
+                sprzeczne.                
             </para>
             <para>
-                Zend_Acl resolves this ambiguity by completing a query when it finds 
-                the first rule that is directly applicable to the query. In this 
-                case, since the "<code>member</code>" Role is examined before the 
-                "<code>guest</code>" Role, the example code would print "<code>allowed</code>".
+                Zend_Acl rozwiązuje tę niejaśność kończąc zapytanie wtedy, gdy
+                znajdzie pierwszą regułę, wprost pasującą do zapytania. W tym 
+                przypadku, z tego względu, że rola "<code>member</code>" jest 
+                sprawdzana przed rolą "<code>guest</code>", przykładowy kod 
+                wyświetliłby "<code>allowed</code>".
             </para>
             <note>
                 <para>
-                    When specifying multiple parents for a Role, keep in mind that 
-                    the last parent listed is the first one searched for rules 
-                    applicable to an authorization query.
+                    Gdy określasz wielu rodziców dla roli, pamiętaj, że ostatni
+                    rodzic na liście jest pierwszym przeszukiwanym rodzicem w 
+                    celu znalezienia ról pasujących do zapytania autoryzacyjnego.
                 </para>
             </note>
         </example>
