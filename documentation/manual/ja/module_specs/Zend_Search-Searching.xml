@@ -321,6 +321,26 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
         </para>
     </sect2>
 
+    <sect2 id="zend.search.searching.highlighting">
+        <title>検索結果の強調</title>
+        <para>
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code>
+            メソッドを使用すると、HTML ドキュメントの中で検索用語を強調させることができます。
+            <programlisting role="php"><![CDATA[
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+$hits = $index->find($query);
+...
+$highlightedHTML = $query->highlightMatches($sourceHTML);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>highlightMatches()</code> メソッドは、HTML の処理の際に
+            <code>Zend_Search_Lucene_Document_Html</code> クラスを使用しています
+            (詳細は <link linkend="zend.search.index-creation.html-documents">HTML ドキュメントの節</link>
+            を参照ください)。つまり、HTML ソースと同じ条件が適用されます。
+        </para>
+    </sect2>
 </sect1>
 
 <!--
