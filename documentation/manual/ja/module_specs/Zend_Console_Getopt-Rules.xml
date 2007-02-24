@@ -47,10 +47,10 @@ $opts = new Zend_Console_Getopt('abp:');
             "<code>-b</code>" あるいは "<code>-p</code>" と宣言するものです。
             最後のフラグにはパラメータが必要となります。
         </para>
-	<para>
-	    短い構文が使用できるのは、一文字のフラグに限られます。
-	    エイリアスやパラメータ型、ヘルプ文字列は短い構文ではサポートしません。
-	</para>
+        <para>
+            短い構文が使用できるのは、一文字のフラグに限られます。
+            エイリアスやパラメータ型、ヘルプ文字列は短い構文ではサポートしません。
+        </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.rules.long">
@@ -69,26 +69,26 @@ $opts = new Zend_Console_Getopt('abp:');
             そのオプションがパラメータを必要とする場合は、
             フラグに続けて等号 ("<code>=</code>") を書き、
             その後にパラメータの型を表す文字を続けます。
-	</para>
-	<itemizedlist>
-	    <listitem>
-		<para>
-		    "<code>=s</code>" は文字列パラメータを表します。
-		</para>
-	    </listitem>
-	    <listitem>
-		<para>
-		    "<code>=w</code>" はワードパラメータ
-		    (空白を含まない文字列) を表します。
-		</para>
-	    </listitem>
-	    <listitem>
-		<para>
-		    "<code>=i</code>" は整数パラメータを表します。
-		</para>
-	    </listitem>
-	</itemizedlist>
-	<para>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    "<code>=s</code>" は文字列パラメータを表します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    "<code>=w</code>" はワードパラメータ
+                    (空白を含まない文字列) を表します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    "<code>=i</code>" は整数パラメータを表します。
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
             そのパラメータがオプションである場合は、等号の代わりにダッシュ
             ("<code>-</code>") を使用します。
         </para>
@@ -112,8 +112,8 @@ $opts = new Zend_Console_Getopt(
         </example>
         <para>
             上の例では、三種類のオプションを宣言しています。
-	    "<code>--apple</code>" および "<code>-a</code>" は同じ意味を持つエイリアスで、
-	    このオプションはパラメータを受け取りません。
+            "<code>--apple</code>" および "<code>-a</code>" は同じ意味を持つエイリアスで、
+            このオプションはパラメータを受け取りません。
             "<code>--banana</code>" および "<code>-b</code>" は同じ意味を持つエイリアスで、
             このオプションには整数値のパラメータが必須となります。
             最後に "<code>--pear</code>" および "<code>-p</code>" は同じ意味を持つエイリアスで、
