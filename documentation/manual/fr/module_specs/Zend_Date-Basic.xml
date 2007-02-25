@@ -3,10 +3,19 @@
     <title>Basic Methods</title>
 
     <para>
-        From this chapter on speaking of dates always implies a date with a time, even when not explicitly mentioned.
-        Setting only a specific date implies a time set to 00:00:00. Setting only a specific date implies a date
-        internally set to 01.01.1970. The following sections show basic usage of <code>Zend_Date</code> primarily by
-        example.
+        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"
+        always imply a calendar date with a time, even when not explicitly mentioned, and vice-versa. The part not
+        specified defaults to an internal representation of "zero". Thus, adding a date having no calendar date and a
+        time value of 12 hours to another date consisting only of a calendar date would result in a date having that
+        calendar date and a time of "noon".
+    </para>
+
+    <para>
+        Setting only a specific date, with no time part, implies a time set to 00:00:00. Conversely, setting only a
+        specific time implies a date internally set to 01.01.1970 plus the number of seconds equal to the elapsed hours,
+        minutes, and seconds identified by the time. Normally, people measure things from a starting point, such as the
+        year 0 A.D. However, many software systems use the first second of the year 1970 as the starting point, and
+        denote times as a timestamp offset counting the number of seconds elapsed from this starting point.
     </para>
 
     <sect2 id="zend.date.basic.creation">
@@ -14,8 +23,12 @@
         <title>The current date</title>
 
         <para>
-            Without any arguments, constructing an instance returns an object in the default locale with the current
-            date.
+            Without any arguments, constructing an instance returns an object in the default locale with the current,
+            local date using PHP's <code>time()</code> function to obtain the
+            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
+            for the object. Make sure your PHP environment has the correct
+            <link linkend="zend.date.setdefaulttimezone">default timezone</link>
+            .
         </para>
 
         <example>
@@ -38,7 +51,7 @@ print $date;
 
         <para>
             Reviewing basic methods of <code>Zend_Date</code> is a good place to start for those unfamiliar with date
-            objects. A small example will be provided for each method.
+            objects in other languages or frameworks. A small example will be provided for each method below.
         </para>
 
         <sect3 id="zend.date.simple.functions.get">
@@ -69,8 +82,8 @@ print $date->get();
             <title>Setting a Date</title>
 
             <para>
-                The <code>set()</code> method alters the date stored in the object. Again, there are many options which
-                will be explored in later sections.
+                The <code>set()</code> method alters the date stored in the object, and returns the final date value as
+                a timestamp (not an object). Again, there are many options which will be explored in later sections.
             </para>
 
             <example>
@@ -94,8 +107,9 @@ print $date->get(Zend_Date::W3C);
 
             <para>
                 Adding two dates with <code>add()</code> usually involves adding a real date in time with an artificial
-                date part, such as 12 hours, as shown in the example below. Both <code>add()</code> and
-                <code>sub()</code> use the same set of options as <code>set()</code>, which will be explained later.
+                timestramp representing a date part, such as 12 hours, as shown in the example below. Both
+                <code>add()</code> and <code>sub()</code> use the same set of options as <code>set()</code>, which will
+                be explained later.
             </para>
 
             <example>
@@ -107,7 +121,11 @@ $date = new Zend_Date();
 
 // changes $date by adding 12 hours
 $date->add('12:00:00', Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);
+
+print "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+
+// use magic __toString() method to call Zend_Date's toString()
+print "Date via toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
 
