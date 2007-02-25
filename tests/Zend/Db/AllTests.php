@@ -46,7 +46,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Db/DbTest.php';
 require_once 'Zend/Db/ProfilerTest.php';
 require_once 'Zend/Db/Adapter/Db2Test.php';
-// require_once 'Zend/Db/Adapter/MysqliTest.php';
+require_once 'Zend/Db/Adapter/MysqliTest.php';
 require_once 'Zend/Db/Adapter/OracleTest.php';
 require_once 'Zend/Db/Adapter/Pdo/MssqlTest.php';
 require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
@@ -79,7 +79,7 @@ class Zend_Db_AllTests
 
         if (defined('TESTS_ZEND_DB_ADAPTER_MYSQLI_ENABLED') &&
         constant('TESTS_ZEND_DB_ADAPTER_MYSQLI_ENABLED') == true) {
-            // $suite->addTestSuite('Zend_Db_Adapter_MysqliTest');
+            $suite->addTestSuite('Zend_Db_Adapter_MysqliTest');
         } else {
             $suite->addTestSuite('Zend_Db_Adapter_Skip_MysqliTest');
         }

@@ -17,23 +17,23 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * 
- */ 
+ *
+ */
 
 /**
  * Zend
  */
 require_once 'Zend.php';
 
-/** 
- * Zend_Db_Adapter_Abstract 
+/**
+ * Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
 
 /**
  * Zend_Db_Adapter_Exception
  */
-require_once 'Zend/Db/Adapter/Exception.php';
+require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
 
 /**
  * Zend_Db_Profiler
@@ -54,6 +54,8 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
 {
 
     /**
+     * Returns the symbol the adapter uses for delimiting identifiers.
+     *
      * @return string
      */
     public function getQuoteIdentifierSymbol()
@@ -68,250 +70,212 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     public function listTables()
     {
-        return $this->fetchCol('SHOW TABLES'); 
+        return $this->fetchCol('SHOW TABLES');
     }
 
     /**
      * Returns the column descriptions for a table.
      *
+     * The return value is an associative array keyed by the column name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     *
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMN_NAME => string; column name
+     * COLUMN_POSITION => number; ordinal position of column in table
+     * DATA_TYPE   => string; SQL datatype name of column
+     * DEFAULT     => string; default expression of column, null if none
+     * NULLABLE    => boolean; true if column can have nulls
+     * LENGTH      => number; length of CHAR/VARCHAR
+     * SCALE       => number; scale of NUMERIC/DECIMAL
+     * PRECISION   => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED    => boolean; unsigned property of an integer type
+     * PRIMARY     => boolean; true if column is part of the primary key
+     *
+     * @todo Discover column position.
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
      * @return array
      */
-    public function describeTable($table, $schemaName = null)
+    public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "DESCRIBE $table";
-        $this->_connect();
-        $_result = $this->_connection->query($sql);
-        $result = array();
-        while ($_row = $_result->fetch_assoc()) {
-                $row = array();
-                foreach ($_row as $key => $value) {
-                        $row[strtolower($key)] = $value;
-                }
-                $result[] = $row;
-        }
-        $descr = array();
-        foreach ($result as $key => $val) {
-            $descr[$val['field']] = array(
-                'name'    => $val['field'],
-                'type'    => $val['type'],
-                'notnull' => (bool) ($val['null'] != 'YES'), // not null is NO or empty, null is YES
-                'default' => $val['default'],
-                'primary' => (strtolower($val['key']) == 'pri'),
+        $sql = "DESCRIBE $tableName";
+        $row_defaults = array(
+            'Length'    => null,
+            'Scale'     => null,
+            'Precision' => null,
+            'Unsigned'  => null
+        );
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+        $desc = array();
+        foreach ($result as $key => $row) {
+            $row = array_merge($row_defaults, $row);
+            if (preg_match('/unsigned/', $row['Type'])) {
+                $row['Unsigned'] = true;
+            }
+            if (preg_match('/^((?:var)?char)\((\d+)\)/', $row['Type'], $matches)) {
+                $row['Type'] = $matches[1];
+                $row['Length'] = $matches[2];
+            } else if (preg_match('/^decimal\((\d+),(\d+)\)/', $row['Type'], $matches)) {
+                $row['Type'] = 'decimal';
+                $row['Precision'] = $matches[1];
+                $row['Scale'] = $matches[2];
+            } else if (preg_match('/^((?:big|medium|small)?int)\((\d+)\)/', $row['Type'], $matches)) {
+                $row['Type'] = $matches[1];
+                // The optional argument of a Mysql int type is not precision
+                // or length; it is only a hint for display width.
+            }
+            $desc[$row['Field']] = array(
+                'SCHEMA_NAME' => null,
+                'TABLE_NAME'  => $tableName,
+                'COLUMN_NAME' => $row['Field'],
+                'COLUMN_POSITION' => null, // @todo
+                'DATA_TYPE'   => $row['Type'],
+                'DEFAULT'     => $row['Default'],
+                'NULLABLE'    => (bool) ($row['Null'] == 'YES'),
+                'LENGTH'      => $row['Length'],
+                'PRECISION'   => $row['Precision'],
+                'SCALE'       => $row['Scale'],
+                'UNSIGNED'    => $row['Unsigned'],
+                'PRIMARY'     => (bool) (strtoupper($row['Key']) == 'PRI')
             );
         }
-        return $descr; 
-    }
-
-    public function query($sql, $bind = array())
-    {
-        //print $sql;
-        $this->_connect();
-        // is the $sql a Zend_Db_Select object?
-        if ($sql instanceof Zend_Db_Select) {
-            $sql = $sql->__toString();
-        }
-        $_result = $this->_connection->query($sql);
-        print $this->_connection->error;
-        return $_result;
-    }
-
-    public function fetchRow($sql, $bind = null)
-    {
-        $result = $this->query($sql, $bind);
-        return $result->fetch_object();
-    }
-
-    public function fetchAll($sql)
-    {
-        $_result = $this->query($sql);
-
-        $result = array();
-
-        while ($_row = $_result->fetch_assoc()) {
-                $row = array();
-                foreach ($_row as $key => $value) {
-                        $row[strtolower($key)] = $value;
-                }
-                $result[] = $row;
-        }
-        return $result;
-    }
-
-    /**
-     * Inserts a table row with specified data.
-     *
-     * @param string $table The table to insert data into.
-     * @param array $bind Column-value pairs.
-     * @return int The number of affected rows.
-     */
-    public function insert($table, $bind)
-    {
-        // col names come from the array keys
-        $cols = array_keys($bind);
-        $vals = array_values($bind);
-
-        // build the statement
-        $sql = "INSERT INTO $table "
-             . '(' . implode(', ', $cols) . ') '
-             . 'VALUES (' . $this->quote($vals) . ')';
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $bind);
-        return $result;
-    }
-
-    /**
-     * Updates table rows with specified data based on a WHERE clause.
-     *
-     * @param string $table The table to udpate.
-     * @param array $bind Column-value pairs.
-     * @param string $where UPDATE WHERE clause.
-     * @return int The number of affected rows.
-     */
-    public function update($table, $bind, $where)
-    {
-        // build "col = :col" pairs for the statement
-        $set = array();
-        foreach ($bind as $col => $val) {
-            if ($col != "id") {
-                $set[] = "$col = ".$this->quote($val);
-            }
-        }
-
-        // build the statement
-        $sql = "UPDATE $table "
-             . 'SET ' . implode(', ', $set)
-             . (($where) ? " WHERE $where" : '');
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $bind);
-        return $result;
-    }
-
-    /**
-     * Deletes table rows based on a WHERE clause.
-     *
-     * @param string $table The table to udpate.
-     * @param string $where DELETE WHERE clause.
-     * @return int The number of affected rows.
-     */
-    public function delete($table, $where)
-    {
-        // build the statement
-        $sql = "DELETE FROM $table"
-             . (($where) ? " WHERE $where" : '');
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql);
-        return $result;
-    }
-
-    /**
-     * Quote a raw string.
-     *
-     * @param string $value     Raw string
-     * @return string           Quoted string
-     */
-    protected function _quote($value)
-    {
-        return "'".str_replace("'", "''", $value)."'"; 
+        return $desc;
     }
 
     /**
      * Creates a connection to the database.
      *
      * @return void
+     * @throws Zend_Db_Adapter_Mysqli_Exception
      */
     protected function _connect()
     {
         if ($this->_connection) {
-                return ;
+            return;
         }
-        $this->_connection =& new mysqli($this->_config['host'], $this->_config['username'], $this->_config['password'], $this->_config['dbname']);
+        $this->_connection = new mysqli(
+            $this->_config['host'],
+            $this->_config['username'],
+            $this->_config['password'],
+            $this->_config['dbname']
+        );
+        if ($this->_connection === false || mysqli_connect_errno()) {
+            throw new Zend_Db_Adapter_Mysqli_Exception(mysqli_connect_error());
+        }
     }
 
     /**
      * Prepare a statement and return a PDOStatement-like object.
      *
      * @param  string  $sql  SQL query
-     * @return Zend_Db_Statment|PDOStatement
+     * @return Zend_Db_Statement_Mysqli
      */
     public function prepare($sql)
     {
         $this->_connect();
-        return $this->_connection->prepare($sql);
+        $stmt = new Zend_Db_Statement_Mysqli($this, $sql);
+        $stmt->setFetchMode($this->_fetchMode);
+        return $stmt;
     }
 
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $tableName   name of table (or sequence) associated with sequence
-     * @param  string $primaryKey  primary key in $tableName
-     * @return integer
+     * @param  string $tableName   OPTIONAL
+     * @param  string $primaryKey  OPTIONAL
+     * @return int
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
-        $this->_connect();
-        return $this->_connection->insert_id; 
+        $mysqli = $this->_connection;
+        return $mysqli->insert_id;
     }
 
     /**
      * Begin a transaction.
+     *
+     * @return void
      */
     protected function _beginTransaction()
     {
-        $this->_connection->beginTransaction(); 
+        $this->_connection->beginTransaction();
     }
 
     /**
      * Commit a transaction.
+     *
+     * @return void
      */
     protected function _commit()
     {
-        $this->_connection->commit(); 
+        $this->_connection->commit();
     }
 
     /**
      * Roll-back a transaction.
+
+     * @return void
      */
     protected function _rollBack()
     {
-        $this->_connection->rollBack(); 
+        $this->_connection->rollBack();
     }
 
     /**
      * Set the fetch mode.
      *
-     * @param integer $mode
+     * @param int $mode
+     * @return void
      */
     public function setFetchMode($mode)
     {
         switch ($mode) {
-            case PDO::FETCH_LAZY:
-            case PDO::FETCH_ASSOC:
-            case PDO::FETCH_NUM:
-            case PDO::FETCH_BOTH:
-            case PDO::FETCH_NAMED:
-            case PDO::FETCH_OBJ:
+            case Zend_Db::FETCH_LAZY:
+            case Zend_Db::FETCH_ASSOC:
+            case Zend_Db::FETCH_NUM:
+            case Zend_Db::FETCH_BOTH:
+            case Zend_Db::FETCH_NAMED:
+            case Zend_Db::FETCH_OBJ:
                 $this->_fetchMode = $mode;
                 break;
             default:
-                throw new Zend_Db_Adapter_Exception('Invalid fetch mode specified');
+                throw new Zend_Db_Adapter_Mysqli_Exception('Invalid fetch mode specified');
                 break;
-        } 
+        }
     }
 
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
+     * @param string $sql
+     * @param int $count
+     * @param int $offset OPTIONAL
      * @return string
      */
-    public function limit($sql, $count, $offset)
+    public function limit($sql, $count, $offset = 0)
     {
-        if ($count > 0) {
-            $offset = ($offset > 0) ? $offset : 0;
-            $sql .= "LIMIT $offset, $count";
+        $count = intval($count);
+        if ($count <= 0) {
+            throw new Zend_Db_Adapter_Mysqli_Exception("LIMIT argument count=$count is not valid");
         }
-        return $sql; 
+
+        $offset = intval($offset);
+        if ($offset < 0) {
+            throw new Zend_Db_Adapter_Mysqli_Exception("LIMIT argument offset=$offset is not valid");
+        }
+
+        $sql .= " LIMIT $count";
+        if ($offset > 0) {
+            $sql .= " OFFSET $offset";
+        }
+
+        return $sql;
     }
+
 }
