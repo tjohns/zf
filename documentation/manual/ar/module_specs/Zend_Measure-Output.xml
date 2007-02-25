@@ -35,12 +35,11 @@
             <example>
                 <title>Automatic output</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH, $locale);
+$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -71,12 +70,11 @@ echo $unit;
             <example>
                 <title>Output a value</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
+require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH, $locale);
+$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
 
 echo $unit->getValue();
 ?>]]></programlisting>
@@ -94,13 +92,11 @@ echo $unit->getValue();
             <example>
                 <title>Outputting units</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Measure_Weight');
+require_once 'Zend/Measure/Weight.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89";
-$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND, $locale);
+$unit = new Zend_Measure_Weight($mystring,Zend_Measure_Weight::POUND, $locale);
 
 echo $unit->getType();
 ?>]]></programlisting>
@@ -114,18 +110,10 @@ echo $unit->getType();
         <title>Output as localized string</title>
 
         <para>
-            Outputtig a string in a format common in the users' country is usually desirable.
+            Outputtig a string in a format common in the users' country is usually desirable. For example, the
+            measurement "1234567.8" would become "1.234.567,8" for Germany. This functionality will be supported in a
+            future release.
         </para>
-
-        <para>
-            For example, the measurement "1234567.8" would become "1.234.567,8" for Germany.
-        </para>
-
-        <note>
-            <para>
-                This functionality will be supported in a future release.
-            </para>
-        </note>
 
     </sect2>
 

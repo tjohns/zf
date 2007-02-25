@@ -7,11 +7,6 @@
     </para>
 
     <para>
-        <link linkend="zend.measure.special.serial"><code>Serializing and Deserializing</code>
-        </link>
-    </para>
-
-    <para>
         <link linkend="zend.measure.special.typelist"><code>Listing all known types</code>
         </link>
     </para>
@@ -20,46 +15,6 @@
         <link linkend="zend.measure.special.unitlist"><code>Listing all known units</code>
         </link>
     </para>
-
-    <sect2 id="zend.measure.special.serial">
-
-        <title>Serializing and Deserializing</title>
-
-        <para>
-            To save measurements for later use, <code>Zend_Measure</code> supports serialization.
-        </para>
-
-        <para>
-            <example>
-                <title>Serializing</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-
-$unit = new Zend_Measure(100,Zend_Measure::LENGTH);
-
-$serial = $unit->serialize();
-
-// save ... or any other action
-?>]]></programlisting>
-            </example>
-            <example>
-                <title>Deserializing</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Measure_Length');
-
-// load serialized object
-
-$unit = unserialize($serial);
-
-echo $unit;
-?>]]></programlisting>
-            </example>
-        </para>
-
-    </sect2>
 
     <sect2 id="zend.measure.special.typelist">
 
@@ -92,11 +47,9 @@ echo $unit;
             <example>
                 <title>Listing all units for a given type</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Measure_Length');
+require_once 'Zend/Measure/Length.php';
 
-$unit = new Zend_Measure(0,Zend_Measure::LENGTH);
+$unit = new Zend_Measure_Length(0,Zend_Measure_Length::STANDARD);
 
 $array = $unit->getTypeList();
 print_r($array);
