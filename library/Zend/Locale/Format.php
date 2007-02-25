@@ -38,6 +38,7 @@ require_once 'Zend/Locale/Math.php';
  */
 class Zend_Locale_Format
 {
+    public static $_usePhpDateFormat = false;
 
     private static $_signs = array(
         'Default'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Default == Latin
@@ -485,6 +486,51 @@ class Zend_Locale_Format
 
 
     /**
+     * Selects if standard ISO format should be used or PHP's date format
+     * Keep in mind that ISO supports all PHP date formats but PHP does not
+     * support all ISO formats
+     * Standard useage is ISO (false) set it to true if you need to have PHP's date format supported
+     * 
+     * @param  boolean  $format  OPTIONAL, if not set returns the format, otherwise sets the new format
+     *                                     false = ISO format, true = PHP format
+     * @return boolean
+     */
+    public static function usePhpDateFormat($format = null)
+    {
+        if ($format === null) {
+            return self::$_usePhpDateFormat;
+        }
+        self::$_usePhpDateFormat = $format;
+    }
+
+
+    /**
+     * Converts a format string from PHP's date format to ISO format
+     * Remember that Zend Date always returns localized string, so a month name which returns the english
+     * month in php's date() will return the translated month name with this function... use 'en' as locale
+     * if you are in need of the original english names
+     * 
+     * The conversion has the following restrictions:
+     * 'a', 'A' - Meridiem is not explicit upper/lowercase, you have to upper/lowercase the translated value yourself
+     * 
+     * @param  string  $format  Format string in PHP's date format
+     * @return string           Format string in ISO format
+     */
+    public static function convertPhpToIsoFormat($format)
+    {
+        $orig = array('d'  , 'D'   , 'j'   , 'l'   , 'N'   , 'S' , 'w'  , 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
+                      't'  , 'L'   , 'o'   , 'Y'   , 'y'   , 'a' , 'A'  , 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
+                      's'  , 'e'   , 'I'   , 'O'   , 'P'   , 'T' , 'Z'  , 'c',
+                      'r'  , 'U');
+        $dest = array('dd' , 'EEE' , 'd'   , 'EEEE', 'e'   , 'SS', 'eee', 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
+                      'ddd', 'l'   , 'YYYY', 'yyyy', 'yy'  , 'a' , 'a'  , 'B' , 'h', 'H'   , 'hh', 'HH' , 'mm',
+                      'ss' , 'zzzz', 'I'   , 'Z'   , 'ZZZZ', 'z' , 'X'   , 'YYYY-MM-DDTHH:mm:ssZZZZ',
+                      'r'  , 'U');
+        return str_replace($orig, $dest, $format);
+    }
+
+
+    /**
      * Parse date and split in named array fields
      *
      * @param string              $date    Date string to parse
@@ -776,6 +822,8 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getDateFormat($locale);
+        } else if (self::$_usePhpDateFormat === true) {
+            $format = self::convertPhpToIsoFormat($format);
         }
 
         return self::_parseDate($date, $format, $locale, false);
@@ -804,6 +852,8 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getDateFormat($locale);
+        } else if (self::$_usePhpDateFormat === true) {
+            $format = self::convertPhpToIsoFormat($format);
         }
 
         return self::_parseDate($date, $format, $locale, true);
@@ -888,6 +938,8 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getTimeFormat($locale);
+        } else if (self::$_usePhpDateFormat === true) {
+            $format = self::convertPhpToIsoFormat($format);
         }
 
         return self::_parseDate($time, $format, $locale);

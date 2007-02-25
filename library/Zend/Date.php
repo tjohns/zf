@@ -43,9 +43,6 @@ class Zend_Date extends Zend_Date_DateObject {
     private $_Fractional = 0;
     private $_Precision  = 3;
 
-    // format tokens to use
-    public static $_usePhpFormat = false;
-
     // Class wide Date Constants
     // day formats
     const DAY            = 'DAY';            // d - 2 digit day of month, 01-31
@@ -305,38 +302,12 @@ class Zend_Date extends Zend_Date_DateObject {
      *                                     false = ISO format, true = PHP format
      * @return boolean
      */
-    public static function usePhpFormat($format = null)
+    public static function usePhpDateFormat($format = null)
     {
         if ($format === null) {
-            return self::$_usePhpFormat;
+            return Zend_Locale_Format::$_usePhpDateFormat;
         }
-        self::$_usePhpFormat = $format;
-    }
-
-
-    /**
-     * Converts a format string from PHP's date format to ISO format
-     * Remember that Zend Date always returns localized string, so a month name which returns the english
-     * month in php's date() will return the translated month name with this function... use 'en' as locale
-     * if you are in need of the original english names
-     * 
-     * The conversion has the following restrictions:
-     * 'a', 'A' - Meridiem is not explicit upper/lowercase, you have to upper/lowercase the translated value yourself
-     * 
-     * @param  string  $format  Format string in PHP's date format
-     * @return string           Format string in ISO format
-     */
-    public static function convertPhpToIsoFormat($format)
-    {
-        $orig = array('d'  , 'D'   , 'j'   , 'l'   , 'N'   , 'S' , 'w'  , 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
-                      't'  , 'L'   , 'o'   , 'Y'   , 'y'   , 'a' , 'A'  , 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
-                      's'  , 'e'   , 'I'   , 'O'   , 'P'   , 'T' , 'Z'  , 'c',
-                      'r'  , 'U');
-        $dest = array('dd' , 'EEE' , 'd'   , 'EEEE', 'e'   , 'SS', 'eee', 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
-                      'ddd', 'l'   , 'YYYY', 'yyyy', 'yy'  , 'a' , 'a'  , 'B' , 'h', 'H'   , 'hh', 'HH' , 'mm',
-                      'ss' , 'zzzz', 'I'   , 'Z'   , 'ZZZZ', 'z' , 'X'   , 'YYYY-MM-DDTHH:mm:ssZZZZ',
-                      'r'  , 'U');
-        return str_replace($orig, $dest, $format);
+        Zend_Locale_Format::$_usePhpDateFormat = $format;
     }
 
 
@@ -374,8 +345,8 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
-        } else if (self::$_usePhpFormat === true) {
-            $format = self::convertPhpToIsoFormat($format);
+        } else if (self::usePhpDateFormat() === true) {
+            $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
         // get format tokens
@@ -2447,8 +2418,8 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $locale);
         } else {
-            if (self::$_usePhpFormat === true) {
-                $format = self::convertPhpToIsoFormat($format);
+            if (self::usePhpDateFormat() === true) {
+                $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
             $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             $time = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
@@ -2574,8 +2545,8 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         } else {
-            if (self::$_usePhpFormat === true) {
-                $format = self::convertPhpToIsoFormat($format);
+            if (self::usePhpDateFormat() === true) {
+                $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
             $parsed = Zend_Locale_Format::getCorrectableDate($date, $format, $locale);
             $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
