@@ -43,6 +43,9 @@ class Zend_Date extends Zend_Date_DateObject {
     private $_Fractional = 0;
     private $_Precision  = 3;
 
+    // format tokens to use
+    public static $_usePhpFormat = false;
+
     // Class wide Date Constants
     // day formats
     const DAY            = 'DAY';            // d - 2 digit day of month, 01-31
@@ -293,31 +296,21 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Returns a string representation of the object
-     * The format string must be given in PHP's date format
+     * Selects if standard ISO format should be used or PHP's date format
+     * Keep in mind that ISO supports all PHP date formats but PHP does not
+     * support all ISO formats
+     * Standard useage is ISO (false) set it to true if you need to have PHP's date format supported
      * 
-     * @param  string              $format  OPTIONAL An rule for formatting the output, if null the default dateformat is used
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
-     * @return string
+     * @param  boolean  $format  OPTIONAL, if not set returns the format, otherwise sets the new format
+     *                                     false = ISO format, true = PHP format
+     * @return boolean
      */
-    public function toPhpString($format = null, $locale = null)
+    public static function usePhpFormat($format = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
-        if (Zend_Locale::isLocale($format)) {
-            $locale = $format;
-            $format = null;
-        }
-
         if ($format === null) {
-            $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
-        } else {
-            $format = Zend_Date::convertPhpToIsoFormat($format);
+            return self::$_usePhpFormat;
         }
-
-        return $this->toString($format, $locale);
+        self::$_usePhpFormat = $format;
     }
 
 
@@ -327,31 +320,22 @@ class Zend_Date extends Zend_Date_DateObject {
      * month in php's date() will return the translated month name with this function... use 'en' as locale
      * if you are in need of the original english names
      * 
-     * The conversion has actually the following restrictions:
-     * 'S' - day suffix is not supported as this value can not be localized, use get(Zend_Date::DAY_SUFFIX) instead
-     * 'w' - non ISO day of week is not supported, use get(Zend_Date::WEEKDAY_DIGIT) instead
-     * 't' - number of days per month is not supported, use get(Zend_Date::MONTH_DAYS) instead 
-     * 'L' - Leap year is not supported, use isLeapYear() instead
+     * The conversion has the following restrictions:
      * 'a', 'A' - Meridiem is not explicit upper/lowercase, you have to upper/lowercase the translated value yourself
-     * 'B' - Swatch is not supported, use get(Zend_Date::SWATCH) instead
-     * 'I' - daylight not supported, use get(Zend_Date::DAYLIGHT) instead
-     * 'Z' - timezone offset in seconds is not supported, use get(Zend_Date::TIMEZONE_SECS) instead
-     * 'r' - RFC2822 can not be supported because the content would be localized, use get(Zend_Date::RFC2822) instead
-     * 'U' - Unix Timestamp is not supported, use get(Zend_Date::TIMESTAMP) instead
      * 
      * @param  string  $format  Format string in PHP's date format
      * @return string           Format string in ISO format
      */
     public static function convertPhpToIsoFormat($format)
     {
-        $orig = array('d' , 'D'   , 'j'   , 'l'   , 'N'   , 'S', 'w', 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
-                      't' , 'L'   , 'o'   , 'Y'   , 'y'   , 'a', 'A', 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
-                      's' , 'e'   , 'I'   , 'O'   , 'P'   , 'T', 'Z', 'c',
-                      'r' , 'U');
-        $dest = array('dd', 'EEE' , 'd'   , 'EEEE', 'e'   , '' , '' , 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
-                      ''  , ''    , 'YYYY', 'yyyy', 'yy'  , 'a', 'a', '' , 'h', 'H'   , 'hh', 'HH' , 'mm',
-                      'ss', 'zzzz', ''    , 'Z'   , 'ZZZZ', 'z', '' , 'YYYY-MM-DDTHH:mm:ssZZZZ',
-                      ''  , '');
+        $orig = array('d'  , 'D'   , 'j'   , 'l'   , 'N'   , 'S' , 'w'  , 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
+                      't'  , 'L'   , 'o'   , 'Y'   , 'y'   , 'a' , 'A'  , 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
+                      's'  , 'e'   , 'I'   , 'O'   , 'P'   , 'T' , 'Z'  , 'c',
+                      'r'  , 'U');
+        $dest = array('dd' , 'EEE' , 'd'   , 'EEEE', 'e'   , 'SS', 'eee', 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
+                      'ddd', 'l'   , 'YYYY', 'yyyy', 'yy'  , 'a' , 'a'  , 'B' , 'h', 'H'   , 'hh', 'HH' , 'mm',
+                      'ss' , 'zzzz', 'I'   , 'Z'   , 'ZZZZ', 'z' , 'X'   , 'YYYY-MM-DDTHH:mm:ssZZZZ',
+                      'r'  , 'U');
         return str_replace($orig, $dest, $format);
     }
 
@@ -360,10 +344,15 @@ class Zend_Date extends Zend_Date_DateObject {
      * Returns a string representation of the object
      * Supported format tokens are:
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
-     * E - day of week, e - number of weekday, h - hour 1-12, H - hour 0-23, m - minute, s - second
+     * E - day of week, e - number of weekday (1-7), h - hour 1-12, H - hour 0-23, m - minute, s - second
      * A - milliseconds of day, z - timezone, Z - timezone offset, S - fractional second, a - period of day
+     * 
+     * Additionally format tokens but non ISO conform are:
+     * SS - day suffix, eee - php number of weekday(0-6), ddd - number of days per month 
+     * l - Leap year, B - swatch internet time, I - daylight saving time, X - timezone offset in seconds
+     * r - RFC2822 format, U - unix timestamp
      *
-     * Not supported tokens are
+     * Not supported ISO tokens are
      * u - extended year, Q - quarter, q - quarter, L - stand alone month, W - week of month
      * F - day of week of month, g - modified julian, c - stand alone weekday, k - hour 0-11, K - hour 1-24
      * v - wall zone
@@ -385,6 +374,8 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
+        } else if (self::$_usePhpFormat === true) {
+            $format = self::convertPhpToIsoFormat($format);
         }
 
         // get format tokens
@@ -422,7 +413,45 @@ class Zend_Date extends Zend_Date_DateObject {
             // fill fixed tokens
             switch ($output[$i]) {
 
-                // eras
+                // special formats
+                case 'SS' :
+                    $output[$i] = $this->date('S', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'eee' :
+                    $output[$i] = $this->date('N', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'ddd' :
+                    $output[$i] = $this->date('t', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'l' :
+                    $output[$i] = $this->date('L', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'B' :
+                    $output[$i] = $this->date('B', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'I' :
+                    $output[$i] = $this->date('I', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'X' :
+                    $output[$i] = $this->date('Z', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'r' :
+                    $output[$i] = $this->date('r', $this->getUnixTimestamp(), false);
+                    break;
+
+                case 'U' :
+                    $output[$i] = $this->getUnixTimestamp();
+                    break;
+
+
+                    // eras
                 case 'GGGGG' :
                     $output[$i] = substr($this->get(Zend_Date::ERA, $locale), 0, 1) . ".";
                     break;
@@ -2418,6 +2447,9 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $locale);
         } else {
+            if (self::$_usePhpFormat === true) {
+                $format = self::convertPhpToIsoFormat($format);
+            }
             $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             $time = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $time->set($parsed['hour'],   Zend_Date::HOUR);
@@ -2542,6 +2574,9 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         } else {
+            if (self::$_usePhpFormat === true) {
+                $format = self::convertPhpToIsoFormat($format);
+            }
             $parsed = Zend_Locale_Format::getCorrectableDate($date, $format, $locale);
             $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR);
