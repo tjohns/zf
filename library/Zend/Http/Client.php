@@ -776,7 +776,8 @@ class Zend_Http_Client
                         // Else, assume we have a relative path
                     } else {
                         // Get the current path directory, removing any trailing slashes
-                        $path = rtrim(dirname($this->uri->getPath()), "/");
+                        $path = $this->uri->getPath();
+                        $path = rtrim(substr($path, 0, strrpos($path, '/')), "/");
                         $this->uri->setPath($path . '/' . $location);
                     }
                 }
