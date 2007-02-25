@@ -169,7 +169,7 @@ class Zend_Date extends Zend_Date_DateObject {
             $this->setTimezone($zone);
         }
 
-        if (is_string($date) && (@constant("Zend_Date::".$date) !== null)) {
+        if (is_string($date) && defined("self::".$date)) {
             $part = $date;
             $date = null;
         }

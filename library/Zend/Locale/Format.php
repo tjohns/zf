@@ -534,8 +534,7 @@ class Zend_Locale_Format
      * Parse date and split in named array fields
      *
      * @param string              $date    Date string to parse
-     * @param string              $format  Format to parse. Only single-letter codes (H, m, s, y, M, d),
-     *                                     and MMMM and EEEE are supported.
+     * @param string              $format  Format to parse
      * @param Zend_Locale|string  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array                       possible array members: day, month, year, hour, minute, second, fixed, format
      */
