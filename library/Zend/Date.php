@@ -294,6 +294,70 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Returns a string representation of the object
+     * The format string must be given in PHP's date format
+     * 
+     * @param  string              $format  OPTIONAL An rule for formatting the output, if null the default dateformat is used
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return string
+     */
+    public function toPhpString($format = null, $locale = null)
+    {
+        if ($locale === null) {
+            $locale = $this->getLocale();
+        }
+
+        if (Zend_Locale::isLocale($format)) {
+            $locale = $format;
+            $format = null;
+        }
+
+        if ($format === null) {
+            $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
+        } else {
+            $format = Zend_Date::convertPhpToIsoFormat($format);
+        }
+
+        return $this->toString($format, $locale);
+    }
+
+
+    /**
+     * Converts a format string from PHP's date format to ISO format
+     * Remember that Zend Date always returns localized string, so a month name which returns the english
+     * month in php's date() will return the translated month name with this function... use 'en' as locale
+     * if you are in need of the original english names
+     * 
+     * The conversion has actually the following restrictions:
+     * 'S' - day suffix is not supported as this value can not be localized, use get(Zend_Date::DAY_SUFFIX) instead
+     * 'w' - non ISO day of week is not supported, use get(Zend_Date::WEEKDAY_DIGIT) instead
+     * 't' - number of days per month is not supported, use get(Zend_Date::MONTH_DAYS) instead 
+     * 'L' - Leap year is not supported, use isLeapYear() instead
+     * 'a', 'A' - Meridiem is not explicit upper/lowercase, you have to upper/lowercase the translated value yourself
+     * 'B' - Swatch is not supported, use get(Zend_Date::SWATCH) instead
+     * 'I' - daylight not supported, use get(Zend_Date::DAYLIGHT) instead
+     * 'Z' - timezone offset in seconds is not supported, use get(Zend_Date::TIMEZONE_SECS) instead
+     * 'r' - RFC2822 can not be supported because the content would be localized, use get(Zend_Date::RFC2822) instead
+     * 'U' - Unix Timestamp is not supported, use get(Zend_Date::TIMESTAMP) instead
+     * 
+     * @param  string  $format  Format string in PHP's date format
+     * @return string           Format string in ISO format
+     */
+    public static function convertPhpToIsoFormat($format)
+    {
+        $orig = array('d' , 'D'   , 'j'   , 'l'   , 'N'   , 'S', 'w', 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
+                      't' , 'L'   , 'o'   , 'Y'   , 'y'   , 'a', 'A', 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
+                      's' , 'e'   , 'I'   , 'O'   , 'P'   , 'T', 'Z', 'c',
+                      'r' , 'U');
+        $dest = array('dd', 'EEE' , 'd'   , 'EEEE', 'e'   , '' , '' , 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
+                      ''  , ''    , 'YYYY', 'yyyy', 'yy'  , 'a', 'a', '' , 'h', 'H'   , 'hh', 'HH' , 'mm',
+                      'ss', 'zzzz', ''    , 'Z'   , 'ZZZZ', 'z', '' , 'YYYY-MM-DDTHH:mm:ssZZZZ',
+                      ''  , '');
+        return str_replace($orig, $dest, $format);
+    }
+
+
+    /**
+     * Returns a string representation of the object
      * Supported format tokens are:
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
      * E - day of week, e - number of weekday, h - hour 1-12, H - hour 0-23, m - minute, s - second
