@@ -33,8 +33,29 @@
             <code>Zend_Date::HOUR</code>. These constants are valid for all of the functions below. A list of all
             available constants is provided in
             <xref linkend="zend.date.constants.list" />
-            . If no <code>$part</code> is specified, then <code>Zend_Date::TIMESTAMP</code> is assumed.
+            . If no <code>$part</code> is specified, then <code>Zend_Date::TIMESTAMP</code> is assumed. Alternatively, a
+            user-specified format may be used for <code>$part</code>, using the same underlying mechanism and format
+            codes as
+            <link linkend="zend.locale.date.normalize"><code>Zend_Locale_Format::getDate()</code>
+            </link>
+            . If a date object is constructed using an obviously invalid date (e.g. a month number greater than 12),
+            then <code>Zend_Date</code> will throw an exception, unless no specific date format has been selected -i.e.
+            <code>$part</code> is either <code>null</code> or <code>Zend_Date::DATES</code> (a "loose" format).
         </para>
+
+        <example>
+            <title>User-specified input date format</title>
+<programlisting role="php"><![CDATA[<?php
+$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+
+$date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
+echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // strictly restricts interpretation to specified format
+echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+?>]]></programlisting>
+        </example>
 
         <para>
             If the optional <code>$locale</code> parameter is provided, then the <code>$locale</code> disambiguates the
@@ -188,7 +209,7 @@ print $date;
                             <entry>
                                 <ulink url="http://www.faqs.org/rfcs/rfc822.html">Arpa</ulink>
                             </entry>
-                            <entry>Arpa dates (i.e. RFC 822 formatted dates) are supported. Output uses either a "GMT" or "Local differential hours+min" format (see section 5 of RFC 822). Example: <code>Mon, 31 Dec 06 23:59:59 GMT</code>
+                            <entry>Arpa dates (i.e. RFC 822 formatted dates) are supported. Output uses either a "GMT" or "Local differential hours+min" format (see section 5 of RFC 822).  Before PHP 5.2.2, using the DATE_RFC822 constant with PHP date functions sometimes produces <ulink url="http://bugs.php.net/bug.php?id=40308">incorrect results</ulink>.  Zend_Date's results are correct.  Example: <code>Mon, 31 Dec 06 23:59:59 GMT</code>
                             </entry>
                         </row>
                         <row>
@@ -452,7 +473,9 @@ print $date;
                                 Invoke directly or via the magic method <code>__toString()</code>. The
                                 <code>toString()</code> method automatically formats the date object's value according
                                 to the conventions of the object's locale, or an optionally specified
-                                <code>$locale</code>.
+                                <code>$locale</code>. For a list of supported format codes, see
+                                <xref linkend="zend.date.constants.selfdefinedformats" />
+                                .
                             </para>
                         </entry>
                     </row>
@@ -466,8 +489,8 @@ print $date;
                                 Returns an integer representation of the selected date <code>$part</code> according to
                                 the conventions of the object's locale. Returns <code>false</code> when
                                 <code>$part</code> selects a non-numeric value, such as
-                                <code>Zend_Date::MONTH_NAME</code>. <emphasis role="strong">NOTE:</emphasis> This method
-                                calls
+                                <code>Zend_Date::MONTH_NAME_SHORT</code>. <emphasis role="strong">NOTE:</emphasis> This
+                                method calls
                                 <link linkend="id.date.basic.operations"><code>get()</code>
                                 </link>
                                 and casts the result to a PHP integer, which will give unpredictable results, if

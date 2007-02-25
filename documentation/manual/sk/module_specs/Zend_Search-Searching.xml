@@ -62,7 +62,7 @@
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $index->find($query);
 
@@ -163,7 +163,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
 
@@ -191,7 +191,7 @@ foreach ($hits as $hit) {
 
 require_once('Zend/Search/Lucene.php');
 
-$index = new Zend_Search_Lucene('/data/my_index');
+$index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
 foreach ($hits as $hit) {
@@ -306,6 +306,25 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
         </para>
     </sect2>
 
+    <sect2 id="zend.search.searching.highlighting">
+        <title>Search Results Highlighting</title>
+        <para>
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows to highlight HTML document terms
+            in context of search query:
+            <programlisting role="php"><![CDATA[
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+$hits = $index->find($query);
+...
+$highlightedHTML = $query->highlightMatches($sourceHTML);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>highlightMatches()</code> method utilizes <code>Zend_Search_Lucene_Document_Html</code> class
+            (see <link linkend="zend.search.index-creation.html-documents">HTML documents section</link> for details)
+            for HTML processing. So it has the same requirements for HTML source.
+        </para>
+    </sect2>
 </sect1>
 
 <!--

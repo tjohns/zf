@@ -18,13 +18,13 @@
             differently when in different parts of the world, the object's timezone will automatically be used to
             compute the correct value, even though the internal timestamp is the same for the same moment in time,
             regardless of the user's physical location in the world. Regardless of the units involved, output must be
-            expressed either as GMT/UTC or localized to a locale. The example output below reflect localization to
+            expressed either as GMT/UTC or localized to a locale. The example output below reflects localization to
             Europe/GMT+1 hour (e.g. Germany, Austria, France).
         </para>
 
         <table>
             <title>Operations involving Zend_Date::HOUR</title>
-            <tgroup cols="2">
+            <tgroup cols="4">
                 <thead>
                     <row>
                         <entry>Function/input</entry>
@@ -218,28 +218,28 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry>Month (Name of the month, localized, complete)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry>Month (Name of the month, localized, abbreviated, three digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry>Month (Name of the month, localized, abbreviated, one digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry>Month (Number of the month, two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry>2009-<emphasis role="strong">02</emphasis>-06T14:53:27+01:00 (02)</entry>
@@ -337,15 +337,15 @@
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
                         <entry>Hour (1-12, one or two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">2</emphasis>
                         </entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
-                        <entry>Hour (01-12, one or two digit)</entry>
+                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>Hour (01-12, two digit)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">02</emphasis>
                         </entry>
@@ -440,14 +440,14 @@
                     </row>
                     <row>
                         <entry>Zend_Date::GMT_DIFF_SEP</entry>
-                        <entry>Differenz to GMT in seconds (string, separated)</entry>
+                        <entry>Difference to GMT in seconds (string, separated)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
-                        <entry>2009-02-06T14:53:27<emphasis role="strong">+01:00</emphasis>
+                        <entry><emphasis role="strong">+01:00</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>Zend_Date::DAYLIGHT</entry>
-                        <entry>Summertime or wintertime? (TRUE or FALSE)</entry>
+                        <entry>Summer time or Winter time? (TRUE or FALSE)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">FALSE</emphasis>
                         </entry>
@@ -550,6 +550,14 @@
             </tgroup>
         </table>
 
+        <para>
+            Especially note <code>Zend_Date::DATES</code>, since this format specifier has a unique property within
+            <code>Zend_Date</code> as an <emphasis role="strong">input</emphasis> format specifier. When used as an
+            input format for <code>$part</code>, this constant provides the most flexible acceptance of a variety of
+            similar date formats. Heuristics are used to automatically extract dates from an input string and then "fix"
+            simple errors in dates (if any), such as swapping of years, months, and days, when possible.
+        </para>
+
         <table>
             <title>Date and Time Formats (format varies by locale)</title>
             <tgroup cols="4">
@@ -575,8 +583,9 @@
                         <entry><emphasis role="strong">anno domini</emphasis> (anno Domini)</entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::DATES</entry>
-                        <entry>Standard date (string, localized, default value)</entry>
+                        <entry><emphasis role="strong">Zend_Date::DATES</emphasis>
+                        </entry>
+                        <entry>Standard date (string, localized, default value).</entry>
                         <entry>2009-02-13T14:53:27+01:00</entry>
                         <entry><emphasis role="strong">13.02.2009</emphasis>
                         </entry>
@@ -652,7 +661,7 @@
 
     <sect2 id="zend.date.constants.selfdefinedformats">
 
-        <title>Self-Defined Formats</title>
+        <title>Self-Defined OUTPUT Formats</title>
 
         <para>
             All formats which need to be self-defined correspond to the ISO 8601 norm. However, not all formats defined
@@ -800,28 +809,28 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     <row>
                         <entry>MM</entry>
                         <entry>Month, two digit</entry>
-                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Zend_Date::MONTH</entry>
                         <entry><emphasis role="strong">02</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMM</entry>
                         <entry>Month, localized, abbreviated</entry>
-                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
                         <entry><emphasis role="strong">Feb</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMM</entry>
                         <entry>Month, localized, complete</entry>
-                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
                         <entry><emphasis role="strong">February</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>MMMMM</entry>
                         <entry>Month, localized, abbreviated, one digit</entry>
-                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Zend_Date::MONTH_NAME_NARROW</entry>
                         <entry><emphasis role="strong">F</emphasis>
                         </entry>
                     </row>

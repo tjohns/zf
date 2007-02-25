@@ -72,6 +72,10 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
 ?>]]></programlisting>
+        <note><para>
+            note than the <code>save()</code> method accepts an optional fourth argument : <code>$specificLifeTime</code>
+            (if != false, it sets a specific lifetime for this particular cache record)
+        </para></note>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Cleaning the cache</title>

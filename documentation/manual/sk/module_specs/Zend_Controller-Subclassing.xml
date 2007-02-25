@@ -164,6 +164,352 @@
         </sect3>
     </sect2>
 
+    <sect2 id="zend.controller.front">
+        <title>Front Controller</title>
+
+        <para>
+            Zend_Controller_Front implements a Front Controller. Additionally,
+            it is a singleton class, meaning only one instance of it may be
+            available at any given point.
+        </para>
+
+        <para>
+            To subclass it, at the very minimum you will need to override the
+            <code>getInstance()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class My_Controller_Front extends Zend_Controller_Front
+{
+    public static function getInstance()
+    {
+        if (null === self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+}
+]]></programlisting>
+
+        <para>
+            Overriding the getInstance() method ensures that subsequent calls to
+            <code>Zend_Controller_Front::getInstance()</code> will return an
+            instance of your new subclass instead of a Zend_Controller_Front
+            instance -- this is particularly useful for some of the alternate
+            routers and view helpers. 
+        </para>
+
+        <para>
+            In addition to getInstance(), there are many other methods you may
+            override:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * Resets all object properties of the singleton instance
+     *
+     * Primarily used for testing; could be used to chain front controllers.
+     * 
+     * @return void
+     */
+    public function resetInstance();
+
+    /**
+     * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
+     *
+     * In PHP 5.1.x, a call to a static method never populates $this -- so run() 
+     * may actually be called after setting up your front controller.
+     *
+     * @param string|array $controllerDirectory Path to Zend_Controller_Action 
+     * controller classes or array of such paths
+     * @return void
+     * @throws Zend_Controller_Exception if called from an object instance
+     */
+    static public function run($controllerDirectory);
+
+    /**
+     * Add a controller directory to the controller directory stack
+     *
+     * If $args is presented and is a string, uses it for the array key mapping 
+     * to the directory specified.
+     * 
+     * @param string $directory 
+     * @param mixed $args Optional argument; if string value, used as array key map
+     * @return Zend_Controller_Front
+     */
+    public function addControllerDirectory($directory, $args = null);
+
+    /**
+     * Set controller directory
+     *
+     * Stores controller directory to pass to dispatcher. May be an array of 
+     * directories or a string containing a single directory.
+     *
+     * @param string|array $directory Path to Zend_Controller_Action controller 
+     * classes or array of such paths
+     * @return Zend_Controller_Front
+     */
+    public function setControllerDirectory($directory);
+
+    /**
+     * Retrieve controller directory
+     *
+     * Retrieves stored controller directory
+     *
+     * @return string|array
+     */
+    public function getControllerDirectory();
+
+    /**
+     * Set the default controller (unformatted string)
+     *
+     * @param string $controller
+     * @return Zend_Controller_Front
+     */
+    public function setDefaultController($controller);
+
+    /**
+     * Retrieve the default controller (unformatted string)
+     *
+     * @return string
+     */
+    public function getDefaultController();
+
+    /**
+     * Set the default action (unformatted string)
+     *
+     * @param string $action
+     * @return Zend_Controller_Front
+     */
+    public function setDefaultAction($action);
+
+    /**
+     * Retrieve the default action (unformatted string)
+     *
+     * @return string
+     */
+    public function getDefaultAction();
+
+    /**
+     * Set request class/object
+     *
+     * Set the request object.  The request holds the request environment.
+     *
+     * If a class name is provided, it will instantiate it
+     *
+     * @param string|Zend_Controller_Request_Abstract $request
+     * @throws Zend_Controller_Exception if invalid request class
+     * @return Zend_Controller_Front
+     */
+    public function setRequest($request);
+
+    /**
+     * Return the request object.
+     *
+     * @return null|Zend_Controller_Request_Abstract
+     */
+    public function getRequest();
+
+    /**
+     * Set router class/object
+     *
+     * Set the router object.  The router is responsible for mapping
+     * the request to a controller and action.
+     *
+     * If a class name is provided, instantiates router with any parameters
+     * registered via {@link setParam()} or {@link setParams()}.
+     *
+     * @param string|Zend_Controller_Router_Interface $router
+     * @throws Zend_Controller_Exception if invalid router class
+     * @return Zend_Controller_Front
+     */
+    public function setRouter($router);
+
+    /**
+     * Return the router object.
+     *
+     * Instantiates a Zend_Controller_Router object if no router currently set.
+     *
+     * @return null|Zend_Controller_Router_Interface
+     */
+    public function getRouter();
+
+    /**
+     * Set the base URL used for requests
+     *
+     * Use to set the base URL segment of the REQUEST_URI to use when 
+     * determining PATH_INFO, etc. Examples:
+     * - /admin
+     * - /myapp
+     * - /subdir/index.php
+     *
+     * Note that the URL should not include the full URI. Do not use:
+     * - http://example.com/admin
+     * - http://example.com/myapp
+     * - http://example.com/subdir/index.php
+     *
+     * If a null value is passed, this can be used as well for autodiscovery (default).
+     * 
+     * @param string $base
+     * @return Zend_Controller_Front
+     * @throws Zend_Controller_Exception for non-string $base
+     */
+    public function setBaseUrl($base = null);
+
+    /**
+     * Retrieve the currently set base URL
+     * 
+     * @return string
+     */
+    public function getBaseUrl();
+
+    /**
+     * Set the dispatcher object.  The dispatcher is responsible for
+     * taking a Zend_Controller_Request_Abstract object, instantiating the controller, and
+     * calling the action method of the controller.
+     *
+     * @param Zend_Controller_Dispatcher_Interface $dispatcher
+     * @return Zend_Controller_Front
+     */
+    public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher);
+
+    /**
+     * Return the dispatcher object.
+     *
+     * @return Zend_Controller_DispatcherInteface
+     */
+    public function getDispatcher();
+
+    /**
+     * Set response class/object
+     *
+     * Set the response object.  The response is a container for action
+     * responses and headers. Usage is optional.
+     *
+     * If a class name is provided, instantiates a response object.
+     *
+     * @param string|Zend_Controller_Response_Abstract $response
+     * @throws Zend_Controller_Exception if invalid response class
+     * @return Zend_Controller_Front
+     */
+    public function setResponse($response);
+
+    /**
+     * Return the response object.
+     *
+     * @return null|Zend_Controller_Response_Abstract
+     */
+    public function getResponse();
+
+    /**
+     * Add or modify a parameter to use when instantiating an action controller
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return Zend_Controller_Front
+     */
+    public function setParam($name, $value);
+
+    /**
+     * Set parameters to pass to action controller constructors
+     *
+     * @param array $params
+     * @return Zend_Controller_Front
+     */
+    public function setParams(array $params);
+
+    /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
+     * Retrieve action controller instantiation parameters
+     *
+     * @return array
+     */
+    public function getParams();
+
+    /**
+     * Clear the controller parameter stack
+     *
+     * By default, clears all parameters. If a parameter name is given, clears 
+     * only that parameter; if an array of parameter names is provided, clears 
+     * each.
+     * 
+     * @param null|string|array single key or array of keys for params to clear
+     * @return Zend_Controller_Front
+     */
+    public function clearParams($name = null);
+
+    /**
+     * Register a plugin.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return Zend_Controller_Front
+     */
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin);
+
+    /**
+     * Unregister a plugin.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return Zend_Controller_Front
+     */
+    public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin);
+
+    /**
+     * Set whether exceptions encounted in the dispatch loop should be thrown 
+     * or caught and trapped in the response object
+     *
+     * Default behaviour is to trap them in the response object; call this 
+     * method to have them thrown.
+     * 
+     * @param boolean $flag Defaults to true
+     * @return boolean Returns current setting
+     */
+    public function throwExceptions($flag = null);
+
+    /**
+     * Set whether {@link dispatch()} should return the response without first 
+     * rendering output. By default, output is rendered and dispatch() returns 
+     * nothing.
+     * 
+     * @param boolean $flag 
+     * @return boolean Returns current setting
+     */
+    public function returnResponse($flag = null);
+
+    /**
+     * Dispatch an HTTP request to a controller/action.
+     *
+     * @param Zend_Controller_Request_Abstract|null $request
+     * @param Zend_Controller_Response_Abstract|null $response
+     * @return void|Zend_Controller_Response_Abstract Returns response object if returnResponse() is true
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
+]]></programlisting>
+
+        <para>
+            The purpose of the front controller is to setup the request
+            environment, route the incoming request, and then dispatch any
+            discovered actions. Finally, it aggregates any responses and returns
+            them.
+        </para>
+
+        <para>
+            The main reasons to extend the front controller would be to change
+            the logic for one of the accessor methods (for instance, to load a
+            different default router or dispatcher, or to specify different
+            logic for how controller directories are handled), or to change how
+            routing and dispatching occur.
+        </para>
+    </sect2>
+
     <sect2 id="zend.controller.request.abstract">
         <title>Request Abstract</title>
 
