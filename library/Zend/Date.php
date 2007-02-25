@@ -644,7 +644,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::WEEKDAY_SHORT :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'wide', $weekday));
                 return substr($day[$weekday], 0, 3);
                 break;
 
@@ -654,7 +654,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::WEEKDAY :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'wide', $weekday));
                 return $day[$weekday];
                 break;
 
@@ -677,13 +677,13 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::WEEKDAY_NARROW :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'abbreviated', $weekday));
                 return substr($day[$weekday], 0, 1);
                 break;
 
             case Zend_Date::WEEKDAY_NAME :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'abbreviated', $weekday));
                 return $day[$weekday];
                 break;
 
