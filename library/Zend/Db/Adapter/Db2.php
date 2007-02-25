@@ -240,19 +240,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Quote a raw string.
-     *
-     * @param string $value Raw string
-     * @return string Quoted string
-     */
-    protected function _quote($value)
-    {
-        $value = str_replace("'", "''", $value);
-        $value = "'$value'";
-        return $value;
-    }
-
-    /**
      * @return string
      */
     public function getQuoteIdentifierSymbol()
@@ -481,10 +468,12 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @param array $bind Column-value pairs.
      * @return int The number of affected rows.
      */
+    /*
     public function insert($table, $bind)
     {
         // col names come from the array keys
         $cols = array_keys($bind);
+        $values = array_values($bind);
 
         $sql = '';
         $values = array();
@@ -518,6 +507,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
         return $result->rowCount();
     }
+     */
 
     /**
      * Updates table rows with specified data based on a WHERE clause.
@@ -527,6 +517,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @param string $where UPDATE WHERE clause.
      * @return int The number of affected rows.
      */
+    /*
     public function update($table, $bind, $where)
     {
         // build "col = :col" pairs for the statement
@@ -549,5 +540,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $result = $this->query($sql, $newValues);
         return $result->rowCount();
     }
+*/
 
 }
