@@ -17,7 +17,8 @@
         persistent within the Zend_View instance, and is reused for all
         future calls to $this->helperName().
     </para>
-    
+
+   
     <sect2 id="zend.view.helpers.initial">
     
         <title>Initial Helpers</title>
@@ -153,18 +154,24 @@
         <title>Helper Paths</title>
         
         <para>
-            As with view scripts, your controller can specify a stack of
-            paths for Zend_View to search for helper classes. By
-            default, Zend_View looks in "Zend/View/Helper/*" for helper
-            classes. You can tell Zend_View to look in other locations
-            using the setHelperPath() and addHelperPath() methods.
+            As with view scripts, your controller can specify a stack of paths
+            for Zend_View to search for helper classes. By default, Zend_View
+            looks in "Zend/View/Helper/*" for helper classes. You can tell
+            Zend_View to look in other locations using the setHelperPath() and
+            addHelperPath() methods.  Additionally, you can indicate a class
+            prefix to use for helpers in the path provided, to allow namespacing
+            your helper classes. By default, if no class prefix is provided,
+            'Zend_View_Helper_' is assumed.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setHelperPath('/path/to/more/helpers');
+
+// Set path to /path/to/more/helpers, with previs 'My_View_Helper'
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
+
         
         <para>
             In fact, you can "stack" paths using the addHelperPath()
@@ -177,13 +184,15 @@ $view->setHelperPath('/path/to/more/helpers');
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->addHelperPath('/path/to/some/helpers');
-$view->addHelperPath('/other/path/to/helpers');
+// Add /path/to/some/helpers with class prefix 'My_View_Helper'
+$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
+// Add /other/path/to/helpers with class prefix 'Your_View_Helper'
+$view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/other/path/to/helpers/HelperName.php", then for
-// "/path/to/some/helpers/HelperName", and finally for
-// "Zend/View/Helpers/HelperName.php".
+// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName", 
+// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName", 
+// and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
         
@@ -200,11 +209,15 @@ $view->addHelperPath('/other/path/to/helpers');
         <itemizedlist>
             
             <listitem><para>
-                The class name must be Zend_View_Helper_*, where * is
-                the helper name itself.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would be
-                "Zend_View_Helper_SpecialPurpose" (note the
-                capitalization).
+                The class name must, at the very minimum, end with the helper
+                name itself, using CamelCaps.  E.g., if you were writing a
+                helper called "specialPurpose", the class name would minimally
+                need to be "SpecialPurpose". You may, and should, give the class
+                name a prefix, and it is recommended that you use 'View_Helper'
+                as part of that prefix: "My_View_Helper_SpecialPurpose". (You
+                will need to pass in the prefix, with or without the trailing
+                underscore, to <code>addHelperPath()</code> or
+                <code>setHelperPath()</code>).
             </para></listitem>
             
             <listitem><para>
@@ -240,7 +253,7 @@ $view->addHelperPath('/other/path/to/helpers');
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class Zend_View_Helper_SpecialPurpose {
+class My_View_Helper_SpecialPurpose {
     protected $_count = 0;
     public function specialPurpose()
     {
