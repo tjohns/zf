@@ -19,9 +19,8 @@
 
             <para>
                 <code>Zend_Controller_Request_Http</code> provides a request object
-                for use in an HTTP environment. In addition to extending
-                <code>Zend_Controller_Request_Abstract</code>, it proxies to a
-                <code>Zend_Http_Request</code> object. <code>Zend_Controller_Request_Http</code>
+                for use in an HTTP environment.
+                <code>Zend_Controller_Request_Http</code>
                 is the default request class utilised by
                 <code>Zend_Controller_Dispatcher</code>.
             </para>
@@ -35,7 +34,7 @@
                 to relevant values such as the key name and value for the
                 controller and action router variables, and all additional
                 parameters parsed from the URI. By proxying to
-                <code>Zend_Http_Request</code> it additionally allows
+                <code>Zend_Controller_Request_Http</code> it additionally allows
                 access to values contained in the superglobals as public
                 members and manages the current Base URL and Request URI.
                 Superglobal values cannot be set on a request object, instead use
@@ -65,10 +64,10 @@
             <title>Base Url and subdirectories</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> by proxying to
-                <code>Zend_Http_Request</code> allows Zend_Controller_RewriteBase
-                to be used in subdirectories. Zend_Http_Request will attempt to
-                automatically detect your base URL and set it accordingly.
+                <code>Zend_Controller_Request_Http</code> allows
+                Zend_Controller_Router_Rewrite to be used in subdirectories.
+                Zend_Controller_Request_Http will attempt to automatically
+                detect your base URL and set it accordingly.
             </para>
 
             <para>
@@ -97,19 +96,18 @@
                 Should base URL be detected incorrectly you can override it
                 with your own base path with the help of the
                 <code>setBaseUrl()</code> method of either the
-                <code>Zend_Http_Request</code> class, the
                 <code>Zend_Controller_Request_Http</code> class, or the
                 <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>, 
+                method is to set it in <code>Zend_Controller_Front</code>,
                 which will proxy it into the request object. Example usage to
                 set a custom base URL:
             </para>
 
             <programlisting role="php"><![CDATA[
-/** 
+/**
  * Dispatch Request with custom base URL with Zend_Controller_Front.
  */
-$router     = new Zend_Controller_RewriteRouter();
+$router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
@@ -119,27 +117,25 @@ $response   = $controller->dispatch();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.rewriterouter">
-        <title>Zend_Controller_RewriteRouter</title>
+        <title>Zend_Controller_Router_Rewrite</title>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Controller_RewriteRouter</code> is a new
-                version of the framework
-                router. Routing is the process of taking a URI endpoint (that part
-                of the URI which comes after the base URL) and
-                decomposing it into parameters to determine which
-                controller and action of that
-                controller should receive the request. This value of the
-                controller, action and other parameters is packaged into a
-                <code>Zend_Controller_Request_Http</code> object which is
-                then processed by <code>Zend_Controller_Dispatcher</code>.
-                Routing occurs only once: when the request is initially
-                received and before the first controller is dispatched.
+                <code>Zend_Controller_Router_Rewrite</code> is the standard
+                framework router. Routing is the process of taking a URI
+                endpoint (that part of the URI which comes after the base URL)
+                and decomposing it into parameters to determine which controller
+                and action of that controller should receive the request. This
+                value of the controller, action and other parameters is packaged
+                into a <code>Zend_Controller_Request_Http</code> object which is
+                then processed by <code>Zend_Controller_Dispatcher_Standard</code>.
+                Routing occurs only once: when the request is initially received
+                and before the first controller is dispatched.
             </para>
 
             <para>
-                <code>Zend_Controller_RewriteRouter</code> is designed to allow for
+                <code>Zend_Controller_Router_Rewrite</code> is designed to allow for
                 mod_rewrite like functionality using pure php structures. It is
                 very loosely based on Ruby on Rails routing and does not require
                 any prior knowledge of webserver URL rewriting. It is designed
@@ -159,9 +155,9 @@ RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
-            
+
             <para>
-                The RewriteRouter can also be used with the IIS webserver
+                The rewrite router can also be used with the IIS webserver
                 if <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 has been installed as an Isapi extension with the following rewrite rule:
             </para>
@@ -174,7 +170,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
                 <para>
                     When using IIS, <code>$_SERVER['REQUEST_URI']</code>
                     will either not exist, or be set as an empty string. In
-                    this case, <code>Zend_Http_Request</code> will
+                    this case, <code>Zend_Controller_Request_Http</code> will
                     attempt to use the <code>$_SERVER['HTTP_X_REWRITE_URL']</code>
                     value set by the Isapi_Rewrite extension.
                 </para>
@@ -190,7 +186,7 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <title>Using a router</title>
 
             <para>
-                To properly use the RewriteRouter you have to instantiate it,
+                To properly use the rewrite router you have to instantiate it,
                 add some user defined routes and inject it into the controller.
                 The following code illustrates the procedure:
             </para>
@@ -198,16 +194,12 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
             <programlisting role="php"><![CDATA[
 /* Create a router */
 
-$router = new Zend_Controller_RewriteRouter();
+$router = $ctrl->getRouter(); // returns a rewrite router by default
 $router->addRoute(
-	'user',
-	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+    'user',
+    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
-
-/* Set it in a controller */
-
-$ctrl = Zend_Controller_Front::getInstance();
-$ctrl->setRouter($router);]]></programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
@@ -239,9 +231,9 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
                 constructor is a route that will be matched to a URL -
                 for example, the above route will match
                 <code>http://example.com/user/martel</code>. The colon in a
-                route marks a URL variable. After the successful routing, values 
+                route marks a URL variable. After the successful routing, values
                 of all defined variables will be injected to the Zend_Controller_Request.
-                After that they will be accessible through a Zend_Controller_Request::getParam or 
+                After that they will be accessible through a Zend_Controller_Request::getParam or
                 Zend_Controller_Action::_getParam methods. In our example a
                 parameter named username will be set to a value of 'martel'.
             </para>
@@ -277,8 +269,8 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             <note>
                 <title>Special variables</title>
                 <para>
-                    Names of these special variables may be different if you choose to 
-                    alter the defaults in <code>Zend_Controller_Request_Http</code> 
+                    Names of these special variables may be different if you choose to
+                    alter the defaults in <code>Zend_Controller_Request_Http</code>
                     by the means of setControllerKey and setActionKey methods.
                 </para>
             </note>
@@ -320,10 +312,10 @@ $router->addRoute(
             </para>
 
             <para>
-                The above example will only result in injecting a year variable 
-                to the request. No routing will take place since controller and 
-                action parameters are not set. To make it more usable you have to 
-                provide a valid controller and a valid action as defaults. 
+                The above example will only result in injecting a year variable
+                to the request. No routing will take place since controller and
+                action parameters are not set. To make it more usable you have to
+                provide a valid controller and a valid action as defaults.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -333,7 +325,7 @@ $router->addRoute(
 );]]></programlisting>
 
             <para>
-				This route will then result in dispatching to showAction of ArchiveController.
+                This route will then result in dispatching to showAction of ArchiveController.
             </para>
 
         </sect3>
@@ -342,7 +334,7 @@ $router->addRoute(
             <title>Variable requirements</title>
 
             <para>
-                One can add a third parameter to the 
+                One can add a third parameter to the
                 <code>Zend_Controller_Router_Route</code>
                 constructor where variable requirements can
                 be set. These are defined as regular expressions:
@@ -372,17 +364,15 @@ $router->addRoute(
             <title>Base URL and subdirectories</title>
 
             <para>
-                Unlike the original Router, the current RewriteRouter can be used in
-                subdirectories. The original RewriteRouter's setRewriteBase()
-                method is no longer available however. Instead the base URL
-                will be automatically detected by Zend_Controller_Request_Http 
-                (which proxies to Zend_Http_Request).
+                The rewrite router can be used in subdirectories, and the base
+                URL will be automatically detected by
+                <code>Zend_Controller_Request_Http</code>.
             </para>
 
             <para>
                 Should the base URL be detected incorrectly you can override it
-                with your own base path with the help of Zend_Http_Request
-                by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
+                with your own base path with the help of <code>Zend_Controller_Request_Http</code>
+                by calling the <code>setBaseUrl()</code> method (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
             </para>
 
         </sect3>
@@ -391,32 +381,155 @@ $router->addRoute(
             <title>Default routes</title>
 
             <para>
-                Zend_Controller_RewriteRouter is preconfigured with one default
-                route to provide compatibility with the first version of the 
-                router. It will match URIs in the shape of <code>'controller/action'</code> 
-                and will also match any additional parameters appended to the URI by default.
-                It is configured as:
+                Zend_Controller_Router_Rewrite is preconfigured with one default.
+                It will match URIs in the shape of <code>'controller/action'</code>
+                Additionally, a module name may be specified as the first path
+                element, allowing URIs of the form
+                <code>'module/controller/action</code>.
+                Finally, it will also match any additional parameters appended
+                to the URI by default.
+            </para>
+
+            <para>
+                As some examples of how such routes are matched:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Assuming the following:
+// $ctrl->setControllerDirectory(array(
+//     'default' => '/path/to/default/controllers',
+//     'news'    => '/path/to/blog/controllers',
+//     'blog'    => '/path/to/blog/controllers'
+// ));
+
+Module only:
+http://example/news
+    module == news
+
+Invalid module maps to controller name:
+http://example/foo
+    controller == foo
+
+Module + controller:
+http://example/blog/archive
+    module     == blog
+    controller == archive
+
+Module + controller + action:
+http://example/blog/archive/list
+    module     == blog
+    controller == archive
+    action     == list
+
+Module + controller + action + params:
+http://example/blog/archive/list/sort/alpha/date/desc
+    module     == blog
+    controller == archive
+    action     == list
+    sort       == alpha
+    date       == desc
+]]></programlisting>
+
+            <para>
+                The default route is a
+                <code>Zend_Controller_Router_Route_Module</code> object
+                instantiated without any defaults:
             </para>
 
             <programlisting role="php"><![CDATA[
 // Route for Router v1 compatibility
-$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$compat = new Zend_Controller_Router_Route_Module();
 $this->addRoute('default', $compat);]]></programlisting>
 
             <note>
                 <title>Matching URIs</title>
                 <para>
-                    Zend_Controller_RewriteRouter is configured for backwards
+                    <code>Zend_Controller_Router_Rewrite</code> is configured for backwards
                     compatibility. It will automatically match <code>controller/action</code>
                     URIs with additional parameters. The additional parameters do not
                     require the addition of new routes unless they must have default values
                     or variable requirements. These additional parameters will be accessible
-                    from the Zend_Controller_Action::_getParam method.
+                    from the <code>Zend_Controller_Action::_getParam()</code> method.
                 </para>
             </note>
 
-        </sect3>    
-    
+            <para>
+                If you do not want the default route in your routing schema, you
+                may remove it using <code>removeDefaultRoutes()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Remove default compatability route
+$router->removeDefaultRoutes();]]></programlisting>
+
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
+            <title>Static Routes</title>
+
+            <para>
+                The examples above all use dynamic routes -- routes that contain
+                patterns to match against. Sometimes, however, a particular
+                route is set in stone, and firing up the regular expression
+                engine would be overkill. The answer to this situation is to use
+                static routes:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
+$router->addRoute('login', $static);
+]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
+            <title>Using Zend_Config with the RewriteRouter</title>
+
+            <para>
+                Sometimes its more convenient to update a configuration file
+                with new routes than to change the code. This is possible via
+                the <code>addConfig()</code> method. Basically, you create a
+                Zend_Config-compatible configuration, and in your code read it
+                in and pass it to the RewriteRouter:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * Example INI located at /path/to/config.ini:
+ *
+ * [production]
+ *
+ * routes.archive.route = "archive/:year/*"
+ * routes.archive.defaults.controller = archive
+ * routes.archive.defaults.action = show
+ * routes.archive.defaults.year = 2000
+ * routes.archive.reqs.year = "\d+"
+ *
+ * routes.news.type = "Zend_Controller_Router_Route_Static"
+ * routes.news.route = "news"
+ * routes.news.defaults.controller = "news"
+ * routes.news.defaults.action = "list"
+ */
+$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
+$router = new Zend_Controller_Router_Rewrite();
+$router->addConfig($config, 'routes');
+]]></programlisting>
+
+            <para>
+                In the above example, we tell the router to use the 'routes'
+                section of the INI file to use for its routes. Each first-level
+                key under that section will be used to define a route name; the
+                above example defines the routes 'archive' and 'news'. Each
+                route then requires, minimally a 'route' entry and one or more
+                'defaults' entries; optionally one or more 'reqs' (short for
+                'required') may be provided. All told, these correspond to the
+                three arguments provided to a <code>Zend_Controller_Router_Route_Interface</code>
+                object. An option key, 'type', can be used to specify the route
+                class type to use for that particular route; by default, it uses
+                <code>Zend_Controller_Router_Route</code>. In the example above,
+                the 'news' route is defined to use
+                <code>Zend_Controller_Router_Route_Static</code>.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.response.http">
