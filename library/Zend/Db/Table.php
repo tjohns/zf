@@ -232,11 +232,9 @@ abstract class Zend_Db_Table
 
     /**
      * Inserts a new row.
-     *
      * Columns must be in underscore format.
      *
      * @param array $data Column-value pairs.
-     * @param string $where An SQL WHERE clause.
      * @return int The last insert ID.
      */
     public function insert(&$data)
