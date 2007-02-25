@@ -3,6 +3,18 @@
 
     <para>Lazy loads an exception class, instantiates the exception, and returns it.</para>
 
+    <note>
+        <title>Deprecated:</title>
+        <para>
+            This method was introduced in Zend Framework 0.6.0.
+            It was recently decided that it's better to use traditional methods
+            to instantiate, throw, and catch exceptions.
+            The <code>Zend::exception()</code> method is deprecated in
+            Zend Framework 0.6.1, and it will be removed from the Zend Framework
+            product in a later Preview Release.
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);

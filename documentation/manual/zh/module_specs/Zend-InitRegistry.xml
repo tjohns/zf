@@ -34,6 +34,20 @@ Zend::initRegistry($registry);
 ?>]]></programlisting>
     </example>
 
+    <para>
+        Use the constant <code>ArrayObject::ARRAY_AS_PROPS</code> in the constructor to enable accessing values
+        using <code>$registry->$indexName</code>, in addition to <code>$registry[$indexName]</code>.
+        However, beware of name collisions, if you extend Zend_Registry and add private variables.
+    </para>
+
+    <example>
+        <title>Accessing Values Using OO Notation Instead of ArrayAccess Notation</title>
+<programlisting role="php"><![CDATA[<?php
+$registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
+Zend::initRegistry($registry);
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

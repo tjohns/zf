@@ -1,30 +1,62 @@
 <sect1 id="zend.registry">
-    <title>Zend::registry()</title>
+
+    <title>Zend::registry($index = null)</title>
 
     <para>
-    Returns an object in the registry or lists all objects in the registry.
+        Returns a value stored at offset $index in the registry, or the registry itself.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>registry() / offsetGet() Example</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::registry($index=null)
 
-Zend::registry($name=null)
+// or
 
+$registry = Zend::registry();
+$value = $registry->offsetGet($index);
 ?>]]></programlisting>
+    </example>
 
     <para>
-    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
-    are the names of the objects in the registry and the values are the class names of those objects.
+        If a value has been stored at the <code>$index</code> offset, that value will be returned. If the
+        <code>$index</code> argument is <code>NULL</code>, the registry itself will be returned (a subclass of
+        <ulink url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>
+        ). This method simply wraps the
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetget.php">
+        offsetGet() method</ulink>
+        , with the additional behavior of returned the registry if $index is not given.
     </para>
 
     <para>
-    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
-    an object does not exist in the registry with that <code>$name</code>, a
-    <code>Zend_Exception</code> will be thrown.
+        To quickly determine if an index is present in the registry, use Zend::isRegistered():
     </para>
 
+    <example>
+        <title>isRegistered() / offsetExists() Example</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::isRegistered($index=null)
+
+// or
+
+$registry = Zend::registry();
+echo $registry->offsetExists($index) ? 'exists' : 'does not exist';
+?>]]></programlisting>
+    </example>
+
     <para>
-    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+        Iteration requires little effort:
     </para>
+
+    <example>
+        <title>Iterating Over the Registry</title>
+<programlisting role="php"><![CDATA[<?php
+foreach (Zend::registry() as $index => $value) {
+    echo "$index => $value<br />\n";
+}
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
