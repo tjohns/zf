@@ -92,8 +92,44 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
 
             <para>
-                You could give names for fields by your own choice.
+                Each of these methods (excluding <code>Zend_Search_Lucene_Field::Binary()</code> method) has optional
+                <code>$encoding</code> parameter. It specifies input data encoding.
             </para>
+
+            <para>
+                Encoding may differ for different documents as well as for different fields within one document:
+
+                <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                If encoding parameter is omitted, then current locale is used at processing time. For example:
+                <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
+?>]]></programlisting>
+            </para>
+
+            <para>
+                Fields are always stored and returned from index in UTF-8 encoding. Conversion to UTF-8 proceeds
+                automatically.
+            </para>
+
+            <para>
+                Text analyzers (<link linkend="zend.search.extending.analysis">see below</link>) may also convert text
+                to some other encodings. Actually, default analyzer converts text to 'ASCII//TRANSLIT' encoding.
+                Be care with this, such translation may depend on current locale.
+            </para>
+
+            <para>
+                Fields' names are defined only by your own choice.
+            </para>
+
             <para>
                 Java Lucene uses "contents" field as a default field to search.
                 Zend_Search_Lucene searches through all fiels by default, but it's also possible to change this behavior.
@@ -196,8 +232,74 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
            </listitem>
        </itemizedlist>
     </sect2>
-</sect1>
 
-<!--
-vim:se ts=4 sw=4 et:
--->
+    <sect2 id="zend.search.index-creation.html-documents">
+        <title>HTML documents</title>
+        <para>
+            Zend_Search_Lucene offers HTML parsing feature. Documents can be created directly from HTML file or string:
+            <programlisting role="php"><![CDATA[<?php
+$doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
+$index->addDocument($doc);
+...
+$doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
+$index->addDocument($doc);
+?>]]></programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Html</code> class uses <code>DOMDocument::loadHTML()</code> and
+            <code>DOMDocument::loadHTMLFile()</code> methods to parse source HTML, so it doesn't need HTML to be well formed or
+            to be XHTML. From the other side it's sensitive to encoding mentioned in "meta http-equiv" header tag.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Html</code> class recognizes document title, body and document header meta tags.
+        </para>
+
+        <para>
+            'title' field is actually /html/head/title value. It's stored within index, tokenized and available for search through.
+        </para>
+
+        <para>
+            'body' field is actually body content. It doesn't include scripts, comments and tags' attributes.
+        </para>
+
+        <para>
+            <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods of <code>Zend_Search_Lucene_Document_Html</code> class
+            also have second optional argument. If it's set to true, then body content is also stored within index and can
+            be retrieved from index. Body is only tokenized and indexed, but not stored by default.
+        </para>
+
+        <para>
+            Document header meta tags produce additional document fields. Field name is taken from 'name' attribute,
+            'content' attribute gives field value, which is tokenized, indexed and stored, so documents may be searched by their meta tags
+            (for example, by keywords).
+        </para>
+
+        <para>
+            Parsed documents may be extended by user with any other field:
+            <programlisting role="php"><![CDATA[<?php
+$doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
+                                                   time()));
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
+                                                   time()));
+$doc->addField(Zend_Search_Lucene_Field::Text('annotation',
+                                              'Document annotation text'));
+$index->addDocument($doc);
+?>]]></programlisting>
+        </para>
+
+        <para>
+            Document links are not included into generated document, but may be retrieved with
+            <code>Zend_Search_Lucene_Document_Html::getLinks()</code> and <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code>
+            methods:
+            <programlisting role="php"><![CDATA[<?php
+$doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
+$linksArray = $doc->getLinks();
+$headerLinksArray = $doc->getHeaderLinks();
+?>]]></programlisting>
+        </para>
+    </sect2>
+
+</sect1>

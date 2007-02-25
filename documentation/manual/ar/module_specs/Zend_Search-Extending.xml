@@ -38,13 +38,14 @@ $index->addDocument($doc);
 
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed to be a parent for all user
-            defined analyzers. User should only define the <code>tokenize()</code> method, which takes input
-            data as a string and returns an array of tokens.
+            defined analyzers. User should only define the <code>reset()</code> and <code>nextToken()</code> methods,
+            which take string from $_input member and returns tokens step by step
+            (<code>null</code> indicates end of stream).
         </para>
 
         <para>
-            The <code>tokenize()</code> method should apply the <code>normalize()</code> method to all
-            tokens. It will allow you to use token filters with your analyzer.
+            The <code>nextToken()</code> method should apply the <code>normalize()</code> method to each
+            token. It will allow you to use token filters with your analyzer.
         </para>
 
         <para>
@@ -61,45 +62,63 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
-    /**
-     * Tokenize text to a terms
-     * Returns array of Zend_Search_Lucene_Analysis_Token objects
-     *
-     * @param string $data
-     * @return array
-     */
-    public function tokenize($data)
-    {
-        $tokenStream = array();
+    private $_position;
 
-        $position = 0;
-        while ($position < strlen($data)) {
+    /**
+     * Reset token stream
+     */
+    public function reset()
+    {
+        $this->_position = 0;
+    }
+
+    /**
+     * Tokenization stream API
+     * Get next token
+     * Returns null at the end of stream
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
+        }
+
+        while ($this->_position < strlen($this->_input)) {
             // skip white space
-            while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   !ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
-            $termStartPosition = $position;
+            $termStartPosition = $this->_position;
 
             // read token
-            while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
             // Empty token, end of stream.
-            if ($position == $termStartPosition) {
-                break;
+            if ($this->_position == $termStartPosition) {
+                return null;
             }
 
-            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
+            $token = new Zend_Search_Lucene_Analysis_Token(
+                                      substr($this->_input,
                                              $termStartPosition,
-                                             $position-$termStartPosition),
+                                             $this->_position - $termStartPosition),
                                       $termStartPosition,
-                                      $position);
-            $tokenStream[] = $this->normalize($token);
+                                      $this->_position);
+            $token = $this->normalize($token);
+            if ($token !== null) {
+                return $token;
+            }
+            // Continue if token is skipped
         }
 
-        return $tokenStream;
+        return null;
     }
 }
 
@@ -109,7 +128,96 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 ?>]]></programlisting>
             </example>
         </para>
-        </sect2>
+    </sect2>
+
+    <sect2 id="zend.search.extending.filters">
+        <title>Tokens Filtering</title>
+        <para>
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> analyzer also offers tokens filtering
+            mechanism.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter</code> class is an abstract level for such filters.
+            It should be used as an ancestor for your own filters.
+        </para>
+
+        <para>
+            Custom filter must implement <code>normalize()</code> method which may transform input token or signal that
+            token should be skipped.
+        </para>
+
+        <para>
+            There are three filters already defined in Analysis subpackage:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> filter.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> filter.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> filter.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            <code>LowerCase</code> filter is already used for
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> analyzer
+            which is default.
+        </para>
+
+        <para>
+            <code>ShortWords</code> and <code>StopWords</code> may be used with already defined or your own
+            analyzers like this:
+            <programlisting role="php"><![CDATA[<?php
+$stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($shortWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> constructor takes an array of stop-words
+            as an input. But stop-words may be also loaded from a file:
+            <programlisting role="php"><![CDATA[<?php
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
+$stopWordsFilter->loadFromFile($my_stopwords_file);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            File should be a common text file with one word in each string. '#' marks string as a comment.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> constructor has one optional argument.
+            It's a words length limit. Default value is 2.
+        </para>
+
+    </sect2>
+
 
     <sect2 id="zend.search.extending.scoring">
         <title>Scoring Algorithms</title>

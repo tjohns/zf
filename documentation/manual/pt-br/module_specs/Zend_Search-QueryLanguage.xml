@@ -95,7 +95,9 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
         <para>
             Zend_Search_Lucene supports "~" modifier only for phrases now
             <footnote>
-                "~" for terms is used for fuzzy search, but fuzzy search queries are not supported yet.
+                <para>
+                    "~" for terms is used for fuzzy search, but fuzzy search queries are not supported yet.
+                </para>
             </footnote>
         </para>
     </sect2>
@@ -225,12 +227,29 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
         <sect3 id="zend.search.query-language.boolean.no-operator">
             <title>no operator</title>
             <para>
-                If no operator is used, then term is optional. It may be or may not be presented within document,
-                but documents with this term will have higher score.
+                If no operator is used, then behavior is defined by "default boolean operator".
+            </para>
+            <para>
+                It's <code>OR</code> by default.
+            </para>
+            <para>
+                That means, that term is optional. It may be or may not be presented within document, but documents with this term
+                will have higher score.
             </para>
             <para>
                 To search for documents that requires "PHP framework" and may contain "Zend Framework" use the query:
                 <programlisting role="querystring"><![CDATA[+"PHP framework" "Zend Framework"]]></programlisting>
+            </para>
+
+            <para>
+                Default boolean operator may be set or retrieved with
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</code> and
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</code> methods.
+            </para>
+            <para>
+                These methods operate with
+                <code>Zend_Search_Lucene_Search_QueryParser::B_AND</code> and
+                <code>Zend_Search_Lucene_Search_QueryParser::B_OR</code> constants.
             </para>
         </sect3>
     </sect2>

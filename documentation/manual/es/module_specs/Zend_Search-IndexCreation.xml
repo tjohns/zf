@@ -15,8 +15,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Setting the second argument to TRUE creates a new index
-$index = new Zend_Search_Lucene('/data/my-index', true);
+// Create index
+$index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
@@ -45,7 +45,7 @@ $index->addDocument($doc);
 
         <programlisting role="php"><![CDATA[<?php
 // Open existing index
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 // Store document URL to identify it in search result.
@@ -79,6 +79,45 @@ foreach ($hits as $hit) {
 ?>]]></programlisting>
     </sect2>
 
+    <sect2 id="zend.search.index-creation.counting">
+        <title>Retrieving Index size</title>
+
+        <para>
+            There are two methods to retrieve index size in Zend_Search_Lucene.
+        </para>
+
+        <para>
+             <code>Zend_Search_Lucene::maxDoc()</code> returns one greater than the largest possible document number.
+             It's actually overall number of the documents in the index including deleted documents.
+             So it has a synonym: <code>Zend_Search_Lucene::count()</code>.
+        </para>
+
+        <para>
+             <code>Zend_Search_Lucene::numDocs()</code> returns the total number of non-deleted documents.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$indexSize = $index->count();
+$documents = $index->numDocs();
+?>]]></programlisting>
+
+        <para>
+            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+for ($count = 0; $count < $index->maxDoc(); $count++) {
+    if ($index->isDeleted($count)) {
+        echo "Document #$id is deleted.\n";
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.index-creation.optimization">
         <title>Index optimization</title>
 
@@ -104,7 +143,7 @@ foreach ($hits as $hit) {
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Open existing index
-$index = new Zend_Search_Lucene('/data/my-index');
+$index = Zend_Search_Lucene::open('/data/my-index');
 
 // Optimize index.
 $index->optimize();
@@ -171,6 +210,18 @@ $index->optimize();
                 can also be used to optimize index.
             </para>
         </sect3>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.limitations">
+        <title>Limitationas</title>
+
+        <para>
+            Limitations are platform dependent.
+        </para>
+
+        <para>
+            Maximum index size is 2GB for 32-bit platforms.
+        </para>
     </sect2>
 </sect1>
 
