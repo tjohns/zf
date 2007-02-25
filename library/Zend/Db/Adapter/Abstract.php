@@ -211,14 +211,15 @@ abstract class Zend_Db_Adapter_Abstract
     {
         // col names come from the array keys
         $cols = array_keys($bind);
+        $placeholders = array_fill(0, count($cols), '?');
 
         // build the statement
         $sql = "INSERT INTO $table "
              . '(' . implode(', ', $cols) . ') '
-             . 'VALUES (:' . implode(', :', $cols) . ')';
+             . 'VALUES (' . implode(', ', $placeholders) . ')';
 
         // execute the statement and return the number of affected rows
-        $stmt = $this->query($sql, $bind);
+        $stmt = $this->query($sql, array_values($bind));
         $result = $stmt->rowCount();
         return $result;
     }
@@ -233,10 +234,10 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function update($table, $bind, $where)
     {
-        // build "col = :col" pairs for the statement
+        // build "col = ?" pairs for the statement
         $set = array();
         foreach ($bind as $col => $val) {
-            $set[] = "$col = :$col";
+            $set[] = "$col = ?";
         }
 
         // build the statement
@@ -245,7 +246,7 @@ abstract class Zend_Db_Adapter_Abstract
              . (($where) ? " WHERE $where" : '');
 
         // execute the statement and return the number of affected rows
-        $stmt = $this->query($sql, $bind);
+        $stmt = $this->query($sql, array_values($bind));
         $result = $stmt->rowCount();
         return $result;
     }
@@ -391,6 +392,18 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Quote a raw string.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        $value = str_replace("'", "''", $value);
+        return "'" . $value . "'";
+    }
+
+    /**
      * Safely quotes a value for an SQL statement.
      *
      * If an array is passed as the value, the array values are quoted
@@ -410,7 +423,7 @@ abstract class Zend_Db_Adapter_Abstract
             }
             return implode(', ', $value);
         } else {
-            if (is_int($value)) {
+            if (is_int($value) || is_float($value)) {
                 return $value;
             } else {
                 return $this->_quote($value);
@@ -504,14 +517,6 @@ abstract class Zend_Db_Adapter_Abstract
      * @return array
      */
     abstract public function describeTable($tableName, $schemaName = null);
-
-    /**
-     * Quote a raw string.
-     *
-     * @param string $value     Raw string
-     * @return string           Quoted string
-     */
-    abstract protected function _quote($value);
 
     /**
      * Creates a connection to the database.

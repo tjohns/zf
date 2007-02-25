@@ -137,18 +137,6 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
-     * Quote a raw string.
-     *
-     * @param string $value     Raw string
-     * @return string           Quoted string
-     */
-    public function _quote($value)
-    {
-        $value = str_replace("'", "''", $value);
-        return "'" . $value . "'";
-    }
-
-    /**
      * Gets the last inserted ID.
      *
      * @param string $sequenceName   Name of table (or sequence) associated with sequence.

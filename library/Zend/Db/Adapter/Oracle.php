@@ -307,18 +307,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Quote a raw string.
-     *
-     * @param string $value     Raw string
-     * @return string           Quoted string
-     */
-    public function _quote($value)
-    {
-        $value = str_replace("'", "''", $value);
-        return "'" . $value . "'";
-    }
-
-    /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
      * @param string $sql
