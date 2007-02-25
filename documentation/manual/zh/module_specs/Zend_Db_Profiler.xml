@@ -61,17 +61,37 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getTotalNumQueries()</code> returns the total number
-                of queries that have been profiled.</listitem>
-            <listitem><code>getTotalElapsedSeconds()</code> returns the total
-                number of seconds elapsed for all profiled queries.</listitem>
-            <listitem><code>getQueryProfiles()</code> returns an array of all
-                query profiles.</listitem>
-            <listitem><code>getLastQueryProfile()</code> returns the last (most
-                recent) query profile, regardless of whether or not the query
-                has finished (if it hasn't, the end time will be null)</listitem>
-            <listitem><code>clear()</code> clears any past query profiles
-                from the stack.</listitem>
+            <listitem>
+                <para>
+                    <code>getTotalNumQueries()</code> returns the total number
+                    of queries that have been profiled.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getTotalElapsedSecs()</code> returns the total
+                    number of seconds elapsed for all profiled queries.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryProfiles()</code> returns an array of all
+                    query profiles.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getLastQueryProfile()</code> returns the last (most
+                    recent) query profile, regardless of whether or not the query
+                    has finished (if it hasn't, the end time will be null)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>clear()</code> clears any past query profiles
+                    from the stack.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -82,9 +102,17 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getQuery()</code> returns the SQL text of the query.</listitem>
-            <listitem><code>getElapsedSecs()</code> returns the number of
-                seconds the query ran.</listitem>
+            <listitem>
+                <para>
+                    <code>getQuery()</code> returns the SQL text of the query.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getElapsedSecs()</code> returns the number of
+                    seconds the query ran.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -107,7 +135,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSeconds();
+$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -120,7 +148,8 @@ foreach ($profiler->getQueryProfiles() as $query) {
 }
 
 echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . ' seconds' . "\n";
-echo 'Average query length: ' . $queryCount / $totalTime . ' seconds' . "\n";
+echo 'Average query length: ' . $totalTime / $queryCount . ' seconds' . "\n";
+echo 'Queries per second: ' . $queryCount / $totalTime . "\n";
 echo 'Longest query length: ' . $longestTime . "\n";
 echo "Longest query: \n" . $longestQuery . "\n";
 ?>]]></programlisting>
@@ -166,22 +195,49 @@ $profiler->setFilterElapsedSecs(null);
             </para>
 
             <itemizedlist>
-                <listitem><code>Zend_Db_Profiler::CONNECT</code>: connection
-                    operations, or selecting a database.</listitem>
-                <listitem><code>Zend_Db_Profiler::QUERY</code>: general database
-                    queries that do not match other types.</listitem>
-                <listitem><code>Zend_Db_Profiler::INSERT</code>: any query that
-                    adds new data to the database, generally SQL
-                    INSERT.</listitem>
-                <listitem><code>Zend_Db_Profiler::UPDATE</code>: any query that
-                    updates existing data, usually SQL UPDATE.</listitem>
-                <listitem><code>Zend_Db_Profiler::DELETE</code>: any query that
-                    deletes existing data, usually SQL DELETE.</listitem>
-                <listitem><code>Zend_Db_Profiler::SELECT</code>: any query that
-                    retrieves existing data, usually SQL SELECT.</listitem>
-                <listitem><code>Zend_Db_Profiler::TRANSACTION</code>: any
-                    transactional operation, such as start transaction, commit,
-                    or rollback.</listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::CONNECT</code>: connection
+                        operations, or selecting a database.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::QUERY</code>: general database
+                        queries that do not match other types.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::INSERT</code>: any query that
+                        adds new data to the database, generally SQL INSERT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::UPDATE</code>: any query that
+                        updates existing data, usually SQL UPDATE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::DELETE</code>: any query that
+                        deletes existing data, usually SQL DELETE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::SELECT</code>: any query that
+                        retrieves existing data, usually SQL SELECT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::TRANSACTION</code>: any
+                        transactional operation, such as start transaction, commit,
+                        or rollback.
+                    </para>
+                </listitem>
             </itemizedlist>
 
             <para>
