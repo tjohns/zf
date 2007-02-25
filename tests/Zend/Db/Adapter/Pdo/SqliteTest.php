@@ -138,6 +138,11 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
         }
     }
 
+    public function testSelectGroupByClause()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
     public function testSelectJoinRightClause()
     {
         $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');

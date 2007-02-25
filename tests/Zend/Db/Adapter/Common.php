@@ -23,6 +23,7 @@
  * Zend_Db
  */
 require_once 'Zend/Db.php';
+require_once 'Zend/Db/Expr.php';
 
 /**
  * PHPUnit test case
@@ -190,7 +191,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     {
         $this->tearDownMetadata();
 
-        // close the PDO connection
         $connection = $this->_db->getConnection();
         $connection = null;
         $this->_db = null;
@@ -220,17 +220,17 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $table = $this->getIdentifier(self::TABLE_NAME);
 
         $result = $this->_db->delete($table, 'id = 2');
-        $this->assertEquals(1, $result);
+        $this->assertEquals(1, $result, 'Expected rows affected to return 1');
 
         $select = $this->_db->select()
             ->from($table);
         $result = $this->_db->fetchAll($select);
 
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(1, count($result), 'Expected count of result to be 1');
+        $this->assertEquals(1, $result[0][$id], 'Expected result[0][id] to be 1');
 
         $result = $this->_db->delete($table, 'id = 327');
-        $this->assertEquals(0, $result);
+        $this->assertEquals(0, $result, 'Expected rows affected to return 0');
     }
 
     /**
@@ -433,7 +433,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         );
         $rows_affected = $this->_db->insert($table, $row);
         $last_insert_id = $this->_db->lastInsertId();
-        $this->assertEquals('3', (string) $last_insert_id); // correct id has been set
+        $this->assertEquals(3, (string) $last_insert_id, 'Expected new id to be 3');
     }
 
     /**
@@ -447,16 +447,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 1);
 
-        $result = $this->_db->query($sql);
-        $result = $result->fetchAll();
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(5, count($result[0]));
         $this->assertEquals(1, $result[0][$id]);
 
         $sql = $this->_db->limit('SELECT * FROM ' . $this->_db->quoteIdentifier($table), 1, 1);
 
-        $result = $this->_db->query($sql);
-        $result = $result->fetchAll();
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(5, count($result[0]));
         $this->assertEquals(2, $result[0][$id]);
@@ -617,14 +617,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             ->from($table, $title); // scalar
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result[0]));
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
+        $this->assertEquals(1, count($result[0]), 'Expected column count of result set to be 1');
         $this->assertThat($result[0], $this->arrayHasKey($titleKey));
 
         $select = $this->_db->select()
             ->from($table, array($title, $subtitle)); // array
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(2, count($result[0]));
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
+        $this->assertEquals(2, count($result[0]), 'Expected column count of result set to be 2');
         $this->assertThat($result[0], $this->arrayHasKey($titleKey));
         $this->assertThat($result[0], $this->arrayHasKey($subtitleKey));
     }
@@ -828,12 +830,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGroupByClause()
     {
-        // @todo: fix ZF-884
-        if ($this->getDriver() == 'pdo_Sqlite') {
-            $this->markTestIncomplete('Pending fix for ZF-884');
-            return;
-        }
-
         $userIdKey = $this->getResultSetKey('user_id');
         $countKey = $this->getResultSetKey('thecount');
         $table2 = $this->getIdentifier(self::TABLE_NAME_2);
@@ -843,27 +839,27 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $select = $this->_db->select()
             ->from($table2, $userId)
-            ->from('', 'count(*) as thecount')
+            ->from('', new Zend_Db_Expr('count(*) as thecount'))
             ->group($userId)
             ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(2, count($result));
+        $this->assertEquals(2, count($result), 'Expected count of first result set to be 2');
         $this->assertEquals(101, $result[0][$userIdKey]);
-        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(2, $result[0][$countKey], 'Expected count(*) of first result set to be 2');
         $this->assertEquals(102, $result[1][$userIdKey]);
         $this->assertEquals(1, $result[1][$countKey]);
 
         $select = $this->_db->select()
             ->from($table2, array($userId))
-            ->from('', 'count(*) as thecount')
+            ->from('', new Zend_Db_Expr('count(*) as thecount'))
             ->group(array($userId, $userId))
             ->order($userId);
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $this->assertEquals(2, count($result));
+        $this->assertEquals(2, count($result), 'Expected count of second result set to be 2');
         $this->assertEquals(101, $result[0][$userIdKey]);
-        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(2, $result[0][$countKey], 'Expected count(*) of second result set to be 2');
         $this->assertEquals(102, $result[1][$userIdKey]);
         $this->assertEquals(1, $result[1][$countKey]);
     }
@@ -980,6 +976,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             ->order(array($id, $id));
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
         $this->assertEquals(1, $result[0][$idKey]);
 
         $select = $this->_db->select()
@@ -987,6 +984,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             ->order("$id ASC");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
         $this->assertEquals(1, $result[0][$idKey]);
 
         $select = $this->_db->select()
@@ -994,6 +992,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             ->order("$id DESC");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
         $this->assertEquals(2, $result[0][$idKey]);
     }
 
@@ -1352,6 +1351,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     public function testTableRowsetToArray()
     {
         list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $titleKey = $this->getIdentifier('title');
 
         $rows = $dbTable->find(array(1, 2));
         $this->assertEquals(2, $rows->count());
@@ -1371,7 +1371,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(count($a), $rows->count());
         $this->assertTrue(is_array($a[0]));
         $this->assertEquals(5, count($a[0]));
-        $this->assertEquals('foo', $a[0]['title']);
+        $this->assertEquals('foo', $a[0][$titleKey]);
     }
 
     public function testTableFindRow()
