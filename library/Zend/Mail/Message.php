@@ -64,7 +64,7 @@ class Zend_Mail_Message extends Zend_Mail_Part
             }
         }
 
-        if (isset($params['flags'])) {
+        if (!empty($params['flags'])) {
             // set key and value to the same value for easy lookup
             $this->_flags = array_combine($params['flags'], $params['flags']);
         }
