@@ -1,159 +1,214 @@
 <sect1 id="zend.http.client">
-    <title>Zend_Http_Client</title>
+    <title>Zend_Http_Client - Introduction</title>
 
     <sect2 id="zend.http.client.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Http_Client</code> provides an easy interface with which to perform HTTP requests.
-            <code>Zend_Http_Client</code> is able to perform GET, POST, PUT and DELETE requests.
+            Zend_Http_Client provides an easy interface for preforming Hyper-Text 
+            Transfer Protocol (HTTP) requests. Zend_Http_Client supports most simple 
+            features expected from an HTTP client, as well as some more complex 
+            features such as HTTP authentication and file uploads. Successful 
+            requests (and most unsuccessful ones too) return a Zend_Http_Response 
+            object, which provides access to the response's headers and body (see 
+            <xref linkend="zend.http.response" />).
         </para>
-        <note>
-            <title>Ammount of redirections</title>
-            <para>
-                <code>Zend_Http_Client</code> follows up to 5 HTTP redirections by default. To change this behavior, pass the
-                maximum number of allowed redirections to the <code>get()</code> method.
-            </para>
-        </note>
-        <example>
-            <title>Performing a Basic GET Request</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-try {
-    $http = new Zend_Http_Client('http://example.org');
-    $response = $http->get();
-    if ($response->isSuccessful()) {
-        echo $response->getBody();
-    } else {
-        echo '<p>An error occurred</p>';
-    }
-} catch (Zend_Http_Client_Exception $e) {
-    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
-}
+        <para>
+            The class constructor optionally accepts a URL as it's first parameter
+            (can be either a string or a Zend_Uri_Http object), and an optional 
+            array of configuration parameters. Both can be left out, 
+            and set later using the setUri() and setConfig() methods.
+            <example>
+                <title>Instantiating a Zend_Http_Client object</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+
+    $client = new Zend_Http_Client('http://example.org', array(
+        'maxredirects' => 0,
+        'timeout'      => 30));
+        
+    // This is actually exactly the same:
+    $client = new Zend_Http_Client();
+    $client->setUri('http://example.org');
+    $client->setConfig(array(
+        'maxredirects' => 0,
+        'timeout'      => 30));
+
 ?>]]></programlisting>
-        </example>
+            </example>
+        </para>
     </sect2>
-    <sect2 id="zend.http.client.basic-get-requests">
-        <title>Basic GET Requests with Specified HTTP Headers</title>
+    <sect2 id="zend.http.client.configuration">
+        <title>Configuration Parameters</title>
         <para>
-            The <code>Zend_Http_Client</code> constructor creates a <code>Zend_Http_Client</code> instance for sending
-            HTTP requests.
+            The constructor and setConfig() method accept an associative array 
+            of configuration parameters. Setting these parameters is optional, 
+            as they all have default values.
+            <table>
+                <title>Zend_Http_Client configuration parameters</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Expected Values</entry>
+                            <entry>Default Value</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>maxredirects</entry>
+                            <entry>Maximum number of redirections to follow (0 = none)</entry>
+                            <entry>integer</entry>
+                            <entry>5</entry>
+                        </row>
+                        <row>
+                            <entry>strictredirects</entry>
+                            <entry>Whether to strictly follow the RFC when redirecting (see <xref linkend="zend.http.client.redirections" />)</entry>
+                            <entry>boolean</entry>
+                            <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>useragent</entry>
+                            <entry>User agent identifier string (sent in request headers)</entry>
+                            <entry>string</entry>
+                            <entry>'Zend_Http_Client'</entry>
+                        </row>
+                        <row>
+                            <entry>timeout</entry>
+                            <entry>Connection timeout (seconds)</entry>
+                            <entry>integer</entry>
+                            <entry>10</entry>
+                        </row>
+                        <row>
+                            <entry>httpversion</entry>
+                            <entry>HTTP protocol version</entry>
+                            <entry>float (1.1 or 1.0)</entry>
+                            <entry>1.1</entry>
+                        </row>
+                        <row>
+                            <entry>adapter</entry>
+                            <entry>Connection adapter class to use (see <xref linkend="zend.http.client.adapters" />)</entry>
+                            <entry>mixed</entry>
+                            <entry>'Zend_Http_Client_Adapter_Socket'</entry>
+                        </row>
+                        <row>
+                            <entry>keepalive</entry>
+                            <entry>Whether to enable keep-alive connections with the server. Useful and might improve performance if several
+                            consecutive requests to the same server are performned.</entry>
+                            <entry>boolean</entry>
+                            <entry>false</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
         </para>
+    </sect2>
+    <sect2 id="zend.http.client.basic-requests">
+        <title>Performing Basic HTTP Requests</title>
         <para>
-            When using <code>Zend_Http_Client</code> on a single URL, in most cases you can supply the URL and
-            relevant headers to the <emphasis>constructor</emphasis>, as in the following examples:
-        </para>
-        <example>
-            <title>Creating a Basic Zend_Http_Client</title>
-            <programlisting role="php"><![CDATA[<?php
+            Performing simple HTTP requests is very easily done using the 
+            request() method, and rarely needs more than three lines of code:
+            <example>
+                <title>Preforming a Simple GET Request</title>
+                <programlisting role="php">
+<![CDATA[<?php
     require_once 'Zend/Http/Client.php';
 
-    // Specify the URL and a single header
-    $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
-    ?>]]>       </programlisting>
-        </example>
-        <example>
-            <title>Sending Multiple Headers</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Specify the URL and multiple headers
-    $http = new Zend_Http_Client('http://example.org',
-                            array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
-    ?>]]>       </programlisting>
-        </example>
+    $client = new Zend_Http_Client('http://example.org');
+    $response = $client->request();
+?>]]></programlisting>
+            </example>
+            The request() method takes one optional parameter - the request method.
+            This can be either GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS or 
+            CONNECT as defined by the HTTP protocol
+            <footnote>
+              <para>
+                See RFC 2616 - <ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.html" />.
+              </para>
+            </footnote>. 
+            For convenience, these are all defined as class constants:
+            Zend_Http_Request::GET, Zend_Http_Request::POST and so on.
+        </para>
         <para>
-            If you wish to use <code>Zend_Http_Client</code> to send requests to <emphasis>multiple</emphasis> URLs,
-            see <xref linkend="zend.http.client.requesting-multiple-domains" />
+            If no method is specified, the method set by the last setMethod()
+            call is used. If setMethod() was never called, the default request
+            method is GET (see the above example).
+            <example>
+                <title>Using Request Methods Other Than GET</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Preforming a POST request
+    $response = $client->request('POST');
+    
+    // Yet another way of preforming a POST request
+    $client->setMethod(Zend_Http_Client::POST);
+    $response = $client->request();
+?>]]></programlisting>            
+            </example>
         </para>
     </sect2>
-    <sect2 id="zend.http.client.requesting-multiple-domains">
-        <title>Requesting Multiple Domains</title>
+        
+    <sect2 id="zend.http.client.parameters">
+        <title>Adding GET and POST parameters </title>
         <para>
-            <code>Zend_Http_Client</code> supports sending requests to multiple domains by setting the URL to query
-            using <code>Zend_Http_Client::setUri()</code>.
+            Adding GET parameters to an HTTP request is quite simple, and can 
+            be done either by specifying them as part of the URL, or by using
+            the setParameterGet() method. 
+            This method takes the GET parameter's name as it's first parameter,
+            and the GET parameter's value as it's second parameter. 
+            For convenience, the setParameterGet() method can also accept a
+            single associative array of name => value GET variables - which may
+            be more comfortable when several GET parameters need to be set.
+            <example>
+                <title>Setting GET Parameters</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a get parameter using the setParameterGet method
+    $client->setParameterGet('knight', 'lancelot');
+
+    // This is equivalent to setting such URL:
+    $client->setUri('http://example.com/index.php?knight=lancelot');
+    
+    // Adding several parameters with one call
+    $client->setParameterGet(array(
+        'first_name'  => 'Bender',
+        'middle_name' => 'Bending'
+        'made_in'     => 'Mexico',
+    ));
+?>]]></programlisting>
+            </example>
         </para>
-        <note>
-            <para>A great use for this is when querying multiple RSS feeds.</para>
-        </note>
-        <example>
-            <title>Requesting Multiple Domains</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Instantiate our client object
-    $http = new Zend_Http_Client();
-
-    // Set the URI to Slashdot's main feed
-    $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
-
-    // Retrieve the feed
-    $slashdot = $http->get();
-
-    // Now get the BBC news feed
-    $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
-
-    // Retrieve the feed
-    $bbc = $http->get();
-    ?>]]>   </programlisting>
-        </example>
-    </sect2>
-    <sect2 id="zend.http.client.settimeout">
-        <title>Changing the HTTP Timeout</title>
         <para>
-            <code>Zend_Http_Client::setTimeout()</code> allows you to set the timeout for the HTTP connection in
-            seconds.
+            While GET parameters can be sent with every request method, POST
+            parameters are only sent in the body of POST requests. Adding POST
+            parameters to a request is very similar to adding GET parameters, 
+            and can be done with the setParameterPost() method, which is
+            similar to the setParameterGet() method in structure.
+            <example>
+                <title>Setting POST Parameters</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a POST parameter
+    $client->setParameterPost('language', 'fr');
+    
+    // Setting several POST parameters, one of them with several values
+    $client->setParameterPost(array(
+        'language'  => 'es',
+        'country'   => 'ar',
+        'selection' => array(45, 32, 80)
+    ));
+?>]]></programlisting>
+            </example>
+            Note that when sending POST requests, you can set both GET and 
+            POST parameters. On the other hand, while setting POST parameters
+            for a non-POST request will not trigger and error, it is useless. 
+            Unless the request is a POST request, POST parameters are simply 
+            ignored.
         </para>
-        <note>
-            <para>The default timeout is 10 seconds.</para>
-        </note>
-    </sect2>
-    <sect2 id="zend.http.client.setheaders">
-        <title>Setting HTTP Headers Dynamically</title>
-        <para>
-            Using <code>Zend_Http_Client::setHeaders()</code> you supply an <emphasis>array</emphasis> of
-            headers.
-        </para>
-        <important>
-            <para>
-                Headers must follow the format:
-                <option><code>Header: value</code></option>
-            </para>
-        </important>
-    </sect2>
-    <sect2 id="zend.http.client.making-other-requests">
-        <title>Making HTTP POST, PUT, and DELETE Requests</title>
-        <para>
-            Performing HTTP POST, PUT, and DELETE requests are facilitated in <code>Zend_Http_Client</code> by three
-            methods: <code>post()</code>, <code>put()</code>, and <code>delete()</code>, respectively. The
-            <code>post()</code> and <code>put()</code> methods each take a single string parameter, <code>$data</code>,
-            into which should be placed a string with the data properly encoded, as in the following:
-            <emphasis><code>name=value&amp;foo=bar</code></emphasis>. The <code>delete()</code> method has no
-            parameters.
-        </para>
-        <example>
-            <title>Sending POST data with Zend_Http_Client</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Instantiate our client object
-    $http = new Zend_Http_Client();
-
-    // Set the URI to a POST data processor
-    $http->setUri('http://example.org/post/processor');
-
-    // Save specific GET variables as HTTP POST data
-    $postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
-
-    // Make the HTTP POST request and save the HTTP response
-    $httpResponse = $http->post($postData);
-    ?>]]>   </programlisting>
-            <para>
-                Making a PUT request is the same as in the example above for making a POST request; just substitute the
-                <code>put()</code> method for <code>post()</code>.
-            </para>
-        </example>
     </sect2>
 </sect1>
+
 <!--
 vim:se ts=4 sw=4 et:
 -->
