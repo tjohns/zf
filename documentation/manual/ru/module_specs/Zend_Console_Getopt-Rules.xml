@@ -17,7 +17,7 @@
         configuration options to customize the behavior of
         <code>Zend_Console_Getopt</code>.
         See <link linkend="zend.console.getopt.configuration.config">Adding Configuration</link>
-	for reference on the options available.
+        for reference on the options available.
     </para>
 
     <sect2 id="zend.console.getopt.rules.short">
@@ -45,11 +45,11 @@ $opts = new Zend_Console_Getopt('abp:');
             "<code>-b</code>", or "<code>-p</code>".  The latter flag
             requires a parameter.
         </para>
-	<para>
-	    The short syntax is limited to flags of a single character.
-	    Aliases, parameter types, and help strings are not supported
-	    in the short syntax.
-	</para>
+        <para>
+            The short syntax is limited to flags of a single character.
+            Aliases, parameter types, and help strings are not supported
+            in the short syntax.
+        </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.rules.long">
@@ -69,28 +69,28 @@ $opts = new Zend_Console_Getopt('abp:');
             aliases, if the option requires a parameter, is an equals symbol
             ("<code>=</code>") with a letter that stands for the
             <emphasis>type</emphasis> of the parameter:
-	</para>
-	<itemizedlist>
-	    <listitem>
-		<para>
-		    "<code>=s</code>" for a string parameter
-		</para>
-	    </listitem>
-	    <listitem>
-		<para>
-		    "<code>=w</code>" for a word parameter
-		    (a string containing no whitespace)
-		</para>
-	    </listitem>
-	    <listitem>
-		<para>
-		    "<code>=i</code>" for an integer parameter
-		</para>
-	    </listitem>
-	</itemizedlist>
-	<para>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    "<code>=s</code>" for a string parameter
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    "<code>=w</code>" for a word parameter
+                    (a string containing no whitespace)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    "<code>=i</code>" for an integer parameter
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
             If the parameter is optional, use a dash ("<code>-</code>")
-	    instead of the equals symbol.
+            instead of the equals symbol.
         </para>
         <para>
             The value of each element in the associative array is a help string
@@ -112,8 +112,8 @@ $opts = new Zend_Console_Getopt(
         </example>
         <para>
             In the example declaration above, there are three options.
-	    "<code>--apple</code>" and "<code>-a</code>" are aliases for each
-	    other, and the option takes no parameter.
+            "<code>--apple</code>" and "<code>-a</code>" are aliases for each
+            other, and the option takes no parameter.
             "<code>--banana</code>" and "<code>-b</code>" are aliases for each
             other, and the option takes a mandatory integer parameter.
             Finally, "<code>--pear</code>" and "<code>-p</code>" are aliases

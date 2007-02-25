@@ -58,9 +58,9 @@
                 <row>
                     <entry>Flags</entry>
                     <entry>No</entry>
-                    <entry>todo</entry>
+                    <entry>Yes</entry>
                     <entry>No</entry>
-                    <entry>todo</entry>
+                    <entry>Yes</entry>
                 </row>
             </tbody>
         </tgroup>
@@ -317,6 +317,69 @@ if (!$foundPart) {
     echo 'no plain text part found';
 } else {
     echo "plain text part: \n" . $foundPart;
+}
+]]></programlisting>
+
+    </sect2>
+    <sect2 id="zend.mail.read-flags">
+        <title>Checking for flags</title>
+
+        <para>Maildir and IMAP support storing flags. The class Zend_Mail_Storage has constants for all known
+        maildir and IMAP system flags, named <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code>. To check
+        for flags <code>Zend_Mail_Message</code> has a method called <code>hasFlag()</code>. With
+        <code>getFlags()</code> you'll get all set flags.</para>
+
+        <programlisting role="php"><![CDATA[<?php
+// find unread messages
+echo "Unread mails:\n";
+foreach ($mail as $message) {
+    if ($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN)) {
+        continue;
+    }
+    // mark recent/new mails
+    if ($message->hasFlag(Zend_Mail_Storage::FLAG_RECENT)) {
+        echo '! ';
+    } else {
+        echo '  ';
+    }
+    echo $message->subject . "\n";
+}
+
+
+// check for known flags
+$flags = $message->getFlags();
+echo "Message is flagged as: ";
+foreach ($flags as $flag) {
+    switch ($flag) {
+        case Zend_Mail_Storage::FLAG_ANSWERED:
+            echo 'Answered ';
+            break;
+        case Zend_Mail_Storage::FLAG_FLAGGED:
+            echo 'Flagged ';
+            break;
+
+        // ...
+        // check for other flags
+        // ...
+
+        default:
+            echo $flag . '(unknown flag) ';
+    }
+}
+]]></programlisting>
+
+        <para>As IMAP allows user or client defined flags you could get flags, that don't have a constant in
+        <code>Zend_Mail_Storage</code>. Instead they are returned as string and can be checked the same way with
+        <code>hasFlag()</code>.</para>
+
+        <programlisting role="php"><![CDATA[<?php
+// check message for client defined flags $IsSpam, $SpamTested
+if (!$message->hasFlag('$SpamTested')) {
+    echo 'message has not been tested for spam';
+} else if ($message->hasFlag('$IsSpam')) {
+    echo 'this message is spam';
+} else {
+    echo 'this message is ham';
 }
 ]]></programlisting>
 
