@@ -751,7 +751,7 @@ class Zend_Locale {
      * @param  string|locale  $locale  OPTIONAL Locale|Language for which this informations should be returned
      * @return array                   Array with the wished information in the given language
      */
-    public function getList($type = null, $locale = null)
+    public function getTranslationList($type = null, $locale = null)
     {
         if ($locale === null) {
             $locale = $this->_Locale;
@@ -864,9 +864,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for language translation
      * @return  array
      */
-    public function getLanguageList($locale = null)
+    public function getLanguageTranslationList($locale = null)
     {
-        return $this->getList('language', $locale);
+        return $this->getTranslationList('language', $locale);
     }
 
 
@@ -876,9 +876,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for script translation
      * @return  array
      */
-    public function getScriptList($locale = null)
+    public function getScriptTranslationList($locale = null)
     {
-        return $this->getList('script', $locale);
+        return $this->getTranslationList('script', $locale);
     }
 
 
@@ -888,9 +888,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for country translation
      * @return  array
      */
-    public function getCountryList($locale = null)
+    public function getCountryTranslationList($locale = null)
     {
-        return $this->getList('country', $locale);
+        return $this->getTranslationList('country', $locale);
     }
 
 
@@ -901,79 +901,203 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for territory translation
      * @return  array
      */
-    public function getTerritoryList($locale = null)
+    public function getTerritoryTranslationList($locale = null)
     {
-        return $this->getList('territory', $locale);
+        return $this->getTranslationList('territory', $locale);
     }
 
 
     /**
-     * Returns an single language translated for the actual locale
+     * Returns a localized information string, supported are several types of informations.
      * 
-     * @param  string $language
-     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
-     * @return array
+     * Supported types are:
+     * 'language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
+     * 'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
+     * 'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail', 'language_detail'
+     * For detailed information about the types look into the documentation
+     * 
+     * @param  string         $what    Name to get detailed information about
+     * @param  string         $type    OPTIONAL Type of information to return
+     * @param  string|locale  $locale  OPTIONAL Locale|Language for which this informations should be returned
+     * @return string|array            Array with the wished information in the given language
      */
-    public function getLanguageDisplay($language, $locale = null)
+    public function getTranslation($what, $type = null, $locale = null)
     {
         if ($locale === null) {
             $locale = $this->_Locale;
         }
 
-        $language = Zend_Locale_Data::getContent($locale, 'language', $language);
-
-        if (!empty($language)) {
-            return current($language);
+        switch (strtolower($type)) {
+            case 'language' :
+                $list = Zend_Locale_Data::getContent($locale, 'language', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'script' :
+                $list = Zend_Locale_Data::getContent($locale, 'script', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'country' :
+                $list = Zend_Locale_Data::getContent($locale, 'territory', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'territory' :
+                $list = Zend_Locale_Data::getContent($locale, 'territory', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'calendar' :
+                $list = Zend_Locale_Data::getContent($locale, 'type', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'month' :
+                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'wide', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'month_short' :
+                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'abbreviated', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'month_narrow' :
+                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'stand-alone', 'narrow', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'day' :
+                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'wide', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'day_short' :
+                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'abbreviated', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'day_narrow' :
+                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'stand-alone', 'narrow', $what));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'dateformat' :
+                $list = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $what, 'narrow'));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'timeformat' :
+                $list = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $what, 'narrow'));
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'timezone' :
+                $list = Zend_Locale_Data::getContent($locale, 'timezone', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'currency' :
+                $list = Zend_Locale_Data::getContent($locale, 'currencyname', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'currency_sign' :
+                $list = Zend_Locale_Data::getContent($locale, 'currencysymbol', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'currency_detail' :
+                $list = Zend_Locale_Data::getContent($locale, 'currencyforregion', $what);
+                if (isset($list[$what])) {
+                    return $list[$what];
+                }
+                break;
+            case 'territory_detail' :
+                $list = Zend_Locale_Data::getContent($locale, 'regionforterritory', $what);
+                return explode(' ', $list[$what]);
+                break;
+            case 'language_detail' :
+                $list = Zend_Locale_Data::getContent($locale, 'territoryforlanguage', $what);
+                return explode(' ', $list[$what]);
+                break;
+            default :
+                return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
+                             'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
+                             'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail',
+                             'language_detail');
         }
-
         return false;
     }
 
 
     /**
-     * Returns a single script translated for a locale
+     * Returns the localized language name
      * 
-     * @param  string $script
-     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
-     * @return array
+     * @param   string  $what    Name to get detailed information about
+     * @param   string  $locale  OPTIONAL locale for language translation
+     * @return  array
      */
-    public function getScriptDisplay($script, $locale = null)
+    public function getLanguageTranslation($what, $locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->_Locale;
-        }
-
-        $script = Zend_Locale_Data::getContent($locale, 'script', $script);
-
-        if (!empty($script)) {
-            return current($script);
-        }
-
-        return false;
+        return $this->getTranslation($what, 'language', $locale);
     }
 
 
     /**
-     * Returns an single region translated for the actual locale
+     * Returns the localized script name
      * 
-     * @param  string  $region 
-     * @param  string  $locale  OPTIONAL locale for language translation
-     * @param  string  $locale  OPTIONAL locale for language translation (defaults to $this locale)
-     * @return array
+     * @param   string  $what    Name to get detailed information about
+     * @param   string  $locale  OPTIONAL locale for script translation
+     * @return  array
      */
-    public function getRegionDisplay($region, $locale = null)
+    public function getScriptTranslation($what, $locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->_Locale;
-        }
+        return $this->getTranslation($what, 'script', $locale);
+    }
 
-        $region = Zend_Locale_Data::getContent($locale, 'territory', $region);
 
-        if (!empty($region)) {
-            return current($region);
-        }
+    /**
+     * Returns the localized country name
+     * 
+     * @param   string  $what    Name to get detailed information about
+     * @param   string  $locale  OPTIONAL locale for country translation
+     * @return  array
+     */
+    public function getCountryTranslation($what, $locale = null)
+    {
+        return $this->getTranslation($what, 'country', $locale);
+    }
 
-        return false;
+
+    /**
+     * Returns the localized territory name
+     * All territories contains other countries.
+     * 
+     * @param   string  $what    Name to get detailed information about
+     * @param   string  $locale  OPTIONAL locale for territory translation
+     * @return  array
+     */
+    public function getTerritoryTranslation($what, $locale = null)
+    {
+        return $this->getTranslation($what, 'territory', $locale);
     }
 
 

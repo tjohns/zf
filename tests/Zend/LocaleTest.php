@@ -164,127 +164,124 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test getLanguageList
+     * test getLanguageTranslationList
      * expected true
      */
-    public function testgetLanguageList()
+    public function testgetLanguageTranslationList()
     {
         $value = new Zend_Locale();
-        $list = $value->getLanguageList();
+        $list = $value->getLanguageTranslationList();
         $this->assertTrue(is_array($list), 'Language List not returned');
     }
 
 
     /**
-     * test getLanguageListLocale
+     * test getLanguageTranslationListLocale
      * expected true
      */
-    public function testgetLanguageListLocale()
+    public function testgetLanguageTranslationListLocale()
     {
         $value = new Zend_Locale();
-        $list = $value->getLanguageList('de');
+        $list = $value->getLanguageTranslationList('de');
         $this->assertTrue(is_array($list), 'Language List not returned');
     }
 
 
     /**
-     * test getLanguageDisplay
+     * test getLanguageTranslationDisplay
      * expected true
      */
-    public function testgetLanguageDisplay()
+    public function testgetLanguageTranslationDisplay()
     {
         $value = new Zend_Locale('de_AT');
-        $list = $value->getLanguageDisplay('de');
+        $list = $value->getLanguageTranslation('de');
         $this->assertEquals($list, 'Deutsch', 'Language Display not returned');
 
-        $list = $value->getLanguageDisplay('de', 'en');
+        $list = $value->getLanguageTranslation('de', 'en');
         $this->assertEquals($list, 'German', 'Language Display not returned');
 
-        $list = $value->getLanguageDisplay('xyz');
+        $list = $value->getLanguageTranslation('xyz');
         $this->assertFalse(is_string($list), 'Language Display should be false');
     }
 
 
     /**
-     * test getScriptList
+     * test getScriptTranslationList
      * expected true
      */
-    public function testgetScriptList()
+    public function testgetScriptTranslationList()
     {
         $value = new Zend_Locale();
-        $list = $value->getScriptList();
+        $list = $value->getScriptTranslationList();
         $this->assertTrue(is_array($list), 'Script List not returned');
 
-        $list = $value->getScriptList('de');
+        $list = $value->getScriptTranslationList('de');
         $this->assertTrue(is_array($list), 'Script List not returned');
 
         $value->setLocale('de');
-        $list = $value->getScriptDisplay('Arab');
+        $list = $value->getScriptTranslation('Arab');
         $this->assertEquals($list, 'Arabisch', 'Script Display not returned');
 
-        $list = $value->getScriptDisplay('Arab', 'en');
+        $list = $value->getScriptTranslation('Arab', 'en');
         $this->assertEquals($list, 'Arabic', 'Script Display not returned');
 
-        $list = $value->getScriptDisplay('xyz');
+        $list = $value->getScriptTranslation('xyz');
         $this->assertFalse(is_string($list), 'Script Display should be false');
     }
 
 
     /**
-     * test getRegionList
+     * test getCountryTranslationList
      * expected true
      */
-    public function testgetCountryList()
+    public function testgetCountryTranslationList()
     {
         $value = new Zend_Locale();
-        $list = $value->getCountryList();
+        $list = $value->getCountryTranslationList();
         $this->assertTrue(is_array($list), 'Region List not returned');
 
-        $list = $value->getCountryList('de');
+        $list = $value->getCountryTranslationList('de');
         $this->assertTrue(is_array($list), 'Region List not returned');
     }
 
 
     /**
-     * test getRegionDisplay
+     * test getRegionTranslation
      * expected true
      */
-    public function testgetRegionDisplay()
+    public function testgetRegionTranslationDisplay()
     {
         $value = new Zend_Locale('de_AT');
-        $list = $value->getRegionDisplay('DE');
+        $list = $value->getTerritoryTranslation('DE');
         $this->assertEquals($list, 'Deutschland', 'Region Display not returned');
 
-        $list = $value->getRegionDisplay('DE','en');
+        $list = $value->getTerritoryTranslation('DE','en');
         $this->assertEquals($list, 'Germany', 'Region Display not returned');
 
-        $list = $value->getRegionDisplay('xyz');
+        $list = $value->getTerritoryTranslation('xyz');
         $this->assertFalse(is_string($list), 'Region Display should be false');
     }
 
 
     /**
-     * test getLanguage
+     * test getLanguageTranslation
      * expected true
      */
-    public function testgetLanguage()
+    public function testgetLanguageTranslation()
     {
         $value = new Zend_Locale('de_DE');
-        $this->assertEquals($value->getLanguage(), 'de', 'No language found');
+        $this->assertEquals($value->getLanguageTranslation('de'), 'Deutsch', 'No language found');
     }
 
 
     /**
-     * test getRegion
+     * test getCountryTranslation
      * expected true
      */
-    public function testgetRegion()
+    public function testgetCountryTranslation()
     {
         $value = new Zend_Locale('de_DE');
-        $this->assertEquals($value->getRegion(), 'DE', 'No region found');
-
-        $value = new Zend_Locale('de');
-        $this->assertEquals($value->getRegion(), '', 'No region found');
+        $this->assertEquals($value->getCountryTranslation('DE'), 'Deutschland', 'No region found');
     }
 
 

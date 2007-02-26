@@ -608,6 +608,11 @@ class Zend_Locale_Data
                 }
                 break;
 
+            case 'currencyname':
+                self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\''
+                             . $value . '\']/displayName', '', $key);
+                break;
+
             case 'currencysymbols':
                 self::_getFile($locale, '/ldml/numbers/currencies/currency', 'type');
                 $_temp = self::$_list;
@@ -616,6 +621,11 @@ class Zend_Locale_Data
                     self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\''
                                  . $key . '\']/symbol', '', $key);
                 }
+                break;
+
+            case 'currencysymbol':
+                self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\''
+                             . $value . '\']/symbol', '', $key);
                 break;
 
             case 'questionstrings':
