@@ -29,13 +29,13 @@
         </para>
 
         <para>
-            Also, the sister method <code>getCorrectableDate()</code> adds a key 'fixed' with a whole number value indicating
-            if the input date string required "fixing" by rearranging the day, month, or year in the input to fit the
-            format used.
+            The <code>getCorrectableDate()</code> method adds a key 'fixed' with a whole number value indicating if the
+            input date string required "fixing" by rearranging the day, month, or year in the input to fit the format
+            used.
         </para>
 
         <table>
-            <title>'fixed' key values</title>
+            <title>'fixed' key values for getCorrectableDate()</title>
             <tgroup cols='4'>
                 <thead>
                     <row>
@@ -308,9 +308,9 @@ print_r ($date);
         </note>
 
         <para>
-            The method <code>getCorrectableDate()</code> uses simple tests to determine if the day or month is not valid, and
-            then applies heuristics to try and correct any detected problems. <code>getDate()</code> automatically
-            detects and corrects some kinds of problems with input, such as misplacing the year:
+            The method <code>getCorrectableDate()</code> uses simple tests to determine if the day or month is not
+            valid, and then applies heuristics to try and correct any detected problems. <code>getDate()</code>
+            automatically detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
 
         <example>
@@ -332,9 +332,11 @@ print_r ($date);
         <title>Testing Dates</title>
 
         <para>
-            Use <code>isDate()</code> to check if a given string contains a valid date. The <code>isDate()</code> method
-            uses <code>getDate()</code>, not <code>getCorrectableDate()</code> to avoid returning true when the input fails to
-            conform to the date format.
+            Use <code>isDate($inputString, $format, $locale)</code> to check if a given string contains a valid date.
+            The <code>isDate()</code> method uses <code>getDate()</code>, not <code>getCorrectableDate()</code> to avoid
+            returning true when the input fails to conform to the date format. If errors are detected in the input, such
+            as swapped values for months and days, the <code>isCorrectableDate()</code> method will apply heuristics to
+            "correct" dates before determining their validity.
         </para>
 
         <example>
@@ -343,7 +345,8 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
+// using the default date format for 'de_AT', is this a valid date?
+if (Zend_Locale_Format::isDate('13.Apr.2006', null, $locale) {
     print "date";
 } else {
     print "not a date";
