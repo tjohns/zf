@@ -567,15 +567,15 @@ else {
 
         <para>
             Если вы приказали <code>Zend_Auth</code> не сохранять метку сессии в
-            сессиях, то можете вручную сохранить ID авторизации под хорошо
-            известным ключом в любом пространстве имен сессии на ваш выбор.
-            Часто приложения имеют особые
+            сессиях, то можете вручную сохранять ID авторизации под хорошо
+            известным ключом в любом пространстве имен сессии.
+            Часто приложения имеют свои
             требования к тому, где хранить "мандат" (учетная запись с
             праметрами доступа пользователя) и идентификатор авторизации.
             Приложения часто устанавливают соответствие идентификаторов
             аутентификации (например, имена пользователей) и идентификаторов
             авторизации (например, присвоенное уникальное целое число) во время
-            аутентификации, которая должна производится в методе
+            аутентификации, которая должна производится внутри метода
             <code>authenticate()</code> адаптера аутентификации Zend_Auth.
 <!--
             If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
@@ -592,12 +592,11 @@ else {
 <programlisting role="php">
 <![CDATA[<?php
     // pre-authentication request
-    require_once 'Zend/Auth/Result.php';
     require_once 'Zend/Auth/Adapter/Digest.php';
     $adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
     $result = $adapter->authenticate();
     require_once 'Zend/Session/Namespace.php';
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
     if ($result->isValid()) {
         $namespace->authorizationId = $result->getIdentity();
         $namespace->date = time();
@@ -608,7 +607,7 @@ else {
     // subsequent requests
     require_once 'Zend/Session.php';
     Zend_Session::start();
-    $namespace = Zend_Session_Namespace('Zend_Auth');
+    $namespace = new Zend_Session_Namespace('Zend_Auth');
 
     echo "Valid: ", (empty($namespace->authorizationId) ? 'No' : 'Yes'), "\n"';
     echo "Authorization / user Id: ", (empty($namespace->authorizationId)
@@ -619,6 +618,48 @@ else {
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
 ?>]]></programlisting>
         </example>
+
+        <para>
+            Идентификаторы авторизации, хранящиеся на клиентской стороне, могут
+            использоваться в атаках на поднятие привилегий, если им доверяет
+            серверная сторона и если они, например, не дублируются на серверной
+            стороне (например, в данных сессии) и затем сверяются с
+            идентификатором авторизации, предоставленным клентом для
+            действующией сессии. Мы различаем понятия "идентификаторов
+            аутентификации" (например, имена пользователей) и "идентификаторов
+            авторизации" (например, ID пользователя #101 в таблице БД для
+            пользователей).
+<!--
+            Authorization ids stored client-side are subject to privilege escalation vulnerabilities, if these ids are
+            used and trusted by the server, unless, for example, the id is duplicated on the server-side (e.g. in the
+            session) and then cross-checked with the authorization id claimed by the client for the in-effect session.
+            We are differentiating between "authentication ids" (e.g. usernames) and "authorization ids" (e.g. user id
+            #101 in the users DB table).
+-->
+        </para>
+
+        <para>
+            Последнее часто используется для повышения производительности -
+            например, для выборки из пула серверов, кеширующих данные сессии,
+            чтобы решить проблему "курицы и яйца". На моей практике часто
+            происходили дебаты о том, использовать ли настоящий ID авторизации в
+            куках или некую замену, которая помогает установить соответствие
+            с настоящим ID авторизации (или сессии сервера(ов), хранящего
+            сессию/профиль пользователя и т.д.), в то время как некоторые
+            архитекторы системной безопасности предпочитают избегать
+            публикования истинных значений первичных ключей, пытаясь достичь
+            некоторого дополнительного уровня защиты в случае наличия
+            уязвимостей к SQL-инъекциям.
+<!--
+            The latter is not uncommon for performance reasons, such as helping select from a pool of servers caching
+            session information to help solve chicken-and-egg problems. In my experience, often debates ensue about
+            whether to use the real authorization id in the cookie, or some substitute that aids in mapping to the real
+            authorization id (or session or server(s) holding the user's session/profile, etc.), as some system security
+            architects wish to prevent true "DB primary keys" from escaping into the wild to try and obtain some level
+            of protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone
+            uses auto-increment strategies for authorization ids.
+-->
+        </para>
 
     </sect2>
 
@@ -635,13 +676,13 @@ else {
             исключение "<emphasis role="strong">Zend_Session is currently marked
             as read-only</emphasis>" ("Zend_Session помечен как доступный только
             для чтения"). Тем не менее, юнит-тесты, использующие Zend_Session,
-            требуют особого внимания, поскольку закрытие
+            требуют особого внимания в разработке, поскольку закрытие
             (<code>Zend_Session::writeClose()</code>) или уничтожение сессии
             (<code>Zend_Session::destroy()</code>) не дает впоследствии
             устанавливать или сбрасывать ключи в любом объекте
             Zend_Session_Namespace. Это поведение является прямым следствием
-            использования лежащего в основе мехнанизма расширения ext/session
-            и функций <code>session_destroy()</code> и
+            использования лежащего в основе расширения ext/session,
+            функций <code>session_destroy()</code> и
             <code>session_write_close()</code>, которые не имеют механизма
             "отмены" для облегчения установки/демонтажа в юнит-тестировании.
 <!--
