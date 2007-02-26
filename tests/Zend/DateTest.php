@@ -1016,7 +1016,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C, 'es'),'2009-02-13T23:31:30+00:00');
         $date->setTimezone('Indian/Maldives');
 
-        $this->assertSame($date->get('x'),'x');
+        try {
+            // get() should not accept date format specifiers (should use toString when using format strings)
+            $date->get('Y');
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            $this->assertRegexp('/unknown date part \(use toString for format string support\)/i', $e->getMessage());
+            // success
+        }
     }
 
     /**
@@ -4819,6 +4826,15 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_TimeSync_Exception $e) {
             $this->markTestIncomplete('NTP timeserver not available.');
         }
+    }
+
+    public function testUsePhpDateFormat()
+    {
+        // @todo
+        $this->markTestIncomplete();
+        // ISO format specifier tests
+        Zend_Date::usePhpDateFormat(true);
+        // PHP date() format specifier tests
     }
 }
 
