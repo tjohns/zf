@@ -4832,9 +4832,17 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         // @todo
         $this->markTestIncomplete();
+
         // ISO format specifier tests
+        // @todo
+
         Zend_Date::usePhpDateFormat(true);
+
         // PHP date() format specifier tests
+        $date1 = new Zend_Date('2006-01-02 23:58:59', Zend_Date::ISO_8601, 'en_US');
+        $date2 = new Zend_Date('2006-01-02 23:58:59', 'Y-m-d H:i:s', 'en_US');
+        $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
+        // @todo more
     }
 }
 

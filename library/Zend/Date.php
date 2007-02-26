@@ -294,9 +294,10 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Selects if standard ISO format should be used or PHP's date format
-     * Keep in mind that ISO supports all PHP date formats but PHP does not
-     * support all ISO formats
-     * Standard useage is ISO (false) set it to true if you need to have PHP's date format supported
+     * ISO supports almost all PHP date() format specifier tokens, but PHP does not
+     * support all ISO formats.  Standard useage is ISO (false).
+     * Setting $format to true makes Zend_Date methods accepting date format
+     * specifiers only accept PHP date()-style specifier tokens.
      * 
      * @param  boolean  $format  OPTIONAL, if not set returns the format, otherwise sets the new format
      *                                     false = ISO format, true = PHP format
@@ -691,12 +692,17 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function get($part = null, $locale = null)
     {
-        if ($part === null) {
-            $part = Zend_Date::TIMESTAMP;
-        }
-
         if ($locale === null) {
             $locale = $this->getLocale();
+        }
+
+        if (Zend_Locale::isLocale($part)) {
+            $locale = $part;
+            $part = null;
+        }
+
+        if ($part === null) {
+            $part = Zend_Date::TIMESTAMP;
         }
 
         switch($part) {
