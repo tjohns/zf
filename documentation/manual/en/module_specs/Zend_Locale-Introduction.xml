@@ -202,9 +202,9 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
                     <para>
                         const <code>Zend_Locale::FRAMEWORK</code> - When the Zend Framework has a standardized way of
                         specifying component defaults (planned, but not yet available), then using this constant during
-                        instatiation will give preference to choosing a locale based on these defaults. If no matching
+                        instantiation will give preference to choosing a locale based on these defaults. If no matching
                         locale can be found, then preference is given to <code>ENVIRONMENT</code> and lastly
-                        <code>FRAMEWORK</code>.
+                        <code>BROWSER</code>.
                     </para>
                 </listitem>
             </orderedlist>
