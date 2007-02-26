@@ -1,41 +1,43 @@
 <sect1 id="zend.auth.adapter.digest">
 
-    <title>Digest Authentication</title>
+    <title>Uwierzytelnianie Digest</title>
 
     <sect2 id="zend.auth.adapter.digest.introduction">
 
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
 
         <para>
-            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest authentication</ulink>
-            is a method of HTTP authentication that improves upon
-            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basic authentication</ulink>
-            by providing a way to authenticate without having to transmit the password in clear text across
-            the network.
+            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Uwierzytelnianie Digest</ulink>
+            jest metodą uwierzytelniania HTTP, która udoskonala 
+            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">uwierzytelnianie Basic</ulink>
+            dostarczając sposób uwierzytelniania bez konieczności przesyłania
+            hasła w postaci czystego tekstu poprzez sieć.
         </para>
 
         <para>
-            This adapter allows authentication against text files containing lines having the basic elements
-            of digest authentication:
+            Ten adapter pozwala na uwierzytelnianie w oparciu o pliki tekstowe
+            zawierające linie, w których znajdują się podstawowe elementy
+            uwierzytelniania digest:
             <itemizedlist>
                 <listitem>
                     <para>
-                        username, such as "<code>joe.user</code>"
+                        nazwa użytkownika, jak na przykład "<code>joe.user</code>"
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        realm, such as "<code>Administrative Area</code>"
+                        nazwa obszaru, jak na przykład "<code>Administrative Area</code>"
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        MD5 hash of the username, realm, and password, separated by colons
+                        skrót MD5 nazwy użytkownika, nazwy obszaru oraz hasła,
+                        oddzielonych dwukropkami
                     </para>
                 </listitem>
             </itemizedlist>
-            The above elements are separated by colons, as in the following example (in which the password is
-            "<code>somePassword</code>"):
+            Powyższe elementy są oddzielone dwukropkami, tak jak w poniższym przykładzie
+            (w którym hasłem jest "<code>somePassword</code>"):
         </para>
 
         <programlisting><![CDATA[someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8]]></programlisting>
@@ -44,46 +46,50 @@
 
     <sect2 id="zend.auth.adapter.digest.specifics">
 
-        <title>Specifics</title>
+        <title>Parametry</title>
 
         <para>
-            The digest authentication adapter, <code>Zend_Auth_Adapter_Digest</code>, requires several input parameters:
+            Adapter uwierzytelniania digest, <code>Zend_Auth_Adapter_Digest</code>, 
+            wymaga ustawienia kilku wejściowych parametrów:
             <itemizedlist>
                 <listitem>
                     <para>
-                        filename - Filename against which authentication queries are performed
+                        filename - plik na podstawie którego przeprowadzane są
+                        zapytania uwierzytelniania
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        realm - Digest authentication realm
+                        realm - obszar uwierzytelniania Digest
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        username - Digest authentication user
+                        username - użytkownik uwierzytelniania Digest
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        password - Password for the user of the realm
+                        password - hasło dla użytkownika danego obszaru
                     </para>
                 </listitem>
             </itemizedlist>
-            These parameters must be set prior to calling <code>authenticate()</code>.
+            Te parametry muszą być ustawione przed wywołaniem metody
+            <code>authenticate()</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.auth.adapter.digest.identity">
 
-        <title>Identity</title>
+        <title>Tożsamość</title>
 
         <para>
-            The digest authentication adapter returns a <code>Zend_Auth_Result</code> object, which has been
-            populated with the identity as an array having keys of <code>realm</code> and
-            <code>username</code>. The respective array values associated with these keys correspond to the
-            values set before <code>authenticate()</code> is called.
+            Adapter uwierzytelniania digest zwraca obiekt <code>Zend_Auth_Result</code>,
+            który został wypełniony danymi tożsamości w postaci tablicy posiadajacej
+            klucze <code>realm</code> oraz <code>username</code>. Odpowiednie
+            wartości tablicy powiązane z tymi kluczami odpowiadają wartościom
+            ustawionym przed wywołaniem metody <code>authenticate()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
