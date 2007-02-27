@@ -462,7 +462,7 @@ class Zend_Mail_Protocol_Imap
      */
     public function examineOrSelect($command = 'EXAMINE', $box = 'INBOX')
     {
-        $this->sendRequest($command, (array)$this->escapeString($box), $tag);
+        $this->sendRequest($command, array($this->escapeString($box)), $tag);
 
         $result = array();
         while (!$this->readLine($tokens, $tag)) {
