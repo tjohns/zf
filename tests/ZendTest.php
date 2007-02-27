@@ -34,6 +34,15 @@ class ZendTest extends PHPUnit_Framework_TestCase
         Zend::loadClass('Class1', $dir);
     }
 
+    public function testLoadInterfaceViaLoadClass()
+    {
+        try {
+            Zend::loadClass('Zend_Controller_Dispatcher_Interface');
+        } catch (Exception $e) {
+            $this->fail('Loading interfaces should not fail');
+        }
+    }
+
     /**
      * Tests that an exception is thrown when a file is loaded but the
      * class is not found within the file
