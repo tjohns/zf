@@ -174,19 +174,19 @@ print $locale->toString();
         <title>Obtaining localized strings</title>
 
         <para>
-            <code>getList</code> gives you access to localized informations of several types.
-            These information are usefull if you want to display localized data to a customer without the
-            need of translating it. They are already avaiable for your useage.
+            <code>getTranslationList()</code> gives you access to localized informations of several types. These
+            information are usefull if you want to display localized data to a customer without the need of translating
+            it. They are already avaiable for your useage.
         </para>
 
         <para>
-            You can receive this informations for all languages. But not all of the informations are 
-            completly avaiable for all languages. Some of these types are also avaiable through an
-            own function for simplicity. See this list for detailed informations.
+            You can receive this informations for all languages. But not all of the informations are completly avaiable
+            for all languages. Some of these types are also avaiable through an own function for simplicity. See this
+            list for detailed informations.
         </para>
 
         <table>
-            <title>Details for Zend_Locale->getList</title>
+            <title>Details for getTranslationList()</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -199,25 +199,25 @@ print $locale->toString();
                 <tbody>
                     <row>
                         <entry>Language</entry>
-                        <entry>getLanguageList</entry>
+                        <entry>getLanguageTranslationList</entry>
                         <entry>Localized list of all languages</entry>
                         <entry>Complete</entry>
                     </row>
                     <row>
                         <entry>Script</entry>
-                        <entry>getScriptList</entry>
+                        <entry>getScriptTranslationList</entry>
                         <entry>Localized list of all scripts</entry>
                         <entry>Complete</entry>
                     </row>
                     <row>
                         <entry>Country</entry>
-                        <entry>getCountryList</entry>
+                        <entry>getCountryTranslationList</entry>
                         <entry>Localized list of all countries</entry>
                         <entry>Complete</entry>
                     </row>
                     <row>
                         <entry>Territory</entry>
-                        <entry>getTerritoryList</entry>
+                        <entry>getTerritoryTranslationList</entry>
                         <entry>Localized list of all territories</entry>
                         <entry>Complete</entry>
                     </row>
@@ -315,24 +315,65 @@ print $locale->toString();
             </tgroup>
         </table>
 
+        <para>
+            The example below demonstrates how to obtain the names of things in different languages.
+        </para>
+
         <example>
-            <title>getList</title>
+            <title>getTranslationList</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
-print_r $locale->getList('country', 'de'); // prints the names of all countries in german language
+// prints the names of all countries in German language
+print_r($locale->getTranslationList('country', 'de'));
+?>]]></programlisting>
+        </example>
+
+        <para>
+            The next example shows how to find the name of a language in another language, when the two letter CLDR
+            country code is not known.
+        </para>
+
+        <example>
+            <title>Converting country name in one language to another</title>
+<programlisting role="php"><![CDATA[<?php
+require 'Zend/Locale.php';
+$locale = new Zend_Locale('en_US');
+$code2name = $locale->getLanguageTranslationList();
+$name2code = array_flip($code2name);
+$frenchCode = $name2code['French'];
+echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
+// output is the German name of the French language
+?>]]></programlisting>
+        </example>
+
+        <para>
+            To gain some familiarity with what is available, try the example and examine the output.
+        </para>
+
+        <example>
+            <title>All available translations</title>
+<programlisting role="php"><![CDATA[<?php
+// obtain a list of all the translation lists
+$lists = $locale->getTranslationList();
+
+// show all translation lists available (lots of output, all in English language)
+foreach ($lists as $list) {
+    echo "List $list = ";
+    print_r($locale->getTranslationList($list));
+}
 ?>]]></programlisting>
         </example>
 
         <para>
             To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
-            try the example below in a web page. Similarly, <code>getCountryList()</code> and
+            try the example below in a web page. Similarly, <code>getCountryTranslationList()</code> and
             <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
-            regions to the names of the regions shown in another language. Likewise, <code>getCalendarList()</code> and
-            <code>getCalendarDisplay()</code> work identically. Use a <code>try .. catch</code> block to handle
-            exceptions that occur when using a locale that does not exist. Not all languages are also locales. In the
-            example, below exceptions are ignored to prevent early termination.
+            regions to the names of the regions shown in another language. Likewise,
+            <code>getCalendarTranslationList()</code> and <code>getCalendarDisplay()</code> work identically. Use a
+            <code>try .. catch</code> block to handle exceptions that occur when using a locale that does not exist. Not
+            all languages are also locales. In the example, below exceptions are ignored to prevent early termination.
         </para>
 
         <example>
@@ -342,7 +383,7 @@ require_once 'Zend/Locale.php';
 
 $sourceLanguage = null; // set to your native language code
 $locale = new Zend_Locale($sourceLanguage);
-$list = $locale->getLanguageList();
+$list = $locale->getLanguageTranslationList();
 
 foreach($list as $language => $content) {
     try {
@@ -389,7 +430,7 @@ print $locale->getScriptDisplay('Latn');
 
         <para>
             Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
-            to obtain an array containing the correct word(s) or regex strings to use for prompting the user in a 
+            to obtain an array containing the correct word(s) or regex strings to use for prompting the user in a
             particular $locale (defaults to the current object's locale). The array will contain six key-value pairs,
             for "yes", "no", their abbreviations, and regex string for proper parsing as shown in the example below.
         </para>
