@@ -959,12 +959,19 @@ abstract class Zend_Date_DateObject {
      * 
      * @param  string  $zone      OPTIONAL timezone for date calculation; defaults to date_default_timezone_get()
      * @return string  actual set timezone string
+     * @throws Zend_Date_Exception
      */
     public function setTimezone($zone = null)
     {
         $oldzone = @date_default_timezone_get();
         if ($zone === null) {
             $zone = $oldzone;
+        }
+
+        if (function_exists('timezone_identifiers_list')) {
+            if (!in_array($zone, timezone_identifiers_list())) {
+                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone");
+            }
         }
         $result = @date_default_timezone_set($zone);
         if ($result === true) {

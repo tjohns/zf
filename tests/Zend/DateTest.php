@@ -3877,8 +3877,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->getTimezone();
         $this->assertSame($result, 'Indian/Maldives');
 
-        $result = $date->setTimezone('unknown');
-        $this->assertSame($result, false);
+        try {
+            $result = $date->setTimezone('unknown');
+            // if function timezone_identifiers_list is not avaiable false should be returned
+            $this->assertSame($result, false);
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
         $result = $date->getTimezone();
         $this->assertSame($result, 'Indian/Maldives');
 
