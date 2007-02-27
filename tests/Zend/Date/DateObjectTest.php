@@ -465,7 +465,13 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('Europe/Vienna');
         $this->assertTrue($date->setTimezone('Indian/Maldives'));
         $this->assertSame($date->getTimezone(), 'Indian/Maldives');
-        $this->assertFalse($date->setTimezone('Unknown'));
+        try {
+            $this->assertFalse($date->setTimezone('Unknown'));
+            $this->fail("exception expected");
+        } catch (Zend_Date_Exception $e) {
+            $this->assertRegexp('/not a known timezone/i', $e->getMessage());
+            $this->assertSame($e->getOperand(), 'Unknown');
+        }
         $this->assertSame($date->getTimezone(), 'Indian/Maldives');
         $this->assertTrue($date->setTimezone());
         $this->assertSame($date->getTimezone(), 'Europe/Vienna');
