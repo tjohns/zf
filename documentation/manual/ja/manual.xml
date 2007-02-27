@@ -119,7 +119,6 @@
         &module_specs.Zend_Filter;
         &module_specs.Zend_Filter-FilterChains;
         &module_specs.Zend_Filter-WritingFilters;
-        &module_specs.Zend_Filter_Input;
     </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>

@@ -234,7 +234,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワーク�
                         この定数を使用することでデフォルト設定を選択できるようになります。
                         対応するロケールが見つからない場合は <code>ENVIRONMENT</code>
                         による検索を行い、それでもだめなら最後は
-                        <code>FRAMEWORK</code> を使用します。
+                        <code>BROWSER</code> を使用します。
                     </para>
                 </listitem>
             </orderedlist>

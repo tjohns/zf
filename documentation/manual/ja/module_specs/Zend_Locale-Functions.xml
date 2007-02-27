@@ -181,7 +181,7 @@ print $locale->toString();
         <title>地域化された文字列の取得</title>
 
         <para>
-            <code>getList</code> を使用すると、地域化された情報を利用することができます。
+            <code>getTranslationList()</code> を使用すると、地域化された情報を利用することができます。
             これらの情報は、各地域に特化したデータを顧客に対して提供する際に
             翻訳の必要がなくなるので便利です。
             これらはすでに使用可能となっています。
@@ -195,7 +195,7 @@ print $locale->toString();
         </para>
 
         <table>
-            <title>Zend_Locale->getList の詳細</title>
+            <title>getTranslationList() の詳細</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -208,25 +208,25 @@ print $locale->toString();
                 <tbody>
                     <row>
                         <entry>Language</entry>
-                        <entry>getLanguageList</entry>
+                        <entry>getLanguageTranslationList</entry>
                         <entry>地域化された全言語の一覧</entry>
                         <entry>完全</entry>
                     </row>
                     <row>
                         <entry>Script</entry>
-                        <entry>getScriptList</entry>
+                        <entry>getScriptTranslationList</entry>
                         <entry>地域化された全文字の一覧</entry>
                         <entry>完全</entry>
                     </row>
                     <row>
                         <entry>Country</entry>
-                        <entry>getCountryList</entry>
+                        <entry>getCountryTranslationList</entry>
                         <entry>地域化された全国名の一覧</entry>
                         <entry>完全</entry>
                     </row>
                     <row>
                         <entry>Territory</entry>
-                        <entry>getTerritoryList</entry>
+                        <entry>getTerritoryTranslationList</entry>
                         <entry>地域化された全領域の一覧</entry>
                         <entry>完全</entry>
                     </row>
@@ -324,23 +324,64 @@ print $locale->toString();
             </tgroup>
         </table>
 
+        <para>
+            以下の例は、さまざまな言語でのものの名前を取得する方法を示すものです。
+        </para>
+
         <example>
-            <title>getList</title>
+            <title>getTranslationList</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
-print_r $locale->getList('country', 'de'); // すべての国名をドイツ語で表示します
+// すべての国名をドイツ語で表示します
+print_r($locale->getTranslationList('country', 'de'));
+?>]]></programlisting>
+        </example>
+
+        <para>
+            次の例は、ある言語の名前を別の言語でどのようにいうのかを、
+            二文字の CLDR 国コードを知らない場合に調べるものです。
+        </para>
+
+        <example>
+            <title>国の名前を、ある言語から別の言語に変換する</title>
+<programlisting role="php"><![CDATA[<?php
+require 'Zend/Locale.php';
+$locale = new Zend_Locale('en_US');
+$code2name = $locale->getLanguageTranslationList();
+$name2code = array_flip($code2name);
+$frenchCode = $name2code['French'];
+echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
+// 出力は、「フランス語」を表すドイツ語の名前になります
+?>]]></programlisting>
+        </example>
+
+        <para>
+            何ができるのかをもう少し詳しく知るには、次の例の出力を確認してみましょう。
+        </para>
+
+        <example>
+            <title>使用できるすべての翻訳</title>
+<programlisting role="php"><![CDATA[<?php
+// すべての翻訳の一覧を取得します
+$lists = $locale->getTranslationList();
+
+// 使用できるすべての翻訳を表示します (大量に出力されます。すべて英語で表示されます)
+foreach ($lists as $list) {
+    echo "List $list = ";
+    print_r($locale->getTranslationList($list));
+}
 ?>]]></programlisting>
         </example>
 
         <para>
             Zend_Locale で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
             以下の例をウェブページで使用してみましょう
-            同様に <code>getCountryList()</code> および
+            同様に <code>getCountryTranslationList()</code> および
             <code>getRegionDisplay()</code> を使用すると、
             あなたのネイティブ言語での地域名と別の言語での地域名の対応表を作成できます。
-            また、<code>getCalendarList()</code> および
+            また、<code>getCalendarTranslationList()</code> および
             <code>getCalendarDisplay()</code> も同様に動作します。
             <code>try .. catch</code> ブロックで、
             存在しないロケールを使用した場合の例外を処理するようにしましょう。
@@ -356,7 +397,7 @@ require_once 'Zend/Locale.php';
 
 $sourceLanguage = null; // あなたのネイティブ言語のコードを設定します
 $locale = new Zend_Locale($sourceLanguage);
-$list = $locale->getLanguageList();
+$list = $locale->getLanguageTranslationList();
 
 foreach($list as $language => $content) {
     try {
