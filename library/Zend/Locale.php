@@ -996,14 +996,14 @@ class Zend_Locale {
                 break;
             case 'dateformat' :
                 $list = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $what, 'narrow'));
-                if (isset($list[$what])) {
-                    return $list[$what];
+                if (isset($list['pattern'])) {
+                    return $list['pattern'];
                 }
                 break;
             case 'timeformat' :
                 $list = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $what, 'narrow'));
-                if (isset($list[$what])) {
-                    return $list[$what];
+                if (isset($list['pattern'])) {
+                    return $list['pattern'];
                 }
                 break;
             case 'timezone' :
@@ -1014,20 +1014,20 @@ class Zend_Locale {
                 break;
             case 'currency' :
                 $list = Zend_Locale_Data::getContent($locale, 'currencyname', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
+                if (isset($list[0])) {
+                    return $list[0];
                 }
                 break;
             case 'currency_sign' :
                 $list = Zend_Locale_Data::getContent($locale, 'currencysymbol', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
+                if (isset($list[0])) {
+                    return $list[0];
                 }
                 break;
             case 'currency_detail' :
                 $list = Zend_Locale_Data::getContent($locale, 'currencyforregion', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
+                if (!empty($list)) {
+                    return $list;
                 }
                 break;
             case 'territory_detail' :
