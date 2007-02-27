@@ -68,7 +68,7 @@ final class Zend
      */
     static public function loadClass($class, $dirs = null)
     {
-        if (class_exists($class, false)) {
+        if (class_exists($class, false) || interface_exists($class, false)) {
             return;
         }
 
@@ -102,7 +102,7 @@ final class Zend
 
         self::loadFile($file, $dirs, true);
 
-        if (!class_exists($class, false)) {
+        if (!class_exists($class, false) && !interface_exists($class, false)) {
             throw new Zend_Exception("File \"$file\" was loaded "
                                . "but class \"$class\" was not found within.");
         }
