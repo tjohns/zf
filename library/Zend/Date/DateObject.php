@@ -90,7 +90,7 @@ abstract class Zend_Date_DateObject {
         } else if ($timestamp === null) {
             $this->_unixTimestamp = time();
         } else {
-            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp');
+            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp', $timestamp);
         }
 
         return $old;
@@ -970,7 +970,7 @@ abstract class Zend_Date_DateObject {
 
         if (function_exists('timezone_identifiers_list')) {
             if (!in_array($zone, timezone_identifiers_list())) {
-                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone");
+                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", $zone);
             }
         }
         $result = @date_default_timezone_set($zone);
