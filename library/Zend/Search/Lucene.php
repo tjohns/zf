@@ -502,6 +502,8 @@ class Zend_Search_Lucene
 
         $query->execute($this);
 
+        $topScore = 0;
+
         foreach ($query->matchedDocs() as $id => $num) {
             $docScore = $query->score($id, $this);
             if( $docScore != 0 ) {
@@ -512,12 +514,26 @@ class Zend_Search_Lucene
                 $hits[]   = $hit;
                 $ids[]    = $id;
                 $scores[] = $docScore;
+
+                if ($docScore > $topScore) {
+                    $topScore = $docScore;
+                }
             }
         }
 
         if (count($hits) == 0) {
             // skip sorting, which may cause a error on empty index
         	return array();
+        }
+
+        if ($topScore > 1) {
+            $normalizedScores = array();
+
+            foreach ($scores as $score) {
+                $normalizedScores[] = $score/$topScore;
+            }
+
+            $scores = $normalizedScores;
         }
 
         if (func_num_args() == 1) {
