@@ -11,13 +11,7 @@ Zend::exception($class, $message, $code);
 
 ?>]]></programlisting>
 
-    <para>
-        The <code>$class</code> argument specifies the exception class to load
-        and instantiate, and is loaded using 
-        <xref linkend="zend.loadclass" />; as such, it
-        must follow the framework class naming conventions and be somewhere in
-        the PHP <code>include_path</code>.
-
+    <para>  
 	<code>$class</code>参数指定了要加载和实例化的异常类（这个类通过Zend::loadClass()来加载，见<xref linkend="zend.loadclass" />）。本参数的命名一定要遵循命名规则，类文件可以位于<code>include_path</code>指定的位置。
     </para>
 
