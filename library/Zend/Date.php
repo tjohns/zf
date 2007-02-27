@@ -164,7 +164,7 @@ class Zend_Date extends Zend_Date_DateObject {
         $this->setLocale($locale);
 
         // set the timezone and offset for $this
-        $zone = date_default_timezone_get();
+        $zone = @date_default_timezone_get();
         if ($zone !== 'UTC') {
             $this->setTimezone($zone);
         }
