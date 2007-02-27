@@ -705,6 +705,10 @@ class Zend_Date extends Zend_Date_DateObject {
             $part = Zend_Date::TIMESTAMP;
         }
 
+        if (!defined("self::".$part)) {
+            return $this->toString($part, $locale);
+        }
+
         switch($part) {
 
             // day formats
