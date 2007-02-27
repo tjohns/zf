@@ -30,6 +30,10 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_maildir = dirname(__FILE__) . '/_files/test.maildir/';
+		if (!is_dir($this->_maildir . '/cur/')) {
+			$this->markTestSkipped('You have to unpack maildir.tar in Zend/Mail/_files/test.maildir/ '
+			                     . 'directory before enabling the maildir tests');
+		}
     }
 
     public function testLoadOk()
