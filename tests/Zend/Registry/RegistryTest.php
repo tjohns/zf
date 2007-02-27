@@ -189,4 +189,16 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Zend::registry('componentOptions'), $object2);
     }
 
+    /**
+     * http://bugs.php.net/bug.php?id=40442 (ZF-960)
+     */
+    public function testArrayOffset()
+    {
+        $registry = Zend::registry();
+        $registry['emptyArray'] = array();
+        $registry['null'] = null;
+        $this->assertTrue(Zend::isRegistered('emptyArray'));
+        $this->assertTrue(Zend::isRegistered('null'));
+        $this->assertFalse(Zend::isRegistered('noIndex'));
+    }
 }
