@@ -186,7 +186,7 @@ print $locale->toString();
         </para>
 
         <table>
-            <title>Details for getTranslationList()</title>
+            <title>Details for getTranslationList($type = null, $locale = null)</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -316,13 +316,27 @@ print $locale->toString();
         </table>
 
         <para>
-            If you are in need of a single translated value, you can use getTranslation() instead of 
-            getTranslationList(). It returned a single string or an array depending on if the result 
-            can have multiple values (f.e. language_detail because a language is spoken in more than 
-            one country) or only one value (f.e. language because a language has always only one 
-            translated name for it). The type is for both functions the same and also the additional
-            single functions are always avaiable for both, list and single value.
+            If you are in need of a single translated value, then you can use <code>getTranslation()</code>
+            instead of <code>getTranslationList()</code>. It returns a single string or an array depending
+            on if the result can have multiple values (f.e. language_detail because a language is spoken
+            in more than one country), or only one value (f.e. language because a language always has only
+            one translated name for it). Both functions accept a type from the list above.
+            As a convenience functions, the following have simple equivalents using the two functions above:
         </para>
+
+        <example>
+            <title>Convenience functions for getTranslation()</title>
+<programlisting role="php"><![CDATA[<?php
+getCountryTranslation($what, $locale = null)
+getCountryTranslationList($locale = null)
+getLanguageTranslation($what, $locale = null)
+getLanguageTranslationList($locale = null)
+getScriptTranslation($what, $locale = null)
+getScriptTranslationList($locale = null)
+getTerritoryTranslation($what, $locale = null)
+getTerritoryTranslationList($locale = null)
+?>]]></programlisting>
+        </example>
 
         <para>
             The example below demonstrates how to obtain the names of things in different languages.
