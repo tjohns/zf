@@ -222,6 +222,9 @@ class Zend_Db_Select
                     $l[] = $term->__toString();
                 } else if (is_array($term)) {
                     $l[] = $this->_adapter->quoteIdentifier($term[0]) . ' ' . $term[1];
+                } else {
+                    // should never happen
+                    $l[] = $term;
                 }
             }
             $sql .= implode(",\n\t", $l);
@@ -658,8 +661,15 @@ class Zend_Db_Select
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $val) {
             if ($val instanceof Zend_Db_Expr) {
+                $expr = $val->__toString();
+                if (empty($expr)) {
+                    continue;
+                }
                 $this->_parts[self::ORDER][] = $val;
             } else {
+                if (empty($val)) {
+                    continue;
+                }
                 $direction = 'ASC';
                 if (preg_match('/(.*)\s+(ASC|DESC)\s*$/i', $val, $matches)) {
                     $val = trim($matches[1]);

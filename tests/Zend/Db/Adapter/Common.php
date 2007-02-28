@@ -1277,6 +1277,60 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $rows->count());
     }
 
+    public function testTableFetchAll()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $rows = $dbTable->fetchAll();
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'), 'Expecting object of type Zend_Db_Table_Rowset');
+        $this->assertEquals(2, $rows->count());
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'), 'Expecting object of type Zend_Db_Table_Row');
+    }
+
+    public function testTableFetchAllWhere()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $rows = $dbTable->fetchAll("$id = 2");
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'), 'Expecting object of type Zend_Db_Table_Rowset');
+        $this->assertEquals(1, $rows->count());
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'), 'Expecting object of type Zend_Db_Table_Row');
+        $this->assertEquals(2, $row1->id);
+    }
+
+    public function testTableFetchAllOrder()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $rows = $dbTable->fetchAll(null, "$id DESC");
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'), 'Expecting object of type Zend_Db_Table_Rowset');
+        $this->assertEquals(2, $rows->count());
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'), 'Expecting object of type Zend_Db_Table_Row');
+        $this->assertEquals(2, $row1->id);
+    }
+
+    public function testTableFetchAllOrderExpr()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $rows = $dbTable->fetchAll(null, new Zend_Db_Expr("$id + 1 DESC"));
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'), 'Expecting object of type Zend_Db_Table_Rowset');
+        $this->assertEquals(2, $rows->count());
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'), 'Expecting object of type Zend_Db_Table_Row');
+        $this->assertEquals(2, $row1->id);
+    }
+
+    public function testTableFetchAllLimit()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $rows = $dbTable->fetchAll(null, null, 2, 1);
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'), 'Expecting object of type Zend_Db_Table_Rowset');
+        $this->assertEquals(1, $rows->count());
+        $row1 = $rows->current();
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row'), 'Expecting object of type Zend_Db_Table_Row');
+        $this->assertEquals(2, $row1->id);
+    }
+
     public function testTableExceptionNoAdapter()
     {
         Zend::loadClass('Zend_Db_Table_ZfTestTable');

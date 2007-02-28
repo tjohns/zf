@@ -397,7 +397,9 @@ abstract class Zend_Db_Table
         }
 
         // the ORDER clause
-        $order = (array) $order;
+        if (!is_array($order)) {
+            $order = array($order);
+        }
         foreach ($order as $val) {
             $select->order($val);
         }
