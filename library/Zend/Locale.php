@@ -855,6 +855,7 @@ class Zend_Locale {
                              'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail',
                              'language_detail');
         }
+        return false;
     }
 
 
@@ -1014,14 +1015,14 @@ class Zend_Locale {
                 break;
             case 'currency' :
                 $list = Zend_Locale_Data::getContent($locale, 'currencyname', $what);
-                if (isset($list[0])) {
-                    return $list[0];
+                if (isset($list[$what])) {
+                    return $list[$what];
                 }
                 break;
             case 'currency_sign' :
                 $list = Zend_Locale_Data::getContent($locale, 'currencysymbol', $what);
-                if (isset($list[0])) {
-                    return $list[0];
+                if (isset($list[$what])) {
+                    return $list[$what];
                 }
                 break;
             case 'currency_detail' :
@@ -1032,11 +1033,15 @@ class Zend_Locale {
                 break;
             case 'territory_detail' :
                 $list = Zend_Locale_Data::getContent($locale, 'regionforterritory', $what);
-                return explode(' ', $list[$what]);
+                if (isset($list[$what])) {
+                    return explode(' ', $list[$what]);
+                }
                 break;
             case 'language_detail' :
                 $list = Zend_Locale_Data::getContent($locale, 'territoryforlanguage', $what);
-                return explode(' ', $list[$what]);
+                if (isset($list[$what])) {
+                    return explode(' ', $list[$what]);
+                }
                 break;
             default :
                 return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',

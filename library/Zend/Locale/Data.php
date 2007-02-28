@@ -610,7 +610,7 @@ class Zend_Locale_Data
 
             case 'currencyname':
                 self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\''
-                             . $value . '\']/displayName', '', $key);
+                             . $value . '\']/displayName', '', $value);
                 break;
 
             case 'currencysymbols':
@@ -625,7 +625,7 @@ class Zend_Locale_Data
 
             case 'currencysymbol':
                 self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\''
-                             . $value . '\']/symbol', '', $key);
+                             . $value . '\']/symbol', '', $value);
                 break;
 
             case 'questionstrings':

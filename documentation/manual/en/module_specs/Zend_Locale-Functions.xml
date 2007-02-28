@@ -316,6 +316,15 @@ print $locale->toString();
         </table>
 
         <para>
+            If you are in need of a single translated value, you can use getTranslation() instead of 
+            getTranslationList(). It returned a single string or an array depending on if the result 
+            can have multiple values (f.e. language_detail because a language is spoken in more than 
+            one country) or only one value (f.e. language because a language has always only one 
+            translated name for it). The type is for both functions the same and also the additional
+            single functions are always avaiable for both, list and single value.
+        </para>
+
+        <para>
             The example below demonstrates how to obtain the names of things in different languages.
         </para>
 
@@ -395,30 +404,6 @@ foreach($list as $language => $content) {
         continue;
     }
 }
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getscriptdisplay">
-
-        <title>Get an translated string of an script</title>
-
-        <para>
-            With <code>getScriptDisplay()</code> the translated name of an script of the given language will be
-            returned. The same way as with the function getLanguageDisplay(), this function also supports the useage for
-            obtaining output localized to other locales, using the optional $locale argument.
-        </para>
-
-        <example>
-            <title>getScriptDisplay</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// Script
-print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
 
