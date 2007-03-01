@@ -22,6 +22,18 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_ViewTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        $this->errorReporting = error_reporting();
+        $this->displayErrors  = ini_get('display_errors');
+    }
+
+    public function tearDown()
+    {
+        error_reporting($this->errorReporting);
+        ini_set('display_errors', $this->displayErrors);
+    }
+
 	/**
 	 * Tests that the default script path is properly initialized
 	 */
@@ -574,5 +586,18 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $escaped  = $view->escape($original);
         $this->assertNotEquals($original, $escaped);
         $this->assertEquals("Some text", $escaped);
+    }
+
+    public function testZf995UndefinedPropertiesReturnNull()
+    {
+        error_reporting(E_ALL | E_STRICT);
+        ini_set('display_errors', true);
+    	$view = new Zend_View();
+    	$view->setScriptPath(dirname(__FILE__) . '/View/_templates');
+
+        ob_start();
+        echo $view->render('testZf995.phtml');
+        $content = ob_get_flush();
+        $this->assertTrue(empty($content));
     }
 }

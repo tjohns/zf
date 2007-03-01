@@ -153,6 +153,17 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     }
 
     /**
+     * Prevent E_NOTICE for nonexistent values
+     * 
+     * @param string $key 
+     * @return null
+     */
+    public function __get($key)
+    {
+        return null;
+    }
+
+    /**
      * Allows testing with empty() and isset() to work inside
      * templates.
      *
