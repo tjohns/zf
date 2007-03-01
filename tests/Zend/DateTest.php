@@ -4830,7 +4830,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testUsePhpDateFormat()
     {
         // @todo
-        $this->markTestIncomplete();
+        //$this->markTestIncomplete();
 
         // ISO format specifier tests
         // @todo
@@ -4842,6 +4842,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date2 = new Zend_Date('2006-01-02 23:58:59', 'Y-m-d H:i:s', 'en_US');
         $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
         // @todo more
+
         date_default_timezone_set('GMT');
         $date = new Zend_Date(0); // 1970-01-01 is a Thursday (should be 4 for 'w' format specifier)
         $this->assertSame($date->toString('w'), gmdate('w',$date->getTimestamp()));
