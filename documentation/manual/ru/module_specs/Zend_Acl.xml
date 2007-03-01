@@ -478,20 +478,38 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-        <title>Defining Access Controls</title>
+        <title>
+	Определение Контроля Доступа
+<!-- 	
+	Defining Access Controls
+ -->	
+	</title>
 
         <para>
+	    Теперь, когда ACL содержит необходимые Роли, можно определять правила,
+	    по которым Роли будут иметь доступ к Ресурсам. Вы должно быть заметили,
+	    что мы не определили ни одного отдельного Ресурса для этого примера,
+	    это упрощает демонстрацию того, что правила применяются ко всем Ресурсам.
+	    Zend_Acl предоставляет реализацию, посредством которой правила должны передаваться
+	    от общих к специфическим, минимизируя таким образом количество необходимых правил, так как
+	    Ресурсы и Роли наследуют правила, которые определены для их предков.
+<!-- 	
             Now that the ACL contains the relevant Roles, rules can be established that define how
             Resources may be accessed by Roles. You may have noticed that we have not defined any particular
             Resources for this example, which is simplified to illustrate that the rules apply to all Resources.
             Zend_Acl provides an implementation whereby rules need only be assigned from general to specific,
             minimizing the number of rules needed, because Resources and Roles inherit rules that are defined upon
             their ancestors.
+ -->	    
         </para>
 
         <para>
+	    В результате, мы можем определить умеренно сложный набор правил минимальным кодом.
+	    Для определения базовых прав доступа, описанных выше:
+<!-- 	
             Consequently, we can define a reasonably complex set of rules with a minimum amount of code.
             To apply the base permissions as defined above:
+ -->	    
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -507,37 +525,51 @@ $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 $acl->addRole(new Zend_Acl_Role('administrator'));
 
-// Guest may only view content
+// Гость может только просматривать контент
 $acl->allow($roleGuest, null, 'view');
 
-/* alternatively, the above could be written:
+/* другим способом, предыдущий блок кода может быть записан в таком виде:
 $acl->allow('guest', null, 'view');
 //*/
 
-// Staff inherits view privilege from guest, but also needs additional privileges
+// Посетитель наследует привилегии просмотра у Гостя, но также нуждается в дополнительных привилегиях
 $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 
-// Editor inherits view, edit, submit, and revise privileges from staff,
-// but also needs additional privileges
+// Редактор наследует привилегии просмотра, редактирования, отправки и исправлений у Посетителя
+// но также нуждается в дополнительных привилегиях
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
-// Administrator inherits nothing, but is allowed all privileges
+// Администратор не наследует ничего, но обладает всеми привилегиями
 $acl->allow('administrator');]]></programlisting>
 
         <para>
+	    Значение <code>null</code> в вызовах функции <code>allow()</code>используются для
+	    того чтобы показать, что правила предоставляющие доступ применяются ко всем ресурсам.
+<!-- 	
             The <code>null</code> values in the above <code>allow()</code> calls are used to indicate
             that the allow rules apply to all Resources.
+ -->	    
         </para>
 
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-        <title>Querying the ACL</title>
+        <title>
+	Запрос ACL
+<!-- 	
+	Querying the ACL
+ -->	
+	</title>
 
         <para>
+	    Теперь у нас есть гибкий ACL, который может использоваться для того чтобы определить, достаточно ли прав
+	    имеет запрашивающий, чтобы выполнить функции в веб-приложении. Выполнять запросы достаточно просто, используя
+	    метод <code>isAllowed()</code>:
+<!-- 	
             We now have a flexible ACL that can be used to determine whether requesters have permission
             to perform functions throughout the web application. Performing queries is quite simple using
             the <code>isAllowed()</code> method:
+ -->	    
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -551,19 +583,19 @@ echo $acl->isAllowed('staff', null, 'revise') ?
      "allowed" : "denied"; // allowed
 
 echo $acl->isAllowed('editor', null, 'view') ?
-     "allowed" : "denied"; // allowed because of inheritance from guest
+     "allowed" : "denied"; // allowed из-за наследования от Гостя
 
 echo $acl->isAllowed('editor', null, 'update') ?
-     "allowed" : "denied"; // denied because no allow rule for 'update'
+     "allowed" : "denied"; // denied, так как нет разрешающего правила для 'обновления'
 
 echo $acl->isAllowed('administrator', null, 'view') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied"; // allowed, т.к. администратор обладает всеми привилегиями
 
 echo $acl->isAllowed('administrator') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied"; // allowed, т.к. администратор обладает всеми привилегиями
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]></programlisting>
+     "allowed" : "denied"; // allowed, т.к. администратор обладает всеми привилегиями]]></programlisting>
 
     </sect2>
 </sect1>
