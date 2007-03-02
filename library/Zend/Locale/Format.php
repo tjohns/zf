@@ -518,15 +518,20 @@ class Zend_Locale_Format
      */
     public static function convertPhpToIsoFormat($format)
     {
-        $orig = array('d'  , 'D'   , 'j'   , 'l'   , 'N'   , 'S' , 'w'  , 'z', 'W', 'F'   , 'm' , 'M'  , 'n',
-                      't'  , 'L'   , 'o'   , 'Y'   , 'y'   , 'a' , 'A'  , 'B', 'g', 'G'   , 'h' , 'H'  , 'i',
-                      's'  , 'e'   , 'I'   , 'O'   , 'P'   , 'T' , 'Z'  , 'c',
-                      'r'  , 'U');
-        $dest = array('dd' , 'EEE' , 'd'   , 'EEEE', 'e'   , 'SS', 'eee', 'D', 'w', 'MMMM', 'MM', 'MMM', 'M',
-                      'ddd', 'l'   , 'YYYY', 'yyyy', 'yy'  , 'a' , 'a'  , 'B' , 'h', 'H'   , 'hh', 'HH' , 'mm',
-                      'ss' , 'zzzz', 'I'   , 'Z'   , 'ZZZZ', 'z' , 'X'   , 'YYYY-MM-DDTHH:mm:ssZZZZ',
-                      'r'  , 'U');
-        return str_replace($orig, $dest, $format);
+        $convert = array('d' => 'dd'  , 'D' => 'EEE' , 'j' => 'd'   , 'l' => 'EEEE', 'N' => 'e'   , 'S' => 'SS'  ,
+                         'w' => 'eee' , 'z' => 'D'   , 'W' => 'w'   , 'F' => 'MMMM', 'm' => 'MM'  , 'M' => 'MMM' ,
+                         'n' => 'M'   , 't' => 'ddd' , 'L' => 'l'   , 'o' => 'YYYY', 'Y' => 'yyyy', 'y' => 'yy'  ,
+                         'a' => 'a'   , 'A' => 'a'   , 'B' => 'B'   , 'g' => 'h'   , 'G' => 'H'   , 'h' => 'hh'  ,
+                         'H' => 'HH'  , 'i' => 'mm'  , 's' => 'ss'  , 'e' => 'zzzz', 'I' => 'I'   , 'O' => 'Z'   ,
+                         'P' => 'ZZZZ', 'T' => 'z'   , 'Z' => 'X'   , 'c' => 'YYYY-MM-DDTHH:mm:ssZZZZ',
+                         'r' => 'r'   , 'U' => 'U');
+        $values = str_split($format);
+        foreach ($values as $key => $value) {
+            if (array_key_exists($value, $convert)) {
+                $values[$key] = $convert[$value];
+            }
+        }
+        return join($values);
     }
 
 
