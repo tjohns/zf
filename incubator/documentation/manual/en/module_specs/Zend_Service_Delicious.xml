@@ -7,9 +7,9 @@
             XML and JSON web services. This component gives you read-write access to posts at del.icio.us
             if you provide credentials. It also allows read-only access to public data of all users.
         </para>
-        <example>
+        <example id="zend.service.delicious.introduction.getAllPosts">
             <title>Get all posts</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
@@ -17,19 +17,18 @@ foreach ($posts as $post) {
     echo "--\n";
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
-}
-            ]]></programlisting>
+}]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.retrieving_posts">
         <title>Retrieving posts</title>
         <para>
-            Class provides three methods for post retrieving: <code>getPosts</code>, 
-            <code>getRecentPosts</code> and <code>getAllPosts</code>. All of these 
-            methods return <code>Zend_Service_Delicious_PostList</code> object which 
+            <code>Zend_Service_Delicious</code> provides three methods for retrieving posts: <code>getPosts()</code>,
+            <code>getRecentPosts()</code> and <code>getAllPosts()</code>. All of these
+            methods return an instance of <code>Zend_Service_Delicious_PostList</code>, which
             holds all retrieved posts.
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get posts matching the arguments. If no date or url is given, most recent date will be used.
  *
@@ -39,8 +38,7 @@ foreach ($posts as $post) {
  * @return Zend_Service_Delicious_PostList
  */
 public function getPosts($tag = null, $dt = null, $url = null);
-            ]]></programlisting>
-            <programlisting role="php"><![CDATA[
+
 /**
  * Get recent posts
  *
@@ -49,26 +47,24 @@ public function getPosts($tag = null, $dt = null, $url = null);
  * @return Zend_Service_Delicious_PostList
  */
 public function getRecentPosts($tag = null, $count = 15);
-        ]]></programlisting>
-        <programlisting role="php"><![CDATA[
+
 /**
  * Get all posts
  *
  * @param string $tag Optional filtering by tag
  * @return Zend_Service_Delicious_PostList
  */
-public function getAllPosts($tag = null);
-        ]]></programlisting>
+public function getAllPosts($tag = null);]]></programlisting>
     </sect2>
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
         <para>
-            For easier data access this class implements <code>Countable</code>, <code>Iterator</code> and
+            For easier data access this class implements the <code>Countable</code>, <code>Iterator</code>, and
             <code>ArrayAccess</code> interfaces.
         </para>
-        <example>
+        <example id="zend.service.delicious.postlist.accessing_post_lists">
             <title>Accessing post lists</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
@@ -82,56 +78,53 @@ foreach ($posts as $post) {
     echo "Url: {$post->getUrl()}\n";
 }
 
-// get post as from the array
-echo $posts[0]->getTitle();
-            ]]></programlisting>
+// get post using array access
+echo $posts[0]->getTitle();]]></programlisting>
         </example>
         <note>
             <para>
-                Methods <code>ArrayAccess::offsetSet()</code> and <code>ArrayAccess::offsetUnset()</code>
-                in this implementation just throw errors. So code like <code>unset($posts[0]);</code> and
-                <code>$posts[0] = 'A';</code> will throw exception because this properties are read-only.
+                The <code>ArrayAccess::offsetSet()</code> and <code>ArrayAccess::offsetUnset()</code> methods
+                throw exceptions in this implementation. Thus, code like <code>unset($posts[0]);</code> and
+                <code>$posts[0] = 'A';</code> will throw exceptions because these properties are read-only.
             </para>
         </note>
     </sect2>
     <sect2 id="zend.service.delicious.editing_posts">
         <title>Editing posts</title>
-        <example>
+        <example id="zend.service.delicious.editing_posts.post_editing">
             <title>Post editing</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
 // set title
 $posts[0]->setTitle('New title');
 // save changes
-$posts[0]->save();
-            ]]></programlisting>
+$posts[0]->save();]]></programlisting>
         </example>
-        <para>
-           Every setter method returns the post so you can chain method calls.
-        </para>
-        <example>
+        <example id="zend.service.delicious.editing_posts.method_call_chaining">
             <title>Method call chaining</title>
-            <programlisting><![CDATA[
+            <para>
+               Every setter method returns the post object so that you can chain method calls using a fluent interface.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('New title')
          ->setNotes('New notes')
-         ->save();
-            ]]></programlisting>
+         ->save();]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.deleting_posts">
         <title>Deleting posts</title>
         <para>
-            There are two way to delete a post, by specifying post URL or by calling <code>delete()</code>
-            method on a post.
+            There are two ways to delete a post, by specifying the post URL or by calling the <code>delete()</code>
+            method upon a post object.
         </para>
-        <example>
+        <example id="zend.service.delicious.deleting_posts.deleting_posts">
             <title>Deleting posts</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // by specifying date
@@ -141,21 +134,20 @@ $delicious->deletePost('http://framework.zend.com');
 $posts = $delicious->getPosts();
 $posts[0]->delete();
 
-// the second way actually does this
-$delicious->deletePost($posts[0]->getUrl());
-            ]]></programlisting>
+// another way of using deletePost()
+$delicious->deletePost($posts[0]->getUrl());]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.adding_posts">
         <title>Adding new posts</title>
         <para>
-            When adding a post first you need to call <code>createNewPost()</code> method which returns
-            <code>Zend_Service_Delicious_Post</code> object. When you edit the post you need to save it
-            to del.icio.us database by calling a <code>save()</code> method.
+            To add a post you first need to call the <code>createNewPost()</code> method, which returns a
+            <code>Zend_Service_Delicious_Post</code> object. When you edit the post, you need to save it
+            to the del.icio.us database by calling the <code>save()</code> method.
         </para>
-        <example>
+        <example id="zend.service.delicious.adding_posts.adding_a_post">
             <title>Adding a post</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // create a new post and save it (with method call chaining)
@@ -164,32 +156,30 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->save();
 
 // create a new post and save it  (without method call chaining)
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com'); 
-$newPost->setNotes('Zend Framework Homepage'); 
-$newPost->save(); 
-            ]]></programlisting>
+$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
+$newPost->setNotes('Zend Framework Homepage');
+$newPost->save();]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.tags">
         <title>Tags</title>
-        <example>
+        <example id="zend.service.delicious.tags.tags">
             <title>Tags</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all tags
 print_r($delicious->getTags());
 
 // rename tag ZF to zendFramework
-$delicious->renameTag('ZF', 'zendFramework');
-            ]]></programlisting>
+$delicious->renameTag('ZF', 'zendFramework');]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.bundles">
         <title>Bundles</title>
-        <example>
+        <example id="zend.service.delicious.bundles">
             <title>Bundles</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all bundles
@@ -199,17 +189,16 @@ print_r($delicious->getBundles());
 $delicious->deleteBundle('someBundle');
 
 // add bundle
-$delicious->addBundle('newBundle', array('tag1', 'tag2'));
-            ]]></programlisting>
+$delicious->addBundle('newBundle', array('tag1', 'tag2'));]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.public_data">
         <title>Public data</title>
         <para>
-            del.icio.us web API allows access to data of all users.
+            The del.icio.us web API allows access to the public data of all users.
         </para>
-        <table>
-            <title>Functions for retrieving public data</title>
+        <table id="zend.service.delicious.public_data.functions_for_retrieving_public_data">
+            <title>Methods for retrieving public data</title>
             <tgroup cols="2">
                 <thead>
                     <row>
@@ -220,22 +209,22 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
                 </thead>
                 <tbody>
                     <row>
-                        <entry>getUserFans</entry>
+                        <entry><code>getUserFans()</code></entry>
                         <entry>Retrieves fans of a user</entry>
                         <entry>Array</entry>
                     </row>
                     <row>
-                        <entry>getUserNetwork</entry>
+                        <entry><code>getUserNetwork()</code></entry>
                         <entry>Retrieves network of a user</entry>
                         <entry>Array</entry>
                     </row>
                     <row>
-                        <entry>getUserPosts</entry>
+                        <entry><code>getUserPosts()</code></entry>
                         <entry>Retrieves posts of a user</entry>
                         <entry>Zend_Service_Delicious_PostList</entry>
                     </row>
                     <row>
-                        <entry>getUserTags</entry>
+                        <entry><code>getUserTags()</code></entry>
                         <entry>Retrieves tags of a user</entry>
                         <entry>Array</entry>
                     </row>
@@ -244,13 +233,13 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
         </table>
         <note>
             <para>
-                When using only these methods username and password are note required when constructing
-                <code>Zend_Service_Delicious</code> object.
+                When using only these methods, a username and password combination is not required when constructing
+                a new <code>Zend_Service_Delicious</code> object.
             </para>
         </note>
-        <example>
+        <example id="zend.service.delicious.public_data.retrieving_public_data">
             <title>Retrieving public data</title>
-            <programlisting><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 // username and password are not required
 $delicious = new Zend_Service_Delicious();
 
@@ -261,19 +250,18 @@ print_r($delicious->getUserFans('someUser'));
 print_r($delicious->getUserNetwork('someUser'));
 
 // get tags of user someUser
-print_r($delicious->getUserTags('someUser'));
-            ]]></programlisting>
+print_r($delicious->getUserTags('someUser'));]]></programlisting>
         </example>
         <sect3 id="zend.service.delicious.public_data.posts">
             <title>Public posts</title>
             <para>
-                When retrieving public posts with <code>getUserPosts()</code> method the
-                <code>Zend_Service_Delicious_PostList</code> object is returned but it contains
-                <code>Zend_Service_Delicious_SimplePost</code> objects which hold only basic data
-                of a post, this objects only contain URL, title, notes and tags.
+                When retrieving public posts with the <code>getUserPosts()</code> method, a
+                <code>Zend_Service_Delicious_PostList</code> object is returned, and it contains
+                <code>Zend_Service_Delicious_SimplePost</code> objects, which contain basic information
+                about the posts, including URL, title, notes, and tags.
             </para>
-            <table>
-                <title>Methods of <code>Zend_Service_Delicious_SimplePost</code> class</title>
+            <table id="zend.service.delicious.public_data.posts.SimplePost_methods">
+                <title>Methods of the <code>Zend_Service_Delicious_SimplePost</code> class</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -284,22 +272,22 @@ print_r($delicious->getUserTags('someUser'));
                     </thead>
                     <tbody>
                         <row>
-                            <entry>getNotes</entry>
+                            <entry><code>getNotes()</code></entry>
                             <entry>Returns notes of a post</entry>
                             <entry>String</entry>
                         </row>
                         <row>
-                            <entry>getTags</entry>
+                            <entry><code>getTags()</code></entry>
                             <entry>Returns tags of a post</entry>
                             <entry>Array</entry>
                         </row>
                         <row>
-                            <entry>getTitle</entry>
+                            <entry><code>getTitle()</code></entry>
                             <entry>Returns title of a post</entry>
                             <entry>String</entry>
                         </row>
                         <row>
-                            <entry>getUrl</entry>
+                            <entry><code>getUrl()</code></entry>
                             <entry>Returns URL of a post</entry>
                             <entry>String</entry>
                         </row>
