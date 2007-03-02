@@ -184,7 +184,7 @@ class Zend_Session extends Zend_Session_Abstract
         // set default options on first run only (before applying user settings)
         if (!self::$_defaultOptionsSet) {
             foreach (self::$_defaultOptions as $default_option_name => $default_option_value) {
-                if (isset(self::$_defaultOptions[$default_option_name]) && $default_option_value !== null) {
+                if (isset(self::$_defaultOptions[$default_option_name])) {
                     ini_set('session.' . $default_option_name, $default_option_value);
                 }
             }
@@ -671,7 +671,7 @@ class Zend_Session extends Zend_Session_Abstract
      */
     static public function namespaceGet($namespace)
     {
-        return parent::_namespaceGet($namespace);
+        return parent::_namespaceGetAll($namespace);
     }
 
 

@@ -151,7 +151,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
      */
     public function getIterator()
     {
-        return new ArrayObject(parent::_namespaceGet($this->_namespace));
+        return new ArrayObject(parent::_namespaceGetAll($this->_namespace));
     }
 
 
