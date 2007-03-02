@@ -1,33 +1,38 @@
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
     <para>
-    <code>Zend::loadClass()</code> charge un fichier PHP dont le nom est de la 
-    forme "<code>$nomClasse.php</code>", et vérifie ensuite si 
-    <code>$nomClasse</code> existe.
+        <code>Zend::loadClass($class, $dirs)</code> charge un fichier PHP
+        et vérifie l'existence de la classe dans celui-ci.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
-Zend::loadClass($class, $dirs)
+
+Zend::loadClass('Contenant_Arbre', array('/home/production/malib', '/home/production/appli'));
 
 ?>]]></programlisting>
 
     <para>
-    Si le fichier est introuvable ou si la classe n'existe pas après chargement, 
-    une exception <code>Zend_Exception</code> est lancée. La méthode 
-    <code>Zend::loadFile()</code> est utilisée pour le chargement du fichier, et 
-    l'argument <code>$dirs</code> lui est passé directement.
+        Après avoir converti <code>$class</code> en un chemin par remplacement des tirets bas en séparateurs
+        de répertoires, le résultat obtenu est ajouté à chacun des chemins fournis dans  <code>$dirs</code>
+        Si <code>$dirs</code> vaut null, seul le chemin obtenu est utilisé.
+        Par exemple, <code>Contenant_Arbre</code> devient <code>Contenant/Arbre.php</code>.
+        Si <code>/home/production/malib/Contenant/Arbre.php</code> existe, alors il sera chargé.
+        Alternativement, <code>/home/production/appli/Contenant/Arbre.php</code> sera chargé si il existe.
+        Sinon, les répertoires contenus dans la variable de configuration <code>include_path</code> de PHP 
+        seront parcourus à la recherche de <code>Contenant/Arbre.php</code>.
     </para>
 
     <para>
-    Si vous demandez une classe dont le nom contient des tirets-bas ("_") et si 
-    <code>$dirs</code> vaut null (le cas par défaut), 
-    <code>Zend::loadClass()</code> déterminera automatiquement 
-    <code>$dirs</code> à partir du nom de la classe, en convertissant les 
-    tirets-bas en séparateurs de répertoires. Par exemple, si 
-    <code>$class</code> est <code>Zend_Exemple_Classe</code>, ce nom 
-    correspondra au chemin d'accès <code>Zend/Exemple/Classe.php</code>.
+        Si <code>$dirs</code> est un tableau, les répertoires sont parcourus
+        dans leur ordre de déclaration et le premier fichier correspondant est chargé.
     </para>
+
+    <para>
+        Si le fichier n'est pas trouvé ou qu'il ne contient pas la classe, une exception <code>Zend_Exception</code>
+        est lancée. <code>Zend::loadFile()</code> est utilisé pour le chargement. De ce fait, le nom de la classe ne
+        doit contenir que des caractères alphanumériques et les caractères tiret ('-'), tiret bas ('_') et point ('.').
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
