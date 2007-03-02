@@ -540,7 +540,7 @@ class Zend_Locale_Format
      *
      * @param string              $date    Date string to parse
      * @param string              $format  Format to parse. Only single-letter codes are supported:
-     *                                     [hH] hour, [im] minute, s second,
+     *                                     [hH] hour, [m] minute, s second,
      *                                     [yY] year, [M] month, [dD] day, a am/pm
      *                                     MMMM month name, EEEE weekday name
      * @param Zend_Locale|string  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
@@ -570,10 +570,6 @@ class Zend_Locale_Format
             if ($day === false) {
                 $day = iconv_strpos($format, 'D');
             }
-        }
-
-        if ($min === false) {
-            $min = iconv_strpos($format, 'i');
         }
 
         if ($day !== false) {
@@ -714,6 +710,10 @@ class Zend_Locale_Format
                     }
                     ++$cnt;
                     break;
+                default:
+                    if (ctype_alpha($value)) {
+                        throw new Zend_Locale_Exception("unable to parse format string '$format' at letter '$value'");
+                    }
             }
         }
 
