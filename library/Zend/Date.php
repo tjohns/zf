@@ -2079,7 +2079,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // ATOM and RFC_3339 are identical
             case Zend_Date::ATOM :
             case Zend_Date::RFC_3339:
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                $result = preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]{1}\d{2}:\d{2}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, ATOM format expected", $date);
                 }
@@ -2132,7 +2132,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::RFC_822 :
                 // new RFC 822 format
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     // old RFC 822 format
                     $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\w{1,3}/', $date, $match);
@@ -2190,7 +2190,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::RFC_1036 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 1036 date format expected", $date);
                 }
@@ -2216,7 +2216,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::RFC_1123 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 1123 date format expected", $date);
                 }
@@ -2241,7 +2241,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::RSS :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RSS date format expected", $date);
                 }
@@ -2266,7 +2266,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::W3C :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                $result = preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]{1}\d{2}:\d{2}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, W3C date format expected", $date);
                 }
