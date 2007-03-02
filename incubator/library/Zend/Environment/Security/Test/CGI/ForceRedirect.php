@@ -32,7 +32,7 @@ class Zend_Environment_Security_Test_CGI_ForceRedirect extends Zend_Environment_
 	protected $_recommended_value = TRUE;
 
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('cgi.force_redirect');
+		$this->_current_value = $this->getIniValue('cgi.force_redirect');
 	}
 
 
@@ -56,6 +56,7 @@ class Zend_Environment_Security_Test_CGI_ForceRedirect extends Zend_Environment_
 	 *
 	 */
 	protected function _setMessages() {
+		parent::_setMessages();
         $this->setMessageForResult(self::RESULT_OK, 'en', "force_redirect is enabled, which is the recommended setting");
 		$this->setMessageForResult(self::RESULT_WARN, 'en', "force_redirect is disabled.  In most cases, this is a <strong>serious</strong> security vulnerability.  Unless you are absolutely sure this is not needed, enable this setting");
 	}
