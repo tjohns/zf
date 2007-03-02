@@ -5,7 +5,6 @@
 <!ENTITY % xinclude SYSTEM "xinclude.mod">
 %xinclude;
 ]>
-<!-- $Id: $ -->
 <book id="manual" lang="en">
     <bookinfo>
         <title>Programmer's Reference Guide</title>
