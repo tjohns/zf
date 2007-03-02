@@ -4836,11 +4836,51 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
     public function testUsePhpDateFormat()
     {
-        // @todo
-        //$this->markTestIncomplete();
+        Zend_Date::usePhpDateFormat(false);
 
-        // ISO format specifier tests
-        // @todo
+        // PHP date() format specifier tests
+        $date1 = new Zend_Date('2006-01-02 23:58:59', Zend_Date::ISO_8601, 'en_US');
+        $date2 = new Zend_Date('2006-01-02 23:58:59', 'YYYY-MM-dd HH:mm:ss', 'en_US');
+        $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
+
+        date_default_timezone_set('GMT');
+        $date = new Zend_Date(0); // 1970-01-01 is a Thursday (should be 4 for 'w' format specifier)
+        $this->assertSame($date->toString('eee'), gmdate('w',$date->getTimestamp()));
+        $this->assertSame($date->toString('dd'), gmdate('d',$date->getTimestamp()));
+        $this->assertSame($date->toString('EEE', 'en'), gmdate('D',$date->getTimestamp()));
+        $this->assertSame($date->toString('d'), gmdate('j',$date->getTimestamp()));
+        $this->assertSame($date->toString('EEEE', 'en'), gmdate('l',$date->getTimestamp()));
+        $this->assertSame($date->toString('e'), gmdate('N',$date->getTimestamp()));
+        $this->assertSame($date->toString('SS'), gmdate('S',$date->getTimestamp()));
+        $this->assertSame($date->toString('D'), gmdate('z',$date->getTimestamp()));
+        $this->assertSame($date->toString('w'), gmdate('W',$date->getTimestamp()));
+        $this->assertSame($date->toString('MMMM', 'en'), gmdate('F',$date->getTimestamp()));
+        $this->assertSame($date->toString('MM'), gmdate('m',$date->getTimestamp()));
+        $this->assertSame($date->toString('MMM', 'en'), gmdate('M',$date->getTimestamp()));
+        $this->assertSame($date->toString('M'), gmdate('n',$date->getTimestamp()));
+        $this->assertSame($date->toString('ddd'), gmdate('t',$date->getTimestamp()));
+        $this->assertSame($date->toString('l'), gmdate('L',$date->getTimestamp()));
+        $this->assertSame($date->toString('YYYY'), gmdate('o',$date->getTimestamp()));
+        $this->assertSame($date->toString('yyyy'), gmdate('Y',$date->getTimestamp()));
+        $this->assertSame($date->toString('yy'), gmdate('y',$date->getTimestamp()));
+        $this->assertSame(strtolower($date->toString('a', 'en')), gmdate('a',$date->getTimestamp()));
+        $this->assertSame(strtoupper($date->toString('a', 'en')), gmdate('A',$date->getTimestamp()));
+        $this->assertSame($date->toString('B'), gmdate('B',$date->getTimestamp()));
+        $this->assertSame($date->toString('h'), gmdate('g',$date->getTimestamp()));
+        $this->assertSame($date->toString('H'), gmdate('G',$date->getTimestamp()));
+        $this->assertSame($date->toString('hh'), gmdate('h',$date->getTimestamp()));
+        $this->assertSame($date->toString('HH'), gmdate('H',$date->getTimestamp()));
+        $this->assertSame($date->toString('mm'), gmdate('i',$date->getTimestamp()));
+        $this->assertSame($date->toString('ss'), gmdate('s',$date->getTimestamp()));
+        $this->assertSame($date->toString('zzzz'), date('e',$date->getTimestamp()));
+        $this->assertSame($date->toString('I'), gmdate('I',$date->getTimestamp()));
+        $this->assertSame($date->toString('Z'), gmdate('O',$date->getTimestamp()));
+        $this->assertSame($date->toString('ZZZZ'), gmdate('P',$date->getTimestamp()));
+        $this->assertSame($date->toString('z'), gmdate('T',$date->getTimestamp()));
+        $this->assertSame($date->toString('X'), gmdate('Z',$date->getTimestamp()));
+        $this->assertSame($date->toString('yyyy-MM-ddTHH:mm:ssZZZZ'), gmdate('c',$date->getTimestamp()));
+        $this->assertSame($date->toString('r'), gmdate('r',$date->getTimestamp()));
+        $this->assertSame($date->toString('U'), gmdate('U',$date->getTimestamp()));
 
         Zend_Date::usePhpDateFormat(true);
 
@@ -4848,7 +4888,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date1 = new Zend_Date('2006-01-02 23:58:59', Zend_Date::ISO_8601, 'en_US');
         $date2 = new Zend_Date('2006-01-02 23:58:59', 'Y-m-d H:i:s', 'en_US');
         $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
-        // @todo more
 
         date_default_timezone_set('GMT');
         $date = new Zend_Date(0); // 1970-01-01 is a Thursday (should be 4 for 'w' format specifier)
