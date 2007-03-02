@@ -708,9 +708,9 @@ class Zend_Search_Lucene
             if ($segInfo->getTermInfo($term) instanceof Zend_Search_Lucene_Index_TermInfo) {
                 return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 
     /**
