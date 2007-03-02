@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+[
+    <!ENTITY % xinclude SYSTEM "xinclude.mod">
+    %xinclude;
+]>
+<book id="manual" lang="en">
+    <chapter>
+        <title>XMLLint</title>
+        <xi:include href="@LINT@">
+            <xi:fallback>
+                Cannot find file "@LINT@"
+            </xi:fallback>
+        </xi:include>
+    </chapter>
+</book>
+<!--
+vim:se ts=4 sw=4 et:
+-->

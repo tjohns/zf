@@ -1,16 +1,32 @@
-How to build the docs:
+Required software:
 
-- Install libxml2-devel package so that you have the "xsltproc" tool.
+- autoconf
+- make
+- xsltproc
+- xmllint
 
-On windows; install cygwin and the autoconf, make, libxml2-devel packages.
+On Windows, you should use Cygwin software or another port of GNU 
+development tools.
 
-- run autoconf in this dir
-- run ./configure in this dir
-- run make
+How to build the DocBook documentation:
 
-the docs will appear in the html dir.
+- run "autoconf" in this dir
+- run "./configure" in this dir
+- run "make"
 
-When developing content, you can run "make check" to verify that your docbook is valid.
+The HTML files are rendered in the "html" dir.
+
+When developing content, you can verify your changes by running:
+
+  "make check"
+
+This verifies the XML for the whole manual is valid.
+
+You can verify your changes in a single file by running:
+
+  "make XMLFILE=filename.xml check1"
+
+The filename.xml is relative to the "module_specs" directory.
 
 DocBook resources:
 

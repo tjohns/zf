@@ -4,6 +4,7 @@ XINC=xinc
 XEP=xep
 FOP=fop
 XSLTPROC=xsltproc
+XMLLINT=xmllint
 
 AC_ARG_WITH(xep, [  --with-xep   Where to find RenderX XEP],
 	[
@@ -41,6 +42,15 @@ AC_ARG_WITH(xsltproc, [  --with-xsltproc  Where to find xsltproc],
 )
 AC_PATH_PROG(XSLTPROC,  $XSLTPROC)
 
+AC_ARG_WITH(xmllint, [  --with-xmllint  Where to find xmllint],
+	[
+		if test "x$withval" != "xno"; then
+			XMLLINT="$withval"
+		fi
+	]
+)
+AC_PATH_PROG(XMLLINT,  $XMLLINT)
+
 ECSRC=../trunk
 AC_ARG_WITH(ecsrc, [  --with-ecsrc  Where to find the ecelerity source],
 	[
@@ -54,6 +64,7 @@ AC_SUBST(XINC)
 AC_SUBST(XEP)
 AC_SUBST(FOP)
 AC_SUBST(XSLTPROC)
+AC_SUBST(XMLLINT)
 AC_SUBST(ECSRC)
 HERE=`pwd`
 AC_SUBST(HERE)
@@ -64,6 +75,7 @@ cat > config.nice <<EOT
 ./configure \
     --with-ecsrc='$ECSRC' \
     --with-xsltproc='$XSLTPROC' \
+    --with-xmllint='$XMLLINT' \
     --with-fop='$FOP' \
     --with-xinc='$XINC' \
     --with-xep='$XEP'
