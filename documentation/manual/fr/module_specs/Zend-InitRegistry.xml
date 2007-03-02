@@ -3,20 +3,23 @@
     <title>Zend::initRegistry($registry = 'Zend_Registry')</title>
 
     <para>
-        Developers wishing to extend the existing registry's functionality may use this function.
-        This method enables developers to subclass Zend_Registry, including
-        adding alias methods for offsetGet() and offsetExists(), such as has(), getval(), setval(), etc.,
-        by creating an instance of a Zend_Registry subclass in bootstrap code, and then supplying that instance
-        to initRegistry(), before any other registry-related methods are used.  Note that initRegistry()
-        may only be used once, to avoid accidentally overwriting the registry after initialization.
-        Also, using Zend::registry() or Zend::register() automatically calls initRegistry(), if it has
-        not already been called.
+        Les dévelopeurs désireux d'étendre les fonctionnalités existantes du registre peuvent
+        utiliser cette fonction.
+        Cette méthode permet aux développeurs de créer des sous-classes à Zend_Registry,
+        incluant l'ajout de méthodes aliasées à offsetGet() et offsetExists(), tels que
+        has(), getval(), setval(), etc. en créant une instance  de la sous-classe de
+        Zend_Registry dans le code de bootstrap et en fournissant cette instance à initRegistry(),
+        avant que toute autre méthode liée au registre ne sont invoquée.
+        Notez que initRegistry() peut seulement être utilisé une seule fois, afin d'éviter tout
+        écrasement accidentel après l'initialisation.
+        Ainsi, l'utilisation de Zend::registry() ou de Zend::register() invoque automatiquement
+        initRegistry() si cela n'a pas déjà été fait.
     </para>
 
     <example>
-        <title>register() / offsetSet() Example</title>
+        <title>Exemple register() / offsetSet()</title>
 <programlisting role="php"><![CDATA[<?php
-class Zend_RegistryMine extends Zend_Registry
+class Zend_Registry_Perso extends Zend_Registry
 {
     public function getval($index)
     {
@@ -24,24 +27,24 @@ class Zend_RegistryMine extends Zend_Registry
     }
 }
 
-# in your bootstrap code:
+# dans votre code de bootstrap :
 
-$ini_array = parse_ini_file('your_stuff.ini'); // purely optional
-$registry = new Zend_RegistryMine($ini_array);
+$ini_array = parse_ini_file('votreconfig.ini'); // entièrement optionnel
+$registry = new Zend_Registry_Perso($ini_array);
 Zend::initRegistry($registry);
 
-# now the normal Zend::registry(), Zend::register(), and Zend::isRegistered() work as expected
+# maintenant, les méthodes originales Zend::registry(), Zend::register() et Zend::isRegistered() fonctionnent normalement
 ?>]]></programlisting>
     </example>
 
     <para>
-        Use the constant <code>ArrayObject::ARRAY_AS_PROPS</code> in the constructor to enable accessing values
-        using <code>$registry->$indexName</code>, in addition to <code>$registry[$indexName]</code>.
-        However, beware of name collisions, if you extend Zend_Registry and add private variables.
+        Utilisez la constante <code>ArrayObject::ARRAY_AS_PROPS</code> dans le constructeur pour permettre d'accéder aux valeurs
+        en utilisant <code>$registry->$indexName</code>, en plus de <code>$registry[$indexName]</code>.
+        Cependant, attention aux conflits de noms si vous étendez Zend_Registry et ajoutez des variables privées.
     </para>
 
     <example>
-        <title>Accessing Values Using OO Notation Instead of ArrayAccess Notation</title>
+        <title>Accéder aux valeurs en utilisant la notation objet OO au lieu de la notation ArrayAccess</title>
 <programlisting role="php"><![CDATA[<?php
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
 Zend::initRegistry($registry);
