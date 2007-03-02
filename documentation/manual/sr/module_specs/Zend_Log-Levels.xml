@@ -1,0 +1,17 @@
+<sect1 id="zend.log.log-levels">
+   <title>Log Levels</title>
+   <para>
+       <code>Zend_Log::log()</code> will log all messages as <code>LEVEL_DEBUG</code> unless a different level
+       is supplied as the optional second argument.  The following levels are available as constants of the
+       <code>Zend_Log</code> class.
+    </para>
+    <programlisting role="php"><![CDATA[
+LEVEL_DEBUG     = 1
+LEVEL_WARNING   = 4
+LEVEL_ERROR     = 8
+LEVEL_SEVERE    = 16
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

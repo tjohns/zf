@@ -1,0 +1,40 @@
+XEP=@XEP@
+XINC=@XINC@
+FOP=@FOP@
+XSLTPROC=@XSLTPROC@
+ECSRC=@ECSRC@
+HERE=@HERE@
+
+# Subdirs that contain docs
+DOCS=ref module_specs
+
+XML_CATALOG_FILES=../.build/docbook-xsl/catalog.xml
+export XML_CATALOG_FILES FOP
+
+all:	build/docbook-xsl entities.ent manual.xml html
+
+clean:
+	-rm html/*.html
+
+pdf:	entities.ent
+
+entities.ent:	../.build/mkentities.sh $(DOCS)
+	sh ../.build/mkentities.sh $(DOCS) > .ent
+	[ -s .ent ] && mv .ent entities.ent 
+	-rm -f .ent
+
+# Build the docs in HTML format
+
+html: html/index.html
+
+html/index.html: manual.xml ../.build/html.xsl
+	$(XSLTPROC) --output html/index.html ../.build/html.xsl manual.xml
+
+check: manual.xml
+	xmllint --valid --noout --postvalid manual.xml
+
+# need to touch the dir because the timestamp in the tarball
+# is older than that of the tarball :)
+build/docbook-xsl: ../.build/docbook-xsl-1.69.1.tgz
+	cd ../.build && tar xzf docbook-xsl-1.69.1.tgz && touch docbook-xsl
+

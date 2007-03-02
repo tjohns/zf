@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+[
+    <!ENTITY % magic.fixup SYSTEM "./entities.ent">
+    %magic.fixup;
+]>
+<book id="manual" lang="en">
+    <bookinfo>
+        <title>Programmer's Reference Guide</title>
+        <subtitle>Zend Framework</subtitle>
+        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <copyright>
+            <year>2005-<?dbtimestamp format="Y"?></year>
+            <holder>
+                Zend Technologies Inc.
+                (<ulink url="http://www.zend.com" />)
+            </holder>
+        </copyright>
+        <!--
+        A Title page graphic can be included like this
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../web/images/foo.jpg"/>
+              </imageobject>
+            </mediaobject>
+        -->
+    </bookinfo>
+    <!-- &ref.preface; -->
+    <!-- &ref.install; -->
+    <!-- &ref.conf;    -->
+    <chapter id="zend">
+        <title>Zend</title>
+        &module_specs.Zend-Introduction;
+        &module_specs.Zend-LoadFile;
+        &module_specs.Zend-LoadClass;
+        &module_specs.Zend-IsReadable;
+        &module_specs.Zend-Exception;
+        &module_specs.Zend-Dump;
+        &module_specs.Zend-Register;
+        &module_specs.Zend-Registry;
+        &module_specs.Zend-InitRegistry;
+    </chapter>
+    <chapter id="zend.acl">
+        <title>Zend_Acl</title>
+        &module_specs.Zend_Acl;
+        &module_specs.Zend_Acl-Refining;
+        &module_specs.Zend_Acl-Advanced;
+    </chapter>
+    <chapter id="zend.auth">
+        <title>Zend_Auth</title>
+        &module_specs.Zend_Auth;
+        &module_specs.Zend_Auth_Adapter_Digest;
+    </chapter>
+    <chapter id="zend.cache">
+        <title>Zend_Cache</title>
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
+    </chapter>
+    <chapter id="zend.config">
+        <title>Zend_Config</title>
+        &module_specs.Zend_Config-Introduction;
+        &module_specs.Zend_Config-TheoryOfOperation;
+        &module_specs.Zend_Config_Ini;
+        &module_specs.Zend_Config_Xml;
+    </chapter>
+    <chapter id="zend.console.getopt">
+        <title>Zend_Console_Getopt</title>
+        &module_specs.Zend_Console_Getopt-Introduction;
+        &module_specs.Zend_Console_Getopt-Rules;
+        &module_specs.Zend_Console_Getopt-Fetching;
+        &module_specs.Zend_Console_Getopt-Configuration;
+    </chapter>
+    <chapter id="zend.controller">
+        <title>Zend_Controller</title>
+        &module_specs.Zend_Controller-Overview;
+        &module_specs.Zend_Controller-GettingStarted;
+        &module_specs.Zend_Controller-Subclassing;
+        &module_specs.Zend_Controller-ProvidedSubclasses;
+        &module_specs.Zend_Controller-ActionController;
+        &module_specs.Zend_Controller-Plugins;
+        &module_specs.Zend_Controller-Modular;
+        &module_specs.Zend_Controller-Exceptions;
+        &module_specs.Zend_Controller-Migration;
+    </chapter>
+    <chapter id="zend.date">
+        <title>Zend_Date</title>
+        &module_specs.Zend_Date-Introduction;
+        &module_specs.Zend_Date-Basic;
+        &module_specs.Zend_Date-Theory;
+        &module_specs.Zend_Date-Overview;
+        &module_specs.Zend_Date-Constants;
+    </chapter>
+    <chapter id="zend.db">
+        <title>Zend_Db</title>
+        &module_specs.Zend_Db_Adapter;
+        &module_specs.Zend_Db_Profiler;
+        &module_specs.Zend_Db_Select;
+        &module_specs.Zend_Db_Table;
+        &module_specs.Zend_Db_Table_Row;
+        &module_specs.Zend_Db_Table_Rowset;
+    </chapter>
+    <chapter id="zend.feed">
+        <title>Zend_Feed</title>
+        &module_specs.Zend_Feed-Introduction;
+        &module_specs.Zend_Feed-Importing;
+        &module_specs.Zend_Feed-FindFeeds;
+        &module_specs.Zend_Feed-ConsumingRss;
+        &module_specs.Zend_Feed-ConsumingAtom;
+        &module_specs.Zend_Feed-ConsumingAtomSingle;
+        &module_specs.Zend_Feed-ModifyingFeed;
+        &module_specs.Zend_Feed-CustomFeed;
+    </chapter>
+    <chapter id="zend.filter">
+        <title>Zend_Filter</title>
+        &module_specs.Zend_Filter;
+        &module_specs.Zend_Filter-FilterChains;
+        &module_specs.Zend_Filter-WritingFilters;
+    </chapter>
+    <chapter id="zend.gdata">
+        <title>Zend_Gdata</title>
+        &module_specs.Zend_Gdata-Introduction;
+        &module_specs.Zend_Gdata_AuthSub;
+        &module_specs.Zend_Gdata_ClientLogin;
+        &module_specs.Zend_Gdata_Base;
+        &module_specs.Zend_Gdata_Blogger;
+        &module_specs.Zend_Gdata_Calendar;
+        &module_specs.Zend_Gdata_CodeSearch;
+        <!--
+        &module_specs.Zend_Gdata_Spreadsheets;
+        -->
+        &module_specs.Zend_Gdata_Data;
+        &module_specs.Zend_Gdata_Exception;
+    </chapter>
+    <chapter id="zend.http">
+        <title>Zend_Http</title>
+        &module_specs.Zend_Http_Client;
+        &module_specs.Zend_Http_Client-Advanced;
+        &module_specs.Zend_Http_Client-Adapters;
+        &module_specs.Zend_Http_Cookie-Handling;
+        &module_specs.Zend_Http_Response;
+    </chapter>
+    <chapter id="zend.json">
+        <title>Zend_Json</title>
+        &module_specs.Zend_Json-Introduction;
+        &module_specs.Zend_Json-Basics;
+        &module_specs.Zend_Json-Objects;
+    </chapter>
+    <chapter id="zend.locale">
+        <title>Zend_Locale</title>
+        &module_specs.Zend_Locale-Introduction;
+        &module_specs.Zend_Locale-Functions;
+        &module_specs.Zend_Locale-Parsing;
+        &module_specs.Zend_Locale-DatesTimes;
+        &module_specs.Zend_Locale-AppendixLanguages;
+        &module_specs.Zend_Locale-AppendixRegions;
+    </chapter>
+    <chapter id="zend.log">
+        <title>Zend_Log</title>
+        &module_specs.Zend_Log-Introduction;
+        &module_specs.Zend_Log-Simple;
+        &module_specs.Zend_Log-Levels;
+        &module_specs.Zend_Log-Advanced;
+    </chapter>
+    <chapter id="zend.mail">
+        <title>Zend_Mail</title>
+        &module_specs.Zend_Mail-Introduction;
+        &module_specs.Zend_Mail-Sending;
+        &module_specs.Zend_Mail-MultipleEmails;
+        &module_specs.Zend_Mail-DifferentTransports;
+        &module_specs.Zend_Mail-HtmlMails;
+        &module_specs.Zend_Mail-Attachments;
+        &module_specs.Zend_Mail-AddingRecipients;
+        &module_specs.Zend_Mail-Boundary;
+        &module_specs.Zend_Mail-AdditionalHeaders;
+        &module_specs.Zend_Mail-CharacterSets;
+        &module_specs.Zend_Mail-Encoding;
+        &module_specs.Zend_Mail-SmtpAuthentication;
+        &module_specs.Zend_Mail-SmtpSecure;
+        &module_specs.Zend_Mail_Read;
+    </chapter>
+    <chapter id="zend.measure">
+        <title>Zend_Measure</title>
+        &module_specs.Zend_Measure-Introduction;
+        &module_specs.Zend_Measure-Creation;
+        &module_specs.Zend_Measure-Output;
+        &module_specs.Zend_Measure-Edit;
+        &module_specs.Zend_Measure-Special;
+        &module_specs.Zend_Measure-Types;
+    </chapter>
+    <chapter id="zend.mime">
+        <title>Zend_Mime</title>
+        &module_specs.Zend_Mime;
+        &module_specs.Zend_Mime_Message;
+        &module_specs.Zend_Mime_Part;
+    </chapter>
+    <chapter id="zend.pdf">
+        <title>Zend_Pdf</title>
+        &module_specs.Zend_Pdf-Introduction;
+        &module_specs.Zend_Pdf-Create;
+        &module_specs.Zend_Pdf-Save;
+        &module_specs.Zend_Pdf-Pages;
+        &module_specs.Zend_Pdf-Drawing;
+        &module_specs.Zend_Pdf-Usage;
+    </chapter>
+    <chapter id="zend.rest">
+        <title>Zend_Rest</title>
+        &module_specs.Zend_Rest;
+        &module_specs.Zend_Rest_Client;
+        &module_specs.Zend_Rest_Server;
+    </chapter>
+    <chapter id="zend.search">
+        <title>Zend_Search</title>
+        &module_specs.Zend_Search-Overview;
+        &module_specs.Zend_Search-IndexCreation;
+        &module_specs.Zend_Search-Searching;
+        &module_specs.Zend_Search-QueryLanguage;
+        &module_specs.Zend_Search-Queries;
+        &module_specs.Zend_Search-Charset;
+        &module_specs.Zend_Search-Extending;
+        &module_specs.Zend_Search-JavaLucene;
+    </chapter>
+    <chapter id="zend.server">
+        <title>Zend_Server</title>
+        &module_specs.Zend_Server;
+        &module_specs.Zend_Server_Reflection;
+    </chapter>
+    <chapter id="zend.service">
+        <title>Zend_Service</title>
+        &module_specs.Zend_Service;
+        &module_specs.Zend_Service_Akismet;
+        &module_specs.Zend_Service_Amazon;
+        &module_specs.Zend_Service_Flickr;
+        &module_specs.Zend_Service_Yahoo;
+    </chapter>
+    <chapter id="zend.session">
+        <title>Zend_Session</title>
+        &module_specs.Zend_Session-Introduction;
+        &module_specs.Zend_Session-BasicUsage;
+        &module_specs.Zend_Session-AdvancedUsage;
+        &module_specs.Zend_Session-GlobalSessionManagement;
+        &module_specs.Zend_Session-Theory;
+    </chapter>
+    <chapter id="zend.uri">
+        <title>Zend_Uri</title>
+        &module_specs.Zend_Uri;
+    </chapter>
+    <chapter id="zend.validate">
+        <title>Zend_Validate</title>
+        &module_specs.Zend_Validate;
+        &module_specs.Zend_Validate-ValidatorChains;
+        &module_specs.Zend_Validate-WritingValidators;
+        &module_specs.Zend_Validate-EmailAddress;
+        &module_specs.Zend_Validate-Hostname;
+    </chapter>
+    <chapter id="zend.view">
+        <title>Zend_View</title>
+        &module_specs.Zend_View-Introduction;
+        &module_specs.Zend_View-Controllers;
+        &module_specs.Zend_View-Scripts;
+        &module_specs.Zend_View-Helpers;
+    </chapter>
+    <chapter id="zend.xmlrpc">
+        <title>Zend_XmlRpc</title>
+        &module_specs.Zend_XmlRpc;
+        &module_specs.Zend_XmlRpc_Client;
+        &module_specs.Zend_XmlRpc_Server;
+    </chapter>
+    <!-- &ref.faq; -->
+    &ref.coding_standard;
+    &ref.copyrights;
+    <index id="the.index" />
+</book>
+<!--
+vim:se ts=4 sw=4 et:
+-->
