@@ -539,7 +539,10 @@ class Zend_Locale_Format
      * Parse date and split in named array fields
      *
      * @param string              $date    Date string to parse
-     * @param string              $format  Format to parse
+     * @param string              $format  Format to parse. Only single-letter codes are supported:
+     *                                     [hH] hour, [im] minute, s second,
+     *                                     [yY] year, [M] month, [dD] day, a am/pm
+     *                                     MMMM month name, EEEE weekday name
      * @param Zend_Locale|string  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array                       possible array members: day, month, year, hour, minute, second, fixed, format
      */
@@ -547,6 +550,7 @@ class Zend_Locale_Format
     {
         $number = $date; // working copy
         $result['format'] = $format; // save the format used to normalize $number (convenience)
+        $result['locale'] = $locale; // save the locale used to normalize $number (convenience)
 
         $day   = iconv_strpos($format, 'd');
         $month = iconv_strpos($format, 'M');
@@ -558,71 +562,62 @@ class Zend_Locale_Format
         if ($hour === false) {
             $hour = iconv_strpos($format, 'h');
         }
+        if ($year === false) {
+            $year = iconv_strpos($format, 'Y');
+        }
         if ($day === false) {
             $day = iconv_strpos($format, 'E');
+            if ($day === false) {
+                $day = iconv_strpos($format, 'D');
+            }
+        }
+
+        if ($min === false) {
+            $min = iconv_strpos($format, 'i');
         }
 
         if ($day !== false) {
             $parse[$day]   = 'd';
+            if (!empty($locale) && $locale !== 'root' && (!is_object($locale) || $locale->toString() !== 'root')) {
+                // erase day string
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
+                foreach($daylist as $key => $name) {
+                    if (iconv_strpos($number, $name) !== false) {
+                        $number = str_replace($name, "EEEE", $number);
+                        break;
+                    }
+                }
+            }
+        }
+        $position = false;
+
+        if ($month !== false) {
             $parse[$month] = 'M';
+            if (!empty($locale) && $locale !== 'root' && (!is_object($locale) || $locale->toString() !== 'root')) {
+                // prepare to convert month name to their numeric equivalents, if requested, and we have a $locale
+                $position = self::_replaceMonth($number, Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide')));
+                if ($position === false) {
+                    $position = self::_replaceMonth($number, Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated')));
+                }
+            }
+        }
+        if ($year !== false) {
             $parse[$year]  = 'y';
         }
         if ($hour !== false) {
             $parse[$hour] = 'H';
-            $parse[$min]  = 'm';
-            if ($sec !== false) {
-                $parse[$sec]  = 's';
-            }
+        }
+        if ($min !== false) {
+            $parse[$min] = 'm';
+        }
+        if ($sec !== false) {
+            $parse[$sec] = 's';
         }
 
         if (empty($parse)) {
             throw new Zend_Locale_Exception("unknown format, neither date nor time in '$format' found");
         }
         ksort($parse);
-
-        // erase day string
-        if (!empty($locale) && $day) {
-            $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
-            foreach($daylist as $key => $name) {
-                if (iconv_strpos($number, $name) !== false) {
-                    $number   = str_replace($name, "EEEE", $number);
-                    break;
-                }
-            }
-        }
-
-        $monthlist = false;
-        if (!empty($locale) && $month) {
-            // prepare to convert month name to their numeric equivalents, if requested, and we have a $locale
-            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
-            $monthabbr = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
-        }
-
-        $position = false;
-
-        // If $locale was invalid, $monthlist will default to a "root" identity
-        // mapping for each month number from 1 to 12.
-        // If no $locale was given, or $locale was invalid, do not use this identity mapping to normalize.
-        // Otherwise, translate locale aware month names in $number to their numeric equivalents.
-        if ($monthlist && $monthlist[1] != 1) {
-            foreach($monthlist as $key => $name) {
-                if (($position = iconv_strpos($number, $name)) !== false) {
-                    if ($key < 10) {
-                        $key = "0" . $key;
-                    }
-                    $number   = str_replace($name, $key, $number);
-                    break;
-                }
-                $abbrname = $monthabbr[$key];
-                if (($position = iconv_strpos($number, $abbrname)) !== false) {
-                    if ($key < 10) {
-                        $key = "0" . $key;
-                    }
-                    $number   = str_replace($abbrname, $key, $number);
-                    break;
-                }
-            }
-        }
 
         // get daytime
         if (iconv_strpos($format, 'a') !== false) {
@@ -646,7 +641,6 @@ class Zend_Locale_Format
             $split = 0;
         }
         $cnt = 0;
-
         foreach($parse as $key => $value) {
 
             switch($value) {
@@ -674,7 +668,7 @@ class Zend_Locale_Format
                     break;
                 case 'y':
                     $length = 2;
-                    if (iconv_substr($format, $year, 4) == 'yyyy') {
+                    if ((iconv_substr($format, $year, 4) == 'yyyy') || (iconv_substr($format, $year, 4) == 'YYYY')) {
                         $length = 4;
                     }
                     if ($split === false) {
@@ -740,7 +734,7 @@ class Zend_Locale_Format
             if (isset($result['day']) and isset($result['month'])) {
                 if (($position !== false) && ($position != $month)) {
                     if ($fix !== true) {
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format' (false month, $position, $month)");
                     }
                     $temp = $result['day'];
                     $result['day']   = $result['month'];
@@ -753,7 +747,7 @@ class Zend_Locale_Format
             if (isset($result['day']) and isset($result['year'])) {
                 if ($result['day'] > 31) {
                     if ($fix !== true) {
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format' (d <> y)");
                     }
                     $temp = $result['year'];
                     $result['year'] = $result['day'];
@@ -766,7 +760,7 @@ class Zend_Locale_Format
             if (isset($result['month']) and isset($result['year'])) {
                 if ($result['month'] > 31) {
                     if ($fix !== true) {
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format' (M <> y)");
                     }
                     $temp = $result['year'];
                     $result['year']  = $result['month'];
@@ -779,7 +773,7 @@ class Zend_Locale_Format
             if (isset($result['month']) and isset($result['day'])) {
                 if ($result['month'] > 12) {
                     if ($fix !== true || $result['month'] > 31) {
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format'");
+                        throw new Zend_Locale_Exception("unable to parse date '$date' using '$format' (M <> d)");
                     }
                     $temp = $result['day'];
                     $result['day']   = $result['month'];
@@ -789,6 +783,36 @@ class Zend_Locale_Format
             }
         }
         return $result;
+    }
+
+
+    /**
+     * Search $number for a month name found in $monthlist, and replace if found.
+     *
+     * @param  string  $number     Date string (modified)
+     * @param  array   $monthlist  List of month names
+     *
+     * @return int|false  position of replaced string (false if nothing replaced) 
+     */
+    static protected function _replaceMonth(&$number, $monthlist)
+    {
+        // If $locale was invalid, $monthlist will default to a "root" identity
+        // mapping for each month number from 1 to 12.
+        // If no $locale was given, or $locale was invalid, do not use this identity mapping to normalize.
+        // Otherwise, translate locale aware month names in $number to their numeric equivalents.
+        $position = false;
+        if ($monthlist && $monthlist[1] != 1) {
+            foreach($monthlist as $key => $name) {
+                if (($position = iconv_strpos($number, $name)) !== false) {
+                    if ($key < 10) {
+                        $key = "0" . $key;
+                    }
+                    $number   = str_replace($name, $key, $number);
+                    return $position;
+                }
+            }
+        }
+        return false;
     }
 
 
@@ -806,7 +830,6 @@ class Zend_Locale_Format
         $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $format));
         return $format['pattern'];
     }
-
 
 
     /**

@@ -252,7 +252,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
         $this->assertEquals(is_array(Zend_Locale_Format::getDate('10.10.06')), true, "array expected");
-        $this->assertEquals(count(Zend_Locale_Format::getDate('10.10.06','dd.MM.yy')), 4, "array with 4 tags expected");
+        $this->assertEquals(count(Zend_Locale_Format::getDate('10.10.06','dd.MM.yy')), 5, "array with 5 tags expected");
 
         $value = Zend_Locale_Format::getDate('10.11.06','dd.MM.yy');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
@@ -511,7 +511,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
-        $this->assertEquals(count(Zend_Locale_Format::getTime('13:14:55','HH:mm:ss')), 4, "array with 4 tags expected");
+        $this->assertEquals(count(Zend_Locale_Format::getTime('13:14:55','HH:mm:ss')), 5, "array with 5 tags expected");
 
         $value = Zend_Locale_Format::getTime('13:14:55','HH:mm:ss');
         $this->assertEquals($value['hour'], 13, 'Hour 13 expected');
