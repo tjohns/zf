@@ -27,7 +27,7 @@ require_once('Zend/Environment/Security/Test/Core.php');
 
 /**
  * Test class for GID
- * 
+ *
  * @package Zend_Environment
  */
 class Zend_Environment_Security_Test_Core_Gid extends Zend_Environment_Security_Test_Core
@@ -38,39 +38,39 @@ class Zend_Environment_Security_Test_Core_Gid extends Zend_Environment_Security_
 	 *
 	 * @var string
 	 */
-	protected $test_name = "group_id";
-	
-	protected $recommended_value = 100;
-	
+	protected $_name = "group_id";
+
+	protected $_recommended_value = 100;
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value =  getmygid();
+		$this->_current_value =  getmygid();
 	}
-					
+
 	/**
 	 * Checks the GID of the PHP process to make sure it is above PHPSECINFO_MIN_SAFE_GID
 	 *
 	 * @see PHPSECINFO_MIN_SAFE_GID
 	 */
 	protected function _execTest() {
-		
-		if ($this->current_value >= $this->recommended_value) {
+
+		if ($this->_current_value >= $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
-		
+
 		return self::RESULT_WARN;
 	}
-		
-	
+
+
 	/**
 	 * Set the messages specific to this test
 	 *
 	 */
 	protected function _setMessages() {
 		parent::_setMessages();
-		
+
 		$this->setMessageForResult(self::RESULT_OK, 'en', 'PHP is executing as what is probably a non-privileged group');
 		$this->setMessageForResult(self::RESULT_WARN, 'en', 'PHP may be executing as a "privileged" group, which could be a serious security vulnerability.');
 	}
-	
+
 
 }

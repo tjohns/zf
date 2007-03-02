@@ -26,7 +26,7 @@ require_once('Zend/Environment/Security/Test/Core.php');
 
 /**
  * Test class for expose_php
- * 
+ *
  * @package Zend_Environment
  */
 class Zend_Environment_Security_Test_Core_ExposePhp extends Zend_Environment_Security_Test_Core
@@ -37,40 +37,40 @@ class Zend_Environment_Security_Test_Core_ExposePhp extends Zend_Environment_Sec
 	 *
 	 * @var string
 	 */
-	protected $test_name = "expose_php";
-	
-	protected $recommended_value = FALSE;
-	
+	protected $_name = "expose_php";
+
+	protected $_recommended_value = FALSE;
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value =  $this->returnBytes(ini_get('expose_php'));
+		$this->_current_value =  $this->returnBytes(ini_get('expose_php'));
 	}
-					
+
 	/**
 	 * Checks to see if expose_php is enabled
 	 *
 	 */
 	protected function _execTest() {
-		
-		if ($this->current_value == $this->recommended_value) {
+
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
-		
+
 		return self::RESULT_NOTICE;
 	}
-		
-	
+
+
 	/**
 	 * Set the messages specific to this test
 	 *
 	 */
 	protected function _setMessages() {
 		parent::_setMessages();
-		
+
 		$this->setMessageForResult(self::RESULT_OK, 'en', 'expose_php is disabled, which is the recommended setting');
 		$this->setMessageForResult(self::RESULT_NOTICE, 'en', 'expose_php is enabled.  This adds
 				the PHP "signature" to the web server header, including the PHP version number.  This
 				could attract attackers looking for vulnerable versions of PHP');
 	}
-	
+
 
 }

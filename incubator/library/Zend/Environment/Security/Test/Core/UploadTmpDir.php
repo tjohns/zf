@@ -37,18 +37,18 @@ class Zend_Environment_Security_Test_Core_UploadTmpDir extends Zend_Environment_
 	 *
 	 * @var string
 	 */
-	protected $test_name = "upload_tmp_dir";
+	protected $_name = "upload_tmp_dir";
 
-	protected $recommended_value = "A non-world readable/writable directory";
+	protected $_recommended_value = "A non-world readable/writable directory";
 
 	protected function _retrieveCurrentValue() {
-		$this->current_value =  ini_get('upload_tmp_dir');
+		$this->_current_value =  ini_get('upload_tmp_dir');
 
-		if( empty($this->current_value) ) {
+		if( empty($this->_current_value) ) {
 			if (function_exists("sys_get_temp_dir")) {
-		    	$this->current_value = sys_get_temp_dir();
+		    	$this->_current_value = sys_get_temp_dir();
 			} else {
-				$this->current_value = $this->sys_get_temp_dir();
+				$this->_current_value = $this->sys_get_temp_dir();
 			}
 		}
 	}
@@ -77,17 +77,17 @@ class Zend_Environment_Security_Test_Core_UploadTmpDir extends Zend_Environment_
 	 */
 	protected function _execTest() {
 
-		$perms = fileperms($this->current_value);
+		$perms = fileperms($this->_current_value);
 
-		if ($this->current_value
-			&& !preg_match("|".self::COMMON_TMPDIR."/?|", $this->current_value)
+		if ($this->_current_value
+			&& !preg_match("|".self::COMMON_TMPDIR."/?|", $this->_current_value)
 			&& ! ($perms & 0x0004)
 			&& ! ($perms & 0x0002) ) {
 			return self::RESULT_OK;
 		}
 
-		// rewrite current_value to display perms
-		$this->current_value .= " (".substr(sprintf('%o', $perms), -4).")";
+		// rewrite _current_value to display perms
+		$this->_current_value .= " (".substr(sprintf('%o', $perms), -4).")";
 
 		return self::RESULT_NOTICE;
 	}

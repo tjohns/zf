@@ -38,12 +38,12 @@ class Zend_Environment_Security_Test_Core_PostMaxSize extends Zend_Environment_S
 	 *
 	 * @var string
 	 */
-	protected $test_name = "post_max_size";
+	protected $_name = "post_max_size";
 
-	protected $recommended_value = 262144;
-	
+	protected $_recommended_value = 262144;
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value =  $this->returnBytes(ini_get('post_max_size'));
+		$this->_current_value =  $this->returnBytes(ini_get('post_max_size'));
 	}
 
 	/**
@@ -51,8 +51,8 @@ class Zend_Environment_Security_Test_Core_PostMaxSize extends Zend_Environment_S
 	 */
 	protected function _execTest() {
 
-		if ($this->current_value
-			&& $this->current_value < $this->recommended_value
+		if ($this->_current_value
+			&& $this->_current_value < $this->_recommended_value
 			&& $post_max_size != -1) {
 			return self::RESULT_OK;
 		}

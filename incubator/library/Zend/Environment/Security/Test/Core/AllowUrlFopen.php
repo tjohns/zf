@@ -38,28 +38,28 @@ class Zend_Environment_Security_Test_Core_AllowUrlFopen extends Zend_Environment
 	 *
 	 * @var string
 	 */
-	protected $test_name = "allow_url_fopen";
-	
+	protected $_name = "allow_url_fopen";
+
 	/**
 	 * The recommended setting value
 	 *
 	 * @var mixed
 	 */
-	protected $recommended_value = FALSE;
+	protected $_recommended_value = FALSE;
 
 
-	
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('allow_url_fopen');
+		$this->_current_value = $this->getIniValue('allow_url_fopen');
 	}
-	
-	
+
+
 	/**
 	 * Checks to see if allow_url_fopen is enabled
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
 

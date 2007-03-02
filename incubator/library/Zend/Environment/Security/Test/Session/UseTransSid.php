@@ -34,14 +34,14 @@ class Zend_Environment_Security_Test_Session_UseTransSid extends Zend_Environmen
 	 *
 	 * @var string
 	 */
-	protected $test_name = "use_trans_sid";
+	protected $_name = "use_trans_sid";
 
 
-	protected $recommended_value = FALSE;
+	protected $_recommended_value = FALSE;
 
 
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('session.use_trans_sid');
+		$this->_current_value = $this->getIniValue('session.use_trans_sid');
 	}
 
 
@@ -50,7 +50,7 @@ class Zend_Environment_Security_Test_Session_UseTransSid extends Zend_Environmen
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
 

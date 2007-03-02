@@ -26,7 +26,7 @@ require_once('Zend/Environment/Security/Test/Core.php');
 
 /**
  * Test class for display_errors
- * 
+ *
  * @package Zend_Environment
  */
 class Zend_Environment_Security_Test_Core_DisplayErrors extends Zend_Environment_Security_Test_Core
@@ -37,38 +37,38 @@ class Zend_Environment_Security_Test_Core_DisplayErrors extends Zend_Environment
 	 *
 	 * @var string
 	 */
-	protected $test_name = "display_errors";
-	
-	protected $recommended_value = FALSE;
-	
+	protected $_name = "display_errors";
+
+	protected $_recommended_value = FALSE;
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('display_errors');
+		$this->_current_value = $this->getIniValue('display_errors');
 	}
-				
-					
+
+
 	/**
 	 * Checks to see if display_errors is enabled
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
-		
+
 		return self::RESULT_NOTICE;
 	}
-		
-	
+
+
 	/**
 	 * Set the messages specific to this test
 	 *
 	 */
 	protected function _setMessages() {
 		parent::_setMessages();
-		
+
 		$this->setMessageForResult(self::RESULT_OK, 'en', 'display_errors is disabled, which is the recommended setting');
 		$this->setMessageForResult(self::RESULT_NOTICE, 'en', 'display_errors is enabled.  This is not recommended on "production" servers, as it could reveal sensitive information.  You should consider disabling this feature');
 	}
-	
+
 
 }

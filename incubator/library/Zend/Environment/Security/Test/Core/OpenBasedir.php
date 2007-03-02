@@ -26,7 +26,7 @@ require_once('Zend/Environment/Security/Test/Core.php');
 
 /**
  * Test Class for open_basedir
- * 
+ *
  * @package Zend_Environment
  */
 class Zend_Environment_Security_Test_Core_OpenBasedir extends Zend_Environment_Security_Test_Core
@@ -37,36 +37,36 @@ class Zend_Environment_Security_Test_Core_OpenBasedir extends Zend_Environment_S
 	 *
 	 * @var string
 	 */
-	protected $test_name = "open_basedir";
+	protected $_name = "open_basedir";
 
-	protected $recommended_value = TRUE;
+	protected $_recommended_value = TRUE;
 
-	
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('open_basedir');
+		$this->_current_value = $this->getIniValue('open_basedir');
 	}
-	
-	
+
+
 	/**
 	 * Checks to see if allow_url_fopen is enabled
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
 
 		return self::RESULT_NOTICE;
 	}
-		
-	
+
+
 	/**
 	 * Set the messages specific to this test
 	 *
 	 */
 	protected function _setMessages() {
 		parent::_setMessages();
-		
+
 		$this->setMessageForResult(self::RESULT_OK, 'en', 'open_basedir is enabled, which is the
 				recommended setting. Keep in mind that other web applications not written in PHP will not
 				be restricted by this setting.');
@@ -76,6 +76,6 @@ class Zend_Environment_Security_Test_Core_OpenBasedir extends Zend_Environment_S
 					You should consider turning this on.  Keep in mind that other web applications not
 					written in PHP will not be restricted by this setting.');
 	}
-	
+
 
 }

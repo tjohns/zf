@@ -37,14 +37,14 @@ class Zend_Environment_Security_Test_Core_MagicQuotesGPC extends Zend_Environmen
 	 *
 	 * @var string
 	 */
-	protected $test_name = "magic_quotes_gpc";
+	protected $_name = "magic_quotes_gpc";
 
 
-	protected $recommended_value = FALSE;
+	protected $_recommended_value = FALSE;
 
 
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('magic_quotes_gpc');
+		$this->_current_value = $this->getIniValue('magic_quotes_gpc');
 	}
 
 
@@ -63,7 +63,7 @@ class Zend_Environment_Security_Test_Core_MagicQuotesGPC extends Zend_Environmen
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
 

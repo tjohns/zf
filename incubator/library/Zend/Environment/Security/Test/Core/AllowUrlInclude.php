@@ -39,23 +39,23 @@ class Zend_Environment_Security_Test_Core_AllowUrlInclude extends Zend_Environme
 	 *
 	 * @var string
 	 */
-	protected $test_name = "allow_url_include";
+	protected $_name = "allow_url_include";
 
 
-	protected $recommended_value = FALSE;
+	protected $_recommended_value = FALSE;
 
-	
+
 	protected function _retrieveCurrentValue() {
-		$this->current_value = $this->getIniValue('allow_url_include');
+		$this->_current_value = $this->getIniValue('allow_url_include');
 	}
-	
-	
+
+
 	/**
 	 * Checks to see if allow_url_fopen is enabled
 	 *
 	 */
 	protected function _execTest() {
-		if ($this->current_value == $this->recommended_value) {
+		if ($this->_current_value == $this->_recommended_value) {
 			return self::RESULT_OK;
 		}
 
