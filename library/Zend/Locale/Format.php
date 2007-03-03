@@ -38,7 +38,7 @@ require_once 'Zend/Locale/Math.php';
  */
 class Zend_Locale_Format
 {
-    public static $_usePhpDateFormat = false;
+    private static $_Options = array('format' => 'iso');
 
     private static $_signs = array(
         'Default'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Default == Latin
@@ -64,6 +64,37 @@ class Zend_Locale_Format
         'Bali' => array( '᭐', '᭑', '᭒', '᭓', '᭔', '᭕', '᭖', '᭗', '᭘', '᭙'), // 1B50 - 1B59 balinese
         'Nkoo' => array( '߀', '߁', '߂', '߃', '߄', '߅', '߆', '߇', '߈', '߉')  // 07C0 - 07C9 nko
     );
+
+    /**
+     * Sets class wide options, if no option was given, the actual set options will be returned
+     *
+     * @param  array  $options  Options to set
+     * @throws Zend_Locale_Exception
+     * @return Options array if no option was given 
+     */
+    public static function setOptions(array $options = array())
+    {
+        if (empty($options)) {
+            return self::$_Options;
+        }
+        foreach ($options as $name => $value) {
+            $name  = strtolower($name);
+            $value = strtolower($value);
+
+            if (isset(self::$_Options[$name])) {
+                switch($name) {
+                    case 'format' :
+                        if (($value != 'php') && ($value != 'iso')) {
+                            throw new Zend_Date_Exception("Unknown format ($value) for dates, only 'iso' and 'php' supported", $value);
+                        }
+                }
+                self::$_Options[$name] = $value;
+            }
+            else {
+                throw new Zend_Date_Exception("Unknown option: $name = $value");
+            }
+        }
+    }
 
     /**
      * Changes the numbers/digits within a given string from one script to another
@@ -486,25 +517,6 @@ class Zend_Locale_Format
 
 
     /**
-     * Selects if standard ISO format should be used or PHP's date format
-     * Keep in mind that ISO supports all PHP date formats but PHP does not
-     * support all ISO formats
-     * Standard useage is ISO (false) set it to true if you need to have PHP's date format supported
-     * 
-     * @param  boolean  $format  OPTIONAL, if not set returns the format, otherwise sets the new format
-     *                                     false = ISO format, true = PHP format
-     * @return boolean
-     */
-    public static function usePhpDateFormat($format = null)
-    {
-        if ($format === null) {
-            return self::$_usePhpDateFormat;
-        }
-        self::$_usePhpDateFormat = $format;
-    }
-
-
-    /**
      * Converts a format string from PHP's date format to ISO format
      * Remember that Zend Date always returns localized string, so a month name which returns the english
      * month in php's date() will return the translated month name with this function... use 'en' as locale
@@ -849,7 +861,7 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getDateFormat($locale);
-        } else if (self::$_usePhpDateFormat === true) {
+        } else if (self::$_Options['format'] == 'php') {
             $format = self::convertPhpToIsoFormat($format);
         }
 
@@ -879,7 +891,7 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getDateFormat($locale);
-        } else if (self::$_usePhpDateFormat === true) {
+        } else if (self::$_Options['format'] == 'php') {
             $format = self::convertPhpToIsoFormat($format);
         }
 
@@ -965,7 +977,7 @@ class Zend_Locale_Format
     {
         if (empty($format)) {
             $format = self::getTimeFormat($locale);
-        } else if (self::$_usePhpDateFormat === true) {
+        } else if (self::$_Options['format'] == 'php') {
             $format = self::convertPhpToIsoFormat($format);
         }
 
