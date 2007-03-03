@@ -254,7 +254,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentTracks()
 	{
-		$service = "/{$this->get('version')}/user/{$this->get('user')}/friends.xml";
+		$service = "/{$this->get('version')}/user/{$this->get('user')}/recenttracks.xml";
         return $this->getInfo($service);
 	}
 
