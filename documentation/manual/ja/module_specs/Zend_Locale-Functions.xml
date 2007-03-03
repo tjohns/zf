@@ -195,7 +195,7 @@ print $locale->toString();
         </para>
 
         <table>
-            <title>getTranslationList() の詳細</title>
+            <title>getTranslationList($type = null, $locale = null) の詳細</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -325,6 +325,30 @@ print $locale->toString();
         </table>
 
         <para>
+            単一の翻訳データがほしい場合は、<code>getTranslationList()</code> ではなく
+            <code>getTranslation()</code> を使用します。この関数は文字列あるいは配列を返します。
+            これは、返り値が複数となりえる (たとえば language_detail など。というのも、
+            ひとつの言語が複数の国で用いられることもあるからです) か、あるいはひとつにしかなりえない
+            (たとえば language など。言語に対応する翻訳はひとつしかありません) によって決まります。
+            これらの両方の関数で、上のリストの型を使用できます。
+            利便性のため、以下のような関数も用意しています。これは上のふたつの関数と等価です。
+        </para>
+
+        <example>
+            <title>getTranslation() 系の便利な関数</title>
+<programlisting role="php"><![CDATA[<?php
+getCountryTranslation($what, $locale = null)
+getCountryTranslationList($locale = null)
+getLanguageTranslation($what, $locale = null)
+getLanguageTranslationList($locale = null)
+getScriptTranslation($what, $locale = null)
+getScriptTranslationList($locale = null)
+getTerritoryTranslation($what, $locale = null)
+getTerritoryTranslationList($locale = null)
+?>]]></programlisting>
+        </example>
+
+        <para>
             以下の例は、さまざまな言語でのものの名前を取得する方法を示すものです。
         </para>
 
@@ -409,30 +433,6 @@ foreach($list as $language => $content) {
         continue;
     }
 }
-?>]]></programlisting>
-        </example>
-
-    </sect2>
-
-    <sect2 id="zend.locale.getscriptdisplay">
-
-        <title>翻訳された文字名の取得</title>
-
-        <para>
-            <code>getScriptDisplay()</code> は、指定した言語の文字名を翻訳したものを返します。
-            getLanguageDisplay() 関数と同様、この関数は別のロケールで結果を出力することもできます。
-            その場合はオプションの引数 $locale を指定します。
-        </para>
-
-        <example>
-            <title>getScriptDisplay</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
-$locale = new Zend_Locale();
-
-// 文字
-print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
 
