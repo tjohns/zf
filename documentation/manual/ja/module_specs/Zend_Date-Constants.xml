@@ -667,10 +667,12 @@
 
     <sect2 id="zend.date.constants.selfdefinedformats">
 
-        <title>自分で定義する出力フォーマット</title>
+        <title>ISO 書式指定子を使用して自分で定義する出力フォーマット</title>
 
         <para>
-            たいていのフォーマットについては ISO 8601 形式で対応できるでしょう。
+            たいていのフォーマットについては、標準の ISO 8601 形式で対応できるでしょう。
+            もしおなじみの形式を使用したいのなら、ISO 形式ではなく PHP
+            の日付書式を使用するように変更することもできます。
             しかし、ISO 形式ですべてが対応できるわけではありません。
             フォーマット文字列の長さは無制限です。
             また、同じ定数を複数回使用してもかまいません。
@@ -678,7 +680,7 @@
         </para>
 
         <example>
-            <title>自分で定義するフォーマットの例</title>
+            <title>ISO 書式を使用した独自書式の例</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
@@ -894,21 +896,21 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     </row>
                     <row>
                         <entry>E</entry>
-                        <entry>曜日 (地域化された省略形、一桁)</entry>
+                        <entry>曜日 (地域化された省略形、一文字)</entry>
                         <entry>Zend_Date::WEEKDAY_NARROW</entry>
                         <entry><emphasis role="strong">M</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>EE</entry>
-                        <entry>曜日 (地域化された省略形、二桁)</entry>
+                        <entry>曜日 (地域化された省略形、二文字)</entry>
                         <entry>Zend_Date::WEEKDAY_NAME</entry>
                         <entry><emphasis role="strong">Mo</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>EEE</entry>
-                        <entry>曜日 (地域化された省略形、三桁)</entry>
+                        <entry>曜日 (地域化された省略形、三文字)</entry>
                         <entry>Zend_Date::WEEKDAY_SHORT</entry>
                         <entry><emphasis role="strong">Mon</emphasis>
                         </entry>
@@ -929,7 +931,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     </row>
                     <row>
                         <entry>e</entry>
-                        <entry>曜日番号 (一桁あるいは二桁)</entry>
+                        <entry>曜日番号 (一桁)</entry>
                         <entry>Zend_Date::WEEKDAY_NARROW</entry>
                         <entry><emphasis role="strong">4</emphasis>
                         </entry>
@@ -1080,4 +1082,355 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
     </sect2>
 
+    <sect2 id="zend.date.constants.phpformats">
+
+        <title>PHP の date() 関数の書式指定子を使用して自分で定義する出力フォーマット</title>
+
+        <para>
+            もし PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるのなら、
+            <code>usePhpDateFormat()</code> をコールしてみましょう。その後の書式パラメータは、すべて
+            <ulink url="http://php.net/date">PHP の <code>date()</code> 書式指定子</ulink>
+            に従うようになります。PHP の日付書式には含まれていないけれども ISO の書式には含まれるもの、
+            またその逆もあります。もしそれほど PHP の日付書式になじみがないのなら、標準の
+            ISO 書式を使用しましょう。既存のコードで PHP の日付書式をしているものがある場合は
+            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::convertPhpToIsoFormat()</link>
+            で ISO 書式に変換するか、
+            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::usePhpDateFormat()</link>
+            を使用します。次の例は、下の表の定数を用いて独自の書式を定義するものですが、まず最初に
+            <code>Zend_Locale_Format::usePhpDateFormat(true)</code> をコールしています。
+        </para>
+
+        <example>
+            <title>PHP の指定子を使用した独自書式の例</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date.php';
+
+$locale = new Zend_Locale('de_AT');
+Zend_Locale_Format::usePhpDateFormat(true);
+$date = new Zend_Date(1234567890, false, $locale);
+
+// 出力は 'February 16, 2007, 3:36 am' のようになります
+print $date->toString('F j, Y, g:i a');
+
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
+?>]]></programlisting>
+        </example>
+
+        <para>
+            次の表は、PHP の日付書式指定子とそれに対応する Zend_Date の定数、
+            そして同等な CLDR/ISO 書式指定子を示したものです。
+            たいていの場合は、もし CLDR/ISO 書式に同等のものがなければ
+            <code>Zend_Locale_Format::convertPhpToIsoFormat()</code>
+            で PHP の書式指定子がそのまま残されます。そして Zend_Date
+            のメソッドは、たとえ "ISO" 書式モードであったとしても、これらの
+            PHP "独特の" 書式指定を理解します。
+        </para>
+
+        <table>
+            <title><emphasis role="strong">PHP の日付出力</emphasis> 用の定数
+            </title>
+            <tgroup cols="5">
+                <thead>
+                    <row>
+                        <entry>定数</entry>
+                        <entry>説明</entry>
+                        <entry>対応する要素</entry>
+                        <entry>CLDR での同等の指定子</entry>
+                        <entry>影響する部分/例</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d</entry>
+                        <entry>その月の日付 (二桁)</entry>
+                        <entry>Zend_Date::DAY</entry>
+                        <entry>dd</entry>
+                        <entry><emphasis role="strong">09</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>D</entry>
+                        <entry>曜日 (地域化された省略形、三文字)</entry>
+                        <entry>Zend_Date::WEEKDAY_SHORT</entry>
+                        <entry>EEE</entry>
+                        <entry><emphasis role="strong">Mon</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>j</entry>
+                        <entry>その月の日付 (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::DAY_SHORT</entry>
+                        <entry>d</entry>
+                        <entry><emphasis role="strong">9</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>l (小文字の L)</entry>
+                        <entry>曜日 (地域化された完全形)</entry>
+                        <entry>Zend_Date::WEEKDAY</entry>
+                        <entry>EEEE</entry>
+                        <entry><emphasis role="strong">Monday</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>N</entry>
+                        <entry>曜日番号 (一桁)</entry>
+                        <entry>Zend_Date::WEEKDAY_8601</entry>
+                        <entry>e</entry>
+                        <entry><emphasis role="strong">4</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>S</entry>
+                        <entry>英語の日付の後につける接尾辞 (二文字)</entry>
+                        <entry>なし</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">st</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>w</entry>
+                        <entry>曜日番号 (0=日曜日、6=土曜日)</entry>
+                        <entry>Zend_Date::WEEKDAY_DIGIT</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">4</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>z</entry>
+                        <entry>その年の日付 (一桁、二桁あるいは三桁)</entry>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry>D</entry>
+                        <entry><emphasis role="strong">7</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>W</entry>
+                        <entry>週 (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::WEEK</entry>
+                        <entry>w</entry>
+                        <entry><emphasis role="strong">5</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>F</entry>
+                        <entry>月 (地域化された完全形)</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>MMMM</entry>
+                        <entry><emphasis role="strong">February</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>月 (二桁)</entry>
+                        <entry>Zend_Date::MONTH</entry>
+                        <entry>MM</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>月 (地域化された省略形)</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
+                        <entry>MMM</entry>
+                        <entry><emphasis role="strong">Feb</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>n</entry>
+                        <entry>月 (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>M</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>t</entry>
+                        <entry>その月の日数 (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::MONTH_DAYS</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">30</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>L</entry>
+                        <entry>うるう年かどうか</entry>
+                        <entry>Zend_Date::LEAPYEAR</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">true</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>o</entry>
+                        <entry>ISO 8601 形式の年 (最低四桁)</entry>
+                        <entry>Zend_Date::YEAR_8601</entry>
+                        <entry>YYYY</entry>
+                        <entry><emphasis role="strong">2009</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Y</entry>
+                        <entry>年 (最低四桁)</entry>
+                        <entry>Zend_Date::YEAR</entry>
+                        <entry>yyyy</entry>
+                        <entry><emphasis role="strong">2009</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>y</entry>
+                        <entry>年 (最低二桁)</entry>
+                        <entry>Zend_Date::YEAR_SHORT</entry>
+                        <entry>yy</entry>
+                        <entry><emphasis role="strong">09</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>a</entry>
+                        <entry>午前/午後 (地域化された形式)</entry>
+                        <entry>Zend_Date::MERIDIEM</entry>
+                        <entry>a (sort of, but likely to be uppercase)</entry>
+                        <entry><emphasis role="strong">vorm.</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>A</entry>
+                        <entry>午前/午後 (地域化された形式)</entry>
+                        <entry>Zend_Date::MERIDIEM</entry>
+                        <entry>a (sort of, but no guarantee that the format is uppercase)</entry>
+                        <entry><emphasis role="strong">VORM.</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>B</entry>
+                        <entry>Swatch インターネット時間</entry>
+                        <entry>Zend_Date::SWATCH</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">1463</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>g</entry>
+                        <entry>時間 (1-12) (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
+                        <entry>h</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>G</entry>
+                        <entry>時間 (0-23) (一桁あるいは二桁)</entry>
+                        <entry>Zend_Date::HOUR_SHORT</entry>
+                        <entry>H</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>時間 (01-12) (二桁)</entry>
+                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>hh</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>H</entry>
+                        <entry>時間 (00-23) (二桁)</entry>
+                        <entry>Zend_Date::HOUR</entry>
+                        <entry>HH</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>i</entry>
+                        <entry>分 (00-59) (二桁)</entry>
+                        <entry>Zend_Date::MINUTE</entry>
+                        <entry>mm</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>秒 (00-59) (二桁)</entry>
+                        <entry>Zend_Date::SECOND</entry>
+                        <entry>ss</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>e</entry>
+                        <entry>タイムゾーン (地域化された完全形)</entry>
+                        <entry>Zend_Date::TIMEZONE_NAME</entry>
+                        <entry>zzzz</entry>
+                        <entry><emphasis role="strong">Europe/Paris</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>I</entry>
+                        <entry>夏時間</entry>
+                        <entry>Zend_Date::DAYLIGHT</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">1</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>O</entry>
+                        <entry>タイムゾーンの時差</entry>
+                        <entry>Zend_Date::GMT_DIFF</entry>
+                        <entry>Z、ZZ あるいは ZZZ</entry>
+                        <entry><emphasis role="strong">+0100</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>P</entry>
+                        <entry>タイムゾーンの時差 (分割形式)</entry>
+                        <entry>Zend_Date::GMT_DIFF_SEP</entry>
+                        <entry>ZZZZ</entry>
+                        <entry><emphasis role="strong">+01:00</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>T</entry>
+                        <entry>タイムゾーン (地域化された省略形)</entry>
+                        <entry>Zend_Date::TIMEZONE</entry>
+                        <entry>z、zz あるいは zzz</entry>
+                        <entry><emphasis role="strong">CET</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Z</entry>
+                        <entry>タイムゾーンの時差秒数</entry>
+                        <entry>Zend_Date::TIMEZONE_SECS</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">3600</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>c</entry>
+                        <entry>標準の Iso 書式の出力</entry>
+                        <entry>Zend_Date::ISO_8601</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">2004-02-12T15:19:21+00:00</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>r</entry>
+                        <entry>標準の Rfc 2822 書式の出力</entry>
+                        <entry>Zend_Date::RFC_2822</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">Thu, 21 Dec 2000 16:01:07 +0200</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>U</entry>
+                        <entry>Unix タイムスタンプ</entry>
+                        <entry>Zend_Date::TIMESTAMP</entry>
+                        <entry>なし</entry>
+                        <entry><emphasis role="strong">15275422364</emphasis>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
 </sect1>

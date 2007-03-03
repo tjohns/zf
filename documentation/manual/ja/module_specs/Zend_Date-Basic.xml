@@ -133,10 +133,10 @@ $date = new Zend_Date();
 // $date に 12 時間加算します
 $date->add('12:00:00', Zend_Date::TIMES);
 
-print "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+echo "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
 
 // マジックメソッド __toString() から、Zend_Date の toString() をコールします
-print "Date via toString() = ", $date, "\n";
+echo "Date via toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
 
