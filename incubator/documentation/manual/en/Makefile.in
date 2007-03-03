@@ -1,29 +1,88 @@
+#
+# Zend Framework
+#
+# LICENSE
+#
+# This source file is subject to the new BSD license that is bundled
+# with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://framework.zend.com/license/new-bsd
+# If you did not receive a copy of the license and are unable to
+# obtain it through the world-wide-web, please send an email
+# to license@zend.com so we can send you a copy immediately.
+#
+# @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+# @license    http://framework.zend.com/license/new-bsd     New BSD License
+#
+
+#
+# Makefile - build Zend Framework product and documentation
+#
+# Main targets:
+#  all - render DocBook manual in HTML.
+#  clean - remove staged files.
+#  check - validate DocBook manual using xmllint.
+#  check1 - validate one DocBook XML file using xmllint.
+#    Requires that you set the XMLFILE variable.
+# 
+
+# -- parameters you are likely to want to change --
+
+# XMLFILE is the name of one DocBook XML file that you want to 
+#   test with xmllint, using the 'check1' target.
+
 XEP=@XEP@
 XINC=@XINC@
 FOP=@FOP@
 XSLTPROC=@XSLTPROC@
+XMLLINT=@XMLLINT@
 ECSRC=@ECSRC@
 HERE=@HERE@
 
-# Subdirs that contain docs
-DOCS=ref module_specs
-
-XML_CATALOG_FILES=./build/docbook-xsl/catalog.xml
-export XML_CATALOG_FILES FOP
+DTD_URL=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
+MODULE=module_specs
+XMLFILE=
 
 all:	manual.xml html
 
 clean:
-	-rm html/*.html
-
-pdf:
+	-rm -f html/*.html
+	-rm -f config.* configure 
+	-rm -rf autom4te.cache
+	-rm -f _temp_*.xml
+	-rm -f Makefile
 
 # Build the docs in HTML format
 
-html: html/index.html 
+html: html/index.html
 
-html/index.html: manual.xml build/html.xsl
+html/index.html: manual.xml $(HTML_XSL)
+	@echo "Rendering the whole manual with $(XSLTPROC)..."
 	$(XSLTPROC) --xinclude --output html/index.html html.xsl manual.xml
 
+# Build the docs in PDF format
+
+# pdf: manual.xml $(FO_XSL)
+#	$(XSLTPROC) --xinclude --output ZendFramework.fo $(FO_XSL) manual.xml
+#	$(FOP) -fo ZendFramework.fo -pdf ZendFramework.pdf
+
 check: manual.xml
-	xmllint --valid --noout --postvalid manual.xml
+	@echo "Checking the whole manual with $(XMLLINT)..."
+	@$(XMLLINT) --xinclude --output _temp_manual.xml manual.xml
+	@$(XMLLINT) --valid --noout --postvalid _temp_manual.xml \
+	    && echo "OK"
+
+check1: manual-lint.xml
+	@if [ -n "$(XMLFILE)" ] ; then \
+	    if [ -f "$(MODULE)/$(XMLFILE)" ] ; then \
+		echo "Checking $(XMLFILE) with $(XMLLINT)..." ; \
+		sed -e 's/@LINT@/$(MODULE)\/$(XMLFILE)/' manual-lint.xml \
+		| $(XMLLINT) --xinclude --output _temp_$(XMLFILE) - ; \
+		$(XMLLINT) --valid --noout --postvalid _temp_$(XMLFILE) \
+		  && echo "OK" ; \
+	    else  \
+		echo "File $(MODULE)/$(XMLFILE) not found." ; \
+	    fi ; \
+	else \
+	    echo "Please specify a filename, e.g. 'make XMLFILE=filename.xml lint'" ; \
+	fi
