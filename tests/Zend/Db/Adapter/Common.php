@@ -632,6 +632,43 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for column aliases.
+     * e.g. from('table', array('alias' => 'col1')).
+     */
+    public function testSelectColumnsAliases()
+    {
+        // to be written
+    }
+
+    /**
+     * Test syntax to support qualified column names,
+     * e.g. from('table', array('table.col1', 'table.col2')).
+     */
+    public function testSelectColumnsQualified()
+    {
+        // to be written
+    }
+
+    /**
+     * Test support for columns defined by Zend_Db_Expr.
+     */
+    public function testSelectColumnsExpr()
+    {
+        // to be written
+    }
+
+    /**
+     * Test support for automatic conversion of SQL functions to
+     * Zend_Db_Expr, e.g. from('table', array('COUNT(*)'))
+     * should generate the same result as
+     * from('table', array(new Zend_Db_Expr('COUNT(*)')))
+     */
+    public function testSelectColumnsAutoExpr()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
      */
     public function testSelectDistinctModifier()
@@ -655,6 +692,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     {
     }
      */
+
+    /**
+     * Test support for schema-qualified table names in from()
+     * e.g. from('schema.table').
+     */
+    public function testSelectFromQualified()
+    {
+        // to be written
+    }
 
     /**
      * Test adding a JOIN to a Zend_Db_Select object.
@@ -778,6 +824,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for schema-qualified table names in join(),
+     * e.g. join('schema.table', 'condition')
+     */
+    public function testSelectJoinQualified()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding a WHERE clause to a Zend_Db_Select object.
      * @todo: test where() with 2 args for quoteInto()
      */
@@ -806,6 +861,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for where() with a parameter,
+     * e.g. where('id = ?', 1).
+     */
+    public function testSelectWhereClauseWithParameter()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      * @todo: test orWhere() with 2 args for quoteInto()
      */
@@ -823,6 +887,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($result));
         $this->assertEquals(1, $result[0][$id]);
         $this->assertEquals(2, $result[1][$id]);
+    }
+
+    /**
+     * Test support for where() with a parameter,
+     * e.g. orWhere('id = ?', 2).
+     */
+    public function testSelectOrWhereClauseWithParameter()
+    {
+        // to be written
     }
 
     /**
@@ -865,8 +938,36 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for qualified table in group(),
+     * e.g. group('schema.table').
+     */
+    public function testSelectGroupByClauseQualified()
+    {
+        // to be written
+    }
+
+    /**
+     * Test support for Zend_Db_Expr in group(),
+     * e.g. group(new Zend_Db_Expr('id+1'))
+     */
+    public function testSelectGroupByClauseExpr()
+    {
+        // to be written
+    }
+
+    /**
+     * Test support for automatic conversion of a SQL
+     * function to a Zend_Db_Expr in group(),
+     * e.g.  group('LOWER(title)') should give the same
+     * result as group(new Zend_Db_Expr('LOWER(title)')).
+     */
+    public function testSelectGroupByClauseAutoExpr()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding a HAVING clause to a Zend_Db_Select object.
-     * @todo: test having() with 2 args for quoteInto()
      */
     public function testSelectHavingClause()
     {
@@ -906,8 +1007,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for parameter in having(),
+     * e.g. having('count(*) > ?', 1).
+     */
+    public function testSelectHavingClauseWithParameter()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding a HAVING clause to a Zend_Db_Select object.
-     * @todo: test orHaving() with 2 args for quoteInto()
      */
     public function testSelectOrHavingClause()
     {
@@ -956,6 +1065,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test support for parameter in orHaving(),
+     * e.g. orHaving('count(*) > ?', 1).
+     */
+    public function testSelectOrHavingClauseWithParameter()
+    {
+        // to be written
+    }
+
+    /**
      * Test adding an ORDER BY clause to a Zend_Db_Select object.
      */
     public function testSelectOrderByClause()
@@ -994,6 +1112,35 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
         $this->assertEquals(2, $result[0][$idKey]);
+    }
+
+    /**
+     * Test support for qualified table in order(),
+     * e.g. order('schema.table').
+     */
+    public function testSelectOrderByClauseQualified()
+    {
+        // to be written
+    }
+
+    /**
+     * Test support for Zend_Db_Expr in order(),
+     * e.g. order(new Zend_Db_Expr('id+1')).
+     */
+    public function testSelectOrderByClauseExpr()
+    {
+        // to be written
+    }
+
+    /**
+     * Test automatic conversion of SQL functions to 
+     * Zend_Db_Expr, e.g. order('LOWER(title)')
+     * should give the same result as
+     * order(new Zend_Db_Expr('LOWER(title)')).
+     */
+    public function testSelectOrderByClauseAutoExpr()
+    {
+        // to be written
     }
 
     /**
