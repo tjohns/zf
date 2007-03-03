@@ -218,6 +218,54 @@ class FooModule_View extends Zend_View
 
     </sect2>
 
+    <sect2 id="zend.session.expiration">
+
+        <title>名前空間の有効期限</title>
+
+        <para>
+            名前空間およびその中の個々のキーについて、その寿命を制限することができます。
+            これは、たとえばリクエスト間で一時的な情報を渡す際に使用します。
+            これにより、認証内容などの機密情報へアクセスできないようにし、
+            セキュリティリスクを下げます。有効期限の設定は経過秒数によって決めることもできますし、
+            "ホップ" 数によって決めることもできます。ホップ数とは、
+            一連のリクエストにおいて、最低でも一度の
+            <code>$space = new Zend_Session_Namespace('myspace');</code>
+            で名前空間をアクティブにした回数を表します。
+        </para>
+
+        <example>
+            <title>有効期限切れの例</title>
+<programlisting role="php">
+<![CDATA[<?php
+$s = new Zend_Session_Namespace('expireAll');
+$s->a = 'apple';
+$s->p = 'pear';
+$s->o = 'orange';
+
+$s->setExpirationSeconds(5, 'a'); // キー "a" だけは 5 秒で有効期限切れとなります
+
+// 名前空間全体は、5 "ホップ" で有効期限切れとなります
+$s->setExpirationHops(5);
+
+$s->setExpirationSeconds(60);                  
+// "expireAll" 名前空間は、60 秒が経過するか
+// 5 ホップに達するかのどちらかが発生した時点で
+// "有効期限切れ" となります
+?>]]></programlisting>
+        </example>
+
+        <para>
+            現在のリクエストで期限切れになったデータを扱うにあたり、
+            データを取得する際には注意が必要です。
+            データは参照で返されますが、それを変更したとしても
+            期限切れのデータを現在のリクエストから持ち越すことはできません。
+            有効期限を "リセット" するには、取得したデータをいったん一時変数に格納し、
+            名前空間上の内容を削除し、あらためて適切なキーで再設定します。
+        </para>
+
+    </sect2>
+
+
     <sect2 id="zend.session.controllers">
 
         <title>コントローラでのセッションのカプセル化</title>
