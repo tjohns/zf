@@ -69,6 +69,21 @@
         </table>
 
         <para>
+            For those needing to specify explicitly the format of the date string, the following
+            format token specifiers are supported.
+            If an invalid format specifier is used, such as the PHP 'i' specifier when in ISO format mode,
+            then an error will be thrown by the methods in Zend_Locale_Format that support user-defined formats.
+        </para>
+            
+        <para>
+            These specifiers (below) are a small subset of the full
+            "ISO" set supported by Zend_Date's <code>toString()</code>.  If you need to use PHP
+            <code>date()</code> compatible format specifiers, then first call
+            <code>usePhpDateFormat()</code>.  Currently, the only practical difference relates
+            to the specifier for minutes ('m' using the ISO default, and 'i' using the PHP date format).
+        </para>
+
+        <para>
             The following return values are possible, when the BCMath extension is available:
         </para>
 
