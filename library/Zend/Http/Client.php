@@ -767,7 +767,7 @@ class Zend_Http_Client
                     } else {
                     	$query = '';
                     }
-                    $this->uri->setQueryString($query);
+                    $this->uri->setQuery($query);
 
                     // Else, if we got just an absolute path, set it
                     if(strpos($location, '/') === 0) {
