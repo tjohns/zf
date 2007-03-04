@@ -192,6 +192,51 @@ class FooModule_View extends Zend_View
 
     </sect2>
 
+    <sect2 id="zend.session.expiration">
+
+        <title>Namespace Expiration</title>
+
+        <para>
+            Limits can be placed on the longevity of both namespaces and individual keys in namespaces.
+            Common use cases include passing temporary information between requests, and reducing exposure
+            to certain security risks by removing access to potentially sensitive information some time
+            after authentication occurred.  Expiration can be based on elapsed seconds, or based on
+            the concept of "hops", where a hop occurs for each successive request that activates the
+            namespace via at least one <code>$space = new Zend_Session_Namespace('myspace');</code>.
+        </para>
+
+        <example>
+            <title>Expiration Examples</title>
+<programlisting role="php">
+<![CDATA[<?php
+$s = new Zend_Session_Namespace('expireAll');
+$s->a = 'apple';
+$s->p = 'pear';
+$s->o = 'orange';
+
+$s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
+
+// expire entire namespace in 5 "hops"
+$s->setExpirationHops(5);
+
+$s->setExpirationSeconds(60);                  
+// The "expireAll" namespace will be marked "expired" on
+// the first request received after 60 seconds have elapsed,
+// or in 5 hops, whichever happens first.
+?>]]></programlisting>
+        </example>
+
+        <para>
+            When working with data expiring from the session in the current request,
+            care should be used when retrieving it.  Although the data is returned by reference,
+            modifying the data will not make expiring data persist past the current request.
+            In order to "reset" the expiration time, fetch the data into temporary variables,
+            use the namespace to unset it, and then set the appropriate keys again.
+        </para>
+
+    </sect2>
+
+
     <sect2 id="zend.session.controllers">
 
         <title>Session Encapsulation and Controllers</title>
