@@ -661,17 +661,18 @@
 
     <sect2 id="zend.date.constants.selfdefinedformats">
 
-        <title>Self-Defined OUTPUT Formats</title>
+        <title>Self-Defined OUTPUT Formats with ISO</title>
 
         <para>
-            All formats which need to be self-defined correspond to the ISO 8601 norm. However, not all formats defined
-            in the ISO norm are supported. Die format length is unlimited. Also, multiple usage of format constants is
-            allowed. The following examples illustrate the usage of constants from the table below to create
-            self-defined formats.
+            All formats which need to be self-defined correspond by standard to the ISO 8601 norm. The
+            accepted format specifiers can be changed from ISO Format to PHP's date format if you are more
+            common with it. However, not all formats defined in the ISO norm are supported. The format 
+            length is unlimited. Also, multiple usage of format constants is allowed. The following 
+            examples illustrate the usage of constants from the table below to create self-defined formats.
         </para>
 
         <example>
-            <title>Example usage for self-defined formats</title>
+            <title>Example usage for self-defined ISO formats</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
@@ -885,21 +886,21 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     </row>
                     <row>
                         <entry>E</entry>
-                        <entry>Day of the week, localized, abbreviated, one digit</entry>
+                        <entry>Day of the week, localized, abbreviated, one char</entry>
                         <entry>Zend_Date::WEEKDAY_NARROW</entry>
                         <entry><emphasis role="strong">M</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>EE</entry>
-                        <entry>Day of the week, localized, abbreviated, two digit</entry>
+                        <entry>Day of the week, localized, abbreviated, two char</entry>
                         <entry>Zend_Date::WEEKDAY_NAME</entry>
                         <entry><emphasis role="strong">Mo</emphasis>
                         </entry>
                     </row>
                     <row>
                         <entry>EEE</entry>
-                        <entry>Day of the week, localized, abbreviated, three digit</entry>
+                        <entry>Day of the week, localized, abbreviated, three char</entry>
                         <entry>Zend_Date::WEEKDAY_SHORT</entry>
                         <entry><emphasis role="strong">Mon</emphasis>
                         </entry>
@@ -920,7 +921,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     </row>
                     <row>
                         <entry>e</entry>
-                        <entry>Number of the day, one or two digit</entry>
+                        <entry>Number of the day, one digit</entry>
                         <entry>Zend_Date::WEEKDAY_NARROW</entry>
                         <entry><emphasis role="strong">4</emphasis>
                         </entry>
@@ -1071,4 +1072,357 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
     </sect2>
 
+    <sect2 id="zend.date.constants.phpformats">
+
+        <title>Self-defined OUTPUT formats using PHP's date() format specifiers</title>
+
+        <para>
+            If you are more comfortable with PHP's date format specifier than with ISO format specifiers,
+            then you can call the <code>usePhpDateFormat()</code>.
+            Afterwards, all format parameters must be given with
+            <ulink url="http://php.net/date">PHP's <code>date()</code> format specifiers</ulink>.
+            The PHP date format lacks some of the formats supported by the ISO Format,
+            and vice-versa. If you are not already comfortable with it, then use the standard ISO format instead.
+            Also, if you have legacy code using PHP's date format, then either manually convert
+            it to the ISO format using
+            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::convertPhpToIsoFormat()</link>, or 
+            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::usePhpDateFormat()</link>.
+            The following examples illustrate the usage of constants from the table below to create 
+            self-defined formats, <emphasis role="strong">after</emphasis> first calling 
+            <code>Zend_Locale_Format::usePhpDateFormat(true)</code>.
+        </para>
+
+        <example>
+            <title>Example usage for self-defined formats with PHP specifier</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date.php';
+
+$locale = new Zend_Locale('de_AT');
+Zend_Locale_Format::usePhpDateFormat(true);
+$date = new Zend_Date(1234567890, false, $locale);
+
+// outputs something like 'February 16, 2007, 3:36 am'
+print $date->toString('F j, Y, g:i a');
+
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
+?>]]></programlisting>
+        </example>
+
+        <para>
+            The following table shows the list of PHP date format specifiers with
+            their equivalent Zend_Date constants and CLDR/ISO equivalent format specifiers.
+            In most cases, when the CLDR/ISO format does not have an equivalent
+            format specifier, the PHP format specifier is not altered by
+            <code>Zend_Locale_Format::convertPhpToIsoFormat()</code>, and the Zend_Date
+            methods then recognize these "peculiar" PHP format specifiers, even when in
+            the default "ISO" format mode.
+        </para>
+
+        <table>
+            <title>Constants for <emphasis role="strong">PHP date output</emphasis>
+            </title>
+            <tgroup cols="5">
+                <thead>
+                    <row>
+                        <entry>Constant</entry>
+                        <entry>Description</entry>
+                        <entry>Corresponds best to</entry>
+                        <entry>closest CLDR equivalent</entry>
+                        <entry>Affected part/example</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>d</entry>
+                        <entry>Day of the month, two digit</entry>
+                        <entry>Zend_Date::DAY</entry>
+                        <entry>dd</entry>
+                        <entry><emphasis role="strong">09</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>D</entry>
+                        <entry>Day of the week, localized, abbreviated, three digit</entry>
+                        <entry>Zend_Date::WEEKDAY_SHORT</entry>
+                        <entry>EEE</entry>
+                        <entry><emphasis role="strong">Mon</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>j</entry>
+                        <entry>Day of the month, one or two digit</entry>
+                        <entry>Zend_Date::DAY_SHORT</entry>
+                        <entry>d</entry>
+                        <entry><emphasis role="strong">9</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>l (lowercase L)</entry>
+                        <entry>Day of the week, localized, complete</entry>
+                        <entry>Zend_Date::WEEKDAY</entry>
+                        <entry>EEEE</entry>
+                        <entry><emphasis role="strong">Monday</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>N</entry>
+                        <entry>Number of the weekday, one digit</entry>
+                        <entry>Zend_Date::WEEKDAY_8601</entry>
+                        <entry>e</entry>
+                        <entry><emphasis role="strong">4</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>S</entry>
+                        <entry>English suffixes for day of month, two chars</entry>
+                        <entry>no equivalent</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">st</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>w</entry>
+                        <entry>Number of the weekday, 0=sunday, 6=saturday</entry>
+                        <entry>Zend_Date::WEEKDAY_DIGIT</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">4</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>z</entry>
+                        <entry>Day of the year, one, two or three digit</entry>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry>D</entry>
+                        <entry><emphasis role="strong">7</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>W</entry>
+                        <entry>Week, one or two digit</entry>
+                        <entry>Zend_Date::WEEK</entry>
+                        <entry>w</entry>
+                        <entry><emphasis role="strong">5</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>F</entry>
+                        <entry>Month, localized, complete</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>MMMM</entry>
+                        <entry><emphasis role="strong">February</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>Month, two digit</entry>
+                        <entry>Zend_Date::MONTH</entry>
+                        <entry>MM</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>Month, localized, abbreviated</entry>
+                        <entry>Zend_Date::MONTH_NAME_SHORT</entry>
+                        <entry>MMM</entry>
+                        <entry><emphasis role="strong">Feb</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>n</entry>
+                        <entry>Month, one or two digit</entry>
+                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>M</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>t</entry>
+                        <entry>Number of days per month, one or two digits</entry>
+                        <entry>Zend_Date::MONTH_DAYS</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">30</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>L</entry>
+                        <entry>Leapyear, boolean</entry>
+                        <entry>Zend_Date::LEAPYEAR</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">true</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>o</entry>
+                        <entry>Year according to ISO 8601, at least four digit</entry>
+                        <entry>Zend_Date::YEAR_8601</entry>
+                        <entry>YYYY</entry>
+                        <entry><emphasis role="strong">2009</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Y</entry>
+                        <entry>Year, at least four digit</entry>
+                        <entry>Zend_Date::YEAR</entry>
+                        <entry>yyyy</entry>
+                        <entry><emphasis role="strong">2009</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>y</entry>
+                        <entry>Year, at least two digit</entry>
+                        <entry>Zend_Date::YEAR_SHORT</entry>
+                        <entry>yy</entry>
+                        <entry><emphasis role="strong">09</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>a</entry>
+                        <entry>Time of day, localized</entry>
+                        <entry>Zend_Date::MERIDIEM</entry>
+                        <entry>a (sort of, but likely to be uppercase)</entry>
+                        <entry><emphasis role="strong">vorm.</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>A</entry>
+                        <entry>Time of day, localized</entry>
+                        <entry>Zend_Date::MERIDIEM</entry>
+                        <entry>a (sort of, but no guarantee that the format is uppercase)</entry>
+                        <entry><emphasis role="strong">VORM.</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>B</entry>
+                        <entry>Swatch internet time</entry>
+                        <entry>Zend_Date::SWATCH</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">1463</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>g</entry>
+                        <entry>Hour, (1-12), one or two digit</entry>
+                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
+                        <entry>h</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>G</entry>
+                        <entry>Hour, (0-23), one or two digit</entry>
+                        <entry>Zend_Date::HOUR_SHORT</entry>
+                        <entry>H</entry>
+                        <entry><emphasis role="strong">2</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>Hour, (01-12), two digit</entry>
+                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry>hh</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>H</entry>
+                        <entry>Hour, (00-23), two digit</entry>
+                        <entry>Zend_Date::HOUR</entry>
+                        <entry>HH</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>i</entry>
+                        <entry>Minute, (00-59), two digit</entry>
+                        <entry>Zend_Date::MINUTE</entry>
+                        <entry>mm</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>Second, (00-59), two digit</entry>
+                        <entry>Zend_Date::SECOND</entry>
+                        <entry>ss</entry>
+                        <entry><emphasis role="strong">02</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>e</entry>
+                        <entry>Time zone, localized, complete</entry>
+                        <entry>Zend_Date::TIMEZONE_NAME</entry>
+                        <entry>zzzz</entry>
+                        <entry><emphasis role="strong">Europe/Paris</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>I</entry>
+                        <entry>Daylight</entry>
+                        <entry>Zend_Date::DAYLIGHT</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">1</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>O</entry>
+                        <entry>Difference of time zone</entry>
+                        <entry>Zend_Date::GMT_DIFF</entry>
+                        <entry>Z or ZZ or ZZZ</entry>
+                        <entry><emphasis role="strong">+0100</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>P</entry>
+                        <entry>Difference of time zone, separated</entry>
+                        <entry>Zend_Date::GMT_DIFF_SEP</entry>
+                        <entry>ZZZZ</entry>
+                        <entry><emphasis role="strong">+01:00</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>T</entry>
+                        <entry>Time zone, localized, abbreviated</entry>
+                        <entry>Zend_Date::TIMEZONE</entry>
+                        <entry>z or zz or zzz</entry>
+                        <entry><emphasis role="strong">CET</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>Z</entry>
+                        <entry>Time zone offset in seconds</entry>
+                        <entry>Zend_Date::TIMEZONE_SECS</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">3600</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>c</entry>
+                        <entry>Standard Iso format output</entry>
+                        <entry>Zend_Date::ISO_8601</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">2004-02-12T15:19:21+00:00</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>r</entry>
+                        <entry>Standard Rfc 2822 format output</entry>
+                        <entry>Zend_Date::RFC_2822</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">Thu, 21 Dec 2000 16:01:07 +0200</emphasis>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>U</entry>
+                        <entry>Unix timestamp</entry>
+                        <entry>Zend_Date::TIMESTAMP</entry>
+                        <entry>no equivalent</entry>
+                        <entry><emphasis role="strong">15275422364</emphasis>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
 </sect1>
