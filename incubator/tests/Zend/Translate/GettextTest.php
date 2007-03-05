@@ -62,7 +62,14 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($translation, 'Сообщение 2 (ru)');
 
         $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
-        $this->assertEquals($adapter->translate('Message 5', 'ru'), 'Message 5');
+        $this->assertEquals($adapter->translate('Message 5', 'ru_RU'), 'Message 5');
+
+        try {
+            $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_ru(koi8-r).mo', 'xx');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
     }
 
     public function testOptions()
@@ -95,5 +102,19 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Translate_Exception $e) {
             // success
         }
+    }
+
+    public function testList()
+    {
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+
+        $this->assertEquals($adapter->getList(), array('en' => 'en'));
+        $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_en.mo', 'de');
+        $this->assertEquals($adapter->getList(), array('en' => 'en', 'de' => 'de'));
+
+        $this->assertTrue($adapter->isAvailable('de'));
+        $locale = new Zend_Locale('en');
+        $this->assertTrue($adapter->isAvailable($locale));
+        $this->assertFalse($adapter->isAvailable('sr'));
     }
 }
