@@ -3,14 +3,7 @@
     <title>Zend::initRegistry($registry = 'Zend_Registry')</title>
 
     <para>
-        Developers wishing to extend the existing registry's functionality may use this function.
-        This method enables developers to subclass Zend_Registry, including
-        adding alias methods for offsetGet() and offsetExists(), such as has(), getval(), setval(), etc.,
-        by creating an instance of a Zend_Registry subclass in bootstrap code, and then supplying that instance
-        to initRegistry(), before any other registry-related methods are used.  Note that initRegistry()
-        may only be used once, to avoid accidentally overwriting the registry after initialization.
-        Also, using Zend::registry() or Zend::register() automatically calls initRegistry(), if it has
-        not already been called.
+      如果你想扩展现有的注册表（对象仓库）功能，可以使用这个类方法。这个方法允许程序继承Zend_Registry类，包括增加别名方法offsetGet()和offsetExists()，如has(), getval(), setval()等等。你可以在bootstrap代码中（index.php）创建一个Zend_Registry的子类的实例，然后把实例传递给initRegistry()，这些操作要在其它注册相关的方法使用之前完成。注意initRegistry()只能使用一次，这是为了避免在初始化覆盖了已经存在的注册表。同样，使用Zend::registry()或者 Zend::register()会自动调用initRegistry()，如果它没被调用过的话。
     </para>
 
     <example>
@@ -25,12 +18,14 @@ class Zend_RegistryMine extends Zend_Registry
 }
 
 # in your bootstrap code:
+# 在bootstrap代码中：
 
 $ini_array = parse_ini_file('your_stuff.ini'); // purely optional
 $registry = new Zend_RegistryMine($ini_array);
 Zend::initRegistry($registry);
 
 # now the normal Zend::registry(), Zend::register(), and Zend::isRegistered() work as expected
+# 现在Zend::registry(), Zend::register()和Zend::isRegistered()都按预期的工作正常
 ?>]]></programlisting>
     </example>
 
@@ -38,10 +33,11 @@ Zend::initRegistry($registry);
         Use the constant <code>ArrayObject::ARRAY_AS_PROPS</code> in the constructor to enable accessing values
         using <code>$registry->$indexName</code>, in addition to <code>$registry[$indexName]</code>.
         However, beware of name collisions, if you extend Zend_Registry and add private variables.
+		在构造方法中使用常量<code>ArrayObject::ARRAY_AS_PROPS</code>允许使用<code>$registry->$indexName</code>的方式来访问值，而不只能够用<code>$registry[$indexName]</code>的方式。但是如果你扩展了Zend_Registry并添加了private的变量，要注意避免出现命名冲突。
     </para>
 
     <example>
-        <title>Accessing Values Using OO Notation Instead of ArrayAccess Notation</title>
+        <title>使用OO方式代替数组方式来访问值</title>
 <programlisting role="php"><![CDATA[<?php
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
 Zend::initRegistry($registry);
