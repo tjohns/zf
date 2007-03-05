@@ -76,10 +76,13 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
             $content = fgets($this->_file);
             $content = explode(";", $content);
             // # marks a comment in the translation source
-            if ($content[0][0] == "#") {
+            if ((!is_array($content) and (substr(trim($content), 0, 1) == "#")) or
+                 (is_array($content) and (substr(trim($content[0]), 0, 1) == "#"))) {
                 continue;
             }
-            $this->_translate[$locale][$content[0]] = $content[1];
+            if (!empty($content[1])) {
+                $this->_translate[$locale][$content[0]] = $content[1];
+            }
         }
     }
 

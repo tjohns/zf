@@ -89,8 +89,10 @@ abstract class Zend_Translate_Adapter {
      */
     public function setOptions($options)
     {
-        foreach ($options as $key => $option) {
-            $this->_options[strtolower($key)] = $option;
+        if (is_array($options)) {
+            foreach ($options as $key => $option) {
+                $this->_options[strtolower($key)] = $option;
+            }
         }
     }
 

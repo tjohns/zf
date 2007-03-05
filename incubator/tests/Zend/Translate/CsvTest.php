@@ -8,9 +8,9 @@
 
 
 /**
- * Zend_Translate_Adapter_Gettext
+ * Zend_Translate_Adapter_Csv
  */
-require_once 'Zend/Translate/Adapter/Gettext.php';
+require_once 'Zend/Translate/Adapter/Csv.php';
 
 /**
  * PHPUnit test case
@@ -20,54 +20,45 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
- * @package    Zend_Config
+ * @package    Zend_Translate
  * @subpackage UnitTests
  */
-class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
+class Zend_Translate_CsvTest extends PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv');
 
-        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Gettext);
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Csv);
     }
 
     public function testToString()
     {
-        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv');
 
-        $this->assertEquals($adapter->toString(), 'Gettext');
+        $this->assertEquals($adapter->toString(), 'Csv');
     }
 
     public function testTranslate()
     {
-        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv');
 
-        $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
+        $this->assertSame($adapter->translate('Message 1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5');
     }
 
     public function testLoadTranslationData()
     {
-        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
 
         $this->assertEquals($adapter->translate('Message 1'),       'Message 1 (en)');
         $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
         $this->assertEquals($adapter->translate('Message 2', 'ru'), 'Message 2');
-
-        $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_ru(koi8-r).mo', 'ru');
-        // Original message is in KOI8-R.. as unit tests are done in UTF8 we have to convert
-        // the returned KOI8-R string into UTF-8
-        $translation = iconv("KOI8-R", "UTF-8", $adapter->translate('Message 2', 'ru'));
-        $this->assertEquals($translation, 'Сообщение 2 (ru)');
-
-        $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
-        $this->assertEquals($adapter->translate('Message 5', 'ru'), 'Message 5');
     }
 
     public function testOptions()
     {
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
 
         $adapter->setOptions(array('testoption' => 'testkey'));
         $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey'));
@@ -77,7 +68,7 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
 
     public function testLocale()
     {
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
 
         $this->assertEquals($adapter->getLocale(), 'en');
         $locale = new Zend_Locale('en');

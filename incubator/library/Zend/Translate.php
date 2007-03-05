@@ -40,7 +40,8 @@ class Zend_Translate {
     const AN_ARRAY   = 'array';
     const AN_CSV     = 'csv';
     const AN_TMX     = 'tmx';
-    
+    const AN_XLIFF   = 'xliff';
+
     /**
      * Adapter
      *
@@ -97,9 +98,9 @@ class Zend_Translate {
                 break;
             case 'xliff':
                 /** Zend_Translate_Adapter_Xliff */
-//                require_once('Zend/Translate/Adapter/Xliff.php');
-//                $this->_adapter = new Zend_Translate_Adapter_Xliff($options, $locale);
-//                break;
+                require_once('Zend/Translate/Adapter/Xliff.php');
+                $this->_adapter = new Zend_Translate_Adapter_Xliff($options, $locale);
+                break;
             case 'qt':
             case 'sql':
             case 'tbx':

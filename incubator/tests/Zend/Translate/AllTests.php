@@ -8,6 +8,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Translate/ArrayTest.php';
 require_once 'Zend/Translate/GettextTest.php';
+require_once 'Zend/Translate/CsvTest.php';
 
 class Zend_Translate_AllTests
 {
@@ -22,6 +23,7 @@ class Zend_Translate_AllTests
 
         $suite->addTestSuite('Zend_Translate_ArrayTest');
         $suite->addTestSuite('Zend_Translate_GettextTest');
+        $suite->addTestSuite('Zend_Translate_CsvTest');
 
         return $suite;
     }

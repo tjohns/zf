@@ -1,9 +1,9 @@
 # Comment
 # A csv files contains all informations for one language
 # MessageID;Translation
-Hallo;Hy
-Übersetzung;Translation
-Test;Test
-Inhalt mit Nummer %1\$s;Content with number %1\$s
-# Another comment
-Zusätzlicher Inhalt;Additional content
+Message 1;Message 1 (en)
+Message 2;Message 2 (en)
+Message 3;Message 3 (en)
+Message 4;Message 4 (en)
+# Comment
+Message 5;Message 5 (en)

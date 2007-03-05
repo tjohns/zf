@@ -87,4 +87,42 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($adapter->translate('msg2', 'ru'), 'msg2');
         $this->assertEquals($adapter->translate('msg4', 'ru'), 'Message 4 (ru)');
     }
+
+    public function testOptions()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ), 'en');
+
+        $adapter->setOptions(array('testoption' => 'testkey'));
+        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey'));
+        $this->assertEquals($adapter->getOptions('testoption'), 'testkey');
+        $this->assertTrue(is_null($adapter->getOptions('nooption')));
+    }
+
+    public function testLocale()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)',
+                                                         ), 'en');
+
+        $this->assertEquals($adapter->getLocale(), 'en');
+        $locale = new Zend_Locale('en');
+        $adapter->setLocale($locale);
+        $this->assertEquals($adapter->getLocale(), 'en');
+        try {
+            $adapter->setLocale('nolocale');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
+        try {
+            $adapter->setLocale('de');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
+    }
 }

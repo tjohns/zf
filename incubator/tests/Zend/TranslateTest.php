@@ -47,8 +47,55 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testGetAdapter()
     {
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY , array(), 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
+
         $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/_files/testmsg_en.mo', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Gettext);
+
+        $lang = new Zend_Translate(Zend_Translate::AN_TMX , dirname(__FILE__) . '/Translate/_files/translation_en.tmx', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tmx);
+
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/_files/translation_en.csv', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Csv);
+
+        $lang = new Zend_Translate(Zend_Translate::AN_XLIFF , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+
+        try {
+            $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+        } catch (Zend_Translate_Exception $e) {
+            // success - not implemented
+        }
+
+        try {
+            $lang = new Zend_Translate('sql' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+        } catch (Zend_Translate_Exception $e) {
+            // success - not implemented
+        }
+
+        try {
+            $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+        } catch (Zend_Translate_Exception $e) {
+            // success - not implemented
+        }
+
+        try {
+            $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+        } catch (Zend_Translate_Exception $e) {
+            // success - not implemented
+        }
+
+        try {
+            $lang = new Zend_Translate('noadapter' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+        } catch (Zend_Translate_Exception $e) {
+            // success - not implemented
+        }
     }
 
     public function testSetAdapter()
