@@ -6,7 +6,7 @@
 
         <para>
             Das Zend Framework stellt verschiedene Alternativen zu den bereit gestellten 
-            Standardklassen zur Verfügung. Dies beinhaltet altive Request Objekte, Router und 
+            Standardklassen zur Verfügung. Dies beinhaltet alternative Request Objekte, Router und 
             Response Objekte.
         </para>
     </sect2>
