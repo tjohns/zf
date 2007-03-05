@@ -127,10 +127,10 @@ $posts[0]->setTitle('New title')
             <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
 
-// by specifying date
+// by specifying URL
 $delicious->deletePost('http://framework.zend.com');
 
-// or by calling a method on a post
+// or by calling the method upon a post object
 $posts = $delicious->getPosts();
 $posts[0]->delete();
 
