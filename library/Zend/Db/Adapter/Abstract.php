@@ -455,18 +455,44 @@ abstract class Zend_Db_Adapter_Abstract
 
     /**
      * Quotes an identifier.
+     * 
+     * By default the given string will be treated as a qualified identifier.
+     * For Example:
+     *
+     * <code>
+     * $adapter->quoteIdentifier('myschema.mytable')
+     * </code>
+     * Returns: "myschema"."mytable"
+     * 
+     * Whereas to actually quote an identifier that contains a dot:
+     * <code>
+     * $adapter->quoteIdentifier('my.table', false)
+     * </code>
+     * Returns: "my.table"
+     * 
+     * The actual quote character surrounding the identifiers may vary depending on
+     * the adapter.
      *
      * @param string|Zend_Db_Expr $ident The identifier.
+     * @param boolean $qualified Should dots be treated as identifier separators.
      * @return string The quoted identifier.
      */
-    public function quoteIdentifier($ident)
+    public function quoteIdentifier($ident, $qualified = true)
     {
         if ($ident instanceof Zend_Db_Expr) {
             return $ident->__toString();
         }
         $q = $this->getQuoteIdentifierSymbol();
         $ident = str_replace("$q", "$q$q", $ident);
-        return $q . $ident . $q;
+        if ($qualified) {
+            $segments = array();
+            foreach (explode('.', $ident) as $segment) {
+                $segments[] = $q . $segment . $q;
+            }
+            return implode('.', $segments);
+        } else {
+            return $q . $ident . $q;
+        }
     }
 
     /**

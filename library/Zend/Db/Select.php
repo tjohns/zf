@@ -329,8 +329,8 @@ class Zend_Db_Select
         }
 
         if (is_array($name)) {
-            // Must be array($tableName => $correlationName)
-            foreach ($name as $_tableName => $_correlationName) {
+            // Must be array($correlationName => $tableName)
+            foreach ($name as $_correlationName => $_tableName) {
                 $tableName = $_tableName;
                 $correlationName = $_correlationName;
                 break;
@@ -338,9 +338,18 @@ class Zend_Db_Select
         } else if (empty($name)) {
             $correlationName = $tableName = '';
         } else {
-            // Generate a correlation name matching {$tableName},
-            // {$tableName}_2, {$tableName}_3, etc.
-            $correlationName = $tableName = $name;
+            if ($name instanceof Zend_Db_Expr) {
+                $tableName = $name;
+                // Use a default correlation name
+                $correlationName = 't';
+            } else {
+                $tableName = $name;
+                // Extract just the last name of a qualified table name
+                $dot = strrpos($name,'.');
+                $correlationName = ($dot === false) ? $name : substr($name, $dot+1);
+            }
+            // Generate a correlation name matching {$correlationName},
+            // {$correlationName}_2, {$correlationName}_3, etc.
             $c = $correlationName;
             for ($i = 2; array_key_exists($c, $this->_parts[self::FROM]); ++$i) {
                 $c = $correlationName . '_' . (string) $i;
