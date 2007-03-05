@@ -731,8 +731,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $this->createTestTable2();
         $select = $this->_db->select()
-            ->from( array($table => 'xyz1') )
-            ->join( array($table2 => 'xyz2'), 'xyz1.id = xyz2.news_id')
+            ->from( array('xyz1' => $table) )
+            ->join( array('xyz2' => $table2), 'xyz1.id = xyz2.news_id')
             ->where('xyz1.id = 1');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
