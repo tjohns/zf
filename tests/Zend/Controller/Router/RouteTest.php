@@ -362,4 +362,39 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame(null, $route->getDefault('bogus'));
     }
 
+    public function testGetInstance()
+    {
+        require_once 'Zend/Config.php';
+
+        $routeConf = array(
+            'route' => 'users/all',
+            'defaults' => array(
+                'controller' => 'ctrl'
+            )
+        );
+        
+        $config = new Zend_Config($routeConf);
+        $route = Zend_Controller_Router_Route::getInstance($config);
+        
+        $this->assertType('Zend_Controller_Router_Route', $route);
+
+        $values = $route->match('users/all');
+
+        $this->assertSame('ctrl', $values['controller']);
+
+    }
+
+    public function testAssembleResetDefaults()
+    {    
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        
+        $values = $route->match('news/view/id/3');
+
+        $url = $route->assemble(array('action' => null));
+        $this->assertSame('news/index/id/3', $url);
+
+        $url = $route->assemble(array('action' => null, 'id' => null));
+        $this->assertSame('news/index', $url);
+
+    }
 }

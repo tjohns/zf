@@ -38,6 +38,17 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     
     protected $_values = array();
     
+    /**
+     * Instantiates route based on passed Zend_Config structure
+     */
+    public static function getInstance(Zend_Config $config) 
+    {
+        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->asArray() : array();
+        $map = ($config->map instanceof Zend_Config) ? $config->map->asArray() : array();
+        $reverse = (isset($config->reverse)) ? $config->reverse : null;
+        return new self($config->route, $defs, $map, $reverse);
+    }
+
     public function __construct($route, $defaults = array(), $map = array(), $reverse = null)
     {
         $this->_regex = '#^' . $route . '$#i';

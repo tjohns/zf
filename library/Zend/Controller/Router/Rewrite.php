@@ -124,10 +124,12 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
             throw new Zend_Controller_Router_Exception("No route configuration in section '{$section}'");
         }
         foreach ($config->{$section} as $name => $info) {
-            $object = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';        
-            $reqs = (isset($info->reqs)) ? $info->reqs->asArray() : null;
-            $defs = (isset($info->defaults)) ? $info->defaults->asArray() : null;
-            $this->addRoute($name, new $object($info->route, $defs, $reqs));
+            
+            $class = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';
+            Zend::loadClass($class);
+               
+            $route = call_user_func(array($class, 'getInstance'), $info);
+            $this->addRoute($name, $route);
         }
     }
 

@@ -73,6 +73,15 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     protected $_request;
 
     /**
+     * Instantiates route based on passed Zend_Config structure
+     */
+    public static function getInstance(Zend_Config $config) 
+    {
+        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->asArray() : array();
+        return new self($defs);
+    }
+
+    /**
      * Constructor
      *
      * @param array Defaults for map variables with keys as variable names

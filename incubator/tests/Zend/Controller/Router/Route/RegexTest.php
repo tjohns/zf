@@ -342,4 +342,32 @@ class Zend_Controller_Router_Route_RegexTest extends PHPUnit_Framework_TestCase
         $this->assertSame('users/vicki', $url);
     }
     
+    public function testGetInstance()
+    {
+        require_once 'Zend/Config.php';
+
+        $routeConf = array(
+            'route' => 'forum/(\d+)',
+            'reverse' => 'forum/%d',
+            'defaults' => array(
+                'controller' => 'ctrl'
+            )
+        );
+        /* numeric Zend_Config indexes don't work at the moment
+            'map' => array(
+                '1' => 'forum_id'
+            )  
+        */
+        
+        $config = new Zend_Config($routeConf);
+        $route = Zend_Controller_Router_Route_Regex::getInstance($config);
+        
+        $this->assertType('Zend_Controller_Router_Route_Regex', $route);
+
+        $values = $route->match('forum/1');
+
+        $this->assertSame('ctrl', $values['controller']);
+
+    }
+    
 }

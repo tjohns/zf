@@ -287,4 +287,21 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('def/con', $url);
     }
 
+    public function testGetInstance()
+    {
+        require_once 'Zend/Config.php';
+
+        $routeConf = array(
+            'defaults' => array(
+                'controller' => 'ctrl'
+            )
+        );
+        
+        $config = new Zend_Config($routeConf);
+        $route = Zend_Controller_Router_Route_Module::getInstance($config);
+        
+        $this->assertType('Zend_Controller_Router_Route_Module', $route);
+
+    }
+
 }
