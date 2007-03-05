@@ -1,43 +1,43 @@
 <sect1 id="zend.filter.writing_filters">
 
-    <title>Writing Filters</title>
+    <title>Ecriture de filtres</title>
 
     <para>
-        Zend_Filter supplies a set of commonly needed filters, but developers will often need to write custom
-        filters for their particular use cases. The task of writing a custom filter is facilitated by
-        implementing <code>Zend_Filter_Interface</code>.
+        Zend_Filter fournit un ensemble de filtres usuels. Cependant, les développeurs auront souvent besoin
+        d'écrire des filtres personnalisés pour leurs besoins propres. L'écriture de filtre personnalisés est
+        rendue plus facile via l'implémentation de <code>Zend_Filter_Interface</code>.
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> defines a single method, <code>filter()</code>, that may be
-        implemented by user classes. An object that implements this interface may be added to a filter chain
-        with <code>Zend_Filter::addFilter()</code>.
+        <code>Zend_Filter_Interface</code> définit une méthode unique, <code>filter()</code>, qui peut 
+        être implémentée dans les classes créées. Un objet qui implémente cette interface peut être
+        ajouté à une chaîne de filtrage via <code>Zend_Filter::addFilter()</code>.
     </para>
 
     <para>
-        The following example demonstrates how to write a custom filter:
+        L'exemple suivant démontre comment écrire un filtre personnalisé :
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/Interface.php';
 
-class MyFilter implements Zend_Filter_Interface
+class MonFiltre implements Zend_Filter_Interface
 {
-    public function filter($value)
+    public function filter($valeur)
     {
-        // perform some transformation upon $value to arrive on $valueFiltered
+        // application de transformations sur $valeur pour parvenir à $valeurFiltree
 
-        return $valueFiltered;
+        return $valeurFiltree;
     }
 }]]></programlisting>
 
     </para>
 
     <para>
-        To add an instance of the above filter to a filter chain:
+        Pour ajouter une instance du filtre défini ci-dessus à une chaîne de filtrage : 
 
         <programlisting role="php"><![CDATA[<?php
-$filterChain = new Zend_Filter();
-$filterChain->addFilter(new MyFilter());]]></programlisting>
+$filtreChaine = new Zend_Filter();
+$filtreChaine->addFilter(new MonFiltre());]]></programlisting>
 
     </para>
 
