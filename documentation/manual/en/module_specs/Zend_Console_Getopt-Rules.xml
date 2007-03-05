@@ -32,7 +32,7 @@
             character ("<code>:</code>") indicates a flag that requires a
             parameter.
         </para>
-        <example>
+        <example id="zend.console.getopt.rules.short.example">
             <title>Using the Short Syntax</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
@@ -96,7 +96,7 @@ $opts = new Zend_Console_Getopt('abp:');
             The value of each element in the associative array is a help string
             to describe to a user how to use your program.  
         </para>
-        <example>
+        <example id="zend.console.getopt.rules.long.example">
             <title>Using the Long Syntax</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';

@@ -30,7 +30,7 @@
             which returns as a string the formatted set of usage messages for
             all declared options.
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.exceptions.example">
             <title>Catching Getopt Exceptions</title>
             <programlisting role="php"><![CDATA[<?php
 try {
@@ -75,7 +75,7 @@ try {
             the user did specify it on the command-line, the method returns
             <code>true</code>.  Otherwise the method returns <code>null</code>.
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title>Using getOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -89,7 +89,7 @@ $p_parameter = $opts->getOption('p');
             variable.  The <code>__isset()</code> magic method is also
             implemented.
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.byname.example.magic">
             <title>Using __get() and __isset() magic methods</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -157,7 +157,7 @@ $p_parameter = $opts->p; // null if not set
             <code>geRemainingArgs()</code> method.  This method returns
             an array of the strings that were not part of any options.
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.remainingargs.example">
             <title>Using getRemainingArgs()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
