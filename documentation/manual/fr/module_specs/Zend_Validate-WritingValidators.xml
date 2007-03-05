@@ -1,37 +1,38 @@
 <sect1 id="zend.validate.writing_validators">
 
-    <title>Writing Validators</title>
+    <title>Ecrire des validateurs</title>
 
     <para>
-        Zend_Validate supplies a set of commonly needed validators, but inevitably, developers will wish to
-        write custom validators for their particular needs. The task of writing a custom validator is
-        facilitated by implementing <code>Zend_Validate_Interface</code>.
+        Zend_Validate fournit un ensemble de validateurs usuels. Inévitablement, les développeurs ont besoin
+        de pouvoir écrire leurs propres validateurs pour des besoins spécifiques. La tâche consistant à
+        écrire des validateurs personnalisés est facilitée en implémentant <code>Zend_Validate_Interface</code>. 
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> defines two methods, <code>isValid()</code> and
-        <code>getMessages()</code>, that may be implemented by user classes. An object that implements this
-        interface may be added to a validator chain with <code>Zend_Validate::addValidator()</code>.
+        <code>Zend_Validate_Interface</code> définit deux méthodes, <code>isValid()</code> et 
+        <code>getMessages()</code>, qui peuvent être implémentées par les classes créées.
+        Un objet qui implémente cette interface peut être utilisé comme chaîne de validation via
+        <code>Zend_Validate::addValidator()</code>.
     </para>
 
     <para>
-        The following example demonstrates how a custom validator might be written:
+        L'exemple ci-dessous décrit comment écrire un validateur personnalisé :
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Interface.php';
 
-class MyValidator implements Zend_Validate_Interface
+class MonValidateur implements Zend_Validate_Interface
 {
     protected $_messages = array();
 
-    public function isValid($value)
+    public function isValid($valeur)
     {
         $this->_messages = array();
 
-        // arrive on $requirement based on validation criteria
+        // définition de $requirement sur la base des critères de validation
 
         if (!$requirement) {
-            $this->_messages[] = "Reason validation failed";
+            $this->_messages[] = "Raison de l'échec";
             return false;
         }
 
@@ -47,11 +48,11 @@ class MyValidator implements Zend_Validate_Interface
     </para>
 
     <para>
-        To add an instance of the above validator to a validator chain:
+        Pour ajouter une instance de la classe précédente à une chaîne de validation :
 
         <programlisting role="php"><![CDATA[<?php
-$validatorChain = new Zend_Validate();
-$validatorChain->addValidator(new MyValidator());]]></programlisting>
+$validateurChaine = new Zend_Validate();
+$validateurChaine->addValidator(new MonValidateur());]]></programlisting>
 
     </para>
 

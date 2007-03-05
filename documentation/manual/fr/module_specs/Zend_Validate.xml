@@ -19,7 +19,7 @@
     </para>
 
     <para>
-        Par exemplen une application web peut réclamer qu'un identifiant comprennent entre six et douze
+        Par exemple, une application web peut réclamer qu'un identifiant comprennent entre six et douze
         caractères et ne contiennent que des caractères alphanumériques. Un validateur peut être utilisé
         pour s'assurer que les identifiants remplissent ces règles. Si un identifiant donné ne respecte
         pas l'une ou plusieurs de ces règles, il sera utile de savoir laquelle ou lesquelles en particulier.

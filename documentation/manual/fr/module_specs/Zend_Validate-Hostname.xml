@@ -1,73 +1,76 @@
 <sect1 id="zend.validate.validating_hostnames">
 
-    <title>Validating Hostnames</title>
+    <title>Validation des noms de domaine</title>
 
     <para>
-        Zend_Validate_Hostname allows you to validate a hostname against a set of known specifications.
-        It is possible to check for three different types of hostnames: a DNS Hostname (i.e.
-        domain.com), IP address (i.e. 1.2.3.4), and Local hostnames (i.e. localhost). By default only
-        DNS hostnames are matched.
+        Zend_Validate_Hostname vous permet de valider un nom de domaine contre un ensemble
+        de spécifications connues. Il est ainsi possible de valider trois types différents de
+        noms de domaine : un nom de domaine qualifié (ex : domaine.com), une adresse IP (ex : 1.2.3.4)
+        ou un nom de domaine local (ex : localhost). Par défaut, seul les noms de domaines qualifiés
+        sont acceptés. 
     </para>
 
     <para>
-        <emphasis role="strong">Basic usage</emphasis>
+        <emphasis role="strong">Utilisation basique</emphasis>
     </para>
 
     <para>
-        A basic example of usage is below:
+        Exemple simple
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
-$validator = new Zend_Validate_Hostname();
-if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+$validateur = new Zend_Validate_Hostname();
+if ($validateur->isValid($domaine)) {
+    // le nom de domaine est valide
 } else {
-    // hostname is invalid; print the reasons
-    foreach ($validator->getMessages() as $message) {
+    // le nom de domaine est invalide ; afficher pourquoi
+    foreach ($validateur->getMessages() as $message) {
         echo "$message\n";
     }
 }]]></programlisting>
 
-        This will match the hostname <code>$hostname</code> and on failure populate
-        <code>$validator->getMessages()</code> with useful error messages.
+        Ceci validera le domaine <code>$domaine</code> et, en cas d'échec, *
+        fournira des messages d'erreur informatifs via <code>$validator->getMessages()</code>.
 
     </para>
 
     <para>
-        <emphasis role="strong">Validating different types of hostnames</emphasis>
+        <emphasis role="strong">Validation de différents types de noms de domaine</emphasis>
     </para>
 
     <para>
-        You may find you also want to match IP addresses, Local hostnames, or a combination of all
-        allowed types. This can be done by passing a parameter to Zend_Validate_Hostname when you
-        instantiate it. The paramter should be an integer which determines what types of hostnames
-        are allowed. You are encouraged to use the Zend_Validate_Hostname constants to do this.
+        Il peut se trouver que vous souhaitez valider des adresses IP, des noms de domaine locaux 
+        ou toute combinaison de tous les types disponibles. Cette opération peut être effectuée
+        en passant un paramètre à Zend_Validate_Hostname au moment de l'instanciation. Le paramètre
+        doit être un entier qui détermine quels types de noms de domaine sont admis. Il est 
+        recommandé d'utiliser les constantes de la classe Zend_Validate_Hostname. 
     </para>
 
     <para>
-        The Zend_Validate_Hostname constants are: <code>ALLOW_DNS</code> to allow only DNS hostnames,
-        <code>ALLOW_IP</code> to allow IP addresses, <code>ALLOW_LOCAL</code> to allow local network
-        names, and <code>ALLOW_ALL</code> to allow all three types. To just check for IP addresses
-        you can use the example below:
+        Les constantes de Zend_Validate_Hostname sont : <code>ALLOW_DNS</code> qui autorise uniquement
+        les noms de domaine qualifiés, <code>ALLOW_IP</code> qui autorise les adresses IP, <code>ALLOW_LOCAL</code>
+        qui autorise les domaines locaux et <code>ALLOW_ALL</code> qui autorise les trois types précédents.
+        Pour vérifier uniquement les adresses IP, vous pouvez utiliser l'exemple suivant :
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
-if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+$validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
+if ($validateur->isValid($hostname)) {
+    // le nom de domaine est valide
 } else {
-    // hostname is invalid; print the reasons
-    foreach ($validator->getMessages() as $message) {
+    // le nom de domaine est invalide ; afficher pourquoi
+    foreach ($validateur->getMessages() as $message) {
         echo "$message\n";
     }
 }]]></programlisting>
     </para>
 
     <para>
-        As well as using <code>ALLOW_ALL</code> to accept all hostnames types you can combine
-        these types to allow for combinations. For example, to accept DNS and Local hostnames
-        instantiate your Zend_Validate_Hostname object as so:
+        Vous pouvez utiliser <code>ALLOW_ALL</code> pour accepter tous les types de
+        domaines. De même, vous pouvez créer des configurations combinant ces différents types. Par exemple, 
+        pour accepter les domaines qualifiés et les domaines locaux, instanciez votre objet Zend_Validate_Hostname
+        de la manière suivante : 
         <programlisting role="php"><![CDATA[<?php
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+$validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
 }]]></programlisting>
 
     </para>
