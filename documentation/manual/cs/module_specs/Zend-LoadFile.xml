@@ -2,9 +2,8 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> loads a PHP file, which may contain any PHP code. It is a wrapper for the
-    PHP function <ulink url="http://php.net/include"><code>include()</code></ulink> that throws
-    <code>Zend_Exception</code> on failure.
+    <code>Zend::loadFile()</code> nahrává PHP soubor, který může obsahovat jakýkoli PHP kód. Metoda je obal pro funkci <ulink url="http://php.net/include"><code>include()</code></ulink> a vyhazuje výjimku 
+    <code>Zend_Exception</code> při chybě.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -13,22 +12,17 @@ Zend::loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
 
-    <para>The <code>$filename</code> argument specifies the filename to load, which must not contain
-    any path information.  A security check is performed on <code>$filename</code>.  The
-    <code>$filename</code> may only contain alphanumeric characters, dashes ("-"), underscores ("_"), or
-    periods (".").  No such restriction is placed on the <code>$dirs</code> argument.
+    <para>Parametr <code>$filename</code> určuje soubor, který má být nahrán. Nesmí obsahovat žádné informace o cestě a  předtím, než je soubor nahrán, projde parametr <code>$filename</code> bezpečnostní kontrolou. Smí obsahovat pouze alfanumerické znaky, pomlčku ("-"), podtržítko ("_") nebo tečku ("."). Taková pravidla ovšem neplatí pro parametr <code>$dirs</code>.
     </para>
-
-    <para>The <code>$dirs</code> argument specifies directories to search for the file.  If
-    <code>NULL</code>, only the <code>include_path</code> will be searched.  If a string
-    or an array, the directory or directories specified will be searched, and then the
-    <code>include_path</code>.
+    
+        
+    <para>Parametr <code>$dirs</code> určuje adresáře, ve kterých se má hledat soubor.  Jestliže je nastaven na 
+    <code>NULL</code>, pak bude použita cesta specifikovaná direktivou <code>include_path</code>. Jestliže bude mít parametr jako hodnotu řetězec nebo pole, nejprve prohledá tyto adresáře a až pak místa určená direktivou <code>include_path</code>.
     </para>
 
     <para>
-    The <code>$once</code> argument is a boolean that specifies whether to use the PHP
-    functions <ulink url="http://php.net/include"><code>include()</code></ulink> or <ulink
-    url="http://php.net/include_once"><code>include_once()</code></ulink> for loading the file.
+    Parametr <code>$once</code> má boolean hodnotu (true/false), která určuje, zda se má při nahrávání souboru použít funkce <ulink url="http://php.net/include"><code>include()</code></ulink> nebo <ulink
+    url="http://php.net/include_once"><code>include_once()</code></ulink>.
     </para>
 </sect1>
 <!--

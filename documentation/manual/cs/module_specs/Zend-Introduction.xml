@@ -1,10 +1,8 @@
 <sect1 id="zend.introduction">
-    <title>Introduction</title>
+    <title>Úvod</title>
     <para>
-    The Zend class is the foundation class of the Zend Framework.  This
-    class evolved out of the framework's adherence to the DRY principle (Don't Repeat
-    Yourself).  It contains only static methods, and these methods
-    contain functionality that is required by many components in the Zend Framework.
+    Třída Zend je základní třídou Zend Frameworku. Obsahuje pouze statické metody, které četně využívají ostatní knihovny Zend Frameworku. Třída byla vytvořena tak, aby dodržovala tzv. DRY princip (Don't Repeat
+    Yourself, tzn. nevytvářej duplicity).
     </para>
 </sect1>
 <!--
