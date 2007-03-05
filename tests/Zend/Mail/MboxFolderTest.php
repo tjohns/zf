@@ -206,7 +206,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
 
         $count = $mail->countMessages();
-        $this->assertEquals(5, $count);
+        $this->assertEquals(6, $count);
 
         $mail->selectFolder('/subfolder/test.mbox');
         $count = $mail->countMessages();
@@ -216,7 +216,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
-        $shouldSizes = array(1 => 397, 89, 694, 452, 497);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 103);
 
         $sizes = $mail->getSize();
         $this->assertEquals($shouldSizes, $sizes);
@@ -236,5 +236,25 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail->selectFolder('/subfolder/test.mbox');
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
+    }
+
+    public function testSleepWake()
+    {
+        $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
+
+        $mail->selectFolder('/subfolder/test.mbox');
+        $count = $mail->countMessages();
+        $content = $mail->getMessage(1)->getContent();
+
+        $serialzed = serialize($mail);
+        $mail = null;
+        $mail = unserialize($serialzed);
+
+        $this->assertEquals($mail->countMessages(), $count);
+        $this->assertEquals($mail->getMessage(1)->getContent(), $content);
+
+        $mail->selectFolder('/subfolder/test.mbox');
+        $this->assertEquals($mail->countMessages(), $count);
+        $this->assertEquals($mail->getMessage(1)->getContent(), $content);
     }
 }

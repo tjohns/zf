@@ -167,13 +167,13 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Pop3($this->_params);
 
         $count = $mail->countMessages();
-        $this->assertEquals(5, $count);
+        $this->assertEquals(6, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Pop3($this->_params);
-        $shouldSizes = array(1 => 397, 89, 709, 452, 497);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101);
 
 
         $sizes = $mail->getSize();
@@ -277,9 +277,15 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
         $mail->login($this->_params['user'], $this->_params['password']);
 
         $uids = $mail->uniqueid();
-        $this->assertEquals(count($uids), 5);
+        $this->assertEquals(count($uids), 6);
 
         $this->assertEquals($uids[1], $mail->uniqueid(1));
     }
 
+    public function testRawHeader()
+    {
+        $mail = new Zend_Mail_Storage_Pop3($this->_params);
+
+        $this->assertTrue(strpos($mail->getRawHeader(1), "\r\nSubject: Simple Message\r\n") > 0);
+    }
 }

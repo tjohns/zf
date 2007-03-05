@@ -234,13 +234,13 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($this->_params);
 
         $count = $mail->countMessages();
-        $this->assertEquals(5, $count);
+        $this->assertEquals(6, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
-        $shouldSizes = array(1 => 397, 89, 709, 452, 497);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101);
 
 
         $sizes = $mail->getSize();
@@ -451,5 +451,12 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $flags = $mail->getMessage(1)->getFlags();
         $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_SEEN]));
         $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_SEEN, $flags));
+    }
+
+    public function testRawHeader()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $this->assertTrue(strpos($mail->getRawHeader(1), "\r\nSubject: Simple Message\r\n") > 0);
     }
 }

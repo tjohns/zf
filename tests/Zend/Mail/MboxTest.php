@@ -115,13 +115,13 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = $mail->countMessages();
-        $this->assertEquals(5, $count);
+        $this->assertEquals(6, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
-        $shouldSizes = array(1 => 397, 89, 694, 452, 497);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 103);
 
 
         $sizes = $mail->getSize();
@@ -214,4 +214,18 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
         $this->fail('no exception raised while seeking to not invalid id');
     }
 
+    public function testSleepWake()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+
+        $count = $mail->countMessages();
+        $content = $mail->getMessage(1)->getContent();
+
+        $serialzed = serialize($mail);
+        $mail = null;
+        $mail = unserialize($serialzed);
+
+        $this->assertEquals($mail->countMessages(), $count);
+        $this->assertEquals($mail->getMessage(1)->getContent(), $content);
+    }
 }
