@@ -14,27 +14,33 @@
  *
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Log_Writer_Abstract */
+require_once 'Zend/Log/Writer/Abstract.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-interface Zend_Log_Filter_Interface
+class Zend_Log_Writer_Null extends Zend_Log_Writer_Abstract
 {
     /**
-     * Returns TRUE to accept the message, FALSE to block it.
+     * Write a message to the log.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return boolean            accepted?
+     * @param  $message    Log message
+     * @param  $level      Log level
+     * @return bool        Always True
      */
-    public function accept($message, $level);
+    public function write($message, $level)
+    {
+        return true;
+    }
 
 }

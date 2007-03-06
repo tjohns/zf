@@ -14,52 +14,58 @@
  *
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Log_Filter_Interface */
-require_once 'Zend/Log/Filter/Interface.php';
+/** Zend_Log_Formatter_Interface */
+require_once 'Zend/Log/Formatter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-class Zend_Log_Filter_Level implements Zend_Log_Filter_Interface
+class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
 {
     /**
-     * @var integer
+     * @var string
      */
-    protected $_level;
+    protected $_format;
 
     /**
-     * Filter out any log messages greater than $level.
+     * Class constructor
      *
-     * @param  integer  $level  Maximum log level to pass through the filter
+     * @param null|string  $format  Format specifier for log messages 
      */
-    public function __construct($level)
+    public function __construct($format = null)
     {
-        if (! is_integer($level)) {
-            throw new Zend_Log_Exception('Level must be an integer');
+        if ($format === null) {
+            $format = '%timestamp% %level%: %message%' . PHP_EOL;
         }
         
-        $this->_level = $level;
+        if (! is_string($format)) {
+            throw new Zend_Log_Exception('Format must be a string');
+        }
+        
+        $this->_format = $format;
     }
 
     /**
-     * Returns TRUE to accept the message, FALSE to block it.
+     * Formats a message to be written by the writer.
      *
      * @param  string   $message  message for the log
      * @param  integer  $level    log level
-     * @return boolean            accepted?
+     * @return string             formatted message
      */
-    public function accept($message, $level)
+    public function format($message, $level)
     {
-        return $level <= $this->_level;
+        return str_replace(array('%message%', '%level%', '%timestamp%'),
+                           array($message, $level, date('c')),
+                           $this->_format);
     }
 
 }

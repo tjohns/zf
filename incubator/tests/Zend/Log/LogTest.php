@@ -1,9 +1,23 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Log
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
 
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -11,37 +25,132 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /** Zend_Log */
 require_once 'Zend/Log.php';
 
-/** Zend_Log_Writer_Mock */
-require_once 'Zend/Log/Writer/Mock.php';
-
-
 /**
+ * @category   Zend
  * @package    Zend_Log
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
 {
-    public function testWriterInConstructor()
+    public function setUp()
     {
-        $mock = new Zend_Log_Writer_Mock();
-        $logger = new Zend_Log($mock);
-        $logger->log('message', Zend_Log::INFO);
+        $this->log = fopen('php://memory', 'a');
+        $this->writer = new Zend_Log_Writer_Stream($this->log);
+    }
+    
+    // Writers
+    
+    public function testWriterCanBeAddedWithConstructor()
+    {
+        $logger = new Zend_Log($this->writer);
+        $logger->log($message = 'message-to-long', Zend_Log::INFO);
 
-        $messages = $mock->flush();
-        $this->assertEquals(1, count($messages));
-        $this->assertEquals('message', $messages[0]['message']);
+        rewind($this->log);
+        $this->assertContains($message, stream_get_contents($this->log));
     }
 
     public function testAddWriter()
     {
         $logger = new Zend_Log();
-        $mock = new Zend_Log_Writer_Mock();
-        $logger->addWriter($mock);
-        $logger->log('message', Zend_Log::INFO);
+        $logger->addWriter($this->writer);
+        $logger->log($message = 'message-to-log', Zend_Log::INFO);
+    
+        rewind($this->log);
+        $this->assertContains($message, stream_get_contents($this->log));
+    }
 
-        $messages = $mock->flush();
-        $this->assertEquals(1, count($messages));
-        $this->assertEquals('message', $messages[0]['message']);
+    public function testAddWriterAddsMultipleWriters()
+    {
+        $logger = new Zend_Log();
+
+        // create writers for two separate streams of temporary memory
+        $log1    = fopen('php://memory', 'a');
+        $writer1 = new Zend_Log_Writer_Stream($log1);
+        $log2    = fopen('php://memory', 'a');
+        $writer2 = new Zend_Log_Writer_Stream($log2);
+
+        // add the writers
+        $logger->addWriter($writer1);
+        $logger->addWriter($writer2);
+
+        // log to both writers
+        $logger->log($message = 'message-sent-to-both-logs', Zend_Log::INFO);
+        
+        // verify both writers were called by the logger
+        rewind($log1);
+        $this->assertContains($message, stream_get_contents($log1));
+        rewind($log2);
+        $this->assertContains($message, stream_get_contents($log2));
+        
+        // prove the two memory streams are different 
+        // and both writers were indeed called
+        fwrite($log1, 'foo');
+        $this->assertNotEquals(ftell($log1), ftell($log2));
+    }
+
+    public function testLoggerThrowsWhenNoWriters()
+    {
+        $logger = new Zend_Log();
+        try {
+            $logger->log('message', Zend_Log::INFO);
+            $this->fail();
+        } catch (Zend_Log_Exception $e) {
+            $this->assertRegexp('/no writer/i', $e->getMessage());
+        }
+    }
+
+    // Levels
+
+    public function testLogThrowsOnBadLogLevel()
+    {
+        $logger = new Zend_Log($this->writer);
+        try {
+            $logger->log('foo', 42);
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/bad log level/i', $e->getMessage());
+        }
+    }
+
+    public function testLogThrough__callThrowsOnBadLogLevel()
+    {
+        $logger = new Zend_Log($this->writer);
+        try {
+            $logger->nonexistantLevel('');
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/bad log level/i', $e->getMessage());
+        }
+    }
+
+    public function testAddingLevelThrowsWhenOverridingBuiltinLogLevel()
+    {
+        try {
+            $logger = new Zend_Log($this->writer);
+            $logger->addLevel('BOB', 0);
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/existing log level/i', $e->getMessage());
+        }
+    
+    }
+    
+    public function testAddLogLevel()
+    {
+        $logger = new Zend_Log($this->writer);
+        $logger->addLevel('EIGHT', $level = 8);
+
+        $logger->eight($message = 'eight message');
+
+        rewind($this->log);
+        $logdata = stream_get_contents($this->log);
+        $this->assertContains((string)$level, $logdata);
+        $this->assertContains($message, $logdata);
     }
 
 }

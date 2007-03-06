@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Log
+ * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -21,6 +22,7 @@
 /**
  * @category   Zend
  * @package    Zend_Log
+ * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
@@ -35,16 +37,6 @@ abstract class Zend_Log_Writer_Abstract
      * @var array of Zend_Log_Filter_Interface
      */
     protected $_filters = array();
-
-    /**
-     * Class Destructor
-     *
-     * Flush log buffer on class shutdown.
-     */
-    public function __destruct()
-    {
-        $this->flush();
-    }
 
     /**
      * Add a filter specific to this writer.
@@ -79,13 +71,13 @@ abstract class Zend_Log_Writer_Abstract
         $this->write($message, $level);
     }
 
-	/**
-	 * Sets an option specific to the implementation of the log writer.
-	 *
-	 * @param  $optionKey      Key name for the option to be changed.  Keys are writer-specific
-	 * @param  $optionValue    New value to assign to the option
-	 * @return bool            True
-	 */
+    /**
+     * Sets an option specific to the implementation of the log writer.
+     *
+     * @param  $optionKey      Key name for the option to be changed.  Keys are writer-specific
+     * @param  $optionValue    New value to assign to the option
+     * @return bool            True
+     */
     public function setOption($optionKey, $optionValue)
     {
         if (!array_key_exists($optionKey, $this->_options)) {
@@ -97,16 +89,12 @@ abstract class Zend_Log_Writer_Abstract
     }
 
     /**
-     * Buffer a message to be stored in the storage 
-     * implemented by this writer.
-     * 
-     * @param  string  $message  Message to log
-     * @param  string  $level    Log level
+     * Write a message to the log.
+     *
+     * @param  $message    Log message
+     * @param  $level      Log level
+     * @return bool        Always True
      */
     abstract public function write($message, $level);
 
-    /**
-     * Flush the buffer to the storage.
-     */
-    abstract public function flush();
 }

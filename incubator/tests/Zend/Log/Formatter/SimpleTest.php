@@ -14,37 +14,44 @@
  *
  * @category   Zend
  * @package    Zend_Log
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Log_Writer_Abstract */
-require_once 'Zend/Log/Writer/Abstract.php';
+/** PHPUnit_Framework_TestCase */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+/** Zend_Log_Formatter_Simple */
+require_once 'Zend/Log/Formatter/Simple.php';
 
 /**
  * @category   Zend
  * @package    Zend_Log
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
+ */
+class Zend_Log_Formatter_SimpleTest extends PHPUnit_Framework_TestCase
 {
-    protected $_buffer = array();
-
-    public function write($message, $level)
+    public function testConstructorThrowsOnBadFormatString()
     {
-        $this->_buffer[] = array('message' => $message,
-                                 'level' => $level);
+        try {
+            new Zend_Log_Formatter_Simple(1);
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/must be a string/i', $e->getMessage());
+        }
+    }
+    
+    public function testDefaultFormat()
+    {
+        $f = new Zend_Log_Formatter_Simple();
+        $line = $f->format($message = 'message', $level = 1);
+
+        $this->assertContains($message, $line);
+        $this->assertContains((string)$level, $line);
     }
 
-    /**
-     * Return all messages that have been written to the mock writer,
-     * and remove those messages from the message buffer.
-     */
-    public function flush()
-    {
-        $m = $this->_buffer;
-        $this->_buffer = array();
-        return $m;
-    }
 }

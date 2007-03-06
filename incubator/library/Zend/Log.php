@@ -87,6 +87,8 @@ class Zend_Log
         $level = strtoupper($method);
         if (($level = array_search($level, $this->_levels)) !== false) {
             $this->log(array_shift($params), $level);
+        } else {
+            throw new Zend_Log_Exception('Bad log level');
         }
     }
 
@@ -103,6 +105,14 @@ class Zend_Log
             if (!$filter->accept($message, $level)) {
                 return;
             }
+        }
+
+        if (empty($this->_writers)) {
+            throw new Zend_Log_Exception('No writers were added');
+        }
+
+        if (! isset($this->_levels[$level])) {
+            throw new Zend_Log_Exception('Bad log level');
         }
 
         foreach ($this->_writers as $writer) {
@@ -158,4 +168,5 @@ class Zend_Log
     {
         $this->_writers[] = $writer;
     }
+
 }

@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -22,19 +22,19 @@
 /**
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-interface Zend_Log_Filter_Interface
+interface Zend_Log_Formatter_Interface
 {
     /**
-     * Returns TRUE to accept the message, FALSE to block it.
+     * Formats a message to be written by the writer.
      *
      * @param  string   $message  message for the log
      * @param  integer  $level    log level
-     * @return boolean            accepted?
+     * @return string             formatted message
      */
-    public function accept($message, $level);
+    public function format($message, $level);
 
 }

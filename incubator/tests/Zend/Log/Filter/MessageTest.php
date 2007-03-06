@@ -14,27 +14,44 @@
  *
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** PHPUnit_Framework_TestCase */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+/** Zend_Log */
+require_once 'Zend/Log.php';
+
+/** Zend_Log_Filter_Message */
+require_once 'Zend/Log/Filter/Message.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
- * @subpackage Filter
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
-interface Zend_Log_Filter_Interface
+ */
+class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Returns TRUE to accept the message, FALSE to block it.
-     *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return boolean            accepted?
-     */
-    public function accept($message, $level);
+    public function testMessageFilterRecognizesInvalidRegularExpression()
+    {
+        try {
+            $filter = new Zend_Log_Filter_Message('invalid regexp');
+            $this->fail();
+        } catch (Zend_Log_Exception $e) {
+            $this->assertRegexp('/invalid reg/i', $e->getMessage());
+        }
+    }
+    
+    public function testMessageFilter()
+    {
+        $filter = new Zend_Log_Filter_Message('/accept/');
+        $this->assertTrue($filter->accept('foo accept bar', 0));
+        $this->assertFalse($filter->accept('foo reject bar', 0));
+    }
 
 }
