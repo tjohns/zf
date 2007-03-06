@@ -455,44 +455,60 @@ abstract class Zend_Db_Adapter_Abstract
 
     /**
      * Quotes an identifier.
-     * 
-     * By default the given string will be treated as a qualified identifier.
-     * For Example:
      *
+     * Accepts a string representing a qualified indentifier. For Example:
      * <code>
      * $adapter->quoteIdentifier('myschema.mytable')
      * </code>
      * Returns: "myschema"."mytable"
-     * 
-     * Whereas to actually quote an identifier that contains a dot:
+     *
+     * Or, an array of one or more identifiers that may form a qualified identifier:
      * <code>
-     * $adapter->quoteIdentifier('my.table', false)
+     * $adapter->quoteIdentifier(array('myschema','my.table'))
      * </code>
-     * Returns: "my.table"
-     * 
+     * Returns: "myschema"."my.table"
+     *
+     * An optional alias may also be given, which may be excluded if it matches the
+     * last name of a qualified identifier:
+     * <code>
+     * $adapter->quoteIdentifier('table','t')
+     * </code>
+     * Returns: "table" AS "t"
+     *
      * The actual quote character surrounding the identifiers may vary depending on
      * the adapter.
      *
-     * @param string|Zend_Db_Expr $ident The identifier.
-     * @param boolean $qualified Should dots be treated as identifier separators.
+     * @param string|array|Zend_Db_Expr $ident The identifier.
+     * @param string $alias An optional alias to attach to the identifier with an 'AS' operator.
      * @return string The quoted identifier.
      */
-    public function quoteIdentifier($ident, $qualified = true)
+    public function quoteIdentifier($ident, $alias = null)
     {
-        if ($ident instanceof Zend_Db_Expr) {
-            return $ident->__toString();
-        }
         $q = $this->getQuoteIdentifierSymbol();
-        $ident = str_replace("$q", "$q$q", $ident);
-        if ($qualified) {
-            $segments = array();
-            foreach (explode('.', $ident) as $segment) {
-                $segments[] = $q . $segment . $q;
-            }
-            return implode('.', $segments);
+
+        if ($ident instanceof Zend_Db_Expr) {
+            $quoted = $ident->__toString();
         } else {
-            return $q . $ident . $q;
+            if (is_string($ident)) {
+                $ident = explode('.', $ident);
+            }
+            if (is_array($ident)) {
+                $segments = array();
+                foreach ($ident as $segment) {
+                    $segments[] = $q . str_replace("$q", "$q$q", $segment) . $q;
+                }
+                if ($alias !== null && end($ident) == $alias) {
+                    $alias = null;
+                }
+                $quoted = implode('.', $segments);
+            } else {
+                $quoted = $q . str_replace("$q", "$q$q", $ident) . $q;
+            }
         }
+        if ($alias !== null) {
+            $quoted .= ' AS ' . $q . str_replace("$q", "$q$q", $alias) . $q;
+        }
+        return $quoted;
     }
 
     /**

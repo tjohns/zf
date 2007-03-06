@@ -142,14 +142,18 @@ class Zend_Db_Select
                         $columns[] = "$expr";
                     }
                 } else {
-                    foreach ($columnList as $column) {
+                    foreach ($columnList as $alias => $column) {
+                        if (!is_string($alias)) {
+                            $alias = null;
+                        }
                         if ($column instanceof Zend_Db_Expr) {
-                            $columns[] = $column->__toString();
+                            $columns[] = $this->_adapter->quoteIdentifier($column, $alias);
                         } else {
-                            if ($column != '*') {
-                                $column = $this->_adapter->quoteIdentifier($column);
+                            if ($column == '*') {
+                                $columns[] = $this->_adapter->quoteIdentifier($correlationName) . '.*';
+                            } else {
+                                $columns[] = $this->_adapter->quoteIdentifier(array($correlationName,$column), $alias);
                             }
-                            $columns[] = $correlationName . '.' . $column;
                         }
                     }
                 }
@@ -165,13 +169,13 @@ class Zend_Db_Select
                 $tmp = '';
                 if (empty($from)) {
                     // First table is named alone ignoring join information
-                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName']) . ' ' . $correlationName;
+                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName'], $correlationName);
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
                         $tmp .= ' ' . strtoupper($table['joinType']) . ' ';
                     }
-                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName']) . ' ' . $correlationName;
+                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName'], $correlationName);
                     if (! empty($table['joinCondition'])) {
                         $tmp .= ' ON ' . $table['joinCondition'];
                     }
@@ -328,33 +332,31 @@ class Zend_Db_Select
             throw new Zend_Db_Select_Exception("Invalid join type '$type'");
         }
 
-        if (is_array($name)) {
-            // Must be array($correlationName => $tableName)
+        if (empty($name)) {
+            $correlationName = $tableName = '';
+        } else if (is_array($name)) {
+            // Must be array($correlationName => $tableName) or array($ident, ...)
             foreach ($name as $_correlationName => $_tableName) {
-                $tableName = $_tableName;
-                $correlationName = $_correlationName;
+                if (is_string($_correlationName)) {
+                    // We assume the key is the correlation name and value is the table name
+                    $tableName = $_tableName;
+                    $correlationName = $_correlationName;
+                } else {
+                    // We assume just an array of identifiers, with no correlation name
+                    $tableName = $name;
+                    $correlationName = $this->_uniqueCorrelation($tableName);
+                }
                 break;
             }
-        } else if (empty($name)) {
-            $correlationName = $tableName = '';
+        } else if ($name instanceof Zend_Db_Expr) {
+            $tableName = $name;
+            $correlationName = $this->_uniqueCorrelation('t');
+        } else if (preg_match('/^(.+)\s+AS\s+(.+)$/i', $name, $m)) {
+            $tableName = $m[1];
+            $correlationName = $m[2];
         } else {
-            if ($name instanceof Zend_Db_Expr) {
-                $tableName = $name;
-                // Use a default correlation name
-                $correlationName = 't';
-            } else {
-                $tableName = $name;
-                // Extract just the last name of a qualified table name
-                $dot = strrpos($name,'.');
-                $correlationName = ($dot === false) ? $name : substr($name, $dot+1);
-            }
-            // Generate a correlation name matching {$correlationName},
-            // {$correlationName}_2, {$correlationName}_3, etc.
-            $c = $correlationName;
-            for ($i = 2; array_key_exists($c, $this->_parts[self::FROM]); ++$i) {
-                $c = $correlationName . '_' . (string) $i;
-            }
-            $correlationName = $c;
+            $tableName = $name;
+            $correlationName = $this->_uniqueCorrelation($tableName);
         }
 
         if (!empty($correlationName)) {
@@ -372,6 +374,26 @@ class Zend_Db_Select
         // add to the columns from this joined table
         $this->_tableCols($correlationName, $cols);
         return $this;
+    }
+
+    /**
+     * Generate a unique correlation name
+     * 
+     * @param string|array $name A qualified identifier.
+     */
+    private function _uniqueCorrelation($name)
+    {
+        if (is_array($name)) {
+            $c = end($name);
+        } else {
+            // Extract just the last name of a qualified table name
+            $dot = strrpos($name,'.');
+            $c = ($dot === false) ? $name : substr($name, $dot+1);
+        }
+        for ($i = 2; array_key_exists($c, $this->_parts[self::FROM]); ++$i) {
+            $c = $name . '_' . (string) $i;
+        }
+        return $c;
     }
 
     /**
@@ -738,8 +760,23 @@ class Zend_Db_Select
             $correlationName = '';
         }
 
-        foreach ($cols as $col) {
-            $this->_parts[self::COLUMNS][$correlationName][] = $col;
+        foreach ($cols as $alias => $col) {
+            if (is_string($col)) {
+                // Check for a column matching "<column> AS <alias>" and extract the alias name
+                if (preg_match('/^(.+)\s+AS\s+(.+)$/i', $col, $m)) {
+                    $col = $m[1];
+                    $alias = $m[2];
+                }
+                // Check for columns that look like functions and convert to Zend_Db_Expr
+                if (preg_match('/^.+\(.*\)$/', $col)) {
+                    $col = new Zend_Db_Expr($col);
+                }
+            }
+            if (is_string($alias)) {
+                $this->_parts[self::COLUMNS][$correlationName][$alias] = $col;
+            } else {
+                $this->_parts[self::COLUMNS][$correlationName][] = $col;
+            }
         }
     }
 
