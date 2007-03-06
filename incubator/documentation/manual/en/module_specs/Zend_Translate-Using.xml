@@ -1,12 +1,14 @@
 <sect1 id="zend.translate.using">
 
-    <title>Using translation Adapters</title>
+    <title>Using Translation Adapters</title>
 
     <para>
-        The next step will be to use the adapter within your code. So let's look at a small example.
+        The next step is to use the adapter within your code.
     </para>
 
-    <para><programlisting role="php"><![CDATA[<?php
+    <example id="zend.translate.using.example1">
+        <title>Example of single-language PHP code</title>
+        <programlisting role="php"><![CDATA[<?php
 print "Example\n";
 print "=======\n";
 print "Here is line one\n";
@@ -14,20 +16,24 @@ print "Today is the " . date("d.m.Y") . "\n";
 print "\n";
 print "Fix language here is line two\n";
 ?>]]></programlisting>
-    </para>    
+    </example>    
 
     <para>
-        You will probably write your code in your native language. Our example shows some output.
-        Generally you will not only translate the output but also error or log messages.
+        The example above shows some output with no support for translation.
+        You probably write your code in your native language.
+        Generally you need to translate translate not only the output,
+        but also error messages and log messages.
     </para>
 
     <para>
-        The next step will be to include Zend Translate into your existing code. Of course it will be
-        much easier if you are writing your code already by using Zend Translate instead of changing 
-        your code afterwards...
+        The next step is to include Zend Translate in your existing code.
+        Of course it is much easier if you are writing your code using
+        Zend_Translate instead of changing your code afterwards.
     </para>
 
-    <para><programlisting role="php"><![CDATA[<?php
+    <example id="zend.translate.using.example2">
+        <title>Example of multi-lingual PHP code</title>
+        <programlisting role="php"><![CDATA[<?php
 require_once("Zend/Translate.php");
 
 $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
@@ -42,14 +48,15 @@ print "\n";
 $translation->setLanguage('fr');
 print $translate->_("Fix language here is line two") . "\n";
 ?>]]></programlisting>
-    </para>    
+    </example>    
 
     <para>
-        Now lets get a deeper look into what has been done and how to integrate Zend Translate into your code.
+        Now let's get a deeper look into what has been done and how to
+        integrate Zend_Translate into your code.
     </para>
 
     <para>
-        First of all you will have to create a new Translation Object and define the base adapter.
+        Create a new Translation object and define the base adapter:
 
 <programlisting role="php"><![CDATA[<?php
 require_once("Zend/Translate.php");
@@ -57,15 +64,18 @@ require_once("Zend/Translate.php");
 $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
 ?>]]></programlisting>
 
-        In our example we decided the <emphasis role="strong">Gettext Adapter</emphasis>.
-        We will place our file <emphasis role="strong">source-de.mo</emphasis> into the directory 
-        <emphasis role="strong">/my/path</emphasis>. The gettext file will have german translation 
-        included. And we also added another language source for french.
+        In this example we decided the
+        <emphasis role="strong">Gettext Adapter</emphasis>.
+        We place our file <emphasis role="strong">source-de.mo</emphasis>
+        into the directory <emphasis role="strong">/my/path</emphasis>.
+        The gettext file will have German translation included.
+        And we also added another language source for French.
     </para>
 
     <para>
-        The next step is to wrap all strings which will be translated. The simplest approach is to have
-        only simple strings or sentences like this:
+        The next step is to wrap all strings which are to be translated.
+        The simplest approach is to have only simple strings or sentences
+        like this:
 
 <programlisting role="php"><![CDATA[<?php
 print $translate->_("Example")."\n";
@@ -73,26 +83,31 @@ print "=======\n";
 print $translate->_("Here is line one")."\n";
 ?>]]></programlisting>
 
-        Of course some strings will not needed to be translated... a seperating line is always a seperated line,
+        Some strings do not needed to be translated.
+        The seperating line is always a seperating line,
         even in other languages.
     </para>
 
     <para>
-        Having informations integrated into a translation string is also no big issue.
+        Having data values integrated into a translation string is also 
+        supported through the use of embedded parameters.
         
 <programlisting role="php"><![CDATA[<?php
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 ?>]]></programlisting>
 
-        Instead of print use the printf function and exclude all informations with %1\$s parts.
-        The first is %1\$s, the second %2\$s and so on. This way a translation can be done without knowing 
-        the exact information. In our example the date is always the actual day, but the string can be translated
-        without the knowledge of the actual day.
+        Instead of <code>print()</code>, use the <code>printf()</code>
+        function and replace all parameters with <code>%1\$s</code> parts.
+        The first is <code>%1\$s</code>, the second <code>%2\$s</code>,
+        and so on. This way a translation can be done without knowing 
+        the exact value. In our example, the date is always the actual day,
+        but the string can be translated without the knowledge of the actual
+        day.
     </para>
 
     <para>
-        Of course you can also use message id's instead of strings. In the above examples the message id's are
-        identical with the strings. So we could also do it like this:
+        Each string is identified in the translation storage by a message id.
+        You can use message id's instead of strings in your code, like this:
 
 <programlisting role="php"><![CDATA[<?php
 print $translate->_(1)."\n";
@@ -100,45 +115,55 @@ print "=======\n";
 print $translate->_(2)."\n";
 ?>]]></programlisting>
 
-        But doing so has several disadvantages.
+        But doing this has several disadvantages:
     </para>
 
     <para>
-        You will not be able to see what your code should output just by viewing your code.
+        You can not see what your code should output just by viewing your code.
     </para>
 
     <para>
-        Also you will get problems if some strings are not translated. You always must imagine how
-        translation works. First Zend Translate looks if the set language has a translation for the 
-        given message id / string. If no translation string has been found it refers to the next lower 
-        language as defined within Zend Locale. So <emphasis role="strong">de_AT</emphasis> will become
-        <emphasis role="strong">de</emphasis> only. And if also for <emphasis role="strong">de</emphasis>
-        there is no translation found the original message id will be returned. This way you will always
-        have an output. Zend Translate will never throw an error or exception when translating strings.
+        Also you will get problems if some strings are not translated.
+        You always must imagine how translation works.
+        First Zend_Translate looks if the set language has a translation
+        for the given message id or string.
+        If no translation string has been found it refers to the next lower 
+        language as defined within Zend_Locale.
+        So "<emphasis role="strong">de_AT</emphasis>" becomes
+        "<emphasis role="strong">de</emphasis>" only.
+        If there is no translation found for
+        "<emphasis role="strong">de</emphasis>" either,
+        then the original message is returned.
+        This way you always have an output, in case the message translation
+        does not exist in your message storage.
+        Zend_Translate never throws an error or exception when translating
+        strings.
     </para>
 
     <sect2 id="zend.translate.using.structure">
 
-        <title>Translation Source structures</title>
+        <title>Translation Source Structures</title>
 
         <para>
-            Your next step will be to create the translation sources for the several languages you want to 
-            translate to. Every adapter is created it's own way as described here. But there are some general
-            feature which are relevant for all adapters.
+            Your next step is to create the translation sources for the several
+            languages to which you translate.
+            Every adapter is created its own way as described here.
+            But there are some general features that are relevant for all adapters.
         </para>
 
         <para>
-            First of all you should know where to store your translation source files. With Zend_Translate you
-            are not bundled to any restriction. The following structures are preferable:
+            You should know where to store your translation source files.
+            With Zend_Translate you are not bound to any restriction.
+            The following structures are preferable:
         </para>
 
-        <itemizedlist mark='opencircle'>
+        <itemizedlist>
             <listitem>
                 <para>
                     Single structured source
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting><![CDATA[
 /application
 /languages
   lang.en
@@ -147,8 +172,8 @@ print $translate->_(2)."\n";
 ]]></programlisting>
 
                 <para>
-                    Positive: All source files for every languages can be found in one directory. 
-                    No splitting of related files.
+                    Positive: All source files for every languages can be
+                    found in one directory.  No splitting of related files.
                 </para>
             </listitem>
             <listitem>
@@ -156,7 +181,7 @@ print $translate->_(2)."\n";
                     Language structured source
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting><![CDATA[
 /application
 /languages
   /en
@@ -169,8 +194,10 @@ print $translate->_(2)."\n";
 ]]></programlisting>
 
                 <para>
-                    Positive: Every language is based in one directory. Easy translation as only one directory 
-                    has to be translated by a language team. Also the useage of multiple files is transparent.
+                    Positive: Every language is based in one directory.
+                    Easy translation as only one directory has to be
+                    translated by a language team.
+                    Also the usage of multiple files is transparent.
                 </para>
             </listitem>
             <listitem>
@@ -178,7 +205,7 @@ print $translate->_(2)."\n";
                     Application structured source
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting><![CDATA[
 /application
   /languages
     lang.en
@@ -188,12 +215,13 @@ print $translate->_(2)."\n";
 ]]></programlisting>
 
                 <para>
-                    Positive: All source files for every languages can be found in one directory. 
-                    No splitting of related files.
+                    Positive: All source files for every languages can be
+                    found in one directory.  No splitting of related files.
                 </para>
 
                 <para>
-                    Negative: Having multiple files for the same language is problematic.
+                    Negative: Having multiple files for the same language is
+                    problematic.
                 </para>
             </listitem>
             <listitem>
@@ -201,7 +229,7 @@ print $translate->_(2)."\n";
                     Gettext structured source
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting><![CDATA[
 /languages
   /de
     /LC_MESSAGES
@@ -214,12 +242,13 @@ print $translate->_(2)."\n";
 ]]></programlisting>
 
                 <para>
-                    Positive: Old gettext sources can be used without changing structure.
+                    Positive: Old gettext sources can be used without changing
+                    structure.
                 </para>
 
                 <para>
-                    Negative: Having sub-sub directories is for people which have not used gettext
-                    before problematic.
+                    Negative: Having sub-sub directories may be confusing
+                    for people who have not used gettext before.
                 </para>
             </listitem>
             <listitem>
@@ -227,7 +256,7 @@ print $translate->_(2)."\n";
                    File structured source
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting><![CDATA[
 /application
   /models
     mymodel.php
@@ -246,22 +275,26 @@ print $translate->_(2)."\n";
   /Zend
 ]]></programlisting>
                 <para>
-                    Positive: Every file is realted to its own translation source.
+                    Positive: Every file is related to its own translation
+                    source.
                 </para>
 
                 <para>
-                    Negative: Multiple small translation source files makes it harder to translate.
+                    Negative: Multiple small translation source files make
+                    it harder to translate.
                     Also every file has to be added as translation source.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Single structured and language structured source files are most useable for Zend_Translate.
+            Single structured and language structured source files are most
+            usable for Zend_Translate.
         </para>
 
         <para>
-            So now, that we know which structure we want to have, we should create our translation source files.
+            So now, that we know which structure we want to have,
+            we should create our translation source files.
         </para>
 
     </sect2>
@@ -271,9 +304,11 @@ print $translate->_(2)."\n";
         <title>Creating array source files</title>
 
         <para>
-            Array source files are just arrays. But you have to define them manually as there is no tool
-            for this. But because they are so simple, it's the fastest way to look if your code works as
-            expected and it's the best adapter to get started with translation business.
+            Array source files are just arrays.  But you have to define them
+            manually because there is no tool for this.
+            But because they are so simple, it's the fastest way to look up
+            messages if your code works as expected.  It's generally the best
+            adapter to get started with translation business.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -291,14 +326,17 @@ $translate->addTranslation($deutsch, 'de');
 
     <sect2 id="zend.translate.using.source.gettext">
 
-        <title>Creating gettext source files</title>
+        <title>Creating Gettext Source Files</title>
 
         <para>
-            Gettext source files are created by GNU's gettext library. There are several free tools avaiable 
-            which can parse your code files and create the needed gettext source files. These files have the 
-            ending <emphasis role="strong">*.mo</emphasis> and are binary files. A freeware tool for creating
-            the files is for example poEdit (http://www.poedit.net). This tool also supports you for the
-            translation process itself. 
+            Gettext source files are created by GNU's gettext library.
+            There are several free tools available that can parse your
+            code files and create the needed gettext source files.
+            These files have the ending <emphasis role="strong">*.mo</emphasis>
+            and they are binary files.
+            One freeware tool for creating the files is 
+            <ulink url="http://sourceforge.net/projects/poedit/">poEdit</ulink>.
+            This tool also supports you for the translation process itself. 
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -308,42 +346,50 @@ $translate->addTranslation('path/to/german.mo', 'de');
 ]]></programlisting>
 
         <para>
-            As you can see the adapters are used exactly the same way, with only just one small difference.
-            We changed 'array' to 'gettext'... all other useages are exactly the same as with all other
-            adapters. So with the gettext adapter you have no longer be aware of gettext's standard 
-            directory structure, bindtextdomain and textdomain. Just give the path and filename to the adapter
-            and that's it.
+            As you can see the adapters are used exactly the same way,
+            with only just one small difference.
+            Change 'array' to 'gettext'.  All other usages are exactly
+            the same as with all other adapters.
+            With the gettext adapter you no longer have to be aware of
+            gettext's standard directory structure,
+            bindtextdomain and textdomain.
+            Just give the path and filename to the adapter.
         </para>
 
         <note>
             <para>
-                You should always use UTF-8 as source encoding. Otherwise you will have problems if you are 
-                using two different source encodings. Expect you have one source file with ISO-8815-11 and
-                one with CP815. But you can only set one encoding for your source file. So one of your languages
-                will probably not be displayed correct. 
+                 You should always use UTF-8 as source encoding.
+                 Otherwise you will have problems if you are using two
+                 different source encodings.
+                 For example, if one of your source files is encoded
+                 with ISO-8815-11 and another file is encoded with CP815.
+                 You can set only one encoding for your source file,
+                 so one of your languages probably will not display correctly. 
             </para>
             <para>
-                UTF-8 is a portable format which supports all languages. So you will not have problems with 
-                different languages by using it.
+                 UTF-8 is a portable format which supports all languages.
+                 If you use UTF-8 encoding for all languages, you eliminate
+                 the problem of incompatible encodings.
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
 
-        <title>Creating tmx source files</title>
+        <title>Creating TMX Source Files</title>
 
         <para>
-            Tmx source files are a new industry standard. They have the advantage to be xml files and
-            so they are readable by every editor and of course human readable. You can eighter create TMX
-            files manually or use a tool. But most tools are not freeware.
+            TMX source files are a new industry standard.
+            They have the advantage of being XML files and so they are
+            readable by every editor and of course they are human-readable.
+            You can either create TMX files manually with a text editor,
+            or you can use a tool. But most tools currently available for
+            developing TMX source files are not freeware.
         </para>
 
-        <para>
-            Example tmx file:
-        </para>
-
-        <programlisting role="php"><![CDATA[
+        <example id="zend.translate.using.source.tmx.example">
+            <title>Example TMX file</title>
+            <programlisting role="xml"><![CDATA[
 <?xml version="1.0" ?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
@@ -360,40 +406,43 @@ $translate->addTranslation('path/to/german.mo', 'de');
   </tu>
 ]]></programlisting>
 
-        <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
-// TMX can have several languages within one Tmx file.
+// TMX can have several languages within one TMX file.
 ]]></programlisting>
+        </example>
 
         <para>
-            Tmx files can have several languages within the same file. All other included languages
-            will be added automatically, so you will not have to call addLanguage();
+            TMX files can have several languages within the same file.
+            All other included languages are added automatically,
+            so you do not have to call <code>addLanguage()</code>.
         </para>
     </sect2>
 
     <sect2 id="zend.translate.using.source.csv">
 
-        <title>Creating csv source files</title>
+        <title>Creating CSV Source Files</title>
 
         <para>
-            Csv source files are small and human readable. If your customers want to translate their own,
-            you will probably use the csv adapter.
+            CSV source files are small and human readable.
+            If your customers want to translate their own,
+            you will probably use the CSV adapter.
         </para>
 
-        <para>
-            Example csv file:
-        </para>
-
-        <programlisting role="php"><![CDATA[
+        <example id="zend.translate.using.source.csv.example">
+            <title>Example CSV file</title>
+            <programlisting><![CDATA[
 ﻿#Example csv file
 message1;Nachricht1
 message2;Nachricht2
 ]]></programlisting>
 
-        <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
 $translate->addTranslation('path/to/other.csv', 'fr');
 ]]></programlisting>
+        </example>
+
     </sect2>
 
 </sect1>

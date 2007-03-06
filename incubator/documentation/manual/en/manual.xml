@@ -76,7 +76,6 @@
         <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
         <xi:include href="module_specs/Zend_Translate-Adapters.xml" />
         <xi:include href="module_specs/Zend_Translate-Using.xml" />
-        <xi:include href="module_specs/Zend_Translate-Old.xml" />
     </chapter>
 
     <!--

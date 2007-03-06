@@ -3,132 +3,136 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Translate is the answer of the Zend Framework to the problem of multilingual sites.
+        Zend_Translate is the Zend Framework's solution for multilingual
+        applications.
     </para>
 
     <para>
-        Multilingual sites are having the problem that the content has to be translated into several languages and
-        depending on the users language the proper content has to be displayed. PHP itself offers already several ways
-        to handle such problems.
+        In multilingual applications, the content must be translated into
+        several languages and display content depending on the user's language.
+        PHP offers already several ways to handle such problems, however
+        the PHP solution has some problems:
     </para>
 
-    <para>
-        Actual problems of PHP are:
-    </para>
-
-    <itemizedlist mark='opencircle'>
+    <itemizedlist>
         <listitem>
             <para>
-                No API
-            </para>
-            <para>
-                There is no API for the different source formats. The useage of gettext for example is for a beginner
-                very complicated.
+                <emphasis role="strong">Inconsistent API:</emphasis>
+                There is no single API for the different source formats.
+                The usage of gettext for example is very complicated.
             </para>
         </listitem>
         <listitem>
             <para>
-                Only gettext and array native supported
-            </para>
-            <para>
-                PHP itself offers only support for array or gettext. All other source formats have to be coded per hand,
-                as there is no native support.
+                <emphasis role="strong">PHP supports only gettext and native array:</emphasis>
+                PHP itself offers only support for array or gettext.
+                All other source formats have to be coded manually,
+                because there is no native support.
             </para>
         </listitem>
         <listitem>
             <para>
-                No detection of the default language
-            </para>
-            <para>
-                The default language of the user can not be detected without deeper knowledge of the beackgrounds for
+                <emphasis role="strong">No detection of the default language:</emphasis>
+                The default language of the user cannot be detected without
+                deeper knowledge of the backgrounds for
                 the different web browsers.
             </para>
         </listitem>
         <listitem>
             <para>
-                Gettext is not thread save
-            </para>
-            <para>
-                PHP's gettext library is not tread save. So PHP's gettext library should not be used in a multithreaded
-                environment. This is due to problems with gettext itself, not PHP, but it is an existing problem.
+                <emphasis role="strong">Gettext is not thread-safe:</emphasis>
+                PHP's gettext library is not thread safe, and it
+                should not be used in a multithreaded environment.
+                This is due to problems with gettext itself, not PHP,
+                but it is an existing problem.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Zend_Translate itself does not have these problems. This is why we announce anyone to use Zend_Translate instead
-        of PHP's native functions. The benefits are:
+        Zend_Translate does not have the above problems. This is why we
+        recommend using Zend_Translate instead of PHP's native functions.
+        The benefits of Zend_Translate are:
     </para>
 
-    <itemizedlist mark='opencircle'>
+    <itemizedlist>
         <listitem>
             <para>
-                Multiple source formats supported
-            </para>
-            <para>
-                Multiple different source formats are supported within Zend_Translate. So when the format of the source
-                files change from Gettext to Tmx the only thing to do is just change one line.
+                <emphasis role="strong">Supports multiple source formats:</emphasis>
+                Zend_Translate supports several source formats, including
+                those supported by PHP, and other formats including TMX
+                and CSV files.
             </para>
         </listitem>
         <listitem>
             <para>
-                Threadsave gettext
-            </para>
-            <para>
-                The gettext reader of Zend_Translate is threadsave. There will be no problems by using it in
-                multithreaded environments.
+                <emphasis role="strong">Thread-safe gettext:</emphasis>
+                The gettext reader of Zend_Translate is thread-safe.
+                There are no problems using it in multi-threaded environments.
             </para>
         </listitem>
         <listitem>
             <para>
-                Easy and generic API
-            </para>
-            <para>
-                The API of Zend_Translate is very simple and supports only a hand full of functions. So it's easy to
-                learn and easy to maintain. All source formats are handled the same way.
+                <emphasis role="strong">Easy and generic API:</emphasis>
+                The API of Zend_Translate is very simple and requires only a
+                handful of functions.
+                So it's easy to learn and easy to maintain.
+                All source formats are handled the same way, so if the format
+                of your source files change from Gettext to TMX,
+                you only need to change one line of code to specify the
+                storage adapter.
             </para>
         </listitem>
         <listitem>
             <para>
-                Detection of the users standard language
-            </para>
-            <para>
-                The preferred language of the user accessing the site can be detected and used by Zend_Translate.
+                <emphasis role="strong">Detection of the user's standard language:</emphasis>
+                The preferred language of the user accessing the site can be
+                detected and used by Zend_Translate.
             </para>
         </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">
 
-        <title>Starting multilingual</title>
+        <title>Starting multi-lingual</title>
 
         <para>
-            So let's get started with Multilingual business. What we want to do is translating our string
-            output so the view produces the translated output. Otherwise we would have to write one view
-            per every language, and no one would like to do this. Principially multilingual sites are very
-            simple in their design. There are only 4 steps you would have to do...
+            So let's get started with multi-lingual business.
+            What we want to do is translate our string
+            output so the view produces the translated output.
+            Otherwise we would have to write one view
+            for each language, and no one would like to do this.
+            Generally, multi-lingual sites are very simple in their design.
+            There are only four steps you would have to do:
         </para>
 
-        <itemizedlist mark='opencircle'>
+        <orderedlist numeration='arabic'>
             <listitem>
                 <para>
-                    Decide which adaptor you want to use
-                </para>
-                <para>
-                    Create your view and integrate Zend_Translate in your code
-                </para>
-                <para>
-                    Create the source file from your code
-                </para>
-                <para>
-                    Translate your source file to the wished language
+                    Decide which adapter you want to use;
                 </para>
             </listitem>
-        </itemizedlist>
+            <listitem>
+                <para>
+                    Create your view and integrate Zend_Translate in your code;
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Create the source file from your code;
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Translate your source file to the desired language.
+                </para>
+            </listitem>
+        </orderedlist>
 
         <para>
-            We will guide you through all 4 steps so just read through the next few pages to create your
-            own multilingual site.
+            The following sections guide you through all four steps.
+            Read through the next few pages to create your own
+            multi-lingual web application.
         </para>
 
     </sect2>

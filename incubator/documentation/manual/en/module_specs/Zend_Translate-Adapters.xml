@@ -3,45 +3,47 @@
     <title>Adapters for Zend_Translate</title>
 
     <para>
-        Zend_Translate can handle different adapters for translation. Each adapter has it's own pros and cons.
-        Here you can find a comprehensive list of all supported adapters for translation source files.
+        Zend_Translate can handle different adapters for translation.
+        Each adapter has its own advantages and disadvantages.
+        Below is a comprehensive list of all supported adapters for
+        translation source files.
     </para>
 
-    <table>
+    <table id="zend.translate.adapter.table">
         <title>Adapters for Zend_Translate</title>
         <tgroup cols="3">
             <thead>
                 <row>
                     <entry>Adapter</entry>
                     <entry>Description</entry>
-                    <entry>Useage</entry>
+                    <entry>Usage</entry>
                 </row>
             </thead>
             <tbody>
                 <row>
                     <entry>Array</entry>
                     <entry>Use php arrays</entry>
-                    <entry>Small pages, simplest useage, only for programmers</entry>
+                    <entry>Small pages; simplest usage; only for programmers</entry>
                 </row>
                 <row>
                     <entry>Csv</entry>
                     <entry>Use comma seperated (*.csv/*.txt) files</entry>
-                    <entry>Simple text file format, very fast, possible problems with unicode characters</entry>
+                    <entry>Simple text file format; very fast; possible problems with unicode characters</entry>
                 </row>
                 <row>
                     <entry>Gettext</entry>
                     <entry>Use binary gettext (*.mo) files</entry>
-                    <entry>Gnu standard for linux, very fast, threadsave, needs tools for translation</entry>
+                    <entry>GNU standard for linux; very fast; thread-safe; needs tools for translation</entry>
                 </row>
                 <row>
-                    <entry>Tmx</entry>
+                    <entry>TMX</entry>
                     <entry>Use tmx (*.tmx) files</entry>
-                    <entry>Industry standard for inter application translation, xml format, human readable</entry>
+                    <entry>Industry standard for inter application translation; XML format; human readable</entry>
                 </row>
                 <row>
                     <entry>Others</entry>
                     <entry>*.xliff, *.sql, *.tbx, *.qt</entry>
-                    <entry>Different other adapters are supposed to be implemented in the future but not ready for now</entry>
+                    <entry>Different other adapters may be implemented in the future</entry>
                 </row>
             </tbody>
         </tgroup>
@@ -52,9 +54,11 @@
         <title>How to decide which translation adapter to use</title>
 
         <para>
-            First of all you should decide which Adapter you want to use for Zend_Translate.
-            Most times your Customer will decide for you but if you are in the Position to to this yourself,
-            we give you some hints to simplify you your decision.
+            You should decide which Adapter you want to use for Zend_Translate.
+            Frequently, external criteria such as a project requirement or
+            a customer requirement determines this for you, but if you are in
+            the position to do this yourself, the following hints may simplify
+            your decision.
         </para>
 
         <sect3 id="zend.translate.adapter.array">
@@ -62,15 +66,18 @@
             <title>Zend_Translate_Adapter_Array</title>
 
             <para>
-                The Array Adapter is the Adapter which is simplest to use for Programmers.
-                But when you have much translation strings or much languages you should think about another
-                Adapter. If you have for example 5000 translation strings the Array Adapter is posibly 
-                not the best choice for you.
+                The Array Adapter is the Adapter which is simplest to use for
+                programmers.
+                But when you have numerous translation strings or many
+                languages you should think about another Adapter.
+                For example, if you have 5000 translation strings,
+                the Array Adapter is possibly not the best choice for you.
             </para>
 
             <para>
-                You should only use this Adapter for small sites with only a handfull languages and if you 
-                or your programmer team does translations your own.
+                You should only use this Adapter for small sites with a handful
+                of languages, and if you or your programmer team creates the
+                translations yourselves.
             </para>
         </sect3>
 
@@ -79,13 +86,15 @@
             <title>Zend_Translate_Adapter_Csv</title>
 
             <para>
-                The Csv Adapter is the Adapter which is simplest to use for Customers.
-                Csv files are readable by standard text editors but you will have problems when you
-                want to use it with utf8 charactersets.
+                The Csv Adapter is the Adapter which is simplest to use for
+                customers.
+                CSV files are readable by standard text editors, but 
+                text editors often do not support utf8 character sets.
             </para>
 
             <para>
-                You should only use this Adapter if your customer want to do translations himself.
+                You should only use this Adapter if your customer wants to do
+                translations himself.
             </para>
         </sect3>
 
@@ -94,16 +103,24 @@
             <title>Zend_Translate_Adapter_Gettext</title>
 
             <para>
-                The Gettext Adapter is the Adapter which is used most of times. Gettext is a translation source
-                format which was introduced by Gnu and nowadays used worldwide. It is not human readable but there
-                are several freeware tools (f.e. POEdit) out there which are very helpfull. The Zend Framework
-                is not related to PHP's gettext extension. You can use the gettext adapter even if you do not have
-                the extension installed. Also the Adapter is threadsave and the extension is not for now.
+                The Gettext Adapter is the Adapter which is used most
+                frequently.  Gettext is a translation source format which was
+                introduced by GNU, and is now used worldwide.
+                It is not human readable, but there are several freeware tools
+                (for instance, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>), which are very helpful.
+                The Zend_Translate Gettext Adapter is not implemented using
+                PHP's gettext extension.
+                You can use the Gettext Adapter even if you do not have
+                the PHP gettext extension installed.
+                Also the Adapter is thread-safe and the PHP gettext extension
+                is currently not thread-safe.
             </para>
 
             <para>
-                Most people will use this adapter. With the avaiable tools also professional translation is 
-                very simple. But this format is not readable without tools.
+                Most people will use this adapter.
+                With the available tools, professional translation is 
+                very simple.  But gettext data are is stored in a
+                machine-readable format, which is not readable without tools.
             </para>
         </sect3>
 
@@ -112,15 +129,19 @@
             <title>Zend_Translate_Adapter_Tmx</title>
 
             <para>
-                The Tmx Adapter is the Adapter which will be used by most customers which have multiple systems
-                which use the same translation source or when the translation source have to be system independent.
-                Tmx is a XML file based format, which is announced to be the next industry standard. Xml files are
-                human readable but the parsing is not that fast as with gettext files.
+                The Tmx Adapter is the Adapter which will be used by most
+                customers which have multiple systems which use the same
+                translation source, or when the translation source must be
+                system-independent.
+                TMX is a XML file based format, which is announced to be the
+                next industry standard.
+                XML files are human-readable, but the parsing is not as fast
+                as with gettext files.
             </para>
 
             <para>
-                Most medium to big sized companys will use this adapter. The files are human readable and system
-                independent.
+                Most medium to large companies use this adapter.
+                The files are human readable and system-independent.
             </para>
         </sect3>
 
