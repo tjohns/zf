@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,6 +18,7 @@
  * @subpackage Delicious
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -33,14 +35,17 @@ class Zend_Service_Delicious_SimplePost
      * @var string Post url
      */
     protected $_url;
+
     /**
      * @var string Post title
      */
     protected $_title;
+
     /**
      * @var string Post notes
      */
     protected $_notes;
+
     /**
      * @var array Post tags
      */
@@ -49,12 +54,16 @@ class Zend_Service_Delicious_SimplePost
     /**
      * Constructor
      *
-     * @param array $post Post data
-     * @return Zend_Service_Delicio
+     * @param  array $post Post data
+     * @return void
      */
-    public function __construct($post)
+    public function __construct(array $post)
     {
         if (!isset($post['u']) || !isset($post['d'])) {
+            /**
+             * @see Zend_Service_Delicious_Exception
+             */
+            require_once 'Zend/Service/Delicious/Exception.php';
             throw new Zend_Service_Delicious_Exception('Title and URL not set.');
         }
 
@@ -68,6 +77,7 @@ class Zend_Service_Delicious_SimplePost
             $this->_notes = $post['n'];
         }
     }
+
     /**
      * Getter for URL
      *
@@ -77,6 +87,7 @@ class Zend_Service_Delicious_SimplePost
     {
         return $this->_url;
     }
+
     /**
      * Getter for title
      *
@@ -86,6 +97,7 @@ class Zend_Service_Delicious_SimplePost
     {
         return $this->_title;
     }
+
     /**
      * Getter for notes
      *
@@ -95,6 +107,7 @@ class Zend_Service_Delicious_SimplePost
     {
         return $this->_notes;
     }
+
     /**
      * Getter for tags
      *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,10 +18,12 @@
  * @subpackage Delicious
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Service_Delicious
+ * @see Zend_Service_Delicious
  */
 require_once 'Zend/Service/Delicious.php';
 
@@ -28,6 +31,7 @@ require_once 'Zend/Service/Delicious.php';
  * PHPUnit_Framework_TestCase
  */
 require_once 'PHPUnit/Framework/TestCase.php';
+
 
 /**
  * @category   Zend_Service
@@ -40,11 +44,11 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
 {
     const TEST_UNAME = 'zfTestUser';
     const TEST_PASS  = 'zfuser';
+
     /**
      * @var Zend_Service_Delicious
      */
     protected $_delicious;
-    
 
     /**
      * @return void
@@ -57,6 +61,7 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
         ));
         $this->_delicious = new Zend_Service_Delicious();
     }
+
     /**
      * Try to get tags of some user
      *
@@ -68,6 +73,7 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
 
         $this->assertType('array', $tags);
     }
+
     /**
      * @return void
      */
@@ -78,6 +84,7 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $tags);
         $this->assertTrue(count($tags) <= 20);
     }
+
     /**
      * @return void
      */
@@ -90,6 +97,7 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($count >= 5);
         }
     }
+
     /**
      * @return void
      */
@@ -99,15 +107,17 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
 
         $this->assertType('array', $network);
     }
+
     /**
      * @return void
      */
     public function testGetFans()
     {
         $fans = $this->_delicious->getUserFans(self::TEST_UNAME);
-        
+
         $this->assertType('array', $fans);
     }
+
     /**
      * @return void
      */
@@ -132,5 +142,3 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
         }
     }
 }
-
-?>
