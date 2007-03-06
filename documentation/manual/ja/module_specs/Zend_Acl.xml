@@ -156,13 +156,13 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
                 "<code>guest</code>" ロールより先に調べられ、例のコードの出力は
                 "<code>allowed</code>" となります。
             </para>
-            <note>
-                <para>
-                    複数の親をロールに指定する場合は、承認クエリでの規則の検索順を覚えておきましょう。
-                    最後に指定した親が最初に対象となります。
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                複数の親をロールに指定する場合は、承認クエリでの規則の検索順を覚えておきましょう。
+                最後に指定した親が最初に対象となります。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
