@@ -16,10 +16,16 @@ if (!isset($argv[1])) {
     exit;
 }
 
-if (file_exists($argv[1])) {
+try {
     $pdf = Zend_Pdf::load($argv[1]);
-} else {
-    $pdf = new Zend_Pdf();
+} catch (Zend_Pdf_Exception $e) {
+    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+        // Create new PDF if file doesn't exist
+        $pdf = new Zend_Pdf();
+    } else {
+        // Throw an exception if it's not the "Can't open file" exception
+        throw $e;
+    }
 }
 
 //------------------------------------------------------------------------------------
