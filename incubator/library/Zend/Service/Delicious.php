@@ -20,9 +20,9 @@
  */
 
 /**
- * Zend_Service_Rest
+ * Zend_Rest_Client
  */
-include_once 'Zend/Service/Rest.php';
+include_once 'Zend/Rest/Client.php';
 
 /**
  * Zend_Json
@@ -115,7 +115,7 @@ class Zend_Service_Delicious
      */
     public function __construct($uname = null, $pass = null)
     {
-        $this->_rest = new Zend_Service_Rest();
+        $this->_rest = new Zend_Rest_Client();
         $this->_rest->getHttpClient()->setConfig(array('ssltransport'=>'ssl'));
         $this->setAuth($uname, $pass);
     }
