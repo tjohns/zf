@@ -42,11 +42,11 @@ require_once 'Zend/Pdf/Color.php';
 /** Zend_Pdf_Color_GrayScale */
 require_once 'Zend/Pdf/Color/GrayScale.php';
 
-/** Zend_Pdf_Color_RGB */
-require_once 'Zend/Pdf/Color/RGB.php';
+/** Zend_Pdf_Color_Rgb */
+require_once 'Zend/Pdf/Color/Rgb.php';
 
-/** Zend_Pdf_Color_CMYK */
-require_once 'Zend/Pdf/Color/CMYK.php';
+/** Zend_Pdf_Color_Cmyk */
+require_once 'Zend/Pdf/Color/Cmyk.php';
 
 /**
  * PDF Page

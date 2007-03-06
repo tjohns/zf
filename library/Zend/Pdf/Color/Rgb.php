@@ -30,74 +30,62 @@ require_once 'Zend/Pdf/Element/Numeric.php';
 
 
 /**
- * CMYK color implementation
+ * RGB color implementation
  *
  * @category   Zend
  * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Color_CMYK extends Zend_Pdf_Color
+class Zend_Pdf_Color_Rgb extends Zend_Pdf_Color
 {
     /**
-     * Cyan level.
+     * Red level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
      * @var Zend_Pdf_Element_Numeric
      */
-    private $_c;
+    private $_r;
 
     /**
-     * Magenta level.
+     * Green level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
      * @var Zend_Pdf_Element_Numeric
      */
-    private $_m;
+    private $_g;
 
     /**
-     * Yellow level.
+     * Blue level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
      * @var Zend_Pdf_Element_Numeric
      */
-    private $_y;
-
-    /**
-     * Key (BlacK) level.
-     * 0.0 (zero concentration) - 1.0 (maximum concentration)
-     *
-     * @var Zend_Pdf_Element_Numeric
-     */
-    private $_k;
+    private $_b;
 
 
     /**
      * Object constructor
      *
-     * @param float $c
-     * @param float $m
-     * @param float $y
-     * @param float $k
+     * @param float $r
+     * @param float $g
+     * @param float $b
      */
-    public function __construct($c, $m, $y, $k)
+    public function __construct($r, $g, $b)
     {
-        $this->_c = new Zend_Pdf_Element_Numeric($c);
-        $this->_m = new Zend_Pdf_Element_Numeric($m);
-        $this->_y = new Zend_Pdf_Element_Numeric($y);
-        $this->_k = new Zend_Pdf_Element_Numeric($k);
+        /** Clamp values to legal limits. */
+        if ($r < 0) { $r = 0; }
+        if ($r > 1) { $r = 1; }
 
-        if ($this->_c->value < 0) { $this->_c->value = 0; }
-        if ($this->_c->value > 1) { $this->_c->value = 1; }
+        if ($g < 0) { $g = 0; }
+        if ($g > 1) { $g = 1; }
 
-        if ($this->_m->value < 0) { $this->_m->value = 0; }
-        if ($this->_m->value > 1) { $this->_m->value = 1; }
+        if ($b < 0) { $b = 0; }
+        if ($b > 1) { $b = 1; }
 
-        if ($this->_y->value < 0) { $this->_y->value = 0; }
-        if ($this->_y->value > 1) { $this->_y->value = 1; }
-
-        if ($this->_k->value < 0) { $this->_k->value = 0; }
-        if ($this->_k->value > 1) { $this->_k->value = 1; }
+        $this->_r = new Zend_Pdf_Element_Numeric($r);
+        $this->_g = new Zend_Pdf_Element_Numeric($g);
+        $this->_b = new Zend_Pdf_Element_Numeric($b);
     }
 
     /**
@@ -110,10 +98,9 @@ class Zend_Pdf_Color_CMYK extends Zend_Pdf_Color
      */
     public function instructions($stroking)
     {
-        return $this->_c->toString() . ' '
-             . $this->_m->toString() . ' '
-             . $this->_y->toString() . ' '
-             . $this->_k->toString() .     ($stroking? " K\n" : " k\n");
+        return $this->_r->toString() . ' '
+             . $this->_g->toString() . ' '
+             . $this->_b->toString() .     ($stroking? " RG\n" : " rg\n");
     }
 }
 
