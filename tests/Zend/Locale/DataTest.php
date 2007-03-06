@@ -170,7 +170,9 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'percentnumberformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencyformat')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencynames')), 'array expected');
+        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencyname', 'EUR')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencysymbols')), 'array expected');
+        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'currencysymbol', 'EUR')), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'questionstrings')), 'array expected');
 
         $value = Zend_Locale_Data::getContent('de_AT', 'month', array('gregorian', 'format', 'wide', 12));

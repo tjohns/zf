@@ -476,6 +476,27 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['day'], 1, 'Day 1 expected');
         $this->assertEquals($value['month'], 4, 'Month 4 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+
+        try {
+            $value = Zend_Locale_Format::getDate('13.2006.11','dd.MM.yy');
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        Zend_Locale_Format::setOptions(array('format' => 'php'));
+        $value = Zend_Locale_Format::getDate('10.11.06','d.m.Y');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 6, 'Year 6 expected');
+
+        $value = Zend_Locale_Format::getCorrectableDate('10.11.06','d.m.Y');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 6, 'Year 6 expected');
+        
+        $this->assertEquals(is_array(Zend_Locale_Format::getTime('13:14:55', 'HH:mm:ss')), true, "array expected");
+        Zend_Locale_Format::setOptions(array('format' => 'iso'));
         
 // @todo failed test, auto completion doesnt work for this case
 //        $value = Zend_Locale_Format::getDate('2006 Nov 10', false, 'de_AT');
@@ -511,6 +532,20 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
+        try {
+            $value = Zend_Locale_Format::getTime('13:14:55', 'ZZZZ');
+            $this->fail("no time expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        try {
+            $value = Zend_Locale_Format::getTime('13:14:55', 'HH:mm:ss.x');
+            $this->fail("no time expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
         $this->assertEquals(count(Zend_Locale_Format::getTime('13:14:55','HH:mm:ss')), 5, "array with 5 tags expected");
 
         $value = Zend_Locale_Format::getTime('13:14:55','HH:mm:ss');
@@ -537,6 +572,8 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse(Zend_Locale_Format::isDate('20.01.2006', 'M-d-y'), "false expected");
         $this->assertTrue(Zend_Locale_Format::isDate('20.01.2006', 'd-M-y'), "true expected");
+
+        $this->assertTrue(Zend_Locale_Format::isCorrectableDate('20.01.2006', 'M-d-y'), "false expected");
     }
 
 
@@ -603,5 +640,72 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(-1234567.12345, '##0;##0-', 'de_AT'), '1234567-', "string -1.234.567,12345 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567.12345, '##0;##0-', 'de_AT'), '1234567', "string -1.234.567,12345 expected");
         $this->assertEquals(Zend_Locale_Format::toNumberFormat(1234567, '#,##0.00', 'de_AT'), '1.234.567,00', "value 1234567,00 expected");
+    }
+
+
+    /**
+     * test setOption
+     * expected boolean
+     */
+    public function testSetOption()
+    {
+        $this->assertTrue(Zend_Locale_Format::setOptions(array('format' => 'php')));
+        $this->assertTrue(is_array(Zend_Locale_Format::setOptions()));
+        try {
+            $this->assertTrue(Zend_Locale_Format::setOptions(array('format' => 'xxx')));
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+        try {
+            $this->assertTrue(Zend_Locale_Format::setOptions(array('myformat' => 'xxx')));
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+    }
+
+
+    /**
+     * test convertPhpToIso
+     * expected boolean
+     */
+    public function testConvertPhpToIso()
+    {
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('d'), 'dd');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('D'), 'EEE');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('j'), 'd');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('l'), 'EEEE');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('N'), 'e');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('S'), 'SS');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('w'), 'eee');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('z'), 'D');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('W'), 'w');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('F'), 'MMMM');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('m'), 'MM');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('M'), 'MMM');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('n'), 'M');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('t'), 'ddd');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('L'), 'l');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('o'), 'YYYY');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('Y'), 'yyyy');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('y'), 'yy');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('a'), 'a');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('A'), 'a');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('B'), 'B');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('g'), 'h');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('G'), 'H');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('h'), 'hh');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('H'), 'HH');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('i'), 'mm');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('s'), 'ss');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('e'), 'zzzz');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('I'), 'I');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('O'), 'Z');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('P'), 'ZZZZ');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('T'), 'z');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('Z'), 'X');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('c'), 'yyyy-MM-ddTHH:mm:ssZZZZ');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('r'), 'r');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('U'), 'U');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('His'), 'HHmmss');
     }
 }

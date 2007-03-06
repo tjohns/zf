@@ -113,6 +113,26 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      * test getEnvironment
      * expected true
      */
+    public function testLocaleDetail()
+    {
+        $value = new Zend_Locale('de_AT');
+        $this->assertEquals($value->getLanguage(), 'de');
+        $this->assertEquals($value->getRegion(), 'AT');
+
+        $value = new Zend_Locale('en_US');
+        $this->assertEquals($value->getLanguage(), 'en');
+        $this->assertEquals($value->getRegion(), 'US');
+
+        $value = new Zend_Locale('en');
+        $this->assertEquals($value->getLanguage(), 'en');
+        $this->assertFalse($value->getRegion());
+    }
+
+
+    /**
+     * test getEnvironment
+     * expected true
+     */
     public function testEnvironment()
     {
         $value = new Zend_Locale();

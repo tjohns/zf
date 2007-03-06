@@ -85,15 +85,16 @@ class Zend_Locale_Format
                 switch($name) {
                     case 'format' :
                         if (($value != 'php') && ($value != 'iso')) {
-                            throw new Zend_Date_Exception("Unknown format ($value) for dates, only 'iso' and 'php' supported", $value);
+                            throw new Zend_Locale_Exception("Unknown format ($value) for dates, only 'iso' and 'php' supported");
                         }
                 }
                 self::$_Options[$name] = $value;
             }
             else {
-                throw new Zend_Date_Exception("Unknown option: $name = $value");
+                throw new Zend_Locale_Exception("Unknown option: $name = $value");
             }
         }
+        return true;
     }
 
     /**
@@ -416,7 +417,7 @@ class Zend_Locale_Format
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        $regex = '/^('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+$/';
         preg_match($regex, $input, $found);
 
         if (!isset($found[0]))
@@ -560,6 +561,13 @@ class Zend_Locale_Format
      */
     private static function _parseDate($date, $format, $locale, $fix = null)
     {
+        $test = array('h', 'H', 'm', 's', 'y', 'Y', 'M', 'd', 'D', 'E', 'S', 'l', 'B', 'I', 
+                       'X', 'r', 'U', 'G', 'w', 'e', 'a', 'A', 'Z', 'z');
+        foreach (str_split($format) as $splitted) {
+            if ((!in_array($splitted, $test)) and (ctype_alpha($splitted))) {
+                throw new Zend_Locale_Exception("unable to parse format string '$format' at letter '$splitted'");
+            }
+        }
         $number = $date; // working copy
         $result['format'] = $format; // save the format used to normalize $number (convenience)
         $result['locale'] = $locale; // save the locale used to normalize $number (convenience)
@@ -722,10 +730,6 @@ class Zend_Locale_Format
                     }
                     ++$cnt;
                     break;
-                default:
-                    if (ctype_alpha($value)) {
-                        throw new Zend_Locale_Exception("unable to parse format string '$format' at letter '$value'");
-                    }
             }
         }
 
