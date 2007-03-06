@@ -20,14 +20,14 @@
  */
 
 /**
- * Zend_Service_Rest
+ * Zend_Rest_Client
  */
-require_once 'Zend/Service/Rest.php';
+require_once 'Zend/Http/Client.php';
 
 /**
- * Zend_Service_Exception
+ * Zend_Rest_Exception
  */
-require_once 'Zend/Service/Exception.php';
+require_once 'Zend/Http/Client/Exception.php';
 
 /**
  * @package    Zend_Service
@@ -40,11 +40,11 @@ require_once 'Zend/Service/Exception.php';
 class Zend_Service_Audioscrobbler
 {
     /**
-     * Zend_Service_Rest Object
+     * Zend_Http_Client Object
      *
-     * @var Zend_Service_Rest
+     * @var Zend_Http_Client
      */
-    protected $_rest;
+    protected $_client;
 
 	/**
 	 * Array that contains parameters being used by the webservice
@@ -68,13 +68,13 @@ class Zend_Service_Audioscrobbler
         iconv_set_encoding('output_encoding', 'UTF-8');
         iconv_set_encoding('input_encoding', 'UTF-8');
         iconv_set_encoding('internal_encoding', 'UTF-8');
-
+        
         try {
-            $this->_rest = new Zend_Service_Rest();
-            $this->_rest->setUri('http://ws.audioscrobbler.com');
+            $this->_client = new Zend_Http_Client;
         } catch (Zend_Http_Client_Exception $e) {
             throw $e;
         }
+    
    }
 
 	/**
@@ -115,23 +115,28 @@ class Zend_Service_Audioscrobbler
 		$service = (string) $service;
 		$params = (string) $params;
 
-		try {   
-            $request = $this->_rest->restGet($service, $params);
+		try {
             
-			if ($request->isSuccessful()) {
-				$response = simplexml_load_string($request->getBody());
-				return $response;
+            if ($params == "") {
+                $this->_client->setUri("http://ws.audioscrobbler.com{$service}");
             } else {
-				if ($request->getBody() == 'No such path') {
-					throw new Zend_Service_Exception('Could not find: ' . $dir);
-				} else if ($request->getBody() == 'No user exists with this name.') {
-					throw new Zend_Service_Exception('No user exists with this name.');
-				} else {
-					throw new Zend_Service_Exception('The REST service ' . $service . ' returned the following status code: ' . $request->getStatus());
-				}
-			}
+                $this->_client->setUri("http://ws.audioscrobbler.com{$service}?{$params}");
+            }
+
+            $request =  $this->_client->request();
+            $response = $request->getBody();
+                        
+            if ($response == 'No such path') {
+                throw new Zend_Http_Client_Exception('Could not find: ' . $this->_client->getUri());
+            } else if ($response == 'No user exists with this name.') {
+                throw new Zend_Http_Client_Exception('No user exists with this name');
+            } else if ($request->isError()) {
+                throw new Zend_Http_Client_Exception('The web service ' . $this->_client->getUri() . ' returned the following status code: ' . $response->getStatus());
+            } else {
+                return simplexml_load_string($response);
+            }
 		}
-		catch (Zend_Service_Exception $e) {
+		catch (Zend_Http_Client_Exception $e) {
 			throw ($e);
 		}
 	}
