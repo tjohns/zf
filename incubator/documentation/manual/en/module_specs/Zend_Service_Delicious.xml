@@ -309,20 +309,20 @@ print_r($delicious->getUserTags('someUser'));
     <sect2 id="zend.service.delicious.httpclient">
         <title>HTTP client</title>
         <para>
-            <code>Zend_Service_Delicious</code> uses <code>Zend_Rest_Client</code> for making HTTP requests 
-            to del.icio.us web service, so to change a HTTP client to use with <code>Zend_Service_Delicious</code>
-            you need to change a HTTP client of <code>Zend_Rest_Client</code>.
+            <code>Zend_Service_Delicious</code> uses <code>Zend_Rest_Client</code> for making HTTP requests
+            to the del.icio.us web service. To change which HTTP client <code>Zend_Service_Delicious</code>
+            uses, you need to change the HTTP client of <code>Zend_Rest_Client</code>.
         </para>
-        <example id="zend.service.delicious.httpclient.changeingclient">
-            <title>Changing HTTP client of <code>Zend_Rest_Client</code></title>
+        <example id="zend.service.delicious.httpclient.changing">
+            <title>Changing the HTTP client of <code>Zend_Rest_Client</code></title>
             <programlisting role="php"><![CDATA[<?php
-$myHttpClient = new My_Http_Client()
+$myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);
 ?>]]></programlisting>
         </example>
         <para>
-            When you are making more then one request with <code>Zend_Service_Delicious</code> to speed your
-            requests it's better to configure your HTTP client to keep connections alive.
+            When you are making more than one request with <code>Zend_Service_Delicious</code> to speed your
+            requests, it's better to configure your HTTP client to keep connections alive.
         </para>
         <example id="zend.service.delicious.httpclient.keepalive">
             <title>Configuring your HTTP client to keep connections alive</title>
@@ -334,11 +334,14 @@ Zend_Rest_Client::getHttpClient()->setConfig(array(
         </example>
         <note>
             <para>
-                When <code>Zend_Service_Delicious</code> object is constructed ssl transport
-                of <code>Zend_Rest_Client</code> is set to 'ssl' rather then the default 'ssl2', this is 
-                because del.icio.us has some problems with 'ssl2', requests take a long time to complete  
-                (around 2 seconds).
+                When a <code>Zend_Service_Delicious</code> object is constructed, the SSL transport
+                of <code>Zend_Rest_Client</code> is set to <code>'ssl'</code> rather than the default of
+                <code>'ssl2'</code>. This is because del.icio.us has some problems with <code>'ssl2'</code>, such
+                as requests taking a long time to complete (around 2 seconds).
             </para>
         </note>
     </sect2>
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
