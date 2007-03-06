@@ -25,7 +25,7 @@
             最大の違いは認証に関する点です。以下の表を参照ください。
         </para>
 
-        <table cellspacing="0" cellpadding="5">
+        <table cellspacing="0" cellpadding="5" id="zend.gdata.blogger.compatibility.differences">
             <title>現在の Blogger サービスとベータ版の Blogger サービスの違い</title>
             <tgroup cols="3">
                 <thead>

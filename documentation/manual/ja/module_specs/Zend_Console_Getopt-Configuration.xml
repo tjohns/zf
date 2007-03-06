@@ -14,7 +14,7 @@
             <link linkend="zend.console.getopt.rules">Getopt の規則の宣言</link>
             を参照ください。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addrules.example">
             <title>addRules() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -42,7 +42,7 @@ $opts->addRules(
             <code>setHelp()</code> メソッドの引数は連想配列で、
             キーがフラグ名、値が対応するヘルプ文字列となります。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addhelp.example">
             <title>setHelp() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -78,7 +78,7 @@ $opts->setHelp(
             エイリアスは一度しか宣言できません。既存のエイリアスを再定義しようとすると
             <code>Zend_Console_Getopt_Exception</code> がスローされます。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addaliases.example">
             <title>setAliases() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -119,7 +119,7 @@ $opts->setAliases(
             <code>addArguments()</code> は現在の引数にその配列を追加し、
             <code>setArguments()</code> は現在の引数をその配列で置き換えます。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addargs.example">
             <title>addArguments() および setArguments() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 // デフォルトでは、コンストラクタは $_SERVER['argv'] を使用します
@@ -203,7 +203,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <code>setOption()</code>
             メソッドに渡す引数は、設定オプション名とその値のふたつです。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.config.example.setoption">
             <title>setOption() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -217,7 +217,7 @@ $opts->setOption('ignoreCase', true);
             指定した設定項目が既存の設定にマージされるので、
             すべてのオプションを指定する必要はありません。
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.config.example.setoptions">
             <title>setOptions() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');

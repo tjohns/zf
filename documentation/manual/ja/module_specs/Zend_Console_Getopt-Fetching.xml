@@ -29,7 +29,7 @@
             が使用できます。これは、宣言されているすべてのオプションについての
             使用法を説明した文字列を返します。
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.exceptions.example">
             <title>Getopt の例外処理</title>
             <programlisting role="php"><![CDATA[<?php
 try {
@@ -76,7 +76,7 @@ try {
             このメソッドは <code>true</code> を返します。
             それ以外の場合は、このメソッドは <code>null</code> を返します。
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title>getOption() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -89,7 +89,7 @@ $p_parameter = $opts->getOption('p');
             まるでクラスのメンバ変数であるかのようにオプションの値を取得することもできます。
             また、マジックメソッド <code>__isset()</code> も実装しています。
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.byname.example.magic">
             <title>マジックメソッド __get() および __isset() の使用例</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -157,7 +157,7 @@ $p_parameter = $opts->p; // 設定されていない場合は null となりま�
             <code>geRemainingArgs()</code> メソッドを使用します。このメソッドは、
             どのオプションにも属さない文字列の配列を返します。
         </para>
-        <example>
+        <example id="zend.console.getopt.fetching.remainingargs.example">
             <title>getRemainingArgs() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');

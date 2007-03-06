@@ -34,7 +34,7 @@
             文字の後ろにコロン ("<code>:</code>") を続けると、
             そのフラグがパラメータを要求することを表します。
         </para>
-        <example>
+        <example id="zend.console.getopt.rules.short.example">
             <title>短い形式の構文の使用</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
@@ -96,7 +96,7 @@ $opts = new Zend_Console_Getopt('abp:');
             連想配列の各要素の値は、ヘルプ文字列を表します。これは、
             ユーザに対してプログラムの使用法を説明するものです。
         </para>
-        <example>
+        <example id="zend.console.getopt.rules.long.example">
             <title>長い形式の構文の使用</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
