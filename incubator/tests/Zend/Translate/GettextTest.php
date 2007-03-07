@@ -30,6 +30,20 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
 
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Gettext);
+
+        try {
+            $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/nofile.mo', 'en');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
+
+        try {
+            $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/test_fileerror.mo', 'en');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
     }
 
     public function testToString()
@@ -74,7 +88,7 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
 
     public function testOptions()
     {
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
 
         $adapter->setOptions(array('testoption' => 'testkey'));
         $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey'));
@@ -84,7 +98,7 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
 
     public function testLocale()
     {
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
 
         $this->assertEquals($adapter->getLocale(), 'en');
         $locale = new Zend_Locale('en');
@@ -106,7 +120,7 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
 
     public function testList()
     {
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
 
         $this->assertEquals($adapter->getList(), array('en' => 'en'));
         $adapter->addTranslation(dirname(__FILE__) . '/_files/testmsg_en.mo', 'de');
@@ -116,5 +130,11 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('en');
         $this->assertTrue($adapter->isAvailable($locale));
         $this->assertFalse($adapter->isAvailable('sr'));
+    }
+
+    public function testBigEndian()
+    {
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/translate_bigendian.mo', 'sr');
+        $this->assertEquals($adapter->translate('Informacje'), 'Informacje');
     }
 }

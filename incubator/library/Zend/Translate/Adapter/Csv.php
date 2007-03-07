@@ -63,10 +63,6 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
             $this->_translate[$locale] = array();
         }
 
-        if (!is_readable($filename)) {
-            throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
-        }
-
         $this->_file = @fopen($filename, 'rb');
         if (!$this->_file) {
             throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
@@ -81,7 +77,7 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
                 continue;
             }
             if (!empty($content[1])) {
-                $this->_translate[$locale][$content[0]] = $content[1];
+                $this->_translate[$locale][$content[0]] = substr($content[1], 0, -2);
             }
         }
     }
