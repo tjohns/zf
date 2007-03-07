@@ -1,0 +1,12 @@
+<sect1 id="zend.introduction">
+    <title>Introduction</title>
+    <para>
+    The Zend class is the foundation class of the Zend Framework.  This
+    class evolved out of the framework's adherence to the DRY principle (Don't Repeat
+    Yourself).  It contains only static methods, and these methods
+    contain functionality that is required by many components in the Zend Framework.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

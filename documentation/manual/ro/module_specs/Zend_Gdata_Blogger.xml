@@ -1,0 +1,203 @@
+<sect1 id="zend.gdata.blogger">
+    <title>Using Google Blogger</title>
+
+    <para>
+        The weblog hosting service Blogger.com participates in the
+        Google Data API.
+        You can write PHP applications using Zend_Gdata_Blogger to query
+        existing blogs, and post new entries to blogs for which you have
+        authenticated access.
+    </para>
+
+    <para>
+        See
+        <ulink url="http://code.google.com/apis/blogger/overview.html">http://code.google.com/apis/blogger/overview.html</ulink>
+        for more information about the Google Blogger API.
+    </para>
+
+    <sect2 id="zend.gdata.blogger.compatibility">
+        <title>Understanding Blogger version compatibility</title>
+
+        <para>
+            There are some differences regarding using the Google Data API to
+            access blogs that are hosted on the current version of Blogger,
+            versus blogs that are hosted on the version of Blogger that is
+            currently in Beta.
+            The most significant differences are related to authentication.
+            See the table below:
+        </para>
+
+        <table cellspacing="0" cellpadding="5" id="zend.gdata.blogger.compatibility.differences">
+            <title>Differences between current Blogger service and Blogger beta service</title>
+            <tgroup cols="3">
+                <thead>
+                    <row>
+                        <entry align="left">Characteristic</entry>
+                        <entry>Current Blogger service</entry>
+                        <entry>Beta Blogger service</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Supports Google Data API</entry>
+                        <entry align="center">Yes</entry>
+                        <entry align="center">Yes</entry>
+                    </row>
+                    <row>
+                        <entry>Credentials based on</entry>
+                        <entry align="center">Blogger.com account</entry>
+                        <entry align="center">Google.com account</entry>
+                    </row>
+                    <row>
+                        <entry>Supports ClientLogin authentication</entry>
+                        <entry align="center">Yes</entry>
+                        <entry align="center">Yes</entry>
+                    </row>
+                    <row>
+                        <entry>Supports basic HTTP authentication</entry>
+                        <entry align="center">Yes</entry>
+                        <entry align="center">No</entry>
+                    </row>
+                    <row>
+                        <entry>Supports AuthSub authentication</entry>
+                        <entry align="center">No</entry>
+                        <entry align="center">Yes</entry>
+                    </row>
+                    <row>
+                        <entry>Format for unauthenticated feeds</entry>
+                        <entry align="center">Atom 0.3</entry>
+                        <entry align="center">Atom 1.0</entry>
+                    </row>
+                    <row>
+                        <entry>Format for authenticated feeds</entry>
+                        <entry align="center">Atom 1.0</entry>
+                        <entry align="center">Atom 1.0</entry>
+                    </row>
+                    <row>
+                        <entry>Format for posting entries</entry>
+                        <entry align="center">Atom 1.0</entry>
+                        <entry align="center">Atom 1.0</entry>
+                    </row>
+                    <row>
+                        <entry>Supports query parameters</entry>
+                        <entry align="center">No</entry>
+                        <entry align="center">Yes</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect2>
+
+    <sect2 id="zend.gdata.blogger.query">
+        <title>Querying a blog</title>
+
+        <para>
+            Use the <code>setBlogName()</code> method to specify the name of
+            a blog.  This is the name that appears in a blogspot URL,
+            for example:
+            <code>http://blogname.blogspot.com.</code>
+            You can also specify the name of the blog when you request
+            a feed.
+        </para>
+
+    <programlisting role="php"><![CDATA[<?php
+$gdataBlog = new Zend_Gdata_Blogger();
+
+// One way to get a feed for a blog...
+$feed = $gdataBlog->getBloggerFeed('blogname');
+
+// Another way to get a feed for a blog...
+$gdataBlog->setBlogName('blogname');
+$feed = $gdataBlog->getBloggerFeed();
+?>]]></programlisting>
+
+        <para>
+            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
+            for more information on how to use this object.
+        </para>
+
+        <para>
+            The <code>setPublishedMin()</code> and <code>setPublishedMax()</code>
+            methods allow you to specify bounds on the entry date.
+            If you specify a value for <code>publishedMin</code>,
+            no entries that were published earlier than the date
+            you specify are included in the feed.  Likewise
+            no entries published after the date specified by
+            <code>publishedMax</code> are included.
+        </para>
+
+        <para>
+            The entries in the feed are ordered by the <code>&lt;updated&gt;</code>
+            element, with the most recent entry appearing first in the feed.
+        </para>
+
+        <note>
+            <title>No support for category or full-text queries</title>
+            <para>
+                The Google Blogger API currently does not support queries
+                using categories, keywords, or tags.
+                If you try to specify a search using <code>setCategory()</code>,
+                Zend_Gdata_Blogger throws an exception.
+            </para>
+            <para>
+                The Google Blogger API currently does not support queries
+                using full-text search terms.
+                If you try to specify a search using <code>setQuery()</code>,
+                Zend_Gdata_Blogger throws an exception.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.gdata.blogger.post">
+        <title>Posting to your blog</title>
+
+        <para>
+            You can use the <code>post()</code> method to post entries
+            to your blog.  
+            To post entries, you must be using an authenticated
+            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
+            or Zend_Gdata_ClientLogin classes.
+        </para>
+
+    <programlisting role="php"><![CDATA[<?php
+$gdataBlog = new Zend_Gdata_Blogger($authenticatedHttpClient);
+$gdataBlog->setBlogName('myblog');
+
+$xmlString = <<<XML
+<entry xmlns='http://www.w3.org/2005/Atom'>
+  <title type='text'>Marriage!</title>
+  <content type='xhtml'>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Mr. Darcy has <em>proposed marriage</em> to me!</p>
+      <p>He is the last man on earth I would ever desire to marry.</p>
+      <p>Whatever shall I do?</p>
+    </div>
+  </content>
+  <author>
+    <name>Elizabeth Bennet</name>
+    <email>liz@gmail.com</email>
+  </author>
+</entry>
+XML;
+
+$xml = new SimpleXMLElement($xmlString);
+
+$response = $gdataBlog->post($xml->asXML());
+?>]]></programlisting>
+
+        <para>
+            You can get a feed that names the blogs for your currently
+            authenticated account using the <code>getBloggerListFeed()</code>
+            method.
+        </para>
+
+    <programlisting role="php"><![CDATA[<?php
+$gdataBlog = new Zend_Gdata_Blogger($authenticatedHttpClient);
+$myBlogs = $gdataBlog->getBloggerListFeed();
+?>]]></programlisting>
+
+    </sect2>
+
+</sect1>
