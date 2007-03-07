@@ -30,6 +30,11 @@ require_once 'Zend/Http/Client.php';
 require_once 'Zend/Http/Client/Exception.php';
 
 /**
+ * Zend_Http_Client_Adapter_Test
+ */
+require_once 'Zend/Http/Client/Adapter/Test.php';
+
+/**
  * @package    Zend_Service
  * @subpackage Audioscrobbler
  * @copyright  Copyright (c) 2005-2007 Zend Technologies Inc. (http://www.zend.com)
@@ -52,7 +57,23 @@ class Zend_Service_Audioscrobbler
 	 */
 	protected $params;
 	
-	
+    /**
+     * Flag if we're doing testing or not
+     *
+     * @var boolean
+     */
+    protected $testing;
+    
+    /**
+     * Http response used for testing purposes
+     *
+     * @var string
+     */
+	protected $testing_response;
+    
+    
+    
+    
 	//////////////////////////////////////////////////////////
 	///////////////////  CORE METHODS  ///////////////////////
 	//////////////////////////////////////////////////////////
@@ -60,22 +81,26 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Zend_Service_Audioscrobbler Constructor, setup character encoding
+     * @param mixed $adapter Zend_Http_Client Adapter to be used
      */
-    public function __construct()
+    
+    public function __construct($testing = FALSE, $testing_response = NULL)
     {
     	$this->set('version', '1.0');
-
+    
         iconv_set_encoding('output_encoding', 'UTF-8');
         iconv_set_encoding('input_encoding', 'UTF-8');
         iconv_set_encoding('internal_encoding', 'UTF-8');
         
         try {
             $this->_client = new Zend_Http_Client;
+            $this->testing = $testing;
+            $this->testing_response = $testing_response;
         } catch (Zend_Http_Client_Exception $e) {
             throw $e;
         }
-    
-   }
+    }
+   
 
 	/**
 	* Generic get action for a particular field
@@ -121,6 +146,12 @@ class Zend_Service_Audioscrobbler
                 $this->_client->setUri("http://ws.audioscrobbler.com{$service}");
             } else {
                 $this->_client->setUri("http://ws.audioscrobbler.com{$service}?{$params}");
+            }
+
+            if ($this->testing == TRUE) {
+                $adapter = new Zend_Http_Client_Adapter_Test();
+                $this->_client->setConfig(array('adapter' => $adapter));
+                $adapter->setResponse($this->testing_response);
             }
 
             $request =  $this->_client->request();
