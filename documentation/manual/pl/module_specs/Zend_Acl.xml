@@ -163,14 +163,14 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
                 sprawdzana przed rolą "<code>guest</code>", przykładowy kod 
                 wyświetliłby "<code>allowed</code>".
             </para>
-            <note>
-                <para>
-                    Gdy określasz wielu rodziców dla roli, pamiętaj, że ostatni
-                    rodzic na liście jest pierwszym przeszukiwanym rodzicem w 
-                    celu znalezienia ról pasujących do zapytania autoryzacyjnego.
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                Gdy określasz wielu rodziców dla roli, pamiętaj, że ostatni
+                rodzic na liście jest pierwszym przeszukiwanym rodzicem w 
+                celu znalezienia ról pasujących do zapytania autoryzacyjnego.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">

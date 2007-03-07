@@ -24,18 +24,18 @@ $height = $pdfPage->getHeight();]]>
         PDF ma bardzo rozbudowane możliwości reprezentowania kolorów. Zend_Pdf
         wspiera palety Grey Scale, RGB oraz CMYK. Każda z nich może być użyta 
         wszędzie, gdzie jest wymagany obiekt <code>Zend_Pdf_Color</code>. Klasy 
-        <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> oraz
-        <code>Zend_Pdf_Color_CMYK</code> zapewniają taką funkcjonalność:
+        <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> oraz
+        <code>Zend_Pdf_Color_Cmyk</code> zapewniają taką funkcjonalność:
         </para>
         <programlisting role="php"><![CDATA[
 // $grayLevel (liczba zmiennoprzecinkowa). 0.0 (czarny) - 1.0 (biały)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
 // $r, $g, $b (liczby zmiennoprzecinkowe). 0.0 (minimalna intensywność) - 1.0 (maksymalna intensywność)
-$color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
+$color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
 // $c, $m, $y, $k (liczby zmiennoprzecinkowe). 0.0 (minimalna intensywność) - 1.0 (maksymalna intensywność)
-$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
+$color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
         </programlisting>
     </sect2>
 
@@ -429,9 +429,9 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
             <programlisting role="php"><![CDATA[<?php
 ...
 // Utwórz obiekt obrazu bezpośrednio (wybierz jedno z poniższych)
-$image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
-$image = new Zend_Pdf_Image_PNG('my_image.png');
+$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
+$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
+$image = new Zend_Pdf_Image_Png('my_image.png');
 
 // lub użyj klasy Zend_Pdf_ImageFactory aby załadować odpowiedni typ
 $image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
@@ -443,8 +443,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Ważne! Klasa Zend_Pdf_Image_JPEG wymaga rozszerzenia PHP GD.</emphasis>
-            <emphasis>Ważne! Klasa Zend_Pdf_Image_PNG wymaga rozszerzenia ZLIB skonfigurowanego do obsługi obrazów z kanałem Alpha.</emphasis>
+            <emphasis>Ważne! Klasa Zend_Pdf_Image_Jpeg wymaga rozszerzenia PHP GD.</emphasis>
+            <emphasis>Ważne! Klasa Zend_Pdf_Image_Png wymaga rozszerzenia ZLIB skonfigurowanego do obsługi obrazów z kanałem Alpha.</emphasis>
         </para>
         <para>
             Sprawdź dokumentację PHP aby znaleźć bardziej szczegółowe informacje.

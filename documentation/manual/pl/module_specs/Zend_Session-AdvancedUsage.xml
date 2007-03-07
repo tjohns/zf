@@ -3,13 +3,13 @@
     <title>Użycie zaawansowane</title>
 
     <para>
-        While the basic usage examples are a perfectly acceptable way to utilize 
-        Zend Framework sessions, there are some best practices to consider. 
-        Consider the
-        <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> example</link>
-        that transparently uses Zend_Session_Namespace by default to persist 
-        authentication tokens. This example shows one approach to quickly and 
-        easily integrate Zend_Session_Namespace and Zend_Auth.
+        Chociaż przykłady podstawowego użycia sesji są całkowicie zadowalającym
+        sposobem wykorzystania sesji Zend Framework, to jest kilka dobrych
+        zwyczajów, ktore powinieneś przeanalizować. Przeanalizuj 
+        <link linkend="zend.auth.introduction.using">przykład użycia <code>Zend_Auth</code></link>,
+        który domyślnie używa Zend_Session_Namespace do przechowywania
+        danych uwierzytelniania. Ten przykład pokazuje jeden sposób szybkiego i 
+        łatwego zintegrowania Zend_Session_Namespace oraz Zend_Auth.
     </para>
 
     <sect2 id="zend.session.startingasession">
@@ -33,12 +33,13 @@ Zend_Session::start();
         </example>
 
         <para>
-            By starting the session in the bootstrap file, you avoid the 
-            possibility that your session might be started after headers have 
-            been sent to the browser, which results in an exception, and 
-            possibly a broken page for website viewers. Various advanced 
-            features require <code>Zend_Session::start()</code> first. (More on 
-            advanced features later.)
+            Rozpoczynając sesję w pliku ładującym zapobiegasz przypadkowym
+            próbom rozpoczęcia sesji po wysłaniu nagłówków do przeglądarki, 
+            co powodowałoby wyrzucenie wyjątku i prawdopodobnie wyświetlenie
+            nieprawidłowo wygenerowanej strony. Wiele zaawansowanych 
+            funkcjonalności wymaga wcześniejszego wywołania metody 
+            <code>Zend_Session::start()</code>. (więcej informacji o 
+            zaawansowanych funkcjonalnościach pojawi się później)
         </para>
 
         <para>
@@ -152,7 +153,7 @@ Zend_Session::start();
 
     <sect2 id="zend.session.locking">
 
-        <title>Locking Session Namespaces</title>
+        <title>Blokowanie przestrzeni nazw sesji</title>
 
         <para>
             Session namespaces can be locked, to prevent further alterations to 
@@ -170,16 +171,16 @@ Zend_Session::start();
         </para>
 
         <example>
-            <title>Locking Session Namespaces</title>
+            <title>Blokowanie przestrzeni nazw sesji</title>
 <programlisting role="php">
 <![CDATA[<?php
     // zakładając:
     $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
-    // marking session as read only locked
+    // oznaczanie sesji jako zablokowanej tylko do odczytu
     $userProfileNamespace->lock();
 
-    // unlocking read-only lock
+    // odblokowanie sesji
     if ($userProfileNamespace->isLocked()) {
         $userProfileNamespace->unLock();
     }
@@ -197,7 +198,7 @@ Zend_Session::start();
         </para>
 
         <example>
-            <title>Locking Sessions in Views</title>
+            <title>Blokowanie danych sesji w widokach</title>
 <programlisting role="php">
 <![CDATA[<?php
 class FooModule_View extends Zend_View
@@ -223,6 +224,51 @@ class FooModule_View extends Zend_View
         </example>
 
     </sect2>
+
+    <sect2 id="zend.session.expiration">
+
+        <title>Namespace Expiration</title>
+
+        <para>
+            Limits can be placed on the longevity of both namespaces and individual keys in namespaces.
+            Common use cases include passing temporary information between requests, and reducing exposure
+            to certain security risks by removing access to potentially sensitive information some time
+            after authentication occurred.  Expiration can be based on elapsed seconds, or based on
+            the concept of "hops", where a hop occurs for each successive request that activates the
+            namespace via at least one <code>$space = new Zend_Session_Namespace('myspace');</code>.
+        </para>
+
+        <example>
+            <title>Expiration Examples</title>
+<programlisting role="php">
+<![CDATA[<?php
+$s = new Zend_Session_Namespace('expireAll');
+$s->a = 'apple';
+$s->p = 'pear';
+$s->o = 'orange';
+
+$s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
+
+// expire entire namespace in 5 "hops"
+$s->setExpirationHops(5);
+
+$s->setExpirationSeconds(60);                  
+// The "expireAll" namespace will be marked "expired" on
+// the first request received after 60 seconds have elapsed,
+// or in 5 hops, whichever happens first.
+?>]]></programlisting>
+        </example>
+
+        <para>
+            When working with data expiring from the session in the current request,
+            care should be used when retrieving it.  Although the data is returned by reference,
+            modifying the data will not make expiring data persist past the current request.
+            In order to "reset" the expiration time, fetch the data into temporary variables,
+            use the namespace to unset it, and then set the appropriate keys again.
+        </para>
+
+    </sect2>
+
 
     <sect2 id="zend.session.controllers">
 
@@ -330,7 +376,7 @@ else {
 <![CDATA[<?php
     $sessionNamespace = new Zend_Session_Namespace('Foo');
     $sessionNamespace->array = array();
-    $sessionNamespace->array['testKey'] = 1; // does not work before PHP 5.2.1
+    $sessionNamespace->array['testKey'] = 1; // nie działa przed PHP 5.2.1
 ?>]]></programlisting>
         </example>
 
@@ -374,24 +420,30 @@ else {
         <title>Using Sessions with Authentication</title>
 
         <para>
-            If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
-            is an object (not recommended), instead of an array, then make sure to require your authorization identity
-            class definition before starting the session. Instead, we recommend storing the authorization ids computed
-            within an authentication adapter inside a well-known key in the a session namespace. For example, the
-            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
+            If your authentication adapter for <code>Zend_Auth</code> returns a 
+            result where the authorization identity is an object (not 
+            recommended), instead of an array, then make sure to require your 
+            authorization identity class definition before starting the session. 
+            Instead, we recommend storing the authorization ids computed within 
+            an authentication adapter inside a well-known key in the a session 
+            namespace. For example, the default behavior of <code>Zend_Auth</code> 
+            places this in the 'storage' key of the 'Zend_Auth' namespace.
         </para>
 
         <para>
-            If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
-            store the authorization id to the session, in a well-known location in a session namespace of your choice.
-            Often, applications have specific needs about where to store credentials used (if any) and "authorization"
-            identity. Applications often map authentication identities (e.g. usernames) to authorization identities
-            (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth authentication
+            If you tell <code>Zend_Auth</code> to not persist authentication 
+            tokens in sessions, then you can manually store the authorization id 
+            to the session, in a well-known location in a session namespace of 
+            your choice. Often, applications have specific needs about where to 
+            store credentials used (if any) and "authorization" identity. 
+            Applications often map authentication identities (e.g. usernames) to 
+            authorization identities (e.g. a uniquely assigned integer) during 
+            authentication, which would occur in the Zend_Auth authentication
             adapter's <code>authenticate()</code> method.
         </para>
 
         <example>
-            <title>Example: Simplified access of authorization ids</title>
+            <title>Przykład: Simplified access of authorization ids</title>
 <programlisting role="php">
 <![CDATA[<?php
     // pre-authentication request
@@ -469,11 +521,11 @@ else {
         </para>
 
         <example>
-            <title>Using PHPUnit to test code written using Zend_Session*</title>
+            <title>Użycie PHPUnit do testowania kodu używającego Zend_Session*</title>
 <programlisting role="php">
 <![CDATA[<?php
-        // testing setExpirationSeconds()
-        require 'tests/Zend/Session/SessionTestHelper.php'; // also see SessionTest.php in trunk/
+        // testowanie setExpirationSeconds()
+        require 'tests/Zend/Session/SessionTestHelper.php'; // zobacz także plik SessionTest.php w trunk/
         $script = 'SessionTestHelper.php';
         $s = new Zend_Session_Namespace('space');
         $s->a = 'apple';
