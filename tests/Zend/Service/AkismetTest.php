@@ -17,6 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 
 
 /** Zend_Service_Akismet */
@@ -34,9 +35,9 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Service_AkismetTest extends PHPUnit_Framework_TestCase
 {
-	public function setUp()
-	{
-	    $this->akismet = new Zend_Service_Akismet('somebogusapikey', 'http://framework.zend.com/wiki/');
+    public function setUp()
+    {
+        $this->akismet = new Zend_Service_Akismet('somebogusapikey', 'http://framework.zend.com/wiki/');
         $adapter = new Zend_Http_Client_Adapter_Test();
         $client = new Zend_Http_Client(null, array(
             'adapter' => $adapter
@@ -50,7 +51,7 @@ class Zend_Service_AkismetTest extends PHPUnit_Framework_TestCase
             'comment_type'    => 'comment',
             'comment_content' => 'spam check'
         );
-	}
+    }
 	
     public function testBlogUrl()
     {
