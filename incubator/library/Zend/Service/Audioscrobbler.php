@@ -494,6 +494,12 @@ class Zend_Service_Audioscrobbler
 	    return $this->getInfo($service);
 	}
 	
+    public function tagGetTopAlbums()
+    {
+        $service = "/{$this->get('version')}/tag/{$this->get('tag')}/topalbums.xml";
+        return $this->getInfo($service);
+    }
+    
 	public function tagGetTopArtists()
 	{
 	    $service = "/{$this->get('version')}/tag/{$this->get('tag')}/topartists.xml";
