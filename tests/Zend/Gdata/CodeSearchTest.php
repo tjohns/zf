@@ -21,7 +21,7 @@
 
 require_once 'Zend/Gdata/CodeSearch.php';
 require_once 'Zend/Http/Client.php';
-// require_once 'XML/Beautifier.php';
+require_once 'Zend/Http/Client/Adapter/Test.php';
 
 /**
  * @package Zend_Gdata
@@ -32,8 +32,9 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->gdata = new Zend_Gdata_CodeSearch(new Zend_Http_Client());
-        // $this->xml = new XML_Beautifier();
+        $testAdapter = new Zend_Http_Client_Adapter_Test();
+        $client = new Zend_Http_Client(null, array('adapter' => $testAdapter));
+        $this->gdata = new Zend_Gdata_CodeSearch($client);
    }
 
     public function testMaxResultsParam()
@@ -45,18 +46,6 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
         $this->gdata->setMaxResults($max);
         $this->assertTrue(isset($this->gdata->maxResults));
         $this->assertEquals($max, $this->gdata->getMaxResults());
-        $feed = $this->gdata->getCodeSearchFeed();
-        $this->assertEquals($max, $feed->count());
-        foreach ($feed as $feedEntry) {
-            // echo $this->xml->formatString($feedEntry->saveXML());
-            $gcs = 'gcs:package';
-            $gcsPackage = $feedEntry->$gcs;
-            $gcs = 'gcs:file';
-            $gcsFile = $feedEntry->$gcs;
-            $gcs = 'gcs:match';
-            $gcsMatch = $feedEntry->$gcs;
-            $this->assertTrue(isset($gcsPackage) && isset($gcsFile) && isset($gcsMatch));
-        }
         unset($this->gdata->maxResults);
         $this->assertFalse(isset($this->gdata->maxResults));
     }
@@ -70,19 +59,21 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
         $this->gdata->setStartIndex($start);
         $this->assertTrue(isset($this->gdata->startIndex));
         $this->assertEquals($start, $this->gdata->getStartIndex());
-        $feed = $this->gdata->getCodeSearchFeed();
-        foreach ($feed as $feedEntry) {
-            // echo $this->xml->formatString($feedEntry->saveXML());
-            $gcs = 'gcs:package';
-            $gcsPackage = $feedEntry->$gcs;
-            $gcs = 'gcs:file';
-            $gcsFile = $feedEntry->$gcs;
-            $gcs = 'gcs:match';
-            $gcsMatch = $feedEntry->$gcs;
-            $this->assertTrue(isset($gcsPackage) && isset($gcsFile) && isset($gcsMatch));
-        }
         unset($this->gdata->startIndex);
         $this->assertFalse(isset($this->gdata->startIndex));
+    }
+
+    public function testExceptionPostNotSupported()
+    {
+        $this->gdata->resetParameters();
+        try {
+            $this->gdata->post('dummy-data', 'dummy-uri');
+            $this->fail('Expected to catch Zend_Gdata_BadMethodCallException');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_BadMethodCallException'),
+                'Expected Zend_Gdata_BadMethodCallException, got '.get_class($e));
+            $this->assertEquals("There are no post operations for CodeSearch.", $e->getMessage());
+        }
     }
 
     public function testExceptionUpdatedMinMaxParam()
@@ -90,13 +81,20 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
         $this->gdata->resetParameters();
         try {
             $feed = $this->gdata->updatedMin = 'string';
-        } catch (Zend_Gdata_Exception $e) {
+            $this->fail('Expected to catch Zend_Gdata_InvalidArgumentException');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
+                'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
             $this->assertEquals("Parameter 'updatedMin' is not currently supported in CodeSearch.", $e->getMessage());
         }
+
         $this->gdata->resetParameters();
         try {
             $feed = $this->gdata->updatedMax = 'string';
-        } catch (Zend_Gdata_Exception $e) {
+            $this->fail('Expected to catch Zend_Gdata_InvalidArgumentException');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
+                'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
             $this->assertEquals("Parameter 'updatedMax' is not currently supported in CodeSearch.", $e->getMessage());
         }
     }

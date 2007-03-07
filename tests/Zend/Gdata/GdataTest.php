@@ -31,14 +31,23 @@ class Zend_Gdata_GdataTest extends PHPUnit_Framework_TestCase
     public function testDefaultHttpClient()
     {
         $gdata = new Zend_Gdata();
-        $this->assertTrue($gdata->getHttpClient() instanceof Zend_Http_Client);
+        $client = $gdata->getHttpClient();
+        $this->assertTrue($client instanceof Zend_Http_Client,
+            'Expecting object of type Zend_Http_Client, got '
+            . (gettype($client) == 'object' ? get_class($client) : gettype($client))
+        );
     }
 
     public function testSpecificHttpClient()
     {
         $client = new Zend_Http_Client();
         $gdata = new Zend_Gdata($client);
-        $this->assertSame($client, $gdata->getHttpClient());
+        $client2 = $gdata->getHttpClient();
+        $this->assertTrue($client2 instanceof Zend_Http_Client,
+            'Expecting object of type Zend_Http_Client, got '
+            . (gettype($client) == 'object' ? get_class($client) : gettype($client))
+        );
+        $this->assertSame($client, $client2);
     }
 
     public function testExceptionNotHttpClient()
@@ -46,7 +55,10 @@ class Zend_Gdata_GdataTest extends PHPUnit_Framework_TestCase
         $obj = new ArrayObject();
         try {
             $gdata = new Zend_Gdata($obj);
-        } catch (Zend_Gdata_HttpException $e) {
+            $this->fail('Expecting to catch Zend_Gdata_HttpException');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_HttpException'),
+                'Expecting Zend_Gdata_HttpException, got '.get_class($e));
             $this->assertEquals('Argument is not an instance of Zend_Http_Client.', $e->getMessage());
         }
     }

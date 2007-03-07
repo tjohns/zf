@@ -109,6 +109,13 @@ define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
 /**
  * Zend_Gdata tests
  *
+ * If the ONLINE_ENABLED property is false, only tests that can be executed with
+ * a mock HTTP client are run.  No request is sent to the Google Gdata servers.
+ * If ONLINE_ENABLED is true, some tests may make requests to the remote
+ * servers.  This does not work if you are running tests on a disconnected
+ * client host.  Also, the tests may show as failures if the Google servers
+ * cannot be reached or if they do not respond for another reason.
+ *
  * If the CLIENTLOGIN_ENABLED property below is false, the authenticated
  * tests are reported Skipped in the test run.  Set this property to true
  * to enable tests that require ClientLogin authentication.  Enter your
@@ -117,6 +124,7 @@ define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
  * Edit TestConfiguration.php, not TestConfiguration.php.dist.
  * Never commit plaintext passwords to the source code repository.
  */
+define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL', 'example@example.com');
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');

@@ -21,20 +21,17 @@
 
 require_once 'Zend/Gdata/Blogger.php';
 require_once 'Zend/Http/Client.php';
-require_once 'Zend/Http/Client/Adapter/Test.php';
 
 /**
  * @package Zend_Gdata
  * @subpackage UnitTests
  */
-class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
+class Zend_Gdata_BloggerOnlineTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()
     {
-        $testAdapter = new Zend_Http_Client_Adapter_Test();
-        $client = new Zend_Http_Client(null, array('adapter' => $testAdapter));
-        $this->gdata = new Zend_Gdata_Blogger($client);
+        $this->gdata = new Zend_Gdata_Blogger(new Zend_Http_Client());
     }
 
     public function testBlogFeed()
@@ -44,6 +41,26 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setBlogName($blog);
         $this->assertTrue(isset($this->gdata->blogName));
         $this->assertEquals($blog, $this->gdata->getBlogName());
+        $feed = $this->gdata->getBloggerFeed();
+        foreach ($feed as $feedEntry) {
+            $author = $feedEntry->author;
+            $this->assertTrue(isset($author));
+        }
+        unset($this->gdata->blogName);
+        $this->assertFalse(isset($this->gdata->blogName));
+    }
+
+    public function testBlogNameArg()
+    {
+        $this->gdata->resetParameters();
+        $blog = 'karwin';
+        $feed = $this->gdata->getBloggerFeed($blog);
+        $this->assertTrue(isset($this->gdata->blogName));
+        $this->assertEquals($blog, $this->gdata->getBlogName());
+        foreach ($feed as $feedEntry) {
+            $author = $feedEntry->author;
+            $this->assertTrue(isset($author));
+        }
         unset($this->gdata->blogName);
         $this->assertFalse(isset($this->gdata->blogName));
     }
@@ -57,6 +74,12 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setMaxResults($max);
         $this->assertTrue(isset($this->gdata->maxResults));
         $this->assertEquals($max, $this->gdata->getMaxResults());
+        $feed = $this->gdata->getBloggerFeed();
+        $this->assertEquals($max, $feed->count());
+        foreach ($feed as $feedEntry) {
+            $author = $feedEntry->author;
+            $this->assertTrue(isset($author));
+        }
         unset($this->gdata->maxResults);
         $this->assertFalse(isset($this->gdata->maxResults));
     }
@@ -70,6 +93,11 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setStartIndex($start);
         $this->assertTrue(isset($this->gdata->startIndex));
         $this->assertEquals($start, $this->gdata->getStartIndex());
+        $feed = $this->gdata->getBloggerFeed();
+        foreach ($feed as $feedEntry) {
+            $author = $feedEntry->author;
+            $this->assertTrue(isset($author));
+        }
         unset($this->gdata->startIndex);
         $this->assertFalse(isset($this->gdata->startIndex));
     }
@@ -87,6 +115,15 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setPublishedMax($max);
         $this->assertTrue(isset($this->gdata->publishedMax));
         $this->assertEquals($this->gdata->formatTimestamp($max), $this->gdata->getPublishedMax());
+        $feed = $this->gdata->getBloggerFeed();
+        $this->assertEquals(1, $feed->count());
+        foreach ($feed as $feedEntry) {
+            $author = $feedEntry->author;
+            $this->assertTrue(isset($author));
+            $pub = $feedEntry->published();
+            $this->assertThat($pub, $this->greaterThan($min));
+            $this->assertThat($pub, $this->lessThan($max));
+        }
         unset($this->gdata->publishedMin);
         $this->assertFalse(isset($this->gdata->publishedMin));
         unset($this->gdata->publishedMax);
@@ -103,45 +140,6 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
             $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
                 'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
             $this->assertEquals('You must specify a blog name.', $e->getMessage());
-        }
-    }
-
-    public function testExceptionQueryParam()
-    {
-        $this->gdata->resetParameters();
-        try {
-            $feed = $this->gdata->setQuery('string');
-            $this->fail('Expected to catch Zend_Gdata_InvalidArgumentException');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
-                'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
-            $this->assertEquals('Text queries are not currently supported in Blogger.', $e->getMessage());
-        }
-    }
-
-    public function testExceptionCategoryParam()
-    {
-        $this->gdata->resetParameters();
-        try {
-            $feed = $this->gdata->category = 'string';
-            $this->fail('Expected to catch Zend_Gdata_InvalidArgumentException');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
-                'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
-            $this->assertEquals('Category queries are not currently supported in Blogger.', $e->getMessage());
-        }
-    }
-
-    public function testExceptionEntryParam()
-    {
-        $this->gdata->resetParameters();
-        try {
-            $feed = $this->gdata->entry = 'string';
-            $this->fail('Expected to catch Zend_Gdata_InvalidArgumentException');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Gdata_InvalidArgumentException'),
-                'Expected Zend_Gdata_InvalidArgumentException, got '.get_class($e));
-            $this->assertEquals('Entry queries are not currently supported in Blogger.', $e->getMessage());
         }
     }
 

@@ -26,16 +26,14 @@ require_once 'Zend/Http/Client.php';
  * @package Zend_Gdata
  * @subpackage UnitTests
  */
-class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
+class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
 {
     const GOOGLE_DEVELOPER_CALENDAR = 'developer-calendar@google.com';
     const ZEND_CONFERENCE_EVENT = 'bn2h4o4mc3a03ci4t48j3m56pg';
 
     public function setUp()
     {
-        $testAdapter = new Zend_Http_Client_Adapter_Test();
-        $client = new Zend_Http_Client(null, array('adapter' => $testAdapter));
-        $this->gdata = new Zend_Gdata_Calendar($client);
+        $this->gdata = new Zend_Gdata_Calendar(new Zend_Http_Client());
     }
 
     public function testUpdatedMinMaxParam()
@@ -48,17 +46,16 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setUpdatedMax($updatedMax);
         $this->assertTrue(isset($this->gdata->updatedMin));
         $this->assertTrue(isset($this->gdata->updatedMax));
-        $this->assertTrue(isset($this->gdata->user));
         $this->assertEquals($this->gdata->formatTimestamp($updatedMin), $this->gdata->getUpdatedMin());
         $this->assertEquals($this->gdata->formatTimestamp($updatedMax), $this->gdata->getUpdatedMax());
-        $this->assertEquals(self::GOOGLE_DEVELOPER_CALENDAR, $this->gdata->getUser());
+
+        $feed = $this->gdata->getCalendarFeed();
+        $this->assertEquals(7, $feed->count());
 
         unset($this->gdata->updatedMin);
         $this->assertFalse(isset($this->gdata->updatedMin));
         unset($this->gdata->updatedMax);
         $this->assertFalse(isset($this->gdata->updatedMax));
-        unset($this->gdata->user);
-        $this->assertFalse(isset($this->gdata->user));
     }
 
     public function testStartMinMaxParam()
@@ -73,6 +70,9 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->gdata->startMax));
         $this->assertEquals($this->gdata->formatTimestamp($startMin), $this->gdata->getStartMin());
         $this->assertEquals($this->gdata->formatTimestamp($startMax), $this->gdata->getStartMax());
+
+        $feed = $this->gdata->getCalendarFeed();
+        $this->assertEquals(1, $feed->count());
 
         unset($this->gdata->startMin);
         $this->assertFalse(isset($this->gdata->startMin));
@@ -90,6 +90,14 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setVisibility($visibility);
         $this->assertTrue(isset($this->gdata->visibility));
         $this->assertEquals($visibility, $this->gdata->getVisibility());
+        try {
+            $feed = $this->gdata->getCalendarFeed();
+            $this->fail('Expected to catch Zend_Feed_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Feed_Exception'),
+                'Expected Zend_Feed_Exception, got '.get_class($e));
+            $this->assertContains('response code 401', $e->getMessage());
+        }
         unset($this->gdata->visibility);
         $this->assertFalse(isset($this->gdata->visibility));
     }
@@ -102,6 +110,16 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setProjection($projection);
         $this->assertTrue(isset($this->gdata->projection));
         $this->assertEquals($projection, $this->gdata->getProjection());
+        $feed = $this->gdata->getCalendarFeed();
+        foreach ($feed as $feedItem) {
+            $gdc = 'gd:comments';
+            $comments = $feedItem->$gdc;
+            $gdf = 'gd:feedLink';
+            $feedLink = $comments->$gdf;
+            $feedElt = $feedLink->feed;
+            $this->assertTrue(isset($feedElt));
+        }
+
         unset($this->gdata->projection);
         $this->assertFalse(isset($this->gdata->projection));
     }
@@ -114,6 +132,19 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setOrderby($orderby);
         $this->assertTrue(isset($this->gdata->orderby));
         $this->assertEquals($orderby, $this->gdata->getOrderby());
+        $feed = $this->gdata->getCalendarFeed();
+        $prevTs = null;
+        foreach ($feed as $feedItem) {
+            $gdw = 'gd:when';
+            $elt = $feedItem->$gdw;
+            $startTime = $elt->offsetGet('startTime');
+            $ts = strtotime($startTime);
+            if ($prevTs != null) {
+                $this->assertThat($ts, $this->logicalNot($this->greaterThan($prevTs)));
+            }
+            $prevTs = $ts;
+        }
+
         unset($this->gdata->orderby);
         $this->assertFalse(isset($this->gdata->orderby));
     }
@@ -125,19 +156,12 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setEvent(self::ZEND_CONFERENCE_EVENT);
         $this->assertTrue(isset($this->gdata->event));
         $this->assertEquals(self::ZEND_CONFERENCE_EVENT, $this->gdata->getEvent());
+        $feed = $this->gdata->getCalendarFeed();
+        foreach ($feed as $feedItem) {
+            $this->assertContains(self::ZEND_CONFERENCE_EVENT, $feedItem->id());
+        }
         unset($this->gdata->event);
         $this->assertFalse(isset($this->gdata->event));
-    }
-
-    public function testCommentsParam()
-    {
-        $this->gdata->resetParameters();
-        $comment = 'we need to reschedule';
-        $this->gdata->setComments($comment);
-        $this->assertTrue(isset($this->gdata->comments));
-        $this->assertEquals($comment, $this->gdata->getComments());
-        unset($this->gdata->comments);
-        $this->assertFalse(isset($this->gdata->comments));
     }
 
 }
