@@ -54,14 +54,17 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 
     /**
      * known flag chars in filenames
+     *
+     * This list has to be in alphabetical order for setFlags()
+     *
      * @var array
      */
-    protected static $_knownFlags = array('P' => Zend_Mail_Storage::FLAG_PASSED,
+    protected static $_knownFlags = array('D' => Zend_Mail_Storage::FLAG_DRAFT,
+                                          'F' => Zend_Mail_Storage::FLAG_FLAGGED,
+                                          'P' => Zend_Mail_Storage::FLAG_PASSED,
                                           'R' => Zend_Mail_Storage::FLAG_ANSWERED,
                                           'S' => Zend_Mail_Storage::FLAG_SEEN,
-                                          'T' => Zend_Mail_Storage::FLAG_DELETED,
-                                          'D' => Zend_Mail_Storage::FLAG_DRAFT,
-                                          'F' => Zend_Mail_Storage::FLAG_FLAGGED);
+                                          'T' => Zend_Mail_Storage::FLAG_DELETED);
 
     /**
      * Count messages all messages in current box
@@ -226,6 +229,12 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     protected function _isMaildir($dirname)
     {
+        if (file_exists($dirname . '/new') && !is_dir($dirname . '/new')) {
+            return false;
+        }
+        if (file_exists($dirname . '/tmp') && !is_dir($dirname . '/tmp')) {
+            return false;
+        }
         return is_dir($dirname . '/cur');
     }
 
@@ -253,6 +262,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
         if ($dh) {
             $this->_getMaildirFiles($dh, $dirname . '/new/', array(Zend_Mail_Storage::FLAG_RECENT));
             closedir($dh);
+        } else if (file_exists($dirname . '/new/')) {
+            throw new Zend_Mail_Storage_Exception('cannot read recent mails in maildir');
         }
     }
 
@@ -324,5 +335,4 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     {
         throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
     }
-
 }

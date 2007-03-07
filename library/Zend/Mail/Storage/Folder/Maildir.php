@@ -164,7 +164,7 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
         }
 
         // rootdir is same as INBOX in maildir
-        if (strpos($rootFolder, 'INBOX') === 0) {
+        if (strpos($rootFolder, 'INBOX' . $this->_delim) === 0) {
             $rootFolder = substr($rootFolder, 6);
         }
         $currentFolder = $this->_rootFolder;
