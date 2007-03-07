@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,15 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Service_Simpy_Watchlist
+ * @see Zend_Service_Simpy_Watchlist
  */
 require_once 'Zend/Service/Simpy/Watchlist.php';
+
 
 /**
  * @category   Zend
@@ -37,26 +40,26 @@ class Zend_Service_Simpy_WatchlistSet implements IteratorAggregate
     /**
      * List of watchlists
      *
-     * @var Zend_Service_Simpy_Watchlist
+     * @var array of Zend_Service_Simpy_Watchlist objects
      */
-    protected $_watchlists;
-    
+    protected $_watchlists = array();
+
     /**
      * Constructor to initialize the object with data
      *
-     * @param DOMDocument $doc Parsed response from a GetWatchlists operation
+     * @param  DOMDocument $doc Parsed response from a GetWatchlists operation
+     * @return void
      */
     public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//watchlists/watchlist');
-        $this->_watchlists = array();
-        
+
         for ($x = 0; $x < $list->length; $x++) {
             $this->_watchlists[$x] = new Zend_Service_Simpy_Watchlist($list->item($x));
         }
     }
-    
+
     /**
      * Returns an iterator for the watchlist set
      *
@@ -67,10 +70,10 @@ class Zend_Service_Simpy_WatchlistSet implements IteratorAggregate
         $array = new ArrayObject($this->_watchlists);
         return $array->getIterator();
     }
-    
+
     /**
      * Returns the number of watchlists in the set
-     * 
+     *
      * @return int
      */
     public function getLength()

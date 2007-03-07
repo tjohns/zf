@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,6 +18,7 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -35,19 +37,20 @@ class Zend_Service_Simpy_Tag
      * @var string
      */
     protected $_tag;
-    
+
     /**
      * Number of links with the tag
-     * 
+     *
      * @var int
      */
     protected $_count;
-    
+
     /**
      * Constructor to initialize the object with data
      *
-     * @param DOMNode $node Individual <tag> node from a parsed response from 
-     *                      a GetTags operation
+     * @param  DOMNode $node Individual <tag> node from a parsed response from
+     *                       a GetTags operation
+     * @return void
      */
     public function __construct($node)
     {
@@ -55,7 +58,7 @@ class Zend_Service_Simpy_Tag
         $this->_tag = $map->getNamedItem('name')->nodeValue;
         $this->_count = $map->getNamedItem('count')->nodeValue;
     }
-    
+
     /**
      * Returns the name of the tag
      *
@@ -65,7 +68,7 @@ class Zend_Service_Simpy_Tag
     {
         return $this->_tag;
     }
-    
+
     /**
      * Returns the number of links with the tag
      *

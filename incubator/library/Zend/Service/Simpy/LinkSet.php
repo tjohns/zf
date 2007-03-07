@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,15 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Service_Simpy_Link
+ * @see Zend_Service_Simpy_Link
  */
 require_once 'Zend/Service/Simpy/Link.php';
+
 
 /**
  * @category   Zend
@@ -37,26 +40,27 @@ class Zend_Service_Simpy_LinkSet implements IteratorAggregate
     /**
      * List of links
      *
-     * @var Zend_Service_Simpy_Link
+     * @var array of Zend_Service_Simpy_Link objects
      */
     protected $_links;
-    
+
     /**
      * Constructor to initialize the object with data
      *
-     * @param DOMDocument $doc Parsed response from a GetLinks operation
+     * @param  DOMDocument $doc Parsed response from a GetLinks operation
+     * @return void
      */
     public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//links/link');
         $this->_links = array();
-        
+
         for ($x = 0; $x < $list->length; $x++) {
             $this->_links[$x] = new Zend_Service_Simpy_Link($list->item($x));
         }
     }
-    
+
     /**
      * Returns an iterator for the link set
      *
@@ -67,10 +71,10 @@ class Zend_Service_Simpy_LinkSet implements IteratorAggregate
         $array = new ArrayObject($this->_links);
         return $array->getIterator();
     }
-    
+
     /**
      * Returns the number of links in the set
-     * 
+     *
      * @return int
      */
     public function getLength()

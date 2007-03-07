@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,6 +18,7 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -31,161 +33,164 @@ class Zend_Service_Simpy_LinkQuery
 {
     /**
      * Query string for the query
-     * 
+     *
      * @var string
      */
-    protected $_query;
-    
+    protected $_query = null;
+
     /**
      * Maximum number of search results to return
-     * 
+     *
      * @var int
      */
-    protected $_limit;
-    
+    protected $_limit = null;
+
     /**
      * Date on which search results must have been added
-     * 
+     *
      * @var string
      */
-    protected $_date;
-    
+    protected $_date = null;
+
     /**
      * Date after which search results must have been added
-     * 
+     *
      * @var string
      */
-    protected $_afterDate;
-    
+    protected $_afterDate = null;
+
     /**
      * Date before which search results must have been added
-     * 
+     *
      * @var string
      */
-    protected $_beforeDate;
-    
-    /**
-     * Constructor to initialize class members
-     */
-    public function __construct()
-    {
-        $this->_clauses = array();
-        $this->_limit = null;
-        $this->_date = null;
-        $this->_afterDate = null;
-        $this->_beforeDate = null;
-    }
-    
+    protected $_beforeDate = null;
+
     /**
      * Sets the query string for the query
-     * 
-     * @param string $query Query string in valid Simpy syntax
-     * @see http://www.simpy.com/faq#searchSyntax
-     * @see http://www.simpy.com/faq#searchFieldsLinks
+     *
+     * @param  string $query Query string in valid Simpy syntax
+     * @see    http://www.simpy.com/faq#searchSyntax
+     * @see    http://www.simpy.com/faq#searchFieldsLinks
+     * @return Zend_Service_Simpy_LinkQuery Provides a fluent interface
      */
     public function setQueryString($query)
     {
         $this->_query = $query;
+
+        return $this;
     }
-    
+
     /**
      * Returns the query string set for this query
-     * 
+     *
      * @return string
      */
     public function getQueryString()
     {
         return $this->_query;
     }
-    
+
     /**
      * Sets the maximum number of search results to return
-     * 
-     * @param int $limit
+     *
+     * @param  int $limit
+     * @return Zend_Service_Simpy_LinkQuery Provides a fluent interface
      */
     public function setLimit($limit)
     {
         $this->_limit = intval($limit);
-        
+
         if ($this->_limit == 0) {
             $this->_limit = null;
         }
+
+        return $this;
     }
-    
+
     /**
      * Returns the maximum number of search results to return
-     * 
+     *
      * @return int
      */
     public function getLimit()
     {
         return $this->_limit;
     }
-    
+
     /**
-     * Sets the date on which search results must have been added, which will 
+     * Sets the date on which search results must have been added, which will
      * override any existing values set using setAfterDate() and setBeforeDate()
-     * 
-     * @param string $date
-     * @see setAfterDate()
-     * @see setBeforeDate()
+     *
+     * @param  string $date
+     * @see    setAfterDate()
+     * @see    setBeforeDate()
+     * @return Zend_Service_Simpy_LinkQuery Provides a fluent interface
      */
     public function setDate($date)
     {
         $this->_date = $date;
         $this->_afterDate = null;
         $this->_beforeDate = null;
+
+        return $this;
     }
-   
+
     /**
      * Returns the date on which search results must have been added
-     * 
+     *
      * @return string
      */
     public function getDate()
     {
         return $this->_date;
     }
-    
+
     /**
-     * Sets the date after which search results must have been added, which will 
+     * Sets the date after which search results must have been added, which will
      * override any existing values set using setDate()
-     * 
-     * @param string $date
-     * @see setDate()
+     *
+     * @param  string $date
+     * @see    setDate()
+     * @return Zend_Service_Simpy_LinkQuery Provides a fluent interface
      */
     public function setAfterDate($date)
     {
         $this->_afterDate = $date;
         $this->_date = null;
+
+        return $this;
     }
-    
+
     /**
      * Returns the date after which search results must have been added
-     * 
+     *
      * @return string
      */
     public function getAfterDate()
     {
         return $this->_afterDate;
     }
-    
+
     /**
      * Sets the date before which search results must have been added, which
      * will override any existing values set using setDate()
-     * 
-     * @param string $date
-     * @see setDate()
+     *
+     * @param  string $date
+     * @see    setDate()
+     * @return Zend_Service_Simpy_LinkQuery Provides a fluent interface
      */
     public function setBeforeDate($date)
     {
         $this->_beforeDate = $date;
         $this->_date = null;
+
+        return $this;
     }
-    
+
     /**
      * Returns the date before which search results must have been added
-     * 
+     *
      * @return string
      */
     public function getBeforeDate()

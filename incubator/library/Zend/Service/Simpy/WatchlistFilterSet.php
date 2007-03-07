@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,15 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Service_Simpy_WatchlistFilter
+ * @see Zend_Service_Simpy_WatchlistFilter
  */
 require_once 'Zend/Service/Simpy/WatchlistFilter.php';
+
 
 /**
  * @category   Zend
@@ -34,31 +37,24 @@ require_once 'Zend/Service/Simpy/WatchlistFilter.php';
  */
 class Zend_Service_Simpy_WatchlistFilterSet implements IteratorAggregate
 {
-	/**
-	 * List of filters in the set
-	 * 
-	 * @var array
-	 */
-	protected $_filters;
+    /**
+     * List of filters in the set
+     *
+     * @var array of Zend_Service_Simpy_WatchlistFilter objects
+     */
+    protected $_filters = array();
 
     /**
-     * Constructor to initialize class members
-     */
-    public function __construct()
-    {
-        $this->_filters = array();
-    }
-    
-    /**
      * Adds a filter to the set
-     * 
-     * @param Zend_Service_Simpy_WatchlistFilter $filter Filter to be added
+     *
+     * @param  Zend_Service_Simpy_WatchlistFilter $filter Filter to be added
+     * @return void
      */
     public function add(Zend_Service_Simpy_WatchlistFilter $filter)
     {
         $this->_filters[] = $filter;
     }
-    
+
     /**
      * Returns an iterator for the watchlist filter set
      *
@@ -69,10 +65,10 @@ class Zend_Service_Simpy_WatchlistFilterSet implements IteratorAggregate
         $array = new ArrayObject($this->_filters);
         return $array->getIterator();
     }
-    
+
     /**
      * Returns the number of filters in the set
-     * 
+     *
      * @return int
      */
     public function getLength()
