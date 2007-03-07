@@ -468,21 +468,50 @@ abstract class Zend_Db_Adapter_Abstract
      * </code>
      * Returns: "myschema"."my.table"
      *
-     * An optional alias may also be given, which may be excluded if it matches the
-     * last name of a qualified identifier:
-     * <code>
-     * $adapter->quoteIdentifier('table','t')
-     * </code>
-     * Returns: "table" AS "t"
-     *
      * The actual quote character surrounding the identifiers may vary depending on
      * the adapter.
      *
      * @param string|array|Zend_Db_Expr $ident The identifier.
-     * @param string $alias An optional alias to attach to the identifier with an 'AS' operator.
      * @return string The quoted identifier.
      */
-    public function quoteIdentifier($ident, $alias = null)
+    public function quoteIdentifier($ident)
+    {
+        return $this->_quoteIdentifierAs($ident);
+    }
+
+    /**
+     * Quote a column identifier and alias.
+     *
+     * @param string|array|Zend_Db_Expr $ident The identifier or expression.
+     * @param string $alias An alias for the column.
+     * @return string The quoted identifier and alias.
+     */
+    public function quoteColumnAs($ident, $alias)
+    {
+        return $this->_quoteIdentifierAs($ident, $alias);
+    }
+
+    /**
+     * Quote a table identifier and alias.
+     *
+     * @param string|array|Zend_Db_Expr $ident The identifier or expression.
+     * @param string $alias An alias for the table.
+     * @return string The quoted identifier and alias.
+     */
+    public function quoteTableAs($ident, $alias)
+    {
+        return $this->_quoteIdentifierAs($ident, $alias);
+    }
+
+    /**
+     * Quote an identifier and an optional alias.
+     *
+     * @param string|array|Zend_Db_Expr $ident The identifier or expression.
+     * @param string $alias An optional alias.
+     * @param string $as The string to add between the identifier/expression and the alias.
+     * @return string The quoted identifier and alias.
+     */
+    protected function _quoteIdentifierAs($ident, $alias = null, $as = ' AS ')
     {
         $q = $this->getQuoteIdentifierSymbol();
 
@@ -510,7 +539,7 @@ abstract class Zend_Db_Adapter_Abstract
             }
         }
         if ($alias !== null) {
-            $quoted .= ' AS ' . $q . str_replace("$q", "$q$q", $alias) . $q;
+            $quoted .= $as . $q . str_replace("$q", "$q$q", $alias) . $q;
         }
         return $quoted;
     }

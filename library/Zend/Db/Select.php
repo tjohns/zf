@@ -142,16 +142,16 @@ class Zend_Db_Select
                         $alias = null;
                     }
                     if ($column instanceof Zend_Db_Expr) {
-                        $columns[] = $this->_adapter->quoteIdentifier($column, $alias);
+                        $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
                     } else {
                         if ($column == '*') {
                             $column = new Zend_Db_Expr('*');
                             $alias = null;
                         }
                         if (empty($correlationName)) {
-                            $columns[] = $this->_adapter->quoteIdentifier($column, $alias);
+                            $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
                         } else {
-                            $columns[] = $this->_adapter->quoteIdentifier(array($correlationName, $column), $alias);
+                            $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias);
                         }
                     }
                 }
@@ -167,13 +167,13 @@ class Zend_Db_Select
                 $tmp = '';
                 if (empty($from)) {
                     // First table is named alone ignoring join information
-                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName'], $correlationName);
+                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
                         $tmp .= ' ' . strtoupper($table['joinType']) . ' ';
                     }
-                    $tmp .= $this->_adapter->quoteIdentifier($table['tableName'], $correlationName);
+                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
                     if (! empty($table['joinCondition'])) {
                         $tmp .= ' ON ' . $table['joinCondition'];
                     }

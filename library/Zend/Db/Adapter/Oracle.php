@@ -158,6 +158,19 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Quote a table identifier and alias.
+     *
+     * @param string|array|Zend_Db_Expr $ident The identifier or expression.
+     * @param string $alias An alias for the table.
+     * @return string The quoted identifier and alias.
+     */
+    public function quoteTableAs($ident, $alias)
+    {
+        // Oracle doesn't allow the 'AS' keyword between the table identifier/expression and alias.
+        return $this->_quoteIdentifierAs($ident, $alias, ' ');
+    }
+
+    /**
      * Gets the last inserted ID.
      *
      * @param string $sequenceName   Name of sequence to query.
