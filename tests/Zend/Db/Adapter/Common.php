@@ -679,7 +679,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $select = $this->_db->select()
             ->distinct()
             ->from($table, array())
-            ->from('', 327);
+            ->from('', new Zend_Db_Expr(327));
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
