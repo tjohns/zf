@@ -495,7 +495,11 @@ abstract class Zend_Db_Adapter_Abstract
             if (is_array($ident)) {
                 $segments = array();
                 foreach ($ident as $segment) {
-                    $segments[] = $q . str_replace("$q", "$q$q", $segment) . $q;
+                    if ($segment instanceof Zend_Db_Expr) {
+                        $segments[] = $segment->__toString();
+                    } else {
+                        $segments[] = $q . str_replace("$q", "$q$q", $segment) . $q;
+                    }
                 }
                 if ($alias !== null && end($ident) == $alias) {
                     $alias = null;

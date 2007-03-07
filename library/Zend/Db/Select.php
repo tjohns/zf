@@ -137,23 +137,21 @@ class Zend_Db_Select
         if ($this->_parts[self::COLUMNS]) {
             $columns = array();
             foreach ($this->_parts[self::COLUMNS] as $correlationName => $columnList) {
-                if (empty($correlationName)) {
-                    foreach ($columnList as $expr) {
-                        $columns[] = "$expr";
+                foreach ($columnList as $alias => $column) {
+                    if (!is_string($alias)) {
+                        $alias = null;
                     }
-                } else {
-                    foreach ($columnList as $alias => $column) {
-                        if (!is_string($alias)) {
+                    if ($column instanceof Zend_Db_Expr) {
+                        $columns[] = $this->_adapter->quoteIdentifier($column, $alias);
+                    } else {
+                        if ($column == '*') {
+                            $column = new Zend_Db_Expr('*');
                             $alias = null;
                         }
-                        if ($column instanceof Zend_Db_Expr) {
+                        if (empty($correlationName)) {
                             $columns[] = $this->_adapter->quoteIdentifier($column, $alias);
                         } else {
-                            if ($column == '*') {
-                                $columns[] = $this->_adapter->quoteIdentifier($correlationName) . '.*';
-                            } else {
-                                $columns[] = $this->_adapter->quoteIdentifier(array($correlationName,$column), $alias);
-                            }
+                            $columns[] = $this->_adapter->quoteIdentifier(array($correlationName, $column), $alias);
                         }
                     }
                 }
