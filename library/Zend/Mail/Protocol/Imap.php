@@ -284,11 +284,11 @@ class Zend_Mail_Protocol_Imap
         while (!$this->readLine($tokens, $tag, $dontParse)) {
             $lines[] = $tokens;
         }
+
         if ($dontParse) {
             // last to chars are still needed for response code
             $tokens = array(substr($tokens, 0, 2));
         }
-
         // last line has response code
         if ($tokens[0] == 'OK') {
             return $lines ? $lines : true;
@@ -324,7 +324,7 @@ class Zend_Mail_Protocol_Imap
                 if (!$this->_assumedNextLine('+ OK')) {
                     throw new Zend_Mail_Protocol_Exception('cannot send literal string');
                 }
-                $line .= $token[1];
+                $line = $token[1];
             } else {
                 $line .= ' ' . $token;
             }
@@ -618,5 +618,64 @@ class Zend_Mail_Protocol_Imap
         }
 
         return $result;
+    }
+
+    public function store($flags, $from, $to = null, $mode = null, $silent = true)
+    {
+        $item = 'FLAGS';
+        if ($mode == '+' || $mode == '-') {
+            $item = $mode . $item;
+        }
+        if ($silent) {
+            $item .= '.SILENT';
+        }
+
+        $flags = $this->escapeList($flags);
+        $set = (int)$from;
+        if ($to != null) {
+            $set .= ':' . ($to == INF ? '*' : (int)$to);
+        }
+
+        $result = $this->requestAndResponse('STORE', array($set, $item, $flags), $silent);
+
+        if ($silent) {
+            return $result ? true : false;
+        }
+
+        $tokens = $result;
+        $result = array();
+        foreach ($tokens as $token) {
+            if ($token[1] != 'FETCH' || $token[2][0]) {
+                continue;
+            }
+            $result[$token[0]] = $token[2][1];
+        }
+
+        return $result;
+    }
+
+    public function append($folder, $message, $flags = null, $date = null)
+    {
+        $tokens = array();
+        $tokens[] = $this->escapeString($folder);
+        if ($flags !== null) {
+            $tokens[] = $this->escapeList($flags);
+        }
+        if ($date !== null) {
+            $tokens[] = $this->escapeString($date);
+        }
+        $tokens[] = $this->escapeString($message);
+
+        return $this->requestAndResponse('APPEND', $tokens, true);
+    }
+
+    public function copy($folder, $from, $to = null)
+    {
+        $set = (int)$from;
+        if ($to != null) {
+            $set .= ':' . ($to == INF ? '*' : (int)$to);
+        }
+
+        return $this->requestAndResponse('COPY', array($set, $this->escapeString($folder)), true);
     }
 }

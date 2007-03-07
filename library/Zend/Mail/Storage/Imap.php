@@ -29,6 +29,11 @@ require_once 'Zend/Mail/Storage/Abstract.php';
 require_once 'Zend/Mail/Protocol/Imap.php';
 
 /**
+ * Zend_Mail_Storage_Writable_Interface
+ */
+require_once 'Zend/Mail/Storage/Writable/Interface.php';
+
+/**
  * Zend_Mail_Storage_Folder_Interface
  */
 require_once 'Zend/Mail/Storage/Folder/Interface.php';
@@ -58,7 +63,8 @@ require_once 'Zend/Mail/Storage.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_Mail_Storage_Folder_Interface
+class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
+                             implements Zend_Mail_Storage_Folder_Interface, Zend_Mail_Storage_Writable_Interface
 {
     /**
      * protocol handler
@@ -341,5 +347,102 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract implements Zend_
     public function getCurrentFolder()
     {
         return $this->_currentFolder;
+    }
+
+    /**
+     * create a new folder
+     *
+     * This method also creates parent folders if necessary. Some mail storages may restrict, which folder
+     * may be used as parent or which chars may be used in the folder name
+     *
+     * @param string                          $name         global name of folder, local name if $parentFolder is set
+     * @param string|Zend_Mail_Storage_Folder $parentFolder parent folder for new folder, else root folder is parent
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function createFolder($name, $parentFolder = null)
+    {
+        throw new Exception('todo'); // TODO
+    }
+
+    /**
+     * remove a folder
+     *
+     * @param string|Zend_Mail_Storage_Folder $name      name or instance of folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function removeFolder($name)
+    {
+        throw new Exception('todo'); // TODO
+    }
+
+    /**
+     * rename and/or move folder
+     *
+     * The new name has the same restrictions as in createFolder()
+     *
+     * @param string|Zend_Mail_Storage_Folder $oldName name or instance of folder
+     * @param string                          $newName new global name of folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function renameFolder($oldName, $newName)
+    {
+        throw new Exception('todo'); // TODO
+    }
+
+    /**
+     * append a new message to mail storage
+     *
+     * @param string|Zend_Mail_Message|Zend_Mime_Message $message message as string or instance of message class
+     * @param null|string|Zend_Mail_Storage_Folder       $folder  folder for new message, else current folder is taken
+     * @param null|array                                 $flags   set flags for new message, else a default set is used
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function appendMessage($message, $folder = null, $flags = null)
+    {
+        if ($folder === null) {
+            $folder = $this->_currentFolder;
+        }
+
+        if ($flags === null) {
+            $flags = array(Zend_Mail_Storage::FLAG_SEEN);
+        }
+
+        // TODO: handle class instances for $message
+        if (!$this->_protocol->append($folder, $message, $flags)) {
+            throw new Zend_Mail_Storage_Exception('cannot create message, please check if the folder exists and your flags');
+        }
+    }
+
+    /**
+     * copy an existing message
+     *
+     * @param int                             $id     number of message
+     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function copyMessage($id, $folder)
+    {
+        return $this->_protocol->copy($folder, $id) ? true : false;
+    }
+
+
+    /**
+     * set flags for message
+     *
+     * NOTE: this method can't set the recent flag.
+     *
+     * @param int   $id    number of message
+     * @param array $flags new flags for message
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function setFlags($id, $flags)
+    {
+        if (!$this->_protocol->store($flags, $id)) {
+            throw new Zend_Mail_Storage_Exception('cannot set flags, have you tried to set the recent flag or special chars?');
+        }
     }
 }
