@@ -378,6 +378,7 @@ class Zend_Db_Select
      * Generate a unique correlation name
      * 
      * @param string|array $name A qualified identifier.
+     * @return string A unique correlation name.
      */
     private function _uniqueCorrelation($name)
     {
@@ -557,7 +558,7 @@ class Zend_Db_Select
      *
      * @param string $cond The WHERE condition.
      * @param string $val A single value to quote into the condition.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function where($cond)
     {
@@ -582,7 +583,7 @@ class Zend_Db_Select
      *
      * @param string $cond The WHERE condition.
      * @param string $val A value to quote into the condition.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      *
      * @see where()
      */
@@ -606,7 +607,7 @@ class Zend_Db_Select
      * Adds grouping to the query.
      *
      * @param mixed $spec The column(s) to group by.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function group($spec)
     {
@@ -630,7 +631,7 @@ class Zend_Db_Select
      *
      * @param string $cond The HAVING condition.
      * @param string $val A single value to quote into the condition.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function having($cond)
     {
@@ -655,7 +656,7 @@ class Zend_Db_Select
      *
      * @param string $cond The HAVING condition.
      * @param string $val A single value to quote into the condition.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      *
      * @see having()
      */
@@ -679,7 +680,7 @@ class Zend_Db_Select
      * Adds a row order to the query.
      *
      * @param mixed $spec The column(s) and direction to order by.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function order($spec)
     {
@@ -716,7 +717,7 @@ class Zend_Db_Select
      *
      * @param int $count The number of rows to return.
      * @param int $offset Start returning after this many rows.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function limit($count = null, $offset = null)
     {
@@ -730,7 +731,7 @@ class Zend_Db_Select
      *
      * @param int $page Limit results to this page number.
      * @param int $rowCount Use this many rows per page.
-     * @return void
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function limitPage($page, $rowCount)
     {
