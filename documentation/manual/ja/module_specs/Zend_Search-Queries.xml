@@ -67,10 +67,22 @@ try {
         </para>
         <programlisting role="php"><![CDATA[<?php
 
-    $term  = new Zend_Search_Lucene_Index_Term('word1');
+    $term  = new Zend_Search_Lucene_Index_Term('word1', 'field1');
     $query = new Zend_Search_Lucene_Search_Query_Term($term);
     $hits  = $index->find($query);
 ?>]]></programlisting>
+
+        <para>
+            単語のフィールドは任意で指定します。
+            指定しなかった場合は、Zend_Search_Lucene
+            は全フィールドを対象に検索します。
+            <programlisting role="php"><![CDATA[<?php
+
+    $term  = new Zend_Search_Lucene_Index_Term('word1');  // インデックス化されている全フィールドから 'word1' を探します
+    $query = new Zend_Search_Lucene_Search_Query_Term($term);
+    $hits  = $index->find($query);
+?>]]></programlisting>
+        </para>
     </sect2>
 
     <sect2 id="zend.search.queries.multiterm-query">

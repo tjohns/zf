@@ -25,18 +25,18 @@ $height = $pdfPage->getHeight();]]>
         グレイスケール、RGB および CMYK 色空間をサポートしています。
         <code>Zend_Pdf_Color</code> オブジェクトが要求される箇所では、
         これらのどれでも使用することができます。それぞれの色空間に対応する機能を提供するのが
-        <code>Zend_Pdf_Color_GrayScale</code>、<code>Zend_Pdf_Color_RGB</code> および
-        <code>Zend_Pdf_Color_CMYK</code> クラスです。
+        <code>Zend_Pdf_Color_GrayScale</code>、<code>Zend_Pdf_Color_Rgb</code> および
+        <code>Zend_Pdf_Color_Cmyk</code> クラスです。
         </para>
         <programlisting role="php"><![CDATA[
 // $grayLevel (float 型の数値)。0.0 (黒) - 1.0 (白)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
 // $r, $g, $b (float 型の数値)。0.0 (最低の強度) - 1.0 (最大の強度)
-$color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
+$color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
 // $c, $m, $y, $k (float 型の数値)。0.0 (最小の強度) - 1.0 (最大の強度)
-$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
+$color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
         </programlisting>
     </sect2>
 
@@ -428,9 +428,9 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
             <programlisting role="php"><![CDATA[<?php
 ...
 // (以下のいずれかを使用して) 画像オブジェクトを直接作成します
-$image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
-$image = new Zend_Pdf_Image_PNG('my_image.png');
+$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
+$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
+$image = new Zend_Pdf_Image_Png('my_image.png');
 
 // あるいは Zend_Pdf_ImageFactory で適切な形式を読み込みます
 $image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
@@ -442,8 +442,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>重要! Zend_Pdf_Image_JPEG クラスは PHP の GD 拡張モジュールを必要とします。</emphasis>
-            <emphasis>重要! Zend_Pdf_Image_PNG クラスでアルファチャネルを使用した画像を扱うには、ZLIB 拡張モジュールを必要とします。</emphasis>
+            <emphasis>重要! Zend_Pdf_Image_Jpeg クラスは PHP の GD 拡張モジュールを必要とします。</emphasis>
+            <emphasis>重要! Zend_Pdf_Image_Png クラスでアルファチャネルを使用した画像を扱うには、ZLIB 拡張モジュールを必要とします。</emphasis>
         </para>
         <para>
             詳細な情報は、PHP のドキュメント

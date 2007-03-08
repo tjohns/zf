@@ -218,6 +218,14 @@ $index->optimize();
                 は対話的なインデックス保守の際に有効です。
             </para>
             <para>
+                <emphasis>MergeFactor</emphasis>
+                は、自動最適化が行われる平均セグメント数にほぼ等しくなります。
+                あまり大きな値を指定すると、新しいセグメントにまとめる前に
+                セグメント数が多くなってしまいます。これは
+                "failed to open stream: Too many open files"
+                というエラーの原因となります。制限は、システムに依存します。
+            </para>
+            <para>
                 <emphasis>MergeFactor</emphasis> の値の取得や設定は、<code>$index->getMergeFactor()</code>
                 あるいは <code>$index->setMergeFactor($mergeFactor)</code> のコールによって行います。
             </para>
