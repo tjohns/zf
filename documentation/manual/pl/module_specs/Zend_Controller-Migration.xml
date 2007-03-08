@@ -49,9 +49,9 @@ Zend_Controller_Front::run('/path/to/controllers');
                     Nowa klasa trasy doa użycia z rewrite routerem została 
                     przedstawiona, jest to
                     <code>Zend_Controller_Router_Route_Module</code>; kryje
-                    ona w sobie domyślną trasę używaną przez MVC i wspiera <xref
+                    ona w sobie domyślną trasę używaną przez MVC i wspiera <link
                         linkend="zend.controller.modular">moduły
-                        kontrolerów</xref>.
+                        kontrolerów</link>.
                 </para>
             </listitem>
 

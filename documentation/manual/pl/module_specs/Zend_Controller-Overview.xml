@@ -91,9 +91,9 @@
 					
                     <para>
                         <code>Zend_Controller_Router_Rewrite</code> może być 
-                        także użyty do dopasowania bezwzlędnych ścieżek; zobacz <xref
+                        także użyty do dopasowania bezwzlędnych ścieżek; zobacz <link
                         linkend="zend.controller.providedsubclasses.rewriterouter">
-                        dokumentację rewrite routera</xref> aby dowiedzieć się
+                        dokumentację rewrite routera</link> aby dowiedzieć się
                         więcej.
                     </para>
 				</listitem>
@@ -310,8 +310,8 @@ Akcja    : index]]>
 		    <title>Elastyczność</title>
 		    <para>
                 Jeśli chcesz bardziej elastyczne możliwości, możesz sprawdzić
-              <xref linkend="zend.controller.providedsubclasses.rewriterouter">dokumentację
-                Rewrite Routera</xref>.
+              <link linkend="zend.controller.providedsubclasses.rewriterouter">dokumentację
+                Rewrite Routera</link>.
             </para>
 		</note>
 

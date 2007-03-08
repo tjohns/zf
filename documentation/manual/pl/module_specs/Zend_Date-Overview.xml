@@ -486,11 +486,10 @@ print $date;
                                 <emphasis role="strong">Zend_Date::usePhpDateFormat($format = null)</emphasis>
                             </para>
                             <para>
-                                Sets the accepted format type for the date object. <code>null</code> returns the
-                                actual set format. <code>true</code> set's php's date format specifiers for all
-                                functions which accept a <code>$format</code> parameter. The standard value
-                                <code>false</code> set's Iso format specifiers for all functions. For a list
-                                of supported format codes, see
+                                Sets the accepted format type for the date object. <code>null</code> returns the actual
+                                set format. <code>true</code> set's php's date format specifiers for all functions which
+                                accept a <code>$format</code> parameter. The standard value <code>false</code> set's Iso
+                                format specifiers for all functions. For a list of supported format codes, see
                                 <xref linkend="zend.date.constants.phpformats" />
                                 .
                             </para>

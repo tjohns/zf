@@ -157,9 +157,9 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             Wyjątek wyrzucany przez metodę dispatch() jest
                             wyjątkiem Zend_Controller_Dispatcher_Exception 
                             zawierającym tekst 'Invalid controller specified'. 
-                            Użyj jednej z metod opisanych w <xref 
+                            Użyj jednej z metod opisanych w <link 
                             linkend="zend.controller.exceptions.handling">poprzedniej
-                            sekcji</xref> aby złapać wyjątek, a następnie 
+                            sekcji</link> aby złapać wyjątek, a następnie 
                             przekierować do strony błędu lub do strony głownej.
                         </para>
                     </listitem>

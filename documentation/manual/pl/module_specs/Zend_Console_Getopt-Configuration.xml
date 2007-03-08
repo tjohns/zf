@@ -149,11 +149,13 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         </para>
         <note>
             <title>Clarifying the term "option"</title>
-            The term "option" is used for configuration of the
-            <code>Zend_Console_Getopt</code> class to match terminology 
-            used elsewhere in the Zend Framework.  These are not the same
-            things as the command-line options that are parsed by
-            the <code>Zend_Console_Getopt</code> class.
+            <para>
+                The term "option" is used for configuration of the
+                <code>Zend_Console_Getopt</code> class to match terminology 
+                used elsewhere in the Zend Framework.  These are not the same
+                things as the command-line options that are parsed by
+                the <code>Zend_Console_Getopt</code> class.
+            </para>
         </note>
         <para>
             The currently supported 

@@ -185,7 +185,7 @@ $delicious->renameTag('ZF', 'zendFramework');
     </sect2>
     <sect2 id="zend.service.delicious.bundles">
         <title>Bundles</title>
-        <example id="zend.service.delicious.bundles">
+        <example id="zend.service.delicious.bundles.example">
             <title>Bundles</title>
             <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('username', 'password');
