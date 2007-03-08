@@ -273,6 +273,7 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         fclose($temp_file['handle']);
 
         // we're adding the size to the filename for maildir++
+        // TODO: maybe we should support maildirsize or we just let the MDA do the work
         $size = filesize($old_file);
         if ($size) {
             $info = ',S=' . $size . $info;

@@ -426,7 +426,9 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function copyMessage($id, $folder)
     {
-        return $this->_protocol->copy($folder, $id) ? true : false;
+        if (!$this->_protocol->copy($folder, $id)) {
+            throw new Zend_Mail_Storage_Exception('cannot copy message, does the folder exist?');
+        }
     }
 
 
