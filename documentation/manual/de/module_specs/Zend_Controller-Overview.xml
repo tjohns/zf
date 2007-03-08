@@ -81,9 +81,9 @@
                     
                     <para>
                         <code>Zend_Controller_Router_Rewrite</code> kann auch für beliebige Pfade 
-                        verwendet werden; man beachte <xref
+                        verwendet werden; man beachte <link
                             linkend="zend.controller.providedsubclasses.rewriterouter">die 
-                        Rewrite Router Dokumentation</xref> für weitere Informationen.
+                        Rewrite Router Dokumentation</link> für weitere Informationen.
                     </para>
 				</listitem>
 
@@ -283,8 +283,8 @@ Action    : index]]>
 		    <title>Flexibilität</title>
 		    <para>
                 Wenn man flexiblere Möglichkeiten benötigt, sollte man den 
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter">die
-                Rewrite Router Dokumentation</xref> anschauen.
+                <link linkend="zend.controller.providedsubclasses.rewriterouter">die
+                Rewrite Router Dokumentation</link> anschauen.
             </para>
 		</note>
 

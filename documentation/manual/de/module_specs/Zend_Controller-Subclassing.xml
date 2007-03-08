@@ -690,7 +690,7 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
 		</para>
 	</sect2>
 		
-    <sect2 id="zend.controller.action">
+    <sect2 id="zend.controller.action-controller">
         <title>Action Controller</title>
 
         <para>

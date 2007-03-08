@@ -145,13 +145,13 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
                 examined before the "<code>guest</code>" Role, the example code would print
                 "<code>allowed</code>".
             </para>
-            <note>
-                <para>
-                    When specifying multiple parents for a Role, keep in mind that the last parent listed is
-                    the first one searched for rules applicable to an authorization query.
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                When specifying multiple parents for a Role, keep in mind that the last parent listed is
+                the first one searched for rules applicable to an authorization query.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
