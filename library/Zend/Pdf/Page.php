@@ -339,8 +339,6 @@ class Zend_Pdf_Page
      */
     private function _addProcSet($procSetName)
     {
-        global $procSets;
-
         // Check that Resources dictionary contains ProcSet entry
         if ($this->_pageDictionary->Resources->ProcSet === null) {
             $this->_pageDictionary->Resources->touch();
