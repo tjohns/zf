@@ -147,12 +147,14 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         </para>
         <note>
             <title>"オプション" という用語について</title>
-            ここでいう "オプション" は、
-            <code>Zend_Console_Getopt</code> クラスの設定に使用するもののことを指しています。
-            オプションという言葉の意味自体は、Zend Framework
-            のその他の部分で使用している意味と同じです。
-            <code>Zend_Console_Getopt</code> がパースする
-            コマンドラインオプションのことではありません。
+            <para>
+                ここでいう "オプション" は、
+                <code>Zend_Console_Getopt</code> クラスの設定に使用するもののことを指しています。
+                オプションという言葉の意味自体は、Zend Framework
+                のその他の部分で使用している意味と同じです。
+                <code>Zend_Console_Getopt</code> がパースする
+                コマンドラインオプションのことではありません。
+            </para>
         </note>
         <para>
             現在サポートしているオプションには、

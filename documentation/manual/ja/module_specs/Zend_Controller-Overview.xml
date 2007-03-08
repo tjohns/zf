@@ -83,9 +83,9 @@
                     <para>
                         <code>Zend_Controller_Router_Rewrite</code>
                         は、任意のパスにマッチさせることもできます。
-                        詳細は <xref
+                        詳細は <link
                             linkend="zend.controller.providedsubclasses.rewriterouter">
-                        Rewrite Router のドキュメント</xref>
+                        Rewrite Router のドキュメント</link>
                         を参照ください。
                     </para>
                 </listitem>
@@ -291,8 +291,8 @@ http://framework.zend.com/
             <title>柔軟性</title>
             <para>
                 より柔軟な機能を使用したい場合は、
-                <xref linkend="zend.controller.providedsubclasses.rewriterouter">
-                Rewrite Router のドキュメント</xref>
+                <link linkend="zend.controller.providedsubclasses.rewriterouter">
+                Rewrite Router のドキュメント</link>
                 を調べてみましょう。
             </para>
         </note>

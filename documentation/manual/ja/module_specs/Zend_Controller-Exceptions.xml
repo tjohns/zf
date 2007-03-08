@@ -155,8 +155,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             dispatch() がスローする例外は
                             Zend_Controller_Dispatcher_Exception で、この中には
                             'Invalid controller specified' というテキストが含まれます。
-                            <xref linkend="zend.controller.exceptions.handling">
-                            先ほどの節</xref>
+                            <link linkend="zend.controller.exceptions.handling">
+                            先ほどの節</link>
                             でとりあげられているメソッドのいずれかでこの例外を捕捉し、
                             共通のエラーページあるいはホームページにリダイレクトします。
                         </para>
