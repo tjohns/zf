@@ -4,7 +4,7 @@
  <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en-us" srclang="de-at" o-tmf="abc" creationtool="XYZTool" >
  </header>
  <body>
-  <tu tuid='Message 1'>
+  <tu tuid='Message 1' />
    <tuv xml:lang="de"><seg>Message 1</seg></tuv>
    <tuv xml:lang="en"><seg>Message 1 (en)</seg></tuv>
   </tu>

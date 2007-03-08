@@ -131,8 +131,6 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
             if ($transtemp[$count * 2 + 1] != 0) {
                 fseek($this->_file, $transtemp[$count * 2 + 2]);
                 $this->_translate[$locale][$original] = fread($this->_file, $transtemp[$count * 2 + 1]);
-            } else {
-                $this->_translate[$locale][$original] = '';
             }
         }
     }

@@ -86,7 +86,7 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
         xml_set_character_data_handler($this->_file, "_contentElement");
 
         if (!xml_parse($this->_file, file_get_contents($filename))) {
-            throw new Zend_Translate_Exception(sprintr('XML error: %s at line %d', 
+            throw new Zend_Translate_Exception(sprintf('XML error: %s at line %d', 
                       xml_error_string(xml_get_error_code($this->_file)),
                       xml_get_current_line_number($this->_file)));
             xml_parser_free($this->_file);
@@ -99,6 +99,8 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
             case 'file':
                 $this->_source = $attrib['source-language'];
                 $this->_target = $attrib['target-language'];
+                $this->_translate[$this->_source] = array();
+                $this->_translate[$this->_target] = array();
                 break;
             case 'trans-unit':
                 $this->_transunit = true;
@@ -106,17 +108,11 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
             case 'source':
                 if ($this->_transunit === true) {
                     $this->_scontent = null;
-                    if (!array_key_exists($this->_source, $this->_translate)) {
-                        $this->_translate[$this->_source] = array();
-                    }
                 }
                 break;
             case 'target':
                 if ($this->_transunit === true) {
                     $this->_tcontent = null;
-                    if (!array_key_exists($this->_target, $this->_translate)) {
-                        $this->_translate[$this->_target] = array();
-                    }
                 }
                 break;
             default:
@@ -129,16 +125,22 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
         switch (strtolower($name)) {
             case 'trans-unit':
                 $this->_transunit = null;
+                $this->_scontent = null;
+                $this->_tcontent = null;
                 break;
             case 'source':
-                $this->_source = null;
-                break;
-            case 'target':
-                $this->_target = null;
                 if (!empty($this->_scontent) and !empty($this->_tcontent) or 
                     !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
-                    $this->_translate[$this->_source][$this->_scontent] = $this->_tcontent;
+                    $this->_translate[$this->_source][$this->_scontent] = $this->_scontent;
                 }
+                break;
+            case 'target':
+                if (!empty($this->_scontent) and !empty($this->_tcontent) or 
+                    !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
+                    $this->_translate[$this->_target][$this->_scontent] = $this->_tcontent;
+                }
+                break;
+            default:
                 break;
         }
     }
