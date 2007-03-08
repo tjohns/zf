@@ -49,9 +49,9 @@ Zend_Controller_Front::run('/path/to/controllers');
                     A new route class for use with the rewrite router was
                     introduced,
                     <code>Zend_Controller_Router_Route_Module</code>; it covers
-                    the default route used by the MVC, and has support for <xref
+                    the default route used by the MVC, and has support for <link
                         linkend="zend.controller.modular">controller
-                        modules</xref>.
+                        modules</link>.
                 </para>
             </listitem>
 
