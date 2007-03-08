@@ -316,12 +316,12 @@ print $locale->toString();
         </table>
 
         <para>
-            If you are in need of a single translated value, then you can use <code>getTranslation()</code>
-            instead of <code>getTranslationList()</code>. It returns a single string or an array depending
-            on if the result can have multiple values (f.e. language_detail because a language is spoken
-            in more than one country), or only one value (f.e. language because a language always has only
-            one translated name for it). Both functions accept a type from the list above.
-            As a convenience functions, the following have simple equivalents using the two functions above:
+            If you are in need of a single translated value, then you can use <code>getTranslation()</code> instead of
+            <code>getTranslationList()</code>. It returns a single string or an array depending on if the result can
+            have multiple values (f.e. language_detail because a language is spoken in more than one country), or only
+            one value (f.e. language because a language always has only one translated name for it). Both functions
+            accept a type from the list above. As a convenience functions, the following have simple equivalents using
+            the two functions above:
         </para>
 
         <example>
