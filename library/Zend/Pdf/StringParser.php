@@ -526,6 +526,9 @@ class Zend_Pdf_StringParser
             return new Zend_Pdf_Element_Null();
         }
 
+        // Save current offset to make getObject() reentrant
+        $offsetSave = $this->offset;
+
         $this->offset    = $offset;
         $this->_context  = $context;
         $this->_elements = array();
@@ -559,6 +562,9 @@ class Zend_Pdf_StringParser
             foreach ($this->_elements as $element) {
                 $element->setParentObject($obj);
             }
+
+            // Restore offset value
+            $this->offset = $offsetSave;
 
             return $obj;
         }
@@ -617,6 +623,10 @@ class Zend_Pdf_StringParser
         foreach ($this->_elements as $element) {
             $element->setParentObject($obj);
         }
+
+        // Restore offset value
+        $this->offset = $offsetSave;
+
         return $obj;
     }
 
