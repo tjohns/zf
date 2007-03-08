@@ -6,14 +6,15 @@
     </para>
     <para>
         <code>Zend_Service</code> offre un support pour tout service web basé sur REST à  travers
-        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>.
+        <link linkend="zend.rest.client"><code>Zend_Service_Rest</code></link>.
     </para>
     <para>
         En plus d'être capable d'étendre <code>Zend_Service</code> et d'utiliser <code>Zend_Service_Rest</code>
         pour des services web basé sur REST, Zend fournit un support pour les services web populaires tels que
+        <link linkend="zend.service.akismet">Akismet</link>,
         <link linkend="zend.service.amazon">Amazon</link>,
         <link linkend="zend.service.flickr">Flickr</link>, et
-        <link linkend="zend.service.yahoo">Yahoo!</link>. 
+        <link linkend="zend.service.yahoo">Yahoo!</link>.
         D'autres devraient être ajoutés dans un futur proche.
     </para>
 </sect1>
