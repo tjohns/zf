@@ -88,7 +88,8 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
 
         $this->_buildFolderTree($this->_rootdir);
         $this->selectFolder(!empty($params['folder']) ? $params['folder'] : 'INBOX');
-        $this->_has['top'] = true;
+        $this->_has['top']      = true;
+        $this->_has['uniqueid'] = false;
     }
 
     /**

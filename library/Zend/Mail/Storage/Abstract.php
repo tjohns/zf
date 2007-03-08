@@ -33,7 +33,7 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      * class capabilities with default values
      * @var array
      */
-    protected $_has = array('uniqueid'  => false,
+    protected $_has = array('uniqueid'  => true,
                             'delete'    => false,
                             'create'    => false,
                             'top'       => false,
@@ -173,6 +173,29 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      * @return null
      */
     abstract public function removeMessage($id);
+
+    /**
+     * get unique id for one or all messages
+     *
+     * if storage does not support unique ids it's the same as the message number
+     *
+     * @param int|null $id message number
+     * @return array|string message number for given message or all messages as array
+     * @throws Zend_Mail_Storage_Exception
+     */
+    abstract public function getUniqueId($id = null);
+
+    /**
+     * get a message number from a unique id
+     *
+     * I.e. if you have a webmailer that supports deleting messages you should use unique ids
+     * as parameter and use this method to translate it to message number right before calling removeMessage()
+     *
+     * @param string $id unique id
+     * @return int message number
+     * @throws Zend_Mail_Storage_Exception
+     */
+    abstract public function getNumberByUniqueId($id);
 
     // interface implementations follows
 

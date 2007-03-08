@@ -335,4 +335,47 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
     {
         throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
     }
+
+    /**
+     * get unique id for one or all messages
+     *
+     * if storage does not support unique ids it's the same as the message number
+     *
+     * @param int|null $id message number
+     * @return array|string message number for given message or all messages as array
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getUniqueId($id = null)
+    {
+        if ($id) {
+            return $this->_getFileData($id, 'uniq');
+        }
+
+        $ids = array();
+        foreach ($this->_files as $num => $file) {
+            $ids[$num + 1] = $file['uniq'];
+        }
+        return $ids;
+    }
+
+    /**
+     * get a message number from a unique id
+     *
+     * I.e. if you have a webmailer that supports deleting messages you should use unique ids
+     * as parameter and use this method to translate it to message number right before calling removeMessage()
+     *
+     * @param string $id unique id
+     * @return int message number
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getNumberByUniqueId($id)
+    {
+        foreach ($this->_files as $num => $file) {
+            if ($file['uniq'] == $id) {
+                return $num + 1;
+            }
+        }
+
+        throw new Zend_Mail_Storage_Exception('unique id not found');
+    }
 }

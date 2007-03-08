@@ -66,6 +66,9 @@ require_once 'Zend/Mail/Storage.php';
 class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
                              implements Zend_Mail_Storage_Folder_Interface, Zend_Mail_Storage_Writable_Interface
 {
+    // TODO: with an internal cache we could optimize this class, or create an extra class with
+    // such optimizations. Especially the various fetch calls could be combined to one cache call
+
     /**
      * protocol handler
      * @var null|Zend_Mail_Protocol_Imap
@@ -264,6 +267,48 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
         return false;
 //        $this->_protocol->delete($id);
     }
+
+    /**
+     * get unique id for one or all messages
+     *
+     * if storage does not support unique ids it's the same as the message number
+     *
+     * @param int|null $id message number
+     * @return array|string message number for given message or all messages as array
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getUniqueId($id = null)
+    {
+        if ($id) {
+            return $this->_protocol->fetch('UID', $id);
+        }
+
+        return $this->_protocol->fetch('UID', 1, INF);
+    }
+
+    /**
+     * get a message number from a unique id
+     *
+     * I.e. if you have a webmailer that supports deleting messages you should use unique ids
+     * as parameter and use this method to translate it to message number right before calling removeMessage()
+     *
+     * @param string $id unique id
+     * @return int message number
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getNumberByUniqueId($id)
+    {
+        // TODO: use search to find number directly
+        $ids = $this->getUniqueId();
+        foreach ($ids as $k => $v) {
+            if ($v == $id) {
+                return $k;
+            }
+        }
+
+        throw new Zend_Mail_Storage_Exception('unique id not found');
+    }
+
 
     /**
      * get root folder or given folder

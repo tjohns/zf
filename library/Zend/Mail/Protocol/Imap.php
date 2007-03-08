@@ -580,6 +580,8 @@ class Zend_Mail_Protocol_Imap
             }
             // if we want only one message we can ignore everything else and just return
             if ($to === null && $tokens[0] == $from) {
+                // we still need to read all lines
+                while (!$this->readLine($tokens, $tag));
                 return $data;
             }
             $result[$tokens[0]] = $data;

@@ -193,7 +193,8 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
         }
 
         $this->_openMboxFile($params['filename']);
-        $this->_has['top'] = true;
+        $this->_has['top']      = true;
+        $this->_has['uniqueid'] = false;
     }
 
     /**
@@ -310,6 +311,46 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
     public function removeMessage($id)
     {
         throw new Zend_Mail_Storage_Exception('mbox is read-only');
+    }
+
+    /**
+     * get unique id for one or all messages
+     *
+     * Mbox does not support unique ids (yet) - it's always the same as the message number.
+     * That shouldn't be a problem, because we can't change mbox files. Therefor the message
+     * number is save enough.
+     *
+     * @param int|null $id message number
+     * @return array|string message number for given message or all messages as array
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getUniqueId($id = null)
+    {
+        if ($id) {
+            // check if id exists
+            $this->_getPos($id);
+            return $id;
+        }
+
+        $range = range(1, $this->countMessages());
+        return array_combine($range, $range);
+    }
+
+    /**
+     * get a message number from a unique id
+     *
+     * I.e. if you have a webmailer that supports deleting messages you should use unique ids
+     * as parameter and use this method to translate it to message number right before calling removeMessage()
+     *
+     * @param string $id unique id
+     * @return int message number
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function getNumberByUniqueId($id)
+    {
+        // check if id exists
+        $this->_getPos($id);
+        return $id;
     }
 
     /**
