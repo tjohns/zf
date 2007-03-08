@@ -15,7 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -36,7 +36,7 @@ require_once 'Zend/Validate/Hostname.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_EmailAddress implements Zend_Validate_Interface
@@ -54,11 +54,11 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      * @var Zend_Validate_Hostname
      */
     protected $_hostnameValidator;
-    
+
     /**
      * Instantiates hostname validator for local use
-     * 
-     * You can pass a bitfield to determine what types of hostnames are allowed. 
+     *
+     * You can pass a bitfield to determine what types of hostnames are allowed.
      * These bitfields are defined by the ALLOW_* constants in Zend_Validate_Hostname
      * The default is to allow DNS hostnames only
      *
@@ -71,7 +71,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         // Initialise Zend_Validate_Hostnames
         $this->_hostnameValidator = new Zend_Validate_Hostname($allow);
     }
-    
+
     /**
      * Defined by Zend_Validate_Interface
      *
@@ -99,7 +99,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         /**
          * @todo 0.9 ZF-42 implement basic MX check on hostname via dns_get_record()
          */
-        
+
         // Match hostname part
         $hostnameResult = $this->_hostnameValidator->isValid($hostname);
         if (!$hostnameResult) {
@@ -124,7 +124,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         } else {
              $this->_messages[] = "'$localPart' not matched against dot-atom format";
         }
-        
+
         // If not matched, try quoted string format
         if (!$localResult) {
 
