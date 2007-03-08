@@ -308,7 +308,27 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $url = $route->assemble(array(), true);
 
-        $this->assertSame('users/list', $url);
+        $this->assertSame('archive/show', $url);
+    }
+    
+    public function testAssembleWithReset3()
+    {
+        $route = new Zend_Controller_Router_Route('archive/:year/*', array('controller' => 'archive', 'action' => 'show', 'year' => 2005));
+        $values = $route->match('archive/2006/show/all/sort/name');
+
+        $url = $route->assemble(array(), true);
+
+        $this->assertSame('archive/2005', $url);
+    }
+    
+    public function testAssembleWithReset4()
+    {
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'archive', 'action' => 'show'));
+        $values = $route->match('users/list');
+
+        $url = $route->assemble(array('action' => 'display'), true);
+
+        $this->assertSame('archive/display', $url);
     }
     
     public function testAssembleWithWildcardAndAdditionalParameters()

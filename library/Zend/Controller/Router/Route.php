@@ -214,9 +214,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 if (isset($data[$part['name']]) && !$resetPart) {
                     $url[$key] = $data[$part['name']];
                     unset($data[$part['name']]);
-                } elseif (isset($this->_values[$part['name']])  && !$resetPart) {
+                } elseif (!$reset && !$resetPart && isset($this->_values[$part['name']])) {
                     $url[$key] = $this->_values[$part['name']];
-                } elseif (!$reset && isset($this->_params[$part['name']]) && !$resetPart) {
+                } elseif (!$reset && !$resetPart && isset($this->_params[$part['name']])) {
                     $url[$key] = $this->_params[$part['name']];
                 } elseif (isset($this->_defaults[$part['name']])) {
                     $url[$key] = $this->_defaults[$part['name']];
