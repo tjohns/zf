@@ -407,7 +407,18 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function createFolder($name, $parentFolder = null)
     {
-        throw new Exception('todo'); // TODO
+        if ($parentFolder instanceof Zend_Mail_Folder) {
+            // TODO: we assume / as the hierarchy delim - need to get that from the folder class!
+            $folder = $parentFolder->getGlobalName() . '/' . $name;
+        } else if ($parentFolder != null) {
+            $folder = $parentFolder . $name;
+        } else {
+            $folder = $name;
+        }
+
+        if (!$this->_protocol->create($folder)) {
+            throw new Zend_Mail_Storage_Exception('cannot create folder');
+        }
     }
 
     /**
@@ -419,7 +430,13 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function removeFolder($name)
     {
-        throw new Exception('todo'); // TODO
+        if ($name instanceof Zend_Mail_Folder) {
+            $name = $name->getGlobalName();
+        }
+
+        if (!$this->_protocol->delete($name)) {
+            throw new Zend_Mail_Storage_Exception('cannot delete folder');
+        }
     }
 
     /**
@@ -434,7 +451,13 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function renameFolder($oldName, $newName)
     {
-        throw new Exception('todo'); // TODO
+        if ($oldName instanceof Zend_Mail_Folder) {
+            $oldName = $oldName->getGlobalName();
+        }
+
+        if (!$this->_protocol->rename($oldName, $newName)) {
+            throw new Zend_Mail_Storage_Exception('cannot rename folder');
+        }
     }
 
     /**

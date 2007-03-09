@@ -711,4 +711,38 @@ class Zend_Mail_Protocol_Imap
 
         return $this->requestAndResponse('COPY', array($set, $this->escapeString($folder)), true);
     }
+
+    /**
+     * create a new folder (and parent folders if needed)
+     *
+     * @param string $folder folder name
+     * @return bool success
+     */
+    public function create($folder)
+    {
+        return $this->requestAndResponse('CREATE', array($this->escapeString($folder)), true);
+    }
+
+    /**
+     * rename an existing folder
+     *
+     * @param string $old old name
+     * @param string $new new name
+     * @return bool success
+     */
+    public function rename($old, $new)
+    {
+        return $this->requestAndResponse('RENAME', $this->escapeString($old, $new), true);
+    }
+
+    /**
+     * remove a folder
+     *
+     * @param string $folder folder name
+     * @return bool success
+     */
+    public function delete($folder)
+    {
+        return $this->requestAndResponse('DELETE', array($this->escapeString($folder)), true);
+    }
 }
