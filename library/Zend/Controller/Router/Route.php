@@ -205,7 +205,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         foreach ($this->_parts as $key => $part) {
             
             $resetPart = false;
-            if (array_key_exists($part['name'], $data) && $data[$part['name']] === null) {
+            if (isset($part['name']) && array_key_exists($part['name'], $data) && $data[$part['name']] === null) {
                 $resetPart = true;
             }
             
