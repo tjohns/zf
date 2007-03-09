@@ -175,9 +175,6 @@ class Zend_XmlRpc_Response
             return false;
         }
 
-        // cast to default encoding
-        $response = iconv('', $this->getEncoding(), $response);
-
         try {
             $xml = @new SimpleXMLElement($response);
         } catch (Exception $e) {

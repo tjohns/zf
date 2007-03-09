@@ -252,9 +252,6 @@ class Zend_XmlRpc_Request
             return false;
         }
 
-        // cast to default encoding
-        $request = iconv('', $this->getEncoding(), $request);
-
         try {
             $xml = @new SimpleXMLElement($request);
         } catch (Exception $e) {
