@@ -9,7 +9,6 @@ error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 /**
  * Zend_Currency
  */
-require_once 'Zend.php';
 require_once 'Zend/Locale.php';
 require_once 'Zend/Currency.php';
 

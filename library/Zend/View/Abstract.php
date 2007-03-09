@@ -21,7 +21,7 @@
 /**
  * Zend
  */
-require_once 'Zend.php';
+require_once 'Zend/Loader.php';
 
 /**
  * Zend_View_Interface
@@ -724,7 +724,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             if (class_exists($class, false)) {
                 $this->$classAccess($name, $class);
                 return $class;
-            } elseif (Zend::isReadable($dir . $file)) {
+            } elseif (Zend_Loader::isReadable($dir . $file)) {
                 include_once $dir . $file;
 
                 if (class_exists($class, false)) {

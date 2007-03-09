@@ -452,7 +452,7 @@ class Zend_Console_Getopt
             );
         }
 
-        Zend::loadClass('Zend_Json');
+        require_once 'Zend/Json.php';
         $json = Zend_Json::encode($j);
 
         return $json;

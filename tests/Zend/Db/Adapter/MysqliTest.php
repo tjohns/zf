@@ -40,7 +40,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_Pdo_MysqlTest
         $include_path = get_include_path();
         set_include_path($include_path . PATH_SEPARATOR . $incubator);
         try {
-            Zend::loadClass('Zend_Db_Adapter_Mysqli');
+            Zend_Loader::loadClass('Zend_Db_Adapter_Mysqli');
         } catch (Zend_Exception $e) {
             $this->markTestIncomplete($e->getMessage());
         }

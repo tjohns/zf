@@ -46,7 +46,6 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Incubator');
 
-        $suite->addTestSuite('ZendTest');
         $suite->addTest(Zend_AllTests::suite());
 
         return $suite;

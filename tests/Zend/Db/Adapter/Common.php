@@ -20,6 +20,16 @@
  */
 
 /**
+ * Zend_Registry
+ */
+require_once 'Zend.php'; // @todo: change to 'Zend/Registry.php'
+
+/**
+ * Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+/**
  * Zend_Db
  */
 require_once 'Zend/Db.php';
@@ -1224,7 +1234,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     protected function getInstanceOfDbTable()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
@@ -1265,7 +1275,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableSetAndGetAdapter()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
@@ -1284,7 +1294,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableExceptionSetInvalidAdapter()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
@@ -1301,7 +1311,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableExceptionPrimaryKeyNotSpecified()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
 
         $caughtException = false;
@@ -1322,7 +1332,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableExceptionInvalidPrimaryKey()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $invalidId = $this->getIdentifier('invalid');
 
@@ -1480,7 +1490,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableExceptionNoAdapter()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
 
         try {
             $dbTable = new Zend_Db_Table_ZfTestTable(array('db' => 327));
@@ -1489,7 +1499,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             $this->assertEquals($e->getMessage(), 'db object does not extend Zend_Db_Adapter_Abstract');
         }
 
-        Zend::register('registered_db', 327);
+        Zend_Registry::set('registered_db', 327); 
         try {
             $dbTable = new Zend_Db_Table_ZfTestTable(array('db' => 'registered_db'));
         } catch (Exception $e) {

@@ -19,9 +19,9 @@
 
 
 /**
- * Zend
+ * Zend_Loader
  */
-require_once 'Zend.php';
+require_once 'Zend/Loader.php';
 
 /**
  * A simple web-mailer based on Zend_Mail_Storage classes.
@@ -155,10 +155,10 @@ class Demo_Zend_Mail_SimpleMailer
                            'imap'           => 'Zend_Mail_Storage_Imap');
 
         if (isset($classname[$this->type])) {
-            Zend::loadClass($classname[$this->type]);
+            Zend_Loader::loadClass($classname[$this->type]);
         }
 
-        Zend::loadClass('Zend_Mail_Storage');
+        Zend_Loader::loadClass('Zend_Mail_Storage');
     }
 
     /**

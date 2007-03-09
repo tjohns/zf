@@ -20,9 +20,6 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-require_once "Zend.php";
-require_once "Zend/Uri.php";
-
 /**
  * Zend_Http_Cookie is a class describing an HTTP cookie and all it's parameters. 
  * 

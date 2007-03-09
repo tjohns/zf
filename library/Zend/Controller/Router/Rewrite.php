@@ -19,6 +19,9 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
+/** Zend_Loader */
+require_once 'Zend/Loader.php';
+
 /** Zend_Controller_Router_Abstract */
 require_once 'Zend/Controller/Router/Abstract.php';
 
@@ -126,7 +129,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         foreach ($config->{$section} as $name => $info) {
             
             $class = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';
-            Zend::loadClass($class);
+            Zend_Loader::loadClass($class);
                
             $route = call_user_func(array($class, 'getInstance'), $info);
             $this->addRoute($name, $route);

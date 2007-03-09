@@ -27,7 +27,7 @@ error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 /**
  * Zend_Locale
  */
-require_once 'Zend.php';
+// @todo require_once 'Zend.php';
 require_once 'Zend/Locale.php';
 
 /**

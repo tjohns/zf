@@ -28,7 +28,7 @@ error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 /**
  * Zend_Date
  */
-require_once 'Zend.php';
+require_once 'Zend/Loader.php';
 require_once 'Zend/Date.php';
 require_once 'Zend/Locale.php';
 require_once 'Zend/Date/Cities.php';
@@ -4808,8 +4808,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $include_path = get_include_path();
         set_include_path($include_path . PATH_SEPARATOR . $incubator);
         try {
-            Zend::loadClass('Zend_TimeSync');
-            Zend::loadClass('Zend_TimeSync_Ntp');
+            Zend_Loader::loadClass('Zend_TimeSync');
+            Zend_Loader::loadClass('Zend_TimeSync_Ntp');
         } catch (Zend_Exception $e) {
             $this->markTestIncomplete($e->getMessage());
         }

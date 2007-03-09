@@ -21,6 +21,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Loader.php';
 require_once 'Zend/Uri.php';
 require_once 'Zend/Http/Client/Adapter/Interface.php';
 require_once 'Zend/Http/Response.php';
@@ -966,7 +967,7 @@ class Zend_Http_Client
     {
         if (is_string($adapter)) {
         	try {
-        		Zend::loadClass($adapter);
+        		Zend_Loader::loadClass($adapter);
         	} catch (Zend_Exception $e) {
         		throw new Zend_Http_Client_Exception("Unable to load adapter '$adapter': {$e->getMessage()}");
         	}

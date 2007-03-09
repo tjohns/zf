@@ -19,6 +19,12 @@
 
 
 /**
+ * Zend_Loader
+ * May be used in constructor, but commented out for now
+ */
+// require_once 'Zend/Loader.php';
+
+/**
  * Zend_Mail_Storage_Abstract
  */
 require_once 'Zend/Mail/Storage/Abstract.php';
@@ -188,7 +194,7 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     public function __construct($params)
     {
-        if (!isset($params['filename']) /* || Zend::isReadable($params['filename']) */) {
+        if (!isset($params['filename']) /* || Zend_Loader::isReadable($params['filename']) */) {
             throw new Zend_Mail_Storage_Exception('no valid filename given in params');
         }
 

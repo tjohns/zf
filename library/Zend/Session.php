@@ -23,7 +23,7 @@
 /**
  * Zend
  */
-require_once 'Zend.php';
+require_once 'Zend_Loader.php';
 
 /**
  * Zend_Session_Abstract
@@ -628,7 +628,7 @@ class Zend_Session extends Zend_Session_Abstract
     static private function _processValidators()
     {
         foreach ($_SESSION['__ZF']['VALID'] as $validator_name => $valid_data) {
-            Zend::loadClass($validator_name);
+            Zend_Loader::loadClass($validator_name);
             $validator = new $validator_name;
             if ($validator->validate() === false) {
                 throw new Zend_Session_Exception("This session is not valid according to {$validator_name}.");

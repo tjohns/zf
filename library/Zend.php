@@ -19,12 +19,10 @@
  * @version    $Id$
  */
 
-
 /**
  * Zend_Exception
  */
 require_once 'Zend/Exception.php';
-
 
 /**
  * Utility class for common functions.
@@ -38,11 +36,14 @@ final class Zend
 {
     /**
      * Zend Framework version identification - see compareVersion()
+     *
+     * @deprecated Since 0.9.0 -- use Zend_Version::VERSION instead.
      */
-    const VERSION = '0.8.0dev';
+    const VERSION = '0.9.0dev';
 
     /**
      * Object registry provides storage for shared objects
+     *
      * @var Zend_Registry
      */
     static private $_registry = null;
@@ -65,9 +66,13 @@ final class Zend
      * @param string|array $dirs - OPTIONAL either a path or array of paths to search
      * @throws Zend_Exception
      * @return void
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Loader::loadClass() instead.
      */
     static public function loadClass($class, $dirs = null)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::loadClass() instead");
+
         if (class_exists($class, false) || interface_exists($class, false)) {
             return;
         }
@@ -108,7 +113,6 @@ final class Zend
         }
     }
 
-
     /**
      * Loads an interface from a PHP file
      *
@@ -140,9 +144,13 @@ final class Zend
      * @param  boolean       $once
      * @throws Zend_Exception
      * @return mixed
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Loader::loadFile() instead.
      */
     static public function loadFile($filename, $dirs = null, $once = false)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::loadFile() instead");
+
         // security check
         if (preg_match('/[^a-z0-9\-_.]/i', $filename)) {
             throw new Zend_Exception('Security check: Illegal character in filename');
@@ -191,16 +199,19 @@ final class Zend
         }
     }
 
-
     /**
      * Returns TRUE if the $filename is readable, or FALSE otherwise.  This
      * function uses the PHP include_path, where PHP's is_readable() does not.
      *
      * @param string $filename
      * @return boolean
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Loader::isReadable() instead.
      */
     static public function isReadable($filename)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::isReadable() instead");
+
         if (is_readable($filename)) {
             return true;
         }
@@ -222,7 +233,6 @@ final class Zend
         return false;
     }
 
-
     /**
      * Return a new exception
      *
@@ -243,10 +253,13 @@ final class Zend
      * @param int $code Defaults to 0
      * @return Exception
      * @throws Zend_Exception when invalid exception class passed
-     * @deprecated since 0.6.1
+     *
+     * @deprecated Since 0.6.1
      */
     static public function exception($class, $message = '', $code = 0)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.6.1");
+
         $class = (string) $class;
 
         self::loadClass($class);
@@ -260,23 +273,25 @@ final class Zend
         return $exception;
     }
 
-
     /**
      * offsetSet stores $newval at key $index
      *
      * @param mixed $index  index to set
      * @param $newval new value to store at offset $index
      * @return  void
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Registry::set() instead.
      */
     static public function register($index, $newval)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::set() instead");
+
         if (self::$_registry === null) {
             self::initRegistry();
         }
 
         self::$_registry[$index] = $newval;
     }
-
 
     /**
      * registry() retrieves the value stored at an index.
@@ -288,9 +303,13 @@ final class Zend
      * @param   string      $index The name for the value.
      * @throws  Zend_Registry_Exception
      * @return  mixed       The registered value for $index.
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Registry::get() instead.
      */
     static public function registry($index = null)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::get() instead");
+
         if (self::$_registry === null) {
             self::initRegistry();
         }
@@ -298,16 +317,19 @@ final class Zend
         return self::$_registry->get($index);
     }
 
-
     /**
      * Returns TRUE if the $index is a named value in the
      * registry, or FALSE if $index was not found in the registry.
      *
      * @param  string $index
      * @return boolean
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Registry::isRegistered() instead.
      */
     static public function isRegistered($index)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::isRegistered() instead");
+
         if (self::$_registry === null) {
             return false;
         }
@@ -315,17 +337,18 @@ final class Zend
         return self::$_registry->offsetExists($index);
     }
 
-
     /**
      * Initialize the registry. Invoking this method more than once will generate an exception.
      *
      * @param mixed $registry - Either a name of the registry class (Zend_Registry, or a subclass)
      *                          or an instance of Zend_Registry (or subclass)
-     *
      * @return Zend_Registry
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Registry::setClassName() instead.
      */
     static public function initRegistry($registry = 'Zend_Registry')
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::setClassName() instead");
         // prevent multiple calls to this method
         if (self::$_registry !== null) {
             throw new Zend_Exception('Registry already initialized.');
@@ -356,15 +379,16 @@ final class Zend
         return self::$_registry;
     }
 
-
     /**
      * primarily for tearDown() in unit tests
+     *
+     * @deprecated Since 0.9.0 -- Use Zend_Registry::_unsetInstance() instead.
      */
     static public function __unsetRegistry()
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::_unsetInstance() instead");
         self::$_registry = null;
     }
-
 
     /**
      * Debug helper function.  This is a wrapper for var_dump() that adds
@@ -374,9 +398,13 @@ final class Zend
      * @param  mixed  $var The variable to dump.
      * @param  string $label An optional label.
      * @return string
+     *
+     * @deprecated since 0.9.0
      */
     static public function dump($var, $label=null, $echo=true)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Debug::dump() instead");
+
         // format the label
         $label = ($label===null) ? '' : rtrim($label) . ' ';
 
@@ -410,9 +438,13 @@ final class Zend
      * @param  string  $version  A version identifier for the ZF (e.g. "0.7.1")
      * @return boolean    -1 if the $version is older, 0 if they are the same, and +1 if $version is newer
      *
+     * @deprecated Since 0.9.0 -- Use Zend_Version::compareVersion() instead.
      */
     static public function compareVersion($version)
     {
+        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Version::compareVersion() instead");
+
         return version_compare($version, Zend::VERSION);
     }
+
 }

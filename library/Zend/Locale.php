@@ -23,7 +23,6 @@
 /**
  * Include needed Locale classes
  */
-require_once 'Zend.php';
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Format.php';
 

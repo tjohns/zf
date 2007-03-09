@@ -29,7 +29,6 @@ require_once 'Zend/Db.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
-
 /**
  * @package    Zend_Db
  * @subpackage UnitTests

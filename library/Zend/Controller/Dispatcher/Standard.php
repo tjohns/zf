@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 
+/** Zend_Loader */
+require_once 'Zend/Loader.php';
+
 /** Zend_Controller_Dispatcher_Abstract */
 require_once 'Zend/Controller/Dispatcher/Abstract.php';
 
@@ -148,7 +151,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $fileSpec    = $this->classToFilename($className);
         $dispatchDir = $this->getDispatchDirectory();
         $test        = $dispatchDir . DIRECTORY_SEPARATOR . $fileSpec;
-        return Zend::isReadable($test);
+        return Zend_Loader::isReadable($test);
     }
 
     /**
@@ -232,7 +235,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $loadFile    = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
         $dir         = dirname($loadFile);
         $file        = basename($loadFile);
-        Zend::loadFile($file, $dir, true);
+        Zend_Loader::loadFile($file, $dir, true);
 
         if ('default' != $this->_curModule) {
             $className = $this->formatModuleName($this->_curModule) . '_' . $className;
@@ -315,7 +318,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         if ($this->isValidModule($module)) {
             $moduleDir = $controllerDirs[$module];
             $fileSpec  = $moduleDir . DIRECTORY_SEPARATOR . $this->classToFilename($default);
-            if (Zend::isReadable($fileSpec)) {
+            if (Zend_Loader::isReadable($fileSpec)) {
                 $this->_curModule    = $this->formatModuleName($module);
                 $this->_curDirectory = $moduleDir;
             }

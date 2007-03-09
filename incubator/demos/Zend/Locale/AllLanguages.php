@@ -5,8 +5,7 @@
  * 
  * So en = english de = deutsch da = dánsk and so on
  */
-require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $list = $locale->getLanguageList();

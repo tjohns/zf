@@ -234,7 +234,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
     public function testTableInsert()
     {
-        Zend::loadClass('Zend_Db_Table_ZfTestTable');
+        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 

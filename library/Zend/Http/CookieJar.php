@@ -20,7 +20,6 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-require_once "Zend.php";
 require_once "Zend/Uri.php";
 require_once "Zend/Http/Cookie.php";
 require_once "Zend/Http/Response.php";

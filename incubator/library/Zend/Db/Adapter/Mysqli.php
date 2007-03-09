@@ -21,11 +21,6 @@
  */
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-/**
  * Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';

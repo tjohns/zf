@@ -72,7 +72,7 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
             foreach ($registry as $file) {
                 $class = rtrim($file->getFilename(), '.php');
                 $module = "Zend_Environment_Module_{$class}";
-                Zend::loadClass($module);
+                Zend_Loader::loadClass($module);
                 try {
                     $modules[] = new $module(strtolower($class));
                 } catch (Zend_Environment_Exception $e) {

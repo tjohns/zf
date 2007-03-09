@@ -104,7 +104,8 @@ abstract class Zend_Db_Table
 
             // use an object from the registry?
             if (is_string($db)) {
-                $db = Zend::registry($db);
+                require_once 'Zend/Registry.php';
+                $db = Zend_Registry::get($db);
             }
 
             // make sure it's a Zend_Db_Adapter_Abstract
