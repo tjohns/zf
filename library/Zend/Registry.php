@@ -138,9 +138,13 @@ class Zend_Registry extends ArrayObject
      * @return mixed
      * @throws Zend_Exception if no entry is registerd for $index.
      */
-    public static function get($index)
+    public static function get($index = null)
     {
         $instance = self::getInstance();
+        
+        if ($index === null) {
+            return $instance;
+        }
 
         if (!$instance->offsetExists($index)) {
            throw new Zend_Exception("No entry is registered for key '$index'");
