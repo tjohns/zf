@@ -132,6 +132,14 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Registry::isRegistered('noIndex'));
     }
 
+    public function testRegistryArrayAsProps()
+    {
+        $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS);
+        $registry->foo = 'bar';
+        $this->assertTrue(isset($registry->foo));
+        $this->assertEquals('bar', $registry->foo);
+    }
+
     public function testRegistryExceptionInvalidClassname()
     {
         try {
