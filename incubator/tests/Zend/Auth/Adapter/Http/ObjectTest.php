@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -15,16 +16,39 @@
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2007 Bryce Lohr
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
+
+/**
+ * PHPUnit_Framework_TestCase
+ */
 require_once 'PHPUnit/Framework/TestCase.php';
+
+
+/**
+ * @see Zend_Auth_Adapter_Http
+ */
 require_once 'Zend/Auth/Adapter/Http.php';
-require_once 'Zend/Auth/Adapter/Exception.php';
+
+
+/**
+ * @see Zend_Auth_Adapter_Http_Resolver_File
+ */
 require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
+
+
+/**
+ * @see Zend_Controller_Request_Http
+ */
 require_once 'Zend/Controller/Request/Http.php';
+
+
+/**
+ * @see Zend_Controller_Response_Http
+ */
 require_once 'Zend/Controller/Response/Http.php';
 
 
@@ -32,39 +56,78 @@ require_once 'Zend/Controller/Response/Http.php';
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2007 Bryce Lohr
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_Adapter_HttpObjectTest extends PHPUnit_Framework_TestCase
+class Zend_Auth_Adapter_Http_ObjectTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Path to test files
+     *
+     * @var string
+     */
+    protected $_filesPath;
+
+    /**
+     * HTTP Basic configuration
+     *
+     * @var array
+     */
     protected $_basicConfig;
+
+    /**
+     * HTTP Digest configuration
+     *
+     * @var array
+     */
     protected $_digestConfig;
+
+    /**
+     * HTTP Basic Digest configuration
+     *
+     * @var array
+     */
     protected $_bothConfig;
+
+    /**
+     * File resolver setup against with HTTP Basic auth file
+     *
+     * @var Zend_Auth_Adapter_Http_Resolver_File
+     */
     protected $_basicResolver;
+
+    /**
+     * File resolver setup against with HTTP Digest auth file
+     *
+     * @var Zend_Auth_Adapter_Http_Resolver_File
+     */
     protected $_digestResolver;
 
-
-    public function setUp()
+    /**
+     * Sets up test configuration
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        chdir(dirname(__FILE__));
-
-        $this->_basicResolver = new Zend_Auth_Adapter_Http_Resolver_File('./_files/htbasic.1');
-        $this->_digestResolver = new Zend_Auth_Adapter_Http_Resolver_File('./_files/htdigest.3');
-        $this->_basicConfig = array(
+        $this->_filesPath      = dirname(__FILE__) . '/_files';
+        $this->_basicResolver  = new Zend_Auth_Adapter_Http_Resolver_File("$this->_filesPath/htbasic.1");
+        $this->_digestResolver = new Zend_Auth_Adapter_Http_Resolver_File("$this->_filesPath/htdigest.3");
+        $this->_basicConfig    = array(
             'accept_schemes' => 'basic',
-            'realm' => 'Test Realm'
+            'realm'          => 'Test Realm'
         );
-        $this->_digestConfig = array(
+        $this->_digestConfig   = array(
             'accept_schemes' => 'digest',
-            'realm' => 'Test Realm',
+            'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout' => 300
+            'nonce_timeout'  => 300
         );
-        $this->_bothConfig = array(
+        $this->_bothConfig     = array(
             'accept_schemes' => 'basic digest',
-            'realm' => 'Test Realm',
+            'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout' => 300
+            'nonce_timeout'  => 300
         );
     }
 
@@ -103,25 +166,25 @@ class Zend_Auth_Adapter_HttpObjectTest extends PHPUnit_Framework_TestCase
         $badConfigs = array(
             'bad1' => array(
                 'auth_type' => 'bogus',
-                'realm' => 'Test Realm'
+                'realm'     => 'Test Realm'
             ),
             'bad2' => array(
-                'auth_type' => 'digest',
-                'realm' => 'Bad: "Chars"'."\n",
+                'auth_type'      => 'digest',
+                'realm'          => 'Bad: "Chars"'."\n",
                 'digest_domains' => '/ /admin',
-                'nonce_timeout' => 300
+                'nonce_timeout'  => 300
             ),
             'bad3' => array(
-                'auth_type' => 'digest',
-                'realm' => 'Test Realm',
+                'auth_type'      => 'digest',
+                'realm'          => 'Test Realm',
                 'digest_domains' => 'no"quotes'."\tor tabs",
-                'nonce_timeout' => 300
+                'nonce_timeout'  => 300
             ),
             'bad4' => array(
-                'auth_type' => 'digest',
-                'realm' => 'Test Realm',
+                'auth_type'      => 'digest',
+                'realm'          => 'Test Realm',
                 'digest_domains' => '/ /admin',
-                'nonce_timeout' => 'junk'
+                'nonce_timeout'  => 'junk'
             )
         );
 
@@ -172,7 +235,7 @@ class Zend_Auth_Adapter_HttpObjectTest extends PHPUnit_Framework_TestCase
             $a->setRequest($request);
             $a->setResponse($response);
             $result = $a->authenticate();
-            $this->fail('Tried Basic authentication without a resolver.'."\n".array_shift($result->getMessages()));
+            $this->fail("Tried Basic authentication without a resolver.\n" . array_shift($result->getMessages()));
         } catch (Zend_Auth_Adapter_Exception $e) {
             // Good, it threw an exception
             unset($a);
@@ -189,7 +252,7 @@ class Zend_Auth_Adapter_HttpObjectTest extends PHPUnit_Framework_TestCase
             $a->setRequest($request);
             $a->setResponse($response);
             $result = $a->authenticate();
-            $this->fail('Tried Digest authentication without a resolver.'."\n".array_shift($result->getMessages()));
+            $this->fail("Tried Digest authentication without a resolver.\n" . array_shift($result->getMessages()));
         } catch (Zend_Auth_Adapter_Exception $e) {
             // Good, it threw an exception
             unset($a);

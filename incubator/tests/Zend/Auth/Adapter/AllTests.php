@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 3412 2007-02-14 22:22:35Z darby $
+ * @version    $Id$
  */
 
 
@@ -40,24 +40,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
- * Zend_Auth_FileResolverTest
+ * @see Zend_Auth_Adapter_Http_AllTests
  */
-require_once 'Zend/Auth/Adapter/FileResolverTest.php';
-
-/**
- * Zend_Auth_HttpObjectTest
- */
-require_once 'Zend/Auth/Adapter/HttpObjectTest.php';
-
-/**
- * Zend_Auth_HttpAuthTest
- */
-require_once 'Zend/Auth/Adapter/HttpAuthTest.php';
-
-/**
- * Zend_Auth_HttpProxyTest
- */
-require_once 'Zend/Auth/Adapter/HttpProxyTest.php';
+require_once 'Zend/Auth/Adapter/Http/AllTests.php';
 
 
 /**
@@ -88,10 +73,7 @@ class Zend_Auth_Adapter_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth Adapters');
 
-        $suite->addTestSuite('Zend_Auth_Adapter_FileResolverTest');
-        $suite->addTestSuite('Zend_Auth_Adapter_HttpObjectTest');
-        $suite->addTestSuite('Zend_Auth_Adapter_HttpAuthTest');
-        $suite->addTestSuite('Zend_Auth_Adapter_HttpProxyTest');
+        $suite->addTest(Zend_Auth_Adapter_Http_AllTests::suite());
 
         return $suite;
     }

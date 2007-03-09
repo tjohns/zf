@@ -23,14 +23,8 @@
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_Http_AllTests::main');
 }
-
-
-/**
- * Start output buffering to prevent problems using session
- */
-ob_start();
 
 
 /**
@@ -46,9 +40,27 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
- * @see Zend_Auth_Adapter_AllTests
+ * @see Zend_Auth_Adapter_Http_AuthTest
  */
-require_once 'Zend/Auth/Adapter/AllTests.php';
+require_once 'Zend/Auth/Adapter/Http/AuthTest.php';
+
+
+/**
+ * @see Zend_Auth_Adapter_Http_ObjectTest
+ */
+require_once 'Zend/Auth/Adapter/Http/ObjectTest.php';
+
+
+/**
+ * @see Zend_Auth_Adapter_Http_ProxyTest
+ */
+require_once 'Zend/Auth/Adapter/Http/ProxyTest.php';
+
+
+/**
+ * @see Zend_Auth_Adapter_Http_Resolver_AllTests
+ */
+require_once 'Zend/Auth/Adapter/Http/Resolver/AllTests.php';
 
 
 /**
@@ -58,7 +70,7 @@ require_once 'Zend/Auth/Adapter/AllTests.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_AllTests
+class Zend_Auth_Adapter_Http_AllTests
 {
     /**
      * Runs this test suite
@@ -77,14 +89,17 @@ class Zend_Auth_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth_Adapter_Http');
 
-        $suite->addTest(Zend_Auth_Adapter_AllTests::suite());
+        $suite->addTestSuite('Zend_Auth_Adapter_Http_AuthTest');
+        $suite->addTestSuite('Zend_Auth_Adapter_Http_ObjectTest');
+        $suite->addTestSuite('Zend_Auth_Adapter_Http_ProxyTest');
+        $suite->addTest(Zend_Auth_Adapter_Http_Resolver_AllTests::suite());
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Auth_AllTests::main') {
-    Zend_Auth_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_Http_AllTests::main') {
+    Zend_Auth_Adapter_Http_AllTests::main();
 }
