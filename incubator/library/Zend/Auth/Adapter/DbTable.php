@@ -314,8 +314,6 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
             try {
                 $result_identities = $this->_zendDb->fetchAll($select->__toString());
             } catch (Exception $e) {
-                print_r($e);
-                die();
                 throw new Zend_Auth_Exception($e->getMessage());
             }
             
