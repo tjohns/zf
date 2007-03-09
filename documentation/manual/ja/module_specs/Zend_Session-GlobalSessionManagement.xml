@@ -213,6 +213,82 @@ remember_me_seconds = 864000
 
     </sect2>
 
+    <sect2 id="zend.session.errors">
+
+        <title>エラー</title>
+
+        <sect3 id="zend.session.errors.headerssent">
+
+            <title>Headers already sent</title>
+
+            <para>
+                "Cannot modify header information - headers already sent"
+                や "You must
+                call .. before any output has been sent to the browser; output started in ..."
+                のようなエラーが出た場合は、そのメッセージの直接の原因となった部分
+                (関数あるいはメソッド) がどこなのかをきちんと調べましょう。
+                HTTP ヘッダを送信するアクション、たとえばブラウザのクッキーの変更などは、
+                通常の出力 (バッファリングされていない出力)
+                の前に行う必要があります。ただし
+                PHP の出力バッファリングを使用している場合は例外です。
+            </para>
+
+            <itemizedlist mark='opencircle'>
+                <listitem>
+                    <para>
+                        常に
+                        <ulink url="http://php.net/outcontrol">出力バッファリング</ulink>
+                        を使用するようにすると、この問題を避けられます。またパフォーマンスも向上するでしょう。
+                        たとえば <code>php.ini</code> で "<code>output_buffering = 65535</code>"
+                        とすると、64K のバッファで出力バッファリングを行います。
+                        出力バッファリングでパフォーマンスの向上を狙うことは
+                        本番サーバでも有効な手法ですが、バッファリングだけでは
+                        "headers already sent" 問題を解消するには不十分です。
+                        アプリケーションで送信する内容がこのバッファサイズをこえないよう注意しましょう。
+                        さもないと、(HTTP ヘッダの前に送信する出力が)
+                        バッファサイズをこえた時点で断続的に問題が発生することでしょう。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        別の方法としては、アプリケーションのロジックを見直して
+                        ヘッダを操作するアクションを
+                        あらゆる出力の前に済ませてしまうことがあります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        もし Zend_Session のメソッドでエラーが発生しているのなら、
+                        そのメソッドをよく見直してください。そのメソッドは、
+                        必要な処理を本当に行っていますか?
+                        たとえば、<code>destroy()</code> をデフォルトで使用すると、
+                        HTTP ヘッダを送信してクライアント側のセッションクッキーを期限切れにします。
+                        これが不要な場合は <code>destroy(false)</code> としてください。
+                        HTTP においては、クッキーを書き換える (期限切れにするなど)
+                        処理は HTTP ヘッダで行われます。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        別の方法としては、アプリケーションのロジックを見直して
+                        ヘッダを操作するアクションを
+                        あらゆる出力の前に済ませてしまうことがあります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        PHP のソースファイルの最後でこのエラーが発生するのなら、
+                        終了タグ "<code>?&gt;</code>" を削除しましょう。
+                        これは不要です。また、終了タグの後に改行などの目に見えない文字があった場合、
+                        それが出力としてクライアントに送信されてしまいます。
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+        </sect3>
+
+    </sect2>
+
     <sect2 id="zend.session.regenerateid">
 
         <title>regenerateId()</title>
@@ -462,6 +538,18 @@ if (!isset($defaultNamespace->initialized))
             を使用すると、Zend_Session_Namespace のインスタンスや
             Zend_Session のメソッドからセッションデータ
             ($_SESSION) への書き込みができなくなります。
+        </para>
+
+        <para>
+            "Cannot modify header information - headers already sent"
+            というエラーが出た場合は、最初の引数として true
+            (セッションクッキーを削除) を使用しないようにするか、あるいは
+            <xref linkend="zend.session.errors.headerssent" /> を参照ください。
+            つまり、"Zend_Session::destroy(true)" をコールするなら
+            PHP が HTTP ヘッダを送信する前にするか、
+            あるいは出力バッファリングを有効にしなければなりません。
+            また、出力データの大きさが、設定したバッファサイズをこえてはいけません。
+            これにより、destroy() のコール前に出力が送信されてしまうことを防ぎます。
         </para>
 
         <note>

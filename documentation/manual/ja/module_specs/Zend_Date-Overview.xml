@@ -585,13 +585,11 @@ print $date;
                                 <emphasis role="strong">Zend_Date::usePhpDateFormat($format = null)</emphasis>
                             </para>
                             <para>
-                                日付オブジェクトで使用する書式の型を設定します。
-                                <code>null</code> は、現在設定されている書式を返します。
-                                <code>true</code> は、パラメータ <code>$format</code>
+                                日付オブジェクトで使用する書式の型を設定します。<code>null</code> は、
+                                現在設定されている書式を返します。<code>true</code> は、パラメータ <code>$format</code>
                                 を使用できるすべての関数に対して php の日付書式指定子を適用します。
-                                標準の値である <code>false</code> は、すべての関数に対して
-                                Iso 書式指定子を適用します。サポートする書式コードについては
-                                <xref linkend="zend.date.constants.phpformats" />
+                                標準の値である <code>false</code> は、すべての関数に対して Iso 書式指定子を適用します。
+                                サポートする書式コードについては <xref linkend="zend.date.constants.phpformats" />
                                 を参照ください。
                             </para>
                         </entry>

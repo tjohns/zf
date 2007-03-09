@@ -130,10 +130,8 @@ Zend_Session::start();
                     (<ulink url="http://www.php.net/headers_sent">HTTP ヘッダ</ulink> など)
                     をする <emphasis role="strong">前に</emphasis>、確実に
                     最初の <code>new Zend_Session_Namespace()</code> をコールしなければなりません。
-                    <ulink url="http://php.net/outcontrol">出力バッファリング</ulink>
-                    を使用すると、この問題を解決することができ、パフォーマンスも向上させることができるでしょう。
-                    たとえば、<code>php.ini</code> で "<code>output_buffering = 65535</code>"
-                    とすると、出力バッファリング用のバッファが 64K になります。
+                    詳細は <xref linkend="zend.session.errors.headerssent" />
+                    を参照ください。
                 </para>
             </listitem>
         </itemizedlist>
@@ -264,7 +262,6 @@ $s->setExpirationSeconds(60);
         </para>
 
     </sect2>
-
 
     <sect2 id="zend.session.controllers">
 
