@@ -23,7 +23,7 @@
 /**
  * Zend
  */
-require_once 'Zend_Loader.php';
+require_once 'Zend/Loader.php';
 
 /**
  * Zend_Session_Abstract
