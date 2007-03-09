@@ -39,6 +39,12 @@ require_once 'Zend/XmlRpc/Request.php';
 class Zend_XmlRpc_Request_Http extends Zend_XmlRpc_Request
 {
     /**
+     * Array of headers
+     * @var array
+     */
+    protected $_headers;
+
+    /**
      * Raw XML as received via request
      * @var string 
      */
@@ -80,5 +86,44 @@ class Zend_XmlRpc_Request_Http extends Zend_XmlRpc_Request
     public function getRawRequest()
     {
         return $this->_xml;
+    }
+
+    /**
+     * Get headers
+     *
+     * Gets all headers as key => value pairs and returns them.
+     * 
+     * @return array
+     */
+    public function getHeaders()
+    {
+        if (null === $this->_headers) {
+            $this->_headers = array();
+            foreach ($_SERVER as $key => $value) {
+                if ('HTTP_' == substr($key, 0, 5)) {
+                    $header = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($key, 5)))));
+                    $this->_headers[$header] = $value;
+                }
+            }
+        }
+
+        return $this->_headers;
+    }
+
+    /**
+     * Retrieve the full HTTP request, including headers and XML
+     * 
+     * @return string
+     */
+    public function getFullRequest()
+    {
+        $request = '';
+        foreach ($this->getHeaders() as $key => $value) {
+            $request .= $key . ': ' . $value . "\n";
+        }
+
+        $request .= $this->_xml;
+
+        return $request;
     }
 }

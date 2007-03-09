@@ -12,6 +12,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/XmlRpc/ValueTest.php';
 require_once 'Zend/XmlRpc/RequestTest.php';
+require_once 'Zend/XmlRpc/Request/HttpTest.php';
 require_once 'Zend/XmlRpc/ResponseTest.php';
 require_once 'Zend/XmlRpc/FaultTest.php';
 require_once 'Zend/XmlRpc/ClientTest.php';
@@ -32,6 +33,7 @@ class Zend_XmlRpc_AllTests
 
         $suite->addTestSuite('Zend_XmlRpc_ValueTest');
         $suite->addTestSuite('Zend_XmlRpc_RequestTest');
+        $suite->addTestSuite('Zend_XmlRpc_Request_HttpTest');
         $suite->addTestSuite('Zend_XmlRpc_ResponseTest');
         $suite->addTestSuite('Zend_XmlRpc_FaultTest');
         $suite->addTestSuite('Zend_XmlRpc_ClientTest');

@@ -293,6 +293,8 @@ class Zend_XmlRpc_Request
            $this->_params = $argv;
         }
 
+        $this->_xml = $request;
+
         return true;
     }
 
