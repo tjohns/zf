@@ -1,62 +1,58 @@
-<sect1 id="zend.filter.filter">
-    <title>Zend_Filter</title>
+<sect1 id="zend.filter.introduction">
 
-    <sect2 id="zend.filter.filter.introduction">
-        <title>Introduction</title>
+    <title>Introduction</title>
+
     <para>
-     <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données.
-     Pour le filtrage des données passées en entrée, voyez plutôt le <xref linkend="zend.filter.input" />
-     car ce composant constitue une plate-forme dédiée au filtrage des données passées en
-     entrée, et il utilise les méthodes fournies par cette classe.
-     Toutefois, comme <literal>Zend_Filter_Input</literal> est conçu en priorité pour fonctionner avec des tableaux,
-     <literal>Zend_Filter</literal> reste utile pour le filtrage de variables scalaires,
-     du fait du comportement de ses méthodes qui agissent de la même manière que les fonctions PHP dédiées aux chaînes :
-    </para>
-    <programlisting>
-    <![CDATA[<?php
-
-    $nomUtilisateurAlpha = Zend_Filter::getAlpha('Jean123Dupond');
-
-    /* $nomUtilisateurAlpha = 'JeanDupond'; */
-
-    ?>]]>
-    </programlisting>
-  </sect2>
-  <sect2 id="zend.filter.filter.usecases">
-    <title>Exemples d'utilisation</title>
-    <para>
-      Dans chacun de ces exemples d'utilisation, <literal>$valeur</literal> représente une valeur scalaire arbitraire.
+        Le composant Zend_Filter fournit un ensemble de filtres de données usuels. Il fournit également
+        un mécanisme simple de chaînage par lequel plusieurs filtres peuvent être appliqués à une donnée
+        dans un ordre défini.
     </para>
 
-    <para>Filtrage par liste blanche :</para>
-    <programlisting>
-    <![CDATA[<?php
+    <para>
+        <emphasis role="strong">Qu'est-ce qu'un filtre ?</emphasis>
+    </para>
 
-    if ($email = Zend_Filter::testEmail($value)) {
-        /* $email constitue une adresse e-mail valide */
-    } else {
-        /* $email ne constitue pas une adresse e-mail valide */
-    }
+    <para>
+        Généralement parlant, une filtre est utilisé pour supprimer les parties non désirées de ce qui lui est 
+        soumis tout en laissant passer la partie désiré. Dans ce cas de figure, un filtre 
+        est une opération qui restitue une partie de la donnée soumise. Ce type de filtrage est utile pour les
+        applications web : suppression des données soumises non conformes, élimination des espaces inutiles, etc.  
+    </para>
 
-    ?>]]>
-    </programlisting>
-    <para>Filtrage à l'aveugle :</para>
-    <programlisting>
-    <![CDATA[<?php
+    <para>
+        Cette définition simple d'un filtre peut être étendue pour inclure des transformations généralisées aux 
+        données soumises. Une transformation communément requise dans les applications web consiste à échapper les
+        entités HTML. Ainsi, si un champ de formulaire est automatiquement transmis et contient des données
+        non vérifiées (provenant par exemple d'un navigateur web), ces données doivent être expurgées de leurs
+        entités HTML ou bien contenir uniquement des entités HTML échappées, de manière à se garantir contre les
+        comportements non désirés et les vulnérabilités de sécurité. Afin d'assurer cette opération, les entités
+        HTML qui sont présentes dans les données saisies doivent être soit supprimées soit échappées. Naturellement,
+        l'approche adéquate dépend du contexte. Un fitre de suppression des entités HTML opère dans le contexte
+        défini plus haut : une opération produisant un sous-ensemble à partir d'une donnée soumise. Cependant, 
+        un filtre échappant les entités HTML transforme la valeur entrée (par exemple, "<code>&amp;</code>" sera
+        transformé en "<code>&amp;amp;</code>". Permettre de telles choses est important pour les développeurs 
+        web et "filtrer" dans le contexte d'utilisation de Zend_Filter consiste à réaliser des transformations
+        sur les donnée soumises.
+    </para>
 
-    $nomAlpha = Zend_Filter::getAlpha($valeur);
+    <para>
+        Cette définition du filtrage fournit les fondations pour <code>Zend_Filter_Interface</code>, qui ne
+        nécessite qu'une seule méthode nommée <code>filter()</code> pour être implémenté par une classe de
+        filtrage.
+    </para>
 
-    ?>]]>
-    </programlisting>
-    <para>Filtrage par liste noire :</para>
-    <programlisting>
-    <![CDATA[<?php
+    <para>
+        Un exemple simple ci-dessous démontre l'usage d'un filtre sur les caractères esperluette (<code>&amp;</code>,
+        'ampersand' en anglais) et guillemet double (<code>&quot;</code>) :
 
-    $commentaireSansBalises = Zend_Filter::noTags($valeur);
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Filter/HtmlEntities.php';
+$htmlEntities = new Zend_Filter_HtmlEntities();
+echo $htmlEntities->filter('&'); // &amp;
+echo $htmlEntities->filter('"'); // &quot;]]></programlisting>
 
-    ?>]]>
-    </programlisting>
-  </sect2>
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
