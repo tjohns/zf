@@ -325,8 +325,8 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
 $router = $ctrl->getRouter();
 
 $router->addRoute(
-	'user',
-	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+    'user',
+    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
 ]]></programlisting>
         </sect3>
@@ -789,7 +789,10 @@ $router->addRoute('login', $static);
 
             <programlisting role="php"><![CDATA[
 /**
- * Пример INI:
+ * Пример INI в файле /path/to/config.ini:
+ * 
+ * [production]
+ *   
  * routes.archive.route = "archive/:year/*"
  * routes.archive.defaults.controller = archive
  * routes.archive.defaults.action = show
@@ -801,7 +804,7 @@ $router->addRoute('login', $static);
  * routes.news.defaults.controller = "news"
  * routes.news.defaults.action = "list"
  */
-$config = new Zend_Config_Ini($file);
+$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
 ]]></programlisting>

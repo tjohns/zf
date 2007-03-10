@@ -333,6 +333,78 @@ class FooModule_View extends Zend_View
 
     </sect2>
 
+    <sect2 id="zend.session.expiration">
+
+        <title>Время жизни пространства имен<!--Namespace Expiration--></title>
+
+        <para>
+            Время жизни может быть ограничено как у пространства имен в целом,
+            так и у отдельных ключей. Общие случаи использования
+            включают в себя передачу временной информации между запросами
+            и повышение защищенности от определенных угроз безопасности
+            посредством устранения доступа к потенциально чувствительной
+            информации по прошествии некоторого времени после
+            аутентификации. Истечение времени жизни может быть основано на
+            количестве секунд или на концепции "прыжков" (hops), в которой
+            "прыжком" считается каждый успешный запрос, в котором активируется
+            пространство имен через, как минимум, один
+            <code>$space = new Zend_Session_Namespace('myspace');</code>.
+<!--
+            Limits can be placed on the longevity of both namespaces and
+            individual keys in namespaces. Common use cases
+            include passing temporary information between requests, and
+            reducing exposure to certain security risks by
+            removing access to potentially sensitive information some time
+            after authentication occurred. Expiration can
+            be based on elapsed seconds, or based on the concept of "hops",
+            where a hop occurs for each successive
+            request that activates the namespace via at least one
+            <code>$space = new Zend_Session_Namespace('myspace');</code>.
+-->
+        </para>
+
+        <example>
+            <title>Примеры установки времени жизни<!--Expiration Examples--></title>
+<programlisting role="php">
+<![CDATA[<?php
+$s = new Zend_Session_Namespace('expireAll');
+$s->a = 'apple';
+$s->p = 'pear';
+$s->o = 'orange';
+
+// Время жизни установлено только для ключа "a" (5 секунд)
+$s->setExpirationSeconds(5, 'a');
+
+// Время жизни всего пространства имен - 5 "прыжков"
+$s->setExpirationHops(5);
+
+$s->setExpirationSeconds(60);
+// Пространство имен "expireAll" будет помечено как с истекшим временем жизни
+// при первом запросе, произведенном после того, как прошло 60 секунд,
+// или после 5 "прыжков" - в зависимости от того, что произошло раньше  
+?>]]></programlisting>
+        </example>
+
+        <para>
+            При работе с данными, время жизни которых истекает в текущем запросе,
+            будьте внимательны при их извлечении. Несмотря на то, что данные
+            возвращаются по ссылке, изменение этих данных не приведет к их
+            сохранению после текущего запроса. Для "сброса" времени истечения
+            извлеките данные во временные переменные, уничтожьте эти данные в
+            пространстве имен и затем установите соответствующий ключ снова.
+<!--
+            When working with data expiring from the session in the current
+            request, care should be used when retrieving
+            it. Although the data is returned by reference, modifying the data
+            will not make expiring data persist past
+            the current request. In order to "reset" the expiration time, fetch
+            the data into temporary variables, use
+            the namespace to unset it, and then set the appropriate keys again.
+-->
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.session.controllers">
 
         <title>Инкапсуляция сессий и контроллеры<!--Session Encapsulation and Controllers--></title>

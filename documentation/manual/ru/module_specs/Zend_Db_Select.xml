@@ -842,7 +842,7 @@ $select->limitPage(3, 10);
 ?>]]></programlisting>
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.db.select.other">
         <title>Другие методы<!--Other methods--></title>
 
         <para>

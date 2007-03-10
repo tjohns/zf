@@ -497,6 +497,42 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
         </para>
     </sect2>
 
+    <sect2 id="zend.search.searching.highlighting">
+        <title>Подсветка результатов поиска<!--Search Results Highlighting--></title>
+        <para>
+            Метод
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code>
+            позволяет подсвечивать в HTML-документе элементы, присутствующие в
+            контексте поискового запроса:
+<!--
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code>
+            method allows to highlight HTML document terms
+            in context of search query:
+-->
+            <programlisting role="php"><![CDATA[
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+$hits = $index->find($query);
+...
+$highlightedHTML = $query->highlightMatches($sourceHTML);
+]]></programlisting>
+        </para>
+
+        <para>
+            Метод <code>highlightMatches()</code> для обработки HTML использует
+            класс <code>Zend_Search_Lucene_Document_Html</code> (см.
+            <link linkend="zend.search.index-creation.html-documents">раздел
+            "HTML-документы"</link>). Поэтому этот метод предъявляет те же
+            требования к HTML-коду, что и используемый класс.  
+<!--
+            <code>highlightMatches()</code> method utilizes
+            <code>Zend_Search_Lucene_Document_Html</code> class
+            (see <link linkend="zend.search.index-creation.html-documents">HTML
+            documents section</link> for details)
+            for HTML processing. So it has the same requirements for HTML source.
+-->
+        </para>
+    </sect2>
+
 </sect1>
 
 <!--
