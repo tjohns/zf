@@ -1,51 +1,44 @@
 <sect1 id="zend.gdata.introduction">
     <title>Introduction to Gdata</title>
     <para>
-        Google Data APIs provide programmatic interface to some of Google's
-        online services.
-        Client applications submit queries and data via HTTP, and retrieve
-        results.
-        The Zend_Gdata component is a PHP 5 interface for accessing Google Data
-        from PHP.
+	Les API Google Data fournissent une interface de programmation pour accéder aux differents services en ligne de 	Google.
+	
+	Les applications clientes envoyent des requetes et des données via HTTP, et récupères les resultats.
+	Le composant Zend_Gdata est une interface PHP 5 pour accéder à Google Data depuis PHP.
     </para>
 
     <para>
-        See
+        Voir
         <ulink url="http://code.google.com/apis/gdata/">http://code.google.com/apis/gdata/</ulink>
-        for more information about Google Data API.
+        pour plus d'informations sur les API Google Data
     </para>
 
     <para>
-        The services that are accessible by Zend_Gdata include the
-        following:
+	Parmis les services accessibles à l'aide de Zend_Gdata on trouve :
 
         <itemizedlist>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.base">Google Base</link>
-                    provides a search tool for online products,
-                    jobs, events, personal ads, and other types of entries.
-                    People post items and describe them with commonly-named
-                    attributes.
+			Fournissant un moteur de recherche pour produits en ligne, emplois, événements, publiciés personnels, et d'autres type de données. Les personnes déposent des Items et les décrivent à l'aide d'attributs courants.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.blogger">Google Blogger</link>
-                    is a popular internet provider of
-                    "push-button publishing" and syndication.
+			Est un outil populaire de Blog.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.calendar">Google Calendar</link>
-                    is an online scheduling and collaboration tool.
+			Est un calendrier en ligne et un outil de collaboration.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
-                    allows you to search public source code from many projects.
+			Vous donne la possibilité de rechercher des codes sources publiques dans de nombreux projets.
                 </para>
             </listitem>
         </itemizedlist>
@@ -54,72 +47,61 @@
     <note>
         <title>Unsupported services</title>
         <para>
-            Google Data API also supports Google Spreadsheets, but Zend_Gdata
-            does not provide a helper class for Spreadsheets in this release.
+		Les API Google Data proposent aussi Google Spreadsheets, mais Zend_Gdata ne fourni pas de class d'aide pour 		spreadsheets dans sa version actuelle.
         </para>
 
         <para>
-            Zend_Gdata does not provide an interface to any other Google
-            service, such as Search, Gmail, Translation, or Maps.
-            Only services that support the Google Data API are supported.
+		Zend_Gdata ne fourni pas non plus d'interface pour les autres services Google, comme la recherche (Google Search), Gmail, le service de traduction (Google Translate), ou le sercie de cartographie (Google Maps).
+	Seul les services supportants les API Google Data sont implémentés.
         </para>
     </note>
 
     <sect2 id="zend.gdata.introduction.authentication">
-        <title>Google Data Client Authentication</title>
+        <title>L'authentification client Google Data</title>
         <para>
-            Most Google Data services require client applications to
-            authenticate against the Google server before accessing
-            private data, or saving or deleting data.
-            There are two implementations of authentication for Google Data:
-            <link linkend="zend.gdata.authsub">AuthSub</link> and
+		La pluparts des services Google Data requièrent l'authentification de l'application cliente auprès du serveur Google avant d'accéder aux données privés, de sauvegarder des données ou d'en supprimer.
+Il y a deux implémentations de l'authentification sur Google Data :
+            <link linkend="zend.gdata.authsub">AuthSub</link> et
             <link linkend="zend.gdata.clientlogin">ClientLogin</link>.
-            Zend_Gdata offers class interfaces for both of these methods.
+		Zend-Gdata fourni des interfaces (Classes) pour chacunes de ces methodes. 
         </para>
 
         <para>
-            Most other types of queries against Google Data services do not
-            require authentication.
+	La plupart des autres types de rêquetes au travers du service Google Data ne requièrent pas d'authentification.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.dependencies">
-        <title>Dependencies</title>
+        <title>Les dépendances</title>
         <para>
-            Zend_Gdata makes use of 
-            <link linkend="zend.feed.introduction">Zend_Feed</link> and
-            <link linkend="zend.http.client">Zend_Http_Client</link> to send
-            requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a Zend_Feed object in the
-            format of an Atom or RSS feed.
+            Zend_Gdata utilise  
+            <link linkend="zend.feed.introduction">Zend_Feed</link> et
+            <link linkend="zend.http.client">Zend_Http_Client</link> 
+		pour envoyer des données à google.com et récupérer les resultats.		
+The response to most
+La plupart des réponses sont retournés sous la forme d'objets Zend_Feed au format Atom ou fil RSS.
         </para>
 
         <para>
-            Zend_Gdata assumes your PHP application is running on a host that
-            has a direct connection to the internet.
-            The Zend_Gdata client operates by contacting Google Data servers.
+L'utilisation de Zend_Gdata nécesite que l'hote sur lequel votre application PHP tourne ait accès au réseau Internet.
+Le client Zend_Gdata procède en contactant les serveurs Google Data.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.creation">
-        <title>Creating a new Gdata client</title>
+        <title>Création d'un nouveau client GData</title>
 
         <para>
-            Create a new object of class Zend_Gdata or one of the
-            subclasses available that offer helper methods for
-            service-specific behavior.
+Créer un nouvel objet de la classe Zend_Gdata ou d'une des classes dérivés disponibles qui offrent des methodes spécifiques pour chaques services.
         </para>
 
         <para>
-            The single optional parameter to the Zend_Gdata constructor
-            is an instance of 
+Le seul paramètre optionnel au constructeur de Zend_Gdata est une instance de 
             <link linkend="zend.http.client">Zend_Http_Client</link>.
-            If you don't pass this parameter, Zend_Gdata creates a default
-            Zend_Http_Client object.
-            Specifying the Zend_Http_Client object allows you to
-            pass configuration options to that client object.
+Si vous ne passez pas ce paramètre, Zend_Gdata créera un nouvel objet Zend_Http_Client.
+Instancier un objet Zend_Http_Client vous permettra de passer des options de configuration à ce dernier.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -133,92 +115,79 @@ $gdata = new Zend_Gdata($client);
 ?>]]></programlisting>
 
         <para>
-            Also see the sections on authentication for methods to
-            create an authenticated Zend_Http_Client object.
+Voir aussi la partie sur l'authentification pour les méthodes de création d'un objet Zend_Http_Client authentifié.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.parameters">
-        <title>Common query parameters</title>
+        <title>Paramètres de requête courants</title>
 
         <para>
-            You can specify parameters to customize queries with Zend_Gdata.
-            Some parameters apply only to individual Google Data services.
-            These parameters are documented in later sections for each service.
-            Some parameters apply in a common way to multiple Google Data services.
-            These parameters are described below.
+ vos pouvez spécifier des paramètres avec Zend_Gdata pour personaliser vos requêtes.
+Certain paramètres s'appliquent uniquement sur certain services Google Data.
+Ces paramètres seront documentés plus tards dans les paragraphes des services correspondants.
+Certain paramètres agisent de façon générique sur tout les services Google Data accessibles.
+            Voici leur description :
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    The <code>alt</code> parameter specifies the feed type.
-                    The value of the parameter can be
+                    le paramètre <code>alt</code> spécifie le type de fil.
+                    le paramètre peux prendre pour valeur :
                     <code>atom</code>,
                     <code>rss</code>,
                     <code>json</code>,
-                    or <code>json-in-script</code>.
-                    If you don't specify this parameter, the default feed type
-                    is <code>atom</code>.
+                    ou <code>json-in-script</code>.
+                    si vous ne spécifiez pas de paramètre, le type par défaut est <code>atom</code>.
                 </para>
                 <para>
-                    Set this parameter with the <code>setAlt()</code>
-                    function.
+                    Renseignez ce paramètre à l'aide de la fonction <code>setAlt()</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>maxResults</code> parameter limits the number
-                    of entries in the feed.  The value of the parameter is
-                    an integer.  The number of entries returned in the feed 
-                    will not exceed this value.
+                    Le paramètre <code>maxResults</code> limitant le nombr d'entrées du fil RSS ou Atom.  Ce paramètre est un entier.  Le nombre d'entrées retrounés n'exèderons pas cette valeur
                 </para>
                 <para>
-                    Set this parameter with the <code>setMaxResults()</code>
-                    function.
+                    Renseignez ce paramètre à l'aide de la fonction <code>setMaxResults()</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>startIndex</code> parameter specifies the
-                    ordinal number of the first entry returned in the feed.
-                    Entries before this number are skipped.
+                    Le paramètre <code>startIndex</code> définit le rang du premier paramètre à renvoyer.
+                    Les entrées qui le précédent sont ignorés.
                 </para>
                 <para>
-                    Set this parameter with the <code>setStartIndex()</code>
-                    function.
+                    Renseignez ce paramètre à l'aide de la fonction <code>setStartIndex()</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>updatedMin</code> and <code>updatedMax</code>
-                    parameters specify bounds on the entry date.
-                    If you specify a value for <code>updatedMin</code>,
-                    no entries that were updated earlier than the date
-                    you specify are included in the feed.  Likewise
-                    no entries updated after the date specified by
-                    <code>updatedMax</code> are included.
+                    Les paramètres <code>updatedMin</code> et <code>updatedMax</code>
+                    définissent des limites sur les date des entrées.
+                    Si vous spécifiez un valeur pour <code>updatedMin</code>,
+Aucune entrée qui à été mise à jour plus tôt que la date spécifiée ne sera récupérée.
+ De la meme façon, aucune entrée qui à été mise à jour après la date <code>updatedMax</code> ne sera remontée.
                 </para>
                 <para>
-                    You can use numeric timestamps, or a variety of
-                    date/time string representations as the value for
-                    these parameters.
+Vous pouvez utiliser des timestamps ou des dates/heure sous forme de chaine de caractères comme valeurs pour ces paramètres.
                 </para>
                 <para>
-                    Set this parameter with the <code>setUpdatedMin()</code>
-                    and <code>setUpdatedMax()</code> functions.
+                    Renseignez ces paramètres à l'aide des fonctions <code>setUpdatedMin()</code>
+                    et <code>setUpdatedMax()</code>.
                 </para>
             </listitem>
 
         </itemizedlist>
 
         <para>
-            There is a <code>get</code> function for each
-            <code>set</code> function.
+            Il existe une fonction <code>get</code> pour chaques fonctions
+            <code>set</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -227,46 +196,41 @@ $gdata->setMaxResults(10);
 echo $gdata->getMaxResults();   // returns 10
 ?>]]></programlisting>
 
-        <para>
-            The Zend_Gdata class also implements "magic" getter and
-            setter methods, so you can use the name of the parameter
-            as a virtual member of the class.  You can use
-            <code>isset()</code> and <code>unset()</code> on these
-            virtual members.
+        <para> 
+		Zend_Gdata implémente aussi des méthodes getter et setter "magic", vous donnant ainsi la possibilité d'utiliser les noms de ces paramètres en tant que membres virtuels de la classe.
+ Vous pouvez donc utiliser 
+            <code>isset()</code> et <code>unset()</code> sur ces membres virtuels.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
 $gdata->maxResults = 10;
-echo $gdata->maxResults;        // returns 10
-echo isset($gdata->maxResults); // returns true
-unset($gdata->maxResults);      // clears parameter
+echo $gdata->maxResults;        // retourne 10
+echo isset($gdata->maxResults); // renvoi "vrai"
+unset($gdata->maxResults);      // efface le paramètre
 ?>]]></programlisting>
 
         <para>
-            You can clear all parameters with the <code>resetParameters()</code>
-            function.  This is useful to do if you reuse a Zend_Gdata
-            object for multiple queries.
+Vous pouvez effacer tous les paramètres en une fois en utilisant la fonction <code>resetParameters()</code>. Ceci est utile si vous réutilisez un objetc Zend_Gdata pour différentes requêtes.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
 $gdata->maxResults = 10;
-// ...get feed...
+// ...récupération des entrées...
 
-$gdata->resetParameters();      // clears all parameters
-// ...get a different feed...
+$gdata->resetParameters();      // efface tous les paramètre
+// ...récupérez de nouvelles entrées...
 ?>]]></programlisting>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.getfeed">
-        <title>Fetching a feed</title>
+        <title>Récupérer un fil</title>
 
         <para>
-            Use the <code>getFeed()</code> function to retrieve
-            a feed from a specified URI.
-            This function returns an object of class Zend_Feed.
+            Utilisez la fonction <code>getFeed()</code> pour récupérer le fil d'une URI spécifiée.
+            Cete fonction retourne un objet de type Zend_Feed.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
