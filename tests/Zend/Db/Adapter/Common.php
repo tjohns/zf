@@ -22,7 +22,7 @@
 /**
  * Zend_Registry
  */
-require_once 'Zend.php'; // @todo: change to 'Zend/Registry.php'
+require_once 'Zend/Registry.php';
 
 /**
  * Zend_Loader
