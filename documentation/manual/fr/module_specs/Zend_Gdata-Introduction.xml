@@ -243,33 +243,25 @@ $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
 
         <para>
-            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
-            for more information on how to use this object.
+            Voir la documentation de <link linkend="zend.feed.introduction">Zend_Feed</link>
+            pour plus d'informations sur l'utilisation de cet objet.
         </para>
 
         <para>
-            See later sections for special functions in each
-            helper class for Google Data services.  These
-            functions help you to get feeds from the URI that is
-            appropriate for the respective service.
+Voir les autres charpitres pour les fonctions spécifiques à certains services Google Data. Ces fonctions vous aide à récupérer les données d'un service particulier à partir de son URI.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
-        <title>Posting entries to Google servers</title>
+        <title>Envoyer des données sur le serveur Google</title>
 
         <para>
-            The Zend_Gdata object has a function <code>post()</code>
-            with which you can upload data to save new entries
-            to Google Data services.
+L'objet Zend_GData possède une fonction <code>post()</code> avec laquelle vous pouvez uploader de nouvelles entrées dans les services Google Data.
         </para>
 
         <para>
-            You are responsible for constructing a string containing
-            the correct XML structure for an entry of the respective
-            Google Data service you are using.  You may use PHP class
-            libraries such as DOM XML or SimpleXML.
+Il est à votre charge de construire une chaine XML syntaxiquement et stucturellement correcte pour une entrée d'un service donné. Vous pouvez pour cela vous aider de librairies PHP comme DOM XML ou SimpleXML.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -305,21 +297,16 @@ $gdata->post($xml->asXML(), $myCalendar);
 ?>]]></programlisting>
 
         <para>
-            To post entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+Pour transférer des données, vous devze utiliser un objet Zend_Http_Client authentifié que vous aurez créer en utilisant les classes Zend_Gdata_AuthSub ou Zend_Gdata_ClientLogin.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.delete">
-        <title>Deleting entries on Google servers</title>
+        <title>Supprimer des données sur le serveur Google</title>
 
         <para>
-            The Zend_Gdata object has a function <code>delete()</code>
-            with which you can delete entries from Google Data
-            services.  Pass the <code>&lt;id&gt;</code> value from
-            a feed entry to the <code>delete()</code> method.
+L'objet Zend_Gdata possède la fonction <code>delete()</code> avec laquelle vous pouvez supprimer des entrées sur les services Google Data. Pour cela il faut passer l'identifiant <code>&lt;id&gt;</code> d'une entrée à la methode <code>delete()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -335,9 +322,7 @@ foreach ($feed as $feedEntry) {
 ?>]]></programlisting>
 
         <para>
-            You can also use the <code>delete()</code> method without
-            a feed object, if you pass a correct URI identifying an
-            entry.
+            Vous pouvez aussi utiliser la methode <code>delete()</code> sans identifiant du moment que vous lui passez une URI correcte identifiant une entrée.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -347,14 +332,11 @@ $gdata->delete($uri);
 ?>]]></programlisting>
 
         <para>
-            In the above example, replace "<code>entryID</code>" with the
-            ID value for the specific entry you want to delete.
+            Dans l'exemple précédent, remplacez "<code>entryID</code>" par l'identifiant de l'entrée que vous voulez supprimer.
         </para>
 
         <para>
-            To delete entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+Pour supprimer des entrées, vous devez utiliser un objet Zend_Http_Client authentifié que vous aurez céer à l'aide d'une des classes Zend_Gdata_AuthSub ou Zend_Gdata_ClientLogin.
         </para>
 
     </sect2>
