@@ -58,6 +58,14 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         return $params;
     }
 
+    /**
+     * @return string the schema name, often this is the dbname.
+     */
+    public function getSchema()
+    {
+        return 'public';
+    }
+
     function getCreateTableSQL()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
@@ -189,6 +197,16 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals('"table_name"', $value);
         $value = $this->_db->quoteIdentifier('table_"_name');
         $this->assertEquals('"table_""_name"', $value);
+    }
+
+    public function testSelectGroupByClauseExpr()
+    {
+        $this->markTestSkipped("PostgreSQL has problems with expressions in GROUP BY");
+    }
+
+    public function testSelectGroupByClauseAutoExpr()
+    {
+        $this->markTestSkipped("PostgreSQL has problems with expressions in GROUP BY");
     }
 
     public function testTableInsert()

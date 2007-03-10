@@ -138,7 +138,52 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
         }
     }
 
+    public function testSelectFromQualified()
+    {
+        $this->markTestSkipped('SQLite does not support qualified table names');
+    }
+
+    public function testSelectJoinQualified()
+    {
+        $this->markTestSkipped('SQLite does not support qualified table names');
+    }
+
     public function testSelectGroupByClause()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectGroupByClauseQualified()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectGroupByClauseExpr()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectGroupByClauseAutoExpr()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectHavingClause()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectHavingClauseWithParameter()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectOrHavingClause()
+    {
+        $this->markTestIncomplete('Pending fix for ZF-884');
+    }
+
+    public function testSelectOrHavingClauseWithParameter()
     {
         $this->markTestIncomplete('Pending fix for ZF-884');
     }

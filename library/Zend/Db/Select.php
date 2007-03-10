@@ -198,11 +198,7 @@ class Zend_Db_Select
                 $sql .= "\nGROUP BY\n\t";
                 $l = array();
                 foreach ($this->_parts[self::GROUP] as $term) {
-                    if ($term instanceof Zend_Db_Expr) {
-                        $l[] = $term->__toString();
-                    } else {
-                        $l[] = $this->_adapter->quoteIdentifier($term);
-                    }
+                    $l[] = $this->_adapter->quoteIdentifier($term);
                 }
                 $sql .= implode(",\n\t", $l);
             }
@@ -220,13 +216,10 @@ class Zend_Db_Select
             $sql .= "\nORDER BY\n\t";
             $l = array();
             foreach ($this->_parts[self::ORDER] as $term) {
-                if ($term instanceof Zend_Db_Expr) {
-                    $l[] = $term->__toString();
-                } else if (is_array($term)) {
+                if (is_array($term)) {
                     $l[] = $this->_adapter->quoteIdentifier($term[0]) . ' ' . $term[1];
                 } else {
-                    // should never happen
-                    $l[] = $term;
+                    $l[] = $this->_adapter->quoteIdentifier($term);
                 }
             }
             $sql .= implode(",\n\t", $l);
@@ -568,9 +561,9 @@ class Zend_Db_Select
         }
 
         if ($this->_parts[self::WHERE]) {
-            $this->_parts[self::WHERE][] = "AND $cond";
+            $this->_parts[self::WHERE][] = "AND ($cond)";
         } else {
-            $this->_parts[self::WHERE][] = $cond;
+            $this->_parts[self::WHERE][] = "($cond)";
         }
 
         return $this;
@@ -595,9 +588,9 @@ class Zend_Db_Select
         }
 
         if ($this->_parts[self::WHERE]) {
-            $this->_parts[self::WHERE][] = "OR $cond";
+            $this->_parts[self::WHERE][] = "OR ($cond)";
         } else {
-            $this->_parts[self::WHERE][] = $cond;
+            $this->_parts[self::WHERE][] = "($cond)";
         }
 
         return $this;
@@ -616,6 +609,9 @@ class Zend_Db_Select
         }
 
         foreach ($spec as $val) {
+            if (preg_match('/^.+\(.*\)$/', $val)) {
+                $val = new Zend_Db_Expr($val);
+            }
             $this->_parts[self::GROUP][] = $val;
         }
 
@@ -641,9 +637,9 @@ class Zend_Db_Select
         }
 
         if ($this->_parts[self::HAVING]) {
-            $this->_parts[self::HAVING][] = "AND $cond";
+            $this->_parts[self::HAVING][] = "AND ($cond)";
         } else {
-            $this->_parts[self::HAVING][] = $cond;
+            $this->_parts[self::HAVING][] = "($cond)";
         }
 
         return $this;
@@ -668,9 +664,9 @@ class Zend_Db_Select
         }
 
         if ($this->_parts[self::HAVING]) {
-            $this->_parts[self::HAVING][] = "OR $cond";
+            $this->_parts[self::HAVING][] = "OR ($cond)";
         } else {
-            $this->_parts[self::HAVING][] = $cond;
+            $this->_parts[self::HAVING][] = "($cond)";
         }
 
         return $this;
@@ -690,6 +686,9 @@ class Zend_Db_Select
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $val) {
+            if (preg_match('/^.+\(.*\)$/', $val)) {
+                $val = new Zend_Db_Expr($val);
+            }
             if ($val instanceof Zend_Db_Expr) {
                 $expr = $val->__toString();
                 if (empty($expr)) {
@@ -769,6 +768,9 @@ class Zend_Db_Select
                 // Check for columns that look like functions and convert to Zend_Db_Expr
                 if (preg_match('/^.+\(.*\)$/', $col)) {
                     $col = new Zend_Db_Expr($col);
+                } elseif (preg_match('/(.+)\.(.+)/', $col, $m)) {
+                    $correlationName = $m[1];
+                    $col = $m[2];
                 }
             }
             if (is_string($alias)) {

@@ -96,6 +96,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return string the schema name, often this is the dbname.
+     */
+    public function getSchema()
+    {
+        $param = $this->getParams();
+        return $param['dbname'];
+    }
+
+    /**
      * @return string SQL statement for dropping the test table.
      */
     protected function getDropTableSQL()
@@ -647,7 +656,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectColumnsAliases()
     {
-        // to be written
+        $aliasKey = $this->getResultSetKey('alias');
+        $titleKey = $this->getResultSetKey('title');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from($table, array('alias' => 'title'));
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of result set to be 2');
+        $this->assertThat($result[0], $this->arrayHasKey($aliasKey));
+        $this->assertThat($result[0], $this->logicalNot($this->arrayHasKey($titleKey)));
     }
 
     /**
@@ -656,7 +674,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectColumnsQualified()
     {
-        // to be written
+        $titleKey = $this->getResultSetKey('title');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from($table, "$table.title");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertThat($result[0], $this->arrayHasKey($titleKey));
     }
 
     /**
@@ -664,7 +688,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectColumnsExpr()
     {
-        // to be written
+        $titleKey = $this->getResultSetKey('title');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from($table, new Zend_Db_Expr("$table.title"));
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertThat($result[0], $this->arrayHasKey($titleKey));
     }
 
     /**
@@ -675,7 +705,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectColumnsAutoExpr()
     {
-        // to be written
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from($table, array('count' => 'COUNT(*)'));
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertThat($result[0], $this->arrayHasKey('count'));
+        $this->assertEquals(2, $result[0]['count']);
     }
 
     /**
@@ -709,7 +745,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectFromQualified()
     {
-        // to be written
+        $schema = $this->getSchema();
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $select = $this->_db->select()
+            ->from("$schema.$table");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
     }
 
     /**
@@ -839,7 +881,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectJoinQualified()
     {
-        // to be written
+        $schema = $this->getSchema();
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+
+        $this->createTestTable2();
+        $select = $this->_db->select()
+            ->from($table)
+            ->join("$schema.$table2", 'id = news_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(10, count($result[0]));
     }
 
     /**
@@ -876,12 +929,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectWhereClauseWithParameter()
     {
-        // to be written
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
+        $select = $this->_db->select()
+            ->from($table)
+            ->where('id = ?', 2);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, $result[0][$id]);
     }
 
     /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
-     * @todo: test orWhere() with 2 args for quoteInto()
      */
     public function testSelectOrWhereClause()
     {
@@ -905,7 +966,18 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrWhereClauseWithParameter()
     {
-        // to be written
+        $id = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+
+        $select = $this->_db->select()
+            ->from($table)
+            ->orWhere('id = ?', 1)
+            ->orWhere('id = ?', 2);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0][$id]);
+        $this->assertEquals(2, $result[1][$id]);
     }
 
     /**
@@ -953,7 +1025,25 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGroupByClauseQualified()
     {
-        // to be written
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+        $userId = $this->getIdentifier('user_id');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from($table2, $userId)
+            ->from('', new Zend_Db_Expr('count(*) as thecount'))
+            ->group("$table2.$userId")
+            ->order($userId);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of first result set to be 2');
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey], 'Expected count(*) of first result set to be 2');
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -962,7 +1052,25 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGroupByClauseExpr()
     {
-        // to be written
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+        $userId = $this->getIdentifier('user_id');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from($table2, $userId)
+            ->from('', new Zend_Db_Expr('count(*) as thecount'))
+            ->group(new Zend_Db_Expr("$userId+1"))
+            ->order($userId);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of first result set to be 2');
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey], 'Expected count(*) of first result set to be 2');
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -973,7 +1081,29 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectGroupByClauseAutoExpr()
     {
-        // to be written
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+        $userId = $this->getIdentifier('user_id');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from($table2, $userId)
+            ->from('', new Zend_Db_Expr('count(*) as thecount'))
+            ->group("ABS("
+              . $this->_db->quoteIdentifier($table2)
+              . '.'
+              . $this->_db->quoteIdentifier($userId)
+              . ")")
+            ->order($userId);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result), 'Expected count of first result set to be 2');
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey], 'Expected count(*) of first result set to be 2');
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -981,12 +1111,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectHavingClause()
     {
-        // @todo: fix ZF-884
-        if ($this->getDriver() == 'pdo_Sqlite') {
-            $this->markTestIncomplete('Pending fix for ZF-884');
-            return;
-        }
-
         $userIdKey = $this->getResultSetKey('user_id');
         $countKey = $this->getResultSetKey('thecount');
         $table2 = $this->getIdentifier(self::TABLE_NAME_2);
@@ -1022,7 +1146,23 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectHavingClauseWithParameter()
     {
-        // to be written
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+        $userId = $this->getIdentifier('user_id');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from($table2, array($userId))
+            ->from('', 'count(*) as thecount')
+            ->group($userId)
+            ->having('count(*) > ?', 1);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
     }
 
     /**
@@ -1030,12 +1170,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrHavingClause()
     {
-        // @todo: fix ZF-884
-        if ($this->getDriver() == 'pdo_Sqlite') {
-            $this->markTestIncomplete('Pending fix for ZF-884');
-            return;
-        }
-
         $userIdKey = $this->getResultSetKey('user_id');
         $countKey = $this->getResultSetKey('thecount');
         $table2 = $this->getIdentifier(self::TABLE_NAME_2);
@@ -1080,7 +1214,27 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrHavingClauseWithParameter()
     {
-        // to be written
+        $userIdKey = $this->getResultSetKey('user_id');
+        $countKey = $this->getResultSetKey('thecount');
+        $table2 = $this->getIdentifier(self::TABLE_NAME_2);
+        $userId = $this->getIdentifier('user_id');
+
+        $this->createTestTable2();
+
+        $select = $this->_db->select()
+            ->from($table2, array($userId))
+            ->from('', 'count(*) as thecount')
+            ->group($userId)
+            ->orHaving('count(*) > ?', 1)
+            ->orHaving('count(*) = ?', 1)
+            ->order($userId);
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(101, $result[0][$userIdKey]);
+        $this->assertEquals(2, $result[0][$countKey]);
+        $this->assertEquals(102, $result[1][$userIdKey]);
+        $this->assertEquals(1, $result[1][$countKey]);
     }
 
     /**
@@ -1130,7 +1284,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrderByClauseQualified()
     {
-        // to be written
+        $idKey = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from($table)
+            ->order("$table.$id");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$idKey]);
     }
 
     /**
@@ -1139,7 +1302,16 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrderByClauseExpr()
     {
-        // to be written
+        $idKey = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from($table)
+            ->order(new Zend_Db_Expr("$id+1"));
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$idKey]);
     }
 
     /**
@@ -1150,7 +1322,20 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
      */
     public function testSelectOrderByClauseAutoExpr()
     {
-        // to be written
+        $idKey = $this->getResultSetKey('id');
+        $table = $this->getIdentifier(self::TABLE_NAME);
+        $id = $this->getIdentifier('id');
+
+        $select = $this->_db->select()
+            ->from($table)
+            ->order("ABS("
+              . $this->_db->quoteIdentifier($table)
+              . '.'
+              . $this->_db->quoteIdentifier($id)
+              . ")");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0][$idKey]);
     }
 
     /**
