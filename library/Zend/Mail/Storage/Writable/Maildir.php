@@ -55,7 +55,65 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      */
     public function createFolder($name, $parentFolder = null)
     {
-        throw new Exception('todo'); // TODO
+        if ($parentFolder instanceof Zend_Mail_Folder) {
+            $folder = $parentFolder->getGlobalName() . $this->_delim . $name;
+        } else if ($parentFolder != null) {
+            $folder = rtrim($parentFolder, $this->_delim) . $this->_delim . $name;
+        } else {
+            $folder = $name;
+        }
+
+        $folder = trim($folder, $this->_delim);
+
+        // first we check if we try to create a folder that does exist
+        $exists = null;
+        try {
+            $exists = $this->getFolders($folder);
+        } catch (Zend_Mail_Exception $e) {
+            // ok
+        }
+        if ($exists) {
+            throw new Zend_Mail_Storage_Exception('folder already exists');
+        }
+
+        if (strpos($folder, $this->_delim . $this->_delim) !== false) {
+            throw new Zend_Mail_Storage_Exception('invalid name - folder parts may not be empty');
+        }
+
+        if (strpos($folder, 'INBOX' . $this->_delim) === 0) {
+            $folder = substr($folder, 6);
+        }
+
+        $fulldir = $this->_rootdir . '.' . $folder;
+
+        // check if we got tricked and would create a dir outside of the rootdir or not as direct child
+        if (strpos($folder, DIRECTORY_SEPARATOR) !== false || strpos($folder, '/') !== false
+            || dirname($fulldir) . DIRECTORY_SEPARATOR != $this->_rootdir) {
+            throw new Zend_Mail_Storage_Exception('invalid name - no directory seprator allowed in folder name');
+        }
+
+        // has a parent folder?
+        $parent = null;
+        if (strpos($folder, $this->_delim)) {
+            // let's see if the parent folder exists
+            $parent = substr($folder, 0, strrpos($folder, $this->_delim));
+            try {
+                $this->getFolders($parent);
+            } catch (Zend_Mail_Exception $e) {
+                // does not - create parent folder
+                $this->createFolder($parent);
+            }
+        }
+
+        if (!mkdir($fulldir) || !mkdir($fulldir . DIRECTORY_SEPARATOR . 'cur')) {
+            throw new Zend_Mail_Storage_Exception('error while creating new folder, may be created incompletly');
+        }
+
+        mkdir($fulldir . DIRECTORY_SEPARATOR . 'new');
+        mkdir($fulldir . DIRECTORY_SEPARATOR . 'tmp');
+
+        $localName = $parent ? substr($folder, strlen($parent) + 1) : $folder;
+        $this->getFolders($parent)->$localName = new Zend_Mail_Storage_Folder($localName, $folder, true);
     }
 
     /**
@@ -67,7 +125,60 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      */
     public function removeFolder($name)
     {
-        throw new Exception('todo'); // TODO
+        if ($name instanceof Zend_Mail_Folder) {
+            $name = $name->getGlobalName();
+        }
+
+        $name = trim($name, $this->_delim);
+        if (strpos($name, 'INBOX' . $this->_delim) === 0) {
+            $name = substr($name, 6);
+        }
+
+        // check if folder exists and has no children
+        if (!$this->getFolders($name)->isLeaf()) {
+            throw new Zend_Mail_Storage_Exception('delete children first');
+        }
+
+        if ($name == 'INBOX' || $name == '/') {
+            throw new Zend_Mail_Storage_Exception('wont delete INBOX');
+        }
+
+        if ($name == $this->getCurrentFolder()) {
+            throw new Zend_Mail_Storage_Exception('wont delete selected folder');
+        }
+
+        foreach (array('tmp', 'new', 'cur', '.') as $subdir) {
+            $dir = $this->_rootdir . '.' . $name . '/' . $subdir;
+            if (!file_exists($dir)) {
+                continue;
+            }
+            $dh = opendir($dir);
+            if (!$dh) {
+                throw new Zend_Mail_Storage_Exception("error opening $subdir");
+            }
+            while (($entry = readdir($dh)) !== false) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+                if (!unlink($dir . '/' . $entry)) {
+                    throw new Zend_Mail_Storage_Exception("error cleaning $subdir");
+                }
+            }
+            closedir($dh);
+            if ($subdir !== '.') {
+                if (!rmdir($dir)) {
+                    throw new Zend_Mail_Storage_Exception("error removing $subdir");
+                }
+            }
+        }
+
+        if (!rmdir($this->_rootdir . '.' . $name)) {
+            throw new Zend_Mail_Storage_Exception("error removing maindir");
+        }
+
+        $parent = strpos($name, $this->_delim) ? substr($name, 0, strrpos($name, $this->_delim)) : null;
+        $localName = $parent ? substr($name, strlen($parent) + 1) : $name;
+        unset($this->getFolders($parent)->$localName);
     }
 
     /**
@@ -327,5 +438,18 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         $filedata['filename'] = $new_filename;
 
         $this->_files[$id - 1] = $filedata;
+    }
+
+
+    /**
+     * stub for not supported message deletion
+     *
+     * @return null
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function removeMessage($id)
+    {
+        // TODO: support remove here
+        throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
     }
 }
