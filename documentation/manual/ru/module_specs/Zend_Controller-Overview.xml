@@ -164,8 +164,11 @@
 -->
         					  </para>
                     <para>
-                        <code>Zend_Controller_Router_Rewrite</code> может также использоваться для сопоставления с произвольными путями, за более подробной информацией см. <xref
-                            linkend="zend.controller.providedsubclasses.rewriterouter">                        документацию по Rewrite Router</xref>
+                        <code>Zend_Controller_Router_Rewrite</code> может также
+                        использоваться для сопоставления с произвольными путями,
+                        за более подробной информацией см. <link
+                        linkend="zend.controller.providedsubclasses.rewriterouter">
+                        документацию по Rewrite Router</link>
 <!--
                         <code>Zend_Controller_Router_Rewrite</code> can also be
                         used to match arbitrary paths; see <xref
@@ -210,7 +213,6 @@
                         Если цикл завершится с установленным флагом
                         диспетчеризации (значение <code>true</code>) в объекте
                         запроса, то этим завершается процесс диспетчеризации. 
-                         
 <!--
                         The actual dispatching process consists of instantiating
                         the controller class and calling the action method in
@@ -708,7 +710,9 @@ $front->addControllerDirectory('/path/to/admin/controllers', 'admin');
 		    <note>
 		        <title>Гибкость<!--Flexibility--></title>
 		        <para>
-		            Если вы хотите большей гибкости, то можете обратиться к <xref linkend="zend.controller.providedsubclasses.rewriterouter"> документации по Rewrite Router</xref>.
+		            Если вы хотите большей гибкости, то можете обратиться к
+                <link linkend="zend.controller.providedsubclasses.rewriterouter">
+                документации по Rewrite Router</link>.
 <!--
                 If you want more flexible capabilities, you may want to check out
                 <xref linkend="zend.controller.providedsubclasses.rewriterouter">the

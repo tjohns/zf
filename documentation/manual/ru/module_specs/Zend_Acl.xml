@@ -237,17 +237,17 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
                 "<code>allowed</code>".
  -->		
             </para>
-            <note>
-                <para>
+        </example>
+        <note>
+            <para>
 		    Когда определяем нескольких родительских Ролей, не забывайте, что последний указанный родитель,
 		    является первым в списке поиска правил для запроса авторизации.
 <!-- 		
                     When specifying multiple parents for a Role, keep in mind that the last parent listed is
                     the first one searched for rules applicable to an authorization query.
  -->		    
-                </para>
-            </note>
-        </example>
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">

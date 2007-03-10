@@ -76,8 +76,8 @@ Zend_Controller_Front::run('/path/to/controllers');
                     Внедрен новый класс маршрута для использования с Rewrite
                     Router - <code>Zend_Controller_Router_Route_Module</code>.
                     Он предусматривает маршрут по умолчанию, используемый
-                    компонентами MVC, и поддерживает <xref
-                        linkend="zend.controller.modular">модули контроллеров</xref>.
+                    компонентами MVC, и поддерживает <link
+                        linkend="zend.controller.modular">модули контроллеров</link>.
 <!--
                     A new route class for use with the rewrite router was
                     introduced,

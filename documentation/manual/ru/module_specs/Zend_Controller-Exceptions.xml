@@ -240,8 +240,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             является экземпляром класса
                             Zend_Controller_Dispatcher_Exception, содержащим
                             текст 'Invalid controller specified'. Используйте
-                            один из методов, описанных в <xref
-linkend="zend.controller.exceptions.handling">предыдущем разделе</xref>
+                            один из методов, описанных в <link
+linkend="zend.controller.exceptions.handling">предыдущем разделе</link>
                             для отлова исключений и перенаправления на страницу
                             с сообщением об ошибке или главную страницу.
 <!--

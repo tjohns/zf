@@ -18,9 +18,10 @@
     </para>
     <para>
         Кроме возможности наследования от класса <code>Zend_Service</code>
-        и использования <code>Zend_Rest_Client</code> для веб-сервисов,
-        основанных на REST, Zend предоставляет поддержку популярных
-        веб-сервисов, таких, как
+        и использования
+        <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>
+        для веб-сервисов, основанных на REST, Zend предоставляет поддержку
+        популярных веб-сервисов, таких, как
         <link linkend="zend.service.akismet">Akismet</link>,
         <link linkend="zend.service.amazon">Amazon</link>,
         <link linkend="zend.service.flickr">Flickr</link> и
