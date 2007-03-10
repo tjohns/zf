@@ -33,19 +33,6 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_Pdo_MysqlTest
 
     public function getDriver()
     {
-        // @todo: when the Mysqli adapter moves out of the incubator,
-        // the following trick to allow it to be loaded should be removed.
-        $incubator = dirname(dirname(dirname(dirname(dirname(__FILE__)))))
-            . DIRECTORY_SEPARATOR . 'incubator' . DIRECTORY_SEPARATOR . 'library';
-        $include_path = get_include_path();
-        set_include_path($include_path . PATH_SEPARATOR . $incubator);
-        try {
-            Zend_Loader::loadClass('Zend_Db_Adapter_Mysqli');
-        } catch (Zend_Exception $e) {
-            $this->markTestIncomplete($e->getMessage());
-        }
-        set_include_path($include_path);
-
         return 'Mysqli';
     }
 
