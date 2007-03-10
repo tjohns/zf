@@ -45,7 +45,7 @@
     </para>
 
     <note>
-        <title>Unsupported services</title>
+        <title>Services non supportés</title>
         <para>
 		Les API Google Data proposent aussi Google Spreadsheets, mais Zend_Gdata ne fourni pas de class d'aide pour 		spreadsheets dans sa version actuelle.
         </para>
