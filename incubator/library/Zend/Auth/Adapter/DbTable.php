@@ -90,20 +90,6 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
     protected $_credentialTreatment = null;
     
     /**
-     * $_credentialTreatmentUseRow
-     *
-     * @var bool
-     */
-    protected $_credentialTreatmentUseRow = false;
-    
-    /**
-     * $_strictCheck - Wether to retreive the identity and credential together, OR identity then check password.
-     *
-     * @var bool
-     */
-    protected $_strictCheck = false;
-    
-    /**
      * $_resultRow
      *
      * @var array
@@ -117,9 +103,9 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * @param string $tableName
      * @param string $identityColumn
      * @param string $credentialColumn
-     * @param bool $strictCheck
+     * @param string $credentialTreatment
      */
-    public function __construct(Zend_Db_Adapter_Abstract $zendDb, $tableName = null, $identityColumn = null, $credentialColumn = null, $credentialTreatment = null, $strictCheck = true)
+    public function __construct(Zend_Db_Adapter_Abstract $zendDb, $tableName = null, $identityColumn = null, $credentialColumn = null, $credentialTreatment = null)
     {
         // setup configuration
         $this->_zendDb = $zendDb;
@@ -139,8 +125,6 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
         if ($credentialTreatment) {
             $this->setCredentialTreatment($credentialTreatment);
         }
-        
-        $this->strictCheck($strictCheck);
     }
     
     /**
@@ -185,48 +169,14 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * pass a parameritized string that will be used to determine if the user supplied data matches the
      * stored version and format of the credential. examples: 'PASSWORD(?)' OR 'MD5(?)'
      *
-     * NOTE: useRowInforation - this allows for the EXTREME EDGE CASE that multiple columns of a credential
-     * could be used for building a hashed value.  Without this, the adapter will issue a treated value
-     * (if used in strict mode) like so:   
-     *      SELECT MD5('supplied password') as $credential_name;
-     * 
-     * If you need to retrieve other columns to build the hashing algorithm, set useRowInformation to true,
-     * and the following will be possible: 
-     * 
-     *      $adapter->setCredentialTreatment('SHA1(CONCAT(?, salt_column))', true)
-     * resulting in:
-     *      SELECT SHA1(CONCAT('my supplied password', salt_column)) as $credential_column WHERE $identity_column = $identity;
-     * 
      * @param string $treatment
-     * @param bool $useRow
      */
-    public function setCredentialTreatment($treatment, $useRow = false)
+    public function setCredentialTreatment($treatment)
     {
         $this->_credentialTreatment = $treatment;
-        $this->_credentialTreatmentUseRow = ($useRow) ? true : false;
         return $this;
     }
     
-    /**
-     * strictCheck()
-     *     when TRUE - will check for identity first in query, then compare credential column to provided value
-     *     when FALSE - will check for both identity and password in one query
-     * 
-     * The benefits of checking with strictness = true are that your messages will be more fine grained.  You will
-     * be able to determine the difference between an identity not existing and a credential being bad.  There is
-     * a slight impact on performance as TREATED credentials will require 1 extra query to be issued to resolve the
-     * credential value.
-     * 
-     * By checking with strictness = false, an identity not existing and a password being incorrect will yeild the same
-     * failed athentication messages.
-     * 
-     * @param bool $flag
-     */
-    public function strictCheck($flag)
-    {
-        $this->_strictCheck = ($flag) ? true : false;
-    }
-        
     /**
      * setIdentity() - set the value to be used as the identity
      *
@@ -258,7 +208,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      *
      * @return array
      */
-    public function getResultRow()
+    public function getResultRow($returnKeys = array())
     {
         return $this->_resultRow;
     }
@@ -295,112 +245,61 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
         }
         
         // create result array
-        $result = array(
-            'is_valid'  => false,
+        $auth_result = array(
+            'code'     => Zend_Auth_Result::FAILURE,
             'identity' => $this->_identity,
             'messages' => array()
             );
         
-        
-        // get select
-        $select = $this->_zendDb->select();
-        $select->from($this->_tableName);
-        $select->where("{$this->_identityColumn} = ?", $this->_identity);
-        
-        // if strict check enabled, identity is processed before credentials
-        if ($this->_strictCheck) {
-            
-            // query for the identity
-            try {
-                $result_identities = $this->_zendDb->fetchAll($select->__toString());
-            } catch (Exception $e) {
-                throw new Zend_Auth_Exception($e->getMessage());
-            }
-            
-            if (count($result_identities) < 1) {
-                $result['messages'][] = "Identity not found.";
-                return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);
-            } elseif (count($result_identities) > 1) {
-                $result['messages'][] = "More than one record matches supplied identity.";
-                return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);                
-            }
-            
-            $identity = $result_identities[0];
-            
-            // query for the answer to the credential
-            if ($this->_credentialTreatment && (strpos($this->_credentialTreatment, "?") !== false) ) {
-                if ($this->_credentialTreatmentUseRow) {
-                    $select_supplied_credentials = $this->_zendDb->select();
-                    $credential_expr = new Zend_Db_Expr($this->_zendDb->quoteInto($this->_credentialTreatment, $this->_credential) . ' AS ' . $this->_credentialColumn);
-                    $select_supplied_credentials
-                        ->from($this->_tableName, $credential_expr)
-                        ->where($this->_identityColumn . ' = ?', $this->_identity);
-                    $sql_supplied_credentials = $select_supplied_credentials->__toString();
-                } else {
-                    $sql_supplied_credentials = 'SELECT '
-                        . $this->_zendDb->quoteInto($this->_credentialTreatment, $this->_credential) 
-                        . ' AS ' . $this->_credentialColumn;
-                }
-                
-                try {
-                    $result_treated_credentials = $this->_zendDb->fetchAll($sql_supplied_credentials);
-                } catch (Exception $e) {
-                    throw Zend_Auth_Exception($e->getMessage());
-                }
-                $supplied_credential_value = $result_treated_credentials[0][$this->_credentialColumn];
-            } else {
-                $supplied_credential_value = $this->_credential;
-            }
-
-            // all credential values must be provided for
-            if (!array_key_exists($this->_credentialColumn, $identity)) {
-                throw new Zend_Auth_Exception($this->_credentialColumn . ' does not appear to be a valid credential column.');
-            }
-            
-            if ($identity[$this->_credentialColumn] != $supplied_credential_value) {
-                $result['messages'][] = "Invalid credentials.";
-                $result['messages'][] = "Credential '{$this->_credentialColumn}' does not match recorded value.";
-                return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);
-            }
-
-            $this->_resultRow = $identity;
-            
-            $result['is_valid'] = true;
-            $result['messages'][] = "Authentication successful.";
-            return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);
-
-        } else {
-            
-            if ($this->_credentialTreatment && (strpos($this->_credentialTreatment, "?") !== false) ) {
-                $supplied_credential = $this->_zendDb->quoteInto($this->_credentialTreatment, $this->_credential);
-            } else {
-                $supplied_credential = $this->_zendDb->quote($this->_credential);
-            }
-            
-            $select->where("{$this->_credentialColumn} = $supplied_credential");
-            
-            // query for the identity
-            try {
-                $result_identities = $this->_zendDb->fetchAll($select->__toString());
-            } catch (Exception $e) {
-                throw new Zend_Auth_Exception($e->getMessage());
-            }
-            
-            if (count($result_identities) < 1) {
-                $result['messages'][] = "Identity not found.";
-                return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);
-            } elseif (count($result_identities) > 1) {
-                $result['messages'][] = "More than one record matches supplied identity.";
-                return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);                
-            } 
-
-            $this->_resultRow = $result_identities[0];
-            
-            $result['is_valid'] = true;
-            $result['messages'][] = "Authentication successful.";
-            return new Zend_Auth_Result($result['is_valid'], $result['identity'], $result['messages']);
+        // build credential expression
+        if (empty($this->_credentialTreatment) || (strpos($this->_credentialTreatment, "?") === false)) {
+            $this->_credentialTreatment = '?';
         }
+        
+        $credential_expression = new Zend_Db_Expr(
+            $this->_zendDb->quoteInto(
+                $this->_zendDb->quoteIdentifier($this->_credentialColumn)
+                . ' = ' . $this->_credentialTreatment, $this->_credential
+                )
+            . ' AS zend_auth_credential_match'
+            );
 
+        // get select
+        $db_select = $this->_zendDb->select();
+        $db_select->from($this->_tableName, array('*', $credential_expression))
+                  ->where($this->_zendDb->quoteIdentifier($this->_identityColumn) . ' = ?', $this->_identity);
+        
+        // query for the identity
+        try {
+            $result_identities = $this->_zendDb->fetchAll($db_select->__toString());
+        } catch (Exception $e) {
+            throw new Zend_Auth_Exception($e->getMessage());
+        }
+        
+        if (count($result_identities) < 1) {
+            $auth_result['code'] = Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND;
+            $auth_result['messages'][] = 'A record with the supplied identity could not be found.';
+            return new Zend_Auth_Result($auth_result['code'], $auth_result['identity'], $auth_result['messages']);
+        } elseif (count($result_identities) > 1) {
+            $auth_result['code'] = Zend_Auth_Result::FAILURE_IDENTITY_TOO_AMBIGIOUS;
+            $auth_result['messages'][] = 'More than one record matches the supplied identity.';
+            return new Zend_Auth_Result($auth_result['code'], $auth_result['identity'], $auth_result['messages']);                
+        }
+        
+        $result_identity = $result_identities[0];
+        
+        if ($result_identity['zend_auth_credential_match'] != '1') {
+            $auth_result['code'] = Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL;
+            $auth_result['messages'][] = 'Supplied credential is invalid.';
+            return new Zend_Auth_Result($auth_result['code'], $auth_result['identity'], $auth_result['messages']);
+        }
+        
+        unset($result_identity['zend_auth_credential_match']);
+        $this->_resultRow = $result_identity;
+        
+        $auth_result['code'] = Zend_Auth_Result::SUCCESS;
+        $auth_result['messages'][] = 'Authentication successful.';
+        return new Zend_Auth_Result($auth_result['code'], $auth_result['identity'], $auth_result['messages']);   
     }
 
 }
