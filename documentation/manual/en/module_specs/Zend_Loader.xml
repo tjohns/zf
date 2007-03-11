@@ -6,16 +6,17 @@
         The Zend_Loader class includes methods to help you load files dynamically.
     </para>
 
-    <note>
+    <tip>
+        <title>Zend_Loader vs. require_once()</title>
         <para>
-            The Zend_Loader methods are best used when the file you need to
-            load is variable, for example if it based on a parameter from
+            The Zend_Loader methods are best used if the filename you need to
+            load is variable.  For example, if it is based on a parameter from
             user input or method argument.  If you are loading a file or a
-            class whose name is a literal name, there is no benefit to using
+            class whose name is constant, there is no benefit to using
             Zend_Loader over using traditional PHP functions such as
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
-    </note>
+    </tip>
 
     <sect2 id="zend.loader.load.file">
 
@@ -79,7 +80,12 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
             <title>Example of loadClass() method</title>
             <programlisting role="php"><![CDATA[<?php
 
-Zend_Loader::loadClass('Container_Tree', array('/home/production/mylib', '/home/production/myapp'));
+Zend_Loader::loadClass('Container_Tree',
+    array(
+        '/home/production/mylib',
+        '/home/production/myapp'
+    )
+);
 
 ?>]]></programlisting>
         </example>
