@@ -93,19 +93,19 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
-            $mail->selectFolder('/subfolder/test.mbox');
+            $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         } catch (Exception $e) {
             $this->fail('exception raised while selecting existing folder');
         }
 
-        $this->assertEquals($mail->getCurrentFolder(), '/subfolder/test.mbox');
+        $this->assertEquals($mail->getCurrentFolder(), DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
     }
 
     public function testChangeFolderUnselectable()
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
-            $mail->selectFolder('/subfolder');
+            $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder');
         } catch (Exception $e) {
             return; // test ok
         }
@@ -208,7 +208,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $count = $mail->countMessages();
         $this->assertEquals(6, $count);
 
-        $mail->selectFolder('/subfolder/test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         $count = $mail->countMessages();
         $this->assertEquals(1, $count);
     }
@@ -221,7 +221,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $sizes = $mail->getSize();
         $this->assertEquals($shouldSizes, $sizes);
 
-        $mail->selectFolder('/subfolder/test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         $sizes = $mail->getSize();
         $this->assertEquals(array(1 => 410), $sizes);
     }
@@ -233,7 +233,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
 
-        $mail->selectFolder('/subfolder/test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
@@ -242,7 +242,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
 
-        $mail->selectFolder('/subfolder/test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         $count = $mail->countMessages();
         $content = $mail->getMessage(1)->getContent();
 
@@ -253,7 +253,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
 
-        $mail->selectFolder('/subfolder/test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
     }

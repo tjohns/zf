@@ -153,14 +153,14 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
         $currentFolder = $this->_rootFolder;
         $subname = trim($rootFolder, DIRECTORY_SEPARATOR);
         while ($currentFolder) {
-            @list($entry, $subname) = @explode('/', $subname, 2);
+            @list($entry, $subname) = @explode(DIRECTORY_SEPARATOR, $subname, 2);
             $currentFolder = $currentFolder->$entry;
             if (!$subname) {
                 break;
             }
         }
 
-        if ($currentFolder->getGlobalName() != '/' . trim($rootFolder, DIRECTORY_SEPARATOR)) {
+        if ($currentFolder->getGlobalName() != DIRECTORY_SEPARATOR . trim($rootFolder, DIRECTORY_SEPARATOR)) {
             throw new Zend_Mail_Storage_Exception("folder $rootFolder not found");
         }
         return $currentFolder;
