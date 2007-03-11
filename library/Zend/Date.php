@@ -344,30 +344,32 @@ class Zend_Date extends Zend_Date_DateObject {
      * v - wall zone
      *
      * @param  string              $format  OPTIONAL An rule for formatting the output, if null the default dateformat is used
+     * @param  string              $type    OPTIONAL An type for the format string which overrides the standard setting
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
      */
-    public function toString($format = null, $locale = null)
+    public function toString($format = null, $type = null, $locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->getLocale();
-        }
-
         if (Zend_Locale::isLocale($format)) {
             $locale = $format;
             $format = null;
         }
 
+        if (Zend_Locale::isLocale($type)) {
+            $locale = $type;
+            $type = null;
+        }
+
+        if ($locale === null) {
+            $locale = $this->getLocale();
+        }
+
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
-        } else if (self::$_Options['format'] == 'php') {
+        } else if (((self::$_Options['format'] == 'php') && ($type === null)) or ($type == 'php')) {
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
-        $origformat = Zend_Locale_Format::setOptions();
-        if ($origformat['format'] == 'php') {
-            Zend_Locale_Format::setOptions(array('format' => 'iso'));
-        }
-        
+
         // get format tokens
         $j = 0;
         $comment = false;
@@ -664,7 +666,6 @@ class Zend_Date extends Zend_Date_DateObject {
             }
             $notset = false;
         }
-        Zend_Locale_Format::setOptions($origformat);
 
         return implode('', $output);
     }
@@ -958,91 +959,51 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::DATES :
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString(Zend_Locale_Format::getDateFormat($locale), $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString(Zend_Locale_Format::getDateFormat($locale), 'iso', $locale);
                 break;
 
             case Zend_Date::DATE_FULL :
                 $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'full'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($date['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($date['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::DATE_LONG :
                 $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'long'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($date['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($date['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::DATE_MEDIUM :
                 $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'medium'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($date['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($date['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::DATE_SHORT :
                 $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'short'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($date['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($date['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::TIMES :
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString(Zend_Locale_Format::getTimeFormat($locale), $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString(Zend_Locale_Format::getTimeFormat($locale), 'iso', $locale);
                 break;
 
             case Zend_Date::TIME_FULL :
                 $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'full'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($time['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($time['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::TIME_LONG :
                 $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'long'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($time['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($time['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::TIME_MEDIUM :
                 $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'medium'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($time['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($time['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::TIME_SHORT :
                 $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'short'));
-                $format = self::$_Options['format'];
-                self::$_Options['format'] = 'iso';
-                $value = $this->toString($time['pattern'], $locale);
-                self::$_Options['format'] = $format;
-                return $value;
+                return $this->toString($time['pattern'], 'iso', $locale);
                 break;
 
             case Zend_Date::ATOM :
@@ -1968,15 +1929,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::DATES :
                 try {
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getCorrectableDate($date, null, $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'type' => 'iso', 'fixdate' => true));
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -1990,7 +1943,6 @@ class Zend_Date extends Zend_Date_DateObject {
                                                              1 + $parsed['day'], 1970 + $parsed['year'], true),
                                                  $this->mktime(0, 0, 0, 1 + $month, 1 + $day, 1970 + $year, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -1998,15 +1950,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::DATE_FULL :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'full'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getDate($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getDate($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2020,7 +1964,6 @@ class Zend_Date extends Zend_Date_DateObject {
                                                              1 + $parsed['day'], 1970 + $parsed['year'], true),
                                                  $this->mktime(0, 0, 0, 1 + $month, 1 + $day, 1970 + $year, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2028,15 +1971,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::DATE_LONG :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'long'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getDate($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getDate($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2050,7 +1985,6 @@ class Zend_Date extends Zend_Date_DateObject {
                                   1 + $parsed['day'], 1970 + $parsed['year'], true),
                                   $this->mktime(0, 0, 0, 1 + $month, 1 + $day, 1970 + $year, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2058,15 +1992,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::DATE_MEDIUM :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'medium'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getDate($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getDate($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2080,7 +2006,6 @@ class Zend_Date extends Zend_Date_DateObject {
                                   1 + $parsed['day'], 1970 + $parsed['year'], true),
                                   $this->mktime(0, 0, 0, 1 + $month, 1 + $day, 1970 + $year, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2088,15 +2013,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::DATE_SHORT :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'short'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getDate($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getDate($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
 
                     if ($parsed['year'] < 100) {
                         $parsed['year'] += 1900;
@@ -2117,27 +2034,17 @@ class Zend_Date extends Zend_Date_DateObject {
                                   1 + $parsed['day'], 1970 + $parsed['year'], true),
                                   $this->mktime(0, 0, 0, 1 + $month, 1 + $day, 1970 + $year, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
 
             case Zend_Date::TIMES :
                 try {
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getTime($date, false, $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getTime($date, array('locale' => $locale, 'type' => 'iso', 'fixdate' => true));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2145,20 +2052,11 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::TIME_FULL :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'full'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getTime($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getTime($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], 0,
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2166,20 +2064,11 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::TIME_LONG :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'long'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getTime($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getTime($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2187,20 +2076,11 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::TIME_MEDIUM :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'medium'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getTime($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getTime($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2208,20 +2088,11 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::TIME_SHORT :
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'short'));
-                    if (self::$_Options['format'] == 'php') {
-                        $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
-                    }
-                    $origformat = Zend_Locale_Format::setOptions();
-                    if ($origformat['format'] == 'php') {
-                        Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                    }
-                    $parsed = Zend_Locale_Format::getTime($date, $format['pattern'], $locale);
-                    Zend_Locale_Format::setOptions($origformat);
+                    $parsed = Zend_Locale_Format::getTime($date, array('format' => $format['pattern'], 'type' => 'iso', 'locale' => $locale));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], 0,
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
                 } catch (Zend_Locale_Exception $e) {
-                    Zend_Locale_Format::setOptions($origformat);
                     throw new Zend_Date_Exception($e->getMessage(), $date);
                 }
                 break;
@@ -2446,12 +2317,7 @@ class Zend_Date extends Zend_Date_DateObject {
                         if (self::$_Options['format'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
                         }
-                        $origformat = Zend_Locale_Format::setOptions();
-                        if ($origformat['format'] == 'php') {
-                            Zend_Locale_Format::setOptions(array('format' => 'iso'));
-                        }
-                        $parsed = Zend_Locale_Format::getCorrectableDate($date, $part, $locale);
-                        Zend_Locale_Format::setOptions($origformat);
+                        $parsed = Zend_Locale_Format::getDate($date, array('format' => $part, 'locale' => $locale, 'fixdate' => true, 'type' => 'iso'));
                         if ($calc == 'set') {
                             if (isset($parsed['month'])) {
                                 --$parsed['month'];
@@ -2476,7 +2342,6 @@ class Zend_Date extends Zend_Date_DateObject {
                             1 + $parsed['month'], 1 + $parsed['day'], 1970 + $parsed['year'],
                             false), $this->getUnixTimestamp());
                     } catch (Zend_Locale_Exception $e) {
-                        Zend_Locale_Format::setOptions($origformat);
                         throw new Zend_Date_Exception($e->getMessage(), $date);
                     }
                 }
@@ -2594,17 +2459,11 @@ class Zend_Date extends Zend_Date_DateObject {
             if (self::$_Options['format'] == 'php') {
                 $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
-            $origformat = Zend_Locale_Format::setOptions();
-            if ($origformat['format'] == 'php') {
-                Zend_Locale_Format::setOptions(array('format' => 'iso'));
-            }
             try {
-                $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
+                $parsed = Zend_Locale_Format::getTime($time, array('format' => $format, 'locale' => $locale, 'type' => 'iso'));
             } catch (Zend_Locale_Exception $e) {
-                Zend_Locale_Format::setOptions($origformat);
                 throw new Zend_Date_Exception($e->getMessage());
             }
-            Zend_Locale_Format::setOptions($origformat);
             $time = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $time->set($parsed['hour'],   Zend_Date::HOUR);
             $time->set($parsed['minute'], Zend_Date::MINUTE);
@@ -2731,17 +2590,11 @@ class Zend_Date extends Zend_Date_DateObject {
             if (self::$_Options['format'] == 'php') {
                 $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
-            $origformat = Zend_Locale_Format::setOptions();
-            if ($origformat['format'] == 'php') {
-                Zend_Locale_Format::setOptions(array('format' => 'iso'));
-            }
             try {
-                $parsed = Zend_Locale_Format::getCorrectableDate($date, $format, $locale);
+                $parsed = Zend_Locale_Format::getDate($date, array('format' => $format, 'locale' => $locale, 'type' => 'iso'));
             } catch (Zend_Locale_Exception $e) {
-                Zend_Locale_Format::setOptions($origformat);
                 throw new Zend_Date_Exception($e->getMessage());
             }
-            Zend_Locale_Format::setOptions($origformat);
             $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR);
             $date->set($parsed['month'], Zend_Date::MONTH);

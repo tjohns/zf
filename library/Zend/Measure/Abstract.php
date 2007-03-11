@@ -142,7 +142,7 @@ abstract class Zend_Measure_Abstract
         }
 
         try {
-            $value = Zend_Locale_Format::getNumber($value, $locale);
+            $value = Zend_Locale_Format::getNumber($value, array('locale' => $locale));
         } catch(Exception $e) {
             throw new Zend_Measure_Exception($e->getMessage());
         }

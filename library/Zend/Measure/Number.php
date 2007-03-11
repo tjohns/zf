@@ -230,7 +230,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 break;
             default:
                 try {
-                    $value = Zend_Locale_Format::getInteger($value, $locale);
+                    $value = Zend_Locale_Format::getInteger($value, array('locale' => $locale));
                 } catch (Exception $e) {
                     throw new Zend_Measure_Exception($e->getMessage());
                 }
