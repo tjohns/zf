@@ -1,25 +1,20 @@
-<sect1 id="zend.config.adapters.ini">
+﻿<sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
-        <code>Zend_Config_Ini</code> enables developers to store configuration data in a familiar INI format and read them in the application by using nested object property syntax. The INI format is specialized to provide both the ability to have a hierarchy of configuration data keys and inheritance between configuration data sections. Configuration data hierarchies are supported by separating the keys with the dot or period character (<code>.</code>). A section may extend or inherit from another section by following the section name with a colon character (<code>:</code>) and the name of the section from which data are to be inherited.
+        <code>Zend_Config_Ini</code> permet aux développeurs de stocker des données de configuration dans le format familier d'un fichier INI et de les lire dans l'application en employant une syntaxe de propriétés d'objet imbriquées. Le format INI est spécialisé pour fournir à la fois la capacité d'avoir une hiérarchie des données de configuration et permettre l'héritage entre les sections de données de configuration. La hiérarchie des données de configuration est supportée grâce au fractionnement des clés à l'aide de points (<code>.</code>). Une section peut être étendue ou héritée d'une autre section en suivant le nom de section avec le caractère de deux points (<code>:</code>) et le nom de la section de laquelle des données doivent être héritées.
     </para>
     <note>
         <title>parse_ini_file</title>
         <para>
-            <code>Zend_Config_Ini</code> utilizes the 
-            <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> 
-            PHP function. Please review this documentation to be aware of its specific behaviors, 
-            which propagate to <code>Zend_Config_Ini</code>, such as how the special values of 
-            <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>, 
-            and <code>null</code> are handled.
+            <code>Zend_Config_Ini</code> utilise la fonction <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> de PHP. Veuillez prendre connaissance de la documentation pour apréhender ses comportements spécifiques, qui se propagent à <code>Zend_Config_Ini</code>, tel que la façon dont les valeurs spéciales : <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> et <code>null</code> sont manipulées.
         </para>
     </note>
     <example>
-        <title>Using Zend_Config_Ini</title>
+        <title>Utiliser Zend_Config_Ini</title>
         <para>
-            This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration data from an INI file. In this example there are configuration data for both a production system and for a staging system. Because the staging system configuration data are very similar to those for production, the staging section inherits from the production section. In this case, the decision is arbitrary and could have been written conversely, with the production section inheriting from the staging section, though this may not be the case for more complex situations. Suppose, then, that the following configuration data are contained in <code>/path/to/config.ini</code>:
+            Cet exemple illustre une utilisation de base de <code>Zend_Config_Ini</code> pour le chargement des données de configuration à partir d'un fichier INI. Dans cet exemple il y a des données de configuration pour un environnement de production et pour un environnement de test. Puisque les données de configuration de l'environnement de test sont très semblables à celles de la production, la section de test hérite de la section de production. Dans ce cas, la décision est arbitraire et pourrait avoir été écrite réciproquement, avec la section de production héritant de la section de test, bien que ceci ne doit pas être le cas pour des situations plus complexes. Supposons, que les données suivantes de configuration sont contenues dans <code>/chemin/vers/config.ini</code> :
         </para>
-        <programlisting role="ini"><![CDATA[; Production site configuration data
+        <programlisting role="ini"><![CDATA[; Données de configuration du site de production
 [production]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -28,22 +23,22 @@ database.username = dbuser
 database.password = secret
 database.name     = dbname
 
-; Staging site configuration data inherits from production and
-; overrides values as necessary
-[staging : production]
+; Données de configuration du site de test héritant du site de production
+; et surchargeant les clés nécessaires
+[test : production]
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]></programlisting>
         <para>
-            Next, assume that the application developer needs the staging configuration data from the INI file. It is a simple matter to load these data by specifying the INI file and the staging section:
+            Ensuite, supposons que le développeur a besoin des données de configuration de test issues du fichier INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
+$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 
-echo $config->database->host; // prints "dev.example.com"
-echo $config->database->name; // prints "dbname"]]></programlisting>
+echo $config->database->host; // affiche "dev.example.com"
+echo $config->database->name; // affiche "dbname"]]></programlisting>
     </example>
 </sect1>
 <!--
