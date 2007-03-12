@@ -71,13 +71,13 @@ class Zend_Locale_Format
 
     /**
      * Sets class wide options, if no option was given, the actual set options will be returned
-     * The 'precision' option of a value is used to truncate extra digits.
+     * The 'precision' option of a value is used to truncate or stretch extra digits. -1 means not to touch the extra digits.
      * The 'locale' option helps when parsing numbers and dates using separators and month names.
      * The date format 'type' option selects between CLDR/ISO date format specifier tokens and PHP's date() tokens.
      * The 'fixdate' option enables or disables heuristics that attempt to correct invalid dates.
      *
      * @param  array  $options  Array of options, keyed by option name: type = 'iso' | 'php', fixdate = true | false,
-     *                          locale = Zend_Locale | locale string, precision = whole number between 0 and 30
+     *                          locale = Zend_Locale | locale string, precision = whole number between -1 and 30
      * @throws Zend_Locale_Exception
      * @return Options array if no option was given 
      */
