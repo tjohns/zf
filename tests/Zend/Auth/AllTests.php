@@ -28,12 +28,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 /**
- * Start output buffering to prevent problems using session
- */
-ob_start();
-
-
-/**
  * PHPUnit_Framework_TestSuite
  */
 require_once 'PHPUnit/Framework/TestSuite.php';
@@ -43,12 +37,6 @@ require_once 'PHPUnit/Framework/TestSuite.php';
  * PHPUnit_TextUI_TestRunner
  */
 require_once 'PHPUnit/TextUI/TestRunner.php';
-
-
-/**
- * @see Zend_AuthTest
- */
-require_once 'Zend/Auth/AuthTest.php';
 
 
 /**
@@ -85,7 +73,6 @@ class Zend_Auth_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth');
 
-        $suite->addTestSuite('Zend_AuthTest');
         $suite->addTest(Zend_Auth_Adapter_AllTests::suite());
 
         return $suite;

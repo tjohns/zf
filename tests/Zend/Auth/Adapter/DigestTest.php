@@ -57,7 +57,7 @@ class Zend_Auth_Adapter_DigestTest extends PHPUnit_Framework_TestCase
      */
     public function __construct()
     {
-        $this->_filesPath = dirname(__FILE__) . '/_files';
+        $this->_filesPath = dirname(__FILE__) . '/Digest/_files';
     }
 
     /**

@@ -46,6 +46,12 @@ require_once 'Zend/Auth/Adapter/DigestTest.php';
 
 
 /**
+ * @see Zend_Auth_Adapter_Http_AllTests
+ */
+require_once 'Zend/Auth/Adapter/Http/AllTests.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
@@ -74,6 +80,7 @@ class Zend_Auth_Adapter_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth Adapters');
 
         $suite->addTestSuite('Zend_Auth_Adapter_DigestTest');
+        $suite->addTest(Zend_Auth_Adapter_Http_AllTests::suite());
 
         return $suite;
     }

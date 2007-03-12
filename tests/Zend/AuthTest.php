@@ -23,6 +23,12 @@
 
 
 /**
+ * Start output buffering to prevent problems using session
+ */
+ob_start();
+
+
+/**
  * @see Zend_Auth
  */
 require_once 'Zend/Auth.php';
