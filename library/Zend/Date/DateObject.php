@@ -341,7 +341,7 @@ abstract class Zend_Date_DateObject {
                     break;
 
                 case 'D':  // day of week, 3 letters, Mon - Sun
-                    $output .= date('D', 86400 * (4 + self::dayOfWeek($date['year'], $date['mon'], $date['mday'])));
+                    $output .= date('D', 86400 * (3 + self::dayOfWeek($date['year'], $date['mon'], $date['mday'])));
                     break;
 
                 case 'j':  // day of month, without leading zero, 1 - 31
@@ -349,7 +349,7 @@ abstract class Zend_Date_DateObject {
                     break;
 
                 case 'l':  // day of week, full string name, Sunday - Saturday
-                    $output .= date('l', 86400 * (4 + self::dayOfWeek($date['year'], $date['mon'], $date['mday'])));
+                    $output .= date('l', 86400 * (3 + self::dayOfWeek($date['year'], $date['mon'], $date['mday'])));
                     break;
 
                 case 'N':  // ISO 8601 numeric day of week, 1 - 7
@@ -554,7 +554,7 @@ abstract class Zend_Date_DateObject {
                 case 'r':  // RFC 2822 date format
                     $difference = $this->_offset;
                     $difference = sprintf('%s%04d', ($difference <= 0) ? '+' : '-', abs($difference) / 36);
-                    $output .= gmdate('D', 86400 * (4 + self::dayOfWeek($date['year'], $date['mon'], $date['mday']))) .
+                    $output .= gmdate('D', 86400 * (3 + self::dayOfWeek($date['year'], $date['mon'], $date['mday']))) .
                                ', ' . (($date['mday'] < 10) ? '0' . $date['mday'] : $date['mday']) .
                                ' ' . date('M',mktime(0, 0, 0, $date['mon'], 2, 1971)) .
                                ' ' . $date['year'] .
