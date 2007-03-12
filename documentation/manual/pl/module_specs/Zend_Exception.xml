@@ -1,14 +1,14 @@
 <sect1 id="zend.exception.using">
 
-    <title>Using Exceptions</title>
+    <title>Użycie wyjątków</title>
 
     <para>
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
+        Każdy wyjątek wyrzucany przez klasy Zend Framework powinien
+        wyrzucać wyjątek, który rozszerza podstawową klasę Zend_Exception.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Example of catching an exception</title>
+        <title>Przykład łapania wyjątku</title>
         <programlisting role="php"><![CDATA[<?php
 
 try {
@@ -16,17 +16,17 @@ try {
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
-    // other code to recover from the failure.
+    // inny kod do obsługi błędu.
 }
 
 ?>]]></programlisting>
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework 
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
+        Zobacz dokumentację dla poszczególnych komponentów Zend Framework
+        aby uzyskać bardziej szczegółowe informacje o tym, które metody
+        wyrzucają wyjątki, jakie są okoliczności wyrzucenia wyjątku oraz które
+        klasy wyjątków pochodzą z klasy Zend_Exception.
     </para>
 
 </sect1>
