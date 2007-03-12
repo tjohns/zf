@@ -127,8 +127,7 @@ class Zend_Registry extends ArrayObject
     }
 
     /**
-     * getter method, basically same as offsetGet(), except if the key is not
-     * specified, then the entire registry is returned (iterable).
+     * getter method, basically same as offsetGet().
      *
      * This method can be called from an object of type Zend_Registry, or it
      * can be called statically.  In the latter case, it uses the default
@@ -138,13 +137,9 @@ class Zend_Registry extends ArrayObject
      * @return mixed
      * @throws Zend_Exception if no entry is registerd for $index.
      */
-    public static function get($index = null)
+    public static function get($index)
     {
         $instance = self::getInstance();
-        
-        if ($index === null) {
-            return $instance;
-        }
 
         if (!$instance->offsetExists($index)) {
            throw new Zend_Exception("No entry is registered for key '$index'");
