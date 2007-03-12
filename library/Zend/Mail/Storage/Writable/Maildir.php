@@ -50,7 +50,7 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      *
      * @param string                          $name         global name of folder, local name if $parentFolder is set
      * @param string|Zend_Mail_Storage_Folder $parentFolder parent folder for new folder, else root folder is parent
-     * @return null
+     * @return string only used internally (new created maildir)
      * @throw Zend_Mail_Storage_Exception
      */
     public function createFolder($name, $parentFolder = null)
@@ -114,6 +114,8 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
 
         $localName = $parent ? substr($folder, strlen($parent) + 1) : $folder;
         $this->getFolders($parent)->$localName = new Zend_Mail_Storage_Folder($localName, $folder, true);
+
+        return $fulldir;
     }
 
     /**
@@ -125,6 +127,12 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      */
     public function removeFolder($name)
     {
+        // TODO: This could fail in the middle of the task, which is not optimal.
+        // But there is no defined standard way to mark a folder as removed and there is no atomar fs-op
+        // to remove a directory. Also moving the folder to a/the trash folder is not possible, as
+        // all parent folders must be created. What we could do is add a dash to the front of the
+        // directory name and it should be ignored as long as other processes obey the standard.
+
         if ($name instanceof Zend_Mail_Folder) {
             $name = $name->getGlobalName();
         }
@@ -173,6 +181,8 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         }
 
         if (!rmdir($this->_rootdir . '.' . $name)) {
+            // at least we should try to make it a valid maildir again
+            mkdir($this->_rootdir . '.' . $name . '/' . 'cur');
             throw new Zend_Mail_Storage_Exception("error removing maindir");
         }
 
@@ -193,7 +203,59 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      */
     public function renameFolder($oldName, $newName)
     {
-        throw new Exception('todo'); // TODO
+        // TODO: This is also not atomar and has similar problems as removeFolder()
+
+        if ($oldName instanceof Zend_Mail_Folder) {
+            $oldName = $oldName->getGlobalName();
+        }
+
+        $oldName = trim($oldName, $this->_delim);
+        if (strpos($oldName, 'INBOX' . $this->_delim) === 0) {
+            $oldName = substr($oldName, 6);
+        }
+
+        $newName = trim($newName, $this->_delim);
+        if (strpos($newName, 'INBOX' . $this->_delim) === 0) {
+            $newName = substr($newName, 6);
+        }
+
+        if (strpos($newName, $oldName . $this->_delim) === 0) {
+            throw new Zend_Mail_Storage_Exception('new folder cannot be a child of old folder');
+        }
+
+        // check if folder exists and has no children
+        $folder = $this->getFolders($oldName);
+
+        if ($oldName == 'INBOX' || $oldName == '/') {
+            throw new Zend_Mail_Storage_Exception('wont rename INBOX');
+        }
+
+        if ($oldName == $this->getCurrentFolder()) {
+            throw new Zend_Mail_Storage_Exception('wont rename selected folder');
+        }
+
+        $newdir = $this->createFolder($newName);
+
+        if (!$folder->isLeaf()) {
+            foreach ($folder as $k => $v) {
+                $this->renameFolder($v->getGlobalName(), $newName . $this->_delim . $k);
+            }
+        }
+
+        $olddir = $this->_rootdir . '.' . $folder;
+        foreach (array('tmp', 'new', 'cur') as $subdir) {
+            $subdir = DIRECTORY_SEPARATOR . $subdir;
+            if (!file_exists($olddir . $subdir)) {
+                continue;
+            }
+            // using copy or moving files would be even better - but also much slower
+            if (!rename($olddir . $subdir, $newdir . $subdir)) {
+                throw new Zend_Mail_Storage_Exception('error while moving ' . $subdir);
+            }
+        }
+        // create a dummy if removing fails - otherwise we can't read it next time
+        mkdir($olddir . DIRECTORY_SEPARATOR . 'cur');
+        $this->removeFolder($oldName);
     }
 
     /**
@@ -449,7 +511,12 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
      */
     public function removeMessage($id)
     {
-        // TODO: support remove here
-        throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
+        $filename = $this->_getFileData($id, 'filename');
+        if (!unlink($filename)) {
+            throw new Zend_Mail_Storage_Exception('cannot remove message');
+        }
+        unset($this->_files[$id - 1]);
+        // remove the gap
+        $this->_files = array_values($this->_files);
     }
 }
