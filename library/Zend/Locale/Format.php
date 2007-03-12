@@ -92,14 +92,24 @@ class Zend_Locale_Format
 
             if (array_key_exists($name, self::$_Options)) {
                 switch($name) {
+                    case 'format' :
+                        $type = gettype($value);
+                        if ($type !== 'string') {
+                            throw new Zend_Locale_Exception("Unknown format type '$type'. "
+                                . "Format '$value' must be a valid ISO or PHP date format string.");
+                        }
+                        // $value could now be checked using the same code near the top of _parseDate()
+                        break;
                     case 'type' :
                         if (($value != 'php') && ($value != 'iso')) {
-                            throw new Zend_Locale_Exception("Unknown date format type '$value'. Only 'iso' and 'php' are supported.");
+                            throw new Zend_Locale_Exception("Unknown date format type '$value'. Only 'iso' and 'php'"
+                               . " are supported.");
                         }
                         break;
                     case 'fixdate' :
                         if (($value !== true) && ($value !== false)) {
-                            throw new Zend_Locale_Exception("Enabling correction of dates must be either true or false (fixdate='$value').");
+                            throw new Zend_Locale_Exception("Enabling correction of dates must be either true or false"
+                                . "(fixdate='$value').");
                         }
                         break;
                     case 'locale' :
