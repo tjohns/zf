@@ -141,10 +141,26 @@ define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');
 define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', true);
 
 /**
+ * Zend_Mail_Storage tests
+ *
+ * TESTS_ZEND_MAIL_SERVER_TESTDIR and TESTS_ZEND_MAIL_SERVER_FORMAT are used for POP3 and IMAP tests.
+ * TESTS_ZEND_MAIL_SERVER_FORMAT is the format your test mail server uses: 'mbox' or 'maildir'. The mail
+ * storage for the user specified in your POP3 or IMAP tests should be TESTS_ZEND_MAIL_SERVER_TESTDIR. Be
+ * careful: it's cleared before copying the files. If you want to copy the files manually set the dir
+ * to null (or anything == null).
+ *
+ * TESTS_ZEND_MAIL_TEMPDIR is used for testing write operations in local storages. If not set (== null)
+ * tempnam() is used.
+ */
+define('TESTS_ZEND_MAIL_SERVER_TESTDIR', null);
+define('TESTS_ZEND_MAIL_SERVER_FORMAT', 'mbox');
+define('TESTS_ZEND_MAIL_TEMPDIR', null)
+
+/**
  * Zend_Mail_Storage_Pop3 / Zend_Mail_Transport_Pop3
  *
  * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail
- * directory for the tests to work.
+ * if you haven't set TESTS_ZEND_MAIL_SERVER_TESTDIR
  */
 define('TESTS_ZEND_MAIL_POP3_ENABLED', false);
 define('TESTS_ZEND_MAIL_POP3_HOST', 'localhost');
@@ -162,7 +178,7 @@ define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);
  * Zend_Mail_Storage_Imap / Zend_Mail_Transport_Imap
  *
  * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail
- * directory for the tests to work.
+ * if you haven't set TESTS_ZEND_MAIL_SERVER_TESTDIR
  */
 define('TESTS_ZEND_MAIL_IMAP_ENABLED', false);
 define('TESTS_ZEND_MAIL_IMAP_HOST', 'localhost');

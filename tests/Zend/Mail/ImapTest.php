@@ -38,6 +38,57 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $this->_params = array('host'     => TESTS_ZEND_MAIL_IMAP_HOST,
                                'user'     => TESTS_ZEND_MAIL_IMAP_USER,
                                'password' => TESTS_ZEND_MAIL_IMAP_PASSWORD);
+
+        if (defined('TESTS_ZEND_MAIL_SERVER_TESTDIR') && TESTS_ZEND_MAIL_SERVER_TESTDIR) {
+            if (!file_exists(TESTS_ZEND_MAIL_SERVER_TESTDIR . DIRECTORY_SEPARATOR . 'inbox')
+             && !file_exists(TESTS_ZEND_MAIL_SERVER_TESTDIR . DIRECTORY_SEPARATOR . 'INBOX')) {
+                $this->markTestSkipped('There is no file name "inbox" or "INBOX" in '
+                                       . TESTS_ZEND_MAIL_SERVER_TESTDIR . '. I won\'t use it for testing. '
+                                       . 'This is you safety net. If you think it is the right directory just '
+                                       . 'create an empty file named INBOX or remove/deactived this message.');
+            }
+
+            $this->_cleanDir(TESTS_ZEND_MAIL_SERVER_TESTDIR);
+            $this->_copyDir(dirname(__FILE__) . '/_files/test.' . TESTS_ZEND_MAIL_SERVER_FORMAT,
+                            TESTS_ZEND_MAIL_SERVER_TESTDIR);
+        }
+    }
+
+    protected function _cleanDir($dir)
+    {
+        $dh = opendir($dir);
+        while (($entry = readdir($dh)) !== false) {
+            if ($entry == '.' || $entry == '..') {
+                continue;
+            }
+            $fullname = $dir . DIRECTORY_SEPARATOR . $entry;
+            if (is_dir($fullname)) {
+                $this->_cleanDir($fullname);
+                rmdir($fullname);
+            } else {
+                unlink($fullname);
+            }
+        }
+        closedir($dh);
+    }
+
+    protected function _copyDir($dir, $dest)
+    {
+        $dh = opendir($dir);
+        while (($entry = readdir($dh)) !== false) {
+            if ($entry == '.' || $entry == '..' || $entry == '.svn') {
+                continue;
+            }
+            $fullname = $dir  . DIRECTORY_SEPARATOR . $entry;
+            $destname = $dest . DIRECTORY_SEPARATOR . $entry;
+            if (is_dir($fullname)) {
+                mkdir($destname);
+                $this->_copyDir($fullname, $destname);
+            } else {
+                copy($fullname, $destname);
+            }
+        }
+        closedir($dh);
     }
 
     public function testConnectOk()
@@ -372,7 +423,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($this->_params);
         try {
             $this->assertEquals($mail->getFolders()->subfolder->key(), 'test');
-        } catch (Exception $e) {
+        } catch (Zend_Mail_Exception $e) {
             $this->fail('exception raised while selecting existing folder and getting local name');
         }
     }
@@ -441,7 +492,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
 
-        $this->assertTrue($mail->getMessage(1)->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertTrue($mail->getMessage(1)->hasFlag(Zend_Mail_Storage::FLAG_RECENT));
     }
 
     public function testGetFlags()
@@ -449,8 +500,8 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($this->_params);
 
         $flags = $mail->getMessage(1)->getFlags();
-        $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_SEEN]));
-        $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_SEEN, $flags));
+        $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_RECENT]));
+        $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_RECENT, $flags));
     }
 
     public function testRawHeader()
