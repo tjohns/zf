@@ -69,7 +69,7 @@ $profiler = $db->getProfiler();
             </listitem>
             <listitem>
               <para>
-                <code>getTotalElapsedSeconds()</code> geeft het totaal aantal
+                <code>getTotalElapsedSecs()</code> geeft het totaal aantal
                 seconden weer die nodig waren om alle queries uit te voeren.
               </para>
             </listitem>
@@ -132,7 +132,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSecs();
+$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
