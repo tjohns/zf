@@ -85,6 +85,7 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_RegistryTest');
         $suite->addTest(Zend_Rest_AllTests::suite());
         $suite->addTest(Zend_Server_AllTests::suite());
+        $suite->addTest(Zend_Service_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ValidateTest');

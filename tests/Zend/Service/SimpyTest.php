@@ -550,3 +550,12 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
     	);
     }
 }
+
+
+class Zend_Service_SimpyTest_Skip extends Zend_Service_SimpyTest
+{
+    public function setUp()
+    {
+        $this->markTestSkipped('Zend_Service_Simpy tests not enabled in TestConfiguration.php');
+    }
+}
