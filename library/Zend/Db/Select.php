@@ -609,7 +609,7 @@ class Zend_Db_Select
         }
 
         foreach ($spec as $val) {
-            if (preg_match('/^.+\(.*\)$/', $val)) {
+            if (preg_match('/\(.*\)/', $val)) {
                 $val = new Zend_Db_Expr($val);
             }
             $this->_parts[self::GROUP][] = $val;
@@ -686,7 +686,7 @@ class Zend_Db_Select
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $val) {
-            if (preg_match('/^.+\(.*\)$/', $val)) {
+            if (preg_match('/\(.*\)/', $val)) {
                 $val = new Zend_Db_Expr($val);
             }
             if ($val instanceof Zend_Db_Expr) {
@@ -766,7 +766,7 @@ class Zend_Db_Select
                     $alias = $m[2];
                 }
                 // Check for columns that look like functions and convert to Zend_Db_Expr
-                if (preg_match('/^.+\(.*\)$/', $col)) {
+                if (preg_match('/\(.*\)/', $col)) {
                     $col = new Zend_Db_Expr($col);
                 } elseif (preg_match('/(.+)\.(.+)/', $col, $m)) {
                     $correlationName = $m[1];
