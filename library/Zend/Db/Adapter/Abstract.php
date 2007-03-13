@@ -203,20 +203,30 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Inserts a table row with specified data.
      *
-     * @param string $table The table to insert data into.
+     * @param string|array|Zend_Db_Expr $table The table to insert data into.
      * @param array $bind Column-value pairs.
      * @return int The number of affected rows.
      */
     public function insert($table, $bind)
     {
-        // col names come from the array keys
-        $cols = array_keys($bind);
-        $placeholders = array_fill(0, count($cols), '?');
+        // extract and quote col names from the array keys
+        $cols = array();
+        $vals = array();
+        foreach ($bind as $col => $val) {
+            $cols[] = $this->quoteIdentifier($col);
+            if ($val instanceof Zend_Db_Expr) {
+                $vals[] = $val->__toString();
+                unset($bind[$col]);
+            } else {
+                $vals[] = '?';
+            }
+        }
 
         // build the statement
-        $sql = "INSERT INTO $table "
-             . '(' . implode(', ', $cols) . ') '
-             . 'VALUES (' . implode(', ', $placeholders) . ')';
+        $sql = "INSERT INTO "
+             . $this->quoteIdentifier($table)
+             . ' (' . implode(', ', $cols) . ') '
+             . 'VALUES (' . implode(', ', $vals) . ')';
 
         // execute the statement and return the number of affected rows
         $stmt = $this->query($sql, array_values($bind));
@@ -227,7 +237,7 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Updates table rows with specified data based on a WHERE clause.
      *
-     * @param string $table The table to udpate.
+     * @param string|array|Zend_Db_Expr $table The table to update.
      * @param array $bind Column-value pairs.
      * @param string $where UPDATE WHERE clause.
      * @return int The number of affected rows.
@@ -237,12 +247,19 @@ abstract class Zend_Db_Adapter_Abstract
         // build "col = ?" pairs for the statement
         $set = array();
         foreach ($bind as $col => $val) {
-            $set[] = "$col = ?";
+        	if ($val instanceof Zend_Db_Expr) {
+                $val = $val->__toString();
+                unset($bind[$col]);
+            } else {
+                $val = '?';
+            }
+            $set[] = $this->quoteIdentifier($col) . ' = ' . $val;
         }
 
         // build the statement
-        $sql = "UPDATE $table "
-             . 'SET ' . implode(', ', $set)
+        $sql = "UPDATE "
+             . $this->quoteIdentifier($table)
+             . ' SET ' . implode(', ', $set)
              . (($where) ? " WHERE $where" : '');
 
         // execute the statement and return the number of affected rows
@@ -254,14 +271,15 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Deletes table rows based on a WHERE clause.
      *
-     * @param string $table The table to udpate.
+     * @param string|array|Zend_Db_Expr $table The table to update.
      * @param string $where DELETE WHERE clause.
      * @return int The number of affected rows.
      */
     public function delete($table, $where)
     {
         // build the statement
-        $sql = "DELETE FROM $table"
+        $sql = "DELETE FROM "
+             . $this->quoteIdentifier($table)
              . (($where) ? " WHERE $where" : '');
 
         // execute the statement and return the number of affected rows
