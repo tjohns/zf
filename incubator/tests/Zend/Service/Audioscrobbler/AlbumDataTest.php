@@ -94,10 +94,11 @@ class Zend_Service_Audioscrobbler_AlbumDataTest extends PHPUnit_Framework_TestCa
             $as->set('album', 'Metallica');
             $as->set('artist', 'Metallica');
             $response = $as->albumGetInfo();
-            $this->assertEquals($response['artist'], 'Metallica');
-            $this->assertEquals($response['title'], 'Metallica');
-            $this->assertNotNull($response->url);
-            $this->assertNotNull($response->tracks);
+            $track = $response->tracks->track[0];
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$response['title'], 'Metallica');
+            $this->assertEquals((string)$track->url, 'http://www.last.fm/music/Metallica/_/Enter+Sandman+%28LP+Version%29');
+            $this->assertEquals(count($response->tracks->track), 12);
         } catch (Exception $e ) {
                 $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }

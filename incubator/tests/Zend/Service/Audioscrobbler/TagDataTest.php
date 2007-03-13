@@ -28,7 +28,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
         try {
             $as = new Zend_Service_Audioscrobbler();
             $response = $as->tagGetTopTags();
-            $this->assertNotNull($response->tag);
+            $this->assertNotNull(count($response->tag));
         } catch (Exception $e ) {
                 $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -64,7 +64,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $as->set('tag', 'Rock');
             $response = $as->tagGetTopArtists();
             $this->assertNotNull($response->artist);
-            $this->assertEquals($response['tag'], strtolower($as->get('tag')));
+            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
             } catch (Exception $e ) {
                     $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
             }       
@@ -105,8 +105,8 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('tag', 'Rock');
             $response = $as->tagGetTopAlbums();
-            $this->assertNotNull($response->album);
-            $this->assertEquals($response['tag'], strtolower($as->get('tag')));
+            $this->assertNotNull(count($response->album));
+            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -144,9 +144,10 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('tag', 'Rock');
             $response = $as->tagGetTopTracks();
-            $this->assertNotNull($response->track);
-            $this->assertNotNull($response->artist);
-            $this->assertEquals($response['tag'], strtolower($as->get('tag')));
+            $artist = $response->track[0];
+            $this->assertNotNull(count($response->track));
+            $this->assertNotNull((string)$artist->name);
+            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }

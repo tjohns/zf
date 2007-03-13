@@ -50,9 +50,9 @@ class Zend_Service_Audioscrobbler_TrackDataTest extends PHPUnit_Framework_TestCa
             $as->set('artist', 'Metallica');
             $as->set('track', 'Enter Sandman');
             $response = $as->trackGetTopFans();
-            $this->assertEquals($response['artist'], 'Metallica');
-            $this->assertEquals($response['track'], 'Enter Sandman');
-            $this->assertNotNull($response->user);
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$response['track'], 'Enter Sandman');
+            $this->assertNotNull(count($response->user));
         } catch (Exception $e ) {
                 $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -85,9 +85,9 @@ class Zend_Service_Audioscrobbler_TrackDataTest extends PHPUnit_Framework_TestCa
             $as->set('artist', 'Metallica');
             $as->set('track', 'Enter Sandman');
             $response = $as->trackGetTopTags();
-            $this->assertNotNull($response->tag);
-            $this->assertEquals($response['artist'], 'Metallica');
-            $this->assertEquals($response['track'], 'Enter Sandman');
+            $this->assertNotNull(count($response->tag));
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$response['track'], 'Enter Sandman');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }

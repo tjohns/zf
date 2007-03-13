@@ -53,7 +53,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                             </profile>'; 
             $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
             $as->set('user', 'RJ');
-		    $response = $as->userGetProfileInformation();            
+	    $response = $as->userGetProfileInformation();            
             $this->assertNotNull($response);
             return;
         } catch (Exception $e ) {
@@ -99,8 +99,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopArtists();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->artist);
+            $artist = $response->artist[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((string)$artist->name, 'Dream Theater');
+            $this->assertNotNull($artist->rank, 1);
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test" );
         }
@@ -132,8 +134,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'Frith');
             $response = $as->userGetTopAlbums();
-            $this->assertEquals($response['user'], 'Frith');
-            $this->assertNotNull($response->album);
+            $album = $response->album[0];
+            $this->assertEquals((string)$response['user'], 'Frith');
+            $this->assertNotNull($album);
+            $this->assertEquals((string)$album->name, 'The Warning');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e ."] thrown by test");
         }
@@ -167,8 +171,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopTracks();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->track );
+            $track = $response->track[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertNotNull($track);
+            $this->assertEquals((string)$track->artist, 'Steppenwolf');
+            $this->assertEquals((int)$track->playcount, 31);
         } catch (Exception $e ) {
             $this->fail("Exception: [$e] thrown by test");
         }
@@ -201,8 +208,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopTags();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->tag);
+            $tag = $response->tag[1];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertNotNull($tag);
+            $this->assertEquals((string)$tag->name, 'metal');
+            $this->assertEquals((int)$tag->count, 8);
         } catch (Exception $e) {
             $this->fail("Exception: [$e] thrown by test");
         }
@@ -231,9 +241,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as->set('user', 'RJ');
             $as->set('artist', 'Metallica');
             $response = $as->userGetTopTagsForArtist();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals($response['artist'], 'Metallica');
-            $this->assertNotNull($response->tag);
+            $tag = $response->tag[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertNotNull($tag);
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -269,10 +280,9 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as->set('artist', 'Metallica');
             $as->set('album', 'Ride The Lightning');
             $response = $as->userGetTopTagsForAlbum();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals(strtolower($response['artist']), strtolower('Metallica'));
-            $this->assertEquals(strtolower($response['album']), strtolower('Ride The Lightning'));
-            $this->assertNotNull($response->albumtags);
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((string)strtolower($response['artist']), strtolower('Metallica'));
+            $this->assertEquals((string)strtolower($response['album']), strtolower('Ride The Lightning'));
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");          }
     }
@@ -291,10 +301,9 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
 			$as->set('artist', 'Metallica');
 			$as->set('track', 'Nothing Else Matters');
             $response = $as->userGetTopTagsForTrack();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals($response['artist'], 'Metallica');
-            $this->assertEquals($response['track'], 'Nothing Else Matters');
-            $this->assertNotNull($response->tracktags);
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$response['track'], 'Nothing Else Matters');
         } catch ( Exception $e) {
             $this->fail("Exception: ]" . $e->getMessage() . "] thrown by test");
         }
@@ -326,9 +335,8 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetFriends();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->friends);
-            $this->assertNotNull($response->user);
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->user), 2);
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -356,9 +364,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetNeighbours();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->user);
-            $this->assertNotNull($response->neighbours);
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->user), 2);
+            $user = $response->user[1];
+            $this->assertEquals((string)$user['username'], 'arcymarcy');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -390,9 +399,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetRecentTracks();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->recenttracks);
-            $this->assertNotNull($response->track);
+            $track = $response->track[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->track), 2);
+            $this->assertEquals((string)$track->name, 'Always An Excuse');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -422,9 +432,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetRecentBannedTracks();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->recentbannedtracks);
-            $this->assertNotNull($response->track);
+            $track = $response->track[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->track), 2);
+            $this->assertEquals((string)$track->artist, 'Herbie Hancock');
+            $this->assertEquals((string)$track->name, 'Rockit');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
@@ -453,9 +465,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 </recentlovedtracks>';
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
-            $response = $as->userGetRecentLovedTracks( );
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->recentlovedtracks);
+            $response = $as->userGetRecentLovedTracks();
+            $track = $response->track[1];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertNotNull((string)$track->name, 'Morning Dance');
+            $this->assertNotNull((string)$track->date, '31 Oct 2006, 15:53');
             $this->assertNotNull($response->track);
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
@@ -479,10 +493,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyChartList();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->weeklychartlist);
-            $this->assertNotNull($response->chart['from']);
-            $this->assertNotNull($response->chart['to']);
+            $chart = $response->chart[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->chart), 7);
+            $this->assertEquals((string)$chart['from'], '1108296002');
+            $this->assertEquals((string)$chart['to'], '1108900802');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
        }
@@ -512,7 +527,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyArtistChart();
-            $this->assertEquals($response['user'], 'RJ');
+            $this->assertEquals((string)$response['user'], 'RJ');
             $this->assertNotNull($response->weeklyartistchart);
             $this->assertNotNull($response->artist);
         } catch (Exception $e) {
@@ -546,10 +561,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyAlbumChart();
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertNotNull($response->weeklyalbumchart);
-            $this->assertNotNull($response['from']);
-            $this->assertNotNull($response['to']);
+            $album = $response->album[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals(count($response->album), 2);
+            $this->assertEquals((string)$album->artist, 'Skid Row');
+            $this->assertEquals((string)$album->name, 'Slave To The Grid');
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }
@@ -581,11 +597,12 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyArtistChart($from, $to);
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals($response['from'], 1114965332);
-            $this->assertEquals($response['to'], 1115570132);
-            $this->assertNotNull($response->weeklyartistchart);
-            $this->assertNotNull($response->artist);
+            $artist = $response->artist[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((int)$response['from'], $from);
+            $this->assertEquals((int)$response['to'], $to);
+            $this->assertEquals((string)$artist->name, 'Nine Inch Nails');
+            $this->assertEquals(count($response->artist), 2);
         } catch ( Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }
@@ -619,11 +636,11 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyAlbumChart($from, $to);
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals($response['from'], 1114965332);
-            $this->assertEquals($response['to'], 1115570132);
-            $this->assertNotNull($response->weeklyartistchart);
-            $this->assertNotNull($response->album);
+            $album = $response->album[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((int)$response['from'], 1114965332);
+            $this->assertEquals((int)$response['to'], 1115570132);
+            $this->assertEquals(count($response->album), 2);
         } catch ( Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }
@@ -658,11 +675,12 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyTrackChart($from, $to);
-            $this->assertEquals($response['user'], 'RJ');
-            $this->assertEquals($response['from'], 1114965332);
-            $this->assertEquals($response['to'], 1115570132);
-            $this->assertNotNull($response->weeklytrackchart);
-            $this->assertNotNull($response->track);
+            $track = $response->track[0];
+            $this->assertEquals((string)$response['user'], 'RJ');
+            $this->assertEquals((int)$response['from'], $from);
+            $this->assertEquals((int)$response['to'], $to);
+            $this->assertEquals((string)$track->artist, 'The Kleptones');
+            $this->assertEquals(count($response->track), 2);
         } catch ( Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }

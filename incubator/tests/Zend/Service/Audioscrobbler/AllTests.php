@@ -23,9 +23,8 @@ class AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Audioscrobbler');
-
         $suite->addTestSuite('Zend_Service_Audioscrobbler_ProfileTest');
-		$suite->addTestSuite('Zend_Service_Audioscrobbler_ArtistTest');
+	$suite->addTestSuite('Zend_Service_Audioscrobbler_ArtistTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_AlbumDataTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_TrackDataTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_TagDataTest');
