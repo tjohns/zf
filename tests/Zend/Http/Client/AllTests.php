@@ -18,6 +18,7 @@ require_once 'Zend/Http/Client/SocketTest.php';
 require_once 'Zend/Http/Client/SocketKeepaliveTest.php';
 require_once 'Zend/Http/Client/TestAdapterTest.php';
 require_once 'Zend/Http/Client/ProxyAdapterTest.php';
+require_once 'Zend/Http/Client/SkipTests.php';
 //require_once 'Zend/Http/Client/CurlTest.php';
 
 class Zend_Http_Client_AllTests
@@ -32,10 +33,18 @@ class Zend_Http_Client_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTestSuite('Zend_Http_Client_StaticTest');
-        $suite->addTestSuite('Zend_Http_Client_SocketTest');
-        $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
+        if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI)) {
+            $suite->addTestSuite('Zend_Http_Client_SocketTest');
+            $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
+        } else {
+            $suite->addTestSuite('Zend_Http_Client_Skip_SocketTest');
+        }
         $suite->addTestSuite('Zend_Http_Client_TestAdapterTest');
-        $suite->addTestSuite('Zend_Http_Client_ProxyAdapterTest');
+        if (defined('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY') && TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY) {
+            $suite->addTestSuite('Zend_Http_Client_ProxyAdapterTest');
+        } else {
+            $suite->addTestSuite('Zend_Http_Client_Skip_ProxyAdapterTest');
+        }
         //$suite->addTestSuite('Zend_Http_Client_CurlTest');
 
         return $suite;

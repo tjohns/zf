@@ -72,7 +72,7 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 			
 		} else {
 			// Skip tests
-			$this->markTestSkipped('Set to skip Zend_Http_Client dynamic tests. Please see TestConfiguration.php.dist if you want to enable dynamic tests.');
+                        $this->markTestSkipped("Zend_Http_Client dynamic tests are not enabled in TestConfiguration.php");
 		}
 	}
 	
