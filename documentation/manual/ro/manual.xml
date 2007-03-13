@@ -31,16 +31,8 @@
     <!-- <xi:include href="ref/install.xml" /> -->
     <!-- <xi:include href="ref/conf.xml" />    -->
     <chapter id="zend">
-        <title>Zend</title>
+        <title>Zend Framework</title>
         <xi:include href="module_specs/Zend-Introduction.xml" />
-        <xi:include href="module_specs/Zend-LoadFile.xml" />
-        <xi:include href="module_specs/Zend-LoadClass.xml" />
-        <xi:include href="module_specs/Zend-IsReadable.xml" />
-        <xi:include href="module_specs/Zend-Exception.xml" />
-        <xi:include href="module_specs/Zend-Dump.xml" />
-        <xi:include href="module_specs/Zend-Register.xml" />
-        <xi:include href="module_specs/Zend-Registry.xml" />
-        <xi:include href="module_specs/Zend-InitRegistry.xml" />
     </chapter>
     <chapter id="zend.acl">
         <title>Zend_Acl</title>
@@ -103,6 +95,14 @@
         <xi:include href="module_specs/Zend_Db_Table_Row.xml" />
         <xi:include href="module_specs/Zend_Db_Table_Rowset.xml" />
     </chapter>
+    <chapter id="zend.debug">
+        <title>Zend_Debug</title>
+        <xi:include href="module_specs/Zend_Debug.xml" />
+    </chapter>
+    <chapter id="zend.exception">
+        <title>Zend_Exception</title>
+        <xi:include href="module_specs/Zend_Exception.xml" />
+    </chapter>
     <chapter id="zend.feed">
         <title>Zend_Feed</title>
         <xi:include href="module_specs/Zend_Feed-Introduction.xml" />
@@ -148,6 +148,10 @@
         <xi:include href="module_specs/Zend_Json-Introduction.xml" />
         <xi:include href="module_specs/Zend_Json-Basics.xml" />
         <xi:include href="module_specs/Zend_Json-Objects.xml" />
+    </chapter>
+    <chapter id="zend.loader">
+        <title>Zend_Loader</title>
+        <xi:include href="module_specs/Zend_Loader.xml" />
     </chapter>
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
@@ -206,6 +210,10 @@
         <xi:include href="module_specs/Zend_Pdf-Drawing.xml" />
         <xi:include href="module_specs/Zend_Pdf-Usage.xml" />
     </chapter>
+    <chapter id="zend.registry">
+        <title>Zend_Registry</title>
+        <xi:include href="module_specs/Zend_Registry.xml" />
+    </chapter>
     <chapter id="zend.rest">
         <title>Zend_Rest</title>
         <xi:include href="module_specs/Zend_Rest.xml" />
@@ -257,6 +265,10 @@
         <xi:include href="module_specs/Zend_Validate-WritingValidators.xml" />
         <xi:include href="module_specs/Zend_Validate-EmailAddress.xml" />
         <xi:include href="module_specs/Zend_Validate-Hostname.xml" />
+    </chapter>
+    <chapter id="zend.version">
+        <title>Zend Version</title>
+        <xi:include href="module_specs/Zend_Version.xml" />
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
