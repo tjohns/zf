@@ -75,6 +75,9 @@ class Zend_Locale_Format
      * The 'locale' option helps when parsing numbers and dates using separators and month names.
      * The date format 'type' option selects between CLDR/ISO date format specifier tokens and PHP's date() tokens.
      * The 'fixdate' option enables or disables heuristics that attempt to correct invalid dates.
+     * The 'format' option can be used to specify a default date format string, but beware of using getDate(),
+     * isDate(), getTime(), and isTime() after using setOptions() with a 'format'.  To use these four methods
+     * with the default date format for a locale, use array('format' => null, 'locale' => $locale) for their options.
      *
      * @param  array  $options  Array of options, keyed by option name: type = 'iso' | 'php', fixdate = true | false,
      *                          locale = Zend_Locale | locale string, precision = whole number between -1 and 30
