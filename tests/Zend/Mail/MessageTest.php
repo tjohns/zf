@@ -175,7 +175,7 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
 
     public function testMissingId()
     {
-        $mail = new Zend_Mail_Storage_Mbox(array('filename' => dirname(__FILE__) . '/_files/test.mbox'));
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => dirname(__FILE__) . '/_files/test.mbox/INBOX'));
 
         try {
             $message = new Zend_Mail_Message(array('handler' => $mail));
