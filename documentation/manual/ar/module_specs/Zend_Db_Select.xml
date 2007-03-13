@@ -4,417 +4,1073 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Introduction</title>
+        <title>Overview of the Select Object</title>
 
         <para>
-            Zend_Db_Select is a tool to help you build SQL SELECT statements in
-            a database-independent way.  Obviously this can't be perfect,
-            but it does go a long way toward helping your queries be
-            portable between database backends.  In addition, it aids
-            you in making your queries resistant to SQL injection attacks.
+            The Zend_Db_Select object represents a SQL <code>SELECT</code>
+            query statement.  The class has methods for adding individual
+            parts to the query.  You can specify some parts of the query using
+            PHP methods and data structures, and the class forms the correct
+            SQL syntax for you.
+            After you build a query, you can execute the query as if you had
+            written it as a string.
         </para>
 
         <para>
-            The easiest way to create an instance of Zend_Db_Select is to use the
-            Zend_Db_Adapter::select() method.
+            The value offered by Zend_Db_Select includes:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-require_once 'Zend/Db.php';
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Object-oriented methods for specifying SQL queries
+                    in a piece-by-piece manner;
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Database-independent abstraction of some parts
+                    of the SQL query;
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Automatic quoting of metadata identifiers in most cases,
+                    to support identifiers containing SQL reserved words
+                    and special characters; 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Quoting identifiers and values, to help reduce
+                    risk of SQL injection attacks.
+                </para>
+            </listitem>
+        </itemizedlist>
 
-$params = array (
-    'host'     => '127.0.0.1',
-    'username' => 'malory',
-    'password' => '******',
-    'dbname'   => 'camelot'
-);
+    </sect2>
 
-$db = Zend_Db::factory('PDO_MYSQL', $params);
+    <sect2 id="zend.db.select.creating">
 
+        <title>Creating a Select Object</title>
+
+        <para>
+            You can create an instance of a Zend_Db_Select object
+            using the <code>select()</code> method of a
+            Zend_Db_Adapter_Abstract object.  
+        </para>
+
+        <example id="zend.db.select.creating.example-db">
+            <title>Example of the database adapter's select() method</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory( ...options... );
 $select = $db->select();
-// $select is now a Zend_Db_Select object configured for use only with the PDO_MYSQL adapter.
 
 ?>]]></programlisting>
+        </example>
 
         <para>
-            You then construct a SELECT query using that object and its
-            methods, then generate a string for passing back to Zend_Db_Adapter
-            for queries or fetches.
+            Another way to create a Zend_Db_Select object is with its
+            constructor, specifying the database adapter as an argument.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
-//
+        <example id="zend.db.select.creating.example-new">
+            <title>Example of creating a new Select object</title>
+            <programlisting role="php"><![CDATA[<?php
 
-// you can use an iterative style...
-$select->from('round_table', '*');
-$select->where('noble_title = ?', 'Sir');
-$select->order('first_name');
-$select->limit(10,20);
+$db = Zend_Db::factory( ...options... );
+$select = new Zend_Db_Select($db);
 
-// ...or a "fluent" style:
-$select->from('round_table', '*')
-       ->where('noble_title = ?', 'Sir')
-       ->order('first_name')
-       ->limit(10,20);
+?>]]></programlisting>
+        </example>
 
-// regardless, fetch the results
+    </sect2>
+
+    <sect2 id="zend.db.select.building">
+
+        <title>Building Select queries</title>
+
+        <para>
+            When building the query, you can use most methods of the
+            Zend_Db_Select object using a convenient fluent interface.
+            That is, most methods return the object, so you can use it
+            to invoke another object method.
+        </para>
+
+        <example id="zend.db.select.building.example-fluent">
+            <title>Example of the using the fluent interface</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory( ...options... );
+$select = $db->select()
+    ->from( ...specify table and columns... )
+    ->where( ...specify search criteria... )
+    ->order( ...specify sorting criteria... );
+
+?>]]></programlisting>
+        </example>
+
+        <sect3 id="zend.db.select.building.from">
+
+            <title>Adding a FROM clause</title>
+
+            <para>
+                Specify the table for this query using the <code>from()</code>
+                method.  You can specify the table name as a simple string.
+                Zend_Db_Select applies identifier quoting around the table name,
+                so you can use special characters.
+            </para>
+
+            <example id="zend.db.select.building.from.example">
+                <title>Example of the from() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT *
+//   FROM "products" 
+
+$select = $db->select()
+    ->from( 'products' );
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                You can also specify the correlation name (sometimes called the
+                "table alias") for a table.  Instead of a simple string, use an
+                associative array mapping the correlation name to the table
+                name.  In other clauses of the SQL query, use this correlation
+                name.  If your query joins more than one table, Zend_Db_Select
+                generates unique correlation names based on the table names,
+                for any tables for which you don't specify the correlation name.
+            </para>
+
+            <example id="zend.db.select.building.from.example-cname">
+                <title>Example of specifying a table correlation name</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p.*
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from( array('p' => 'products') );
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                Some RDBMS brands support a leading schema specifier for a
+                table.  You can specify the table name as
+                "<code>schemaName.tableName</code>".
+                Zend_Db_Select quotes each part individually.
+            </para>
+
+            <example id="zend.db.select.building.from.example-schema">
+                <title>Example of specifying a schema name</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT *
+//   FROM "myschema"."products"
+
+$select = $db->select()
+    ->from( 'myschema.products' );
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.columns">
+
+            <title>Adding Columns</title>
+
+            <para>
+                In the second argument of the <code>from()</code> method,
+                you can specify the columns to select from the respective
+                table.  If you specify no columns, the default is
+                "<code>*</code>", the SQL wildcard for "all columns".
+            </para>
+
+            <para>
+                You can list the columns in a simple array of strings,
+                or as an associative mapping of column alias to column name.
+                If you only have one column to query, and you don't need to
+                specify a column alias, you can list it as a plain string 
+                instead of an array.
+            </para>
+
+            <para>
+                You can specify the column name as
+                "<code>correlationName.columnName</code>".
+                Zend_Db_Select quotes each part individually.
+                If you don't specify a correlation name for a
+                column, it uses the correlation name for the
+                table named in the current <code>from()</code>
+                method.
+            </para>
+
+            <example id="zend.db.select.building.columns.example">
+                <title>Examples of specifying columns</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'));
+
+// Build the same query, specifying correlation names:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('p.product_id', 'p.product_name'));
+
+// Build this query with an alias for one column:
+//   SELECT p."product_id" AS prodno, p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('prodno' => 'product_id', 'product_name'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.columns-expr">
+
+            <title>Adding Expression Columns</title>
+
+            <para>
+                Columns in SQL queries are sometimes expressions, not simply
+                column names from a table.  Expressions should not have
+                correlation names or quoting applied.
+                If your column string contains parentheses, Zend_Db_Select
+                recognizes it as an expression.
+            </para>
+
+            <para>
+                You also can create an object of type Zend_Db_Expr explicitly,
+                to prevent a string from being treated as a column name.
+                Zend_Db_Expr is a minimal class that contains a single string.
+                Zend_Db_Select recognizes objects of type Zend_Db_Expr and
+                converts them back to string, but does not apply any 
+                alterations, such as quoting or correlation names.
+            </para>
+
+            <note>
+                <para>
+                    Using Zend_Db_Expr for column names is not necessary if your
+                    column expression contains parentheses; Zend_Db_Select
+                    recognizes parentheses and treats the string as an expression,
+                    skipping quoting and correlation names.
+                </para>
+            </note>
+
+            <example id="zend.db.select.building.columns-expr.example">
+                <title>Examples of specifying columns containing expressions</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", LOWER(product_name)
+//   FROM "products" AS p
+// An expression with parentheses implicitly becomes
+// a Zend_Db_Expr.
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'LOWER(product_name)'));
+
+// Build this query:
+//   SELECT p."product_id", (p.cost * 1.08) AS cost_plus_tax
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'cost_plus_tax' => '(p.cost * 1.08)'));
+
+// Build this query using Zend_Db_Expr explicitly:
+//   SELECT p."product_id", p.cost * 1.08 AS cost_plus_tax
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                In the cases above, Zend_Db_Select does not alter the
+                string to apply correlation names or identifier quoting.
+                If those changes are necessary to resolve ambiguity,
+                you must make the changes manually in the string.
+            </para>
+
+            <para>
+                For example, if your column names are SQL keywords or
+                contain special characters, you should use the Adapter's
+                <code>quoteIdentifier()</code> method and interpolate
+                the result into the string, to protect against
+                invalid SQL syntax.  See example below.
+            </para>
+
+            <example id="zend.db.select.building.columns-quoteid.example">
+                <title>Examples of quoting columns in an expression</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query, quoting a special column name "from" in the expression:
+//   SELECT p."from" + 10 AS origin
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.join">
+
+            <title>Adding Another Table to the Query with JOIN</title>
+
+            <para>
+                Many useful queries involve using a <code>JOIN</code>
+                to combine rows from multiple tables.  You can add
+                tables to a Zend_Db_Select query using the 
+                <code>join()</code> method.  Using this method is
+                similar to the <code>from()</code> method, except
+                you can also specify a join condition in most cases.
+            </para>
+
+            <example id="zend.db.select.building.join.example">
+                <title>Example of the join() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", p."product_name", l.*
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id');
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                The second argument to <code>join()</code> is a string
+                that is the join condition.  This is an expression that
+                declares the criteria by which rows in one table match
+                rows in the the other table.  You can use correlation
+                names in this expression.
+            </para>
+
+            <note>
+                <para>
+                    No quoting is applied to the expression you specify
+                    for the join condition; if you have column names that need
+                    to be quoted, you must use <code>quoteIdentifier()</code>
+                    as you form the string for the join condition.
+                </para>
+            </note>
+
+            <para>
+                The third argument to <code>join()</code> is an array
+                of column names, like that used in the <code>from()</code>
+                method.  It defaults to "<code>*</code>", supports correlation
+                names, expressions, and Zend_Db_Expr in the same way as the
+                array of column names in the <code>from()</code> method.
+            </para>
+
+            <para>
+                To select no columns from a table, use an empty array for
+                the list of columns.  This usage works in the
+                <code>from()</code> method too, but typically you want
+                some columns from the primary table in your queries,
+                whereas you might want no columns from a joined table.
+            </para>
+
+            <example id="zend.db.select.building.columns.example">
+                <title>Examples of specifying no columns</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id'
+        array() ); // empty list of columns
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                SQL has several types of joins.
+                See the list below for the methods to support
+                different join types in Zend_Db_Select.
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <command>INNER JOIN</command> with the
+                        <code>join(table, join, [columns])</code>
+                        or <code>joinInner(table, join, [columns])</code> methods.
+                    <para>
+                    </para>
+                        All RDBMS brands support this join type.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <command>LEFT JOIN</command> with the
+                        <code>joinLeft(table, condition, [columns])</code> method.
+                    </para>
+                    <para>
+                        All RDBMS brands support this join type.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <command>RIGHT JOIN</command> with the
+                        <code>joinRight(table, condition, [columns])</code> method.
+                    </para>
+                    <para>
+                        Some RDBMS brands do not support this join type.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <command>FULL JOIN</command> with the
+                        <code>joinFull(table, condition, [columns])</code> method.
+                    </para>
+                    <para>
+                        Some RDBMS brands do not support this join type.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <command>CROSS JOIN</command> with the
+                        <code>joinCross(table, [columns])</code> method.
+                    </para>
+                    <para>
+                        This method has no parameter to specify the join
+                        condition.  Some RDBMS brands do not support this
+                        join type.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <command>NATURAL JOIN</command> with the
+                        <code>joinNatural(table, [columns])</code> method.
+                    </para>
+                    <para>
+                        This method has no parameter to specify the join
+                        condition; a natural join assumes an equi-join on
+                        columns of the same name in the two tables.
+                        Only NATURAL INNER JOIN is supported.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.where">
+
+            <title>Adding a WHERE Clause</title>
+
+            <para>
+                You can specify criteria for restricting rows of the result set
+                using the <code>where()</code> method.  The first argument of
+                this method is a SQL expression, and this expression is used
+                in a SQL <code>WHERE</code> clause in the query.
+            </para>
+
+            <example id="zend.db.select.building.where.example">
+                <title>Example of the where() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE price > 100.00
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > 100.00');
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    No quoting is applied to expressions given to the
+                    <code>where()</code> or <code>orWhere()</code> methods.
+                    If you have column names that need to be quoted, you must use
+                    <code>quoteIdentifier()</code> as you form the string for the
+                    condition.
+                </para>
+            </note>
+
+            <para>
+                The second argument to the <code>where()</code> method is a
+                parameter, to replace a positional parameter placeholder within
+                the string in the first argument.  If the number of arguments
+                to <code>where()</code> is two, and there is a parameter
+                placeholder, Zend_Db_Select uses the <code>quoteInto()</code>
+                method to bring the value of the second argument into the
+                expression.
+            </para>
+
+            <example id="zend.db.select.building.where.example-param">
+                <title>Example of a parameter in the where() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price > 100.00)
+
+$minimumPrice = 100;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > ?', $minimumPrice);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                You can invoke the <code>where()</code> method multiple times
+                on the same Zend_Db_Select object.  The resulting query combines
+                the multiple terms together using <code>AND</code> between them.
+            </para>
+
+            <example id="zend.db.select.building.where.example-and">
+                <title>Example of multiple where() methods</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price > 100.00)
+//     AND (price < 500.00)
+
+$minimumPrice = 100;
+$maximumPrice = 500;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > ?', $minimumPrice)
+    ->where('price < ?', $maximumPrice);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                If you need to combine terms together using <code>OR</code>,
+                use the <code>orWhere()</code> method.  This method is used
+                in the same way as the <code>where()</code> method, except
+                that the term specified is preceded by <code>OR</code>,
+                instead of <code>AND</code>.
+            </para>
+
+            <example id="zend.db.select.building.where.example-or">
+                <title>Example of the orWhere() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price < 100.00)
+//     OR (price > 500.00)
+
+$minimumPrice = 100;
+$maximumPrice = 500;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price < ?', $minimumPrice)
+    ->orWhere('price > ?', $maximumPrice);
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.group">
+
+            <title>Adding a GROUP BY Clause</title>
+
+            <para>
+                In SQL, the <code>GROUP BY</code> clause allows you
+                to reduce the rows of a query result set to one row per
+                unique value found in the column(s) named in the
+                <code>GROUP BY</code> clause.
+            </para>
+
+            <para>
+                In Zend_Db_Select, you can specify the column(s) to use
+                for calculating the groups of rows using the
+                <code>group()</code> method.  The argument to this
+                method is a column or an array of columns to use in
+                the <code>GROUP BY</code> clause.
+            </para>
+
+            <example id="zend.db.select.building.group.example">
+                <title>Example of the group() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id');
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                Like the columns array in the <code>from()</code> method, you
+                can use correlation names in the column name strings, and the
+                column is quoted as an identifier unless the string contains
+                parentheses or is an object of type Zend_Db_Expr.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.having">
+
+            <title>Adding a HAVING Clause</title>
+
+            <para>
+                In SQL, the <code>HAVING</code> clause applies a restriction
+                condition on groups of rows similarly to how a
+                <code>WHERE</code> clause applies a restriction condition on rows.
+                But the two clauses are different because <code>WHERE</code>
+                conditions are applied before groups are defined, whereas
+                <code>HAVING</code> conditions are applied after groups are
+                defined.
+            </para>
+
+            <para>
+                In Zend_Db_Select, you can specify conditions for restricting
+                groups using the <code>having()</code> method.  Its usage is
+                similar to that of the <code>where()</code> method.
+                The first argument is a string containing a SQL expression.
+                The optional second argument is a value that is used to replace
+                a positional parameter placeholder in the SQL expression.
+                Expressions given in multiple invocations of the
+                <code>having()</code> method are combined using the Boolean
+                <code>AND</code> operator, or the <code>OR</code> operator if
+                you use the <code>orHaving()</code> method.
+            </para>
+
+            <example id="zend.db.select.building.having.example">
+                <title>Example of the having() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+//   HAVING line_items_per_product > 10
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id')
+    ->having('line_items_per_product > 10');
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    No quoting is applied to expressions given to the
+                    <code>having()</code> or <code>orHaving()</code> methods.
+                    If you have column names that need to be quoted, you must use
+                    <code>quoteIdentifier()</code> as you form the string for the
+                    condition.
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.order">
+
+            <title>Adding an ORDER BY Clause</title>
+
+            <para>
+                In SQL, the <code>ORDER BY</code> clause specifies one or more
+                columns or expressions by which the result set of a query is
+                sorted.  If multiple columns are listed, the secondary columns
+                are used to resolve ties; the sort order is determined by the
+                secondary columns if the preceding columns contain identical
+                values.  The default sorting is from least value to greatest
+                value.  You can also sort by greatest value to least value for
+                a given column in the list by specifying the keyword
+                <code>DESC</code> after that column.
+            </para>
+
+            <para>
+                In Zend_Db_Select, you can use the <code>order()</code> method
+                to specify a column or an array of columns by which to sort.
+                Each element of the array is a string naming a column.
+                optionally with the <code>ASC</code> <code>DESC</code> keyword
+                following it, separated by a space.
+            </para>
+
+            <para>
+                Like in the <code>from()</code> and <code>group()</code>
+                methods, column names are quoted as identifiers, unless they
+                contain contain parentheses or are an object of type
+                Zend_Db_Expr.
+            </para>
+
+            <example id="zend.db.select.building.order.example">
+                <title>Example of the order() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+//   ORDER BY "line_items_per_product" DESC, "product_id"
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id')
+    ->order(array('line_items_per_product DESC', 'product_id'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.limit">
+
+            <title>Adding a LIMIT Clause</title>
+
+            <para>
+                Some RDBMS brands extend SQL with a query clause known as the
+                <code>LIMIT</code> clause.  This clause reduces the number of
+                rows in the result set to at most a number you specify.
+                You can also specify to skip a number of rows before starting
+                to output.
+                This feature makes it easy to take a subset of a result set,
+                for example when displaying query results on progressive pages
+                of output.
+            </para>
+
+            <para>
+                In Zend_Db_Select, you can use the <code>limit()</code> method
+                to specify the count of rows and the number of rows to skip.
+                The first argument to this method is the desired count of rows.
+                The second argument is the number of rows to skip.
+            </para>
+
+            <example id="zend.db.select.building.limit.example">
+                <title>Example of the limit() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p 
+//   LIMIT 10, 20
+
+$select = $db->select()
+    ->from(array('p' => 'products'), array('product_id', 'product_name'))
+    ->limit(10, 20);
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    The <code>LIMIT</code> syntax is not supported by all RDBMS
+                    brands.  Some RDBMS require different syntax to support
+                    similar functionality.  Each Zend_Db_Adapter_Abstract class
+                    includes a method to produce SQL appropriate for that RDBMS.
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.distinct">
+
+            <title>Adding the DISTINCT Query Modifier</title>
+
+            <para>
+                The <code>distinct()</code> method enables you to add the
+                <code>DISTINCT</code> keyword to your SQL query.
+            </para>
+
+            <example id="zend.db.select.building.distinct.example">
+                <title>Example of the distinct() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT DISTINCT p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->distinct()
+    ->from(array('p' => 'products'), 'product_name');
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.for-update">
+
+            <title>Adding the FOR UPDATE Query Modifier</title>
+
+            <para>
+                The <code>forUpdate()</code> method enables you to add the
+                <code>FOR UPDATE</code> modifier to your SQL query.
+            </para>
+
+            <example id="zend.db.select.building.for-update.example">
+                <title>Example of forUpdate() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT FOR UPDATE p.*
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->forUpdate()
+    ->from(array('p' => 'products'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.execute">
+
+        <title>Excecuting Select Queries</title>
+
+        <para>
+            This section describes how to execute the query represented by a
+            Zend_Db_Select object.
+        </para>
+
+        <sect3 id="zend.db.select.execute.query-adapter">
+
+            <title>Executing Select Queries from the Db Adapter</title>
+
+            <para>
+                You can execute the query represented by the Zend_Db_Select
+                object by passing it as the first argument to the
+                <code>query()</code> method of a Zend_Db_Adapter_Abstract
+                object.  Use the Zend_Db_Select objects instead of a string
+                query.
+            </para>
+
+            <para>
+                The <code>query()</code> method returns an object of type
+                Zend_Db_Statement or PDOStatement, depending on the adapter type.
+            </para>
+
+            <example id="zend.db.select.execute.query-adapter.example">
+                <title>Example using the Db adapter's query() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+  ->from('products');
+
+$stmt = $db->query($select);
+$result = $stmt->fetchAll();
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.execute.query-select">
+
+            <title>Executing Select Queries from the Object</title>
+
+            <para>
+                As an alternative to using the <code>query()</code> method
+                of the adapter object, you can use the <code>query()</code>
+                method of the Zend_Db_Select object.
+                Both methods return an object of type Zend_Db_Statement or
+                PDOStatement, depending on the adapter type.
+            </para>
+
+            <example id="zend.db.select.execute.query-select.example">
+                <title>Example using the Select object's query method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products');
+
+$stmt = $select->query();
+$result = $stmt->fetchAll();
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.execute.tostring">
+
+            <title>Converting a Select Object to a SQL String</title>
+
+            <para>
+                If you need access to a string representation of the SQL
+                query corresponding to the Zend_Db_Select object, use
+                the <code>__toString()</code> method.
+            </para>
+
+            <example id="zend.db.select.execute.tostring.example">
+                <title>Example of the __toString() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products');
+
 $sql = $select->__toString();
-$result = $db->fetchAll($sql);
+echo "$sql\n";
 
-// alternatively, you can pass the $select object itself;
-// Zend_Db_Adapter is smart enough to call __toString() on the
-// Zend_Db_Select objects to get the query string.
-$result = $db->fetchAll($select);
+// The output is the string:
+//   SELECT * FROM "products"
 
 ?>]]></programlisting>
+            </example>
 
-        <para>
-            You can also use bound parameters in your queries instead of
-            quoting-as-you-go.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
-//
-
-$select->from('round_table', '*')
-       ->where('noble_title = :title')
-       ->order('first_name')
-       ->limit(10,20);
-
-// regardless, fetch the results using bound parameters
-$params = array('title' => 'Sir');
-$result = $db->fetchAll($select, $params);
-
-?>]]></programlisting>
+        </sect3>
 
     </sect2>
 
-    <sect2 id="zend.db.select.fromcols">
+    <sect2 id="zend.db.select.other">
 
-        <title>Columns FROM a Table</title>
+        <title>Other methods</title>
 
         <para>
-            To select columns from a specific table, use the from() method,
-            specifying the table and the columns you want from it.  You can
-            use both table and column aliases, and you can use from() as
-            many times as you need.
+            This section describes other methods of the Zend_Db_Select class
+            that are not covered above:  <code>getPart()</code> and
+            <code>reset()</code>.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, assuming Mysql as the adapter.
-$select = $db->select();
+        <sect3 id="zend.db.select.other.get-part">
 
-// SELECT a, b, c FROM some_table
-$select->from('some_table', 'a, b, c');
-// equivalent:
-$select->from('some_table', array('a', 'b', 'c');
+            <title>Retrieving Parts of the Select Object</title>
 
-// SELECT bar.col FROM foo AS bar
-$select->from('foo AS bar', 'bar.col');
+            <para>
+                The <code>getPart()</code> method returns the data you provided
+                for part of the SQL query.  The Zend_Db_Select class
+                includes constant definitions that you can use for
+                parts of the SQL query.
+            </para>
 
-// SELECT foo.col AS col1, bar.col AS col2 FROM foo, bar
-$select->from('foo', 'foo.col AS col1');
-$select->from('bar', 'bar.col AS col2');
+            <example id="zend.db.select.other.get-part.example">
+                <title>Example of the getPart() method</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products')
+    ->order('keyColumn');
+
+print_r( $select->getPart( Zend_Db_Select::ORDER ) );
 
 ?>]]></programlisting>
-    </sect2>
+            </example>
 
-    <sect2 id="zend.db.select.joincols">
+        </sect3>
 
-        <title>Columns from JOINed Tables</title>
+        <sect3 id="zend.db.select.other.reset">
 
-        <para>
-            To select columns using joined tables, use the join() method.
-            First give the joining table name, then the joining condition,
-            and finally the columns you want from the join.  You can use
-            join() as many times as you need.
-        </para>
+            <title>Resetting Parts of the Select Object</title>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, assuming Mysql as the adapter.
-$select = $db->select();
+            <para>
+                The <code>reset()</code> method enables you to clear one
+                specified part of the SQL query, or else clear all parts of
+                the SQL query if you omit the argument.
+            </para>
 
-//
-// SELECT foo.*, bar.*
-//     FROM foo
-//     JOIN bar ON foo.id = bar.id
-//
-$select->from('foo', '*');
-$select->join('bar', 'foo.id = bar.id', '*');
+            <example id="zend.db.select.other.reset.example">
+                <title>Example of the reset() method</title>
+                <programlisting role="php"><![CDATA[<?php
 
-?>]]></programlisting>
+// Build this query:
+//   SELECT p.*
+//   FROM "products" AS p
+//   ORDER BY "product_name"
 
-        <para>
-            Currently, only the JOIN syntax is supported; no LEFT JOINs,
-            RIGHT JOINs, etc.  Future releases will support these in a
-            database-neutral fashion.
-        </para>
+$select = $db->select()
+    ->from(array('p' => 'products')
+    ->order('product_name');
 
-    </sect2>
+// Changed requirement, instead order by a different columns:
+//   SELECT p.*
+//   FROM "products" AS p
+//   ORDER BY "product_id"
 
-    <sect2 id="zend.db.select.where">
+// Clear one part so we can redefine it
+$select->reset( Zend_Db_Select::ORDER );
 
-        <title>WHERE Conditions</title>
+// And specify a different column
+$select->order('product_id');
 
-        <para>
-            To add WHERE conditions, use the where() method.  You can
-            pass either a regular string, or you can pass a string
-            with a question-mark placeholder and a value to quote into it
-            (the value will be quoted using Zend_Db_Adapter::quoteInto).
-        </para>
-
-        <para>
-            Multiple calls to where() will AND the conditions together;
-            if you need to OR a condition, use orWhere().
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, then get a SELECT tool.
-$select = $db->select();
-
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     AND favorite_color = "yellow"
-//
-$select->from('round_table', '*');
-$select->where('noble_title = "Sir"'); // embedded value
-$select->where('favorite_color = ?', 'yellow'); // quoted value
-
-//
-// SELECT *
-//     FROM foo
-//     WHERE bar = "baz"
-//     OR id IN("1", "2", "3")
-//
-$select->from('foo', '*');
-$select->where('bar = ?', 'baz');
-$select->orWhere('id IN(?)', array(1, 2, 3);
+// Clear all parts of the query
+$select->reset();
 
 ?>]]></programlisting>
+            </example>
 
-    </sect2>
+        </sect3>
 
-    <sect2 id="zend.db.select.group">
-
-        <title>GROUP BY Clause</title>
-
-        <para>
-            To group rows, use the group() method as many times as you wish.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, then get a SELECT tool.
-$select = $db->select();
-
-//
-// SELECT COUNT(id)
-//     FROM foo
-//     GROUP BY bar, baz
-//
-$select->from('foo', 'COUNT(id)');
-$select->group('bar');
-$select->group('baz');
-
-// an equivalent group() call:
-$select->group('bar, baz');
-
-// another equivalent group() call:
-$select->group(array('bar', 'baz'));
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.having">
-
-        <title>HAVING Conditions</title>
-
-        <para>
-            To add HAVING conditions to the selected results, use the having()
-            method.  This method is identical in function to the where() method.
-        </para>
-
-        <para>
-            If you call having() multiple times, the conditions are ANDed together;
-            if you want to OR a condition, use orHaving().
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, then get a SELECT tool.
-$select = $db->select();
-
-//
-// SELECT COUNT(id) AS count_id
-//     FROM foo
-//     GROUP BY bar, baz
-//     HAVING count_id > "1"
-//
-$select->from('foo', 'COUNT(id) AS count_id');
-$select->group('bar, baz');
-$select->having('count_id > ?', 1);
-
-?>]]></programlisting>
-    </sect2>
-
-    <sect2 id="zend.db.select.order">
-
-        <title>ORDER BY Clause</title>
-
-        <para>
-            To ORDER columns, use the order() method as many times as you wish.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, then get a SELECT tool.
-$select = $db->select();
-
-//
-// SELECT * FROM round_table
-//     ORDER BY noble_title DESC, first_name ASC
-//
-$select->from('round_table', '*');
-$select->order('noble_title DESC');
-$select->order('first_name');
-
-// an equivalent order() call:
-$select->order('noble_title DESC, first_name');
-
-// another equivalent order() call:
-$select->order(array('noble_title DESC', 'first_name'));
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.limit">
-
-        <title>LIMIT By Count and Offset</title>
-
-        <para>
-            Zend_Db_Select offers database-abstracted LIMIT clause support.
-            For many databases, such as MySQL and PostgreSQL, this is
-            relatively easy, as they support the the "LIMIT :count
-            [OFFSET :offset]" syntax.
-        </para>
-
-        <para>
-            For other databases, such as Microsoft SQL and Oracle, this
-            is not so easy, as they do not support LIMIT clauses at all.
-            MS-SQL has only a TOP clause, and Oracle  requires that a query
-            be written in a special fashion to emulate a LIMIT.  Because of
-            the way Zend_Db_Select works internally, we can rewrite the SELECT
-            on-the-fly to emulate the LIMIT functionality of the aforementioned
-            open-source database systems.
-        </para>
-
-        <para>
-            To LIMIT the returned results by count and offset, use the limit()
-            method with a count and optional offset.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// first, a simple "LIMIT :count"
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-$select->limit(10);
-
-//
-// In MySQL/PostgreSQL/SQLite, this translates to:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10
-//
-// But in Microsoft SQL, this translates to:
-//
-// SELECT TOP 10 * FROM FOO
-//     ORDER BY id ASC
-//
-//
-
-// now, a more complex "LIMIT :count OFFSET :offset"
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-$select->limit(10, 20);
-
-//
-// In MySQL/PostgreSQL/SQLite, this translates to:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
-//
-// But in Microsoft SQL, which has no offset support, this translates to
-// something like:
-//
-// SELECT * FROM (
-//     SELECT TOP 10 * FROM (
-//         SELECT TOP 30 * FROM foo ORDER BY id DESC
-//     ) ORDER BY id ASC
-// )
-//
-// Zend_Db_Adapter does the query translation for you automatically.
-//
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.paging">
-
-        <title>LIMIT By Page And Count</title>
-
-        <para>
-            Zend_Db_Select offers page-based limits as well.  If you wish to
-            retrieve a certain "page" of results, use the limitPage() method;
-            first pass the page number you want, and then the number of
-            rows that appear on each page.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// build the basic select...
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-
-// ... and limit to page 3 where each page has 10 rows
-$select->limitPage(3, 10);
-
-//
-// In MySQL/PostgreSQL/SQLite, this translates to:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
-//
-
-?>]]></programlisting>
     </sect2>
 
 </sect1>

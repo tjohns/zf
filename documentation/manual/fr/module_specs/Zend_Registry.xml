@@ -224,7 +224,7 @@ var_dump($registry->index);
             <programlisting role="php"><![CDATA[<?php
 
 if (Zend_Registry::isRegistered($index)) {
-    $value = Zend_Registry::
+    $value = Zend_Registry::get($index);
 }
 
 ?>]]></programlisting>
@@ -300,14 +300,14 @@ Zend_Registry::set('index', $value);
             Use the static method <code>_unsetInstance()</code>.
         </para>
 
-        <warning>
+        <note>
             <title>Data loss risk</title>
             <para>
                 When you use <code>_unsetInstance()</code>,
                 all data in the static registry are
                 discarded and cannot be recovered.
             </para>
-        </warning>
+        </note>
 
         <para>
             You might use this method, for example, if you want to 

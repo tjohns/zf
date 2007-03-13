@@ -11,13 +11,13 @@
         <title>Example of catching an exception</title>
         <programlisting role="php"><![CDATA[<?php
 
-            try {
-                Zend_Loader::loadClass('nonexistantclass');
-            } catch (Zend_Exception $e) {
-                echo "Caught exception: " . get_class($e) . "\n";
-                echo "Message: " . $e->getMessage() . "\n";
-                // other code to recover from the failure.
-            }
+try {
+    Zend_Loader::loadClass('nonexistantclass');
+} catch (Zend_Exception $e) {
+    echo "Caught exception: " . get_class($e) . "\n";
+    echo "Message: " . $e->getMessage() . "\n";
+    // other code to recover from the failure.
+}
 
 ?>]]></programlisting>
     </example>

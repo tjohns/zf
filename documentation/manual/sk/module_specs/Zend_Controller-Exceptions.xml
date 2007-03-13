@@ -156,9 +156,9 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             The exception thrown by dispatch() is a
                             Zend_Controller_Dispatcher_Exception containing the
                             text 'Invalid controller specified'. Use one of the
-                            methods outlined in <xref
+                            methods outlined in <link
                                 linkend="zend.controller.exceptions.handling">the
-                            previous section</xref> to catch the exception, and
+                            previous section</link> to catch the exception, and
                             then redirect to a generic error page or the home
                             page.
                         </para>

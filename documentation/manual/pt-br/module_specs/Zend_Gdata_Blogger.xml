@@ -27,7 +27,7 @@
             See the table below:
         </para>
 
-        <table cellspacing="0" cellpadding="5">
+        <table cellspacing="0" cellpadding="5" id="zend.gdata.blogger.compatibility.differences">
             <title>Differences between current Blogger service and Blogger beta service</title>
             <tgroup cols="3">
                 <thead>
