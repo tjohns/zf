@@ -36,14 +36,14 @@ class Zend_Service_Simpy_Link
      *
      * @var string
      */
-    const ACCESSTYPE_PRIVATE = 'private';
+    const ACCESSTYPE_PRIVATE = '0';
 
     /**
      * Public access type
      *
      * @var string
      */
-    const ACCESSTYPE_PUBLIC  = 'public';
+    const ACCESSTYPE_PUBLIC  = '1';
 
     /**
      * Access type assigned to the link

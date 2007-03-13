@@ -118,8 +118,8 @@ class Zend_Service_Simpy_Note
 
         $this->_uri = $xpath->evaluate('/note/uri')->item(0)->nodeValue;
         $this->_id = substr($this->_uri, strrpos($this->_uri, '=') + 1);
-        $this->_modDate = $xpath->evaluate('/note/modDate')->item(0)->nodeValue;
-        $this->_addDate = $xpath->evaluate('/note/addDate')->item(0)->nodeValue;
+        $this->_modDate = trim($xpath->evaluate('/note/modDate')->item(0)->nodeValue);
+        $this->_addDate = trim($xpath->evaluate('/note/addDate')->item(0)->nodeValue);
         $this->_title = $xpath->evaluate('/note/title')->item(0)->nodeValue;
         $this->_description = $xpath->evaluate('/note/description')->item(0)->nodeValue;
 
