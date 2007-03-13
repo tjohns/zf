@@ -32,7 +32,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 //require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/Log/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
-require_once 'Zend/Service/SimpyTest.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/TranslateTest.php';
 require_once 'Zend/Translate/AllTests.php';
@@ -66,7 +65,6 @@ class Zend_AllTests
          * $ php AllTests.php
          */
         // $suite->addTest(Zend_Session_AllTests::suite());
-        $suite->addTestSuite('Zend_Service_SimpyTest');
         $suite->addTestSuite('Zend_TimeSyncTest');
         $suite->addTestSuite('Zend_TranslateTest');
         $suite->addTest(Zend_Translate_AllTests::suite());
