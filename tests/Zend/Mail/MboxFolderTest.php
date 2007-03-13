@@ -30,8 +30,8 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_params = array();
-        $this->_params['dirname'] = dirname(__FILE__) . '/_files/';
-        $this->_params['folder']  = 'test.mbox';
+        $this->_params['dirname'] = dirname(__FILE__) . '/_files/test.mbox/';
+        $this->_params['folder']  = 'INBOX';
     }
 
     public function testLoadOk()
@@ -93,12 +93,12 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
-            $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+            $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         } catch (Exception $e) {
             $this->fail('exception raised while selecting existing folder');
         }
 
-        $this->assertEquals($mail->getCurrentFolder(), DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $this->assertEquals($mail->getCurrentFolder(), DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
     }
 
     public function testChangeFolderUnselectable()
@@ -140,7 +140,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         try {
-            $this->assertEquals($mail->getFolders()->subfolder->key(), 'test.mbox');
+            $this->assertEquals($mail->getFolders()->subfolder->key(), 'test');
         } catch (Exception $e) {
             $this->fail('exception raised while selecting existing folder and getting local name');
         }
@@ -151,9 +151,9 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
-        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                     => 'subfolder',
-                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox' => 'test.mbox',
-                                DIRECTORY_SEPARATOR . 'test.mbox'                                     => 'test.mbox');
+        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                => 'subfolder',
+                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test' => 'test',
+                                DIRECTORY_SEPARATOR . 'INBOX'                                    => 'INBOX');
         $found_folders = array();
 
         foreach ($iterator as $localName => $folder) {
@@ -173,9 +173,9 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
         $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
         // we search for this folder because we can't assume a order while iterating
-        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                     => 'subfolder',
-                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox' => 'test.mbox',
-                                DIRECTORY_SEPARATOR . 'test.mbox'                                     => 'test.mbox');
+        $search_folders = array(DIRECTORY_SEPARATOR . 'subfolder'                                => 'subfolder',
+                                DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test' => 'test',
+                                DIRECTORY_SEPARATOR . 'INBOX'                                    => 'INBOX');
         $found_folders = array();
 
         foreach ($iterator as $localName => $folder) {
@@ -208,7 +208,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $count = $mail->countMessages();
         $this->assertEquals(6, $count);
 
-        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         $count = $mail->countMessages();
         $this->assertEquals(1, $count);
     }
@@ -221,7 +221,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $sizes = $mail->getSize();
         $this->assertEquals($shouldSizes, $sizes);
 
-        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         $sizes = $mail->getSize();
         $this->assertEquals(array(1 => 410), $sizes);
     }
@@ -233,7 +233,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
 
-        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Message in subfolder', $subject);
     }
@@ -242,7 +242,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
     {
         $mail = new Zend_Mail_Storage_Folder_Mbox($this->_params);
 
-        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         $count = $mail->countMessages();
         $content = $mail->getMessage(1)->getContent();
 
@@ -253,7 +253,7 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
 
-        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test.mbox');
+        $mail->selectFolder(DIRECTORY_SEPARATOR . 'subfolder' . DIRECTORY_SEPARATOR . 'test');
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
     }
