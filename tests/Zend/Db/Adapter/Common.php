@@ -192,7 +192,13 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             $conn = $this->_db->getConnection();
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
-            $this->assertContains('driver is not currently installed', $e->getMessage());
+            $this->assertThat(
+                $e->getMessage(),
+                $this->logicalOr(
+                    $this->equalTo('The PDO extension is required for this adapter but not loaded'),
+                    $this->stringContains('driver is not currently installed')
+                )
+            );
             $this->markTestSkipped($e->getMessage());
         }
 

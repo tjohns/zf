@@ -69,7 +69,13 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
             $conn = null; // close the connection
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
-            $this->assertEquals('The sqlite driver is not currently installed', $e->getMessage());
+            $this->assertThat(
+                $e->getMessage(),
+                $this->logicalOr(
+                    $this->equalTo('The PDO extension is required for this adapter but not loaded'),
+                    $this->equalTo('The sqlite driver is not currently installed')
+                )
+            );
             $this->markTestSkipped($e->getMessage());
         }
     }
