@@ -188,6 +188,14 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         // open a new connection
         $this->_db = Zend_Db::factory($this->getDriver(), $this->getParams());
 
+        try {
+            $conn = $this->_db->getConnection();
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $this->assertContains('driver is not currently installed', $e->getMessage());
+            $this->markTestSkipped($e->getMessage());
+        }
+
         $this->setUpMetadata();
     }
 

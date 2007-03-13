@@ -62,9 +62,16 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
                 'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
             )
         );
-        $conn = $db->getConnection();
-        $this->assertThat($conn, $this->isInstanceOf('PDO'));
-        $conn = null; // close the connection
+
+        try {
+            $conn = $db->getConnection();
+            $this->assertThat($conn, $this->isInstanceOf('PDO'));
+            $conn = null; // close the connection
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+            $this->assertEquals('The sqlite driver is not currently installed', $e->getMessage());
+            $this->markTestSkipped($e->getMessage());
+        }
     }
 
     function testGetFetchMode()
