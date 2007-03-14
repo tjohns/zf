@@ -34,7 +34,6 @@ require_once 'Zend/Exception.php';
 
 class Zend_Loader
 {
-
     /**
      * Loads a class from a PHP file.  The filename must be formatted
      * as "$class.php".
@@ -200,4 +199,24 @@ class Zend_Loader
         return false;
     }
 
+    /**
+     * spl_autoload() suitable implementation for supporting class autoloading.
+     *
+     * Attach to spl_autoload() using the following:
+     * <code>
+     * spl_autoload_register(array('Zend_Loader', 'autoload'));
+     * </code>
+     * 
+     * @param string $class 
+     * @return string|false Class name on success; false on failure
+     */
+    public static function autoload($class)
+    {
+        try {
+            self::loadClass($class);
+            return $class;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }

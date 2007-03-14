@@ -136,4 +136,20 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Loader::isReadable(__FILE__ . '.foobaar'));
     }
 
+    /**
+     * Tests that autoload works for valid classes and interfaces
+     */
+    public function testAutoloadLoadsValidClasses()
+    {
+        $this->assertEquals('Zend_Db_Profiler_Exception', Zend_Loader::autoload('Zend_Db_Profiler_Exception'));
+        $this->assertEquals('Zend_Auth_Storage_Interface', Zend_Loader::autoload('Zend_Auth_Storage_Interface'));
+    }
+
+    /**
+     * Tests that autoload returns false on invalid classes
+     */
+    public function testAutoloadFailsOnInvalidClasses()
+    {
+        $this->assertFalse(Zend_Loader::autoload('Zend_FooBar_Magic_Abstract'));
+    }
 }
