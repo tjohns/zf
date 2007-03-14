@@ -33,8 +33,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Log/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/TranslateTest.php';
-require_once 'Zend/Translate/AllTests.php';
 
 /**
  * @category   Zend
@@ -66,8 +64,6 @@ class Zend_AllTests
          */
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
-        $suite->addTestSuite('Zend_TranslateTest');
-        $suite->addTest(Zend_Translate_AllTests::suite());
 
         return $suite;
     }

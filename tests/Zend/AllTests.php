@@ -36,6 +36,8 @@ require_once 'Zend/RegistryTest.php';
 require_once 'Zend/Rest/AllTests.php';
 require_once 'Zend/Server/AllTests.php';
 require_once 'Zend/Service/AllTests.php';
+require_once 'Zend/TranslateTest.php';
+require_once 'Zend/Translate/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ValidateTest.php';
@@ -86,6 +88,8 @@ class Zend_AllTests
         $suite->addTest(Zend_Rest_AllTests::suite());
         $suite->addTest(Zend_Server_AllTests::suite());
         $suite->addTest(Zend_Service_AllTests::suite());
+        $suite->addTestSuite('Zend_TranslateTest');
+        $suite->addTest(Zend_Translate_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ValidateTest');

@@ -75,13 +75,6 @@
         <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
     </chapter>
 
-    <chapter id="zend.translate">
-        <title>Zend_Translate</title>
-        <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Translate-Adapters.xml" />
-        <xi:include href="module_specs/Zend_Translate-Using.xml" />
-    </chapter>
-
     <!--
     <xi:include href="ref/faq.xml" />
     -->
