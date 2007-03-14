@@ -158,19 +158,6 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testGetBodyAsArray()
-    {
-        $string1 = 'content for the response body';
-        $string2 = 'more content for the response body';
-        $string3 = 'even more content for the response body';
-        $this->_response->appendBody($string1);
-        $this->_response->appendBody($string2);
-        $this->_response->appendBody($string3);
-
-        $expected = array($string1, $string2, $string3);
-        $this->assertEquals($expected, $this->_response->getBody(true));
-    }
-
     public function testRenderExceptions()
     {
         $this->assertFalse($this->_response->renderExceptions());
@@ -226,6 +213,208 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
             $this->fail('Should not accept non-integer response codes');
         } catch (Exception $e) {
         }
+    }
+
+    public function testCanSendHeadersIndicatesFileAndLine()
+    {
+        $this->_response->headersSentThrowsException = true;
+        try {
+            $this->_response->canSendHeaders(true);
+            $this->fail('canSendHeaders() should throw exception');
+        } catch (Exception $e) {
+            $this->assertRegExp('/headers already sent in .+, line \d+$/', $e->getMessage());
+        }
+    }
+
+    public function testAppend()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some' => "some content\n",
+            'more' => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testAppendUsingExistingSegmentOverwrites()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('some', "more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some' => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testPrepend()
+    {
+        $this->_response->prepend('some', "some content\n");
+        $this->_response->prepend('more', "more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'more' => "more content\n",
+            'some' => "some content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testPrependUsingExistingSegmentOverwrites()
+    {
+        $this->_response->prepend('some', "some content\n");
+        $this->_response->prepend('some', "more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some' => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testInsert()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+        $this->_response->insert('foobar', "foobar content\n", 'some');
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some'   => "some content\n",
+            'foobar' => "foobar content\n",
+            'more'   => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testInsertBefore()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+        $this->_response->insert('foobar', "foobar content\n", 'some', true);
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'foobar' => "foobar content\n",
+            'some'   => "some content\n",
+            'more'   => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testInsertWithFalseParent()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+        $this->_response->insert('foobar', "foobar content\n", 'baz', true);
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some'   => "some content\n",
+            'more'   => "more content\n",
+            'foobar' => "foobar content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testSetBodyNamedSegment()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->setBody("more content\n", 'some');
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some'   => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testSetBodyOverwritesWithDefaultSegment()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->setBody("more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'default'   => "more content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testAppendBodyAppendsDefaultSegment()
+    {
+        $this->_response->setBody("some content\n");
+        $this->_response->appendBody("more content\n");
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'default'   => "some content\nmore content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testAppendBodyAppendsExistingSegment()
+    {
+        $this->_response->setBody("some content\n", 'some');
+        $this->_response->appendBody("more content\n", 'some');
+
+        $content = $this->_response->getBody(true);
+        $this->assertTrue(is_array($content));
+        $expected = array(
+            'some'   => "some content\nmore content\n"
+        );
+        $this->assertEquals($expected, $content);
+    }
+
+    public function testGetBodyNamedSegment()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+
+        $this->assertEquals("more content\n", $this->_response->getBody('more'));
+        $this->assertEquals("some content\n", $this->_response->getBody('some'));
+    }
+
+    public function testGetBodyAsArray()
+    {
+        $string1 = 'content for the response body';
+        $string2 = 'more content for the response body';
+        $string3 = 'even more content for the response body';
+        $this->_response->appendBody($string1, 'string1');
+        $this->_response->appendBody($string2, 'string2');
+        $this->_response->appendBody($string3, 'string3');
+
+        $expected = array(
+            'string1' => $string1, 
+            'string2' => $string2, 
+            'string3' => $string3
+        );
+
+        $this->assertEquals($expected, $this->_response->getBody(true));
+    }
+
+    public function testClearBody()
+    {
+        $this->_response->append('some', "some content\n");
+
+        $this->assertTrue($this->_response->clearBody());
+        $body = $this->_response->getBody(true);
+        $this->assertTrue(is_array($body));
+        $this->assertEquals(0, count($body));
     }
 }
 
