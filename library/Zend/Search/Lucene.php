@@ -582,7 +582,7 @@ class Zend_Search_Lucene
 
                     if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
                         $count++;
-                        $sortArgs[] = $argList[$count+1];
+                        $sortArgs[] = $argList[$count];
                     } else {
                         if ($argList[$count] == SORT_ASC  || $argList[$count] == SORT_DESC) {
                             $sortArgs[] = SORT_REGULAR;
@@ -602,7 +602,7 @@ class Zend_Search_Lucene
             $sortArgs[] = SORT_NUMERIC;
 
             // Array to be sorted
-            $sortArgs[] = $hits;
+            $sortArgs[] = &$hits;
 
             // Do sort
             call_user_func_array('array_multisort', $sortArgs);
