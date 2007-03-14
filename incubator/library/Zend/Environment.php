@@ -28,6 +28,12 @@ require_once 'Zend/Environment/Exception.php';
 
 
 /**
+ * Zend_Environment_Container_Abstract
+ */
+require_once 'Zend/Environment/Container/Abstract.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Environment
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -51,7 +57,7 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
      * @throws Zend_Environment_Exception
      * @return void
      */
-    public function __construct($modules, $config = array())
+    public function __construct($modules = null, $config = array())
     {
         if (is_array($config)) {
             if (isset($config['cache'])) {
@@ -60,23 +66,24 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
         }
         
         if (isset($this->_cache)) {
-            if ($data = $this->_cache->load($this->_cachePrefix . 'module')) {
+            $data = $this->_cache->load($this->_cachePrefix . 'module');
+            if ($data) {
                 $this->_data = unserialize($data);
                 return;
             }
         }
 
         if ($modules === null) {
-            $modules = array();
+			// Load module registry
+            require_once 'Zend/Environment/ModuleRegistry.php';
             $registry = new Zend_Environment_ModuleRegistry();
+
+            $modules = array();
             foreach ($registry as $file) {
                 $class = rtrim($file->getFilename(), '.php');
                 $module = "Zend_Environment_Module_{$class}";
                 Zend_Loader::loadClass($module);
-                try {
-                    $modules[] = new $module(strtolower($class));
-                } catch (Zend_Environment_Exception $e) {
-                }
+                $modules[] = new $module(strtolower($class));
             }
         } elseif (!is_array($modules)) {
             $modules = array($modules);
@@ -165,7 +172,8 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
     public function match($locations, $server = null, $ip = null)
     {
         if (isset($this->_config)) {
-            if ($id = $this->_config->load($this->_cachePrefix . 'match')) {
+            $id = $this->_config->load($this->_cachePrefix . 'match');
+            if ($id) {
                 return $id;
             }
         }
@@ -201,7 +209,7 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
 
             foreach ($environment as $host) {
 
-                if (preg_match("/^(\d+\.){3}\d+(\/\d+)?$/", $host)) {
+                if (preg_match('/^(\d+\.){3}\d+(\/\d+)?$/', $host)) {
 
                     if (strpos($host, '/') === false) {
                         // If not in CIDR notation then perform straight compare
@@ -260,8 +268,8 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
      */
     protected function _getDefaultView()
     {
-        $view = new Zend_Environment_View;
-        $view->setScriptPath(dirname(__FILE__) . '/Environment/View');
+    	require_once 'Zend/Environment/View.php';
+        $view = new Zend_Environment_View();
         return $view;
     }
     
@@ -280,4 +288,5 @@ class Zend_Environment extends Zend_Environment_Container_Abstract
         
         return $value;
     }
+
 }

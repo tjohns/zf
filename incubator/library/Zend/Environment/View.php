@@ -35,7 +35,18 @@ require_once('Zend/View.php');
  */
 class Zend_Environment_View extends Zend_View
 {
-    public function toString($val, $padding = 4)
+
+    public function __construct ($config = array())
+    {
+		// Set the default script views if not supplied by user
+        if (!array_key_exists('scriptPath', $config)) {
+            $config['scriptPath'] = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View');
+        }
+
+        parent::__construct($config);
+    }
+
+    public function toString($val)
     {
         if (is_string($val) || is_object($val) || empty($val)) {
             return trim("{$val}");
@@ -49,4 +60,5 @@ class Zend_Environment_View extends Zend_View
 
         return "\n" . trim(join("\n", $array));
     }
+
 }

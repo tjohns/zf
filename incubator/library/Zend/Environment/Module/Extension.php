@@ -22,9 +22,9 @@
 
 
 /**
- * Zend_View_Abstract
+ * Zend_Environment_Module_Abstract
  */
-require_once('Zend/Environment/Module/Abstract.php');
+require_once 'Zend/Environment/Module/Abstract.php';
 
 
 /**
@@ -54,16 +54,28 @@ class Zend_Environment_Module_Extension extends Zend_Environment_Module_Abstract
         }
     }
 
+    /**
+     * Parses phpinfo() module information to determine correct version
+     *
+     * @param  array $info
+     * @return false|array
+     */
     protected function _checkExtensionVersion($info)
     {
         $matches = preg_grep("!(revision|version)!i", array_keys($info));
-        $value = $info[current($matches)];
-        preg_match("!(\d[\d\w\.\-_]+)!", $value, $version);
-        if (count($version)) {
-            return array('version' => current($version),
-                         'string' => $value);
-        } else {
+        $version = array();
+        
+        if (!isset($info[current($matches)])) {
             return false;
         }
+
+        $value = (array) $info[current($matches)];
+        preg_match('/(\d[\d\w\.\-_]+)/', $value[0], $version);
+
+        if (!count($version)) {
+            return false;
+        }
+
+        return array('version' => current($version), 'string' => $value);
     }
 }

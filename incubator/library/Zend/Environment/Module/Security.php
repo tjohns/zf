@@ -28,6 +28,12 @@ require_once('Zend/Environment/Module/Abstract.php');
 
 
 /**
+ * Zend_Environment_Security_Field
+ */
+require_once('Zend/Environment/Security/Field.php');
+
+
+/**
  * @category   Zend
  * @package    Zend_Environment
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -86,7 +92,7 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
 
 			while (false !== ($entry = $this_dir->read())) {
 				if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)
-					&& preg_match("/[A-Za-z]+\.php/i", $entry)) {
+					&& preg_match('/[A-Za-z]+\.php/i', $entry)) {
 					include_once $this_dir->path.DIRECTORY_SEPARATOR.$entry;
 					$classNames[] = "Zend_Environment_Security_Test_".$test_dir."_".basename($entry, '.php');
 				}

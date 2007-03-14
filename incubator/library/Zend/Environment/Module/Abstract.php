@@ -22,6 +22,12 @@
 
 
 /**
+ * Zend_Environment_Field
+ */
+require_once 'Zend/Environment/Field.php';
+
+
+/**
  * Zend_Environment_Module_Interface
  */
 require_once 'Zend/Environment/Module/Interface.php';
@@ -102,7 +108,7 @@ abstract class Zend_Environment_Module_Abstract extends Zend_Environment_Contain
         $info = array();
         ob_start();
         phpinfo($section);
-        $output = ob_get_clean();
+
         $search = array('![\w\W]+?<body>([\w\W]+?)</body>[\w\W]+!mi',
                         '!<h(\d)[^>]*>(.*?)</h\\1>\s*!mi',
                         '!\s*(</tr>\s*)?<tr[^>]*>\s*!mi',
@@ -112,14 +118,43 @@ abstract class Zend_Environment_Module_Abstract extends Zend_Environment_Contain
                         "___marker___\\2__section__\n",
                         "\n___row___\n",
                         "___delim___",
-                        "");
-        $output = strip_tags(preg_replace($search, $replace, $output));
+                        "\\1___delim___");
+
+        $output = strip_tags(preg_replace($search, $replace, ob_get_clean()));
         $output = preg_split('!___marker___!m', $output, -1, PREG_SPLIT_NO_EMPTY);
+
         foreach($output as $section) {
+            // Ensure section is populated
+            $section = trim($section);
+            if (!$section) {
+                continue;
+            }
+            
+            // Split into names and directives
             list($name, $directives) = explode('__section__', $section);
-            $directives = preg_split("!___row___\s+!m", trim($directives), -1, PREG_SPLIT_NO_EMPTY);
+            $directives = preg_split('/___row___\s+/m', trim($directives), -1, PREG_SPLIT_NO_EMPTY);
+            
+            // Discard redundant header rows if found in directives
+            if (count($directives) > 1) {
+                array_pop($directives);
+            }
+            
             foreach($directives as $directive) {
-                list($element, $local, $master) = preg_split('!\s*___delim___\s*!', $directive, -1, PREG_SPLIT_NO_EMPTY);
+                $props = preg_split('/\s*___delim___\s*/', $directive, -1, PREG_SPLIT_NO_EMPTY);
+                $element = $props[0];
+
+                if (count($props) < 2) {
+                    $local  = $element;
+                } else {
+                    $local= $props[1];
+                }
+
+                if (count($props) < 3) {
+                    $master = $local;
+                } else {
+                    $master = $props[2];
+                }
+                
                 if (preg_match('!^[a-z0-9_ \.\-\(\)\[\]"]+$!i', $element)) {
                     if (!is_null($master)) {
                         $value = array($local, $master);
