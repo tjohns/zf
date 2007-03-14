@@ -30,10 +30,10 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_maildir = dirname(__FILE__) . '/_files/test.maildir/';
-		if (!is_dir($this->_maildir . '/cur/')) {
-			$this->markTestSkipped('You have to unpack maildir.tar in Zend/Mail/_files/test.maildir/ '
-			                     . 'directory before enabling the maildir tests');
-		}
+        if (!is_dir($this->_maildir . '/cur/')) {
+            $this->markTestSkipped('You have to unpack maildir.tar in Zend/Mail/_files/test.maildir/ '
+                                 . 'directory before enabling the maildir tests');
+        }
     }
 
     public function testLoadOk()
@@ -219,5 +219,36 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $flags = $mail->getMessage(1)->getFlags();
         $this->assertTrue(isset($flags[Zend_Mail_Storage::FLAG_SEEN]));
         $this->assertTrue(in_array(Zend_Mail_Storage::FLAG_SEEN, $flags));
+    }
+
+    public function testUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+
+        $this->assertTrue($mail->hasUniqueId);
+        $this->assertEquals(1, $mail->getNumberByUniqueId($mail->getUniqueId(1)));
+
+        $ids = $mail->getUniqueId();
+        $should_ids = array(1 => '1000000000.P1.example.org', '1000000001.P1.example.org', '1000000002.P1.example.org',
+                            '1000000003.P1.example.org', '1000000004.P1.example.org');
+        foreach ($ids as $num => $id) {
+            $this->assertEquals($id, $should_ids[$num]);
+
+            if ($mail->getNumberByUniqueId($id) != $num) {
+                    $this->fail('reverse lookup failed');
+            }
+        }
+    }
+
+    public function testWrongUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+        try {
+            $mail->getNumberByUniqueId('this_is_an_invalid_id');
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception while getting number for invalid id');
     }
 }

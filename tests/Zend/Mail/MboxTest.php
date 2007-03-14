@@ -228,4 +228,22 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
     }
+
+    public function testUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+
+        $this->assertFalse($mail->hasUniqueId);
+        $this->assertEquals(1, $mail->getNumberByUniqueId($mail->getUniqueId(1)));
+
+        $ids = $mail->getUniqueId();
+        foreach ($ids as $num => $id) {
+            $this->assertEquals($num, $id);
+
+            if ($mail->getNumberByUniqueId($id) != $num) {
+                    $this->fail('reverse lookup failed');
+            }
+        }
+    }
+
 }

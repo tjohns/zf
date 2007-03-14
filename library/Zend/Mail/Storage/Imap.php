@@ -407,11 +407,11 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function createFolder($name, $parentFolder = null)
     {
-        if ($parentFolder instanceof Zend_Mail_Folder) {
-            // TODO: we assume / as the hierarchy delim - need to get that from the folder class!
+        // TODO: we assume / as the hierarchy delim - need to get that from the folder class!
+        if ($parentFolder instanceof Zend_Mail_Storage_Folder) {
             $folder = $parentFolder->getGlobalName() . '/' . $name;
         } else if ($parentFolder != null) {
-            $folder = $parentFolder . $name;
+            $folder = $parentFolder . '/' . $name;
         } else {
             $folder = $name;
         }
@@ -430,7 +430,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function removeFolder($name)
     {
-        if ($name instanceof Zend_Mail_Folder) {
+        if ($name instanceof Zend_Mail_Storage_Folder) {
             $name = $name->getGlobalName();
         }
 
@@ -451,7 +451,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function renameFolder($oldName, $newName)
     {
-        if ($oldName instanceof Zend_Mail_Folder) {
+        if ($oldName instanceof Zend_Mail_Storage_Folder) {
             $oldName = $oldName->getGlobalName();
         }
 

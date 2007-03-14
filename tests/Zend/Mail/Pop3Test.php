@@ -339,4 +339,40 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(strpos($mail->getRawHeader(1), "\r\nSubject: Simple Message\r\n") > 0);
     }
+
+    public function testUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Pop3($this->_params);
+
+        $this->assertTrue($mail->hasUniqueId);
+        $this->assertEquals(1, $mail->getNumberByUniqueId($mail->getUniqueId(1)));
+
+        $ids = $mail->getUniqueId();
+        foreach ($ids as $num => $id) {
+            foreach ($ids as $inner_num => $inner_id) {
+                if ($num == $inner_num) {
+                    continue;
+                }
+                if ($id == $inner_id) {
+                    $this->fail('not all ids are unique');
+                }
+            }
+
+            if ($mail->getNumberByUniqueId($id) != $num) {
+                    $this->fail('reverse lookup failed');
+            }
+        }
+    }
+
+    public function testWrongUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Pop3($this->_params);
+        try {
+            $mail->getNumberByUniqueId('this_is_an_invalid_id');
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception while getting number for invalid id');
+    }
 }

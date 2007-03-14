@@ -510,4 +510,206 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(strpos($mail->getRawHeader(1), "\r\nSubject: Simple Message\r\n") > 0);
     }
+
+    public function testUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $this->assertTrue($mail->hasUniqueId);
+        $this->assertEquals(1, $mail->getNumberByUniqueId($mail->getUniqueId(1)));
+
+        $ids = $mail->getUniqueId();
+        foreach ($ids as $num => $id) {
+            foreach ($ids as $inner_num => $inner_id) {
+                if ($num == $inner_num) {
+                    continue;
+                }
+                if ($id == $inner_id) {
+                    $this->fail('not all ids are unique');
+                }
+            }
+
+            if ($mail->getNumberByUniqueId($id) != $num) {
+                    $this->fail('reverse lookup failed');
+            }
+        }
+    }
+
+    public function testWrongUniqueId()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        try {
+            $mail->getNumberByUniqueId('this_is_an_invalid_id');
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception while getting number for invalid id');
+    }
+
+    public function testCreateFolder()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        $mail->createFolder('subfolder/test1');
+        $mail->createFolder('test2', 'subfolder');
+        $mail->createFolder('test3', $mail->getFolders()->subfolder);
+
+        try {
+            $mail->getFolders()->subfolder->test1;
+            $mail->getFolders()->subfolder->test2;
+            $mail->getFolders()->subfolder->test3;
+        } catch (Exception $e) {
+            $this->fail('could not get new folders');
+        }
+    }
+
+    public function testCreateExistingFolder()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        try {
+            $mail->createFolder('subfolder/test');
+        } catch (Exception $e) {
+            return; // ok
+        }
+
+        $this->fail('should not be able to create existing folder');
+    }
+
+    public function testRemoveFolderName()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        $mail->removeFolder('subfolder/test');
+
+        try {
+            $mail->getFolders()->subfolder->test;
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('folder still exists');
+    }
+
+    public function testRemoveFolderInstance()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        $mail->removeFolder($mail->getFolders()->subfolder->test);
+
+        try {
+            $mail->getFolders()->subfolder->test;
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('folder still exists');
+    }
+
+    public function testRemoveInvalidFolder()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        try {
+            $mail->removeFolder('thisFolderDoestNotExist');
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no error while removing invalid folder');
+    }
+
+    public function testRenameFolder()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        try {
+            $mail->renameFolder('subfolder/test', 'subfolder/test1');
+            $mail->renameFolder($mail->getFolders()->subfolder->test1, 'subfolder/test');
+        } catch (Exception $e) {
+            $this->fail('renaming failed');
+        }
+
+        try {
+            $mail->renameFolder('subfolder/test', 'INBOX');
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no error while renaming folder to INBOX');
+    }
+
+    public function testAppend()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        $count = $mail->countMessages();
+
+        $message = '';
+        $message .= "From: me@example.org\r\n";
+        $message .= "To: you@example.org\r\n";
+        $message .= "Subject: append test\r\n";
+        $message .= "\r\n";
+        $message .= "This is a test\r\n";
+        $mail->appendMessage($message);
+
+        $this->assertEquals($count + 1, $mail->countMessages());
+        $this->assertEquals($mail->getMessage($count + 1)->subject, 'append test');
+
+        try {
+            $mail->appendMessage('');
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no error while appending empty message');
+    }
+
+    public function testCopy()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $mail->selectFolder('subfolder/test');
+        $count = $mail->countMessages();
+        $mail->selectFolder('INBOX');
+        $message = $mail->getMessage(1);
+
+        $mail->copyMessage(1, 'subfolder/test');
+        $mail->selectFolder('subfolder/test');
+        $this->assertEquals($count + 1, $mail->countMessages());
+        $this->assertEquals($mail->getMessage($count + 1)->subject, $message->subject);
+        $this->assertEquals($mail->getMessage($count + 1)->from, $message->from);
+        $this->assertEquals($mail->getMessage($count + 1)->to, $message->to);
+
+        try {
+            $mail->copyMessage(1, 'justARandomFolder');
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no error while copying to wrong folder');
+    }
+
+    public function testSetFlags()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+
+        $mail->setFlags(1, array(Zend_Mail_Storage::FLAG_SEEN));
+        $message = $mail->getMessage(1);
+        $this->assertTrue($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertFalse($message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED));
+
+        $mail->setFlags(1, array(Zend_Mail_Storage::FLAG_SEEN, Zend_Mail_Storage::FLAG_FLAGGED));
+        $message = $mail->getMessage(1);
+        $this->assertTrue($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertTrue($message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED));
+
+        $mail->setFlags(1, array(Zend_Mail_Storage::FLAG_FLAGGED));
+        $message = $mail->getMessage(1);
+        $this->assertFalse($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertTrue($message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED));
+
+        $mail->setFlags(1, array('myflag'));
+        $message = $mail->getMessage(1);
+        $this->assertFalse($message->hasFlag(Zend_Mail_Storage::FLAG_SEEN));
+        $this->assertFalse($message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED));
+        $this->assertTrue($message->hasFlag('myflag'));
+
+        try {
+            $mail->setFlags(1, array(Zend_Mail_Storage::FLAG_RECENT));
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('should not be able to set recent flag');
+    }
 }
