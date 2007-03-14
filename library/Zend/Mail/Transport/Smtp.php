@@ -22,6 +22,12 @@
 
 
 /**
+ * Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+
+/**
  * Zend_Mail_Protocol_Smtp
  */
 require_once 'Zend/Mail/Protocol/Smtp.php';
