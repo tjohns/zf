@@ -42,8 +42,8 @@ $index->addDocument($doc);
 
         <para>
             Der selbe Prozess wird verwendet, um einen vorhandenen Index zu aktualisieren. Der 
-            einzige Unterschied ist, dass der Index ohne den zweiten Parameter geöffnet werden
-            sollte:
+            einzige Unterschied ist, dass die open() Methode statt der create() Methode aufgerufen
+            wird:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
