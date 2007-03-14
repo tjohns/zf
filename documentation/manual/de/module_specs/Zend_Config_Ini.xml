@@ -9,6 +9,18 @@
             <code>Zend_Config_Ini</code> verwendet die PHP-Funktion <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>. Deren Dokumentation klärt über spezielle Verhaltensweisen auf, die sich auch auf <code>Zend_Config_Ini</code> auswirken, z. B. wie die besonderen Werte <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> und <code>null</code> gehandhabt werden.
         </para>
     </note>
+    <note>
+        <title>Schlüssel Trenner</title>
+        <para>
+            Standardmäßig ist das Schlüssel Trennzeichen der Punkt (.). Dennoch kann dies geändert
+            werden, indem der $config Schlüssel "nestSeparator" geändert werden, wenn das 
+            <code>Zend_Config_Ini</code> Objekt instanziert wird. Zum Beispiel:
+            <programlisting role="php"><!CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+$config['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+        </para>
+    </note>    
     <example>
         <title>Zend_Config_Ini benutzen</title>
         <para>
