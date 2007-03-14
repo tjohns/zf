@@ -37,12 +37,17 @@
                 </row>
                 <row>
                     <entry>TMX</entry>
-                    <entry>Use tmx (*.tmx) files</entry>
+                    <entry>Use tmx (*.tmx/*.xml) files</entry>
                     <entry>Industry standard for inter application translation; XML format; human readable</entry>
                 </row>
                 <row>
+                    <entry>XLIFF</entry>
+                    <entry>Use xliff (*.xliff/*.xml) files</entry>
+                    <entry>A simpler format as TMX but related to it; XML format; human readable</entry>
+                </row>
+                <row>
                     <entry>Others</entry>
-                    <entry>*.xliff, *.sql, *.tbx, *.qt</entry>
+                    <entry>*.sql, *.tbx, *.qt</entry>
                     <entry>Different other adapters may be implemented in the future</entry>
                 </row>
             </tbody>
@@ -141,6 +146,26 @@
 
             <para>
                 Most medium to large companies use this adapter.
+                The files are human readable and system-independent.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.xliff">
+
+            <title>Zend_Translate_Adapter_Xliff</title>
+
+            <para>
+                The Xliff Adapter is the Adapter which will be used by most
+                customers which want to have XML files but do not have tools
+                for TMX.
+                XLIFF is a XML file based format, which is related to TMX but
+                simpler as it does not support all possibilities of it.
+                XML files are human-readable, but the parsing is not as fast
+                as with gettext files.
+            </para>
+
+            <para>
+                Most medium companies use this adapter.
                 The files are human readable and system-independent.
             </para>
         </sect3>
