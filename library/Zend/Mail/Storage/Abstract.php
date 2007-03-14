@@ -202,7 +202,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
     /**
      * Countable::count()
      *
-     * @internal
      * @return   int
      */
      public function count()
@@ -214,7 +213,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * ArrayAccess::offsetExists()
       *
-      * @internal
       * @param    int     $id
       * @return   boolean
       */
@@ -233,7 +231,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * ArrayAccess::offsetGet()
       *
-      * @internal
       * @param    int $id
       * @return   Zend_Mail_Message message object
       */
@@ -246,7 +243,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * ArrayAccess::offsetSet()
       *
-      * @internal
       * @param    id     $id
       * @param    mixed  $value
       * @throws   Zend_Mail_Storage_Exception
@@ -261,7 +257,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * ArrayAccess::offsetUnset()
       *
-      * @internal
       * @param    int   $id
       * @return   boolean success
       */
@@ -278,7 +273,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
       * the interfaces and your scripts take long you should use reset()
       * from time to time.
       *
-      * @internal
       * @return   void
       */
      public function rewind()
@@ -291,7 +285,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * Iterator::current()
       *
-      * @internal
       * @return   Zend_Mail_Message current message
       */
      public function current()
@@ -303,7 +296,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * Iterator::key()
       *
-      * @internal
       * @return   int id of current position
       */
      public function key()
@@ -315,7 +307,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * Iterator::next()
       *
-      * @internal
       * @return   void
       */
      public function next()
@@ -327,7 +318,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * Iterator::valid()
       *
-      * @internal
       * @return   boolean
       */
      public function valid()
@@ -342,7 +332,6 @@ abstract class Zend_Mail_Storage_Abstract implements Countable, ArrayAccess, See
      /**
       * SeekableIterator::seek()
       *
-      * @internal
       * @param  int $pos
       * @return void
       * @throws OutOfBoundsException
