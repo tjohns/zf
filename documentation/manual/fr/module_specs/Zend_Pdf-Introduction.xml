@@ -1,11 +1,11 @@
-<sect1 id="zend.pdf.introduction">
+﻿<sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Introduction.</title>
     <para>
     <code>Zend_Pdf</code> est un module entièrement écrit en PHP5 permettant la manipulation de
     documents PDF (Portable Document Format). Il peut charger des documents existants, en créer de nouveaux,
-    les modifier et les sauvegarders. Cela peut aider toute les applications PHP à générer dynamiquement des
-    documents PDF en modifiant un modèle existant ou en générant un document de zéro.
+    les modifier et les sauvegarder. Cela peut aider toute les applications PHP à générer dynamiquement des
+    documents PDF en modifiant un modèle existant ou en générant un document à partir de zéro.
     Le module Zend_Pdf supporte les fonctionnalités suivantes :
     <itemizedlist>
         <listitem>
@@ -13,7 +13,7 @@
              Créer un nouveau document ou en charger un qui existe déjà.
             <footnote>
                 <para>
-                 Les documents aux format PDF V1.4 (Acrobat 5) sont désormais supporté au chargement.
+                 Les documents aux format PDF V1.4 (Acrobat 5) sont désormais supportés au chargement.
                 </para>
             </footnote>
             </para>
@@ -35,7 +35,7 @@
         </listitem>
         <listitem>
             <para>
-             Dessiner du texte en utilisant une des 14 polices standard ou vos propres font TrueType.
+             Dessiner du texte en utilisant une des 14 polices standard ou vos propres polices TrueType.
             </para>
         </listitem>
         <listitem>
@@ -48,14 +48,14 @@
              Inclure des images.
             <footnote>
                 <para>
-                 Seul les images au format JPG sont supportés pour le moment.
+                 Seul les images au format JPG sont supportées pour le moment.
                 </para>
             </footnote>
             </para>
         </listitem>
         <listitem>
             <para>
-             Mise à jour incrementale des fichiers PDF.
+             Mise à jour incrémentale des fichiers PDF.
             </para>
         </listitem>
     </itemizedlist>

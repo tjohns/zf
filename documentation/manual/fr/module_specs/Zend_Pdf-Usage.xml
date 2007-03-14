@@ -1,4 +1,4 @@
-<sect1 id="zend.pdf.usage">
+﻿<sect1 id="zend.pdf.usage">
     <title>Exemple d'utilisation du module Zend_Pdf</title>
     <para>
      Cette section propose un exemple d'utilisation du module <code>Zend_Pdf</code>.
@@ -27,14 +27,20 @@ if (!isset($argv[1])) {
     exit;
 }
 
-if (file_exists($argv[1])) {
+try {
     $pdf = Zend_Pdf::load($argv[1]);
-} else {
-    $pdf = new Zend_Pdf();
+} catch (Zend_Pdf_Exception $e) {
+    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+        // Create new PDF if file doesn't exist
+        $pdf = new Zend_Pdf();
+    } else {
+        // Throw an exception if it's not the "Can't open file" exception
+        throw $e;
+    }
 }
 
 //------------------------------------------------------------------------------------
-// Renverse l'ordre des pages
+// Inverse l'ordre des pages
 $pdf->pages = array_reverse($pdf->pages);
 
 // Crée un nouveau style
@@ -45,10 +51,10 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32)
 
-// Crée un nouveau objet image
+// Crée un nouvel objet image
 $stampImage = new Zend_Pdf_Image_JPEG(dirname(__FILE__) . '/stamp.jpg');
 
-// Marque la page comme modifié
+// Marque la page comme modifiée
 foreach ($pdf->pages as $page){
     $page->saveGS();
     $page->setStyle($style);
@@ -63,10 +69,10 @@ foreach ($pdf->pages as $page){
     $page->restoreGS();
 }
 
-// Ajoute une nouvelle page généré par l'objet Zend_Pdf (la page est attaché au document)
+// Ajoute une nouvelle page générée par l'objet Zend_Pdf (la page est attachée au document)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Ajoute une nouvelle page généré par l'objet Zend_Pdf (la page n'est pas attaché au document)
+// Ajoute une nouvelle page générée par l'objet Zend_Pdf (la page n'est pas attachée au document)
 $pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // Crée une nouvelle police
