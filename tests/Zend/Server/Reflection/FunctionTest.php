@@ -123,6 +123,23 @@ class Zend_Server_Reflection_FunctionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($u instanceof Zend_Server_Reflection_Function);
         $this->assertEquals('', $u->getNamespace());
     }
+
+    public function testMultipleWhitespaceBetweenDoctagsAndTypes()
+    {
+        $function = new ReflectionFunction('Zend_Server_Reflection_FunctionTest_function3');
+        $r = new Zend_Server_Reflection_Function($function);
+
+        $prototypes = $r->getPrototypes();
+        $this->assertTrue(is_array($prototypes));
+        $this->assertTrue(0 < count($prototypes));
+        $this->assertEquals(1, count($prototypes));
+
+        $proto = $prototypes[0];
+        $params = $proto->getParameters();
+        $this->assertTrue(is_array($params));
+        $this->assertEquals(1, count($params));
+        $this->assertEquals('string', $params[0]->getType());
+    }
 }
 
 /**
@@ -149,3 +166,12 @@ function Zend_Server_Reflection_FunctionTest_function2()
 {
 }
 
+/**
+ * Zend_Server_Reflection_FunctionTest_function3 
+ * 
+ * @param  string $var1 
+ * @return void
+ */
+function Zend_Server_Reflection_FunctionTest_function3($var1)
+{
+}
