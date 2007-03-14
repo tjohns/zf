@@ -18,6 +18,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->_controller->setRedirectExit(false);
+        Zend_Controller_Front::getInstance()->resetInstance();
     }
 
     public function tearDown()
@@ -202,6 +203,77 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(1, $found);
         $this->assertContains('/foo/bar', $url);
+    }
+
+    public function testInitView()
+    {
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController(
+            new Zend_Controller_Request_Http(),
+            new Zend_Controller_Response_Cli()
+        );
+        $view = $controller->initView();
+        $this->assertTrue($view instanceof Zend_View);
+        $scriptPath = $view->getScriptPaths();
+        $this->assertTrue(is_array($scriptPath));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR, $scriptPath[0]);
+    }
+
+    public function testRender()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('index');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->indexAction();
+        $this->assertContains('In the index action view', $response->getBody());
+    }
+
+    public function testRenderByName()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('test');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->testAction();
+        $this->assertContains('In the index action view', $response->getBody());
+    }
+
+    public function testRenderOutsideControllerSubdir()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('site');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->siteAction();
+        $this->assertContains('In the sitewide view', $response->getBody());
+    }
+
+    public function testRenderNamedSegment()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('name');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->nameAction();
+        $this->assertContains('In the name view', $response->getBody('name'));
     }
 }
 
