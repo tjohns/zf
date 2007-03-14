@@ -35,21 +35,27 @@
 class Zend_Locale_Math
 {
     // support unit testing without using bcmath functions 
-    static protected $_bcmathDisabled = false;
+    protected static $_bcmathDisabled = false;
 
-    static public $add   = 'bcadd';
-    static public $sub   = 'bcsub';
-    static public $pow   = 'bcpow';
-    static public $mul   = 'bcmul';
-    static public $div   = 'bcdiv';
-    static public $comp  = 'bccomp';
-    static public $sqrt  = 'bcsqrt';
-    static public $mod   = 'bcmod';
-    static public $scale = 'bcscale';
+    public static $add   = 'bcadd';
+    public static $sub   = 'bcsub';
+    public static $pow   = 'bcpow';
+    public static $mul   = 'bcmul';
+    public static $div   = 'bcdiv';
+    public static $comp  = 'bccomp';
+    public static $sqrt  = 'bcsqrt';
+    public static $mod   = 'bcmod';
+    public static $scale = 'bcscale';
 
-    static public function isBcmathDisabled()
+    public static function isBcmathDisabled()
     {
         return self::$_bcmathDisabled;
+    }
+
+    public static function round($op1, $op2 = 0) {
+        $value = call_user_func(Zend_Locale_Math::$sub, $op1, '0', $op2);
+        $value = call_user_func(Zend_Locale_Math::$sub, $op1, $value, $op2);
+        return   call_user_func(Zend_Locale_Math::$sub, $op1, $value, $op2);
     }
 }
 

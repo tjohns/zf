@@ -297,13 +297,13 @@ class Zend_Locale_Format
                 $options['numberformat'] .= ".";
                 $options['numberformat'] = str_pad($options['numberformat']
                                          , strlen($options['numberformat']) + $options['precision'], "0");
-                $value = round($value, $options['precision']);
+                $value = Zend_Locale_Math::round($value, $options['precision']);
             }
             if (($rest != '0') and ($rest != '#')) {
                 $options['numberformat'] .= $rest;
             }
             if ($options['precision'] == -1) {
-                $value = round($value);
+                $value = Zend_Locale_Math::round($value, 0);
             }
         }
 
@@ -345,16 +345,16 @@ class Zend_Locale_Format
                     $options['numberformat'] = substr($options['numberformat']
                                              , 0, strpos($options['numberformat'], '.') + 1);
                     $options['numberformat'] .= '###';
-                    $value = round($value, $options['precision']);
+                    $value = Zend_Locale_Math::round($value, $options['precision']);
                 } else {
                     $options['precision'] = null;
                 }
             } else {
-                $value = round($value);
+                $value = Zend_Locale_Math::round($value, 0);
                 $options['precision'] = 0;
             }
         }
-        
+
         // seperate negative format pattern when avaiable 
         if (iconv_strpos($options['numberformat'], ';') !== false) {
             if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
@@ -376,11 +376,11 @@ class Zend_Locale_Format
         }
 
         // get number parts
-        if (iconv_strpos($value, '.') !== false) {
+        if (strlen($value) != strlen(Zend_Locale_Math::round($value, 0))) {
             if ($options['precision'] === null) {
-                $precstr = iconv_substr($value, iconv_strpos($value, '.') + 1);
+                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1);
             } else {
-                $precstr = iconv_substr($value, iconv_strpos($value, '.') + 1, $options['precision']);
+                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1, $options['precision']);
                 if (iconv_strlen($precstr) < $options['precision']) {
                     $precstr = $precstr . str_pad("0", ($options['precision'] - iconv_strlen($precstr)), "0");
                 }
