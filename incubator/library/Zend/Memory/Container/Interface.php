@@ -28,17 +28,12 @@
 interface Zend_Memory_Container_Interface
 {
     /**
-     * Process container value update
-     */
-    public function processUpdate();
-
-    /**
      * Get string value reference
      *
      * _Must_ be used for value access before PHP v 5.2
      * or _may_ be used for performance considerations
      *
-     * @return string
+     * @return &string
      */
     public function &getRef();
 
@@ -49,5 +44,26 @@ interface Zend_Memory_Container_Interface
      */
     public function touch();
 
+    /**
+     * Lock object in memory.
+     * If writeLock is true, then object is locked for writing
+     * Otherwise only read lock is obtained.
+     * (Write lock also discards swapped data)
+     *
+     * @param boolean $writeLock
+     */
+    public function lock($writeLock = true);
+
+    /**
+     * Unlock object
+     */
+    public function unlock();
+
+    /**
+     * Return true if object is locked
+     *
+     * @return boolean
+     */
+    public function isLocked();
 }
 

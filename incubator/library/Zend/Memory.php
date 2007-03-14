@@ -29,6 +29,9 @@ require_once 'Zend/Memory/Value.php';
 /** Zend_Memory_Container */
 require_once 'Zend/Memory/Container.php';
 
+/** Zend_Memory_Exception */
+require_once 'Zend/Cache.php';
+
 
 /**
  * @category   Zend

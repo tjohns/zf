@@ -60,9 +60,9 @@ class Zend_Memory_Value implements ArrayAccess {
      * Object constructor
      *
      * @param string $value
-     * @param Zend_Memory_Container_Interface $container
+     * @param Zend_Memory_Container_Movable $container
      */
-    public function __construct($value = '', Zend_Memory_Container_Interface $container)
+    public function __construct($value = '', Zend_Memory_Container_Movable $container)
     {
         $this->_value     = (string)$value;
         $this->_container = $container;

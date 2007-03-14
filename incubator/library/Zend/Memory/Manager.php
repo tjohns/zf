@@ -17,6 +17,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Memory_Container_Movable */
+require_once 'Zend/Memory/Container/Movable.php';
+
+/** Zend_Memory_Container_Locked */
+require_once 'Zend/Memory/Container/Locked.php';
+
+/** Zend_Memory_AccessController */
+require_once 'Zend/Memory/AccessController.php';
+
+
 /**
  * Memory manager
  *
@@ -29,7 +39,7 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Memory_Manager
+class Zend_Memory_Manager
 {
     /**
      * Object storage backend
@@ -171,7 +181,7 @@ abstract class Zend_Memory_Manager
     }
 
     /**
-     * minimum size of values, which may be swapped
+     * Get minimum size of values, which may be swapped
      *
      * @return integer
      */
@@ -181,34 +191,78 @@ abstract class Zend_Memory_Manager
     }
 
     /**
-     * Create new Zend_Memory object
+     * Create new Zend_Memory value container
      *
      * @param string $value
-     * @return Zend_Memory_Container
+     * @return Zend_Memory_Container_Interface
      * @throws Zend_Memory_Exception
      */
     public function create($value = '')
     {
-        $id = $this->_nextId++;
-
-        $valueObject         = new Zend_Memory_Container($this, $id, $value);
-        $this->_objects[$id] = $valueObject;
-
-        // Put object id on a top of access history
-        $this->_accessHistory[$id] = $id;
-
-        return $valueObject;
+        return $this->_create($value, false);
     }
 
     /**
-     * Get Zend_Memory object
+     * Create new Zend_Memory value container, which has value always
+     * locked in memory
      *
+     * @param string $value
+     * @return Zend_Memory_Container_Interface
+     * @throws Zend_Memory_Exception
+     */
+    public function createLocked($value = '')
+    {
+        return $this->_create($value, true);
+    }
+
+    /**
+     * Create new Zend_Memory object
+     *
+     * @param string $value
+     * @param boolean $locked
+     * @return Zend_Memory_Container_Interface
+     * @throws Zend_Memory_Exception
+     */
+    private function _create($value, $locked)
+    {
+        $id = $this->_nextId++;
+
+        if ($locked) {
+            return new Zend_Memory_Container_Locked($this, $id, $value);
+        }
+
+        $valueObject = new Zend_Memory_Container_Movable($this, $id, $value);
+
+        // Put object id on a top of access history
+        $this->_accessHistory[$id] = $id;
+        $this->_objects[$id] = $valueObject;
+
+        return new Zend_Memory_AccessController($valueObject);
+    }
+
+    /**
+     * Unlink value container from memory manager
+     *
+     * Used by Memory container destroy() method
+     *
+     * @internal
      * @param integer $id
      * @return Zend_Memory_Container
      */
-    public function get($id)
+    public function unlink($id)
     {
-        return $this->_objects[$id];
+        if (isset($this->_loadedObjects[$id])) {
+            $this->_memorySize -= strlen($this->_objects[$id]->getRef());
+            unset($this->_loadedObjects[$id]);
+        }
+
+        if (isset($this->_accessHistory[$id])) {
+            unset($this->_accessHistory[$id]);
+        }
+
+        if (isset($this->_objects[$id])) {
+            unset($this->_objects[$id]);
+        }
     }
 
     /**
