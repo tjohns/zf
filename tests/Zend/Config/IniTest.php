@@ -35,6 +35,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->_iniFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.ini';
         $this->_iniFileCircularConfig = dirname(__FILE__) . '/_files/circular.ini';
         $this->_iniFileMultipleInheritanceConfig = dirname(__FILE__) . '/_files/multipleinheritance.ini';
+        $this->_iniFileSeparatorConfig = dirname(__FILE__) . '/_files/separator.ini';
     }
 
     public function testLoadSingleSection()
@@ -205,4 +206,14 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         }
 
     }
+
+    public function testZF739()
+    {
+        $config = new Zend_Config_Ini($this->_iniFileSeparatorConfig, 'all', array('nestSeparator'=>':'));
+
+        $this->assertEquals('all', $config->hostname);
+        $this->assertEquals('live', $config->db->name);
+        $this->assertEquals('multi', $config->one->two->three);
+    }
+ 
 }
