@@ -1,52 +1,72 @@
 <?php
+
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Feed
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Feed
+ * @see Zend_Feed
  */
 require_once 'Zend/Feed.php';
 
 
 /**
- * @package Zend_Feed
+ * @category   Zend
+ * @package    Zend_Feed
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase {
-
-    private $feed;
-    private $nsfeed;
+class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase
+{
+    private $_feed;
+    private $_nsfeed;
 
     public function setUp()
     {
-        $this->feed = Zend_Feed::importFile(dirname(__FILE__) . '/_files/TestAtomFeed.xml');
-        $this->nsfeed = Zend_Feed::importFile(dirname(__FILE__) . '/_files/TestAtomFeedNamespaced.xml');
+        $this->_feed = Zend_Feed::importFile(dirname(__FILE__) . '/_files/TestAtomFeed.xml');
+        $this->_nsfeed = Zend_Feed::importFile(dirname(__FILE__) . '/_files/TestAtomFeedNamespaced.xml');
     }
 
     public function testRewind()
     {
         $times = 0;
-        foreach ($this->feed as $f) {
+        foreach ($this->_feed as $f) {
             ++$times;
         }
 
         $times2 = 0;
-        foreach ($this->feed as $f) {
+        foreach ($this->_feed as $f) {
             ++$times2;
         }
 
         $this->assertEquals($times, $times2, 'Feed should have the same number of iterations multiple times through');
 
         $times = 0;
-        foreach ($this->nsfeed as $f) {
+        foreach ($this->_nsfeed as $f) {
             ++$times;
         }
 
         $times2 = 0;
-        foreach ($this->nsfeed as $f) {
+        foreach ($this->_nsfeed as $f) {
             ++$times2;
         }
 
@@ -55,12 +75,12 @@ class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase {
 
     public function testCurrent()
     {
-        foreach ($this->feed as $f) {
+        foreach ($this->_feed as $f) {
             $this->assertTrue($f instanceof Zend_Feed_EntryAtom, 'Each feed entry should be an instance of Zend_Feed_EntryAtom');
             break;
         }
 
-        foreach ($this->nsfeed as $f) {
+        foreach ($this->_nsfeed as $f) {
             $this->assertTrue($f instanceof Zend_Feed_EntryAtom, 'Each feed entry should be an instance of Zend_Feed_EntryAtom');
             break;
         }
@@ -69,13 +89,13 @@ class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase {
     public function testKey()
     {
         $keys = array();
-        foreach ($this->feed as $k => $f) {
+        foreach ($this->_feed as $k => $f) {
             $keys[] = $k;
         }
         $this->assertEquals($keys, array(0, 1), 'Feed should have keys 0 and 1');
 
         $keys = array();
-        foreach ($this->nsfeed as $k => $f) {
+        foreach ($this->_nsfeed as $k => $f) {
             $keys[] = $k;
         }
         $this->assertEquals($keys, array(0, 1), 'Feed should have keys 0 and 1');
@@ -84,13 +104,13 @@ class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase {
     public function testNext()
     {
         $last = null;
-        foreach ($this->feed as $current) {
+        foreach ($this->_feed as $current) {
             $this->assertFalse($last === $current, 'Iteration should produce a new object each entry');
             $last = $current;
         }
 
         $last = null;
-        foreach ($this->nsfeed as $current) {
+        foreach ($this->_nsfeed as $current) {
             $this->assertFalse($last === $current, 'Iteration should produce a new object each entry');
             $last = $current;
         }

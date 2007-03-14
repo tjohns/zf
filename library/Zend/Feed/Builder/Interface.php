@@ -22,21 +22,31 @@
 
 
 /**
- * @see Zend_Exception
- */
-require_once 'Zend/Exception.php';
-
-
-/**
- * Feed exceptions
+ * Input feed data interface
  *
- * Class to represent exceptions that occur during Feed operations.
+ * Classes implementing this interface can be passe to Zend_Feed::importBuilder
+ * as an input data source for the Zend_Feed construction
  *
  * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_Exception extends Zend_Exception
-{}
+interface Zend_Feed_Builder_Interface
+{
+    /**
+     * Returns an instance of Zend_Feed_Builder_Header
+     * describing the header of the feed
+     *
+     * @return Zend_Feed_Builder_Header
+     */
+    public function getHeader();
 
+    /**
+     * Returns an array of Zend_Feed_Builder_Entry instances
+     * describing the entries of the feed
+     *
+     * @return array of Zend_Feed_Builder_Entry
+     */
+    public function getEntries();
+}

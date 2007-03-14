@@ -1,32 +1,52 @@
 <?php
+
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Feed
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Feed_EntryAtom
+ * @see Zend_Feed_EntryAtom
  */
 require_once 'Zend/Feed/EntryAtom.php';
 
 /**
- * Zend_Http_Client_File
+ * @see Zend_Http_Client_File
  */
 require_once 'Zend/Http/Client.php';
 
 
 /**
+ * @category   Zend
  * @package    Zend_Feed
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
-
-    private $uri;
+class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase
+{
+    protected $_uri;
 
     public function setUp()
     {
-        $this->uri = 'http://fubar.com/myFeed';
+        $this->_uri = 'http://fubar.com/myFeed';
     }
 
     public function tearDown()
@@ -47,7 +67,7 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
 
         /* Do the initial post. The base feed URI is the same as the
          * POST URI, so just supply save() with that. */
-        $entry->save($this->uri);
+        $entry->save($this->_uri);
 
         /* $entry will be filled in with any elements returned by the
          * server (id, updated, link rel="edit", etc). */
@@ -66,7 +86,7 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
 
         /* The base feed URI is the same as the POST URI, so just supply the
          * Zend_Feed_EntryAtom object with that. */
-        $entry = new Zend_Feed_EntryAtom($this->uri, $contents);
+        $entry = new Zend_Feed_EntryAtom($this->_uri, $contents);
 
         /* Initial state. */
         $this->assertEquals('2005-05-23T16:26:00-08:00', $entry->updated(), 'Initial state of updated timestamp does not match');
@@ -88,36 +108,36 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
 /**
  * A test wrapper around Zend_Http_Client, not actually performing
  * the request.
- * 
+ *
  */
-class TestClient extends Zend_Http_Client 
+class TestClient extends Zend_Http_Client
 {
-	public function request($method = null) {
+    public function request($method = null)
+    {
+        $code = 400;
+        $body = '';
 
-		$code = 400;
-		$body = '';
-		
-		switch ($method) {
-			case self::POST:
-				$code = 201;
-				$body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-created-entry.xml');
-				break;
-				
-			case self::PUT:
-				$doc1 = new DOMDocument();
-        		$doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
-        		$doc2 = new DOMDocument();
-        		$doc2->loadXML($this->raw_post_data);
-        		if ($doc1->saveXML() == $doc2->saveXML()) {
-        			$code = 200;
-        			$body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-updated-entry.xml');
-        		}
-				break;
-				
-			default:
-				break;
-		}
-		
-		return new Zend_Http_Response($code, array(), $body);
-	}
+        switch ($method) {
+            case self::POST:
+                $code = 201;
+                $body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-created-entry.xml');
+                break;
+
+            case self::PUT:
+                $doc1 = new DOMDocument();
+                $doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
+                $doc2 = new DOMDocument();
+                $doc2->loadXML($this->raw_post_data);
+                if ($doc1->saveXML() == $doc2->saveXML()) {
+                    $code = 200;
+                    $body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-updated-entry.xml');
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return new Zend_Http_Response($code, array(), $body);
+    }
 }
