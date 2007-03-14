@@ -79,9 +79,20 @@ class Zend_Service_Delicious_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Delicious');
 
-        $suite->addTestSuite('Zend_Service_Delicious_PublicDataTest');
-        $suite->addTestSuite('Zend_Service_Delicious_PrivateDataTest');
+        if (defined('TESTS_ZEND_SERVICE_DELICIOUS_ENABLED') &&
+            constant('TESTS_ZEND_SERVICE_DELICIOUS_ENABLED') !== false) {
+            $suite->addTestSuite('Zend_Service_Delicious_PublicDataTest');
+            $suite->addTestSuite('Zend_Service_Delicious_PrivateDataTest');
+        } else {
+            $suite->addTestSuite('Zend_Service_Delicious_PublicDataTest_Skip');
+            $suite->addTestSuite('Zend_Service_Delicious_PrivateDataTest_Skip');
+        }
 
         return $suite;
     }
+}
+
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Service_Delicious_AllTests::main') {
+    Zend_Service_Delicious_AllTests::main();
 }

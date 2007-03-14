@@ -222,3 +222,12 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $this->_delicious->getDates());
     }
 }
+
+
+class Zend_Service_Delicious_PrivateDataTest_Skip extends Zend_Service_Delicious_PrivateDataTest
+{
+    public function setUp()
+    {
+        $this->markTestSkipped('Zend_Service_Delicious tests not enabled in TestConfiguration.php');
+    }
+}
