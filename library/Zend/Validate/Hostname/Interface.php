@@ -33,8 +33,8 @@ interface Zend_Validate_Hostname_Interface
     /**
      * Returns UTF-8 characters allowed in DNS hostnames for the specified Top-Level-Domain
      *
-     * UTF-8 characters should be written as four character hex strings \x{XXXX}
-     * For example é is represented by \x{00E9}
+     * UTF-8 characters should be written as four character hex codes \x{XXXX}
+     * For example Ã© (lowercase e with acute) is represented by the hex code \x{00E9}
      * 
      * To enable additional UTF-8 characters for a domain ensure the TLD exists in the property
      * Zend_Validate_Hostname::_registeredTlds 
