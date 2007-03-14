@@ -14,7 +14,7 @@
             See <link linkend="zend.console.getopt.rules">Declaring Getopt Rules</link>
             for details on the syntax for specifying options.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addrules.example">
             <title>Using addRules()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -44,7 +44,7 @@ $opts->addRules(
             associative array, in which the key is a flag, and the value is a
             corresponding help string.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addhelp.example">
             <title>Using setHelp()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -81,7 +81,7 @@ $opts->setHelp(
             An alias may be declared only once.  If you try to redefine
             an alias, a <code>Zend_Console_Getopt_Exception</code> is thrown.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addaliases.example">
             <title>Using setAliases()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -122,7 +122,7 @@ $opts->setAliases(
             arguments, and the latter method substitutes the array for the
             current arguments.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.addargs.example">
             <title>Using addArguments() and setArguments()</title>
             <programlisting role="php"><![CDATA[<?php
 // By default, the constructor uses $_SERVER['argv']
@@ -207,7 +207,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             The two arguments to the <code>setOption()</code> method are
             a configuration option name and an option value.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.config.example.setoption">
             <title>Using setOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
@@ -222,7 +222,7 @@ $opts->setOption('ignoreCase', true);
             The configuration values you specify are merged with the current
             configuration; you don't have to list all options.
         </para>
-        <example>
+        <example id="zend.console.getopt.configuration.config.example.setoptions">
             <title>Using setOptions()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');

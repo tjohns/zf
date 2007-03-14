@@ -211,6 +211,11 @@ $index->optimize();
                 und kleinere Werte (&lt; 10)  sind besser für Indizes, die interaktiv gepflegt werden.
             </para>
             <para>
+                <emphasis>MergeFactor</emphasis> is a good estimation for average number of segments merged by one auto-optimization pass.
+                Too large values produce large number of segments while they are not merged into new one. It may be a cause of
+                "failed to open stream: Too many open files" error message. This limitation is system dependant.
+            </para>
+            <para>
                 <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von 
                 <code>$index->getMergeFactor()</code> oder <code>$index->setMergeFactor($mergeFactor)</code>.
             </para>

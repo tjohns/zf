@@ -112,11 +112,9 @@ Zend_Session::start();
                     Zend_Session_Namespace()</code> happens <emphasis role="strong">before</emphasis> any output (i.e.
                     <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>
                     ) has been sent by PHP to the client, if you are using the default, cookie-based sessions (strongly
-                    recommended). Using
-                    <ulink url="http://php.net/outcontrol">output buffering</ulink>
-                    often is sufficient to prevent this issue and may help improve performance. For example, in
-                    <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a 64K
-                    buffer.
+                    recommended). See
+                    <xref linkend="zend.session.errors.headerssent" />
+                    for more information.
                 </para>
             </listitem>
         </itemizedlist>
@@ -197,12 +195,12 @@ class FooModule_View extends Zend_View
         <title>Namespace Expiration</title>
 
         <para>
-            Limits can be placed on the longevity of both namespaces and individual keys in namespaces.
-            Common use cases include passing temporary information between requests, and reducing exposure
-            to certain security risks by removing access to potentially sensitive information some time
-            after authentication occurred.  Expiration can be based on elapsed seconds, or based on
-            the concept of "hops", where a hop occurs for each successive request that activates the
-            namespace via at least one <code>$space = new Zend_Session_Namespace('myspace');</code>.
+            Limits can be placed on the longevity of both namespaces and individual keys in namespaces. Common use cases
+            include passing temporary information between requests, and reducing exposure to certain security risks by
+            removing access to potentially sensitive information some time after authentication occurred. Expiration can
+            be based on elapsed seconds, or based on the concept of "hops", where a hop occurs for each successive
+            request that activates the namespace via at least one <code>$space = new
+            Zend_Session_Namespace('myspace');</code>.
         </para>
 
         <example>
@@ -227,15 +225,13 @@ $s->setExpirationSeconds(60);
         </example>
 
         <para>
-            When working with data expiring from the session in the current request,
-            care should be used when retrieving it.  Although the data is returned by reference,
-            modifying the data will not make expiring data persist past the current request.
-            In order to "reset" the expiration time, fetch the data into temporary variables,
-            use the namespace to unset it, and then set the appropriate keys again.
+            When working with data expiring from the session in the current request, care should be used when retrieving
+            it. Although the data is returned by reference, modifying the data will not make expiring data persist past
+            the current request. In order to "reset" the expiration time, fetch the data into temporary variables, use
+            the namespace to unset it, and then set the appropriate keys again.
         </para>
 
     </sect2>
-
 
     <sect2 id="zend.session.controllers">
 

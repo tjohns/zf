@@ -22,18 +22,18 @@ $height = $pdfPage->getHeight();]]>
             PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die Zend_Pdf 
             Komponente unterstützt die Grauskala sowie RGB und CYMK Farbräume. Jede kann überall 
             verwendet werden, wo ein <code>Zend_Pdf_Color</code> Objekt benötigt wird. Die 
-            <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> und
-            <code>Zend_Pdf_Color_CMYK</code> Klassen stellen folgende Funktionalitäten bereit:
+            <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> und
+            <code>Zend_Pdf_Color_Cmyk</code> Klassen stellen folgende Funktionalitäten bereit:
         </para>
             <programlisting role="php"><![CDATA[
 // $grayLevel (Fließkommazahl). 0.0 (schwarz) - 1.0 (weiß)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
 // $r, $g, $b (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
-$color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
+$color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
 // $c, $m, $y, $k (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
-$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
+$color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
             </programlisting>
     </sect2>
 
@@ -434,9 +434,9 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
             <programlisting role="php"><![CDATA[<?php
 ...
 // Erstelle ein Grafikobjekt direkt (wähle eines aus)
-$image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
-$image = new Zend_Pdf_Image_PNG('my_image.png');
+$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
+$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
+$image = new Zend_Pdf_Image_Png('my_image.png');
 
 // oder verwende Zend_Pdf_ImageFactory um den entsprechenden Typ zu laden
 $image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
@@ -448,9 +448,9 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Wichtig! Die Zend_Pdf_Image_JPEG Klasse setzt voraus, dass die GD 
+            <emphasis>Wichtig! Die Zend_Pdf_Image_Jpeg Klasse setzt voraus, dass die GD 
             Erweiterung für PHP konfiguriert wurde.</emphasis>
-            <emphasis>Wichtig! Die Zend_Pdf_Image_PNG Klasse setzt voraus, dass die ZLIB 
+            <emphasis>Wichtig! Die Zend_Pdf_Image_Png Klasse setzt voraus, dass die ZLIB 
             Erweiterung konfiguriert wurde, um mit Grafiken mit Alphakanal zu arbeiten.</emphasis>
         </para>
         <para>

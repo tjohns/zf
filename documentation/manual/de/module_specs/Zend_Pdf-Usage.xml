@@ -28,10 +28,16 @@ if (!isset($argv[1])) {
     exit;
 }
 
-if (file_exists($argv[1])) {
+try {
     $pdf = Zend_Pdf::load($argv[1]);
-} else {
-    $pdf = new Zend_Pdf();
+} catch (Zend_Pdf_Exception $e) {
+    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+        // Erstelle neues PDF, wenn Datei nicht existiert
+        $pdf = new Zend_Pdf();
+    } else {
+        // Werfe eine Ausnahme, wenn es nicht die "Can't open file" Exception ist
+        throw $e;
+    }
 }
 
 //------------------------------------------------------------------------------------
@@ -40,7 +46,7 @@ $pdf->pages = array_reverse($pdf->pages);
 
 // Erstelle einen neuen Stil
 $style = new Zend_Pdf_Style();
-$style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
+$style->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
@@ -95,26 +101,26 @@ $page2->drawRectangle(60, 400, 400, 350);
 
 // Zeichne einen Kreis
 $page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
-$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
 $page2->drawCircle(85, 375, 25);
 
 // Zeichne Kreisausschnitte
 $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
-$page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
 $page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
-$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
 $page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
 
 // Zeichne Ellipsen
-$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
 $page2->drawEllipse(250, 400, 400, 350);
-$page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
 $page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
-$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
 $page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
 
 // Zeichne und fülle ein Polygon
-$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 1));
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 1));
 $x = array();
 $y = array();
 for ($count = 0; $count < 8; $count++) {
