@@ -1,45 +1,50 @@
 <sect1 id="zend.acl.advanced">
 
-    <title>Advanced Use</title>
+    <title>Fortgeschrittene Verwendung</title>
 
     <sect2 id="zend.acl.advanced.storing">
 
-        <title>Storing ACL Data for Persistence</title>
+        <title>Dauerhafte Speicherung von ACL Daten</title>
 
         <para>
-        Zend_Acl was designed in such a way that it does not require any particular backend technology such
-        as a database or cache server for storage of the ACL data. Its complete PHP implementation enables
-        customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many
-        situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods
-        setting up, and querying against, the access controls of an application.
+            Zend_Acl wurde so entwickelt, dass keine spezielle Backend Technologie benötigt wird,
+            wie z.B. eine Datenbank oder ein Cache Server, um die ACL Daten zu speichern. Die 
+            vollständige PHP Implementation ermöglicht angepasste Administrationstools, die relativ
+            einfach und flexibel auf Zend_Acl aufbauen. Viele Situationen erfordern eine interaktive 
+            Wartung der ACL und Zend_Acl stellt Methoden für das Einrichten und Abfragen der 
+            Zugriffskontrolle einer Anwendung.
         </para>
 
         <para>
-        Storage of ACL data is therefore left as a task for the developer, since use cases are expected to
-        vary widely for various situations. Because Zend_Acl is serializable, ACL objects may be serialized
-        with PHP's <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> function, and the
-        results may be stored anywhere the developer should desire, such as a file, database, or caching
-        mechanism.
+            Die Speicherung der ACL Daten ist deshalb die Aufgabe des Entwicklers, da sich die 
+            Anwendungsfälle für verschiedene Situationen erwartungsgemäß stark unterscheiden. Da 
+            Zend_Acl serialisierbar ist, können ACL Objekte mit der PHP Funktion
+            <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> serialisiert 
+            werden und das Ergebnis kann überall gespeichert werden, wo es der Entwickler möchte,
+            wie z.B. eine Datei, eine Datenbank oder ein Cache Mechanismus.
         </para>
 
     </sect2>
 
     <sect2 id="zend.acl.advanced.assertions">
 
-        <title>Writing Conditional ACL Rules with Assertions</title>
+        <title>Schreiben von bedingten ACL Regeln mit Behauptungen</title>
 
         <para>
-        Sometimes a rule for allowing or denying an Role access to a Resource should not be absolute but dependent
-        upon various criteria. For example, suppose that certain access should be allowed, but only between the
-        hours of 8:00am and 5:00pm. Another example would be denying access because a request comes from an
-        IP address that has been flagged as a source of abuse. Zend_Acl has built-in support for implementing
-        rules based on whatever conditions the developer needs.
+            Manchmal soll eine Regel für das Erlauben oder Verbieten des Zugriffs auf eine Ressource
+            nicht absolut sein, sondern von verschiedenen Kriterien abhängen. Zum Beispiel, nehmen 
+            wir an, dass ein bestimmter Zugriff erlaubt sei, aber nur zwischen 08:00 und 17:00 Uhr.
+            Ein anderes Beispiel könnte sein, dass der Zugriff verboten wird, weil eine Anfrage von
+            einer bestimmten IP Addresse kommt, die als Missbrauchsquelle markiert worden ist.
+            Zend_Acl bietet eine eingebaute Unterstützung für die Implementierung von Regeln, die
+            auf Bedingungen basieren, die der Entwickler benötigt.
         </para>
 
         <para>
-        Zend_Acl provides support for conditional rules with <code>Zend_Acl_Assert_Interface</code>. In order
-        to use the rule assertion interface, a developer writes a class that implements the
-        <code>assert()</code> method of the interface:
+            Zend_Acl bietet Unterstützung für bedingte Regel mit dem 
+            <code>Zend_Acl_Assert_Interface</code>. Um das Regelbehauptungsinterface benutzen
+            zu können, schreibt der Entwickler eine Klasse, welche die <code>assert()</code> 
+            Methode des Interfaces implementiert:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -60,9 +65,10 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 }]]></programlisting>
 
         <para>
-        Once an assertion class is available, the developer must supply an instance of the assertion class
-        when assigning conditional rules. A rule that is created with an assertion only applies when the
-        assertion method returns true.
+            Sobald eine Behauptungsklasse verfügbar ist, muss der Entwickler eine Instanz dieser 
+            Aussageklasse bei der Zuordnung bedingte Regeln übergeben. Eine Regel, die mit einer
+            Behauptung angelegt wird, wird nur angewendet, wenn die Behauptungsmethode true 
+            zurück gibt.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -72,19 +78,22 @@ $acl = new Zend_Acl();
 $acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
 
         <para>
-        The above code creates a conditional allow rule that allows access to all privileges on everything
-        by everyone, except when the requesting IP is "blacklisted." If a request comes in from an IP that
-        is not considered "clean," then the allow rule does not apply. Since the rule applies to all Roles,
-        all Resources, and all privileges, an "unclean" IP would result in a denial of access. This is a special
-        case, however, and it should be understood that in all other cases (i.e., where a specific Role,
-        Resource, or privilege is specified for the rule), a failed assertion results in the rule not applying,
-        and other rules would be used to determine whether access is allowed or denied.
+            Der obige Code legt eine bedingte Erlaubnisregel an, die den Zugriff für alle Rechte 
+            auf alles und von jedem erlaubt, außer wenn die anfordernde IP auf einer "Blacklist" 
+            ist. Wenn die Anfrage von einer IP kommt, die nicht als "sauber" betrachtet wird, wird
+            die Erlaubnisregel nicht angewandt. Da die Regel auf alle Rollen, alle Ressourcen und
+            alle Rechte zutrifft, würde eine "unsaubere" IP zu einem Zugriffsverbot führen. Dies
+            ist ein besonderer Fall und es sollte verstanden werden, dass in allen anderen Fällen
+            (d.h. wenn eine spezielle Rolle, Ressource oder Recht für die Regel spezifiziert wird)
+            eine fehlerhafte Behauptung dazu führt, dass die Regel nicht angewandt wird und andere
+            Regeln verwendet werden, um zu ermittel, ob der Zugriff erlaubt oder verboten ist.
         </para>
 
         <para>
-        The <code>assert()</code> method of an assertion object is passed the ACL, Role, Resource, and privilege
-        to which the authorization query (i.e., <code>isAllowed()</code>) applies, in order to provide
-        a context for the assertion class to determine its conditions where needed.
+            Der <code>assert()</code> Methode eines Behauptungsobjektes werden die ACL, Rolle, 
+            Ressource and die Rechte übergeben, auf welche die Autorisierungsabfrage  (d.h., 
+            <code>isAllowed()</code>) passt, um den Kontext für die Behauptungsklasse bereit zu 
+            stellen, um die Bedingungen zu ermitteln wo erforderlich.
         </para>
 
     </sect2>
