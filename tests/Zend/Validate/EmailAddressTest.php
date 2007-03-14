@@ -23,13 +23,6 @@
 
 
 /**
- * Temp setup to enable PHPUnit 3 usage for on SRJ Sony Vaio
- */
-set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\Subversion\ZendFramework-trunk\library');
-class EmailAddressTest extends Zend_Validate_EmailAddressTest {}
-
-
-/**
  * @see Zend_Validate_EmailAddress
  */
 require_once 'Zend/Validate/EmailAddress.php';
@@ -106,7 +99,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testIPAllowed()
     {
-        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS + Zend_Validate_Hostname::ALLOW_IP);
+        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
         $valuesExpected = array(
             array(Zend_Validate_Hostname::ALLOW_DNS, true, array('bob@212.212.20.4')),
             array(Zend_Validate_Hostname::ALLOW_DNS, false, array('bob@localhost'))
@@ -258,6 +251,32 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
 
+   /**
+     * Ensures that the validator follows expected behavior for checking MX records
+     *
+     * @return void
+     */
+    public function testMXRecords ()
+    {
+        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+        
+        // Are MX checks supported by this system?
+        if (!$localValidator->mxSupported()) {
+            return true;
+        }
+        
+        $valuesExpected = array(
+            array(true, array('Bob.Jones@zend.com', 'Bob.Jones@studio24.net')),
+            array(false, array('Bob.Jones@madeupdomain242424a.com', 'Bob.Jones@madeupdomain242424b.net'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $localValidator->isValid($input), implode("\n", $localValidator->getMessages()));
+            }
+        }  
+    }
+    
+   
     /**
      * Ensures that getMessages() returns expected default value (an empty array)
      *

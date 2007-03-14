@@ -21,11 +21,6 @@
  * @version    $Id$
  */
 
-/**
- * Temp setup to enable PHPUnit 3 usage for on SRJ Sony Vaio
- */
-set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\Subversion\ZendFramework-trunk\library');
-class HostnameTest extends Zend_Validate_HostnameTest {}
 
 /**
  * @see Zend_Validate_Hostname
@@ -87,7 +82,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             }
         }
     }
-    
+
     public function testCombination()
     {
         $valuesExpected = array(
@@ -133,6 +128,46 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensure the TLD check works as expected
+     *
+     */
+    public function testTldCheck()
+    {
+        $valuesExpected = array(
+            array(Zend_Validate_Hostname::CHECK_BASIC, true, array('domain.co.zz', 'my.domain.madeupname')),
+            array(Zend_Validate_Hostname::CHECK_TLD, false, array('domain.co.zz', 'my.domain.madeupname'))
+            );
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, $element[0]);
+            foreach ($element[2] as $input) {
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }
+
+    /**
+     * Ensure the IDN check works as expected
+     * 
+     * This is commented out at present since I cannot preserve UTF-8 encoding in this file during transfer
+     *
+     */
+    public function testIDN()
+    {
+        $valuesExpected = array(
+            array(Zend_Validate_Hostname::CHECK_TLD, false, array('bürger.de', 'hãllo.de', 'hållo.se')),
+            array(Zend_Validate_Hostname::CHECK_IDN, true, array('bürger.de', 'hãllo.de', 'hållo.se')),
+            array(Zend_Validate_Hostname::CHECK_IDN, true, array('bÜrger.de', 'hÃllo.de', 'hÅllo.se')),
+            array(Zend_Validate_Hostname::CHECK_IDN, false, array('hãllo.se', 'bürger.com', 'hãllo.uk'))
+            );
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, $element[0]);
+            foreach ($element[2] as $input) {
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }
+
+    /**
      * Ensures that getAllow() returns expected default value
      *
      * @return void
@@ -142,34 +177,4 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Validate_Hostname::ALLOW_DNS, $this->_validator->getAllow());
     }
 
-    /**
-     * Ensures that getRegex() returns expected default values and throws an exception for unknown type
-     *
-     * @return void
-     */
-    public function testGetRegex()
-    {
-        $this->assertEquals(Zend_Validate_Hostname::REGEX_LOCAL_DEFAULT, $this->_validator->getRegex('local'));
-        try {
-            $this->_validator->getRegex('does not exist');
-            $this->fail('Expected Zend_Validate_Exception not thrown for unknown regex type');
-        } catch (Zend_Validate_Exception $e) {
-            $this->assertContains('must be one of', $e->getMessage());
-        }
-    }
-
-    /**
-     * Ensures that an exception is thrown when a bad local regex is supplied
-     *
-     * @return void
-     */
-    public function testBadRegexLocal()
-    {
-        try {
-            $this->_validator->setRegex('local', '/')->isValid('anything');
-            $this->fail('Expected Zend_Validate_Exception not thrown for bad local network name regex');
-        } catch (Zend_Validate_Exception $e) {
-            $this->assertContains('local network name validation failed', $e->getMessage());
-        }
-    }
 }

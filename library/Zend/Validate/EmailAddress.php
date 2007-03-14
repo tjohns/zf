@@ -56,6 +56,13 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
     protected $_hostnameValidator;
 
     /**
+     * Whether we check for a valid MX record via DNS
+     *
+     * @var boolean
+     */
+    protected $_mxCheck = false;
+    
+    /**
      * Instantiates hostname validator for local use
      *
      * You can pass a bitfield to determine what types of hostnames are allowed.
@@ -66,12 +73,26 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      * @param integer $allow
      * @return void
      */
-    public function __construct($allow = Zend_Validate_Hostname::ALLOW_DNS)
+    public function __construct($allow = Zend_Validate_Hostname::ALLOW_DNS, $mxCheck = false)
     {
-        // Initialise Zend_Validate_Hostnames
+        // Initialise Zend_Validate_Hostname
         $this->_hostnameValidator = new Zend_Validate_Hostname($allow);
+        
+        $this->_mxCheck = $mxCheck;
+    }   
+    
+    /**
+     * Whether MX checking via dns_get_mx is supported or not
+     * 
+     * This currently only works on UNIX systems
+     *
+     * @return boolean
+     */
+    public function mxSupported ()
+    {
+        return function_exists('dns_get_mx');
     }
-
+    
     /**
      * Defined by Zend_Validate_Interface
      *
@@ -95,11 +116,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
 
         $localPart	= $matches[1];
         $hostname 	= $matches[2];
-
-        /**
-         * @todo 0.9 ZF-42 implement basic MX check on hostname via dns_get_record()
-         */
-
+        
         // Match hostname part
         $hostnameResult = $this->_hostnameValidator->isValid($hostname);
         if (!$hostnameResult) {
@@ -111,6 +128,26 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
             }
         }
 
+        // MX check on hostname via dns_get_record()
+        if ($this->_mxCheck) {
+            if ($this->mxSupported()) {
+                $result = dns_get_mx($hostname, $mxHosts); 
+                print "checking $hostname MX: ";
+                var_dump($result, $mxHosts);
+                if (count($result) < 1) {
+                    $hostnameResult = false;
+                    $this->_messages[] = "'$hostname' does not appear to have a valid MX record for the email address '$value'";
+                }
+            } else {
+                /**
+                  * MX checks are not supported by this system
+                  * @see Zend_Validate_Exception
+                  */
+                require_once 'Zend/Validate/Exception.php';
+                throw new Zend_Validate_Exception('Internal error: MX checking not available on this system');
+            }
+        }
+        
         // First try to match the local part on the common dot-atom format
         $localResult = false;
 

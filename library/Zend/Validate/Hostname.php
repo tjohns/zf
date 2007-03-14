@@ -26,8 +26,22 @@
  */
 require_once 'Zend/Validate/Interface.php';
 
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
 
 /**
+ * Please note there are two standalone test scripts for testing IDN characters due to problems 
+ * with file encoding. 
+ * 
+ * The first is tests/Zend/Validate/HostnameTestStandalone.php which is designed to be run on 
+ * the command line. 
+ * 
+ * The second is tests/Zend/Validate/HostnameTestForm.php which is designed to be run via HTML 
+ * to allow users to test entering UTF-8 characters in a form.
+ * 
  * @category   Zend
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -56,26 +70,42 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     const ALLOW_ALL   = 7;
 
     /**
-     * Default regular expression for local network name validation
-     * @todo 0.9 Check allowed characters for a local hostname and possibly deprecate this constant
+     * Only make the basic hostname checks, do not run any additional checks
+     *
      */
-    const REGEX_LOCAL_DEFAULT = '/^(?:[^\W_](?:[^\W_]|-){0,61}[^\W_]\.)*(?:[^\W_](?:[^\W_]|-){0,61}[^\W_])\.?$/';
-
+    const CHECK_BASIC  = 0;
+    
+    /**
+     * In addition, check for valid Top-Level Domains (default)
+     *
+     */
+    const CHECK_TLD   = 1;
+    
+    /**
+     * In addition, check for valid International Domain Names (e.g. bürger.de) and valid Top-Level Domains 
+     *
+     */
+    const CHECK_IDN   = 2;
+    
+    /**
+     * Run all available hostname checks
+     *
+     */
+    const CHECK_ALL   = 3;
+    
     /**
      * Bit field of ALLOW constants; determines which types of hostnames are allowed
      *
      * @var integer
      */
     protected $_allow;
-
+    
     /**
-     * Array of regular expressions used for validation
+     * Bit field of CHECK constants; determines what additional hostname checks to make
      *
-     * @var array
+     * @var unknown_type
      */
-     protected $_regex = array(
-        'local' => self::REGEX_LOCAL_DEFAULT
-        );
+    protected $_check;
 
     /**
      * Array of validation failure messages
@@ -119,15 +149,29 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
         );
 
     /**
+     * Array of top-level domains which have additional UTF-8 characters available
+     * 
+     * If a top-level domain appears in this array then a Zend_Validate_Hostname_<TLD> 
+     * class must exist defining the additional UTF-8 characters available for this domain.
+     * 
+     * 
+     * @var array
+     * @see Zend_Validate_Hostname_Interface 
+     */
+    protected $_registeredTlds = array('at', 'ch', 'li', 'de', 'fi', 'hu', 'no', 'se'); 
+            
+    /**
      * Sets validator options
      *
-     * @param  integer $allow
+     * @param  integer $allow Set what types of hostname to allow (default ALLOW_DNS)
+     * @param  integer $check Set what additional hostname checks to make (default CHECK_TLD)
      * @return void
      * @see http://www.iana.org/cctld/specifications-policies-cctlds-01apr02.htm  Technical Specifications for ccTLDs
      */
-    public function __construct($allow = self::ALLOW_DNS)
+    public function __construct($allow = self::ALLOW_DNS, $check = self::CHECK_TLD)
     {
         $this->setAllow($allow);
+        $this->setCheck($check);
     }
 
     /**
@@ -153,29 +197,27 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     }
 
     /**
-     * Returns the regular expression used for validating $type hostnames
+     * Returns the check option
      *
-     * @param  string $type
-     * @return string
+     * @return integer
      */
-    public function getRegex($type)
+    public function getCheck()
     {
-        return $this->_checkRegexType($type)->_regex[$type];
+        return $this->_check;
     }
 
     /**
-     * Enter description here...
+     * Sets the check option
      *
-     * @param  string $type
-     * @param  string $pattern
+     * @param  integer $check
      * @return Zend_Validate_Hostname Provides a fluent interface
      */
-    public function setRegex($type, $pattern)
+    public function setCheck($check)
     {
-        $this->_checkRegexType($type)->_regex[$type] = $pattern;
+        $this->_check = $check;
         return $this;
     }
-
+        
     /**
      * Defined by Zend_Validate_Interface
      *
@@ -189,8 +231,8 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     {
         $this->_messages = array();
 
-        // Check input against IP address schema
         /**
+         * Check input against IP address schema
          * @see Zend_Validate_Ip
          */
         require_once 'Zend/Validate/Ip.php';
@@ -222,24 +264,41 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
 
                     // Match TLD against known list
                     $valueTld = strtolower($matches[1]);
-                    if (!in_array($valueTld, $this->_validTlds)) {
-                        $this->_messages[] = "'$value' appears to be a DNS hostname but cannot match TLD against known list";
-                        $status = false;
-                        break;
+                    if (($this->_check & self::CHECK_TLD) || ($this->_check & self::CHECK_IDN)) {
+                        if (!in_array($valueTld, $this->_validTlds)) {
+                            $this->_messages[] = "'$value' appears to be a DNS hostname but cannot match TLD against known list";
+                            $status = false;
+                            break;
+                        }
                     }
-
+                    
                     /**
-                     * @todo 0.9 ZF-881 Implement UTF-8 support for IDN characters allowed in some TLD hostnames, i.e. bürger.de
+                     * Match against IDN hostnames
+                     * @see Zend_Validate_Hostname_Interface
                      */
+                    $labelChars = 'a-z0-9';
+                    $utf8 = false;
+                    if ($this->_check & self::CHECK_IDN) {
+                        if (in_array($valueTld, $this->_registeredTlds)) {
+                            
+                            // Load additional characters
+                            $className = 'Zend_Validate_Hostname_' . ucfirst($valueTld);
+                            Zend_Loader::loadClass($className);
+                            $labelChars .= call_user_func(array($className, 'getCharacters'));
+                            $utf8 = true;
+                        }
+                    }
                     
                     // Keep label regex short to avoid issues with long patterns when matching IDN hostnames
-                    $labelChars = 'a-zA-Z0-9';
-                    $regexLabel = '/^[' . $labelChars . '\x2d]{1,63}$/';
+                    $regexLabel = '/^[' . $labelChars . '\x2d]{1,63}$/i';
+                    if ($utf8) {
+                        $regexLabel .= 'u';
+                    }
                     
                     // Check each hostname part
                     $valid = true;
                     foreach ($domainParts as $domainPart) {
-
+                        
                         // Check dash (-) does not start, end or appear in 3rd and 4th positions
                         if (strpos($domainPart, '-') === 0 || 
                         (strlen($domainPart) > 2 && strpos($domainPart, '-', 2) == 2 && strpos($domainPart, '-', 3) == 3) ||
@@ -252,7 +311,7 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
                         }
 
                         // Check each domain part
-                        $status = @preg_match($regexLabel, strtolower($domainPart));
+                        $status = @preg_match($regexLabel, $domainPart);
                         if ($status === false) {
                             /**
                              * Regex error
@@ -289,7 +348,8 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
         }
         
         // Check input against local network name schema; last chance to pass validation
-        $status = @preg_match($this->_regex['local'], $value);
+        $regexLocal = "/^(([a-zA-Z0-9\x2d]{1,63}\x2e)*[a-zA-Z0-9\x2d]{1,63}){1,254}$/"; 
+        $status = @preg_match($regexLocal, $value);
         if (false === $status) {
             /**
              * Regex error
