@@ -47,14 +47,9 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
                 )
             );
 
-        $this->_menuData0 = array(
-            'button' => array(
-                '0' => array(
-                    'L1' => 'button0-1',
-                    'L2' => 'button0-2',
-                    'L3' => 'button0-3'
-                    )
-                )
+        $this->_numericData = array(
+             0 => 34,
+             1 => 'test',
             );
 
         $this->_menuData1 = array(
@@ -75,10 +70,6 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
             );
 
         $this->_leadingdot = array('.test' => 'dot-test');
-        $this->_onedot = array('.' => 'dot-test');
-        $this->_twodots = array('..' => 'dot-test');
-        $this->_threedots = array('...' => 'dot-test');
-        $this->_trailingdot = array('test.' => 'dot-test');
         $this->_invalidkey = array(' ' => 'test', ''=>'test2');
 
     }
@@ -150,13 +141,9 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
 
     public function testNumericKeys()
     {
-        try {
-            $data = new Zend_Config($this->_menuData0);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
+        $data = new Zend_Config($this->_numericData);
+        $this->assertEquals('test', $data->{1});
+        $this->assertEquals(34, $data->{0});
     }
 
     public function testCount()
@@ -206,63 +193,6 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertContains('[hostname] => all', $contents);
         $this->assertContains('[user] => username', $contents);
     }
-
-    public function testErrorLeadingDot()
-    {
-        try {
-            $config = new Zend_Config($this->_leadingdot);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
-    }
-
-    public function testErrorOneDot()
-    {
-        try {
-            $config = new Zend_Config($this->_onedot);
-        }
-        catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
-    }
-
-    public function testErrorTwoDots()
-    {
-        try {
-            $config = new Zend_Config($this->_twodots);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
-    }
-
-    public function testErrorThreeDots()
-    {
-        try {
-            $config = new Zend_Config($this->_threedots);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
-    }
-
-    public function testErrorTrailingDot()
-    {
-        try {
-            $config = new Zend_Config($this->_trailingdot);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
-    }
-
 
     public function testErrorWriteToReadOnly()
     {
@@ -314,15 +244,19 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($count === 4);
     }
     
-    public function testErrorInvalidKey()
+    public function testZf1019_HandlingInvalidKeyNames()
     {
-        try {
-            $config = new Zend_Config($this->_invalidkey);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Invalid key', $expected->getMessage());
-            return;
-        }
-        $this->fail('An expected Zend_Config_Exception has not been raised');
+        $config = new Zend_Config($this->_leadingdot);
+        $array = $config->asArray();
+        $this->assertContains('dot-test', $array['.test']);
+    }
+
+    public function testZF1019_EmptyKeys()
+    {
+        $config = new Zend_Config($this->_invalidkey);
+        $array = $config->asArray();
+        $this->assertContains('test', $array[' ']);
+        $this->assertContains('test', $array['']);
     }
 }
 
