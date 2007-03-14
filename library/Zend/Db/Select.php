@@ -45,7 +45,6 @@ class Zend_Db_Select
     const FOR_UPDATE   = 'forupdate';
     const COLUMNS      = 'columns';
     const FROM         = 'from';
-    const JOIN         = 'join';
     const WHERE        = 'where';
     const GROUP        = 'group';
     const HAVING       = 'having';
@@ -77,7 +76,6 @@ class Zend_Db_Select
         self::FOR_UPDATE   => false,
         self::COLUMNS      => array(),
         self::FROM         => array(),
-        self::JOIN         => array(),
         self::WHERE        => array(),
         self::GROUP        => array(),
         self::HAVING       => array(),
@@ -815,7 +813,7 @@ class Zend_Db_Select
      * Clear parts of the Select object, or an individual part.
      *
      * @param string $part OPTIONAL
-     * @return void
+     * @return Zend_Db_Select
      */
     public function reset($part = null)
     {
@@ -824,6 +822,7 @@ class Zend_Db_Select
         } else if (array_key_exists($part, self::$_partsInit)) {
             $this->_parts[$part] = self::$_partsInit[$part];
         }
+        return $this;
     }
 
 }
