@@ -211,7 +211,17 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
          * Dispatch the method call
          */
         $request->setDispatched(true);
+
+        // by default, buffer output
+        $disableOb = $this->getParam('disableOutputBuffering');
+        if (empty($disableOb)) {
+            ob_start();
+        }
         $controller->dispatch($action);
+        if (empty($disableOb)) {
+            $content = ob_get_clean();
+            $response->appendBody($content);
+        }
 
         // Destroy the page controller instance and reflection objects
         $controller = null;

@@ -31,6 +31,14 @@ define('TESTS_ZEND_CACHE_MEMCACHED_PORT', 11211);
 define('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT', true);
 
 /**
+ * Zend_Controller
+ *
+ * TESTS_ZEND_CONTROLLER_DISPATCHER_OB => test disabling output buffering in
+ *                                        dispatcher
+ */
+define('TESTS_ZEND_CONTROLLER_DISPATCHER_OB', false);
+
+/**
  * Zend_Db_Adapter_Pdo_Mysql and Zend_Db_Adapter_Mysqli
  * There are separate properties to enable tests for the PDO_MYSQL adapter and
  * the native Mysqli adapters, but the other properties are shared between the

@@ -279,4 +279,37 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertContains("Index action called", $body, $body);
     }
+
+    public function testOutputBuffering()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('ob');
+        $request->setActionName('index');
+
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertContains("OB index action called", $body, $body);
+    }
+
+    public function testDisableOutputBuffering()
+    {
+        if (!defined('TESTS_ZEND_CONTROLLER_DISPATCHER_OB') || !TESTS_ZEND_CONTROLLER_DISPATCHER_OB) {
+            $this->markTestSkipped('Skipping output buffer disabling in Zend_Controller_Dispatcher_Standard');
+        }
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('ob');
+        $request->setActionName('index');
+        $this->_dispatcher->setParam('disableOutputBuffering', true);
+
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertEquals('', $body, $body);
+    }
 }
