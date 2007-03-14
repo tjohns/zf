@@ -1,123 +1,82 @@
 <sect1 id="zend.console.getopt.rules">
     <title>Declaring Getopt Rules</title>
     <para>
-        The constructor for the <code>Zend_Console_Getopt</code> class takes
-        from one to three arguments.  The first argument 
-        declares which options are supported by your application.
-        This class supports alternative syntax forms for declaring the options.
-        See the sections below for the format and usage of these syntax forms.
+         Le constructeur de la classe <code>Zend_Console_Getopt</code> prend un à trois arguments. Le premier argument déclare quelles options sont supportées par votre application. Cette classe soutient des formes de syntaxe alternatives pour déclarer les options. Voir les sections ci-dessous pour le format et l'utilisation de ces formes de syntaxe.
     </para>
     <para>
-        The constructor takes two more arguments, both of which are optional.
-        The second argument may contain the command-line arguments.
-        This defaults to <code>$_SERVER['argv']</code>.
+         Le constructeur prend deux arguments supplémentaires, qui sont facultatifs. Le deuxième argument peut contenir les arguments de la ligne de commande. La valeur par défaut est <code>$_SERVER['argv']</code>.
     </para>
     <para>
-        The third argument of the constructor may contain an 
-        configuration options to customize the behavior of
-        <code>Zend_Console_Getopt</code>.
-        See <link linkend="zend.console.getopt.configuration.config">Adding Configuration</link>
-        for reference on the options available.
+         Le troisième argument du constructeur peut contenir des options de configuration pour adapter le comportement de <code>Zend_Console_Getopt</code>. Voir <link linkend="zend.console.getopt.configuration.config">Ajouter une configuration</link> pour la référence des options disponibles.
     </para>
 
     <sect2 id="zend.console.getopt.rules.short">
-        <title>Declaring Options with the Short Syntax</title>
+        <title>Déclarer des options avec la syntaxe courte</title>
         <para>
-            <code>Zend_Console_Getopt</code> supports a compact syntax similar
-            to that used by GNU Getopt (see
-            <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>.
-            This syntax supports only single-character flags.  In a single
-            string, you type each of the letters that correspond to flags
-            supported by your application.  A letter followed by a colon
-            character ("<code>:</code>") indicates a flag that requires a
-            parameter.
+             <code>Zend_Console_Getopt</code> supporte une syntaxe compacte semblable à cela employée par GNU Getopt (voir <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>). Cette syntaxe supporte seulement des drapeaux courts (1 seul caractère). Dans une chaîne de caractère unique, vous entrez chacune des lettres qui correspondent aux drapeaux supportés par votre application. Une lettre suivie d'un caractère de deux points ("<code>:</code>") indique un drapeau qui exige un paramètre.
         </para>
         <example id="zend.console.getopt.rules.short.example">
-            <title>Using the Short Syntax</title>
+            <title>Utiliser la syntaxe courte</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
 $opts = new Zend_Console_Getopt('abp:');
 ?>]]></programlisting>
         </example>
         <para>
-            The example above shows using <code>Zend_Console_Getopt</code>
-            to declare that options may be given as "<code>-a</code>",
-            "<code>-b</code>", or "<code>-p</code>".  The latter flag
-            requires a parameter.
+            L'exemple ci-dessus montre l'utilisation de <code>Zend_Console_Getopt</code> pour déclarer que des options peuvent être données en tant que "<code>-a</code>", "<code>-b</code>" ou "<code>-p</code>". Le dernier drapeau exige un paramètre.
         </para>
         <para>
-            The short syntax is limited to flags of a single character.
-            Aliases, parameter types, and help strings are not supported
-            in the short syntax.
+            La syntaxe courte est limitée aux drapeaux courts (1 seul caractère). Les alias, les types des paramètres, et les messages d'aide ne sont pas supportés dans la syntaxe courte.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.rules.long">
-        <title>Declaring Options with the Long Syntax</title>
+        <title>Déclarer des options avec la syntaxe longue</title>
         <para>
-            A different syntax with more features is also available.  This
-            syntax allows you to specify aliases for flags, types of option
-            parameters, and also help strings to describe usage to the user.
-            Instead of the single string used in the short syntax to declare
-            the options, the long syntax uses an associative array as the
-            first argument to the constructor.
+            Une syntaxe différente avec plus de possibilités est également disponible. Cette syntaxe permet d'indiquer des alias pour les drapeaux, les types de paramètres d'option, et aussi des messages d'aide pour décrire l'utilisation à l'utilisateur. Au lieu d'utiliser une chaîne de caractère unique comme pour la syntaxe courte, la syntaxe longue emploie une tableau associatif comme premier argument du constructeur pour déclarer les options.
         </para>
         <para>
-            The key of each element of the associative array is a string with
-            a format that names the flag, with any aliases, separated by the
-            pipe symbol ("<code>|</code>").  Following this series of flag
-            aliases, if the option requires a parameter, is an equals symbol
-            ("<code>=</code>") with a letter that stands for the
-            <emphasis>type</emphasis> of the parameter:
+            La clé de chaque élément du tableau associatif est une chaîne avec un format qui nomme le drapeau, avec tous ses alias, séparés par le symbole "<code>|</code>". Après la série des alias, si l'option exige un paramètre, il y a un symbole égal ("<code>=</code>") avec une lettre qui représente le <emphasis>type</emphasis> du paramètre :
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    "<code>=s</code>" for a string parameter
+                    "<code>=s</code>" pour un paramètre de type chaine de caractère
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    "<code>=w</code>" for a word parameter
-                    (a string containing no whitespace)
+                    "<code>=w</code>" pour un paramètre de type mot (une chaine de caractère qui ne contient pas d'espace)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    "<code>=i</code>" for an integer parameter
+                    "<code>=i</code>" paramètre de type entier (integer)
                 </para>
             </listitem>
         </itemizedlist>
         <para>
-            If the parameter is optional, use a dash ("<code>-</code>")
-            instead of the equals symbol.
+            Si le paramètre est optionel, on utilise le tiret ("<code>-</code>") au lieu du symbole égal.
         </para>
         <para>
-            The value of each element in the associative array is a help string
-            to describe to a user how to use your program.  
+            La valeur de chaque élément dans le tableau associatif est un message d'aide pour décrire à l'utilisateur comment employer votre programme.
         </para>
         <example id="zend.console.getopt.rules.long.example">
-            <title>Using the Long Syntax</title>
+            <title>Utiliser la syntaxe longue</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
 $opts = new Zend_Console_Getopt(
   array(
-    'apple|a'    => 'This option chooses apple, with no parameter',
-    'banana|b=i' => 'This option chooses banana, with required integer parameter',
-    'pear|p-s'   => 'This option chooses pear, with optional string parameter'
+    'abricot|a'    => 'Cette option choisit abricot, sans parametres',
+    'banane|b=i' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',
+    'pear|p-s'   => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
   )
 );
 ?>]]>
             </programlisting>
         </example>
         <para>
-            In the example declaration above, there are three options.
-            "<code>--apple</code>" and "<code>-a</code>" are aliases for each
-            other, and the option takes no parameter.
-            "<code>--banana</code>" and "<code>-b</code>" are aliases for each
-            other, and the option takes a mandatory integer parameter.
-            Finally, "<code>--pear</code>" and "<code>-p</code>" are aliases
-            for each other, and the option may take an optional string parameter.
+            Dans l'exemple ci-dessus, il y a trois options. "<code>--abricot</code>" and "<code>-a</code>" sont des alias l'un pour l'autre et l'option ne prend pas de paramètres. "<code>--banane</code>" and "<code>-b</code>" sont des alias l'un pour l'autre et l'option prend un paramètre obligatoire de type entier. Enfin, "<code>--pear</code>" and "<code>-p</code>" sont des alias l'un pour l'autre et l'option prend un paramètre optionel de type chaîne de caractère.
         </para>
     </sect2>
 

@@ -1,37 +1,19 @@
-<sect1 id="zend.console.getopt.fetching">
-    <title>Fetching Options and Arguments</title>
+﻿<sect1 id="zend.console.getopt.fetching">
+    <title>Extraire les options et les arguments</title>
     <para>
-        After you have declared the options that the
-        <code>Zend_Console_Getopt</code> object should recognize, and supply
-        arguments from the command-line or an array, you can
-        query the object to find out which options were specified by a user in
-        a given command-line invocation of your program.  The class implements
-        magic methods so you can query for options by name.
+        Après que avoir déclaré les options que l'objet de <code>Zend_Console_Getopt</code> doit identifier, et fournit les arguments de la ligne de commande ou un tableau, vous pouvez interroger l'objet pour connaître les options indiquées par un utilisateur lors d'un appel à votre programme en ligne de commande. La classe implémente les méthodes magiques ainsi vous pouvez interroger directement par les nom d'options.
     </para>
     <para>
-        The parsing of the data is deferred until the first query you make
-        against the <code>Zend_Console_Getopt</code> object to find out if an
-        option was given, the object performs its parsing.  This allows you to
-        use several method calls to configure the options, arguments, help
-        strings, and configuration options before parsing takes place.
+        L'analyse des données est reportée jusqu'à ce que vous invoquiez pour la première fois l'objet <code>Zend_Console_Getopt</code> pour découvrir si une option était renseignée, l'objet exécute alors son analyse. Ceci permet plusieurs appels de méthode pour configurer les options, arguments, messages d'aide, et les options de configuration, avant que l'analyse ne soit lancée.
     </para>
 
     <sect2 id="zend.console.getopt.fetching.exceptions">
-        <title>Handling Getopt Exceptions</title>
+        <title>Manipuler les exceptions Getopt</title>
         <para>
-            If the user gave any invalid options on the command-line,
-            the parsing function throws a <code>Zend_Console_Getopt_Exception</code>.
-            You should catch this exception in your application code.
-            You can use the <code>parse()</code> method to force the object
-            to parse the arguments.  This is useful because you can invoke
-            <code>parse()</code> in a <code>try</code> block.  If it passes,
-            you can be sure that the parsing won't throw an exception again.
-            The exception thrown has a custom method <code>getUsageMessage()</code>,
-            which returns as a string the formatted set of usage messages for
-            all declared options.
+            Si l'utilisateur a donné des options invalides sur la ligne de commande, la fonction d'analyse syntaxique lève une <code>Zend_Console_Getopt_Exception</code>. Vous devrez récupérer cette exception dans votre code d'application. Vous pouvez utiliser la méthode <code>parse()</code> pour forcer l'objet à analyser les arguments. C'est utile parce que vous pouvez invoquer <code>parse()</code> dans un bloc <code>try</code>. S'il passe, vous pouvez être sûrs que l'analyse syntaxique ne lèvera pas d'exception de nouveau. L'exception est lancée via une méthode personnalisée <code>getUsageMessage()</code>, qui retourne comme une chaîne de caractère l'ensemble formaté des messages d'utilisation pour toutes les options déclarées.
         </para>
         <example id="zend.console.getopt.fetching.exceptions.example">
-            <title>Catching Getopt Exceptions</title>
+            <title>Récuperer une exception Getopt</title>
             <programlisting role="php"><![CDATA[<?php
 try {
     $opts = new Zend_Console_Getopt('abp:');
@@ -43,40 +25,34 @@ try {
 ?>]]></programlisting>
         </example>
         <para>
-            Cases where parsing throws an exception include:
+            Les cas où l'analyse syntaxique lève, une exception, incluent :
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    Option given is not recognized.
+                    L'option passée n'est pas reconnue
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Option requires a parameter but none was given.
+                    L'option nécessite un paramètre mais aucun n'est fourni
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Option parameter is of the wrong type.
-                    E.g. a non-numeric string when an integer
-                    was required.
+                    Le paramètre d'option n'a pas le bon type. Par exemple, une chaîne de caractères non-numérique quand un nombre entier a été exigé.
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.byname">
-        <title>Fetching Options by Name</title>
+        <title>Extraire les options par nom</title>
         <para>
-            You can use the <code>getOption()</code> method to query the value
-            of an option.  If the option had a parameter, this method returns
-            the value of the parameter.  If the option had no parameter but
-            the user did specify it on the command-line, the method returns
-            <code>true</code>.  Otherwise the method returns <code>null</code>.
+            Vous pouvez employer la méthode de <code>getOption()</code> pour connaître la valeur d'une option. Si l'option avait un paramètre, cette méthode retourne la valeur du paramètre. Si l'option n'avait aucun paramètre mais l'utilisateur l'indiquait sur dans la ligne de commande, la méthode retourne <code>true</code>. Autrement la méthode retourne <code>null</code>.
         </para>
         <example id="zend.console.getopt.fetching.byname.example.setoption">
-            <title>Using getOption()</title>
+            <title>Utiliser getOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
@@ -84,94 +60,70 @@ $p_parameter = $opts->getOption('p');
 ?>]]></programlisting>
         </example>
         <para>
-            Alternatively, you can use the magic <code>__get()</code> function
-            to retrieve the value of an option as if it were a class member
-            variable.  The <code>__isset()</code> magic method is also
-            implemented.
+            De manière alternative, vous pouvez employer la fonction magique <code>__get()</code> pour rechercher la valeur d'une option comme si c'était une variable de membre de classe. La méthode magique <code>__isset()</code> est également implémentée.
         </para>
         <example id="zend.console.getopt.fetching.byname.example.magic">
-            <title>Using __get() and __isset() magic methods</title>
+            <title>Utiliser les méthodes magiques __get() and __isset()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {
-    echo "I got the b option.\n";
+    echo "J'ai recu l'option b.\n";
 }
-$p_parameter = $opts->p; // null if not set
+$p_parameter = $opts->p; // null si non fourni
 ?>]]></programlisting>
         </example>
         <para>
-            If your options are declared with aliases, you may use any of the
-            aliases for an option in the methods above.
+            Si vos options sont déclarées avec des alias, vous pouvez employer n'importe quel alias de l'option dans les méthodes ci-dessus.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.reporting">
         <title>Reporting Options</title>
         <para>
-            There are several methods to report the full set of
-            options given by the user on the current command-line.
+            Il y a plusieurs méthodes pour rapporter l'ensemble complet des options fournies par l'utilisateur sur dans la ligne de commande courante.
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    As a string: use the <code>toString()</code> method.  The options
-                    are returned as a space-separated string of "<code>flag=value</code>"
-                    pairs.  The value of an option that does not have a parameter
-                    is the literal string "<code>true</code>".
+                    Comme un chaîne de caractères : employer la méthode <code>toString()</code>. Les options sont retournées sous la forme d'une chaîne de caractère où les paires "<code>drapeau=valeur</code>" sont séparées par des espaces. La valeur d'une option qui n'a pas de paramètre est la chaîne "<code>true</code>".
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    As an array: use the <code>toArray()</code> method.  The options
-                    are returned in a simple integer-indexed array of strings, the flag
-                    strings followed by parameter strings, if any.
+                    Comme un tableau : employer la méthode <code>toArray()</code>. Les options sont retournées dans un tableau de chaînes de caractères indexé par des nombres, les chaînes de drapeau sont suivies par les chaînes de paramètre éventuelles.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    As a string containing JSON data: use the <code>toJson()</code> method.
+                    Comme une chaîne au format JSON : employer la méthode <code>toJson()</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    As a string containing XML data: use the <code>toXml()</code> method.
+                    Comme une chaîne au format XML : employer la méthode <code>toXml()</code>.
                 </para>
             </listitem>
         </itemizedlist>
         <para>
-            In all of the above dumping methods, the flag string is the
-            first string in the corresponding list of aliases.  For example,
-            if the option aliases were declared like "<code>verbose|v</code>",
-            then the first string, "<code>verbose</code>", is used as the
-            canonical name of the option.  The name of the option flag does not
-            include any preceding dashes.
+            Dans toutes les méthodes de déchargement ci-dessus, la chaîne du drapeau est la première chaîne dans la liste des alias correspondant. Par exemple, si les noms d'emprunt d'option étaient déclarés comme "<code>verbose|v</code>", alors la première chaîne, "<code>verbose</code>", est employé comme nom de l'option. Le nom du drapeau d'option n'inclut pas le tiret précédent.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.remainingargs">
-        <title>Fetching Non-option Arguments</title>
+        <title>Extraction les arguments sans option</title>
         <para>
-            After option arguments and their parameters have been
-            parsed from the command-line, there may be additional arguments
-            remaining.  You can query these arguments using the 
-            <code>geRemainingArgs()</code> method.  This method returns
-            an array of the strings that were not part of any options.
+            Après que les arguments d'option et ainsi que les paramètres de la ligne de commande ont été analysés , il peut exister des arguments additionnels restants. Vous pouvez interroger ces arguments en utilisant la méthode de <code>getRemainingArgs()</code>. Cette méthode renvoie une tableau de chaîne qui ne fait partie d'aucune option.
         </para>
         <example id="zend.console.getopt.fetching.remainingargs.example">
-            <title>Using getRemainingArgs()</title>
+            <title>Utiliser getRemainingArgs()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // returns array('filename')
+$opts->setArguments(array('-p', 'p_parameter', 'nomdefichier'));
+$args = $opts->getRemainingArgs(); // retourne array('nomdefichier')
 ?>]]></programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> supports the GNU convention that 
-            an argument consisting of a double-dash signifies the end of
-            options.  Any arguments following this signifier must be treated as
-            non-option arguments.  This is useful if you might have a non-option
-            argument that begins with a dash.
-            For example: "<command>rm -- -filename-with-dash</command>".
+            <code>Zend_Console_Getopt</code> supporte la convention GNU selon laquelle un argument se composant d'un double-tiret signifie la fin des options. Tous les arguments suivant celui-ci doivent être traités en tant qu'arguments sans option. C'est utile si vous avez un argument sans option qui commence par un tiret. Par exemple : "<command>rm -- -nomdefichier-avec-tiret</command>".
         </para>
     </sect2>
 

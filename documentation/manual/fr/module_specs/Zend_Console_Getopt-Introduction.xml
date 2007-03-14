@@ -1,114 +1,57 @@
-<sect1 id="zend.console.getopt.introduction">
+﻿<sect1 id="zend.console.getopt.introduction">
     <title>Introduction to Getopt</title>
     <para>
-        The <code>Zend_Console_Getopt</code> class helps command-line
-        applications to parse their options and arguments.
+        La classe <code>Zend_Console_Getopt</code> aide les applications lancées en ligne de commande à analyser les options et arguments.
     </para>
     <para>
-        Users may specify command-line arguments when
-        they execute your application.  These arguments have meaning to the
-        application, to change the behavior in some way, or choose resources,
-        or specify parameters.  Many options have developed customary meaning,
-        for example "<code>--verbose</code>" enables extra output from many
-        applications.  Other options may have a meaning that is different for
-        each application.  For example, "<code>-c</code>" enables different
-        features in <command>grep</command>, <command>ls</command>, and
-        <command>tar</command>.
+        Les utilisateurs peuvent spécifier des arguments en ligne de commande quand ils exécutent votre application. Ces arguments ont du sens dans l'application : changer son comportement, choisir des ressources, ou spécifier des paramètres. Beaucoup d'options ont une signification usuelle, par exemple "<code>--verbose</code>" permet la production supplémentaire dans beaucoup d'applications. D'autres options peuvent avoir un sens qui est différent pour chaque application. Par exemple, "-c" prend des sens différents lorsqu'ils est utilisé dans <command>grep</command>, <command>ls</command>, et <command>tar</command>.
     </para>
     <para>
-        Below are a few definitions of terms.  Common usage of the terms
-        varies, but this documentation will use the definitions below.
+        Nous avons ci-dessous quelques définitions de termes. L'usage commun des termes varie, mais cette documentation utilisera les définitions ci-dessous.
     </para>
     <itemizedlist>
         <listitem>
             <para>
-                "argument": a string that occurs on the command-line
-                following the name of the command.  Arguments may be
-                options or else may appear without an option, to name
-                resources on which the command operates.  
+                "argument" : une chaîne de carctères (<code>string</code>) qui apparaît dans la ligne de commande après le nom de la commande. Les arguments peuvent être des options ou bien peut apparaître sans option, appeler des ressources sur lesquelles la commande agit.
             </para>
         </listitem>
         <listitem>
             <para>
-                "option": an argument that signifies that the command
-                should change its default behavior in some way.
+                "option" : un argument qui signifie que la commande va changer son comportement par défaut d'une manière quelconque.
             </para>
         </listitem>
         <listitem>
             <para>
-                "flag": the first part of an option, identifies
-                the purpose of the option.  A flag is preceded
-                conventionally by one or two dashes
-                ("<code>-</code>" or "<code>--</code>").
-                A single dash precedes a single-character flag
-                or a cluster of single-character flags.
-                A double-dash precedes a multi-character flag.
-                Long flags cannot be clustered.
+                "flag" (drapeau) : la première partie d'une option, identifie le but de l'option. Un drapeau est précédé conventionnellement par un ou deux tirets ("<code>-</code>" or "<code>--</code>"). Un drapeau court comporte un caractère unique. Un drapeau long est une chaîne de plusieurs caractères. Un tiret simple précède un drapeau court ou un groupe de drapeaux courts. Un tiret double précède un drapeau long. Les drapeaux longs ne peuvent pas être groupés.
             </para>
         </listitem>
         <listitem>
             <para>
-                "parameter": the secondary part of an option; a data value
-                that may accompany a flag, if it is applicable to the
-                given option.  For example, many commands accept a
-                "<code>--verbose</code>" option, but typically 
-                this option has no parameter.  However, an option like
-                "<code>--user</code>" almost always requires
-                a following parameter.
+                "parameter" (paramètre) : la seconde partie d'une option ; une donnée qui peut accompagner un drapeau, si c'est applicable à l'option donnée. Par exemple, beaucoup de commandes acceptent "<code>--verbose</code>", mais typiquement cette option n'a aucun paramètre. Cependant, une option comme "<code>--user</code> a presque toujours besoin d'un paramètre à sa suite.
             </para>
             <para>
-                A parameter may be given as a separate argument following a
-                flag argument, or as part of the same argument string,
-                separated from the flag by an equals symbol ("<code>=</code>").
-                The latter form is supported only by long flags.
-                For example,
-                <code>-u username</code>, <code>--user username</code>,
-                and <code>--user=username</code> are forms supported
-                by <code>Zend_Console_Getopt</code>.
+                Un paramètre peut être donné comme un argument séparé après un argument de drapeau, ou comme faisant partie de la même chaîne de caractères, séparé du drapeau par le symbole égal ("<code>=</code>"). La dernière forme est autorisée seulement avec des drapeaux longs. Par exemple, <code>-u username</code>, <code>--user username</code>, et <code>--user=username</code> sont des formats supportés par <code>Zend_Console_Getopt</code>.
             </para>
         </listitem>
         <listitem>
             <para>
-                "cluster": multiple single-character flags combined
-                in a single string argument and preceded by a single
-                dash.  For example, "<command>ls -1str</command>"
-                uses a cluster of four short flags.  This command is
-                equivalent to "<command>ls -1 -s -t -r</command>".
-                Only single-character flags can be clustered.
-                You cannot make a cluster of long flags.
+                "cluster" (groupe) : les drapeaux courts peuvent être combinés dans une chaîne de caractère unique précédée par un tiret simple. Par exemple, "<command>ls -1str</command>" emploie un groupe de quatre drapeaux courts. Cette commande est équivalente à "<command>ls -1 -s -t -r</command>". Seuls les drapeaux courts peuvent être groupés. Vous ne pouvez pas faire un gorupe de drapeaux ongs.
             </para>
         </listitem>
     </itemizedlist>
     <para>
-        For example, in "<code>mysql --user=root mydatabase</code>",
-        "<code>mysql</code>" is a <emphasis>command</emphasis>,
-        "<code>--user=root</code>" is an <emphasis>option</emphasis>,
-        "<code>--user</code>" is a <emphasis>flag</emphasis>,
-        "<code>root</code>" is a <emphasis>parameter</emphasis> to the option,
-        and "<code>mydatabase</code>" is an argument but not an option
-        by our definition.
+        Par exemple, dans "<code>mysql --user=root mabase</code>", "<code>mysql</code>" est la <emphasis>commande</emphasis>, "<code>--user=root</code>" est une <emphasis>option</emphasis>, "<code>--user</code>" est un <emphasis>drapeau</emphasis>, "<code>root</code>" est un <emphasis>paramètre</emphasis> de l'option, et "<code>mabase</code>" est un argument mais pas une option dans notre définition.
     </para>
     <para>
-        <code>Zend_Console_Getopt</code> provides an interface to declare
-        which flags are valid for your application, output an error and usage
-        message if they use an invalid flag, and report to your application
-        code which flags the user specified.
+        <code>Zend_Console_Getopt</code> fournit une interface pour déclarer quels drapeaux sont valides pour votre application, produit une erreur et un message s'ils emploient un drapeau invalide, et transmet à votre application les drapeaux spécifiés par l'utilisateur.
     </para>
     <note>
-        <title>Getopt is not an application framework</title>
+        <title>Getopt n'est pas une application framework</title>
         <para>
-            <code>Zend_Console_Getopt</code> does <emphasis>not</emphasis>
-            interpret the meaning of flags and parameters, nor does this class
-            implement application workflow or invoke application code.
-            You must implement those actions in your own application code.
-            You can use the <code>Zend_Console_Getopt</code> class to parse
-            the command-line and provide object-oriented methods for querying
-            which options were given by a user, but code to use this
-            information to invoke parts of your application should be in
-            another PHP class.
+            Zend_Console_Getopt <emphasis>n'</emphasis>interprète <emphasis>pas</emphasis> le sens des drapeaux ou des paramètres, cette classe n'exécute pas non plus de processus d'application ou n'invoque pas le code d'application. Vous devez implémenter ces actions dans votre propre code d'application. Vous pouvez utiliser la classe <code>Zend_Console_Getopt</code> pour analyser la ligne d'instruction et fournir des méthodes orientées objet pour savoir quelles options ont été données par un utilisateur, mais le code pour utiliser ces données pour appeler les parties de votre application devra être dans une autre classe PHP.
         </para>
     </note>
     <para>
-        The following sections describe usage of <code>Zend_Console_Getopt</code>.
+        Les sections suivantes décrivent l'utilisation de <code>Zend_Console_Getopt</code>.
     </para>
 </sect1>
