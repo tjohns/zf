@@ -48,10 +48,10 @@ class Zend_Log_Formatter_SimpleTest extends PHPUnit_Framework_TestCase
     public function testDefaultFormat()
     {
         $f = new Zend_Log_Formatter_Simple();
-        $line = $f->format($message = 'message', $level = 1);
+        $line = $f->format($message = 'message', $priority = 1);
 
         $this->assertContains($message, $line);
-        $this->assertContains((string)$level, $line);
+        $this->assertContains((string)$priority, $line);
     }
 
 }

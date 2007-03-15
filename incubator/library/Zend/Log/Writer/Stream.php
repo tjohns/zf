@@ -74,13 +74,13 @@ class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  $message    Log message
-     * @param  $level      Log level
+     * @param  $message    Message to log
+     * @param  $priority   Priority of message
      * @return bool        Always True
      */
-    public function write($message, $level)
+    public function write($message, $priority)
     {
-        $line = $this->_formatter->format($message, $level);
+        $line = $this->_formatter->format($message, $priority);
 
         if (! @fwrite($this->_stream, $line)) {
             throw new Zend_Log_Exception("Unable to write to stream");

@@ -31,10 +31,10 @@ interface Zend_Log_Formatter_Interface
     /**
      * Formats a message to be written by the writer.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return string             formatted message
+     * @param  string   $message   message for the log
+     * @param  integer  $priority  priority of message
+     * @return string              formatted message
      */
-    public function format($message, $level);
+    public function format($message, $priority);
 
 }

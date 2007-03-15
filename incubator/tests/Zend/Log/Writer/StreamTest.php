@@ -98,7 +98,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         $stream = fopen('php://memory', 'a');
 
         $writer = new Zend_Log_Writer_Stream($stream);
-        $writer->write($message = 'message-to-log', $level = 1);
+        $writer->write($message = 'message-to-log', $priority = 1);
 
         rewind($stream);
         $contents = stream_get_contents($stream);
@@ -106,7 +106,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
 
         $date  = '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-\d{2}:\d{2}';
 
-        $this->assertRegExp("/$date $level: $message/", $contents);
+        $this->assertRegExp("/$date $priority: $message/", $contents);
     }
     
     public function testWriteThrowsWhenStreamWriteFails()

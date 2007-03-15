@@ -37,7 +37,7 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
     protected $_options = array('elementEntry'     => 'log',
                                 'elementTimestamp' => 'timestamp',
                                 'elementMessage'   => 'message',
-                                'elementLevel'     => 'level',
+                                'elementPriority'  => 'priority',
                                 'lineEnding'       => PHP_EOL);
 
     /**
@@ -54,17 +54,17 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
      * Formats a message to be written by the writer.
      *
      * @param  string   $message  message for the log
-     * @param  integer  $level    log level
+     * @param  integer  $priority priority of message
      * @return string             formatted message
      */
-    public function format($message, $level)
+    public function format($message, $priority)
     {
         $dom = new DOMDocument();
 
         $elt = $dom->appendChild(new DOMElement($this->_options['elementEntry']));
         $elt->appendChild(new DOMElement($this->_options['elementTimestamp'], date('c')));
         $elt->appendChild(new DOMElement($this->_options['elementMessage'], $message));
-        $elt->appendChild(new DOMElement($this->_options['elementLevel'], $level));        
+        $elt->appendChild(new DOMElement($this->_options['elementPriority'], $priority));        
         
         $xml = $dom->saveXML();
         $xml = preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $xml);

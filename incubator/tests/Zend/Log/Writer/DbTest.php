@@ -45,38 +45,38 @@ class Zend_Log_Writer_DbTest extends PHPUnit_Framework_TestCase
     public function testWriteWithDefaults()
     {
         // log to the mock db adapter
-        $message = 'message-to-log';
-        $level   = 2;
-        $this->writer->write($message, $level);
+        $message  = 'message-to-log';
+        $priority = 2;
+        $this->writer->write($message, $priority);
 
         // insert should be called once...
         $this->assertContains('insert', array_keys($this->db->calls));
         $this->assertEquals(1, count($this->db->calls['insert']));
 
         // ...with the correct table and binds for the database
-        $binds = array('message' => $message, 
-                       'level' => $level);
+        $binds = array('message'  => $message, 
+                       'priority' => $priority);
         $this->assertEquals(array($this->tableName, $binds), 
                             $this->db->calls['insert'][0]);
     }
 
-    public function testWriteUsesOptionalCustomColumns()
+    public function testWriteUsesOptionalCustomColumnNames()
     {
-        $this->writer->setOption('fieldMessage', $messageField = 'new-message-field');
-        $this->writer->setOption('fieldLevel',   $levelField   = 'new-level-field');
+        $this->writer->setOption('fieldMessage',  $messageField = 'new-message-field');
+        $this->writer->setOption('fieldPriority', $priorityField   = 'new-priority-field');
 
         // log to the mock db adapter
-        $message = 'message-to-log';
-        $level   = 2;
-        $this->writer->write($message, $level);
+        $message  = 'message-to-log';
+        $priority = 2;
+        $this->writer->write($message, $priority);
         
         // insert should be called once...
         $this->assertContains('insert', array_keys($this->db->calls));
         $this->assertEquals(1, count($this->db->calls['insert']));
 
         // ...with the correct table and binds for the database
-        $binds = array($messageField => $message, 
-                       $levelField   => $level);
+        $binds = array($messageField  => $message, 
+                       $priorityField => $priority);
         $this->assertEquals(array($this->tableName, $binds), 
                             $this->db->calls['insert'][0]);
     }

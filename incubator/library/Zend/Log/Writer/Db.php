@@ -49,7 +49,7 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
      * @var array
      */
     protected $_options = array('fieldMessage'  => 'message',
-                                'fieldLevel'    => 'level');
+                                'fieldPriority' => 'priority');
 
     /**
      * Class constructor
@@ -66,14 +66,14 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  $message    Log message
-     * @param  $level      Log level
+     * @param  $message    Message to log
+     * @param  $priority   Priority of message
      * @return bool        Always True
      */
-    public function write($message, $level)
+    public function write($message, $priority)
     {
         $fields = array($this->_options['fieldMessage'] => $message,
-                        $this->_options['fieldLevel']   => $level);
+                        $this->_options['fieldPriority']   => $priority);
         
         $this->_db->insert($this->_table, $fields);
         return true;

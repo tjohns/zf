@@ -45,7 +45,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
     public function __construct($format = null)
     {
         if ($format === null) {
-            $format = '%timestamp% %level%: %message%' . PHP_EOL;
+            $format = '%timestamp% %priority%: %message%' . PHP_EOL;
         }
         
         if (! is_string($format)) {
@@ -58,14 +58,14 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
     /**
      * Formats a message to be written by the writer.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return string             formatted message
+     * @param  string   $message   message for the log
+     * @param  integer  $priority  priority of message
+     * @return string              formatted message
      */
-    public function format($message, $level)
+    public function format($message, $priority)
     {
-        return str_replace(array('%message%', '%level%', '%timestamp%'),
-                           array($message, $level, date('c')),
+        return str_replace(array('%message%', '%priority%', '%timestamp%'),
+                           array($message, $priority, date('c')),
                            $this->_format);
     }
 
