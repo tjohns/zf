@@ -49,9 +49,47 @@
         <para>
             在 Zend_Acl, 一个 Role 可以从一个或多个 Role 继承，这就是在 Role 中支持规则的继承。例如，一个用户 Role，如 “sally”，可以属于一个或多个 Role，如：“editor”和“administrator”。开发者可以分别给“editor”和“administrator”分配规则，而“sally”将从它们俩继承规则，不需要直接给“sally”分配规则。  
         </para>
+        <para>
+           虽然从多重角色继承的能力非常有用，但是多重继承也带来了一定程度的复杂性。下面的例子来示例含糊情形和Zend_Acl如何解决它。
+        </para>
+        <example>
+            <title>角色之间的多重继承</title>
+            <para>
+               下面的代码定义了三个基本角色 - "<code>guest</code>", "<code>member</code>", 和 "<code>admin</code>" - 其它角色可以从它们继承。接着，创建一个"<code>someUser</code>" 角色并从其它三个基本角色继承。在<code>$parents</code> 数组里这些角色出现的顺序很重要。 必要时，Zend_Acl 不但搜索为被查询的角色（这里指 "<code>someUser</code>"）定义的访问规则，而且搜索为被查询的角色所继承的角色（这里指 "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"）定义的访问规则：
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Acl.php';
+$acl = new Zend_Acl();
+
+require_once 'Zend/Acl/Role.php';
+$acl->addRole(new Zend_Acl_Role('guest'))
+    ->addRole(new Zend_Acl_Role('member'))
+    ->addRole(new Zend_Acl_Role('admin'));
+
+$parents = array('guest', 'member', 'admin');
+$acl->addRole(new Zend_Acl_Role('someUser'), $parents);
+
+require_once 'Zend/Acl/Resource.php';
+$acl->add(new Zend_Acl_Resource('someResource'));
+
+$acl->deny('guest', 'someResource');
+$acl->allow('member', someResource');
+
+echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+            <para>
+                因为没有明确地为 "<code>someUser</code>"和"<code>someResource</code>" 定义规则，所以Zend_Acl 必须搜索可能为"<code>someUser</code>"所继承的角色定义的规则。首先，"<code>admin</code>"角色被访问，没有给它定义访问规则。接着，"<code>member</code>"角色被访问，Zend_Acl发现有个规则允许"<code>member</code>" 访问"<code>someResource</code>"。
+            </para>
+            <para>
+                如果Zend_Acl打算继续检查为父角色所定义的规则，然而，它将发现"<code>guest</code>" 被拒绝访问"<code>someResource</code>" 。这带来了模棱两可的情形， "<code>someUser</code>"即被允许又被禁止访问"<code>someResource</code>"，因为它从不同的父角色继承了冲突的规则。
+            </para>
+            <para>
+                Zend_Acl 解决了这个模棱两可的问题，当它发现第一个可用的规则时，就完成了查询。对于这个案例，因为"<code>member</code>"角色先于"<code>guest</code>" 角色被检查，这个例子将打印"<code>allowed</code>"。
+            </para>
+        </example>
+        
         <note>
             <para>
-                因为 Zend_Acl 支持从多个 Role 继承规则，它们彼此间可能会有冲突，有必要很清楚地解决这些冲突。Zend_Acl 通过把最近继承的 Role 作为最高优先级来解决潜在的冲突。换句话说，从最近继承的 Role 开始，一旦发现一个 “parent” Role 的规则，其它的规则将不被考虑，因为最高优先级的规则已经找到。 
+                当为一个角色指定多重父（角色）时，请记住，对于一个授权查询的可用规则，最后列出的父（角色）是首先被搜索的。
              </para>
         </note>
     </sect2>
