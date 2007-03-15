@@ -48,12 +48,12 @@ class Zend_Environment_Security_Field extends Zend_Environment_Field
      * @var array
      */
     protected $_data = array('group' =>   null,
-                             'name' =>    null,
-                             'result_code' =>  null,
-                             'result' =>  null,
-                             'details' => null,
-                             'current_value' => null,
-                             'recommended_value' => null,
-                             'link' =>    null);
+    'name' =>    null,
+    'result_code' =>  null,
+    'result' =>  null,
+    'details' => null,
+    'current_value' => null,
+    'recommended_value' => null,
+    'link' =>    null);
 
 }

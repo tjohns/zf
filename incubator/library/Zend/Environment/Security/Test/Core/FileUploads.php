@@ -22,7 +22,7 @@
 /**
  * require the Zend_Environment_Security_Test_Core class
  */
-require_once('Zend/Environment/Security/Test/Core.php');
+require_once 'Zend/Environment/Security/Test/Core.php';
 
 /**
  * Test Class for file_uploads
@@ -32,44 +32,44 @@ require_once('Zend/Environment/Security/Test/Core.php');
 class Zend_Environment_Security_Test_Core_FileUploads extends Zend_Environment_Security_Test_Core
 {
 
-	/**
+    /**
 	 * This should be a <b>unique</b>, human-readable identifier for this test
 	 *
 	 * @var string
 	 */
-	protected $_name = "file_uploads";
+    protected $_name = "file_uploads";
 
-	protected $_recommended_value = FALSE;
+    protected $_recommended_value = FALSE;
 
-	protected function _retrieveCurrentValue() {
-		$this->_current_value =  $this->returnBytes(ini_get('file_uploads'));
-	}
+    protected function _retrieveCurrentValue() {
+        $this->_current_value =  $this->returnBytes(ini_get('file_uploads'));
+    }
 
-	/**
+    /**
 	 * Checks to see if expose_php is enabled
 	 *
 	 */
-	protected function _execTest() {
+    protected function _execTest() {
 
-		if ($this->_current_value == $this->_recommended_value) {
-			return self::RESULT_OK;
-		}
+        if ($this->_current_value == $this->_recommended_value) {
+            return self::RESULT_OK;
+        }
 
-		return self::RESULT_NOTICE;
-	}
+        return self::RESULT_NOTICE;
+    }
 
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
+    protected function _setMessages() {
+        parent::_setMessages();
 
-		$this->setMessageForResult(self::RESULT_OK, 'en', 'file_uploads are disabled.  Unless you\'re sure you need them, this is the recommended setting');
-		$this->setMessageForResult(self::RESULT_NOTICE, 'en', 'file_uploads are enabled.  If you do not require file upload capability, consider disabling them.');
-	}
+        $this->setMessageForResult(self::RESULT_OK, 'en', 'file_uploads are disabled.  Unless you\'re sure you need them, this is the recommended setting');
+        $this->setMessageForResult(self::RESULT_NOTICE, 'en', 'file_uploads are enabled.  If you do not require file upload capability, consider disabling them.');
+    }
 
 
 }

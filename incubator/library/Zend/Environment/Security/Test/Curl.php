@@ -32,23 +32,23 @@ abstract class Zend_Environment_Security_Test_Curl extends Zend_Environment_Secu
 
     protected $_group = 'curl';
 
-	/**
+    /**
 	 * if curl extension is not loaded, no curl tests should be run
 	 *
 	 * @return boolean
 	 */
-	public function isTestable() {
+    public function isTestable() {
         return extension_loaded('curl');
-	}
+    }
 
-	/**
+    /**
 	 * Extended for curl-specific message
 	 *
 	 */
-	protected function _setMessages() {
-	   parent::_setMessages();
-	   $this->setMessageForResult(self::RESULT_NOTRUN, 'en', "CURL support is not enabled in your PHP install");
-	}
+    protected function _setMessages() {
+        parent::_setMessages();
+        $this->setMessageForResult(self::RESULT_NOTRUN, 'en', "CURL support is not enabled in your PHP install");
+    }
 
 
 }

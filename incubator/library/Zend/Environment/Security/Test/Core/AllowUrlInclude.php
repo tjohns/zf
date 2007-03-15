@@ -23,7 +23,7 @@
 /**
  * require the Zend_Environment_Security_Test_Core class
  */
-require_once('Zend/Environment/Security/Test/Core.php');
+require_once 'Zend/Environment/Security/Test/Core.php';
 
 /**
  * Test Class for allow_url_include
@@ -34,62 +34,62 @@ require_once('Zend/Environment/Security/Test/Core.php');
  */
 class Zend_Environment_Security_Test_Core_AllowUrlInclude extends Zend_Environment_Security_Test_Core
 {
-	/**
+    /**
 	 * This should be a <b>unique</b>, human-readable identifier for this test
 	 *
 	 * @var string
 	 */
-	protected $_name = "allow_url_include";
+    protected $_name = "allow_url_include";
 
 
-	protected $_recommended_value = FALSE;
+    protected $_recommended_value = FALSE;
 
 
-	protected function _retrieveCurrentValue() {
-		$this->_current_value = $this->getIniValue('allow_url_include');
-	}
+    protected function _retrieveCurrentValue() {
+        $this->_current_value = $this->getIniValue('allow_url_include');
+    }
 
 
-	/**
+    /**
 	 * Checks to see if allow_url_fopen is enabled
 	 *
 	 */
-	protected function _execTest() {
-		if ($this->_current_value == $this->_recommended_value) {
-			return self::RESULT_OK;
-		}
+    protected function _execTest() {
+        if ($this->_current_value == $this->_recommended_value) {
+            return self::RESULT_OK;
+        }
 
-		return self::RESULT_WARN;
-	}
+        return self::RESULT_WARN;
+    }
 
 
-	/**
+    /**
 	 * allow_url_include is only available since PHP 5.2
 	 *
 	 * @return boolean
 	 */
-	public function isTestable() {
+    public function isTestable() {
 
-		if ( version_compare(PHP_VERSION, '5.2', '<') ) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+        if ( version_compare(PHP_VERSION, '5.2', '<') ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
+    protected function _setMessages() {
+        parent::_setMessages();
 
-		$this->setMessageForResult(self::RESULT_NOTRUN, 'en', 'You are running a version of PHP older than 5.2, and allow_url_include is not available');
-		$this->setMessageForResult(self::RESULT_OK, 'en', 'allow_url_include is disabled, which is the recommended setting');
-		$this->setMessageForResult(self::RESULT_WARN, 'en', 'allow_url_include is enabled.  This could be a serious security risk.  You should disable allow_url_include and consider using the <a href="http://php.net/manual/en/ref.curl.php" target="_blank">PHP cURL functions</a> instead.');
-	}
+        $this->setMessageForResult(self::RESULT_NOTRUN, 'en', 'You are running a version of PHP older than 5.2, and allow_url_include is not available');
+        $this->setMessageForResult(self::RESULT_OK, 'en', 'allow_url_include is disabled, which is the recommended setting');
+        $this->setMessageForResult(self::RESULT_WARN, 'en', 'allow_url_include is enabled.  This could be a serious security risk.  You should disable allow_url_include and consider using the <a href="http://php.net/manual/en/ref.curl.php" target="_blank">PHP cURL functions</a> instead.');
+    }
 
 
 }

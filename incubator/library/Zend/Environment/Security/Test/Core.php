@@ -31,13 +31,13 @@ abstract class Zend_Environment_Security_Test_Core extends Zend_Environment_Secu
 
     protected $_group = 'core';
 
-	/**
+    /**
 	 * "Core" tests should pretty much be always testable, so the default is just to return true
-	 * 
+	 *
 	 * @return boolean
 	 */
-	public function isTestable() {
-		
-		return true;
-	}
+    public function isTestable() {
+
+        return true;
+    }
 }

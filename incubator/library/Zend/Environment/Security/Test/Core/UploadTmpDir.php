@@ -22,7 +22,7 @@
 /**
  * require the Zend_Environment_Security_Test_Core class
  */
-require_once('Zend/Environment/Security/Test/Core.php');
+require_once 'Zend/Environment/Security/Test/Core.php';
 
 /**
  * Test Class for upload_tmp_dir
@@ -32,42 +32,42 @@ require_once('Zend/Environment/Security/Test/Core.php');
 class Zend_Environment_Security_Test_Core_UploadTmpDir extends Zend_Environment_Security_Test_Core
 {
 
-	/**
+    /**
 	 * This should be a <b>unique</b>, human-readable identifier for this test
 	 *
 	 * @var string
 	 */
-	protected $_name = "upload_tmp_dir";
+    protected $_name = "upload_tmp_dir";
 
-	protected $_recommended_value = "A non-world readable/writable directory";
+    protected $_recommended_value = "A non-world readable/writable directory";
 
-	protected function _retrieveCurrentValue() {
-		$this->_current_value =  ini_get('upload_tmp_dir');
+    protected function _retrieveCurrentValue() {
+        $this->_current_value =  ini_get('upload_tmp_dir');
 
-		if( empty($this->_current_value) ) {
-			if (function_exists("sys_get_temp_dir")) {
-		    	$this->_current_value = sys_get_temp_dir();
-			} else {
-				$this->_current_value = $this->sys_get_temp_dir();
-			}
-		}
-	}
+        if( empty($this->_current_value) ) {
+            if (function_exists("sys_get_temp_dir")) {
+                $this->_current_value = sys_get_temp_dir();
+            } else {
+                $this->_current_value = $this->sys_get_temp_dir();
+            }
+        }
+    }
 
-	/**
+    /**
 	 * We are disabling this function on Windows OSes right now until
 	 * we can be certain of the proper way to check world-readability
 	 *
 	 * @return unknown
 	 */
-	public function isTestable() {
-		if ($this->osIsWindows()) {
-			return FALSE;
-		} else {
-			return TRUE;
-		}
-	}
+    public function isTestable() {
+        if ($this->osIsWindows()) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
-	/**
+    /**
 	 * Check if upload_tmp_dir matches self::COMMON_TMPDIR, or is word-writable
 	 *
 	 * This is still unix-specific, and it's possible that for now
@@ -75,38 +75,38 @@ class Zend_Environment_Security_Test_Core_UploadTmpDir extends Zend_Environment_
 	 *
 	 * @see self::COMMON_TMPDIR
 	 */
-	protected function _execTest() {
+    protected function _execTest() {
 
-		$perms = fileperms($this->_current_value);
+        $perms = fileperms($this->_current_value);
 
-		if ($this->_current_value
-			&& !preg_match("|".self::COMMON_TMPDIR."/?|", $this->_current_value)
-			&& ! ($perms & 0x0004)
-			&& ! ($perms & 0x0002) ) {
-			return self::RESULT_OK;
-		}
+        if ($this->_current_value
+        && !preg_match("|".self::COMMON_TMPDIR."/?|", $this->_current_value)
+        && ! ($perms & 0x0004)
+        && ! ($perms & 0x0002) ) {
+            return self::RESULT_OK;
+        }
 
-		// rewrite _current_value to display perms
-		$this->_current_value .= " (".substr(sprintf('%o', $perms), -4).")";
+        // rewrite _current_value to display perms
+        $this->_current_value .= " (".substr(sprintf('%o', $perms), -4).")";
 
-		return self::RESULT_NOTICE;
-	}
+        return self::RESULT_NOTICE;
+    }
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
+    protected function _setMessages() {
+        parent::_setMessages();
 
-		$this->setMessageForResult(self::RESULT_NOTRUN, 'en', 'Test not run -- currently disabled on Windows OSes');
-		$this->setMessageForResult(self::RESULT_OK, 'en', 'upload_tmp_dir is enabled, which is the
+        $this->setMessageForResult(self::RESULT_NOTRUN, 'en', 'Test not run -- currently disabled on Windows OSes');
+        $this->setMessageForResult(self::RESULT_OK, 'en', 'upload_tmp_dir is enabled, which is the
 						recommended setting. Make sure your upload_tmp_dir path is not world-readable');
-		$this->setMessageForResult(self::RESULT_NOTICE, 'en', 'upload_tmp_dir is disabled, or is set to a
+        $this->setMessageForResult(self::RESULT_NOTICE, 'en', 'upload_tmp_dir is disabled, or is set to a
 						common world-writable directory.  This typically allows other users on this server
 						to access temporary copies of files uploaded via your PHP scripts.  You should set
 						upload_tmp_dir to a non-world-readable directory');
-	}
+    }
 
 }

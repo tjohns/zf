@@ -31,25 +31,25 @@ abstract class Zend_Environment_Security_Test_CGI extends Zend_Environment_Secur
 
     protected $_group = 'cgi';
 
-	/**
+    /**
 	 * No CGI tests should be run if the CGI SAPI isn't being used
 	 *
 	 * @return boolean
 	 */
-	public function isTestable() {
+    public function isTestable() {
         return strpos(php_sapi_name(), 'cgi') === 0;
-	}
+    }
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 * @access	public
 	 * @return	null
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
-		$this->setMessageForResult(self::RESULT_NOTRUN, 'en', "You don't seem to be using the CGI SAPI");
-	}
+    protected function _setMessages() {
+        parent::_setMessages();
+        $this->setMessageForResult(self::RESULT_NOTRUN, 'en', "You don't seem to be using the CGI SAPI");
+    }
 
 }

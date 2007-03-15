@@ -22,7 +22,7 @@
 /**
  * require the Zend_Environment_Security_Test_Core class
  */
-require_once('Zend/Environment/Security/Test/Core.php');
+require_once 'Zend/Environment/Security/Test/Core.php';
 
 
 /**
@@ -33,45 +33,45 @@ require_once('Zend/Environment/Security/Test/Core.php');
 class Zend_Environment_Security_Test_Core_Uid extends Zend_Environment_Security_Test_Core
 {
 
-	/**
+    /**
 	 * This should be a <b>unique</b>, human-readable identifier for this test
 	 *
 	 * @var string
 	 */
-	protected $_name = "user_id";
+    protected $_name = "user_id";
 
-	protected $_recommended_value = 100;
+    protected $_recommended_value = 100;
 
-	protected function _retrieveCurrentValue() {
-		$this->_current_value =  getmyuid();
-	}
+    protected function _retrieveCurrentValue() {
+        $this->_current_value =  getmyuid();
+    }
 
-	/**
+    /**
 	 * Checks the GID of the PHP process to make sure it is above PHPSECINFO_MIN_SAFE_UID
 	 *
 	 * @see PHPSECINFO_MIN_SAFE_UID
 	 */
-	protected function _execTest() {
+    protected function _execTest() {
 
-		if ($this->_current_value >= $this->_recommended_value) {
-			return self::RESULT_OK;
-		}
+        if ($this->_current_value >= $this->_recommended_value) {
+            return self::RESULT_OK;
+        }
 
-		return self::RESULT_WARN;
-	}
+        return self::RESULT_WARN;
+    }
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
+    protected function _setMessages() {
+        parent::_setMessages();
 
-		$this->setMessageForResult(self::RESULT_OK, 'en', 'PHP is executing as what is probably a non-privileged user');
-		$this->setMessageForResult(self::RESULT_WARN, 'en', 'PHP may be executing as a "privileged" user,
+        $this->setMessageForResult(self::RESULT_OK, 'en', 'PHP is executing as what is probably a non-privileged user');
+        $this->setMessageForResult(self::RESULT_WARN, 'en', 'PHP may be executing as a "privileged" user,
 				which could be a serious security vulnerability.');
-	}
+    }
 
 
 }

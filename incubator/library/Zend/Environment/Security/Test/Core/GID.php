@@ -22,7 +22,7 @@
 /**
  * require the Zend_Environment_Security_Test_Core class
  */
-require_once('Zend/Environment/Security/Test/Core.php');
+require_once 'Zend/Environment/Security/Test/Core.php';
 
 
 /**
@@ -33,44 +33,44 @@ require_once('Zend/Environment/Security/Test/Core.php');
 class Zend_Environment_Security_Test_Core_Gid extends Zend_Environment_Security_Test_Core
 {
 
-	/**
+    /**
 	 * This should be a <b>unique</b>, human-readable identifier for this test
 	 *
 	 * @var string
 	 */
-	protected $_name = "group_id";
+    protected $_name = "group_id";
 
-	protected $_recommended_value = 100;
+    protected $_recommended_value = 100;
 
-	protected function _retrieveCurrentValue() {
-		$this->_current_value =  getmygid();
-	}
+    protected function _retrieveCurrentValue() {
+        $this->_current_value =  getmygid();
+    }
 
-	/**
+    /**
 	 * Checks the GID of the PHP process to make sure it is above PHPSECINFO_MIN_SAFE_GID
 	 *
 	 * @see PHPSECINFO_MIN_SAFE_GID
 	 */
-	protected function _execTest() {
+    protected function _execTest() {
 
-		if ($this->_current_value >= $this->_recommended_value) {
-			return self::RESULT_OK;
-		}
+        if ($this->_current_value >= $this->_recommended_value) {
+            return self::RESULT_OK;
+        }
 
-		return self::RESULT_WARN;
-	}
+        return self::RESULT_WARN;
+    }
 
 
-	/**
+    /**
 	 * Set the messages specific to this test
 	 *
 	 */
-	protected function _setMessages() {
-		parent::_setMessages();
+    protected function _setMessages() {
+        parent::_setMessages();
 
-		$this->setMessageForResult(self::RESULT_OK, 'en', 'PHP is executing as what is probably a non-privileged group');
-		$this->setMessageForResult(self::RESULT_WARN, 'en', 'PHP may be executing as a "privileged" group, which could be a serious security vulnerability.');
-	}
+        $this->setMessageForResult(self::RESULT_OK, 'en', 'PHP is executing as what is probably a non-privileged group');
+        $this->setMessageForResult(self::RESULT_WARN, 'en', 'PHP may be executing as a "privileged" group, which could be a serious security vulnerability.');
+    }
 
 
 }
