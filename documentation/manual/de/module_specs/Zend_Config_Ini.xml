@@ -15,7 +15,7 @@
             Standardmäßig ist das Schlüssel Trennzeichen der Punkt (.). Dennoch kann dies geändert
             werden, indem der $config Schlüssel "nestSeparator" geändert werden, wenn das 
             <code>Zend_Config_Ini</code> Objekt instanziert wird. Zum Beispiel:
-            <programlisting role="php"><!CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
