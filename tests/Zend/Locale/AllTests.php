@@ -33,6 +33,7 @@ error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 
 require_once 'Zend/Locale/DataTest.php';
 require_once 'Zend/Locale/FormatTest.php';
+require_once 'Zend/Locale/MathTest.php';
 
 // echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
@@ -49,6 +50,7 @@ class Zend_Locale_AllTests
 
         $suite->addTestSuite('Zend_Locale_DataTest');
         $suite->addTestSuite('Zend_Locale_FormatTest');
+        $suite->addTestSuite('Zend_Locale_MathTest');
 
         return $suite;
     }
