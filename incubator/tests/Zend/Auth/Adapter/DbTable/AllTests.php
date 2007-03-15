@@ -18,12 +18,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: AllTests.php 3874 2007-03-12 19:50:38Z darby $
  */
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_Http_AllTests::main');
 }
 
 
@@ -39,13 +39,16 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
-require_once 'Zend/Auth/Adapter/DbTable/AllTests.php';
+/**
+ * @see Zend_Auth_Adapter_Http_AuthTest
+ */
+require_once 'Zend/Auth/Adapter/DbTable/BasicSqliteTest.php';
 
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED',  true);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
 
+/**
+ * @see Zend_Auth_Adapter_Http_ObjectTest
+ */
+require_once 'Zend/Auth/Adapter/DbTable/AdvancedMysqlTest.php';
 
 
 /**
@@ -55,7 +58,7 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Auth_Adapter_AllTests
+class Zend_Auth_Adapter_DbTable_AllTests
 {
     /**
      * Runs this test suite
@@ -74,12 +77,24 @@ class Zend_Auth_Adapter_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth Adapters');
-        $suite->addTest(Zend_Auth_Adapter_DbTable_AllTests::suite());
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth_Adapter_Http');
+
+        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED') && constant('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED') !== false) {
+            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_BasicSqliteTest');
+        } else {
+            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_BasicSqliteTest_Skip');
+        }
+        
+        /*
+        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED') && constant('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED') !== false) {
+            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_AdvancedMysqlTest_Skip');
+        }
+        */
+
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_AllTests::main') {
-    Zend_Auth_Adapter_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_Http_AllTests::main') {
+    Zend_Auth_Adapter_Http_AllTests::main();
 }
