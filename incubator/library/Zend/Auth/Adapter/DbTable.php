@@ -220,28 +220,23 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
+        $exception = null;
         
         if ($this->_tableName == '') {
-            throw new Zend_Auth_Exception('A table must be supplied authentication adapter.');
+            $exception = 'A table must be supplied authentication adapter.';
+        } elseif ($this->_identityColumn == '') {
+            $exception = 'A table column must be supplied for the identity.';
+        } elseif ($this->_identity == '') {
+            $exception = 'A value for the identity must be provided to authenticate.';
+        } elseif ($this->_credentialColumn == '') {
+            $exception = 'A credential column must be supplied to autheticate against.';
+        } elseif ($this->_credential === null) {
+            $exception = 'A credential value must be provided to authenticate.';
         }
         
-        if ($this->_identityColumn == '') {
-            throw new Zend_Auth_Exception('A table column must be supplied for the identity.');
-        }
-        
-        // make sure an identity satisfied
-        if ($this->_identity == '') {
-            throw new Zend_Auth_Exception('A value for the identity must be provided to authenticate.');
-        }
-        
-        // at least one credential
-        if ($this->_credentialColumn == '') {
-            throw new Zend_Auth_Exception('At least one credential column must be supplied to autheticate against.');
-        }
-        
-        // all credential values must be provided for
-        if ($this->_credential === null) {
-            throw new Zend_Auth_Exception('A credential value must be provided to authenticate.');
+        if (!is_null($exception)) {
+            require_once 'Zend/Auth/Exception.php';
+            throw new Zend_Auth_Exception($exception);
         }
         
         // create result array

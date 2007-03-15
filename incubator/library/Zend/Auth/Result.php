@@ -112,7 +112,7 @@ class Zend_Auth_Result
      */
     public function isValid()
     {
-        return ($this->_code) ? true : false;
+        return ($this->_code > 0) ? true : false;
     }
 
     /**
