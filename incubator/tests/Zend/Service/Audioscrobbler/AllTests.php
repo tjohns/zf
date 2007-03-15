@@ -13,7 +13,7 @@ require_once 'TrackDataTest.php';
 require_once 'TagDataTest.php';
 require_once 'GroupTest.php';
 
-class AllTests
+class Zend_Service_Audioscrobbler_AllTests
 {
     public static function main()
     {

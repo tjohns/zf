@@ -33,6 +33,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Log/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
+require_once 'Zend/Service/Audioscrobbler/AllTests.php';
 
 /**
  * @category   Zend
@@ -64,6 +65,7 @@ class Zend_AllTests
          */
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
+        $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
 
         return $suite;
     }
