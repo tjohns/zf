@@ -28,7 +28,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Log/LogTest.php';
 require_once 'Zend/Log/Filter/ChainingTest.php';
-require_once 'Zend/Log/Filter/LevelTest.php';
+require_once 'Zend/Log/Filter/PriorityTest.php';
 require_once 'Zend/Log/Filter/MessageTest.php';
 require_once 'Zend/Log/Formatter/SimpleTest.php';
 require_once 'Zend/Log/Formatter/XmlTest.php';
@@ -56,7 +56,7 @@ class Zend_Log_AllTests
 
         $suite->addTestSuite('Zend_Log_LogTest');
         $suite->addTestSuite('Zend_Log_Filter_ChainingTest');
-        $suite->addTestSuite('Zend_Log_Filter_LevelTest');
+        $suite->addTestSuite('Zend_Log_Filter_PriorityTest');
         $suite->addTestSuite('Zend_Log_Filter_MessageTest');
         $suite->addTestSuite('Zend_Log_Formatter_SimpleTest');
         $suite->addTestSuite('Zend_Log_Formatter_XmlTest');

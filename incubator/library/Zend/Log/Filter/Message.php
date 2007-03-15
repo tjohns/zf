@@ -53,11 +53,11 @@ class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return boolean            accepted?
+     * @param  string   $message   message for the log
+     * @param  integer  $priority  priority of message
+     * @return boolean             accepted?
      */
-    public function accept($message, $level)
+    public function accept($message, $priority)
     {
         return preg_match($this->_regexp, $message) > 0;
     }

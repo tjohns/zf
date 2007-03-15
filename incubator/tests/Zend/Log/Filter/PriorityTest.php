@@ -25,8 +25,8 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /** Zend_Log */
 require_once 'Zend/Log.php';
 
-/** Zend_Log_Filter_Level */
-require_once 'Zend/Log/Filter/Level.php';
+/** Zend_Log_Filter_Priority */
+require_once 'Zend/Log/Filter/Priority.php';
 
 /**
  * @category   Zend
@@ -35,29 +35,29 @@ require_once 'Zend/Log/Filter/Level.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Log_Filter_LevelTest extends PHPUnit_Framework_TestCase
+class Zend_Log_Filter_PriorityTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        // accept at or below level 2
-        $this->filter = new Zend_Log_Filter_Level(2);
+        // accept at or below priority 2
+        $this->filter = new Zend_Log_Filter_Priority(2);
     }
 
-    public function testLevelFilterAccept()
+    public function testPriorityFilterAccept()
     {
         $this->assertTrue($this->filter->accept('', 2));
         $this->assertTrue($this->filter->accept('', 1));
     }
 
-    public function testLevelFilterReject()
+    public function testPriorityFilterReject()
     {
         $this->assertFalse($this->filter->accept('', 3));
     } 
 
-    public function testConstructorThrowsOnInvalidLevel()
+    public function testConstructorThrowsOnInvalidPriority()
     {
         try {
-            new Zend_Log_Filter_Level('foo');
+            new Zend_Log_Filter_Priority('foo');
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);

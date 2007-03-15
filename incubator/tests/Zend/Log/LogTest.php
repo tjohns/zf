@@ -101,9 +101,9 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    // Levels
+    // Priorities
 
-    public function testLogThrowsOnBadLogLevel()
+    public function testLogThrowsOnBadLogPriority()
     {
         $logger = new Zend_Log($this->writer);
         try {
@@ -111,45 +111,45 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);
-            $this->assertRegExp('/bad log level/i', $e->getMessage());
+            $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
 
-    public function testLogThrough__callThrowsOnBadLogLevel()
+    public function testLogThrough__callThrowsOnBadLogPriority()
     {
         $logger = new Zend_Log($this->writer);
         try {
-            $logger->nonexistantLevel('');
+            $logger->nonexistantPriority('');
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);
-            $this->assertRegExp('/bad log level/i', $e->getMessage());
+            $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
 
-    public function testAddingLevelThrowsWhenOverridingBuiltinLogLevel()
+    public function testAddingPriorityThrowsWhenOverridingBuiltinLogPriority()
     {
         try {
             $logger = new Zend_Log($this->writer);
-            $logger->addLevel('BOB', 0);
+            $logger->addPriority('BOB', 0);
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);
-            $this->assertRegExp('/existing log level/i', $e->getMessage());
+            $this->assertRegExp('/existing priorities/i', $e->getMessage());
         }
     
     }
     
-    public function testAddLogLevel()
+    public function testAddLogPriority()
     {
         $logger = new Zend_Log($this->writer);
-        $logger->addLevel('EIGHT', $level = 8);
+        $logger->addPriority('EIGHT', $priority = 8);
 
         $logger->eight($message = 'eight message');
 
         rewind($this->log);
         $logdata = stream_get_contents($this->log);
-        $this->assertContains((string)$level, $logdata);
+        $this->assertContains((string)$priority, $logdata);
         $this->assertContains($message, $logdata);
     }
 

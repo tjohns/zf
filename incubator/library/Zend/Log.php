@@ -21,8 +21,8 @@
 /** Zend_Log_Exception */
 require_once 'Zend/Log/Exception.php';
 
-/** Zend_Log_Filter_Level */
-require_once 'Zend/Log/Filter/Level.php';
+/** Zend_Log_Filter_Priority */
+require_once 'Zend/Log/Filter/Priority.php';
 
 /**
  * @category   Zend
@@ -39,13 +39,13 @@ class Zend_Log
     const WARN    = 4;  // Warning: warning conditions
     const NOTICE  = 5;  // Notice: normal but significant condition
     const INFO    = 6;  // Informational: informational messages
-    const DEBUG   = 7;  // Debug: debug-level messages
+    const DEBUG   = 7;  // Debug: debug messages
 
     /**
-     * @var array of log levels where the keys are the
-     * level priorities and the values are the level names
+     * @var array of priorities where the keys are the
+     * priority numbers and the values are the priority names
      */
-    private $_levels = array();
+    private $_priorities = array();
 
     /**
      * @var array of Zend_Log_Writer_Abstract
@@ -65,7 +65,7 @@ class Zend_Log
     public function __construct($writer = null)
     {
         $r = new ReflectionClass($this);
-        $this->_levels = array_flip($r->getConstants());
+        $this->_priorities = array_flip($r->getConstants());
 
         if ($writer !== null) {
             $this->addWriter($writer);
@@ -74,35 +74,35 @@ class Zend_Log
 
     /**
      * Undefined method handler allows a shortcut:
-     *   $log->levelName('message')
+     *   $log->priorityName('message')
      *     instead of
-     *   $log->log('message', Zend_Log::LEVELNAME)
+     *   $log->log('message', Zend_Log::PRIORITY_NAME)
      *
-     * @param  string  $method  log level name
+     * @param  string  $method  priority name
      * @param  string  $params  message to log
      * @return void
      */
     public function __call($method, $params)
     {
-        $level = strtoupper($method);
-        if (($level = array_search($level, $this->_levels)) !== false) {
-            $this->log(array_shift($params), $level);
+        $priority = strtoupper($method);
+        if (($priority = array_search($priority, $this->_priorities)) !== false) {
+            $this->log(array_shift($params), $priority);
         } else {
-            throw new Zend_Log_Exception('Bad log level');
+            throw new Zend_Log_Exception('Bad log priority');
         }
     }
 
     /**
-     * Log a message at a level
+     * Log a message at a priority
      *
-     * @param  string   $message  Message to log
-     * @param  integer  $level    Log level of message
+     * @param  string   $message   Message to log
+     * @param  integer  $priority  Priority of message
      * @return void
      */
-    public function log($message, $level)
+    public function log($message, $priority)
     {
         foreach ($this->_filters as $filter) {
-            if (!$filter->accept($message, $level)) {
+            if (!$filter->accept($message, $priority)) {
                 return;
             }
         }
@@ -111,33 +111,33 @@ class Zend_Log
             throw new Zend_Log_Exception('No writers were added');
         }
 
-        if (! isset($this->_levels[$level])) {
-            throw new Zend_Log_Exception('Bad log level');
+        if (! isset($this->_priorities[$priority])) {
+            throw new Zend_Log_Exception('Bad log priority');
         }
 
         foreach ($this->_writers as $writer) {
-            $writer->log($message, $level);
+            $writer->log($message, $priority);
         }
     }
 
     /**
-     * Add a custom log level
+     * Add a custom priority
      *
-     * @param  string  $name    Name of level
-     * @param  integer  $level  Numeric level
+     * @param  string   $name      Name of priority
+     * @param  integer  $priority  Numeric priority
      * @return void
      */
-    public function addLevel($name, $level)
+    public function addPriority($name, $priority)
     {
-        // Log level names must be uppercase for predictability.
+        // Priority names must be uppercase for predictability.
         $name = strtoupper($name);
 
-        if (isset($this->_levels[$level])
-            || array_search($name, $this->_levels)) {
-            throw new Zend_Log_Exception('Existing log levels cannot be overwritten');
+        if (isset($this->_priorities[$priority])
+            || array_search($name, $this->_priorities)) {
+            throw new Zend_Log_Exception('Existing priorities cannot be overwritten');
         }
 
-        $this->_levels[$level] = $name;
+        $this->_priorities[$priority] = $name;
     }
 
     /**
@@ -151,7 +151,7 @@ class Zend_Log
     public function addFilter($filter)
     {
         if (is_integer($filter)) {
-            $filter = new Zend_Log_Filter_Level($filter);
+            $filter = new Zend_Log_Filter_Priority($filter);
         }
 
         $this->_filters[] = $filter;

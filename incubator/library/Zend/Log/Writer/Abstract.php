@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Log_Filter_Priority */
+require_once 'Zend/Log/Filter/Priority.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -47,7 +50,7 @@ abstract class Zend_Log_Writer_Abstract
     public function addFilter($filter)
     {
         if (is_integer($filter)) {
-            $filter = new Zend_Log_Filter_Level($filter);
+            $filter = new Zend_Log_Filter_Priority($filter);
         }
 
         $this->_filters[] = $filter;
@@ -56,19 +59,19 @@ abstract class Zend_Log_Writer_Abstract
     /**
      * Log a message to this writer.
      *
-     * @param  string   $message  Message to log
-     * @param  integer  $level    Log level
+     * @param  string   $message   Message to log
+     * @param  integer  $priority  Priority of message
      * @return void
      */
-    public function log($message, $level)
+    public function log($message, $priority)
     {
         foreach ($this->_filters as $filter) {
-            if (!$filter->accept($message, $level)) {
+            if (!$filter->accept($message, $priority)) {
                 return;
             }
         }
 
-        $this->write($message, $level);
+        $this->write($message, $priority);
     }
 
     /**
@@ -91,10 +94,10 @@ abstract class Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  $message    Log message
-     * @param  $level      Log level
+     * @param  $message    Message to log
+     * @param  $priority   priority of message
      * @return bool        Always True
      */
-    abstract public function write($message, $level);
+    abstract public function write($message, $priority);
 
 }

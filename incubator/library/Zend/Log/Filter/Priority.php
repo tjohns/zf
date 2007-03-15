@@ -29,37 +29,37 @@ require_once 'Zend/Log/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-class Zend_Log_Filter_Level implements Zend_Log_Filter_Interface
+class Zend_Log_Filter_Priority implements Zend_Log_Filter_Interface
 {
     /**
      * @var integer
      */
-    protected $_level;
+    protected $_priority;
 
     /**
-     * Filter out any log messages greater than $level.
+     * Filter out any log messages greater than $priority.
      *
-     * @param  integer  $level  Maximum log level to pass through the filter
+     * @param  integer  $priority  Maximum priority to pass through the filter
      */
-    public function __construct($level)
+    public function __construct($priority)
     {
-        if (! is_integer($level)) {
-            throw new Zend_Log_Exception('Level must be an integer');
+        if (! is_integer($priority)) {
+            throw new Zend_Log_Exception('Priority must be an integer');
         }
         
-        $this->_level = $level;
+        $this->_priority = $priority;
     }
 
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $level    log level
-     * @return boolean            accepted?
+     * @param  string   $message   message for the log
+     * @param  integer  $priority  priority of message
+     * @return boolean             accepted?
      */
-    public function accept($message, $level)
+    public function accept($message, $priority)
     {
-        return $level <= $this->_level;
+        return $priority <= $this->_priority;
     }
 
 }
