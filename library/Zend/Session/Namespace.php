@@ -211,7 +211,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
 
     /**
-     * __get() - method to get a variable in this objects current namespace
+     * __get() - method to get a variable in this object's current namespace
      *
      * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return mixed
@@ -227,7 +227,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
 
     /**
-     * __set() - method to set a variable/value in this objects namespace
+     * __set() - method to set a variable/value in this object's namespace
      *
      * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @param mixed $value - value in the <key,value> pair to assign to the $name key
@@ -255,7 +255,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
 
     /**
-     * __isset() - determine if a variable in this objects namespace is set
+     * __isset() - determine if a variable in this object's namespace is set
      *
      * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return bool
@@ -271,7 +271,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
 
     /**
-     * __unset() - unset a variable in this objects namespace.
+     * __unset() - unset a variable in this object's namespace.
      *
      * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return true
