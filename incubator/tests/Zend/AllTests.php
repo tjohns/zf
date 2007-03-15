@@ -29,6 +29,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Zend/Auth/AllTests.php';
 //require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/Log/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
@@ -55,6 +56,7 @@ class Zend_AllTests
 
         // place other tests here for incubator suite
 
+        $suite->addTest(Zend_Auth_AllTests::suite());
 // Do not include Zend_Currency as empty testbeds can cause phpunit to crash
 //        $suite->addTest(Zend_Currency_AllTests::suite());
         $suite->addTest(Zend_Log_AllTests::suite());

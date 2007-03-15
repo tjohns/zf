@@ -39,13 +39,10 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
+/**
+ * @see Zend_Auth_Adapter_DbTable_AllTests
+ */
 require_once 'Zend/Auth/Adapter/DbTable/AllTests.php';
-
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED',  true);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
-
 
 
 /**

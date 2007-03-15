@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AuthTest.php 3874 2007-03-12 19:50:38Z darby $
+ * @version    $Id$
  */
 
 
@@ -29,26 +29,24 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
- * @see Zend_Auth_Adapter_Http
+ * @see Zend_Db_Adapter_Pdo_Sqlite
  */
-require_once 'Zend/Auth/Adapter/Http.php';
-
+require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
 
 
 /**
- * @see 
+ * This is required because Zend_Db_Adapter_Pdo_Sqlite uses Zend_Db constants
+ * but does not load the file containing the Zend_Db class.
+ *
+ * @see Zend_Db
  */
 require_once 'Zend/Db.php';
 
+
 /**
- * @see 
+ * @see Zend_Auth_Adapter_DbTable
  */
-require_once 'Zend/Db/Adapter/Abstract.php';
-
-require_once 'Zend/Auth.php';
-require_once 'Zend/Auth/Result.php';
 require_once 'Zend/Auth/Adapter/DbTable.php';
-
 
 
 /**
@@ -60,100 +58,91 @@ require_once 'Zend/Auth/Adapter/DbTable.php';
  */
 class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCase
 {
-
-    protected $_db = null;
-    
     /**
-     * Enter description here...
+     * Sqlite database connection
+     *
+     * @var Zend_Db_Adapter_Pdo_Sqlite
+     */
+    protected $_db = null;
+
+    /**
+     * Database table authentication adapter
      *
      * @var Zend_Auth_Adapter_DbTable
      */
     protected $_adapter = null;
-    
+
     /**
      * Set up test configuration
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->_db = Zend_Db::factory('pdo_sqlite', array('dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE));
-        
-        $sql_create = 'CREATE TABLE [users] ( [id] INTEGER  NOT NULL PRIMARY KEY, [username] VARCHAR(50)  UNIQUE NOT NULL, [password] VARCHAR(32)  NULL, [real_name] VARCHAR(150)  NULL)';
-        $sql_insert = 'INSERT INTO users (username, password, real_name) VALUES ("my_username", "my_password", "My Real Name")';
-        $this->_db->query($sql_create);
-        $this->_db->query($sql_insert);
-    }
-
     public function setUp()
     {
+        $this->_db = new Zend_Db_Adapter_Pdo_Sqlite(
+            array('dbname' => TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE)
+            );
+
+        $sqlCreate = 'CREATE TABLE [users] ( '
+                   . '[id] INTEGER  NOT NULL PRIMARY KEY, '
+                   . '[username] VARCHAR(50) UNIQUE NOT NULL, '
+                   . '[password] VARCHAR(32) NULL, '
+                   . '[real_name] VARCHAR(150) NULL)';
+        $this->_db->query($sqlCreate);
+
+        $sqlInsert = 'INSERT INTO users (username, password, real_name) '
+                   . 'VALUES ("my_username", "my_password", "My Real Name")';
+        $this->_db->query($sqlInsert);
+
         $this->_adapter = new Zend_Auth_Adapter_DbTable($this->_db, 'users', 'username', 'password');
     }
-    
-    public function testSuccessAuthenticate()
+
+    /**
+     * Ensures expected behavior for authentication success
+     *
+     * @return void
+     */
+    public function testAuthenticateSuccess()
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $result = $this->_adapter->authenticate();
-        $this->assertEquals($result->getCode(), Zend_Auth_Result::SUCCESS);
-        
+        $this->assertTrue($result->isValid());
     }
 
-    public function testFailureAuthenticate()
+    /**
+     * Ensures expected behavior for authentication failure because of a bad password
+     *
+     * @return void
+     */
+    public function testAuthenticateFailure()
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password_bad');
         $result = $this->_adapter->authenticate();
-        print_r($result);
-        
-        $this->assertEquals($result->isValid(), false);
-        $this->assertEquals($result->getCode(), Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL);
-
-               
+        $this->assertFalse($result->isValid());
     }
-    
-    public function testExceptions()
-    {
-        /*
-        try {
-            $result = $this->_adapter->authenticate();
-            $this->assertFail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals(1, 1);
-        }
 
-        try {
-            $result = $this->_adapter->authenticate();
-            $this->assertFail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals(1, 1);
-        }
-        */
-    }
-    
-    public function testResultRow()
+    /**
+     * Ensures that getResultRow() works for successful authentication
+     *
+     * @return void
+     */
+    public function testGetResultRow()
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $result = $this->_adapter->authenticate();
-
-        $result_row = $this->_adapter->getResultRow();
-        $this->assertEquals($result_row['username'], 'my_username');
-               
+        $resultRow = $this->_adapter->getResultRow();
+        $this->assertEquals($resultRow['username'], 'my_username');
     }
-    
-    
 }
 
-class Zend_Auth_Adapter_DbTable_BasicSqliteTest_Skip extends Zend_Auth_Adapter_DbTable_BasicSqliteTest 
+
+class Zend_Auth_Adapter_DbTable_BasicSqliteTest_Skip extends Zend_Auth_Adapter_DbTable_BasicSqliteTest
 {
-    public function __construct()
-    {
-        /* */
-    }
-    
     public function setUp()
     {
-        $this->markTestSkipped('Sqlite is not enabled in TestConfiguration.php.');
+        $this->markTestSkipped('Zend_Auth_Adapter_DbTable Sqlite tests are not enabled in TestConfiguration.php');
     }
 }
