@@ -21,13 +21,13 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($this->section as $info) { ?>    <tr>
+        <?php foreach ($this->section as $info) { ?>    <tr class="sec-<?php echo $this->escape($this->toString($info->result)) ?>">
                 <td><?php echo nl2br($this->escape($this->toString($info->group))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->name))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->result))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->current_value))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->recommended_value))) ?></td>
-                <td><?php echo nl2br($this->escape($this->toString($info->details))) ?></td>
+                <td><?php echo nl2br($this->toString($info->details)) ?></td>
                 <td><a href="<?php echo nl2br($this->escape($this->toString($info->link))) ?>">More Info &raquo;</a></td>
             </tr>
         <?php } ?></tbody>

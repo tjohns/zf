@@ -268,6 +268,22 @@ UlWj+FukBY0AAAAASUVORK5CYII%3D'));
 	    color: white;
 	    font-size: 120%;
 	}
+
+	tr.sec-error {
+	    background-color:#CC9898;
+	}
+	tr.sec-notice {
+	    background-color:#FFC685;
+	}
+	tr.sec-ok {
+	    background-color:#9AFFB3;
+	}
+	tr.sec-notrun {
+	    background-color:#CCCCCC;
+	}
+	tr.sec-warning {
+	    background-color:#FF8C8C;
+	}
 </style>
 </head>
 
