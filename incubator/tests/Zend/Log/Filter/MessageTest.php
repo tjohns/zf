@@ -17,6 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /** PHPUnit_Framework_TestCase */
@@ -34,6 +35,7 @@ require_once 'Zend/Log/Filter/Message.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
 {
