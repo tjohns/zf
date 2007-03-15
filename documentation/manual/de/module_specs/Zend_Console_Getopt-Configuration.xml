@@ -176,7 +176,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("ignoreCase"),
+                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"),
                     if true, makes flags aliases of each other if they differ
                     only in their case.  That is, "<code>-a</code>" and
                     "<code>-A</code>" will be considered to be synonymous flags.
