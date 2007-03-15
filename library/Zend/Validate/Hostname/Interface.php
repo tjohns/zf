@@ -36,13 +36,13 @@ interface Zend_Validate_Hostname_Interface
      * UTF-8 characters should be written as four character hex codes \x{XXXX}
      * For example é (lowercase e with acute) is represented by the hex code \x{00E9}
      * 
-     * To enable additional UTF-8 characters for a domain ensure the TLD exists in the property
-     * Zend_Validate_Hostname::_registeredTlds 
-     * The addition of the TLD to this array avoids unecessary file checking 
-     * since the majority of domains do not have additional UTF-8 characters
+     * You only need to include lower-case equivalents of characters since the hostname 
+     * check is case-insensitive
      * 
-     * Any build scripts used to generate these strings should be placed within build-tools/ValidateHostname
+     * Please document the supported TLDs in the documentation file at:
+     * manual/en/module_specs/Zend_Validate-Hostname.xml
      *
+     * @see http://en.wikipedia.org/wiki/Internationalized_domain_name
      * @see http://www.iana.org/cctld/ Country-Code Top-Level Domains (TLDs)
      * @see http://www.columbia.edu/kermit/utf8-t1.html UTF-8 characters
      * @return string

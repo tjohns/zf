@@ -21,6 +21,10 @@
  * @version    $Id$
  */
 
+/* Test settings for SRJ PC Unit Tests */
+class EmailAddressTest extends Zend_Validate_EmailAddressTest {};
+set_include_path(get_include_path().PATH_SEPARATOR.'../../../library');
+/* END test settings */
 
 /**
  * @see Zend_Validate_EmailAddress
@@ -77,8 +81,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testLocalhostAllowed()
     {
-        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
-        $this->assertTrue($localValidator->isValid('username@localhost'));
+        $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
+        $this->assertTrue($validator->isValid('username@localhost'));
     }
 
     /**
@@ -88,8 +92,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testLocaldomainAllowed()
     {
-        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
-        $this->assertTrue($localValidator->isValid('username@localhost.localdomain'));
+        $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
+        $this->assertTrue($validator->isValid('username@localhost.localdomain'));
     }
     
     /**
@@ -99,14 +103,14 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testIPAllowed()
     {
-        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+        $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
         $valuesExpected = array(
             array(Zend_Validate_Hostname::ALLOW_DNS, true, array('bob@212.212.20.4')),
             array(Zend_Validate_Hostname::ALLOW_DNS, false, array('bob@localhost'))
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $localValidator->isValid($input), implode("\n", $localValidator->getMessages()));
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }                 
     }
@@ -258,10 +262,10 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testMXRecords ()
     {
-        $localValidator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+        $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
         
         // Are MX checks supported by this system?
-        if (!$localValidator->mxSupported()) {
+        if (!$validator->validateMxSupported()) {
             return true;
         }
         
@@ -271,11 +275,52 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $localValidator->isValid($input), implode("\n", $localValidator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
-        }  
+        } 
+        
+        // Try a check via setting the option via a method
+        unset($validator);
+        $validator = new Zend_Validate_EmailAddress();
+        $validator->setValidateMx(true);
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        } 
     }
     
+   /**
+     * Test changing hostname settings via EmailAddress object
+     *
+     * @return void
+     */
+    public function testHostnameSettings ()
+    {
+        $validator = new Zend_Validate_EmailAddress();
+        
+        // Check no IDN matching
+        $validator->hostnameValidator->setValidateIdn(false);
+        $valuesExpected = array(
+            array(false, array('name@bürger.de', 'name@hãllo.de', 'name@hållo.se'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+        
+        // Check no TLD matching
+        $validator->hostnameValidator->setValidateTld(false);
+        $valuesExpected = array(
+            array(true, array('name@domain.xx', 'name@domain.zz', 'name@domain.madeup'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }
    
     /**
      * Ensures that getMessages() returns expected default value (an empty array)

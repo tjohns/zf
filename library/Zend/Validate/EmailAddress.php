@@ -53,14 +53,14 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      *
      * @var Zend_Validate_Hostname
      */
-    protected $_hostnameValidator;
+    public $hostnameValidator;
 
     /**
      * Whether we check for a valid MX record via DNS
      *
-     * @var boolean
+     * @var boolean 
      */
-    protected $_mxCheck = false;
+    protected $_validateMx = false;
     
     /**
      * Instantiates hostname validator for local use
@@ -73,12 +73,13 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      * @param integer $allow
      * @return void
      */
-    public function __construct($allow = Zend_Validate_Hostname::ALLOW_DNS, $mxCheck = false)
+    public function __construct($allow = Zend_Validate_Hostname::ALLOW_DNS, $validateMx = false)
     {
         // Initialise Zend_Validate_Hostname
-        $this->_hostnameValidator = new Zend_Validate_Hostname($allow);
+        $this->hostnameValidator = new Zend_Validate_Hostname($allow);
         
-        $this->_mxCheck = $mxCheck;
+        // Set validation options
+        $this->_validateMx = $validateMx;
     }   
     
     /**
@@ -88,10 +89,22 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
      *
      * @return boolean
      */
-    public function mxSupported ()
+    public function validateMxSupported ()
     {
         return function_exists('dns_get_mx');
     }
+    
+    /**
+     * Set whether we check for a valid MX record via DNS
+     * 
+     * This only applies when DNS hostnames are validated
+     *
+     * @param boolean $allowed Set allowed to true to validate for MX records, and false to not validate them
+     */
+    public function setValidateMx ($allowed)
+    {
+        $this->_validateMx = (bool) $allowed;  
+    }    
     
     /**
      * Defined by Zend_Validate_Interface
@@ -118,21 +131,20 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         $hostname 	= $matches[2];
         
         // Match hostname part
-        $hostnameResult = $this->_hostnameValidator->isValid($hostname);
+        $hostnameResult = $this->hostnameValidator->isValid($hostname);
         if (!$hostnameResult) {
             $this->_messages[] = "'$hostname' is not a valid hostname for email address '$value'";
 
             // Get messages from hostnameValidator
-            foreach ($this->_hostnameValidator->getMessages() as $message) {
+            foreach ($this->hostnameValidator->getMessages() as $message) {
                 $this->_messages[] = $message;
             }
         }
 
         // MX check on hostname via dns_get_record()
-        if ($this->_mxCheck) {
-            if ($this->mxSupported()) {
+        if ($this->_validateMx) {
+            if ($this->validateMxSupported()) {
                 $result = dns_get_mx($hostname, $mxHosts); 
-                print "checking $hostname MX: ";
                 var_dump($result, $mxHosts);
                 if (count($result) < 1) {
                     $hostnameResult = false;

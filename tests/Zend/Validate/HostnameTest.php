@@ -21,6 +21,10 @@
  * @version    $Id$
  */
 
+/* Test settings for SRJ PC Unit Tests */
+class HostnameTest extends Zend_Validate_HostnameTest {};
+set_include_path(get_include_path().PATH_SEPARATOR.'../../../library');
+/* END test settings */
 
 /**
  * @see Zend_Validate_Hostname
@@ -128,44 +132,91 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensure the TLD check works as expected
-     *
-     */
-    public function testTldCheck()
-    {
-        $valuesExpected = array(
-            array(Zend_Validate_Hostname::CHECK_BASIC, true, array('domain.co.zz', 'my.domain.madeupname')),
-            array(Zend_Validate_Hostname::CHECK_TLD, false, array('domain.co.zz', 'my.domain.madeupname'))
-            );
-        foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, $element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
-            }
-        }
-    }
-
-    /**
      * Ensure the IDN check works as expected
      * 
-     * This is commented out at present since I cannot preserve UTF-8 encoding in this file during transfer
-     *
      */
     public function testIDN()
     {
+        $validator = new Zend_Validate_Hostname();
+        
+        // Check IDN matching
         $valuesExpected = array(
-            array(Zend_Validate_Hostname::CHECK_TLD, false, array('bürger.de', 'hãllo.de', 'hållo.se')),
-            array(Zend_Validate_Hostname::CHECK_IDN, true, array('bürger.de', 'hãllo.de', 'hållo.se')),
-            array(Zend_Validate_Hostname::CHECK_IDN, true, array('bÜrger.de', 'hÃllo.de', 'hÅllo.se')),
-            array(Zend_Validate_Hostname::CHECK_IDN, false, array('hãllo.se', 'bürger.com', 'hãllo.uk'))
+            array(true, array('bürger.de', 'hãllo.de', 'hållo.se')),
+            array(true, array('bÜrger.de', 'hÃllo.de', 'hÅllo.se')),
+            array(false, array('hãllo.se', 'bürger.com', 'hãllo.uk'))
             );
         foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, $element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+        
+        // Check no IDN matching
+        $validator->setValidateIdn(false);
+        $valuesExpected = array(
+            array(false, array('bürger.de', 'hãllo.de', 'hållo.se'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+        
+        // Check setting no IDN matching via constructor
+        unset($validator);
+        $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
+        $valuesExpected = array(
+            array(false, array('bürger.de', 'hãllo.de', 'hållo.se'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
     }
+    
+    /**
+     * Ensure the TLD check works as expected
+     *
+     */
+    public function testTLD()
+    {
+        $validator = new Zend_Validate_Hostname();
+        
+        // Check TLD matching
+        $valuesExpected = array(
+            array(true, array('domain.co.uk', 'domain.uk.com', 'domain.tl', 'domain.zw')),
+            array(false, array('domain.xx', 'domain.zz', 'domain.madeup'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+        
+        // Check no TLD matching
+        $validator->setValidateTld(false);
+        $valuesExpected = array(
+            array(true, array('domain.xx', 'domain.zz', 'domain.madeup'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+        
+        // Check setting no TLD matching via constructor
+        unset($validator);
+        $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
+        $valuesExpected = array(
+            array(true, array('domain.xx', 'domain.zz', 'domain.madeup'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+            }
+        }
+    }    
 
     /**
      * Ensures that getAllow() returns expected default value

@@ -68,30 +68,20 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
      * Allows all types of hostnames
      */
     const ALLOW_ALL   = 7;
-
-    /**
-     * Only make the basic hostname checks, do not run any additional checks
-     *
-     */
-    const CHECK_BASIC  = 0;
     
     /**
-     * In addition, check for valid Top-Level Domains (default)
+     * Whether IDN domains are validated
      *
+     * @var boolean
      */
-    const CHECK_TLD   = 1;
+    private $_validateIdn = true;
     
     /**
-     * In addition, check for valid International Domain Names (e.g. bürger.de) and valid Top-Level Domains 
+     * Whether TLDs are validated against a known list
      *
+     * @var boolean
      */
-    const CHECK_IDN   = 2;
-    
-    /**
-     * Run all available hostname checks
-     *
-     */
-    const CHECK_ALL   = 3;
+    private $_validateTld = true;
     
     /**
      * Bit field of ALLOW constants; determines which types of hostnames are allowed
@@ -146,32 +136,26 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
         'tz', 'ua', 'ug', 'uk', 'um', 'us', 'uy', 'uz', 'va', 'vc', 've',
         'vg', 'vi', 'vn', 'vu', 'wf', 'ws', 'ye', 'yt', 'yu', 'za', 'zm',
         'zw'
-        );
-
-    /**
-     * Array of top-level domains which have additional UTF-8 characters available
-     * 
-     * If a top-level domain appears in this array then a Zend_Validate_Hostname_<TLD> 
-     * class must exist defining the additional UTF-8 characters available for this domain.
-     * 
-     * 
-     * @var array
-     * @see Zend_Validate_Hostname_Interface 
-     */
-    protected $_registeredTlds = array('at', 'ch', 'li', 'de', 'fi', 'hu', 'no', 'se'); 
-            
+        ); 
+    
     /**
      * Sets validator options
      *
      * @param  integer $allow Set what types of hostname to allow (default ALLOW_DNS)
      * @param  integer $check Set what additional hostname checks to make (default CHECK_TLD)
+     * @param  boolean $validateIdn Set whether IDN domains are validated (default true)
+     * @param  boolean $validateTld Set whether the TLD element of a hostname is validated (default true)
      * @return void
      * @see http://www.iana.org/cctld/specifications-policies-cctlds-01apr02.htm  Technical Specifications for ccTLDs
      */
-    public function __construct($allow = self::ALLOW_DNS, $check = self::CHECK_TLD)
+    public function __construct($allow = self::ALLOW_DNS, $validateIdn = true, $validateTld = true)
     {
+        // Set allow options
         $this->setAllow($allow);
-        $this->setCheck($check);
+        
+        // Set validation options
+        $this->_validateIdn = $validateIdn;
+        $this->_validateTld = $validateTld;
     }
 
     /**
@@ -197,13 +181,27 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
     }
 
     /**
-     * Returns the check option
+     * Set whether IDN domains are validated
+     * 
+     * This only applies when DNS hostnames are validated
      *
-     * @return integer
+     * @param boolean $allowed Set allowed to true to validate IDNs, and false to not validate them
      */
-    public function getCheck()
+    public function setValidateIdn ($allowed)
     {
-        return $this->_check;
+        $this->_validateIdn = (bool) $allowed;
+    }
+
+    /**
+     * Set whether the TLD element of a hostname is validated
+     * 
+     * This only applies when DNS hostnames are validated
+     *
+     * @param boolean $allowed Set allowed to true to validate TLDs, and false to not validate them
+     */
+    public function setValidateTld ($allowed)
+    {
+        $this->_validateTld = (bool) $allowed;  
     }
 
     /**
@@ -264,7 +262,7 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
 
                     // Match TLD against known list
                     $valueTld = strtolower($matches[1]);
-                    if (($this->_check & self::CHECK_TLD) || ($this->_check & self::CHECK_IDN)) {
+                    if ($this->_validateTld) {
                         if (!in_array($valueTld, $this->_validTlds)) {
                             $this->_messages[] = "'$value' appears to be a DNS hostname but cannot match TLD against known list";
                             $status = false;
@@ -278,8 +276,9 @@ class Zend_Validate_Hostname implements Zend_Validate_Interface
                      */
                     $labelChars = 'a-z0-9';
                     $utf8 = false;
-                    if ($this->_check & self::CHECK_IDN) {
-                        if (in_array($valueTld, $this->_registeredTlds)) {
+                    $classFile = 'Zend/Validate/Hostname/' . ucfirst($valueTld) . '.php';
+                    if ($this->_validateIdn) {
+                        if (Zend_Loader::isReadable($classFile)) {
                             
                             // Load additional characters
                             $className = 'Zend_Validate_Hostname_' . ucfirst($valueTld);

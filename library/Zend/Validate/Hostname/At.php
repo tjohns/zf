@@ -40,7 +40,6 @@ class Zend_Validate_Hostname_At implements Zend_Validate_Hostname_Interface
      * Returns UTF-8 characters allowed in DNS hostnames for the specified Top-Level-Domain
      *
      * @see http://www.nic.at/en/service/technical_information/idn/charset_converter/ Austria (.AT)
-     * @see /build-tools/ValidateHostname/generateAt.php Build file
      * @return string
      */
     public function getCharacters()
