@@ -40,7 +40,7 @@ class Zend_Log_Formatter_SimpleTest extends PHPUnit_Framework_TestCase
             new Zend_Log_Formatter_Simple(1);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/must be a string/i', $e->getMessage());
         }
     }

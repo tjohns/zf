@@ -80,11 +80,12 @@ abstract class Zend_Log_Writer_Abstract
      * @param  $optionKey      Key name for the option to be changed.  Keys are writer-specific
      * @param  $optionValue    New value to assign to the option
      * @return bool            True
+     * @throws InvalidArgumentException
      */
     public function setOption($optionKey, $optionValue)
     {
         if (!array_key_exists($optionKey, $this->_options)) {
-            throw new Zend_Log_Exception("Unknown option \"$optionKey\".");
+            throw new InvalidArgumentException("Unknown option \"$optionKey\".");
         }
         $this->_options[$optionKey] = $optionValue;
 

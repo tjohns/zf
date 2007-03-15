@@ -39,7 +39,8 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
     /**
      * Class constructor
      *
-     * @param null|string  $format  Format specifier for log messages 
+     * @param  null|string  $format  Format specifier for log messages
+     * @throws InvalidArgumentException
      */
     public function __construct($format = null)
     {
@@ -48,7 +49,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
         }
         
         if (! is_string($format)) {
-            throw new Zend_Log_Exception('Format must be a string');
+            throw new InvalidArgumentException('Format must be a string');
         }
         
         $this->_format = $format;

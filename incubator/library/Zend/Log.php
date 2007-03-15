@@ -81,6 +81,7 @@ class Zend_Log
      * @param  string  $method  priority name
      * @param  string  $params  message to log
      * @return void
+     * @throws InvalidArgumentException
      */
     public function __call($method, $params)
     {
@@ -88,7 +89,7 @@ class Zend_Log
         if (($priority = array_search($priority, $this->_priorities)) !== false) {
             $this->log(array_shift($params), $priority);
         } else {
-            throw new Zend_Log_Exception('Bad log priority');
+            throw new InvalidArgumentException('Bad log priority');
         }
     }
 
@@ -98,6 +99,7 @@ class Zend_Log
      * @param  string   $message   Message to log
      * @param  integer  $priority  Priority of message
      * @return void
+     * @throws InvalidArgumentException
      */
     public function log($message, $priority)
     {
@@ -112,7 +114,7 @@ class Zend_Log
         }
 
         if (! isset($this->_priorities[$priority])) {
-            throw new Zend_Log_Exception('Bad log priority');
+            throw new InvalidArgumentException('Bad log priority');
         }
 
         foreach ($this->_writers as $writer) {
@@ -125,7 +127,7 @@ class Zend_Log
      *
      * @param  string   $name      Name of priority
      * @param  integer  $priority  Numeric priority
-     * @return void
+     * @throws InvalidArgumentException
      */
     public function addPriority($name, $priority)
     {
@@ -134,7 +136,7 @@ class Zend_Log
 
         if (isset($this->_priorities[$priority])
             || array_search($name, $this->_priorities)) {
-            throw new Zend_Log_Exception('Existing priorities cannot be overwritten');
+            throw new InvalidArgumentException('Existing priorities cannot be overwritten');
         }
 
         $this->_priorities[$priority] = $name;

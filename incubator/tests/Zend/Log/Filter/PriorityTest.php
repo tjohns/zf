@@ -60,7 +60,7 @@ class Zend_Log_Filter_PriorityTest extends PHPUnit_Framework_TestCase
             new Zend_Log_Filter_Priority('foo');
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/must be an integer/i', $e->getMessage());
         }
     }

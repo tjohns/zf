@@ -110,7 +110,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->log('foo', 42);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
@@ -122,7 +122,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->nonexistantPriority('');
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
@@ -134,7 +134,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->addPriority('BOB', 0);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/existing priorities/i', $e->getMessage());
         }
     

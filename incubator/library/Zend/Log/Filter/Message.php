@@ -40,12 +40,12 @@ class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
      * Filter out any log messages not matching $regexp.
      *
      * @param  string  $regexp     Regular expression to test the log message
-     * @throws Zend_Log_Exception  Invalid regular expression
+     * @throws InvalidArgumentException
      */
     public function __construct($regexp)
     {
         if (@preg_match($regexp, '') === false) {
-            throw new Zend_Log_Exception("Invalid regular expression '$regexp'");
+            throw new InvalidArgumentException("Invalid regular expression '$regexp'");
         }
         $this->_regexp = $regexp;
     }

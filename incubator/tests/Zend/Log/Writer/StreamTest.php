@@ -88,7 +88,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
             $writer->setOption('foo', 42);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertType('InvalidArgumentException', $e);
             $this->assertRegExp('/unknown option/i', $e->getMessage());
         }
     }

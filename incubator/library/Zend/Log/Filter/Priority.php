@@ -40,11 +40,12 @@ class Zend_Log_Filter_Priority implements Zend_Log_Filter_Interface
      * Filter out any log messages greater than $priority.
      *
      * @param  integer  $priority  Maximum priority to pass through the filter
+     * @throws InvalidArgumentException
      */
     public function __construct($priority)
     {
         if (! is_integer($priority)) {
-            throw new Zend_Log_Exception('Priority must be an integer');
+            throw new InvalidArgumentException('Priority must be an integer');
         }
         
         $this->_priority = $priority;
