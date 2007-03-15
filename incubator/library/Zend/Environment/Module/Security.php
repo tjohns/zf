@@ -22,15 +22,15 @@
 
 
 /**
- * Zend_View_Abstract
+ * Zend_Module_Abstract
  */
-require_once('Zend/Environment/Module/Abstract.php');
+require_once 'Zend/Environment/Module/Abstract.php';
 
 
 /**
  * Zend_Environment_Security_Field
  */
-require_once('Zend/Environment/Security/Field.php');
+require_once 'Zend/Environment/Security/Field.php';
 
 
 /**
@@ -52,13 +52,14 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
     protected $_num_tests_run = 0;
 
 
-    protected function _init()
-    {
+    protected function _init() {
         $this->loadTests();
         $this->runTests();
     }
 
-
+    /**
+     * This resets all the stat-tracking variables
+     */
     public function resetStats() {
         $this->_tests_not_run = array();
         $this->_result_counts = array();
@@ -71,42 +72,43 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
 	 * then builds an array of classnames for the tests that will be run
 	 *
 	 */
-	public function loadTests($test_path=NULL) {
-	    $this->resetStats();
+    public function loadTests($test_path=NULL) {
+        $this->resetStats();
 
-	    if ($test_path === NULL) {
-	        // this seems hackey.  is it?  dunno.
+        if ($test_path === NULL) {
+            // this seems hackey.  is it?  dunno.
             $test_path = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'Security'.DIRECTORY_SEPARATOR.'Test';
-	    }
+        }
         $test_root = dir($test_path);
 
-		while (false !== ($entry = $test_root->read())) {
-			if ( is_dir($test_root->path.DIRECTORY_SEPARATOR.$entry) && !preg_match('|^\.(.*)$|', $entry) ) {
-				$test_dirs[] = $entry;
-			}
-		}
+        while (false !== ($entry = $test_root->read())) {
+            if ( is_dir($test_root->path.DIRECTORY_SEPARATOR.$entry) && !preg_match('|^\.(.*)$|', $entry) ) {
+                $test_dirs[] = $entry;
+            }
+        }
 
-		// include_once all files in each test dir
-		foreach ($test_dirs as $test_dir) {
-			$this_dir = dir($test_root->path.DIRECTORY_SEPARATOR.$test_dir);
+        // include_once all files in each test dir
+        foreach ($test_dirs as $test_dir) {
+            $this_dir = dir($test_root->path.DIRECTORY_SEPARATOR.$test_dir);
 
-			while (false !== ($entry = $this_dir->read())) {
-				if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)
-					&& preg_match('/[A-Za-z]+\.php/i', $entry)) {
-					include_once $this_dir->path.DIRECTORY_SEPARATOR.$entry;
-					$classNames[] = "Zend_Environment_Security_Test_".$test_dir."_".basename($entry, '.php');
-				}
-			}
+            while (false !== ($entry = $this_dir->read())) {
+                if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)
+                && preg_match('/[A-Za-z]+\.php/i', $entry)) {
+                    $className = "Zend_Environment_Security_Test_".$test_dir."_".basename($entry, '.php');
+                    Zend::loadClass($className);
+                    $classNames[] = $className;
+                }
+            }
 
-		}
+        }
 
-		$this->_tests_to_run = $classNames;
-	}
+        $this->_tests_to_run = $classNames;
+    }
 
 
 
-	/**
-	 * This runs the tests in the tests_to_run array and
+    /**
+	 * This runs the tests in the $_tests_to_run array and
 	 * places returned data in the following arrays/scalars:
 	 * - $this->_data
 	 * - $this->_result_counts
@@ -114,82 +116,88 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
 	 * - $this->_tests_not_run
 	 *
 	 */
-	function runTests() {
-		$this->resetStats();
+    function runTests() {
+        $this->resetStats();
 
-		foreach ($this->_tests_to_run as $testClass) {
+        foreach ($this->_tests_to_run as $testClass) {
 
-			$test = new $testClass();
+            $test = new $testClass();
 
-			/* @var $test Zend_Environment_Security_Test */
+            /* @var $test Zend_Environment_Security_Test */
 
-			if ($test->isTestable()) {
-				$test->test();
+            if ($test->isTestable()) {
+                $test->test();
 
-				$rs = array('name' => $test->getTestName(),
-				            'group' => $test->getTestGroup(),
-				            'result_code' => $test->getResult(),
-				            'result' => $this->_getResultAsString($test->getResult()),
-							'details' => $test->getMessage(),
-							'current_value' => $test->getCurrentTestValue(),
-							'recommended_value' => $test->getRecommendedTestValue(),
-							'link' => $test->getMoreInfoURL(),
-						);
-				$sec_field = new Zend_Environment_Security_Field($rs);
+                $rs = array('name' => $test->getTestName(),
+                    'group' => $test->getTestGroup(),
+                    'result_code' => $test->getResult(),
+                    'result' => $this->_getResultAsString($test->getResult()),
+                    'details' => $test->getMessage(),
+                    'current_value' => $test->getCurrentTestValue(),
+                    'recommended_value' => $test->getRecommendedTestValue(),
+                    'link' => $test->getMoreInfoURL(),
+                );
+                $sec_field = new Zend_Environment_Security_Field($rs);
 
-				//$this->_test_results[] = $sec_field;
+                //$this->_test_results[] = $sec_field;
 
-				// initialize if not yet set
-				if (!isset ($this->_result_counts[$sec_field->result]) ) {
-					$this->_result_counts[$sec_field->result] = 0;
-				}
-				$this->_result_counts[$sec_field->result]++;
-				$this->_num_tests_run++;
-			} else {
-				$rs = array('name' => $test->getTestName(),
-				            'group' => $test->getTestGroup(),
-				            'result_code' => $test->getResult(),
-				            'result' => $this->_getResultAsString($test->getResult()),
-							'details' => $test->getMessage(),
-							'current_value' => $test->getCurrentTestValue(),
-							'recommended_value' => $test->getRecommendedTestValue(),
-							'link' => $test->getMoreInfoURL(),
-						);
+                // initialize if not yet set
+                if (!isset ($this->_result_counts[$sec_field->result]) ) {
+                    $this->_result_counts[$sec_field->result] = 0;
+                }
+                $this->_result_counts[$sec_field->result]++;
+                $this->_num_tests_run++;
+            } else {
+                $rs = array('name' => $test->getTestName(),
+                    'group' => $test->getTestGroup(),
+                    'result_code' => $test->getResult(),
+                    'result' => $this->_getResultAsString($test->getResult()),
+                    'details' => $test->getMessage(),
+                    'current_value' => $test->getCurrentTestValue(),
+                    'recommended_value' => $test->getRecommendedTestValue(),
+                    'link' => $test->getMoreInfoURL(),
+                );
                 $sec_field = new Zend_Environment_Security_Field($rs);
 
                 // initialize if not yet set
-				if (!isset ($this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN]) ) {
-					$this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN] = 0;
-				}
-				$this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN]++;
-				$this->_tests_not_run[] = $sec_field;
-			}
+                if (!isset ($this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN]) ) {
+                    $this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN] = 0;
+                }
+                $this->_result_counts[Zend_Environment_Security_Test::RESULT_NOTRUN]++;
+                $this->_tests_not_run[] = $sec_field;
+            }
 
-			$this->{$sec_field->group."__".$sec_field->name} = $sec_field;
-		}
-	}
+            $this->{$sec_field->group."__".$sec_field->name} = $sec_field;
+        }
+    }
 
+    /**
+     * Takes the integer code for a result and returns a string for human
+     * consumption
+     *
+     * @param integer $result_code
+     * @return string
+     */
+    protected function _getResultAsString($result_code) {
+        switch ($result_code) {
+            case Zend_Environment_Security_Test::RESULT_ERROR :
+                return 'error';
+                break;
+            case Zend_Environment_Security_Test::RESULT_NOTICE :
+                return 'notice';
+                break;
+            case Zend_Environment_Security_Test::RESULT_NOTRUN :
+                return 'notrun';
+                break;
+            case Zend_Environment_Security_Test::RESULT_OK :
+                return 'ok';
+                break;
+            case Zend_Environment_Security_Test::RESULT_WARN :
+                return 'warning';
+                break;
+        }
 
-	protected function _getResultAsString($result_code) {
-	    switch ($result_code) {
-	        case Zend_Environment_Security_Test::RESULT_ERROR :
-	            return 'error';
-	            break;
-	        case Zend_Environment_Security_Test::RESULT_NOTICE :
-	            return 'notice';
-	            break;
-	        case Zend_Environment_Security_Test::RESULT_NOTRUN :
-	            return 'notrun';
-	            break;
-	        case Zend_Environment_Security_Test::RESULT_OK :
-	            return 'ok';
-	            break;
-	        case Zend_Environment_Security_Test::RESULT_WARN :
-	            return 'warning';
-	            break;
-	    }
-
-	}
+    }
 
 
 }
