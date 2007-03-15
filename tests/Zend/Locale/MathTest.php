@@ -226,7 +226,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             '726.233' => 0,
             '0.239589' => 10,
             '1678730037' => 11,
-            '380074.136825' => 5,
+            '380074.136825' => 4,
             '5.69' => 4,
             '235.532' => 4,
             '0.41770' => -3,
@@ -1649,7 +1649,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             '260.26' => 0,
             '0.242649' => -1,
             '1629568497' => -9,
-            '262573.171415' => 5,
+            '262573.17145' => 4,
             '27.73' => -1,
             '282.471' => -5,
             '0.285776' => 8,
@@ -3655,7 +3655,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             '443.825' => 2,
             '0.230763' => -6,
             '1096029721' => 11,
-            '272402.344025' => 5,
+            '272402.34425' => 5,
             '99.54' => 4,
             '353.632' => 5,
             '0.285236' => -11,
@@ -4512,7 +4512,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             '610.468' => -1,
             '0.122567' => 2,
             '2071388762' => -7,
-            '56055.18115' => 4,
+            '56055.1825' => 3,
             '38.36' => -4,
             '253.223' => 3,
             '0.49607' => 5,
@@ -4999,6 +4999,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             '0.210012' => 10,
             '1640724691' => 10
         );
+        $this->assertEquals(Zend_Locale_Math::round('56055.18115', 4), '56055.1812');
         $this->assertEquals(Zend_Locale_Math::round('3.4'), '3');
         $this->assertEquals(Zend_Locale_Math::round('3.4'), round(3.4));
         $this->assertEquals(Zend_Locale_Math::round('3.5'), '4');
