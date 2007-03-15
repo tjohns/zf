@@ -54,11 +54,11 @@ $index->addDocument($doc);
 
         <para>
             Та же самая процедура используется при обновлении существующего
-            индекса. Единственное отличие состоит в том, что индекс должен быть открыт без
-            второго параметра:
+            индекса. Единственное отличие состоит в том, что вместо метода
+            create() вызывается метод open():
 <!--
-            The same procedure is used to update an existing index. The only difference is that the index should be
-            opened without the second parameter:
+            The same procedure is used to update an existing index. The only difference
+            is that the open() method is called instead of the create() method:
 -->
         </para>
 
@@ -346,6 +346,23 @@ $index->optimize();
                 larger values (&gt; 10) are best for batch
                 index creation, and smaller values (&lt; 10) for indices that
                 are interactively maintained.
+-->
+            </para>
+            <para>
+                <emphasis>MergeFactor</emphasis> является хорошим средством
+                оценки среднего количества сегментов, объединяемых в одном
+                прохождении автоматической оптимизации. Слишком большие значения
+                приводят к созданию большого количества сегментов то того, как
+                они объединятся в один новый. Это может вызвать
+                сообщение об ошибке "failed to open stream: Too many open files".
+                Данное ограничение зависит от операционной системы.
+<!--
+                <emphasis>MergeFactor</emphasis> is a good estimation for average
+                number of segments merged by one auto-optimization pass.
+                Too large values produce large number of segments while they are
+                not merged into new one. It may be a cause of
+                "failed to open stream: Too many open files" error message.
+                This limitation is system dependant.
 -->
             </para>
             <para>
