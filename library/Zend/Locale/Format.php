@@ -295,13 +295,13 @@ class Zend_Locale_Format
             if ((int) $options['precision'] > 0) {
                 $format .= ".";
                 $format = str_pad($format, strlen($format) + $options['precision'], "0");
-                $value = Zend_Locale_Math::round($value, $options['precision']);
+                $value = round($value, $options['precision']);
             }
             if (($rest != '0') and ($rest != '#')) {
                 $format .= $rest;
             }
             if ($options['precision'] == -1) {
-                $value = Zend_Locale_Math::round($value, 0);
+                $value = round($value, 0);
             }
         }
 
@@ -344,12 +344,12 @@ class Zend_Locale_Format
                     $options['precision'] = strlen($options['precision']);
                     $format = substr($format, 0, strpos($format, '.') + 1);
                     $format .= '###';
-                    $value = Zend_Locale_Math::round($value, $options['precision']);
+                    $value = round($value, $options['precision']);
                 } else {
                     $options['precision'] = null;
                 }
             } else {
-                $value = Zend_Locale_Math::round($value, 0);
+                $value = round($value, 0);
                 $options['precision'] = 0;
             }
         }
@@ -373,11 +373,11 @@ class Zend_Locale_Format
         }
 
         // get number parts
-        if (strlen($value) != strlen(Zend_Locale_Math::round($value, 0))) {
+        if (strlen($value) != strlen(round($value, 0))) {
             if ($options['precision'] === null) {
-                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1);
+                $precstr = iconv_substr($value, strlen(round($value, 0)) + 1);
             } else {
-                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1, $options['precision']);
+                $precstr = iconv_substr($value, strlen(round($value, 0)) + 1, $options['precision']);
                 if (iconv_strlen($precstr) < $options['precision']) {
                     $precstr = $precstr . str_pad("0", ($options['precision'] - iconv_strlen($precstr)), "0");
                 }
