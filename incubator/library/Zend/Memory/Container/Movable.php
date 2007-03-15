@@ -60,13 +60,6 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     private $_value;
 
-    /**
-     * Memory manager reference
-     *
-     * @var Zend_Memory_Manager
-     */
-    private $_memManager;
-
     /** Value states */
     const LOADED   = 1;
     const SWAPPED  = 2;
@@ -96,24 +89,12 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
 
     /**
      * Lock object in memory.
-     * If writeLock is true, then object is locked for writing
-     * Otherwise only read lock is obtained.
-     * (Write lock also discards swapped data)
-     *
-     * @param boolean $writeLock
      */
-    public function lock($writeLock = true)
+    public function lock()
     {
         if ( !($this->_state & self::LOADED) ) {
-            /** @todo Load value from a swap */
-
+            $this->_memManager->load($this, $this->_id);
             $this->_state |= self::LOADED;
-        }
-
-        if ($writeLock  && ($this->_state & self::SWAPPED)) {
-            /** @todo Clear swap */
-
-            $this->_state &= ~self::SWAPPED;
         }
 
         $this->_state |= self::LOCKED;
@@ -124,6 +105,7 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function unlock()
     {
+        // Clear LOCKED state bit
         $this->_state &= ~self::LOCKED;
     }
 
@@ -154,8 +136,7 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
         }
 
         if ( !($this->_state & self::LOADED) ) {
-            /** @todo Load value from a swap */
-
+            $this->_memManager->load($this, $this->_id);
             $this->_state |= self::LOADED;
         }
 
@@ -175,14 +156,10 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
             throw new Zend_Memory_Exception('Unknown property: Zend_Memory_container::$' . $property);
         }
 
-        if ($this->_state & self::SWAPPED) {
-            /** @todo Clean up swap */
-
-            $this->_state &= ~self::SWAPPED;
-        }
-
-        $this->_state |= ~self::LOADED;
+        $this->_state = self::LOADED;
         $this->_value = new Zend_Memory_Value($value, $this);
+
+        $this->_memManager->processUpdate($this, $this->_id);
     }
 
 
@@ -196,6 +173,11 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function &getRef()
     {
+        if ( !($this->_state & self::LOADED) ) {
+            $this->_memManager->load($this, $this->_id);
+            $this->_state |= self::LOADED;
+        }
+
         return $this->_value->getRef();
     }
 
@@ -206,10 +188,6 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function touch()
     {
-        if ($this->_state == self::STORED) {
-        }
-        $this->_state = self::MODIFIED;
-
         $this->_memManager->processUpdate($this, $this->_id);
     }
 
@@ -221,11 +199,8 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function processUpdate()
     {
-        if ($this->_state & self::SWAPPED) {
-            /** @todo Clear swap */
-
-            $this->_state &= ~self::SWAPPED;
-        }
+        // Clear SWAPPED state bit
+        $this->_state &= ~self::SWAPPED;
 
         $this->_memManager->processUpdate($this, $this->_id);
     }
@@ -237,10 +212,57 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function startTrace()
     {
-        /** @todo check, that object has correct state */
-        if ($this->_state == self::STORED) {
+        if ( !($this->_state & self::LOADED) ) {
+            $this->_memManager->load($this, $this->_id);
+            $this->_state |= self::LOADED;
         }
+
         $this->_value->startTrace();
+    }
+
+    /**
+     * Set value (used by memory manager when value is loaded)
+     *
+     * @internal
+     */
+    public function setValue($value)
+    {
+        $this->_value = new Zend_Memory_Value($value, $this);
+    }
+
+    /**
+     * Clear value (used by memory manager when value is swapped)
+     *
+     * @internal
+     */
+    public function unloadValue()
+    {
+        // Clear LOADED state bit
+        $this->_state &= ~self::LOADED;
+
+        $this->_value = null;
+    }
+
+    /**
+     * Mark, that object is swapped
+     *
+     * @internal
+     */
+    public function markAsSwapped()
+    {
+        // Clear LOADED state bit
+        $this->_state |= self::LOADED;
+    }
+
+    /**
+     * Check if object is marked as swapped
+     *
+     * @internal
+     * @return boolean
+     */
+    public function isSwapped()
+    {
+        return $this->_state & self::SWAPPED;
     }
 
     /**

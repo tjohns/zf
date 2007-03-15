@@ -117,6 +117,36 @@ class Zend_Memory_Manager
      */
     private $_lastModified = null;
 
+    /**
+     * Unique memory manager id
+     *
+     * @var integer
+     */
+    private $_managerId;
+
+    /**
+     * Tags array, used by backend to categorize stored values
+     *
+     * @var array
+     */
+    private $_tags;
+
+    /**
+     * This function is intended to generate unique id, used by memory manager
+     */
+    private function _generateMemManagerId()
+    {
+        /**
+         * @todo !!!
+         * uniqid() php function doesn't really garantee the id to be unique
+         * it should be changed by something else
+         * (Ex. backend interface should be extended to provide this functionality)
+         */
+        $this->_managerId = uniqid('ZendMemManager', true);
+        $this->_tags = array($this->_managerId);
+        $this->_managerId .= '_';
+    }
+
 
     /**
      * Memory manager constructor
@@ -133,6 +163,7 @@ class Zend_Memory_Manager
         }
 
         $this->_backend = $backend;
+        $this->_generateMemManagerId();
 
         $memoryLimitStr = trim(ini_get('memory_limit'));
         if ($memoryLimitStr != '') {
@@ -154,6 +185,18 @@ class Zend_Memory_Manager
         } // No limit otherwise
 
         $this->_minSize    = 16384;
+    }
+
+    /**
+     * Object destructor
+     *
+     * Clean up backend storage
+     */
+    public function __destruct()
+    {
+        if ($this->_backend !== null) {
+        	$this->_backend->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, $this->_tags);
+        }
     }
 
     /**
@@ -240,7 +283,7 @@ class Zend_Memory_Manager
             return new Zend_Memory_Container_Locked($value);
         }
 
-        // Commit modifications
+        // Commit other objects modifications
         $this->_commit();
 
         $valueObject = new Zend_Memory_Container_Movable($this, $id, $value);
@@ -296,9 +339,15 @@ class Zend_Memory_Manager
             return;
         }
 
+        // Remove just updated object from loaded objects list
+        if( isset($this->_loadedObjects[$id])) {
+            unset($this->_loadedObjects[$id]);
+            $this->_memorySize -= $this->_sizes[$id];
+        }
+
+        // Commit changes of previously modified object if necessary
         $this->_commit();
 
-        //
         $this->_lastModified = $container;
     }
 
@@ -307,9 +356,7 @@ class Zend_Memory_Manager
      */
     private function _commit()
     {
-        $container = $this->_lastModified;
-
-        if ($container === null) {
+        if (($container = $this->_lastModified) === null) {
             return;
         }
 
@@ -317,11 +364,15 @@ class Zend_Memory_Manager
 
         $id = $container->getId();
 
+        // Move object to "loaded objects list"
         $this->_loadedObjects[$id] = $container;
+
+        // Calculate new object size and increase used memory size by this value
+        $this->_memorySize += ($this->_sizes[$id] = strlen($container->getRef()));
+
         $container->startTrace();
 
-        $this->_memorySize += $this->_sizes[$id];
-
+        $this->_swapCheck();
     }
 
     /**
@@ -349,12 +400,13 @@ class Zend_Memory_Manager
                     return;
                 }
             }
+
+            /**
+             * @todo Small memory objects should be moved to another list to improve performance
+             */
         }
 
-        throw new Zend_Memory_Exception("Memory manager can't get enough space. \n"
-                                      . "Memory limit: " . $this->_memoryLimit . ". \n"
-                                      . "Number of non-swappable objects: " . count($this->_loadedObjects) . ". \n"
-                                      . "Minimum size of swappable objects: " . $this->_minSize . ". ");
+        throw new Zend_Memory_Exception('Memory manager can\'t get enough space.');
     }
 
 
@@ -365,18 +417,42 @@ class Zend_Memory_Manager
      *
      * @param Zend_Memory_Container_Movable $container
      * @param integer $id
-     *
      */
     private function _swap(Zend_Memory_Container_Movable $container, $id)
     {
-        /** @todo implementation */
+        if ($container->isLocked()) {
+            return;
+        }
+
+        if (!$container->isSwapped()) {
+            $this->_backend->save($container->getRef(), $this->_managerId . $id, $this->_tags);
+        }
+
+        unset($this->_loadedObjects[$id]);
+        $this->_memorySize -= $this->_sizes[$id];
+
+        $container->markAsSwapped();
+        $container->unloadValue();
     }
 
     /**
      * Load value from swap file.
+     *
+     * @internal
+     * @param Zend_Memory_Container_Movable $container
+     * @param integer $id
      */
-    private function _load($id)
+    public function load(Zend_Memory_Container_Movable $container, $id)
     {
-        /** @todo implementation */
+        $value = $this->_backend->load($this->_managerId . $id, true);
+
+        // Try to swap other objects if necessary
+        // (do not include specified object into check)
+        $this->_memorySize += strlen($value);
+        $this->_swapCheck();
+
+        // Add loaded obect to the end of loaded objects list
+        $container->setValue($value);
+        $this->_loadedObjects[$id] = $container;
     }
 }

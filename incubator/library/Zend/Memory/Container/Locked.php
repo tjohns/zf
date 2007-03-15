@@ -58,13 +58,8 @@ class Zend_Memory_Container_Locked extends Zend_Memory_Container
 
     /**
      * Lock object in memory.
-     * If writeLock is true, then object is locked for writing
-     * Otherwise only read lock is obtained.
-     * (Write lock also discards swapped data)
-     *
-     * @param boolean $writeLock
      */
-    public function lock($writeLock = true)
+    public function lock()
     {
         /* Do nothing */
     }
