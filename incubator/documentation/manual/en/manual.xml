@@ -57,9 +57,7 @@
 
     <chapter id="zend.service">
         <title>Zend_Service</title>
-        <!--
         <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
-        -->
     </chapter>
 
     <!--
