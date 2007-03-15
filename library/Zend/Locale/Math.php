@@ -35,7 +35,7 @@
 class Zend_Locale_Math
 {
     // support unit testing without using bcmath functions 
-    protected static $_bcmathDisabled = false;
+    public static $_bcmathDisabled = false;
 
     public static $add   = 'bcadd';
     public static $sub   = 'bcsub';
@@ -52,10 +52,62 @@ class Zend_Locale_Math
         return self::$_bcmathDisabled;
     }
 
-    public static function round($op1, $op2 = 0) {
-        $value = call_user_func(Zend_Locale_Math::$sub, $op1, '0', $op2);
-        $value = call_user_func(Zend_Locale_Math::$sub, $op1, $value, $op2);
-        return   call_user_func(Zend_Locale_Math::$sub, $op1, $value, $op2);
+    /**
+     * Surprisingly, the results of this implementation of round()
+     * prove better than the native PHP round(). For example, try:
+     *   round(639.795, 2);
+     *   round(267.835, 2);
+     *   round(0.302515, 5);
+     *   round(0.36665, 4);
+     * then try:
+     *   Zend_Locale_Math::round('639.795', 2);
+     */
+    public static function round($op1, $precision = 0)
+    {
+        if (self::$_bcmathDisabled) {
+            return round($op1, $precision);
+        }
+        $op1 = trim($op1);
+        $length = strlen($op1);
+        if (($decPos = strpos($op1, '.')) === false) {
+            $op1 .= '.0';
+            $decPos = $length;
+            $length += 2;
+        }
+        if ($precision < 0 && abs($precision) > $decPos) {
+            return '0';
+        }
+        $digitsBeforeDot = $length - ($decPos + 1);
+        if ($precision >= ($length - ($decPos + 1))) {
+            return $op1;
+        }
+        if ($precision === 0) {
+            $triggerPos = 1;
+            $roundPos   = -1;
+        } elseif ($precision > 0) {
+            $triggerPos = $precision + 1;
+            $roundPos   = $precision;
+        } else {
+            $triggerPos = $precision;
+            $roundPos   = $precision -1;
+        }
+        $triggerDigit = $op1[$triggerPos + $decPos];
+        if ($precision < 0) {
+            // zero fill digits to the left of the decimal place
+            $op1 = substr($op1, 0, $decPos + $precision) . str_pad('', abs($precision), '0');
+        }
+        if ($triggerDigit >= '5') {
+            if ($roundPos + $decPos == -1) {
+                return str_pad('1', $decPos + 1, '0');
+            }
+            $roundUp = str_pad('', $length, '0');
+            $roundUp[$decPos] = '.';
+            $roundUp[$roundPos + $decPos] = '1';
+            return bcadd($op1, $roundUp, $precision);
+        } elseif ($precision >= 0) {
+            return substr($op1, 0, $decPos + ($precision ? $precision + 1: 0));
+        }
+        return $op1;
     }
 }
 
