@@ -161,14 +161,14 @@
         <title>Front Controller</title>
 
         <para>
-            Zend_Controller_Front implements a Front Controller. Additionally,
-            it is a singleton class, meaning only one instance of it may be
-            available at any given point.
+            Zend_Controller_Front implementiert einen Front Controller. Zusätzlich ist sie eine
+            Singleton Klasse, was bedeutet, dass nur einen Instanz von ihr zu jeder Zeit 
+            verfügbar ist.
         </para>
 
         <para>
-            To subclass it, at the very minimum you will need to override the
-            <code>getInstance()</code> method:
+            Um von ihr abzuleiten, muss man minimal nur die 
+            <code>getInstance()</code> Methode überschreiben:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -186,16 +186,14 @@ class My_Controller_Front extends Zend_Controller_Front
 ]]></programlisting>
 
         <para>
-            Overriding the getInstance() method ensures that subsequent calls to
-            <code>Zend_Controller_Front::getInstance()</code> will return an
-            instance of your new subclass instead of a Zend_Controller_Front
-            instance -- this is particularly useful for some of the alternate
-            routers and view helpers. 
+            Das Überschrieben der getInstance() Methode stellt sicher, dass nachfolgende Aufrufe von
+            <code>Zend_Controller_Front::getInstance()</code> einen Instanz der neuen Unterklasse
+            statt der Zend_Controller_Front Instant zurückgeben -- dies ist besonders nützlich für
+            einige der alternativen Router und View Helfer. 
         </para>
 
         <para>
-            In addition to getInstance(), there are many other methods you may
-            override:
+            Zusätzlich zu getInstance() können viele andere Methoden überschrieben werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -488,18 +486,16 @@ class My_Controller_Front extends Zend_Controller_Front
 ]]></programlisting>
 
         <para>
-            The purpose of the front controller is to setup the request
-            environment, route the incoming request, and then dispatch any
-            discovered actions. Finally, it aggregates any responses and returns
-            them.
+            Der Zweck des Front Controller ist es, die Anfrageumgebung aufzusetzen, die eingehende
+            Anfrage zu verarbeiten und dann alle erforderlichen Aktionen abzuarbeiten. 
+            Schlußendlich aggregiert es alle Antworten und Rückgaben.
         </para>
 
         <para>
-            The main reasons to extend the front controller would be to change
-            the logic for one of the accessor methods (for instance, to load a
-            different default router or dispatcher, or to specify different
-            logic for how controller directories are handled), or to change how
-            routing and dispatching occur.
+            Die Hauptgründe für eine Erweiterung des Front Controllers könnten das Verändern der 
+            Logik für eine der Zugriffsmethoden (zum Beispiel, um einen anderen Standardrouter oder 
+            Dispatcher zu laden oder um eine andere Logik anzugeben, wie Controller Verzeichnisse
+            gehandhabt werden) oder das Ändern des Routings oder der Verarbeitung sein.
         </para>
     </sect2>
 

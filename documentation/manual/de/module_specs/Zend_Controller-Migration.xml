@@ -8,11 +8,10 @@
     </para>
 
     <sect2 id="zend.controller.migration.fromzerosix">
-        <title>Migrating from 0.6.0 to 0.8.0</title>
+        <title>Migration von 0.6.0 nach 0.8.0</title>
 
         <para>
-            Per previous changes, the most basic usage of the MVC components
-            remains the same:
+            Durch bisherige Änderungen bleibt die wesentliche Verwendung der MVC Komponenten gleich:
         </para>
         
         <programlisting role="php"><![CDATA[
@@ -21,58 +20,55 @@ Zend_Controller_Front::run('/path/to/controllers');
 ]]></programlisting>
 
         <para>
-            However, the directory structure underwent an overhaul, several
-            components were removed, and several others either renamed or added.
-            Changes include:
+            Dennoch wurde die Verzeichnisstruktur gründliche überarbeitet, verschiedene Komponenten
+            wurden entfernt und mehrere andere umbenannt und hinzugefügt. Die Änderungen beinhalten:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router</code> was removed in favor of
-                    the rewrite router.
+                    <code>Zend_Controller_Router</code> wurde entfernt für den Rewrite Router 
+                    entfernt.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_RewriteRouter</code> was renamed to
-                    <code>Zend_Controller_Router_Rewrite</code>, and promoted to
-                    the standard router shipped with the framework;
-                    <code>Zend_Controller_Front</code> will use it by default if
-                    no other router is supplied.
+                    <code>Zend_Controller_RewriteRouter</code> wurde in 
+                    <code>Zend_Controller_Router_Rewrite</code> umbenannt und zum Standard Router 
+                    befördert, der mit dem Framework ausgeliefert wird; 
+                    <code>Zend_Controller_Front</code> wird ihn als Standard verwenden, wenn kein
+                    anderer Router übergeben wird.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    A new route class for use with the rewrite router was
-                    introduced,
-                    <code>Zend_Controller_Router_Route_Module</code>; it covers
-                    the default route used by the MVC, and has support for <link
-                        linkend="zend.controller.modular">controller
-                        modules</link>.
+                    Eine neue Route Klasse für die Verwendung mit dem Rewrite Router wurde 
+                    eingeführt: <code>Zend_Controller_Router_Route_Module</code>; sie deckt die
+                    Standardrouten ab, die vom MVC verwendet werden und bietet die Unterstützung
+                    für <link linkend="zend.controller.modular">Controller Module</link>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_StaticRoute</code> was renamed
-                    to <code>Zend_Controller_Router_Route_Static</code>.
+                    <code>Zend_Controller_Router_StaticRoute</code> wurde umbenannt in 
+                    <code>Zend_Controller_Router_Route_Static</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher</code> was renamed
+                    <code>Zend_Controller_Dispatcher</code> wurde umbenannt in
                     <code>Zend_Controller_Dispatcher_Standard</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::_forward()</code>'s arguments
-                    have changed. The signature is now:
+                    <code>Zend_Controller_Action::_forward()</code>'s Argumente wurden geändert. 
+                    Die Signatur ist nun:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -80,14 +76,13 @@ final protected function _forward($action, $controller = null, $module = null, a
 ]]></programlisting>
 
                 <para>
-                    <code>$action</code> is always required; if no controller is
-                    specified, an action in the current controller is assumed.
-                    <code>$module</code> is always ignored unless
-                    <code>$controller</code> is specified. Finally, any
-                    <code>$params</code> provided will be appended to the
-                    request object. If you do not require the controller or
-                    module, but still need to pass parameters, simply specify
-                    null for those values.
+                    <code>$action</code> wird immer benötigt; wenn kein Controller angegeben wird,
+                    wird eine Action im aktuellen Controller angenommen. <code>$module</code> wird
+                    immer ignoriert, es sei denn <code>$controller</code> wird angegeben. 
+                    Schließlich werden alle übergebenen Parameter <code>$params</code> an das
+                    Request Objekt angehängt. Wenn man keinen Controller oder kein Modul angeben, 
+                    aber dennoch Parameter übergeben möchte, gibt man einfach null für diese Werte
+                    an.
                 </para>
             </listitem>
         </itemizedlist>
