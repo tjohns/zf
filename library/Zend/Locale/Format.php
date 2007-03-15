@@ -108,7 +108,9 @@ class Zend_Locale_Format
         }
         foreach ($options as $name => $value) {
             $name  = strtolower($name);
-            $value = strtolower($value);
+            if ($name !== 'locale') {
+                $value = strtolower($value);
+            }
 
             if (array_key_exists($name, self::$_Options)) {
                 switch($name) {
