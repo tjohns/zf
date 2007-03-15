@@ -44,16 +44,12 @@ class Zend_Memory_Value implements ArrayAccess {
      */
     private $_container;
 
-    /** Value states */
-    const STORED   = 0;
-    const MODIFIED = 1;
-
     /**
-     * State
+     * Boolean flag which signals to trace value modifications
      *
-     * @var integer
+     * @var boolean
      */
-    private $_state;
+    private $_trace;
 
 
     /**
@@ -62,11 +58,21 @@ class Zend_Memory_Value implements ArrayAccess {
      * @param string $value
      * @param Zend_Memory_Container_Movable $container
      */
-    public function __construct($value = '', Zend_Memory_Container_Movable $container)
+    public function __construct($value, Zend_Memory_Container_Movable $container)
     {
-        $this->_value     = (string)$value;
         $this->_container = $container;
-        $this->_state     = self::MODIFIED;
+
+        $this->_value = (string)$value;
+
+        /**
+         * Object is marked as just modified by memory manager
+         * So we don't need to trace followed object modifications and
+         * object is processed (and marked as traced) when another
+         * memory object is modified.
+         *
+         * It reduces overall numberr of calls necessary to modification trace
+         */
+        $this->_trace = false;
     }
 
 
@@ -105,8 +111,8 @@ class Zend_Memory_Value implements ArrayAccess {
     {
         $this->_value[$offset] = $char;
 
-        if ($this->_state == self::STORED) {
-            $this->_state = self::MODIFIED;
+        if ($this->_trace) {
+            $this->_trace = false;
             $this->_container->processUpdate();
         }
     }
@@ -121,8 +127,8 @@ class Zend_Memory_Value implements ArrayAccess {
     {
         unset($this->_value[$offset]);
 
-        if ($this->_state == self::STORED) {
-            $this->_state = self::MODIFIED;
+        if ($this->_trace) {
+            $this->_trace = false;
             $this->_container->processUpdate();
         }
     }
@@ -145,6 +151,7 @@ class Zend_Memory_Value implements ArrayAccess {
      * _Must_ be used for value access before PHP v 5.2
      * or _may_ be used for performance considerations
      *
+     * @internal
      * @return string
      */
     public function &getRef()
@@ -153,26 +160,15 @@ class Zend_Memory_Value implements ArrayAccess {
     }
 
     /**
-     * Signal, that value is updated by external code.
+     * Start modifications trace
      *
-     * Should be used together with getRef()
-     */
-    public function touch()
-    {
-        if ($this->_state == self::STORED) {
-            $this->_state = self::MODIFIED;
-            $this->_container->processUpdate();
-        }
-    }
-
-
-    /**
-     * Mark value as stored.
+     * _Must_ be used for value access before PHP v 5.2
+     * or _may_ be used for performance considerations
      *
-     * This turns on value update catching
+     * @internal
      */
-    public function markStored()
+    public function startTrace()
     {
-        $this->_state = self::STORED;
+        $this->_trace = true;
     }
 }

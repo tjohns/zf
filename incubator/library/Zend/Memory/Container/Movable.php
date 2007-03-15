@@ -40,18 +40,25 @@ require_once 'Zend/Memory/Value.php';
  */
 class Zend_Memory_Container_Movable extends Zend_Memory_Container {
     /**
+     * Internal object Id
+     *
+     * @var integer
+     */
+    protected $_id;
+
+    /**
+     * Memory manager reference
+     *
+     * @var Zend_Memory_Manager
+     */
+    private $_memManager;
+
+    /**
      * Value object
      *
      * @var Zend_Memory_Value
      */
     private $_value;
-
-    /**
-     * Value size
-     *
-     * @var integer
-     */
-    private $_size;
 
     /**
      * Memory manager reference
@@ -81,9 +88,8 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
      */
     public function __construct(Zend_Memory_Manager $memoryManager, $id, $value)
     {
-        parent::__construct($memoryManager, $id);
-
-        $this->_size  = strlen($value);
+        $this->_memManager = $memoryManager;
+        $this->_id    = $id;
         $this->_state = self::LOADED;
         $this->_value = new Zend_Memory_Value($value, $this);
     }
@@ -175,7 +181,6 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
             $this->_state &= ~self::SWAPPED;
         }
 
-        $this->_size  = strlen($value);
         $this->_state |= ~self::LOADED;
         $this->_value = new Zend_Memory_Value($value, $this);
     }
@@ -202,16 +207,17 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
     public function touch()
     {
         if ($this->_state == self::STORED) {
-            $this->_state = self::MODIFIED;
-            $this->_container->processUpdate();
         }
+        $this->_state = self::MODIFIED;
+
+        $this->_memManager->processUpdate($this, $this->_id);
     }
 
     /**
-     * Zend_Memory_Container interface
-     *
      * Process container value update.
      * Must be called only by value object
+     *
+     * @internal
      */
     public function processUpdate()
     {
@@ -221,6 +227,44 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
             $this->_state &= ~self::SWAPPED;
         }
 
-        $this->_size = strlen($this->_value->getRef());
+        $this->_memManager->processUpdate($this, $this->_id);
+    }
+
+    /**
+     * Start modifications trace
+     *
+     * @internal
+     */
+    public function startTrace()
+    {
+        /** @todo check, that object has correct state */
+        if ($this->_state == self::STORED) {
+        }
+        $this->_value->startTrace();
+    }
+
+    /**
+     * Get object id
+     *
+     * @internal
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+    /**
+     * Destroy memory container and remove it from memory manager list
+     *
+     * @internal
+     */
+    public function destroy()
+    {
+        /**
+         * We don't clean up swap because of performance considerations
+         * Cleaning is performed by Memory Manager destructor
+         */
+
+        $this->_memManager->unlink($this, $this->_id);
     }
 }

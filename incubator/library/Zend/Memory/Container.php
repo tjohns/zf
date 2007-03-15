@@ -34,42 +34,4 @@ require_once 'Zend/Memory/Container/Interface.php';
  */
 abstract class Zend_Memory_Container implements Zend_Memory_Container_Interface
 {
-    /**
-     * Internal object Id
-     *
-     * @var integer
-     */
-    protected $_id;
-
-    /**
-     * Memory manager reference
-     *
-     * @var Zend_Memory_Manager
-     */
-    private $_memManager;
-
-    /**
-     * Object constructor
-     *
-     * @param Zend_Memory_Manager $memoryManager
-     * @param integer $id
-     */
-    public function __construct($memoryManager, $id)
-    {
-        $this->_memManager = $memoryManager;
-        $this->_id    = $id;
-    }
-
-    /**
-     * Destroy memory container and remove it from memory manager list
-     */
-    public function destroy()
-    {
-        /**
-         * We don't clean up swap because of performance considerations
-         * Cleaning is performed by Memory Manager destructor
-         */
-
-        $this->_memManager->unlink($this->_id);
-    }
 }

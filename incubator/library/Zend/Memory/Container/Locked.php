@@ -51,9 +51,8 @@ class Zend_Memory_Container_Locked extends Zend_Memory_Container
      * @param integer $id
      * @param string $value
      */
-    public function __construct(Zend_Memory_Manager $memoryManager, $id, $value)
+    public function __construct($value)
     {
-        parent::__construct($memoryManager, $id);
         $this->value = $value;
     }
 

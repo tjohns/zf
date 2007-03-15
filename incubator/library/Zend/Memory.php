@@ -51,6 +51,10 @@ class Zend_Memory
      */
     static public function factory($backend, $backendOptions = array())
     {
+        if (strcasecmp($backend, 'none') == 0) {
+            return new Zend_Memory_Manager();
+        }
+
         // because lowercase will fail
         $backend = @ucfirst(strtolower($backend));
 
