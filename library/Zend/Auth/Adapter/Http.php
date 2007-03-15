@@ -547,6 +547,12 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
             );
         }
 
+        // See ZF-1052. This code was a bit too unforgiving of invalid 
+        // usernames. Now, if the username is bad, we re-challenge the client.
+        if ('::invalid::' == $data['username']) {
+            return $this->_challengeClient();
+        }
+
         // Verify that the client sent back the same nonce
         if ($this->_calcNonce() != $data['nonce']) {
             return $this->_challengeClient();
@@ -659,12 +665,14 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         $temp = null;
         $data = array();
 
+        // See ZF-1052. Detect invalid usernames instead of just returning a 
+        // 400 code.
         $ret = preg_match('/username="([^"]+)"/', $header, $temp);
         if (!$ret || empty($temp[1])) {
-            return false;
+            $data['username'] = '::invalid::';
         }
         if (!ctype_print($temp[1]) || strpos($temp[1], ':') !== false) {
-            return false;
+            $data['username'] = '::invalid::';
         } else {
             $data['username'] = $temp[1];
         }
