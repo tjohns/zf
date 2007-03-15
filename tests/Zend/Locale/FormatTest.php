@@ -39,6 +39,20 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 {
+
+    /**
+     * teardown / cleanup
+     */
+    public function tearDown()
+    {
+        // I'm anticipating possible platform inconsistencies, so I'm leaving some debug comments for now.
+        //echo '<<<', setlocale(LC_NUMERIC, '0'); // show locale before changing
+        setlocale(LC_ALL, 'C'); // attempt to restore global setting i.e. test teardown
+        //echo '>>>', setlocale(LC_NUMERIC, '0'); // show locale after changing
+        //echo "\n";
+    }
+
+
     /**
      * test getNumber
      * expected integer
@@ -721,5 +735,28 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('r'), 'r');
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('U'), 'U');
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('His'), 'HHmmss');
+    }
+
+
+    /**
+     * Test toFloat()/toNumber() when a different setlocale() is in effect,
+     * where the locale does not use '.' as the decimal place separator.
+     * expected string
+     */
+    public function testToFloatSetlocale()
+    {
+        setlocale(LC_ALL, 'fr_FR@euro'); // test setup
+
+        //var_dump( setlocale(LC_NUMERIC, '0')); // this is the specific setting of interest
+        $locale_fr = new Zend_Locale('fr_FR');
+        $locale_en = new Zend_Locale('en_US');
+        $params_fr = array('precision' => 2, 'locale' => $locale_fr);
+        $params_en = array('precision' => 2, 'locale' => $locale_en);
+        $myFloat = 1234.5;
+        $test1 = Zend_Locale_Format::toFloat($myFloat, $params_fr);
+        $test2 = Zend_Locale_Format::toFloat($myFloat, $params_en);
+        $this->assertEquals($test1, "1 234,50");
+        $this->assertEquals($test2, "1,234.50");
+        // placing tearDown here (i.e. restoring locale) won't work, if test already failed/aborted above.
     }
 }
