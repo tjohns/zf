@@ -12,7 +12,7 @@
     <note>
         <title>Séparateur de clé</title>
         <para>
-            Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant la clé de $config "nestSeparator"en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
+            Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant la clé de $config "nestSeparator" en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';

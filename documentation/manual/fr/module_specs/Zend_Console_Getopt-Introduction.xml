@@ -1,5 +1,5 @@
 ﻿<sect1 id="zend.console.getopt.introduction">
-    <title>Introduction to Getopt</title>
+    <title>Introduction à Getopt</title>
     <para>
         La classe <code>Zend_Console_Getopt</code> aide les applications lancées en ligne de commande à analyser les options et arguments.
     </para>

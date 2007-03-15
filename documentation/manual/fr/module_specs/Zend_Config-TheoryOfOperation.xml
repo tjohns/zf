@@ -10,7 +10,7 @@
         Par défaut, les données de configuration fournies par <code>Zend_Config</code> ne sont pas modifiables (lecture seule), et une affectation (par exemple, <code><![CDATA[$config->database->host = 'example.com']]></code>) lèvera une exception. Ce comportement par défaut peut cependant être surchargé par le constructeur pour permettre la modification des valeurs de données.
         <note>
             <para>
-                Il est important de ne pas confondre des modifications en cours de script avec l'enregistrement des données de configuration dans le support de stockage spécifique. Les outils pour créer et modifier des données de configuration pour différents supports de stockage ne concerne pas <code>Zend_Config</code>. Les solutions tiers open-source sont facilement disponibles afin des données créer et/ou de modifier les données de configuration pour différents supports de stockage.
+                Il est important de ne pas confondre des modifications en cours de script avec l'enregistrement des données de configuration dans le support de stockage spécifique. Les outils pour créer et modifier des données de configuration pour différents supports de stockage ne concerne pas <code>Zend_Config</code>. Les solutions tiers open-source sont facilement disponibles afin de créer et/ou de modifier les données de configuration pour différents supports de stockage.
             </para>
         </note>
     </para>

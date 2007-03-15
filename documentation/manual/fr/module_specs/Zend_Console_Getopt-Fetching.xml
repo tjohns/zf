@@ -13,7 +13,7 @@
             Si l'utilisateur a donné des options invalides sur la ligne de commande, la fonction d'analyse syntaxique lève une <code>Zend_Console_Getopt_Exception</code>. Vous devrez récupérer cette exception dans votre code d'application. Vous pouvez utiliser la méthode <code>parse()</code> pour forcer l'objet à analyser les arguments. C'est utile parce que vous pouvez invoquer <code>parse()</code> dans un bloc <code>try</code>. S'il passe, vous pouvez être sûrs que l'analyse syntaxique ne lèvera pas d'exception de nouveau. L'exception est lancée via une méthode personnalisée <code>getUsageMessage()</code>, qui retourne comme une chaîne de caractère l'ensemble formaté des messages d'utilisation pour toutes les options déclarées.
         </para>
         <example id="zend.console.getopt.fetching.exceptions.example">
-            <title>Récuperer une exception Getopt</title>
+            <title>Récupérer une exception Getopt</title>
             <programlisting role="php"><![CDATA[<?php
 try {
     $opts = new Zend_Console_Getopt('abp:');
@@ -110,7 +110,7 @@ $p_parameter = $opts->p; // null si non fourni
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.remainingargs">
-        <title>Extraction les arguments sans option</title>
+        <title>Extraction des arguments sans option</title>
         <para>
             Après que les arguments d'option et ainsi que les paramètres de la ligne de commande ont été analysés , il peut exister des arguments additionnels restants. Vous pouvez interroger ces arguments en utilisant la méthode de <code>getRemainingArgs()</code>. Cette méthode renvoie une tableau de chaîne qui ne fait partie d'aucune option.
         </para>
