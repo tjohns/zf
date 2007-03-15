@@ -71,7 +71,7 @@
 
     <sect2 id="zend.auth.adapter.digest.identity">
 
-        <title>Identity</title>
+        <title>身份（Identity）</title>
 
         <para>
             数字认证返回一个<code>Zend_Auth_Result</code> 对象，它由包含<code>realm</code>和<code>username</code>健值的数组的身份形成。在<code>authenticate()</code>被调用之前，分别设置和这些健值关联的数组值为相符的值。
