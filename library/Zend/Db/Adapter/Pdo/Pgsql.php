@@ -193,13 +193,13 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      * @param  string $primaryKey  primary key in $tableName need for some PDO drivers
      * @return integer
      */
-    public function lastInsertId($tableName = null, $primaryKey = null)
+    public function lastInsertId($tableName = null, $primaryKey = 'id')
     {
         if (!$tableName) {
             throw new Zend_Db_Adapter_Exception("Sequence name must be specified");
         }
         $this->_connect();
-        $sequenceName = $tableName . '_seq';
+        $sequenceName = "{$tableName}_{$primaryKey}_seq";
         return $this->_connection->lastInsertId($sequenceName);
     }
 
