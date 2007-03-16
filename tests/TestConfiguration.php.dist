@@ -15,6 +15,12 @@
  */
 
 /**
+ * Zend_Auth_Adapter_DbTable tests
+ */
+define('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED', false);
+define('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE', ':memory:');
+
+/**
  * Zend_Cache
  *
  * TESTS_ZEND_CACHE_SQLITE_ENABLED    => sqlite extension has to be enabled

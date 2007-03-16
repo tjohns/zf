@@ -40,6 +40,12 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
+ * @see Zend_Auth_Adapter_DbTable_AllTests
+ */
+require_once 'Zend/Auth/Adapter/DbTable/AllTests.php';
+
+
+/**
  * @see Zend_Auth_Adapter_DigestTest
  */
 require_once 'Zend/Auth/Adapter/DigestTest.php';
@@ -79,6 +85,7 @@ class Zend_Auth_Adapter_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth Adapters');
 
+        $suite->addTest(Zend_Auth_Adapter_DbTable_AllTests::suite());
         $suite->addTestSuite('Zend_Auth_Adapter_DigestTest');
         $suite->addTest(Zend_Auth_Adapter_Http_AllTests::suite());
 

@@ -15,12 +15,6 @@
  */
 
 /**
- * Zend_Auth_Adapter_DbTable tests
- */
-define('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED', false);
-define('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE', ':memory:');
-
-/**
  * Zend_Rest_Client test
  *
  * Before enabling these tests, you must get relevant API keys
