@@ -42,7 +42,7 @@ class Zend_Validate_Hostname_De implements Zend_Validate_Hostname_Interface
      * @see http://www.denic.de/en/domains/idns/liste.html Germany (.DE) alllowed characters
      * @return string
      */
-    public function getCharacters()
+    static function getCharacters()
     {
         return  '\x{00E1}\x{00E0}\x{0103}\x{00E2}\x{00E5}\x{00E4}\x{00E3}\x{0105}\x{0101}\x{00E6}\x{0107}' . 
                 '\x{0109}\x{010D}\x{010B}\x{00E7}\x{010F}\x{0111}\x{00E9}\x{00E8}\x{0115}\x{00EA}\x{011B}' .

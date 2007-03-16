@@ -21,10 +21,6 @@
  * @version    $Id$
  */
 
-/* Test settings for SRJ PC Unit Tests */
-class HostnameTest extends Zend_Validate_HostnameTest {};
-set_include_path(get_include_path().PATH_SEPARATOR.'../../../library');
-/* END test settings */
 
 /**
  * @see Zend_Validate_Hostname

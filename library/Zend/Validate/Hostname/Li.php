@@ -42,7 +42,7 @@ class Zend_Validate_Hostname_Li implements Zend_Validate_Hostname_Interface
      * @see https://nic.switch.ch/reg/ocView.action?res=EF6GW2JBPVTG67DLNIQXU234MN6SC33JNQQGI7L6#anhang1 Liechtenstein (.LI)
      * @return string
      */
-    public function getCharacters()
+    static function getCharacters()
     {
         return '\x{00EO}-\x{00F6}\x{00F8}-\x{00FF}\x{0153}';
     }

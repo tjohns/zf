@@ -47,6 +47,6 @@ interface Zend_Validate_Hostname_Interface
      * @see http://www.columbia.edu/kermit/utf8-t1.html UTF-8 characters
      * @return string
      */
-    public function getCharacters();
+    static function getCharacters();
     
 }

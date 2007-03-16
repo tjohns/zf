@@ -21,10 +21,6 @@
  * @version    $Id$
  */
 
-/* Test settings for SRJ PC Unit Tests */
-class EmailAddressTest extends Zend_Validate_EmailAddressTest {};
-set_include_path(get_include_path().PATH_SEPARATOR.'../../../library');
-/* END test settings */
 
 /**
  * @see Zend_Validate_EmailAddress
