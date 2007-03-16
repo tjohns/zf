@@ -1,6 +1,136 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.9.0 / 16-Mar-2007=
+- Zend_Acl
+    ZF-950  Unclear explanation of multiple inheritance between Roles
+- Zend_Auth
+    ZF-822  New Auth adapter for HTTP Authentication
+    ZF-983  New Zend_Auth database table adapter
+    ZF-1052 Zend_Auth_Adapter_Http and Digest Auth
+- Zend_Config
+    ZF-941  Zend_Config bad example
+    ZF-739  Ability to configure LevelKey character or string
+    ZF-1019 Zend_Config and numeric keys
+- Zend_Console_Getopt
+    ZF-843  Notice in Getopt when called with invalid key
+- Zend_Controller
+    ZF-970  Small bug in logic of Zend_Controller_Router_Route::assemble()
+    ZF-1014 Move route config loading mechanisms to route themselves
+    ZF-1015 Single parameter resetting in Zend_Controller_Router_Route
+    ZF-1026 Zend_Controller unit tests post Notices
+- Zend_Date & Zend_Locale
+    ZF-779  Adding a year in a leap year only adds 365 days
+    ZF-908  Consistency of character format code used for minutes and months
+    ZF-926  Zend_Date_DateObject::date() - 'D' is off by 1 day
+    ZF-932  Enable Zend_Date / Zend_TimeSync to interoperate
+    ZF-963  Parse error: syntax error, unexpected '{'
+    ZF-966  Notices when running Unit Tests
+    ZF-968  Checking for constant exist in __construct()
+    ZF-982  get() inconsistent, fails to accept ISO formats
+    ZF-986  Zend_Date_DateObject and date_default_timezone_get/set()
+    ZF-999  usePhpDateFormat() - str_replace() does not work as expected
+    ZF-1000 Zend_Date::usePhpDateFormat() <=> Zend_Locale_Format::usePhpDateFormat()
+    ZF-1003 testCreationDefaultFormat, testCreationDefaultFormatConsistency failing
+    ZF-1042 Zend_Date incorrectly returns day of week after 2038
+- Zend_Db
+    ZF-139  Insert/update do not distinguish strings and SQL expressions
+    ZF-942  Pdo_Pgsql: lastInsertId cannot find sequence 
+- Zend_Db_Adapter_Mysqli
+    ZF-381  Mysqli: Zend_Db adapter implementation
+    ZF-424  Mysqli: prepare() does not return same object as other adapters
+    ZF-587  Mysqli: fetchAll function triggers E_NOTICE
+    ZF-591  Mysqli: "Call to undefined method mysqli_result::fetchAll()"
+    ZF-813  Mysqli: new assignment by reference
+    ZF-814  Mysqli: fetchAll signature does not fit parent class
+    ZF-972  Mysqli: describeTable() does not match other adapters
+    ZF-973  Mysqli: execute() method does not support input parameters
+    ZF-975  Mysqli: use mysqli_affected_rows
+    ZF-976  Mysqli: close result set on error or end of data
+    ZF-977  Mysqli: create new exception classes
+- Zend_Db_Select
+    ZF-867  Oracle: Zend_Db_Select->order() incorrectly forces ASC order
+    ZF-953  Improve quoting of schema.table and table.column identifiers
+    ZF-1013 Proposal for column aliases in Zend_Db_Select
+    ZF-1043 Parenthesize WHERE clause to make precedence more predictable
+- Zend_Db_Table
+    ZF-1    Quote SQL identifiers
+    ZF-21   Zend_Db_Table::find() - return values have inconsistent type
+    ZF-38   Zend_Db_Table should allow custom Row objects
+    ZF-45   Zend_Db_Table should return FALSE for no resulting rows
+    ZF-180  Zend_Db_Table_Row: __get function maps incorrectly to _data
+    ZF-190  Make Zend_Db_Rowset, Zend_Db_Row serialisable
+    ZF-445  Name Filter: Column Names in camelCaps not Accessible?
+    ZF-554  Inefficient instantiation of Zend_Db_Inflector in Zend_Db_Table
+    ZF-557  Unexpected behaviour in Zend_Db_Table->find()
+    ZF-619  Zend_Db_Table_Row::toArray() do not camelize the field names
+    ZF-627  Schema qualified name will not work with Zend_Db_Table
+    ZF-773  Zend_Db_Table_Row needs delete() method
+    ZF-956  Support Zend_Db_Expr in Zend_Db_Table_Row
+    ZF-962  Zend_Db_Table::insert() has wrong param in docblock
+    ZF-988  fetchAll ORDER BY clause no longer working
+    ZF-1046 Failure to initialize arrays in Zend_Db_Table::find()
+- Zend_Debug, Zend_Loader, Zend_Registry, Zend_Version
+    ZF-1029 Refactor Zend.php 
+    ZF-937  Add interface awareness to Zend::loadClass()
+    ZF-958  ZF directory structure is incompatible with use of svn:externals
+    ZF-960  Assigning empty values causes Zend_Registry to throw exception
+    ZF-1030 Zend_Register::get() fails without an argument
+- Zend_Feed
+    ZF-875  Produce a RSS/Atom feed with Zend_Feed
+- Zend_Filter
+    ZF-1007 Remove items @deprecated with 0.8.0
+    ZF-1010 Fatal error: Call to undefined method Zend_Filter::ishostname()
+    ZF-1028 Zend_Filter unit test fails on Windows
+- Zend_Gdata
+    ZF-921  Refactor Gdata unit tests to skip live tests by default
+- Zend_Http_Client
+    ZF-930  Zend_Http_Client::request mishandles relative paths on Windows
+- Zend_Locale
+    ZF-880  getDate() / _parseDate() automatically process abbreviated month names, even when not selected
+    ZF-948  New function getCountryList
+    ZF-959  Simplification for Zend_Locale
+    ZF-1054 Zend_Locale_Math - new round function yields incorrect results
+- Zend_Mail
+    ZF-459  not space between sendername to mailaddress
+    ZF-927  Zend_Mail strips down empty newlines in body message
+    ZF-928  Zend_Mail mixes To: and Bcc: headers on multiple Bcc
+    ZF-989  Duplicate To: headers
+    ZF-993  Zend_Mail_Transport_Sendmail function return-path with option -f
+    ZF-1053 Zend_Mail_Transport_Smtp does not include Zend_Loader
+- Zend_Pdf
+    ZF-472  Zend_Pdf docs/demo creates race condition
+    ZF-502  Error while rendering loaded pdf
+    ZF-509  [Coding Standard] Class names do not match coding standard
+    ZF-585  Nesting level too deep - recursive dependency
+- Zend_Search_Lucene
+    ZF-96   Implement Search Highlighting
+    ZF-295  Implement score normalisation
+    ZF-626  Exception when adding document using static variables
+    ZF-693  Using unoptimized indexing database damages storage
+    ZF-943  Java examples are no longer necessary. 
+    ZF-1002 Document deleting/updating problem
+- Zend_Server_Reflection
+    ZF-1018 support more than one whitespace after @phpdoc attribute
+- Zend_Session
+    ZF-796  Usage of Zend_Session and Zend_Session_Core are not clear enough
+    ZF-949  Fixes for Example: Simplified access of authorization ids
+- Zend_Translate
+    Component moved from incubator to core.
+    Storage adapters for CSV, XLIFF, TMX, Gettext, and Array
+    ZF-929  Test errors and failures in Zend_Translate
+- Zend_Validate
+    ZF-42   Zend_Validate::isEmail() implementation 
+    ZF-881  Zend_Validate_Hostname - UTF-8 hostnames valid?
+    ZF-1059 Zend_Validate_HostnameTest does not pass strict compliance
+- Zend_View
+    ZF-995  Zend_View property overloading raises notices 
+- Zend_XmlRpc_Client & Server
+    ZF-1025 Zend_XmlRpc_Request should not cast incoming XML encoding
+    ZF-1027 Zend_XmlRpc_Request_Http should have a getRawRequest() method
+- Total of 109 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 0.8.0 / 16-Feb-2007=
 - Documentation
     ZF-709 Deleted documentation chapters are not erased in wiki
@@ -157,7 +287,7 @@ Zend Framework                                                             NEWS
 - Zend_Search_Lucene
     New feature to index HTML files.
     Greatly improved performance.
-    ZF-76 Zend_Search_Lucene don't index polish chars in UTF-8 (TRAC#83)
+    ZF-76 Zend_Search_Lucene don't index polish chars in UTF-8
     ZF-90 memory segmen storage provider
     ZF-265 Document character escaping query parser feature (Changeset [220])
     ZF-336 Detected an illegal character in input string
@@ -177,7 +307,7 @@ Zend Framework                                                             NEWS
     ZF-906 $_SESSION might be modified after Zend_Session::writeClose()
 - Zend_XmlRpc_Client / Zend_XmlRpc_Server
     ZF-771 XmlRpc value encoding can cause conflicts with server and client
-- Total of 131 issues resolved; for a detailed list, see the changelog
+- Total of 133 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.7.0 / 18-Jan-2007=
@@ -285,7 +415,7 @@ Zend Framework                                                             NEWS
     ZF-706 Cannot specify id attribute for hidden fields in 0.6.0
     ZF-727 Loading of helpers is not LIFO
     ZF-752 Wrong error message in Zend_View_Abstract
-- Total of 95 issues resolved; for a detailed list, see the changelog
+- Total of 90 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.6.0 / 16-Dec-2006=
@@ -309,7 +439,7 @@ Zend Framework                                                             NEWS
 - Zend_Uri: new documentation.
 - Zend_XmlRpc_Client,Server: improvements, documentation, moved to core library.
 - Many improvements to documentation and testing coverage.
-- 135 issues resolved; for a detailed list, see the changelog
+- 124 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.2.0 / 29-Oct-2006=
@@ -327,8 +457,8 @@ Zend Framework                                                             NEWS
 - New Session component
 - New Web Services clients for Delicious and Audioscrobbler
 - New Registry component
-- For detailed list of bugs fixed, see the changelog in the issue tracker
-  at http://framework.zend.com/issues
+- 72 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.1.5 / 10-Jul-2006=
 - release notes can be found in the issue tracker at http://framework.zend.com/issues under the project changelog.
