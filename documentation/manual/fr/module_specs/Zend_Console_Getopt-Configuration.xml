@@ -25,7 +25,7 @@ $opts->addRules(
     <sect2 id="zend.console.getopt.configuration.addhelp">
         <title>Ajouter des messages d'aide</title>
         <para>
-            En plus d'indiquer les messages d'aide en déclarant les règles d'option dans le long format, vous peut associer des messages d'aide aux règles d'option en utilisant la méthode <code>setHelp()</code>. L'argument de la méthode de <code>setHelp()</code> est un tableau associatif, dans laquelle la clé est un drapeau, et la valeur est le message d'aide correspondant.
+            En plus d'indiquer les messages d'aide en déclarant les règles d'option dans le long format, vous pouvez associer des messages d'aide aux règles d'option en utilisant la méthode <code>setHelp()</code>. L'argument de la méthode de <code>setHelp()</code> est un tableau associatif, dans laquelle la clé est un drapeau, et la valeur est le message d'aide correspondant.
         </para>
         <example>
             <title>Utiliser setHelp()</title>
@@ -54,7 +54,7 @@ $opts->setHelp(
             Vous pouvez déclarer des alias pour des options en utilisant la méthode <code>setAliases()</code>. L'argument est un tableau associatif, dont la clé est une chaîne de drapeau déclaré auparavant, et dont la valeur est un nouvel alias pour ce drapeau. Ces alias sont fusionnés avec tous les alias existants. En d'autres termes, les alias que vous avez déclarés plus tôt sont toujours actifs.
         </para>
         <para>
-            Un alias ne peut être déclaré qu'une seule fois. Si vous essayez de redéfinir un alias, un <code>Zend_Console_Getopt_Exception</code> est levé.
+            Un alias ne peut être déclaré qu'une seule fois. Si vous essayez de redéfinir un alias, une <code>Zend_Console_Getopt_Exception</code> est levée.
         </para>
         <example>
             <title>Utiliser setAliases()</title>
