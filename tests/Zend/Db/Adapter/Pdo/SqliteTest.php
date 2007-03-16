@@ -127,15 +127,7 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
 
     public function testExceptionInvalidLoginCredentials()
     {
-        $params = $this->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Pdo_Sqlite($params);
-        } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Pdo_Exception'));
-            echo $e->getMessage();
-        }
+        $this->markTestSkipped('SQLite does not support login credentials');
     }
 
     public function testSelectFromQualified()
@@ -191,11 +183,6 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function testSelectJoinRightClause()
     {
         $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
-    }
-
-    public function testTableExceptionInvalidPrimaryKey()
-    {
-        $this->markTestIncomplete('SQLite is getting Warning, will resolve this later');
     }
 
 }

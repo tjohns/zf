@@ -256,6 +256,10 @@ abstract class Zend_Db_Adapter_Abstract
             $set[] = $this->quoteIdentifier($col) . ' = ' . $val;
         }
 
+        if (is_array($where)) {
+            $where = implode(' AND ', $where);
+        }
+
         // build the statement
         $sql = "UPDATE "
              . $this->quoteIdentifier($table)
@@ -277,6 +281,10 @@ abstract class Zend_Db_Adapter_Abstract
      */
     public function delete($table, $where)
     {
+        if (is_array($where)) {
+            $where = implode(' AND ', $where);
+        }
+
         // build the statement
         $sql = "DELETE FROM "
              . $this->quoteIdentifier($table)
@@ -573,6 +581,64 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Returns the column descriptions for a table, using a query against
+     * the ISO SQL standard INFORMATION_SCHEMA system views, for RDBMS
+     * implementations that support that feature.
+     * This method returns an associative array compatible with that returned
+     * by the describeTable() method.
+     *
+     * @param string $tableName
+     * @param string $schemaName OPTIONAL
+     * @return array
+     */
+    protected function _describeTableInformationSchema($tableName, $schemaName = null)
+    {
+        $sql = "SELECT c.table_schema, c.table_name, c.column_name,
+              c.ordinal_position as column_ordinal_position, c.data_type,
+              c.column_default, c.is_nullable, c.character_octet_length,
+              c.numeric_precision, c.numeric_scale, c.character_set_name,
+              tc.constraint_type, k.ordinal_position as key_ordinal_position
+            FROM INFORMATION_SCHEMA.COLUMNS c
+              LEFT JOIN (INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
+                JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
+                ON (k.table_schema = tc.table_schema
+                  AND k.table_name = tc.table_name
+                  AND tc.constraint_type = 'PRIMARY KEY'))
+              ON (c.table_schema = k.table_schema
+                AND c.table_name = k.table_name
+                AND c.column_name = k.column_name)
+            WHERE c.table_name = '$tableName'";
+
+        if ($schemaName != null) {
+            $sql .= " AND c.table_schema = '$schemaName'";
+        }
+
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
+        $desc = array();
+        foreach ($result as $key => $row) {
+            $desc[$row['column_name']] = array(
+                'SCHEMA_NAME'      => $row['table_schema'],
+                'TABLE_NAME'       => $row['table_name'],
+                'COLUMN_NAME'      => $row['column_name'],
+                'COLUMN_POSITION'  => $row['column_ordinal_position'],
+                'DATA_TYPE'        => $row['data_type'],
+                'DEFAULT'          => $row['column_default'],
+                'NULLABLE'         => (bool) ($row['is_nullable'] == 'YES'),
+                'LENGTH'           => $row['character_octet_length'],
+                'PRECISION'        => $row['numeric_precision'],
+                'SCALE'            => $row['numeric_scale'],
+                'UNSIGNED'         => null, // @todo
+                'PRIMARY'          => (bool) ($row['constraint_type'] == 'PRIMARY KEY'),
+                'PRIMARY_POSITION' => $row['key_ordinal_position']
+            );
+        }
+
+        return $desc;
+    }
+
+    /**
      * Abstract Methods
      */
 
@@ -604,6 +670,7 @@ abstract class Zend_Db_Adapter_Abstract
      * PRECISION   => number; precision of NUMERIC/DECIMAL
      * UNSIGNED    => boolean; unsigned property of an integer type
      * PRIMARY     => boolean; true if column is part of the primary key
+     * PRIMARY_POSITION => integer; position of column in primary key
      *
      * @param string $tableName
      * @param string $schemaName OPTIONAL

@@ -57,8 +57,6 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Pdo_OciTest
         );
 
         $rows = $result->fetchAll();
-        // echo "*** OracleTest::testFetchAll()\n";
-        // print_r($rows);
         $this->assertEquals(2, count($rows));
         $this->assertEquals('1', $rows[0]['ID']);
     }
@@ -82,9 +80,9 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_Pdo_OciTest
 
         try {
             $db = new Zend_Db_Adapter_Oracle($params);
-        } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'));
-            echo $e->getMessage();
+            $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'), 'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
         }
     }
 

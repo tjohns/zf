@@ -211,7 +211,10 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
     public function testTableInsert()
     {
-        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
+        $this->markTestIncomplete('Need solution for Zend_Db_Table when inserting to PostgreSQL');
+        return;
+
+        Zend::loadClass('Zend_Db_Table_ZfTestTable');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
 
@@ -245,18 +248,16 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
         try {
             $db = new Zend_Db_Adapter_Pdo_Pgsql($params);
-        } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Pdo_Exception'));
-            echo $e->getMessage();
+            $db->getConnection(); // force connection
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }
 
     public function testTableRowSaveInsert()
     {
-        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
-
         $this->markTestIncomplete('Need solution for Zend_Db_Table when inserting to PostgreSQL');
-        return;
     }
 
 }

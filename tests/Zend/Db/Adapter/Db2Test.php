@@ -179,51 +179,43 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     {
         $params = $this->getParams();
 
-        $exceptionSeen = false;
         try {
             $db = new Zend_Db_Adapter_Db2('scalar');
-        } catch (Zend_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration must be an array.", $e->getMessage());
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
 
-        $exceptionSeen = false;
         try {
             $p = $params;
             unset($p['password']);
             $db = new Zend_Db_Adapter_Db2($p);
-        } catch (Zend_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'password' for login credentials.", $e->getMessage());
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
 
-        $exceptionSeen = false;
         try {
             $p = $params;
             unset($p['username']);
             $db = new Zend_Db_Adapter_Db2($p);
-        } catch (Zend_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'username' for login credentials.", $e->getMessage());
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
 
-        $exceptionSeen = false;
         try {
             $p = $params;
             unset($p['dbname']);
             $db = new Zend_Db_Adapter_Db2($p);
-        } catch (Zend_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'));
+            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
 
     }
 

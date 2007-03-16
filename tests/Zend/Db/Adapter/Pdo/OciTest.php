@@ -118,34 +118,6 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
         $this->_db->query($sql);
     }
 
-    public function testDescribeTable()
-    {
-        $desc = $this->_db->describeTable(self::TABLE_NAME);
-
-        $this->assertThat($desc, $this->arrayHasKey('BODY'));
-
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('SCHEMA_NAME'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('TABLE_NAME'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('COLUMN_NAME'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('DATA_TYPE'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('DEFAULT'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('NULLABLE'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('LENGTH'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('SCALE'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('PRECISION'));
-        $this->assertThat($desc['BODY'], $this->arrayHasKey('PRIMARY'));
-
-        $this->assertEquals(strtoupper(self::TABLE_NAME), $desc['BODY']['TABLE_NAME']);
-        $this->assertEquals('BODY', $desc['BODY']['COLUMN_NAME']);
-        $this->assertEquals('VARCHAR2', $desc['BODY']['DATA_TYPE']);
-        $this->assertEquals('', $desc['BODY']['DEFAULT']);
-        $this->assertTrue($desc['BODY']['NULLABLE']);
-        $this->assertEquals(100, $desc['BODY']['LENGTH']);
-        $this->assertEquals(0, $desc['BODY']['SCALE']);
-        $this->assertEquals(0, $desc['BODY']['PRECISION']);
-        $this->assertEquals('', $desc['BODY']['PRIMARY']);
-    }
-
     public function testInsert()
     {
         $nextId = $this->_db->fetchOne('SELECT ' . self::SEQUENCE_NAME . '.NEXTVAL FROM DUAL');
@@ -268,9 +240,10 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
 
         try {
             $db = new Zend_Db_Adapter_Pdo_Oci($params);
-        } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Pdo_Exception'));
-            echo $e->getMessage();
+            $db->getConnection(); // force connection
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }
 
