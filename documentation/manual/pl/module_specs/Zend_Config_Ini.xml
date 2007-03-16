@@ -22,6 +22,18 @@
             <code>yes</code>, <code>no</code>, oraz <code>null</code>.
         </para>
     </note>
+    <note>
+        <title>Key Separator</title>
+        <para>
+            By default, the key separator character is the period character (.), 
+            however this can be changed by changing the $config key "nestSeparator" 
+            when constructing the <code>Zend_Config_Ini</code> object. For example:
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+$config['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+        </para>
+    </note>
     <example>
         <title>Użycie Zend_Config_Ini</title>
         <para>

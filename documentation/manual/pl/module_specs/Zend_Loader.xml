@@ -1,9 +1,10 @@
 <sect1 id="zend.loader.load">
 
-    <title>Loading Files and Classes Dynamically</title>
+    <title>Dynamiczne ładowanie plików i klas</title>
 
     <para>
-        The Zend_Loader class includes methods to help you load files dynamically.
+        Klasa Zend_Loader zawiera metody pomagające ci w dynamicznym ładowaniu 
+        plików.
     </para>
 
     <tip>
@@ -20,19 +21,19 @@
 
     <sect2 id="zend.loader.load.file">
 
-        <title>Loading Files</title>
+        <title>Ładowanie plików</title>
 
         <para>
-            The static method <code>Zend_Loader::loadFile()</code> loads a PHP
-            file.  The file loaded may contain any PHP code.
-            The method is a wrapper for the PHP function
+            Statyczna metoda <code>Zend_Loader::loadFile()</code> ładuje plik 
+            PHP. Ładowany plik może zawierać dowolny kod PHP. Ta metoda używa
+            funkcji PHP
             <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            This method throws <code>Zend_Exception</code> on failure, for example
-            if the specified file does not exist.
+            Metoda ta wyrzuca wyjątek <code>Zend_Exception</code> w przypadku
+            niepowodzenia, na przykład gdy dany plik nie istnieje.
         </para>
 
         <example id="zend.loader.file.example">
-            <title>Example of loadFile() method</title>
+            <title>Przykład użycia metody loadFile()</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadFile($filename, $dirs=null, $once=false)
@@ -57,27 +58,27 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
         </para>
 
         <para>
-            The <code>$once</code> argument is a boolean.  If <code>TRUE</code>,
-            <code>Zend_Loader::loadFile()</code> uses the PHP function
-            <ulink url="http://php.net/include"><code>include_once()</code></ulink>
-            for loading the file, otherwise the PHP function
-            <ulink url="http://php.net/include_once"><code>include()</code></ulink>
-            is used.
+            Argument <code>$once</code> jest zmienną logiczną. Jeśli ma wartość
+            <code>TRUE</code>, to metoda <code>Zend_Loader::loadFile()</code> 
+            używa do ładowania pliku funkcji PHP 
+            <ulink url="http://php.net/include"><code>include_once()</code></ulink>, 
+            w przeciwnym wypadku używa funkcji PHP
+            <ulink url="http://php.net/include_once"><code>include()</code></ulink>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.class">
 
-        <title>Loading Classes</title>
+        <title>Ładowanie klas</title>
 
         <para>
-            The static method <code>Zend_Loader::loadClass($class, $dirs)</code>
-            loads a PHP file and then checks for the existance of the class.
+            Statyczna metoda <code>Zend_Loader::loadClass($class, $dirs)</code>
+            ładuje plik PHP, a następnie sprawdza czy dana klasa istnieje.
         </para>
 
         <example id="zend.loader.class.example">
-            <title>Example of loadClass() method</title>
+            <title>Przykład użycia metody loadClass()</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadClass('Container_Tree',
@@ -105,8 +106,9 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <para>
-            If the file is not found or the class does not exist after the load,
-            <code>Zend_Loader::loadClass()</code> throws a Zend_Exception.
+            Jeśli plik nie zostanie znaleziony lub po załadowaniu pliku klasa
+            nie istnieje, metoda <code>Zend_Loader::loadClass()</code> wyrzuca
+            wyjątek Zend_Exception.
         </para>
 
         <para>
@@ -128,11 +130,11 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <example id="zend.loader.isreadable.example">
-            <title>Example of isReadable() method</title>
+            <title>Przykład użycia metody isReadable()</title>
             <programlisting role="php"><![CDATA[<?php
 
 if (Zend_Loader::isReadable($filename)) {
-    // do something with $filename
+    // zrób coś z $filename
 }
 
 ?>]]></programlisting>
