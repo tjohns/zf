@@ -25,6 +25,15 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Locale_AllTests::main');
 }
 
+/**
+ * Read in user-defined test configuration if available; otherwise, read default test configuration
+ */
+if (is_readable('../../TestConfiguration.php')) {
+    require_once '../../TestConfiguration.php';
+} else {
+    require_once '../../TestConfiguration.php.dist';
+}
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -41,6 +50,11 @@ class Zend_Locale_AllTests
 {
     public static function main()
     {
+        if (defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE') && TESTS_ZEND_LOCALE_FORMAT_SETLOCALE) {
+            // run all tests in a special locale
+            setlocale(LC_ALL, TESTS_ZEND_LOCALE_FORMAT_SETLOCALE);
+        }
+
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 

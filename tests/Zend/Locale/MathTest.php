@@ -39,6 +39,29 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
 {
+    private static $savedLocale = 'C';
+
+    /**
+     * setup for tests (BCMath is not designed to normalize localized numbers)
+     */
+    public function setUp()
+    {
+        self::$savedLocale = setlocale(LC_NUMERIC, '0');
+        if (self::$savedLocale != 'C') {
+            setlocale(LC_NUMERIC, 'C');
+        }
+    }
+
+    /**
+     * teardown for tests (restore whatever setlocale was previously in place)
+     */
+    public function tearDown()
+    {
+        if (self::$savedLocale != 'C') {
+            setlocale(LC_NUMERIC, self::$savedLocale);
+        }
+    }
+
     /*
      * Note: All other aspects of Zend_Locale_Math receive extensive testing
      * via unit tests in Zend_Date and Zend_Measure*.
