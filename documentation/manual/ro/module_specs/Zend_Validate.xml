@@ -46,6 +46,7 @@
         The following example illustrates validation of an e-mail address:
 
         <programlisting role="php"><![CDATA[<?php
+
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
@@ -55,7 +56,9 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]></programlisting>
+}
+
+?>]]></programlisting>
 
     </para>
 
