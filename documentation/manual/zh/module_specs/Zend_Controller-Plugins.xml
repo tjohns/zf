@@ -4,9 +4,11 @@
 	<sect2 id="zend.controller.plugins.introduction">
 		<title>简介</title>
 
-		<note>
+            <note>
+                <para>
 		本章节仍在建设中...
-		</note>
+                </para>
+            </note>
 	</sect2>
 		
 </sect1>

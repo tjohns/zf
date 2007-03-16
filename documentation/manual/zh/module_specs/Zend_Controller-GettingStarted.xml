@@ -47,7 +47,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
+            <para>
 			bootstrap文件必须是根目录下唯一的PHP文件。			
+            </para>
 		</note>
 
 		<para>
@@ -95,7 +97,9 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		</para>
 		
 		<note>
+            <para>
 			这一章节尚未完成，可能会有大量内容补充或修改。
+            </para>
 		</note>
 	</sect2>	
 

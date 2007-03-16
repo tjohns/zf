@@ -7,11 +7,11 @@
 	        <code>Zend_Http_Client</code> 为那些需要执行HTTP请求的程序提供了一个简单的接口.
 	        <code>Zend_Http_Client</code> 可以执行 GET, POST, PUT 和 DELETE 请求.
 	    </para>
-	    <note>
+        <note><para>
 	        默认情况下<code>Zend_Http_Client</code> 将追踪 5 次 HTTP 重定向. 要改变这个行为, 
 			可以传入允许重定向的最大数量到<code>get()</code>的方法
 	        
-	    </note>
+        </para></note>
 	    <para>
 	        <example>
 	            <title>执行一个基本的 GET 请求</title>

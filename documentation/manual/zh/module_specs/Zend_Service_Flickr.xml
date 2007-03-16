@@ -25,9 +25,9 @@ foreach ($results as $result) {
 }
 ?>]]>       </programlisting>
         </example>
-        <note>
+        <note><para>
             <code>tagSearch()</code> 可以接受第二个(可选的)参数提供更多选项.
-        </note>
+        </para></note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
         <title>查找 Flickr 用户</title>
@@ -74,8 +74,8 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>获得 Flickr 图像详细资料</title>
-        <code>Zend_Service_Flickr</code>使我们可以使用给定的图像id来非常方便快捷的得到图像的详细信息,使用<code>getImageDetails()</code>
-		方法, 如下面的例子:
+        <para><code>Zend_Service_Flickr</code>使我们可以使用给定的图像id来非常方便快捷的得到图像的详细信息,使用<code>getImageDetails()</code>
+        方法, 如下面的例子:</para>
         <example>
             <title>获得 Flickr 图像详细资料</title>
             <para>

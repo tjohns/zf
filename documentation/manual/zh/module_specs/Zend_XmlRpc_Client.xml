@@ -22,11 +22,11 @@ print_r( $server->system->listMethods() );
 ?>]]>
             </programlisting>
         </example>
-        <para>
-            <note>
+        <note>
+            <para>
                 用<code>Zend_XmlRpc_Client</code>尝试调用一个远程服务器的方法看起来就像调用本地方法那样简单。如果一个远程方法包含一个命名空间，就像前面的<code>system.listMethods()</code>那样，那么调用的时候可以用PHP的对象链的形式：<code>$server->system->listMethods()</code>。
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.xmlrpc.client.parameters">
         <title>带参数</title>
@@ -187,11 +187,11 @@ $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
 $service->serviceProcedure($p1, $p2);
 ...]]>
             </programlisting>
-            <para>
-                <note>
+            <note>
+                <para>
                     传递的参数值仍是PHP变量的值，只不过用PHP转换技术转换成指定的类型（也就是说一个字符串的值传给<code>Zend_XmlRpc_Value_Integer</code>对象时，将会被转换成整形以<code>(int)$value</code>的形式）。
-                </note>
-            </para>
+                </para>
+            </note>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
             <title>将一个XML字符串解析为XML-RPC参数</title>
@@ -214,7 +214,9 @@ $service->serviceProcedure($p1, $p2);
             XML-RPC协议解决这个问题的办法是调用一个特殊的远程过程<code>system.methodSignature</code>。这个过程得到一个过程名作为参数并返回一个该过程的签名。这个签名中包含这个过程需要传递的参数类型和返回值的类型。 
         </para>
         <note>
+            <para>
             不是所有的XML-RPC服务器都支持这个特殊的<code>system.methodSignature</code>过程，不支持这个过程的服务器则无法支持参数类型提醒。
+            </para>
         </note>
         <para>
             <code>Zend_XmlRpc_Client</code>实现了一个对XML-RPC服务器<code>system.methodSignature</code>过程返回的'WSDL'类型文件的排序。

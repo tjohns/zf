@@ -43,9 +43,9 @@
 			, 如果你要了解更多信息，请访问
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> .
         </para>
-        <note>
+        <note><para>
             你的Amazon开发者API key是和你的Amazon Id相联系的， 所以请小心使用，不要随便泄漏啦 .
-        </note>
+        </para></note>
         <example>
             <title>用传统的API搜索Amazon</title>
             <para>
@@ -89,11 +89,11 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
-            <note>
-                有效的国家代码: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, 和 <code>US</code>.
-            </note>
         </example>
+        <note><para>
+            有效的国家代码: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+            <code>UK</code>, 和 <code>US</code>.
+        </para></note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>用ASIN来搜索指定的Amazon出版物</title>
@@ -137,7 +137,9 @@ foreach($response as $r) {
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
         </para>
         <tip>
+            <para>
             The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 类是对这个方法的简单包装.
+            </para>
         </tip>
     </sect2>
 <sect2 id="zend.service.amazon.query">
@@ -508,8 +510,9 @@ foreach ($results as $result) {
             对象返回。
         </para>
         <sect4 id="zend.service.amazon.classes.offer.properties">
+            <title>Zend_Service_Amazon_Offer 属性</title>
             <table>
-                <title>Zend_Service_Amazon_Offer 属性</title>
+                <title>属性</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
