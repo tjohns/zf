@@ -80,9 +80,10 @@
         </para>
         <para>
             Though the ability to inherit from multiple Roles is very useful, multiple inheritance also
-            introduces some degree of complexity. The following example illustrates the ambiguity condition and how Zend_Acl solves it.
+            introduces some degree of complexity. The following example illustrates the ambiguity condition and how
+            Zend_Acl solves it.
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>Multiple inheritance between Roles</title>
             <para>
                 The following code defines three base Roles - "<code>guest</code>", "<code>member</code>", and
@@ -182,7 +183,7 @@ $acl = new Zend_Acl();]]></programlisting>
             The permissions may be expressed as follows:
         </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>Access Controls for an Example CMS</title>
           <tgroup cols="3">
             <thead>
