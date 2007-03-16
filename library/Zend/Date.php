@@ -1935,7 +1935,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::DATES :
                 try {
-                    $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'type' => 'iso', 'fixdate' => true));
+                    $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'type' => 'iso', 'fix_date' => true));
 
                     if ($calc == 'set') {
                         --$parsed['month'];
@@ -2046,7 +2046,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::TIMES :
                 try {
-                    $parsed = Zend_Locale_Format::getTime($date, array('locale' => $locale, 'type' => 'iso', 'fixdate' => true));
+                    $parsed = Zend_Locale_Format::getTime($date, array('locale' => $locale, 'type' => 'iso', 'fix_date' => true));
                     return $this->_assign($calc, $this->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                   1, 1, 1970, true),
                                   $this->mktime($hour, $minute, $second, 1, 1, 1970, true));
@@ -2323,7 +2323,7 @@ class Zend_Date extends Zend_Date_DateObject {
                         if (self::$_Options['format'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
                         }
-                        $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fixdate' => true, 'type' => 'iso'));
+                        $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fix_date' => true, 'type' => 'iso'));
                         if ($calc == 'set') {
                             if (isset($parsed['month'])) {
                                 --$parsed['month'];
