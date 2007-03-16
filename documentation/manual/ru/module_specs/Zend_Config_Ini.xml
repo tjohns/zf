@@ -47,12 +47,14 @@
         <note>
         <title>Разделитель ключей<!--Key Separator--></title>
         <para>
-            По умолчанию разделителем ключей является символ точки (.), но
-            он может быть заменен на любой другой посредством изменения ключа
-            "nestSeparator" в $config при создании объекта
-            <code>Zend_Config_Ini</code>. Например:
+            По умолчанию разделителем ключей является символ точки
+            (<code>.</code>). Он может быть заменен на любой другой посредством
+            изменения ключа <code>'nestSeparator'</code> в <code>$config</code>
+            при создании объекта <code>Zend_Config_Ini</code>. Например:
 <!--
-            By default, the key separator character is the period character (.), however this can be changed by changing the $config key "nestSeparator" when constructing the <code>Zend_Config_Ini</code> object. For example:
+            By default, the key separator character is the period character (<code>.</code>). This can be changed,
+            however, by changing the <code>$config</code> key <code>'nestSeparator'</code> when constructing the
+            <code>Zend_Config_Ini</code> object. For example:
 -->
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
@@ -60,7 +62,7 @@ $config['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
         </para>
     </note>    
-    <example>
+    <example id="zend.config.adapters.ini.example.using">
         <title>Использование Zend_Config_Ini<!--Using Zend_Config_Ini--></title>
         <para>
             Данный пример демонстрирует основы использования <code>Zend_Config_Ini</code>

@@ -38,7 +38,7 @@
 -->
         </para>
     </note>
-    <example>
+    <example id="zend.config.adapters.xml.example.using">
         <title>Использование Zend_Config_Xml<!--Using Zend_Config_Xml--></title>
         <para>
             Данный пример демонстрирует основы использования <code>Zend_Config_Xml</code>

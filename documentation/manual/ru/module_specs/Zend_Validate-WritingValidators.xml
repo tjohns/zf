@@ -1,6 +1,6 @@
 <sect1 id="zend.validate.writing_validators">
 
-    <title>написание валидаторов<!--Writing Validators--></title>
+    <title>Написание валидаторов<!--Writing Validators--></title>
 
     <para>
         Zend_Validate предоставляет набор наиболее часто используемых валидаторов, но разработчики часто сталкиваются с такими ситуациями, когда требуется написание своих валидаторов. Написание своих валидаторов облегчается реализацией интерфейса <code>Zend_Validate_Interface</code>.
@@ -27,6 +27,7 @@
 -->
 
         <programlisting role="php"><![CDATA[<?php
+
 require_once 'Zend/Validate/Interface.php';
 
 class MyValidator implements Zend_Validate_Interface
@@ -51,7 +52,9 @@ class MyValidator implements Zend_Validate_Interface
     {
         return $this->_messages;
     }
-}]]></programlisting>
+}
+
+?>]]></programlisting>
 
     </para>
 
@@ -62,8 +65,11 @@ class MyValidator implements Zend_Validate_Interface
 -->
 
         <programlisting role="php"><![CDATA[<?php
+
 $validatorChain = new Zend_Validate();
-$validatorChain->addValidator(new MyValidator());]]></programlisting>
+$validatorChain->addValidator(new MyValidator());
+
+?>]]></programlisting>
 
     </para>
 

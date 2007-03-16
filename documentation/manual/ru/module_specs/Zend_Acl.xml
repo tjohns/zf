@@ -151,7 +151,7 @@
             introduces some degree of complexity. The following example illustrates the ambiguity condition and how Zend_Acl solves it.
  -->	    
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>
 	    Множественное наследование Ролей
 <!-- 	    
@@ -323,7 +323,7 @@ $acl = new Zend_Acl();]]></programlisting>
  -->	    
         </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>
 	  Контроль доступа для демонстрационной CMS
 <!-- 	  

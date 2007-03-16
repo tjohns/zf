@@ -23,7 +23,7 @@
         and <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
 -->
     </para>
-    <example>
+    <example id="zend.config.introduction.example.using">
         <title>Использование Zend_Config без адаптеров<!--Using Zend_Config Per Se--></title>
         <para>
             Обычно предполагается, что используется один из классов адаптеров
