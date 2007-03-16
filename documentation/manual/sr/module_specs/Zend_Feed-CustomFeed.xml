@@ -12,10 +12,9 @@
         doesn't need to worry about namespaces at all.
     </para>
 
-    <example>
+    <example id="zend.feed.custom-feed.example.extending">
         <title>Extending the Atom Entry Class with Custom Namespaces</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 /**
  * The custom entry class automatically knows the feed URI (optional) and
@@ -64,8 +63,7 @@ class MyEntry extends Zend_Feed_EntryAtom
             Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
             property:
         </para>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';

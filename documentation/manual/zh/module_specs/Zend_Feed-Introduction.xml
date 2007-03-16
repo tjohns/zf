@@ -29,10 +29,9 @@
         </para>
     </note>
 
-    <example>
+    <example id="zend.feed.introduction.example.rss">
         <title>Putting Zend_Feed to Work on RSS Feed Data</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Feed.php';
 
 // Fetch the latest Slashdot headlines
