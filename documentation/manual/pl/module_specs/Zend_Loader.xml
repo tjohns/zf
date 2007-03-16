@@ -8,13 +8,14 @@
     </para>
 
     <tip>
-        <title>Zend_Loader vs. require_once()</title>
+        <title>Zend_Loader a require_once()</title>
         <para>
-            The Zend_Loader methods are best used if the filename you need to
-            load is variable.  For example, if it is based on a parameter from
-            user input or method argument.  If you are loading a file or a
-            class whose name is constant, there is no benefit to using
-            Zend_Loader over using traditional PHP functions such as
+            Metody klasy Zend_Loader są przydatne gdy nazwa pliku, który chcesz
+            załadować jest zmienną. Na przykład, jeśli nazwa jest oparta na 
+            parametrze pochodzącym od użytkownika lub argumencie metody.
+            Jeśli ładujesz plik lub klasę których nazwą jest stała, nie ma 
+            dodatkowych korzyści z użycia Zend_Loader zamiast tradycyjnych
+            funkcji PHP takich jak 
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
     </tip>
@@ -42,19 +43,21 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
     </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to load,
-            which must not contain any path information.
-            A security check is performed on <code>$filename</code>.
-            The <code>$filename</code> may only contain alphanumeric characters,
-            dashes ("-"), underscores ("_"), or periods (".").
-            No such restriction is placed on the <code>$dirs</code> argument.
+            Argument <code>$filename</code> określa nazwę pliku do załadowania,
+            nazwa ta nie może zawierać żadnych informacji o ścieżce.
+            Parametr <code>$filename</code> jest sprawdzany pod kątem
+            bezpieczeństwa. Argument <code>$filename</code> może zawierać 
+            jedynie znaki alfanumeryczne, myślniki ("-"), podkreślniki ("_"), 
+            oraz kropki ("."). Argument <code>$dirs</code> może być dowolny.
         </para>
 
         <para>
-            The <code>$dirs</code> argument specifies directories to search for
-            the file.  If <code>NULL</code>, only the <code>include_path</code>
-            is searched.  If a string or an array, the directory or directories
-            specified will be searched, and then the <code>include_path</code>.
+            Argument <code>$dirs</code> określa katalogi, które mają być 
+            sprawdzone w poszukiwaniu pliku. Jeśli ma wartość <code>NULL</code>, 
+            sprawdzane są jedynie ścieżki z dyrektywy <code>include_path</code>.
+            Jeśli jest łańcuchem znaków lub tablicą, ścieżka lub ścieżki będą 
+            przeszukane, a następnie zostaną sprawdzone ścieżki z dyrektywy
+            <code>include_path</code>.
         </para>
 
         <para>
@@ -92,17 +95,19 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            The string specifying the class is converted to a relative path
-            by substituting directory separates for underscores, and appending
-            '.php'.  In the example above, 'Container_Tree' becomes 'Container/Tree.php'.
+            Łańcuch znaków określający nazwę klasy jest konwertowany do 
+            relatywnej ścieżki przez zamianę podkreślników na separatory ścieżek, 
+            oraz przez dodanie na końcu nazwy rozszerzenia '.php'. W powyższym
+            przykładzie, nazwa 'Container_Tree' staje się 'Container/Tree.php'.
         </para>
 
         <para>
-            If <code>$dirs</code> is a string or an array,
-            <code>Zend_Loader::loadClass()</code> searches the directories in
-            the order supplied.  The first matching file is loaded.  If the file
-            does not exist in the specified <code>$dirs</code>, then the
-            include_path for the PHP environment is searched.
+            Jeśli argument <code>$dirs</code> jest łańcuchem znaków lub tablicą,
+            metoda <code>Zend_Loader::loadClass()</code> przeszuka ścieżki w 
+            kolejności ich zdefiniowania. Pierwszy pasujący plik zostanie 
+            załadowany. Jeśli plik nie istnieje w ścieżkach ze zmiennej 
+            <code>$dirs</code>, to przeszukiwane są ścieżki z dyrektywy 
+            include_path środowiska PHP.
         </para>
 
         <para>
@@ -112,21 +117,22 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <para>
-            <code>Zend_Loader::loadFile()</code> is used for loading, so the
-            class name may only contain alphanumeric characters and the hyphen
-            ('-'), underscore ('_'), and period ('.').
+            Do ładowania używana jest metoda <code>Zend_Loader::loadFile()</code>, 
+            więc nazwa klasy może zawierać jedynie znaki alfanumeryczne, 
+            myślniki ("-"), podkreślniki ("_"), oraz kropki (".").
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.isreadable">
 
-        <title>Testing if a File is Readable</title>
+        <title>Sprawdzanie czy plik jest dostępny do odczytu</title>
 
         <para>
-            The static method <code>Zend_Loader::isReadable($pathname)</code>
-            returns <code>TRUE</code> if a file at the specified pathname exists
-            and is readable, FALSE otherwise.
+            Statyczna metoda <code>Zend_Loader::isReadable($pathname)</code>
+            zwraca <code>TRUE</code> jeśli plik w określonej ścieżce istnieje
+            i jest dostępny do odczytu, w przeciwnym wypadku zwracana jest 
+            wartość FALSE.
         </para>
 
         <example id="zend.loader.isreadable.example">
@@ -141,12 +147,11 @@ if (Zend_Loader::isReadable($filename)) {
         </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to
-            check.  This may contain path information.
-            This method is a wrapper for the PHP function
+            Argument <code>$filename</code> określa nazwę pliku do sprawdzenia. 
+            Może on zawierać informacje o ścieżce. Ta metoda używa funkcji PHP
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
-            The PHP function does not search the <code>include_path</code>,
-            while <code>Zend_Loader::isReadable()</code> does.
+            Funkcja PHP nie sprawdza ścieżek z dyrektywy <code>include_path</code>,
+            a metoda <code>Zend_Loader::isReadable()</code> sprawdza.
         </para>
 
     </sect2>

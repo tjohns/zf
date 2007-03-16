@@ -34,10 +34,9 @@
         </para>
     </note>
 
-    <example>
+    <example id="zend.feed.introduction.example.rss">
         <title>Użycie Zend_Feed do pobierania danych RSS</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Feed.php';
 
 // Ściągamy najnowsze nagłówki ze Slashdot

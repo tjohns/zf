@@ -112,9 +112,10 @@ Zend_Session::start();
                     </listitem>
                 </itemizedlist>
                 <para>
-                    Opcja <code>strict</code> option prevents 
-                    <code>new Zend_Session_Namespace()</code> from automatically
-                    starting the session using <code>Zend_Session::start()</code>. 
+                    Opcja <code>strict</code> zapobiega automatycznemu
+                    rozpoczęciu sesji za pomocą metody
+                    <code>Zend_Session::start()</code> w konstruktorze 
+                    <code>new Zend_Session_Namespace()</code>.
                     Thus, this option helps developers of userland ZF applications 
                     enforce a design decision to avoid using sessions for certain 
                     requests, since an error will be thrown when using this option 

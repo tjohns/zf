@@ -102,7 +102,7 @@
             złożoności. Poniższy przykład ilustruje niejasny przypadek 
             dziedziczenia i pokazuje w jaki sposób Zend_Acl go rozwiązuje.
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>Dziedziczenie po wielu rolach</title>
             <para>
                 Poniższy kod definiuje trzy podstawowe role, po których inne role
@@ -220,7 +220,7 @@ $acl = new Zend_Acl();]]></programlisting>
             uprawnień. Uprawnienia mogą być wyrażone w taki sposób:
         </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>Kontrola dostępu dla przykładowego CMS</title>
           <tgroup cols="3">
             <thead>

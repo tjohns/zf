@@ -8,10 +8,9 @@
         aby zapisać go do pliku lub wysłać na serwer.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modyfikacja istniejącego wpisu</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
@@ -45,10 +44,9 @@ echo $entry->saveXML();
         przestrzeni nazw jeśli nie określisz precyzyjnie innej przestrzeni.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.creating">
         <title>Tworzenie wpisu Atom z elementami własnej przestrzeni nazw</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entry = new Zend_Feed_EntryAtom();
 // id w Atom jest zawsze nadane przez serwer

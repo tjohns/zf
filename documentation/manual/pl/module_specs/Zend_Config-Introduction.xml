@@ -11,7 +11,7 @@
         <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
 
     </para>
-    <example>
+    <example id="zend.config.introduction.example.using">
         <title>Użycie Zend_Config</title>
         <para>
             Normalnie jest tak, że użytkownicy użyliby jednej z klas adaptera, 

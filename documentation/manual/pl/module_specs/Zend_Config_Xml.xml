@@ -22,7 +22,7 @@
             do własnych potrzeb.
         </para>
     </note>
-    <example>
+    <example id="zend.config.adapters.xml.example.using">
         <title>Użycie Zend_Config_Xml</title>
         <para>
             Ten przykład pokazuje podstawowe użycie klasy <code>Zend_Config_Xml</code> 

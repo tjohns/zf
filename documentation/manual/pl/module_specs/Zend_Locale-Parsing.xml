@@ -36,7 +36,8 @@
             (e.g. "3.14"). Numbers can be normalized with the <code>getNumber()</code> function to obtain the standard
             decimal representation. For all number-related discussions in this manual,
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">Arabic/European numerals (0,1,2,3,4,5,6,7,8,9)</ulink>
-            are implied, unless explicitly stated otherwise.  The options array may contain a 'locale' to define grouping and decimal characters.  The array may also have a 'precision' to truncate excess digits from the result.
+            are implied, unless explicitly stated otherwise. The options array may contain a 'locale' to define grouping
+            and decimal characters. The array may also have a 'precision' to truncate excess digits from the result.
         </para>
 
         <example>
@@ -56,9 +57,9 @@ print $number; // will return 13524.678
             <title>Precision and Calculations</title>
 
             <para>
-                Since <code>getNumber()</code> can normalize extremely large numbers, check the result carefully before
-                using finite precision calculations, such as ordinary PHP math operations. For example, <code>if
-                ((string)int_val($number) != $number) { use
+                Since <code>getNumber($value, array $options = array())</code> can normalize extremely large numbers,
+                check the result carefully before using finite precision calculations, such as ordinary PHP math
+                operations. For example, <code>if ((string)int_val($number) != $number) { use
                 <ulink url="http://www.php.net/bc">BCMath</ulink>
                 or
                 <ulink url="http://www.php.net/gmp">GMP</ulink>
@@ -93,10 +94,11 @@ print $number; // will return 13524.6
         <title>Number localization</title>
 
         <para>
-            <code>toNumber()</code> can localize numbers to the
+            <code>toNumber($value, array $options = array())</code> can localize numbers to the
             <link linkend="zend.locale.regions">supported locales</link>
             . This function will return a localized string of the given number in a conventional format for a specific
-            locale.
+            locale. The 'number_format' option explicitly specifies a non-default number format for use with
+            <code>toNumber()</code>.
         </para>
 
         <example>
@@ -157,7 +159,8 @@ print $number;
         <title>Number testing</title>
 
         <para>
-            <code>isNumber()</code> checks if a given string is a number and returns true or false.
+            <code>isNumber($value, array $options = array())</code> checks if a given string is a number and returns
+            true or false.
         </para>
 
         <example>
@@ -181,8 +184,8 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
         <title>Float value normalization</title>
 
         <para>
-            Floating point values can be parsed with the <code>getFloat()</code> function. A floating point value will
-            be returned.
+            Floating point values can be parsed with the <code>getFloat($value, array $options = array())</code>
+            function. A floating point value will be returned.
         </para>
 
         <example>
@@ -239,7 +242,8 @@ print $number;
         <title>Floating point value testing</title>
 
         <para>
-            <code>isFloat()</code> checks if a given string is a floating point value and returns true or false.
+            <code>isFloat($value, array $options = array())</code> checks if a given string is a floating point value
+            and returns true or false.
         </para>
 
         <example>
@@ -286,8 +290,8 @@ print $number;
         <title>Integer point value localization</title>
 
         <para>
-            <code>toInteger()</code> can localize integer values. This function will return a localized string of the
-            given number.
+            <code>toInteger($value, array $options = array())</code> can localize integer values. This function will
+            return a localized string of the given number.
         </para>
 
         <example>
@@ -310,7 +314,8 @@ print $number;
         <title>Integer value testing</title>
 
         <para>
-            <code>isInteger()</code> checks if a given string is a integer value and returns true or false.
+            <code>isInteger($value, array $options = array())</code> checks if a given string is a integer value and
+            returns true or false.
         </para>
 
         <example>

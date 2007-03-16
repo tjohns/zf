@@ -137,8 +137,8 @@ $validator->hostnameValidator->setValidateIdn(false);
 
 ?>]]></programlisting>
 
-        More information on the usage of <code>setValidateIdn()</code> appears in the
-        Zend_Validate_Hostname documentation.
+        Więcej informacji na temat użycia metody <code>setValidateIdn()</code> 
+        znajduje się w dokumentacji Zend_Validate_Hostname.
     </para>
 
     <para>
@@ -160,8 +160,8 @@ $validator->hostnameValidator->setValidateTld(false);
 
 ?>]]></programlisting>
 
-        More information on the usage of <code>setValidateTld()</code> appears in the
-        Zend_Validate_Hostname documentation.
+        Więcej informacji na temat użycia metody <code>setValidateTld()</code> 
+        znajduje się w dokumentacji Zend_Validate_Hostname.
     </para>
 
     <para>

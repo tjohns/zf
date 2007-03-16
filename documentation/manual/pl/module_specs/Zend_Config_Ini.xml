@@ -25,16 +25,17 @@
     <note>
         <title>Separator kluczy</title>
         <para>
-            Domyślnie separatorem kluczy jest znak kropki (.), ale może on być 
-            zmieniony przez zmianę klucza konfiguracyjnego "nestSeparator" 
-            podczas tworzenia obiektu <code>Zend_Config_Ini</code>. Na przykład:
+            Domyślnie separatorem kluczy jest znak kropki (<code>.</code>). Może 
+            on być jednak zmieniony przez zmianę klucza 
+            <code>'nestSeparator'</code> z tablicy <code>$config</code> podczas 
+            tworzenia obiektu <code>Zend_Config_Ini</code>. Na przykład:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
         </para>
     </note>
-    <example>
+    <example id="zend.config.adapters.ini.example.using">
         <title>Użycie Zend_Config_Ini</title>
         <para>
             Ten przykład pokazuje podstawowe użycie klasy <code>Zend_Config_Ini</code> 
