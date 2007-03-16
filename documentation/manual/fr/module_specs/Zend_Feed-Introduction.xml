@@ -1,4 +1,4 @@
-<sect1 id="zend.feed.introduction">
+﻿<sect1 id="zend.feed.introduction">
     <title>Introduction</title>
     <para>
         Le composant <code>Zend_Feed</code> offre des services permettant de 
@@ -32,7 +32,7 @@
     </para>
 
     <note>
-        <title>Be aware</title>
+        <title>Attention</title>
         <para>
             Beaucoup de flux RSS ont à leur disposition différentes propriétés, pour 
             les canaux comme pour les éléments. La spécification RSS spécifie 
