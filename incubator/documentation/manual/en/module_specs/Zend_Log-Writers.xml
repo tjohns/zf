@@ -18,10 +18,12 @@
       (<code>php://stderr</code>).
       
       <programlisting role="php"><![CDATA[<?php
+
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
+
 ?>]]></programlisting>        
     </para>
 
@@ -31,10 +33,12 @@ $logger->info('Informational message');
       URLs</ulink>:
       
       <programlisting role="php"><![CDATA[<?php
+
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
+
 ?>]]></programlisting>
 
       By default, the stream is opened in the append mode (<code>"a"</code>).
@@ -46,6 +50,7 @@ $logger->info('Informational message');
       The constructor of <code>Zend_Log_Writer_Stream</code> also accepts an existing stream resource:
 
       <programlisting role="php"><![CDATA[<?php
+
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('Failed to open stream');
@@ -55,6 +60,7 @@ $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
+
 ?>]]></programlisting>
 
       The mode cannot be specified for existing stream resources. Doing so
@@ -78,11 +84,13 @@ $logger->info('Informational message');
       It is useful for disabling logging or stubbing out logging during tests:
 
       <programlisting role="php"><![CDATA[<?php
+
 $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // goes nowhere
 $logger->info('Informational message');
+
 ?>]]></programlisting>
     </para>
   </sect2>
@@ -96,6 +104,7 @@ $logger->info('Informational message');
       method:
     
       <programlisting role="php"><![CDATA[<?php
+
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
 $writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
 
@@ -105,6 +114,7 @@ $logger->addWriter($writer2);
 
 // goes to both writers
 $logger->info('Informational message');      
+
 ?>]]></programlisting>
     </para>
   </sect2>
