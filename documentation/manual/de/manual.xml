@@ -43,6 +43,7 @@
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
         <xi:include href="module_specs/Zend_Auth.xml" />
+        <xi:include href="module_specs/Zend_Auth_Adapter_DbTable.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Digest.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml" />
     </chapter>
@@ -95,6 +96,7 @@
         <xi:include href="module_specs/Zend_Db_Table.xml" />
         <xi:include href="module_specs/Zend_Db_Table_Row.xml" />
         <xi:include href="module_specs/Zend_Db_Table_Rowset.xml" />
+        <xi:include href="module_specs/Zend_Db_Table-Relationships.xml" />
     </chapter>
     <chapter id="zend.debug">
         <title>Zend_Debug</title>
@@ -243,6 +245,7 @@
         <xi:include href="module_specs/Zend_Service.xml" />
         <xi:include href="module_specs/Zend_Service_Akismet.xml" />
         <xi:include href="module_specs/Zend_Service_Amazon.xml" />
+        <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
         <xi:include href="module_specs/Zend_Service_Flickr.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
