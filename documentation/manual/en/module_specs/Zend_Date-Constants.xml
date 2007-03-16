@@ -664,11 +664,19 @@
         <title>Self-Defined OUTPUT Formats with ISO</title>
 
         <para>
-            All formats which need to be self-defined correspond by standard to the ISO 8601 norm. The accepted format
-            specifiers can be changed from ISO Format to PHP's date format if you are more common with it. However, not
-            all formats defined in the ISO norm are supported. The format length is unlimited. Also, multiple usage of
-            format constants is allowed. The following examples illustrate the usage of constants from the table below
-            to create self-defined formats.
+            If you need a date format not shown above, then use a self-defined format composed from the ISO format token
+            specifiers below. The following examples illustrate the usage of constants from the table below to create
+            self-defined ISO formats. The format length is unlimited. Also, multiple usage of format constants is
+            allowed.
+        </para>
+
+        <para>
+            The accepted format specifiers can be changed from ISO Format to PHP's date format if you are more
+            comfortable with it. However, not all formats defined in the ISO norm are supported with PHP's date format
+            specifiers. Use the <code>Zend_Date::setOptions()</code> method to switch Zend_Date methods from supporting
+            ISO format specifiers to PHP date() type specifiers (see
+            <xref linkend="zend.date.constants.phpformats" />
+            below).
         </para>
 
         <example>
@@ -1078,17 +1086,16 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             If you are more comfortable with PHP's date format specifier than with ISO format specifiers, then you can
-            call the <code>usePhpDateFormat()</code>. Afterwards, all format parameters must be given with
+            use the <code>Zend_Date::setOptions('format' => 'php')</code> method to switch Zend_Date methods from
+            supporting ISO format specifiers to PHP date() type specifiers. Afterwards, all format parameters must be
+            given with
             <ulink url="http://php.net/date">PHP's <code>date()</code> format specifiers</ulink>
             . The PHP date format lacks some of the formats supported by the ISO Format, and vice-versa. If you are not
             already comfortable with it, then use the standard ISO format instead. Also, if you have legacy code using
             PHP's date format, then either manually convert it to the ISO format using
             <link linkend="zend.locale.date.normalize">Zend_Locale_Format::convertPhpToIsoFormat()</link>
-            , or
-            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::usePhpDateFormat()</link>
-            . The following examples illustrate the usage of constants from the table below to create self-defined
-            formats, <emphasis role="strong">after</emphasis> first calling
-            <code>Zend_Locale_Format::usePhpDateFormat(true)</code>.
+            , or use <code>setOptions()</code>. The following examples illustrate the usage of constants from the table
+            below to create self-defined formats.
         </para>
 
         <example>
