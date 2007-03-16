@@ -39,8 +39,8 @@ $index->addDocument($doc);
         <title>Updating Index</title>
 
         <para>
-            The same procedure is used to update an existing index. The only difference is that the index should be
-            opened without the second parameter:
+            The same procedure is used to update an existing index. The only difference
+            is that the open() method is called instead of the create() method:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
