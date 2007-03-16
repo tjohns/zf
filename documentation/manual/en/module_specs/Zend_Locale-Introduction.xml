@@ -274,13 +274,21 @@ $temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
 
         <para>
             The 'precision' option of a value is used to truncate or stretch extra digits. A value of '-1' disables
-            modification of the number of digits in the fractional part of the value.
-            The 'locale' option helps when parsing numbers and dates using separators and month names.
-            The date format 'type' option selects between CLDR/ISO date format specifier tokens and PHP's date() tokens.
-            The 'fixdate' option enables or disables heuristics that attempt to correct invalid dates.
-            The 'format' option can be used to specify a default date format string, but beware of using getDate(),
-            isDate(), getTime(), and isTime() after using setOptions() with a 'format'.  To use these four methods with
-            the default date format for a locale, use array('format' => null, 'locale' => $locale) for their options.
+            modification of the number of digits in the fractional part of the value. The 'locale' option helps when
+            parsing numbers and dates using separators and month names. The date format 'type' option selects between
+            CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
+            heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
+            format for use with <code>toNumber()</code> (see
+            <xref 
+                linkend= "zend.locale.number.localize"/>
+            ).
+        </para>
+
+        <para>
+            The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
+            isDate(), getTime(), and isTime() after using setOptions() with a 'date_format'. To use these four methods
+            with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their
+            options.
         </para>
 
         <example>
