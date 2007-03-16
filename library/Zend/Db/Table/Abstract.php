@@ -533,6 +533,7 @@ abstract class Zend_Db_Table_Abstract
             throw new Zend_Db_Table_Exception("Missing value(s) for the primary key");
         }
 
+        $whereList = array();
         foreach ($args as $keyPosition => $keyValues) {
             // Coerce the values to an array.
             // Don't simply typecast to array, because the values
@@ -545,18 +546,21 @@ abstract class Zend_Db_Table_Abstract
             }
         }
 
-        $whereOrTerms = array();
-        foreach ($whereList as $keyValueSets) {
-            $whereAndTerms = array();
-            foreach ($keyValueSets as $keyPosition => $keyValue) {
-                $whereAndTerms[] = $this->_db->quoteInto(
-                    $this->_db->quoteIdentifier($keyNames[$keyPosition]) . ' = ?',
-                    $keyValue
-                );
+        $whereClause = null;
+        if (count($whereList)) {
+            $whereOrTerms = array();
+            foreach ($whereList as $keyValueSets) {
+                $whereAndTerms = array();
+                foreach ($keyValueSets as $keyPosition => $keyValue) {
+                    $whereAndTerms[] = $this->_db->quoteInto(
+                        $this->_db->quoteIdentifier($keyNames[$keyPosition]) . ' = ?',
+                        $keyValue
+                    );
+                }
+                $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
-            $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
+            $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         }
-        $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
 
         return $this->fetchAll($whereClause);
     }
