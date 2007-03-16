@@ -23,11 +23,11 @@
         </para>
     </note>
     <note>
-        <title>Key Separator</title>
+        <title>Separator kluczy</title>
         <para>
-            By default, the key separator character is the period character (.), 
-            however this can be changed by changing the $config key "nestSeparator" 
-            when constructing the <code>Zend_Config_Ini</code> object. For example:
+            Domyślnie separatorem kluczy jest znak kropki (.), ale może on być 
+            zmieniony przez zmianę klucza konfiguracyjnego "nestSeparator" 
+            podczas tworzenia obiektu <code>Zend_Config_Ini</code>. Na przykład:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
