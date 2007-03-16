@@ -1,12 +1,21 @@
 <sect1 id="zend.config.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Config</code> is designed to simplify access to and use of configuration data within applications. It provides a nested object property based user interface for accessing such configuration data within application code. The configuration data may come from a variety of media supporting hierarchical data storage. Currently <code>Zend_Config</code> provides adapters for configuration data that are stored in text files with <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> and <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
+        <code>Zend_Config</code> is designed to simplify access to and use of configuration data within applications. It
+        provides a nested object property based user interface for accessing such configuration data within application
+        code. The configuration data may come from a variety of media supporting hierarchical data storage. Currently
+        <code>Zend_Config</code> provides adapters for configuration data that are stored in text files with
+        <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> and
+        <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
     </para>
-    <example>
+    <example id="zend.config.introduction.example.using">
         <title>Using Zend_Config Per Se</title>
         <para>
-            Normally it is expected that users would use one of the adapter classes such as <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> or <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>, but if configuration data are available in a PHP array, one may simply pass the data to the <code>Zend_Config</code> constructor in order to utilize a simple object-oriented interface:
+            Normally it is expected that users would use one of the adapter classes such as
+            <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> or
+            <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>, but if configuration data are
+            available in a PHP array, one may simply pass the data to the <code>Zend_Config</code> constructor in order
+            to utilize a simple object-oriented interface:
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Given an array of configuration data
@@ -36,7 +45,8 @@ $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->name);]]></programlisting>
     </example>
     <para>
-        As illustrated in the example above, <code>Zend_Config</code> provides nested object property syntax to access configuration data passed to its constructor.
+        As illustrated in the example above, <code>Zend_Config</code> provides nested object property syntax to access
+        configuration data passed to its constructor.
     </para>
 </sect1>
 <!--
