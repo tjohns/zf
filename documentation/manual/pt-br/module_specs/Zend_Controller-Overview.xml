@@ -124,7 +124,7 @@ Action    : index
 				</programlisting></para>
 
     <note>
-       Atualmente estamos desenvolvendo um novo roteador baseado em uma engine de reescrita que conferirá maior flexibilidade às funcionalidades atualmente presentes. Isto será incluído nas próximas versões do framework em um futuro bem próximo.
+        <para>Atualmente estamos desenvolvendo um novo roteador baseado em uma engine de reescrita que conferirá maior flexibilidade às funcionalidades atualmente presentes. Isto será incluído nas próximas versões do framework em um futuro bem próximo.</para>
     </note>
 
     <para>O nome do controlador, de sua respectiva ação, e quaisquer

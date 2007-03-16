@@ -30,7 +30,7 @@ print_r( $server-&gt;system-&gt;listMethods() );
             </programlisting>
     </example>
 
-    <para><note>
+    <note><para>
          
 
         <code>Zend_XmlRpc_Client</code>
@@ -44,7 +44,7 @@ print_r( $server-&gt;system-&gt;listMethods() );
         <code>$server-&gt;system-&gt;listMethods()</code>
 
          . 
-      </note></para>
+     </para></note>
   </sect2>
 
   <sect2 id="zend.xmlrpc.client.parameters">
@@ -266,7 +266,7 @@ $service-&gt;serviceProcedure($p1, $p2);
 ...
             </programlisting>
 
-      <para><note>
+       <note><para>
            O valor do parâmetro é cedido por uma variável PHP mas irá ser convertido para o tipo específico usando as técnicas de conversão do PHP (ex: se uma string é informada como um valor para o objeto 
 
           <code>Zend_XmlRpc_Value_Integer</code>
@@ -276,7 +276,7 @@ $service-&gt;serviceProcedure($p1, $p2);
           <code>(int)$value</code>
 
           ). 
-        </note></para>
+      </para></note>
     </sect3>
 
     <sect3 id="zend.xmlrpc.client.parameters.as_xml">
@@ -312,11 +312,11 @@ $service-&gt;serviceProcedure($p1, $p2);
     requerido e do valor de retorno do procedimento.</para>
 
     <note>
-       Nem todos os servidores XML-RPC suportam o procedimento especial 
+      <para>Nem todos os servidores XML-RPC suportam o procedimento especial 
 
       <code>system.methodSignature</code>
 
-      , e consequentemente, não suportam também a indicação de tipo. 
+      , e consequentemente, não suportam também a indicação de tipo. </para>
     </note>
 
     <para>O <code>Zend_XmlRpc_Client</code> implementa uma gama de tipos de

@@ -31,11 +31,8 @@ foreach ($results as $result) {
     </example>
 
     <note>
-       
-
-      <code>tagSearch()</code>
-
-       aceita um array de opções como segundo parâmetro opcional. 
+      <para><code>tagSearch()</code>
+      aceita um array de opções como segundo parâmetro opcional. </para>
     </note>
   </sect2>
 
@@ -95,6 +92,7 @@ foreach ($results as $result) {
 
      
 
+    <para>
     <code>Zend_Service_Flickr</code>
 
      torna fácil e rápida a recuperação de detalhes de imagens baseada em um dado "image ID". Basta usar o método 
@@ -102,6 +100,7 @@ foreach ($results as $result) {
     <code>getImageDetails()</code>
 
     , como mostrado no exemplo seguinte: 
+    </para>
 
     <example>
       <title>Recuperando Flickr Image Details</title>
