@@ -52,7 +52,7 @@
         <para>
            虽然从多重角色继承的能力非常有用，但是多重继承也带来了一定程度的复杂性。下面的例子来示例含糊情形和Zend_Acl如何解决它。
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>角色之间的多重继承</title>
             <para>
                下面的代码定义了三个基本角色 - "<code>guest</code>", "<code>member</code>", 和 "<code>admin</code>" - 其它角色可以从它们继承。接着，创建一个"<code>someUser</code>" 角色并从其它三个基本角色继承。在<code>$parents</code> 数组里这些角色出现的顺序很重要。 必要时，Zend_Acl 不但搜索为被查询的角色（这里指 "<code>someUser</code>"）定义的访问规则，而且搜索为被查询的角色所继承的角色（这里指 "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"）定义的访问规则：
@@ -120,7 +120,7 @@ $acl = new Zend_Acl();]]></programlisting>
             内容管理系统总是几乎需要一个等级结构的许可来决定它的用户的授权能力。作为示范，“Guest”组允许有限的访问，“Staff”适合大多数的执行日常操作的CMS用户，“Editor”组适合于发布、复核、存档和删除内容，最后“Administrator”组的任务包括所有其它组的内容并包括敏感的信息、用户管理、后台配置数据和备份/导出。这组许可可以被表示为一个 Role 注册表，允许每个组从“”组继承权限，也可以为单一的组提供独特的权限。这些许可可以表示如下：
          </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>一个CMS范例的访问控制</title>
           <tgroup cols="3">
             <thead>
