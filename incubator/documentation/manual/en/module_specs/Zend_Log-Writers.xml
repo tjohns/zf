@@ -37,13 +37,13 @@ $logger = new Zend_Log($writer);
 $logger->info('Informational message');
 ?>]]></programlisting>
 
-      By default, the stream will be opened in the append mode (<code>"a"</code>).  To open it
-      with a different mode, the Zend_Log_Writer_Stream constructor accepts an optional
-      second parameter for the mode.
+      By default, the stream is opened in the append mode (<code>"a"</code>).
+      To open it with a different mode, the Zend_Log_Writer_Stream constructor
+      accepts an optional second parameter for the mode.
     </para>
   
     <para>
-      The constructor of <code>Zend_Log_Writer_Stream</code> will also accept an existing stream resource:
+      The constructor of <code>Zend_Log_Writer_Stream</code> also accepts an existing stream resource:
 
       <programlisting role="php"><![CDATA[<?php
 $stream = @fopen('/path/to/logfile', 'a', false);
@@ -57,8 +57,8 @@ $logger = new Zend_Log($writer);
 $logger->info('Informational message');
 ?>]]></programlisting>
 
-      The mode cannot be specified for existing stream resources.  Specifying a mode for
-      an existing stream resource will result in an <code>InvalidArgumentException</code>.
+      The mode cannot be specified for existing stream resources. Doing so
+      will result in an <code>InvalidArgumentException</code>.
     </para>
   </sect2>
 

@@ -10,11 +10,10 @@
       <itemizedlist>
         <listitem>
           <para>
-            A Log (instance of <code>Zend_Log</code>) is the object
-            that your application will interact with most. You can have as many Log
-            objects as you like and they will not interact. A Log object must
-            contain at least one Writer, and can optionally contain one or
-            more Filters.
+            A Log (instance of <code>Zend_Log</code>) is the object that your
+            application uses the most. You can have as many Log objects as you
+            like and they will not interact. A Log object must contain at
+            least one Writer, and can optionally contain one or more Filters.
           </para>
         </listitem><listitem>
           <para>
@@ -25,7 +24,7 @@
           <para>
             A Filter (implements <code>Zend_Log_Filter_Interface</code>)
             blocks log data from being saved. A filter may be applied to an
-            individual Writer, or to a Log where it will be applied to all
+            individual Writer, or to a Log where it is applied before all
             Writers. In either case, filters may be chained.
           </para>
         </listitem>
@@ -77,9 +76,8 @@ $logger = new Zend_Log($writer);
       <title>Logging Messages</title>
       
       <para>
-        Every event that your application will send to the Log must consist of
-        a message and a corresponding priority.  To log an event, call the <code>log()</code>
-        method of a Log instance and pass it a message and priority:        
+        To log a message, call the <code>log()</code> method of a Log instance
+        and pass it the message with a corresponding priority:
 
       <programlisting role="php"><![CDATA[<?php
 $logger->log('Informational message', Zend_Log::INFO);
@@ -154,7 +152,7 @@ DEBUG   = 7;  // Debug: debug messages
 $logger->addPriority('FOO', 8);      
 ?>]]></programlisting>
 
-      The snippet above will create a new priority, <code>FOO</code>, whose
+      The snippet above creates a new priority, <code>FOO</code>, whose
       value is <code>8</code>. The new priority is then available for logging:
     
       <programlisting role="php"><![CDATA[<?php
