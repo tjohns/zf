@@ -46,6 +46,12 @@ require_once 'Zend/Service/AkismetTest.php';
 
 
 /**
+ * @see Zend_Service_Audioscrobbler_AllTests
+ */
+require_once 'Zend/Service/Audioscrobbler/AllTests.php';
+
+
+/**
  * @see Zend_Service_Delicious_AllTests
  */
 require_once 'Zend/Service/Delicious/AllTests.php';
@@ -86,6 +92,7 @@ class Zend_Service_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service');
 
         $suite->addTestSuite('Zend_Service_AkismetTest');
+        $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
         $suite->addTest(Zend_Service_Delicious_AllTests::suite());
         if (defined('TESTS_ZEND_SERVICE_SIMPY_ENABLED') && constant('TESTS_ZEND_SERVICE_SIMPY_ENABLED') !== false) {
             $suite->addTestSuite('Zend_Service_SimpyTest');
