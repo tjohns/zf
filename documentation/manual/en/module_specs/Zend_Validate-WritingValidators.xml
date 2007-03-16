@@ -18,6 +18,7 @@
         The following example demonstrates how a custom validator might be written:
 
         <programlisting role="php"><![CDATA[<?php
+
 require_once 'Zend/Validate/Interface.php';
 
 class MyValidator implements Zend_Validate_Interface
@@ -42,7 +43,9 @@ class MyValidator implements Zend_Validate_Interface
     {
         return $this->_messages;
     }
-}]]></programlisting>
+}
+
+?>]]></programlisting>
 
     </para>
 
@@ -50,8 +53,11 @@ class MyValidator implements Zend_Validate_Interface
         To add an instance of the above validator to a validator chain:
 
         <programlisting role="php"><![CDATA[<?php
+
 $validatorChain = new Zend_Validate();
-$validatorChain->addValidator(new MyValidator());]]></programlisting>
+$validatorChain->addValidator(new MyValidator());
+
+?>]]></programlisting>
 
     </para>
 
