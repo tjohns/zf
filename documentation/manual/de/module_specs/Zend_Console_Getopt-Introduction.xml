@@ -1,239 +1,114 @@
-<sect1 id="zend.console.getopt.configuration">
-    <title>Configuring Zend_Console_Getopt</title>
-
-    <sect2 id="zend.console.getopt.configuration.addrules">
-        <title>Adding Option Rules</title>
-        <para>
-            You can add more option rules in addition to those you specified
-            in the <code>Zend_Console_Getopt</code> constructor, using the
-            <code>addRules()</code> method.  The argument to
-            <code>addRules()</code> is the same as the first argument to the
-            class constructor.  It is either a string in the format of the
-            short syntax options specification, or else an associative array 
-            in the format of a long syntax options specification.
-            See <link linkend="zend.console.getopt.rules">Declaring Getopt Rules</link>
-            for details on the syntax for specifying options.
-        </para>
-        <example id="zend.console.getopt.configuration.addrules.example">
-            <title>Using addRules()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
-$opts->addRules(
-  array(
-    'verbose|v' => 'Print verbose output'
-  )
-);
-?>]]></programlisting>
-        </example>
-        <para>
-            The example above shows adding the "<code>--verbose</code>" option
-            with an alias of "<code>-v</code>" to a set of options 
-            defined in the call to the constructor.  Notice that you can mix
-            short format options and long format options in the same instance
-            of <code>Zend_Console_Getopt</code>.
-        </para>
-    </sect2>
-
-    <sect2 id="zend.console.getopt.configuration.addhelp">
-        <title>Adding Help Messages</title>
-        <para>
-            In addition to specifying the help strings when declaring option
-            rules in the long format, you can associate help strings
-            with option rules using the <code>setHelp()</code>
-            method.  The argument to the <code>setHelp()</code> method is an
-            associative array, in which the key is a flag, and the value is a
-            corresponding help string.
-        </para>
-        <example id="zend.console.getopt.configuration.addhelp.example">
-            <title>Using setHelp()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
-$opts->setHelp(
-    array(
-        'a' => 'This option chooses apple, with no parameter',
-        'b' => 'This option chooses banana, with required integer parameter',
-        'p' => 'This option chooses pear, with optional string parameter'
-    )
-);
-?>]]></programlisting>
-        </example>
-        <para>
-            If you declared options with aliases, you can use any of the 
-            aliases as the key of the associative array.
-        </para>
-        <para>
-            The <code>setHelp()</code> method is the only way to define help
-            strings if you declared the options using the short syntax.
-        </para>
-    </sect2>
-
-    <sect2 id="zend.console.getopt.configuration.addaliases">
-        <title>Adding Option Aliases</title>
-        <para>
-            You can declare aliases for options using the <code>setAliases</code>
-            method.  The argument is an associative array, whose key is
-            a flag string declared previously, and whose value is a new
-            alias for that flag.  These aliases are merged with any existing
-            aliases.  In other words, aliases you declared earlier are
-            still in effect.
-        </para>
-        <para>
-            An alias may be declared only once.  If you try to redefine
-            an alias, a <code>Zend_Console_Getopt_Exception</code> is thrown.
-        </para>
-        <example id="zend.console.getopt.configuration.addaliases.example">
-            <title>Using setAliases()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
-$opts->setAliases(
-    array(
-        'a' => 'apple',
-        'a' => 'apfel',
-        'p' => 'pear'
-    )
-);
-?>]]></programlisting>
-        </example>
-        <para>
-            In the example above, after declaring these aliases,
-            "<code>-a</code>", "<code>--apple</code>" and
-            "<code>--apfel</code>" are aliases for each other.
-            Also "<code>-p</code>" and "<code>--pear</code>" are aliases
-            for each other.
-        </para>
-        <para>
-            The <code>setAliases()</code> method is the only way to define aliases
-            if you declared the options using the short syntax.
-        </para>
-    </sect2>
-
-    <sect2 id="zend.console.getopt.configuration.addargs">
-        <title>Adding Argument Lists</title>
-        <para>
-            By default, <code>Zend_Console_Getopt</code> uses
-            <code>$_SERVER['argv']</code> for the array of command-line
-            arguments to parse.  You can alternatively specify the array of
-            arguments as the second constructor argument.  Finally, you
-            can append more arguments to those already used using the
-            <code>addArguments()</code> method, or you can replace the current
-            array of arguments using the <code>setArguments()</code> method.
-            In both cases, the parameter to these methods is a simple array of
-            strings.  The former method appends the array to the current
-            arguments, and the latter method substitutes the array for the
-            current arguments.
-        </para>
-        <example id="zend.console.getopt.configuration.addargs.example">
-            <title>Using addArguments() and setArguments()</title>
-            <programlisting role="php"><![CDATA[<?php
-// By default, the constructor uses $_SERVER['argv']
-$opts = new Zend_Console_Getopt('abp:');
-
-// Append an array to the existing arguments
-$opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-
-// Substitute a new array for the existing arguments
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-?>]]></programlisting>
-        </example>
-    </sect2>
-
-    <sect2 id="zend.console.getopt.configuration.config">
-        <title>Adding Configuration</title>
-        <para>
-            The third parameter to the <code>Zend_Console_Getopt</code>
-            constructor is an array of configuration options that affect
-            the behavior of the object instance returned. You can also
-            specify configuration options using the <code>setOptions()</code>
-            method, or you can set an individual option using the
-            <code>setOption()</code> method.
-        </para>
-        <note>
-            <title>Clarifying the term "option"</title>
+<sect1 id="zend.console.getopt.introduction">
+    <title>Introduction to Getopt</title>
+    <para>
+        The <code>Zend_Console_Getopt</code> class helps command-line
+        applications to parse their options and arguments.
+    </para>
+    <para>
+        Users may specify command-line arguments when
+        they execute your application.  These arguments have meaning to the
+        application, to change the behavior in some way, or choose resources,
+        or specify parameters.  Many options have developed customary meaning,
+        for example "<code>--verbose</code>" enables extra output from many
+        applications.  Other options may have a meaning that is different for
+        each application.  For example, "<code>-c</code>" enables different
+        features in <command>grep</command>, <command>ls</command>, and
+        <command>tar</command>.
+    </para>
+    <para>
+        Below are a few definitions of terms.  Common usage of the terms
+        varies, but this documentation will use the definitions below.
+    </para>
+    <itemizedlist>
+        <listitem>
             <para>
-                The term "option" is used for configuration of the
-                <code>Zend_Console_Getopt</code> class to match terminology 
-                used elsewhere in the Zend Framework.  These are not the same
-                things as the command-line options that are parsed by
-                the <code>Zend_Console_Getopt</code> class.
+                "argument": a string that occurs on the command-line
+                following the name of the command.  Arguments may be
+                options or else may appear without an option, to name
+                resources on which the command operates.  
             </para>
-        </note>
+        </listitem>
+        <listitem>
+            <para>
+                "option": an argument that signifies that the command
+                should change its default behavior in some way.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                "flag": the first part of an option, identifies
+                the purpose of the option.  A flag is preceded
+                conventionally by one or two dashes
+                ("<code>-</code>" or "<code>--</code>").
+                A single dash precedes a single-character flag
+                or a cluster of single-character flags.
+                A double-dash precedes a multi-character flag.
+                Long flags cannot be clustered.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                "parameter": the secondary part of an option; a data value
+                that may accompany a flag, if it is applicable to the
+                given option.  For example, many commands accept a
+                "<code>--verbose</code>" option, but typically 
+                this option has no parameter.  However, an option like
+                "<code>--user</code>" almost always requires
+                a following parameter.
+            </para>
+            <para>
+                A parameter may be given as a separate argument following a
+                flag argument, or as part of the same argument string,
+                separated from the flag by an equals symbol ("<code>=</code>").
+                The latter form is supported only by long flags.
+                For example,
+                <code>-u username</code>, <code>--user username</code>,
+                and <code>--user=username</code> are forms supported
+                by <code>Zend_Console_Getopt</code>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                "cluster": multiple single-character flags combined
+                in a single string argument and preceded by a single
+                dash.  For example, "<command>ls -1str</command>"
+                uses a cluster of four short flags.  This command is
+                equivalent to "<command>ls -1 -s -t -r</command>".
+                Only single-character flags can be clustered.
+                You cannot make a cluster of long flags.
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+        For example, in "<code>mysql --user=root mydatabase</code>",
+        "<code>mysql</code>" is a <emphasis>command</emphasis>,
+        "<code>--user=root</code>" is an <emphasis>option</emphasis>,
+        "<code>--user</code>" is a <emphasis>flag</emphasis>,
+        "<code>root</code>" is a <emphasis>parameter</emphasis> to the option,
+        and "<code>mydatabase</code>" is an argument but not an option
+        by our definition.
+    </para>
+    <para>
+        <code>Zend_Console_Getopt</code> provides an interface to declare
+        which flags are valid for your application, output an error and usage
+        message if they use an invalid flag, and report to your application
+        code which flags the user specified.
+    </para>
+    <note>
+        <title>Getopt is not an application framework</title>
         <para>
-            The currently supported 
-            options have const definitions in the class.  The options,
-            their const identifiers (with literal values in parentheses)
-            are listed below:
+            <code>Zend_Console_Getopt</code> does <emphasis>not</emphasis>
+            interpret the meaning of flags and parameters, nor does this class
+            implement application workflow or invoke application code.
+            You must implement those actions in your own application code.
+            You can use the <code>Zend_Console_Getopt</code> class to parse
+            the command-line and provide object-oriented methods for querying
+            which options were given by a user, but code to use this
+            information to invoke parts of your application should be in
+            another PHP class.
         </para>
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash"),
-                    if true, enables the special flag "<code>--</code>" to
-                    signify the end of flags.  Command-line arguments following
-                    the double-dash signifier are not interpreted as options,
-                    even if the arguments start with a dash.  This configuration
-                    option is true by default.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"),
-                    if true, makes flags aliases of each other if they differ
-                    only in their case.  That is, "<code>-a</code>" and
-                    "<code>-A</code>" will be considered to be synonymous flags.
-                    This configuration option is false by default.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") may have values <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") and <code>Zend_Console_Getopt::MODE_GNU</code>
-                    ("gnu").  It should not be necessary to use this option
-                    unless you extend the class with additional syntax forms.
-                    The two modes supported in the base <code>Zend_Console_Getopt</code>
-                    class are unambiguous.  If the specifier is a string, the
-                    class assumes <code>MODE_GNU</code>, otherwise it assumes
-                    <code>MODE_ZEND</code>.  But if you extend the class and
-                    add more syntax forms, you may need to specify the mode
-                    using this option.
-                </para>
-            </listitem>
-        </itemizedlist>
-        <para>
-            More configuration options may be added as future enhancements
-            of this class.
-        </para>
-        <para>
-            The two arguments to the <code>setOption()</code> method are
-            a configuration option name and an option value.
-        </para>
-        <example id="zend.console.getopt.configuration.config.example.setoption">
-            <title>Using setOption()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);
-?>]]></programlisting>
-        </example>
-        <para>
-            The argument to the <code>setOptions()</code> method is
-            an associative array.  The keys of this array are the configuration
-            option names, and the values are configuration values.
-            This is also the array format used in the class constructor.
-            The configuration values you specify are merged with the current
-            configuration; you don't have to list all options.
-        </para>
-        <example id="zend.console.getopt.configuration.config.example.setoptions">
-            <title>Using setOptions()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
-$opts->setOptions(
-    array(
-        'ignoreCase' => true,
-        'dashDash'   => false
-    )
-);
-?>]]></programlisting>
-        </example>
-    </sect2>
-
+    </note>
+    <para>
+        The following sections describe usage of <code>Zend_Console_Getopt</code>.
+    </para>
 </sect1>
