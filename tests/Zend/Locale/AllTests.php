@@ -26,12 +26,14 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 /**
- * Read in user-defined test configuration if available; otherwise, read default test configuration
+ * Read in user-defined test configuration if available; otherwise, read default test configuration.
+ * This facilitates running "php AllTests.php" in this subdirectory.
  */
-if (is_readable('../../TestConfiguration.php')) {
-    require_once '../../TestConfiguration.php';
+$_test_configuration = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .  'TestConfiguration.php');
+if (is_readable($_test_configuration)) {
+    include_once $_test_configuration;
 } else {
-    require_once '../../TestConfiguration.php.dist';
+    include_once "$_test_configuration.dist";
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
