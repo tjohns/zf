@@ -43,7 +43,7 @@ class Zend_Date extends Zend_Date_DateObject {
     private $_Fractional = 0;
     private $_Precision  = 3;
 
-    private static $_Options = array('format' => 'iso');
+    private static $_Options = array('date_format' => 'iso');
 
     // Class wide Date Constants
     // day formats
@@ -218,7 +218,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             if (isset(self::$_Options[$name])) {
                 switch($name) {
-                    case 'format' :
+                    case 'date_format' :
                         if (($value != 'php') && ($value != 'iso')) {
                             throw new Zend_Date_Exception("Unknown format ($value) for dates, only 'iso' and 'php' supported", $value);
                         }
@@ -366,7 +366,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
-        } else if (((self::$_Options['format'] == 'php') && ($type === null)) or ($type == 'php')) {
+        } else if (((self::$_Options['date_format'] == 'php') && ($type === null)) or ($type == 'php')) {
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
@@ -2320,7 +2320,7 @@ class Zend_Date extends Zend_Date_DateObject {
             default :
                 if (!is_numeric($date)) {
                     try {
-                        if (self::$_Options['format'] == 'php') {
+                        if (self::$_Options['date_format'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
                         }
                         $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fix_date' => true, 'type' => 'iso'));
@@ -2462,7 +2462,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $locale);
         } else {
-            if (self::$_Options['format'] == 'php') {
+            if (self::$_Options['date_format'] == 'php') {
                 $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
             try {
@@ -2593,7 +2593,7 @@ class Zend_Date extends Zend_Date_DateObject {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
         } else {
-            if (self::$_Options['format'] == 'php') {
+            if (self::$_Options['date_format'] == 'php') {
                 $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
             }
             try {
