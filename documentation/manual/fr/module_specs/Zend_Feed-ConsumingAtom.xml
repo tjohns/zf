@@ -1,4 +1,4 @@
-<sect1 id="zend.feed.consuming-atom">
+﻿<sect1 id="zend.feed.consuming-atom">
 <title>Consommer un flux Atom</title>
 
     <para>
@@ -14,7 +14,7 @@
     (contenu).
     </para>
 
-    <example>
+    <example id="zend.feed.consuming-atom.example.usage">
         <title>Emploi basique de Zend_Feed_Atom</title>
         <para>
             Pour lire un flux Atom et afficher le titre (propriété 

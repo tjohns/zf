@@ -41,7 +41,7 @@
         </para>
     </note>
 
-    <example>
+    <example id="zend.feed.introduction.example.rss">
         <title>Manipuler des données RSS avec Zend_Feed</title>
         <programlisting role="php"><![CDATA[
 <?php

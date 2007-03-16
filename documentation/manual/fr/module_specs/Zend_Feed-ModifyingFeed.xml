@@ -1,4 +1,4 @@
-<sect1 id="zend.feed.modifying-feed">
+﻿<sect1 id="zend.feed.modifying-feed">
     <title>Modifier la structure du flux ou des entrées</title>
 
     <para>
@@ -9,7 +9,7 @@ en code XML bien formé et enregistrer ensuite ce code dans un fichier ou
 le renvoyer au serveur.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modifier l'entrée existante d'un flux</title>
         <programlisting role="php"><![CDATA[
 <?php
@@ -48,7 +48,7 @@ noms par défaut si vous ne spécifiez pas explicitement un autre espace
 de noms.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.creating">
         <title>Créer une entrée Atom dont les éléments appartiennent à un espace de noms personnalisé</title>
         <programlisting role="php"><![CDATA[
 <?php

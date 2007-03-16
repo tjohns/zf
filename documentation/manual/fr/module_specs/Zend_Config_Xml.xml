@@ -9,7 +9,7 @@
             Des données de configuration lues grâce à <code>Zend_Config_Xml</code> sont toujours des chaînes de caractères (<code>string</code>). La conversion des données à partir des chaînes de caractères vers d'autres types de données est laissée aux développeurs en fonction de leurs besoins.
         </para>
     </note>
-    <example>
+    <example id="zend.config.adapters.xml.example.using">
         <title>Utiliser Zend_Config_Xml</title>
         <para>
             Cet exemple illustre une utilisation de base de <code>Zend_Config_Xml</code> pour le chargement des données de configuration à partir d'un fichier XML. Dans cet exemple il y a des données de configuration pour un environnement de production et pour un environnement de test. Puisque les données de configuration de l'environnement de test sont très semblables à celles de la production, la section de test hérite de la section de production. Dans ce cas, la décision est arbitraire et pourrait avoir été écrite réciproquement, avec la section de production héritant de la section de test, bien que ceci ne doit pas être le cas pour des situations plus complexes. Supposons, que les données suivantes de configuration sont contenues dans <code>/chemin/vers/config.xml</code> :
@@ -43,7 +43,7 @@ require_once 'Zend/Config/Xml.php';
 $config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 
 echo $config->database->host; // affiche "dev.example.com"
-echo $config->database->name; // affiche "dbname"]]></programlisting>
+echo $config->database->name; // affiche "dbname"?>]]></programlisting>
     </example>
 </sect1>
 <!--

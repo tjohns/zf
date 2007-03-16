@@ -1,4 +1,4 @@
-<sect1 id="zend.feed.consuming-atom-single-entry">
+﻿<sect1 id="zend.feed.consuming-atom-single-entry">
     <title>Consommer une entrée Atom particulière</title>
 
     <para>
@@ -15,7 +15,7 @@
         flux "anonyme" pour contenir l'entrée.
     </para>
 
-    <example>
+    <example id="zend.feed.consuming-atom-single-entry.example.atom">
         <title>Lire un flux Atom constitué d'une seule entrée</title>
         <programlisting role="php"><![CDATA[
 <?php
@@ -34,7 +34,7 @@ entrées si vous êtes sûr que vous accédez à un document contenant une
 seule balise <code>&lt;entry&gt;</code> :
     </para>
 
-    <example>
+    <example id="zend.feed.consuming-atom-single-entry.example.entryatom">
         <title>Utiliser directement l'objet Zend_Feed_EntryAtom</title>
         <programlisting role="php"><![CDATA[
 <?php

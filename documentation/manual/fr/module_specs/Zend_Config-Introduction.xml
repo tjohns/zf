@@ -3,7 +3,7 @@
     <para>
         <code>Zend_Config</code> est conçu pour simplifier l'accès et l'utilisation des données de configuration dans les applications. Il fournit un interface utilisateur basée sur des propriétés d'objets imbriquées. Les données de configuration peuvent venir de sources variées supportant une organisation hiérarchique des données. Actuellement <code>Zend_Config</code> fournit des adaptateurs pour les données de configuration qui sont stockées dans des fichier textes avec <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> et <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
     </para>
-    <example>
+    <example id="zend.config.introduction.example.using">
         <title>Utilisation native de Zend_Config</title>
         <para>
             Normalement on s'attend à ce que les utilisateurs emploient une des classes d'adaptateur telles que <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> ou <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>, mais si les données de configuration sont disponibles dans un tableau PHP, on peut simplement passer les données au constructeur de <code>Zend_Config</code> afin d'utiliser une interface orientée objet simple :

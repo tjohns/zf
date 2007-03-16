@@ -16,10 +16,10 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);]]></programlisting>
+$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);?>]]></programlisting>
         </para>
     </note>    
-    <example>
+    <example id="zend.config.adapters.ini.example.using">
         <title>Utiliser Zend_Config_Ini</title>
         <para>
             Cet exemple illustre une utilisation de base de <code>Zend_Config_Ini</code> pour le chargement des données de configuration à partir d'un fichier INI. Dans cet exemple il y a des données de configuration pour un environnement de production et pour un environnement de test. Puisque les données de configuration de l'environnement de test sont très semblables à celles de la production, la section de test hérite de la section de production. Dans ce cas, la décision est arbitraire et pourrait avoir été écrite réciproquement, avec la section de production héritant de la section de test, bien que ceci ne doit pas être le cas pour des situations plus complexes. Supposons, que les données suivantes de configuration sont contenues dans <code>/chemin/vers/config.ini</code> :
@@ -48,7 +48,7 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 
 echo $config->database->host; // affiche "dev.example.com"
-echo $config->database->name; // affiche "dbname"]]></programlisting>
+echo $config->database->name; // affiche "dbname"?>]]></programlisting>
     </example>
 </sect1>
 <!--
