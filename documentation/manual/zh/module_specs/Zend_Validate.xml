@@ -31,6 +31,7 @@
     <para>
         下面的例子示例一个e-mail地址的校验：
         <programlisting role="php"><![CDATA[<?php
+        
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
@@ -40,7 +41,9 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]></programlisting>
+}
+
+?>]]></programlisting>
 
     </para>
 
