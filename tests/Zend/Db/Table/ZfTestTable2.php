@@ -14,26 +14,26 @@
  *
  * @category   Zend
  * @package    Zend_Db
- * @subpackage Table
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Db_Table_Row_Abstract
- */
-require_once 'Zend/Db/Table/Row/Abstract.php';
+require_once('Zend/Db/Table.php');
 
-/**
- * Reference concrete class that extends Zend_Db_Table_Row_Abstract.
- * Developers may also create their own classes that extend the abstract class.
- *
- * @category   Zend
- * @package    Zend_Db
- * @subpackage Table
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class Zend_Db_Table_Row extends Zend_Db_Table_Row_Abstract
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+class Zend_Db_Table_ZfTestTable2 extends Zend_Db_Table_Abstract
 {
+    protected $_name = 'zf_test_table2';
+    protected $_primary = array();
+    protected $_referenceMap = array(
+        'News' => array(
+            self::COLUMNS         => array('news_id'),
+            self::REF_TABLE_CLASS => 'Zend_Db_Table_ZfTestTable',
+            self::REF_COLUMNS     => array('id'),
+            self::ON_DELETE       => self::CASCADE,
+            self::ON_UPDATE       => self::CASCADE
+        )
+    );
 }
