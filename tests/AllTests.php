@@ -22,7 +22,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 set_include_path(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'
                  . PATH_SEPARATOR . '.' . PATH_SEPARATOR . get_include_path());
 
-require_once 'ZendTest.php';
 require_once 'Zend/AllTests.php';
 
 class AllTests
