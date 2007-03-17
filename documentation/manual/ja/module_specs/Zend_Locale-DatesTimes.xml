@@ -23,7 +23,7 @@
         <para>
             <code>getDate()</code> メソッドは、地域化された書式の日付を含む文字列をパースします。
             結果は構造化された配列で返されます。この配列のキーが、日付の各部分を表します。
-            さらに、この配列には 'format' というキーがあり、
+            さらに、この配列には 'date_format' というキーがあり、
             入力日付文字列をパースする際に使用する書式文字列がここに含まれます。
             地域化された日付文字列が日付/時刻のすべての要素を含んでいるとは限らないので、
             配列のすべてのキーが存在するとは限りません。
@@ -154,8 +154,8 @@
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
-$dateObject = Zend_Date('13.04.2006', 'dd.MM.yyyy'); // この日付に対応する Zend_Date オブジェクトを作成します
+$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
+$dateObject = Zend_Date('13.04.2006', array('date_format' => 'dd.MM.yyyy')); // この日付に対応する Zend_Date オブジェクトを作成します
 
 print_r($date); // 出力は、このようになります
 
@@ -168,7 +168,7 @@ Array
 )
 
 // 入力値に何らかの問題がある場合に、自動的に修正します
-$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', 'dd.MM.yyyy');
+$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', array('date_format' => 'dd.MM.yyyy'));
 
 print_r($date); // 出力は、このようになります
 
@@ -190,6 +190,11 @@ Array
             <code>getCorrectableDate()</code> は簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
+            '<code>null</code>' を '<code>date_format</code>'
+            の値として指定すると、<code>setOptions()</code>
+            で設定されているクラス全体のデフォルト日付書式を使用しないようにできます。
+            これにより、getDate は <code>$locale</code>
+            のデフォルトの日付書式を使用するようになります。
         </para>
 
         <example>
@@ -198,7 +203,7 @@ Array
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2006', null, $locale);
+$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => null, 'locale' => $locale));
 
 print_r ($date);
 ?>]]></programlisting>
@@ -215,7 +220,7 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => null, 'locale' => $locale);
 
 print_r ($date);
 ?>]]></programlisting>
@@ -233,7 +238,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
+$date = Zend_Locale_Format::getDate('13200504T551422', array('date_format' => 'ddyyyyMM ssmmHH');
 
 print_r ($date);
 ?>]]></programlisting>
@@ -343,7 +348,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getCorrectableDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getCorrectableDate('41.10.20', array('date_format' => 'ddMMyy'));
 
 // 41 は、日付ではなく年として返されます
 print_r ($date);
@@ -357,7 +362,7 @@ print_r ($date);
         <title>日付かどうかの確認</title>
 
         <para>
-            <code>isDate($inputString, $format, $locale)</code> を使用して、
+            <code>isDate($inputString, array('date_format' => $format, $locale))</code> を使用して、
             指定した文字列が有効な日付を含むかどうかを調べます。
             <code>isDate()</code> メソッドは <code>getDate()</code> を使用します。
             <code>getCorrectableDate()</code> を使用すると、
@@ -373,7 +378,7 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
+if (Zend_Locale_Format::isDate('13.Apr.2006', array('date_format' => null, $locale)) {
     print "日付です";
 } else {
     print "日付ではありません";
@@ -401,7 +406,7 @@ if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::getTime('13:44:42', $locale) {
+if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => null, 'locale' => $locale)) {
     print "時刻です";
 } else {
     print "時刻ではありません";
@@ -426,7 +431,7 @@ if (Zend_Locale_Format::getTime('13:44:42', $locale) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isTime('13:44:42', $locale) {
+if (Zend_Locale_Format::isTime('13:44:42', array('date_format' => null, 'locale' => $locale)) {
     print "時刻です";
 } else {
     print "時刻ではありません";

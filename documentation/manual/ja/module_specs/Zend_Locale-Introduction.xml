@@ -275,8 +275,8 @@ require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';
 
 $usLocale = new Zend_Locale('en_US');
-$date = new Zend_Date('2006',Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $usLocale);
+$date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
+$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $usLocale);
 ?>]]></programlisting>
         </example>
 
@@ -293,8 +293,42 @@ require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';
 
 $locale = new Zend_Locale();
-$date = new Zend_Date('2006',Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $locale);
+$date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
+$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.formatoptions">
+
+        <title>Zend_Locale_Format::setOptions(array $options)</title>
+
+        <para>
+            オプション 'precision' の値を使用して、桁数の切り詰めあるいは拡張を行います。
+            '-1' を指定すると、値の小数部分の桁数を変更しないようにします。
+            オプション 'locale' は、数値や日付をパースする際の区切り文字や月名を判断するために使用します。
+            オプション 'format_type' では、CLDR/ISO 日付書式指定トークンおよび PHP
+            の date() で使用するトークンのどちらを使用するかを選択します。
+            オプション 'fix_date' は、無効な形式の日付に対する自動修正処理を有効あるいは無効にします。
+            オプション 'number_format' は、<code>toNumber()</code>
+            で使用するデフォルトの数値書式を指定します
+            (詳細は <xref linkend= "zend.locale.number.localize"/> を参照ください)。
+        </para>
+
+        <para>
+            'date_format' オプションでデフォルトの日付書式文字列を指定することができます。
+            しかし、setOptions() で 'date_format' を指定した後で getDate() や
+            isDate()、getTime() そして isTime() を使用する際には十分注意しましょう。
+            これらのメソッドをそのロケールのデフォルトの日付書式で使用するには
+            array('date_format' => null, 'locale' => $locale) をメソッドのオプションで指定します。
+        </para>
+
+        <example>
+            <title>日付のデフォルトを、ウェブユーザの正しいロケールに設定する</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
 ?>]]></programlisting>
         </example>
 
