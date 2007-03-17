@@ -40,6 +40,8 @@ ECSRC=@ECSRC@
 HERE=@HERE@
 
 DTD_URL=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
+XSL_URL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+HTML_XSL=html.xsl
 MODULE=module_specs
 XMLFILE=
 
@@ -58,7 +60,10 @@ html: html/index.html
 
 html/index.html: manual.xml $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
-	$(XSLTPROC) --xinclude --output html/index.html html.xsl manual.xml
+	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) manual.xml
+
+$(HTML_XSL): $(HTML_XSL).in
+	sed -e 's!@XSL_URL@!$(XSL_URL)!' $? > $@
 
 # Build the docs in PDF format
 
