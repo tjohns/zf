@@ -493,9 +493,6 @@ $res = $cache->foobar2('1', '2');
 	        	sparen (das System wird ein "HTTP 304 nicht geändert" schicken, wenn der Cache gefunden wurde und wenn
 	        	der Browser bereits eine gültige Version hat).
 	        </para>
-	        <note><para>
-                Zend_Cache_Frontend_Page ist wirklich eine "Alpha Version" und ist zukünftig für Verbesserungen vorgesehen.
-	        </para></note>
     	</sect3>
     	<sect3 id="zend.cache.frontends.page.options">
 	        <title>Mögliche Optionen (Für dieses Frontend in der Zend_Cache Factory)</title>

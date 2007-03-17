@@ -276,7 +276,7 @@ $temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
         <para>
             The 'precision' option of a value is used to truncate or stretch extra digits. A value of '-1' disables
             modification of the number of digits in the fractional part of the value. The 'locale' option helps when
-            parsing numbers and dates using separators and month names. The date format 'type' option selects between
+            parsing numbers and dates using separators and month names. The date format 'format_type' option selects between
             CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
             heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
             format for use with <code>toNumber()</code> (see
@@ -296,7 +296,7 @@ $temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
             <title>Dates default to correct locale of web users</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'fixdate' => true, 'type' => 'php');
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
 ?>]]></programlisting>
         </example>
 
