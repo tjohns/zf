@@ -1,16 +1,17 @@
 <sect1 id="zend.debug.dumping">
 
-    <title>Dumping Variables</title>
+    <title>変数の出力</title>
 
     <para>
-        The static method <code>Zend_Debug::dump()</code> prints or returns
-        information about an expression.  This simple technique of debugging is
-        common, because it is easy to use in an ad hoc fashion, and requires no
-        initialization, special tools, or debugging environment.
+        静的メソッド <code>Zend_Debug::dump()</code> は、
+        式の内容を表示したり返したりします。この単純なデバッグ手法は、
+        一般的によく用いられています。というのも、
+        簡単に使用することができ、事前準備や特別なツール、
+        デバッグ用環境などが不要だからです。
     </para>
 
     <example id="zend.debug.dumping.example">
-        <title>Example of dump() method</title>
+        <title>dump() メソッドの例</title>
         <programlisting role="php"><![CDATA[<?php
 
 Zend_Debug::dump($var, $label=null, $echo=true)
@@ -19,49 +20,46 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </example>
 
     <para>
-        The <code>$var</code> argument specifies the expression or variable
-        about which the <code>Zend_Debug::dump()</code> method outputs
-        information.
+        引数 <code>$var</code> で指定した式や変数についての情報を
+        <code>Zend_Debug::dump()</code> メソッドが出力します。
     </para>
 
     <para>
-        The <code>$label</code> argument is a string to be prepended to the
-        output of <code>Zend_Debug::dump()</code>.  It may be useful, for
-        example, to use labels if you are dumping information about multiple
-        variables on a given screen.
+        引数 <code>$label</code> は、<code>Zend_Debug::dump()</code>
+        の出力の前に出力される文字列です。
+        これは、たとえば複数の変数の内容を出力する際に便利です。
     </para>
 
     <para>
-        The boolean <code>$echo</code> argument specifies whether the output
-        of <code>Zend_Debug::dump()</code> is echoed or not.
-        If <code>true</code>, the output is echoed.
-        Regardless of the value of the <code>$echo</code> argument, the 
-        return value of this method contains the output.
+        論理型の <code>$echo</code> で、<code>Zend::dump()</code> の結果を
+        echo するかどうかを指定します。<code>TRUE</code> の場合は出力が
+        echo されます。<code>$echo</code> の設定にかかわらず、
+        出力結果は常にメソッドの返り値となります。
     </para>
 
     <para>
-        It may be helpful to understand that internally, 
-        <code>Zend_Debug::dump()</code> method wraps the PHP function
-        <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.
-        If the output stream is detected as a web presentation, 
-        the output of <code>var_dump()</code> is escaped using
+        内部構造を知っておくと、挙動が理解しやすくなります。
+        <code>Zend_Debug::dump()</code> メソッドは、PHP の関数
+        <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>
+        をラップしたものです。出力ストリームがウェブに渡された場合、
+        <code>var_dump()</code> の出力は
         <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink>
-        and wrapped with (X)HTML <code>&lt;pre&gt;</code> tags.
+        でエスケープされ、(X)HTML の <code>&lt;pre&gt;</code> タグで囲まれます。
     </para>
 
     <tip>
-        <title>Debugging with Zend_Log</title>
+        <title>Zend_Log を使用したデバッグ</title>
         <para>
-            Using <code>Zend_Debug::dump()</code> is best for ad hoc 
-            debugging during software development.  You can add code to dump
-            a variable and then remove the code very quickly.
+            <code>Zend_Debug::dump()</code> は、ソフトウェアの開発中の
+            ちょっとしたデバッグには最適です。
+            変数の中身を見るメソッドを追加したり削除したりするのが手っ取り早くできます。
         </para>
         <para>
-            Also consider the <link linkend="zend.log.introduction">Zend_Log</link>
-            component when writing more permanent debugging code.
-            For example, you can use the <code>DEBUG</code> log level and the
-            Stream log writer, to output the string returned by
-            <code>Zend_Debug::dump()</code>.
+            その場限りのコードではなくずっと使用し続けるデバッグコードを書くのなら、
+            <link linkend="zend.log.introduction">Zend_Log</link>
+            の使用を検討してください。たとえば、ログレベルを
+            <code>DEBUG</code> にして Stream ログライターを使用すると、
+            <code>Zend_Debug::dump()</code> が返す文字列を出力することができます。
         </para>
     </tip>
 

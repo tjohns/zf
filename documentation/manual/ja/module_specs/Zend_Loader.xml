@@ -1,38 +1,38 @@
 <sect1 id="zend.loader.load">
 
-    <title>Loading Files and Classes Dynamically</title>
+    <title>ファイルやクラスの動的な読み込み</title>
 
     <para>
-        The Zend_Loader class includes methods to help you load files dynamically.
+        Zend_Loader クラスは、ファイルを動的に読み込むためのメソッドを提供します。
     </para>
 
     <tip>
-        <title>Zend_Loader vs. require_once()</title>
+        <title>Zend_Loader 対 require_once()</title>
         <para>
-            The Zend_Loader methods are best used if the filename you need to
-            load is variable.  For example, if it is based on a parameter from
-            user input or method argument.  If you are loading a file or a
-            class whose name is constant, there is no benefit to using
-            Zend_Loader over using traditional PHP functions such as
-            <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
+            Zend_Loader のメソッドは、読み込みたいファイルの名前が変化する場合に便利です。
+            たとえば、ユーザの入力やメソッドの引数などのパラメータに基づいたファイル名を使用する場合などです。
+            もし読み込むファイルやクラスの名前が決まっている場合は、
+            <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>
+            のような PHP の関数ではなくあえて Zend_Loader を使用するメリットはありません。
         </para>
     </tip>
 
     <sect2 id="zend.loader.load.file">
 
-        <title>Loading Files</title>
+        <title>ファイルの読み込み</title>
 
         <para>
-            The static method <code>Zend_Loader::loadFile()</code> loads a PHP
-            file.  The file loaded may contain any PHP code.
-            The method is a wrapper for the PHP function
-            <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            This method throws <code>Zend_Exception</code> on failure, for example
-            if the specified file does not exist.
+            静的メソッド <code>Zend_Loader::loadFile()</code>
+            は、PHP ファイルを読み込みます。
+            読み込まれるファイルには任意の PHP コードを含めることができます。
+            このメソッドは PHP 関数
+            <ulink url="http://php.net/include"><code>include()</code></ulink>
+            のラッパーで、失敗した場合 (たとえば指定したファイルが存在しないなど)
+            には <code>Zend_Exception</code> をスローします。
         </para>
 
         <example id="zend.loader.file.example">
-            <title>Example of loadFile() method</title>
+            <title>loadFile() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadFile($filename, $dirs=null, $once=false)
@@ -41,43 +41,43 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
     </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to load,
-            which must not contain any path information.
-            A security check is performed on <code>$filename</code>.
-            The <code>$filename</code> may only contain alphanumeric characters,
-            dashes ("-"), underscores ("_"), or periods (".").
-            No such restriction is placed on the <code>$dirs</code> argument.
+            引数 <code>$filename</code> には読み込むファイル名を指定します。
+            ここにはパス情報を含めてはいけません。<code>$filename</code>
+            に対してはセキュリティチェックが行われます。
+            <code>$filename</code> に含めることができるのは英数字、ダッシュ ("-")、
+            アンダースコア ("_") あるいはピリオド (".") だけです。
+            引数 <code>$dirs</code> にはそのような制限はありません。
         </para>
 
         <para>
-            The <code>$dirs</code> argument specifies directories to search for
-            the file.  If <code>NULL</code>, only the <code>include_path</code>
-            is searched.  If a string or an array, the directory or directories
-            specified will be searched, and then the <code>include_path</code>.
+            引数 <code>$dirs</code> にはファイルを探すディレクトリを指定します。
+            <code>NULL</code> の場合は <code>include_path</code> の中のみを対象とします。
+            文字列あるいは配列を指定すると、指定されたディレクトリをまず探した後で、それから
+            <code>include_path</code> を探します。
         </para>
 
         <para>
-            The <code>$once</code> argument is a boolean.  If <code>TRUE</code>,
-            <code>Zend_Loader::loadFile()</code> uses the PHP function
+            引数 <code>$once</code> は論理値です。<code>TRUE</code> を指定すると、
+            <code>Zend_Loader::loadFile()</code> は PHP の関数
             <ulink url="http://php.net/include"><code>include_once()</code></ulink>
-            for loading the file, otherwise the PHP function
+            でファイルを読み込みます。それ以外の場合は
             <ulink url="http://php.net/include_once"><code>include()</code></ulink>
-            is used.
+            を使用します。
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.class">
 
-        <title>Loading Classes</title>
+        <title>クラスの読み込み</title>
 
         <para>
-            The static method <code>Zend_Loader::loadClass($class, $dirs)</code>
-            loads a PHP file and then checks for the existance of the class.
+            静的メソッド <code>Zend_Loader::loadClass($class, $dirs)</code>
+            は、PHP ファイルを読み込んでクラスが存在するかどうかを確かめます。
         </para>
 
         <example id="zend.loader.class.example">
-            <title>Example of loadClass() method</title>
+            <title>loadClass() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadClass('Container_Tree',
@@ -91,60 +91,62 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            The string specifying the class is converted to a relative path
-            by substituting directory separates for underscores, and appending
-            '.php'.  In the example above, 'Container_Tree' becomes 'Container/Tree.php'.
+            クラスを指定する文字列は、アンダースコアをパス区切り文字に変換し、
+            最後に '.php' を追加されます。上の例では、
+            'Container_Tree' は 'Container/Tree.php' となります。
         </para>
 
         <para>
-            If <code>$dirs</code> is a string or an array,
-            <code>Zend_Loader::loadClass()</code> searches the directories in
-            the order supplied.  The first matching file is loaded.  If the file
-            does not exist in the specified <code>$dirs</code>, then the
-            include_path for the PHP environment is searched.
+            <code>$dirs</code> に文字列あるいは配列を指定すると、
+            <code>Zend_Loader::loadClass()</code> は指定した順にそのディレクトリを探します。
+            そして最初に見つかったファイルを読み込みます。
+            ディレクトリ <code>$dirs</code> にファイルがみつからない場合は、
+            PHP の include_path で指定された場所を探します。
         </para>
 
         <para>
-            If the file is not found or the class does not exist after the load,
-            <code>Zend_Loader::loadClass()</code> throws a Zend_Exception.
+            ファイルが見つからない場合、あるいは読み込んだファイルにクラスが存在しない場合は
+            <code>Zend_Loader::loadClass()</code> は Zend_Exception
+            をスローします。
         </para>
 
         <para>
-            <code>Zend_Loader::loadFile()</code> is used for loading, so the
-            class name may only contain alphanumeric characters and the hyphen
-            ('-'), underscore ('_'), and period ('.').
+            ファイルの読み込みには <code>Zend::loadFile()</code> を使用するので、
+            クラス名として指定できるのは
+            英数字とハイフン ('-')、アンダースコア ('_') そしてピリオド ('.') だけです。
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.isreadable">
 
-        <title>Testing if a File is Readable</title>
+        <title>ファイルが読み込み可能かどうかの確認</title>
 
         <para>
-            The static method <code>Zend_Loader::isReadable($pathname)</code>
-            returns <code>TRUE</code> if a file at the specified pathname exists
-            and is readable, FALSE otherwise.
+            静的メソッド <code>Zend_Loader::isReadable($pathname)</code>
+            は、指定した場所にファイルが存在して読み込み可能な場合に
+            <code>TRUE</code>、それ以外の場合に FALSE を返します。
         </para>
 
         <example id="zend.loader.isreadable.example">
-            <title>Example of isReadable() method</title>
+            <title>isReadable() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
 if (Zend_Loader::isReadable($filename)) {
-    // do something with $filename
+    // $filename で何かをします
 }
 
 ?>]]></programlisting>
         </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to
-            check.  This may contain path information.
-            This method is a wrapper for the PHP function
-            <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
-            The PHP function does not search the <code>include_path</code>,
-            while <code>Zend_Loader::isReadable()</code> does.
+            引数 <code>$filename</code> で、調べたいファイル名を指定します。
+            ここにはパス情報を含めることもできます。
+            このメソッドは、PHP の関数
+            <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>
+            のラッパーです。この関数は <code>include_path</code>
+            を探しませんが、<code>Zend_Loader::isReadable()</code>
+            は <code>include_path</code> も検索対象に含めます。
         </para>
 
     </sect2>
