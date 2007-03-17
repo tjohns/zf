@@ -1,4 +1,4 @@
-<sect1 id="zend.acl.introduction">
+﻿<sect1 id="zend.acl.introduction">
     <title>Introduction</title>
 
     <para>
@@ -101,7 +101,7 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();]]></programlisting>
+$acl = new Zend_Acl();?>]]></programlisting>
 
         <para>
              Bien que la possibilité d'hériter de plusieurs Rôles soit très utile, l'héritage multiple introduit aussi un certain degrè de complexité.
@@ -135,7 +135,7 @@ $acl = new Zend_Acl();]]></programlisting>
  $acl->deny('invite', 'uneResource');
  $acl->allow('membre', uneResource');
  
- echo $acl->isAllowed('invite', 'uneResource') ? 'autorisé' : 'refusé';]]></programlisting>
+ echo $acl->isAllowed('invite', 'uneResource') ? 'autorisé' : 'refusé';?>]]></programlisting>
              <para>
                  
                  Puisqu'il n'y a pas de règle spécifiquement définie pour le Rôle "<code>unUser</code>" et 
@@ -156,13 +156,13 @@ $acl = new Zend_Acl();]]></programlisting>
                  Zend_Acl résoud cette ambiguité en arrêtant la recherche de règles d'accès dès qu'une première règle est découverte.
                  Dans notre exemple, puisque le Rôle "<code>membre</code>" est examiné avant le röle "<code>invite</code>", le résultat devrait afficher "<code>autorisé</code>".
               </para>
+         </example>
              <note>
                  <para>
                      Lorsque vous spécifiez plusieurs parents pour un Rôle, conservez à l'esprit que le dernier parent listé est le premier dans
                      lequel une règle utilisable sera recherchée.
                  </para>
              </note>
-         </example>
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
