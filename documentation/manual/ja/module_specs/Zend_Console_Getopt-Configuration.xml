@@ -174,7 +174,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("ignoreCase")
+                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase")
                     を true にすると、大文字小文字が違うだけのフラグをお互いエイリアスとして扱います。
                     つまり、"<code>-a</code>" と
                     "<code>-A</code>" は同じフラグとみなされます。
