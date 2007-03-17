@@ -8,10 +8,9 @@
         妥当な形式の XML でファイルに保存したりサーバに送信したりといったことが簡単にできます。
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.modifying">
         <title>既存のフィードエントリの変更</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
@@ -45,10 +44,9 @@ echo $entry->saveXML();
         明示的に名前空間を指定しない限りデフォルトの名前空間に配置されます。
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.creating">
         <title>独自の名前空間の要素としての Atom エントリの作成</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entry = new Zend_Feed_EntryAtom();
 // Atom では id は常にサーバから割り当てられます

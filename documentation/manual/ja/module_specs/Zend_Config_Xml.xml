@@ -20,7 +20,7 @@
             文字列から適切な型に変換してください。
         </para>
     </note>
-    <example>
+    <example id="zend.config.adapters.xml.example.using">
         <title>Zend_Config_Xml の使用法</title>
         <para>
             この例は、<code>Zend_Config_Xml</code> を使用して

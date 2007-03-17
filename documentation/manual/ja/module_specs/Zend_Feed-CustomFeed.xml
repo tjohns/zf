@@ -14,10 +14,9 @@
         このクラスの使用者は、名前空間について心配する必要がなくなります。
     </para>
 
-    <example>
+    <example id="zend.feed.custom-feed.example.extending">
         <title>独自の名前空間を使用しての Atom エントリクラスの拡張</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 /**
  * この独自エントリクラスは、自動的にフィード URI を識別 (オプション) して
@@ -66,8 +65,7 @@ class MyEntry extends Zend_Feed_EntryAtom
             そしてこのクラスを使用すると、インスタンスを作成したらすぐに
             <code>myUpdated</code> プロパティを設定することができます。
         </para>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';

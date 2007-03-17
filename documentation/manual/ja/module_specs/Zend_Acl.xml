@@ -103,7 +103,7 @@
             多重継承は複雑な問題を引き起こすこともあります。
             次の例は、あいまいな条件になったときに Zend_Acl がそれをどう解決するかを示すものです。
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>ロールの多重継承</title>
             <para>
                 以下のコードでは、基本となる三つのロール "<code>guest</code>"、"<code>member</code>"
@@ -208,7 +208,7 @@ $acl = new Zend_Acl();]]></programlisting>
             これらの権限を整理すると、次のようになります。
         </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>サンプル CMS 用のアクセス制御</title>
           <tgroup cols="3">
             <thead>
