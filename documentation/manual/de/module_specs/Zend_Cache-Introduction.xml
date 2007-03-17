@@ -26,7 +26,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // Lebensdauer des Caches 2 Stunden 
+   'lifetime' => 7200, // Lebensdauer des Caches 2 Stunden 
    'automaticSerialization' => true
 );
 
@@ -87,7 +87,7 @@ print_r($result);
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // Lebenszeit des Caches wir auf eine halbe Minute gesetzt
+   'lifetime' => 30,                  // Lebenszeit des Caches wir auf eine halbe Minute gesetzt
    'automaticSerialization' => false  // Dieser Wert ist auf alle Fälle Standard
 );
 

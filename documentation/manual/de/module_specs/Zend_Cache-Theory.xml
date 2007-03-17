@@ -2,7 +2,7 @@
     <title>Die Theorie des Cachens</title>
     <para>
         Es gibt 3 Schlüsselkonzepte in Zend_Cache. Eines ist die eindeutige Identifizierung (ein String), 
-        die benutzt wird, um Cache Datensätze zu identifizieren. Das zweite ist die <code>'lifeTime'</code>
+        die benutzt wird, um Cache Datensätze zu identifizieren. Das zweite ist die <code>'lifetime'</code>
         Direktive, wie im Beispiel gezeigt; sie definiert, wie lange eine gecachte Ressource als 'frisch'
         betrachtet wird. Das dritte Konzept ist die bedingte Ausführung, so das Teile des Codes komplett 
         übersprungen werden können, was die Leistung steigert.
@@ -79,7 +79,7 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
 ?>]]></programlisting>
         <note><para>
             Man beachte, dass die <code>save()</code> Method einen optionales, viertes Argument akzeptiert: 
-            <code>$specificLifeTime</code> (wenn != false, setzt es eine spezifische Laufzeit für diesen speziellen Cache Eintrag)
+            <code>$specificLifetime</code> (wenn != false, setzt es eine spezifische Laufzeit für diesen speziellen Cache Eintrag)
         </para></note>
     </sect2>
     <sect2 id="zend.cache.clean">
