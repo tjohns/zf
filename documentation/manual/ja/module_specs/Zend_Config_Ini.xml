@@ -24,7 +24,21 @@
             を処理できることなどです。
         </para>
     </note>
-    <example>
+    <note>
+        <title>キーの区切り文字</title>
+        <para>
+            デフォルトでは、キーの区切り文字はピリオド (<code>.</code>) です。
+            しかし、これは変更することもできます。変更するには、
+            <code>Zend_Config_Ini</code> オブジェクトの作成時に
+            <code>$config</code> のキー
+            <code>'nestSeparator'</code> を設定します。たとえばこのようになります。
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+$config['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+        </para>
+    </note>
+    <example id="zend.config.adapters.ini.example.using">
         <title>Zend_Config_Ini の使用法</title>
         <para>
             この例は、<code>Zend_Config_Ini</code> を使用して
