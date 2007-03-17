@@ -278,7 +278,7 @@
         <xi:include href="module_specs/Zend_Validate-Hostname.xml" />
     </chapter>
     <chapter id="zend.version">
-        <title>Zend Version</title>
+        <title>Zend_Version</title>
         <xi:include href="module_specs/Zend_Version.xml" />
     </chapter>
     <chapter id="zend.view">
