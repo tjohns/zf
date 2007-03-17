@@ -517,7 +517,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
-        Zend_Locale_Format::setOptions(array('type' => 'php'));
+        Zend_Locale_Format::setOptions(array('format_type' => 'php'));
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'd.m.Y'));
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
@@ -529,7 +529,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['year'], 6, 'Year 6 expected');
         
         $this->assertEquals(is_array(Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss'))), true, "array expected");
-        Zend_Locale_Format::setOptions(array('type' => 'iso'));
+        Zend_Locale_Format::setOptions(array('format_type' => 'iso'));
         
 // @todo failed test, auto completion doesnt work for this case
 //        $value = Zend_Locale_Format::getDate('2006 Nov 10', false, 'de_AT');
@@ -682,10 +682,10 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testSetOption()
     {
-        $this->assertEquals(count(Zend_Locale_Format::setOptions(array('type' => 'php'))), 6);
+        $this->assertEquals(count(Zend_Locale_Format::setOptions(array('format_type' => 'php'))), 6);
         $this->assertTrue(is_array(Zend_Locale_Format::setOptions()));
         try {
-            $this->assertTrue(Zend_Locale_Format::setOptions(array('type' => 'xxx')));
+            $this->assertTrue(Zend_Locale_Format::setOptions(array('format_type' => 'xxx')));
         } catch (Zend_Locale_Exception $e) {
             // success
         }

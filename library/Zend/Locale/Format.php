@@ -40,7 +40,7 @@ class Zend_Locale_Format
 {
     private static $_Options = array('date_format'   => null,
                                      'number_format' => null,
-                                     'type'          => 'iso',
+                                     'format_type'   => 'iso',
                                      'fix_date'      => false,
                                      'locale'        => null,
                                      'precision'     => null);
@@ -74,14 +74,14 @@ class Zend_Locale_Format
      * Sets class wide options, if no option was given, the actual set options will be returned
      * The 'precision' option of a value is used to truncate or stretch extra digits. -1 means not to touch the extra digits.
      * The 'locale' option helps when parsing numbers and dates using separators and month names.
-     * The date format 'type' option selects between CLDR/ISO date format specifier tokens and PHP's date() tokens.
+     * The date format 'format_type' option selects between CLDR/ISO date format specifier tokens and PHP's date() tokens.
      * The 'fix_date' option enables or disables heuristics that attempt to correct invalid dates.
      * The 'number_format' option can be used to specify a default number format string
      * The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
      * isDate(), getTime(), and isTime() after using setOptions() with a 'format'.  To use these four methods
      * with the default date format for a locale, use array('format' => null, 'locale' => $locale) for their options.
      *
-     * @param  array  $options  Array of options, keyed by option name: type = 'iso' | 'php', fix_date = true | false,
+     * @param  array  $options  Array of options, keyed by option name: format_type = 'iso' | 'php', fix_date = true | false,
      *                          locale = Zend_Locale | locale string, precision = whole number between -1 and 30
      * @throws Zend_Locale_Exception
      * @return Options array if no option was given 
@@ -96,7 +96,7 @@ class Zend_Locale_Format
      * Internal function for checking the options array of proper input values
      * See {@link setOptions()} for details.
      * 
-     * @param  array  $options  Array of options, keyed by option name: type = 'iso' | 'php', fix_date = true | false,
+     * @param  array  $options  Array of options, keyed by option name: format_type = 'iso' | 'php', fix_date = true | false,
      *                          locale = Zend_Locale | locale string, precision = whole number between -1 and 30
      * @throws Zend_Locale_Exception
      * @return Options array if no option was given 
@@ -126,7 +126,7 @@ class Zend_Locale_Format
                                 . "Format '$value' must be a valid ISO or PHP date format string.");
                         }
                         break;
-                    case 'type' :
+                    case 'format_type' :
                         if (($value != 'php') && ($value != 'iso')) {
                             throw new Zend_Locale_Exception("Unknown date format type '$value'. Only 'iso' and 'php'"
                                . " are supported.");
@@ -610,7 +610,7 @@ class Zend_Locale_Format
      * Parse date and split in named array fields
      *
      * @param   string  $date     Date string to parse
-     * @param   array   $options  Options: type, fix_date, locale, date_format. See {@link setOptions()} for details.
+     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  array             Possible array members: day, month, year, hour, minute, second, fixed, format
      */
     private static function _parseDate($date, $options)
@@ -927,7 +927,7 @@ class Zend_Locale_Format
      * when not using the default format for the 'locale'.
      *
      * @param   string  $date     Date string
-     * @param   array   $options  Options: type, fix_date, locale, date_format. See {@link setOptions()} for details.
+     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  array             Possible array members: day, month, year, hour, minute, second, fixed, format
      */
     public static function getDate($date, array $options = array())
@@ -935,7 +935,7 @@ class Zend_Locale_Format
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
             $options['date_format'] = self::getDateFormat($options['locale']);
-        } else if ($options['type'] == 'php') {
+        } else if ($options['format_type'] == 'php') {
             $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
 
@@ -947,7 +947,7 @@ class Zend_Locale_Format
      * Returns if the given string is a date
      *
      * @param   string  $date     Date string
-     * @param   array   $options  Options: type, fix_date, locale, date_format. See {@link setOptions()} for details.
+     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  boolean
      */
     public static function isDate($date, array $options = array())
@@ -986,7 +986,7 @@ class Zend_Locale_Format
      * containing both a time and a day or month name.
      *
      * @param   string  $time     Time string
-     * @param   array   $options  Options: type, fix_date, locale, date_format. See {@link setOptions()} for details.
+     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  array             Possible array members: day, month, year, hour, minute, second, fixed, format
      */
     public static function getTime($time, array $options = array())
@@ -994,7 +994,7 @@ class Zend_Locale_Format
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
             $options['date_format'] = self::getTimeFormat($options['locale']);
-        } else if ($options['type'] == 'php') {
+        } else if ($options['format_type'] == 'php') {
             $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
 
@@ -1006,7 +1006,7 @@ class Zend_Locale_Format
      * Returns is the given string is a time
      *
      * @param   string  $time     Time string
-     * @param   array   $options  Options: type, fix_date, locale, date_format. See {@link setOptions()} for details.
+     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  boolean
      */
     public static function isTime($time, array $options = array())
