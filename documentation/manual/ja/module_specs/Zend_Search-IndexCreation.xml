@@ -42,7 +42,7 @@ $index->addDocument($doc);
 
         <para>
             既存のインデックスを更新する際にも同じ手順を使用します。ただひとつの違いは、
-            2 番目のパラメータを指定せずにインデックスをオープンしなければならないということです。
+            create() メソッドではなく open() メソッドをコールするということです。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
