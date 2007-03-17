@@ -22,6 +22,7 @@
         以下の例で、独自のバリデータを作成する方法を説明します。
 
         <programlisting role="php"><![CDATA[<?php
+
 require_once 'Zend/Validate/Interface.php';
 
 class MyValidator implements Zend_Validate_Interface
@@ -46,7 +47,9 @@ class MyValidator implements Zend_Validate_Interface
     {
         return $this->_messages;
     }
-}]]></programlisting>
+}
+
+?>]]></programlisting>
 
     </para>
 
@@ -54,8 +57,11 @@ class MyValidator implements Zend_Validate_Interface
         このバリデータのインスタンスをバリデータチェインに追加するには、次のようにします。
 
         <programlisting role="php"><![CDATA[<?php
+
 $validatorChain = new Zend_Validate();
-$validatorChain->addValidator(new MyValidator());]]></programlisting>
+$validatorChain->addValidator(new MyValidator());
+
+?>]]></programlisting>
 
     </para>
 
