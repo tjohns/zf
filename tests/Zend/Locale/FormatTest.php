@@ -52,7 +52,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             setlocale(LC_ALL, 'C'); // attempt to restore global setting i.e. test teardown
             //echo '>>>', setlocale(LC_NUMERIC, '0'); // show locale after changing
             //echo "\n";
-        } else {
+        } else if (defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE')) {
             setlocale(LC_ALL, TESTS_ZEND_LOCALE_FORMAT_SETLOCALE);
         }
     }
@@ -691,6 +691,53 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         }
         try {
             $this->assertTrue(Zend_Locale_Format::setOptions(array('myformat' => 'xxx')));
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        $format = Zend_Locale_Format::setOptions(array('locale' => 'de', 'number_format' => Zend_Locale_Format::STANDARD));
+        $test = Zend_Locale_Data::getContent('de', 'decimalnumberformat');
+        $this->assertEquals($format['number_format'], $test['default']);
+
+        try {
+            $this->assertFalse(Zend_Locale_Format::setOptions(array('number_format' => array('x' => 'x'))));
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        $format = Zend_Locale_Format::setOptions(array('locale' => 'de', 'date_format' => Zend_Locale_Format::STANDARD));
+        $test = Zend_Locale_Format::getDateFormat('de');
+        $this->assertEquals($format['date_format'], $test);
+
+        try {
+            $this->assertFalse(Zend_Locale_Format::setOptions(array('date_format' => array('x' => 'x'))));
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        try {
+            $this->assertFalse(is_array(Zend_Locale_Format::setOptions(array('fix_date' => 'no'))));
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        $format = Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD));
+        $locale = new Zend_Locale();
+        $this->assertEquals($format['locale'], $locale);
+
+        try {
+            $this->assertFalse(is_array(Zend_Locale_Format::setOptions(array('locale' => 'nolocale'))));
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            // success
+        }
+
+        try {
+            $this->assertFalse(is_array(Zend_Locale_Format::setOptions(array('precision' => 50))));
+            $this->fail();
         } catch (Zend_Locale_Exception $e) {
             // success
         }

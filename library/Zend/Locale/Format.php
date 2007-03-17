@@ -111,25 +111,35 @@ class Zend_Locale_Format
         foreach ($options as $name => $value) {
             $name  = strtolower($name);
             if ($name !== 'locale') {
-                $value = strtolower($value);
+                if (gettype($value) === 'string') {
+                    $value = strtolower($value);
+                }
             }
 
             if (array_key_exists($name, self::$_Options)) {
                 switch($name) {
                     case 'number_format' :
-                        if (strtoupper($value) == 'STANDARD') {
-                            $format  = Zend_Locale_Data::getContent($options['locale'], 'decimalnumberformat');
+                        if ($value == 'standard') {
+                            $locale = self::$_Options['locale'];
+                            if (isset($options['locale'])) {
+                                $locale = $options['locale'];
+                            }
+                            $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
                             $options['number_format'] = $format['default'];
-                        } else if (gettype($value) !== 'string') {
-                            throw new Zend_Locale_Exception("Unknown number format type '" . gettype($type) . "'. "
+                        } else if ((gettype($value) !== 'string') and ($value !== NULL)) {
+                            throw new Zend_Locale_Exception("Unknown number format type '" . gettype($value) . "'. "
                                 . "Format '$value' must be a valid number format string.");
                         }
                         break;
                     case 'date_format' :
-                        if (strtoupper($value) == 'STANDARD') {
+                        if ($value == 'standard') {
+                            $locale = self::$_Options['locale'];
+                            if (isset($options['locale'])) {
+                                $locale = $options['locale'];
+                            }
                             $options['date_format'] = Zend_Locale_Format::getDateFormat($locale);
-                        } else if (gettype($value) !== 'string') {
-                            throw new Zend_Locale_Exception("Unknown dateformat type '" . gettype($type) . "'. "
+                        } else if ((gettype($value) !== 'string') and ($value !== NULL)) {
+                            throw new Zend_Locale_Exception("Unknown dateformat type '" . gettype($value) . "'. "
                                 . "Format '$value' must be a valid ISO or PHP date format string.");
                         }
                         break;
@@ -140,13 +150,13 @@ class Zend_Locale_Format
                         }
                         break;
                     case 'fix_date' :
-                        if (($value != true) && ($value != false)) {
+                        if (($value !== true) && ($value !== false)) {
                             throw new Zend_Locale_Exception("Enabling correction of dates must be either true or false"
                                 . "(fix_date='$value').");
                         }
                         break;
                     case 'locale' :
-                        if (strtoupper($value) == 'STANDARD') {
+                        if (strtolower($value) == 'standard') {
                             $options['locale'] = new Zend_Locale();
                         } else if (!empty($value) && (!Zend_Locale::isLocale($value))) {
                             throw new Zend_Locale_Exception("'" .
@@ -155,11 +165,12 @@ class Zend_Locale_Format
                         }
                         break;
                     case 'precision' :
+                        if ($value === NULL) {
+                            $value = -1;
+                        }
                         if (($value < -1) || ($value > 30)) {
                             throw new Zend_Locale_Exception("'$value' precision is not a whole number less than 30.");
                         }
-                        break;
-                    default :
                         break;
                 }
             }
