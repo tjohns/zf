@@ -38,6 +38,8 @@ require_once 'Zend/Locale/Math.php';
  */
 class Zend_Locale_Format
 {
+    const STANDARD   = 'STANDARD';
+
     private static $_Options = array('date_format'   => null,
                                      'number_format' => null,
                                      'format_type'   => 'iso',
@@ -79,7 +81,7 @@ class Zend_Locale_Format
      * The 'number_format' option can be used to specify a default number format string
      * The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
      * isDate(), getTime(), and isTime() after using setOptions() with a 'format'.  To use these four methods
-     * with the default date format for a locale, use array('format' => null, 'locale' => $locale) for their options.
+     * with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their options.
      *
      * @param  array  $options  Array of options, keyed by option name: format_type = 'iso' | 'php', fix_date = true | false,
      *                          locale = Zend_Locale | locale string, precision = whole number between -1 and 30
@@ -115,13 +117,18 @@ class Zend_Locale_Format
             if (array_key_exists($name, self::$_Options)) {
                 switch($name) {
                     case 'number_format' :
-                        if (gettype($value) !== 'string') {
+                        if (strtoupper($value) == 'STANDARD') {
+                            $format  = Zend_Locale_Data::getContent($options['locale'], 'decimalnumberformat');
+                            $options['number_format'] = $format['default'];
+                        } else if (gettype($value) !== 'string') {
                             throw new Zend_Locale_Exception("Unknown number format type '" . gettype($type) . "'. "
                                 . "Format '$value' must be a valid number format string.");
                         }
                         break;
                     case 'date_format' :
-                        if (gettype($value) !== 'string') {
+                        if (strtoupper($value) == 'STANDARD') {
+                            $options['date_format'] = Zend_Locale_Format::getDateFormat($locale);
+                        } else if (gettype($value) !== 'string') {
                             throw new Zend_Locale_Exception("Unknown dateformat type '" . gettype($type) . "'. "
                                 . "Format '$value' must be a valid ISO or PHP date format string.");
                         }
@@ -139,7 +146,9 @@ class Zend_Locale_Format
                         }
                         break;
                     case 'locale' :
-                        if (!empty($value) && (!Zend_Locale::isLocale($value))) {
+                        if (strtoupper($value) == 'STANDARD') {
+                            $options['locale'] = new Zend_Locale();
+                        } else if (!empty($value) && (!Zend_Locale::isLocale($value))) {
                             throw new Zend_Locale_Exception("'" .
                                 (gettype($value) === 'object' ? get_class($value) : $value)
                                 . "' is not a known locale.");
