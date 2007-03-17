@@ -21,11 +21,26 @@
  * @version    $Id$
  */
 
+error_reporting( E_ALL | E_STRICT );
+
+if (is_readable('TestConfiguration.php')) {
+    require_once('TestConfiguration.php');
+} else {
+    require_once('TestConfiguration.php.dist');
+}
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_AllTests::main');
-}
 
+    /**
+     * Prepend library/ to the include_path.  This allows the tests to run out
+     * of the box and helps prevent finding other copies of the framework that
+     * might be present.
+     */
+    $zf_top = dirname(dirname(dirname(dirname(__FILE__))));
+    set_include_path($zf_top . DIRECTORY_SEPARATOR . 'library'
+         . PATH_SEPARATOR . get_include_path());
+}
 
 /**
  * PHPUnit_Framework_TestSuite
