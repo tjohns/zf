@@ -33,10 +33,9 @@
         </para>
     </note>
 
-    <example>
+    <example id="zend.feed.introduction.example.rss">
         <title>Zend_Feed für die Verarbeitung von RSS Feed Daten verwenden</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Feed.php';
 
 // hole die neuesten Slashdot Schlagzeilen

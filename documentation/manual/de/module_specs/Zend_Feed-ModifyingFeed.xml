@@ -8,10 +8,9 @@
         Server zu senden.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.modifying">
         <title>Verändern eines bestehenden Feed Eintrags</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
@@ -43,10 +42,9 @@ echo $entry->saveXML();
         Namensraum verwenden, wenn du nicht explizit einen anderen Namensraum festgelegt hast.
     </para>
 
-    <example>
+    <example id="zend.feed.modifying-feed.example.creating">
         <title>Erstellen eines Atom Eintrags mit Elementen eines eigenen Namensraumes</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entry = new Zend_Feed_EntryAtom();
 // Die ID wird immer vom Server in Atom zugewiesen

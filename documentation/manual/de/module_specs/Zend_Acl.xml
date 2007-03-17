@@ -95,7 +95,7 @@
             die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende 
             Beispiel illustriert die mehrdeutigen Bedingungen und wie Zend_Acl sie auflöst.
         </para>
-        <example>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>Mehrfache Vererbung zwischen Rollen</title>
             <para>
                 Der folgende Code definiert drei Basis Rollen - "<code>guest</code>", 
@@ -203,7 +203,7 @@ $acl = new Zend_Acl();]]></programlisting>
             Genehmigungen können wir folgt ausgedrückt werden:
         </para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
           <title>Zugangsbeschränkung für ein Beispiel-CMS</title>
           <tgroup cols="3">
             <thead>

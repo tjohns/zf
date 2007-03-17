@@ -385,14 +385,14 @@ else {
             If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
             is an object (not recommended), instead of an array, then make sure to require your authorization identity
             class definition before starting the session. Instead, we recommend storing the authorization ids computed
-            within an authentication adapter inside a well-known key in a session namespace. For example, the
-            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
+            within an authentication adapter inside a well-known key in a session namespace. For example, the default
+            behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
         </para>
 
         <para>
             If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
-            store the authorization id in the session namespace, in a well-known location in a session namespace of
-            your choice.  Often, applications have specific needs about where to store credentials used (if any) and
+            store the authorization id in the session namespace, in a well-known location in a session namespace of your
+            choice. Often, applications have specific needs about where to store credentials used (if any) and
             "authorization" identity. Applications often map authentication identities (e.g. usernames) to authorization
             identities (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth
             authentication adapter's <code>authenticate()</code> method.
@@ -440,12 +440,12 @@ else {
 
         <para>
             The latter is not uncommon for performance reasons, such as helping select from a pool of servers caching
-            session information to help solve chicken-and-egg problems. Often debates ensue about
-            whether to use the real authorization id in the cookie, or some substitute that aids in mapping to the real
-            authorization id (or session or server(s) holding the user's session/profile, etc.), as some system security
-            architects wish to prevent true "DB primary keys" from escaping into the wild.  These architects try and obtain
-            some level of protection by obfuscation in the event of a SQL injection vulnerability in their system.
-            Not everyone uses auto-increment strategies for authorization ids.
+            session information to help solve chicken-and-egg problems. Often debates ensue about whether to use the
+            real authorization id in the cookie, or some substitute that aids in mapping to the real authorization id
+            (or session or server(s) holding the user's session/profile, etc.), as some system security architects wish
+            to prevent true "DB primary keys" from escaping into the wild. These architects try and obtain some level of
+            protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone uses
+            auto-increment strategies for authorization ids.
         </para>
 
     </sect2>
