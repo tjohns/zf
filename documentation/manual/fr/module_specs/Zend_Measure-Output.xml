@@ -1,61 +1,55 @@
-<sect1 id="zend.measure.output">
+﻿<sect1 id="zend.measure.output">
 
-    <title>Outputting measurements</title>
+    <title>Récupérer des mesures</title>
 
     <para>
-        Measurements can be output in a number of different ways.
+        Les mesures peuvent être récupérer de différentes manières.
     </para>
 
     <para>
-        <link linkend="zend.measure.output.auto"><code>Automatic output</code>
+        <link linkend="zend.measure.output.auto"><code>Récupération automatique</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.value"><code>Outputting values</code>
+        <link linkend="zend.measure.output.value"><code>Récupération des valeurs</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.unit"><code>Output with unit of measurement</code>
+        <link linkend="zend.measure.output.unit"><code>Récupération de l'unité de mesure</code>
         </link>
     </para>
 
     <para>
-        <link linkend="zend.measure.output.unit"><code>Output as localized string</code>
+        <link linkend="zend.measure.output.unit"><code>Récupération en tant que chaîne régionale</code>
         </link>
     </para>
 
     <sect2 id="zend.measure.output.auto">
 
-        <title>Automatic output</title>
+        <title>Récupération automatique</title>
 
         <para>
-            <code>Zend_Measure</code> supports outputting of strings automatically.
+            <code>Zend_Measure</code> supporte la récupération sous formes de chaines de caractères automatiquement.
             <example>
-                <title>Automatic output</title>
+                <title>Récupération automatique</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$machaine = "1.234.567,89 Meter";
+$unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unit;
+echo $unite; // affiche "1234567.89 m"
 ?>]]></programlisting>
             </example>
         </para>
 
         <note>
-            <title>Measurement output</title>
+            <title>Affichage de la mesure</title>
             <para>
-                Output can be achieved simply by using
-                <ulink url="http://php.net/echo"><code>echo</code>
-                </ulink>
-                or
-                <ulink url="http://php.net/print"><code>print</code>
-                </ulink>
-                .
+                L'affichage peut être résalisé simplement en utilisant <ulink url="http://php.net/echo"><code>echo</code></ulink> ou <ulink url="http://php.net/print"><code>print</code></ulink>.
             </para>
         </note>
 
@@ -63,20 +57,20 @@ echo $unit;
 
     <sect2 id="zend.measure.output.value">
 
-        <title>Outputting values</title>
+        <title>Récupération des valeurs</title>
 
         <para>
-            The value of a measurement can be output using <code>getValue()</code>.
+            La valeur d'une mesure peut être récupérée en utilisant <code>getValue()</code>.
             <example>
-                <title>Output a value</title>
+                <title>Récupération d'une valeur</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$machaine = "1.234.567,89 Meter";
+$unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unit->getValue();
+echo $unite->getValue(); // affiche "1234567.89"
 ?>]]></programlisting>
             </example>
         </para>
@@ -85,20 +79,20 @@ echo $unit->getValue();
 
     <sect2 id="zend.measure.output.unit">
 
-        <title>Output with unit of measurement</title>
+        <title>Récupération de l'unité de mesure</title>
 
         <para>
-            The function <code>getType()</code> returns the current unit of measurement.
+            La fonction <code>getType()</code> retourne l'unité de mesure courante.
             <example>
-                <title>Outputting units</title>
+                <title>Récupérer l'unité de mesure</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
 
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89";
-$unit = new Zend_Measure_Weight($mystring,Zend_Measure_Weight::POUND, $locale);
+$machaine = "1.234.567,89";
+$unit = new Zend_Measure_Weight($machaine,Zend_Measure_Weight::POUND, $locale);
 
-echo $unit->getType();
+echo $unit->getType(); // affiche "POUND"
 ?>]]></programlisting>
             </example>
         </para>
@@ -107,12 +101,10 @@ echo $unit->getType();
 
     <sect2 id="zend.measure.output.localized">
 
-        <title>Output as localized string</title>
+        <title>Récupération en tant que chaîne régionale</title>
 
         <para>
-            Outputtig a string in a format common in the users' country is usually desirable. For example, the
-            measurement "1234567.8" would become "1.234.567,8" for Germany. This functionality will be supported in a
-            future release.
+            Récupérer une chaîne dans un format habituel du pays de l'utilisateur est habituellement souhaitable. Par exemple, la mesure "1234567.8" deviendrait "1.234.567,8" pour l'Allemagne. Cette fonctionnalité sera supportée dans une future release.
         </para>
 
     </sect2>
