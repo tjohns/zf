@@ -284,56 +284,10 @@ class Zend_Locale_Format
 
         return $found;
     }
-
-    /**
-     * Returns a locale formatted number, using the default decimal number format for the locale.
-     * The seperation and fraction sign is used from the set locale.
-     * ##0.#  -> 12345.12345 -> 12345.12345
-     * ##0.00 -> 12345.12345 -> 12345.12
-     * ##,##0.00 -> 12345.12345 -> 12,345.12
-     * 
-     * @param   string  $value    Number to localize
-     * @param   array   $options  Options: locale, precision. See {@link setOptions()} for details.
-     * @return  string            Locale formatted number
-     */
-    public static function toNumber($value, array $options = array())
-    {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
-        $format  = Zend_Locale_Data::getContent($options['locale'], 'decimalnumberformat');
-        $format  = $format['default'];
-
-        // seperate negative format pattern when avaiable 
-        if (iconv_strpos($format, ';') !== false) {
-            if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
-                $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
-            } else {
-                $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
-            }
-        }
-
-        if (is_int($options['precision'])) {
-            $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
-            $format = substr($format, 0, strpos($format, '.'));
-            if ((int) $options['precision'] > 0) {
-                $format .= ".";
-                $format = str_pad($format, strlen($format) + $options['precision'], "0");
-                $value = round($value, $options['precision']);
-            }
-            if (($rest != '0') and ($rest != '#')) {
-                $format .= $rest;
-            }
-            if ($options['precision'] == -1) {
-                $value = round($value, 0);
-            }
-        }
-
-        $options['number_format'] = $format;
-        return self::toNumberFormat($value, $options);
-    }
         
     /**
-     * Returns a self formatted number
-     * The seperation and fraction sign is used from the set locale
+     * Returns a locale formatted number depending on the given options.
+     * The seperation and fraction sign is used from the set locale.
      * ##0.#  -> 12345.12345 -> 12345.12345
      * ##0.00 -> 12345.12345 -> 12345.12
      * ##,##0.00 -> 12345.12345 -> 12,345.12
@@ -342,7 +296,7 @@ class Zend_Locale_Format
      * @param   array   $options  Options: number_format, locale, precision. See {@link setOptions()} for details.
      * @return  string  locale formatted number
      */
-    public static function toNumberFormat($value, array $options = array())
+    public static function toNumber($value, array $options = array())
     {
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if ($options['locale'] instanceof Zend_Locale) {
@@ -358,33 +312,58 @@ class Zend_Locale_Format
         if ($format === null) {
             $format  = Zend_Locale_Data::getContent($options['locale'], 'decimalnumberformat');
             $format  = $format['default'];
-            $options['precision'] = null;
+            if (iconv_strpos($format, ';') !== false) {
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                    $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
+                } else {
+                    $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
+                }
+            }
+
+            if (is_int($options['precision'])) {
+                $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
+                $format = substr($format, 0, strpos($format, '.'));
+                if ((int) $options['precision'] > 0) {
+                    $format .= ".";
+                    $format = str_pad($format, strlen($format) + $options['precision'], "0");
+                    $value = round($value, $options['precision']);
+                }
+                if (($rest != '0') and ($rest != '#')) {
+                    $format .= $rest;
+                }
+                if ($options['precision'] == -1) {
+                    $value = round($value, 0);
+                }
+            }
         } else {
+            // seperate negative format pattern when avaiable 
+            if (iconv_strpos($format, ';') !== false) {
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                    $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
+                } else {
+                    $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
+                }
+            }
+
             if (strpos($format, '.')) {
-                $options['precision'] = substr($format, strpos($format, '.') + 1);
                 if (is_numeric($options['precision'])) {
-                    $options['precision'] = strlen($options['precision']);
-                    $format = substr($format, 0, strpos($format, '.') + 1);
-                    $format .= '###';
                     $value = round($value, $options['precision']);
                 } else {
-                    $options['precision'] = null;
+                    if (substr($format, strpos($format, '.') + 1, 3) == '###') {
+                        $options['precision'] = null;
+                    } else {
+                        $options['precision'] = strlen(substr($format, strpos($format, '.') + 1));
+                        if (($value < 0) and (strpos($format, '.') < strpos($format, '-'))) {
+                            --$options['precision'];
+                        }
+                        $format = substr($format, 0, strpos($format, '.') + 1) . '###';
+                    }
                 }
             } else {
                 $value = round($value, 0);
                 $options['precision'] = 0;
             }
         }
-
-        // seperate negative format pattern when avaiable 
-        if (iconv_strpos($format, ';') !== false) {
-            if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
-                $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
-            } else {
-                $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
-            }
-        }
-
         // set negative sign
         if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
             if (iconv_strpos($format, '-') === false) {
@@ -393,7 +372,7 @@ class Zend_Locale_Format
                 $format = str_replace('-', $symbols['minus'], $format);
             }
         }
-
+        
         // get number parts
         if (strlen($value) != strlen(round($value, 0))) {
             if ($options['precision'] === null) {
@@ -431,12 +410,20 @@ class Zend_Locale_Format
         $group2 = iconv_strpos ($format, ',');
         $point  = iconv_strpos ($format, '0');
         // Add fraction
+        $rest = "";
+        if (($value < 0) && (strpos($format, '.'))) {
+            $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
+        }
         if ($options['precision'] == '0') {
             $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal']
-                               . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 1);
+                               . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         }
+        if (($value < 0) and ($rest != '0') and ($rest != '#')) {
+            $format .= $rest;
+        }
+
         // Add seperation
         if ($group == 0) {
             // no seperation
@@ -525,6 +512,7 @@ class Zend_Locale_Format
      */
     public static function toFloat($value, array $options = array())
     {
+        $options['number_format'] = 'standard';
         return self::toNumber($value, $options);
     }
 
@@ -575,8 +563,8 @@ class Zend_Locale_Format
      */
     public static function toInteger($value, array $options = array())
     {
-        // round the output with precision -1
-        $options['precision'] = -1;
+        $options['precision'] = 0;
+        $options['number_format'] = 'standard';
         return self::toNumber($value, $options);
     }
 
