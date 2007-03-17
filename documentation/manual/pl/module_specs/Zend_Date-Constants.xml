@@ -673,8 +673,8 @@
         <para>
             The accepted format specifiers can be changed from ISO Format to PHP's date format if you are more
             comfortable with it. However, not all formats defined in the ISO norm are supported with PHP's date format
-            specifiers. Use the <code>Zend_Date::setOptions()</code> method to switch Zend_Date methods from supporting
-            ISO format specifiers to PHP date() type specifiers (see
+            specifiers. Use the <code>Zend_Date::setOptions(array('date_format' => 'php'))</code> method to switch
+            Zend_Date methods from supporting ISO format specifiers to PHP date() type specifiers (see
             <xref linkend="zend.date.constants.phpformats" />
             below).
         </para>

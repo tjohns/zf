@@ -70,8 +70,8 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]></programlisting>
 array(
       'title'       => 'tytuł kanału', //wymagane
       'link'        => 'adres url kanału', //wymagane
-      'lastUpdate'  => 'timestamp of the update date', // opcjonalne
-      'published'   => 'timestamp of the publication date', //opcjonalne
+      'lastUpdate'  => 'data aktualizacji w postaci uniksowego znacznika czasu', // opcjonalne
+      'published'   => 'data publikacji w postaci uniksowego znacznika czasu', //opcjonalne
       'charset'     => 'zestaw znaków dla danych tekstowych', // wymagane
       'description' => 'krótki opis kanału', //opcjonalne
       'author'      => 'autor kanału', //opcjonalne
@@ -82,18 +82,18 @@ array(
       'generator'   => 'generator', // opcjonalne
       'language'    => 'język w jakim publikowany jest kanał', // opcjonalne
       'ttl'         => 'na jak długo, w minutach, kanał może być buforowany przed odświeżeniem', // opcjonalne, ignorowane jeśli używany jest atom
-      'rating'      => 'The PICS rating for the channel.', // opcjonalne, ignorowane jeśli używany jest atom
+      'rating'      => 'Ocena PICS dla kanału.', // opcjonalne, ignorowane jeśli używany jest atom
       'cloud'       => array(
-                             'domain'            => 'domain of the cloud, np. rpc.sys.com' // wymagane
-                             'port'              => 'port to connect to' // opcjonalne, domyślnie wartość 80
-                             'path'              => 'path of the cloud, np. /RPC2' //wymagane
+                             'domain'            => 'domena usługi cloud, np. rpc.sys.com' // wymagane
+                             'port'              => 'port usługi to' // opcjonalne, domyślnie wartość 80
+                             'path'              => 'ścieżka usługi cloud, np. /RPC2' //wymagane
                              'registerProcedure' => 'procedura do wywołania, np. myCloud.rssPleaseNotify' // wymagane
                              'protocol'          => 'protokół do użycia, np. soap lub xml-rpc' // wymagane
-                             ), // a cloud to be notified of updates // opcjonalne, ignorowane jeśli używany jest atom
+                             ), // dane usługi cloud umożliwiającej powiadamianie użytkowników o zmianach // opcjonalne, ignorowane jeśli używany jest atom
       'textInput'   => array(
                              'title'       => 'etykieta przycisku wysyłającego treść pola tekstowego' // wymagane,
                              'description' => 'wyjaśnienie przeznaczenia pola tekstowego' // wymagane
-                             'name'        => 'the name of the text object in the text input area' // wymagane
+                             'name'        => 'nazwa obiektu pola tekstowego' // wymagane
                              'link'        => 'adres URL skryptu CGI który przetwarza wysłaną treść' // wymagane
                              ) // pole tekstowe które może być wyświetlone wraz z kanałem // opcjonalne, ignorowane jeśli używany jest atom
       'skipHours'   => array(
@@ -105,7 +105,7 @@ array(
                              // do 7 wierszy, których wartościami mogą być Monday, Tuesday, Wednesday, Thursday, Friday, Saturday lub Sunday
                              ) // Wskazówka mówiąca agregatorom które dni mogą pominąć // opcjonalne, ignorowane jeśli używany jest atom
       'itunes'      => array(
-                             'author'       => 'Artist column' // opcjonalne, domyślnie wartość z pola author
+                             'author'       => 'nazwa artysty' // opcjonalne, domyślnie wartość z pola author
                              'owner'        => array(
                                                      'name' => 'nazwa właściciela' // opcjonalne, domyślnie wartość z głównego pola author
                                                      'email' => 'adres email właściciela' // opcjonalne, domyślnie wartość z głównego pola email
@@ -113,16 +113,16 @@ array(
                              'image'        => 'obrazek albumu/podcasta' // opcjonalne, domyślnie wartość z głownego pola image
                              'subtitle'     => 'krótki opis' // opcjonalne, domyślnie wartość z głownego pola description
                              'summary'      => 'dłuższy opis' // opcjonalne, domyślnie wartość z głownego pola description
-                             'block'        => 'Prevent an episode from appearing (yes|no)' // opcjonalne
+                             'block'        => 'zapobiega przed pojawieniem się epizodu (yes|no)' // opcjonalne
                              'category'     => array(
                                                      array('main' => 'głowna kategoria', // wymagane
                                                            'sub'  => 'podkategoria' // opcjonalne
                                                            ),
                                                      // do 3 wierszy
-                                                     ) // 'Category column and in iTunes Music Store Browse' // wymagane
-                             'explicit'     => 'parental advisory graphic (yes|no|clean)' // opcjonalne
+                                                     ) // 'Dane kategorii w iTunes Music Store Browse' // wymagane
+                             'explicit'     => 'znaczek kontroli rodzicielskiej (yes|no|clean)' // opcjonalne
                              'keywords'     => 'lista maksymalnie 12 słów kluczowych oddzielonych przecinkami' // opcjonalne
-                             'new-feed-url' => 'used to inform iTunes of new feed URL location' // opcjonalne
+                             'new-feed-url' => 'używane aby poinformować iTunes o nowym adresie URL kanału' // opcjonalne
                              ) // Dane rozszerzenia Itunes // opcjonalne, ignorowane jeśli używany jest atom
       'entries'     => array(
                              array(
@@ -131,9 +131,9 @@ array(
                                    'description'  => 'krótka wersja wpisu z kanału', // jedynie tekst, bez html, wymagane
                                    'guid'         => 'identyfikator artykułu, jeśli nie podany, zostanie użyta wartość z pola link', //opcjonalne
                                    'content'      => 'długa wersja', // może zawierać html, opcjonalne
-                                   'lastUpdate'   => 'timestamp of the publication date', // opcjonalne
-                                   'comments'     => 'comments page of the feed entry', // opcjonalne
-                                   'commentRss'   => 'the feed url of the associated comments', // opcjonalne
+                                   'lastUpdate'   => 'data publikacji w postaci uniksowego znacznika czasu', // opcjonalne
+                                   'comments'     => 'strona komentarzy powiązanych z wpisem w kanale', // opcjonalne
+                                   'commentRss'   => 'adres kanału z powiązanymi komentarzami', // opcjonalne
                                    'source'       => array(
                                                            'title' => 'tytuł oryginalnego źródła' // wymagane,
                                                            'url' => 'adres oryginalnego źródła' // wymagane
@@ -149,14 +149,14 @@ array(
                                                            ) // lista powiązanych kategorii // opcjonalne
                                    'enclosure'    => array(
                                                            array(
-                                                                 'url' => 'url of the linked enclosure' // wymagane
-                                                                 'type' => 'mime type of the enclosure' // opcjonalne
-                                                                 'length' => 'length of the linked content in octets' // opcjonalne
+                                                                 'url' => 'adres powiązanego załącznika' // wymagane
+                                                                 'type' => 'typ mime załącznika' // opcjonalne
+                                                                 'length' => 'długość załącznika w bajtach' // opcjonalne
                                                                  ),
                                                            array(
-                                                                 // data for the second enclosure and so on
+                                                                 // dane drugiego załącznika itd.
                                                                  )
-                                                           ) // list of the enclosures of the feed entry // opcjonalne
+                                                           ) // lista załączników dla wpisu kanału // opcjonalne
                                    ),
                              array(
                                    // dane dla drugiego wpisu itd.
@@ -165,7 +165,7 @@ array(
        );]]></programlisting>
 
             <para>
-                References:
+                Odnośniki:
                 <itemizedlist>
                     <listitem>
                         <para>
@@ -218,9 +218,9 @@ array(
 
             <note>
                 <para>
-                    <code>Zend_Feed_Builder</code> serves as a concrete 
-                    implementation to demonstrate the usage. Users are encouraged 
-                    to make their own classes to implement 
+                    <code>Zend_Feed_Builder</code> jest konkretną implementacją
+                    pokazującą sposób użycia. Namawiamy użytkownika do napisania
+                    własnej klasy, implementującej interfejs 
                     <code>Zend_Feed_Builder_Interface</code>.
                 </para>
             </note>
@@ -230,33 +230,33 @@ array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// importing a feed from a custom builder source
+// importowanie kanału z własnego źródła
 $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// the following line is equivalent to the above; by default a Zend_Feed_Atom instance is returned
+// poniższy kod odpowiada kodowi powyżej; domyślnie zwracana jest instancja Zend_Feed_Atom
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
-// importing a rss feed from a custom builder array
+// importowanie kanału rss z własnego źródła
 $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]></programlisting>
 
         </sect3>
 
         <sect3 id="zend.feed.importing.custom.dump">
 
-            <title>Dumping the contents of a feed</title>
+            <title>Zrzucanie zawartości kanału</title>
 
             <para>
-                To dump the contents of a <code>Zend_Feed_Abstract</code> instance, 
-                you may use <code>send()</code> or <code>saveXml()</code> methods.
+                Aby zrzucić zawartość instancji <code>Zend_Feed_Abstract</code>, 
+                możesz użyć metody <code>send()</code> lub <code>saveXml()</code>.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 assert($feed instanceof Zend_Feed_Abstract);
 
-// dump the feed to standard output
+// zrzuca kanał do standardowego wyjścia
 print $feed->saveXML();
 
-// send http headers and dump the feed
+// wysyła nagłówki oraz zrzuca zawartość kanału
 $feed->send();]]></programlisting>
 
         </sect3>
