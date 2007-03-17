@@ -74,7 +74,7 @@
   <property name="zf.src.default" value="${project.basedir}/.." />
   <property name="zf.product.name" value="Zend Framework" />
   <property name="zf.productname" value="ZendFramework" />
-  <property name="zf.version" value="0.8.0" />
+  <property name="zf.version" value="0.9.0-Beta" />
   <property name="svn.url" value="http://framework.zend.com/svn" />
   <property name="zf.svn.url" value="${svn.url}/framework/trunk" />
   <property name="zf.svn.tag" value="HEAD" />
@@ -84,7 +84,7 @@
   <property name="zf.tarball" value="${stage.home}/${zf.productname}-${zf.version}.tar" />
   <property name="zf.zipball" value="${stage.home}/${zf.productname}-${zf.version}.zip" />
   <property name="zf.apidoc.output.style" value="HTML:frames:DOM/earthli" />
-  <property name="lang" value="en,ar,de,es,fr,ja,nl,pl,pt-br,ru,zh" />
+  <property name="lang" value="en,ar,cs,de,es,fr,ja,nl,pl,pt-br,ro,ru,sk,sr,zh" />
   <property name="tree" value="core,incubator" />
 
   <target name="dist" depends="build"
