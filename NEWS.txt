@@ -71,10 +71,10 @@ Zend Framework                                                             NEWS
     ZF-988  fetchAll ORDER BY clause no longer working
     ZF-1046 Failure to initialize arrays in Zend_Db_Table::find()
 - Zend_Debug, Zend_Loader, Zend_Registry, Zend_Version
-    ZF-1029 Refactor Zend.php 
     ZF-937  Add interface awareness to Zend::loadClass()
     ZF-958  ZF directory structure is incompatible with use of svn:externals
     ZF-960  Assigning empty values causes Zend_Registry to throw exception
+    ZF-1029 Refactor Zend.php 
     ZF-1030 Zend_Register::get() fails without an argument
 - Zend_Feed
     ZF-875  Produce a RSS/Atom feed with Zend_Feed
@@ -92,6 +92,10 @@ Zend Framework                                                             NEWS
     ZF-959  Simplification for Zend_Locale
     ZF-1054 Zend_Locale_Math - new round function yields incorrect results
 - Zend_Mail
+    IMAP/Maildir: get and set flags
+    IMAP/Maildir: create, move, and remove folders
+    IMAP/Maildir: copy and append new messages
+    Translation of message numbers to unique ids and vice versa
     ZF-459  not space between sendername to mailaddress
     ZF-927  Zend_Mail strips down empty newlines in body message
     ZF-928  Zend_Mail mixes To: and Bcc: headers on multiple Bcc
@@ -110,6 +114,7 @@ Zend Framework                                                             NEWS
     ZF-693  Using unoptimized indexing database damages storage
     ZF-943  Java examples are no longer necessary. 
     ZF-1002 Document deleting/updating problem
+    ZF-1050 Result sorting problem
 - Zend_Server_Reflection
     ZF-1018 support more than one whitespace after @phpdoc attribute
 - Zend_Session
