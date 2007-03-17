@@ -1,13 +1,13 @@
-Zend Framework Preview
+Zend Framework Beta
 ----------------------
 
-Thank you for downloading the preview.  The files in this archive
+Thank you for downloading the beta.  The files in this archive
 are released under the Zend Framework license.  See LICENSE.txt
 in this directory for a copy of the license.  Please see NEWS.txt
 in this directory for a high-level list of changes in this release.
 
-The preview is not a single release.  Check http://framework.zend.com
-often for updates.  A new preview will be built as needed when
+The beta is not a single release.  Check http://framework.zend.com
+often for updates.  A new beta will be built as needed when
 improvements and bugfixes are made.
 
 DOCUMENTATION
@@ -24,7 +24,7 @@ Documentation can be found in the /documentation directory:
         /incubator
 
 All documentation is in HTML and can be viewed with your web browser.
-As with the software itself, the documentation is a preview release and
+As with the software itself, the documentation is a beta release and
 in many areas is not complete.  We consider documentation to be a necessary
 part of any software product, so we are working on it with high priority.
 
@@ -37,9 +37,8 @@ Zend Framework classes can be found in these directories:
 /incubator/library
 
 The /library directory contains files that are working.  However, this
-is a preview release of software in active development, not even a beta.
-All files in the distribution are subject to change at any time.  However,
-you should have reasonable success using the files in this directory.
+is a beta release of software in active development.  All files in the
+distribution are nearing stability, but are still subject to change.
 If you experience problems, please check the TODO files and then submit
 a report to our issue tracker (see below).
 
