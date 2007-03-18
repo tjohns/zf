@@ -5049,7 +5049,8 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Math::round('5.055', 2), '5.06');
         $this->assertEquals(Zend_Locale_Math::round('5.055', 2), round(5.055, 2));
         foreach ($rounder as $val => $precision) {
-            $this->assertEquals(Zend_Locale_Math::round($val, $precision), (string) round($val, $precision));
+            file_put_contents('foo',"$val");
+            $this->assertEquals((string)Zend_Locale_Math::round($val, $precision), (string) round($val, $precision));
         }
     }
 }
