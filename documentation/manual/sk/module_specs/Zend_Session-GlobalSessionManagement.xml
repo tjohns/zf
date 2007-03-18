@@ -188,6 +188,70 @@ remember_me_seconds = 864000
 
     </sect2>
 
+    <sect2 id="zend.session.errors">
+
+        <title>Errors</title>
+
+        <sect3 id="zend.session.errors.headerssent">
+
+            <title>Headers already sent</title>
+
+            <para>
+                If you see the error message, "Cannot modify header information - headers already sent", or, "You must
+                call .. before any output has been sent to the browser; output started in ...", then carefully examine
+                the immediate cause (function or method) associated with the message. Any actions that require sending
+                HTTP headers, such as modifying the browser's cookie, must be done before sending normal output
+                (unbuffered output), except when using PHP's output buffering.
+            </para>
+
+            <itemizedlist mark='opencircle'>
+                <listitem>
+                    <para>
+                        Using
+                        <ulink url="http://php.net/outcontrol">output buffering</ulink>
+                        often is sufficient to prevent this issue, and may help improve performance. For example, in
+                        <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a
+                        64K buffer. Even though output buffering might be a good tactic on production servers to
+                        increase performance, relying only on buffering to resolve the "headers already sent" problem is
+                        not sufficient. Make sure the application will never exceed this buffer size, or else the
+                        problem will occur intermittently, whenever the output sent (prior to the HTTP headers) exceeds
+                        the buffer size.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Alternatively, try rearranging the application logic, so that actions manipulating headers are
+                        performed prior to sending any output whatsoever.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        If a Zend_Session method is involved in causing the error message, examine the method carefully,
+                        and make sure it's use really is needed in the application. For example, the default usage of
+                        <code>destroy()</code> also sends an HTTP header to expire the client-side session cookie. If
+                        this is not needed, then use <code>destroy(false)</code>. In HTTP, the instructions for
+                        modifying (e.g. expiring) cookies are sent with HTTP headers.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Alternatively, try rearranging the application logic, so that actions manipulating headers are
+                        performed prior to sending any output whatsoever.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Remove any closing "<code>?&gt;</code>" tags, if they occur at the end of a PHP source file.
+                        They are not needed, and newlines and other nearly invisible whitespace following the closing
+                        tag can trigger output to the client.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+        </sect3>
+
+    </sect2>
+
     <sect2 id="zend.session.regenerateid">
 
         <title>regenerateId()</title>
@@ -366,9 +430,18 @@ if (!isset($defaultNamespace->initialized))
             <code>Zend_Session::destroy()</code> destroys all of the persistent data associated with the current
             session. However, no variables in PHP are affected, so your namespaced sessions (instances of
             <code>Zend_Session_Namespace</code>) remain readable. To complete a "logout", set the optional parameter to
-            true (default is true) to also delete the user agent's session id cookie. The optinal <code>$readonly</code>
-            parameter removes the ability for Zend_Session_Namespace instances, and Zend_Session methods to write to the
-            session data store (i.e. $_SESSION).
+            true (default is true) to also delete the user agent's session id cookie. The optional
+            <code>$readonly</code> parameter removes the ability for Zend_Session_Namespace instances, and Zend_Session
+            methods to write to the session data store (i.e. $_SESSION).
+        </para>
+
+        <para>
+            If you see the error message, "Cannot modify header information - headers already sent", then either avoid
+            using true as the value for the first argument (requesting removal of the session cookie), or see
+            <xref linkend="zend.session.errors.headerssent" />
+            . Thus, "Zend_Session::destroy(true)" must either be called before PHP has sent HTTP headers, or output
+            buffering must be enabled. Also, the total output sent must not exceed the set buffer size, in order to
+            prevent triggering sending the output before the call to destroy().
         </para>
 
         <note>

@@ -112,11 +112,9 @@ Zend_Session::start();
                     Zend_Session_Namespace()</code> happens <emphasis role="strong">before</emphasis> any output (i.e.
                     <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>
                     ) has been sent by PHP to the client, if you are using the default, cookie-based sessions (strongly
-                    recommended). Using
-                    <ulink url="http://php.net/outcontrol">output buffering</ulink>
-                    often is sufficient to prevent this issue and may help improve performance. For example, in
-                    <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a 64K
-                    buffer.
+                    recommended). See
+                    <xref linkend="zend.session.errors.headerssent" />
+                    for more information.
                 </para>
             </listitem>
         </itemizedlist>
@@ -189,6 +187,49 @@ class FooModule_View extends Zend_View
 }
 ?>]]></programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.expiration">
+
+        <title>Namespace Expiration</title>
+
+        <para>
+            Limits can be placed on the longevity of both namespaces and individual keys in namespaces. Common use cases
+            include passing temporary information between requests, and reducing exposure to certain security risks by
+            removing access to potentially sensitive information some time after authentication occurred. Expiration can
+            be based on elapsed seconds, or based on the concept of "hops", where a hop occurs for each successive
+            request that activates the namespace via at least one <code>$space = new
+            Zend_Session_Namespace('myspace');</code>.
+        </para>
+
+        <example>
+            <title>Expiration Examples</title>
+<programlisting role="php">
+<![CDATA[<?php
+$s = new Zend_Session_Namespace('expireAll');
+$s->a = 'apple';
+$s->p = 'pear';
+$s->o = 'orange';
+
+$s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
+
+// expire entire namespace in 5 "hops"
+$s->setExpirationHops(5);
+
+$s->setExpirationSeconds(60);                  
+// The "expireAll" namespace will be marked "expired" on
+// the first request received after 60 seconds have elapsed,
+// or in 5 hops, whichever happens first.
+?>]]></programlisting>
+        </example>
+
+        <para>
+            When working with data expiring from the session in the current request, care should be used when retrieving
+            it. Although the data is returned by reference, modifying the data will not make expiring data persist past
+            the current request. In order to "reset" the expiration time, fetch the data into temporary variables, use
+            the namespace to unset it, and then set the appropriate keys again.
+        </para>
 
     </sect2>
 
@@ -344,17 +385,17 @@ else {
             If your authentication adapter for <code>Zend_Auth</code> returns a result where the authorization identity
             is an object (not recommended), instead of an array, then make sure to require your authorization identity
             class definition before starting the session. Instead, we recommend storing the authorization ids computed
-            within an authentication adapter inside a well-known key in the a session namespace. For example, the
-            default behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
+            within an authentication adapter inside a well-known key in a session namespace. For example, the default
+            behavior of <code>Zend_Auth</code> places this in the 'storage' key of the 'Zend_Auth' namespace.
         </para>
 
         <para>
             If you tell <code>Zend_Auth</code> to not persist authentication tokens in sessions, then you can manually
-            store the authorization id to the session, in a well-known location in a session namespace of your choice.
-            Often, applications have specific needs about where to store credentials used (if any) and "authorization"
-            identity. Applications often map authentication identities (e.g. usernames) to authorization identities
-            (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth authentication
-            adapter's <code>authenticate()</code> method.
+            store the authorization id in the session namespace, in a well-known location in a session namespace of your
+            choice. Often, applications have specific needs about where to store credentials used (if any) and
+            "authorization" identity. Applications often map authentication identities (e.g. usernames) to authorization
+            identities (e.g. a uniquely assigned integer) during authentication, which would occur in the Zend_Auth
+            authentication adapter's <code>authenticate()</code> method.
         </para>
 
         <example>
@@ -399,12 +440,12 @@ else {
 
         <para>
             The latter is not uncommon for performance reasons, such as helping select from a pool of servers caching
-            session information to help solve chicken-and-egg problems. In my experience, often debates ensue about
-            whether to use the real authorization id in the cookie, or some substitute that aids in mapping to the real
-            authorization id (or session or server(s) holding the user's session/profile, etc.), as some system security
-            architects wish to prevent true "DB primary keys" from escaping into the wild to try and obtain some level
-            of protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone
-            uses auto-increment strategies for authorization ids.
+            session information to help solve chicken-and-egg problems. Often debates ensue about whether to use the
+            real authorization id in the cookie, or some substitute that aids in mapping to the real authorization id
+            (or session or server(s) holding the user's session/profile, etc.), as some system security architects wish
+            to prevent true "DB primary keys" from escaping into the wild. These architects try and obtain some level of
+            protection by obfuscation in the event of a SQL injection vulnerability in their system. Not everyone uses
+            auto-increment strategies for authorization ids.
         </para>
 
     </sect2>
