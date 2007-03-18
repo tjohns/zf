@@ -8,6 +8,27 @@
         さまざまな操作や演算ができます。
     </para>
 
+    <sect2 id="zend.date.options">
+
+        <title>Zend_Date のオプション</title>
+
+        <para>
+            現在は、クラス全体で使用する Zend_Date のオプションはひとつだけです。
+            いくつかのメソッドでは、PHP の <code>date()</code>
+            関数と似た形式の日付書式文字列を使用します。
+            PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるという場合は、
+            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>
+            とすることができます。こうすると、<code>$format</code>
+            パラメータを持つすべての関数で PHP の日付書式指定子が使用できるようになります。
+            <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code>
+            とすると、デフォルトのモードに戻ります。このモードは、
+            ISO 日付書式トークンのみをサポートするものです。
+            サポートする書式コードの一覧は、
+            <xref linkend="zend.date.constants.phpformats" /> を参照ください。
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.date.values">
 
         <title>日付の値の操作</title>
@@ -574,22 +595,6 @@ print $date;
                                 <code>$locale</code> にもとづいて決まります。
                                 サポートする書式コードの一覧は、
                                 <xref linkend="zend.date.constants.selfdefinedformats" />
-                                を参照ください。
-                            </para>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>static usePhpDateFormat</entry>
-                        <entry>
-                            <para>
-                                <emphasis role="strong">Zend_Date::usePhpDateFormat($format = null)</emphasis>
-                            </para>
-                            <para>
-                                日付オブジェクトで使用する書式の型を設定します。<code>null</code> は、
-                                現在設定されている書式を返します。<code>true</code> は、パラメータ <code>$format</code>
-                                を使用できるすべての関数に対して php の日付書式指定子を適用します。
-                                標準の値である <code>false</code> は、すべての関数に対して Iso 書式指定子を適用します。
-                                サポートする書式コードについては <xref linkend="zend.date.constants.phpformats" />
                                 を参照ください。
                             </para>
                         </entry>

@@ -670,12 +670,19 @@
         <title>ISO 書式指定子を使用して自分で定義する出力フォーマット</title>
 
         <para>
-            たいていのフォーマットについては、標準の ISO 8601 形式で対応できるでしょう。
-            もしおなじみの形式を使用したいのなら、ISO 形式ではなく PHP
-            の日付書式を使用するように変更することもできます。
-            しかし、ISO 形式ですべてが対応できるわけではありません。フォーマット文字列の長さは無制限です。
-            また、同じ定数を複数回使用してもかまいません。
-            次の例は、以下の表にまとめたフォーマット定数を使用して自分でフォーマットを定義するものです。
+            上で示したもの意外の日付書式が必要な場合は、以下に示す
+            ISO 書式トークンを使用して自分で書式を定義します。
+            以下の例は、下の表の定数を用いて独自の ISO 書式を作成する方法を示すものです。
+            書式の長さは無制限で、同じ定数を複数回使用してもかまいません。
+        </para>
+
+        <para>
+            もし PHP 風の日付書式のほうがなじみがあるのなら、
+            ISO 書式ではなく PHP の書式を用いるように変更することも可能です。
+            しかし、ISO で定められているすべての書式が PHP の日付書式で指定できるわけではありません。
+            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> メソッドを使用すると、
+            Zend_Date のメソッドで ISO 書式指定子ではなく PHP の date() での指定子を用いるようになります
+            (以下の <xref linkend="zend.date.constants.phpformats" /> を参照ください)。
         </para>
 
         <example>
@@ -1087,16 +1094,16 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             もし PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるのなら、
-            <code>usePhpDateFormat()</code> をコールしてみましょう。その後の書式パラメータは、すべて
+            <code>Zend_Date::setOptions('format' => 'php')</code> を使用しましょう。これで、
+            Zend_Date のメソッドで ISO 書式指定子ではなく PHP の date() での指定子を用いるようになります
+            その後の書式パラメータは、すべて
             <ulink url="http://php.net/date">PHP の <code>date()</code> 書式指定子</ulink>
             に従うようになります。PHP の日付書式には含まれていないけれども ISO の書式には含まれるもの、
             またその逆もあります。もしそれほど PHP の日付書式になじみがないのなら、標準の
             ISO 書式を使用しましょう。既存のコードで PHP の日付書式をしているものがある場合は
             <link linkend="zend.locale.date.normalize">Zend_Locale_Format::convertPhpToIsoFormat()</link>
-            で ISO 書式に変換するか、
-            <link linkend="zend.locale.date.normalize">Zend_Locale_Format::usePhpDateFormat()</link>
-            を使用します。次の例は、下の表の定数を用いて独自の書式を定義するものですが、まず最初に
-            <code>Zend_Locale_Format::usePhpDateFormat(true)</code> をコールしています。
+            で ISO 書式に変換するか、<code>setOptions()</code>
+            を使用します。次の例は、下の表の定数を用いて独自の書式を定義するものです。
         </para>
 
         <example>
