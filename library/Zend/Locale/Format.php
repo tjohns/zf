@@ -721,10 +721,10 @@ class Zend_Locale_Format
                 case 'd':
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['day']    = (int) $splitted[0][$cnt];
+                            $result['day']    = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['day']    = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $result['day']    = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -732,10 +732,10 @@ class Zend_Locale_Format
                 case 'M':
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['month']  = (int) $splitted[0][$cnt];
+                            $result['month']  = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['month']  = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $result['month']  = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -748,10 +748,10 @@ class Zend_Locale_Format
                     }
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['year']   = (int) $splitted[0][$cnt];
+                            $result['year']   = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['year']   = (int) iconv_substr($splitted[0][0], $split, $length);
+                        $result['year']   = iconv_substr($splitted[0][0], $split, $length);
                         $split += $length;
                     }
                     ++$cnt;
@@ -759,10 +759,10 @@ class Zend_Locale_Format
                 case 'H':
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['hour']   = (int) $splitted[0][$cnt];
+                            $result['hour']   = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['hour']   = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $result['hour']   = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -770,10 +770,10 @@ class Zend_Locale_Format
                 case 'm':
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['minute'] = (int) $splitted[0][$cnt];
+                            $result['minute'] = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['minute'] = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $result['minute'] = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -781,10 +781,10 @@ class Zend_Locale_Format
                 case 's':
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
-                            $result['second'] = (int) $splitted[0][$cnt];
+                            $result['second'] = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['second'] = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $result['second'] = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -938,7 +938,9 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns if the given string is a date
+     * Returns if the given datestring contains all date parts from the given format.
+     * If no format is given, the standard date format from the locale is used
+     * If you want to check if the date is a proper date you should use Zend_Date::isDate()
      *
      * @param   string  $date     Date string
      * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
@@ -949,6 +951,29 @@ class Zend_Locale_Format
         try {
             $date = self::getDate($date, $options);
         } catch (Exception $e) {
+            return false;
+        }
+
+        $options = array_merge(self::$_Options, self::checkOptions($options));
+        if (empty($options['date_format'])) {
+            $options['date_format'] = self::getDateFormat($options['locale']);
+        } else if ($options['format_type'] == 'php') {
+            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
+        }
+
+        // day expected but not parsed
+        if ((iconv_strpos($options['date_format'], 'd') !== false) and (!isset($date['day']) or ($date['day'] == ""))) {
+            return false;
+        }
+
+        // month expected but not parsed
+        if ((iconv_strpos($options['date_format'], 'M') !== false) and (!isset($date['month']) or ($date['month'] == ""))) {
+            return false;
+        }
+
+        // year expected but not parsed
+        if (((iconv_strpos($options['date_format'], 'Y') !== false) or 
+             (iconv_strpos($options['date_format'], 'y') !== false)) and (!isset($date['year']) or ($date['year'] == ""))) {
             return false;
         }
         return true;
@@ -997,7 +1022,9 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns is the given string is a time
+     * Returns if the given timestring contains all date parts from the given format.
+     * If no format is given, the standard time format from the locale is used
+     * If you want to check if the time is a proper time you should use Zend_Date::isTime()
      *
      * @param   string  $time     Time string
      * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
@@ -1008,6 +1035,29 @@ class Zend_Locale_Format
         try {
             $date = self::getTime($time, $options);
         } catch (Exception $e) {
+            return false;
+        }
+
+        $options = array_merge(self::$_Options, self::checkOptions($options));
+        if (empty($options['date_format'])) {
+            $options['date_format'] = self::getDateFormat($options['locale']);
+        } else if ($options['format_type'] == 'php') {
+            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
+        }
+
+        // second expected but not parsed
+        if ((iconv_strpos($options['date_format'], 's') !== false) and (!isset($date['second']) or ($date['second'] == ""))) {
+            return false;
+        }
+
+        // minute expected but not parsed
+        if ((iconv_strpos($options['date_format'], 'm') !== false) and (!isset($date['minute']) or ($date['minute'] == ""))) {
+            return false;
+        }
+
+        // hour expected but not parsed
+        if (((iconv_strpos($options['date_format'], 'H') !== false) or 
+             (iconv_strpos($options['date_format'], 'h') !== false)) and (!isset($date['hour']) or ($date['hour'] == ""))) {
             return false;
         }
         return true;

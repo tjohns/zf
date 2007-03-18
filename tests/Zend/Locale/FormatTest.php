@@ -293,9 +293,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['year'], 06, 'Year 06 expected');
 
         $value = Zend_Locale_Format::getDate('10.11.2006', array('date_format' => 'dd.MM.yy'));
-        $this->assertSame($value['day'], 10, 'Day 10 expected');
-        $this->assertSame($value['month'], 11, 'Month 11 expected');
-        $this->assertSame($value['year'], 2006, 'Year 2006 expected');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
         try {
             $value = Zend_Locale_Format::getDate('2006.13.01', array('date_format' => 'dd.MM.yy'));
@@ -606,6 +606,12 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse(Zend_Locale_Format::isDate('20.01.2006', array('date_format' => 'M-d-y')), "false expected");
         $this->assertTrue(Zend_Locale_Format::isDate('20.01.2006', array('date_format' => 'd-M-y')), "true expected");
+
+        $this->assertFalse(Zend_Locale_Format::isDate('20.April', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::isDate('20.April', array('date_format' => 'MMMM.YYYY')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::isDate('20', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
+        $this->assertTrue(Zend_Locale_Format::isDate('April.2007', array('date_format' => 'MMMM.YYYY')), "true expected");
+        $this->assertTrue(Zend_Locale_Format::isDate('20.April.2007', array('date_format' => 'dd.YYYY')), "true expected");
     }
 
 
