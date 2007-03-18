@@ -319,22 +319,6 @@ class Zend_Locale_Format
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
                 }
             }
-
-            if (is_int($options['precision'])) {
-                $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
-                $format = substr($format, 0, strpos($format, '.'));
-                if ((int) $options['precision'] > 0) {
-                    $format .= ".";
-                    $format = str_pad($format, strlen($format) + $options['precision'], "0");
-                    $value = round($value, $options['precision']);
-                }
-                if (($rest != '0') and ($rest != '#')) {
-                    $format .= $rest;
-                }
-                if ($options['precision'] == -1) {
-                    $value = round($value, 0);
-                }
-            }
         } else {
             // seperate negative format pattern when avaiable 
             if (iconv_strpos($format, ';') !== false) {
@@ -352,11 +336,10 @@ class Zend_Locale_Format
                     if (substr($format, strpos($format, '.') + 1, 3) == '###') {
                         $options['precision'] = null;
                     } else {
-                        $options['precision'] = strlen(substr($format, strpos($format, '.') + 1));
-                        if (($value < 0) and (strpos($format, '.') < strpos($format, '-'))) {
-                            --$options['precision'];
-                        }
-                        $format = substr($format, 0, strpos($format, '.') + 1) . '###';
+                        $options['precision'] = strlen(substr($format, strpos($format, '.') + 1, 
+                                                              strrpos($format, '0') - strpos($format, '.')));
+                        $format = substr($format, 0, strpos($format, '.') + 1) . '###'
+                                . substr($format, strrpos($format, '0') + 1);
                     }
                 }
             } else {
