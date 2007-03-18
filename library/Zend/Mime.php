@@ -128,6 +128,7 @@ class Zend_Mime
         $out = '';
         $str = str_replace('=', '=3D', $str);
         $str = str_replace(self::$qpKeys, self::$qpReplaceValues, $str);
+        $str = rtrim($str);
 
         // Split encoded text into separate lines
         while ($str) {

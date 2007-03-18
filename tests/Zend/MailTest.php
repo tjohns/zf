@@ -454,7 +454,7 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->send($mock);
         $to  = $this->_getHeader($mock);
         $bcc = $this->_getHeader($mock, 'Bcc');
-        $this->assertContains('to.address@email.com', $to, $mock->header);
+        $this->assertNotContains('to.address@email.com', $to, $mock->header);
         $this->assertNotContains('second.bcc@email.com', $to, $bcc);
     }
 
