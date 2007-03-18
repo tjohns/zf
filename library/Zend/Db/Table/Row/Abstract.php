@@ -1,4 +1,4 @@
-<?php
+?php
 /**
  * Zend Framework
  *
@@ -598,7 +598,7 @@ abstract class Zend_Db_Table_Row_Abstract
         $matchInfo = $matchTable->info();
         $matchName = $matchInfo['name'];
 
-        $matchMap = $this->_prepareReference($interTable, $matchTableClass, $matchRefRule);
+        $matchMap = $this->_prepareReference($intersectionTable, $matchTableClass, $matchRefRule);
 
         for ($i = 0; $i < count($matchMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $interCol = $db->quoteIdentifier($interName) . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
@@ -611,7 +611,7 @@ abstract class Zend_Db_Table_Row_Abstract
             ->from($interName, array())
             ->join($matchName, $joinCond, '*');
 
-        $callerMap = $this->_prepareReference($interTable, $matchTbleClass, $callerRefRule);
+        $callerMap = $this->_prepareReference($intersectionTable, $matchTbleClass, $callerRefRule);
 
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $interCol = $db->quoteIdentifier($interName) . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
