@@ -44,7 +44,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>lifeTime</code></entry>
+                              <entry><code>lifetime</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
                               <entry>
@@ -502,10 +502,6 @@ $res = $cache->foobar2('1', '2');
                 (キャッシュにヒットし、かつブラウザがそのバージョンを既に持っている場合に
                 HTTP 304 Not Modified を送信するようにします)。
             </para>
-            <note><para>
-                Zend_Cache_Frontend_Page は「アルファ版」であり、
-                実用できるようになるまでにはまだまだ時間がかかるでしょう。
-            </para></note>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>(Zend_Cache ファクトリで、このフロントエンドを使用する際に) 使用可能なオプション</title>
@@ -660,7 +656,7 @@ $cache->start();
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200,
+   'lifetime' => 7200,
    'debugHeader' => true, // デバッグ用
    'regexps' => array(
        '^/$' => array('cache' => true),         // IndexController 全体をキャッシュします

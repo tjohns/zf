@@ -29,7 +29,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // キャッシュの有効期限を 2 時間とします
+   'lifetime' => 7200, // キャッシュの有効期限を 2 時間とします
    'automaticSerialization' => true
 );
 
@@ -89,7 +89,7 @@ print_r($result);
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // キャッシュの有効期間は 30 秒です
+   'lifetime' => 30,                  // キャッシュの有効期間は 30 秒です
    'automaticSerialization' => false  // これはデフォルト値です
 );n
 
