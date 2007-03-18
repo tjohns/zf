@@ -1,15 +1,14 @@
 <sect1 id="zend.json.basics">
-    <title>Basic Usage</title>
+    <title>Základné použtie</title>
     <para>
-        Usage of <code>Zend_Json</code> involves using the two public static
-        methods available: <code>Zend_Json::encode()</code> and
-        <code>Zend_Json::decode()</code>. 
+        Používanie <code>Zend_Json</code> vyžaduje použitie týchto dvoch metód:
+        <code>Zend_Json::encode()</code> a <code>Zend_Json::decode()</code>.
     </para>
     <programlisting role="php"><![CDATA[<?php
-// Retrieve a value:
+// Získanie hodnoty:
 $phpNative = Zend_Json::decode($encodedValue);
 
-// Encode it to return to the client:
+// Zakódovanie pre ďalšie použitie na klientovi:
 $json = Zend_Json::encode($phpNative);
 ?>]]></programlisting>
 </sect1>

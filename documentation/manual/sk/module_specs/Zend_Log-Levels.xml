@@ -1,9 +1,9 @@
 <sect1 id="zend.log.log-levels">
-   <title>Log Levels</title>
-   <para>
-       <code>Zend_Log::log()</code> will log all messages as <code>LEVEL_DEBUG</code> unless a different level
-       is supplied as the optional second argument.  The following levels are available as constants of the
-       <code>Zend_Log</code> class.
+    <title>Úrovne logovania</title>
+    <para>
+        <code>Zend_Log::log()</code> zaznamenáva všetky správy ako <code>LEVEL_DEBUG</code> pokiaľ nie je
+        nastavený iná úroveň pomocou druhého nepovinného parametra. V nasledujúcom príklade je uvedený zoznam
+        úrovni a aj ich konštánt ktoré obsahuje trieda <code>Zend_Log</code>.
     </para>
     <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
