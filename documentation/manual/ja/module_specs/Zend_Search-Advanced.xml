@@ -1,25 +1,32 @@
 <sect1 id="zend.search.advanced">
-    <title>Advanced</title>
+    <title>応用</title>
 
     <sect2 id="zend.search.advanced.static">
-        <title>Using index as static property</title>
+        <title>静的プロパティとしてのインデックスの使用</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> object uses object destructor to commit changes and clean up resources.
+            <code>Zend_Search_Lucene</code> オブジェクトは、デストラクタ内で
+            変更のコミットやリソースの後始末を行います。
         </para>
 
         <para>
-            It stores added documents in memory and dumps new index segment to disk depending on <code>MaxBufferedDocs</code> parameter.
+            パラメータ <code>MaxBufferedDocs</code> 
+            の内容に応じて、メモリ内に追加されたドキュメントを保存したり
+            新しいインデックスセグメントをディスクに書き出したりします。
         </para>
 
         <para>
-            If <code>MaxBufferedDocs</code> limit is not reached then there are some "unsaved" documents which a saved as new segment in object destructor.
-            Index auto-optimization procedure is invoked if necessary depending on <code>MaxBufferedDocs</code>, <code>MaxMergeDocs</code> and
-            <code>MergeFactor</code> parameters.
+            もし <code>MaxBufferedDocs</code> の制限に達していない場合は "保存されていない"
+            ドキュメントが残ってしまい、これがオブジェクトのデストラクタで
+            新しいセグメントとして保存されます。
+            インデックスの自動最適化は、
+            <code>MaxBufferedDocs</code>、<code>MaxMergeDocs</code> および
+            <code>MergeFactor</code> の設定内容により、必要に応じて行われます。
         </para>
 
         <para>
-            Static object properties (see below) are destroyed <emphasis>after</emphasis> the "last line of executed script".
+            静的オブジェクトプロパティ (以下を参照ください) は、
+            "スクリプトが最後まで実行された" <emphasis>後で</emphasis> 破棄されます。
 
             <programlisting role="php"><![CDATA[<?php
 class Searcher {
@@ -36,23 +43,33 @@ Searcher::initIndex();
 
 
         <para>
-            Nevertheless, object destructor for static properties is correctly invoked and has possibility to do everything it has to do.
+            にもかかわらず、静的プロパティのオブジェクトのデストラクタは正常に起動し、
+            やるべきことをすべて行う可能性があります。
         </para>
 
         <para>
-            Potential problem is an exception handling. Exceptions thrown by destructors of static objects don't have context, because execution is performed
-            "after the end of script".
+            問題が起こる可能性があるとすれば、例外処理です。
+            静的オブジェクトのデストラクタでスローされた例外は、コンテキストを保持していません。
+            というのも、"スクリプトが最後まで実行された後" に実行されるものだからです。
         </para>
 
         <para>
-            You will get "Fatal error: Exception thrown without a stack frame in Unknown on line 0" error message instead of exception description for such cases.
+            おそらく、そのような場合は例外ではなく
+            "Fatal error: Exception thrown without a stack frame in Unknown on line 0"
+            のようなエラーメッセージが表示されるでしょう。
         </para>
 
         <para>
-            Zend_Search_Lucene gives the possibility to handle this problem with <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
-            You are free to use commit operation any time or several times during script execution. You can still use <code>Zend_Search_Lucene</code> object for searching,
-            adding or deleting document after commit operation. But <code>commit()</code> call guarantees, that if there are no document adding or deleting after commit call, then
-            <code>Zend_Search_Lucene</code> destructor has nothing to do and doesn't throw any exception:
+            Zend_Search_Lucene は、この問題を <code>commit()</code>
+            メソッドで処理できるようにしています。これは、未保存の変更内容をすべて保存し、
+            新しいセグメントを保存するために使用しているメモリを解放します。
+            コミット操作は、スクリプトの実行中にいつでも何度でも行うことができます。
+            <code>Zend_Search_Lucene</code> オブジェクトを使用して、
+            コミット操作の後にもドキュメントの検索や追加、削除ができます。
+            しかし <code>commit()</code> をコールすることで、
+            もしそれ以降ドキュメントの追加や削除が行われていないのなら
+            <code>Zend_Search_Lucene</code> のデストラクタは何もせず、
+            例外もスローしないことが保証されます。
 
             <programlisting role="php"><![CDATA[<?php
 class Searcher {
@@ -73,7 +90,7 @@ Searcher::initIndex();
 
 ...
 
-// Script shutdown routine
+// スクリプトの終了処理
 ...
 Searcher::commit();
 ...
