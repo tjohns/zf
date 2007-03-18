@@ -143,7 +143,7 @@ class Zend_Mime
             }
 
             // Check if there is a space at the end of the line and rewind
-            if ($str[$ptr - 1] == ' ') {
+            if ($ptr > 0 && $str[$ptr - 1] == ' ') {
                 --$ptr;
             }
 
