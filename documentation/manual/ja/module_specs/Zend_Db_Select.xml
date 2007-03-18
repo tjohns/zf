@@ -4,700 +4,1287 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>導入</title>
+        <title>Select オブジェクトの概要</title>
 
         <para>
-            Zend_Db_Select は、データベースに依存しない方法で
-            SQL の SELECT 文を作成するのを助けるためのツールです。
-            もちろん完璧なものだとはいえませんが、
-            クエリの移植性を高めることを助けるのに貢献するでしょう。
-            さらに、クエリを SQL インジェクション攻撃から守ることも助けます。
+            Zend_Db_Select オブジェクトは、SQL の <code>SELECT</code> 文を表すものです。
+            このクラスには、クエリの各部分を追加するためのメソッドが用意されています。
+            PHP のメソッドやデータをもとにクエリの各部分を指定すると、
+            このクラスが正確な SQL 文を作成してくれます。クエリを作成したら、
+            あとは通常の文字列と同じようにそれを用いてクエリを実行できます。
         </para>
 
         <para>
-            Zend_Db_Select のインスタンスを生成する一番簡単な方法は、
-            Zend_Db_Adapter::select() メソッドを使用することです。
+            Zend_Db_Select は次のような機能を提供します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-require_once 'Zend/Db.php';
-
-$params = array (
-    'host'     => '127.0.0.1',
-    'username' => 'malory',
-    'password' => '******',
-    'dbname'   => 'camelot'
-);
-
-$db = Zend_Db::factory('PDO_MYSQL', $params);
-
-$select = $db->select();
-// $select は、PDO_MYSQL アダプタでのみ使用可能なように設定された
-// Zend_Db_Select オブジェクトとなります
-
-?>]]></programlisting>
-
-        <para>
-            それから、このオブジェクトとメソッドを使用して
-            SELECT クエリを作成し、Zend_Db_Adapter
-            がクエリやデータ取得に使用するための文字列を作成します。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-//
-// SELECT round_table.*
-// FROM `round_table` round_table
-// WHERE `noble_title` = 'Sir'
-// ORDER BY `first_name`
-// LIMIT 10 OFFSET 20
-//
-
-// 順に指定していくこともできますし、
-$select->from('round_table');
-$select->where('noble_title = ?', 'Sir');
-$select->order('first_name');
-$select->limit(10,20);
-
-// 一連の流れで指定することもできます
-$select->from('round_table')
-       ->where('noble_title = ?', 'Sir')
-       ->order('first_name')
-       ->limit(10,20);
-
-// 結果を取得します
-$sql = $select->__toString();
-$result = $db->fetchAll($sql);
-
-// 別のやり方として、$select オブジェクト自身を渡すこともできます。
-$result = $db->fetchAll($select);
-
-// もうひとつの方法は、$select オブジェクトから直接 Zend_Db_Statement
-// や PDOStatement を作成するものです。
-$stmt = $select->query();
-$result = $stmt->fetchAll();
-
-?>]]></programlisting>
-
-        <para>
-            その都度クォートする代わりに、
-            クエリの中でバインドパラメータを使用することもできます。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-//
-// SELECT round_table.*
-// FROM `round_table` round_table
-// WHERE noble_title = 'Sir'
-// ORDER BY `first_name`
-// LIMIT 10 OFFSET 20
-//
-
-$select->from('round_table', '*')
-       ->where('noble_title = :title')
-       ->order('first_name')
-       ->limit(10,20);
-
-// バインドパラメータを使用して結果を取得します
-$params = array('title' => 'Sir');
-$result = $db->fetchAll($select, $params);
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.fromcols">
-
-        <title>テーブルからのカラムの取得</title>
-
-        <para>
-            指定したテーブルからカラムを SELECT するには、
-            from() メソッドを使用してテーブル名とカラムを指定します。
-            テーブル名およびカラムのどちらについてもエイリアスを使用することが可能で、
-            何度でも必要なだけ from() を使用することができます。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
-$select = $db->select();
-
-// SELECT some_table.`a`, some_table.`b`, some_table.`c`
-// FROM `some_table` some_table
-
-$select->from('some_table', array('a', 'b', 'c'));
-
-// SELECT bar.`col`
-// FROM `foo` bar
-
-$select->from(array('foo' => 'bar'), 'col');
-
-?>]]></programlisting>
-
-        <para>
-            from() メソッドの二番目の引数は、
-            カラム名を表すスカラー値あるいは複数のカラム名の配列となります。
-            スカラーの値あるいは配列の要素は文字列で、
-            これがカラム名として解釈されます。そして、
-            クォートされてテーブルのエイリアスが前につけられます。
-            二番目の引数を省略した場合のデフォルトは <code>'*'</code>
-            となります。これはクォートされませんが、
-            前にテーブルのエイリアスがつなげられます。
-            このテーブルからは結果セットにカラムを取得したくない場合は、
-            空の <code>array()</code> を使用します。
-        </para>
-
-        <para>
-            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
-            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
-            現在はサポートしていません。配列形式を使用してください。
-        </para>
-
-        <para>
-            テーブルのエイリアスは、第二引数のすべての文字列要素に付加されます。
-            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
-            その文字列値をそのまま使用します。
-            クォート処理やテーブルエイリアスの付加は行いません。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-
-$select = $db->select();
-
-// SELECT foo.col AS col1, bar.col AS col2
-// FROM foo, bar
-$select->from('foo', array(
-    new Zend_Db_Expr('foo.col AS col1'),
-    new Zend_Db_Expr('CURDATE()')
-);
-$select->from('bar', new Zend_Db_Expr('bar.col AS col2'));
-
-?>]]></programlisting>
-
-        <para>
-            連想配列を用いて、テーブルのエイリアスを指定します。
-            テーブル名がキー、そしてその値がエイリアスとなります。
-            連想配列ではなく通常の文字列としてエイリアスを指定した場合は、
-            Zend_Db_Select がテーブルエイリアスを作成します。
-            デフォルトでは、作成されるテーブルエイリアスはそのテーブル名と同じになります。
-            つまり、まるで SQL クエリを
-            "<code>SELECT foo.* FROM `foo` foo</code>"
-            のように書いたのと同じことになります。
-            同じテーブルを複数回使用した場合、たとえば自己結合などの場合は、
-            Zend_Db_Select は各テーブルに対して一意なエイリアスを宣言します。つまり
-            "<code>foo_1</code>"、"<code>foo_2</code>" といったようになります。
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.joincols">
-
-        <title>JOIN されたテーブルからのカラムの取得</title>
-
-        <para>
-            連結したテーブルからカラムを取得するには join() メソッドを使用します。
-            まず連結するテーブル名、次に連結の条件、
-            そして最後に連結したテーブルから取得したいカラムを指定します。
-            何度でも必要なだけ join() を使用することができます。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
-$select = $db->select();
-
-// SELECT foo.*, bar.*
-// FROM `foo` foo
-// JOIN `bar` bar ON foo.id = bar.id
-
-$select->from('foo');
-$select->join('bar', 'foo.id = bar.id');
-
-?>]]></programlisting>
-
-        <para>
-            join() メソッドの最初の引数で、テーブルを指定します。
-            これは from() メソッドの最初の引数と同じ形式です。つまり
-            テーブル名を表す文字列、あるいはテーブル名とエイリアス名を
-            対応させた連想配列となります。
-        </para>
-
-        <para>
-            join() メソッドの二番目の引数は、結合条件となる式です。
-            ここではテーブルのエイリアスを指定できます。ただ、
-            自分でエイリアスを指定しない限りは Zend_Db_Select
-            が自動的にエイリアスを作成することに注意しましょう。
-            結合条件を省略した場合は、CROSS JOIN
-            あるいはデカルト積と同等の扱いとなります。
-        </para>
-
-        <para>
-            join() メソッドの三番目の引数は、
-            結合するテーブルのカラムの中で select 結果に含めるものを指定します。
-            これは from() メソッドの二番目の引数と同じ形式です。つまり
-            カラム名を表すスカラー値あるいは複数のカラム名の配列となります。
-            各スカラー値は、文字列あるいは
-            Zend_Db_Expr 型のオブジェクトとなります。
-            この引数を省略した場合のデフォルトは <code>'*'</code> です。
-            このテーブルからは結果セットにカラムを取得したくない場合は、
-            空の <code>array()</code> を使用します。
-        </para>
-
-        <para>
-            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
-            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
-            現在はサポートしていません。配列形式を使用してください。
-        </para>
-
-        <para>
-            以下の結合形式をサポートしています。
-        </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <command>INNER JOIN</command> は
-                    <code>join()</code> あるいは <code>joinInner()</code>
-                    メソッドで指定します。すべての RDBMS
-                    でこの結合形式をサポートしています。
+                    SQL クエリを少しずつ組み立てていくための
+                    オブジェクト指向のメソッド
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>LEFT JOIN</command> は
-                    <code>joinLeft()</code> メソッドで指定します。
-                    すべての RDBMS でこの結合形式をサポートしています。
+                    SQL クエリの一部について、データベースに依存しない抽象化
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>RIGHT JOIN</command> は
-                    <code>joinRight()</code> メソッドで指定します。
-                    RDBMS によっては、この結合形式をサポートしていないものもあります。
+                    大半のメタデータ識別子の自動クォート処理による、
+                    予約語や特殊文字を含む SQL のサポート
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <command>FULL JOIN</command> は
-                    <code>joinFull()</code> メソッドで指定します。
-                    RDBMS によっては、この結合形式をサポートしていないものもあります。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <command>CROSS JOIN</command> は
-                    <code>joinCross()</code> メソッドで指定します。
-                    結合条件パラメータには何も指定しません。
-                    RDBMS によっては、この結合形式をサポートしていないものもあります。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <command>NATURAL JOIN</command> は
-                    <code>joinNatural()</code> メソッドで指定します。
-                    結合条件パラメータには何も指定しません。
-                    自然結合とは、ふたつのテーブルの同名のカラムを連結するものです。
-                    NATURAL INNER JOIN のみをサポートしています。
+                    識別子や値のクォートによる、
+                    SQL インジェクション攻撃対策
                 </para>
             </listitem>
         </itemizedlist>
 
     </sect2>
 
-    <sect2 id="zend.db.select.where">
+    <sect2 id="zend.db.select.creating">
 
-        <title>WHERE 条件</title>
-
-        <para>
-            WHERE 条件を追加するには、where() メソッドを使用します。通常の文字列、
-            あるいは疑問符のプレースホルダを使用した文字列と代入する値
-            (値は Zend_Db_Adapter::quoteInto を使用してクォートされます)
-            のいずれかを渡すことができます。
-        </para>
+        <title>Select オブジェクトの作成</title>
 
         <para>
-            where() を複数回使用すると、それらの条件が AND で連結されます。
-            OR 条件を指定するには orWhere() を使用します。
+            Zend_Db_Select オブジェクトのインスタンスを作成するには、
+            Zend_Db_Adapter_Abstract オブジェクトの
+            <code>select()</code> メソッドを使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成し、SELECT ツールを取得します
+        <example id="zend.db.select.creating.example-db">
+            <title>データベースアダプタの select() メソッドの例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory( ...options... );
 $select = $db->select();
 
-// SELECT r.*
-// FROM `round_table` r
-// WHERE noble_title = 'Sir'
-//   AND favorite_color = 'yellow'
-
-$select->from(array('round_table' => 'r'));
-$select->where("noble_title = 'Sir'"); // 値を埋め込む形式
-$select->where('favorite_color = ?', 'yellow'); // 値をクォートする形式
-
-// SELECT foo.*
-//     FROM `foo` foo
-//     WHERE bar = 'baz'
-//     OR id IN('1', '2', '3')
-
-$select->from('foo');
-$select->where('bar = ?', 'baz');
-$select->orWhere('id IN(?)', array(1, 2, 3));
-
 ?>]]></programlisting>
+        </example>
 
         <para>
-            Zend_Db_Select は、WHERE 句のカラムに対しては
-            クォートやエイリアスの連結を適用しません。
-            PHP の変数を WHERE 句の文字列として使用する場合は、
-            Zend_Db_Adapter の quoteIdentifier()
-            メソッドで無効な構文を防ぐようにしましょう。
+            Zend_Db_Select オブジェクトを作成するもうひとつの方法は、
+            コンストラクタの引数でデータベースアダプタを指定することです。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-...
-$columnName = 'bar'; // あるいは、他の信頼できない入力元から設定します
-$whereExpr = $db->quoteIdentifier($columnName) . ' = ?';
-$select->where($whereExpr, 'baz');
+
+        <example id="zend.db.select.creating.example-new">
+            <title>新しい Select オブジェクトの作成の例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory( ...options... );
+$select = new Zend_Db_Select($db);
+
 ?>]]></programlisting>
+        </example>
 
     </sect2>
 
-    <sect2 id="zend.db.select.group">
+    <sect2 id="zend.db.select.building">
 
-        <title>GROUP BY 句</title>
+        <title>Select クエリの作成</title>
 
         <para>
-            行をグループ化するには、必要なだけ group() メソッドを使用します。
+            クエリを作成する際に、クエリの句を個別に追加していくことができます。
+            Zend_Db_Select オブジェクトには、
+            個々の句を追加していくメソッドが用意されています。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成し、SELECT ツールを取得します
+        <example id="zend.db.select.building.example">
+            <title>メソッドを使用して句を追加する例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+// Zend_Db_Select オブジェクトを作成します
 $select = $db->select();
 
-// SELECT COUNT(id)
-// FROM `foo` foo
-// GROUP BY `bar`, `baz`
+// FROM 句を追加します
+$select->from( ...テーブルとカラムを指定します... )
 
-$select->from('foo', new Zend_Db_Expr('COUNT(id)'));
-$select->group('bar');
-$select->group('baz');
+// WHERE 句を追加します
+$select->where( ...検索条件を指定します... )
 
-// 上と等価な group() のコール方法
-$select->group(array('bar', 'baz'));
+// ORDER BY 句を追加します
+$select->order( ...ソート条件を指定します... );
 
 ?>]]></programlisting>
+        </example>
 
         <para>
-            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
-            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
-            現在はサポートしていません。配列形式を使用してください。
+            Zend_Db_Select オブジェクトの大半のメソッドで、便利な
+            「流暢なインターフェイス」形式を利用できます。これは、
+            各メソッドが、自分自身への参照を結果として返すということです。
+            つまり、その結果を使用してすぐに別のメソッドをコールできるのです。
         </para>
 
+        <example id="zend.db.select.building.example-fluent">
+            <title>流暢なインターフェイスの使用例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from( ...テーブルとカラムを指定します... )
+    ->where( ...検索条件を指定します... )
+    ->order( ...ソート条件を指定します... );
+
+?>]]></programlisting>
+        </example>
+
         <para>
-            group() の引数のすべての文字列に対してクォートが行われます。
-            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
-            文字列値をクォートせずにそのまま使用します。
+            この節の例では流暢なインターフェイスを使用しますが、
+            この方式を使用せずに使用することも可能です。
+            そうしなければならないこともよくあるでしょう。たとえば、
+            クエリに句を追加する前にアプリケーションで何らかの処理が必要な場合などです。
         </para>
+
+        <sect3 id="zend.db.select.building.from">
+
+            <title>FROM 句の追加</title>
+
+            <para>
+                このクエリのテーブルを指定するために <code>from()</code>
+                メソッドを使用します。テーブル名は、単純に文字列で指定することができます。
+                Zend_Db_Select はテーブル名を識別子としてクォートするので、
+                特殊文字を使用することもできます。
+            </para>
+
+            <example id="zend.db.select.building.from.example">
+                <title>from() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT *
+//   FROM "products" 
+
+$select = $db->select()
+    ->from( 'products' );
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                テーブルの相関名 (あるいは "エイリアス" とも言われます)
+                を指定することもできます。その場合は、
+                単純な文字列ではなく連想配列を使用し、相関名とテーブル名の対応を指定します。
+                SQL のその他の句で、この相関名を使用できるようになります。
+                複数のテーブルを結合したクエリを作成する場合は、
+                Zend_Db_Select はそのテーブル名に基づいた一意な相関名を作成します。
+            </para>
+
+            <example id="zend.db.select.building.from.example-cname">
+                <title>テーブルの相関名を指定する例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p.*
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from( array('p' => 'products') );
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                RDBMS によっては、テーブル名の前にスキーマ名をつなげる方式をサポートしているものもあります。
+                テーブル名として、"<code>schemaName.tableName</code>"
+                のように指定することができます。この場合、
+                Zend_Db_Select は各部分を個別にクォートします。
+            </para>
+
+            <example id="zend.db.select.building.from.example-schema">
+                <title>スキーマ名の指定の例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT *
+//   FROM "myschema"."products"
+
+$select = $db->select()
+    ->from( 'myschema.products' );
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.columns">
+
+            <title>カラムの追加</title>
+
+            <para>
+                <code>from()</code> メソッドの二番目の引数で、
+                対応するテーブルから取得するカラムを指定することができます。
+                カラムを指定しなかった場合のデフォルトは
+                "<code>*</code>" で、これは "すべてのカラム"
+                を表す SQL のワイルドカードです。
+            </para>
+
+            <para>
+                カラム名を指定するには、単純な文字列の配列を使用するか、
+                あるいは連想配列でエイリアスとカラム名を対応させます。
+                取得したいカラムがひとつだけの場合でエイリアスを使用しない場合は、
+                配列ではなく単純な文字列で指定することもできます。
+            </para>
+
+            <para>
+                カラム名を
+                "<code>correlationName.columnName</code>"
+                の形式で指定することもできます。この場合、
+                Zend_Db_Select は各部分を個別にクォートします。
+                カラムの correlationName (相関名) を指定しなかった場合は、
+                現在の <code>from()</code> メソッドで指定したテーブルの名前を使用します。
+            </para>
+
+            <example id="zend.db.select.building.columns.example">
+                <title>カラムを指定する例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'));
+
+// 同じクエリを、相関名を指定して作成します
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('p.product_id', 'p.product_name'));
+
+// このクエリを、カラムのひとつにエイリアスを指定して作成します
+//   SELECT p."product_id" AS prodno, p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('prodno' => 'product_id', 'product_name'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.columns-expr">
+
+            <title>式によるカラムの追加</title>
+
+            <para>
+                SQL クエリでは、単にテーブルのカラムを使用するだけでなく
+                何らかの式をカラムとして使用することもあります。
+                このような場合は、相関名をつけたりクォートを適用したりしてはいけません。
+                カラム文字列に括弧が含まれている場合に、Zend_Db_Select
+                はそれを式として扱います。
+            </para>
+
+            <para>
+                Zend_Db_Expr 型のオブジェクトを明示的に作成し、
+                文字列がカラム名と解釈されてしまうことを防ぐこともできます。
+                Zend_Db_Expr は、文字列をひとつだけ含む最小限のクラスです。
+                Zend_Db_Select は Zend_Db_Expr 型のオブジェクトを認識し、
+                それを文字列に変換しますが、
+                その際にクォートや相関名などの処理を適用しません。
+            </para>
+
+            <note>
+                <para>
+                    カラムとして使用する式に括弧が含まれている場合は、
+                    カラム名で Zend_Db_Expr を指定する必要はありません。
+                    Zend_Db_Select は、括弧を発見すると自動的にその文字列を式として扱います。
+                    クォートや相関名の設定はされません。
+                </para>
+            </note>
+
+            <example id="zend.db.select.building.columns-expr.example">
+                <title>式を含むカラムの指定の例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", LOWER(product_name)
+//   FROM "products" AS p
+// 括弧つきの式は、暗黙のうちに
+// Zend_Db_Expr として扱われます
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'LOWER(product_name)'));
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", (p.cost * 1.08) AS cost_plus_tax
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'cost_plus_tax' => '(p.cost * 1.08)'));
+
+// このクエリを、明示的に Zend_Db_Expr を指定して作成します
+//   SELECT p."product_id", p.cost * 1.08 AS cost_plus_tax
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                上の例では、Zend_Db_Select は
+                相関名の設定や識別子のクォートといった処理を行いません。
+                あいまいさを解決するためにそのような処理が必要な場合は、
+                手動で文字列を変更する必要があります。
+            </para>
+
+            <para>
+                カラム名が SQL キーワードや特殊文字を含んでいる場合は、
+                アダプタの <code>quoteIdentifier()</code>
+                メソッドを使用して結果を操作する必要があります。
+                <code>quoteIdentifier()</code> は、
+                識別子に対して SQL のクォート処理を行います。
+                これによりテーブルやカラムといった識別子を
+                SQL のそれ以外の部分と区別できるようになります。
+            </para>
+
+            <para>
+                クォート処理を直接文字列に埋め込んでしまわずに
+                <code>quoteIdentifier()</code> メソッドを使用することで、
+                あなたのコードをデータベースに依存しないものにすることができます。
+                というのも、RDBMS によってはあまり標準的ではない文字でクォートを行うものもあるからです。
+                <code>quoteIdentifier()</code> メソッドは、
+                アダプタの型に応じて適切なクォート文字を使用するように設計されています。
+                <code>quoteIdentifier()</code> メソッドはまた、
+                識別子の名前の中に登場するクォート文字自体もエスケープします。
+            </para>
+
+            <example id="zend.db.select.building.columns-quoteid.example">
+                <title>式の中のカラムをクォートする例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// このクエリを作成する際に、式の中にある特別なカラム名 "from" をクォートします
+//   SELECT p."from" + 10 AS origin
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.join">
+
+            <title>JOIN による、クエリへの別のテーブルの追加</title>
+
+            <para>
+                有用なクエリの多くは、<code>JOIN</code>
+                を使用して複数テーブルの行を結合しています。
+                テーブルを Zend_Db_Select クエリに追加するには、
+                <code>join()</code> メソッドを使用します。
+                このメソッドの使用法は <code>from()</code>
+                メソッドと似ていますが、ほとんどの場合に結合条件を指定するという点が異なります。
+            </para>
+
+            <example id="zend.db.select.building.join.example">
+                <title>join() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", p."product_name", l.*
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id');
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                <code>join()</code> の二番目の引数として、
+                結合条件を文字列で指定します。これは、
+                あるテーブルの行が別のテーブルのどの行と対応するのかを表す条件式です。
+                式の中では相関名を使用することができます。
+            </para>
+
+            <note>
+                <para>
+                    結合条件に指定した式に関しては、クォート処理は行われません。
+                    クォートする必要のあるカラム名を使用する場合は、
+                    結合条件の文字列を作成する際に
+                    <code>quoteIdentifier()</code> を使用しなければなりません。
+                </para>
+            </note>
+
+            <para>
+                <code>join()</code> の三番目の引数はカラム名を表す配列です。
+                これは <code>from()</code> メソッドで使用する形式と似ています。
+                デフォルトは "<code>*</code>" です。
+                相関名や式、Zend_Db_Expr についての扱いは、
+                <code>from()</code> メソッドにおけるカラム名の配列と同じです。
+            </para>
+
+            <para>
+                テーブルからカラムを取得しない場合は、
+                カラムリストに空の配列を使用します。
+                これは <code>from()</code> メソッドでも同様に動作しますが、
+                普通は最初のテーブルからは何らかのカラムを取得するでしょう。
+                一方、連結するテーブルについてはカラムを取得しないこともありえます。
+            </para>
+
+            <example id="zend.db.select.building.join.example-no-columns">
+                <title>カラムを指定しない例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id', 'product_name'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id'
+        array() ); // 空のカラムリスト
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                SQL の結合にはいくつかの形式があります。
+                以下に、Zend_Db_Select がサポートする結合の形式をまとめます。
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>join(table, join, [columns])</code> メソッドあるいは
+                        <code>joinInner(table, join, [columns])</code> メソッドによる
+                        <command>INNER JOIN</command>
+                    </para>
+                    <para>
+                        これはもっとも一般的な結合形式です。各テーブルの行を、
+                        指定した結合条件に基づいて比較します。
+                        結果セットには、その結合条件を満たす行のみが含まれます。
+                        条件を満たす行がない場合は、結果セットが空になることもあります。
+                    </para>
+                    <para>
+                        すべての RDBMS が、この結合形式に対応しています。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>joinLeft(table, condition, [columns])</code> メソッドによる
+                        <command>LEFT JOIN</command>
+                    </para>
+                    <para>
+                        左側のテーブルのすべての行と
+                        右側のテーブルの条件にマッチする行が含まれます。
+                        右側のテーブルからのカラムのうち、
+                        左側のテーブルに対応する行がないものについては
+                        NULL で埋められます。
+                    </para>
+                    <para>
+                        すべての RDBMS が、この結合形式に対応しています。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>joinRight(table, condition, [columns])</code> メソッドによる
+                        <command>RIGHT JOIN</command>
+                    </para>
+                    <para>
+                        右外部結合は、左外部結合を補完するものです。
+                        右側のテーブルのすべての行と
+                        左側のテーブルの条件にマッチする行が含まれます。
+                        左側のテーブルからのカラムのうち、
+                        右側のテーブルに対応する行がないものについては
+                        NULL で埋められます。
+                    </para>
+                    <para>
+                        RDBMS によっては、この結合形式に対応していないものもあります。
+                        しかし、一般に右外部結合は、
+                        テーブルの順番を入れ替えれば左外部結合として表すことが可能です。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>joinFull(table, condition, [columns])</code> メソッドによる
+                        <command>FULL JOIN</command>
+                    </para>
+                    <para>
+                        完全外部結合は、左外部結合と右外部結合を組み合わせたようなものです。
+                        両側のテーブルのすべての行が含まれます。
+                        結合条件を満たす組み合わせがあった場合はそれらが同一行にまとめられ、
+                        それ以外の場合は、対応するデータがないカラムについては NULL で埋められます。
+                    </para>
+                    <para>
+                        RDBMS によっては、この結合形式に対応していないものもあります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>joinCross(table, [columns])</code> メソッドによる
+                        <command>CROSS JOIN</command>
+                    </para>
+                    <para>
+                        クロス結合とは、デカルト積のことです。
+                        最初のテーブルの各行に対して、
+                        二番目のテーブルのすべての行がマッチします。
+                        つまり、結果セットの行数は、
+                        ふたつのテーブルの行数の積と等しくなります。
+                        結果セットをフィルタリングするには、WHERE
+                        句で条件を指定します。
+                        この方法によるクロス結合は、昔の SQL-89
+                        の結合構文と似ています。
+                    </para>
+                    <para>
+                        <code>joinCross()</code> メソッドには、
+                        結合条件を指定するパラメータがありません。
+                        RDBMS によっては、この結合形式に対応していないものもあります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>joinNatural(table, [columns])</code> メソッドによる
+                        <command>NATURAL JOIN</command>
+                    </para>
+                    <para>
+                        自然結合は、両方のテーブルに同じ名前で登場するカラムを比較します。
+                        比較はすべてのカラムに対して行われます。
+                        この API でサポートしているのは、自然内部結合のみです。
+                        SQL で自然外部結合がサポートされていたとしても、使用できません。
+                    </para>
+                    <para>
+                        <code>joinNatural()</code> メソッドには、
+                        結合条件を指定するパラメータはありません。
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.where">
+
+            <title>WHERE 句の追加</title>
+
+            <para>
+                結果セットの行を制限するための条件を指定するには
+                <code>where()</code> メソッドを使用します。
+                このメソッドの最初の引数は SQL の式で、これをクエリの
+                SQL で <code>WHERE</code> 句として使用します。
+            </para>
+
+            <example id="zend.db.select.building.where.example">
+                <title>where() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE price > 100.00
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > 100.00');
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    <code>where()</code> メソッドや <code>orWhere()</code>
+                    メソッドで指定する式にはクォート処理は行われません。
+                    クォートする必要のあるカラム名を使用する場合は、
+                    条件の文字列を作成する際に
+                    <code>quoteIdentifier()</code> を使用しなければなりません。
+                </para>
+            </note>
+
+            <para>
+                <code>where()</code> メソッドの二番目の引数はオプションです。
+                これは式を置き換える値となります。
+                Zend_Db_Select は値をクォートし、式の中の
+                クエスチョンマーク ("<code>?</code>") をその値で置き換えます。
+            </para>
+
+            <para>
+                このメソッドはパラメータをひとつだけ受け取ります。
+                複数の値を置換する必要がある場合は、文字列を自分でフォーマットし、
+                値の挿入やクォートを自分で行う必要があります。
+            </para>
+
+            <example id="zend.db.select.building.where.example-param">
+                <title>where() メソッドでのパラメータの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price > 100.00)
+
+$minimumPrice = 100;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > ?', $minimumPrice);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                Zend_Db_Select オブジェクト上で、<code>where()</code>
+                メソッドを複数回実行することもできます。その結果のクエリは、
+                指定した条件を <code>AND</code> でひとつにまとめたものとなります。
+            </para>
+
+            <example id="zend.db.select.building.where.example-and">
+                <title>複数の where() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price > 100.00)
+//     AND (price < 500.00)
+
+$minimumPrice = 100;
+$maximumPrice = 500;
+
+$select = $db->select()
+    ->from('products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price > ?', $minimumPrice)
+    ->where('price < ?', $maximumPrice);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                複数の条件を <code>OR</code> で連結したい場合は、
+                <code>orWhere()</code> メソッドを使用します。
+                このメソッドの使用法は <code>where()</code>
+                メソッドとほとんど同じですが、条件の前には
+                <code>AND</code> ではなく <code>OR</code>
+                がつくことになります。
+            </para>
+
+            <example id="zend.db.select.building.where.example-or">
+                <title>orWhere() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price < 100.00)
+//     OR (price > 500.00)
+
+$minimumPrice = 100;
+$maximumPrice = 500;
+
+$select = $db->select()
+    ->from('products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price < ?', $minimumPrice)
+    ->orWhere('price > ?', $maximumPrice);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                Zend_Db_Select は、<code>where()</code> メソッドや
+                <code>orWhere()</code> メソッドで指定した式の両側に
+                自動的に括弧をつけます。これにより、
+                論理演算子が予期せぬ結果を引き起こすことを防ぎます。
+            </para>
+
+            <example id="zend.db.select.building.where.example-parens">
+                <title>論理式を括弧で囲む例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price < 100.00 OR price > 500.00)
+//     AND (product_name = 'Apple')
+
+$minimumPrice = 100;
+$maximumPrice = 500;
+$prod = 'Apple';
+
+$select = $db->select()
+    ->from('products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price < $minimumPrice OR price > $maximumPrice')
+    ->where('product_name = ?', $prod);
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                上の例では、括弧がなければ結果はまったく異なるものとなります。
+                なぜなら、<code>AND</code> のほうが <code>OR</code>
+                よりも優先順位が高いからです。Zend_Db_Select
+                は括弧をつけるので、それぞれの <code>where()</code>
+                で指定された式の結合度が <code>AND</code>
+                より高くなります。
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.group">
+
+            <title>GROUP BY 句の追加</title>
+
+            <para>
+                SQL で <code>GROUP BY</code> 句を使用すると、
+                結果セットの行数を減らすことができます。
+                <code>GROUP BY</code> 句で指定したカラムの一意な値ごとに、
+                結果が一行にまとめられます。
+            </para>
+
+            <para>
+                Zend_Db_Select では、行のグループ化を行うためのカラムを
+                <code>group()</code> メソッドで指定します。
+                このメソッドへの引数は、<code>GROUP BY</code>
+                句で使用するカラムあるいは複数カラムの配列となります。
+            </para>
+
+            <example id="zend.db.select.building.group.example">
+                <title>group() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id');
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                <code>from()</code> メソッドでのカラムの配列と同様、
+                カラム名には相関名を使用することができます。また、
+                カラム名は識別子としてクォートされます。
+                ただし、文字列に括弧が含まれたり
+                Zend_Db_Expr 型のオブジェクトを指定したりした場合は別です。
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.having">
+
+            <title>HAVING 句の追加</title>
+
+            <para>
+                SQL で <code>HAVING</code> 句を使用すると、
+                グループ化した行に制約を適用します。これは、
+                <code>WHERE</code> 句が行に対して制約を適用するのと同じです。
+                しかし、これらには相違点があります。
+                <code>WHERE</code> 条件はグループ化の前に適用されますが、
+                <code>HAVING</code> 条件はグループ化された後に適用されます。
+            </para>
+
+            <para>
+                Zend_Db_Select では、グループに対する制約を指定するには
+                <code>having()</code> メソッドを使用します。
+                このメソッドの使用法は <code>where()</code> メソッドと似ています。
+                最初の引数が SQL の式を含む文字列です。二番目の引数はオプションで、
+                SQL 式の中のパラメータプレースホルダを置き換える値となります。
+                <code>having()</code> を複数回実行すると、それらの条件が
+                論理演算子 <code>AND</code> で連結されます。
+                <code>orHaving()</code> メソッドを使用した場合は、論理演算子
+                <code>OR</code> で連結されます。
+            </para>
+
+            <example id="zend.db.select.building.having.example">
+                <title>having() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+//   HAVING line_items_per_product > 10
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id')
+    ->having('line_items_per_product > 10');
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    <code>having()</code> メソッドや <code>orHaving()</code>
+                    メソッドで指定する式にはクォート処理は行われません。
+                    クォートする必要のあるカラム名を使用する場合は、
+                    条件の文字列を作成する際に
+                    <code>quoteIdentifier()</code> を使用しなければなりません。
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.order">
+
+            <title>ORDER BY 句の追加</title>
+
+            <para>
+                SQL の <code>ORDER BY</code> 句では、
+                クエリの結果セットの並べ替えの基準となるカラムや式を指定します。
+                複数のカラムを指定すると、最初のカラムの値が同じだった場合に
+                二番目のカラムを用いて並べ替えを行います。
+                デフォルトでは、小さいほうから大きいほうに向かって並べ替えます。
+                逆に大きいほうから小さいほうに向かって並べ替えるには、
+                カラムリストの中のそのカラム名の後に、キーワード
+                <code>DESC</code> を指定します。
+            </para>
+
+            <para>
+                Zend_Db_Select では、<code>order()</code> メソッドを使用して
+                並べ替えの基準となるカラムあるいはカラムの配列を指定します。
+                配列の各要素はカラム名を表す文字列です。オプションとして、
+                スペースをはさんでキーワード
+                <code>ASC</code> や <code>DESC</code> を続けます。
+            </para>
+
+            <para>
+                <code>from()</code> メソッドや <code>group()</code>
+                メソッドと同様、カラム名は識別子としてクォートされます。
+                ただし、文字列に括弧が含まれたり
+                Zend_Db_Expr 型のオブジェクトを指定したりした場合は別です。
+            </para>
+
+            <example id="zend.db.select.building.order.example">
+                <title>order() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", COUNT(*) AS line_items_per_product
+//   FROM "products" AS p JOIN "line_items" AS l
+//     ON p.product_id = l.product_id
+//   GROUP BY p.product_id
+//   ORDER BY "line_items_per_product" DESC, "product_id"
+
+$select = $db->select()
+    ->from(array('p' => 'products'),
+        array('product_id'))
+    ->join(array('l' => 'line_items'),
+        'p.product_id = l.product_id',
+        array('line_items_per_product' => 'COUNT(*)'))
+    ->group('p.product_id')
+    ->order(array('line_items_per_product DESC', 'product_id'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.limit">
+
+            <title>LIMIT 句の追加</title>
+
+            <para>
+                RDBMS によっては、SQL を拡張して、いわゆる
+                <code>LIMIT</code> 句を使用できるようにしているものもあります。
+                これは、結果セットの行数を、最大でも指定した数までに制限します。
+                また、出力を始める前に読み飛ばす行数を指定することもできます。
+                この機能を使用すると、結果セットの一部だけを取得することが簡単になります。
+                たとえば、クエリの結果をページに分けて出力する場合などに便利です。
+            </para>
+
+            <para>
+                Zend_Db_Select では、<code>limit()</code>
+                メソッドを使用して結果の行数および読み飛ばしの行数を指定します。
+                このメソッドの最初の引数は取得したい行数、
+                そして二番目の引数は読み飛ばす行数となります。
+            </para>
+
+            <example id="zend.db.select.building.limit.example">
+                <title>limit() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p 
+//   LIMIT 10, 20
+
+$select = $db->select()
+    ->from(array('p' => 'products'), array('product_id', 'product_name'))
+    ->limit(10, 20);
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    <code>LIMIT</code> 構文は、すべての RDBMS
+                    でサポートされているわけではありません。RDBMS によっては、
+                    似た機能を別の構文でサポートしているものもあります。
+                    各 Zend_Db_Adapter_Abstract クラスには、
+                    その RDBMS に対応した適切な SQL を作成するメソッドが用意されています。
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.distinct">
+
+            <title>クエリ修飾子 DISTINCT の追加</title>
+
+            <para>
+                <code>distinct()</code> メソッドを使用すると、SQL クエリに
+                <code>DISTINCT</code> キーワードを追加することができます。
+            </para>
+
+            <example id="zend.db.select.building.distinct.example">
+                <title>distinct() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT DISTINCT p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->distinct()
+    ->from(array('p' => 'products'), 'product_name');
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.for-update">
+
+            <title>クエリ修飾子 FOR UPDATE の追加</title>
+
+            <para>
+                <code>forUpdate()</code> メソッドを使用すると、SQL クエリに
+                <code>FOR UPDATE</code> 修飾子を追加することができます。
+            </para>
+
+            <example id="zend.db.select.building.for-update.example">
+                <title>forUpdate() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT FOR UPDATE p.*
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->forUpdate()
+    ->from(array('p' => 'products'));
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
 
     </sect2>
 
-    <sect2 id="zend.db.select.having">
+    <sect2 id="zend.db.select.execute">
 
-        <title>HAVING 条件</title>
-
-        <para>
-            選択した結果に HAVING 条件を追加するには、having() メソッドを使用します。
-            このメソッドは where() メソッドと同じです。
-        </para>
+        <title>Select クエリの実行</title>
 
         <para>
-            having() を複数回使用すると、それらの条件が AND で連結されます。
-            OR 条件を指定するには orHaving() を使用します。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成し、SELECT ツールを取得します
-$select = $db->select();
-
-// SELECT COUNT(id) AS count_id
-//     FROM `foo` foo
-//     GROUP BY `bar`, `baz`
-//     HAVING count_id > '1'
-
-$select->from('foo', new Zend_Db_Expr('COUNT(id) AS count_id'));
-$select->group(array('bar', 'baz'));
-$select->having('count_id > ?', 1);
-
-?>]]></programlisting>
-
-        <para>
-            Zend_Db_Select は、HAVING 句のカラムに対しては
-            クォートやエイリアスの連結を適用しません。
-            PHP の変数を HAVING 句の文字列として使用する場合は、
-            Zend_Db_Adapter の quoteIdentifier()
-            メソッドで無効な構文を防ぐようにしましょう。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-...
-$columnName = 'count_id'; // or set by an untrusted source
-$havingExpr = $db->quoteIdentifier($columnName) . ' > ?';
-$select->having($havingExpr, 1);
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.order">
-
-        <title>ORDER BY 句</title>
-
-        <para>
-            カラムを並べ替えるには、必要なだけ order() メソッドを使用します。
+            この節では、Zend_Db_Select オブジェクトが表すクエリを実行する方法を説明します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-	
-// $db オブジェクトを作成し、SELECT ツールを取得します
-$select = $db->select();
+        <sect3 id="zend.db.select.execute.query-adapter">
 
-// SELECT r.*
-// FROM `round_table` r
-// ORDER BY `noble_title` DESC, `first_name` ASC
+            <title>Db アダプタからの Select クエリの実行</title>
 
-$select->from('round_table');
-$select->order('noble_title DESC');
-$select->order('first_name');
+            <para>
+                Zend_Db_Select オブジェクトが表すクエリを実行するには、それを
+                Zend_Db_Adapter_Abstract オブジェクトの <code>query()</code>
+                メソッドの最初の引数として渡します。すると、
+                文字列のクエリのかわりに Zend_Db_Select オブジェクトを使用するようになります。
+            </para>
 
-// 上と等価な order() のコール方法
-$select->order(array('noble_title DESC', 'first_name'));
+            <para>
+                <code>query()</code> メソッドは、アダプタの型によって
+                Zend_Db_Statement あるいは PDOStatement
+                型のオブジェクトを返します。
+            </para>
 
-?>]]></programlisting>
+            <example id="zend.db.select.execute.query-adapter.example">
+                <title>Db アダプタの query() メソッドの使用例</title>
+                <programlisting role="php"><![CDATA[<?php
 
-        <para>
-            複数のカラムを、ひとつの文字列でカンマ区切りで指定することはやめましょう。
-            以前のプレビュー版の Zend_Db で用いられていたこの形式は、
-            現在はサポートしていません。配列形式を使用してください。
-        </para>
+$select = $db->select()
+  ->from('products');
 
-        <para>
-            order() の引数のすべての文字列に対してクォートが行われます。
-            しかし、その要素が Zend_Db_Expr 型のオブジェクトだった場合は、
-            文字列値をクォートせずにそのまま使用します。
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.limit">
-
-        <title>件数やオフセットによる制限</title>
-
-        <para>
-            Zend_Db_Select は、LIMIT 句のサポートを抽象化した機能を提供しています。
-            MySQL や PostgreSQL などの多くのデータベースでは、これは比較的簡単なことです。
-            というのも "LIMIT :count [OFFSET :offset]" という構文がサポートされているからです。
-        </para>
-
-        <para>
-            その他のデータベースの中には、ちょっと面倒なものもあります。
-            というのも、これらは LIMIT 句をサポートしていないのです。
-            MS-SQL は TOP 句しかサポートしていませんし、
-            Microsoft SQL Server の場合は TOP 句を使用すると同じ結果が得られます。
-            Oracle や DB2 は、クエリを特別な形式に書き直して LIMIT
-            をエミュレートする必要があります。
-            Zend_Db_Select は、データベースアダプタにあわせて SELECT
-            文を適切に書き換え、LIMIT 機能を実現しています。
-        </para>
-
-        <para>
-            返される結果を件数とオフセットで絞り込むためには、
-            件数と (オプションで) オフセットを指定して limit() を使用します。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// まずは単純な "LIMIT :count"
-$select = $db->select();
-$select->from('foo');
-$select->order('id');
-$select->limit(10);
-
-// MySQL/PostgreSQL/SQLite では、以下のように変換されます
-//
-// SELECT foo.*
-// FROM "foo" foo
-// ORDER BY "id" ASC
-// LIMIT 10
-//
-// しかし Microsoft SQL Server では、このようになります
-//
-// SELECT TOP 10 foo.*
-// FROM [foo] foo
-// ORDER BY [id] ASC
-
-// 今度は、ちょっと複雑な "LIMIT :count OFFSET :offset"
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-$select->limit(10, 20);
-
-// MySQL/PostgreSQL/SQLite では、以下のように変換されます
-//
-// SELECT foo.*
-// FROM "foo" foo
-// ORDER BY "id" ASC
-// LIMIT 10 OFFSET 20
-//
-// Microsoft SQL Server ではオフセットはサポートされていないので
-// このようになります
-//
-// SELECT * FROM (
-//     SELECT TOP 10 * FROM (
-//         SELECT TOP 30 *
-//         FROM [foo] foo
-//         ORDER BY [id] DESC
-//     ) ORDER BY id ASC
-// )
-//
-// Zend_Db_Adapter は、クエリの変換を自動的に行います。
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.paging">
-
-        <title>ページ数や件数による制限</title>
-
-        <para>
-            Zend_Db_Select は、ページを基準とした制限にも対応しています。
-            結果から特定の「ページ」を取得したい場合には、limitPage()
-            メソッドを使用します。取得したいページ番号を最初に、
-            そしてその次に 1 ページあたりの件数を指定します。
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// 基本的な select を作成します
-$select = $db->select();
-$select->from('foo');
-$select->order('id');
-
-// そして、1 ページあたり 10 件とした場合の 3 ページ目のみを取得します
-$select->limitPage(3, 10);
-
-// MySQL/PostgreSQL/SQLite では、以下のように変換されます
-//
-// SELECT foo.*
-// FROM `foo` foo
-// ORDER BY `id` ASC
-// LIMIT 10 OFFSET 20
-
-?>]]></programlisting>
-    </sect2>
-
-    <sect2 id="zend.db.select.other">
-        <title>その他のメソッド</title>
-
-        <para>
-            distinct() メソッドは、DISTINCT
-            キーワードを SQL クエリに追加します。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-
-// SELECT DISTINCT foo.`non_unique_column`
-// FROM `foo` foo
-
-$select = $db->select();
-$select->distinct();
-$select->from('foo', 'non_unique_column');
-
-?>]]></programlisting>
-
-        <para>
-            forUpdate() メソッドは、FOR UPDATE
-            キーワードを SQL クエリに追加します。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-
-// SELECT FOR UPDATE foo.*
-// FROM `foo` foo
-
-$select = $db->select();
-$select->forUpdate();
-$select->from('foo');
-
-?>]]></programlisting>
-
-        <para>
-            query() メソッドは、
-            Zend_Db_Adapter の query() メソッドと似ています。
-            アダプタの型に応じて、Zend_Db_Statement 型
-            あるいは PDOStatement 型のオブジェクトを返します。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-
-$select = $db->select();
-$select->from('foo');
-$stmt = $select->query();
-$result = $stmt->fetchAll();
-
-// これは、以下と同等です
-$select = $db->select();
-$select->from('foo');
 $stmt = $db->query($select);
 $result = $stmt->fetchAll();
 
 ?>]]></programlisting>
+            </example>
 
-        <para>
-            getPart() メソッドは、SQL クエリの一部として指定したデータを返します。
-            The Zend_Db_Select クラスでは、SQL クエリの一部を表す際に
-            使用する定数が定義されています。
-        </para>
-        <programlisting role="php"><![CDATA[<?php
+        </sect3>
 
-// SELECT foo.*
-// FROM `foo` foo
-// ORDER `keyColumn`
+        <sect3 id="zend.db.select.execute.query-select">
 
-$select = $db->select();
-$select->from('foo');
-$select->order('keyColumn');
+            <title>オブジェクトからの Select クエリの実行</title>
 
-print_r( $select->getPart( Zend_Db_Select::ORDER ) );
+            <para>
+                アダプタオブジェクトの <code>query()</code>
+                メソッドを使用する以外の方法としては、Zend_Db_Select
+                オブジェクトの <code>query()</code>
+                メソッドを使用するものがあります。
+                どちらのメソッドも、アダプタの型によって
+                Zend_Db_Statement あるいは PDOStatement
+                型のオブジェクトを返します。
+            </para>
+
+            <example id="zend.db.select.execute.query-select.example">
+                <title>Select オブジェクトの query メソッドの使用例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products');
+
+$stmt = $select->query();
+$result = $stmt->fetchAll();
 
 ?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.execute.tostring">
+
+            <title>Select オブジェクトから SQL 文字列への変換</title>
+
+            <para>
+                Zend_Db_Select オブジェクトに対応する
+                SQL クエリ文字列にアクセスしたい場合は、
+                <code>__toString()</code> メソッドを使用します。
+            </para>
+
+            <example id="zend.db.select.execute.tostring.example">
+                <title>__toString() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products');
+
+$sql = $select->__toString();
+echo "$sql\n";
+
+// 出力は、次のような文字列になります
+//   SELECT * FROM "products"
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.other">
+
+        <title>その他のメソッド</title>
 
         <para>
-            reset() メソッドは、
-            SQL クエリの指定した部分をクリアします。
-            あるいは引数を省略した場合は、SQL
-            クエリのすべての部分をクリアします。
+            この節では、これまでにあげてこなかった Zend_Db_Select
+            クラスのメソッドである <code>getPart()</code> および
+            <code>reset()</code> について説明します。
         </para>
-        <programlisting role="php"><![CDATA[<?php
 
-// SELECT foo.*
-// FROM `foo` foo
-// ORDER BY `column1`
+        <sect3 id="zend.db.select.other.get-part">
 
-$select = $db->select();
-$select->from('foo');
-$select->order('column1');
+            <title>Select オブジェクトの一部の取得</title>
 
-// 別の order 条件を指定します
-//
-// SELECT foo.*
-// FROM `foo` foo
-// ORDER BY `column2`
+            <para>
+                <code>getPart()</code> メソッドは、SQL クエリの一部を返します。
+                たとえば、このメソッドを使用すると、
+                <code>WHERE</code> 句の式を表す配列や
+                <code>SELECT</code> するカラム (あるいは式) の配列、または
+                <code>LIMIT</code> 句のカウントやオフセットを取得することができます。
+            </para>
 
-// いったん削除してから定義しなおします
+            <para>
+                返り値は、SQL の一部を抜き取った文字列ではありません。
+                オブジェクトでの内部表現で、通常は値と式を含む配列となります。
+                クエリの各部分によって、その構造は異なります。
+            </para>
+
+            <para>
+                <code>getPart()</code> メソッドの引数はひとつで、
+                Select クエリのどの部分を返すのかをここで指定します。
+                たとえば、文字列 <code>'from'</code> を指定すると、
+                Select オブジェクトが <code>FROM</code>
+                句として保持しているテーブルの情報を返します。
+                ここには結合している他のテーブルも含まれます。
+            </para>
+
+            <para>
+                Zend_Db_Select クラスでは、SQL クエリの各部分を指定するための定数を定義しています。
+                これらの定数、あるいはリテラル文字列のいずれかで指定することができます。
+            </para>
+
+            <table id="zend.db.select.other.get-part.table">
+                <title>getPart() および reset() で使用する定数</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row>
+                            <entry>定数</entry>
+                            <entry>文字列値</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><code>Zend_Db_Select::DISTINCT</code></entry>
+                            <entry><code>'distinct'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::FOR_UPDATE</code></entry>
+                            <entry><code>'forupdate'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::COLUMNS</code></entry>
+                            <entry><code>'columns'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::FROM</code></entry>
+                            <entry><code>'from'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::WHERE</code></entry>
+                            <entry><code>'where'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::GROUP</code></entry>
+                            <entry><code>'group'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::HAVING</code></entry>
+                            <entry><code>'having'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::ORDER</code></entry>
+                            <entry><code>'order'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::LIMIT_COUNT</code></entry>
+                            <entry><code>'limitcount'</code></entry>
+                        </row>
+                        <row>
+                            <entry><code>Zend_Db_Select::LIMIT_OFFSET</code></entry>
+                            <entry><code>'limitoffset'</code></entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+            <example id="zend.db.select.other.get-part.example">
+                <title>getPart() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$select = $db->select()
+    ->from('products')
+    ->order('product_id');
+
+// 文字列リテラルを使用して指定することができます
+$orderData = $select->getPart( 'order' );
+
+// 同じことを、定数を用いて指定することもできます
+$orderData = $select->getPart( Zend_Db_Select::ORDER );
+
+// 返り値は、文字列ではなく配列となります。
+// 各部分が異なる構造になっています。
+print_r( $orderData );
+
+?>]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.other.reset">
+
+            <title>Select オブジェクトの一部のリセット</title>
+
+            <para>
+                <code>reset()</code> メソッドを使用すると、
+                SQL クエリの指定した部分のみを消去することができます。
+                引数を省略した場合は、すべての部分を消去します。
+            </para>
+
+            <para>
+                引数はひとつで、これは省略可能です。
+                消去したい SQL の部分を、<code>getPart()</code>
+                メソッドの引数と同じ文字列で指定します。
+                クエリの指定した部分が、デフォルトの状態に戻ります。
+            </para>
+
+            <para>
+                パラメータを省略すると、<code>reset()</code>
+                はクエリのすべての部分をデフォルトの状態に戻します。
+                これにより、Zend_Db_Select オブジェクトは初期状態と同等になります。
+                つまり、最初にインスタンスを作成したときと同じ状態ということです。
+            </para>
+
+            <example id="zend.db.select.other.reset.example">
+                <title>reset() メソッドの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT p.*
+//   FROM "products" AS p
+//   ORDER BY "product_name"
+
+$select = $db->select()
+    ->from(array('p' => 'products')
+    ->order('product_name');
+
+// 条件を変更し、別のカラムで並べ替えます
+//   SELECT p.*
+//   FROM "products" AS p
+//   ORDER BY "product_id"
+
+// 再定義するため、いちどこの部分を消去します
 $select->reset( Zend_Db_Select::ORDER );
-$select->order('column2');
 
-// クエリのすべての部分を削除します
+// そして異なるカラムを指定します
+$select->order('product_id');
+
+// クエリ全体を消去します
 $select->reset();
 
 ?>]]></programlisting>
+            </example>
+
+        </sect3>
 
     </sect2>
 
