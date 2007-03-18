@@ -3,9 +3,9 @@
     <sect2 id="zend.service.amazon.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Service_Amazon</code> は Amazon ウェブサービスを使用するためのシンプルな
-            API です。
-            <code>Zend_Service_Amazon</code> は 2 つの API を実装しています。
+            <code>Zend_Service_Amazon</code> は Amazon
+            ウェブサービスを使用するためのシンプルな API です。
+            <code>Zend_Service_Amazon</code> は、ふたつの API を実装しています。
             Amazon 自身の API に従った伝統的な API と、
             複雑な検索クエリを簡単に作成するためのシンプルな「クエリ API」です。
         </para>

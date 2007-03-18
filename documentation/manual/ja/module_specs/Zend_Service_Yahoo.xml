@@ -19,7 +19,7 @@
             <code>Zend_Service_Yahoo</code> の <code>webSearch()</code>
             メソッドを使用すると、Yahoo! でウェブを検索できます。
             最初の引数に検索パラメータ、
-            オプションで 2 番目の引数に検索オプションの配列を指定します。
+            オプションで二番目の引数に検索オプションの配列を指定します。
             指定できるオプションの詳細については
             <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
             ドキュメント</ulink> を参照ください。<code>webSearch()</code> メソッドは
@@ -44,7 +44,7 @@ foreach ($results as $result) {
             メソッドを使用すると、画像の検索ができます。
             <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> メソッド</link>
             と同様、最初の引数に検索パラメータ、
-            オプションで 2 番目の引数に検索オプションの配列を指定します。
+            オプションで二番目の引数に検索オプションの配列を指定します。
             指定できるオプションの詳細については
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
             ドキュメント</ulink> を参照ください。
