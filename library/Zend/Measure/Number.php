@@ -299,7 +299,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     {
         if ($this->_UNITS[$type][0] <= 16) {
             $newvalue = "";
-            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) > 0) {
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) >= 1) {
                 $target = call_user_func(Zend_Locale_Math::$mod, $value, $this->_UNITS[$type][0]);
                 $target = strtoupper( dechex($target) );
                 $newvalue = $target . $newvalue;
