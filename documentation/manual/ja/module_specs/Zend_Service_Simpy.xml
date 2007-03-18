@@ -1,67 +1,72 @@
 <sect1 id="zend.service.simpy">
     <title>Zend_Service_Simpy</title>
     <sect2 id="zend.service.simpy.introduction">
-        <title>Introduction</title>
+        <title>導入</title>
         <para>
-            <code>Zend_Service_Simpy</code> is a lightweight wrapper for the free REST API available
-            for the Simpy social bookmarking service.
+            <code>Zend_Service_Simpy</code> は、ソーシャルブックマークサービスである
+            Simpy 用のフリーな REST API の、軽量なラッパーです。
         </para>
         <para>
-            In order to use <code>Zend_Service_Simpy</code>, you should already have a Simpy account.
-            To get an account, visit the <ulink url="http://simpy.com">Simpy web site</ulink>. For more
-            information on the Simpy REST API, refer to the
-            <ulink url="http://www.simpy.com/doc/api/rest">Simpy REST API documentation</ulink>.
+            <code>Zend_Service_Simpy</code> を使用するには
+            Simpy アカウントが必要です。アカウントを取得するには、
+            <ulink url="http://simpy.com">Simpy のウェブサイト</ulink> にいきます。
+            Simpy REST API についての詳細な情報は
+            <ulink url="http://www.simpy.com/doc/api/rest">Simpy REST API ドキュメント</ulink>
+            を参照ください。
         </para>
         <para>
-            The Simpy REST API allows developers to interact with specific aspects of the service that
-            the Simpy web site offers. The sections following will outline the use of
-            <code>Zend_Service_Simpy</code> for each of these areas.
+            Simpy REST API を使用すると、Simpy
+            のウェブサイトが提供するサービスを利用することができます。
+            以下の節は、<code>Zend_Service_Simpy</code>
+            で利用できる機能の概要をまとめたものです。
             <itemizedlist>
                 <listitem>
                     <para>
-                        Links: Get, Create, Delete
+                        リンク: 取得、作成、削除
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Tags: Get, Delete, Rename, Merge, Split
+                        タグ: 取得、削除、名前の変更、統合、分割
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Notes: Get, Create, Delete
+                        メモ: 取得、作成、削除
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Watchlists: Get, Get All
+                        ウォッチリスト: 取得、すべてを取得
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
     </sect2>
     <sect2 id="zend.service.simpy.links">
-        <title>Links</title>
+        <title>リンク</title>
         <para>
-            When querying links, results are returned in descending order by date added. Links can be
-            searched by title, nickname, tags, note, or even the content of the web page associated
-            with the link. Simpy offers searching by any or all of these fields with phrases, boolean
-            operators, and wildcards. See the
-            <ulink url="http://www.simpy.com/faq#searchSyntax">search syntax</ulink> and
-            <ulink url="http://www.simpy.com/faq#searchFieldsLinks">search fields</ulink>
-            sections of the Simpy FAQ for more information.
+            リンクを問い合わせると、登録日の降順で結果が返されます。
+            リンクの検索は、タイトルやニックネーム、タグ、メモ
+            そしてリンクに関連付けられたウェブページの内容にもとづいて行うことができます。
+            Simpy の検索は、これらのフィールドのいずれかあるいはすべてを対象に
+            フレーズや論理演算子、ワイルドカードを使用して行うことができます。
+            詳細な情報は、Simpy FAQ の
+            <ulink url="http://www.simpy.com/faq#searchSyntax">検索構文</ulink> や
+            <ulink url="http://www.simpy.com/faq#searchFieldsLinks">検索フィールド</ulink>
+            といった節を参照ください。
         </para>
         <example id="zend.service.simpy.links.querying">
-            <title>Querying Links</title>
+            <title>リンクの問い合わせ</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Simpy.php';
-$simpy = new Zend_Service_Simpy('yourusername', 'yourpassword');
+$simpy = new Zend_Service_Simpy('あなたのユーザ名', 'あなたのパスワード');
 
-/* Search for the 10 links added most recently */
+/* 直近に追加された 10 件のリンクを探します */
 $linkQuery = new Zend_Service_Simpy_LinkQuery();
 $linkQuery->setLimit(10);
 
-/* Get and display the links */
+/* リンクを取得し、表示します */
 $linkSet = $simpy->getLinks($linkQuery);
 foreach ($linkSet as $link) {
     echo '<a href="';
@@ -71,70 +76,70 @@ foreach ($linkSet as $link) {
     echo '</a><br />';
 }
 
-/* Search for the 5 links added most recently with 'PHP' in
-the title */
+/* 直近に追加されたリンクのうち、タイトルに 'PHP' が含まれるものを
+   5 件まで探します */
 $linkQuery->setQueryString('title:PHP');
 $linkQuery->setLimit(5);
 
-/* Search for all links with 'French' in the title and
-'language' in the tags */
+/* タイトルに 'French'、タグに 'language' が含まれる
+   すべてのリンクを探します */
 $linkQuery->setQueryString('+title:French +tags:language');
 
-/* Search for all links with 'French' in the title and without
-'travel' in the tags */
+/* タイトルに 'French' を含み、タグに 'travel' を含まない
+   すべてのリンクを探します */
 $linkQuery->setQueryString('+title:French -tags:travel');
 
-/* Search for all links added on 12/9/06 */
+/* 2006/12/09 に追加されたすべてのリンクを探します */
 $linkQuery->setDate('2006-12-09');
 
-/* Search for all links added after 12/9/06 (excluding that
-date) */
+/* 2006/12/09 より後 (その日を含まない) に追加された
+   すべてのリンクを探します */
 $linkQuery->setAfterDate('2006-12-09');
 
-/* Search for all links added before 12/9/06 (excluding that
-date) */
+/* 2006/12/09 より前 (その日を含まない) に追加された
+   すべてのリンクを探します */
 $linkQuery->setBeforeDate('2006-12-09');
 
-/* Search for all links added between 12/1/06 and 12/9/06
-(excluding those two dates) */
+/* 2006/12/01 から 2006/12/09 (両端の日を含まない) に追加された
+   すべてのリンクを探します */
 $linkQuery->setBeforeDate('2006-12-01');
 $linkQuery->setAfterDate('2006-12-09');]]></programlisting>
         </example>
         <para>
-            Links are represented uniquely by their URLs. In other words, if an attempt is made to save
-            a link that has the same URL as an existing link, data for the existing link will be
-            overwritten with the data specified in the save attempt.
+            リンクの識別は、URL によって行います。言い換えると、
+            既存のリンクと同じ URL のリンクを保存しようとすると
+            既存のリンクが新しいデータで上書きされるということです。
         </para>
         <example id="zend.service.simpy.links.modifying">
-            <title>Modifying Links</title>
+            <title>リンクの変更</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Simpy.php';
-$simpy = new Zend_Service_Simpy('yourusername', 'yourpassword');
+$simpy = new Zend_Service_Simpy('あなたのユーザ名', 'あなたのパスワード');
 
-/* Save a link */
+/* リンクを保存します */
 $simpy->saveLink(
-    'Zend Framework' // Title
+    'Zend Framework' // タイトル
     'http://framework.zend.com', // URL
-    Zend_Service_Simpy_Link::ACCESSTYPE_PUBLIC, // Access Type
-    'zend, framework, php' // Tags
-    'Zend Framework home page' // Alternative title
-    'This site rocks!' // Note
+    Zend_Service_Simpy_Link::ACCESSTYPE_PUBLIC, // アクセス形式
+    'zend, framework, php' // タグ
+    'Zend Framework home page' // 別のタイトル
+    'This site rocks!' // メモ
 );
 
-/* Overwrite the existing link with new data */
+/* 既存のリンクを新しいデータで上書きします */
 $simpy->saveLink(
     'Zend Framework'
     'http://framework.zend.com',
-    Zend_Service_Simpy_Link::ACCESSTYPE_PRIVATE, // Access Type has changed
-    'php, zend, framework' // Tags have changed order
-    'Zend Framework' // Alternative title has changed
-    'This site REALLY rocks!' // Note has changed
+    Zend_Service_Simpy_Link::ACCESSTYPE_PRIVATE, // アクセス形式を変更しました
+    'php, zend, framework' // タグの順番を変更しました
+    'Zend Framework' // 別のタイトルを変更しました
+    'This site REALLY rocks!' // メモを変更しました
 );
 
-/* Delete the link */
+/* リンクを削除します */
 $simpy->deleteLink('http://framework.zend.com');
 
-/* A really easy way to do spring cleaning on your links ;) */
+/* あなたのリンクを大掃除する簡単な方法 (^o^) */
 $linkSet = $this->_simpy->getLinks();
 foreach ($linkSet as $link) {
     $this->_simpy->deleteLink($link->getUrl());
@@ -142,29 +147,29 @@ foreach ($linkSet as $link) {
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.tags">
-        <title>Tags</title>
+        <title>タグ</title>
         <para>
-            When retrieved, tags are sorted in decreasing order (i.e. highest
-            first) by the number of links that use the tag.
+            取得時に、そのタグを使用しているリンク数の降順
+            (多いものが先) でタグが並べ替えられます。
         </para>
         <example id="zend.service.simpy.tags.working">
-            <title>Working With Tags</title>
+            <title>タグの処理</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Simpy.php';
-$simpy = new Zend_Service_Simpy('yourusername', 'yourpassword');
+$simpy = new Zend_Service_Simpy('あなたのユーザ名', 'あなたのパスワード');
 
-/* Save a link with tags */
+/* タグつきでリンクを保存します */
 $simpy->saveLink(
-    'Zend Framework' // Title
+    'Zend Framework' // タイトル
     'http://framework.zend.com', // URL
-    Zend_Service_Simpy_Link::ACCESSTYPE_PUBLIC, // Access Type
-    'zend, framework, php' // Tags
+    Zend_Service_Simpy_Link::ACCESSTYPE_PUBLIC, // アクセス形式
+    'zend, framework, php' // タグ
 );
 
-/* Get a list of all tags in use by links and notes */
+/* リンクおよびメモで使用しているすべてのタグの一覧を取得します */
 $tagSet = $simpy->getTags();
 
-/* Display each tag with the number of links using it */
+/* 各タグと、それを使用しているリンク数を表示します */
 foreach ($tagSet as $tag) {
     echo $tag->getTag();
     echo ' - ';
@@ -172,46 +177,46 @@ foreach ($tagSet as $tag) {
     echo '<br />';
 }
 
-/* Remove the 'zend' tag from all links using it */
+/* 'zend' タグを使用しているすべてのリンクから、そのタグを削除します */
 $simpy->removeTag('zend');
 
-/* Rename the 'framework' tag to 'frameworks' */
+/* 'framework' タグの名前を 'frameworks' に変更します */
 $simpy->renameTag('framework', 'frameworks');
 
-/* Split the 'frameworks' tag into 'framework' and
-'development', which will remove the 'frameworks' tag for
-all links that use it and add the tags 'framework' and
-'development' to all of those links */
+/* 'frameworks' タグを 'framework' および
+'development' に分割します。つまり、'frameworks' タグを
+使用しているすべてのリンクからこのタグを削除し、'framework'
+および 'development' をそれらのリンクに追加します */
 $simpy->splitTag('frameworks', 'framework', 'development');
 
-/* Merge the 'framework' and 'development' tags back into
-'frameworks', basically doing the opposite of splitting them */
+/* 'framework' および 'development' のふたつのタグを
+'frameworks' に統合します。これは分割の反対の作業です */
 $simpy->mergeTags('framework', 'development', 'frameworks');]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.notes">
-        <title>Notes</title>
+        <title>メモ</title>
         <para>
-            Notes can be saved, retrieved, and deleted. They are uniquely
-            identified by a numeric ID value.
+            メモの保存、取得および削除が可能です。
+            メモは、数値 ID によって識別されます。
         </para>
         <example id="zend.service.simpy.notes.working">
-            <title>Working With Notes</title>
+            <title>メモの扱い</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Simpy.php';
-$simpy = new Zend_Service_Simpy('yourusername', 'yourpassword');
+$simpy = new Zend_Service_Simpy('あなたのユーザ名', 'あなたのパスワード');
 
-/* Save a note */
+/* メモを保存します */
 $simpy->saveNote(
-    'Test Note', // Title
-    'test,note', // Tags
-    'This is a test note.' // Description
+    'Test Note', // タイトル
+    'test,note', // タグ
+    'This is a test note.' // 説明
 );
 
-/* Search for the 10 most recently added notes */
+/* 直近に追加された 10 件のメモを探します */
 $noteSet = $simpy->getNotes(null, 10);
 
-/* Display the notes */
+/* メモを表示します */
 foreach ($noteSet as $note) {
     echo '<p>';
     echo $note->getTitle();
@@ -222,34 +227,34 @@ foreach ($noteSet as $note) {
     echo '</p>';
 }
 
-/* Search for all notes with 'PHP' in the title */
+/* タイトルに 'PHP' が含まれるすべてのメモを探します */
 $noteSet = $simpy->getNotes('title:PHP');
 
-/* Search for all notes with 'PHP' in the title and
-without 'framework' in the description */
+/* タイトルに 'PHP' が含まれ、説明に 'framework' が含まれない
+   すべてのメモを探します */
 $noteSet = $simpy->getNotes('+title:PHP -description:framework');
 
-/* Delete a note */
+/* メモを削除します */
 $simpy->deleteNote($note->getId());]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.watchlists">
-        <title>Watchlists</title>
+        <title>ウォッチリスト</title>
         <para>
-            Watchlists cannot be created or removed using the API, only
-            retrieved. Thus, you must set up a watchlist via the Simpy web
-            site prior to attempting to access it using the API.
+            ウォッチリストは、API を用いて作成したり削除したりすることはできません。
+            取得のみが可能です。したがって、API を使用してアクセスする前には
+            Simpy のウェブサイトでウォッチリストを作成しておく必要があります。
         </para>
         <example id="zend.service.simpy.watchlists.retrieving">
-            <title>Retrieving Watchlists</title>
+            <title>ウォッチリストの取得</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Simpy.php';
-$simpy = new Zend_Service_Simpy('yourusername', 'yourpassword');
+$simpy = new Zend_Service_Simpy('あなたのユーザ名', 'あなたのパスワード');
 
-/* Get a list of all watchlists */
+/* すべてのウォッチリストの一覧を取得します */
 $watchlistSet = $simpy->getWatchlists();
 
-/* Display data for each watchlist */
+/* 各ウォッチリストのデータを表示します */
 foreach ($watchlistSet as $watchlist) {
     echo $watchlist->getId();
     echo '<br />';
@@ -275,7 +280,7 @@ foreach ($watchlistSet as $watchlist) {
     }
 }
 
-/* Get an individual watchlist by its identifier */
+/* 個々のウォッチリストを、ID を指定して取得します */
 $watchlist = $simpy->getWatchlist($watchlist->getId());
 $watchlist = $simpy->getWatchlist(1);]]></programlisting>
         </example>
