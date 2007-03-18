@@ -298,6 +298,7 @@ class Zend_Locale_Format
      */
     public static function toNumber($value, array $options = array())
     {
+        $value = Zend_Locale_Math::normalize($value);
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if ($options['locale'] instanceof Zend_Locale) {
             $options['locale'] = $options['locale']->toString();
@@ -378,14 +379,16 @@ class Zend_Locale_Format
                 $options['precision'] = 0;
             }
         }
-
         // get fraction and format lengths
         $preg = call_user_func(Zend_Locale_Math::$sub, $value, '0', 0);
         $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, $options['precision']);
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
-        $number = call_user_func(Zend_Locale_Math::$sub, $value, 0, 0);
+        if (($options['precision'] + 2) > strlen($prec)) {
+            $prec = $prec . str_pad("0", ($options['precision'] - iconv_strlen($prec)), "0");
+        }
+        $number = call_user_func(Zend_Locale_Math::$sub, $value, $prec, 0);
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);
         }
