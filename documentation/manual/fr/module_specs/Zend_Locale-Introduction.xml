@@ -202,9 +202,9 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
                     <para>
                         const <code>Zend_Locale::FRAMEWORK</code> - When the Zend Framework has a standardized way of
                         specifying component defaults (planned, but not yet available), then using this constant during
-                        instatiation will give preference to choosing a locale based on these defaults. If no matching
+                        instantiation will give preference to choosing a locale based on these defaults. If no matching
                         locale can be found, then preference is given to <code>ENVIRONMENT</code> and lastly
-                        <code>FRAMEWORK</code>.
+                        <code>BROWSER</code>.
                     </para>
                 </listitem>
             </orderedlist>
@@ -244,8 +244,8 @@ require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';
 
 $usLocale = new Zend_Locale('en_US');
-$date = new Zend_Date('2006',Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $usLocale);
+$date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
+$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $usLocale);
 ?>]]></programlisting>
         </example>
 
@@ -261,8 +261,41 @@ require_once 'Zend/Date.php';
 require_once 'Zend/Measure.php';
 
 $locale = new Zend_Locale();
-$date = new Zend_Date('2006',Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $locale);
+$date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
+$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.formatoptions">
+
+        <title>Zend_Locale_Format::setOptions(array $options)</title>
+
+        <para>
+            The 'precision' option of a value is used to truncate or stretch extra digits. A value of '-1' disables
+            modification of the number of digits in the fractional part of the value. The 'locale' option helps when
+            parsing numbers and dates using separators and month names. The date format 'type' option selects between
+            CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
+            heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
+            format for use with <code>toNumber()</code> (see
+            <xref 
+                linkend= "zend.locale.number.localize"/>
+            ).
+        </para>
+
+        <para>
+            The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
+            isDate(), getTime(), and isTime() after using setOptions() with a 'date_format'. To use these four methods
+            with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their
+            options.
+        </para>
+
+        <example>
+            <title>Dates default to correct locale of web users</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fixdate' => true, 'type' => 'php');
 ?>]]></programlisting>
         </example>
 

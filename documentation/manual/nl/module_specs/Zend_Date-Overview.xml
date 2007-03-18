@@ -7,6 +7,22 @@
         through the rich permutations of operations and operands.
     </para>
 
+    <sect2 id="zend.date.options">
+
+        <title>Zend_Date Options</title>
+
+        <para>
+            Currently, there is only one class-wide option for Zend_Date. Several methods use date format strings, in a
+            way similar to PHP's <code>date()</code>. If you are more comfortable with PHP's date format specifier than
+            with ISO format specifiers, then you can use <code>Zend_Date::setOptions('format' => 'php')</code>.
+            Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
+            Use <code>Zend_Date::setOptions('format' => 'iso')</code> to switch back to the default mode of supporting
+            only ISO date format tokens. For a list of supported format codes, see
+            <xref linkend="zend.date.constants.phpformats" />
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.date.values">
 
         <title>Working with Date Values</title>

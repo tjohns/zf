@@ -26,7 +26,7 @@
 
     <sect2 id="zend.locale.number.normalize">
 
-        <title>Number normalization: getNumber($input, $precision = false, $locale = false)</title>
+        <title>Number normalization: getNumber($input, Array $options)</title>
 
         <para>
             There are many
@@ -36,7 +36,8 @@
             (e.g. "3.14"). Numbers can be normalized with the <code>getNumber()</code> function to obtain the standard
             decimal representation. For all number-related discussions in this manual,
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">Arabic/European numerals (0,1,2,3,4,5,6,7,8,9)</ulink>
-            are implied, unless explicitly stated otherwise.
+            are implied, unless explicitly stated otherwise. The options array may contain a 'locale' to define grouping
+            and decimal characters. The array may also have a 'precision' to truncate excess digits from the result.
         </para>
 
         <example>
@@ -45,7 +46,7 @@
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::getNumber('13.524,678', false, $locale);
+$number = Zend_Locale_Format::getNumber('13.524,678', array('locale' => $locale, 'precision' => 3));
 
 print $number; // will return 13524.678
 ?>]]></programlisting>
@@ -56,9 +57,9 @@ print $number; // will return 13524.678
             <title>Precision and Calculations</title>
 
             <para>
-                Since <code>getNumber()</code> can normalize extremely large numbers, check the result carefully before
-                using finite precision calculations, such as ordinary PHP math operations. For example, <code>if
-                ((string)int_val($number) != $number) { use
+                Since <code>getNumber($value, array $options = array())</code> can normalize extremely large numbers,
+                check the result carefully before using finite precision calculations, such as ordinary PHP math
+                operations. For example, <code>if ((string)int_val($number) != $number) { use
                 <ulink url="http://www.php.net/bc">BCMath</ulink>
                 or
                 <ulink url="http://www.php.net/gmp">GMP</ulink>
@@ -78,7 +79,7 @@ print $number; // will return 13524.678
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::getNumber('13.524,678', 1, $locale);
+$number = Zend_Locale_Format::getNumber('13.524,678', array('precision' => 1, 'locale' => $locale));
 
 print $number; // will return 13524.6
 ?>]]></programlisting>
@@ -93,10 +94,11 @@ print $number; // will return 13524.6
         <title>Number localization</title>
 
         <para>
-            <code>toNumber()</code> can localize numbers to the
+            <code>toNumber($value, array $options = array())</code> can localize numbers to the
             <link linkend="zend.locale.regions">supported locales</link>
             . This function will return a localized string of the given number in a conventional format for a specific
-            locale.
+            locale. The 'number_format' option explicitly specifies a non-default number format for use with
+            <code>toNumber()</code>.
         </para>
 
         <example>
@@ -105,7 +107,7 @@ print $number; // will return 13524.6
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::toNumber(13547.36, $locale);
+$number = Zend_Locale_Format::toNumber(13547.36, array('locale' => $locale));
 
 // will return 13.547,36
 print $number;
@@ -133,7 +135,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::toNumber(13547.3678, 2, $locale);
+$number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
 
 // will return 13.547,36
 print $number;
@@ -157,7 +159,8 @@ print $number;
         <title>Number testing</title>
 
         <para>
-            <code>isNumber()</code> checks if a given string is a number and returns true or false.
+            <code>isNumber($value, array $options = array())</code> checks if a given string is a number and returns
+            true or false.
         </para>
 
         <example>
@@ -166,7 +169,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
-if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
+if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
     print "Number";
 } else {
     print "not a Number";
@@ -181,8 +184,8 @@ if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
         <title>Float value normalization</title>
 
         <para>
-            Floating point values can be parsed with the <code>getFloat()</code> function. A floating point value will
-            be returned.
+            Floating point values can be parsed with the <code>getFloat($value, array $options = array())</code>
+            function. A floating point value will be returned.
         </para>
 
         <example>
@@ -191,7 +194,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::getFloat('13.524,678', 2, $locale);
+$number = Zend_Locale_Format::getFloat('13.524,678', array('precision' => 2, 'locale' => $locale));
 
 // will return 13524.67
 print $number;
@@ -215,7 +218,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::toFloat(13547.3655, 1, $locale);
+$number = Zend_Locale_Format::toFloat(13547.3655, array('precision' => 1, 'locale' => $locale));
 
 // will return 13.547,3
 print $number;
@@ -239,7 +242,8 @@ print $number;
         <title>Floating point value testing</title>
 
         <para>
-            <code>isFloat()</code> checks if a given string is a floating point value and returns true or false.
+            <code>isFloat($value, array $options = array())</code> checks if a given string is a floating point value
+            and returns true or false.
         </para>
 
         <example>
@@ -248,7 +252,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
+if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
     print "float";
 } else {
     print "not a float";
@@ -272,7 +276,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::getInteger('13.524,678', $locale);
+$number = Zend_Locale_Format::getInteger('13.524,678', array('locale' => $locale));
 
 // will return 13524
 print $number;
@@ -286,8 +290,8 @@ print $number;
         <title>Integer point value localization</title>
 
         <para>
-            <code>toInteger()</code> can localize integer values. This function will return a localized string of the
-            given number.
+            <code>toInteger($value, array $options = array())</code> can localize integer values. This function will
+            return a localized string of the given number.
         </para>
 
         <example>
@@ -296,7 +300,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::toInteger(13547.3655, $locale);
+$number = Zend_Locale_Format::toInteger(13547.3655, array('locale' => $locale));
 
 // will return 13.547
 print $number;
@@ -310,7 +314,8 @@ print $number;
         <title>Integer value testing</title>
 
         <para>
-            <code>isInteger()</code> checks if a given string is a integer value and returns true or false.
+            <code>isInteger($value, array $options = array())</code> checks if a given string is a integer value and
+            returns true or false.
         </para>
 
         <example>
@@ -319,7 +324,7 @@ print $number;
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isInteger('13.445', $locale) {
+if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "integer";
 } else {
     print "not a integer";

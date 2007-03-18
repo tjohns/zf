@@ -21,11 +21,11 @@
         <para>
             The <code>getDate()</code> method parses strings containing dates in localized formats. The results are
             returned in a structured array, with well-defined keys for each part of the date. In addition, the array
-            will contain a key 'format' showing the format string used to parse the input date string. Since a localized
-            date string may not contain all parts of a date/time, the key-value pairs are optional. For example, if only
-            the year, month, and day is given, then all time values are supressed from the returned array, and
-            vice-versa if only hour, minute, and second were given as input. If no date or time can be found within the
-            given input, an exception will be thrown.
+            will contain a key 'date_format' showing the format string used to parse the input date string. Since a
+            localized date string may not contain all parts of a date/time, the key-value pairs are optional. For
+            example, if only the year, month, and day is given, then all time values are supressed from the returned
+            array, and vice-versa if only hour, minute, and second were given as input. If no date or time can be found
+            within the given input, an exception will be thrown.
         </para>
 
         <para>
@@ -69,18 +69,16 @@
         </table>
 
         <para>
-            For those needing to specify explicitly the format of the date string, the following
-            format token specifiers are supported.
-            If an invalid format specifier is used, such as the PHP 'i' specifier when in ISO format mode,
-            then an error will be thrown by the methods in Zend_Locale_Format that support user-defined formats.
+            For those needing to specify explicitly the format of the date string, the following format token specifiers
+            are supported. If an invalid format specifier is used, such as the PHP 'i' specifier when in ISO format
+            mode, then an error will be thrown by the methods in Zend_Locale_Format that support user-defined formats.
         </para>
-            
+
         <para>
-            These specifiers (below) are a small subset of the full
-            "ISO" set supported by Zend_Date's <code>toString()</code>.  If you need to use PHP
-            <code>date()</code> compatible format specifiers, then first call
-            <code>usePhpDateFormat()</code>.  Currently, the only practical difference relates
-            to the specifier for minutes ('m' using the ISO default, and 'i' using the PHP date format).
+            These specifiers (below) are a small subset of the full "ISO" set supported by Zend_Date's
+            <code>toString()</code>. If you need to use PHP <code>date()</code> compatible format specifiers, then first
+            call <code>usePhpDateFormat()</code>. Currently, the only practical difference relates to the specifier for
+            minutes ('m' using the ISO default, and 'i' using the PHP date format).
         </para>
 
         <para>
@@ -151,8 +149,8 @@
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
-$dateObject = Zend_Date('13.04.2006', 'dd.MM.yyyy'); // creates a Zend_Date object for this date
+$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
+$dateObject = Zend_Date('13.04.2006', array('date_format' => 'dd.MM.yyyy')); // creates a Zend_Date object for this date
 
 print_r($date); // outputs:
 
@@ -165,7 +163,7 @@ Array
 )
 
 // alternatively, some types of problems with input data can be automatically corrected
-$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', 'dd.MM.yyyy');
+$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', array('date_format' => 'dd.MM.yyyy'));
 
 print_r($date); // outputs:
 
@@ -184,7 +182,9 @@ Array
             Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
             strings adhering to that locale's format. The method <code>getCorrectableDate()</code> uses simple tests to
             determine if the day or month is not valid, and then applies heuristics to try and correct any detected
-            problems.
+            problems. Note the use of '<code>null</code>' as the value for '<code>date_format</code>' to prevent the use
+            of a class-wide default date format set using <code>setOptions()</code>. This forces getDate to use the
+            default date format for <code>$locale</code>.
         </para>
 
         <example>
@@ -193,7 +193,7 @@ Array
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2006', null, $locale);
+$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => null, 'locale' => $locale));
 
 print_r ($date);
 ?>]]></programlisting>
@@ -209,7 +209,7 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => null, 'locale' => $locale);
 
 print_r ($date);
 ?>]]></programlisting>
@@ -226,7 +226,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
+$date = Zend_Locale_Format::getDate('13200504T551422', array('date_format' => 'ddyyyyMM ssmmHH');
 
 print_r ($date);
 ?>]]></programlisting>
@@ -333,7 +333,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getCorrectableDate('41.10.20', 'ddMMyy');
+$date = Zend_Locale_Format::getCorrectableDate('41.10.20', array('date_format' => 'ddMMyy'));
 
 // instead of 41 for the day, the 41 will be returned as year value
 print_r ($date);
@@ -347,11 +347,12 @@ print_r ($date);
         <title>Testing Dates</title>
 
         <para>
-            Use <code>isDate($inputString, $format, $locale)</code> to check if a given string contains a valid date.
-            The <code>isDate()</code> method uses <code>getDate()</code>, not <code>getCorrectableDate()</code> to avoid
-            returning true when the input fails to conform to the date format. If errors are detected in the input, such
-            as swapped values for months and days, the <code>isCorrectableDate()</code> method will apply heuristics to
-            "correct" dates before determining their validity.
+            Use <code>isDate($inputString, array('date_format' => $format, $locale))</code> to check if a given string
+            contains a valid date. The <code>isDate()</code> method uses <code>getDate()</code>, not
+            <code>getCorrectableDate()</code> to avoid returning true when the input fails to conform to the date
+            format. If errors are detected in the input, such as swapped values for months and days, the
+            <code>isCorrectableDate()</code> method will apply heuristics to "correct" dates before determining their
+            validity.
         </para>
 
         <example>
@@ -361,7 +362,7 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 // using the default date format for 'de_AT', is this a valid date?
-if (Zend_Locale_Format::isDate('13.Apr.2006', null, $locale) {
+if (Zend_Locale_Format::isDate('13.Apr.2006', array('date_format' => null, $locale)) {
     print "date";
 } else {
     print "not a date";
@@ -387,7 +388,7 @@ if (Zend_Locale_Format::isDate('13.Apr.2006', null, $locale) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::getTime('13:44:42', $locale) {
+if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => null, 'locale' => $locale)) {
     print "time";
 } else {
     print "not a time";
@@ -411,7 +412,7 @@ if (Zend_Locale_Format::getTime('13:44:42', $locale) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::isTime('13:44:42', $locale) {
+if (Zend_Locale_Format::isTime('13:44:42', array('date_format' => null, 'locale' => $locale)) {
     print "time";
 } else {
     print "not a time";

@@ -122,10 +122,10 @@ $date = new Zend_Date();
 // changes $date by adding 12 hours
 $date->add('12:00:00', Zend_Date::TIMES);
 
-print "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+echo "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
 
 // use magic __toString() method to call Zend_Date's toString()
-print "Date via toString() = ", $date, "\n";
+echo "Date via toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
 
