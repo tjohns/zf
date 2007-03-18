@@ -12,7 +12,7 @@
         と <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>
         の二種類で、テキストファイルに格納された設定データを使用できるようになっています。.
     </para>
-    <example>
+    <example id="zend.config.introduction.example.using">
         <title>Zend_Config の使用例</title>
         <para>
             通常は、<link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
