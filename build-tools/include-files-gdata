@@ -4,9 +4,6 @@ LICENSE.txt
 demos/Zend/Gdata/Base-AuthSub.php
 demos/Zend/Gdata/Calendar-AuthSub.php
 demos/Zend/Gdata/Calendar-ClientLogin.php
-documentation/manual/.build/docbook-xsl-1.69.1.tgz
-documentation/manual/.build/html.xsl
-documentation/manual/.build/mkentities.sh
 
 documentation/manual/en/ref/coding_standard.xml
 documentation/manual/en/ref/conf.xml
@@ -26,7 +23,9 @@ documentation/manual/en/module_specs/Zend_Gdata_Exception.xml
 documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
 documentation/manual/en/configure.in
 documentation/manual/en/Makefile.in
+documentation/manual/en/html.xsl.in
 documentation/manual/en/manual.xml
+documentation/manual/en/xinclude.mod
 
 library/Zend/Loader.php
 library/Zend/Version.php

@@ -42,7 +42,7 @@ PHPDOC=php c:/xampp/php/PhpDocumentor/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=HEAD
+ZF_TAG=4085
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
@@ -54,6 +54,12 @@ ZF_VERSION=0.9.0-Beta
 # names of language directories, e.g. 'en', 'de', etc.  You also can
 # use any file-globbing pattern.
 LANG=*
+
+# Locations of the DocBook DTD and XSL stylesheets
+DTD_HOST=framework.zend.com
+DTD_URL=http://$(DTD_HOST)/docbook/xml/4.4/docbookx.dtd
+XSL_HOST=framework.zend.com
+XSL_URL=http://$(XSL_HOST)/docbook-xsl/html/chunk.xsl
 
 # -- end of parameters you are likely to want to change --
 
@@ -114,7 +120,7 @@ docbook-core:
 	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
-	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
+	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) DTD_URL=$(DTD_URL) XSL_URL=$(XSL_URL) ) ; \
 	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/$$lang ; \
 	done
 
@@ -123,7 +129,7 @@ docbook-incubator:
 	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
+	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) DTD_URL=$(DTD_URL) XSL_URL=$(XSL_URL) ) ; \
 	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/$$lang ; \
 	done
 
