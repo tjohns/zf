@@ -1,138 +1,137 @@
 <sect1 id="zend.translate.introduction">
 
-    <title>Introduction</title>
+    <title>導入</title>
 
     <para>
-        Zend_Translate is the Zend Framework's solution for multilingual
-        applications.
+        Zend_Translate は、Zend Framework
+        で多言語対応のアプリケーションを作成するためのパッケージです。
     </para>
 
     <para>
-        In multilingual applications, the content must be translated into
-        several languages and display content depending on the user's language.
-        PHP offers already several ways to handle such problems, however
-        the PHP solution has some problems:
+        多言語対応のアプリケーションでは、コンテンツをさまざまな言語に翻訳し、
+        それをユーザの言語に応じて表示しなければなりません。
+        PHP にはすでにそのような場合のための手法が用意されています。
+        しかし、PHP の手法にはいくつかの問題があります。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <emphasis role="strong">Inconsistent API:</emphasis>
-                There is no single API for the different source formats.
-                The usage of gettext for example is very complicated.
+                <emphasis role="strong">一貫性のない API:</emphasis>
+                入力フォーマットによって API が異なります。
+                たとえば gettext の使用法は非常に複雑です。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">PHP supports only gettext and native array:</emphasis>
-                PHP itself offers only support for array or gettext.
-                All other source formats have to be coded manually,
-                because there is no native support.
+                <emphasis role="strong">PHP は gettext
+                およびネイティブの配列しかサポートしていない:</emphasis>
+                PHP 自身は配列あるいは gettext しかサポートしていません。
+                その他の入力フォーマットは、手動で変換する必要があります。
+                ネイティブなサポートはないからです。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">No detection of the default language:</emphasis>
-                The default language of the user cannot be detected without
-                deeper knowledge of the backgrounds for
-                the different web browsers.
+                <emphasis role="strong">デフォルト言語の検出方法がない:</emphasis>
+                ユーザのデフォルト言語を検出するには、
+                個々のブラウザについての深い知識を要します。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Gettext is not thread-safe:</emphasis>
-                PHP's gettext library is not thread safe, and it
-                should not be used in a multithreaded environment.
-                This is due to problems with gettext itself, not PHP,
-                but it is an existing problem.
+                <emphasis role="strong">Gettext はスレッドセーフでない:</emphasis>
+                PHP の gettext ライブラリはスレッドセーフではないので、
+                マルチスレッド環境で使用してはいけません。
+                これは gettext 自体の問題であって PHP のせいではありませんが、
+                問題であることには変わりありません。
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Zend_Translate does not have the above problems. This is why we
-        recommend using Zend_Translate instead of PHP's native functions.
-        The benefits of Zend_Translate are:
+        Zend_Translate にはここであげたような問題はありません。
+        というわけで、PHP のネイティブ関数ではなく
+        Zend_Translate を使用することを推奨します。
+        Zend_Translate の利点は、以下のとおりです。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <emphasis role="strong">Supports multiple source formats:</emphasis>
-                Zend_Translate supports several source formats, including
-                those supported by PHP, and other formats including TMX
-                and CSV files.
+                <emphasis role="strong">複数の入力フォーマットのサポート:</emphasis>
+                Zend_Translate はいくつかの入力フォーマットに対応しています。
+                PHP でサポートしているもののほかに、TMX や CSV
+                形式のファイルにも対応しています。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Thread-safe gettext:</emphasis>
-                The gettext reader of Zend_Translate is thread-safe.
-                There are no problems using it in multi-threaded environments.
+                <emphasis role="strong">スレッドセーフな gettext:</emphasis>
+                Zend_Translate の gettext リーダーはスレッドセーフです。
+                マルチスレッド環境でも問題なく使用できます。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Easy and generic API:</emphasis>
-                The API of Zend_Translate is very simple and requires only a
-                handful of functions.
-                So it's easy to learn and easy to maintain.
-                All source formats are handled the same way, so if the format
-                of your source files change from Gettext to TMX,
-                you only need to change one line of code to specify the
-                storage adapter.
+                <emphasis role="strong">簡単で汎用的な API:</emphasis>
+                Zend_Translate の API は非常にシンプルで、使用する関数はほんの少しだけです。
+                そのため、容易に覚えることができ、保守も簡単です。
+                すべての入力フォーマットを同じように処理できます。
+                つまり、仮に入力ファイルが gettext から TMX に変わったとしても、
+                ストレージアダプタを指定している部分を一行変更するだけで対応できます。
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Detection of the user's standard language:</emphasis>
-                The preferred language of the user accessing the site can be
-                detected and used by Zend_Translate.
+                <emphasis role="strong">ユーザの標準言語の検出:</emphasis>
+                ユーザがサイトにアクセスする際の preferred language
+                設定を検出し、Zend_Translate で使用することができます。
             </para>
         </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">
 
-        <title>Starting multi-lingual</title>
+        <title>多言語対応をはじめよう</title>
 
         <para>
-            So let's get started with multi-lingual business.
-            What we want to do is translate our string
-            output so the view produces the translated output.
-            Otherwise we would have to write one view
-            for each language, and no one would like to do this.
-            Generally, multi-lingual sites are very simple in their design.
-            There are only four steps you would have to do:
+            それでは、多言語対応の作業を始めてみましょう。
+            まずやってみたいことといえば、出力文字列を翻訳し、
+            翻訳結果をビューで表示することですね。
+            そうしないと、個々の言語ごとに別のビューを作らなければならなくなります。
+            誰もそんなことはしたくないでしょう。
+            一般に、多言語対応のサイトの設計は非常にシンプルです。
+            必要なのは、以下のたった 4 つの手順だけです。
         </para>
 
         <orderedlist numeration='arabic'>
             <listitem>
                 <para>
-                    Decide which adapter you want to use;
+                    使用するアダプタを決める
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Create your view and integrate Zend_Translate in your code;
+                    ビューを作成し、Zend_Translate をコードに組み込む
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Create the source file from your code;
+                    コードから入力ファイルを作成する
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Translate your source file to the desired language.
+                    入力ファイルを指定した言語に翻訳する
                 </para>
             </listitem>
         </orderedlist>
 
         <para>
-            The following sections guide you through all four steps.
-            Read through the next few pages to create your own
-            multi-lingual web application.
+            これ以降の節で、この手順について説明します。
+            次の何ページかを読めば、
+            あなたも多言語対応のウェブアプリケーションを作れるようになるでしょう。
         </para>
 
     </sect2>
