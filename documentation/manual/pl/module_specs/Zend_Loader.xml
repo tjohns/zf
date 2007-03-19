@@ -33,7 +33,7 @@
             niepowodzenia, na przykład gdy dany plik nie istnieje.
         </para>
 
-        <example id="zend.loader.file.example">
+        <example id="zend.loader.load.file.example">
             <title>Przykład użycia metody loadFile()</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -80,7 +80,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
             ładuje plik PHP, a następnie sprawdza czy dana klasa istnieje.
         </para>
 
-        <example id="zend.loader.class.example">
+        <example id="zend.loader.load.class.example">
             <title>Przykład użycia metody loadClass()</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -135,7 +135,7 @@ Zend_Loader::loadClass('Container_Tree',
             wartość FALSE.
         </para>
 
-        <example id="zend.loader.isreadable.example">
+        <example id="zend.loader.load.isreadable.example">
             <title>Przykład użycia metody isReadable()</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -152,6 +152,35 @@ if (Zend_Loader::isReadable($filename)) {
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
             Funkcja PHP nie sprawdza ścieżek z dyrektywy <code>include_path</code>,
             a metoda <code>Zend_Loader::isReadable()</code> sprawdza.
+        </para>
+
+    </sect2>
+    
+    <sect2 id="zend.loader.load.autoload">
+
+        <title>Użycie Autoloadera</title>
+
+        <para>
+            Klasa Zend_Loader zawiera metodę, którą możesz zarejestrować jako
+            autoloader PHP SPL. Tą metodą jest <code>Zend_Loader::autoload()</code>.
+        </para>
+
+
+        <example id="zend.loader.load.autoload.example">
+            <title>Przykład zarejestrowania metody autoloadera</title>
+            <programlisting role="php"><![CDATA[<?php
+
+spl_autoload_register(array('Zend_Loader', 'autoload'));
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Po zarejestrowaniu metody autoload z Zend Framework, możesz 
+            odwoływać się do klas Zend Framework bez konieczności ładowania 
+            każdej z nich z osobna. Metoda autoload używa metody
+            <code>Zend_Loader::loadClass()</code> automatycznie gdy odwołujesz 
+            się do klasy.
         </para>
 
     </sect2>

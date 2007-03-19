@@ -28,7 +28,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // okres ważności bufora 2 godziny
+   'lifetime' => 7200, // okres ważności bufora 2 godziny
    'automaticSerialization' => true
 );
 
@@ -89,7 +89,7 @@ print_r($result);
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // okres ważności bufora pół minuty
+   'lifetime' => 30,                  // okres ważności bufora pół minuty
    'automaticSerialization' => false  // to i tak jest domyślna wartość
 );
 

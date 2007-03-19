@@ -44,7 +44,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>lifeTime</code></entry>
+                              <entry><code>lifetime</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
                               <entry>
@@ -504,10 +504,6 @@ $res = $cache->foobar2('1', '2');
 	        	w celu oszczędzania transferu (system wyśle nagłówek HTTP 304 Not Modified jeśli 
 	        	bufor istnieje i gdy przeglądarka ma aktualną wersję bufora).
 	        </para>
-	        <note><para>
-                Zend_Cache_Frontend_Page jest jeszcze w wersji "alpha" i z 
-                biegiem czasu ma być ulepszany.
-	        </para></note>
     	</sect3>
     	<sect3 id="zend.cache.frontends.page.options">
 	        <title>Dostępne opcje (for this frontend in Zend_Cache factory)</title>
@@ -670,7 +666,7 @@ $cache->start();
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200,
+   'lifetime' => 7200,
    'debugHeader' => true, // dla testów
    'regexps' => array(
        '^/$' => array('cache' => true),         // buforuj cały kontroler IndexController         
