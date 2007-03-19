@@ -241,11 +241,11 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
             <title>Overriding default locale selection</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-require_once 'Zend/Measure.php';
+require_once 'Zend/Measure/Temperature.php';
 
 $usLocale = new Zend_Locale('en_US');
 $date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $usLocale);
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);
 ?>]]></programlisting>
         </example>
 
@@ -258,11 +258,11 @@ $temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $usLocale);
             <title>Performance optimization when using a default locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-require_once 'Zend/Measure.php';
+require_once 'Zend/Measure/Temperature.php';
 
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
 ?>]]></programlisting>
         </example>
 

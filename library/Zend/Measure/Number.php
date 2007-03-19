@@ -275,9 +275,13 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $input = preg_replace( array_keys(self::$_ROMANCONVERT), array_values(self::$_ROMANCONVERT), $input);
 
             $split = preg_split('//', strrev($input), -1, PREG_SPLIT_NO_EMPTY);
+
             for ($X=0; $X < sizeof($split); $X++) {
+                if ($split[$X] == '/') {
+                    continue;
+                }
                 $num = self::$_ROMAN[$split[$X]];
-                if ($X > 0 && ($num < self::$_ROMAN[$split[$X-1]])) {
+                if (($X > 0 and ($split[$X-1] != '/') and ($num < self::$_ROMAN[$split[$X-1]]))) {
                     $num -= $num;
                 }
                 $value += $num;

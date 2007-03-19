@@ -257,5 +257,8 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
 
         $value = new Zend_Measure_Number('XXV',Zend_Measure_Number::ROMAN, 'en');
         $this->assertEquals($value->convertTo(Zend_Measure_Number::DECIMAL), 25);
+
+        $value = new Zend_Measure_Number('_X',Zend_Measure_Number::ROMAN, 'en');
+        $this->assertEquals($value->convertTo(Zend_Measure_Number::DECIMAL), 10000);
     }
 }

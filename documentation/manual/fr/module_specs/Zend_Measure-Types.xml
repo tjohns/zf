@@ -258,7 +258,7 @@ require_once 'Zend/Measure/Number.php';
 
 $valeur = 'XIII';
 $locale = new Zend_Locale('en');
-$unite = new Zend_Measure_Number($valeur,Zend_Measure_Number::ROMAN, $locale);
+$unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 // convertir en système décimal
 echo $unite->convertTo(Zend_Measure_Number::DECIMAL);

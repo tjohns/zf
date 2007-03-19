@@ -242,11 +242,11 @@ $date = new Zend_Date('2006', Zend_Date::YEAR);
             <title>Vorgeben einer Locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-require_once 'Zend/Measure.php';
+require_once 'Zend/Measure/Temperature.php';
 
 $deLocale = new Zend_Locale('de_DE');
 $date = new Zend_Date('2006', Zend_Date::YEAR, $deLocale);
-$temp = new Zend_Measure('37,7', Zend_Measure::TEMPERATURE, $deLocale);
+$temp = new Zend_Measure_Temperature('37,7', Zend_Measure::TEMPERATURE, $deLocale);
 ?>]]></programlisting>
         </example>
 
@@ -259,11 +259,11 @@ $temp = new Zend_Measure('37,7', Zend_Measure::TEMPERATURE, $deLocale);
             <title>Performanceoptimierung durch das einmalige Setzen der verwendeten Locale</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-require_once 'Zend/Measure.php';
+require_once 'Zend/Measure/Temperature.php';
 
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure('100,10', Zend_Measure::TEMPERATURE, $locale);
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
 ?>]]></programlisting>
         </example>
 

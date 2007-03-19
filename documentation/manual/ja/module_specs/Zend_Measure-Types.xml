@@ -303,7 +303,7 @@ require_once 'Zend/Measure/Number.php';
 
 $great = '_X';
 $locale = new Zend_Locale('en');
-$unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
+$unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 十進数に変換します
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
