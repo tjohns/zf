@@ -7,20 +7,6 @@
         また、一般的な使用例に対応する具象認証アダプタも用意しています。
     </para>
 
-    <note>
-        <para>
-            Zend_Auth には、
-            <link linkend="zend.auth.adapter.digest">ダイジェスト認証用のアダプタ</link>
-            だけが含まれています。これは、Zend_Auth の考え方を説明するためのシンプルな設計のアダプタです。
-            今後、さらにいろいろなアダプタを開発する予定です。
-            「こんなアダプタがほしい」っていう方はいますか? そんな皆さんは、ぜひ
-            <ulink url="http://framework.zend.com/wiki/x/qx4">投票に参加</ulink>
-            してください。あるいは、
-            <ulink url="http://framework.zend.com/wiki/x/GgE">自分でつくってしまう</ulink>
-            のも大歓迎です!
-        </para>
-    </note>
-
     <para>
         Zend_Auth が扱うのはあくまでも <emphasis role="strong">認証 (authentication)</emphasis>
         であり、<emphasis role="strong">承認 (authorization)</emphasis> ではありません。
@@ -33,6 +19,18 @@
         <link linkend="zend.acl">Zend_Acl</link> を参照ください。
     </para>
 
+    <note>
+        <para>
+            <code>Zend_Auth</code> クラスはシングルトンパターン
+            (クラスのインスタンスは常にひとつだけ)
+            を実装しており、静的メソッド <code>getInstance()</code> でそれを使用します。
+            つまり、<code>new</code> 演算子や
+            <code>clone</code> キーワードは <code>Zend_Auth</code>
+            クラスでは動作しないということです。そのかわりに
+            <code>Zend_Auth::getInstance()</code> を使用します。
+        </para>
+    </note>
+
     <sect2 id="zend.auth.introduction.adapters">
 
         <title>アダプタ</title>
@@ -42,15 +40,17 @@
             LDAP や RDBMS あるいはファイル
             のような特定の型の認証サービスに対する認証を行うことです。
             アダプタによってそのオプションや挙動は大きくことなるでしょうが、
-            いくつかの基本処理は、あらゆるアダプタで共通となります。
-            たとえば認証条件 (いわゆる ID) を受け取り、認証を行い、
-            何らかの結果を返すという処理は、すべての Zend_Auth アダプタで共通です。
+            いくつかの基本処理は、あらゆる認証アダプタで共通となります。
+            たとえば認証条件 (いわゆる ID) を受け取り、
+            認証サービスに対する問い合わせを行い、
+            結果を返すという処理は、すべての Zend_Auth アダプタで共通です。
         </para>
 
         <para>
-            各 Zend_Auth 認証アダプタは、<code>Zend_Auth_Adapter_Interface</code>
+            各 Zend_Auth アダプタクラスは、<code>Zend_Auth_Adapter_Interface</code>
             を実装しています。このインターフェイスで定義されているメソッドが
-            <code>authenticate()</code> で、アダプタクラスはこれを実装して認証を行います。
+            <code>authenticate()</code> で、アダプタクラスは
+            認証クエリを実行するためにこれを実装する必要があります。
             各アダプタクラスは、<code>authenticate()</code>
             をコールする前に準備を済ませておく必要があります。
             つまり、アダプタ側で用意しなければならない機能としては
@@ -152,25 +152,172 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
             クッキーやセッションといった技術によって、
             サーバサイドのウェブアプリケーションでも
             複数リクエスト間でステート (状態) を保持し続けられるようになりました。
-            Zend_Auth は、デフォルトで
-            <link linkend="zend.session">Zend_Session</link> を使用しており、
-            認証に成功した後の ID 情報を PHP のセッションで永続管理するようにしています。
         </para>
 
-        <para>
-            認証に成功すると、<code>Zend_Auth::authenticate()</code> は
-            認証結果の ID を永続ストレージに保存します。デフォルトでは、
-            <code>Zend_Auth</code> が使用するストレージクラスは
-            <link linkend="zend.session">Zend_Session</link> にもとづいたものとなります。
-            ストレージクラスを変更するには、
-            <code>Zend_Auth::setStorage()</code> でストレージオブジェクトを指定します。
-        </para>
+        <sect3 id="zend.auth.introduction.persistence.default">
 
-        <para>
-            自動的に永続ストレージに ID を保存するのはまずい場合もあるでしょう。
-            そんな場合は、<code>Zend_Auth</code> クラスを使用せずに
-            アダプタクラスを直接利用します。
-        </para>
+            <title>PHP セッションにおけるデフォルトの持続性</title>
+
+            <para>
+                 デフォルトでは、<code>Zend_Auth</code> は、
+                 認証に成功した際の ID 情報を PHP のセッションを使用して保存します。
+                 認証に成功すると、<code>Zend_Auth::authenticate()</code>
+                 は認証結果を持続ストレージに保存します。何も指定しなければ、
+                 <code>Zend_Auth</code> が使用するストレージクラスは
+                 <code>Zend_Auth_Storage_Session</code> となります。これは
+                 <link linkend="zend.session">Zend_Session</link> を使用しています。
+                 独自のクラスを使用するには、<code>Zend_Auth_Storage_Interface</code>
+                 を実装したクラスのオブジェクトを <code>Zend_Auth::setStorage()</code>
+                 で設定します。
+            </para>
+
+            <note>
+                <para>
+                    もし ID が自動的に持続ストレージに保存されるのが気に入らない場合は、
+                    <code>Zend_Auth</code> クラスをまるごと使用するのを控え、
+                    アダプタクラスを直接使用します。
+                </para>
+            </note>
+
+            <example id="zend.auth.introduction.persistence.default.example">
+
+                <title>セッション名前空間の変更</title>
+
+                <para>
+                    <code>Zend_Auth_Storage_Session</code> は、セッション名前空間として
+                    <code>'Zend_Auth'</code> を使用します。これを変更するには、別の値を
+                    <code>Zend_Auth_Storage_Session</code> のコンストラクタで指定します。
+                    この値が、内部で <code>Zend_Session_Namespace</code>
+                    のコンストラクタに渡されます。これは認証を試みる前に行う必要があります。
+                    なぜなら、<code>Zend_Auth::authenticate()</code>
+                    は ID を自動的に保存するからです。
+
+                    <programlisting role="php"><![CDATA[<?php
+// Zend_Auth のシングルトンインスタンスへの参照を保存します
+require_once 'Zend/Auth.php';
+$auth = Zend_Auth::getInstance();
+
+// 'Zend_Auth' のかわりに 'someNamespace' を使用します
+require_once 'Zend/Auth/Storage/Session.php';
+$auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
+
+/**
+ * @todo 認証アダプタ $authAdapter を設定します
+ */
+
+// 認証と結果の保存、そして成功時に ID を持続させます
+$result = $auth->authenticate($authAdapter);]]></programlisting>
+
+                </para>
+
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.auth.introduction.persistence.custom">
+
+            <title>独自のストレージの実装</title>
+
+            <para>
+                <code>Zend_Auth_Storage_Session</code> とは異なる形式で、
+                ID を持続させたくなることもあるでしょう。そのような場合は、
+                <code>Zend_Auth_Storage_Interface</code> を実装したクラスのインスタンスを
+                <code>Zend_Auth::setStorage()</code> で設定します。
+            </para>
+
+            <example id="zend.auth.introduction.persistence.custom.example">
+
+                <title>独自のストレージクラスの使用法</title>
+
+                <para>
+                    ID を持続させるストレージクラスを
+                    <code>Zend_Auth_Storage_Session</code> のかわりに使用するには、
+                    <code>Zend_Auth_Storage_Interface</code> を実装します。
+
+                    <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Auth/Storage/Interface.php';
+
+class MyStorage implements Zend_Auth_Storage_Interface
+{
+    /**
+     * ストレージが空の場合にのみ true を返す
+     *
+     * @throws Zend_Auth_Storage_Exception 空かどうか判断できないとき
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        /**
+         * @todo 実装が必要
+         */
+    }
+
+    /**
+     * ストレージの中身を返す
+     *
+     * ストレージが空の場合に挙動は未定義
+     *
+     * @throws Zend_Auth_Storage_Exception ストレージの中身を読み込めない場合
+     * @return mixed
+     */
+    public function read()
+    {
+        /**
+         * @todo 実装が必要
+         */
+    }
+
+    /**
+     * $contents をストレージに書き込む
+     *
+     * @param  mixed $contents
+     * @throws Zend_Auth_Storage_Exception $contents をストレージに書き込めない場合
+     * @return void
+     */
+    public function write($contents)
+    {
+        /**
+         * @todo 実装が必要
+         */
+    }
+
+    /**
+     * ストレージの中身を消去する
+     *
+     * @throws Zend_Auth_Storage_Exception ストレージの中身を消去できない場合
+     * @return void
+     */
+    public function clear()
+    {
+        /**
+         * @todo 実装が必要
+         */
+    }
+
+}]]></programlisting>
+
+                </para>
+
+                <para>
+                    このストレージクラスを使用するには、認証クエリの前に
+                    <code>Zend_Auth::setStorage()</code> を実行します。
+
+                    <programlisting role="php"><![CDATA[<?php
+// Zend_Auth に、独自のストレージクラスを使うよう指示します
+Zend_Auth::getInstance()->setStorage(new MyStorage());
+
+/**
+ * @todo 認証アダプタ $authAdapter を設定します
+ */
+
+// 認証と結果の保存、そして成功時に ID を持続させます
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]></programlisting>
+
+                </para>
+
+            </example>
+
+        </sect3>
 
     </sect2>
 
