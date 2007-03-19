@@ -92,7 +92,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             $this->_profiler->queryEnd($q);
 
             // force names to lower case
-            $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+            $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
 
             // always use exceptions.
             $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
