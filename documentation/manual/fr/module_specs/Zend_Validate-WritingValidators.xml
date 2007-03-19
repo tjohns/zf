@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.writing_validators">
+﻿<sect1 id="zend.validate.writing_validators">
 
     <title>Ecrire des validateurs</title>
 
@@ -43,7 +43,8 @@ class MonValidateur implements Zend_Validate_Interface
     {
         return $this->_messages;
     }
-}]]></programlisting>
+}
+?>]]></programlisting>
 
     </para>
 
@@ -52,7 +53,8 @@ class MonValidateur implements Zend_Validate_Interface
 
         <programlisting role="php"><![CDATA[<?php
 $validateurChaine = new Zend_Validate();
-$validateurChaine->addValidator(new MonValidateur());]]></programlisting>
+$validateurChaine->addValidator(new MonValidateur());
+?>]]></programlisting>
 
     </para>
 

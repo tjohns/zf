@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.introduction">
+﻿<sect1 id="zend.validate.introduction">
 
     <title>Introduction</title>
 
@@ -55,7 +55,8 @@ if ($validateur->isValid($email)) {
     foreach ($validateur->getMessages() as $message) {
         echo "$message\n";
     }
-}]]></programlisting>
+}
+?>]]></programlisting>
 
     </para>
 
