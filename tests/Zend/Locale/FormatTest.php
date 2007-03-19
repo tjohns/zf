@@ -749,6 +749,44 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Locale_Exception $e) {
             // success
         }
+
+        // test interaction between class-wide default date format and using locale's default format
+        try {
+            $result = array('date_format' => 'MMM d, yyyy', 'locale' => 'en_US', 'month' => '07',
+                    'day' => '4', 'year' => '2007');
+            Zend_Locale_Format::setOptions(array('date_format' => null)); // test setUp
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+        try {
+
+            $this->assertSame($result, Zend_Locale_Format::getDate('July 4, 2007', array('locale' => 'en_US')));
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+        try {
+            Zend_Locale_Format::setOptions(array('date_format' => 'y-M-d'));
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+        try {
+            // should continue to work exactly the same, after setting the date_format option above
+            $this->assertSame($result, Zend_Locale_Format::getDate('July 4, 2007', array('locale' => 'en_US')));
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+        try {
+            // It should not be necessary to use the following workaround:
+            $this->assertSame($result,
+                Zend_Locale_Format::getDate('July 4, 2007', array('locale' => 'en_US', 'date_format' => null)));
+
+            // If execution reaches this point, then success, because the class-wide date_format default should
+            // *not* be used, unless explicitly specified in the options array
+            // -i.e. 'date_format' = Zend_Locale_Format::DEFAULT
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+        Zend_Locale_Format::setOptions(array('date_format' => null)); // test tearDown
     }
 
 
