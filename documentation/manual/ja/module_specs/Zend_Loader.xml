@@ -31,7 +31,7 @@
             には <code>Zend_Exception</code> をスローします。
         </para>
 
-        <example id="zend.loader.file.example">
+        <example id="zend.loader.load.file.example">
             <title>loadFile() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -76,7 +76,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
             は、PHP ファイルを読み込んでクラスが存在するかどうかを確かめます。
         </para>
 
-        <example id="zend.loader.class.example">
+        <example id="zend.loader.load.class.example">
             <title>loadClass() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -128,7 +128,7 @@ Zend_Loader::loadClass('Container_Tree',
             <code>TRUE</code>、それ以外の場合に FALSE を返します。
         </para>
 
-        <example id="zend.loader.isreadable.example">
+        <example id="zend.loader.load.isreadable.example">
             <title>isReadable() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -147,6 +147,35 @@ if (Zend_Loader::isReadable($filename)) {
             のラッパーです。この関数は <code>include_path</code>
             を探しませんが、<code>Zend_Loader::isReadable()</code>
             は <code>include_path</code> も検索対象に含めます。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.loader.load.autoload">
+
+        <title>Autoloader の使用法</title>
+
+        <para>
+            Zend_Loader クラスには、PHP の SPL
+            自動ローダーに登録するためのメソッドが含まれています。それが
+            <code>Zend_Loader::autoload()</code> です。
+        </para>
+
+
+        <example id="zend.loader.load.autoload.example">
+            <title>自動ローダー用コールバックメソッドの登録例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+spl_autoload_register(array('Zend_Loader', 'autoload'));
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Zend Framework の autoload コールバックを登録すると、
+            明示的に読み込まなくても Zend Framework のクラスを参照できるようになります。
+            autoload メソッドは、クラスを参照する際に自動的に
+            <code>Zend_Loader::loadClass()</code> を使用します。
         </para>
 
     </sect2>
