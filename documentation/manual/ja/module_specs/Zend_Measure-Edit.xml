@@ -219,8 +219,8 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
 print "Equal:".$unit2->compare($unit);
-print "Greater:".$unit2->compare($unit3);
-print "Lesser:".$unit3->compare($unit2);
+print "Lesser:".$unit2->compare($unit3);
+print "Greater:".$unit3->compare($unit2);
 ?>]]></programlisting>
             </example>
         </para>
