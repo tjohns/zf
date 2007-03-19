@@ -111,7 +111,7 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <para>
-            ファイルの読み込みには <code>Zend::loadFile()</code> を使用するので、
+            ファイルの読み込みには <code>Zend_Loader::loadFile()</code> を使用するので、
             クラス名として指定できるのは
             英数字とハイフン ('-')、アンダースコア ('_') そしてピリオド ('.') だけです。
         </para>

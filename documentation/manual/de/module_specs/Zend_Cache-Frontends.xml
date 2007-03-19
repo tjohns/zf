@@ -649,7 +649,7 @@ $cache->start();
 	        	<programlisting role="php"><![CDATA[<?php
 
 // [...] du solltest es vermeiden, zu viele Zeilen vor dem Cache Bereich zu setzen
-// [...] zum Beispiel sollten für optimale Performanz "require_once" oder "Zend::loadClass" 
+// [...] zum Beispiel sollten für optimale Performanz "require_once" oder "Zend_Loader::loadClass" 
 // [...] nach dem Cache Bereich stehen
 
 require_once 'Zend/Cache.php';

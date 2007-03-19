@@ -268,7 +268,7 @@ require_once 'Zend/XmlRpc/Server/Cache.php';
 
 function __autoload($class)
 {
-    Zend::loadClass($class);
+    Zend_Loader::loadClass($class);
 }
 
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';

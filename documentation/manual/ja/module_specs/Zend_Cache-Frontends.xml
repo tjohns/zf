@@ -650,7 +650,7 @@ $cache->start();
             <programlisting role="php"><![CDATA[<?php
 
 // [...] キャッシュセクションの前には、あまり多くの行を書かないようにしましょう。
-// [...] 例えば、処理速度を最適化するためには "require_once" や "Zend::loadClass"
+// [...] 例えば、処理速度を最適化するためには "require_once" や "Zend_Loader::loadClass"
 // [...] をキャッシュセクションの後におくべきです。
 
 require_once 'Zend/Cache.php';

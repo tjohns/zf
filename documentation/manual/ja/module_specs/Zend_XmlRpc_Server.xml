@@ -269,13 +269,13 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
             使用例は次のようになります。
         </para>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend.php';
+require_once 'Zend/Loader.php';
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Cache.php';
 
 function __autoload($class)
 {
-    Zend::loadClass($class);
+    Zend_Loader::loadClass($class);
 }
 
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';

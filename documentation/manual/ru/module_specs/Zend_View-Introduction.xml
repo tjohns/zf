@@ -83,7 +83,7 @@ $data = array(
 );
 
 // теперь объявляем данные по книгам экземпляру Zend_View 
-Zend::loadClass('Zend_View');
+Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 

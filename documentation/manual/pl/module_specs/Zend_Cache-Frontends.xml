@@ -664,7 +664,7 @@ $cache->start();
             <programlisting role="php"><![CDATA[<?php
 
 // [...] powinieneś unikać tworzenia dużej ilości kodu przed sekcją buforowania
-// [...] na przykład, w celu optymalizacji, instrukcje "require_once" lub "Zend::loadClass" 
+// [...] na przykład, w celu optymalizacji, instrukcje "require_once" lub "Zend_Loader::loadClass" 
 // [...] powinny znajdować się za sekcją buforowania
 
 require_once 'Zend/Cache.php';

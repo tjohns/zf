@@ -827,7 +827,7 @@ $cache->start();
           <programlisting role="php"><![CDATA[<?php
 
 // [...] вы должны избегать слишком большого количества строк кода перед участком кэша 
-// [...] например, для наибольшей производительности "require_once" или "Zend::loadClass"
+// [...] например, для наибольшей производительности "require_once" или "Zend_Loader::loadClass"
 // [...] должны находиться после участка кэша
 
 require_once 'Zend/Cache.php';

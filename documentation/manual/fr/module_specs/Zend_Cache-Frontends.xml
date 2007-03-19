@@ -557,7 +557,7 @@ $cache->start();
 	            un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un fichier d'amorçage (pour utiliser avec Zend_Controller par exemple)
 	        	<programlisting role="php"><![CDATA[<?php
 // vous devriez éviter de mettre trop de lignes avant la section de cache
-// [...] par exemple, pour des performances optimales, "require_once" ou "Zend::loadClass" devrait être
+// [...] par exemple, pour des performances optimales, "require_once" ou "Zend_Loader::loadClass" devrait être
 // [...] après la section de cache
 
 require_once 'Zend/Cache.php';

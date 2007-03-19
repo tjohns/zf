@@ -53,7 +53,7 @@ $data = array(
 );
 
 // przekażmy dane o książkach do instancji Zend_View
-Zend::loadClass('Zend_View');
+Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 

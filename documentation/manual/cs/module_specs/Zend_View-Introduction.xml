@@ -56,7 +56,7 @@ $data = array(
 );
 
 // now assign the book data to a Zend_View instance
-Zend::loadClass('Zend_View');
+Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 

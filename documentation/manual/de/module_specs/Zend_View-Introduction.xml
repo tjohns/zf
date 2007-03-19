@@ -52,7 +52,7 @@ $data = array(
 );
 
 // nun übergebe die Buchdaten an die Zend_View Instanz
-Zend::loadClass('Zend_View');
+Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 

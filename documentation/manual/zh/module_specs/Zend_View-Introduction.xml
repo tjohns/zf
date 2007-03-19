@@ -40,7 +40,7 @@ $data = array(
 );
 
 //传递数据给Zend_View类的实例　
-Zend::loadClass('Zend_View');
+Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 
