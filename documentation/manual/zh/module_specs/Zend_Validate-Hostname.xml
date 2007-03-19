@@ -89,12 +89,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
 
 ?>]]></programlisting>
         
-        另外你可以通过传递 TRUE 或 FALSE 给 <code>$validator->setValidateIdn()</code> 来激活或者禁止 IDN 校验。如果你试图匹配一个当前不被支持的IDN主机名，并且如果有国际字符在其中，校验很可能会失败。
-               
-        Where a ccTLD file doesn't exist in Zend/Validate/Hostname specifying the additional 
-        characters a normal hostname validation is performed. （这段没有理解，正和原作者联系，希望在下个版本中完成，Jason 注）
-        
-        请注意只有当你允许DNS主机名被校验，IDNs才能被校验。
+        另外你可以通过传递 TRUE 或 FALSE 给 <code>$validator->setValidateIdn()</code> 来激活或者禁止 IDN 校验。如果你试图匹配一个当前不被支持的IDN主机名，并且如果有国际字符在其中，校验很可能会失败。当指定附加字符的ccTLD文件在Zend/Validate/Hostname下不存在时，一个正常的主机名校验将被执行。（这就是在解释上句话中为什么校验会失败，Jason 注）请注意只有当你允许DNS主机名被校验，IDNs才能被校验。
     </para>
     
     <para>
