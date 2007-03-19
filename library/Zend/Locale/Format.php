@@ -156,7 +156,7 @@ class Zend_Locale_Format
                         }
                         break;
                     case 'locale' :
-                        if (strtolower($value) == 'standard') {
+                        if (gettype($value) === 'string' && strtolower($value) == 'standard') {
                             $options['locale'] = new Zend_Locale();
                         } else if (!empty($value) && (!Zend_Locale::isLocale($value))) {
                             throw new Zend_Locale_Exception("'" .
