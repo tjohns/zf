@@ -17,7 +17,7 @@
         </para>
 
         <example>
-            <title>Using Zend_Memory component </title>
+            <title>Using Zend_Memory component</title>
             <para>
                 <code>Zend_Memory::factory()</code> instantiates memory manager object with specified backend options.
             </para>
@@ -39,7 +39,7 @@ for ($count = 0; $count < 10000; $count++) {
     $data = fread($f, filesize($fileNames[$count]));
     $fclose($f);
 
-    $loadedFiles[] = $memoryManager->create($data)
+    $loadedFiles[] = $memoryManager->create($data);
 }
 
 ...
@@ -58,7 +58,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
     <sect2 id="zend.memory.theory-of-operation">
         <title>Theory of Operation</title>
         <para>
-            Zend_Memory component operates with the followen entities:
+            Zend_Memory component operates with following concepts:
             <itemizedlist>
                 <listitem>
                     <para>Memory manager</para>
@@ -67,12 +67,41 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
                     <para>Memory container</para>
                 </listitem>
                 <listitem>
-                    <para>Locked memory blocks</para>
+                    <para>Locked memory object</para>
                 </listitem>
                 <listitem>
-                    <para>Movable memory blocks</para>
+                    <para>Movable memory object</para>
                 </listitem>
             </itemizedlist>
+        </para>
+
+        <para>
+            Memory manager generates memory objects (locked or movable) by request of user application and
+            returns them wrapped into memory container object.
+        </para>
+
+        <para>
+            Memory container has virtual or actual <code>value</code> attribute of string type. It represents the value specified
+            at memory object creation time.
+        </para>
+
+        <para>
+            User can operate with this <code>value</code> attribute as he/she prefere:
+            <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);
+...
+echo $memObject->value;
+...
+$memObject->value = $newValue;
+...
+$memObject->value[$index] = '_';
+...
+echo ord($memObject->value[$index1]);
+...
+$memObject->value = substr($memObject->value, $start, $length);
+...
+
+?>]]></programlisting>
         </para>
     </sect2>
 </sect1>
