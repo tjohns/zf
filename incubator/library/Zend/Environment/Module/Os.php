@@ -41,27 +41,27 @@ class Zend_Environment_Module_Os extends Zend_Environment_Module_Abstract
     {
         $this->os = new Zend_Environment_Field(array(
             'title' => 'OS',
-            'description' => 'Host operating system',
+            'info' => 'Host operating system',
             'value' => PHP_OS));
 
         $this->uid = new Zend_Environment_Field(array(
             'title' => 'Script uid',
-            'description' => '',
+            'info' => 'script user id',
             'value' => getmyuid()));
 
         $this->gid = new Zend_Environment_Field(array(
             'title' => 'Script gid',
-            'description' => '',
+            'info' => 'script group id',
             'value' => getmygid()));
 
         $this->script_username = new Zend_Environment_Field(array(
             'title' => 'Script username',
-            'description' => '',
+            'info' => 'username obtained via HTTP authentication',
             'value' => get_current_user()));
 
         $this->memory = new Zend_Environment_Field(array(
             'title' => 'Memory',
-            'description' => 'Memory usage on host'));
+            'info' => 'Memory used by this script on host'));
         if (function_exists('memory_get_usage')) {
             $this->memory->value = memory_get_usage();
         } else {
