@@ -179,15 +179,12 @@ if ($unite1->equals($unite2)) {
         <title>Comparer les mesures</title>
 
         <para>
-            Pour déterminer si une mesure est plus ou moins grande qu'une autre, in faut utiliser <code>compare()</code>, qui renvoie 0, -1 ou 1 selon la différence entre les deux objets. Les mesures identiques renverront 0. Plus petit renverra -1 et plus grand renverra +1.
-            To determine if a measurement is less than or greater than another, use <code>compare()</code>, which
-            returns 0, -1 or 1 depending on the difference between the two objects. Identical measurements will return
-            0. Lesser ones will return a negative, greater ones a positive value.
+            Pour déterminer si une mesure est plus ou moins grande qu'une autre, il faut utiliser <code>compare()</code>, qui renvoie 0, -1 ou 1 selon la différence entre les deux objets. Les mesures identiques renverront 0. Plus petit renverra -1 et plus grand renverra +1.
         </para>
 
         <para>
             <example>
-                <title>Difference</title>
+                <title>Différence</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
