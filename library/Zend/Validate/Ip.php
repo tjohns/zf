@@ -53,10 +53,14 @@ class Zend_Validate_Ip implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (!ip2long($value)) {
-            $this->_messages[] = "'$value' does not appear to be a valid IP address";
+
+        $valueString = (string) $value;
+
+        if (!ip2long($valueString)) {
+            $this->_messages[] = "'$valueString' does not appear to be a valid IP address";
             return false;
         }
+
         return true;
     }
 

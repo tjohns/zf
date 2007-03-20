@@ -45,6 +45,6 @@ class Zend_Filter_StringToLower implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return strtolower($value);
+        return strtolower((string) $value);
     }
 }

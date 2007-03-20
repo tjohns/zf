@@ -47,22 +47,24 @@ class Zend_Validate_Date implements Zend_Validate_Interface
      *
      * Returns true if and only if $value is a valid date of the format YYYY-MM-DD
      *
-     * @param  mixed $value
+     * @param  string $value
      * @return boolean
      */
     public function isValid($value)
     {
         $this->_messages = array();
 
-        if (!preg_match('/\d{4}-\d{2}-\d{2}/', $value)) {
-            $this->_messages[] = "'$value' is not of the format YYYY-MM-DD";
+        $valueString = (string) $value;
+
+        if (!preg_match('/\d{4}-\d{2}-\d{2}/', $valueString)) {
+            $this->_messages[] = "'$valueString' is not of the format YYYY-MM-DD";
             return false;
         }
 
-        list($year, $month, $day) = sscanf($value, '%d-%d-%d');
+        list($year, $month, $day) = sscanf($valueString, '%d-%d-%d');
 
         if (!checkdate($month, $day, $year)) {
-            $this->_messages[] = "'$value' does not appear to be a valid date";
+            $this->_messages[] = "'$valueString' does not appear to be a valid date";
             return false;
         }
 

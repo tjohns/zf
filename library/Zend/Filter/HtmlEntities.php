@@ -116,6 +116,6 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return htmlentities($value, $this->_quoteStyle, $this->_charSet);
+        return htmlentities((string) $value, $this->_quoteStyle, $this->_charSet);
     }
 }

@@ -53,10 +53,14 @@ class Zend_Validate_Alpha implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (!ctype_alpha($value)) {
-            $this->_messages[] = "'$value' has not only alphabetic characters";
+
+        $valueString = (string) $value;
+
+        if (!ctype_alpha($valueString)) {
+            $this->_messages[] = "'$valueString' has not only alphabetic characters";
             return false;
         }
+
         return true;
     }
 

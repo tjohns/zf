@@ -53,8 +53,11 @@ class Zend_Validate_Digits implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (!ctype_digit((string) $value)) {
-            $this->_messages[] = "'$value' contains not only digit characters";
+
+        $valueString = (string) $value;
+
+        if (!ctype_digit($valueString)) {
+            $this->_messages[] = "'$valueString' contains not only digit characters";
             return false;
         }
         return true;

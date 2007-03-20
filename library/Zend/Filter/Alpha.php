@@ -45,6 +45,6 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return preg_replace('/[^[:alpha:]]/', '', $value);
+        return preg_replace('/[^[:alpha:]]/', '', (string) $value);
     }
 }

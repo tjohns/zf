@@ -45,6 +45,6 @@ class Zend_Filter_Dir implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return dirname($value);
+        return dirname((string) $value);
     }
 }

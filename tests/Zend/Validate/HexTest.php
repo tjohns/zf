@@ -68,8 +68,8 @@ class Zend_Validate_HexTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $valuesExpected = array(
-            array(1, false),
-            array(0x1, false),
+            array(1, true),
+            array(0x1, true),
             array(0x123, true),
             array('1', true),
             array('abc123', true),
@@ -79,7 +79,7 @@ class Zend_Validate_HexTest extends PHPUnit_Framework_TestCase
             array('1.2', false)
             );
         foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $this->_validator->isValid($element[0]));
+            $this->assertEquals($element[1], $this->_validator->isValid($element[0]), $element[0]);
         }
     }
 

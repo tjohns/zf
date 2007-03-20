@@ -53,10 +53,14 @@ class Zend_Validate_Hex implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (!ctype_xdigit($value)) {
-            $this->_messages[] = "'$value' has not only hexadecimal digit characters";
+
+        $valueString = (string) $value;
+
+        if (!ctype_xdigit($valueString)) {
+            $this->_messages[] = "'$valueString' has not only hexadecimal digit characters";
             return false;
         }
+
         return true;
     }
 

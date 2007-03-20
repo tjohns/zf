@@ -45,6 +45,6 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return preg_replace('/[^[:alnum:]]/', '', $value);
+        return preg_replace('/[^[:alnum:]]/', '', (string) $value);
     }
 }

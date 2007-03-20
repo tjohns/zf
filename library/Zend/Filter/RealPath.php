@@ -40,11 +40,11 @@ class Zend_Filter_RealPath implements Zend_Filter_Interface
      *
      * Returns realpath($value)
      *
-     * @param  mixed $value
+     * @param  string $value
      * @return string
      */
     public function filter($value)
     {
-        return realpath($value);
+        return realpath((string) $value);
     }
 }

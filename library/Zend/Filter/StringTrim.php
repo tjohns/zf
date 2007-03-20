@@ -89,9 +89,9 @@ class Zend_Filter_StringTrim implements Zend_Filter_Interface
     public function filter($value)
     {
         if (null === $this->_charList) {
-            return trim($value);
+            return trim((string) $value);
         } else {
-            return trim($value, $this->_charList);
+            return trim((string) $value, $this->_charList);
         }
     }
 }

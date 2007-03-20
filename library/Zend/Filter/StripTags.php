@@ -168,7 +168,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
         $dataFiltered = '';
         // Parse the input data iteratively as regular pre-tag text followed by a
         // tag; either may be empty strings
-        preg_match_all('/([^<]*)(<?[^>]*>?)/s', $value, $matches);
+        preg_match_all('/([^<]*)(<?[^>]*>?)/s', (string) $value, $matches);
         // Iterate over each set of matches
         foreach ($matches[1] as $index => $preTag) {
             // If the pre-tag text is non-empty, strip any ">" characters from it

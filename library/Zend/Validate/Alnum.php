@@ -53,10 +53,14 @@ class Zend_Validate_Alnum implements Zend_Validate_Interface
     public function isValid($value)
     {
         $this->_messages = array();
-        if (!ctype_alnum($value)) {
-            $this->_messages[] = "'$value' has not only alphabetic and digit characters";
+
+        $valueString = (string) $value;
+
+        if (!ctype_alnum($valueString)) {
+            $this->_messages[] = "'$valueString' has not only alphabetic and digit characters";
             return false;
         }
+
         return true;
     }
 

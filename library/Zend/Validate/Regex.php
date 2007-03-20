@@ -52,7 +52,7 @@ class Zend_Validate_Regex implements Zend_Validate_Interface
     /**
      * Sets validator options
      *
-     * @param  mixed $pattern
+     * @param  string $pattern
      * @return void
      */
     public function __construct($pattern)
@@ -73,7 +73,7 @@ class Zend_Validate_Regex implements Zend_Validate_Interface
     /**
      * Sets the pattern option
      *
-     * @param  mixed $pattern
+     * @param  string $pattern
      * @return Zend_Validate_Regex Provides a fluent interface
      */
     public function setPattern($pattern)
@@ -87,23 +87,26 @@ class Zend_Validate_Regex implements Zend_Validate_Interface
      *
      * Returns true if and only if $value matches against the pattern option
      *
-     * @param  mixed $value
+     * @param  string $value
      * @throws Zend_Validate_Exception if there is a fatal error in pattern matching
      * @return boolean
      */
     public function isValid($value)
     {
         $this->_messages = array();
-        $status = @preg_match($this->_pattern, $value);
+
+        $valueString = (string) $value;
+
+        $status = @preg_match($this->_pattern, $valueString);
         if (false === $status) {
             /**
              * @see Zend_Validate_Exception
              */
             require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception("Internal error matching pattern '$this->_pattern' against value '$value'");
+            throw new Zend_Validate_Exception("Internal error matching pattern '$this->_pattern' against value '$valueString'");
         }
         if (!$status) {
-            $this->_messages[] = "'$value' does not match against pattern '$this->_pattern'";
+            $this->_messages[] = "'$valueString' does not match against pattern '$this->_pattern'";
             return false;
         }
         return true;

@@ -54,13 +54,15 @@ class Zend_Validate_Int implements Zend_Validate_Interface
     {
         $this->_messages = array();
 
+        $valueString = (string) $value;
+
         $locale = localeconv();
 
-        $valueFiltered = str_replace($locale['decimal_point'], '.', $value);
+        $valueFiltered = str_replace($locale['decimal_point'], '.', $valueString);
         $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
 
         if (strval(intval($valueFiltered)) != $valueFiltered) {
-            $this->_messages[] = "'$value' does not appear to be an integer";
+            $this->_messages[] = "'$valueString' does not appear to be an integer";
             return false;
         }
 
