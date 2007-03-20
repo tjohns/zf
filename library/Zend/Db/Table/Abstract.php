@@ -400,6 +400,8 @@ abstract class Zend_Db_Table_Abstract
 
         if (strpos($this->_name, '.')) {
             list($schemaName, $tableName) = explode('.', $this->_name);
+            $this->_schema = $schemaName;
+            $this->_name = $tableName;
         } else {
             $schemaName = $this->_schema;
             $tableName = $this->_name;
@@ -507,13 +509,17 @@ abstract class Zend_Db_Table_Abstract
             }
             switch ($map[self::ON_UPDATE]) {
                 case self::CASCADE:
+                    $newRefs = array();
                     for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
+                        if (array_key_exists($map[self::REF_COLUMNS][$i], $newPrimaryKey)) {
+                            $newRefs[$map[self::COLUMNS][$i]] = $newPrimaryKey[$map[self::REF_COLUMNS][$i]];
+                        }
                         $where[] = $this->_db->quoteInto(
                             $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
                             $oldPrimaryKey[$map[self::REF_COLUMNS][$i]]
                         );
                     }
-                    $rowsAffected += $this->update($newPrimaryKey, $where); 
+                    $rowsAffected += $this->update($newRefs, $where); 
                     break;
                 case self::NO_ACTION:
                 case self::RESTRICT:

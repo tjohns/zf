@@ -122,11 +122,7 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Specified column \"$key\" is not in the row");
         }
 
-        if (isset($this->_data[$key]) && $this->_data[$key] !== null) {
-            return $this->_data[$key];
-        }
-
-        return null;
+        return $this->_data[$key];
     }
 
     /**
@@ -185,6 +181,7 @@ abstract class Zend_Db_Table_Row_Abstract
     public function __wakeup()
     {
         $this->_connected = false;
+        $this->_cleanData = $this->_data;
     }
 
     /**
@@ -200,10 +197,6 @@ abstract class Zend_Db_Table_Row_Abstract
         if ($table == null) {
             $this->_table = null;
             $this->_connected = false;
-            return false;
-        }
-
-        if ($table->getAdapter() == null) {
             return false;
         }
 
@@ -275,7 +268,7 @@ abstract class Zend_Db_Table_Row_Abstract
             }
         } else {
             // has a primary key value, update only that key.
-            $where = $this->_getWhereQuery();
+            $where = $this->_getWhereQuery(false);
 
             // apply any built-in logic for row update
             $this->_update();
@@ -284,13 +277,13 @@ abstract class Zend_Db_Table_Row_Abstract
             $depTables = $this->_getTable()->getDependentTables();
             if (!empty($depTables)) {
                 $db = $this->_getTable()->getAdapter();
-                $pkNew = $this->_getPrimaryKey();
+                $pkNew = $this->_getPrimaryKey(true);
                 $pkOld = $this->_getPrimaryKey(false);
                 $thisClass = get_class($this);
                 foreach ($depTables as $tableClass) {
                     Zend_Loader::loadClass($tableClass);
                     $t = new $tableClass(array('db' => $db));
-                    $t->_cascadeUpdate($thisClass, $pkOld, $pkNew);
+                    $t->_cascadeUpdate($this->getTableClass(), $pkOld, $pkNew);
                 }
             }
 
@@ -398,10 +391,11 @@ abstract class Zend_Db_Table_Row_Abstract
      *
      * @return array
      */
-    protected function _getWhereQuery()
+    protected function _getWhereQuery($dirty = true)
     {
+        $where = array();
         $db = $this->_getTable()->getAdapter();
-        $keys = $this->_getPrimaryKey();
+        $keys = $this->_getPrimaryKey($dirty);
 
         // retrieve recently updated row using primary keys
         foreach ($keys as $key => $val) {
@@ -419,6 +413,12 @@ abstract class Zend_Db_Table_Row_Abstract
     protected function _refresh()
     {
         $where = $this->_getWhereQuery();
+        $row = $this->_getTable()->fetchRow($where);
+        
+        if (null === $row) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception('Cannot refresh row as parent is missing');
+        }
 
         $this->_data = $this->_getTable()->fetchRow($where)->toArray();
         $this->_cleanData = $this->_data;
