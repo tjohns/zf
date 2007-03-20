@@ -55,7 +55,7 @@ $value = Zend_Registry::get('index');
         </example>
 
         <para>
-            Si vous appelez <code>get()</code> sans arguments, la méthode retourne l'objet registre en entier. La méthode <code>getInstance()</code> retourne aussi l'objet registre en entier.
+            La méthode <code>getInstance()</code> retourne l'objet registre en entier.
         </para>
 
         <para>
@@ -66,7 +66,7 @@ $value = Zend_Registry::get('index');
             <title>Exemple d'itération du registre</title>
             <programlisting role="php"><![CDATA[<?php
 
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "Le registre index $index contient :\n";
@@ -97,9 +97,7 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example">
             <title>Exemple de construction d'un registre</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = new Zend_Registry(array('index' => $value));
-
 ?>]]></programlisting>
         </example>
 
@@ -110,11 +108,9 @@ $registry = new Zend_Registry(array('index' => $value));
         <example id="zend.registry.using.constructing.example-setinstance">
             <title>Exemple d'initialisation d'un registre statique</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = new Zend_Registry(array('index' => $value));
 
 Zend_Registry::setInstance($registry);
-
 ?>]]></programlisting>
         </example>
 
@@ -135,13 +131,11 @@ Zend_Registry::setInstance($registry);
         <example id="zend.registry.using.array-access.example">
             <title>Exemple d'accès de type tableau</title>
             <programlisting role="php"><![CDATA[<?php
-
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
 var_dump( $registry['index'] );
-
 ?>]]></programlisting>
         </example>
 
@@ -152,7 +146,7 @@ var_dump( $registry['index'] );
         <title>Accéder au registre comme à un objet</title>
 
         <para>
-            Vous pouvez trouver aussi intéressant d'accéder au registre d'une manière orientée objet en utilisant les noms d'index comme des propriétés d'objet. Pour cela, vous devez spécifier au constructeur du registre l'option <code>ArrayObject::ARRAY_AS_PROPS</code> et initialiser l'instance statique. Vous devez faire ceci avant d'accéder au registre statique.
+            Vous pouvez trouver aussi intéressant d'accéder au registre d'une manière orientée objet en utilisant les noms d'index comme des propriétés d'objet. Pour cela, vous devez spécifier au constructeur du registre l'option <code>ArrayObject::ARRAY_AS_PROPS</code> et initialiser l'instance statique. Vous devez faire ceci avant d'accéder au registre statique. <emphasis role="strong">Attention</emphasis> en utilisant cette option, puisque certaines versions de PHP ont des bugs quand il utilise le registre avec cette option.
         </para>
 
         <example id="zend.registry.using.array-object.example">
@@ -162,10 +156,12 @@ var_dump( $registry['index'] );
 // Dans votre fichier de lancement de l'application 
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
+$registry->tree='apple';
 
 // Ailleurs dans l'application
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
+echo $registry->tree; // affiche 'apple'
 $registry->index = $value;
 
 var_dump($registry->index);
@@ -202,7 +198,7 @@ if (Zend_Registry::isRegistered($index)) {
             <title>Exemple avec la méthode isset()</title>
             <programlisting role="php"><![CDATA[<?php
 
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 // En utilisant la syntaxe de type tableau
 if (isset($registry['index'])) {
