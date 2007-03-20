@@ -26,11 +26,15 @@
  */
 require_once 'Zend/Environment/Module/Abstract.php';
 
-
 /**
  * Zend_Environment_Security_Field
  */
 require_once 'Zend/Environment/Security/Field.php';
+
+/**
+ * Zend_Loader
+ */
+require_once 'Zend/Loader.php';
 
 
 /**
@@ -95,7 +99,7 @@ class Zend_Environment_Module_Security extends Zend_Environment_Module_Abstract
                 if (!is_dir($this_dir->path.DIRECTORY_SEPARATOR.$entry)
                 && preg_match('/[A-Za-z]+\.php/i', $entry)) {
                     $className = "Zend_Environment_Security_Test_".$test_dir."_".basename($entry, '.php');
-                    Zend::loadClass($className);
+                    Zend_Loader::loadClass($className);
                     $classNames[] = $className;
                 }
             }
