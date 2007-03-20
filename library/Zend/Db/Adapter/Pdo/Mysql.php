@@ -97,7 +97,7 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
     {
         $result = array();
         try {
-            $stmt = $this->query("DESCRIBE INFORMATION_SCHEMA.TABLES");
+            $stmt = $this->query('DESCRIBE INFORMATION_SCHEMA.TABLES');
             $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         } catch (Exception $e) {
             // fallthrough
@@ -107,16 +107,22 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
             return $this->_describeTableInformationSchema($tableName, $schemaName);
         }
 
-        $sql = "DESCRIBE $tableName";
+        if ($schemaName) {
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier($schemaName)
+                . '.' . $this->quoteIdentifier($tableName);
+        } else {
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName);
+        }
+        $stmt = $this->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+        $desc = array();
+
         $row_defaults = array(
             'length'    => null,
             'scale'     => null,
             'precision' => null,
             'unsigned'  => null
         );
-        $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
-        $desc = array();
         $i = 1;
         $p = 1;
         foreach ($result as $key => $row) {

@@ -607,10 +607,10 @@ abstract class Zend_Db_Adapter_Abstract
               ON (c.table_schema = k.table_schema
                 AND c.table_name = k.table_name
                 AND c.column_name = k.column_name)
-            WHERE c.table_name = '$tableName'";
+            WHERE c.table_name = ".$this->quote($tableName);
 
         if ($schemaName != null) {
-            $sql .= " AND c.table_schema = '$schemaName'";
+            $sql .= " AND c.table_schema = ".$this->quote($schemaName);
         }
 
         $stmt = $this->query($sql);

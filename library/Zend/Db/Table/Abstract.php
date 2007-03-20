@@ -68,6 +68,13 @@ abstract class Zend_Db_Table_Abstract
     protected $_db;
 
     /**
+     * The schema name (default null means current schema)
+     *
+     * @var array
+     */
+    protected $_schema = null;
+
+    /**
      * The table name derived from the class name (underscore format).
      *
      * @var array
@@ -90,6 +97,13 @@ abstract class Zend_Db_Table_Abstract
      * @var string
      */
     protected $_primary = 'id';
+
+    /**
+     * Information provided by the adapter's describeTable() method.
+     *
+     * @var array
+     */
+    protected $_describeTable = array();
 
     /**
      * Default classname for row
@@ -324,12 +338,28 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Populate static properties for this table module.
+     * Turnkey for initialization of a table object.
+     * Calls other protected methods for individual tasks, to make it easier
+     * for a subclass to override part of the setup logic.
      *
      * @return void
      * @throws Zend_Db_Table_Exception
      */
     protected function _setup()
+    {
+        $this->_setupDatabaseAdapter();
+        $this->_setupTableName();
+        $this->_setupMetadata();
+        $this->_setupPrimaryKey();
+    }
+
+    /**
+     * Initialize database adapter.
+     *
+     * @return void
+     * @throws Zend_Db_Table_Exception
+     */
+    protected function _setupDatabaseAdapter()
     {
         // get the database adapter
         if (! $this->_db) {
@@ -340,21 +370,68 @@ abstract class Zend_Db_Table_Abstract
             require_once 'Zend/Db/Table/Exception.php';
             throw new Zend_Db_Table_Exception('No object of type Zend_Db_Adapter_Abstract has been specified');
         }
+    }
 
-        // get the table name
+    /**
+     * Initialize table name.
+     * If the table name is not set in the class definition,
+     * use the class name itself as the table name.
+     *
+     * @return void
+     * @throws Zend_Db_Table_Exception
+     */
+    protected function _setupTableName()
+    {
         if (! $this->_name) {
-            require_once 'Zend/Db/Table/Exception.php';
-            throw new Zend_Db_Table_Exception('No table name has been specified');
+            $this->_name = get_class($this);
         }
+    }
         
-        // get the table columns
-        if (! $this->_cols) {
-            $desc = $this->_db->describeTable($this->_name);
-            $this->_cols = array_keys($desc);
+    /**
+     * Initialize metadata.
+     * Call describeTable() to discover metadata information.
+     *
+     * @return void
+     * @throws Zend_Db_Table_Exception
+     */
+    protected function _setupMetadata()
+    {
+        // @todo: support for caching the information from describeTable.
+
+        if (strpos($this->_name, '.')) {
+            list($schemaName, $tableName) = explode('.', $this->_name);
+        } else {
+            $schemaName = $this->_schema;
+            $tableName = $this->_name;
         }
 
-        // primary key
-        if ($this->_primary && array_intersect((array) $this->_primary, $this->_cols) !== (array) $this->_primary) {
+        $this->_describeTable = $this->_db->describeTable($tableName, $schemaName);
+
+        if (! $this->_cols) {
+            $this->_cols = array_keys($this->_describeTable);
+        }
+    }
+
+    /**
+     * Initialize primary key from metadata.
+     * If $_primary is not defined, discover primary keys
+     * from the information returned by describeTable().
+     *
+     * @return void
+     * @throws Zend_Db_Table_Exception
+     */
+    protected function _setupPrimaryKey()
+    {
+        if (!$this->_primary) {
+            foreach ($this->_describeTable as $desc) {
+                if ($desc['PRIMARY']) {
+                    $this->_primary[ $desc['PRIMARY_POSITION'] ] = $desc['COLUMN_NAME'];
+                }
+            }
+            return;
+        }
+
+        if (! array_intersect((array) $this->_primary, $this->_cols) == (array) $this->_primary) {
             require_once 'Zend/Db/Table/Exception.php';
             throw new Zend_Db_Table_Exception("Primary key column(s) ("
                 . implode(',', (array) $this->_primary)
