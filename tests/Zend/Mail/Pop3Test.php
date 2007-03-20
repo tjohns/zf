@@ -375,4 +375,30 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
         $this->fail('no exception while getting number for invalid id');
     }
+
+    public function testReadAfterClose()
+    {
+        $protocol = new Zend_Mail_Protocol_Pop3($this->_params['host']);
+        $protocol->logout();
+
+        try {
+            $protocol->readResponse();
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception while reading from closed socket');
+    }
+
+    public function testRemove()
+    {
+        $mail = new Zend_Mail_Storage_Pop3($this->_params);
+        $count = $mail->countMessages();
+
+        $mail->removeMessage(1);
+        $this->assertEquals($mail->countMessages(), --$count);
+
+        unset($mail[2]);
+        $this->assertEquals($mail->countMessages(), --$count);
+    }
 }

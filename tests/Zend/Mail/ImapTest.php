@@ -712,4 +712,103 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         }
         $this->fail('should not be able to set recent flag');
     }
+
+    public function testCapability()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $capa = $protocol->capability();
+        $this->assertTrue(is_array($capa));
+        $this->assertEquals($capa[0], 'CAPABILITY');
+    }
+
+    public function testSelect()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $status = $protocol->select('INBOX');
+        $this->assertTrue(is_array($status['flags']));
+        $this->assertEquals($status['exists'], 6);
+    }
+
+
+    public function testExamine()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $status = $protocol->examine('INBOX');
+        $this->assertTrue(is_array($status['flags']));
+        $this->assertEquals($status['exists'], 6);
+    }
+
+    public function testClosedSocketNewlineToken()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $protocol->logout();
+
+        try {
+            $protocol->select("foo\nbar");
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no exception while using procol with closed socket');
+    }
+
+    public function testEscaping()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap();
+        $this->assertEquals($protocol->escapeString('foo'), '"foo"');
+        $this->assertEquals($protocol->escapeString('f\\oo'), '"f\\\\oo"');
+        $this->assertEquals($protocol->escapeString('f"oo'), '"f\\"oo"');
+        $this->assertEquals($protocol->escapeString('foo', 'bar'), array('"foo"', '"bar"'));
+        $this->assertEquals($protocol->escapeString("f\noo"), array('{4}', "f\noo"));
+        $this->assertEquals($protocol->escapeList(array('foo')), '(foo)');
+        $this->assertEquals($protocol->escapeList(array(array('foo'))), '((foo))');
+        $this->assertEquals($protocol->escapeList(array('foo', 'bar')), '(foo bar)');
+    }
+
+    public function testFetch()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $protocol->select('INBOX');
+
+        $range = array_combine(range(1, 6), range(1, 6));
+        $this->assertEquals($protocol->fetch('UID', 1, INF), $range);
+        $this->assertEquals($protocol->fetch('UID', 1, 6), $range);
+        $this->assertEquals($protocol->fetch('UID', range(1, 6)), $range);
+        $this->assertTrue(is_numeric($protocol->fetch('UID', 1)));
+
+        $result = $protocol->fetch(array('UID', 'FLAGS'), 1, INF);
+        foreach ($result as $k => $v) {
+            $this->assertEquals($k, $v['UID']);
+            $this->assertTrue(is_array($v['FLAGS']));
+        }
+
+        try {
+            $protocol->fetch('UID', 99);
+        } catch (Exception $e) {
+            return; // ok
+        }
+        $this->fail('no exception while fetching message');
+    }
+
+    public function testStore()
+    {
+        $protocol = new Zend_Mail_Protocol_Imap($this->_params['host']);
+        $protocol->login($this->_params['user'], $this->_params['password']);
+        $protocol->select('INBOX');
+
+        $this->assertTrue($protocol->store(array('\Flagged'), 1));
+        $this->assertTrue($protocol->store(array('\Flagged'), 1, null, '-'));
+        $this->assertTrue($protocol->store(array('\Flagged'), 1, null, '+'));
+
+        $result = $protocol->store(array('\Flagged'), 1, null, '', false);
+        $this->assertTrue(in_array('\Flagged', $result[1]));
+        $result = $protocol->store(array('\Flagged'), 1, null, '-', false);
+        $this->assertFalse(in_array('\Flagged', $result[1]));
+        $result = $protocol->store(array('\Flagged'), 1, null, '+', false);
+        $this->assertTrue(in_array('\Flagged', $result[1]));
+    }
 }
