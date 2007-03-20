@@ -581,7 +581,7 @@ abstract class Zend_Db_Table_Abstract
     {
         $data  = array(
             'table'    => $this,
-            'data'     => $this->_fetch('All', $where, $order, $count, $offset),
+            'data'     => $this->_fetch($where, $order, $count, $offset),
             'rowclass' => $this->_rowClass
         );
 
@@ -590,13 +590,13 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Fetches one row.
-     *
-     * Honors the Zend_Db_Adapter_Abstract fetch mode.
+     * Fetches one row in an object of type Zend_Db_Table_Row_Abstract,
+     * or returns Boolean false if no row matches the specified criteria.
      *
      * @param string|array $where         OPTIONAL An SQL WHERE clause.
      * @param string|array $order         OPTIONAL An SQL ORDER clause.
-     * @return Zend_Db_Table_Row_Abstract The row results per the Zend_Db_Adapter fetch mode.
+     * @return Zend_Db_Table_Row_Abstract|null The row results per the
+     *     Zend_Db_Adapter fetch mode, or false if no row found.
      */
     public function fetchRow($where = null, $order = null)
     {
@@ -604,19 +604,15 @@ abstract class Zend_Db_Table_Abstract
         $vals    = array_fill(0, count($keys), null);
         $primary = array_combine($keys, $vals);
 
-        $row = $this->_fetch('Row', $where, $order, 1);
+        $rows = $this->_fetch($where, $order, 1);
 
-        $values = array_filter(array_intersect_key((array) $row, $primary));
-
-        // @todo is this the right thing to do?
-        // How can we tell that the query was unsuccessful?
-        if (empty($values)) {
-            return $this->fetchNew();
+        if (count($rows) == 0) {
+            return null;
         }
 
         $data = array(
             'table'   => $this,
-            'data'    => $row
+            'data'    => $rows[0]
         );
 
         Zend_Loader::loadClass($this->_rowClass);
@@ -647,14 +643,13 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Support method for fetching rows.
      *
-     * @param string       $type   Whether to fetch 'all' or 'row'.
      * @param string|array $where  OPTIONAL An SQL WHERE clause.
      * @param string|array $order  OPTIONAL An SQL ORDER clause.
      * @param int          $count  OPTIONAL An SQL LIMIT count.
      * @param int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return mixed               The row results per the Zend_Db_Adapter fetch mode.
+     * @return array               The row results, in FETCH_ASSOC mode.
      */
-    protected function _fetch($type, $where = null, $order = null,
+    protected function _fetch($where = null, $order = null,
         $count = null, $offset = null)
     {
         // selection tool
@@ -689,11 +684,8 @@ abstract class Zend_Db_Table_Abstract
         $select->limit($count, $offset);
 
         // return the results
-        $method = "fetch$type";
-        $mode = $this->_db->getFetchMode();
-        $this->_db->setFetchMode(Zend_Db::FETCH_ASSOC);
-        $data = $this->_db->$method($select);
-        $this->_db->setFetchMode($mode);
+        $stmt = $this->_db->query($select);
+        $data = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         return $data;
     }
 
