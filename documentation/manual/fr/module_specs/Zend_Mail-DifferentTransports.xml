@@ -1,4 +1,4 @@
-<sect1 id="zend.mail.different-transports">
+﻿<sect1 id="zend.mail.different-transports">
     <title>Utiliser différents transports</title>
     <para>
         Au cas où vous voudriez envoyer différent emails via des connexions différentes, vous pouvez aussi passer l'objet
@@ -21,7 +21,7 @@ $mail->send();  // utilisation du transport par défaut
 ?>]]>   </programlisting>
     </example>
     <note>
-        <title>Additional transports</title>
+        <title>Transports additionels</title>
         <para>
             Des transports additionnels peuvent-être écrit en implémentant <code>Zend_Mail_Transport_Interface</code>.
         </para>

@@ -1,4 +1,4 @@
-<sect1 id="zend.mail.introduction">
+﻿<sect1 id="zend.mail.introduction">
     <title>Introduction</title>
     <para>
         <code>Zend_Mail</code> fournit des fonctionnalités génériques pour écrire et envoyer des emails au format texte et MIME.
@@ -24,7 +24,7 @@
        </para>
     </example>
     <note>
-        <title>Minimum definitions</title>
+        <title>Définitions minimales</title>
         <para>
             Pour envoyer un email avec <code>Zend_Mail</code>, vous devez spécifier au moins un destinataire, un expéditeur
             (avec <code>setFrom()</code>), et un message (text et/ou HTML).

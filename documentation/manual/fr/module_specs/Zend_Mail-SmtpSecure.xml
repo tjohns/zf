@@ -1,32 +1,27 @@
-<sect1 id="zend.mail.smtp-secure">
-  <title>Securing SMTP Transport</title>
+﻿<sect1 id="zend.mail.smtp-secure">
+  <title>Sécuriser les transports SMTP</title>
 
-  <para><code>Zend_Mail</code> also supports the use of either TLS or SSL to
-  secure a SMTP connection. This can be enabled be passing the 'ssl' parameter
-  to the configuration array in the <code>Zend_Mail_Transport_Smtp</code>
-  constructor with a value of either 'ssl' or 'tls'. A port can optionally be
-  supplied, otherwise it defaults to 25 for TLS or 465 for SSL.</para>
+  <para><code>Zend_Mail</code> supporte aussi l'utilisation des connections SMTP sécurisées via TLSS ou SSL. Ceci peut être activé en passant le paramètre 'ssl' ou 'tls' au tableau de configuration du constructeur de <code>Zend_Mail_Transport_Smtp</code>. Un port peut optionnellement être fourni, sinon il vaut par défaut 25 pour TLS et 465 pour SSL.</para>
 
   <example>
-    <title>Enabling a secure connection within
-    Zend_Mail_Transport_Smtp</title>
+    <title>Activer une connection securisée dans Zend_Mail_Transport_Smtp</title>
 
-    <programlisting role="php">&lt;?php
-
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
 
-$config = array('ssl' =&gt; 'tls',
-                'port' =&gt; 25); // Optional port number supplied
+$config = array('ssl' => 'tls',
+                'port' => 25); // Port optionel fourni
 
 $transport = new Zend_Mail_Transport_Smtp('mail.server.com', $config);
 
 $mail = new Zend_Mail();
-$mail-&gt;setBodyText('This is the text of the mail.');
-$mail-&gt;setFrom('sender@test.com', 'Some Sender');
-$mail-&gt;addTo('recipient@test.com', 'Some Recipient');
-$mail-&gt;setSubject('TestSubject');
-$mail-&gt;send($transport);</programlisting>
+$mail->setBodyText('Ceci est le texte de l\'email.');
+$mail->setFrom('emetteur@test.com', 'Un émetteur');
+$mail->addTo('destinataire@test.com', 'Un destinataire');
+$mail->setSubject('Sujet de test');
+$mail->send($transport);
+?>]]></programlisting>
   </example>
 </sect1>
 <!--
