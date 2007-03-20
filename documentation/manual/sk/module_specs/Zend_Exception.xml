@@ -1,14 +1,14 @@
 <sect1 id="zend.exception.using">
 
-    <title>Using Exceptions</title>
+    <title>Používanie výnimiek</title>
 
     <para>
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
+        Všetky výnimky generované triedami Zend Framework mali by byť
+        odvodené od základnej triedy Zend_Exception.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Example of catching an exception</title>
+        <title>Príklad odchytenia výnimky</title>
         <programlisting role="php"><![CDATA[<?php
 
 try {
@@ -23,10 +23,10 @@ try {
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework 
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
+        Ku každej časti Zend Framework sú v dokumentácii uvedené
+        informácie o metódach ktoré používajú výnimky, informácie
+        o dôvodoch generovania výnimiek a názvy tried ktoré sú
+        odvodené od Zend_Exception.
     </para>
 
 </sect1>

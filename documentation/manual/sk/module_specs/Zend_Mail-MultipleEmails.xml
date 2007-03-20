@@ -1,13 +1,13 @@
 <sect1 id="zend.mail.multiple-emails">
-    <title>Sending Multiple Mails per SMTP Connection</title>
+    <title>Posielanie viacerých e-mailov cez jedno SMTP spojenie</title>
     <para>
-        By default, an SMTP connection is established for every e-mail that is sent. If you want to send
-        multiple e-mails through one SMTP connection, you can handle the <code>connect()</code> yourself. If the
-        transport has already established a connection before <code>send()</code> is called, it will be used
-        and will not be closed:
+        Pre každý posielaný e-mail je vždy vytvorené nové SMTP spojenie. Pre posielanie viacerých e-mailov cez jedno
+        SMTP spojenie je potrebné zmeniť správanie pri vytváraní spojenia (<code>connect()</code>). Ak už bude
+        vytvorené SMTP spojenie pred zavolaním metódy <code>send()</code>, toto spojenie bude použité
+        a nebude po odoslaní e-mailu uzatvorené: 
     </para>
     <example>
-        <title>Sending Multiple Mails per SMTP Connection</title>
+        <title>Posielanie viacerých e-mailov cez jedno SMTP spojenie</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';

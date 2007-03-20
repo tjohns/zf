@@ -1,16 +1,22 @@
 <sect1 id="zend.mail.character-sets">
-    <title>Character Sets</title>
+    <title>Znakové sady</title>
     <para>
         <code>Zend_Mail</code> does not check for the correct character set of the mail parts. When
         instantiating <code>Zend_Mail</code>, a charset for the e-mail itself may be given. It defaults to
         <code>iso-8859-1</code>. The application has to make sure that all parts added to that mail object 
         have their content encoded in the correct character set. When creating a new mail part, a different 
         charset can be given for each part.
+        
+        Trieda <code>Zend_Mail</code> nekontroluje správne nastavenie znakovej sady v jednotlivých častiach
+        e-mailu. Pri vytváraní inštancie <code>Zend_Mail</code> je možné nastaviť inú znakovú sadu ako
+        <code>iso-8859-1</code>, ktorá je ako východzia. Každá časť, ktorá je pridaná k vytvorenému objektu
+        musí mať správne nastavenú znakovú sadu. Pre každú časť MIME e-mailu je možné nastaviť inú
+        znakovú sadu.
     </para>
     <note>
-        <title>Only in text format</title>
+        <title>Iba pre textový obsah</title>
         <para>
-            Character sets are only applicable for message parts in text format.
+            Nastavenie znakovej sady je platné iba pre časti ktoré sú textové.
         </para>
     </note>
 </sect1>

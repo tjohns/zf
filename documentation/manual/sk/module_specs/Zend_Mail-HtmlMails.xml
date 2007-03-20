@@ -1,13 +1,12 @@
 <sect1 id="zend.mail.html-mails">
-    <title>HTML E-Mail</title>
+    <title>HTML e-mail</title>
     <para>
-        To send an e-mail in HTML format, set the body using the method <code>setBodyHTML()</code> instead of
-        <code>setBodyText()</code>. The MIME content type will automatically be set to <code>text/html</code>
-        then. If you use both HTML and Text bodies, a multipart/alternative MIME message will automatically be
-        generated:
+        Na poslanie e-mailu v HTML formáte je potrebné vytvoriť telo e-mailu pomocou metódy <code>setBodyHTML()</code>
+        na miesto metódy <code>setBodyText()</code>. Obsah bude automaticky označený ako <code>text/html</code>.
+        Ak sa vytvorí HTML a aj textová verzia e-mailu výsledný e-mail bude typu multipart/alternative:
     </para>
     <example>
-        <title>Sending HTML E-Mail</title>
+        <title>Vytvorenie a poslanie HTML e-mailu</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
