@@ -59,7 +59,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>lifeTime</code></entry>
+                              <entry><code>lifetime</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
                               <entry>
@@ -833,7 +833,7 @@ $cache->start();
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200,
+   'lifetime' => 7200,
    'debugHeader' => true, // for debuging 
    'regexps' => array(
        '^/$' => array('cache' => true),         // кэширование всего IndexController;         

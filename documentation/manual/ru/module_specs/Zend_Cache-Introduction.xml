@@ -49,7 +49,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // время жизни кэша - 2 часа 
+   'lifetime' => 7200, // время жизни кэша - 2 часа 
    'automaticSerialization' => true
 );
 
@@ -129,7 +129,7 @@ print_r($result);
        <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // время жизни кэша - половина минуты
+   'lifetime' => 30,                  // время жизни кэша - половина минуты
    'automaticSerialization' => false  // уже установлено по умолчанию
 );
 
