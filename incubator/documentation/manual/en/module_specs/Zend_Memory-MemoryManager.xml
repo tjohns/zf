@@ -1,14 +1,147 @@
 <sect1 id="zend.memory.memory-manager">
-    <sect2 id="zend.memory.overview">
-        <title>Memory manager overview</title>
-            <para>
-            </para>
+    <title>Memory Manager</title>
+
+    <sect2 id="zend.memory.memory-manager.creation">
+        <title>Creation</title>
+
+        <para>
+            <code>Zend_Memory::factory($backendName [, $backendOprions])</code> method has to be used to create
+            new memory manager (<code>Zend_Memory_Manager</code> object).
+        </para>
+
+        <para>
+            <code>$backendName</code> is a string which represents backend name.
+        </para>
+
+        <para>
+            <code>$backendOprions</code> is an optional backend options array.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$backendOptions = array(
+    'cacheDir' => './tmp/' // Directory where to put the swapped memory blocks
+);
+
+$memoryManager = Zend_Memory::factory('File', $backendOptions);
+...
+]]></programlisting>
+
+        <para>
+            Zend_Memory uses <link linkend="zend.cache.backends">Zend_Cache backends</link> as storage providers.
+        </para>
+
+        <para>
+            Special name 'None' may be also used as backend name in addition to standard Zend_Cache backends.
+            <programlisting role="php"><![CDATA[
+$memoryManager = Zend_Memory::factory('None');
+]]></programlisting>
+        </para>
+
+        <para>
+            'None' backend doesn't need any options specified.
+        </para>
+
+        <para>
+            If 'None' is specified as backend name, then created memory manager never swaps memory blocks.
+        </para>
+
+        <para>
+            It's very useful if you know that memory is not limited or overall objects size never reaches memory limit.
+        </para>
     </sect2>
 
-    <sect2 id="zend.memory.properties">
-        <title>Memory manager properties</title>
+    <sect2 id="zend.memory.memory-manager.objects-management">
+        <title>Memory Objects Management</title>
+
+        <sect3 id="zend.memory.memory-manager.objects-management.creation">
+            <title>Objects Creation.</title>
+
+            <sect4 id="zend.memory.memory-manager.objects-management.movable">
+                <title>Movable Objects</title>
+
+                <para>
+                    Movable objects (objects, which may be swapped) are created with
+                    <code>Zend_Memory_Manager::create([$data])</code> method:
+                    <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->create($data);
+]]></programlisting>
+                </para>
+
+                <para>
+                    <code>$data</code> parameter is optional and used to initialize object value.
+                    Empty string is used if <code>$data</code> is omitted.
+                </para>
+            </sect4>
+
+            <sect4 id="zend.memory.memory-manager.objects-management.locked">
+                <title>Locked Objects</title>
+                <para>
+                    Locked objects (objects, which may be swapped) are created with
+                    <code>Zend_Memory_Manager::createLocked([$data])</code> method:
+                    <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->createLocked($data);
+]]></programlisting>
+                </para>
+
+                <para>
+                    <code>$data</code> parameter is optional and used to initialize object value.
+                    Empty string is used if <code>$data</code> is omitted.
+                </para>
+            </sect4>
+        </sect3>
+
+        <sect3 id="zend.memory.memory-manager.objects-management.destruction">
+            <title>Objects Destruction.</title>
+
             <para>
+                Memory objects are automatically destroyed and removed from memory, when they goes out of scope:
+                <programlisting role="php"><![CDATA[<?php
+
+function foo()
+{
+    global $memoryManager, $memList;
+
+    ...
+
+    $memObject1 = $memoryManager->create($data1);
+    $memObject2 = $memoryManager->create($data2);
+    $memObject3 = $memoryManager->create($data3);
+
+    ...
+
+    $memList[] = $memObject3;
+
+    ...
+
+    unset($memObject2); // $memObject2 is destroyed here
+
+    ...
+    // $memObject1 is destroyed here
+    // but $memObject2 object is still referenced by $memList and is not destroyed
+}
+
+]]></programlisting>
             </para>
+        </sect3>
     </sect2>
 
+    <sect2 id="zend.memory.memory-manager.settings">
+        <title>Settings</title>
+
+        <sect3 id="zend.memory.memory-manager.settings.memory-limit">
+            <title>Memory Limit</title>
+
+            <para>
+                ...
+            </para>
+        </sect3>
+
+        <sect3 id="zend.memory.memory-manager.settings.min-size">
+            <title>MinSize</title>
+
+            <para>
+                ...
+            </para>
+        </sect3>
+    </sect2>
 </sect1>

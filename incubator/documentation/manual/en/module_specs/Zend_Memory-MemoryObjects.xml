@@ -1,0 +1,17 @@
+<sect1 id="zend.memory.memory-objects">
+    <title>Memory Objects</title>
+
+    <sect2 id="zend.memory.memory-objects.movable">
+        <title>Movable</title>
+        <para>
+            ...
+        </para>
+    </sect2>
+
+    <sect2 id="zend.memory.memory-objects.locked">
+        <title>Locked</title>
+        <para>
+            ...
+        </para>
+    </sect2>
+</sect1>

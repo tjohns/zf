@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            Memory manager uses <link linkend="zend.cache.backends">Zend_Cache backends</link> as storage provider.
+            Memory manager uses <link linkend="zend.cache.backends">Zend_Cache backends</link> as storage providers.
         </para>
 
         <example>
@@ -50,15 +50,14 @@ $loadedFiles[$index2]->value = $newValue;
 ...
 $loadedFiles[$index3]->value[$charIndex] = '_';
 ...
-
-?>]]></programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.memory.theory-of-operation">
         <title>Theory of Operation</title>
         <para>
-            Zend_Memory component operates with following concepts:
+            Zend_Memory component operates with the following concepts:
             <itemizedlist>
                 <listitem>
                     <para>Memory manager</para>
@@ -86,7 +85,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         </para>
 
         <para>
-            User can operate with this <code>value</code> attribute as he/she prefere:
+            User can operate with this <code>value</code> attribute as he/she preferes:
             <programlisting role="php"><![CDATA[<?php
 $memObject = $memoryManager->create($data);
 ...
@@ -103,5 +102,19 @@ $memObject->value = substr($memObject->value, $start, $length);
 
 ?>]]></programlisting>
         </para>
+
+        <para>
+            Locked memory objects are always stored in memory.
+        </para>
+
+        <para>
+            Movable memory objects are transparently swapped and loaded to/from backend when it's necessary<footnote>
+            <para>
+                Memory manager doesn't swap objects less than specified size due to performance considerations.
+                See <link linkend="zend.memory.memory-manager.settings.min-size">Memory Manager Settings. MinSize.</link>
+                section for more details.
+            </para></footnote>.
+        </para>
     </sect2>
+
 </sect1>
