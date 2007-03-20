@@ -280,9 +280,7 @@ class Zend_Http_Client
      */
     public function setMethod($method = self::GET)
     {
-        $method = strtoupper($method);
-        
-        if (! defined('self::' . $method)) 
+        if (! preg_match('/^[A-Za-z_]+$/', $method)) 
             throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
         
         if ($method == self::POST && $this->enctype === null) 

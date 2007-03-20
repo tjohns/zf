@@ -275,4 +275,45 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good!
 		}
 	}
+	
+	/**
+	 * Check that we can set methods which are not documented in the RFC. 
+	 * Also, check that an exception is thrown if non-word characters are
+	 * used in the request method.
+	 *
+	 */
+	public function testSettingExtendedMethod()
+	{
+		$goodMethods = array(
+			'OPTIONS',
+			'POST',
+			'DOSOMETHING',
+			'PROPFIND',
+			'Some_Characters'
+		);
+		
+		foreach ($goodMethods as $method) {
+			try {
+				$this->client->setMethod($method);
+			} catch (Exception $e) {
+				$this->fail("An unexpected exception was thrown when setting request method to '{$method}'");
+			}
+		}
+		
+		$badMethods = array(
+			'N@5TYM3T#0D',
+			'TWO WORDS',
+			'GET http://foo.com/?',
+			"Injected\nnewline"
+		);
+		
+		foreach ($badMethods as $method) {
+			try {
+				$this->client->setMethod($method);
+				$this->fail("A Zend_Http_Client_Exception was expected but was not thrown when setting request method to '{$method}'");
+			} catch (Zend_Http_Client_Exception $e) {
+				// We're ok!
+			}
+		}
+	}
 }
