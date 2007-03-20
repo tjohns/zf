@@ -98,6 +98,12 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
         }
 
         $this->_state |= self::LOCKED;
+
+        /**
+         * @todo
+         * It's possible to set "value" container attribute to avoid modification tracing, while it's locked
+         * Check, if it's  more effective
+         */
     }
 
     /**
