@@ -78,6 +78,19 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
         return $sql;
     }
 
+    function getCreateTableSQLIntersection()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . "(
+            news_id     INT NOT NULL,
+            user_id     INT NOT NULL,
+            date_posted {$this->_textDataType}(100),
+            PRIMARY KEY (news_id, user_id, date_posted),
+            FOREIGN KEY (news_id) REFERENCES " . self::TABLE_NAME . '(news_id),
+            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
+        )';
+        return $sql;
+    }
+
     protected function tearDownMetadata()
     {
         $tables = $this->_db->fetchAll('SELECT TABNAME FROM SYSCAT.TABLES');
@@ -135,15 +148,15 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
+        $this->assertEquals("'St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
+        $this->assertEquals("'St John\\'s Wort'", $value);
 
         // quote an array
         $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
 
         // test numeric
         $value = $this->_db->quote('1');
@@ -160,11 +173,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
     {
         // test double quotes are fine
         $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quoteInto('id = ?', "St John's Wort");
-        $this->assertEquals("id = 'St John''s Wort'", $value);
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
     public function testQuoteIdentifier()
@@ -181,6 +194,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
 
         try {
             $db = new Zend_Db_Adapter_Db2('scalar');
+            $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
@@ -191,6 +205,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
             $p = $params;
             unset($p['password']);
             $db = new Zend_Db_Adapter_Db2($p);
+            $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
@@ -201,6 +216,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
             $p = $params;
             unset($p['username']);
             $db = new Zend_Db_Adapter_Db2($p);
+            $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
@@ -211,6 +227,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_Common
             $p = $params;
             unset($p['dbname']);
             $db = new Zend_Db_Adapter_Db2($p);
+            $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));

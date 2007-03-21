@@ -96,7 +96,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @var string
      */
-    protected $_primary = 'id';
+    protected $_primary = null;
 
     /**
      * Information provided by the adapter's describeTable() method.
@@ -165,6 +165,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @param  array $config Array of user-specified config options.
      * @throws Zend_Db_Table_Exception
+     * @throws Zend_Exception If Row or Rowset classes specified cannot be loaded.
      */
     public function __construct(array $config = array())
     {
@@ -218,10 +219,10 @@ abstract class Zend_Db_Table_Abstract
     /**
      * @param string $classname
      * @return void
+     * @throws Zend_Exception If $classname cannot be loaded.
      */
     public function setRowClass($classname)
     {
-        // @todo: confirm class is available or throw exception
         $this->_rowClass = $classname;
     }
 
@@ -236,10 +237,10 @@ abstract class Zend_Db_Table_Abstract
     /**
      * @param string $classname
      * @return void
+     * @throws Zend_Exception If $classname cannot be loaded.
      */
     public function setRowsetClass($classname)
     {
-        // @todo: confirm class is available or throw exception
         $this->_rowsetClass = $classname;
     }
 
@@ -430,7 +431,6 @@ abstract class Zend_Db_Table_Abstract
                     $this->_primary[ $desc['PRIMARY_POSITION'] ] = $desc['COLUMN_NAME'];
                 }
             }
-            return;
         }
 
         if (! array_intersect((array) $this->_primary, $this->_cols) == (array) $this->_primary) {
@@ -450,12 +450,16 @@ abstract class Zend_Db_Table_Abstract
      */
     public function info()
     {
-        // @todo add more info
-        // like _referenceMap, etc.
         return array(
-            'name'    => $this->_name,
-            'cols'    => (array) $this->_cols,
-            'primary' => (array) $this->_primary,
+            'schema'          => $this->_schema,
+            'name'            => $this->_name,
+            'cols'            => (array) $this->_cols,
+            'primary'         => (array) $this->_primary,
+            'desc'            => $this->_describeTable,
+            'rowClass'        => $this->_rowClass,
+            'rowsetClass'     => $this->_rowsetClass,
+            'referenceMap'    => $this->_referenceMap,
+            'dependentTables' => $this->_dependentTables,
         );
     }
 
@@ -501,33 +505,25 @@ abstract class Zend_Db_Table_Abstract
     { 
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
-            if ($map[self::REF_TABLE_CLASS] != $parentTableClassname) {
-                continue;
-            }
-            if (!isset($map[self::ON_UPDATE])) {
-                continue;
-            }
-            switch ($map[self::ON_UPDATE]) {
-                case self::CASCADE:
-                    $newRefs = array();
-                    for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
-                        if (array_key_exists($map[self::REF_COLUMNS][$i], $newPrimaryKey)) {
-                            $newRefs[$map[self::COLUMNS][$i]] = $newPrimaryKey[$map[self::REF_COLUMNS][$i]];
+            if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_UPDATE])) {
+                switch ($map[self::ON_UPDATE]) {
+                    case self::CASCADE:
+                        $newRefs = array();
+                        for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
+                            if (array_key_exists($map[self::REF_COLUMNS][$i], $newPrimaryKey)) {
+                                $newRefs[$map[self::COLUMNS][$i]] = $newPrimaryKey[$map[self::REF_COLUMNS][$i]];
+                            }
+                            $where[] = $this->_db->quoteInto(
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
+                                $oldPrimaryKey[$map[self::REF_COLUMNS][$i]]
+                            );
                         }
-                        $where[] = $this->_db->quoteInto(
-                            $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
-                            $oldPrimaryKey[$map[self::REF_COLUMNS][$i]]
-                        );
-                    }
-                    $rowsAffected += $this->update($newRefs, $where); 
-                    break;
-                case self::NO_ACTION:
-                case self::RESTRICT:
-                case self::SET_NULL:
-                case self::SET_DEFAULT:
-                default:
-                    // @todo
-                    break;
+                        $rowsAffected += $this->update($newRefs, $where); 
+                        break;
+                    default:
+                        // no action
+                        break;
+                }
             }
         }
         return $rowsAffected;
@@ -554,29 +550,21 @@ abstract class Zend_Db_Table_Abstract
     { 
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
-            if ($map[self::REF_TABLE_CLASS] != $parentTableClassname) {
-                continue;
-            }
-            if (!isset($map[self::ON_DELETE])) {
-                continue;
-            }
-            switch ($map[self::ON_DELETE]) {
-                case self::CASCADE:
-                    for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
-                        $where[] = $this->_db->quoteInto(
-                            $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
-                            $primaryKey[$map[self::REF_COLUMNS][$i]]
-                        );
-                    }
-                    $rowsAffected += $this->delete($where); 
-                    break;
-                case self::NO_ACTION:
-                case self::RESTRICT:
-                case self::SET_NULL:
-                case self::SET_DEFAULT:
-                default:
-                    // @todo
-                    break;
+            if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_DELETE])) {
+                switch ($map[self::ON_DELETE]) {
+                    case self::CASCADE:
+                        for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
+                            $where[] = $this->_db->quoteInto(
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
+                                $primaryKey[$map[self::REF_COLUMNS][$i]]
+                            );
+                        }
+                        $rowsAffected += $this->delete($where); 
+                        break;
+                    default:
+                        // no action
+                        break;
+                }
             }
         }
         return $rowsAffected;
@@ -665,7 +653,7 @@ abstract class Zend_Db_Table_Abstract
         $data  = array(
             'table'    => $this,
             'data'     => $this->_fetch($where, $order, $count, $offset),
-            'rowclass' => $this->_rowClass
+            'rowClass' => $this->_rowClass,
         );
 
         Zend_Loader::loadClass($this->_rowsetClass);

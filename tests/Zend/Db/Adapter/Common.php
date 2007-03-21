@@ -49,8 +49,9 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 {
-    const TABLE_NAME = 'zf_test_table';
+    const TABLE_NAME   = 'zf_test_table';
     const TABLE_NAME_2 = 'zf_test_table2';
+    const TABLE_NAME_I = 'zf_test_table_intersection';
 
     protected $_resultSetUppercase = false;
     protected $_schemaUppercase = false;
@@ -60,7 +61,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     abstract public function getParams();
     abstract public function getCreateTableSQL();
     abstract public function getCreateTableSQL2();
+    abstract public function getCreateTableSQLIntersection();
     abstract public function testExceptionInvalidLoginCredentials();
+    abstract public function testQuote();
+    abstract public function testQuoteIdentifier();
 
     /**
      * @var Zend_Db_Adapter_Abstract
@@ -123,6 +127,15 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return string SQL statement for dropping the test table.
+     */
+    protected function getDropTableSQLIntersection()
+    {
+        $sql = 'DROP TABLE ' . self::TABLE_NAME_I;
+        return $sql;
+    }
+
+    /**
      * Create the test table and populate it with some rows of data.
      * @return void
      */
@@ -168,6 +181,27 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $sql = 'INSERT INTO ' . $this->_db->quoteIdentifier($table2) . "
             (news_id, user_id, comment_title, comment_body, date_posted)
             VALUES (1, 101, 'I still agree', 'This is comment 3', '2006-05-01 15:15:15')";
+        $this->_db->query($sql);
+    }
+
+    /**
+     * Create intersection table for many-to-many relationship test.
+     * @return void
+     */
+    protected function createTestTableIntersection()
+    {
+        $tableI = $this->getIdentifier(self::TABLE_NAME_I);
+        $sql = $this->getCreateTableSQLIntersection();
+        $this->_db->query($sql);
+
+        $t = $this->_db->quoteIdentifier($tableI);
+        $sql = "INSERT INTO $t (news_id, user_id, date_posted) VALUES (1, 101, '2006-05-01 13:13:13')";
+        $this->_db->query($sql);
+        $sql = "INSERT INTO $t (news_id, user_id, date_posted) VALUES (1, 102, '2006-05-01 14:14:14')";
+        $this->_db->query($sql);
+        $sql = "INSERT INTO $t (news_id, user_id, date_posted) VALUES (2, 101, '2006-05-01 13:13:13')";
+        $this->_db->query($sql);
+        $sql = "INSERT INTO $t (news_id, user_id, date_posted) VALUES (2, 101, '2006-05-01 15:15:15')";
         $this->_db->query($sql);
     }
 
@@ -237,6 +271,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $sql = $this->getDropTableSQL();
         $this->_db->query($sql);
         $sql = $this->getDropTableSQL2();
+        $this->_db->query($sql);
+        $sql = $this->getDropTableSQLIntersection();
         $this->_db->query($sql);
     }
 
@@ -918,7 +954,6 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     /**
      * Test adding a WHERE clause to a Zend_Db_Select object.
-     * @todo: test where() with 2 args for quoteInto()
      */
     public function testSelectWhereClause()
     {
@@ -1462,12 +1497,11 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     protected function getInstanceOfDbTable2()
     {
         Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable2');
-        $table = $this->getIdentifier(self::TABLE_NAME);
         $table2 = $this->getIdentifier(self::TABLE_NAME_2);
         $id = $this->getIdentifier('id');
         $newsId = $this->getIdentifier('news_id');
 
-        $dbTable = new Zend_Db_Table_ZfTestTable2(
+        $dbTable2 = new Zend_Db_Table_ZfTestTable2(
             array(
                 'db'              => $this->_db,
                 'name'            => $table2,
@@ -1482,7 +1516,9 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
                 )
             )
         );
-        return array($dbTable, $table2, $id);
+
+        $info = $dbTable2->info();
+        return array($dbTable2, $table2, $info['primary']);
     }
 
     protected function getInstanceOfDbTable3()
@@ -1505,11 +1541,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable3');
         $table = $this->getIdentifier(self::TABLE_NAME);
         $id = $this->getIdentifier('id');
+        $schema = $this->getSchema();
 
         $dbTable = new zf_test_table(
             array(
                 'db'   => $this->_db,
-                'name' => 'test.zf_test_table',
+                'name' => "$schema.zf_test_table",
             )
         );
 
@@ -1532,6 +1569,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($info, $this->arrayHasKey('name'));
         $this->assertThat($info, $this->arrayHasKey('cols'));
         $this->assertThat($info, $this->arrayHasKey('primary'));
+        $this->assertThat($info, $this->arrayHasKey('desc'));
 
         $this->assertEquals($rowClass, 'Zend_Db_Table_Row');
         $this->assertEquals($rowsetClass, 'Zend_Db_Table_Rowset');
@@ -2082,9 +2120,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableRowSaveUpdate()
     {
-        $this->createTestTable2();
-
         list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $this->createTestTable2();
 
         $data = array(
             'title'       => 'News Item 4',
@@ -2119,7 +2156,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable2();
 
         list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
-        list ($dbTable2, $table2, $id2) = $this->getInstanceOfDbTable2();
+        list ($dbTable2, $table2, $primary2) = $this->getInstanceOfDbTable2();
 
         $rows = $dbTable->find(1);
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
@@ -2141,12 +2178,39 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     {
         $this->createTestTable2();
 
-        list ($dbTable2, $table) = $this->getInstanceOfDbTable2();
+        list ($dbTable2, $table, $primary2) = $this->getInstanceOfDbTable2();
         $childRows = $dbTable2->fetchAll('news_id = 1');
         $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
 
         $childRow1 = $childRows->current();
+        $this->assertThat($childRow1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
+            'Expecting object of type Zend_Db_Table_Row_Abstract');
+
+        $parentRow = $childRow1->findParentRow('Zend_Db_Table_ZfTestTable');
+        $this->assertThat($parentRow, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
+            'Expecting object of type Zend_Db_Table_Row_Abstract');
+
+        $this->assertEquals(1,                     $parentRow->id);
+        $this->assertEquals('News Item 1',         $parentRow->title);
+        $this->assertEquals('Sub title 1',         $parentRow->subtitle);
+        $this->assertEquals('This is body 1',      $parentRow->body);
+        $this->assertEquals('2006-05-01 11:11:11', $parentRow->date_created);
+    }
+
+    public function testTableRelationshipMagicFindParentRow()
+    {
+        $this->createTestTable2();
+
+        list ($dbTable2, $table, $primary2) = $this->getInstanceOfDbTable2();
+        $childRows = $dbTable2->fetchAll('news_id = 1');
+        $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+
+        $childRow1 = $childRows->current();
+        $this->assertThat($childRow1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
+            'Expecting object of type Zend_Db_Table_Row_Abstract');
+
         $parentRow = $childRow1->findParentZend_Db_Table_ZfTestTable();
         $this->assertThat($parentRow, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
@@ -2156,6 +2220,133 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals('Sub title 1',         $parentRow->subtitle);
         $this->assertEquals('This is body 1',      $parentRow->body);
         $this->assertEquals('2006-05-01 11:11:11', $parentRow->date_created);
+    }
+
+    public function testTableRelationshipMagicException()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $parentRows = $dbTable->find(1);
+        $parentRow1 = $parentRows->current();
+
+        // Completely bogus method
+        try {
+            $result = $parentRow1->nonExistantMethod();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Row_Exception'),
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals("Unrecognized method 'nonExistantMethod()'", $e->getMessage());
+        }
+    }
+
+    public function testTableRelationshipFindParentRowException()
+    {
+        $this->createTestTable2();
+
+        list ($dbTable2, $table, $primary2) = $this->getInstanceOfDbTable2();
+        $childRows = $dbTable2->fetchAll('news_id = 1');
+        $childRow1 = $childRows->current();
+
+        try {
+            $parentRow = $childRow1->findParentRow('nonexistant_class');
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Row_Exception'),
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+        }
+
+        try {
+            $parentRow = $childRow1->findParentRow(new stdClass());
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for wrong table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('Parent table must be a Zend_Db_Table_Abstract, but it is stdClass', $e->getMessage());
+        }
+    }
+
+    public function testTableRelationshipFindManyToManyRowset()
+    {
+        $this->createTestTable2();
+        $this->createTestTableIntersection();
+
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $originRows = $dbTable->find(1);
+        $originRow1 = $originRows->current();
+
+        $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_ZfTestTable2', 'Zend_Db_Table_ZfTestTableIntersection');
+        $this->assertThat($destRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+
+        $this->assertEquals(2, $destRows->count());
+    }
+
+    public function testTableRelationshipMagicFindManyToManyRowset()
+    {
+        $this->createTestTable2();
+        $this->createTestTableIntersection();
+
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $originRows = $dbTable->find(1);
+        $originRow1 = $originRows->current();
+
+        $destRows = $originRow1->findZend_Db_Table_ZfTestTable2ViaZend_Db_Table_ZfTestTableIntersection();
+        $this->assertThat($destRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+
+        $this->assertEquals(2, $destRows->count());
+    }
+
+    public function testTableRelationshipFindManyToManyRowsetException()
+    {
+        $this->createTestTable2();
+        $this->createTestTableIntersection();
+
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $originRows = $dbTable->find(1);
+        $originRow1 = $originRows->current();
+
+        // Use nonexistant class for destination table
+        try {
+            $destRows = $originRow1->findManyToManyRowset('nonexistant_class', 'Zend_Db_Table_ZfTestTableIntersection');
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+        }
+
+        // Use stdClass instead of table class for destination table
+        try {
+            $destRows = $originRow1->findManyToManyRowset(new stdClass(), 'Zend_Db_Table_ZfTestTableIntersection');
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('Match table must be a Zend_Db_Table_Abstract, but it is stdClass', $e->getMessage());
+        }
+
+        // Use nonexistant class for intersection table
+        try {
+            $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_ZfTestTable2', 'nonexistant_class');
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+        }
+
+        // Use stdClass instead of table class for intersection table
+        try {
+            $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_ZfTestTable2', new stdClass());
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('Intersection table must be a Zend_Db_Table_Abstract, but it is stdClass', $e->getMessage());
+        }
+
     }
 
     public function testTableRelationshipFindDependentRowset()
@@ -2168,18 +2359,72 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
         $parentRow1 = $parentRows->current();
 
-        $childRows = $parentRow1->findZend_Db_Table_ZfTestTable2();
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
         $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+
         $this->assertEquals(3, $childRows->count());
+
         $childRow1 = $childRows->current();
         $this->assertThat($childRow1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
+
         $this->assertEquals(1,                     $childRow1->news_id);
         $this->assertEquals(101,                   $childRow1->user_id);
         $this->assertEquals('I agree',             $childRow1->comment_title);
         $this->assertEquals('This is comment 1',   $childRow1->comment_body);
         $this->assertEquals('2006-05-01 13:13:13', $childRow1->date_posted);
+    }
+
+    public function testTableRelationshipMagicFindDependentRowset()
+    {
+        $this->createTestTable2();
+
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+        $parentRows = $dbTable->find(1);
+        $parentRow1 = $parentRows->current();
+
+        $childRows = $parentRow1->findZend_Db_Table_ZfTestTable2();
+        $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+
+        $this->assertEquals(3, $childRows->count());
+
+        $childRow1 = $childRows->current();
+        $this->assertThat($childRow1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
+            'Expecting object of type Zend_Db_Table_Row_Abstract');
+
+        $this->assertEquals(1,                     $childRow1->news_id);
+        $this->assertEquals(101,                   $childRow1->user_id);
+        $this->assertEquals('I agree',             $childRow1->comment_title);
+        $this->assertEquals('This is comment 1',   $childRow1->comment_body);
+        $this->assertEquals('2006-05-01 13:13:13', $childRow1->date_posted);
+    }
+
+    public function testTableRelationshipFindDependentRowsetException()
+    {
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+
+        $parentRows = $dbTable->find(1);
+        $parentRow1 = $parentRows->current();
+
+        try {
+            $childRows = $parentRow1->findDependentRowset('nonexistant_class');
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for nonexistent table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
+                'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
+            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+        }
+
+        try {
+            $childRows = $parentRow1->findDependentRowset(new stdClass());
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for wrong table class');
+        } catch (Exception $e) {
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Row_Exception'),
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('Dependent table must be a Zend_Db_Table_Abstract, but it is stdClass', $e->getMessage());
+        }
     }
 
     public function testTableRelationshipCascadingUpdate()
@@ -2195,7 +2440,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $parentRow1->setFromArray(array('id' => 101));
         $parentRow1->save();
         
-        $childRows = $parentRow1->findZend_Db_Table_ZfTestTable2();
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
         $this->assertEquals(3, $childRows->count());
         
         $total = 0;
@@ -2207,7 +2452,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $parentRow1->setFromArray(array('id' => 1));
         $parentRow1->save();
 
-        $childRows = $parentRow1->findZend_Db_Table_ZfTestTable2();
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
         $this->assertEquals(3, $childRows->count());
         
         $total = 0;
@@ -2217,11 +2462,32 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, $total);
     }
 
+    public function testTableRelationshipCascadingDelete()
+    {
+        $this->createTestTable2();
+        list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
+
+        $parentRows = $dbTable->find(1);
+        $parentRow1 = $parentRows->current();
+
+        list ($dbTable2, $table2, $primary2) = $this->getInstanceOfDbTable2();
+
+        $info = $dbTable2->info();
+
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
+        $this->assertEquals(3, $childRows->count(), 'Expecting to find three dependent rows');
+
+        $parentRow1->delete();
+
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
+        $this->assertEquals(0, $childRows->count(), 'Expecting cascading delete to have reduced dependent rows to zero');
+    }
+
     public function testTableRelationshipGetReference()
     {
         $this->createTestTable2();
 
-        list ($dbTable, $table) = $this->getInstanceOfDbTable2();
+        list ($dbTable, $table, $primary2) = $this->getInstanceOfDbTable2();
         
         try {
             $dbTable->getReference('Zend_Db_Table_ZfTestTable', 'Nonexistent');
@@ -2443,6 +2709,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
     public function testTableSerializeRowReconnectedDelete()
     {
+        $this->createTestTable2();
+
         list ($dbTable, $table, $id) = $this->getInstanceOfDbTable();
         $rows = $dbTable->find(1);
         $row1 = $rows->current();

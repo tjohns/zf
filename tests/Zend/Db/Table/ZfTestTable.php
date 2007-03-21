@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once('Zend/Db/Table.php');
+require_once('Zend/Db/Table/Abstract.php');
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 

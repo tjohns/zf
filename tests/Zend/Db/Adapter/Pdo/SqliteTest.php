@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 /**
  * Common class is DB independant
  */
@@ -50,7 +52,7 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL()
     {
         return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . " (
-            id           INTEGER PRIMARY KEY,
+            id           INTEGER NOT NULL PRIMARY KEY,
             subtitle     {$this->_textDataType},
             title        {$this->_textDataType},
             body         {$this->_textDataType},
@@ -61,12 +63,25 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL2()
     {
         return 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . " (
-            news_id       INTEGER,
-            user_id       INTEGER,
+            news_id       INTEGER NOT NULL,
+            user_id       INTEGER NOT NULL,
             comment_title {$this->_textDataType},
             comment_body  {$this->_textDataType},
             date_posted   {$this->_textDataType}
         )";
+    }
+
+    function getCreateTableSQLIntersection()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
+            news_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            date_posted {$this->_textDataType},
+            PRIMARY KEY (news_id, user_id, date_posted),
+            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
+            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
+        )';
+        return $sql;
     }
 
     public function getDropTableSQL()
@@ -78,6 +93,12 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function getDropTableSQL2()
     {
         $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_2;
+        return $sql;
+    }
+
+    protected function getDropTableSQLIntersection()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_I;
         return $sql;
     }
 

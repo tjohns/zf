@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 /**
  * Common class is DB independant
  */
@@ -67,8 +69,22 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
             user_id       INT NOT NULL,
             comment_title VARCHAR(100),
             comment_body  {$this->_textDataType},
-            date_posted   DATETIME
+            date_posted   DATETIME,
+            PRIMARY KEY (user_id, date_posted)
         )";
+        return $sql;
+    }
+
+    function getCreateTableSQLIntersection()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
+            news_id     INT NOT NULL,
+            user_id     INT NOT NULL,
+            date_posted DATETIME,
+            PRIMARY KEY (news_id, user_id, date_posted),
+            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
+            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
+        )';
         return $sql;
     }
 
@@ -84,19 +100,25 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         return $sql;
     }
 
+    protected function getDropTableSQLIntersection()
+    {
+        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_I;
+        return $sql;
+    }
+
     public function testQuote()
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
+        $this->assertEquals("'St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
+        $this->assertEquals("'St John\\'s Wort'", $value);
 
         // quote an array
         $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
 
         // test numeric
         $value = $this->_db->quote('1');
@@ -113,11 +135,11 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
     {
         // test double quotes are fine
         $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
     public function testQuoteIdentifier()

@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 /**
  * Common class is DB independant
  */
@@ -56,7 +58,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
-            id           NUMBER(11) PRIMARY KEY,
+            id           NUMBER(11) NOT NULL PRIMARY KEY,
             subtitle     {$this->_textDataType}(100),
             title        {$this->_textDataType}(100),
             body         {$this->_textDataType}(100),
@@ -68,12 +70,25 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     public function getCreateTableSQL2()
     {
         $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id       NUMBER(11),
-            user_id       NUMBER(11),
+            news_id       NUMBER(11) NOT NULL,
+            user_id       NUMBER(11) NOT NULL,
             comment_title {$this->_textDataType}(100),
             comment_body  {$this->_textDataType}(100),
             date_posted   {$this->_textDataType}(100)
         )";
+        return $sql;
+    }
+
+    function getCreateTableSQLIntersection()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
+            news_id     NUMBER(11) NOT NULL,
+            user_id     NUMBER(11) NOT NULL,
+            date_posted {$this->_textDataType}(100),
+            PRIMARY KEY (news_id, user_id, date_posted),
+            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
+            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
+        )';
         return $sql;
     }
 
@@ -165,15 +180,15 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
+        $this->assertEquals("'St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
+        $this->assertEquals("'St John\\'s Wort'", $value);
 
         // quote an array
         $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
 
         // test numeric
         $value = $this->_db->quote('1');
@@ -198,10 +213,10 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_Common
     {
         // test double quotes are fine
         $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
     public function testTableInsert()
