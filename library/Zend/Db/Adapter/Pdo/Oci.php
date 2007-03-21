@@ -68,6 +68,20 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
+     * Quote a raw string.
+     * Most PDO drivers have an implementation for the quote() method,
+     * but the Oracle OCI driver must use the same implementation as the
+     * Zend_Db_Adapter_Abstract class.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        return "'" . addcslashes($value, "\000\n\r\\'\"\032") . "'";
+    }
+
+    /**
      * Quote a table identifier and alias.
      *
      * @param string|array|Zend_Db_Expr $ident The identifier or expression.

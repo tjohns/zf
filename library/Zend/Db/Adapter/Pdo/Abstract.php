@@ -152,10 +152,23 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Quote a raw string.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        $this->_connect();
+        return $this->_connection->quote($value);
+    }
+
+    /**
      * Begin a transaction.
      */
     protected function _beginTransaction()
     {
+        $this->_connect();
         $this->_connection->beginTransaction();
     }
 
@@ -164,6 +177,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      */
     protected function _commit()
     {
+        $this->_connect();
         $this->_connection->commit();
     }
 
@@ -171,6 +185,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      * Roll-back a transaction.
      */
     protected function _rollBack() {
+        $this->_connect();
         $this->_connection->rollBack();
     }
 

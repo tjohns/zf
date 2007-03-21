@@ -425,8 +425,7 @@ abstract class Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
-        $value = str_replace("'", "''", $value);
-        return "'" . $value . "'";
+        return "'" . addcslashes($value, "\000\n\r\\'\"\032") . "'";
     }
 
     /**
@@ -539,8 +538,6 @@ abstract class Zend_Db_Adapter_Abstract
      */
     protected function _quoteIdentifierAs($ident, $alias = null, $as = ' AS ')
     {
-        $q = $this->getQuoteIdentifierSymbol();
-
         if ($ident instanceof Zend_Db_Expr) {
             $quoted = $ident->__toString();
         } else {
@@ -553,7 +550,7 @@ abstract class Zend_Db_Adapter_Abstract
                     if ($segment instanceof Zend_Db_Expr) {
                         $segments[] = $segment->__toString();
                     } else {
-                        $segments[] = $q . str_replace("$q", "$q$q", $segment) . $q;
+                        $segments[] = $this->_quoteIdentifier($segment);
                     }
                 }
                 if ($alias !== null && end($ident) == $alias) {
@@ -561,13 +558,25 @@ abstract class Zend_Db_Adapter_Abstract
                 }
                 $quoted = implode('.', $segments);
             } else {
-                $quoted = $q . str_replace("$q", "$q$q", $ident) . $q;
+                $quoted = $this->_quoteIdentifier($ident);
             }
         }
         if ($alias !== null) {
-            $quoted .= $as . $q . str_replace("$q", "$q$q", $alias) . $q;
+            $quoted .= $as . $this->_quoteIdentifier($alias);
         }
         return $quoted;
+    }
+
+    /**
+     * Quote an identifier.
+     *
+     * @param  string $value The identifier or expression.
+     * @return string        The quoted identifier and alias.
+     */
+    protected function _quoteIdentifier($value)
+    {
+        $q = $this->getQuoteIdentifierSymbol();
+        return ($q . str_replace("$q", "$q$q", $value) . $q);
     }
 
     /**

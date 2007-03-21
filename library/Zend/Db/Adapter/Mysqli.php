@@ -49,6 +49,18 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
 {
 
     /**
+     * Quote a raw string.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        $this->_connect();
+        return "'" . $this->_connection->real_escape_string($value) . "'";
+    }
+
+    /**
      * Returns the symbol the adapter uses for delimiting identifiers.
      *
      * @return string
@@ -175,7 +187,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         if ($this->_connection) {
             return;
         }
-        $this->_connection = new mysqli(
+        // Suppress connection warnings here.
+        // Throw an exception instead.
+        @$this->_connection = new mysqli(
             $this->_config['host'],
             $this->_config['username'],
             $this->_config['password'],
@@ -220,6 +234,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     protected function _beginTransaction()
     {
+        $this->_connect();
         $this->_connection->beginTransaction();
     }
 
@@ -230,6 +245,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     protected function _commit()
     {
+        $this->_connect();
         $this->_connection->commit();
     }
 
@@ -240,6 +256,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     protected function _rollBack()
     {
+        $this->_connect();
         $this->_connection->rollBack();
     }
 
