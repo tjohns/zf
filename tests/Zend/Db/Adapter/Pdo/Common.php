@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 /**
  * Common class is DB independant
  */
