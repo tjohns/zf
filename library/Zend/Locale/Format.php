@@ -141,6 +141,11 @@ class Zend_Locale_Format
                         } else if ((gettype($value) !== 'string') and ($value !== NULL)) {
                             throw new Zend_Locale_Exception("Unknown dateformat type '" . gettype($value) . "'. "
                                 . "Format '$value' must be a valid ISO or PHP date format string.");
+                        } else {
+                            if (((array_key_exists('format_type', $options)) and ($options['format_type'] == 'php')) or
+                                ((!array_key_exists('format_type', $options)) and (self::$_Options['format_type'] == 'php'))) {
+                                $options['date_format'] = Zend_Locale_Format::convertPhpToIsoFormat($value);
+                            }
                         }
                         break;
                     case 'format_type' :
@@ -928,11 +933,9 @@ class Zend_Locale_Format
     {
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
+            $options['format_type'] = 'iso';
             $options['date_format'] = self::getDateFormat($options['locale']);
-        } else if ($options['format_type'] == 'php') {
-            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
-
         return self::_parseDate($date, $options);
     }
 
@@ -954,13 +957,12 @@ class Zend_Locale_Format
             return false;
         }
 
-        $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
+            $options['format_type'] = 'iso';
             $options['date_format'] = self::getDateFormat($options['locale']);
-        } else if ($options['format_type'] == 'php') {
-            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
-
+        $options = array_merge(self::$_Options, self::checkOptions($options));
+        
         // day expected but not parsed
         if ((iconv_strpos($options['date_format'], 'd') !== false) and (!isset($date['day']) or ($date['day'] == ""))) {
             return false;
@@ -1012,9 +1014,8 @@ class Zend_Locale_Format
     {
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
+            $options['format_type'] = 'iso';
             $options['date_format'] = self::getTimeFormat($options['locale']);
-        } else if ($options['format_type'] == 'php') {
-            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
 
         return self::_parseDate($time, $options);
@@ -1040,9 +1041,8 @@ class Zend_Locale_Format
 
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if (empty($options['date_format'])) {
+            $options['format_type'] = 'iso';
             $options['date_format'] = self::getDateFormat($options['locale']);
-        } else if ($options['format_type'] == 'php') {
-            $options['date_format'] = self::convertPhpToIsoFormat($options['date_format']);
         }
 
         // second expected but not parsed
