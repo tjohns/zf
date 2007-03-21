@@ -60,8 +60,7 @@
         <programlisting role="php"><![CDATA[<?php
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
-Zend_Search_Lucene::setDefaultSearchField('contents');
-?>]]></programlisting>
+Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
 
         <para>
             <code>null</code> 値は、すべてのフィールドを検索の対象とすることを意味します。

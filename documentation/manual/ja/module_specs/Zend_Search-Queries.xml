@@ -9,8 +9,7 @@
         ユーザクエリは、API で作成したクエリを組み合わせて作成することができます。
         クエリパーサを使用して、文字列からクエリを作成します。
         <programlisting role="php"><![CDATA[<?php
-$query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
-?>]]></programlisting>
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></programlisting>
     </para>
 
 
@@ -39,8 +38,7 @@ try {
     $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
 } catch (Zend_Search_Lucene_Search_QueryParserException $e) {
     echo "クエリの構文エラー: " . $e->getMessage() . "\n";
-}
-?>]]></programlisting>
+}]]></programlisting>
         </para>
 
         <para>
@@ -66,22 +64,18 @@ try {
         API で作成するクエリ
         </para>
         <programlisting role="php"><![CDATA[<?php
-
-    $term  = new Zend_Search_Lucene_Index_Term('word1', 'field1');
-    $query = new Zend_Search_Lucene_Search_Query_Term($term);
-    $hits  = $index->find($query);
-?>]]></programlisting>
+$term  = new Zend_Search_Lucene_Index_Term('word1', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);]]></programlisting>
 
         <para>
             単語のフィールドは任意で指定します。
             指定しなかった場合は、Zend_Search_Lucene
             は全フィールドを対象に検索します。
             <programlisting role="php"><![CDATA[<?php
-
-    $term  = new Zend_Search_Lucene_Index_Term('word1');  // インデックス化されている全フィールドから 'word1' を探します
-    $query = new Zend_Search_Lucene_Search_Query_Term($term);
-    $hits  = $index->find($query);
-?>]]></programlisting>
+$term  = new Zend_Search_Lucene_Index_Term('word1');  // インデックス化されている全フィールドから 'word1' を探します
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);]]></programlisting>
         </para>
     </sect2>
 
@@ -161,16 +155,13 @@ try {
         API で作成するクエリ
         </para>
         <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
-    $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
 
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
-
-    $hits  = $index->find($query);
-
-?>]]></programlisting>
+$hits  = $index->find($query);]]></programlisting>
 
         <para>
             <code>$signs</code> 配列に、単語の種別についての情報を含めます。
@@ -238,9 +229,7 @@ $query3 = new Zend_Search_Lucene_Search_Query_Phrase(
 ...
 
 $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
-                array('word1', 'word2'), array(0,1), 'annotation');
-
-?>]]></programlisting>
+                array('word1', 'word2'), array(0,1), 'annotation');]]></programlisting>
 
 
         <para>
@@ -253,7 +242,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             Zend_Search_Lucene_Search_Query_Phrase クラスのコンストラクタで、
             オプションの 3 つの引数を指定することができます。
         </para>
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
 
         <para>
             <code>$terms</code> は文字列の配列で、
@@ -279,18 +269,21 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             したがって、
         </para>
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
         <para>
             は 'zend framework' を検索します。
         </para>
 
-        <programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
         <para>
             は 'zend ????? download' を検索し、'zend platform download' や 'zend studio download'、
             'zend core download'、'zend framework download' などがマッチします
         </para>
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
 
         <para>
             は 'title' フィールドから 'zend framework' を検索します。
@@ -302,7 +295,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             2 つの引数をとります。<code>Zend_Search_Lucene_Index_Term</code>
             オブジェクトが必須で、position はオプションです。
         </para>
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
 
         <para>
             <code>$term</code> はフレーズ内の次の単語を指定します。
@@ -317,21 +311,24 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             したがって、
         </para>
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
         <para>
             は 'zend framework' を検索します。
          </para>
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
         <para>
             は 'zend ????? download' を検索し、'zend platform download' や 'zend studio download'、
             'zend core download'、'zend framework download' などがマッチします
         </para>
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
         <para>
@@ -361,7 +358,6 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             曖昧度は、クエリを作成した後で設定することができます。
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 // 隙間をあけないクエリ
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
 
@@ -372,9 +368,7 @@ $hits1 = $index->find($query);
 // 'word1 word2'、'word1 ... word2'、
 // 'word1 ... ... word2'、'word2 word1' を検索します
 $query->setSlop(2);
-$hits2 = $index->find($query);
-
-?>]]></programlisting>
+$hits2 = $index->find($query);]]></programlisting>
 
     </sect2>
 </sect1>

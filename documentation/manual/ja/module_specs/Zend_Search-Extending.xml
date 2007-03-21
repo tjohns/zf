@@ -31,13 +31,11 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
-$index->addDocument($doc);
+$index->addDocument($doc);]]></programlisting>
 
-?>]]></programlisting>
         <para>
             ユーザ定義の解析器のための共通の親クラスとして設計されているのが
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> です。
@@ -202,8 +200,7 @@ $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
         </para>
 
         <para>
@@ -217,8 +214,7 @@ $stopWordsFilter->loadFromFile($my_stopwords_file);
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
             ファイル形式は一般的なテキストファイルで、各文字列にひとつの単語が含まれるものとなります。
             '#' を指定すると、その文字列はコメントであるとみなします。
         </para>
