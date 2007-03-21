@@ -1,10 +1,14 @@
 AC_INIT(Makefile.in)
+AC_COPYRIGHT([Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)])
 
 XINC=xinc
 XEP=xep
 FOP=fop
 XSLTPROC=xsltproc
 XMLLINT=xmllint
+
+AC_DEFINE_UNQUOTED([DOCBOOK_DTD], [${DOCBOOK_DTD:-http://framework.zend.com/docbook/xml/4.4/docbookx.dtd}])
+AC_DEFINE_UNQUOTED([DOCBOOK_XSL], [${DOCBOOK_XSL:-http://framework.zend.com/docbook-xsl/html/chunk.xsl}])
 
 AC_ARG_WITH(xep, [  --with-xep   Where to find RenderX XEP],
 	[
@@ -60,15 +64,21 @@ AC_ARG_WITH(ecsrc, [  --with-ecsrc  Where to find the ecelerity source],
 	]
 )
 
+AC_ARG_VAR([DOCBOOK_DTD], [Location of DocBook DTD])
+AC_ARG_VAR([DOCBOOK_XSL], [Location of DocBook XSL stylesheets])
+
 AC_SUBST(XINC)
 AC_SUBST(XEP)
 AC_SUBST(FOP)
 AC_SUBST(XSLTPROC)
 AC_SUBST(XMLLINT)
 AC_SUBST(ECSRC)
+AC_SUBST(DOCBOOK_DTD)
+AC_SUBST(DOCBOOK_XSL)
 HERE=`pwd`
 AC_SUBST(HERE)
-AC_OUTPUT(Makefile)
+AC_CONFIG_FILES([Makefile manual.xml html.xsl])
+AC_OUTPUT
 
 cat > config.nice <<EOT
 #!/bin/sh
@@ -78,7 +88,9 @@ cat > config.nice <<EOT
     --with-xmllint='$XMLLINT' \
     --with-fop='$FOP' \
     --with-xinc='$XINC' \
-    --with-xep='$XEP'
+    --with-xep='$XEP' \
+    DOCBOOK_DTD='$DOCBOOK_DTD' \
+    DOCBOOK_XSL='$DOCBOOK_XSL'
 
 EOT
 chmod +x config.nice
