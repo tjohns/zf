@@ -704,7 +704,7 @@ abstract class Zend_Controller_Action
 
         if ($exit) {
             // Close session, if started
-            if (class_exists('Zend_Session') && Zend_Session::isStarted()) {
+            if (class_exists('Zend_Session', false) && Zend_Session::isStarted()) {
                 Zend_Session::writeClose();
             } elseif (isset($_SESSION)) {
                 session_write_close();
