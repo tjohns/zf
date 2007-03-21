@@ -42,8 +42,27 @@ class Zend_Environment_Security_Test_Core_Gid extends Zend_Environment_Security_
 
     protected $_recommended_value = 100;
 
+    /**
+	 * This test only works under Unix OSes
+	 *
+	 * @return boolean
+	 */
+    public function isTestable() {
+        if (Zend_Environment_Security_Test::osIsWindows()) {
+            return false;
+        }
+        return true;
+    }
+
     protected function _retrieveCurrentValue() {
-        $this->_current_value =  getmygid();
+        $id = $this->getUnixId();
+       /**
+        * the lowest groupid the executing user belogs to is always
+        * the first key in the array
+        */
+        $lowest_gid = key($id['groups']);
+
+        $this->current_value = $lowest_gid;
     }
 
     /**

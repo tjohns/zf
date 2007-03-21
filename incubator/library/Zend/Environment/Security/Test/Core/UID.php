@@ -42,8 +42,22 @@ class Zend_Environment_Security_Test_Core_Uid extends Zend_Environment_Security_
 
     protected $_recommended_value = 100;
 
+    /**
+	 * This test only works under Unix OSes
+	 *
+	 * @return boolean
+	 */
+    public function isTestable() {
+        if (Zend_Environment_Security_Test::osIsWindows()) {
+            return false;
+        }
+        return true;
+    }
+
+
     protected function _retrieveCurrentValue() {
-        $this->_current_value =  getmyuid();
+        $id = $this->getUnixId();
+        $this->current_value = $id['uid'];
     }
 
     /**

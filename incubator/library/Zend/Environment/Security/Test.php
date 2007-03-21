@@ -500,5 +500,41 @@ abstract class Zend_Environment_Security_Test
         }
     }
 
+    /**
+	 * Returns an array of data returned from the UNIX 'id' command
+	 *
+	 * includes uid, username, gid, groupname, and groups.  Groups
+	 * is an array of all the groups the user belongs to.  Keys are
+	 * the group ids, values are the group names.
+	 *
+	 * @return array|boolean
+	 */
+    public function getUnixId() {
+        if ($this->osIsWindows()) {
+            return false;
+        }
+        $id_raw = exec('id');
+        // uid=1000(coj) gid=1000(coj) groups=1000(coj),1001(admin)
+        preg_match("|uid=(\d+)\((\S+)\)\s+gid=(\d+)\((\S+)\)\s+groups=(.+)|i", $id_raw, $matches);
+
+        $id_data = array(	'uid'=>$matches[1],
+            'username'=>$matches[2],
+            'gid'=>$matches[3],
+            'group'=>$matches[4] );
+
+        if ($matches[5]) {
+            $gs = $matches[5];
+            $gs = explode(',', $gs);
+            print_r($gs);
+            foreach ($gs as $groupstr) {
+                preg_match("/(\d+)\(([^\)]+)\)/", $groupstr, $subs);
+                $groups[$subs[1]] = $subs[2];
+            }
+            ksort($groups);
+            $id_data['groups'] = $groups;
+        }
+        return $id_data;
+    }
+
 
 }

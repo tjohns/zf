@@ -52,7 +52,7 @@ class Zend_Environment_Security_Test_Core_PostMaxSize extends Zend_Environment_S
     protected function _execTest() {
 
         if ($this->_current_value
-        && $this->_current_value < $this->_recommended_value
+        && $this->_current_value <= $this->_recommended_value
         && $post_max_size != -1) {
             return self::RESULT_OK;
         }

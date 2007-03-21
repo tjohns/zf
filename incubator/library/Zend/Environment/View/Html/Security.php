@@ -2,8 +2,8 @@
         <col width="10%" />
         <col width="10%" />
         <col width="10%" />
-        <col width="10%" />
-        <col width="10%" />
+        <col width="5%"%" />
+        <col width="5%" />
         <col />
         <col width="10%" />
         <thead>
@@ -15,7 +15,7 @@
                 <th>Name</th>
                 <th>Result</th>
                 <th>Current Value</th>
-                <th>Recommended Value</th>
+                <th>Rec. Value</th>
                 <th>Details</th>
                 <th>More Info</th>
             </tr>
@@ -27,8 +27,8 @@
                 <td><?php echo nl2br($this->escape($this->toString($info->result))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->current_value))) ?></td>
                 <td><?php echo nl2br($this->escape($this->toString($info->recommended_value))) ?></td>
-                <td><?php echo nl2br($this->toString($info->details)) ?></td>
-                <td><a href="<?php echo nl2br($this->escape($this->toString($info->link))) ?>">More Info &raquo;</a></td>
+                <td><?php echo $this->toString($info->details) ?></td>
+                <td><a href="<?php echo nl2br($this->escape($this->toString($info->link))) ?>">More&nbsp;Info&nbsp;&raquo;</a></td>
             </tr>
         <?php } ?></tbody>
     </table>
