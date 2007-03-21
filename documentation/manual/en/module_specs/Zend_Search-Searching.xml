@@ -59,8 +59,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Search/Lucene.php');
+require_once 'Zend/Search/Lucene.php';
 
 $index = Zend_Search_Lucene::open('/data/my_index');
 
@@ -111,15 +110,13 @@ $query = new Zend_Search_Query_Boolean();
 $query->addSubquery($userQuery, true /* required */);
 $query->addSubquery($pathQuery, true /* required */);
 
-$hits = $index->find($query);
-
-?>]]></programlisting>
+$hits = $index->find($query);]]></programlisting>
             </para>
 
             <para>
                 <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
                 which can specify query string encoding:
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 ]]></programlisting>
             </para>
@@ -131,11 +128,10 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
             <para>
                 It's also possible to specify default query string encoding with
                 <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
-]]></programlisting>
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]></programlisting>
             </para>
 
             <para>
@@ -160,7 +156,6 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
             the corresponding document has two fields: title and author.
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 require_once('Zend/Search/Lucene.php');
 
 $index = Zend_Search_Lucene::open('/data/my_index');
@@ -172,7 +167,6 @@ foreach ($hits as $hit) {
     echo $hit->title;
     echo $hit->author;
 }
-
 ?>]]></programlisting>
 
         <para>
@@ -188,8 +182,7 @@ foreach ($hits as $hit) {
             <code>getFieldValue()</code> method:
         </para>
         <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Search/Lucene.php');
+require_once 'Zend/Search/Lucene.php';
 
 $index = Zend_Search_Lucene::open('/data/my_index');
 
@@ -208,7 +201,6 @@ foreach ($hits as $hit) {
     // same as getFieldValue()
     echo $document->title;
 }
-
 ?>]]></programlisting>
         <para>
         The fields available from the Zend_Search_Lucene_Document object are determined at
@@ -245,9 +237,7 @@ $hits = $index->find($query);
 foreach ($hits as $hit) {
     echo $hit->id;
     echo $hit->score;
-}
-
-?>]]></programlisting>
+}]]></programlisting>
 
         <para>
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.
@@ -265,9 +255,8 @@ foreach ($hits as $hit) {
 
         <para>
             <code>$index->find()</code> call may take several optional parameters:
-            <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
-]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]></programlisting>
         </para>
 
         <para>
@@ -289,15 +278,12 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
 
         <para>
             Examples:
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
-]]></programlisting>
-            <programlisting role="php"><![CDATA[
-$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]></programlisting>
         </para>
 
         <para>
@@ -311,12 +297,11 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
         <para>
             <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows to highlight HTML document terms
             in context of search query:
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
 ...
-$highlightedHTML = $query->highlightMatches($sourceHTML);
-]]></programlisting>
+$highlightedHTML = $query->highlightMatches($sourceHTML);]]></programlisting>
         </para>
 
         <para>
