@@ -64,7 +64,7 @@ class Zend_Memory_Manager
      *
      * @var integer
      */
-    private $_minSize = -1;
+    private $_minSize = 16384;
 
     /**
      * Overall size of memory, used by values
@@ -182,9 +182,9 @@ class Zend_Memory_Manager
                 default:
                     break;
             }
-        } // No limit otherwise
 
-        $this->_minSize    = 16384;
+            $this->_memoryLimit = (int)($this->_memoryLimit*2/3);
+        } // No limit otherwise
     }
 
     /**
