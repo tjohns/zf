@@ -94,7 +94,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
     {
         $directories = $this->getFrontController()->getControllerDirectory();
 
-        if ((null !== $module) && (isset($directories['module']))) {
+        if ((null !== $module) && (isset($directories[$module]))) {
             return $directories[$module];
         }
 
