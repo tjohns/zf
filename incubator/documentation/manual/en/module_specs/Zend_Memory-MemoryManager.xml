@@ -128,7 +128,28 @@ function foo()
             <title>Memory Limit</title>
 
             <para>
-                ...
+                Memory limit is a number of bytes allowed to be used by loaded movable objects.
+            </para>
+
+            <para>
+                If object loading/creation causes exceeding of this limit, then memory manager swaps some other objects.
+            </para>
+
+            <para>
+                Memory limit can be set or retrieved with <code>getMemoryLimit()</code> and <code>setMemoryLimit($newLimit)</code>
+                methods:
+                <programlisting role="php"><![CDATA[<?php
+$oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
+$memoryManager->getMemoryLimit($newLimit);     // Set memory limit in bytes
+]]></programlisting>
+            </para>
+
+            <para>
+                Negative value for memory limit means 'no limit'.
+            </para>
+
+            <para>
+                The default vaule is 2/3 of 'memory_limit' php.ini setting or 'no limit' (-1) if 'memory_limi't is not set in php.ini.
             </para>
         </sect3>
 
@@ -136,7 +157,24 @@ function foo()
             <title>MinSize</title>
 
             <para>
-                ...
+                MinSize is a minimal size of memory objects, which may be swapped by memory manager.
+            </para>
+
+            <para>
+                It's used to reduce number of swap/load operations.
+            </para>
+
+            <para>
+                Memory limit can be set or retrieved with <code>getMinSize()</code> and <code>setMinSize($newSize)</code>
+                methods:
+                <programlisting role="php"><![CDATA[<?php
+$oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
+$memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes
+]]></programlisting>
+            </para>
+
+            <para>
+                The default vaule is 16Kb.
             </para>
         </sect3>
     </sect2>
