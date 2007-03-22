@@ -1,6 +1,48 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.9.1 / 22-Mar-2007=
+- Zend_Loader
+    ZF-1089 Document Zend_Loader::autoload()
+    ZF-1076 Mistake in Zend_Measure-Edit
+- Zend_Auth
+    ZF-1087 Zend_Auth - documentation updates and additions
+- Zend_Controller
+    ZF-1110 Zend_Controller_Router_Route::assemble shoudn't reset user supplied wildcard parameters
+    ZF-1081 Zend_Controller_ActionTest Unit Tests failing
+    ZF-1047 Dispatcher's getControllerDirectory is looking for modules in a wrong place
+    ZF-1020 session_write_close & Zend_Session
+    ZF-1012 getControllerDirectory method in the Standard Dispatcher
+- Zend_Date
+    ZF-1101 getDate() yields results that look inconsistent
+- Zend_Db
+    ZF-1093 MS SQL Server: use QUOTED_IDENTIFIER
+- Zend_Db_Adapter_Mysqli
+    ZF-1039 Mysqli: use real_escape_string() for quoting
+- Zend_Db_Table
+    ZF-45   Zend_Db_Table::fetchRow() should return NULL for no resulting rows
+    ZF-1107 Zend_Db_Table_Abstract->fetchAll: 'rowClass' index typo
+    ZF-1080 Zend/Db/Table/Row/Abstract.php missing opening <
+- Zend_Filter / Zend_Validate
+    ZF-1086 Zend Filter string casts improvement
+- Zend_Http_Client
+    ZF-1095 Allow other HTTP methods not in the RFC
+- Zend_Locale
+    ZF-1072 Zend_Locale Unit Tests failing
+    ZF-1066 isDate() returns true for dates that do not appear to be valid
+- Zend_Mail
+    ZF-580  Quoted printable remove dot from message
+    ZF-1073 Zend_Mail Unit Tests failing
+- Zend_Measure
+    ZF-1079 Example in Zend_Measure-Types
+    ZF-1082 Zend_Measure_NumberTest Unit Tests failing
+- Zend_Mime
+    ZF-508  [Coding Standard] Zend_Mime_Exception @package is Zend_Mail
+    ZF-1058 Infinite loop if body ending with space
+    ZF-1051 Zend_Mime::encodeQuotedPrintable E_NOTICE if str is certain length
+- Zend_Registry
+    ZF-1094 issue with examples given for accessing Zend_Registry as on object
+
 =RELEASE 0.9.0 / 16-Mar-2007=
 - Zend_Acl
     ZF-950  Unclear explanation of multiple inheritance between Roles
@@ -57,7 +99,6 @@ Zend Framework                                                             NEWS
     ZF-1    Quote SQL identifiers
     ZF-21   Zend_Db_Table::find() - return values have inconsistent type
     ZF-38   Zend_Db_Table should allow custom Row objects
-    ZF-45   Zend_Db_Table should return FALSE for no resulting rows
     ZF-180  Zend_Db_Table_Row: __get function maps incorrectly to _data
     ZF-190  Make Zend_Db_Rowset, Zend_Db_Row serialisable
     ZF-445  Name Filter: Column Names in camelCaps not Accessible?
