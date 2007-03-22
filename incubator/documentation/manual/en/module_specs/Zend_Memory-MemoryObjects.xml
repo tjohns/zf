@@ -14,4 +14,31 @@
             ...
         </para>
     </sect2>
+
+    <sect2 id="zend.memory.memory-objects.api">
+        <title>Memory container interface</title>
+
+        <para>
+            Memory container provides the following methods:
+        </para>
+
+        <sect3 id="zend.memory.memory-objects.api.getRef">
+            <title>getRef() method</title>
+
+            <programlisting role="php"><![CDATA[<?php
+public function &getRef();]]></programlisting>
+            <para>
+                <code>getRef()</code> method retorns reference to the object value.
+            </para>
+
+            <para>
+                Movable objects are loaded from swap at this moment if it's necessary. It may cause swapping of other object.
+            </para>
+
+            <para>
+                Movable objects are loaded from swap at this moment if it's necessary. It may cause swapping of other object.
+            </para>
+        </sect3>
+
+    </sect2>
 </sect1>

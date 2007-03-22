@@ -32,13 +32,12 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
 
         <para>
             Special name 'None' may be also used as backend name in addition to standard Zend_Cache backends.
-            <programlisting role="php"><![CDATA[
-$memoryManager = Zend_Memory::factory('None');
-]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$memoryManager = Zend_Memory::factory('None');]]></programlisting>
         </para>
 
         <para>
-            'None' backend doesn't need any options specified.
+            'None' backend doesn't need any option specified.
         </para>
 
         <para>
@@ -62,9 +61,8 @@ $memoryManager = Zend_Memory::factory('None');
                 <para>
                     Movable objects (objects, which may be swapped) are created with
                     <code>Zend_Memory_Manager::create([$data])</code> method:
-                    <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->create($data);
-]]></programlisting>
+                    <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);]]></programlisting>
                 </para>
 
                 <para>
@@ -78,9 +76,8 @@ $memObject = $memoryManager->create($data);
                 <para>
                     Locked objects (objects, which may be swapped) are created with
                     <code>Zend_Memory_Manager::createLocked([$data])</code> method:
-                    <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->createLocked($data);
-]]></programlisting>
+                    <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->createLocked($data);]]></programlisting>
                 </para>
 
                 <para>
@@ -94,7 +91,7 @@ $memObject = $memoryManager->createLocked($data);
             <title>Objects Destruction.</title>
 
             <para>
-                Memory objects are automatically destroyed and removed from memory, when they goes out of scope:
+                Memory objects are automatically destroyed and removed from memory, when they go out of scope:
                 <programlisting role="php"><![CDATA[<?php
 
 function foo()
@@ -119,7 +116,6 @@ function foo()
     // $memObject1 is destroyed here
     // but $memObject2 object is still referenced by $memList and is not destroyed
 }
-
 ]]></programlisting>
             </para>
         </sect3>

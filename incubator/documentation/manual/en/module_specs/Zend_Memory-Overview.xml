@@ -85,7 +85,11 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         </para>
 
         <para>
-            User can operate with this <code>value</code> attribute as he/she preferes:
+            User can operate with this <code>value</code> attribute as he/she preferes<footnote>
+            <para>
+                <link linkend="zend.memory.memory-objects.api.getRef">getRef()</link> method should be used for PHP versions before 5.2
+                estead of direct access to value property.
+            </para></footnote>:
             <programlisting role="php"><![CDATA[<?php
 $memObject = $memoryManager->create($data);
 ...
@@ -99,8 +103,7 @@ echo ord($memObject->value[$index1]);
 ...
 $memObject->value = substr($memObject->value, $start, $length);
 ...
-
-?>]]></programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -110,7 +113,7 @@ $memObject->value = substr($memObject->value, $start, $length);
         <para>
             Movable memory objects are transparently swapped and loaded to/from backend when it's necessary<footnote>
             <para>
-                Memory manager doesn't swap objects less than specified size due to performance considerations.
+                Memory manager doesn't swap objects with size less than it's specified due to performance considerations.
                 See <link linkend="zend.memory.memory-manager.settings.min-size">Memory Manager Settings. MinSize.</link>
                 section for more details.
             </para></footnote>.
