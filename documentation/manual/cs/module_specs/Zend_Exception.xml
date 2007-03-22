@@ -1,32 +1,32 @@
 <sect1 id="zend.exception.using">
 
-    <title>Using Exceptions</title>
+    <title>Práce s výjimkami</title>
 
     <para>
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
+        Všechny výjimky vyhozené v Zend Frameworku by měly být odvozeny od
+        hlavní třídy Zend_Exception.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Example of catching an exception</title>
+        <title>Příklad zachycení výjimky</title>
         <programlisting role="php"><![CDATA[<?php
 
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
-    echo "Caught exception: " . get_class($e) . "\n";
-    echo "Message: " . $e->getMessage() . "\n";
-    // other code to recover from the failure.
+    echo "Zachycená výjimka: " . get_class($e) . "\n";
+    echo "Zpráva: " . $e->getMessage() . "\n";
+    // další kód, který se vykoná při chybě
 }
 
 ?>]]></programlisting>
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework 
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
+        Pro více informací o výjimkách se podívejte do dokumentace
+        k příslušné knihovně Zend Frameworku. Najdete informace metodach,
+        které výjimky vyhazují a za jakých okolností se tak děje
+        a které výjimky jsou zděděny z hlavní výjimky - Zend_Exception.
     </para>
 
 </sect1>
