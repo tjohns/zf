@@ -312,4 +312,24 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertEquals('', $body, $body);
     }
+
+    public function testModuleSubdirControllerFound()
+    {
+        Zend_Controller_Front::getInstance()->addControllerDirectory(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'controllers',
+            'foo'
+        );
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('foo');
+        $request->setControllerName('admin_index');
+        $request->setActionName('index');
+
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertContains("Foo_Admin_IndexController::indexAction() called", $body, $body);
+    }
 }
