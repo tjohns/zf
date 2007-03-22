@@ -4,60 +4,63 @@
 
     <sect2 id="zend.db.table.relationships.introduction">
 
-        <title>Introduction</title>
+        <title>導入</title>
 
         <para>
-            Tables have relationships to each other in a relational database.
-            An entity in one table can be linked to one or more entities in
-            another table by using referential integrity constraints
-            defined in the database schema.
+            リレーショナルデータベースでは、テーブル間の関連
+            (リレーション) が設定されています。
+            あるテーブル内のエンティティが、
+            データベーススキーマで定義されている参照整合性制約を使用して
+            他のエンティティとリンクしているのです。
         </para>
 
         <para>
-            The Zend_Db_Table_Row class has methods for querying
-            related rows in other tables.
+            Zend_Db_Table_Row クラスは、他のテーブルの
+            関連する行を問い合わせるためのメソッドを持っています。
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.relationships.defining">
 
-        <title>Defining Relationships</title>
+        <title>リレーションの定義</title>
 
         <para>
-            In this section, we use an example database that shows
-            several types of relationships between tables.  
-            This database tracks bugs in a software development
-            project.  The database contains three tables: 
+            この節では、テーブル間にいくつかの種類のリレーションが
+            設定されているデータベースを例として使用します。
+            このデータベースは、ソフトウェア開発プロジェクトでのバグを管理するものです。
+            以下の三つのテーブルから構成されています。
         </para>
         
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Accounts</code> stores identities of
-                    each user of the bug-tracking database.
+                    <code>Accounts</code>
+                    には、バグ管理データベースのユーザの情報を保存します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Products</code> stores information about
-                    each product for which a bug can be logged.
+                    <code>Products</code> 
+                    には、バグを記録する対象となる製品についての情報を保存します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Bugs</code> stores information about bugs,
-                    including the product that has the bug,
-                    the person who reported the bug,
-                    the person who is assigned to fix the bug,
-                    and the person who is assigned to verify the fix.
+                    <code>Bugs</code> 
+                    にはバグについての情報を保存します。
+                    バグが発生した製品、
+                    バグを報告した人、
+                    そのバグを修正する担当者、
+                    バグ対応が完了したことを確認する担当者
+                    といった情報が含まれます。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The following SQL data definition language pseudocode
-            describes the tables in this example database.
+            このサンプルデータベースの構造を表す
+            SQL 擬似コードを次に示します。
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -83,34 +86,37 @@ CREATE TABLE bugs (
         </programlisting>
 
         <para>
-            The <code>products</code> table has a one-to-many relationship to
-            the <code>bugs</code> table.
-            The <code>accounts</code> table also has a one-to-many relationship
-            to the <code>bugs</code> table.
-            Thus the <code>products</code> table has a many-to-many relationship
-            to the <code>accounts</code> table.
+            <code>products</code> テーブルは、
+            <code>bugs</code> テーブルとの間に一対多のリレーションがあります。
+            また <code>accounts</code> テーブルも、
+            <code>bugs</code> テーブルとの間に一対多のリレーションがあります。
+            したがって、<code>products</code> テーブルと
+            <code>accounts</code> テーブルの間には
+            多対多のリレーションがあることになります。
         </para>
 
         <para>
-            Also notice that the <code>bugs</code> table contains multiple
-            foreign key references to the <code>accounts</code> table.
-            Each of these foreign keys may reference a different row in the
-            <code>accounts</code> table for a given bug.
+            また、注目すべき点として、<code>bugs</code>
+            テーブルから <code>accounts</code>
+            テーブルに対して複数の外部キーが設定されています。
+            個々の外部キーは、そのバグに対してそれぞれ別の
+            <code>accounts</code> の行を指しています。
         </para>
 
         <para>
-            Define classes for each of these tables, extending the abstract
-            class Zend_Db_Table_Abstract, as described in the
+            これらの三つのテーブルについて、
             "<link linkend="zend.db.table.getting-started">
-            Zend_Db_Table: Getting Started</link>" section.
-            In the class file for each child table, declare the reference
-            relationships in the <code>protected $_referenceMap</code>
-            and <code>protected $_dependentTables</code>
-            array variables.
+            Zend_Db_Table: さあ、はじめましょう</link>"
+            で説明しているようにして
+            抽象クラス Zend_Db_Table_Abstract を継承したクラスを定義します。
+            各テーブルのクラス内で、リレーションを配列変数
+            <code>protected $_referenceMap</code>
+            および <code>protected $_dependentTables</code>
+            として宣言します。
         </para>
 
         <para>
-            Below is the PHP class definitions for these tables:
+            以下に、これらのテーブルに対応する PHP クラス定義を示します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -160,111 +166,100 @@ class Bugs extends Zend_Db_Table_Abstract
         </programlisting>
 
         <para>
-            Declare the <code>$_dependentTables</code> array in the
-            class for the parent table.  List the class name for each
-            dependent table.  Use the class name, not the physical name
-            of the SQL table.
+            配列 <code>$_dependentTables</code> を、親テーブルで宣言し、
+            従属しているテーブルをそこで指定します。
+            SQL でのテーブル名ではなく、クラス名を使用するようにしましょう。
         </para>
 
         <para>
-            Declare the <code>$_referenceMap</code> array in the
-            class for each dependent table.  This is an associative array
-            of reference "rules".  A reference rule identifies which table
-            is the parent table in the relationship, and also lists
-            which columns in the dependent table reference which columns
-            in the parent table.
+            各従属テーブルのクラス内で、配列 <code>$_referenceMap</code>
+            を宣言します。これは、参照の "ルール" を定義する連想配列となります。
+            参照ルールとは、リレーションの親テーブルが何になるのか、
+            従属テーブルのどのカラムと親テーブルのどのカラムが対応するのかを示すものです。
         </para>
 
         <para>
-            The rule key is a string used as an index to the
-            <code>$_referenceMap</code> array.
-            This rule key is used to identify each reference relationship.
-            Choose a descriptive name for this rule key.
-            It's best to use a string that can be part of a PHP method name,
-            as you will see later.
+            ルールのキーを、配列 <code>$_referenceMap</code>
+            のインデックスとして使用します。
+            このルールのキーは、各リレーションを指定する際に使用します。
+            わかりやすい名前をつけるようにしましょう。
+            あとでご覧いただくように、PHP のメソッド名の一部を使用するとよいでしょう。
         </para>
 
         <para>
-            In the example PHP code above, the rule keys are:
-            <code>'Reporter'</code>,
-            <code>'Engineer'</code>,
-            <code>'Verifier'</code>, and
-            <code>'Product'</code>.
+            上のサンプル PHP コードでは、ルールのキーは
+            <code>'Reporter'</code>、
+            <code>'Engineer'</code>、
+            <code>'Verifier'</code> および
+            <code>'Product'</code> となります。
         </para>
 
         <para>
-            The value of each rule entry in the <code>$_referenceMap</code>
-            array is also an associative array.
-            The elements of this rule entry are described below:
+            配列 <code>$_referenceMap</code>
+            の各ルールエントリの内容もまた、連想配列です。
+            このルールエントリの内容について、以下で説明します。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <emphasis role="strong">columns</emphasis> =>
-                    An array of strings, naming the foreign key column name(s)
-                    in the dependent table.
+                    文字列の配列で、従属テーブル内での外部キー列の名前を指定します。
                 </para>
                 <para>
-                    It's common for this to be a single column, but some
-                    tables have multi-column keys.
+                    たいていの場合はカラムはひとつだけですが、
+                    複数カラムのキーとなるテーブルもあります。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">refTableClass</emphasis> =>
-                    The class name of the parent table.
-                    Use the class name, not the physical name of the SQL table.
+                    親テーブルのクラス名を指定します。
+                    SQL テーブルの物理的な名前ではなく、クラス名を使用します。
                 </para>
                 <para>
-                    It's common for a dependent table to have only one reference
-                    to its parent table, but some tables have multiple
-                    references to the same parent table.  In the example
-                    database, there is one reference from the <code>bugs</code>
-                    table to the <code>products</code> table, but three
-                    references from the <code>bugs</code> table to the 
-                    <code>accounts</code> table.
-                    Put each reference in a separate entry in
-                    the <code>$_referenceMap</code> array.
+                    通常は、従属テーブルから親テーブルへの参照はひとつだけになります。
+                    しかし、テーブルによっては同一の親テーブルへの参照を複数持つものもあります。
+                    サンプルのデータベースでは、 <code>bugs</code>
+                    テーブルから <code>products</code> テーブルへの参照はひとつだけです。
+                    しかし、<code>bugs</code> テーブルから
+                    <code>accounts</code> テーブルへの参照は三つあります。
+                    それぞれの参照を、配列 <code>$_referenceMap</code>
+                    の個別のエントリとします。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">refColumns</emphasis> =>
-                    An array of strings, naming primary key column names in
-                    the parent table.
+                    文字列の配列で、親テーブルの主キーのカラム名を指定します。
                 </para>
                 <para>
-                    It's common for this to be a single column, but
-                    some tables have multi-column keys.
-                    If the reference uses a
-                    multi-column key, the order of columns in the 
-                    <code>'columns'</code> entry must match the order of
-                    columns in the <code>'refColumns'</code> entry.
+                    たいていの場合はカラムはひとつだけですが、
+                    複数カラムのキーとなるテーブルもあります。
+                    複数カラムのキーを使用する場合は、
+                    <code>'columns'</code> エントリでのカラムの順番と
+                    <code>'refColumns'</code> エントリでのカラムの順番が一致する必要があります。
                 </para>
                 <para>
-                    It is optional to specify this element.
-                    If you don't specify the <code>refColumns</code>,
-                    the column(s) reported as the primary key columns
-                    of the parent table are used by default.
+                    この要素の指定は必須ではありません。
+                    <code>refColumns</code> を省略した場合は、
+                    親テーブルの主キーカラムをデフォルトで使用します。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">onDelete</emphasis> =>
-                    The rule for an action to execute if a row is
-                    deleted in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    親テーブルの行が削除されたときに実行する動作を指定します。
+                    "<xref linkend="zend.db.table.relationships.cascading" />"
+                    を参照ください。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">onUpdate</emphasis> =>
-                    The rule for an action to execute if values in
-                    primary key columns are updated in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    親テーブルで主キーカラムの値が更新されたときに実行する動作を指定します。
+                    "<xref linkend="zend.db.table.relationships.cascading" />"
+                    を参照ください。
                 </para>
             </listitem>
         </itemizedlist>
@@ -273,13 +268,12 @@ class Bugs extends Zend_Db_Table_Abstract
 
     <sect2 id="zend.db.table.relationships.fetching.dependent">
 
-        <title>Fetching a Dependent Rowset</title>
+        <title>従属行セットの取得</title>
 
         <para>
-            If you have a Row object as the result of a query on a parent
-            table, you can fetch rows from dependent tables that reference
-            the current row.
-            Use the method:
+            親テーブルに対するクエリの結果を Row オブジェクトとして取得すれば、
+            その行を参照している従属テーブルの行を取得することができます。
+            使用するメソッドは、次のようになります。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -288,25 +282,23 @@ $row->findDependentRowset($table, [$rule])
         </programlisting>
 
         <para>
-            This method returns a Zend_Db_Table_Rowset_Abstract object,
-            containing a set of rows from the dependent table
-            <code>$table</code> that refer to the row identified by
-            the <code>$row</code> object.
+            このメソッドは Zend_Db_Table_Rowset_Abstract オブジェクトを返します。
+            その中には、従属テーブル <code>$table</code>
+            の行のうち、<code>$row</code> が指す行を参照しているものが含まれます。
         </para>
 
         <para>
-            The first argument <code>$table</code> can be a string
-            that specifies the dependent table by its class name.
-            You can also specify the dependent table by using an object
-            of that table class.
+            最初の引数 <code>$table</code> には、
+            従属テーブルのクラス名を表す文字列を指定します。
+            文字列ではなく、テーブルクラスのオブジェクトで指定することもできます。
         </para>
 
         <example id="zend.db.table.relationships.fetching.dependent.example">
-            <title>Fetching a Dependent Rowset</title>
+            <title>従属行セットの取得</title>
             <para>
-                This example shows getting a Row object from the table
-                <code>Accounts</code>, and finding the <code>Bugs</code>
-                reported by that account.
+                この例では、<code>Accounts</code> テーブルから取得した行オブジェクトについて、
+                その人が報告したバグを <code>Bugs</code>
+                テーブルから探す方法を示します。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -321,29 +313,29 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
         </example>
 
         <para>
-            The second argument <code>$rule</code> is optional.  It is a
-            string that names the rule key in the <code>$_referenceMap</code>
-            array of the dependent table class.
-            If you don't specify a rule, the first rule in the array that
-            references the parent table is used.
-            If you need to use a rule other than the first, you need to
-            specify the key.
+            二番目の引数 <code>$rule</code> はオプションです。
+            これは、従属テーブルクラスの配列 <code>$_referenceMap</code>
+            でのルールのキーの名前を指定します。
+            ルールを指定しなかった場合は、配列の中で
+            その親テーブルを参照している最初のルールを使用します。
+            最初のもの以外のルールを使用する必要がある場合は、
+            キーを指定しなければなりません。
         </para>
 
         <para>
-            In the example code above, the rule key is not specified, so
-            the rule used by default is the first one that matches
-            the parent table.  This is the rule <code>'Reporter'</code>.
+            上の例のコードでは、ルールのキーを指定していません。
+            したがって、親テーブルにマッチする最初のルールをデフォルトで使用します。
+            ここでは <code>'Reporter'</code> がそれにあたります。
         </para>
 
         <example id="zend.db.table.relationships.fetching.dependent.example-by">
-            <title>Fetching a Dependent Rowset By a Specific Rule</title>
+            <title>ルールを指定することによる従属行セットの取得</title>
             <para>
-                This example shows getting a Row object from the table
-                <code>Accounts</code>, and finding the <code>Bugs</code>
-                assigned to be fixed by the user of that account.
-                The rule key string that corresponds to this reference
-                relationship in this example is <code>'Engineer'</code>.
+                この例では、<code>Accounts</code> テーブルから取得した行オブジェクトについて、
+                修正担当者がその人になっているバグを <code>Bugs</code>
+                テーブルから探す方法を示します。この例における、
+                このリレーションに対応する参照ルールのキーは
+                <code>'Engineer'</code> です。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -358,12 +350,13 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
         </example>
 
         <para>
-            Alternatively, you can query rows from a dependent table using
-            a special mechanism called a "magic method".
-            Zend_Db_Table_Row_Abstract invokes the method:
+            別の方法として、"マジックメソッド"
+            を使用して従属テーブルの行を問い合わせることもできます。
+            以下のパターンのいずれかに該当するメソッドを
+            Row オブジェクトでコールすると、
+            Zend_Db_Table_Row_Abstract は
             <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
-            if you invoke a method on the Row object matching either
-            of the following patterns:
+            メソッドを実行します。
         </para>
 
         <itemizedlist>
@@ -380,31 +373,31 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
         </itemizedlist>
 
         <para>
-            In the patterns above, <code>&lt;TableClass&gt;</code> and
-            <code>&lt;Rule&gt;()</code> are strings that correspond
-            to the class name of the dependent table, and the dependent
-            table's rule key that references the parent table.
+            上のパターンにおいて、<code>&lt;TableClass&gt;</code> および
+            <code>&lt;Rule&gt;()</code> は、それぞれ
+            従属テーブルのクラス名、親テーブルとの参照関係を表す
+            従属テーブルのルールのキーとなります
         </para>
 
         <note>
             <para>
-                Some application frameworks, such as Ruby on Rails, use
-                a mechanism called "inflection" to allow the spelling of
-                identifiers to change depending on usage.
-                For simplicity, Zend_Db_Table_Row does not provide any
-                inflection mechanism.
-                The table identity and the rule key named in the method call
-                must match the spelling of the class and rule key exactly.
+                他のアプリケーションフレームワーク、たとえば
+                Ruby on Rails などでは、いわゆる "inflection
+                (語尾変化)" という仕組みを採用しているものもあります。
+                これにより、使用する状況に応じて識別子のスペルを変更できるようになります。
+                あまり複雑にならないようにするため、
+                Zend_Db_Table_Row ではこの仕組みを提供していません。
+                メソッドのコール時に指定するテーブルの ID やルールのキーは、
+                クラス名やキー名と正確に一致しなければなりません。
             </para>
         </note>
 
         <example id="zend.db.table.relationships.fetching.dependent.example-magic">
-            <title>Fetching Dependent Rowsets using the Magic Method</title>
+            <title>マジックメソッドの使用による従属行セットの取得</title>
             <para>
-                This example shows finding dependent Rowsets equivalent to
-                those in the previous examples.  In this case, the application
-                uses the magic method invocation instead of specifying the
-                table and rule as strings.
+                この例では、先ほどの例と同じ従属行セットを見つける方法を示します。
+                今回は、テーブルとルールを文字列で指定するのではなく、
+                マジックメソッドを使用します。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -412,10 +405,10 @@ $accountsTable    = new Accounts();
 $accountsRowset   = $accountsTable->find(1234);
 $user1234         = $accountsRowset->current();
 
-// Use the default reference rule
+// デフォルトの参照ルールを使用します
 $bugsReportedBy   = $user1234->findBugs();
 
-// Specify the reference rule
+// 参照ルールを指定します
 $bugsAssignedTo   = $user1234->findBugsByEngineer();
 
 ?>]]>
@@ -426,13 +419,12 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();
 
     <sect2 id="zend.db.table.relationships.fetching.parent">
 
-        <title>Fetching a Parent Row</title>
+        <title>親の行の取得</title>
 
         <para>
-            If you have a Row object as the result of a query on a dependent
-            table, you can fetch the row in the parent to which the dependent
-            row refers.
-            Use the method:
+            従属テーブルに対するクエリの結果を Row オブジェクトとして取得すれば、
+            その従属行が参照している親テーブルの行を取得することができます。
+            使用するメソッドは、次のようになります。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -441,25 +433,24 @@ $row->findParentRow($table, [$rule])
         </programlisting>
 
         <para>
-            There always should be exactly one row in the parent table
-            referenced by a dependent row, therefore this method returns
-            a Row object, not a Rowset object.
+            従属テーブルに対応する親テーブルの行は、常にひとつだけです。
+            したがって、このメソッドは Rowset オブジェクトではなく
+            Row オブジェクトを返します。
         </para>
 
         <para>
-            The first argument <code>$table</code> can be a string
-            that specifies the parent table by its class name.
-            You can also specify the parent table by using an object
-            of that table class.
+            最初の引数 <code>$table</code> には、
+            親テーブルのクラス名を表す文字列を指定します。
+            文字列ではなく、テーブルクラスのオブジェクトで指定することもできます。
         </para>
 
         <example id="zend.db.table.relationships.fetching.parent.example">
-            <title>Fetching the Parent Row</title>
+            <title>親の行の取得</title>
             <para>
-                This example shows getting a Row object from the table
-                <code>Bugs</code> (for example one of those bugs with status
-                'NEW'), and finding the row in the <code>Accounts</code>
-                table for the user who reported the bug.
+                この例では、<code>Bugs</code> テーブルから
+                (たとえば status が 'NEW' のものなどの)
+                行オブジェクトを取得し、そのバグを報告した人に対応する行を
+                <code>Accounts</code> テーブルから探す方法を示します。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -474,29 +465,28 @@ $reporter          = $bug1->findParentRow('Accounts');
         </example>
 
         <para>
-            The second argument <code>$rule</code> is optional.  It is a
-            string that names the rule key in the <code>$_referenceMap</code>
-            array of the dependent table class.
-            If you don't specify a rule, the first rule in the array that
-            references the parent table is used.
-            If you need to use a rule other than the first, you need to
-            specify the key.
+            二番目の引数 <code>$rule</code> はオプションです。
+            これは、従属テーブルクラスの配列 <code>$_referenceMap</code>
+            でのルールのキーの名前を指定します。
+            ルールを指定しなかった場合は、配列の中で
+            その親テーブルを参照している最初のルールを使用します。
+            最初のもの以外のルールを使用する必要がある場合は、
+            キーを指定しなければなりません。
         </para>
 
         <para>
-            In the example above, the rule key is not specified, so
-            the rule used by default is the first one that matches
-            the parent table.  This is the rule <code>'Reporter'</code>.
+            上の例のコードでは、ルールのキーを指定していません。
+            したがって、親テーブルにマッチする最初のルールをデフォルトで使用します。
+            ここでは <code>'Reporter'</code> がそれにあたります。
         </para>
 
         <example id="zend.db.table.relationships.fetching.parent.example-by">
-            <title>Fetching a Parent Row By a Specific Rule</title>
+            <title>ルールを指定することによる親の行の取得</title>
             <para>
-                This example shows getting a Row object from the table
-                <code>Bugs</code>, and finding the account for the
-                engineer assigned to fix that bug.
-                The rule key string that corresponds to this reference
-                relationship in this example is <code>'Engineer'</code>.
+                この例では、テーブル <code>Bugs</code> から取得した行オブジェクトについて、
+                そのバグの修正担当者のアカウント情報を探す方法を示します。
+                このリレーションに対応する参照ルールのキーは
+                <code>'Engineer'</code> です。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -511,12 +501,13 @@ $engineer          = $bug1->findParentRow('Account', 'Engineer');
         </example>
 
         <para>
-            Alternatively, you can query rows from a parent table using
-            a "magic method".
-            Zend_Db_Table_Row_Abstract invokes the method:
+            別の方法として、"マジックメソッド"
+            を使用して親テーブルの行を問い合わせることもできます。
+            以下のパターンのいずれかに該当するメソッドを
+            Row オブジェクトでコールすると、
+            Zend_Db_Table_Row_Abstract は
             <code>findParentRow('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
-            if you invoke a method on the Row object matching either
-            of the following patterns:
+            メソッドを実行します。
         </para>
 
         <itemizedlist>
@@ -533,26 +524,25 @@ $engineer          = $bug1->findParentRow('Account', 'Engineer');
         </itemizedlist>
 
         <para>
-            In the patterns above, <code>&lt;TableClass&gt;</code> and
-            <code>&lt;Rule&gt;</code> are strings that correspond
-            to the class name of the parent table, and the dependent
-            table's rule key that references the parent table.
+            上のパターンにおいて、<code>&lt;TableClass&gt;</code> および
+            <code>&lt;Rule&gt;()</code> は、それぞれ
+            親テーブルのクラス名、親テーブルとの参照関係を表す
+            従属テーブルのルールのキーとなります
         </para>
 
         <note>
             <para>
-                The table identity and the rule key named in the method call
-                must match the spelling of the class and rule key exactly.
+                メソッドのコール時に指定するテーブルの ID やルールのキーは、
+                クラス名やキー名と正確に一致しなければなりません。
             </para>
         </note>
 
         <example id="zend.db.table.relationships.fetching.parent.example-magic">
-            <title>Fetching the Parent Row using the Magic Method</title>
+            <title>マジックメソッドの使用による親の行の取得</title>
             <para>
-                This example shows finding parent Rows equivalent to
-                those in the previous examples.  In this case, the application
-                uses the magic method invocation instead of specifying the
-                table and rule as strings.
+                この例では、先ほどの例と同じ親の行を見つける方法を示します。
+                今回は、テーブルとルールを文字列で指定するのではなく、
+                マジックメソッドを使用します。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -560,10 +550,10 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
-// Use the default reference rule
+// デフォルトの参照ルールを使用します
 $reporter          = $bug1->findParentAccount();
 
-// Specify the reference rule
+// 参照ルールを指定します
 $engineer          = $bug1->findParentAccountByEngineer();
 
 ?>]]>
@@ -574,15 +564,14 @@ $engineer          = $bug1->findParentAccountByEngineer();
 
     <sect2 id="zend.db.table.relationships.fetching.many-to-many">
 
-        <title>Fetching a Rowset via a Many-to-many Relationship</title>
+        <title>多対多のリレーションを使用した行セットの取得</title>
 
         <para>
-            If you have a Row object as the result of a query on one table
-            in a many-to-many relationship (for purposes of the example, 
-            call this the "origin" table), you can fetch corresponding rows
-            in the other table (call this the "destination" table)
-            via an intersection table.
-            Use the method:
+            多対多のリレーションの片方のテーブル (この例では "元テーブル"
+            と呼ぶことにします) に対するクエリの結果を Row
+            オブジェクトとして取得すれば、もう一方のテーブル (この例では
+            "対象テーブル" と呼ぶことにします) の対応する行を取得することができます。
+            使用するメソッドは、次のようになります。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -591,36 +580,32 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]])
         </programlisting>
 
         <para>
-            This method returns a Zend_Db_Table_Rowset_Abstract containing rows
-            from the table <code>$table</code>, satisfying the many-to-many
-            relationship.  The current Row object <code>$row</code> from the
-            origin table is used to find rows in the intersection table, and
-            that is joined to the destination table.
+            このメソッドは Zend_Db_Table_Rowset_Abstract オブジェクトを返します。
+            その中には、テーブル <code>$table</code>
+            の行のうち、多対多のリレーションを満たすものが含まれます。
+            元テーブルの行 <code>$row</code> を使用して中間テーブルの行を探し、
+            さらにそれを対象テーブルと結合します。
         </para>
 
         <para>
-            The first argument <code>$table</code> can be a string
-            that specifies the destination table in the many-to-many
-            relationship by its class name.
-            You can also specify the destination table by using an object
-            of that table class.
+            最初の引数 <code>$table</code> には、
+            多対多のリレーションの対象テーブルのクラス名を表す文字列を指定します。
+            文字列ではなく、テーブルクラスのオブジェクトで指定することもできます。
         </para>
 
         <para>
-            The second argument <code>$intersectionTable</code> can be a string
-            that specifies the intersection table between the two tables in
-            the the many-to-many relationship by its class name.
-            You can also specify the intersection table by using an object 
-            of that table class.
+            二番目の引数 <code>$intersectionTable</code> には、
+            多対多のリレーションの中間テーブルのクラス名を表す文字列を指定します。
+            文字列ではなく、テーブルクラスのオブジェクトで指定することもできます。
         </para>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example">
-            <title>Fetching a Rowset with the Many-to-many Method</title>
+            <title>多対多の形式の行セットの取得</title>
             <para>
-                This example shows geting a Row object from from the origin
-                table <code>Accounts</code>, and finding rows from the
-                destination table <code>Products</code>, representing products
-                against which that account has reported bugs.
+                この例では、元テーブル <code>Accounts</code>
+                から取得した行オブジェクトについて、対象テーブル
+                <code>Products</code> の行を探す方法を示します。
+                これは、その人がバグを報告した製品を表すものです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -635,48 +620,46 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
         </example>
 
         <para>
-            The third and fourth arguments <code>$rule1</code> and
-            <code>$rule2</code> are optional.
-            These are strings that name the rule keys in the 
-            <code>$_referenceMap</code> array of the intersection table.
+            三番目と四番目の引数 <code>$rule1</code> および
+            <code>$rule2</code> はオプションです。
+            これは、中間テーブルの配列 <code>$_referenceMap</code>
+            でのルールのキーの名前を表す文字列です。
         </para>
 
         <para>
-            The <code>$rule1</code> key names the rule for the relationship
-            from the intersection table to the origin table.  In this example,
-            this is the relationship from <code>Bugs</code> to
-            <code>Accounts</code>.  
+            <code>$rule1</code> は、中間テーブルから元テーブルへのリレーションを表す
+            ルールのキーです。この例では、<code>Bugs</code> から
+            <code>Accounts</code> へのリレーションがそれにあたります。
         </para>
 
         <para>
-            The <code>$rule2</code> key names the rule for the relationship
-            from the intersection table to the destination table.  In this example,
-            this is the relationship from <code>Bugs</code> to
-            <code>Products</code>.  
+            <code>$rule2</code> は、中間テーブルから対象テーブルへのリレーションを表す
+            ルールのキーです。この例では、<code>Bugs</code> から
+            <code>Products</code> へのリレーションがそれにあたります。
         </para>
 
         <para>
-            Similarly to the methods for finding parent and dependent rows,
-            if you don't specify a rule, the method uses the first rule in the
-            <code>$_referenceMap</code> array that matches the tables in the
-            relationship.  If you need to use a rule other than the first,
-            you need to specify the key.
+            親や従属行を取得するメソッドと同様、もしルールを指定しなければ、
+            配列 <code>$_referenceMap</code>
+            の中でそのリレーションに該当する最初のルールを使用します。
+            最初のもの以外のルールを使用する必要がある場合は、
+            キーを指定しなければなりません。
         </para>
 
         <para>
-            In the example code above, the rule key is not specified, so
-            the rules used by default are the first ones that match.
-            In this case, <code>$rule1</code> is <code>'Reporter'</code>
-            and <code>$rule2</code> is <code>'Product'</code>.
+            上の例のコードでは、ルールのキーを指定していません。
+            したがって、マッチする最初のルールをデフォルトで使用します。
+            ここでは、<code>$rule1</code> が <code>'Reporter'</code>、
+            そして <code>$rule2</code> が <code>'Product'</code> になります。
         </para>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example-by">
-            <title>Fetching a Rowset with the Many-to-many Method By a Specific Rule</title>
+            <title>ルールを指定することによる多対多の形式の行セットの取得</title>
             <para>
-                This example shows geting a Row object from from the origin
-                table <code>Accounts</code>, and finding rows from the
-                destination table <code>Products</code>, representing products
-                for which that account is assigned to fix bugs.
+                この例では、元テーブル <code>Accounts</code>
+                から取得した行オブジェクトについて、対象テーブル
+                <code>Products</code> の行を探す方法を示します。
+                これは、その人が修正担当となっているバグが存在する製品を表すものです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -691,11 +674,12 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs', 'Enginee
         </example>
 
         <para>
-            Alternatively, you can query rows from the destination table
-            in a many-to-many relationship using a "magic method."
-            Zend_Db_Table_Row_Abstract invokes the method:
+            別の方法として、"マジックメソッド"
+            を使用して多対多のリレーションの対象テーブルの行を問い合わせることもできます。
+            以下のパターンのいずれかに該当するメソッドをコールすると、
+            Zend_Db_Table_Row_Abstract は
             <code>findManyToManyRowset('&lt;TableClass&gt;', '&lt;IntersectionTableClass&gt;', '&lt;Rule1&gt;', '&lt;Rule2&gt;')</code>
-            if you invoke a method matching any of the following patterns:
+            メソッドを実行します。
         </para>
 
         <itemizedlist>
@@ -717,30 +701,28 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs', 'Enginee
         </itemizedlist>
 
         <para>
-            In the patterns above, <code>&lt;TableClass&gt;</code> and
-            <code>&lt;IntersectionTableClass&gt;</code> are strings
-            that correspond to the class names of the destination table
-            and the intersection table, respectively.
-            <code>&lt;Rule1&gt;</code> and <code>&lt;Rule2&gt;</code>
-            are strings that correspond to the rule keys in the
-            intersection table that reference the origin table and the
-            destination table, respectively.
+            上のパターンにおいて、<code>&lt;TableClass&gt;</code> および
+            <code>&lt;IntersectionTableClass&gt;</code> は、それぞれ
+            対象テーブルのクラス名および中間テーブルのクラス名となります。
+            また <code>&lt;Rule1&gt;</code> および <code>&lt;Rule2&gt;</code>
+            は、それぞれ中間テーブルから元テーブル、
+            週間テーブルから対象テーブルへの参照を表すルールのキーとなります。
         </para>
 
         <note>
             <para>
-                The table identities and the rule keys named in the method call
-                must match the spelling of the class and rule key exactly.
+                メソッドのコール時に指定するテーブルの ID やルールのキーは、
+                クラス名やキー名と正確に一致しなければなりません。
             </para>
         </note>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example-magic">
-            <title>Fetching Rowsets using the Magic Many-to-many Method</title>
+            <title>マジックメソッドの使用による多対多の形式の行セットの取得</title>
             <para>
-                This example shows finding rows in the destination table
-                of a many-to-many relationship representing products against
-                which the user reported bugs, and for which the user has been
-                assigned to fix bugs.
+                この例では、製品からの多対多のリレーションの
+                対象テーブルの行を見つける方法を示します。
+                その製品についてのバグを報告した人、
+                そしてその製品についてのバグの修正担当者を見つけます。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -748,10 +730,10 @@ $accountsTable     = new Accounts();
 $accountsRowset    = $accountsTable->find(1234);
 $user1234          = $accountsRowset->current();
 
-// Use the default reference rule
+// デフォルトの参照ルールを使用します
 $productsReporting = $user1234->findProductsViaBugs();
 
-// Specify the reference rule
+// 参照ルールを指定します
 $productsFixing    = $user1234->findProductsViaBugsByEngineer();
 
 ?>]]>
@@ -762,37 +744,37 @@ $productsFixing    = $user1234->findProductsViaBugsByEngineer();
 
     <sect2 id="zend.db.table.relationships.cascading">
 
-        <title>Cascading Write Operations</title>
+        <title>書き込み操作の連鎖</title>
 
         <para>
-            You can declare cascading operations to execute against
-            a dependent table when you apply an <code>UPDATE</code>
-            or a <code>DELETE</code> to a row in a parent table.
+            親テーブルに対して <code>UPDATE</code> あるいは
+            <code>DELETE</code> を行った際に、
+            従属テーブルに対して行う操作を指定することができます。
         </para>
 
         <para>
-            It is recommended to declare cascading updates and deletes
-            using declarative referential integrity (DRI) syntax in your 
-            database schema.  If your RDBMS technology supports this
-            feature, use it instead of this feature in Zend_Db_Table.
-            The SQL syntax for this is in a <code>REFERENCES</code> clause,
-            appearing as <code>ON UPDATE CASCADE</code> and
-            <code>ON DELETE CASCADE</code>.
+            更新時や削除時の操作は、データベースのスキーマで
+            宣言参照整合性 (declarative referential integrity: DRI)
+            構文を使用して宣言することを推奨します。
+            RDBMS がこの機能をサポートしている場合は、Zend_Db_Table
+            の機能ではなくそちらを使いましょう。この機能を表す SQL 構文は
+            <code>REFERENCES</code> 句で、
+            <code>ON UPDATE CASCADE</code> および
+            <code>ON DELETE CASCADE</code> などとして使用します。
         </para>
 
         <para>
-            If your RDBMS does not enforce referential integrity constraints,
-            for example, if you use MySQL's MyISAM storage engine, or SQLite,
-            you may find it helpful to declare the cascading operations with
-            Zend_Db_Table.
+            もし RDBMS で参照整合性制約を強制できない場合
+            (たとえば MySQL で MyISAM ストレージエンジンを使用した場合や
+            SQLite など) は、Zend_Db_Table での指定が有用です。
         </para>
 
         <example id="zend.db.table.relationships.cascading.example-delete">
-            <title>Example of a Cascading Delete</title>
+            <title>連鎖削除の例</title>
             <para>
-                This example shows deleting a row in the <code>Products</code>
-                table, which is configured to automatically delete dependent
-                rows in the <code>Bugs</code> table.
+                この例では <code>Products</code> テーブルの行を削除します。
+                その際に、<code>Bugs</code> テーブルの従属行も
+                自動的に削除するように設定されています。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -801,58 +783,55 @@ $productsRowset = $productsTable->find(1234);
 $product1234    = $productsRowset->current();
 
 $product1234->delete();
-// Automatically cascades to Bugs table
-// and deletes dependent rows.
+// 自動的に Bugs テーブルにも連鎖し、
+// 従属する行が削除されます
 
 ?>]]>
             </programlisting>
         </example>
 
         <para>
-            Similarly, if you use <code>UPDATE</code> to change the value
-            of a primary key in a parent table,
-            you may want the value in foreign keys of dependent tables
-            to be updated automatically to match the new value, so that
-            such references are kept up to date.
+            同様に、<code>UPDATE</code> で親テーブルの主キーの値を変更した場合は、
+            従属テーブルの外部キーの値も自動的に新しい値に更新したくなることでしょう。
+            これにより、その参照を最新の状態にすることができます。
         </para>
 
         <para>
-            It's usually not necessary to update the value of a primary key
-            that was generated by a sequence or other mechanism.
-            But if you use a <emphasis>natural key</emphasis> that may change
-            value occasionally, it is more likely that you need to apply
-            cascading updates to dependent tables.
+            シーケンスなどの機能を用いて主キーを生成している場合は、
+            通常はその値を変更する必要はありません。しかし、
+            <emphasis>自然キー</emphasis> を使用している場合は、
+            値が変わる可能性もあります。そのような場合は、
+            従属テーブルに対して連鎖更新を行う必要があるでしょう。
         </para>
 
         <para>
-            To declare a cascading relationship in the Zend_Db_Table,
-            edit the rules in the <code>$_referenceMap</code>.
-            Set the associative array keys <code>'onDelete'</code> and
-            <code>'onUpdate'</code> to the string 'cascade'
-            (or the constant <code>self::CASCADE</code>).
-            Before a row is deleted from the parent table,
-            or its primary key values updated,
-            any rows in the dependent table that refer to the
-            parent's row are deleted or updated first.
+            Zend_Db_Table で連鎖リレーションを宣言するには、
+            <code>$_referenceMap</code> の中でのルールを編集し、
+            連想配列のキー <code>'onDelete'</code> および
+            <code>'onUpdate'</code> に文字列 'cascade'
+            (あるいは定数 <code>self::CASCADE</code>)
+            を設定します。
+            親テーブルから行が削除されたり主キーの値が更新されたりする前に、
+            その行を参照している従属テーブルの行が
+            まず削除あるいは更新されます。
         </para>
 
         <example id="zend.db.table.relationships.cascading.example-declaration">
-            <title>Example Declaration of Cascading Operations</title>
+            <title>連鎖操作の宣言の例</title>
             <para>
-                In the example below, rows in the <code>Bugs</code> table
-                are automatically deleted if the row in the <code>Products</code>
-                table to which they refer is deleted.
-                The <code>'onDelete'</code> element of the reference map entry
-                is set to <code>self::CASCADE</code>.
+                以下の例では、<code>Products</code>
+                テーブルのある行が削除されたときに、その行を参照している
+                <code>Bugs</code> テーブルの行が自動的に削除されます。
+                参照マップのエントリの要素 <code>'onDelete'</code> が
+                <code>self::CASCADE</code> に設定されているからです。
             </para>
             <para>
-                No cascading update is done in the example below if the primary
-                key value in the parent class is changed.
-                The <code>'onUpdate'</code> element of the reference map entry
-                is <code>self::RESTRICT</code>.
-                You can get the same result using the value
-                <code>self::NO_ACTION</code>, or by omitting the
-                <code>'onUpdate'</code> entry.
+                以下の例では、親クラスの主キーの値が変更されても
+                連鎖更新は起こりません。これは、参照マップのエントリの要素
+                <code>'onUpdate'</code> が <code>self::RESTRICT</code>
+                に設定されているからです。この値を
+                <code>self::NO_ACTION</code> にしたり、<code>'onUpdate'</code>
+                エントリ自体を省略したりしても同じ結果となります。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -878,93 +857,87 @@ class Bugs extends Zend_Db_Table_Abstract
 
         <sect3 id="zend.db.table.relationships.cascading.notes">
 
-            <title>Notes Regarding Cascading Operations</title>
+            <title>連鎖操作に関する注意点</title>
 
             <para>
-                <emphasis role="strong">Cascading operations invoked by Zend_Db_Table are not atomic.</emphasis>
+                <emphasis role="strong">Zend_Db_Table が実行する連鎖操作はアトミックではありません。</emphasis>
             </para>
 
             <para>
-                This means that if your database implements and enforces
-                referential integrity constraints, a cascading
-                <code>UPDATE</code> executed by a Zend_Db_Table class 
-                conflicts with the constraint, and results in a referential
-                integrity violation.
-                You can use cascading <code>UPDATE</code> in Zend_Db_Table
-                <emphasis>only</emphasis> if your database does not enforce
-                that referential integrity constraint.
+                つまり、もしデータベース自身が参照整合性制約を実装している場合、
+                Zend_Db_Table クラスが実行した連鎖 <code>UPDATE</code>
+                がその制約と競合し、参照整合性に違反してしまうことになるということです。
+                Zend_Db_Table の連鎖 <code>UPDATE</code> を使用できるのは、
+                データベース側で参照整合性制約を設定していない場合
+                <emphasis>のみ</emphasis> です。
             </para>
 
             <para>
-                Cascading <code>DELETE</code> suffers less from the
-                problem of referential integrity violations.
-                You can delete dependent rows as a non-atomic action
-                before deleting the parent row that they reference.
+                連鎖 <code>DELETE</code> に関しては、参照整合性に違反してしまう恐れはあまりありません。
+                従属行の削除は、参照する親の行が削除される前に
+                アトミックでない処理として行うことができます。
             </para>
 
             <para>
-                However, for both <code>UPDATE</code> and <code>DELETE</code>,
-                changing the database in a non-atomic way also creates the
-                risk that another database user can see the data in an
-                inconsistent state.  For example, if you delete
-                a row and all its dependent rows, there is a small
-                chance that another database client program can query
-                the database after you have deleted the dependent rows,
-                but before you delete the parent row.  That client program
-                may see the parent row with no dependent rows, and assume
-                this is the intended state of the data.
-                There is no way for that client to know that its query 
-                read the database in the middle of a change.
+                しかしながら、<code>UPDATE</code> および <code>DELETE</code>
+                のどちらについても、アトミックでない方法でデータを変更すると、
+                整合性がない状態のデータを他のユーザに見られてしまうというリスクが発生します。
+                たとえば、ある行とそのすべての従属行を削除することを考えましょう。
+                ほんの一瞬ですが、「従属行は削除したけれど親行はまだ削除していない」
+                という状態を他のクライアントプログラムから見られてしまう可能性があります。
+                そのクライアントプログラムは、従属行がない親行を見て、
+                それが意図した状態であると考えることでしょう。
+                クライアントが読み込んだデータが
+                変更の途中の中途半端な状態であることなど、知るすべもありません。
             </para>
 
             <para>
-                The issue of non-atomic change can be mitigated by using
-                transactions to isolate your change.  But some RDBMS brands
-                don't support transactions, or allow clients to read "dirty"
-                changes that have not been committed yet.
+                アトミックでない変更による問題を軽減するには、
+                トランザクションを使用してその変更を他と隔離します。
+                しかし RDBMS によってはトランザクションをサポートしていないものもありますし、
+                まだコミットされていない "ダーティな"
+                変更を他のクライアントから見られるようにしているものもあります。
             </para>
 
             <para>
-                For the reasons above, it is recommended to use the RDBMS
-                declarative referential integrity (DRI) features to impelement
-                cascading operations.  Use the cascading operation support in
-                Zend_Db_Table_Row only if your RDBMS does not support that
-                feature.
+                これらの理由もあるので、RDBMS の宣言参照整合性 (DRI)
+                を使用して連鎖操作を実装することを推奨します。
+                Zend_Db_Table_Row での連鎖操作サポートを使用するのは、
+                RDBMS がその機能をサポートしていない場合だけにしましょう。
             </para>
 
             <para>
-                <emphasis role="strong">Cascading operations in
-                Zend_Db_Table are invoked only by Zend_Db_Table.</emphasis>
+                <emphasis role="strong">Zend_Db_Table の連鎖処理は
+                Zend_Db_Table からのみ実行できます。</emphasis>
             </para>
 
             <para>
-                Cascading deletes and updates defined in your Zend_Db_Table
-                classes are applied if you execute the <code>save()</code> or
-                <code>delete()</code> methods on the Row class.
-                However, if you update or delete data using another interface,
-                such as a query tool or another application, the cascading
-                operations are not applied.
-                Even when using <code>update()</code> and <code>delete()</code>
-                methods in the Zend_Db_Adapter class, cascading operations
-                defined in your Zend_Db_Table classes are not executed.
+                Zend_Db_Table クラスで定義した連鎖削除や更新は、Row クラスで
+                <code>save()</code> メソッドあるいは
+                <code>delete()</code> メソッドを実行した際に適用されます。
+                しかし、クエリツールや別のアプリケーションなどの
+                別ルートでデータを更新あるいは削除した場合は、
+                連鎖操作は発生しません。Zend_Db_Adapter クラスの
+                <code>update()</code> メソッドや <code>delete()</code>
+                メソッドを実行したとしても、Zend_Db_Table
+                で定義した連鎖操作は実行されません。
             </para>
 
             <para>
-                For the reason above, it is recommended to use the RDBMS
-                declarative referential integrity (DRI) features to impelement
-                cascading operations.  Use the cascading operation support in
-                Zend_Db_Table_Row only if your RDBMS does not support that
-                feature.
+                これらの理由もあるので、RDBMS の宣言参照整合性 (DRI)
+                を使用して連鎖操作を実装することを推奨します。
+                Zend_Db_Table_Row での連鎖操作サポートを使用するのは、
+                RDBMS がその機能をサポートしていない場合だけにしましょう。
             </para>
 
             <para>
-                <emphasis role="strong">No Cascading <code>INSERT</code>.</emphasis>
+                <emphasis role="strong">連鎖 <code>INSERT</code> はありません。</emphasis>
             </para>
 
             <para>
-                There is no support for a cascading <code>INSERT</code>.
-                You must insert a row to a parent table in one operation,
-                and insert row(s) to a dependent table in a separate operation.
+                連鎖 <code>INSERT</code> はサポートしていません。
+                親テーブルに行を追加したら、
+                従属テーブルへの行の追加は別の処理として行う必要があります。
             </para>
 
         </sect3>
