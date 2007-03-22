@@ -330,6 +330,16 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('archive/display', $url);
     }
+
+    public function testAssembleWithReset5()
+    {
+        $route = new Zend_Controller_Router_Route('*', array('controller' => 'index', 'action' => 'index'));
+        $values = $route->match('key1/value1/key2/value2');
+
+        $url = $route->assemble(array('key1' => 'newvalue'), true);
+        
+        $this->assertSame('key1/newvalue', $url);
+    }
     
     public function testAssembleWithWildcardAndAdditionalParameters()
     {

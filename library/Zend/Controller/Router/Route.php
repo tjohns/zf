@@ -227,9 +227,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 
                 if ($part['regex'] != '\*') {
                     $url[$key] = $part['regex'];
-                } elseif (!$reset) {
-                    $wildcards = $data + $this->_params;
-                    foreach ($wildcards as $var => $value) {
+                } else {
+                    if (!$reset) $data += $this->_params;
+                    foreach ($data as $var => $value) {
                         if ($value !== null) {
                             $url[$var] = $var . self::URI_DELIMITER . $value;
                         }
