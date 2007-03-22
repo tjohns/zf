@@ -39,10 +39,8 @@ XMLLINT=@XMLLINT@
 ECSRC=@ECSRC@
 HERE=@HERE@
 
-# http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
-DOCBOOK_DTD=@DOCBOOK_DTD@
-# http://framework.zend.com/docbook-xsl/html/chunk.xsl
-DOCBOOK_XSL=@DOCBOOK_XSL@
+DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
+DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
 MANUAL_LINT_XML=manual-lint.xml.in
@@ -58,6 +56,12 @@ html: html/index.html
 html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
 	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) $(MANUAL_XML)
+
+$(MANUAL_XML): $(MANUAL_XML).in
+	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
+
+$(HTML_XSL): $(HTML_XSL).in
+	sed -e 's!@DOCBOOK_XSL@!$(DOCBOOK_XSL)!' $< > $@
 
 # Build the docs in PDF format
 
@@ -75,7 +79,7 @@ check1: $(MANUAL_LINT_XML)
 	@if [ -n "$(XMLFILE)" ] ; then \
 	    if [ -f "$(MODULE)/$(XMLFILE)" ] ; then \
 		echo "Checking $(XMLFILE) with $(XMLLINT)..." ; \
-		sed -e 's!@XMLFILE@!$(MODULE)/$(XMLFILE)!' -e 's!@DOCBOOK_DTD_URL@!$(DOCBOOK_DTD)!' $(MANUAL_LINT_XML) \
+		sed -e 's!@XMLFILE@!$(MODULE)/$(XMLFILE)!' -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $(MANUAL_LINT_XML) \
 		| $(XMLLINT) --xinclude --output _temp_$(XMLFILE) - ; \
 		$(XMLLINT) --valid --noout --postvalid _temp_$(XMLFILE) \
 		  && echo "OK" ; \
