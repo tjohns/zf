@@ -73,6 +73,12 @@ require_once 'Zend/Service/Delicious/AllTests.php';
 
 
 /**
+ * @see Zend_Service_Flickr_AllTests
+ */
+require_once 'Zend/Service/Flickr/AllTests.php';
+
+
+/**
  * @see Zend_Service_SimpyTest
  */
 require_once 'Zend/Service/SimpyTest.php';
@@ -109,6 +115,7 @@ class Zend_Service_AllTests
         $suite->addTestSuite('Zend_Service_AkismetTest');
         $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
         $suite->addTest(Zend_Service_Delicious_AllTests::suite());
+        $suite->addTest(Zend_Service_Flickr_AllTests::suite());
         if (defined('TESTS_ZEND_SERVICE_SIMPY_ENABLED') && constant('TESTS_ZEND_SERVICE_SIMPY_ENABLED') !== false) {
             $suite->addTestSuite('Zend_Service_SimpyTest');
         } else {
