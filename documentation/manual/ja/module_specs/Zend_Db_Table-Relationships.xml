@@ -746,27 +746,37 @@ $productsFixing    = $user1234->findProductsViaBugsByEngineer();
 
         <title>書き込み操作の連鎖</title>
 
+        <note>
+            <title>データベースでの DRI の宣言</title>
+            <para>
+                Zend_Db_Table の連鎖操作を宣言するのは、
+                RDBMS が宣言参照整合性 (DRI)
+                をサポートしていない場合
+                <emphasis role="strong">のみ</emphasis> を想定しています。
+            </para>
+            <para>
+                たとえば、MySQL の MyISAM ストレージエンジンや
+                SQLite では DRI をサポートしていません。
+                このような場合は、Zend_Db_Table での連鎖操作の宣言が有用となるでしょう。
+            </para>
+            <para>
+                もし RDBMS が DRI の <code>ON DELETE</code> 句
+                および <code>ON UPDATE</code> 句を実装しているのなら、
+                データベーススキーマでそれを宣言すべきです。
+                Zend_Db_Table の連鎖機能を使ってはいけません。
+                RDBMS が実装する連鎖 DRI を使用したほうが、
+                データベースのパフォーマンスや一貫性、整合性の面で有利です。
+            </para>
+            <para>
+                もっとも重要なのは、RDBMS と Zend_Db_Table
+                クラスの両方で同時に連鎖操作を宣言してはいけないということです。
+            </para>
+        </note>
+
         <para>
             親テーブルに対して <code>UPDATE</code> あるいは
             <code>DELETE</code> を行った際に、
             従属テーブルに対して行う操作を指定することができます。
-        </para>
-
-        <para>
-            更新時や削除時の操作は、データベースのスキーマで
-            宣言参照整合性 (declarative referential integrity: DRI)
-            構文を使用して宣言することを推奨します。
-            RDBMS がこの機能をサポートしている場合は、Zend_Db_Table
-            の機能ではなくそちらを使いましょう。この機能を表す SQL 構文は
-            <code>REFERENCES</code> 句で、
-            <code>ON UPDATE CASCADE</code> および
-            <code>ON DELETE CASCADE</code> などとして使用します。
-        </para>
-
-        <para>
-            もし RDBMS で参照整合性制約を強制できない場合
-            (たとえば MySQL で MyISAM ストレージエンジンを使用した場合や
-            SQLite など) は、Zend_Db_Table での指定が有用です。
         </para>
 
         <example id="zend.db.table.relationships.cascading.example-delete">
@@ -900,13 +910,6 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                これらの理由もあるので、RDBMS の宣言参照整合性 (DRI)
-                を使用して連鎖操作を実装することを推奨します。
-                Zend_Db_Table_Row での連鎖操作サポートを使用するのは、
-                RDBMS がその機能をサポートしていない場合だけにしましょう。
-            </para>
-
-            <para>
                 <emphasis role="strong">Zend_Db_Table の連鎖処理は
                 Zend_Db_Table からのみ実行できます。</emphasis>
             </para>
@@ -921,13 +924,6 @@ class Bugs extends Zend_Db_Table_Abstract
                 <code>update()</code> メソッドや <code>delete()</code>
                 メソッドを実行したとしても、Zend_Db_Table
                 で定義した連鎖操作は実行されません。
-            </para>
-
-            <para>
-                これらの理由もあるので、RDBMS の宣言参照整合性 (DRI)
-                を使用して連鎖操作を実装することを推奨します。
-                Zend_Db_Table_Row での連鎖操作サポートを使用するのは、
-                RDBMS がその機能をサポートしていない場合だけにしましょう。
             </para>
 
             <para>
