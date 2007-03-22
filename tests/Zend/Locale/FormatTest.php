@@ -600,30 +600,30 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testIsDate()
     {
-        $this->assertTrue(Zend_Locale_Format::isDate('13.Nov.2006', array('locale' => 'de_AT')), "true expected");
-        $this->assertFalse(Zend_Locale_Format::isDate('13.XXX.2006', array('locale' => 'ar_EG')), "false expected");
-        $this->assertFalse(Zend_Locale_Format::isDate('nodate'), "false expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('13.Nov.2006', array('locale' => 'de_AT')), "true expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('13.XXX.2006', array('locale' => 'ar_EG')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('nodate'), "false expected");
 
-        $this->assertFalse(Zend_Locale_Format::isDate('20.01.2006', array('date_format' => 'M-d-y')), "false expected");
-        $this->assertTrue(Zend_Locale_Format::isDate('20.01.2006', array('date_format' => 'd-M-y')), "true expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.01.2006', array('date_format' => 'M-d-y')), "false expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('20.01.2006', array('date_format' => 'd-M-y')), "true expected");
 
-        $this->assertFalse(Zend_Locale_Format::isDate('20.April', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
-        $this->assertFalse(Zend_Locale_Format::isDate('20.April', array('date_format' => 'MMMM.YYYY')), "false expected");
-        $this->assertFalse(Zend_Locale_Format::isDate('20', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
-        $this->assertTrue(Zend_Locale_Format::isDate('April.2007', array('date_format' => 'MMMM.YYYY')), "true expected");
-        $this->assertTrue(Zend_Locale_Format::isDate('20.April.2007', array('date_format' => 'dd.YYYY')), "true expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.April', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.April', array('date_format' => 'MMMM.YYYY')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('April.2007', array('date_format' => 'MMMM.YYYY')), "true expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('20.April.2007', array('date_format' => 'dd.YYYY')), "true expected");
     }
 
 
     /**
-     * test isTime
+     * test checkDateFormat -> time
      * expected boolean
      */
-    public function testIsTime()
+    public function testCheckTime()
     {
-        $this->assertTrue(Zend_Locale_Format::isTime('13:10:55', array('locale' => 'de_AT')), "true expected");
-        $this->assertTrue(Zend_Locale_Format::isTime('11:10:55 am', array('locale' => 'ar_EG')), "true expected");
-        $this->assertFalse(Zend_Locale_Format::isTime('notime'), "false expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('13:10:55', array('date_format' => 'HH:mm:ss', 'locale' => 'de_AT')), "true expected");
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('11:10:55 am', array('date_format' => 'HH:mm:ss', 'locale' => 'ar_EG')), "true expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('notime'), "false expected");
     }
 
 

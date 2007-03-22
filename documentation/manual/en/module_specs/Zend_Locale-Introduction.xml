@@ -286,7 +286,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
 
         <para>
             The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
-            isDate(), getTime(), and isTime() after using setOptions() with a 'date_format'. To use these four methods
+            checkdateFormat() and getTime() after using setOptions() with a 'date_format'. To use these four methods
             with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their
             options.
         </para>

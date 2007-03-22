@@ -80,7 +80,7 @@ class Zend_Locale_Format
      * The 'fix_date' option enables or disables heuristics that attempt to correct invalid dates.
      * The 'number_format' option can be used to specify a default number format string
      * The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
-     * isDate(), getTime(), and isTime() after using setOptions() with a 'format'.  To use these four methods
+     * checkDateFormat() and getTime() after using setOptions() with a 'format'.  To use these four methods
      * with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their options.
      *
      * @param  array  $options  Array of options, keyed by option name: format_type = 'iso' | 'php', fix_date = true | false,
@@ -949,7 +949,7 @@ class Zend_Locale_Format
      * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
      * @return  boolean
      */
-    public static function isDate($date, array $options = array())
+    public static function checkDateFormat($date, array $options = array())
     {
         try {
             $date = self::getDate($date, $options);
@@ -976,6 +976,22 @@ class Zend_Locale_Format
         // year expected but not parsed
         if (((iconv_strpos($options['date_format'], 'Y') !== false) or 
              (iconv_strpos($options['date_format'], 'y') !== false)) and (!isset($date['year']) or ($date['year'] == ""))) {
+            return false;
+        }
+
+        // second expected but not parsed
+        if ((iconv_strpos($options['date_format'], 's') !== false) and (!isset($date['second']) or ($date['second'] == ""))) {
+            return false;
+        }
+
+        // minute expected but not parsed
+        if ((iconv_strpos($options['date_format'], 'm') !== false) and (!isset($date['minute']) or ($date['minute'] == ""))) {
+            return false;
+        }
+
+        // hour expected but not parsed
+        if (((iconv_strpos($options['date_format'], 'H') !== false) or 
+             (iconv_strpos($options['date_format'], 'h') !== false)) and (!isset($date['hour']) or ($date['hour'] == ""))) {
             return false;
         }
         return true;
@@ -1019,47 +1035,5 @@ class Zend_Locale_Format
         }
 
         return self::_parseDate($time, $options);
-    }
-
-
-    /**
-     * Returns if the given timestring contains all date parts from the given format.
-     * If no format is given, the standard time format from the locale is used
-     * If you want to check if the time is a proper time you should use Zend_Date::isTime()
-     *
-     * @param   string  $time     Time string
-     * @param   array   $options  Options: format_type, fix_date, locale, date_format. See {@link setOptions()} for details.
-     * @return  boolean
-     */
-    public static function isTime($time, array $options = array())
-    {
-        try {
-            $date = self::getTime($time, $options);
-        } catch (Exception $e) {
-            return false;
-        }
-
-        $options = array_merge(self::$_Options, self::checkOptions($options));
-        if (empty($options['date_format'])) {
-            $options['format_type'] = 'iso';
-            $options['date_format'] = self::getDateFormat($options['locale']);
-        }
-
-        // second expected but not parsed
-        if ((iconv_strpos($options['date_format'], 's') !== false) and (!isset($date['second']) or ($date['second'] == ""))) {
-            return false;
-        }
-
-        // minute expected but not parsed
-        if ((iconv_strpos($options['date_format'], 'm') !== false) and (!isset($date['minute']) or ($date['minute'] == ""))) {
-            return false;
-        }
-
-        // hour expected but not parsed
-        if (((iconv_strpos($options['date_format'], 'H') !== false) or 
-             (iconv_strpos($options['date_format'], 'h') !== false)) and (!isset($date['hour']) or ($date['hour'] == ""))) {
-            return false;
-        }
-        return true;
     }
 }
