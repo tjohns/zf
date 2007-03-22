@@ -319,7 +319,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
         <para>
             'date_format' オプションでデフォルトの日付書式文字列を指定することができます。
             しかし、setOptions() で 'date_format' を指定した後で getDate() や
-            isDate()、getTime() そして isTime() を使用する際には十分注意しましょう。
+            checkdateFormat() そして getTime() を使用する際には十分注意しましょう。
             これらのメソッドをそのロケールのデフォルトの日付書式で使用するには
             array('date_format' => null, 'locale' => $locale) をメソッドのオプションで指定します。
         </para>
