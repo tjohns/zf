@@ -202,7 +202,7 @@ class Zend_Auth_Adapter_Digest implements Zend_Auth_Adapter_Interface
         $idLength = strlen($id);
 
         $result = array(
-            'isValid'  => false,
+            'code'  => Zend_Auth_Result::FAILURE,
             'identity' => array(
                 'realm'    => $this->_realm,
                 'username' => $this->_username,
@@ -213,15 +213,17 @@ class Zend_Auth_Adapter_Digest implements Zend_Auth_Adapter_Interface
         while ($line = trim(fgets($fileHandle))) {
             if (substr($line, 0, $idLength) === $id) {
                 if (substr($line, -32) === md5("$this->_username:$this->_realm:$this->_password")) {
-                    $result['isValid'] = true;
+                    $result['code'] = Zend_Auth_Result::SUCCESS;
                 } else {
+                    $result['code'] = Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID;
                     $result['messages'][] = 'Password incorrect';
                 }
-                return new Zend_Auth_Result($result['isValid'], $result['identity'], $result['messages']);
+                return new Zend_Auth_Result($result['code'], $result['identity'], $result['messages']);
             }
         }
 
+        $result['code'] = Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND;
         $result['messages'][] = "Username '$this->_username' and realm '$this->_realm' combination not found";
-        return new Zend_Auth_Result($result['isValid'], $result['identity'], $result['messages']);
+        return new Zend_Auth_Result($result['code'], $result['identity'], $result['messages']);
     }
 }
