@@ -42,7 +42,7 @@ $translate->addTranslation('//my/path/fr-source.mo', 'fr');
 print $translate->_("Example")."\n";
 print "=======\n";
 print $translate->_("Here is line one")."\n";
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+print $translate->_("Today is the %1\$s", array('%1\$s', date("d.m.Y")))."\n";
 print "\n";
 
 $translation->setLanguage('fr');
@@ -93,13 +93,12 @@ print $translate->_("Here is line one")."\n";
         この場合は埋め込みパラメータを使用します。
         
 <programlisting role="php"><![CDATA[<?php
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+print $translate->_("Today is the %1\$s", array('%1\$s' => date("d.m.Y"))) . "\n";
 ?>]]></programlisting>
 
-        <code>print()</code> の代わりに <code>printf()</code> 関数を使用し、
         すべてのパラメータを <code>%1\$s</code> のように置き換えます。
         最初のパラメータが <code>%1\$s</code>、その次が <code>%2\$s</code>、
-        といったようになります。
+        といったようになります。プレースホルダの場所に入る値は、配列で渡す必要があります。
         これにより、実際の値を知らなくても翻訳を進めることができます。
         今回の例では、日付は常に今日の日付になります。
         しかし、文字列を翻訳する際には、実際の日付が何であるかを知る必要はありません。
