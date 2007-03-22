@@ -5045,6 +5045,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString('r'), date('r',$date->getTimestamp()));
         $this->assertSame($date->toString('U'), date('U',$date->getTimestamp()));
     }
+
+    public function daylightsaving()
+    {
+        $date = new Zend_Date('2007.03.25', Zend_Date::DATES);
+        $date->set('16:00:00', Zend_Date::TIMES);
+        $this->assertEquals($date->get(Zend_Date::W3C, 0));
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
