@@ -809,10 +809,12 @@ class Zend_Locale_Format
         if ($options['fix_date'] === true) {
             $result['fixed'] = 0; // nothing has been "fixed" by swapping date parts around (yet)
         }
+
         if ($day !== false) {
             // fix false month
             if (isset($result['day']) and isset($result['month'])) {
-                if (($position !== false) && ($position != $month)) {
+                if (($position !== false) and ((iconv_strpos($date, $result['day']) === false) or
+                                               (iconv_strpos($date, $result['year']) === false))) {
                     if ($options['fix_date'] !== true) {
                         throw new Zend_Locale_Exception("unable to parse date '$date' using '" . $format
                             . "' (false month, $position, $month)");

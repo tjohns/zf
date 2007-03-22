@@ -309,7 +309,6 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['month'], 1, 'Month 1 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-
         try {
             $value = Zend_Locale_Format::getDate('2006.01.13', array('date_format' => 'dd.MM.yy'));
             $this->fail("no date expected");
@@ -380,11 +379,10 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
-// @todo failed test, auto completion doesnt work for this case
-//        $value = Zend_Locale_Format::getDate('2006 Nov 10','dd.MMM.yy', 'de_AT');
-//        $this->assertEquals($value['day'], 10, 'Day 10 expected');
-//        $this->assertEquals($value['month'], 11, 'Month 11 expected');
-//        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+        $value = Zend_Locale_Format::getDate('2006 Nov 10', array('date_format' => 'dd.MMM.yy', 'locale' => 'de_AT', 'fix_date' => true));
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
 
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'yy.dd.MM'));
         $this->assertEquals($value['day'], 11, 'Day 11 expected');
@@ -531,11 +529,15 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(is_array(Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss'))), true, "array expected");
         Zend_Locale_Format::setOptions(array('format_type' => 'iso'));
         
-// @todo failed test, auto completion doesnt work for this case
-//        $value = Zend_Locale_Format::getDate('2006 Nov 10', false, 'de_AT');
-//        $this->assertEquals($value['day'], 10, 'Day 10 expected');
-//        $this->assertEquals($value['month'], 11, 'Month 11 expected');
-//        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+        $value = Zend_Locale_Format::getDate('2006 Nov 10', array('locale' => 'de_AT', 'fix_date' => true));
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+
+        $value = Zend_Locale_Format::getDate('anything February 31 2007.', array('date_format' => 'M d Y', 'locale'=>'en'));
+        $this->assertEquals($value['day'], 31, 'Day 31 expected');
+        $this->assertEquals($value['month'], 2, 'Month 2 expected');
+        $this->assertEquals($value['year'], 2007, 'Year 2007 expected');
     }
 
 
