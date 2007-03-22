@@ -80,63 +80,6 @@ indexWriter.addDocument(doc);]]>
         </programlisting>
     </sect2>
         
-	<sect2 id="zend.search.java-lucene.jar">  
-        <title>Verwendung von LuceneIndexCreation.jar</title>
-	
-        <para>
-            Um schnell mit Zend_Search_Lucene starten zu können, wurde eine JAR Datei (Java) 
-            erstellt, um einen Index von der Kommandozeile aus zu erstellen. Für weitere 
-            Informationen zu JAR Dateien besuche bitte:
-            <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>.
-        </para>
-    
-        <para>
-            LuceneIndexCreation.jar verwendet Textdateien und erstellt daraus den Index. Verwendung:
-        </para>
-        <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
-    -c   - erzwinge Index mit Groß- und Kleinschreibung
-    -s   - lege Inhalte im Index ab
-    ]]></programlisting>
-        <para>
-            Dieses Kommando verwendet das Verzeichnis <code>&lt;document_dir&gt;</code>, inklusive
-            aller Unterverzeichnisse, und erstellt einen Lucene Index. Der Index besteht aus einem
-            Satz von Dateien, die in einem separaten Verzeichnis abgelegt werden, dass durch 
-            <code>&lt;index_dir&gt;</code> spezifiziert wird.
-        </para>
-    
-        <para>
-            Für jedes zu indizierende Dokument, erstellt LuceneIndexCreation ein Dokumentobjekt mit 
-            drei Felder: ein <emphasis>contents</emphasis> Feld mit dem Inhalt des Dokuments, ein
-            <emphasis>modified</emphasis> Feld mit dem Änderungsdatum der Datei und der komplette
-            Pfad und Dateiname in einem <emphasis>path</emphasis> Feld.
-        </para>
-    
-        <para>
-            Wenn die <option>-c</option> Option angegeben wird, wird erzwungen, dass der Index die 
-            Groß- und Kleinschreibung beachtet. Andernfalls werden alle Begriffe vor dem Hinzufügen 
-            in den Index in Kleinbuchstaben konvertiert. 
-        </para>
-    
-        <para>
-            Wenn die <option>-s</option> Option angegeben wird, wird der Dokumenteninhalt auch im
-            Index abgelegt und kann über die <code>path</code> und <code>modified</code> Felder
-            zurückgeholt werden.
-        </para>
-        
-        <para>
-            Andernfalls werden nur die <code>path</code> und <code>modified</code> Felder 
-            gespeichert und das <code>contents</code> Feld wird nur indiziert. In diesem Fall muß
-            der Dokumenteninhalt von seinen originalen Quelle mittels des Pfads zurückgeholt 
-            werden.
-        </para>
-        
-        <para>
-            Bitte sei vorsichtig, die Verwendung der <option>-s</option> option vergrößert die 
-            Indexgröße fast um das Fünffache.
-        </para>
-	</sect2>
-
 </sect1>
 
 <!--

@@ -1,25 +1,27 @@
 <sect1 id="zend.search.charset">
-	<title>Zeichensatz.</title>
+	<title>Character set.</title>
 
 	<sect2 id="zend.search.charset.description">
-        <title>Unterstützung für UTF-8 und Zeichensätze mit einzelnen Bytes.</title>
+        <title>UTF-8 and single-byte character sets support.</title>
 
         <para>
-            Zend_Search_Lucene arbeitet intern mit dem UTF-8 Zeichensatz. Die
-            Indexdateien speichern Unicode Daten in Javas "modified UTF-8 encoding". 
-            Der Kern von Zend_Search_Lucene unterstützt dies komplett mit einer Ausnahme. 
+            Zend_Search_Lucene works with UTF-8 charset internally. Index files store
+            unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
+            completely supports it with one exception.
             <footnote>
                <para>
-                   Zend_Search_Lucene unterstützt nur "Basic Multilingual Plane" (BMP) Zeichen 
-                   (von 0x0000 bis 0xFFFF) und unterstützt keine "zusätzlichen Zeichen" (Zeichen,
-                   dessen Kodierungspunkt größer als 0xFFFF sind).
+                   Zend_Search_Lucene supports only Basic Multilingual Plane
+                   (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
+                   "supplementary characters" (characters whose code points are
+                   greater than 0xFFFF)
                </para>
                <para>
-                   Java 2 stellt diese Zeichen als ein Paar von Zeichenwerten (16-bit) dar, das 
-                   erste aus dem "high-surrogates" Bereich (0xD800-0xDBFF), das zweite aus dem
-                   "ow-surrogates" Bereich (0xDC00-0xDFFF). Dann werden sie als normale UTF-8 in
-                   sechs Bytes kodiert. Die Standard UTF-8 Darstellung verwendet vier Bytes für 
-                   zusätzliche Zeichen.
+                   Java 2 represents these characters as a pair of char (16-bit)
+                   values, the first from the high-surrogates range (0xD800-0xDBFF),
+                   the second from the low-surrogates range (0xDC00-0xDFFF). Then
+                   they are encoded as usual UTF-8 characters in six bytes.
+                   Standard UTF-8 representation uses four bytes for supplementary
+                   characters.
                </para>
             </footnote>
         </para>
@@ -57,8 +59,7 @@
 
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
-?>]]></programlisting>
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]></programlisting>
         </para>
 
         <para>
@@ -101,9 +102,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($conten
 $doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
 
 // Title field for retrieving (unindexed, stored)
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
-
-?>]]></programlisting>
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]></programlisting>
         </para>
 
         <para>
@@ -118,12 +117,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 ...
 
-$hits = $index->find(strtolower($query));
-?>]]></programlisting>
+$hits = $index->find(strtolower($query));]]></programlisting>
         </para>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
