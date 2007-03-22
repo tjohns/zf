@@ -208,6 +208,9 @@ class Zend_Session extends Zend_Session_Abstract
                 throw new Zend_Session_Exception("Unknown option: $user_option_name = $user_option_value");
             }
         }
+        if (!is_writable(ini_get('session.save_path'))) {
+            throw new Zend_Session_Exception("Unwritable session.save_path: ". ini_get('session.save_path'));
+        }
     }
 
 
