@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+    "@DOCBOOK_DTD@"
 [
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="ja">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>プログラマ向けリファレンスガイド</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>Zend Framework プログラマ向けリファレンスガイド</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>

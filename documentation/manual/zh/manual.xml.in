@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+    "@DOCBOOK_DTD@"
 [
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
 ]>
-<book id="manual" lang="de">
+<book id="manual" lang="zh_cn">
     <bookinfo>
-        <title>Programmierer Referenzhandbuch</title>
+        <title>Zend Framework手册 中文版</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmierer Referenzhandbuch für das Zend Framework</edition>
+        <edition>Zend Framework手册 中文版</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -34,7 +34,7 @@
         <title>Zend Framework</title>
         <xi:include href="module_specs/Zend-Introduction.xml" />
     </chapter>
-    <chapter id="zend.acl">
+	<chapter id="zend.acl">
         <title>Zend_Acl</title>
         <xi:include href="module_specs/Zend_Acl.xml" />
         <xi:include href="module_specs/Zend_Acl-Refining.xml" />
@@ -68,19 +68,19 @@
         <xi:include href="module_specs/Zend_Console_Getopt-Fetching.xml" />
         <xi:include href="module_specs/Zend_Console_Getopt-Configuration.xml" />
     </chapter>
-	<chapter id="zend.controller">
-		<title>Zend_Controller</title>
-		<xi:include href="module_specs/Zend_Controller-Overview.xml" />
-		<xi:include href="module_specs/Zend_Controller-GettingStarted.xml" />
-		<xi:include href="module_specs/Zend_Controller-Subclassing.xml" />
+     <chapter id="zend.controller">
+        <title>Zend_Controller</title>
+        <xi:include href="module_specs/Zend_Controller-Overview.xml" />
+        <xi:include href="module_specs/Zend_Controller-GettingStarted.xml" />
+        <xi:include href="module_specs/Zend_Controller-Subclassing.xml" />
         <xi:include href="module_specs/Zend_Controller-ProvidedSubclasses.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
-		<xi:include href="module_specs/Zend_Controller-Plugins.xml" />
+        <xi:include href="module_specs/Zend_Controller-Plugins.xml" />
         <xi:include href="module_specs/Zend_Controller-Modular.xml" />
         <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
         <xi:include href="module_specs/Zend_Controller-Migration.xml" />
-	</chapter>
-    <chapter id="zend.date">
+    </chapter>
+	 <chapter id="zend.date">
         <title>Zend_Date</title>
         <xi:include href="module_specs/Zend_Date-Introduction.xml" />
         <xi:include href="module_specs/Zend_Date-Basic.xml" />
@@ -123,7 +123,7 @@
         <xi:include href="module_specs/Zend_Filter-FilterChains.xml" />
         <xi:include href="module_specs/Zend_Filter-WritingFilters.xml" />
     </chapter>
-    <chapter id="zend.gdata">
+	<chapter id="zend.gdata">
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
@@ -136,7 +136,7 @@
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml" />
         -->
         <xi:include href="module_specs/Zend_Gdata_Data.xml" />
-        <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
+		<xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
@@ -156,7 +156,7 @@
         <title>Zend_Loader</title>
         <xi:include href="module_specs/Zend_Loader.xml" />
     </chapter>
-    <chapter id="zend.locale">
+	<chapter id="zend.locale">
         <title>Zend_Locale</title>
         <xi:include href="module_specs/Zend_Locale-Introduction.xml" />
         <xi:include href="module_specs/Zend_Locale-Functions.xml" />
@@ -189,7 +189,7 @@
         <xi:include href="module_specs/Zend_Mail-SmtpSecure.xml" />
         <xi:include href="module_specs/Zend_Mail_Read.xml" />
     </chapter>
-    <chapter id="zend.measure">
+	 <chapter id="zend.measure">
         <title>Zend_Measure</title>
         <xi:include href="module_specs/Zend_Measure-Introduction.xml" />
         <xi:include href="module_specs/Zend_Measure-Creation.xml" />
@@ -223,7 +223,7 @@
         <xi:include href="module_specs/Zend_Rest_Client.xml" />
         <xi:include href="module_specs/Zend_Rest_Server.xml" />
     </chapter>
-	<chapter id="zend.search">
+    <chapter id="zend.search">
         <title>Zend_Search</title>
         <xi:include href="module_specs/Zend_Search-Overview.xml" />
         <xi:include href="module_specs/Zend_Search-IndexCreation.xml" />
@@ -234,7 +234,7 @@
         <xi:include href="module_specs/Zend_Search-Extending.xml" />
         <xi:include href="module_specs/Zend_Search-JavaLucene.xml" />
         <xi:include href="module_specs/Zend_Search-Advanced.xml" />
-	</chapter>
+    </chapter>
     <chapter id="zend.server">
         <title>Zend_Server</title>
         <xi:include href="module_specs/Zend_Server.xml" />
@@ -251,7 +251,7 @@
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
         <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
     </chapter>
-    <chapter id="zend.session">
+	 <chapter id="zend.session">
         <title>Zend_Session</title>
         <xi:include href="module_specs/Zend_Session-Introduction.xml" />
         <xi:include href="module_specs/Zend_Session-BasicUsage.xml" />
@@ -265,7 +265,7 @@
         <xi:include href="module_specs/Zend_Translate-Adapters.xml" />
         <xi:include href="module_specs/Zend_Translate-Using.xml" />
     </chapter>
-    <chapter id="zend.uri">
+	 <chapter id="zend.uri">
         <title>Zend_Uri</title>
         <xi:include href="module_specs/Zend_Uri.xml" />
     </chapter>
@@ -296,7 +296,7 @@
     </chapter>
     <!-- <xi:include href="ref/faq.xml" /> -->
     <xi:include href="ref/coding_standard.xml" />
-    <xi:include href="ref/copyrights.xml" />
+    <xi:include href="ref/copyrights.xml" />	
     <index id="the.index" />
 </book>
 <!--

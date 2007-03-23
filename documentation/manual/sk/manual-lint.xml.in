@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+    "@DOCBOOK_DTD@"
 [
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
@@ -8,9 +8,9 @@
 <book id="manual" lang="en">
     <chapter>
         <title>XMLLint</title>
-        <xi:include href="@LINT@">
+        <xi:include href="@XMLFILE@">
             <xi:fallback>
-                Cannot find file "@LINT@"
+                Cannot find file "@XMLFILE@"
             </xi:fallback>
         </xi:include>
     </chapter>

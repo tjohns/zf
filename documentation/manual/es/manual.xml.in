@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://framework.zend.com/docbook/xml/4.4/docbookx.dtd"
+    "@DOCBOOK_DTD@"
 [
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
 ]>
-<book id="manual" lang="ru">
+<book id="manual" lang="en">
     <bookinfo>
-        <title>Руководство разработчика</title>
-        <subtitle>Zend Framework</subtitle>
-        <edition>Руководство разработчика для Zend Framework</edition>
+        <title>Guía de Referencia del Programador</title>
+        <subtitle>Framework Zend</subtitle>
+        <edition>Guía de Referencia del Programador para el Framework Zend</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -68,18 +68,18 @@
         <xi:include href="module_specs/Zend_Console_Getopt-Fetching.xml" />
         <xi:include href="module_specs/Zend_Console_Getopt-Configuration.xml" />
     </chapter>
-    <chapter id="zend.controller">
-        <title>Zend_Controller</title>
-        <xi:include href="module_specs/Zend_Controller-Overview.xml" />
-        <xi:include href="module_specs/Zend_Controller-GettingStarted.xml" />
-        <xi:include href="module_specs/Zend_Controller-Subclassing.xml" />
+	<chapter id="zend.controller">
+		<title>Zend_Controller</title>
+		<xi:include href="module_specs/Zend_Controller-Overview.xml" />
+		<xi:include href="module_specs/Zend_Controller-GettingStarted.xml" />
+		<xi:include href="module_specs/Zend_Controller-Subclassing.xml" />
         <xi:include href="module_specs/Zend_Controller-ProvidedSubclasses.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
-        <xi:include href="module_specs/Zend_Controller-Plugins.xml" />
+		<xi:include href="module_specs/Zend_Controller-Plugins.xml" />
         <xi:include href="module_specs/Zend_Controller-Modular.xml" />
         <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
         <xi:include href="module_specs/Zend_Controller-Migration.xml" />
-    </chapter>
+	</chapter>
     <chapter id="zend.date">
         <title>Zend_Date</title>
         <xi:include href="module_specs/Zend_Date-Introduction.xml" />
@@ -218,12 +218,12 @@
         <xi:include href="module_specs/Zend_Registry.xml" />
     </chapter>
     <chapter id="zend.rest">
- 	 	<title>Zend_Rest</title>
- 	 	<xi:include href="module_specs/Zend_Rest.xml" />
- 	 	<xi:include href="module_specs/Zend_Rest_Client.xml" />
- 	 	<xi:include href="module_specs/Zend_Rest_Server.xml" />
- 	</chapter>
-    <chapter id="zend.search">
+        <title>Zend_Rest</title>
+        <xi:include href="module_specs/Zend_Rest.xml" />
+        <xi:include href="module_specs/Zend_Rest_Client.xml" />
+        <xi:include href="module_specs/Zend_Rest_Server.xml" />
+    </chapter>
+	<chapter id="zend.search">
         <title>Zend_Search</title>
         <xi:include href="module_specs/Zend_Search-Overview.xml" />
         <xi:include href="module_specs/Zend_Search-IndexCreation.xml" />
@@ -234,7 +234,7 @@
         <xi:include href="module_specs/Zend_Search-Extending.xml" />
         <xi:include href="module_specs/Zend_Search-JavaLucene.xml" />
         <xi:include href="module_specs/Zend_Search-Advanced.xml" />
-    </chapter>
+	</chapter>
     <chapter id="zend.server">
         <title>Zend_Server</title>
         <xi:include href="module_specs/Zend_Server.xml" />
