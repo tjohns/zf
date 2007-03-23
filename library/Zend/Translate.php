@@ -191,13 +191,12 @@ class Zend_Translate {
      * Translate the given string
      *
      * @param  string              $messageId  Original to translate
-     * @param  array               $parameter  OPTIONAL Array of parameters for the translation
      * @param  string|Zend_Locale  $locale     OPTIONAL locale/language to translate to
      * @return string
      */
-    public function _($messageId, $parameter = null, $locale = null)
+    public function _($messageId, $locale = null)
     {
-        return $this->_adapter->translate($messageId, $parameter, $locale);
+        return $this->_adapter->translate($messageId, $locale);
     }
 
 
@@ -205,12 +204,11 @@ class Zend_Translate {
      * Translate the given string
      *
      * @param  string              $messageId  Original to translate
-     * @param  array               $parameter  OPTIONAL Array of parameters for the translation
      * @param  string|Zend_Locale  $locale     OPTIONAL locale/language to translate to
      * @return string
      */
-    public function translate($messageId, $parameter = null, $locale = null)
+    public function translate($messageId, $locale = null)
     {
-        return $this->_adapter->translate($messageId, $parameter, $locale);
+        return $this->_adapter->translate($messageId, $locale);
     }
 }

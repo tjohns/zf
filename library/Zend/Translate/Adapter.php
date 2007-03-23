@@ -216,36 +216,25 @@ abstract class Zend_Translate_Adapter {
      * returns the translation
      *
      * @param  string              $messageId  Translation string
-     * @param  array               $parameter  OPTIONAL Array of parameters for the translation
      * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
      *                                         see Zend_Locale for more information
      * @return string
      */
-    public function translate($messageId, $parameter = null, $locale = null)
+    public function translate($messageId, $locale = null)
     {
-        if ((gettype($parameter) !== 'array') and ($parameter !== null)) {
-            if (Zend_Locale::isLocale($parameter)) {
-                $locale    = $parameter;
-                $parameter = null;
-            } else {
-                return $messageId;
-            }
-                
-        }
-
         if ($locale === null) {
             $locale = $this->_locale;
         } else {
             if (!$locale = Zend_Locale::isLocale($locale)) {
                 // language does not exist, return original string
-                return $this->replace($messageId, $parameter);
+                return $messageId;
             }
         }
 
         if (array_key_exists($locale, $this->_translate)) {
            if (array_key_exists($messageId, $this->_translate[$locale])) {
                 // return original translation
-                return $this->replace($this->_translate[$locale][$messageId], $parameter);
+                return $this->_translate[$locale][$messageId];
            }
         } else if (strlen($locale) != 2) {
             // faster than creating a new locale and separate the leading part
@@ -254,30 +243,12 @@ abstract class Zend_Translate_Adapter {
             if (array_key_exists($locale, $this->_translate)) {
                 if (array_key_exists($messageId, $this->_translate[$locale])) {
                     // return regionless translation (en_US -> en)
-                    return $this->replace($this->_translate[$locale][$messageId], $parameter);
+                    return $this->_translate[$locale][$messageId];
                 }
             }
         }
 
         // no translation found, return original
-        return $this->replace($messageId, $parameter);
-    }
-
-
-    /**
-     * Internal function, replaces all parameters within the translation string
-     * 
-     * @param  string  $messageId   Message to replace within
-     * @param  array   $parameters  Parameters to replace
-     * @return                      Replaced message string
-     */
-    private function replace($messageId, $parameters)
-    {
-        if (is_array($parameters)) {
-            $keys      = array_keys($parameters);
-            $values    = array_values($parameters);
-            $messageId = str_replace($keys, $values, $messageId);
-        }
         return $messageId;
     }
 

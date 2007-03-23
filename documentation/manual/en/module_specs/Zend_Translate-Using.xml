@@ -42,7 +42,7 @@ $translate->addTranslation('//my/path/fr-source.mo', 'fr');
 print $translate->_("Example")."\n";
 print "=======\n";
 print $translate->_("Here is line one")."\n";
-print $translate->_("Today is the %1\$s", array('%1\$s', date("d.m.Y")))."\n";
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
 $translation->setLanguage('fr');
@@ -93,14 +93,13 @@ print $translate->_("Here is line one")."\n";
         supported through the use of embedded parameters.
         
 <programlisting role="php"><![CDATA[<?php
-print $translate->_("Today is the %1\$s", array('%1\$s' => date("d.m.Y"))) . "\n";
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 ?>]]></programlisting>
 
-        Replace all parameters with <code>%1\$s</code> parts.
+        Instead of <code>print()</code>, use the <code>printf()</code>
+        function and replace all parameters with <code>%1\$s</code> parts.
         The first is <code>%1\$s</code>, the second <code>%2\$s</code>,
-        and so on. The value which shall be included instead of the 
-        placeholder has to be given as array.        
-        This way a translation can be done without knowing 
+        and so on. This way a translation can be done without knowing 
         the exact value. In our example, the date is always the actual day,
         but the string can be translated without the knowledge of the actual
         day.

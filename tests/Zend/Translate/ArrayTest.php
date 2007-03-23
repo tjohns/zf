@@ -49,11 +49,10 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
                                                           'msg2' => 'Message 2 (en)',
-                                                          'msg3' => 'Message %1\$s (en)',
+                                                          'msg3' => 'Message 3 (en)',
                                                          ));
 
         $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
-        $this->assertEquals($adapter->translate('msg3', array('%1\$s' => '99')), 'Message 99 (en)');
         $this->assertEquals($adapter->translate('msg4'), 'msg4');
     }
 
