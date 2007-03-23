@@ -47,6 +47,35 @@ $memObject = $memoryManager->createLocked($data);]]></programlisting>
         </para>
     </sect2>
 
+    <sect2 id="zend.memory.memory-objects.value">
+        <title>Memory container 'value' property.</title>
+
+        <para>
+            Memory container (movable or locked) 'value' property is used to operate with memory object data:
+            <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);
+...
+echo $memObject->value;
+...
+$memObject->value = $newValue;
+...
+$memObject->value[$index] = '_';
+...
+echo ord($memObject->value[$index1]);
+...
+$memObject->value = substr($memObject->value, $start, $length);
+...
+]]></programlisting>
+        </para>
+
+        <para>
+            Alternative way for accessing memory object data is
+            <link linkend="zend.memory.memory-objects.api.getRef"><code>getRef()</code></link> method.
+            It <emphasis>must</emphasis> be used for PHP versions before 5.2 and have to be used in some other
+            cases for performance reasons.
+        </para>
+    </sect2>
+
     <sect2 id="zend.memory.memory-objects.api">
         <title>Memory container interface</title>
 
@@ -67,6 +96,25 @@ public function &getRef();]]></programlisting>
                 Movable objects are loaded from swap at this moment if it's necessary. It may cause swapping of other objects.
             </para>
 
+            <para>
+                This method <emphasis>must</emphasis> be used to access memory object data for PHP versions before 5.2.
+            </para>
+
+            <para>
+                Value changes tracking needs additional resources.
+                <code>getRef()</code> method returns reference to string, which is changed directly by user application.
+                So, it's good idea to use <code>getRef()</code> method for value data processing:
+                <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);
+...
+
+$value = &$memObject->getRef();
+
+for ($count = 0; $count < strlen($value); $count++) {
+    $char = $value[$count];
+    ...
+}]]></programlisting>
+            </para>
         </sect3>
 
         <sect3 id="zend.memory.memory-objects.api.touch">
@@ -74,9 +122,23 @@ public function &getRef();]]></programlisting>
 
             <programlisting role="php"><![CDATA[<?php
 public function touch();]]></programlisting>
-
             <para>
-                ...
+                <code>touch()</code> method should be used in common with <code>getRef()</code>. It signals that object value has been changed:
+                <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);
+...
+
+$value = &$memObject->getRef();
+
+for ($count = 0; $count < strlen($value); $count++) {
+    ...
+    if ($condition) {
+        $value[$count] = $char;
+    }
+    ...
+}
+
+$memObject->touch();]]></programlisting>
             </para>
         </sect3>
 
@@ -87,7 +149,35 @@ public function touch();]]></programlisting>
 public function lock();]]></programlisting>
 
             <para>
-                ...
+                <code>lock()</code> methods locks object in memory. It should be used to prevent swapping of some objects<footnote>
+                <para>
+                    Memory manager uses smart enough algorithm to choose candidates for swapping. But if you exactly know, that at
+                    at this part of code some objects should not be swapped, you may lock them.
+                </para></footnote>.
+            </para>
+
+            <para>
+                Locking objects in memory also guarantees that reference returned by <code>getRef()</code> method will be valid until you
+                don't unlock object:
+                <programlisting role="php"><![CDATA[<?php
+$memObject1 = $memoryManager->create($data1);
+$memObject2 = $memoryManager->create($data2);
+...
+
+$memObject1->lock();
+$memObject2->lock();
+
+$value1 = &$memObject1->getRef();
+$value2 = &$memObject2->getRef();
+
+for ($count = 0; $count < strlen($value2); $count++) {
+        $value1 .= $value2[$count];
+}
+
+$memObject1->touch();
+$memObject1->ulock();
+$memObject2->ulock();
+]]></programlisting>
             </para>
         </sect3>
 
@@ -98,7 +188,7 @@ public function lock();]]></programlisting>
 public function unlock();]]></programlisting>
 
             <para>
-                ...
+                <code>unlock()</code> method unlocks object when it's no longer need to be locked. See example above.
             </para>
         </sect3>
 
@@ -109,7 +199,12 @@ public function unlock();]]></programlisting>
 public function isLocked();]]></programlisting>
 
             <para>
-                ...
+                <code>isLocked()</code> method can be used to check if object is locked.
+            </para>
+
+            <para>
+                It returns <code>true</code> or <code>false</code> for "movable" objects and always <code>true</code>
+                for "locked" objects.
             </para>
         </sect3>
     </sect2>
