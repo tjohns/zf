@@ -6,6 +6,7 @@ Zend Framework                                                             NEWS
     ZF-1089 Document Zend_Loader::autoload()
 - Zend_Auth
     ZF-1087 Zend_Auth - documentation updates and additions
+    ZF-1088 Support simple distinction between authentication failure types
 - Zend_Controller
     ZF-1012 getControllerDirectory method in the Standard Dispatcher
     ZF-1020 session_write_close & Zend_Session
@@ -16,13 +17,21 @@ Zend Framework                                                             NEWS
     ZF-1066 isDate() returns true for dates that do not appear to be valid  
     ZF-1101 getDate() yields results that look inconsistent
 - Zend_Db
+    ZF-1031 Zend_Db_* methods should throw only Zend_Db_Exception and/or derivatives
+    ZF-1039 using mysqli::real_escape_string for quote
+    ZF-1068 Support schema in describeTable()
     ZF-1093 MS SQL Server: use QUOTED_IDENTIFIER
+    ZF-1108 describeTableInformationSchema() incorrectly returns columns as primary keys
+    ZF-1117 MySQL: describeTableInformationSchema is too slow
 - Zend_Db_Adapter_Mysqli
     ZF-1039 Mysqli: use real_escape_string() for quoting
 - Zend_Db_Table
     ZF-45   Zend_Db_Table::fetchRow() should return NULL for no resulting rows
+    ZF-174  Documentation mistake in 'Adding Domain Logic' example
     ZF-1080 Zend/Db/Table/Row/Abstract.php missing opening <
+    ZF-1084 Zend_Db_Table implicit table name feature failing
     ZF-1107 Zend_Db_Table_Abstract->fetchAll: 'rowClass' index typo
+    ZF-1109 Wrong class name in code for Zend_Db_Table Relationships Example
 - Zend_Filter / Zend_Validate
     ZF-1086 Zend Filter string casts improvement
 - Zend_Http_Client
@@ -44,6 +53,8 @@ Zend Framework                                                             NEWS
     ZF-1058 Infinite loop if body ending with space
 - Zend_Registry
     ZF-1094 issue with examples given for accessing Zend_Registry as on object
+- Zend_Session
+    ZF-1102 Zend_Session emits warning when save_path not writeable  
 
 =RELEASE 0.9.0 / 16-Mar-2007=
 - Zend_Acl
