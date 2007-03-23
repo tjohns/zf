@@ -123,6 +123,18 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                 </listitem>
                 <listitem>
                     <para>
+                        <code>getCode()</code> - <code>Zend_Auth_Result</code> の定数を返します。
+                        これは、認証に失敗したのか成功したのかを表すものです。
+                        これを使用する場面としては、認証の結果をいくつかの結果から区別したい場合などがあります。
+                        これにより、たとえば認証結果について、より詳細な情報を管理することができるようになります。
+                        別の使用法としては、ユーザに示すメッセージを変更し、より詳細な情報を伝えられるようにすることなどがあります。
+                        しかし、一般的な「認証失敗」メッセージではなく
+                        ユーザに対して詳細な情報を示す際には、そのリスクを知っておくべきです。
+                        詳細な情報は、以下の注意を参照ください。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
                         <code>getIdentity()</code> - 認証を試みた ID 情報を返します。
                     </para>
                 </listitem>
@@ -133,6 +145,50 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                     </para>
                 </listitem>
             </itemizedlist>
+        </para>
+
+        <para>
+            認証の結果によって処理を分岐させ、より決め細やかな処理を行いたいこともあるでしょう。
+            有用な処理としては、たとえば間違ったパスワードを繰り返し入力したアカウントをロックしたり、
+            存在しない ID を何度も入力ｈした IP アドレスに印をつけたり、
+            ユーザに対してよりわかりやすいメッセージを返したりといったことがあります。
+            次の結果コードが使用可能です。
+
+            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+Zend_Auth_Result::FAILURE
+Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
+Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
+Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+
+        </para>
+
+        <para>
+            次の例は、結果コードを処理する方法を示すものです。
+
+            <programlisting role="php"><![CDATA[<?php
+// AuthController / loginAction の中の処理
+$result = $this->_auth->authenticate($adapter);
+
+switch ($result->getCode()) {
+
+    case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
+        /** ID が存在しない場合の処理 **/
+        break;
+
+    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+        /** 認証に失敗した場合の処理 **/
+        break;
+
+    case Zend_Auth_Result::SUCCESS:
+        /** 認証に成功した場合の処理 **/
+        break;
+
+    default:
+        /** その他の原因で失敗した場合の処理 **/
+        break;
+}]]></programlisting>
+
         </para>
 
     </sect2>

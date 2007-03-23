@@ -49,6 +49,9 @@
                         これらの処理を表すパラメータつきの文字列、たとえば <code>'MD5(?)'</code>
                         や <code>'PASSWORD(?)'</code> を指定することで、
                         証明データに対して任意の SQL を適用できるようになります。
+                        これらの関数は RDBMS によって異なります。
+                        データベースシステムでどのような関数が使えるのかについては、
+                        データベースのマニュアルをご確認ください。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -159,6 +162,43 @@ Array
             </para>
 
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
+
+        <title>応用例: 持続的な DbTable 結果オブジェクト</title>
+
+        <para>
+            デフォルトでは <code>Zend_Auth_Adapter_DbTable</code> は、
+            認証に成功した際に認証情報を返します。場合によっては、
+            <code>Zend_Auth</code> の持続ストレージの仕組みを利用して
+            別の有用な情報を格納したいこともあるでしょう。その場合は、
+            <code>getResultRowObject()</code> メソッドを使用して
+            <code>stdClass</code> オブジェクトを返します。
+            次のコードで、使用法をご確認ください。
+
+            <programlisting role="php"><![CDATA[<?php
+// Zend_Auth_Adapter_DbTable による認証を行います
+$result = $this->_auth->authenticate($adapter);
+
+if ($result->isValid()) {
+
+    // 認証情報をオブジェクトとして保存し、username と real_name のみを返します
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+
+    // 認証情報をオブジェクトとして保存し、password のみを省略します
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+
+    /* ... */
+
+} else {
+
+    /* ... */
+
+}]]></programlisting>
+
+        </para>
 
     </sect2>
 
