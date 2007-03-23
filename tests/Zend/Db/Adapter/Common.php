@@ -1569,7 +1569,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($info, $this->arrayHasKey('name'));
         $this->assertThat($info, $this->arrayHasKey('cols'));
         $this->assertThat($info, $this->arrayHasKey('primary'));
-        $this->assertThat($info, $this->arrayHasKey('desc'));
+        $this->assertThat($info, $this->arrayHasKey('metadata'));
 
         $this->assertEquals($rowClass, 'Zend_Db_Table_Row');
         $this->assertEquals($rowsetClass, 'Zend_Db_Table_Rowset');
@@ -2621,6 +2621,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($rowsNew, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
 
+        $this->createTestTable2();
         list ($dbTable2, $table2) = $this->getInstanceOfDbTable2();
         $connected = false;
         try {
@@ -2748,6 +2749,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertThat($row1New, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
 
+        $this->createTestTable2();
         list ($dbTable2, $table2) = $this->getInstanceOfDbTable2();
         $connected = false;
         try {

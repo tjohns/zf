@@ -73,12 +73,12 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQLIntersection()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
+        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . "(
             news_id     INTEGER NOT NULL,
             user_id     INTEGER NOT NULL,
             date_posted {$this->_textDataType},
             PRIMARY KEY (news_id, user_id, date_posted),
-            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
+            FOREIGN KEY (news_id) REFERENCES " . self::TABLE_NAME . '(news_id),
             FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
         )';
         return $sql;
@@ -204,6 +204,11 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_Common
     public function testSelectJoinRightClause()
     {
         $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
+    }
+
+    public function testTableSchemaSpecified()
+    {
+        $this->markTestSkipped('SQLite does not support qualified table names');
     }
 
 }

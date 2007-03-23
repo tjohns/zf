@@ -95,7 +95,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_Common
 
     function getCreateTableSQLIntersection()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
+        $sql = 'CREATE TABLE '. self::TABLE_NAME_I . '(
             news_id     INTEGER NOT NULL,
             user_id     INTEGER NOT NULL,
             date_posted TIMESTAMP,
