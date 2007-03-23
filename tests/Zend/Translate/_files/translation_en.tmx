@@ -24,5 +24,13 @@
    <tuv xml:lang="de"><seg>Message 5</seg></tuv>
    <tuv xml:lang="en"><seg>Message 5 (en)</seg></tuv>
   </tu>
+  <tu tuid='Cooking furniture'>
+   <tuv xml:lang="de"><seg>Küchen Möbel</seg></tuv>
+   <tuv xml:lang="en"><seg>Küchen Möbel (en)</seg></tuv>
+  </tu>
+  <tu tuid='Küchen Möbel'>
+   <tuv xml:lang="de"><seg>Cooking furniture</seg></tuv>
+   <tuv xml:lang="en"><seg>Cooking furniture (en)</seg></tuv>
+  </tu>
  </body>
 </tmx>

@@ -59,6 +59,8 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5 (en)');
+        $this->assertEquals($adapter->translate('Cooking furniture'), 'Küchen Möbel (en)');
+        $this->assertEquals($adapter->translate('Küchen Möbel'), 'Cooking furniture (en)');
     }
 
     public function testLoadTranslationData()

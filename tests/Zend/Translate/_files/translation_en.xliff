@@ -22,6 +22,14 @@
     <source>Message 5</source>
     <target>Message 5 (en)</target>
    </trans-unit>
+   <trans-unit id='6'>
+    <source>Küchen Möbel</source>
+    <target>Cooking furniture (en)</target>
+   </trans-unit>
+   <trans-unit id='7'>
+    <source>Cooking furniture</source>
+    <target>Küchen Möbel (en)</target>
+   </trans-unit>
   </body>
  </file>
 </xliff>
