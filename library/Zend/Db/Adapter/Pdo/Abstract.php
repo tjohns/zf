@@ -99,7 +99,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
             /** @todo Are there other portability attribs to consider? */
         } catch (PDOException $e) {
-            throw new Zend_Db_Adapter_Exception($e->getMessage(), $e->getCode());
+            throw new Zend_Db_Adapter_Exception($e->getMessage(), $e);
         }
 
     }
@@ -136,6 +136,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      * @param string|Zend_Db_Select $sql The SQL statement with placeholders.
      * @param array $bind An array of data to bind to the placeholders.
      * @return Zend_Db_Pdo_Statement
+     * @throws Zend_Db_Adapter_Exception To re-throw PDOException.
      */
     public function query($sql, $bind = array())
     {
@@ -148,7 +149,12 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
                 }
             }
         }
-        return parent::query($sql, $bind);
+
+        try {
+            return parent::query($sql, $bind);
+        } catch (PDOException $e) {
+            throw new Zend_Db_Adapter_Exception($e->getMessage(), $e);
+        }
     }
 
     /**

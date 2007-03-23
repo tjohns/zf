@@ -36,8 +36,11 @@ require_once 'Zend/Db/Adapter/Abstract.php';
 abstract class Zend_Db_Table_Abstract
 {
 
+    const SCHEMA           = 'schema';
     const NAME             = 'name';
     const PRIMARY          = 'primary';
+    const COLS             = 'cols';
+    const METADATA         = 'metadata';
     const ROW_CLASS        = 'rowClass';
     const ROWSET_CLASS     = 'rowsetClass';
     const REFERENCE_MAP    = 'referenceMap';
@@ -103,7 +106,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @var array
      */
-    protected $_describeTable = array();
+    protected $_metadata = array();
 
     /**
      * Default classname for row
@@ -408,10 +411,10 @@ abstract class Zend_Db_Table_Abstract
             $tableName = $this->_name;
         }
 
-        $this->_describeTable = $this->_db->describeTable($tableName, $schemaName);
+        $this->_metadata = $this->_db->describeTable($tableName, $schemaName);
 
         if (! $this->_cols) {
-            $this->_cols = array_keys($this->_describeTable);
+            $this->_cols = array_keys($this->_metadata);
         }
     }
 
@@ -426,9 +429,9 @@ abstract class Zend_Db_Table_Abstract
     protected function _setupPrimaryKey()
     {
         if (!$this->_primary) {
-            foreach ($this->_describeTable as $desc) {
-                if ($desc['PRIMARY']) {
-                    $this->_primary[ $desc['PRIMARY_POSITION'] ] = $desc['COLUMN_NAME'];
+            foreach ($this->_metadata as $col) {
+                if ($col['PRIMARY']) {
+                    $this->_primary[ $col['PRIMARY_POSITION'] ] = $col['COLUMN_NAME'];
                 }
             }
         }
@@ -451,15 +454,15 @@ abstract class Zend_Db_Table_Abstract
     public function info()
     {
         return array(
-            'schema'          => $this->_schema,
-            'name'            => $this->_name,
-            'cols'            => (array) $this->_cols,
-            'primary'         => (array) $this->_primary,
-            'desc'            => $this->_describeTable,
-            'rowClass'        => $this->_rowClass,
-            'rowsetClass'     => $this->_rowsetClass,
-            'referenceMap'    => $this->_referenceMap,
-            'dependentTables' => $this->_dependentTables,
+            self::SCHEMA           => $this->_schema,
+            self::NAME             => $this->_name,
+            self::COLS             => (array) $this->_cols,
+            self::PRIMARY          => (array) $this->_primary,
+            self::METADATA         => $this->_metadata,
+            self::ROW_CLASS        => $this->_rowClass,
+            self::ROWSET_CLASS     => $this->_rowsetClass,
+            self::REFERENCE_MAP    => $this->_referenceMap,
+            self::DEPENDENT_TABLES => $this->_dependentTables,
         );
     }
 
@@ -489,7 +492,7 @@ abstract class Zend_Db_Table_Abstract
      * @param string $where An SQL WHERE clause.
      * @return int          The number of rows updated.
      */
-    public function update(&$data, $where)
+    public function update(array $data, $where)
     {
         return $this->_db->update($this->_name, $data, $where);
     }

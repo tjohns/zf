@@ -596,10 +596,17 @@ abstract class Zend_Db_Adapter_Abstract
      * This method returns an associative array compatible with that returned
      * by the describeTable() method.
      *
+     * @todo: use this for any RDBMS that support it satisfactorily.
+     * Currently it is either buggy or has such slow performance in
+     * all RDBMS that do support it, that we choose to comment it out.
+     * E.g. in MySQL 5.0.0 to 5.0.37 (at least), the INFORMATION_SCHEMA
+     * is too slow to be usable in a web application.
+     *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
      * @return array
      */
+    /*
     protected function _describeTableInformationSchema($tableName, $schemaName = null)
     {
         $sql = "SELECT c.table_schema, c.table_name, c.column_name,
@@ -612,6 +619,7 @@ abstract class Zend_Db_Adapter_Abstract
                 JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
                 ON (k.table_schema = tc.table_schema
                   AND k.table_name = tc.table_name
+                  AND k.constraint_name = tc.constraint_name
                   AND tc.constraint_type = 'PRIMARY KEY'))
               ON (c.table_schema = k.table_schema
                 AND c.table_name = k.table_name
@@ -646,6 +654,7 @@ abstract class Zend_Db_Adapter_Abstract
 
         return $desc;
     }
+     */
 
     /**
      * Abstract Methods
