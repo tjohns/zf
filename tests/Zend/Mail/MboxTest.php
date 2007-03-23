@@ -25,11 +25,42 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
 {
+    protected $_mboxOriginalFile;
     protected $_mboxFile;
+    protected $_tmpdir;
 
     public function setUp()
     {
-        $this->_mboxFile = dirname(__FILE__) . '/_files/test.mbox/INBOX';
+        if ($this->_tmpdir == null) {
+            if (TESTS_ZEND_MAIL_TEMPDIR != null) {
+                $this->_tmpdir = TESTS_ZEND_MAIL_TEMPDIR;
+            } else {
+                $this->_tmpdir = dirname(__FILE__) . '/_files/test.tmp/';
+            }
+            if (!file_exists($this->_tmpdir)) {
+                mkdir($this->_tmpdir);
+            }
+            $count = 0;
+            $dh = opendir($this->_tmpdir);
+            while (readdir($dh) !== false) {
+                ++$count;
+            }
+            closedir($dh);
+            if ($count != 2) {
+                $this->markTestSkipped('Are you sure your tmp dir is a valid empty dir?');
+                return;
+            }
+        }
+
+        $this->_mboxOriginalFile = dirname(__FILE__) . '/_files/test.mbox/INBOX';
+        $this->_mboxFile = $this->_tmpdir . 'INBOX';
+
+        copy($this->_mboxOriginalFile, $this->_mboxFile);
+    }
+
+    public function tearDown()
+    {
+        unlink($this->_mboxFile);
     }
 
     public function testLoadOk()
@@ -223,10 +254,45 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
 
         $serialzed = serialize($mail);
         $mail = null;
+        unlink($this->_mboxFile);
+        // otherwise this test is to fast for a mtime change
+        sleep(2);
+        copy($this->_mboxOriginalFile, $this->_mboxFile);
         $mail = unserialize($serialzed);
 
         $this->assertEquals($mail->countMessages(), $count);
         $this->assertEquals($mail->getMessage(1)->getContent(), $content);
+    }
+
+    public function testSleepWakeRemoved()
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->markTestSkipped('this test wont work with windows, because you cannot mark a file as not readable');
+        }
+
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+
+        $count = $mail->countMessages();
+        $content = $mail->getMessage(1)->getContent();
+
+        $serialzed = serialize($mail);
+        $mail = null;
+
+        $stat = stat($this->_mboxFile);
+        chmod($this->_mboxFile, 0);
+        $check = false;
+        try {
+            $mail = unserialize($serialzed);
+        } catch (Exception $e) {
+            $check = true;
+            // test ok
+        }
+
+        chmod($this->_mboxFile, $stat['mode']);
+
+        if (!$check) {
+            $this->fail('no exception while waking with non readable file');
+         }
     }
 
     public function testUniqueId()
@@ -244,6 +310,19 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
                     $this->fail('reverse lookup failed');
             }
         }
+    }
+
+    public function testShortMbox()
+    {
+        $fh = fopen($this->_mboxFile, 'w');
+        fputs($fh, "From \r\nSubject: test\r\nFrom \r\nSubject: test2\r\n");
+        fclose($fh);
+        $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
+        $this->assertEquals($mail->countMessages(), 2);
+        $this->assertEquals($mail->getMessage(1)->subject, 'test');
+        $this->assertEquals($mail->getMessage(1)->getContent(), '');
+        $this->assertEquals($mail->getMessage(2)->subject, 'test2');
+        $this->assertEquals($mail->getMessage(2)->getContent(), '');
     }
 
 }

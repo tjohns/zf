@@ -25,14 +25,69 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
 {
+    protected $_originalMaildir;
     protected $_maildir;
+    protected $_tmpdir;
 
     public function setUp()
     {
-        $this->_maildir = dirname(__FILE__) . '/_files/test.maildir/';
-        if (!is_dir($this->_maildir . '/cur/')) {
+        $this->_originalMaildir = dirname(__FILE__) . '/_files/test.maildir/';
+        if (!is_dir($this->_originalMaildir . '/cur/')) {
             $this->markTestSkipped('You have to unpack maildir.tar in Zend/Mail/_files/test.maildir/ '
                                  . 'directory before enabling the maildir tests');
+            return;
+        }
+
+        if ($this->_tmpdir == null) {
+            if (TESTS_ZEND_MAIL_TEMPDIR != null) {
+                $this->_tmpdir = TESTS_ZEND_MAIL_TEMPDIR;
+            } else {
+                $this->_tmpdir = dirname(__FILE__) . '/_files/test.tmp/';
+            }
+            if (!file_exists($this->_tmpdir)) {
+                mkdir($this->_tmpdir);
+            }
+            $count = 0;
+            $dh = opendir($this->_tmpdir);
+            while (readdir($dh) !== false) {
+                ++$count;
+            }
+            closedir($dh);
+            if ($count != 2) {
+                $this->markTestSkipped('Are you sure your tmp dir is a valid empty dir?');
+                return;
+            }
+        }
+
+        $this->_maildir = $this->_tmpdir;
+
+        foreach (array('cur', 'new') as $dir) {
+            mkdir($this->_tmpdir . $dir);
+            $dh = opendir($this->_originalMaildir . $dir);
+            while (($entry = readdir($dh)) !== false) {
+                $entry = $dir . '/' . $entry;
+                if (!is_file($this->_originalMaildir . $entry)) {
+                    continue;
+                }
+                copy($this->_originalMaildir . $entry, $this->_tmpdir . $entry);
+            }
+            closedir($dh);
+        }
+    }
+
+    public function tearDown()
+    {
+        foreach (array('cur', 'new') as $dir) {
+            $dh = opendir($this->_tmpdir . $dir);
+            while (($entry = readdir($dh)) !== false) {
+                $entry = $this->_tmpdir . $dir . '/' . $entry;
+                if (!is_file($entry)) {
+                    continue;
+                }
+                unlink($entry);
+            }
+            closedir($dh);
+            rmdir($this->_tmpdir . $dir);
         }
     }
 
@@ -250,5 +305,75 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         }
 
         $this->fail('no exception while getting number for invalid id');
+    }
+
+    public function isFileTest($dir)
+    {
+        if (file_exists($this->_maildir . '/' . $dir)) {
+            rename($this->_maildir . '/' . $dir, $this->_maildir . '/' . $dir . 'bak');
+        }
+        touch($this->_maildir . '/' . $dir);
+
+        $check = false;
+        try {
+            $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+        } catch (Exception $e) {
+            $check = true;
+            // test ok
+        }
+
+        unlink($this->_maildir . '/' . $dir);
+        if (file_exists($this->_maildir . '/' . $dir . 'bak')) {
+            rename($this->_maildir . '/' . $dir . 'bak', $this->_maildir . '/' . $dir);
+        }
+
+        if (!$check) {
+           $this->fail('no exception while loading invalid dir with ' . $dir . ' as file');
+        }
+    }
+
+    public function testCurIsFile()
+    {
+        $this->isFileTest('cur');
+    }
+
+    public function testNewIsFile()
+    {
+        $this->isFileTest('new');
+    }
+
+    public function testTmpIsFile()
+    {
+        $this->isFileTest('tmp');
+    }
+
+    public function notReadableTest($dir)
+    {
+        $stat = stat($this->_maildir . '/' . $dir);
+        chmod($this->_maildir . '/' . $dir, 0);
+
+        $check = false;
+        try {
+            $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+        } catch (Exception $e) {
+            $check = true;
+            // test ok
+        }
+
+        chmod($this->_maildir . '/' . $dir, $stat['mode']);
+
+        if (!$check) {
+           $this->fail('no exception while loading invalid dir with ' . $dir . ' not readable');
+        }
+    }
+
+    public function testNotReadableCur()
+    {
+        $this->notReadableTest('cur');
+    }
+
+    public function testNotReadableNew()
+    {
+        $this->notReadableTest('new');
     }
 }
