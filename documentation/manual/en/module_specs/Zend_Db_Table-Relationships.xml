@@ -503,7 +503,7 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Account', 'Engineer');
+$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
 
 ?>]]>
             </programlisting>
@@ -560,10 +560,10 @@ $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
 // Use the default reference rule
-$reporter          = $bug1->findParentAccount();
+$reporter          = $bug1->findParentAccounts();
 
 // Specify the reference rule
-$engineer          = $bug1->findParentAccountByEngineer();
+$engineer          = $bug1->findParentAccountsByEngineer();
 
 ?>]]>
             </programlisting>
