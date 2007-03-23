@@ -61,16 +61,11 @@ AC_ARG_WITH(ecsrc, [  --with-ecsrc  Where to find the ecelerity source],
 	]
 )
 
-# AC_ARG_VAR(DOCBOOK_DTD, [Location of DocBook DTD])
-# AC_ARG_VAR(DOCBOOK_XSL, [Location of DocBook XSL stylesheets])
-
 AC_SUBST(XINC)
 AC_SUBST(XEP)
 AC_SUBST(FOP)
 AC_SUBST(XSLTPROC)
 AC_SUBST(XMLLINT)
-# AC_SUBST(DOCBOOK_DTD)
-# AC_SUBST(DOCBOOK_XSL)
 AC_SUBST(ECSRC)
 HERE=`pwd`
 AC_SUBST(HERE)
