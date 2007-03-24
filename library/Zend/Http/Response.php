@@ -342,7 +342,7 @@ class Zend_Http_Response
      * @param boolean $http11 Use HTTP version 1.1 
      * @return string
      */ 
-    static public function responseCodeAsText($code, $http11 = true)
+    public static function responseCodeAsText($code, $http11 = true)
     {
         $messages = array (
             // Informational 1xx
@@ -409,7 +409,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return int
      */
-    static public function extractCode($response_str)
+    public static function extractCode($response_str)
     {
         preg_match("|^HTTP/[\d\.x]+ (\d+)|", $response_str, $m);
 
@@ -426,7 +426,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractMessage($response_str)
+    public static function extractMessage($response_str)
     {
         preg_match("|^HTTP/[\d\.x]+ \d+ ([^\r\n]+)|", $response_str, $m);
 
@@ -443,7 +443,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractVersion($response_str)
+    public static function extractVersion($response_str)
     {
         preg_match("|^HTTP/([\d\.x]+) \d+|", $response_str, $m);
 
@@ -460,7 +460,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return array
      */
-    static public function extractHeaders($response_str)
+    public static function extractHeaders($response_str)
     {
         $headers = array();
         $lines = explode("\n", $response_str);
@@ -505,7 +505,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractBody($response_str)
+    public static function extractBody($response_str)
     {
         list(, $body) = preg_split('/^\r?$/m', $response_str, 2);
         $body = ltrim($body);
@@ -519,7 +519,7 @@ class Zend_Http_Response
      * @param string $body
      * @return string
      */
-    static public function decodeChunkedBody($body)
+    public static function decodeChunkedBody($body)
     {
         $decBody = '';
 
@@ -546,7 +546,7 @@ class Zend_Http_Response
      * @param string $body
      * @return string
      */
-    static public function decodeGzip($body)
+    public static function decodeGzip($body)
     {
         return gzinflate(substr($body, 10));
     }
@@ -559,7 +559,7 @@ class Zend_Http_Response
      * @param string $body
      * @return string
      */
-    static public function decodeDeflate($body)
+    public static function decodeDeflate($body)
     {
         return gzuncompress($body);
     }
@@ -570,7 +570,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return Zend_Http_Response
      */
-    static public function fromString($response_str)
+    public static function fromString($response_str)
     {
         $code    = self::extractCode($response_str);
         $headers = self::extractHeaders($response_str);

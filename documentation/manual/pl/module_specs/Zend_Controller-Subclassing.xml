@@ -227,7 +227,7 @@ class My_Controller_Front extends Zend_Controller_Front
      * @return void
      * @throws Zend_Controller_Exception jeśli wywołana z instancji obiektu
      */
-    static public function run($controllerDirectory);
+    public static function run($controllerDirectory);
 
     /**
      * Dodaje ścieżkę kontrolerów na stos ścieżek kontrolerów

@@ -30,9 +30,9 @@
 
             <programlisting role="php"><![CDATA[<?php
 class Searcher {
-    static private $_index;
+    private static $_index;
 
-    static public function initIndex() {
+    public static function initIndex() {
         self::$_index = Zend_Search_Lucene::open('path/to/index');
     }
 }
@@ -73,15 +73,15 @@ Searcher::initIndex();
 
             <programlisting role="php"><![CDATA[<?php
 class Searcher {
-    static private $_index;
+    private static $_index;
 
-    static public function initIndex() {
+    public static function initIndex() {
         self::$_index = Zend_Search_Lucene::open('path/to/index');
     }
 
     ...
 
-    static public function commit() {
+    public static function commit() {
         self::$_index->commit();
     }
 }

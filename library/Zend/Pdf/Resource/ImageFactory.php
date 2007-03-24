@@ -34,7 +34,7 @@ require_once 'Zend/Pdf.php';
  */
 class Zend_Pdf_ImageFactory
 {
-    static public function factory($filename) {
+    public static function factory($filename) {
         if(!is_file($filename)) {
             throw new Zend_Pdf_Exception("Cannot create image resource. File not found.");
         }

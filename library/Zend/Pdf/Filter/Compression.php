@@ -39,7 +39,7 @@ abstract class Zend_Pdf_Filter_Compression implements Zend_Pdf_Filter
      * @param integer $c
      * @return integer
      */
-    static private function _paeth($a, $b, $c)
+    private static function _paeth($a, $b, $c)
     {
         // $a - left, $b - above, $c - upper left
         $p  = $a + $b - $c;       // initial estimate

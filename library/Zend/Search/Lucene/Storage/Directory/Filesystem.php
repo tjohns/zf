@@ -64,7 +64,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      * @return boolean
      */
 
-    static public function mkdirs($dir, $mode = 0777, $recursive = true)
+    public static function mkdirs($dir, $mode = 0777, $recursive = true)
     {
         if (is_null($dir) || $dir === '') {
             return false;

@@ -49,14 +49,14 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
      *
      * @var array
      */
-    static protected $_namespaceLocks = array();
+    protected static $_namespaceLocks = array();
 
     /**
      * Single instance namespace array to ensure data security.
      *
      * @var array
      */
-    static protected $_singleInstances = array();
+    protected static $_singleInstances = array();
 
     /**
      * __construct() - Returns an instance object bound to a particular, isolated section
@@ -182,7 +182,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
      *
      * @return void
      */
-    static public function unlockAll()
+    public static function unlockAll()
     {
         self::$_namespaceLocks = array();
     }

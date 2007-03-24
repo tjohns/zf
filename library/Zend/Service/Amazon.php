@@ -92,12 +92,12 @@ class Zend_Service_Amazon
 {
 	public $appId;
 
-	static protected $_sortVerbs = array('relevance', 'salesrank', 'price', '-price',
+	protected static $_sortVerbs = array('relevance', 'salesrank', 'price', '-price',
 	                                     'most-recent', '-date', 'title', '-title',
 	                                     'sale-flag', 'featured', 'review', 'artist',
 	                                     'age-min', '-age-min');
 
-	static protected $_searchSort = array(
+	protected static $_searchSort = array(
       'Apparel' => array(
           'relevance'   => 'relevancerank',
           'salesrank'   => 'salesrank',
@@ -1173,7 +1173,7 @@ class Zend_Service_Amazon
      * @param DomDocument $dom
      * @throws Zend_Service_Exception
      */
-    static protected function _checkErrors(DomDocument $dom)
+    protected static function _checkErrors(DomDocument $dom)
     {
     	$xpath = new DOMXPath($dom);
         $xpath->registerNamespace('az', 'http://webservices.amazon.com/AWSECommerceService/2005-10-05');

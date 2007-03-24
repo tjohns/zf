@@ -61,7 +61,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @var Zend_Db_Adapter_Abstract
      */
-    static protected $_defaultDb;
+    protected static $_defaultDb;
 
     /**
      * Zend_Db_Adapter_Abstract object.
@@ -316,7 +316,7 @@ abstract class Zend_Db_Table_Abstract
      * @param  Zend_Db_Adapter_Abstract
      * @return void
      */
-    static public final function setDefaultAdapter(Zend_Db_Adapter_Abstract $db)
+    public static final function setDefaultAdapter(Zend_Db_Adapter_Abstract $db)
     {
         Zend_Db_Table_Abstract::$_defaultDb = $db;
     }
@@ -326,7 +326,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @return Zend_Db_Adapter_Abstract
      */
-    static public final function getDefaultAdapter()
+    public static final function getDefaultAdapter()
     {
         return self::$_defaultDb;
     }

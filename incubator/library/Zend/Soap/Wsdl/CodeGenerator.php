@@ -26,17 +26,17 @@ class Zend_Soap_Wsdl_CodeGenerator {
     /**
      * @var string WSDL Filename/URI
      */
-    static private $filename = null;
+    private static $filename = null;
     
     /**
      * @var string PHP Code for output
      */
-    static private $php_code;
+    private static $php_code;
     
     /**
      * @var object Zend_Soap_Wsdl_Parser Result
      */
-    static private $wsdl;
+    private static $wsdl;
 
     /**
      * Constructor
@@ -44,7 +44,7 @@ class Zend_Soap_Wsdl_CodeGenerator {
      * @param string $wsdl Filename, URI or XML for the WSDL
      * @param string $output Output file name, default: null
      */
-    static public function parse($wsdl, $output = null)
+    public static function parse($wsdl, $output = null)
     {
         self::$wsdl = Zend_Soap_Wsdl_Parser::parse($wsdl);
         

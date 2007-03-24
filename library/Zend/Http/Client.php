@@ -992,7 +992,7 @@ class Zend_Http_Client
      * @param array $headers Associative array of optional headers @example ("Content-transfer-encoding" => "binary")
      * @return string
      */
-    static public function encodeFormData($boundary, $name, $value, $filename = null, $headers = array()) {
+    public static function encodeFormData($boundary, $name, $value, $filename = null, $headers = array()) {
         $ret = "--{$boundary}\r\n" .
             'Content-Disposition: form-data; name="' . $name .'"';
 
@@ -1019,7 +1019,7 @@ class Zend_Http_Client
      * @param string $type
      * @return string
      */
-    static public function encodeAuthHeader($user, $password, $type = self::AUTH_BASIC)
+    public static function encodeAuthHeader($user, $password, $type = self::AUTH_BASIC)
     {
         $authHeader = null;
 

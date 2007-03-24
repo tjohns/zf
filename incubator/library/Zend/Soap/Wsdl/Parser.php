@@ -25,7 +25,7 @@ class Zend_Soap_Wsdl_Parser {
     /**
      * @var SimpleXML object for the WSDL document being parsed
      */
-    static private $xml;
+    private static $xml;
 
     /**
      * Parse a WSDL document into a generic object
@@ -33,7 +33,7 @@ class Zend_Soap_Wsdl_Parser {
      * @param string|file $wsdl The WSDL document or a filename for the WSDL document to parse
      * @return Zend_Soap_Wsdl_Parser_Result The contents of the WSDL file
      */
-    static public function parse($wsdl)
+    public static function parse($wsdl)
     {
         if (strpos($wsdl, '<') === false) {
             $wsdl_result = new Zend_Soap_Wsdl_Parser_Result($wsdl);
@@ -85,7 +85,7 @@ class Zend_Soap_Wsdl_Parser {
      * @param string $operation_name Name of the <operation> element to find
      * @return string
      */
-    static private function getOperationInputs($operation_name)
+    private static function getOperationInputs($operation_name)
     {
         $operation = self::$xml->xpath('/zfwsdl:definitions[1]/zfwsdl:portType/zfwsdl:operation[@name="' .$operation_name. '"]');
 
@@ -124,7 +124,7 @@ class Zend_Soap_Wsdl_Parser {
      * @param string $operation_name Name of the <operation> element to find
      * @return string|false Returns variable name if found, or false
      */
-    static private function getOperationOutput($operation_name)
+    private static function getOperationOutput($operation_name)
     {
         $operation = self::$xml->xpath('/zfwsdl:definitions[1]/zfwsdl:portType/zfwsdl:operation[@name="' .$operation_name. '"]');
 
@@ -152,7 +152,7 @@ class Zend_Soap_Wsdl_Parser {
      * @param string $operation_name Name of the <operation> element to find
      * @return string
      */
-    static private function getDocs($operation_name)
+    private static function getDocs($operation_name)
     {
 
         $portType = self::$xml->xpath('//zfwsdl:operation[@name="' .$operation_name. '"]/zfwsdl:documentation');

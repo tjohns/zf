@@ -195,7 +195,7 @@ class Zend_Controller_Front
      * @return void
      * @throws Zend_Controller_Exception if called from an object instance
      */
-    static public function run($controllerDirectory)
+    public static function run($controllerDirectory)
     {
         self::getInstance()
             ->setControllerDirectory($controllerDirectory)

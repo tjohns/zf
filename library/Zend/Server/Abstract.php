@@ -35,7 +35,7 @@ abstract class Zend_Server_Abstract implements Zend_Server_Interface
 	/**
      * @var array PHP's Magic Methods, these are ignored
      */
-    static protected $magic_methods = array(
+    protected static $magic_methods = array(
         '__construct',
         '__destruct',
         '__get',
@@ -59,7 +59,7 @@ abstract class Zend_Server_Abstract implements Zend_Server_Interface
 	 * @param string $key
 	 * @return string Lower cased string
 	 */
-	static public function lowerCase(&$value, &$key)
+	public static function lowerCase(&$value, &$key)
 	{
 		return $value = strtolower($value);
 	}

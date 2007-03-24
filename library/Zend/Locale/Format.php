@@ -880,7 +880,7 @@ class Zend_Locale_Format
      *
      * @return int|false           Position of replaced string (false if nothing replaced) 
      */
-    static protected function _replaceMonth(&$number, $monthlist)
+    protected static function _replaceMonth(&$number, $monthlist)
     {
         // If $locale was invalid, $monthlist will default to a "root" identity
         // mapping for each month number from 1 to 12.

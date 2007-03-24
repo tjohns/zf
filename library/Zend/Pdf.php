@@ -166,7 +166,7 @@ class Zend_Pdf
      * @param integer $revision
      * @return Zend_Pdf
      */
-    static public function parse(&$source = null, $revision = null)
+    public static function parse(&$source = null, $revision = null)
     {
         return new Zend_Pdf($source, $revision);
     }
@@ -178,7 +178,7 @@ class Zend_Pdf
      * @param integer $revision
      * @return Zend_Pdf
      */
-    static public function load($source = null, $revision = null)
+    public static function load($source = null, $revision = null)
     {
         return new Zend_Pdf($source, $revision, true);
     }

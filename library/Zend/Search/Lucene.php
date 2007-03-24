@@ -77,7 +77,7 @@ class Zend_Search_Lucene
      *
      * @var string
      */
-    static private $_defaultSearchField = null;
+    private static $_defaultSearchField = null;
 
     /**
      * File system adapter.
@@ -136,7 +136,7 @@ class Zend_Search_Lucene
      * @param mixed $directory
      * @return Zend_Search_Lucene
      */
-    static public function create($directory)
+    public static function create($directory)
     {
         return new Zend_Search_Lucene($directory, true);
     }
@@ -147,7 +147,7 @@ class Zend_Search_Lucene
      * @param mixed $directory
      * @return Zend_Search_Lucene
      */
-    static public function open($directory)
+    public static function open($directory)
     {
         return new Zend_Search_Lucene($directory);
     }
@@ -348,7 +348,7 @@ class Zend_Search_Lucene
      *
      * @param string $fieldName
      */
-    static public function setDefaultSearchField($fieldName)
+    public static function setDefaultSearchField($fieldName)
     {
         self::$_defaultSearchField = $fieldName;
     }
@@ -360,7 +360,7 @@ class Zend_Search_Lucene
      *
      * @return string
      */
-    static public function getDefaultSearchField()
+    public static function getDefaultSearchField()
     {
         return self::$_defaultSearchField;
     }

@@ -378,7 +378,7 @@ class My_Controller_Front extends Zend_Controller_Front
      * @return void
      * @throws Zend_Controller_Exception если вызывается из объекта
      */
-    static public function run($controllerDirectory);
+    public static function run($controllerDirectory);
 
     /**
      * Добавляет директорию контроллеров в стек директорий контроллеров

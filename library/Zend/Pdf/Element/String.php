@@ -80,7 +80,7 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
      * @param string $inStr
      * @return string
      */
-    static public function escape($inStr)
+    public static function escape($inStr)
     {
         $outStr = '';
         $lastNL = 0;
@@ -154,7 +154,7 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
      * @param string $inStr
      * @return string
      */
-    static public function unescape($inStr)
+    public static function unescape($inStr)
     {
         $outStr = '';
 

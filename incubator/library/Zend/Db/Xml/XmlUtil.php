@@ -41,7 +41,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return DOMDocument $document
 	 */
-	static public function importString($str)
+	public static function importString($str)
 	{
 		$document = new DOMDocument();
 		$document->loadXML($str);
@@ -55,7 +55,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return DOMDocument $document
 	 */
-	static public function importSimpleXML($sXML)
+	public static function importSimpleXML($sXML)
 	{
 		$document = new DOMDocument();
 		$document->loadXML($sXML->asXML());
@@ -72,7 +72,7 @@ class Zend_Db_Xml_XmlUtil
 	 *
 	 * @return DOMDocument $document
 	 */
-	static public function importXMLFile($fXML)
+	public static function importXMLFile($fXML)
 	{
 		$document = new DOMDocument();
 		$document->load($fXML);
@@ -87,7 +87,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return DOMDocument $document
 	 */
-	static public function importXMLFileStream($fsXML)
+	public static function importXMLFileStream($fsXML)
 	{
 		return Zend_Db_Xml_XmlUtil::importString(stream_get_contents($fsXML));
 	}
@@ -101,7 +101,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return mixed
 	 */
-	static public function exportToFile($xmlContent, $which, $name)
+	public static function exportToFile($xmlContent, $which, $name)
 	{
 		if ($which == self::DATA ) {
 			if (!is_null($xmlContent->data)) {
@@ -128,7 +128,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return SimpleXML
 	 */	
-	static public function exportToSimpleXML($xmlContent, $which)
+	public static function exportToSimpleXML($xmlContent, $which)
 	{
 		if ($which == self::DATA ) {
 			if (!is_null($xmlContent->data)) {
@@ -156,7 +156,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return string
 	 */
-	static public function exportToString($xmlContent, $which)
+	public static function exportToString($xmlContent, $which)
 	{
 		return self::saveXML($xmlContent, $which);
 	}
@@ -169,7 +169,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return string
 	 */
-	static public function saveXML($xmlContent, $which)
+	public static function saveXML($xmlContent, $which)
 	{
 		if ($which == self::DATA) {
 			if (!is_null($xmlContent->data)) {
@@ -196,7 +196,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return DOMDocument
 	 */
-	static public function getDOM($xmlContent, $which)
+	public static function getDOM($xmlContent, $which)
 	{
 		if ($which == self::DATA ) {
 			return $xmlContent->data;
@@ -217,7 +217,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return void
 	 */
-	static public function setDOM($xmlContent, $which, $dom)
+	public static function setDOM($xmlContent, $which, $dom)
 	{
 		if ($which == self::DATA) {
 			$xmlContent->setData($dom);
@@ -234,7 +234,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return Zend_Db_Xml_XmlContent
 	 */
-	static public function createDocument()
+	public static function createDocument()
 	{
 		return new Zend_Db_Xml_XmlContent();
 	}
@@ -247,7 +247,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return array $map
 	 */
-	static public function getDOMAsMap($xmlContent, $which)
+	public static function getDOMAsMap($xmlContent, $which)
 	{
 		/**
 		 * @todo convert dom to array, including nested elements
@@ -263,7 +263,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return void
 	 */
-	static public function setDOMFromMap($map, $xmlContent, $which)
+	public static function setDOMFromMap($map, $xmlContent, $which)
 	{
 		/**
 		 * @todo convert an array into a DOM including nested 
@@ -277,7 +277,7 @@ class Zend_Db_Xml_XmlUtil
 	 * 
 	 * @return Zend_Db_Xml_XmlContent
 	 */
-	static public function getXmlResult($xmlRow)
+	public static function getXmlResult($xmlRow)
 	{
 		$xmlResult = new Zend_Db_Xml_XmlContent();
 		$xmlResult->setId($xmlRow['ID']);

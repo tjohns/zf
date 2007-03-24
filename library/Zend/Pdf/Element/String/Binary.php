@@ -47,7 +47,7 @@ class Zend_Pdf_Element_String_Binary extends Zend_Pdf_Element_String
      * @param string $inStr
      * @return string
      */
-    static public function escape($inStr)
+    public static function escape($inStr)
     {
         $outStr = '';
 
@@ -64,7 +64,7 @@ class Zend_Pdf_Element_String_Binary extends Zend_Pdf_Element_String
      * @param string $inStr
      * @return string
      */
-    static public function unescape($inStr)
+    public static function unescape($inStr)
     {
         $outStr = '';
         $nextHexCode = '';

@@ -173,7 +173,7 @@ class Zend_Registry extends ArrayObject
      * @param  string $index
      * @return boolean
      */
-    static public function isRegistered($index)
+    public static function isRegistered($index)
     {
         if (self::$_registry === null) {
             return false;

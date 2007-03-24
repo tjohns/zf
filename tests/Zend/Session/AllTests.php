@@ -87,8 +87,8 @@ class Zend_Session_AllTests extends Zend_Session_PathHelper
             if ($line === 'final class Zend_Session_Core') {
                 fputs($out, "class Zend_Session_Core\n");
             } else {
-                if (false === fputs($out, (preg_replace('/^(\s*)static private\s/',
-                    '\1static protected ', $line)."\n"))) {
+                if (false === fputs($out, (preg_replace('/^(\s*)private static\s/',
+                    '\1protected static ', $line)."\n"))) {
                     return false;
                 }
             }

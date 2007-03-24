@@ -449,7 +449,7 @@ class Zend_Service_Flickr
      * @throws Zend_Service_Exception
      * @return void
      */
-    static protected function _checkErrors(DOMDocument $dom)
+    protected static function _checkErrors(DOMDocument $dom)
     {
         if ($dom->documentElement->getAttribute('stat') === 'fail') {
             $xpath = new DOMXPath($dom);

@@ -37,7 +37,7 @@ require_once 'Zend/Locale/Math/Exception.php';
 
 class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
 {
-    static public function disable()
+    public static function disable()
     {
         self::$_bcmathDisabled = true;
         self::$add   = 'Zend_Locale_Math_Add';

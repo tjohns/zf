@@ -4270,4 +4270,13 @@ class Zend_Date extends Zend_Date_DateObject {
     {
         return $this->_Locale->toString();
     }
+
+
+    /**
+     * Checks if the given date is a real date
+     */
+    public static function isDate($date, array $options = array())
+    {
+        throw new Zend_Date_Exception('function isDate will be integrated soon');
+    }
 }

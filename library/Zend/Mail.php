@@ -68,7 +68,7 @@ class Zend_Mail extends Zend_Mime_Message
      * @var Zend_Mail_Transport_Abstract
      * @static
      */
-    static protected $_defaultTransport = null;
+    protected static $_defaultTransport = null;
 
     /**
      * Mail character set
@@ -147,7 +147,7 @@ class Zend_Mail extends Zend_Mime_Message
      * @todo Allow passing in optional options for the transport to load
      * @param  Zend_Mail_Transport_Abstract $transport
      */
-    static public function setDefaultTransport(Zend_Mail_Transport_Abstract $transport)
+    public static function setDefaultTransport(Zend_Mail_Transport_Abstract $transport)
     {
         self::$_defaultTransport = $transport;
     }

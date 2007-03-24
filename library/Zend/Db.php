@@ -153,7 +153,7 @@ class Zend_Db {
      * @return Zend_Db_Adapter_Abstract
      * @throws Zend_Db_Exception
      */
-    static public function factory($adapterName, $config = array())
+    public static function factory($adapterName, $config = array())
     {
         if (!is_string($adapterName) or !strlen($adapterName)) {
             throw new Zend_Db_Exception('Adapter name must be specified in a string.');

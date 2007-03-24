@@ -251,7 +251,7 @@ class Zend_Http_Cookie
      * @param Zend_Uri_Http|string $ref_uri Reference URI for default values (domain, path)
      * @return Zend_Http_Cookie A new Zend_Http_Cookie object or false on failure.
      */
-    static public function fromString($cookieStr, $ref_uri = null)
+    public static function fromString($cookieStr, $ref_uri = null)
     {
         // Set default values
         if (is_string($ref_uri)) {

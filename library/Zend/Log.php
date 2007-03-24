@@ -63,7 +63,7 @@ class Zend_Log
      *
      * @var array
      */
-    static protected $_levelNames = array(
+    protected static $_levelNames = array(
         1  => 'DEBUG',
         2  => 'INFO',
         4  => 'WARNING',
@@ -77,7 +77,7 @@ class Zend_Log
      *
      * @var      array
      */
-    static private $_instances = array();
+    private static $_instances = array();
 
     /**
      * The static class Zend_Log holds an array of Zend_Log instances
@@ -85,7 +85,7 @@ class Zend_Log
      *
      * @var      array
      */
-    static private $_defaultLogName = 'LOG';
+    private static $_defaultLogName = 'LOG';
 
     /**
      * When this class is instantiated by registerLogger, it is

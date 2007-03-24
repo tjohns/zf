@@ -46,21 +46,21 @@ class ZFormFactory {
      * Constants used to specify the locations of the various directory lists
      * used to locate and load the element/validators/behaviors from
      */
-    static public  $ELEMENT_DIR_NAMES = 'elementDirs';
-    static public  $VALIDATOR_DIR_NAMES = 'validatorDirs';
-    static public  $BEHAVIOR_DIR_NAMES = 'behaviorDirs';
+    public static  $ELEMENT_DIR_NAMES = 'elementDirs';
+    public static  $VALIDATOR_DIR_NAMES = 'validatorDirs';
+    public static  $BEHAVIOR_DIR_NAMES = 'behaviorDirs';
 
-    static private $ELEMENT_FACTORY_DIRS   = 'ZForm/elements';
-    static private $VALIDATOR_FACTORY_DIRS = 'ZForm/validators';
-    static private $BEHAVIOR_FACTORY_DIRS  = 'ZForm/behaviors';
+    private static $ELEMENT_FACTORY_DIRS   = 'ZForm/elements';
+    private static $VALIDATOR_FACTORY_DIRS = 'ZForm/validators';
+    private static $BEHAVIOR_FACTORY_DIRS  = 'ZForm/behaviors';
 
     /**
      * The factory needs to be initialize so that is may contribute the
      * framework javascript files to the output. @todo fix this
      */
-    static private $INITED = false;
+    private static $INITED = false;
 
-    static public function init($initObject = null) {
+    public static function init($initObject = null) {
 	global $FRAMEWORK_URI;
 	if (! self::$INITED) {
 	    // @todo fix this
@@ -82,7 +82,7 @@ class ZFormFactory {
 	    }
 	}
     }
-    static public function loadElement($elementClassName,
+    public static function loadElement($elementClassName,
 				       $id,
 				       $parentNode = null,
 				       $wrapExisting = false,
@@ -98,13 +98,13 @@ class ZFormFactory {
 	return($dynamic ? new ZFormDynamicElement($newObject) : $newObject);
     }
 
-    static public function wrapElement($elementClassName,
+    public static function wrapElement($elementClassName,
 				       $id,
 				       $parentNode = null,
 				       $dynamic = false) {
 	return(self::loadElement($elementClassName, $id, $parentNode, true, $dynamic));
     }
-    static public function loadValidator($validatorClassName, ZFormElement $target) {
+    public static function loadValidator($validatorClassName, ZFormElement $target) {
 
 
 	Zend::loadClass($validatorClassName, self::$VALIDATOR_FACTORY_DIRS);
@@ -117,7 +117,7 @@ class ZFormFactory {
 	return($newObject);
     }
 
-    static public function loadBehavior($behaviorClassName, $targetElement) {
+    public static function loadBehavior($behaviorClassName, $targetElement) {
 
 	Zend::loadClass($behaviorClassName, self::$BEHAVIOR_FACTORY_DIRS);
 	$newObject = new $behaviorClassName($targetElement);

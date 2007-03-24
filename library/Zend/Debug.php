@@ -39,7 +39,7 @@ class Zend_Debug
      * @param  string $label An optional label.
      * @return string
      */
-    static public function dump($var, $label=null, $echo=true)
+    public static function dump($var, $label=null, $echo=true)
     {
         // format the label
         $label = ($label===null) ? '' : rtrim($label) . ' ';

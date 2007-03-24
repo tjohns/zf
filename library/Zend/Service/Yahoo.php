@@ -612,7 +612,7 @@ class Zend_Service_Yahoo
      * @param DOMDocument $dom DOM Object representing the result XML
      * @throws  Zend_Service_Exception Thrown when the result from Yahoo! is an error
      */
-    static protected function _checkErrors(DOMDocument $dom)
+    protected static function _checkErrors(DOMDocument $dom)
     {
 		$xpath = new DOMXPath($dom);
         $xpath->registerNamespace('yapi', 'urn:yahoo:api');
