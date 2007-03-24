@@ -105,8 +105,7 @@ CREATE TABLE bugs (
 
         <para>
             これらの三つのテーブルについて、
-            "<link linkend="zend.db.table.getting-started">
-            Zend_Db_Table: さあ、はじめましょう</link>"
+            <xref linkend="zend.db.table.defining" />
             で説明しているようにして
             抽象クラス Zend_Db_Table_Abstract を継承したクラスを定義します。
             各テーブルのクラス内で、リレーションを配列変数
@@ -494,7 +493,7 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Account', 'Engineer');
+$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
 
 ?>]]>
             </programlisting>
@@ -551,10 +550,10 @@ $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$reporter          = $bug1->findParentAccount();
+$reporter          = $bug1->findParentAccounts();
 
 // 参照ルールを指定します
-$engineer          = $bug1->findParentAccountByEngineer();
+$engineer          = $bug1->findParentAccountsByEngineer();
 
 ?>]]>
             </programlisting>
