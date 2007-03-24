@@ -212,6 +212,23 @@
             POST パラメータを指定しても無視されます。
         </para>
     </sect2>
+    
+    <sect2 id="zend.http.client.accessing_last">
+        <title>直近のリクエストやレスポンスへのアクセス</title>
+        <para>
+            Zend_Http_Client では、そのクライアントオブジェクトが
+            直近に送信したリクエストおよび
+            直近に受信したレスポンスにアクセスするためのメソッドを提供しています。
+            <code>Zend_Http_Client->getLastRequest()</code>
+            は何もパラメータを受け取らず、クライアントが直近に送信した
+            HTTP リクエストを文字列で返します。同様に
+            <code>Zend_Http_Client->getLastResponse()</code> は、
+            クライアントが直近に受信した HTTP レスポンスを
+            <link linkend="zend.http.response">Zend_Http_Response</link>
+            オブジェクトで返します。
+        </para>    
+    </sect2>
+    
 </sect1>
 
 <!--
