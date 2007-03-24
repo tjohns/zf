@@ -67,10 +67,7 @@ $value = Zend_Registry::get('index');
         </example>
 
         <para>
-            If you call <code>get()</code> with no arguments, the method
-            returns the whole static registry object.
-            The <code>getInstance()</code> method also returns the
-            static registry object.
+            The <code>getInstance()</code> method returns the static registry object.
         </para>
 
         <para>
@@ -81,7 +78,7 @@ $value = Zend_Registry::get('index');
             <title>Example of iterating over the registry</title>
             <programlisting role="php"><![CDATA[<?php
 
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "Registry index $index contains:\n";
@@ -165,7 +162,7 @@ Zend_Registry::setInstance($registry);
             <title>Example of array access</title>
             <programlisting role="php"><![CDATA[<?php
 
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
@@ -188,6 +185,9 @@ var_dump( $registry['index'] );
             object using the <code>ArrayObject::ARRAY_AS_PROPS</code> option,
             and initialize the static instance.  You must do this before
             the static registry has been accessed for the first time.
+            <emphasis role="strong">Beware</emphasis> of using this option,
+            since some versions of PHP have bugs when using the registry
+            with this option.
         </para>
 
         <example id="zend.registry.using.array-object.example">
@@ -197,9 +197,16 @@ var_dump( $registry['index'] );
 // in your application bootstrap:
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
+$registry->tree = 'apple';
 
-// elsewhere in your application:
-$registry = Zend_Registry::get();
+.
+.
+.
+
+// in a different function, elsewhere in your application:
+$registry = Zend_Registry::getInstance();
+
+echo $registry->tree; // echo's "apple"
 
 $registry->index = $value;
 
@@ -240,7 +247,7 @@ if (Zend_Registry::isRegistered($index)) {
             <title>Example of isset() method</title>
             <programlisting role="php"><![CDATA[<?php
 
-$registry = Zend_Registry::get();
+$registry = Zend_Registry::getInstance();
 
 // using array-access syntax
 if (isset($registry['index'])) {

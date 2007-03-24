@@ -104,6 +104,18 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                 </listitem>
                 <listitem>
                     <para>
+                        <code>getCode()</code> - returns a <code>Zend_Auth_Result</code> constant identifier for
+                        determining the type of authentication failure or whether success has occurred. This may be
+                        used in situations where the developer wishes to distinguish among several authentication
+                        result types. This allows developers to maintain detailed authentication result statistics,
+                        for example. Another use of this feature is to provide specific, customized messages to
+                        users for usability reasons, though developers are encouraged to consider the risks of
+                        providing such detailed reasons to users, instead of a general authentication failure
+                        message. For more information, see the notes below.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
                         <code>getIdentity()</code> - returns the identity of the authentication attempt
                     </para>
                 </listitem>
@@ -114,6 +126,50 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                     </para>
                 </listitem>
             </itemizedlist>
+        </para>
+
+        <para>
+            A developer may wish to branch based on the type of authentication result in order to perform more
+            specific operations. Some operations developers might find useful are locking accounts after too many
+            unsuccessful password attempts, flagging an IP address after too many nonexistent identities are
+            attempted, and providing specific, customized authentication result messages to the user. The following
+            result codes are available:
+
+            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+Zend_Auth_Result::FAILURE
+Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
+Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
+Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+
+        </para>
+
+        <para>
+            The following example illustrates how a developer may branch on the result code:
+
+            <programlisting role="php"><![CDATA[<?php
+// inside of AuthController / loginAction
+$result = $this->_auth->authenticate($adapter);
+
+switch ($result->getCode()) {
+
+    case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
+        /** do stuff for nonexistent identity **/
+        break;
+
+    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+        /** do stuff for invalid credential **/
+        break;
+
+    case Zend_Auth_Result::SUCCESS:
+        /** do stuff for successful authentication **/
+        break;
+
+    default:
+        /** do stuff for other failure **/
+        break;
+}]]></programlisting>
+
         </para>
 
     </sect2>

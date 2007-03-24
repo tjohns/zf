@@ -31,7 +31,7 @@
             if the specified file does not exist.
         </para>
 
-        <example id="zend.loader.file.example">
+        <example id="zend.loader.load.file.example">
             <title>Example of loadFile() method</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -76,7 +76,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
             loads a PHP file and then checks for the existance of the class.
         </para>
 
-        <example id="zend.loader.class.example">
+        <example id="zend.loader.load.class.example">
             <title>Example of loadClass() method</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -127,7 +127,7 @@ Zend_Loader::loadClass('Container_Tree',
             and is readable, FALSE otherwise.
         </para>
 
-        <example id="zend.loader.isreadable.example">
+        <example id="zend.loader.load.isreadable.example">
             <title>Example of isReadable() method</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -145,6 +145,36 @@ if (Zend_Loader::isReadable($filename)) {
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
             The PHP function does not search the <code>include_path</code>,
             while <code>Zend_Loader::isReadable()</code> does.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.loader.load.autoload">
+
+        <title>Using the Autoloader</title>
+
+        <para>
+            The Zend_Loader class contains a method you can register with the
+            PHP SPL autoloader.  <code>Zend_Loader::autoload()</code> is the
+            method.
+        </para>
+
+
+        <example id="zend.loader.load.autoload.example">
+            <title>Example of registering the autoloader callback method</title>
+            <programlisting role="php"><![CDATA[<?php
+
+spl_autoload_register(array('Zend_Loader', 'autoload'));
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            After registering the Zend Framework autoload callback,
+            you can reference classes from the Zend Framework without
+            having to load them explicitly.  The autoload method uses
+            <code>Zend_Loader::loadClass()</code> automatically
+            when you reference a class.
         </para>
 
     </sect2>

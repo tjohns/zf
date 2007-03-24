@@ -7,20 +7,20 @@
           Zend_Search_Lucene index file formats are binary compatible with a Lucene
           version 1.4 and above.
         </para>
-    
+
         <para>
           A detailed description of this format is available here:
           <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
         </para>
-	</sect2>	
-    
+	</sect2>
+
     <sect2 id="zend.search.index-creation.index-directory">
         <title>Index Directory</title>
-    
+
         <para>
         After index creation, the index directory will contain several files:
         </para>
-    
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -40,15 +40,15 @@
                 </para>
             </listitem>
         </itemizedlist>
-    </sect2>	
-	
+    </sect2>
+
 	<sect2 id="zend.search.java-lucene.source-code">
 		<title>Java Source Code</title>
         <para>
             The Java program listing below provides an example of how to index a file
             using Java Lucene:
         </para>
-    
+
         <programlisting role="java"><![CDATA[
 /**
 * Index creation:
@@ -60,7 +60,7 @@ import java.io.*
 
 ...
 
-IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+IndexWriter indexWriter = new IndexWriter("/data/my_index",
                                           new SimpleAnalyzer(), true);
 
 ...
@@ -79,57 +79,6 @@ doc.add(Field.Text("contents", reader));
 indexWriter.addDocument(doc);]]>
         </programlisting>
     </sect2>
-        
-	<sect2 id="zend.search.java-lucene.jar">  
-        <title>Using LuceneIndexCreation.jar</title>
-	
-        <para>
-            To get started with Zend_Search_Lucene quickly, a JAR file (Java) has been created to
-            generate an index from the command line.  For more information on JAR files,
-            please visit: <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>.
-        </para>
-    
-        <para>
-            LuceneIndexCreation.jar consumes text files and builds an index from them.  Usage:
-        </para>
-        <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
-    -c   - force index to be case sensitive
-    -s   - store content in the index
-    ]]></programlisting>
-        <para>
-            This command consumes the directory <code>&lt;document_dir&gt;</code>, including all of its subdirectories,
-            and produces a Lucene index.  The index is a set of files that will be stored in a separate
-            directory that is specified by <code>&lt;index_dir&gt;</code>.
-        </para>
-    
-        <para>
-            For each document to be indexed, LuceneIndexCreation creates a document object with three
-            fields: a <emphasis>contents</emphasis> field containing the contents (body) of the document,
-            a <emphasis>modified</emphasis> field containing the file modification time, and
-            the full path and filename in a <emphasis>path</emphasis> field.
-        </para>
-    
-        <para>
-            If <option>-c</option> is specified, then index is forced to be case sensitive. Otherwise all terms are converted to lower case before to be added into the index.
-        </para>
-    
-        <para>
-            If <option>-s</option> is specified, then document's content is also stored in the index
-            and can be retrieved with <code>path</code> and <code>modified</code> fields.
-        </para>
-        
-        <para>
-            Otherwise only <code>path</code> and <code>modified</code> fields are stored,
-            and <code>contents</code> field is only indexed. In this case document content must
-            be retrieved from an original source by its path.
-        </para>
-        
-        <para>
-            Please be careful, using <option>-s</option> option increases index size near five times.
-        </para>
-	</sect2>
-
 </sect1>
 
 <!--

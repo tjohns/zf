@@ -11,7 +11,7 @@
         Page size can be retrieved from a page object:
         </para>
         <para>
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[<?php
 $width  = $pdfPage->getWidth();
 $height = $pdfPage->getHeight();]]>
             </programlisting>
@@ -26,7 +26,7 @@ $height = $pdfPage->getHeight();]]>
         object is required. <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> and
         <code>Zend_Pdf_Color_Cmyk</code> classes provide this functionality:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 // $grayLevel (float number). 0.0 (black) - 1.0 (white)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
@@ -47,7 +47,7 @@ $color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
         <para>
         <code>Zend_Pdf_Page</code> class provides a set of drawing primitives:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw a line from x1,y1 to x2,y2.
  *
@@ -58,7 +58,7 @@ $color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
  */
 public function drawLine($x1, $y1, $x2, $y2);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw a rectangle.
  *
@@ -75,7 +75,7 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  */
 public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw a polygon.
  *
@@ -93,7 +93,7 @@ public function drawPolygon($x, $y,
                             $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
                             $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw a circle centered on x, y with a radius of radius.
  *
@@ -121,7 +121,7 @@ public function drawPolygon($x, $y,
  */
 public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw an ellipse inside the specified rectangle.
  *
@@ -152,7 +152,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
         at any position on the page by supplying the x and y coordinates of the baseline. Current font and
         current font size are used for text drawing operations (see detailed description below).
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw a line of text at the specified position.
  *
@@ -178,7 +178,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         By default, text strings are interpreted using the character encoding method of the current locale. If
         you have a string that uses a different encoding method (such as a UTF-8 string read from a file on disk,
         or a MacRoman string obtained from a legacy database), you can indicate the character encoding at draw
-        time and Zend_Pdf will handle the conversion for you. You can supply source strings in any encoding 
+        time and Zend_Pdf will handle the conversion for you. You can supply source strings in any encoding
         method supported by PHP's <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> function:
         </para>
         <example>
@@ -202,7 +202,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
         <code>Zend_Pdf_Page::drawText()</code> uses the page's current font and font size, which is set with
         the <code>Zend_Pdf_Page::setFont()</code> method:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set current font.
  *
@@ -331,7 +331,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         installed, the PDF viewer application will do its best to synthesize a replacement.
         </para>
         <para>
-        Some fonts have very specific licensing rules which prevent them from being embedded in PDF 
+        Some fonts have very specific licensing rules which prevent them from being embedded in PDF
         documents. So you are not caught off-guard by this, if you try to use a font that cannot be
         embedded, the factory method will throw an exception.
         </para>
@@ -389,7 +389,7 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
         <para>
         <code>Zend_Pdf_Page</code> class provides drawImage() method to draw image:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Draw an image at the specified position on the page.
  *
@@ -443,7 +443,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         All of this parameters can be assigned by <code>Zend_Pdf_Page</code>
         class methods:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /** Set line color. */
 public function setLineColor(Zend_Pdf_Color $color);
 
@@ -553,7 +553,7 @@ regardless of the directions in which the circles are drawn.
         PDF page can be rotated before applying any draw operation.
         It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Rotate the page around ($x, $y) point by specified angle (in radians).
  *
@@ -573,7 +573,7 @@ public function rotate($x, $y, $angle);]]>
         <para>
         There are two methods in <code>Zend_Pdf_Page</code> class for these operations:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Save the graphics state of this page.
  * This takes a snapshot of the currently applied style, position, clipping area and
@@ -597,7 +597,7 @@ public function restoreGS();]]>
         <para>
         <code>Zend_Pdf_Page</code> class provides a set of methods for clipping operations.
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Intersect current clipping area with a rectangle.
  *
@@ -608,7 +608,7 @@ public function restoreGS();]]>
  */
 public function clipRectangle($x1, $y1, $x2, $y2);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Intersect current clipping area with a polygon.
  *
@@ -618,7 +618,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  */
 public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Intersect current clipping area with a circle.
  *
@@ -630,7 +630,7 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  */
 public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Intersect current clipping area with an ellipse.
  *
@@ -659,7 +659,7 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
         <para>
         Styles can be used to store a set of graphic state parameters and apply it to a PDF page by one operation:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set the style to use for future drawing operations on this page
  *
@@ -678,7 +678,7 @@ public function getStyle();]]>
         <para>
         <code>Zend_Pdf_Style</code> class provides a set of methods to set or get different graphics state parameters:
         </para>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set line color.
  *
@@ -686,7 +686,7 @@ public function getStyle();]]>
  */
 public function setLineColor(Zend_Pdf_Color $color);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get line color.
  *
@@ -694,7 +694,7 @@ public function setLineColor(Zend_Pdf_Color $color);]]>
  */
 public function getLineColor();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set line width.
  *
@@ -702,7 +702,7 @@ public function getLineColor();]]>
  */
 public function setLineWidth($width);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get line width.
  *
@@ -710,7 +710,7 @@ public function setLineWidth($width);]]>
  */
 public function getLineWidth();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set line dashing pattern
  *
@@ -719,7 +719,7 @@ public function getLineWidth();]]>
  */
 public function setLineDashingPattern($pattern, $phase = 0);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get line dashing pattern
  *
@@ -727,7 +727,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
  */
 public function getLineDashingPattern();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get line dashing phase
  *
@@ -735,7 +735,7 @@ public function getLineDashingPattern();]]>
  */
 public function getLineDashingPhase();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set fill color.
  *
@@ -743,7 +743,7 @@ public function getLineDashingPhase();]]>
  */
 public function setFillColor(Zend_Pdf_Color $color);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get fill color.
  *
@@ -751,7 +751,7 @@ public function setFillColor(Zend_Pdf_Color $color);]]>
  */
 public function getFillColor();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Set current font.
  *
@@ -760,7 +760,7 @@ public function getFillColor();]]>
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Modify current font size
  *
@@ -768,7 +768,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
  */
 public function setFontSize($fontSize);]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get current font.
  *
@@ -776,7 +776,7 @@ public function setFontSize($fontSize);]]>
  */
 public function getFont();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 /**
  * Get current font size
  *

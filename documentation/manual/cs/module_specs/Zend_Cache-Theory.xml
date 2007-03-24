@@ -2,7 +2,7 @@
     <title>The theory of caching</title>
     <para>
         There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
-        to identify cache records. The second one is the <code>'lifeTime'</code> directive as seen in the
+        to identify cache records. The second one is the <code>'lifetime'</code> directive as seen in the
         examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
         is conditional execution so that parts of your code can be skipped entirely, boosting performance.
         The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
@@ -73,7 +73,7 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
 ?>]]></programlisting>
         <note><para>
-            note than the <code>save()</code> method accepts an optional fourth argument : <code>$specificLifeTime</code>
+            note than the <code>save()</code> method accepts an optional fourth argument : <code>$specificLifetime</code>
             (if != false, it sets a specific lifetime for this particular cache record)
         </para></note>
     </sect2>

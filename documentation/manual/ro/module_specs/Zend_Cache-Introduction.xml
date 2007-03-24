@@ -25,7 +25,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // cache lifetime of 2 hours 
+   'lifetime' => 7200, // cache lifetime of 2 hours 
    'automaticSerialization' => true
 );
 
@@ -82,7 +82,7 @@ print_r($result);
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // cache lifetime of half a minute
+   'lifetime' => 30,                  // cache lifetime of half a minute
    'automaticSerialization' => false  // this is default anyway
 );
 
