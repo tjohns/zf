@@ -42,12 +42,12 @@ PHPDOC=php c:/xampp/php/PhpDocumentor/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=4085
+ZF_TAG=4217
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=0.9.0-Beta
+ZF_VERSION=0.9.1-Beta
 
 # For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the
@@ -120,7 +120,7 @@ docbook-core:
 	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
-	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) DTD_URL=$(DTD_URL) XSL_URL=$(XSL_URL) ) ; \
+	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e ) ; \
 	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/$$lang ; \
 	done
 

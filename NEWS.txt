@@ -1,7 +1,8 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 0.9.1 / 22-Mar-2007=
+=RELEASE 0.9.1 / 23-Mar-2007=
+This release resolves the following issues:
 - Zend_Loader
     ZF-1089 Document Zend_Loader::autoload()
 - Zend_Auth
@@ -18,13 +19,14 @@ Zend Framework                                                             NEWS
     ZF-1101 getDate() yields results that look inconsistent
 - Zend_Db
     ZF-1031 Zend_Db_* methods should throw only Zend_Db_Exception and/or derivatives
-    ZF-1039 using mysqli::real_escape_string for quote
     ZF-1068 Support schema in describeTable()
     ZF-1093 MS SQL Server: use QUOTED_IDENTIFIER
     ZF-1108 describeTableInformationSchema() incorrectly returns columns as primary keys
     ZF-1117 MySQL: describeTableInformationSchema is too slow
 - Zend_Db_Adapter_Mysqli
     ZF-1039 Mysqli: use real_escape_string() for quoting
+- Zend_Db_Select
+    ZF-1124 Using table.column syntax changes table for following columns
 - Zend_Db_Table
     ZF-45   Zend_Db_Table::fetchRow() should return NULL for no resulting rows
     ZF-174  Documentation mistake in 'Adding Domain Logic' example
@@ -35,16 +37,17 @@ Zend Framework                                                             NEWS
 - Zend_Filter / Zend_Validate
     ZF-1086 Zend Filter string casts improvement
 - Zend_Http_Client
+    ZF-782  Add getLastResponse() to HTTP Client  
     ZF-1095 Allow other HTTP methods not in the RFC
     ZF-1112 Support arbitrary switching of the adapter for a single HTTP client instance  
 - Zend_Locale
-    ZF-1066 isDate() returns true for dates that do not appear to be valid
     ZF-1072 Zend_Locale Unit Tests failing
 - Zend_Mail
     ZF-580  Quoted printable remove dot from message
     ZF-1073 Zend_Mail Unit Tests failing
 - Zend_Measure
     ZF-1076 Mistake in Zend_Measure-Edit
+    ZF-1077 Mistake in Zend_Measure-Special
     ZF-1079 Example in Zend_Measure-Types
     ZF-1082 Zend_Measure_NumberTest Unit Tests failing
 - Zend_Mime
@@ -56,7 +59,9 @@ Zend Framework                                                             NEWS
 - Zend_Session
     ZF-1102 Zend_Session emits warning when save_path not writeable  
 
+
 =RELEASE 0.9.0 / 16-Mar-2007=
+This release resolves the following issues:
 - Zend_Acl
     ZF-950  Unclear explanation of multiple inheritance between Roles
 - Zend_Auth
@@ -195,6 +200,7 @@ Zend Framework                                                             NEWS
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.8.0 / 16-Feb-2007=
+This release resolves the following issues:
 - Documentation
     ZF-709 Deleted documentation chapters are not erased in wiki
 - Zend
@@ -374,6 +380,7 @@ Zend Framework                                                             NEWS
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.7.0 / 18-Jan-2007=
+This release resolves the following issues:
 - Zend.php:
     ZF-35 ZF Version check
     ZF-329 Removal of loadInterface() Method
