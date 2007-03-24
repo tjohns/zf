@@ -333,12 +333,15 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
 
     public function testNotReadableFolder()
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $this->markTestSkipped('this test wont work with windows, because you cannot mark a file as not readable');
-        }
-
         $stat = stat($this->_params['dirname'] . 'subfolder');
         chmod($this->_params['dirname'] . 'subfolder', 0);
+        clearstatcache();
+        $statcheck = stat($this->_params['dirname'] . 'subfolder');
+        if ($statcheck['mode'] % (8 * 8 * 8) !== 0) {
+            chmod($this->_params['dirname'] . 'subfolder', $stat['mode']);
+            $this->markTestSkipped('cannot remove read rights, which makes this test useless (maybe you are using Windows?)');
+            return;
+        }
 
         $check = false;
         try {
