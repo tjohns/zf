@@ -76,6 +76,11 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                 </listitem>
                 <listitem>
                     <para>
+                      <code>getCode()</code> - 返回一个 <code>Zend_Auth_Result</code>  常量标识符用来决定认证失败的类型或者是否认证成功。这个可以用于开发者希望区别若干认证结果类型的情形，例如，这允许开发者维护详细的认证结果统计。尽管开发这被鼓励去考虑提供这样详细的原因给用户的风险，替而代之使用一般的认证失败信息，这个功能的其它用法是由于可用性的原因提供专用的，定制的信息给用户。更多的信息，参见下面的注释。
+                     </para>
+                </listitem>
+                <listitem>
+                    <para>
                         <code>getIdentity()</code> - 返回认证尝试的身份
                     </para>
                 </listitem>
@@ -85,6 +90,44 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                     </para>
                 </listitem>
             </itemizedlist>
+        </para>
+       <para>       
+           为了执行更多的操作，开发者可能希望基于认证结果的类型来分支化。一些开发者可能发信有用的操作是：在太多的不成功的密码尝试之后锁住帐号，在太多不存在的身份尝试后标记IP地址，并提供专用的，定制的认证结果信息给用户。下面的结果代码是可用的：
+
+            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+Zend_Auth_Result::FAILURE
+Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
+Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
+Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+
+        </para>
+
+        <para>
+            下面的例子举例说明开发者如何分支化结果代码：
+            <programlisting role="php"><![CDATA[<?php
+// inside of AuthController / loginAction
+$result = $this->_auth->authenticate($adapter);
+
+switch ($result->getCode()) {
+
+    case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
+        /** do stuff for nonexistent identity **/
+        break;
+
+    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+        /** do stuff for invalid credential **/
+        break;
+
+    case Zend_Auth_Result::SUCCESS:
+        /** do stuff for successful authentication **/
+        break;
+
+    default:
+        /** do stuff for other failure **/
+        break;
+}]]></programlisting>
+
         </para>
 
     </sect2>

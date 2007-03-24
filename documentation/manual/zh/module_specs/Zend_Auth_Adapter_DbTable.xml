@@ -1,4 +1,4 @@
-<sect1 id="zend.auth.adapter.dbtable">
+﻿<sect1 id="zend.auth.adapter.dbtable">
 
     <title>用数据库表认证</title>
 
@@ -30,7 +30,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialTreatment</code>: 在许多情况下，密码和其他敏感数据是加密的（encrypted, hashed, encoded, obscured 或者通过以下函数或算法来加工）。通过指定参数化的字串来使用这个方法，例如<code>'MD5(?)'</code> 或者 <code>'PASSWORD(?)'</code>，开发者可以在输入证书数据时使用任意的SQL。
+                        <code>credentialTreatment</code>: 在许多情况下，密码和其他敏感数据是加密的（encrypted, hashed, encoded, obscured 或者通过以下函数或算法来加工）。通过指定参数化的字串来使用这个方法，例如<code>'MD5(?)'</code> 或者 <code>'PASSWORD(?)'</code>，开发者可以在输入证书数据时使用任意的SQL。因为这些函数对其下面的RDBMS是专用的， 请查看数据库手册来确保你所用的数据库的函数的可用性。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -125,6 +125,35 @@ Array
             </para>
 
         </example>
+
+    </sect2>
+    <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
+
+        <title>高级使用：持久一个 DbTable 结果对象</title>
+
+        <para>
+            缺省地，基于成功的认证<code>Zend_Auth_Adapter_DbTable</code> 返回提供给auth对象的身份。其他用例情景，开发者想给<code>Zend_Auth</code> 的持久存储机制存储一个包括其他有用信息的身份对象，已经通过使用<code>getResultRowObject()</code> 方法返回一个<code>stdClass</code>对象解决了。下面的代码片段举例说明它的用法：
+            <programlisting role="php"><![CDATA[<?php
+// authenticate with Zend_Auth_Adapter_DbTable
+$result = $this->_auth->authenticate($adapter);
+
+if ($result->isValid()) {
+
+    // store the identity as an object where only the username and real_name have been returned
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+
+    // store the identity as an object where the password column has been omitted
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+
+    /* ... */
+
+} else {
+
+    /* ... */
+
+}]]></programlisting>
+
+        </para>
 
     </sect2>
 
