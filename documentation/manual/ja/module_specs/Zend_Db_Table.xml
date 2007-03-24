@@ -438,7 +438,7 @@ $data = array(
 
 class Bugs extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'bugs;
+    protected $_name = 'bugs';
 
     // これは Zend_Db_Table_Abstract クラスのデフォルト設定です。
     // 特に定義する必要はありません。
@@ -483,7 +483,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
 class Bugs extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'bugs;
+    protected $_name = 'bugs';
 
     protected $_sequence = 'bug_sequence';
 }
