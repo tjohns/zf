@@ -100,8 +100,7 @@ class Zend_Service_Simpy
      */
     public function __construct($username, $password)
     {
-        $this->_rest = new Zend_Rest_Client();
-        $this->_rest->setUri(Zend_Uri::factory($this->_baseUri));
+        $this->_rest = new Zend_Rest_Client($this->_baseUri);
         $http = $this->_rest->getHttpClient();
         $http->setAuth($username, $password);
     }

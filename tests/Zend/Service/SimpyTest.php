@@ -95,6 +95,14 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
     {
     	try {
             extract($this->_link);
+            
+            /**
+             * Delete the link if it already exists and bypass the exception 
+             * that would be thrown as a result
+             */
+            try {
+                $this->_simpy->deleteLink($href);
+            } catch(Zend_Service_Exception $e) { }
 
 	    	$this->_simpy->saveLink(
 	            $title,
