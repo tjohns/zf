@@ -34,7 +34,7 @@
         <title>Пример использования метода compareVersion()<!--Example of compareVersion() method--></title>
         <programlisting role="php"><![CDATA[<?php
 
-// возвращает -1, 0 or 1
+// возвращает -1, 0 или 1
 $cmp = Zend_Version::compareVersion('1.0.0');
 
 ?>]]></programlisting>

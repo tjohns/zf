@@ -1,8 +1,78 @@
-<sect1 id="zend.search.queries">
-	<title>Типы запросов <!--Query Types--></title>
+<sect1 id="zend.search.query-api">
+    <title>API для построения запросов<!--Query Construction API--></title>
 
-	<sect2 id="zend.search.queries.term-query">
-		<title>Простой запрос (запрос по одному ключевому слову)<!--Term Query--></title>
+    <para>
+        В дополнение к автоматическому парсингу запросов есть возможность
+        строить запросы через API. 
+<!--
+        In addition to parsing query automatically it's also possible to constract them through API.
+-->
+    </para>
+
+    <para>
+        Пользовательские запросы могут быть объединены с запросами, созданными
+        через API. Используйте парсер запросов для построения запроса из строки. 
+<!--
+        User query can be combined with queries created through API. Use query parser to construct query from a string:
+-->
+        <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></programlisting>
+    </para>
+
+
+    <sect2 id="zend.search.queries.exceptions">
+        <title>Исключения, бросаемые парсером запросов<!--Query Parser Exceptions--></title>
+        <para>
+        Парсер запросов может генерировать два типа исключений:
+<!--
+        Query parser may generate two types of exceptions.
+-->
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Exception</code> бросается, если
+                    ошибка произошла в самом парсере запросов.
+<!--
+                    <code>Zend_Search_Lucene_Exception</code> is thrown if something wrong in a query parser itself.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code>
+                    бросается в случае ошибки синтаксиса запроса.
+<!--
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown in tha case of
+                    query syntax exception.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+        Будет хорошей идеей отлавливать запросы
+        Zend_Search_Lucene_Search_QueryParserException и выводить
+        соответствующее сообщение.          
+<!--
+        Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make appropriate message:
+-->
+        <programlisting role="php"><![CDATA[<?php
+try {
+    $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
+} catch (Zend_Search_Lucene_Search_QueryParserException $e) {
+    echo "Query syntax error: " . $e->getMessage() . "\n";
+}]]></programlisting>
+        </para>
+
+        <para>
+            Тот же самый подход может (и должен) применяться для метода
+            find() объекта Zend_Search_Lucene.  
+<!--
+            The same technique may (and should) be used for find() method of Zend_Search_Lucene object.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.queries.term-query">
+		    <title>Простой запрос (запрос по одному ключевому слову)<!--Term Query--></title>
         <para>
         Простые запросы предназначены для поиска по одному элементу.
 <!--
@@ -11,46 +81,46 @@
         </para>
 
         <para>
-        Для простых запросов могут использоваться оба метода поиска.
-<!--
-        Both of a search method can be used for term queries.
--->
-        </para>
-
-        <para>
-        Запрос в виде строки:
+        Строка запроса:
 <!--
         Query string:
 -->
         </para>
-
-        <programlisting role="php"><![CDATA[
-    $hits = $index->find('word1');]]>
+        <programlisting role="querystring"><![CDATA[word1]]>
         </programlisting>
 
         <para>или</para>
 
         <para>
-        Построение запроса через программный интерфейс:
+        Построение запроса через API: 
 <!--
         Query construction by API:
 -->
         </para>
-        
         <programlisting role="php"><![CDATA[<?php
+$term  = new Zend_Search_Lucene_Index_Term('word1', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);]]></programlisting>
 
-    $term  = new Zend_Search_Lucene_Index_Term('word1');
-    $query = new Zend_Search_Lucene_Search_Query_Term($term);
-    $hits  = $index->find($query);
-
-?>]]>   </programlisting>
+        <para>
+            Параметр, задающий поле для поиска ('field1'), является
+            опциональным. Zend_Search_Lucene производит поиск по всем
+            полям, если поля для поиска не заданы.
+<!--
+            Term field is optional. Zend_Search_Lucene searches through all fields if field is not specified:
+-->
+            <programlisting role="php"><![CDATA[<?php
+$term  = new Zend_Search_Lucene_Index_Term('word1');  // Search 'word1' through all indexed fields
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);]]></programlisting>
+        </para>
 
 	</sect2>
 
 	<sect2 id="zend.search.queries.multiterm-query">
 		<title>Составной запрос (запрос по нескольким ключевым словам)<!--Multi-Term Query--></title>
         <para>
-            Составные запросы предназначаются для поиска по набору элементов.
+            Составные запросы предназначены для поиска по набору элементов.
 <!--
             Multi term queries are intended for a searching for a set of terms.
 -->
@@ -129,12 +199,7 @@
             Query string:
 -->
         </para>
-        
-        <programlisting role="php"><![CDATA[<?php
-
-$hits = $index->find('+word1 author:word2 -word3');
-
-?>]]>   </programlisting>
+        <programlisting role="querystring"><![CDATA[+word1 author:word2 -word3]]></programlisting>
 
         <itemizedlist>
             <listitem>
@@ -164,23 +229,19 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>или</para>
 
         <para>
-            Построение запроса через программный интерфейс:
+        Построение запроса через программный интерфейс:
 <!--
         Query construction by API:
 -->
         </para>
-        
         <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
-    $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
 
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
-
-    $hits  = $index->find($query);
-
-?>]]>   </programlisting>
+$hits  = $index->find($query);]]></programlisting>
 
         <para>
             Массив <code>$signs</code> содержит информацию о типах элементов:
@@ -229,8 +290,8 @@ $hits = $index->find('+word1 author:word2 -word3');
         </para>
 
         <para>
-            Фразовые запросы являются очень гибкими и позволяют искать как точные
-            фразы, так и неточные.
+            Фразовые запросы являются очень гибкими и позволяют искать как
+            точные фразы, так и неточные.
 <!--
             Phrase Queries are very flexible and allow to search exact phrases as well as sloppy phrases.
 -->
@@ -278,10 +339,7 @@ $query3 = new Zend_Search_Lucene_Search_Query_Phrase(
 ...
 
 $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
-                array('word1', 'word2'), array(0,1), 'annotation');
-
-?>]]>   </programlisting>
-
+                array('word1', 'word2'), array(0,1), 'annotation');]]></programlisting>
 
         <para>
             Фразовый запрос может строиться сразу с помощью конструктора класса
@@ -302,7 +360,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 -->
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
 
         <para>
             <code>$terms</code> является массивом строк, который содержит набор
@@ -347,9 +406,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             Thus:
 -->
         </para>
-        
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
-        
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
         <para>
             будет искать фразу 'zend framework'.
 <!--
@@ -357,8 +415,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 -->
         </para>
 
-        <programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
-        
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
         <para>
             будет искать фразу 'zend ????? download', такой запрос соответствует фразам
             'zend platform download', 'zend studio download',
@@ -369,7 +427,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 -->
         </para>
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
         
         <para>
             будет искать фразу 'zend framework' в поле 'title'.
@@ -382,15 +441,15 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             Метод <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
             принимает два аргумента — объект элемента
             <code>Zend_Search_Lucene_Index_Term</code> в качестве обязательного
-            параметра и позицию элемента в качестве необязательного.  
+            параметра и позицию элемента в качестве необязательного:  
 <!--
             <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method
             takes two arguments.
             Required <code>Zend_Search_Lucene_Index_Term</code> object and optional position:
 -->
         </para>
-
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
 
         <para>
             <code>$term</code> описывает следующий элемент во фразе. Он должен
@@ -415,11 +474,10 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             Thus:
 -->
         </para>
-        
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
-
         <para>
             будет искать фразу 'zend framework'.
 <!--
@@ -427,10 +485,10 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlist
 -->
         </para>
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
-         
         <para>
             будет искать фразу 'zend ????? download', такой запрос соответствует фразам
             'zend platform download', 'zend studio download',
@@ -440,11 +498,10 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programl
             'zend core download', 'zend framework download' and so on.
 -->
         </para>
-
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
-
         <para>
             будет искать фразу 'zend framework' в поле 'title'.
 <!--
@@ -499,7 +556,6 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-
 // Запрос без пропусков.
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
 
@@ -510,9 +566,7 @@ $hits1 = $index->find($query);
 // Поиск 'word1 word2', 'word1 ... word2',
 // 'word1 ... ... word2', 'word2 word1'
 $query->setSlop(2);
-$hits2 = $index->find($query);
-
-?>]]>   </programlisting>
+$hits2 = $index->find($query);]]></programlisting>
 
 	</sect2>
 </sect1>

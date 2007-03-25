@@ -105,8 +105,7 @@
 
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
-?>]]></programlisting>
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]></programlisting>
         </para>
 
         <para>
@@ -176,9 +175,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
 
 // Поле заголовка для возвращения в результатах поиска
 // (не индексируется, но сохраняется)
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
-
-?>]]></programlisting>
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]></programlisting>
         </para>
 
         <para>
@@ -196,8 +193,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 ...
 
-$hits = $index->find(strtolower($query));
-?>]]></programlisting>
+$hits = $index->find(strtolower($query));]]></programlisting>
         </para>
     </sect2>
 </sect1>

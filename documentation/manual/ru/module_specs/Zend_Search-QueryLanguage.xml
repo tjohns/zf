@@ -98,8 +98,7 @@
         <programlisting role="php"><![CDATA[<?php
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
-Zend_Search_Lucene::setDefaultSearchField('contents');
-?>]]></programlisting>
+Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
 
         <para>
             Значение <code>null</code> означает, что поиск производится по всем

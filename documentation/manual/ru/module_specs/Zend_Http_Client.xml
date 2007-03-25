@@ -315,6 +315,31 @@
 -->
         </para>
     </sect2>
+    
+    <sect2 id="zend.http.client.accessing_last">
+        <title>Получение последних запроса и ответа<!--Accessing Last Request and Response--></title>
+        <para>
+            Zend_Http_Client предоставляет методы для получения последнего
+            отправленного запроса и последнего ответа, полученного через
+            объект клиента. Метод
+            <code>Zend_Http_Client->getLastRequest()</code> не требует
+            параметров и возвращает последний HTTP-запрос, отправленный
+            через объект клиента, в виде строки. Аналогично,
+            <code>Zend_Http_Client->getLastResponse()</code> возвращает
+            последний HTTP-ответ, полученный через объект клиента, в виде 
+            объекта <link linkend="zend.http.response">Zend_Http_Response</link>.
+<!--
+            Zend_Http_Client provides methods of accessing the last request
+            sent and last response received by the client object.
+            <code>Zend_Http_Client->getLastRequest()</code> takes no parameters
+            and returns the last HTTP request sent by the client as a string. 
+            Similarly, <code>Zend_Http_Client->getLastResponse()</code> returns
+            the last HTTP response received by the client as a 
+            <link linkend="zend.http.response">Zend_Http_Response</link> object.
+-->
+        </para>    
+    </sect2>
+    
 </sect1>
 
 <!--

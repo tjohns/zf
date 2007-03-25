@@ -50,13 +50,10 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
-$index->addDocument($doc);
-
-?>]]></programlisting>
+$index->addDocument($doc);]]></programlisting>
 
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
@@ -162,9 +159,7 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 }
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new My_Analyzer());
-
-?>]]></programlisting>
+    new My_Analyzer());]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -261,8 +256,7 @@ $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWo
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
@@ -270,8 +264,7 @@ $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
 
         <para>
             Конструктор
@@ -291,8 +284,7 @@ $stopWordsFilter->loadFromFile($my_stopwords_file);
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
 
         <para>
             Файл должен быть текстовым с одним словом в каждой строке. Символом
