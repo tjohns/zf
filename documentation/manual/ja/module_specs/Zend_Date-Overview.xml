@@ -557,6 +557,20 @@ print $date;
                             </para>
                         </entry>
                     </row>
+                    <row>
+                        <entry>isDate()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isDate($date, $format = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                このメソッドは、指定した日付が本当に日付であるかどうかを調べ、
+                                すべてのチェックを通過したときに true を返します。
+                                PHP の checkdate() 関数と似たような働きですが、各地域固有の月名にも対応しており、
+                                また checkdate() の対象範囲外の日付でも正しく判定できます。
+                            </para>
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
