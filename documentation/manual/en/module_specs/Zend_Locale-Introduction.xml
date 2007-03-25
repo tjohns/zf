@@ -128,7 +128,7 @@
         <example>
             <title>Choosing a specific locale</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend_Locale');
+require_once 'Zend_Locale';
 $locale = new Zend_Locale('de_DE'); // German language _ Germany
 ?>]]></programlisting>
         </example>
@@ -296,6 +296,27 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
+?>]]></programlisting>
+        </example>
+
+        <para>
+            For working with the standard definitions of a locale the option Zend_Locale_Format::STANDARD can be used.
+            Setting the option Zend_Locale_Format::STANDARD for date_format uses the standard definitions from the actual
+            set locale. Setting it for number_format uses the standard number format for this locale.
+            And setting it for locale uses the standard locale for this environment or browser.
+        </para>
+
+        <example>
+            <title>Using STANDARD definitions for setOptions()</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
+// overriding the global set date format
+$date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
+
+// global setting of the standard locale
+Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');
+
 ?>]]></programlisting>
         </example>
 
