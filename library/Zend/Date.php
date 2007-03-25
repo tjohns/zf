@@ -1041,11 +1041,6 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::W3C :
                 return $this->date('Y\-m\-d\TH\:i\:sP', $this->getUnixTimestamp(), false);
                 break;
-
-
-            default :
-                return $this->date($part, $this->getUnixTimestamp(), false);
-                break;
         }
     }
 
@@ -4273,10 +4268,114 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
     /**
-     * Checks if the given date is a real date
+     * Checks if the given date is a real date or datepart.
+     * Returns false is a expected datepart is missing or a datepart exceeds its possible border.
+     * But the check will only be done for the expected dateparts which are given by format.
+     * If no format is given the standard dateformat for the actual locale is used.
+     * f.e. 30.February.2007 will return false if format is 'dd.MMMM.YYYY'
+     * 
+     * @param  string              $date    Date to parse for correctness
+     * @param  string              $format  OPTIONAL Format for parsing the date string
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing date parts
+     * @return boolean             True when all date parts are correct
      */
-    public static function isDate($date, array $options = array())
+    public static function isDate($date, $format = null, $locale = null)
     {
-        throw new Zend_Date_Exception('function isDate will be integrated soon');
+        if (Zend_Locale::isLocale($format)) {
+            $locale = $format;
+            $format = null;
+        }
+
+        if ($locale === null) {
+            $locale = new Zend_Locale();
+            $locale = $locale->toString();
+        }
+
+        if ($format === null) {
+            $format = Zend_Locale_Format::getDateFormat($locale);
+        } else if (self::$_Options['format_type'] == 'php') {
+            $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
+        }
+
+        try {
+            $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'date_format' => $format, 'format_type' => 'iso', 'fix_date' => false));   
+        } catch (Zend_Locale_Exception $e) {
+            // date can not be parsed
+            return false;
+        }
+
+        if (((strpos($format, 'Y') !== false) or (strpos($format, 'y') !== false)) and (!isset($parsed['year']))) {
+            // year expected but not found
+            return false;
+        }
+        if ((strpos($format, 'M') !== false) and (!isset($parsed['month']))) {
+            // month expected but not found
+            return false;
+        }
+        if ((strpos($format, 'd') !== false) and (!isset($parsed['day']))) {
+            // day expected but not found
+            return false;
+        }
+        if (((strpos($format, 'H') !== false) or (strpos($format, 'h') !== false)) and (!isset($parsed['hour']))) {
+            // hour expected but not found
+            return false;
+        }
+        if ((strpos($format, 'm') !== false) and (!isset($parsed['minute']))) {
+            // minute expected but not found
+            return false;
+        }
+        if ((strpos($format, 's') !== false) and (!isset($parsed['second']))) {
+            // second expected  but not found
+            return false;
+        }
+
+        // set not given dateparts
+        if (!isset($parsed['hour'])) {
+            $parsed['hour'] = 0;
+        }
+        if (!isset($parsed['minute'])) {
+            $parsed['minute'] = 0;
+        }
+        if (!isset($parsed['second'])) {
+            $parsed['second'] = 0;
+        }
+        if (!isset($parsed['month'])) {
+            $parsed['month'] = 1;
+        }
+        if (!isset($parsed['day'])) {
+            $parsed['day'] = 1;
+        }
+        if (!isset($parsed['year'])) {
+            $parsed['year'] = 1970;
+        }
+        $date = new Zend_Date($locale);
+        $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                   $parsed['month'], $parsed['day'], $parsed['year']);
+
+        if ($parsed['year'] != $date->date('Y', $timestamp)) {
+            // given year differs from parsed year
+            return false;
+        }
+        if ($parsed['month'] != $date->date('n', $timestamp)) {
+            // given month differs from parsed month
+            return false;
+        }
+        if ($parsed['day'] != $date->date('j', $timestamp)) {
+            // given day differs from parsed day
+            return false;
+        }
+        if ($parsed['hour'] != $date->date('G', $timestamp)) {
+            // given hour differs from parsed hour
+            return false;
+        }
+        if ($parsed['minute'] != $date->date('i', $timestamp)) {
+            // given minute differs from parsed minute
+            return false;
+        }
+        if ($parsed['second'] != $date->date('s', $timestamp)) {
+            // given second differs from parsed second
+            return false;
+        }
+        return true;
     }
 }

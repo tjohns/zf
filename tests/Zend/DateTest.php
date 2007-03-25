@@ -1380,7 +1380,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set(1234567890);
         try {
-            $date->set('noday', Zend_Date::MONTH);
+            $date->set('noday', Zend_Date::MONTH_NAME);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
@@ -2478,6 +2478,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set(1234567890);
         $date->set('1000', 'xx');
         $this->assertSame($date->get(Zend_Date::W3C),'1970-01-01T05:16:40+05:00');
+
+        $date->set('10.April.2007', 'dd.MMMM.YYYY');
+        $this->assertSame($date->get(Zend_Date::W3C),'2007-04-10T00:00:00+05:00');
     }
 
     /**
@@ -5044,13 +5047,52 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString('c'), date('c',$date->getTimestamp()));
         $this->assertSame($date->toString('r'), date('r',$date->getTimestamp()));
         $this->assertSame($date->toString('U'), date('U',$date->getTimestamp()));
+        Zend_Date::setOptions(array('format_type' => 'iso'));
     }
 
-    public function daylightsaving()
+    public function testDaylightsaving()
     {
         $date = new Zend_Date('2007.03.25', Zend_Date::DATES);
         $date->set('16:00:00', Zend_Date::TIMES);
-        $this->assertEquals($date->get(Zend_Date::W3C, 0));
+        $this->assertEquals($date->get(Zend_Date::W3C), '2007-03-25T16:00:00+05:00');
+        $date->set('01:00:00', Zend_Date::TIMES);
+        $this->assertEquals($date->get(Zend_Date::W3C), '2007-03-25T01:00:00+05:00');
+    }
+
+    public function testSetOptions()
+    {
+        $options = Zend_Date::setOptions();
+        $this->assertTrue(is_array($options));
+        $this->assertEquals($options['format_type'], 'iso');
+
+        Zend_Date::setOptions(array('format_type' => 'php'));
+        $options = Zend_Date::setOptions();
+        $this->assertEquals($options['format_type'], 'php');
+
+        try {
+            Zend_Date::setOptions(array('format_type' => 'non'));
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+
+        try {
+            Zend_Date::setOptions(array('unknown' => 'non'));
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+    }
+
+    public function testIsDate()
+    {
+        $this->assertTrue(Zend_Date::isDate('25.03.2007', 'de_AT'));
+        $this->assertTrue(Zend_Date::isDate('2007.03.25', 'YYYY.MM.dd'));
+        $this->assertTrue(Zend_Date::isDate('25.Mai.2007', 'dd.MMMM.YYYY', 'de_AT'));
+        $this->assertTrue(Zend_Date::isDate('25.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
+        $this->assertFalse(Zend_Date::isDate('32.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
+        $this->assertFalse(Zend_Date::isDate('30.Februar.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
+        $this->assertFalse(Zend_Date::isDate('30.Februar.2007 30:00:00', 'dd.MMMM.YYYY HH:mm:ss', 'de_AT'));
     }
 }
 
