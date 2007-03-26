@@ -169,6 +169,80 @@ print $number;
             </note>
         </para>
 
+        <para>
+            オプション 'number_format' を使用すると、
+            独自の数値書式を定義することができます。
+            書式を指定するには、以下の CLDR 書式を使用します。
+            ロケールを元に、桁区切りや小数点、その他の数値記号を取得します。
+            たとえば、ドイツ語では小数点として
+            ',' を用いますが、英語では小数点に '.' を使用します。
+        </para>
+
+        <table>
+            <title>自分で作成する数値書式用の書式トークン
+            </title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>トークン</entry>
+                        <entry>説明</entry>
+                        <entry>書式の例</entry>
+                        <entry>出力結果</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>#0</entry>
+                        <entry>桁区切りや小数点のない数値を生成します。</entry>
+                        <entry>#0</entry>
+                        <entry>1234567</entry>
+                    </row>
+                    <row>
+                        <entry>,</entry>
+                        <entry>指定した桁数ごとに区切り文字を生成します。</entry>
+                        <entry>#,##0</entry>
+                        <entry>1,234,567</entry>
+                    </row>
+                    <row>
+                        <entry>#,##,##0</entry>
+                        <entry>最初は標準の 3 桁で区切り、それ以降は 2 桁ごとに区切ります。</entry>
+                        <entry>#,##,##0</entry>
+                        <entry>12,34,567</entry>
+                    </row>
+                    <row>
+                        <entry>.</entry>
+                        <entry>小数点を生成します。</entry>
+                        <entry>#0.#</entry>
+                        <entry>1234567.1234</entry>
+                    </row>
+                    <row>
+                        <entry>0</entry>
+                        <entry>小数点以下を指定した桁数にします。</entry>
+                        <entry>#0.00</entry>
+                        <entry>1234567.12</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <example>
+            <title>自分で定義した数値書式の使用</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toNumber(13547.3678, array('number_format' => '#,#0.00', 'locale' => 'de'));
+
+// 1.35.47,36 を返します
+print $number;
+
+$number = Zend_Locale_Format::toNumber(13547.3, array('number_format' => '#,##0.00', 'locale' => 'de'));
+
+// 13.547,30 を返します
+print $number;
+?>]]></programlisting>
+        </example>
+
     </sect2>
 
     <sect2 id="zend.locale.number.test">
