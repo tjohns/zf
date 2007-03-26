@@ -146,7 +146,11 @@ class Zend_Locale_Data
         if (!empty(self::$_ldml[(string) $locale])) {
             while ($tok !== false) {
                 $search = $search . '/' . $tok;
-                $result = @self::$_ldml[(string) $locale]->xpath($search . '/alias');
+                if ((strpos($tok, '[@') !== false) and (strpos($tok, ']') === false)) {
+                    $tok = strtok('/');
+                    continue;
+                }
+                $result = self::$_ldml[(string) $locale]->xpath($search . '/alias');
 
                 // alias found
                 if (!empty($result)) {
