@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,35 +13,31 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend
+ * @package    Zend_Log
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: AllTests.php 3980 2007-03-15 21:38:38Z mike $
  */
 
-
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Memory_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-//require_once 'Zend/Currency/AllTests.php';
-require_once 'Zend/Log/AllTests.php';
-// require_once 'Zend/Session/AllTests.php';
-require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/Memory/AllTests.php';
+require_once 'Zend/Memory/MemoryTest.php';
+require_once 'Zend/Memory/ValueTest.php';
 
 /**
  * @category   Zend
- * @package    Zend
+ * @package    Zend_Memory
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_AllTests
+class Zend_Memory_AllTests
 {
     public static function main()
     {
@@ -51,27 +46,15 @@ class Zend_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Memory');
 
-        // place other tests here for incubator suite
-
-// Do not include Zend_Currency as empty testbeds can cause phpunit to crash
-//        $suite->addTest(Zend_Currency_AllTests::suite());
-        $suite->addTest(Zend_Log_AllTests::suite());
-        /*
-         * To run the unit tests for Zend_Session*:
-         * $ cd zftrunk/incubator/tests/Zend/Session
-         * $ php AllTests.php
-         */
-        // $suite->addTest(Zend_Session_AllTests::suite());
-        $suite->addTestSuite('Zend_TimeSyncTest');
-        $suite->addTest(Zend_Memory_AllTests::suite());
-
+        $suite->addTestSuite('Zend_Memory_MemoryTest');
+        $suite->addTestSuite('Zend_Memory_ValueTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_AllTests::main') {
-    Zend_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Memory_AllTests::main') {
+    Zend_Memory_AllTests::main();
 }
