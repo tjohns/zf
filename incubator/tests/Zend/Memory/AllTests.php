@@ -29,6 +29,10 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Memory/MemoryTest.php';
 require_once 'Zend/Memory/ValueTest.php';
+require_once 'Zend/Memory/MovableTest.php';
+require_once 'Zend/Memory/LockedTest.php';
+require_once 'Zend/Memory/AccessControllerTest.php';
+require_once 'Zend/Memory/MemoryManagerTest.php';
 
 /**
  * @category   Zend
@@ -50,6 +54,11 @@ class Zend_Memory_AllTests
 
         $suite->addTestSuite('Zend_Memory_MemoryTest');
         $suite->addTestSuite('Zend_Memory_ValueTest');
+        $suite->addTestSuite('Zend_Memory_Container_MovableTest');
+        $suite->addTestSuite('Zend_Memory_Container_LockedTest');
+        $suite->addTestSuite('Zend_Memory_Container_AccessControllerTest');
+        $suite->addTestSuite('Zend_Memory_MemoryManagerTest');
+
 
         return $suite;
     }
