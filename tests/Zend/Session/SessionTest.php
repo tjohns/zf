@@ -36,7 +36,10 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_SessionTest extends PHPUnit_Framework_TestCase
 {
     private $script = null;
+
     private $error_list = array();
+
+    private $savePath;
 
     public function __construct() {
         $this->script = "php " . (dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php ';
@@ -56,6 +59,11 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        if (isset($this->savePath)) {
+            Zend_Session::setOptions(array('save_path' => $this->savePath));
+            unset($this->savePath);
+        }
+
         $old = error_reporting( E_ALL | E_STRICT );
         $this->assertTrue ( $old === (error_reporting( E_ALL | E_STRICT )),
             'something associated with a particular test altered error_reporting to something other than E_STRICT');
@@ -128,11 +136,27 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetOptions()
     {
+        $this->savePath = ini_get('session.save_path');
+
         try {
             Zend_Session::setOptions(array('foo' => 'break me'));
             $this->fail('No exception was returned when trying to set an invalid option');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/unknown.option/i', $e->getMessage());
+        }
+        try {
+            Zend_Session::setOptions(array('save_path' => '1;777;/tmp'));
+            Zend_Session::setOptions(array('save_path' => '2;/tmp'));
+            Zend_Session::setOptions(array('save_path' => '/tmp'));
+        } catch (Zend_Session_Exception $e) {
+            var_dump($e);
+            $this->fail('No exception was expected when using a save_path of "1;777;/tmp"');
+        }
+        try {
+            Zend_Session::setOptions(array('save_path' => '/totallybogussavepath'));
+            $this->fail('No exception was returned when trying to set an invalid save_path');
+        } catch (Zend_Session_Exception $e) {
+            $this->assertRegexp('/Unwritable session/i', $e->getMessage());
         }
     }
 

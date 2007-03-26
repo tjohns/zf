@@ -120,7 +120,8 @@ remember_me_seconds = 864000
                     <para>
                         string <code>save_path</code> - The correct value is system dependent, and should be provided by
                         the developer using an <emphasis role="strong">absolute path</emphasis> to a directory readable
-                        and writable by the PHP process.
+                        and writable by the PHP process.  If a writable path is not supplied, then <code>Zend_Session
+                        </code> will throw an exception when started (i.e. when <code>start()</code> is called).
                     </para>
                     <note>
                         <title>Security Risk</title>
