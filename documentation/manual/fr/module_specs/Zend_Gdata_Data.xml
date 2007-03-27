@@ -2,17 +2,13 @@
     <title>Using the Gdata Data Helper</title>
 
     <para>
-        Many parameters of Google Data queries have a restricted set of
-        supported values.
-        The <code>Zend_Gdata_Data</code> class contains constant
-        definitions for all the legal values.
+	De nombreux paramètres de rêquetes Google Data ne supportent qu'un cetain ensemble de valeurs bien définies. 
+        La classe <code>Zend_Gdata_Data</code> contient des définiton de constantes pour toutes les valeurs authorisées.
     </para>
 
     <para>
-        The <code>isValid()</code> static function tests that a value
-        is valid for a specified attribute.  The example below shows
-        usage of a constant, and a test of that constant using
-        <code>isValid()</code>.
+	La fonction statique <code>isValid()</code> test si une valeur est valide pour un attribut donné.
+	L'exemple suivant monte l'usage d'une constante, ainsi que le test de cette constante en utilisant <code>isValid()</code>.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -24,8 +20,7 @@ if (Zend_Gdata_Data::isValid($vis, 'visibility')) {
 ?>]]></programlisting>
 
     <para>
-        The <code>getValues()</code> static function returns an array of
-        valid values for a specified attribute.
+	La fonction statique <code>getValues()</code> retourne un tableau de valeurs valides pour un attribut donné.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
