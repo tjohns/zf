@@ -1,5 +1,5 @@
 <sect1 id="zend.gdata.data">
-    <title>Using the Gdata Data Helper</title>
+    <title>Utiliser les Helper Gdata Data</title>
 
     <para>
 	De nombreux paramètres de rêquetes Google Data ne supportent qu'un cetain ensemble de valeurs bien définies. 
