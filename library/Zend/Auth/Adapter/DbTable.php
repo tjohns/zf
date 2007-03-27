@@ -228,8 +228,9 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
 
         if (null !== $returnColumns) {
 
+            $availableColumns = array_keys($this->_resultRow);
             foreach ( (array) $returnColumns as $returnColumn) {
-                if (isset($this->_resultRow[$returnColumn])) {
+                if (in_array($returnColumn, $availableColumns)) {
                     $returnObject->{$returnColumn} = $this->_resultRow[$returnColumn];
                 }
             }
