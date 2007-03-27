@@ -1,62 +1,56 @@
 <sect1 id="zend.gdata.blogger">
-    <title>Using Google Blogger</title>
+    <title>Utilistion de Google Blogger</title>
 
     <para>
-        The weblog hosting service Blogger.com participates in the
-        Google Data API.
-        You can write PHP applications using Zend_Gdata_Blogger to query
-        existing blogs, and post new entries to blogs for which you have
-        authenticated access.
+	Le service l'hebergement de Blogs Blogger.com fait partie des API Google Data. 
+Vous pouvez écrire des applications PHP utilisant Zend_Gdata_Blogger pour interroger des blogs existants, et poster de nouvelles entrées sur des blogs sur lesquels vous avez des droits d'accès.
     </para>
 
     <para>
-        See
+        Voir
         <ulink url="http://code.google.com/apis/blogger/overview.html">http://code.google.com/apis/blogger/overview.html</ulink>
-        for more information about the Google Blogger API.
+        pour plus d'information a propos des API Google Blogger.
     </para>
 
     <sect2 id="zend.gdata.blogger.compatibility">
-        <title>Understanding Blogger version compatibility</title>
+        <title>Comprendre la compatibilité de version Blogger</title>
 
         <para>
-            There are some differences regarding using the Google Data API to
-            access blogs that are hosted on the current version of Blogger,
-            versus blogs that are hosted on the version of Blogger that is
-            currently in Beta.
-            The most significant differences are related to authentication.
-            See the table below:
+Il existe des différences d'utilisation des API Google Data vis à vis des blogs hébérgés sur la version actuelle de Blogger, et de ceux hébérgés sur la version beta du service Blogger. 
+La plus grosse diférence relève de l'authentification.
+Voir tableau ci-dessous:
         </para>
 
         <table cellspacing="0" cellpadding="5" id="zend.gdata.blogger.compatibility.differences">
-            <title>Differences between current Blogger service and Blogger beta service</title>
+<title>Différences entre le service Blogger actuel et la version beta</title>
             <tgroup cols="3">
                 <thead>
                     <row>
-                        <entry align="left">Characteristic</entry>
-                        <entry>Current Blogger service</entry>
-                        <entry>Beta Blogger service</entry>
+                        <entry align="left">Caractéristique</entry>
+                        <entry>Service Blogger actuel</entry>
+                        <entry>Service Blogger beta</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Supports Google Data API</entry>
-                        <entry align="center">Yes</entry>
-                        <entry align="center">Yes</entry>
+                        <entry>Support des API Google Data</entry>
+                        <entry align="center">Oui</entry>
+                        <entry align="center">Oui</entry>
                     </row>
                     <row>
-                        <entry>Credentials based on</entry>
-                        <entry align="center">Blogger.com account</entry>
-                        <entry align="center">Google.com account</entry>
+                        <entry>Authentification basée sur</entry>
+                        <entry align="center">Compte Blogger.com</entry>
+                        <entry align="center">Compte Google.com</entry>
                     </row>
                     <row>
-                        <entry>Supports ClientLogin authentication</entry>
-                        <entry align="center">Yes</entry>
-                        <entry align="center">Yes</entry>
+                        <entry>Support de l'athentifiation ClientLogin</entry>
+                        <entry align="center">Oui</entry>
+                        <entry align="center">Oui</entry>
                     </row>
                     <row>
-                        <entry>Supports basic HTTP authentication</entry>
-                        <entry align="center">Yes</entry>
-                        <entry align="center">No</entry>
+                        <entry>Support de l'authentification HTTP basique</entry>
+                        <entry align="center">Oui</entry>
+                        <entry align="center">Non</entry>
                     </row>
                     <row>
                         <entry>Supports AuthSub authentication</entry>
@@ -64,24 +58,24 @@
                         <entry align="center">Yes</entry>
                     </row>
                     <row>
-                        <entry>Format for unauthenticated feeds</entry>
+                        <entry>Format des fils non authentfiés</entry>
                         <entry align="center">Atom 0.3</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Format for authenticated feeds</entry>
+                        <entry>Format des fils authentifiés</entry>
                         <entry align="center">Atom 1.0</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Format for posting entries</entry>
+                        <entry>Format des entrées postés</entry>
                         <entry align="center">Atom 1.0</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Supports query parameters</entry>
-                        <entry align="center">No</entry>
-                        <entry align="center">Yes</entry>
+                        <entry>Support des paramètres de requetes</entry>
+                        <entry align="center">Non</entry>
+                        <entry align="center">Oui</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -90,75 +84,60 @@
     </sect2>
 
     <sect2 id="zend.gdata.blogger.query">
-        <title>Querying a blog</title>
+        <title>Interroger un blog</title>
 
         <para>
-            Use the <code>setBlogName()</code> method to specify the name of
-            a blog.  This is the name that appears in a blogspot URL,
-            for example:
+Utilisez la methode <code>setBlogName()</code> pour spécifier le nom du blog. C'est le nom que l'on retorouve dans l'URL du blog, par exemple:
             <code>http://blogname.blogspot.com.</code>
-            You can also specify the name of the blog when you request
-            a feed.
+Vous pouvez aussi spécifier le nom du blog à l'intérrogation d'un fil.
         </para>
 
     <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger();
 
-// One way to get a feed for a blog...
+// Première façon de récupérer le flux
 $feed = $gdataBlog->getBloggerFeed('blogname');
 
-// Another way to get a feed for a blog...
+// Autre methode
 $gdataBlog->setBlogName('blogname');
 $feed = $gdataBlog->getBloggerFeed();
 ?>]]></programlisting>
 
         <para>
-            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
-            for more information on how to use this object.
+Voir la documentation de Zend_Feed pour plus d'informations sur l'utilisation de cet objet.
         </para>
 
         <para>
-            The <code>setPublishedMin()</code> and <code>setPublishedMax()</code>
-            methods allow you to specify bounds on the entry date.
-            If you specify a value for <code>publishedMin</code>,
-            no entries that were published earlier than the date
-            you specify are included in the feed.  Likewise
-            no entries published after the date specified by
-            <code>publishedMax</code> are included.
+Les methodes <code>setPublishedMin()</code> et <code>setPublishedMax()</code> vous permettent de spécifier des limites sur la date des entrées.
+Si vous spécifiez une valeur pour <code>publishedMin</code>, aucune entre publiée avant cette date ne sera récupérer.
+De la même façon, aucune entrées publiée après la date spécifiée par <code>publishedMax</code> ne sera pris en compte.
         </para>
 
         <para>
-            The entries in the feed are ordered by the <code>&lt;updated&gt;</code>
-            element, with the most recent entry appearing first in the feed.
+Dans le flux les entrées sont ordonnées par l'élément <code>&lt;updated&gt;</code> avec l'entrée a plus récente apparaissant en premier dans le flux.
         </para>
 
         <note>
-            <title>No support for category or full-text queries</title>
+            <title>Non support des catégories ou des requetes full-text</title>
             <para>
-                The Google Blogger API currently does not support queries
-                using categories, keywords, or tags.
-                If you try to specify a search using <code>setCategory()</code>,
-                Zend_Gdata_Blogger throws an exception.
+Actuellement, les API Google Bloger ne suportent pas des requetes utilisant les catégories, mots clef ou tags.
+Si vous essayez de spécifier une recherche en utilisant <code>setCategory()</code>, Zend_Gdata_Blogger renverra une exception.
             </para>
             <para>
-                The Google Blogger API currently does not support queries
-                using full-text search terms.
-                If you try to specify a search using <code>setQuery()</code>,
-                Zend_Gdata_Blogger throws an exception.
+
+Les API Google Blogger ne suportent actuellement pas les requetes utilisant une recherche full-text.
+SI vous essayez de spécifier une recherche en utilisant <code>setQuery()</code>, Zend_Gdata_Blogger renverra une exception.
             </para>
         </note>
 
     </sect2>
 
     <sect2 id="zend.gdata.blogger.post">
-        <title>Posting to your blog</title>
+        <title>Poster sur votre blog</title>
 
         <para>
-            You can use the <code>post()</code> method to post entries
-            to your blog.  
-            To post entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+Vos pouvez utiliser la methode <code>post()</code> pour poster des entrées sur votre blog.
+Por cela vous devez utiliser un Zend_Http_Client authentifié que vous aurez créer en utilisant l'une des classes Zend_Gdata_AuthSub ou Zend_Gdata_ClientLogin
         </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -188,9 +167,7 @@ $response = $gdataBlog->post($xml->asXML());
 ?>]]></programlisting>
 
         <para>
-            You can get a feed that names the blogs for your currently
-            authenticated account using the <code>getBloggerListFeed()</code>
-            method.
+Vou pouvez récupérer le flux des noms des blogs de votre client HTTP authentifié en utilisant le methode <code>getBloggerListFeed()</code>
         </para>
 
     <programlisting role="php"><![CDATA[<?php
