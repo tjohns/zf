@@ -33,14 +33,15 @@
         </para>
 
         <para>
-            また、<code>getCorrectableDate()</code> メソッドは
+            <code>setOption('fix_date' => true)</code> が設定されると、
+            <code>getDate()</code> メソッドは
             'fixed' というキーを追加します。ここには数値が格納され、
             入力の日付文字列の年月日の順序を入れ替えたりして
             使用する書式にあわせるための情報を表します。
         </para>
 
         <table>
-            <title>getCorrectableDate() の 'fixed' キーの値</title>
+            <title>getDate() のオプション 'fix_date' のキーの値</title>
             <tgroup cols='4'>
                 <thead>
                     <row>
@@ -82,12 +83,11 @@
         <para>
             これらの (以下の) 指定子は、Zend_Date の <code>toString()</code> がサポートしている完全な "ISO"
             セットの一部です。PHP の <code>date()</code> 関数と同じ形式の指定子を使用したい場合は、
-            まず最初に <code>usePhpDateFormat()</code> をコールしてください。現時点では、分の形式のみが異なっています
+            まず最初に <code>setOptions('format_type' => 'php')</code> をコールしてください。
+            特定のひとつの書式文字列だけを PHP の <code>date()</code> 互換形式から
+            "ISO" 形式に変換したい場合は <code>convertPhpToIsoFormat()</code>
+            を使用します。現時点では、分の形式のみが異なっています
             (ISO のデフォルトでは 'm'、PHP の date 関数では 'i' を使用します)。
-        </para>
-
-        <para>
-            BCMath 拡張モジュールが有効な場合に、以下のような値を返します。
         </para>
 
         <table>
@@ -154,10 +154,10 @@
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
+$dateString = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
 $dateObject = Zend_Date('13.04.2006', array('date_format' => 'dd.MM.yyyy')); // この日付に対応する Zend_Date オブジェクトを作成します
 
-print_r($date); // 出力は、このようになります
+print_r($dateString); // 出力は、このようになります
 
 Array
 (
@@ -168,7 +168,7 @@ Array
 )
 
 // 入力値に何らかの問題がある場合に、自動的に修正します
-$date2 = Zend_Locale_Format::getCorrectableDate('04.13.2006', array('date_format' => 'dd.MM.yyyy'));
+$date2 = Zend_Locale_Format::getDate('04.13.2006', array('date_format' => 'dd.MM.yyyy', 'fix_date' => true));
 
 print_r($date); // 出力は、このようになります
 
@@ -187,10 +187,10 @@ Array
             <code>getDate()</code> は "ロケール対応" なので、
             <code>$locale</code> を指定することで
             そのロケールの書式の日付文字列を使用できます。
-            <code>getCorrectableDate()</code> は簡単なテストを行って
+            オプション '<code>fix_date</code>' は、簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
-            '<code>null</code>' を '<code>date_format</code>'
+            '<code>Zend_Locale_Format::STANDARD</code>' を '<code>date_format</code>'
             の値として指定すると、<code>setOptions()</code>
             で設定されているクラス全体のデフォルト日付書式を使用しないようにできます。
             これにより、getDate は <code>$locale</code>
@@ -203,7 +203,7 @@ Array
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => null, 'locale' => $locale));
+$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale));
 
 print_r ($date);
 ?>]]></programlisting>
@@ -220,7 +220,7 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => null, 'locale' => $locale);
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale);
 
 print_r ($date);
 ?>]]></programlisting>
@@ -335,7 +335,7 @@ print_r ($date);
         </note>
 
         <para>
-            <code>getCorrectableDate()</code> は簡単なテストを行って
+            オプション '<code>fix_date</code>' は、簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
             <code>getDate()</code> は、
@@ -348,7 +348,7 @@ print_r ($date);
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$date = Zend_Locale_Format::getCorrectableDate('41.10.20', array('date_format' => 'ddMMyy'));
+$date = Zend_Locale_Format::getDate('41.10.20', array('date_format' => 'ddMMyy', 'fix_date' => true));
 
 // 41 は、日付ではなく年として返されます
 print_r ($date);
@@ -378,7 +378,7 @@ print_r ($date);
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => null, $locale)) {
+if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Zend_Locale_Format::STANDARD, $locale)) {
     print "日付です";
 } else {
     print "日付ではありません";
@@ -406,7 +406,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => nu
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => null, 'locale' => $locale)) {
+if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale)) {
     print "時刻です";
 } else {
     print "時刻ではありません";

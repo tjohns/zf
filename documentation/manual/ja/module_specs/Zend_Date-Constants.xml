@@ -1112,7 +1112,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
-Zend_Locale_Format::usePhpDateFormat(true);
+Zend_Date::setOptions('format_type' => 'php');
 $date = new Zend_Date(1234567890, false, $locale);
 
 // 出力は 'February 16, 2007, 3:36 am' のようになります
