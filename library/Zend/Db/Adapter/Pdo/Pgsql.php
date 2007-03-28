@@ -126,7 +126,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
             WHERE a.attnum > 0 AND c.relname = ".$this->quote($tableName);
 
         if ($schemaName) {
-            $sql .= " AND ... n.nspname = ".$this->quote($schemaName);
+            $sql .= " AND n.nspname = ".$this->quote($schemaName);
         }
 
         $stmt = $this->query($sql);
