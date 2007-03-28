@@ -1,82 +1,106 @@
 <sect1 id="zend.memory.memory-objects">
+
     <title>Memory Objects</title>
 
     <sect2 id="zend.memory.memory-objects.movable">
+
         <title>Movable</title>
+
         <para>
-            Movable memory objects are created with <code>create([$data])</code> method of memory manager:
+            Create movable memory objects using the <code>create([$data])</code>
+            method of the memory manager:
             <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->create($data);]]></programlisting>
+
+$memObject = $memoryManager->create($data);
+
+?>]]></programlisting>
         </para>
 
         <para>
-            "Movable" means that such objects may be swapped and unloaded from memory (to free it) and loaded when it's necessary.
+            "Movable" means that such objects may be swapped and unloaded from
+            memory and then loaded when application code accesses the object.
         </para>
+
     </sect2>
 
     <sect2 id="zend.memory.memory-objects.locked">
+
         <title>Locked</title>
 
         <para>
-            Locked memory objects are created with <code>createLocked([$data])</code> method of memory manager:
+            Create locked memory objects using the <code>createLocked([$data])</code>
+            method of the memory manager:
             <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->createLocked($data);]]></programlisting>
+
+$memObject = $memoryManager->createLocked($data);
+
+?>]]></programlisting>
         </para>
 
         <para>
-            "Locked" means that such objects are never swapped and unloaded from memory.
+            "Locked" means that such objects are never swapped and unloaded
+            from memory.
         </para>
 
         <para>
-            Locked objects provides the same interface as movable objects (<code>Zend_Memory_Container_Interface</code>).
+            Locked objects provides the same interface as movable objects
+            (<code>Zend_Memory_Container_Interface</code>).
             So locked object can be used in any place instead of movable objects.
         </para>
 
         <para>
-            It's useful if an application or developer can decide, that some objects should never be swappet
-            (due to performance considerations).
+            It's useful if an application or developer can decide, that some
+            objects should never be swapped, based on performance considerations.
         </para>
 
         <para>
-            Locked objects don't need changes tracking, so work with locked objects is much more faster.
+            Access to locked objects is faster, because the memory manager doesn't
+            need to track changes for these objects.
         </para>
 
         <para>
-            Locked objects class (<code>Zend_Memory_Container_Locked</code>) guarantees the same performance as work with
-            a string variable with only one additional dereference to get class property.
+            The locked objects class (<code>Zend_Memory_Container_Locked</code>)
+            guarantees virtually the same performance as working with a string
+            variable.  The overhead is a single dereference to get the class property.
         </para>
+
     </sect2>
 
     <sect2 id="zend.memory.memory-objects.value">
+
         <title>Memory container 'value' property.</title>
 
         <para>
-            Memory container (movable or locked) 'value' property is used to operate with memory object data:
+            Use the memory container (movable or locked) '<code>value</code>'
+            property to operate with memory object data:
             <programlisting role="php"><![CDATA[<?php
+
 $memObject = $memoryManager->create($data);
-...
+
 echo $memObject->value;
-...
+
 $memObject->value = $newValue;
-...
+
 $memObject->value[$index] = '_';
-...
+
 echo ord($memObject->value[$index1]);
-...
+
 $memObject->value = substr($memObject->value, $start, $length);
-...
-]]></programlisting>
+
+?>]]></programlisting>
         </para>
 
         <para>
-            Alternative way for accessing memory object data is
-            <link linkend="zend.memory.memory-objects.api.getRef"><code>getRef()</code></link> method.
-            It <emphasis>must</emphasis> be used for PHP versions before 5.2 and have to be used in some other
+            An alternative way to access memory object data is to use the
+            <link linkend="zend.memory.memory-objects.api.getRef"><code>getRef()</code></link>
+            method.  This method <emphasis>must</emphasis> be used for PHP
+            versions before 5.2.  It also may have to be used in some other
             cases for performance reasons.
         </para>
     </sect2>
 
     <sect2 id="zend.memory.memory-objects.api">
+
         <title>Memory container interface</title>
 
         <para>
@@ -84,47 +108,67 @@ $memObject->value = substr($memObject->value, $start, $length);
         </para>
 
         <sect3 id="zend.memory.memory-objects.api.getRef">
+
             <title>getRef() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function &getRef();]]></programlisting>
+
+public function &getRef();
+
+?>]]></programlisting>
+
             <para>
-                <code>getRef()</code> method returns reference to the object value.
+                The <code>getRef()</code> method returns reference to the object value.
             </para>
 
             <para>
-                Movable objects are loaded from swap at this moment if it's necessary. It may cause swapping of other objects.
+                Movable objects are loaded from the cache at this moment if the
+                object is not already in memory.  If the object is loaded from
+                the cache, this might cause swapping of other objects if the
+                memory limit would be exceeded by having all the managed
+                objects in memory.
             </para>
 
             <para>
-                This method <emphasis>must</emphasis> be used to access memory object data for PHP versions before 5.2.
+                The <code>getRef()</code> method <emphasis>must</emphasis> be
+                used to access memory object data for PHP versions before 5.2.
             </para>
 
             <para>
-                Value changes tracking needs additional resources.
-                <code>getRef()</code> method returns reference to string, which is changed directly by user application.
-                So, it's good idea to use <code>getRef()</code> method for value data processing:
+                Tracking changes to data needs additional resources.
+                The <code>getRef()</code> method returns reference to string,
+                which is changed directly by user application.
+                So, it's a good idea to use the <code>getRef()</code> method
+                for value data processing:
                 <programlisting role="php"><![CDATA[<?php
+
 $memObject = $memoryManager->create($data);
-...
 
 $value = &$memObject->getRef();
 
 for ($count = 0; $count < strlen($value); $count++) {
     $char = $value[$count];
     ...
-}]]></programlisting>
+}
+?>]]></programlisting>
             </para>
+
         </sect3>
 
         <sect3 id="zend.memory.memory-objects.api.touch">
+
             <title>touch() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function touch();]]></programlisting>
+
+public function touch();
+
+?>]]></programlisting>
             <para>
-                <code>touch()</code> method should be used in common with <code>getRef()</code>. It signals that object value has been changed:
+                The <code>touch()</code> method should be used in common with
+                <code>getRef()</code>. It signals that object value has been changed:
                 <programlisting role="php"><![CDATA[<?php
+
 $memObject = $memoryManager->create($data);
 ...
 
@@ -138,28 +182,39 @@ for ($count = 0; $count < strlen($value); $count++) {
     ...
 }
 
-$memObject->touch();]]></programlisting>
+$memObject->touch();
+
+?>]]></programlisting>
+
             </para>
+
         </sect3>
 
         <sect3 id="zend.memory.memory-objects.api.lock">
+
             <title>lock() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function lock();]]></programlisting>
+
+public function lock();
+
+?>]]></programlisting>
 
             <para>
-                <code>lock()</code> methods locks object in memory. It should be used to prevent swapping of some objects<footnote>
-                <para>
-                    Memory manager uses smart enough algorithm to choose candidates for swapping. But if you exactly know, that at
-                    at this part of code some objects should not be swapped, you may lock them.
-                </para></footnote>.
+                The <code>lock()</code> methods locks object in memory.
+                It should be used to prevent swapping of some objects you choose.
+                Normally, this is not necessary, because the memory manager uses
+                an intelligent algorithm to choose candidates for swapping.
+                But if you exactly know, that at at this part of code some
+                objects should not be swapped, you may lock them.
             </para>
 
             <para>
-                Locking objects in memory also guarantees that reference returned by <code>getRef()</code> method will be valid until you
-                don't unlock object:
+                Locking objects in memory also guarantees that reference
+                returned by the <code>getRef()</code> method is valid until you
+                unlock the object:
                 <programlisting role="php"><![CDATA[<?php
+
 $memObject1 = $memoryManager->create($data1);
 $memObject2 = $memoryManager->create($data2);
 ...
@@ -171,41 +226,56 @@ $value1 = &$memObject1->getRef();
 $value2 = &$memObject2->getRef();
 
 for ($count = 0; $count < strlen($value2); $count++) {
-        $value1 .= $value2[$count];
+    $value1 .= $value2[$count];
 }
 
 $memObject1->touch();
-$memObject1->ulock();
-$memObject2->ulock();
-]]></programlisting>
+$memObject1->unlock();
+$memObject2->unlock();
+
+?>]]></programlisting>
             </para>
+
         </sect3>
 
         <sect3 id="zend.memory.memory-objects.api.unlock">
+
             <title>unlock() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function unlock();]]></programlisting>
+
+public function unlock();
+
+?>]]></programlisting>
 
             <para>
-                <code>unlock()</code> method unlocks object when it's no longer need to be locked. See example above.
+                <code>unlock()</code> method unlocks object when it's no longer
+                necessary to be locked. See the example above.
             </para>
+
         </sect3>
 
         <sect3 id="zend.memory.memory-objects.api.isLocked">
+
             <title>isLocked() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function isLocked();]]></programlisting>
+
+public function isLocked();
+
+?>]]></programlisting>
 
             <para>
-                <code>isLocked()</code> method can be used to check if object is locked.
+                The <code>isLocked()</code> method can be used to check if
+                object is locked.  It returns <code>true</code> if the object
+                is locked, or <code>false</code> if it is not locked.
+                This is always <code>true</code> for "locked" objects,
+                and may be either <code>true</code> or <code>false</code>
+                for "movable" objects.
             </para>
 
-            <para>
-                It returns <code>true</code> or <code>false</code> for "movable" objects and always <code>true</code>
-                for "locked" objects.
-            </para>
         </sect3>
+
     </sect2>
+
 </sect1>
