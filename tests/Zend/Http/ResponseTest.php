@@ -169,6 +169,30 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(1.1, $response->getVersion(), 'Version is expected to be 1.1');
 	}
 	
+	public function testResponseCodeAsText()
+	{
+		// This is an entirely static test
+		
+		// Test some response codes
+		$this->assertEquals('Continue', Zend_Http_Response::responseCodeAsText(100));
+		$this->assertEquals('OK', Zend_Http_Response::responseCodeAsText(200));
+		$this->assertEquals('Multiple Choices', Zend_Http_Response::responseCodeAsText(300));
+		$this->assertEquals('Bad Request', Zend_Http_Response::responseCodeAsText(400));
+		$this->assertEquals('Internal Server Error', Zend_Http_Response::responseCodeAsText(500));
+		
+		// Make sure that invalid codes return 'Unkown'
+		$this->assertEquals('Unknown', Zend_Http_Response::responseCodeAsText(600));
+		
+		// Check HTTP/1.0 value for 302
+		$this->assertEquals('Found', Zend_Http_Response::responseCodeAsText(302));
+		$this->assertEquals('Moved Temporarily', Zend_Http_Response::responseCodeAsText(302, false));
+		
+		// Check we get an array if no code is passed
+		$codes = Zend_Http_Response::responseCodeAsText();
+		$this->assertType('array', $codes);
+		$this->assertEquals('OK', $codes[200]);
+	}
+	
 	public function testUnknownCode()
 	{
 		$response_str = $this->readResponse('response_unknown');
