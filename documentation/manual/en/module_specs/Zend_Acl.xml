@@ -160,9 +160,8 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Zend_Acl is a "whitelist" implementation by default, which means that unless otherwise
-                specified by the developer, Zend_Acl denies access to every privilege upon every Resource by
-                every Role.
+                Until a developer specifies an "allow" rule, Zend_Acl denies access to every privilege upon every
+                Resource by every Role.
             </para>
         </note>
     </sect2>
