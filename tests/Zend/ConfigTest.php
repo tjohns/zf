@@ -185,7 +185,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config($this->_all);
 
         ob_start();
-        print_r($config->asArray());
+        print_r($config->toArray());
         $contents = ob_get_contents();
         ob_end_clean();
 
@@ -219,7 +219,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
             ),
         );
         $form_config = new Zend_Config($config_array, true);
-        $this->assertSame(array(), $form_config->controls->visible->attribs->asArray());
+        $this->assertSame(array(), $form_config->controls->visible->attribs->toArray());
     }
 
     public function testZF402()
@@ -247,14 +247,14 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
     public function testZf1019_HandlingInvalidKeyNames()
     {
         $config = new Zend_Config($this->_leadingdot);
-        $array = $config->asArray();
+        $array = $config->toArray();
         $this->assertContains('dot-test', $array['.test']);
     }
 
     public function testZF1019_EmptyKeys()
     {
         $config = new Zend_Config($this->_invalidkey);
-        $array = $config->asArray();
+        $array = $config->toArray();
         $this->assertContains('test', $array[' ']);
         $this->assertContains('test', $array['']);
     }
