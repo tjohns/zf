@@ -48,7 +48,7 @@
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->asArray()); 
+Zend_Session::setOptions($config->toArray());
 ?>]]></programlisting>
         </example>
 
@@ -459,12 +459,12 @@ remember_me_seconds = 864000
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
 $defaultNamespace = new Zend_Session_Namespace();
- 
+
 if (!isset($defaultNamespace->initialized))
-{ 
-    Zend_Session::regenerateId(); 
+{
+    Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-} 
+}
 ?>]]></programlisting>
             </example>
 
