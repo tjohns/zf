@@ -1,6 +1,6 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Test_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Translate_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
@@ -33,6 +33,6 @@ class Zend_Translate_AllTests
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Test_AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'Zend_Translate_AllTests::main') {
     Zend_Translate_AllTests::main();
 }
