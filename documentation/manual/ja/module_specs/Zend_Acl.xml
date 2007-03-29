@@ -184,8 +184,7 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Zend_Acl の実装は、デフォルトでは "ホワイトリスト" 形式となります。
-                つまり、開発者が明示的に指定しない限り、Zend_Acl
+                開発者が "allow" 規則を指定しない限り、Zend_Acl
                 はあらゆるロールのすべてのリソース上の権限からのアクセスも拒否します。
             </para>
         </note>
