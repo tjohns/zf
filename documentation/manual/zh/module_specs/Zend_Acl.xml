@@ -73,9 +73,9 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
-$acl->allow('member', someResource');
+$acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
                 因为没有明确地为 "<code>someUser</code>"和"<code>someResource</code>" 定义规则，所以Zend_Acl 必须搜索可能为"<code>someUser</code>"所继承的角色定义的规则。首先，"<code>admin</code>"角色被访问，没有给它定义访问规则。接着，"<code>member</code>"角色被访问，Zend_Acl发现有个规则允许"<code>member</code>" 访问"<code>someResource</code>"。
             </para>
