@@ -132,7 +132,7 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
                 "<code>someUser</code>" ロールおよび
                 "<code>someResource</code>" に対する規則は定義されていないので、
