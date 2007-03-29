@@ -108,7 +108,7 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-               缺省地，Zend_Acl是一个“白名单”实现，这就意味着除非开发者指定，Zend_Acl 禁止任何 Role 对任何 Resource 的任何访问权限。
+               直到开发者指明一个"allow" 规则，Zend_Acl 禁止任何 Role 对任何 Resource 的任何访问权限。
             </para>
         </note>
     </sect2>
