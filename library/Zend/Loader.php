@@ -219,4 +219,19 @@ class Zend_Loader
             return false;
         }
     }
+
+    /**
+     * Register {@link autoload()} with spl_autoload()
+     * 
+     * @return void
+     * @throws Zend_Exception if spl_autoload() is not found
+     */
+    public static function registerAutoload()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            throw new Zend_Exception('spl_autoload does not exist in this PHP installation');
+        }
+
+        spl_autoload_register(array('Zend_Loader', 'autoload'));
+    }
 }

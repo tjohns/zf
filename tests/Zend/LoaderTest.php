@@ -152,4 +152,40 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse(Zend_Loader::autoload('Zend_FooBar_Magic_Abstract'));
     }
+
+    public function testRegisterAutoloadRegisters()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload not installed on this PHP installation");
+        }
+
+        Zend_Loader::registerAutoload();
+        $autoloaders = spl_autoload_functions();
+        $expected    = array('Zend_Loader', 'autoload');
+        $found       = false;
+        foreach($autoloaders as $function) {
+            if ($expected == $function) {
+                $found = true;
+            }
+        }
+
+        if (!$found) {
+            $this->fail("Failed to register Zend_Loader::autoload() with spl_autoload");
+        }
+
+        spl_autoload_unregister($expected);
+    }
+
+    public function testRegisterAutoloadFailsWithoutSplAutoload()
+    {
+        if (function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload installed on this PHP installation; cannot test for failure");
+        }
+
+        try {
+            Zend_Loader::registerAutoload();
+            $this->fail('registerAutoload should fail without spl_autoload');
+        } catch (Zend_Exception $e) {
+        }
+    }
 }
