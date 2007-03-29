@@ -454,10 +454,14 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id'
+        'p.product_id = l.product_id',
         array() ); // 空のカラムリスト
 
 ?>]]></programlisting>
+                <para>
+                    上の例で、連結したテーブルのカラム一覧の場所に
+                    空の配列 <code>array()</code> を指定していることに注意しましょう。
+                </para>
             </example>
 
             <para>

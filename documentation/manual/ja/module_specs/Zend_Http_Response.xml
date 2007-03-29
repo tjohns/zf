@@ -247,11 +247,13 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>:
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>: 
                         レスポンスコード $code に対応する、標準的な HTTP レスポンスメッセージを取得します。
                         たとえば $code が 500 の場合は "Internal Server Error" を返します。
                         $http11 が true の場合 (デフォルト) は HTTP/1.1 のメッセージを、
                         そうでない場合は HTTP/1.0 のメッセージを返します。
+                        $code を省略した場合は、このメソッドは、すべての既知の HTTP
+                        レスポンスコードを連想配列 (code => message) で返します。
                     </para>
                 </listitem>
             </itemizedlist>
