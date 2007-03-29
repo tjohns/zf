@@ -382,7 +382,11 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
 
         if (!in_array($clientScheme, $this->_supportedSchemes)) {
             $this->_response->setHttpResponseCode(400);
-            return new Zend_Auth_Result(false, array(), array('Client requested an unsupported authentication scheme'));
+            return new Zend_Auth_Result(
+                Zend_Auth_Result::FAILURE_UNCATEGORIZED,
+                array(), 
+                array('Client requested an unsupported authentication scheme')
+            );
         }
 
         // The server can issue multiple challenges, but the client should
@@ -432,7 +436,11 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         if (in_array('digest', $this->_acceptSchemes)) {
             $this->_response->setHeader($headerName, $this->_digestHeader());
         }
-        return new Zend_Auth_Result(false, array(), array('Invalid or absent credentials; challenging client'));
+        return new Zend_Auth_Result(
+            Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
+            array(),
+            array('Invalid or absent credentials; challenging client')
+        );
     }
 
     /**
@@ -506,9 +514,10 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
 
         $creds = explode(':', $auth);
 
-        $valid = $this->_basicResolver->resolve($creds[0], $this->_realm);
-        if ($valid) {
-            return new Zend_Auth_Result(true, $creds[0]);
+        $password = $this->_basicResolver->resolve($creds[0], $this->_realm);
+        if ($password && $password == $creds[1]) {
+            $identity = array('username'=>$creds[0], 'realm'=>$this->_realm);
+            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $identity);
         } else {
             return $this->_challengeClient();
         }
@@ -542,7 +551,8 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         if ($data === false) {
             $this->_response->setHttpResponseCode(400);
             return new Zend_Auth_Result(
-                false, array(),
+                Zend_Auth_Result::FAILURE_UNCATEGORIZED,
+                array(),
                 array('Invalid Authorization header format')
             );
         }
@@ -608,7 +618,8 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         // If our digest matches the client's let them in, otherwise return
         // a 401 code and exit to prevent access to the protected resource.
         if ($digest == $data['response']) {
-            return new Zend_Auth_Result(true, array($data['username'], $data['realm']));
+            $identity = array('username'=>$data['username'], 'realm'=>$data['realm']);
+            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $identity);
         } else {
             return $this->_challengeClient();
         }

@@ -195,14 +195,26 @@ class Zend_Auth_Adapter_Http_ProxyTest extends PHPUnit_Framework_TestCase
         $this->_checkOK($data);
     }
 
-    public function testBasicAuthBadCreds()
+    public function testBasicAuthBadUser()
     {
         // Attempt Basic Authentication with a bad username and password
 
         // The expected Basic Proxy-Authenticate header value
-        $basic = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
+        $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
 
         $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
+        $this->_checkUnauthorized($data, $basic);
+    }
+
+    public function testBasicAuthBadPassword()
+    {
+        // Attempt Basic Authentication with a valid username, but invalid 
+        // password
+
+        // The expected Basic WWW-Authenticate header value
+        $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
+
+        $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
         $this->_checkUnauthorized($data, $basic);
     }
 

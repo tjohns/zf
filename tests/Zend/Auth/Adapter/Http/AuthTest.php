@@ -192,14 +192,27 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         $this->_checkOK($data);
     }
 
-    public function testBasicAuthBadCreds()
+    public function testBasicAuthBadUser()
     {
-        // Attempt Basic Authentication with a bad username and password
+        // Attempt Basic Authentication with a nonexistant username and 
+        // password
 
         // The expected Basic WWW-Authenticate header value
-        $basic = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
+        $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
 
         $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
+        $this->_checkUnauthorized($data, $basic);
+    }
+
+    public function testBasicAuthBadPassword()
+    {
+        // Attempt Basic Authentication with a valid username, but invalid 
+        // password
+
+        // The expected Basic WWW-Authenticate header value
+        $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
+
+        $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
         $this->_checkUnauthorized($data, $basic);
     }
 
@@ -219,6 +232,18 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         $digest = $this->_digestChallenge();
 
         $data = $this->_doAuth($this->_digestReply('Nobody', 'NotValid'), 'digest');
+        $this->_checkUnauthorized($data, $digest);
+    }
+
+    public function testDigestAuthBadCreds2()
+    {
+        // Formerly, a username with invalid characters would result in a 400 
+        // response, but now should result in 401 response.
+
+        // The expected Digest WWW-Authenticate header value
+        $digest = $this->_digestChallenge();
+
+        $data = $this->_doAuth($this->_digestReply('Bad:chars', 'NotValid'), 'digest');
         $this->_checkUnauthorized($data, $digest);
     }
 
