@@ -476,7 +476,7 @@ $router->removeDefaultRoutes();]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 $loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
-$router->addRoute('login', $static);
+$router->addRoute('login', $loginRoute);
 ]]></programlisting>
         </sect3>
 
@@ -491,23 +491,30 @@ $router->addRoute('login', $static);
                 そして RewriteRouter に渡すことです。
             </para>
 
+            <para>
+                例として、次のような INI ファイルを考えてみましょう。
+            </para>
+
             <programlisting role="php"><![CDATA[
-/**
- * /path/to/config.ini という名前のサンプルの INI ファイル
- *
- * [production]
- *
- * routes.archive.route = "archive/:year/*"
- * routes.archive.defaults.controller = archive
- * routes.archive.defaults.action = show
- * routes.archive.defaults.year = 2000
- * routes.archive.reqs.year = "\d+"
- *
- * routes.news.type = "Zend_Controller_Router_Route_Static"
- * routes.news.route = "news"
- * routes.news.defaults.controller = "news"
- * routes.news.defaults.action = "list"
- */
+[production]
+routes.archive.route = "archive/:year/*"
+routes.archive.defaults.controller = archive
+routes.archive.defaults.action = show
+routes.archive.defaults.year = 2000
+routes.archive.reqs.year = "\d+"
+
+routes.news.type = "Zend_Controller_Router_Route_Static"
+routes.news.route = "news"
+routes.news.defaults.controller = "news"
+routes.news.defaults.action = "list"
+]]></programlisting>
+
+            <para>
+                上の INI ファイルを、次のようにして
+                <code>Zend_Config</code> オブジェクトに読み込みます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');

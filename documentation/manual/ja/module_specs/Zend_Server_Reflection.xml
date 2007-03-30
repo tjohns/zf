@@ -31,14 +31,21 @@ $function = Zend_Server_Reflection::reflectFunction('my_function');
 // プロトタイプを取得します
 $prototypes = $reflection->getPrototypes();
 
-// 返り値の型を取得します
-$prototype->getReturnType();
+// 各プロトタイプを処理します
+foreach ($prototypes as $prototype) {
 
-// パラメータを取得します
-$prototype->getParameters();
+    // 返り値の型を取得します
+    echo "返り値の型: ", $prototype->getReturnType(), "\n";
+    
+    // パラメータを取得します
+    $parameters = $prototype->getParameters();
 
-// パラメータの型を取得します
-$parameter->getType();
+    echo "パラメータ: \n";
+    foreach ($parameters as $parameter) {
+        // パラメータの型を取得します
+        echo "    ", $parameter->getType(), "\n";
+    }
+}
 
 // クラス、関数あるいはメソッドの名前空間を取得します。
 // 名前空間は、インスタンス作成時 (二番目の引数) あるいは
