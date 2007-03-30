@@ -1,15 +1,14 @@
 <sect1 id="zend.feed.modifying-feed">
-    <title>Modifying Feed and Entry structures</title>
+    <title>修改Feed和条目结构</title>
 
     <para>
-        <code>Zend_Feed</code>'s natural syntax extends to constructing and modifying feeds and entries as well
-        as reading them. You can easily turn your new or modified objects back into well-formed XML for saving
-        to a file or sending to a server.
+        <code>Zend_Feed</code>自然的语法既能扩展用于构建和修改Feed以及条目又能非常容易的读取它们。你能容易的把你的新的或者修改过的对象转化成一个结构完整的XML格式保存到文件或者发送到服务器。
     </para>
 
-    <example id="zend.feed.modifying-feed.example.modifying">
-        <title>Modifying an Existing Feed Entry</title>
-        <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>修改一个已存在的条目</title>
+        <programlisting role="php"><![CDATA[
+<?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
@@ -21,35 +20,29 @@ echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
-            This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
-            new entry, including any necessary XML namespaces.
+            这段代码将输出一个新条目完整(包括<code>&lt;?xml ... &gt;</code> 声明)的包含所有必要命名空间的XML格式。
         </para>
         <para>
-            Note that the above will work even if the existing entry does not already have an author tag. You can
-            use as many levels of <code>-&gt;</code> access as you like before getting to an assignment; all of the
-            intervening levels will be created for you automatically if necessary.
+            注意上面的代码即使条目中不存在一个author标记也能工作。在开始赋值之前你就能用多层的<code>-&gt;</code>访问你想要访问的内容了，如果必要程序将自动为你创建所有中间节点。
         </para>
     </example>
 
     <para>
-        If you want to use a namespace other than <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>
-        in your entry, you need to register the namespace with <code>Zend_Feed</code> using <code>
-        Zend_Feed::registerNamespace()</code>. When you are modifying an existing element, it will always
-        maintain its original namespace. When adding a new element, it will go into the default namespace if
-        you do not explicitly specify another namespace.
+        如果你想在你的条目中用一个与<code>atom:</code>, <code>rss:</code>, 或 <code>osrss:</code>不同的命名空间，你必须用<code>Zend_Feed</code>类的<code>Zend_Feed::registerNamespace()</code>方法注册你的命名空间。当你修改一个已存在的元素时，它将维持最初的命名空间。当添加一个新元素时，如果你不特别地指定别的命名空间则程序将使用默认的命名空间。
     </para>
 
-    <example id="zend.feed.modifying-feed.example.creating">
-        <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
-        <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>用自定义的命名空间创建一个Atom条目元素</title>
+        <programlisting role="php"><![CDATA[
+<?php
 
 $entry = new Zend_Feed_EntryAtom();
-// id is always assigned by the server in Atom
+// Atom的id总是由服务器分配
 $entry->title = 'my custom entry';
 $entry->author->name = 'Example Author';
 $entry->author->email = 'me@example.com';
 
-// Now do the custom part.
+// 完成自定义部分
 Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
 
 $entry->{'myns:myelement_one'} = 'my first custom value';

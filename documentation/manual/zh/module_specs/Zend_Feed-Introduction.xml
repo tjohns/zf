@@ -1,49 +1,45 @@
+/**
+ * @todo Be aware未翻译
+ */
 <sect1 id="zend.feed.introduction">
-    <title>Introduction</title>
+    <title>介绍</title>
     <para>
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
-        natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
-        same natural syntax, and turning the result back into XML. In the future, this modification support
-        could provide support for the Atom Publishing Protocol.
+        <code>Zend_Feed</code>提供了处理的 RSS 和 Atom Feed的功能。它提供了一套自然的方法用于
+        访问Feed元素、属性、和条目属性。 除此之外<code>Zend_Feed</code>还扩展提供了同样简单的方法
+        用于修改feed和条目的结构，并将结果转化成XML格式。不久的将来这些扩展可能会被 Atom Publishig Protocol(AtomPP)所支持。
     </para>
 
     <para>
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_EntryAbstract</code> base classes for
-        representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
-        a behind-the-scenes helper for making the natural syntax magic work.
+    	<code>Zend_Feed</code>由一个<code>Zend_Feed</code>基类、一个<code>Zend_Feed_Abstract</code>抽象类以及一个用于表示Feed和条目的<code>Zend_Feed_EntryAbstract</code>基类组成。这些类封装了 RSS 和 Atom 的feed和条目特性的，提供了一套自然的方法使他们用起来变得异常简单。
     </para>
 
     <para>
-        In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
-        portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
-        to a database, etc.
+    	在下面的例子中，我们示范了一个获得一个RSS feed并将其中的一般部分相关数据保存到一个PHP数组中的简单实例，这样这些数据就能方便的用于输出、保存到数据库等等。
     </para>
 
     <note>
         <title>Be aware</title>
         <para>
-            Many RSS feeds have different channel and item properties available. The RSS specification provides for
-            many optional properties, so be aware of this when writing code to work with RSS data.
+        许多RSS中的channel和item属性是不同的。RSS的规范中提供了许多可选的属性，因此在编写RSS相关应用代码时要充分考虑这点。
         </para>
     </note>
-
-    <example id="zend.feed.introduction.example.rss">
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
-        <programlisting role="php"><![CDATA[<?php
+    
+    <example>
+        <title>用Zend_Feed来处理RSS Feed数据</title>
+        <programlisting role="php"><![CDATA[
+<?php
 require_once 'Zend/Feed.php';
 
-// Fetch the latest Slashdot headlines
+// 取得最新的 Slashdot 头条新闻
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
-    // feed import failed
+    // feed 导入失败
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
-// Initialize the channel data array
+// 初始化保存 channel 数据的数组
 $channel = array(
     'title'       => $slashdotRss->title(),
     'link'        => $slashdotRss->link(),
@@ -51,7 +47,7 @@ $channel = array(
     'items'       => array()
     );
 
-// Loop over each channel item and store relevant data
+// 循环获得channel的item并存储到相关数组中
 foreach ($slashdotRss as $item) {
     $channel['items'][] = array(
         'title'       => $item->title(),

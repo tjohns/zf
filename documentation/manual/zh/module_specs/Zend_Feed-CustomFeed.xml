@@ -1,24 +1,22 @@
 <sect1 id="zend.feed.custom-feed">
-    <title>Custom Feed and Entry Classes</title>
+    <title>自定义Feed和条目类</title>
 
     <para>
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
-        niceties like automatic handling of elements that should go into a custom namespace.
+        最后，如果你想提供一个你自己的格式或者想更自动化的定义一个命名空间那么你可以扩展继承<code>Zend_Feed</code>类。
     </para>
 
     <para>
-        Here is an example of a custom Atom entry class that handles its own <code>myns:</code> namespace
-        entries. Note that it also makes the <code>registerNamespace()</code> call for you, so the end user
-        doesn't need to worry about namespaces at all.
+        下面是一个用自定义Atom条目类处理<code>myns:</code>命名空间的例子。注意构造函数中已经为你调用了<code>registerNamespace()</code>，所以最终用户就可以完全不必当心命名空间了。
     </para>
 
-    <example id="zend.feed.custom-feed.example.extending">
-        <title>Extending the Atom Entry Class with Custom Namespaces</title>
-        <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>用自定义的命名空间继承Atom条目类</title>
+        <programlisting role="php"><![CDATA[
+<?php
 
 /**
- * The custom entry class automatically knows the feed URI (optional) and
- * can automatically add extra namespaces.
+ * 自定义的条目类自动地识别feed URI(可选)
+ * 并能自动添加额外的命名空间
  */
 class MyEntry extends Zend_Feed_EntryAtom
 {
@@ -60,10 +58,10 @@ class MyEntry extends Zend_Feed_EntryAtom
 
 ?>]]>   </programlisting>
         <para>
-            Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
-            property:
+            接下来你就可以直接实例化和设置<code>myUpdated</code>属性来使用这个类：
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
+<?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
