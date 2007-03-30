@@ -35,7 +35,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Reference to Flickr service consumer object
@@ -45,18 +45,11 @@ class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
     protected $_flickr;
 
     /**
-     * Path to test data files
+     * Flickr API key
      *
      * @var string
      */
-    protected $_filesPath;
-
-    /**
-     * HTTP client adapter for testing
-     *
-     * @var Zend_Http_Client_Adapter_Test
-     */
-    protected $_httpClientAdapterTest;
+    protected $_apiKey = 'd6f50aed387bee5dc5bae945a49e7436';
 
     /**
      * Socket based HTTP client adapter
@@ -64,13 +57,6 @@ class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
      * @var Zend_Http_Client_Adapter_Socket
      */
     protected $_httpClientAdapterSocket;
-
-    /**
-     * Flickr API key
-     *
-     * @var string
-     */
-    protected $_apiKey = 'd6f50aed387bee5dc5bae945a49e7436';
 
     /**
      * Sets up this test case
@@ -85,44 +71,31 @@ class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
         require_once 'Zend/Service/Flickr.php';
         $this->_flickr = new Zend_Service_Flickr($this->_apiKey);
 
-        $this->_filesPath = dirname(__FILE__) . '/_files';
-
         /**
          * @see Zend_Http_Client_Adapter_Socket
          */
         require_once 'Zend/Http/Client/Adapter/Socket.php';
         $this->_httpClientAdapterSocket = new Zend_Http_Client_Adapter_Socket();
 
-        /**
-         * @see Zend_Http_Client_Adapter_Test
-         */
-        require_once 'Zend/Http/Client/Adapter/Test.php';
-        $this->_httpClientAdapterTest = new Zend_Http_Client_Adapter_Test();
+        $this->_flickr->getRestClient()
+                      ->getHttpClient()
+                      ->setAdapter($this->_httpClientAdapterSocket);
     }
 
     /**
-     * Basic testing to ensure that tagSearch() works as expected
+     * Basic testing to ensure that userSearch() works as expected
      *
      * @return void
      */
-    public function testTagSearchBasic()
+    public function testUserSearchBasic()
     {
-        $this->_flickr->getRestClient()
-                      ->getHttpClient()
-                      ->setAdapter($this->_httpClientAdapterTest);
+        $options = array('per_page' => 10,
+                         'page'     => 1,
+                         'extras'   => 'license, date_upload, date_taken, owner_name, icon_server');
 
-        $this->_httpClientAdapterTest->setResponse($this->_loadResponse(__FUNCTION__));
+        $resultSet = $this->_flickr->userSearch('darby.felton@yahoo.com', $options);
 
-        $options = array(
-            'per_page' => 10,
-            'page'     => 1,
-            'tag_mode' => 'or',
-            'extras'   => 'license, date_upload, date_taken, owner_name, icon_server'
-            );
-
-        $resultSet = $this->_flickr->tagSearch('php', $options);
-
-        $this->assertEquals(4285, $resultSet->totalResultsAvailable);
+        $this->assertEquals(16, $resultSet->totalResultsAvailable);
         $this->assertEquals(10, $resultSet->totalResults());
         $this->assertEquals(10, $resultSet->totalResultsReturned);
         $this->assertEquals(1, $resultSet->firstResultPosition);
@@ -131,6 +104,7 @@ class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
 
         try {
             $resultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
         } catch (OutOfBoundsException $e) {
             $this->assertContains('Illegal index', $e->getMessage());
         }
@@ -139,58 +113,35 @@ class Zend_Service_Flickr_FlickrTest extends PHPUnit_Framework_TestCase
 
         try {
             $resultSet->seek(10);
+            $this->fail('Expected OutOfBoundsException not thrown');
         } catch (OutOfBoundsException $e) {
             $this->assertContains('Illegal index', $e->getMessage());
         }
 
         $resultSet->rewind();
 
-        $resultSetIds = array(
-            '428222530',
-            '427883929',
-            '427884403',
-            '427887192',
-            '427883923',
-            '427884394',
-            '427883930',
-            '427884398',
-            '427883924',
-            '427884401'
-            );
-
-        $this->assertTrue($resultSet->valid());
-
-        foreach ($resultSetIds as $resultSetId) {
-            $this->_httpClientAdapterTest->setResponse($this->_loadResponse(__FUNCTION__ . "-result_$resultSetId"));
-            $result = $resultSet->current();
+        foreach ($resultSet as $result) {
             $this->assertTrue($result instanceof Zend_Service_Flickr_Result);
-            $resultSet->next();
         }
-
-        $this->assertFalse($resultSet->valid());
     }
 
     /**
-     * Utility method that saves an HTTP response to a file
+     * Basic testing to ensure that getIdByUsername() works as expected
      *
-     * @param  string $name
      * @return void
      */
-    protected function _saveResponse($name)
+    public function testGetIdByUsernameBasic()
     {
-        file_put_contents("$this->_filesPath/$name.response",
-                          $this->_flickr->getRestClient()->getHttpClient()->getLastResponse()->asString());
-    }
-
-    /**
-     * Utility method for returning a string HTTP response, which is loaded from a file
-     *
-     * @param  string $name
-     * @return string
-     */
-    protected function _loadResponse($name)
-    {
-        return file_get_contents("$this->_filesPath/$name.response");
+        $userId = $this->_flickr->getIdByUsername('darby.felton');
+        $this->assertEquals('7414329@N07', $userId);
     }
 }
 
+
+class Zend_Service_Flickr_OnlineTest_Skip extends Zend_Service_Flickr_OnlineTest
+{
+    public function setUp()
+    {
+        $this->markTestSkipped('Zend_Service_Flickr online tests not enabled in TestConfiguration.php');
+    }
+}

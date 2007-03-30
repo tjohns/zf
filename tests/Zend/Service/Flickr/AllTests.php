@@ -40,9 +40,15 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
 /**
- * @see Zend_Service_Flickr_FlickrTest
+ * @see Zend_Service_Flickr_OfflineTest
  */
-require_once 'Zend/Service/Flickr/FlickrTest.php';
+require_once 'Zend/Service/Flickr/OfflineTest.php';
+
+
+/**
+ * @see Zend_Service_Flickr_OnlineTest
+ */
+require_once 'Zend/Service/Flickr/OnlineTest.php';
 
 
 /**
@@ -73,7 +79,13 @@ class Zend_Service_Flickr_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Flickr');
 
-        $suite->addTestSuite('Zend_Service_Flickr_FlickrTest');
+        $suite->addTestSuite('Zend_Service_Flickr_OfflineTest');
+        if (defined('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED') !== false) {
+            $suite->addTestSuite('Zend_Service_Flickr_OnlineTest');
+        } else {
+            $suite->addTestSuite('Zend_Service_Flickr_OnlineTest_Skip');
+        }
 
         return $suite;
     }

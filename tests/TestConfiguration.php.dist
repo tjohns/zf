@@ -256,6 +256,11 @@ define('TESTS_ZEND_MAIL_SMTP_AUTH', false);
 define('TESTS_ZEND_SERVICE_DELICIOUS_ENABLED', false);
 
 /**
+ * Zend_Service_Flickr online tests
+ */
+define('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED', false);
+
+/**
  * Zend_Service_Simpy tests
  */
 define('TESTS_ZEND_SERVICE_SIMPY_ENABLED', false);
