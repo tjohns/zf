@@ -132,9 +132,9 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
-$acl->allow('member', someResource');
+$acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
                 Z tego względu, że nie ma zdefiniowanych reguł konkretnie dla 
                 roli "<code>someUser</code>" oraz dla zasobu "<code>someResource</code>",
@@ -191,10 +191,9 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Zend_Acl domyślnie jest implementacją "whitelist", co oznacza, że
-                o ile programista nie określił tego inaczej, Zend_Acl 
-                zabrania dostępu każdej z ról do do wszystkich przywilejów dla 
-                wszystkich zasobów.
+                Dopóki programista nie określi reguły "allow", Zend_Acl zabroni
+                dostępu wszystkim rolom do wszystkich przywilejów dla wszystkich
+                zasobów.
             </para>
         </note>
     </sect2>

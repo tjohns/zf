@@ -456,6 +456,20 @@ print $date;
                             </para>
                         </entry>
                     </row>
+                    <row>
+                        <entry>isDate()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isDate($date, $format = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This method checks if a given date is a real date and returns true if all checks are ok.
+                                It works like php's checkdate() function but can also check for localized month names and 
+                                for dates extending the range of checkdate()
+                                false
+                            </para>
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>

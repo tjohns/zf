@@ -56,7 +56,10 @@
                         przerobienia danych, taką jak na przykład 
                         <code>'MD5(?)'</code> czy <code>'PASSWORD(?)'</code>, 
                         programista może użyć konkretnej funkcji SQL na danych 
-                        uwierzytelniających.
+                        uwierzytelniających. Z tego względu, że te funkcje są
+                        specyficzne dla konkretnych systemów baz danych, zajrzyj
+                        do odpowiednich dokumentacji aby sprawdzić dostępność 
+                        takich funkcji dla twojego systemu bazy danych.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -176,6 +179,44 @@ Array
             </para>
 
         </example>
+
+    </sect2>
+    
+    <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
+
+        <title>Zaawansowane użycie: Stałe przechowywanie obiektu DbTable Result</title>
+
+        <para>
+            Domyślnie <code>Zend_Auth_Adapter_DbTable</code> po udanym 
+            uwierzytelnieniu zwraca do obiektu uwierzytelniającego spowrotem
+            tę samą tożsamość. W innym przykładzie użycia programista może 
+            chcieć przechować w stałym mechanizmie przechowywania 
+            <code>Zend_Auth</code> obiekt tożsamości zawierający inne użyteczne 
+            informacje. W takim przypadku może użyć metody 
+            <code>getResultRowObject()</code> aby zwrócić obiekt klasy 
+            <code>stdClass</code>. Poniższy kod ilustruje sposób jego użycia:
+
+            <programlisting role="php"><![CDATA[<?php
+// uwierzytelniamy za pomocą Zend_Auth_Adapter_DbTable
+$result = $this->_auth->authenticate($adapter);
+
+if ($result->isValid()) {
+
+    // przechowujemy tożsamość jako obiekt, w którym zwracane są jedynie pola username oraz real_name
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+
+    // przechowujemy tożsamość jako obiekt w którym kolumna z hasłem została pominięta
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+
+    /* ... */
+
+} else {
+
+    /* ... */
+
+}]]></programlisting>
+
+        </para>
 
     </sect2>
 
