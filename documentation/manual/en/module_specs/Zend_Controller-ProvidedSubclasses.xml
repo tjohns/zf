@@ -492,23 +492,30 @@ $router->addRoute('login', $loginRoute);
                 in and pass it to the RewriteRouter:
             </para>
 
+            <para>
+                As an example, consider the following INI file:
+            </para>
+
             <programlisting role="php"><![CDATA[
-/**
- * Example INI located at /path/to/config.ini:
- *
- * [production]
- *
- * routes.archive.route = "archive/:year/*"
- * routes.archive.defaults.controller = archive
- * routes.archive.defaults.action = show
- * routes.archive.defaults.year = 2000
- * routes.archive.reqs.year = "\d+"
- *
- * routes.news.type = "Zend_Controller_Router_Route_Static"
- * routes.news.route = "news"
- * routes.news.defaults.controller = "news"
- * routes.news.defaults.action = "list"
- */
+[production]
+routes.archive.route = "archive/:year/*"
+routes.archive.defaults.controller = archive
+routes.archive.defaults.action = show
+routes.archive.defaults.year = 2000
+routes.archive.reqs.year = "\d+"
+
+routes.news.type = "Zend_Controller_Router_Route_Static"
+routes.news.route = "news"
+routes.news.defaults.controller = "news"
+routes.news.defaults.action = "list"
+]]></programlisting>
+
+            <para>
+                The above INI file can then be read into a
+                <code>Zend_Config</code> object as follows:
+            </para>
+
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');
