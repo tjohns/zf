@@ -28,6 +28,6 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
     {
         $index = Zend_Search_Lucene::create(dirname(__FILE__) . '/_files');
 
-        $this->assertTrue($index instanceof Zend_Search_Lucene);
+        $this->assertTrue($index instanceof Zend_Search_Lucene_Interface);
     }
 }

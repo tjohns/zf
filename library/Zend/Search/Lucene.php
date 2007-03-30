@@ -62,13 +62,20 @@ require_once 'Zend/Search/Lucene/Search/Similarity.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
 
 
+/** Zend_Search_Lucene_Interface */
+require_once 'Zend/Search/Lucene/Interface.php';
+
+/** Zend_Search_Lucene_Proxy */
+require_once 'Zend/Search/Lucene/Proxy.php';
+
+
 /**
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene
+class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 {
     /**
      * Default field name for search
@@ -129,6 +136,12 @@ class Zend_Search_Lucene
      */
     private $_lock;
 
+    /**
+     * Signal, that index is already closed, changes are fixed and resources are cleaned up
+     *
+     * @var boolean
+     */
+    private $_closed = false;
 
     /**
      * Create index
@@ -138,7 +151,7 @@ class Zend_Search_Lucene
      */
     public static function create($directory)
     {
-        return new Zend_Search_Lucene($directory, true);
+        return new Zend_Search_Lucene_Proxy(new Zend_Search_Lucene($directory, true));
     }
 
     /**
@@ -234,11 +247,12 @@ class Zend_Search_Lucene
         }
     }
 
-
     /**
-     * Object destructor
+     * Close current index and free resources
+     *
+     * @internal
      */
-    public function __destruct()
+    public function close()
     {
         $this->commit();
 
@@ -248,11 +262,26 @@ class Zend_Search_Lucene
         if ($this->_closeDirOnExit) {
             $this->_directory->close();
         }
+
+        $this->_directory    = null;
+        $this->_writer       = null;
+        $this->_segmentInfos = null;
+    }
+
+    /**
+     * Object destructor
+     */
+    public function __destruct()
+    {
+        if (!$this->_closed) {
+            $this->close();
+        }
     }
 
     /**
      * Returns an instance of Zend_Search_Lucene_Index_Writer for the index
      *
+     * @internal
      * @return Zend_Search_Lucene_Index_Writer
      */
     public function getIndexWriter()
@@ -317,9 +346,9 @@ class Zend_Search_Lucene
     /**
      * Checks, that document is deleted
      *
-     * @param integer
+     * @param integer $id
      * @return boolean
-     * @throws Zend_Search_Lucene_Exception
+     * @throws Zend_Search_Lucene_Exception    Exception is thrown if $id is out of the range
      */
     public function isDeleted($id)
     {
@@ -714,7 +743,7 @@ class Zend_Search_Lucene
     }
 
     /**
-     * Returns an array of all the documents which contain term.
+     * Returns IDs of all the documents containing term.
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @return array
@@ -849,7 +878,7 @@ class Zend_Search_Lucene
      * @param string $fieldName
      * @return float
      */
-    public function norm( $id, $fieldName )
+    public function norm($id, $fieldName)
     {
         if ($id >= $this->_docCount) {
             return null;
