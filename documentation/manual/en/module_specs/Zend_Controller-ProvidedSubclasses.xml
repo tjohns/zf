@@ -477,7 +477,7 @@ $router->removeDefaultRoutes();]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 $loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
-$router->addRoute('login', $static);
+$router->addRoute('login', $loginRoute);
 ]]></programlisting>
         </sect3>
 
