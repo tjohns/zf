@@ -120,9 +120,13 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
 
         $resultSet->rewind();
 
+        $count = 0;
         foreach ($resultSet as $result) {
             $this->assertTrue($result instanceof Zend_Service_Flickr_Result);
+            $count++;
         }
+
+        $this->assertEquals(10, $count);
     }
 
     /**
@@ -134,6 +138,37 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
     {
         $userId = $this->_flickr->getIdByUsername('darby.felton');
         $this->assertEquals('7414329@N07', $userId);
+    }
+
+    /**
+     * Ensures that tagSearch() works as expected with the sort option
+     *
+     * @return void
+     */
+    public function testTagSearchOptionSort()
+    {
+        $options = array(
+            'per_page' => 10,
+            'page'     => 1,
+            'tag_mode' => 'or',
+            'sort'     => 'date-taken-asc',
+            'extras'   => 'license, date_upload, date_taken, owner_name, icon_server'
+            );
+
+        $resultSet = $this->_flickr->tagSearch('php', $options);
+
+        $this->assertTrue(10 < $resultSet->totalResultsAvailable);
+        $this->assertEquals(10, $resultSet->totalResults());
+        $this->assertEquals(10, $resultSet->totalResultsReturned);
+        $this->assertEquals(1, $resultSet->firstResultPosition);
+
+        foreach ($resultSet as $result) {
+            $this->assertTrue($result instanceof Zend_Service_Flickr_Result);
+            if (isset($dateTakenPrevious)) {
+                $this->assertTrue(strcmp($result->datetaken, $dateTakenPrevious) > 0);
+            }
+            $dateTakenPrevious = $result->datetaken;
+        }
     }
 }
 

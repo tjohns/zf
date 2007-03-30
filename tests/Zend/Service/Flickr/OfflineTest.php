@@ -344,6 +344,21 @@ class Zend_Service_Flickr_OfflineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that tagSearch() throws an exception when an option is invalid
+     *
+     * @return void
+     */
+    public function testTagSearchExceptionOptionInvalid()
+    {
+        try {
+            $this->_flickr->tagSearch('irrelevant', array('unexpected' => null));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('parameters are invalid', $e->getMessage());
+        }
+    }
+
+    /**
      * Utility method that saves an HTTP response to a file
      *
      * @param  string $name

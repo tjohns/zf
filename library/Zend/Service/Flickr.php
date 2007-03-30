@@ -103,7 +103,9 @@ class Zend_Service_Flickr
         $this->_validateTagSearch($options);
 
         // now search for photos
-        $response = $this->getRestClient()->restGet('/services/rest/', $options);
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
             /**
@@ -165,7 +167,9 @@ class Zend_Service_Flickr
         $this->_validateUserSearch($options);
 
         // now search for photos
-        $response = $this->getRestClient()->restGet('/services/rest/', $options);
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
             /**
@@ -212,7 +216,9 @@ class Zend_Service_Flickr
             throw new Zend_Service_Exception('You must supply a username');
         }
 
-        $response = $this->getRestClient()->restGet('/services/rest/', $options);
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
             /**
@@ -254,7 +260,9 @@ class Zend_Service_Flickr
 
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'find_email' => (string) $email);
 
-        $response = $this->getRestClient()->restGet('/services/rest/', $options);
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
             /**
@@ -294,7 +302,10 @@ class Zend_Service_Flickr
 
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'photo_id' => $id);
 
-        $response = $this->getRestClient()->restGet('/services/rest/', $options);
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
+
         $dom = new DOMDocument();
         $dom->loadXML($response->getBody());
         $xpath = new DOMXPath($dom);
@@ -395,8 +406,10 @@ class Zend_Service_Flickr
      */
     protected function _validateTagSearch(array $options)
     {
-        $validOptions = array('api_key', 'method', 'user_id', 'per_page', 'page', 'extras', 'min_upload_date',
-                              'min_taken_date', 'max_upload_date', 'max_taken_date', 'tag_mode', 'tags');
+        $validOptions = array('method', 'api_key', 'user_id', 'tags', 'tag_mode', 'text', 'min_upload_date',
+                              'max_upload_date', 'min_taken_date', 'max_taken_date', 'license', 'sort',
+                              'privacy_filter', 'bbox', 'accuracy', 'machine_tags', 'machine_tag_mode', 'group_id',
+                              'extras', 'per_page', 'page');
 
         $this->_compareOptions($options, $validOptions);
 
