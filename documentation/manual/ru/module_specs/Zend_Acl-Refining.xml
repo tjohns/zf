@@ -1,141 +1,167 @@
 <sect1 id="zend.acl.refining">
 
-    <title>Refining Access Controls</title>
+    <title>Усовершенствования Управления Доступом</title>
 
     <sect2 id="zend.acl.refining.precise">
 
-        <title>Precise Access Controls</title>
+        <title>Тщательное Управление Доступом</title>
 
         <para>
+	Базовый, ACL как было описано в <link linkend="zend.acl.introduction">предыдущем разделе</link>, как
+	различные привелегии могут быть разрешены внутри ACL (ко всем ресурсам). Тем не менее, на практике,
+	контроли доступа, как правило, имеют исключения и разную степерь сложности. Zend_Acl позволяет вам
+	использовать эти усовершенствования простым и гибким способом.
+<!-- 	
         The basic ACL as defined in the <link linkend="zend.acl.introduction">previous section</link> shows
         how various privileges may be allowed upon the entire ACL (all Resources). In practice, however, access
         controls tend to have exceptions and varying degrees of complexity. Zend_Acl allows to you accomplish
         these refinements in a straightforward and flexible manner.
-        </para>
+ -->        
+ 	</para>
 
         <para>
+	Для CMS из примера было определено, что пока группа 'пользователь' удовлетворяет нуждам большинства пользователей,
+	но возникла необходимость в новой группе 'маркетинг',  которая имеет доступ к подписке и последним новостям в CMS.
+	Ясно, что группа самодостаточна и будет иметь возможность публиковать и удалять как подписки, так и последние новости.
+<!-- 	
         For the example CMS, it has been determined that whilst the 'staff' group covers the needs of the
         vast majority of users, there is a need for a new 'marketing' group that requires access to the
         newsletter and latest news in the CMS. The group is fairly self-sufficient and will have the ability
         to publish and archive both newsletters and the latest news.
-        </para>
+ -->        
+ 	</para>
 
         <para>
-        In addition, it has also been requested that the 'staff' group be allowed to view news stories but
+	В дополнение, необходимо чтобы группе 'пользователь' было позволено просматривать новости, но
+	запрещено редактировать их. И наконец, должно быть запрещено всем (в том числе и администраторам)
+	удалять любые 'объявления' если их время существования составляет только 1-2 дня.
+<!--         In addition, it has also been requested that the 'staff' group be allowed to view news stories but
         not to revise the latest news. Finally, it should be impossible for anyone (administrators included)
         to archive any 'announcement' news stories since they only have a lifespan of 1-2 days.
-        </para>
+ -->        </para>
 
         <para>
-        First we revise the Role registry to reflect these changes. We have determined that the 'marketing'
+	В первую очередь мы внесем изменение в регистр Роли для отражения этих именений. Мы определили,
+	что группа 'маркетинг' имеет те же базовые права, что и 'пользователь', поэтому мы определим 'маркетинг'
+	таким образом, чтобы она наследовала права группы 'пользователь':
+        <!-- First we revise the Role registry to reflect these changes. We have determined that the 'marketing'
         group has the same basic permissions as 'staff', so we define 'marketing' in such a way that it
         inherits permissions from 'staff':
-        </para>
+         --></para>
 
         <programlisting role="php"><![CDATA[<?php
-// The new marketing group inherits permissions from staff
+// Новая группа 'маркетинг' наследует права от группы 'пользователь'
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
         <para>
-        Next, note that the above access controls refer to specific Resources (e.g., "newsletter", "latest news", "announcement news"). Now we add these Resources:
+	Далее, заметьте, что указанные выше права доступа имеют отношение к особым Ресурсам (например, "подписка", "последние новости").
+	Теперь мы добавим эти Ресурсы:
+        <!-- Next, note that the above access controls refer to specific Resources (e.g., "newsletter", "latest news", "announcement news"). Now we add these Resources: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Create Resources for the rules
+// Создаем Ресурсы для этих ролей
 require_once 'Zend/Acl/Resource.php';
-$acl->add(new Zend_Acl_Resource('newsletter'));           // newsletter
-$acl->add(new Zend_Acl_Resource('news'));                 // news
-$acl->add(new Zend_Acl_Resource('latest'), 'news');       // latest news
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]></programlisting>
+$acl->add(new Zend_Acl_Resource('newsletter'));           // подписка
+$acl->add(new Zend_Acl_Resource('news'));                 // новости
+$acl->add(new Zend_Acl_Resource('latest'), 'news');       // последние новости
+$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // объявления]]></programlisting>
 
         <para>
-        Then it is simply a matter of defining these more specific rules on the target areas of the ACL:
+	Тогда это просто повод для определения этих более точных правил для целевых зон ACL.
+        <!-- Then it is simply a matter of defining these more specific rules on the target areas of the ACL: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Marketing must be able to publish and archive newsletters and the latest news
+// Маркетинг должен иметь возможность публиковать и удалять подписку и последние новости	
 $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
 
-// Staff (and marketing, by inheritance), are denied permission to revise the latest news
+// Пользователю (и маркетингу, через наследование), запрещено редактировать последние новости
 $acl->deny('staff', 'latest', 'revise');
 
-// Everyone (including administrators) are denied permission to archive news announcements
+// Каждому (включая администраторов) запрещено удалять объявления
 $acl->deny(null, 'announcement', 'archive');]]></programlisting>
 
         <para>
-        We can now query the ACL with respect to the latest changes:
+	Теперь мы можем делать запрос ACL с учетом последних изменений:
+        <!-- We can now query the ACL with respect to the latest changes: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // denied (запрещен)
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
 echo $acl->isAllowed('staff', 'latest', 'publish') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // denied (запрещен)
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // denied (запрещен)
 
 echo $acl->isAllowed('editor', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // denied (запрещен)
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied (запрещен)]]></programlisting>
 
     </sect2>
 
     <sect2 id="zend.acl.refining.removing">
 
-        <title>Removing Access Controls</title>
+        <title>Удаление Контроля Доступа</title>
 
         <para>
-        To remove one or more access rules from the ACL, simply use the available <code>removeAllow()</code>
+	Для того чтобы удалить один или несколько правил из ACL, просто используйте методы <code>removeAllow()</code>
+	или <code>removeDeny()</code>. Как и с <code>allow()</code> и <code>deny()</code>, вы можете передавать
+	<code>null</code> как параметр, чтобы применить метод ко всем Правилам, Ресурсам, и/или привилегиям:
+        <!-- To remove one or more access rules from the ACL, simply use the available <code>removeAllow()</code>
         or <code>removeDeny()</code> methods. As with <code>allow()</code> and <code>deny()</code>, you may
-        provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges:
+        provide a <code>null</code> value to indicate application to all Roles, Resources, and/or privileges: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Remove the denial of revising latest news to staff (and marketing, by inheritance)
+// Удаляем запрет на редактирование последних новостей для 'пользователя' (и маркетинга, через наследование)
 $acl->removeDeny('staff', 'latest', 'revise');
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
-// Remove the allowance of publishing and archiving newsletters to marketing
+// Удаляем разрешение на публикацию и удаление подписки для маркетинга
 $acl->removeAllow('marketing', 'newsletter', array('publish', 'archive'));
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied"; // denied (запрещен)
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied (запрещен)]]></programlisting>
 
         <para>
-        Privileges may be modified incrementally as indicated above, but a <code>null</code> value for the
-        privileges overrides such incremental changes:
+	Привилегии могут модифицироваться в порядке возрастания, как показано выше, но параметр <code>null</code>
+	для привилегий перекрывает такой порядок изменений:
+<!--         Privileges may be modified incrementally as indicated above, but a <code>null</code> value for the
+        privileges overrides such incremental changes: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Allow marketing all permissions upon the latest news
+// Разрешить маркетингу все для действий над последними новостями
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied"; // allowed (разрешен)
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed]]></programlisting>
+     "allowed" : "denied"; // allowed (разрешен)]]></programlisting>
 
     </sect2>
 
