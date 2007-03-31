@@ -173,14 +173,14 @@ echo($data);
                 Un exemple est donnée dans le manuel, tout au début. Le voici avec des changements mineurs:
                  <programlisting role="php"><![CDATA[<?php
 // s'il y a un cache manquant, la bufferisation de sortie est lancée
-if(!$cache->start('mypage')):
+if (!$cache->start('mypage')) {
 
-// affiche tout comme d'habitude
-echo 'Hello world! ';
-echo 'This is cached ('.time().') ';
+    // affiche tout comme d'habitude
+    echo 'Hello world! ';
+    echo 'This is cached ('.time().') ';
 
-$cache->end(); // output buffering ends
-endif;
+    $cache->end(); // affiche ce qu'il y a dans le buffer
+}
 
 echo 'This is never cached ('.time().').';
 ?>]]>       </programlisting>
