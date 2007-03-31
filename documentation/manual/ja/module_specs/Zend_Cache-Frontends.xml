@@ -204,14 +204,15 @@ echo($data);
             <programlisting role="php"><![CDATA[<?php
 
 // キャッシュが見つからなかった場合に、出力バッファリングが起動します
-if(!$cache->start('mypage')):
+if (!($cache->start('mypage'))) {
 
-// すべてをいつもどおりに出力します
-echo 'Hello world! ';
-echo 'これはキャッシュされます ('.time().') ';
+    // すべてをいつもどおりに出力しますoutput everything as usual
+    echo 'Hello world! ';
+    echo 'これはキャッシュされます ('.time().') ';
 
-$cache->end(); // 出力バッファリングを終了します
-endif;
+    $cache->end(); // 出力バッファリングを終了します
+
+}
 
 echo 'これはキャッシュされません ('.time().')';
 
