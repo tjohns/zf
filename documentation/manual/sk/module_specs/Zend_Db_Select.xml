@@ -462,10 +462,14 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id'
+        'p.product_id = l.product_id',
         array() ); // empty list of columns
 
 ?>]]></programlisting>
+                <para>
+                    Note the empty <code>array()</code> in the above example
+                    in place of a list of columns from the joined table.
+                </para>
             </example>
 
             <para>

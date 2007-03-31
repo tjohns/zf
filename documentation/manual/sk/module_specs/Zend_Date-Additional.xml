@@ -1,0 +1,138 @@
+<sect1 id="zend.date.additional">
+
+    <title>Sunrise and Sunset</title>
+
+    <para>
+        <code>Zend_Date</code> has also functions integrated for getting informations from the sun. Often it is 
+        necessary to get the time for sunrise or sunset within a particulary day. This is quite easy with 
+        <code>Zend_Date</code> as just the expected day has to be given and additionally location for which 
+        the sunrise or sunset has to be calculated.
+    </para>
+
+    <para>
+        As most people do not know the location of their city we have also spent a helper class which provides
+        the location data for about 250 capital and other big cities around the whole world. Most people could
+        use cities near themself as the difference for locations situated to each other can only be measured within 
+        some seconds.
+    </para>
+
+    <para>
+        For creating a listbox and choosing a special city the function <code>Zend_Date_Cities::getCityList</code>
+        can be used. It returns the names of all avaiable predefined cities for the helper class.
+    </para>
+
+    <example>
+        <title>Getting all avaiable cities</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date/Cities.php';
+
+// Output the complete list of avaiable cities
+print_r (Zend_Date_Cities::getCityList());
+?>]]></programlisting>
+    </example>
+
+    <para>
+        The location itself can be received with the <code>Zend_Date_Cities::City()</code> function.
+        It accepts the name of the city as returned by the <code>Zend_Date_Cities::getCityList()</code>
+        function and optional as second parameter the horizon to set.
+    </para>
+
+    <para>
+        There are 4 defined horizons which can be used with locations to receive the exact time of sunset and
+        sunrise. The '<code>horizon</code>' parameter is always optional in all functions. If it is not set, the
+        '<code>effective</code>' horizon is used.
+    </para>
+
+    <table>
+        <title>Types of supported horizons for sunset and sunrise</title>
+        <tgroup cols="3">
+            <thead>
+                <row>
+                    <entry>Horizon</entry>
+                    <entry>Description</entry>
+                    <entry>Useage</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>effective</entry>
+                    <entry>Standard horizon</entry>
+                    <entry>Expects the world to be a ball. This horizon is always used if non is defined.</entry>
+                </row>
+                <row>
+                    <entry>civil</entry>
+                    <entry>Common horizon</entry>
+                    <entry>Often used in common medias like TV or radio</entry>
+                </row>
+                <row>
+                    <entry>nautic</entry>
+                    <entry>Nautic horizon</entry>
+                    <entry>Often used in sea navigation</entry>
+                </row>
+                <row>
+                    <entry>astronomic</entry>
+                    <entry>Astronomic horizon</entry>
+                    <entry>Often used for calculation with stars</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+
+    <para>
+        Of course also a self-defined location can be given and calculated with. Therefor a '<code>latitude</code>'
+        and a '<code>longitude</code>' has to be given and optional the '<code>horizon</code>'.
+    </para>
+
+    <example>
+        <title>Getting the location for a city</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date/Cities.php';
+
+// Get the location for a defined city
+// uses the effective horizon as no horizon is defined
+print_r (Zend_Date_Cities::City('Vienna'));
+
+// use the nautic horizon
+print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
+
+// self definition of a location
+$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
+?>]]></programlisting>
+    </example>
+
+    <para>
+        As now all needed data can be set the next is to create a <code>Zend_Date</code> object with the day where
+        sunset or sunrise should be calculated. For the calculation there are 3 functions avaiable. It is possible
+        to calculate sunset with '<code>getSunset()</code>', sunrise with '<code>getSunrise()</code>' and all avaiable
+        informations related to the sun with '<code>getSunInfo()</code>'. After the calculation the <code>Zend_Date</code>
+        object will be returned with the calculated time.
+    </para>
+
+    <example>
+        <title>Calculating sun informations</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date.php';
+require_once 'Zend/Date/Cities.php';
+
+// Get the location for a defined city
+$city = Zend_Date_Cities::City('Vienna');
+
+// create a date object for the day for which the sun has to be calculated
+$date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
+
+// calculate sunset
+$sunset = $date->getSunset($city);
+print $sunset->get(Zend_Date::ISO_8601);
+
+// calculate all sun informations
+$info = $date->getSunInfo($city);
+foreach ($info as $sun) {
+    print "\n" . $sun->get(Zend_Date::ISO_8601);
+}
+?>]]></programlisting>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

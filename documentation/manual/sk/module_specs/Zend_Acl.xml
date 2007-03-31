@@ -110,9 +110,9 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
-$acl->allow('member', someResource');
+$acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
                 Since there is no rule specifically defined for the "<code>someUser</code>" Role and
                 "<code>someResource</code>", Zend_Acl must search for rules that may be defined for Roles that
@@ -160,9 +160,8 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Zend_Acl is a "whitelist" implementation by default, which means that unless otherwise
-                specified by the developer, Zend_Acl denies access to every privilege upon every Resource by
-                every Role.
+                Until a developer specifies an "allow" rule, Zend_Acl denies access to every privilege upon every
+                Resource by every Role.
             </para>
         </note>
     </sect2>

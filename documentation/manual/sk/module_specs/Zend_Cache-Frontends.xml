@@ -194,14 +194,15 @@ echo($data);
             <programlisting role="php"><![CDATA[<?php
 
 // if it is a cache miss, output buffering is triggered
-if(!$cache->start('mypage')):
+if (!($cache->start('mypage'))) {
 
-// output everything as usual
-echo 'Hello world! ';
-echo 'This is cached ('.time().') ';
+    // output everything as usual
+    echo 'Hello world! ';
+    echo 'This is cached ('.time().') ';
 
-$cache->end(); // output buffering ends
-endif;
+    $cache->end(); // output buffering ends
+
+}
 
 echo 'This is never cached ('.time().').';
 
