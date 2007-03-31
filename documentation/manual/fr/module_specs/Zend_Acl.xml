@@ -28,7 +28,7 @@
     </para>
 
     <para>
-    Grâce à la définition et à la mise en oeuvre d'une liste de contrôle d'accès (ACL), une application peut contrôler comment les objets demandeurs (Rôles) reçoivent l'accès (ou non) à des objets protégés (Ressources).
+        Grâce à la définition et à la mise en oeuvre d'une liste de contrôle d'accès (ACL), une application peut contrôler comment les objets demandeurs (Rôles) reçoivent l'accès (ou non) à des objets protégés (Ressources).
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
@@ -75,40 +75,12 @@
             "administrateur" séparément, et "eric" va hériter des règles des deux sans avoir à définir des règles 
             directement pour "eric".
         </para>
-        <note>
-            <para>
-                Vu que Zend_Acl supporte l'héritage de règles depuis plusieurs Rôles, qui peuvent éventuellement entrer en 
-                conflit, il est nécessaire de définir une manière de résoudre les conflits si besoin.
-                Zend_Acl résoud ces conflits potentiels en considérant le Rôle hérité le plus récement à la priorité sur 
-                les autres.
-                C'est à dire que, une fois qu'une règle est trouvée pour un Rôle "parent", en commençant au Rôle hérité le 
-                plus récement, plus aucune autre règle n'est prise en compte puisque la règle avec la plus haute priorité
-                a été atteinte.
-            </para>
-        </note>
-    </sect2>
-
-    <sect2 id="zend.acl.introduction.creating">
-        <title>Créer la Liste de Contrôle d'Accès (ACL)</title>
-
-        <para>
-            Une ACL peut représenter n'importe quel ensemble d'objets physiques ou virtuels que vous souhaitez.
-            Pour les besoins de la démonstration, nous allons créer un système basique d'ACL pour une Gestion de Contenus (CMS) qui
-            comporte plusieurs niveaux de groupes au sein d'une grande variété de zones.
-            Pour créer un nouvel objet ACL, nous créons une nouvelle instance de ACL sans paramètres:
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
-$acl = new Zend_Acl();?>]]></programlisting>
-
         <para>
              Bien que la possibilité d'hériter de plusieurs Rôles soit très utile, l'héritage multiple introduit aussi un certain degrè de complexité.
              L'example ci-dessous illustre l'ambiguïté et la manière de la résoudre.
          </para>
-         <example>
-             <title>Héritages multiples entre Rôles</title>
+        <example id="zend.acl.introduction.roles.example.multiple_inheritance">
+            <title>Héritages multiples entre Rôles</title>
              <para>
                  Le code ci-dessous définit trois Rôles de base - "<code>invite</code>", "<code>membre</code>", et
                  "<code>admin</code>" - desquels d'autres Rôles peuvent hériter. Ensuite, un Rôle identifié par 
@@ -127,42 +99,62 @@ $acl = new Zend_Acl();?>]]></programlisting>
      ->addRole(new Zend_Acl_Role('admin'));
  
  $parents = array('invite', 'membre', 'admin');
- $acl->addRole(new Zend_Acl_Role('unUser'), $parents);
+ $acl->addRole(new Zend_Acl_Role('unUtilisateur'), $parents);
  
  require_once 'Zend/Acl/Resource.php';
  $acl->add(new Zend_Acl_Resource('uneResource'));
  
  $acl->deny('invite', 'uneResource');
- $acl->allow('membre', uneResource');
+ $acl->allow('membre', 'uneResource');
  
- echo $acl->isAllowed('invite', 'uneResource') ? 'autorisé' : 'refusé';?>]]></programlisting>
+ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';?>]]></programlisting>
              <para>
-                 
                  Puisqu'il n'y a pas de règle spécifiquement définie pour le Rôle "<code>unUser</code>" et 
-                 "<code>uneResource</code>", Zend_Acl  doit rechercher des règles qui pourraient être définies
+                 "<code>uneResource</code>", Zend_Acl doit rechercher des règles qui pourraient être définies
                  pour des Rôles dont "<code>unUser</code>" hérite.
                  Premièrement, le Rôle "<code>admin</code>" est contrôlé, et il n'y a pas de règle d'accès définie pour lui.
                  Ensuite, le Rôle "<code>membre</code>" est visité, et Zend_Acl trouve qu'il y a une règle qui spécifie que 
                  "<code>membre</code>" a un accès autorisé à "<code>uneResource</code>".
-
              </para>
              <para>
-             Si Zend_Acl continuait à examiner toutes les règles de tous les Rôles parents, il trouverait que 
-             "<code>invite</code>" est interdit d'accès à "<code>uneResource</code>". Ceci introduit une ambiguité puisque maintenant 
-             "<code>unUser</code>" est à la fois autorisé et interdit d'accès à "<code>uneResource</code>", puisqu'il
-             hérite de règles opposées de ses différents parents.
+                 Si Zend_Acl continuait à examiner toutes les règles de tous les Rôles parents, il trouverait que 
+                 "<code>invite</code>" est interdit d'accès à "<code>uneResource</code>". Ceci introduit une ambiguité puisque maintenant 
+                 "<code>unUser</code>" est à la fois autorisé et interdit d'accès à "<code>uneResource</code>", puisqu'il
+                 hérite de règles opposées de ses différents parents.
              </para>
              <para>
                  Zend_Acl résoud cette ambiguité en arrêtant la recherche de règles d'accès dès qu'une première règle est découverte.
                  Dans notre exemple, puisque le Rôle "<code>membre</code>" est examiné avant le röle "<code>invite</code>", le résultat devrait afficher "<code>autorisé</code>".
               </para>
          </example>
-             <note>
-                 <para>
-                     Lorsque vous spécifiez plusieurs parents pour un Rôle, conservez à l'esprit que le dernier parent listé est le premier dans
-                     lequel une règle utilisable sera recherchée.
-                 </para>
-             </note>
+         <note>
+             <para>
+                 Lorsque vous spécifiez plusieurs parents pour un Rôle, conservez à l'esprit que le dernier parent listé est le premier dans
+                 lequel une règle utilisable sera recherchée.
+             </para>
+         </note>
+    </sect2>
+
+    <sect2 id="zend.acl.introduction.creating">
+        <title>Créer la Liste de Contrôle d'Accès (ACL)</title>
+
+        <para>
+            Une ACL peut représenter n'importe quel ensemble d'objets physiques ou virtuels que vous souhaitez.
+            Pour les besoins de la démonstration, nous allons créer un système basique d'ACL pour une Gestion de Contenus (CMS) qui
+            comporte plusieurs niveaux de groupes au sein d'une grande variété de zones.
+            Pour créer un nouvel objet ACL, nous créons une nouvelle instance de ACL sans paramètres:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Acl.php';
+
+$acl = new Zend_Acl();?>]]></programlisting>
+
+        <note>
+            <para>
+                Jusqu'à ce que le développeur spécifie une règle "allow", Zend_Acl refuse l'accès pour tous les privilèges sur chaque ressource pour chaque rôle.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
@@ -243,7 +235,7 @@ $roleinvite = $acl->addRole(new Zend_Acl_Role('staff'), 'invite');
 $acl->addRole(new Zend_Acl_Role('editeur'), 'staff');
 
 // Administrateur n'hérite pas d'accès
-$acl->addRole(new Zend_Acl_Role('administrateur'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrateur'));?>]]></programlisting>
 
     </sect2>
 
@@ -292,7 +284,7 @@ $acl->allow('staff', null, array('edit', 'submit', 'relire'));
 $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 
 // Administrateur hérite de rien, mais reçoit tous les privilèges
-$acl->allow('administrateur');]]></programlisting>
+$acl->allow('administrateur');?>]]></programlisting>
 
         <para>
             Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont utilisées 
