@@ -60,7 +60,7 @@ Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 
 // on initialise un tableau contenant les données du canal RSS
 $canal = array(
-    'titre'       =>; $rssSlashdot->title(),
+    'titre'       => $rssSlashdot->title(),
     'lien'        => $rssSlashdot->link(),
     'description' => $rssSlashdot->description(),
     'elements'    => array()
