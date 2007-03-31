@@ -1524,6 +1524,7 @@ class Zend_Date extends Zend_Date_DateObject {
                         $date = $month - $date;
                         $calc = 'set';
                     }
+
                     return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
                                                  $this->mktime(0, 0, 0, $month, $day, $year, true));
                 }
@@ -2585,7 +2586,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function getDate($locale = null)
     {
-        return $this->copyPart(Zend_Date::DATE_MEDIUM, $locale);
+        return $this->copyPart(Zend_Date::DATE_FULL, $locale);
     }
 
 
@@ -2611,7 +2612,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         if ($date instanceof Zend_Date) {
             // extract date from object
-            $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
+            $date = $date->get(Zend_Date::DATE_FULL, $locale);
         } else {
             if (self::$_Options['format_type'] == 'php') {
                 $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
@@ -2625,10 +2626,10 @@ class Zend_Date extends Zend_Date_DateObject {
             $date->set($parsed['year'], Zend_Date::YEAR);
             $date->set($parsed['month'], Zend_Date::MONTH);
             $date->set($parsed['day'], Zend_Date::DAY);
-            $date = $date->get(Zend_Date::DATE_MEDIUM, $locale);
+            $date = $date->get(Zend_Date::DATE_FULL, $locale);
         }
 
-        $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, $locale);
+        $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_FULL, $locale);
         if ($calc != 'cmp') {
             return $this;
         }
