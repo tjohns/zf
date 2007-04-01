@@ -4219,15 +4219,66 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testAddMonth()
     {
+        date_default_timezone_set('Europe/Vienna');
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date(1577833200,$locale);
         $date->setTimeZone(date_default_timezone_get());
 
         $date->addMonth(1);
-        $this->assertSame($date->get(Zend_Date::W3C), '2020-02-01T04:00:00+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-02-01T00:00:00+01:00');
+        $date->addMonth(1);
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-03-01T00:00:00+01:00');
+        $date->addMonth(1);
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-04-01T00:00:00+02:00');
+        $date->addMonth(1);
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-05-01T00:00:00+02:00');
+        $date->addMonth(1);
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-06-01T00:00:00+02:00');
         $date->addMonth(5);
-        $this->assertSame($date->get(Zend_Date::W3C), '2020-07-01T04:00:00+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C), '2020-11-01T00:00:00+01:00');
+
+        Zend_Date::setOptions(array('fix_dst' => true));
+        $date = new Zend_Date('2007-10-01 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-10-01 00:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-11-01 00:00:00');
+
+        $date = new Zend_Date('2007-10-01 23:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-10-01 23:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-11-01 23:00:00');
+
+        $date = new Zend_Date('2007-03-01 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-01 00:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-04-01 00:00:00');
+
+        $date = new Zend_Date('2007-03-01 23:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-01 23:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-04-01 23:00:00');
+
+        Zend_Date::setOptions(array('fix_dst' => false));
+        $date = new Zend_Date('2007-10-01 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-10-01 00:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-10-31 23:00:00');
+
+        $date = new Zend_Date('2007-10-01 23:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-10-01 23:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-11-01 22:00:00');
+
+        $date = new Zend_Date('2007-03-01 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-01 00:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-04-01 01:00:00');
+
+        $date = new Zend_Date('2007-03-01 23:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-01 23:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-04-02 00:00:00');
     }
 
     /**
