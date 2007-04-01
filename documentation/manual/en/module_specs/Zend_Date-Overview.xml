@@ -11,16 +11,35 @@
 
         <title>Zend_Date Options</title>
 
-        <para>
-            Currently, there is only one class-wide option for Zend_Date. Several methods use date format strings, in a
-            way similar to PHP's <code>date()</code>. If you are more comfortable with PHP's date format specifier than
-            with ISO format specifiers, then you can use
-            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>.
-            Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
-            Use <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code> to switch back to the default mode of
-            supporting only ISO date format tokens. For a list of supported format codes, see
-            <xref linkend="zend.date.constants.phpformats" />
-        </para>
+        <sect3 id="zend.date.options.formattype">
+
+            <title>Selecting the date format type</title>
+
+            <para>
+                Several methods use date format strings, in a way similar to PHP's <code>date()</code>. 
+                If you are more comfortable with PHP's date format specifier than with ISO format specifiers, 
+                then you can use <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>.
+                Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
+                Use <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code> to switch back to the default mode of
+                supporting only ISO date format tokens. For a list of supported format codes, see
+                <xref linkend="zend.date.constants.phpformats" />
+            </para>
+            
+        </sect3>
+
+        <sect3 id="zend.date.options.fixdst">
+
+            <title>Automatically fixing a DST change</title>
+
+            <para>
+                 Crossing the summer-/wintertime normally an hour is substracted or added depending on the date.
+                 But this can lead to problems for example when you add an month. The missing hour would lead
+                 to a false date because of the change from 00:00:00 to 23:00:00 of the previous day. To prevent 
+                 such problems we added the option 'fix_dst' which is by standard set to true. So you can use
+                 <code>Zend_Date::setOptions(array('fix_dst' => false))</code> to take in count the DST change.
+            </para>
+
+        </sect3>
 
     </sect2>
 

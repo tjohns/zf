@@ -10,6 +10,77 @@
 
     <sect2>
 
+        <title>Checking dates</title>
+
+        <para>
+            Probably most dates you will get as input are strings. But the problem with strings is that
+            you can not be sure if the string is a real date. Therefor <code>Zend_Date</code> has spend
+            a own static function to check date strings. <code>Zend_Locale</code> has a own function 
+            <code>getDate($date, $locale);</code> which parses a date and returns the proper and normalized
+            date parts. A monthname for example will be recognised and returned just a month number.
+            But as <code>Zend_Locale</code> does not know anything about dates because it is a 
+            normalizing and localizing class we have integrated a own function <code>isDate($date);</code>
+            which checks this.
+        </para>
+
+        <para>
+            <code>isDate($date, $format, $locale);</code> can take up to 3 parameters and needs minimum one
+            parameter. So what we need to verify a date is, of course, the date itself as string.
+            The second parameter can be the format which the date is expected to have. If no format is given
+            the standard date format from your locale is used. For details about how formats should look like
+            see the chapter about <link linkend="zend.date.constants.selfdefinedformats">self defined formats</link>
+            .
+        </para>
+
+        <para>
+            The third parameter is also optional as the second parameter and can be used to give a locale.
+            We need the locale to normalize monthnames and daynames. So with the third parameter we are able
+            to recognise dates like '01.Jänner.2000' or '01.January.2000' depending on the given locale.
+        </para>
+
+        <para>
+            <code>isDate();</code> of course checks if a date does exist. <code>Zend_Date</code> itself does not
+            check a date. So it is possible to create a date like '31.February.2000' with <code>Zend_Date</code>
+            because <code>Zend_Date</code> will automatically correct the date and return the proper date.
+            In our case '03.March.2000'. <code>isDate()</code> on the other side does this check and will return
+            false on '31.February.2000' because it knows that this date is impossible.
+        </para>
+
+        <example>
+            <title>Checking dates</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Date.php';
+
+// Checking dates
+$date = '01.03.2000';
+if (Zend_Date::isDate($date)) {
+    print "String $date is a date";
+} else {
+    print "String $date is NO date";
+}
+
+// Checking localized dates
+$date = '01 February 2000';
+if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
+    print "String $date is a date";
+} else {
+    print "String $date is NO date";
+}
+
+// Checking imposible dates
+$date = '30 February 2000';
+if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
+    print "String $date is a date";
+} else {
+    print "String $date is NO date";
+}
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2>
+
         <title>Sunrise and Sunset</title>
 
         <para>
