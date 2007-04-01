@@ -83,8 +83,8 @@
     <chapter id="zend.date">
         <title>Zend_Date</title>
         <xi:include href="module_specs/Zend_Date-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Date-Basic.xml" />
         <xi:include href="module_specs/Zend_Date-Theory.xml" />
+        <xi:include href="module_specs/Zend_Date-Basic.xml" />
         <xi:include href="module_specs/Zend_Date-Overview.xml" />
         <xi:include href="module_specs/Zend_Date-Constants.xml" />
         <xi:include href="module_specs/Zend_Date-Additional.xml" />
