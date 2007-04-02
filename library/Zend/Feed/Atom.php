@@ -189,7 +189,8 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
         $id = $this->_element->createElement('id', $array->link);
         $feed->appendChild($id);
 
-        $title = $this->_element->createElement('title', $array->title);
+        $title = $this->_element->createElement('title');
+        $title->appendChild($this->_element->createCDATASection($array->title));
         $feed->appendChild($title);
 
         if (isset($array->author)) {
@@ -221,7 +222,8 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
         $feed->appendChild($link);
 
         if (isset($array->description)) {
-            $subtitle = $this->_element->createElement('subtitle', $array->description);
+            $subtitle = $this->_element->createElement('subtitle');
+            $subtitle->appendChild($this->_element->createCDATASection($array->description));
             $feed->appendChild($subtitle);
         }
 
@@ -267,7 +269,8 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
             $id = $this->_element->createElement('id', isset($dataentry->guid) ? $dataentry->guid : $dataentry->link);
             $entry->appendChild($id);
 
-            $title = $this->_element->createElement('title', $dataentry->title);
+            $title = $this->_element->createElement('title');
+            $title->appendChild($this->_element->createCDATASection($dataentry->title));
             $entry->appendChild($title);
 
             $updated = isset($dataentry->lastUpdate) ? $dataentry->lastUpdate : time();
