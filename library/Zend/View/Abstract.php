@@ -437,11 +437,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      * Zend_View::assign($array) assigns the array keys as variable
      * names (with the corresponding array values).
      *
-     * @param string|array The assignment strategy to use.
-     * @param mixed (Optional) If assigning a named variable, use this
+     * @see    __set()
+     * @param  string|array The assignment strategy to use.
+     * @param  mixed (Optional) If assigning a named variable, use this
      * as the value.
-     * @return void
-     * @see __set()
+     * @return Zend_View_Abstract Fluent interface
      * @throws Zend_View_Exception if $spec is neither a string nor an array, 
      * or if an attempt to set a private or protected member is detected
      */
@@ -473,6 +473,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('assign() expects a string or array, received ' . gettype($spec), $this);
         }
+
+        return $this;
     }
 
     /**

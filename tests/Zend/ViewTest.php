@@ -435,7 +435,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
                 ->setEncoding('UTF-8')
                 ->setScriptPath(dirname(__FILE__) . '/View/_templates')
                 ->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1')
-                ->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1');
+                ->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1')
+                ->assign('foo', 'bar');
         } catch (Exception $e){
             $this->fail('Setters should not throw exceptions');
         }
