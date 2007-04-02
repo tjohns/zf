@@ -416,6 +416,21 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($body));
         $this->assertEquals(0, count($body));
     }
+
+    public function testClearBodySegment()
+    {
+        $this->_response->append('some', "some content\n");
+        $this->_response->append('more', "more content\n");
+        $this->_response->append('superfluous', "superfluous content\n");
+
+        $this->assertFalse($this->_response->clearBody('many'));
+        $this->assertTrue($this->_response->clearBody('more'));
+        $body = $this->_response->getBody(true);
+        $this->assertTrue(is_array($body));
+        $this->assertEquals(2, count($body));
+        $this->assertTrue(isset($body['some']));
+        $this->assertTrue(isset($body['superfluous']));
+    }
 }
 
 require_once 'Zend/Controller/Action.php';

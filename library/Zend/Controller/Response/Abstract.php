@@ -339,11 +339,26 @@ abstract class Zend_Controller_Response_Abstract
 
     /**
      * Clear body array
+     *
+     * With no arguments, clears the entire body array. Given a $name, clears 
+     * just that named segment; if no segment matching $name exists, returns 
+     * false to indicate an error.
      * 
-     * @return true
+     * @param  string $name Named segment to clear
+     * @return boolean
      */
-    public function clearBody()
+    public function clearBody($name = null)
     {
+        if (null !== $name) {
+            $name = (string) $name;
+            if (isset($this->_body[$name])) {
+                unset($this->_body[$name]);
+                return true;
+            }
+
+            return false;
+        }
+
         $this->_body = array();
         return true;
     }
