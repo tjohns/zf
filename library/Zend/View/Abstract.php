@@ -138,6 +138,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         if (array_key_exists('filter', $config)) {
             $this->addFilter($config['filter']);
         }
+
+        $this->init();
     }
 
     /**
@@ -150,6 +152,18 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     public function getEngine()
     {
         return $this;
+    }
+
+    /**
+     * Allow custom object initialization when extending Zend_View_Abstract or 
+     * Zend_View
+     *
+     * Triggered by {@link __construct() the constructor} as its final action.
+     * 
+     * @return void
+     */
+    public function init()
+    {
     }
 
     /**

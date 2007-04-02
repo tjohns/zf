@@ -601,4 +601,22 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $content = ob_get_flush();
         $this->assertTrue(empty($content));
     }
+
+    public function testInit()
+    {
+        $view = new Zend_ViewTest_Extension();
+        $this->assertEquals('bar', $view->foo);
+        $paths = $view->getScriptPaths();
+        $this->assertEquals(1, count($paths));
+        $this->assertEquals(dirname(__FILE__) . '/View/_templates/', $paths[0]);
+    }
+}
+
+class Zend_ViewTest_Extension extends Zend_View
+{
+    public function init()
+    {
+        $this->assign('foo', 'bar');
+        $this->setScriptPath(dirname(__FILE__) . '/View/_templates');
+    }
 }
