@@ -207,13 +207,13 @@ abstract class Zend_Controller_Action
             throw new Zend_Controller_Exception('Invalid action specifier for view render');
         }
 
+        $view   = $this->initView();
         $script = $action . '.' . $this->viewSuffix;
 
         if (!$noController) {
             $script = $this->getRequest()->getControllerName() . DIRECTORY_SEPARATOR . $script;
         }
 
-        $view = $this->initView();
         $this->getResponse()->appendBody(
             $view->render($script),
             $name
