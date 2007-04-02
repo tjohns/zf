@@ -12,20 +12,41 @@
 
         <title>Zend_Date のオプション</title>
 
-        <para>
-            現在は、クラス全体で使用する Zend_Date のオプションはひとつだけです。
-            いくつかのメソッドでは、PHP の <code>date()</code>
-            関数と似た形式の日付書式文字列を使用します。
-            PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるという場合は、
-            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>
-            とすることができます。こうすると、<code>$format</code>
-            パラメータを持つすべての関数で PHP の日付書式指定子が使用できるようになります。
-            <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code>
-            とすると、デフォルトのモードに戻ります。このモードは、
-            ISO 日付書式トークンのみをサポートするものです。
-            サポートする書式コードの一覧は、
-            <xref linkend="zend.date.constants.phpformats" /> を参照ください。
-        </para>
+        <sect3 id="zend.date.options.formattype">
+
+            <title>日付の書式の型の選択</title>
+
+            <para>
+                いくつかのメソッドでは、PHP の <code>date()</code> 関数と似た形式の日付書式文字列を使用します。
+                PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるという場合は、
+                <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>
+                とすることができます。こうすると、<code>$format</code>
+                パラメータを持つすべての関数で PHP の日付書式指定子が使用できるようになります。
+                <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code>
+                とすると、デフォルトのモードに戻ります。このモードは、
+                ISO 日付書式トークンのみをサポートするものです。
+                サポートする書式コードの一覧は、
+                <xref linkend="zend.date.constants.phpformats" /> を参照ください。
+            </para>
+            
+        </sect3>
+
+        <sect3 id="zend.date.options.fixdst">
+
+            <title>夏時間の変更の自動的な修正</title>
+
+            <para>
+                 夏時間と冬時間をまたがる場合は、通常は一時間足したり引いたりといった処理を行います。
+                 しかし、たとえば一ヶ月足すといったときなどには問題が発生する可能性があります。
+                 この一時間により、結果の日付が変わってしまうこともあります。
+                 というのも、変更の前日は 00:00:00 から 23:00:00 までとなるからです。
+                 この問題を回避するために、オプション 'fix_dst' を追加しました。
+                 これは、標準で true に設定されています。つまり
+                 <code>Zend_Date::setOptions(array('fix_dst' => false))</code>
+                 とすることで夏時間の変更を考慮することができます。
+            </para>
+
+        </sect3>
 
     </sect2>
 
