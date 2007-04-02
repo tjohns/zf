@@ -5,6 +5,8 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_View_Helper_Stub2 
 {
+    public $view;
+
 	public function stub2()
 	{
 		return 'bar';

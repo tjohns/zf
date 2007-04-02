@@ -233,6 +233,9 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     /**
      * Accesses a helper object from within a script.
      *
+     * If the helper class has a 'view' property, sets it with the current view 
+     * object.
+     *
      * @param string $name The helper name.
      * @param array $args The parameters for the helper.
      * @return string The result of the helper output.
@@ -244,6 +247,9 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             // load class and create instance
             $class = $this->_loadClass('helper', $name);
             $this->_helper[$name] = new $class();
+            if (property_exists($this->_helper[$name], 'view')) {
+                $this->_helper[$name]->view = $this;
+            }
         }
 
         // call the helper method

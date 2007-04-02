@@ -610,6 +610,21 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($paths));
         $this->assertEquals(dirname(__FILE__) . '/View/_templates/', $paths[0]);
     }
+
+    public function testHelperViewProperty()
+    {
+        $view = new Zend_View();
+        $view->addHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/');
+        $view->stub2();
+
+        $helpers = $view->getHelpers();
+        $this->assertEquals(1, count($helpers));
+        $this->assertTrue(isset($helpers['stub2']));
+        $stub2 = $helpers['stub2'];
+        $this->assertTrue($stub2 instanceof Zend_View_Helper_Stub2);
+        $this->assertTrue(isset($stub2->view));
+        $this->assertSame($view, $stub2->view);
+    }
 }
 
 class Zend_ViewTest_Extension extends Zend_View
