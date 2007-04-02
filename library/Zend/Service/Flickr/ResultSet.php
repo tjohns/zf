@@ -99,9 +99,9 @@ class Zend_Service_Flickr_ResultSet implements SeekableIterator
         $perPage = $photos->getAttribute('perpage');
         $total   = $photos->getAttribute('total');
 
-        $this->totalResultsReturned  = ($page == $pages) ? ($total - ($page - 1) * $perPage) : $perPage;
+        $this->totalResultsReturned  = ($page == $pages) ? ($total - ($page - 1) * $perPage) : (int) $perPage;
         $this->firstResultPosition   = ($page - 1) * $perPage + 1;
-        $this->totalResultsAvailable = $total;
+        $this->totalResultsAvailable = (int) $total;
 
         if ($total > 0) {
             $this->_results = $xpath->query('//photo');
@@ -115,7 +115,7 @@ class Zend_Service_Flickr_ResultSet implements SeekableIterator
      */
     public function totalResults()
     {
-        return (int) $this->totalResultsReturned;
+        return $this->totalResultsReturned;
     }
 
     /**
