@@ -573,7 +573,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function setParam($key, $value) 
     { 
         $keyName = (null !== ($alias = $this->getAlias($key))) ? $alias : $key; 
-        $this->_params[$keyName] = $value; 
+
+        parent::setParam($key, $value);
         return $this;
     } 
      

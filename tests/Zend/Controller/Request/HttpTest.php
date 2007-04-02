@@ -467,4 +467,24 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->assertTrue($this->_request->isXmlHttpRequest());
     }
+
+    public function testSetNullParamUnsetsKey()
+    {
+        $this->_request->setParam('foo', 'bar');
+        $this->assertEquals('bar', $this->_request->getParam('foo'));
+        $this->_request->setParam('foo', null);
+        $params = $this->_request->getParams();
+        $this->assertFalse(isset($params['foo']));
+    }
+
+    public function testSetNullParamsUnsetsKeys()
+    {
+        $this->_request->setParams(array('foo' => 'bar', 'bar' => 'baz'));
+        $this->assertEquals('bar', $this->_request->getParam('foo'));
+        $this->assertEquals('baz', $this->_request->getParam('bar'));
+        $this->_request->setParams(array('foo' => null));
+        $params = $this->_request->getParams();
+        $this->assertFalse(isset($params['foo']));
+        $this->assertTrue(isset($params['bar']));
+    }
 }
