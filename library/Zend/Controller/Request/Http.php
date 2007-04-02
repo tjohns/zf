@@ -743,4 +743,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
         return false;
     }
+
+    /**
+     * Is the request a Javascript XMLHttpRequest?
+     *
+     * Should work with Prototype/Script.aculo.us, possibly others.
+     * 
+     * @return boolean
+     */
+    public function isXmlHttpRequest()
+    {
+        return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
+    }
 }

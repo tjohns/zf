@@ -460,4 +460,11 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+
+    public function testIsXmlHttpRequest()
+    {
+        $this->assertFalse($this->_request->isXmlHttpRequest());
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->assertTrue($this->_request->isXmlHttpRequest());
+    }
 }
