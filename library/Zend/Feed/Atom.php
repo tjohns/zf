@@ -270,7 +270,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
             $title = $this->_element->createElement('title', $dataentry->title);
             $entry->appendChild($title);
 
-            $updated = isset($array->lastUpdate) ? $array->lastUpdate : time();
+            $updated = isset($dataentry->lastUpdate) ? $dataentry->lastUpdate : time();
             $updated = $this->_element->createElement('updated', date(DATE_ATOM, $updated));
             $entry->appendChild($updated);
 
