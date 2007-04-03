@@ -119,6 +119,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             $this->setEncoding($config['encoding']);
         }
 
+        // base path
+        if (array_key_exists('basePath', $config)) {
+            $this->setBasePath($config['basePath']);
+        }
+
         // user-defined view script path
         if (array_key_exists('scriptPath', $config)) {
             $this->addScriptPath($config['scriptPath']);
@@ -257,6 +262,31 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             array($this->_helper[$name], $name),
             $args
         );
+    }
+
+    /**
+     * Given a base path, sets the script, helper, and filter paths relative to it
+     *
+     * Assumes a directory structure of:
+     * <code>
+     * basePath/
+     *     scripts/
+     *     helpers/
+     *     filters/
+     * </code>
+     * 
+     * @param string $path 
+     * @return Zend_View_Abstract
+     */
+    public function setBasePath($path)
+    {
+        $path  = rtrim($path, '/');
+        $path  = rtrim($path, '\\');
+        $path .= DIRECTORY_SEPARATOR;
+        $this->setScriptPath($path . 'scripts');
+        $this->setHelperPath($path . 'helpers');
+        $this->setFilterPath($path . 'filters');
+        return $this;
     }
 
     /**

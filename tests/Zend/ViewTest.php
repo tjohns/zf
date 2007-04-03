@@ -625,6 +625,47 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($stub2->view));
         $this->assertSame($view, $stub2->view);
     }
+
+    public function testSetBasePath()
+    {
+        $view = new Zend_View();
+        $base = dirname(__FILE__) . '/View';
+        $view->setBasePath($base);
+        $this->_testBasePath($view, $base);
+    }
+
+    public function testSetBasePathFromConstructor()
+    {
+        $base = dirname(__FILE__) . '/View';
+        $view = new Zend_View(array('basePath' => dirname(__FILE__) . '/View'));
+        $this->_testBasePath($view, $base);
+    }
+
+    protected function _testBasePath(Zend_View $view, $base)
+    {
+        $scriptPaths = $view->getScriptPaths();
+        $helperPaths = $view->getHelperPaths();
+        $filterPaths = $view->getFilterPaths();
+        $this->assertContains($base . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR, $scriptPaths);
+
+        $found = false;
+        foreach ($helperPaths as $path) {
+            if ($path['dir'] == $base . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, var_export($helperPaths, 1));
+
+        $found = false;
+        foreach ($filterPaths as $path) {
+            if ($path['dir'] == $base . DIRECTORY_SEPARATOR . 'filters' . DIRECTORY_SEPARATOR) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, var_export($filterPaths, 1));
+    }
 }
 
 class Zend_ViewTest_Extension extends Zend_View
