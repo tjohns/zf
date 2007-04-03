@@ -19,21 +19,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Adapter/Pdo/TestCommon.php';
+require_once('Zend/Db/Table/Abstract.php');
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
+class Zend_Db_Table_TableAccounts extends Zend_Db_Table_Abstract
 {
-
-    public function testDbAdapterExceptionInvalidLoginCredentials()
-    {
-        $this->markTestSkipped('SQLite does not support login credentials');
-    }
-
-    public function getDriver()
-    {
-        return 'pdo_Sqlite';
-    }
-
+    protected $_name = 'accounts';
+    protected $_dependentTables = array('Zend_Db_Table_TableBugs');
 }

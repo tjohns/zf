@@ -19,12 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once('Zend/Db/Table/Abstract.php');
+require_once 'Zend/Db/Table/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_ZfTestTable extends Zend_Db_Table_Abstract
+class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
 {
-    protected $_name = 'zf_test_table';
-    protected $_dependentTables = array('zf_test_table2');
+
+    public function getDriver()
+    {
+        return 'Oracle';
+    }
+
 }

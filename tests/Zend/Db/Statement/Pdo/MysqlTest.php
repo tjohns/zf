@@ -19,14 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once('Zend/Db/Table.php');
+require_once 'Zend/Db/Statement/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_ZfTestTable3 extends Zend_Db_Table_Abstract
+class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_TestCommon
 {
-}
 
-class zf_test_table extends Zend_Db_Table_Abstract
-{
+    public function getDriver()
+    {
+        return 'Pdo_Mysql';
+    }
+
 }

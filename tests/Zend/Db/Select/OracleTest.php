@@ -19,24 +19,23 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Adapter/TestCommon.php';
-require_once 'Zend/Db/Adapter/Oracle.php';
+require_once 'Zend/Db/Select/TestCommon.php';
 
-class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+class Zend_Db_Select_OracleTest extends Zend_Db_Select_TestCommon
 {
 
-    public function testExceptionInvalidLoginCredentials()
+    public function testSelect()
     {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
+        $select = $this->_db->select();
+        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
 
-        try {
-            $db = new Zend_Db_Adapter_Oracle($params);
-            $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'),
-                'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
-        }
+        $select->from(self::TABLE_NAME);
+        $result = $this->_db->query($select);
+        $row = $result->fetch();
+        $this->assertEquals(5, count($row)); // correct number of fields
+        $this->assertEquals('1', $row['ID']); // correct data
     }
 
     public function getDriver()

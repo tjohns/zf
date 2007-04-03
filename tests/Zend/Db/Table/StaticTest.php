@@ -19,29 +19,23 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Adapter/TestCommon.php';
-require_once 'Zend/Db/Adapter/Oracle.php';
+require_once 'Zend/Db/Table/TestCommon.php';
 
-class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Util/Filter.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+class Zend_Db_Table_StaticTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testExceptionInvalidLoginCredentials()
+    public function testStatic()
     {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Oracle($params);
-            $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'),
-                'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
-        }
+        $this->markTestIncomplete('Static table tests are not implemented yet');
     }
 
     public function getDriver()
     {
-        return 'Oracle';
+        return 'Static';
     }
 
 }

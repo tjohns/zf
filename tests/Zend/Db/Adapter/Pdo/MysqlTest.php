@@ -19,94 +19,23 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Db/Adapter/Pdo/TestCommon.php';
+require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-/**
- * Common class is DB independant
- */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
-
-/**
- * @package    Zend_Db_Adapter_Pdo_MysqlTest
- * @subpackage UnitTests
- */
-class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
+class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
-    function getDriver()
+    public function testDbAdapterQuoteIdentifier()
     {
-        return 'pdo_Mysql';
+        $value = $this->_db->quoteIdentifier('table_name');
+        $this->assertEquals('`table_name`', $value);
+        $value = $this->_db->quoteIdentifier('table_`_name');
+        $this->assertEquals('`table_``_name`', $value);
     }
 
-    function getParams()
-    {
-        $params = array (
-            'host'     => TESTS_ZEND_DB_ADAPTER_MYSQL_HOSTNAME,
-            'username' => TESTS_ZEND_DB_ADAPTER_MYSQL_USERNAME,
-            'password' => TESTS_ZEND_DB_ADAPTER_MYSQL_PASSWORD,
-            'dbname'   => TESTS_ZEND_DB_ADAPTER_MYSQL_DATABASE
-        );
-        return $params;
-    }
-
-    function getCreateTableSQL()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME . "(
-            id           INT NOT NULL AUTO_INCREMENT,
-            title        VARCHAR(100),
-            subtitle     VARCHAR(100),
-            body         {$this->_textDataType},
-            date_created DATETIME,
-            PRIMARY KEY (id)
-        )";
-        return $sql;
-    }
-
-    function getCreateTableSQL2()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_2 . "(
-            news_id       INT NOT NULL,
-            user_id       INT NOT NULL,
-            comment_title VARCHAR(100),
-            comment_body  {$this->_textDataType},
-            date_posted   DATETIME,
-            PRIMARY KEY (user_id, date_posted)
-        )";
-        return $sql;
-    }
-
-    function getCreateTableSQLIntersection()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
-            news_id     INT NOT NULL,
-            user_id     INT NOT NULL,
-            date_posted DATETIME,
-            PRIMARY KEY (news_id, user_id, date_posted),
-            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
-            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
-        )';
-        return $sql;
-    }
-
-    protected function getDropTableSQL()
-    {
-        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME;
-        return $sql;
-    }
-
-    protected function getDropTableSQL2()
-    {
-        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_2;
-        return $sql;
-    }
-
-    protected function getDropTableSQLIntersection()
-    {
-        $sql = 'DROP TABLE IF EXISTS ' . self::TABLE_NAME_I;
-        return $sql;
-    }
-
-    public function testQuote()
+    public function testDbAdapterQuote()
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
@@ -131,7 +60,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("1, '2', 3", $value);
     }
 
-    public function testQuoteInto()
+    public function testDbAdapterQuoteInto()
     {
         // test double quotes are fine
         $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
@@ -142,17 +71,9 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
         $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
-    public function testQuoteIdentifier()
+    public function testDbAdapterExceptionInvalidLoginCredentials()
     {
-        $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals("`table_name`", $value);
-        $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals("`table_``_name`", $value);
-    }
-
-    public function testExceptionInvalidLoginCredentials()
-    {
-        $params = $this->getParams();
+        $params = $this->_util->getParams();
         $params['password'] = 'xxxxxxxx'; // invalid password
 
         try {
@@ -160,8 +81,14 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_Common
             $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'),
+                    'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
+    }
+
+    function getDriver()
+    {
+        return 'pdo_Mysql';
     }
 
 }

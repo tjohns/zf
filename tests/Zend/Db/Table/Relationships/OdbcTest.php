@@ -19,29 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Adapter/TestCommon.php';
-require_once 'Zend/Db/Adapter/Oracle.php';
+require_once 'Zend/Db/Table/Relationships/TestCommon.php';
 
-class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+class Zend_Db_Table_Relationships_OdbcTest extends Zend_Db_Table_Relationships_TestCommon
 {
-
-    public function testExceptionInvalidLoginCredentials()
-    {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Oracle($params);
-            $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'),
-                'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
-        }
-    }
 
     public function getDriver()
     {
-        return 'Oracle';
+        return 'Odbc';
     }
 
 }

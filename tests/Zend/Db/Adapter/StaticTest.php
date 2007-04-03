@@ -19,74 +19,39 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Db
- */
-require_once 'Zend/Db.php';
-
-/**
- * PHPUnit test case
- */
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Util/Filter.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-/**
- * @package    Zend_Db
- * @subpackage UnitTests
- */
-class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
+require_once 'Zend/Db.php';
+require_once 'Zend/Db/Adapter/Static.php';
+
+class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
 {
+
     function testFactory()
     {
-        $db = Zend_Db::factory('pdo_sqlite',
-            array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
-            )
-        );
+        $db = Zend_Db::factory('Static', array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
     function testConstructorWithoutFactory()
     {
-        $db = new Zend_Db_Adapter_Pdo_Sqlite(
-            array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
-            )
-        );
+        $db = new Zend_Db_Adapter_Static( array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
     function testGetConnection()
     {
-        $db = Zend_Db::factory('pdo_sqlite',
-            array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
-            )
-        );
+        $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
 
-        try {
-            $conn = $db->getConnection();
-            $this->assertThat($conn, $this->isInstanceOf('PDO'));
-            $conn = null; // close the connection
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
-            $this->assertThat(
-                $e->getMessage(),
-                $this->logicalOr(
-                    $this->equalTo('The PDO extension is required for this adapter but not loaded'),
-                    $this->equalTo('The sqlite driver is not currently installed')
-                )
-            );
-            $this->markTestSkipped($e->getMessage());
-        }
+        $conn = $db->getConnection();
+        $this->assertThat($conn, $this->isInstanceOf('Zend_Db_Adapter_Static'));
     }
 
     function testGetFetchMode()
     {
-        $db = Zend_Db::factory('pdo_sqlite',
-            array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE
-            )
-        );
+        $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
         $mode = $db->getFetchMode();
         $this->assertType('integer', $mode);
     }
@@ -105,7 +70,7 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
     function testExceptionInvalidOptionsArray()
     {
         try {
-            $db = Zend_Db::factory('pdo_sqlite', 'scalar');
+            $db = Zend_Db::factory('Static', 'scalar');
             $this->fail('Expected to catch Zend_Db_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
@@ -116,7 +81,7 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
     function testExceptionInvalidOptionsArrayWithoutFactory()
     {
         try {
-            $db = new Zend_Db_Adapter_Pdo_Sqlite('scalar');
+            $db = new Zend_Db_Adapter_Static('scalar');
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
@@ -127,7 +92,7 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
     function testExceptionNoConfig()
     {
         try {
-            $db = Zend_Db::factory('pdo_sqlite', null);
+            $db = Zend_Db::factory('Static', null);
             $this->fail('Expected to catch Zend_Db_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
@@ -138,12 +103,17 @@ class Zend_Db_DbTest extends PHPUnit_Framework_TestCase
     function testExceptionNoDatabaseName()
     {
         try {
-            $db = Zend_Db::factory('pdo_sqlite', array());
+            $db = Zend_Db::factory('Static', array());
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
             $this->assertEquals($e->getMessage(), "Configuration must have a key for 'dbname' that names the database instance.");
         }
+    }
+
+    public function getDriver()
+    {
+        return 'Static';
     }
 
 }

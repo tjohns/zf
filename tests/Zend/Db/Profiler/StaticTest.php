@@ -19,56 +19,49 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Db
- */
-require_once 'Zend/Db.php';
+require_once 'Zend/Db/TestSetup.php';
 
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-
-/**
- * @package    Zend_Db
- * @subpackage UnitTests
- */
-class Zend_Db_ProfilerTest extends PHPUnit_Framework_TestCase
+class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
 {
 
     function testProfilerFactory()
     {
-        $db = Zend_Db::factory('pdo_sqlite',
+        $db = Zend_Db::factory('Static',
             array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE,
+                'dbname'   => 'dummy',
                 'profiler' => false
             )
         );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'), 'Expected object of type Zend_Db_Adapter_Abstract');
+        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'),
+            'Expected object of type Zend_Db_Adapter_Abstract, got '.get_class($db));
 
         $prof = $db->getProfiler();
-        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'), 'Expected object of type Zend_Db_Profiler');
+        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'),
+            'Expected object of type Zend_Db_Profiler, got '.get_class($prof));
         $this->assertFalse($prof->getEnabled());
 
-        $db = Zend_Db::factory('pdo_sqlite',
+        $db = Zend_Db::factory('Static',
             array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE,
+                'dbname' => 'dummy',
                 'profiler' => true
             )
         );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'), 'Expected object of type Zend_Db_Adapter_Abstract');
+        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'),
+            'Expected object of type Zend_Db_Adapter_Abstract, got '.get_class($db));
 
         $prof = $db->getProfiler();
-        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'), 'Expected object of type Zend_Db_Profiler');
+        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'),
+            'Expected object of type Zend_Db_Profiler, got '.get_class($prof));
         $this->assertTrue($prof->getEnabled());
     }
 
     function testProfilerSetEnabled()
     {
-        $db = Zend_Db::factory('pdo_sqlite',
+        $db = Zend_Db::factory('Static',
             array(
-                'dbname' => TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE,
+                'dbname' => 'dummy',
                 'profiler' => false
             )
         );
@@ -76,6 +69,11 @@ class Zend_Db_ProfilerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($prof->getEnabled());
         $prof->setEnabled(true);
         $this->assertTrue($prof->getEnabled());
+    }
+
+    public function getDriver()
+    {
+        return 'Static';
     }
 
 }

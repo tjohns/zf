@@ -19,23 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once('Zend/Db/Table/Abstract.php');
+require_once 'Zend/Db/Table/Relationships/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_ZfTestTableIntersection extends Zend_Db_Table_Abstract
+class Zend_Db_Table_Relationships_Pdo_MysqlTest extends Zend_Db_Table_Relationships_TestCommon
 {
-    protected $_name = 'zf_test_table_intersection';
-    protected $_referenceMap = array(
-        'News' => array(
-            self::COLUMNS         => array('news_id'),
-            self::REF_TABLE_CLASS => 'Zend_Db_Table_ZfTestTable',
-            self::REF_COLUMNS     => array('id')
-        ),
-        'User' => array(
-            self::COLUMNS         => array('user_id', 'date_posted'),
-            self::REF_TABLE_CLASS => 'Zend_Db_Table_ZfTestTable2',
-            self::REF_COLUMNS     => array('user_id', 'date_posted')
-        )
-    );
+
+    public function getDriver()
+    {
+        return 'Pdo_Mysql';
+    }
+
 }

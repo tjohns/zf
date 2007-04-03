@@ -19,21 +19,25 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Adapter/Pdo/TestCommon.php';
+require_once('Zend/Db/Table/Abstract.php');
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
+class Zend_Db_Table_TableBugsProducts extends Zend_Db_Table_Abstract
 {
+    protected $_name = 'bugs_products';
 
-    public function testDbAdapterExceptionInvalidLoginCredentials()
-    {
-        $this->markTestSkipped('SQLite does not support login credentials');
-    }
-
-    public function getDriver()
-    {
-        return 'pdo_Sqlite';
-    }
+    protected $_referenceMap    = array(
+        'Bug' => array(
+            'columns'           => array('bug_id'),
+            'refTableClass'     => 'Zend_Db_Table_TableBugs',
+            'refColumns'        => array('bug_id')
+        ),
+        'Product' => array(
+            'columns'           => array('product_id'),
+            'refTableClass'     => 'Zend_Db_Table_TableProducts',
+            'refColumns'        => array('product_id')
+        )
+    );
 
 }

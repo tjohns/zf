@@ -29,7 +29,6 @@ if (is_readable('TestConfiguration.php')) {
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Db_AllTests::main');
-
     /**
      * Prepend library/ to the include_path.  This allows the tests to run out
      * of the box and helps prevent finding other copies of the framework that
@@ -43,18 +42,10 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/Db/DbTest.php';
-require_once 'Zend/Db/ProfilerTest.php';
-require_once 'Zend/Db/Adapter/Db2Test.php';
-require_once 'Zend/Db/Adapter/MysqliTest.php';
-require_once 'Zend/Db/Adapter/OracleTest.php';
-require_once 'Zend/Db/Adapter/Pdo/MssqlTest.php';
-require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
-require_once 'Zend/Db/Adapter/Pdo/OciTest.php';
-require_once 'Zend/Db/Adapter/Pdo/PgsqlTest.php';
-require_once 'Zend/Db/Adapter/Pdo/SqliteTest.php';
+require_once 'Zend/Loader.php';
+require_once 'Zend/Db/SkipTests.php';
 
-require_once 'Zend/Db/Adapter/SkipTests.php';
+define('TESTS_ZEND_DB_ADAPTER_STATIC_ENABLED', true);
 
 class Zend_Db_AllTests
 {
@@ -67,67 +58,88 @@ class Zend_Db_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Db');
 
-        $suite->addTestSuite('Zend_Db_DbTest');
-        $suite->addTestSuite('Zend_Db_ProfilerTest');
+        self::_addDbTestSuites($suite, 'Static');
 
-        if (defined('TESTS_ZEND_DB_ADAPTER_DB2_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_DB2_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Db2Test');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Db2Test');
-        }
+        self::_addDbTestSuites($suite, 'Db2');
+        self::_addDbTestSuites($suite, 'Mysqli');
+        self::_addDbTestSuites($suite, 'Oracle');
+        // @todo: self::_addDbTestSuites($suite, 'Odbc');
 
-        if (defined('TESTS_ZEND_DB_ADAPTER_MYSQLI_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_MYSQLI_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_MysqliTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_MysqliTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_OracleTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_OracleTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_MssqlTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Pdo_MssqlTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_MysqlTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Pdo_MysqlTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_OCI_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_PDO_OCI_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_OciTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Pdo_OciTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_PgsqlTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Pdo_PgsqlTest');
-        }
-
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED') &&
-        constant('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED') == true) {
-            $suite->addTestSuite('Zend_Db_Adapter_Pdo_SqliteTest');
-        } else {
-            $suite->addTestSuite('Zend_Db_Adapter_Skip_Pdo_SqliteTest');
-        }
+        self::_addDbTestSuites($suite, 'Pdo_Mssql');
+        self::_addDbTestSuites($suite, 'Pdo_Mysql');
+        self::_addDbTestSuites($suite, 'Pdo_Oci');
+        self::_addDbTestSuites($suite, 'Pdo_Pgsql');
+        self::_addDbTestSuites($suite, 'Pdo_Sqlite');
 
         return $suite;
     }
+
+    protected static function _addDbTestSuites($suite, $driver)
+    {
+        $DRIVER = strtoupper($driver);
+        $enabledConst = "TESTS_ZEND_DB_ADAPTER_${DRIVER}_ENABLED";
+        if (!defined($enabledConst) || constant($enabledConst) != true) {
+            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            return;
+        }
+
+        $ext = array(
+            'Oracle' => 'oci8',
+            'Db2'    => 'ibm_db2',
+            'Mysqli' => 'mysqli',
+            // @todo: 'Odbc'
+        );
+
+        if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
+            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            return;
+        }
+
+        if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
+            // check for PDO extension
+            if (!extension_loaded('pdo')) {
+                $suite->addTestSuite("Zend_Db_Skip_PdoTest");
+                return;
+            }
+
+            // check the PDO driver is available
+            if (!in_array(strtolower($matches[1]), PDO::getAvailableDrivers())) {
+                $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+                return;
+            }
+        }
+
+        try {
+
+            if ($driver == 'Static') {
+                Zend_Loader::loadClass("Zend_Db_Profiler_{$driver}Test");
+                $suite->addTestSuite("Zend_Db_Profiler_{$driver}Test");
+            }
+
+            Zend_Loader::loadClass("Zend_Db_Adapter_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Statement_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Select_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Table_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Table_Rowset_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Table_Row_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Table_Relationships_{$driver}Test");
+
+            // if we get this far, there have been no exceptions loading classes
+            // so we can add them as test suites
+
+            $suite->addTestSuite("Zend_Db_Adapter_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Statement_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Select_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Table_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Table_Rowset_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Table_Row_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");
+
+        } catch (Zend_Exception $e) {
+            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+        }
+    }
+
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Db_AllTests::main') {

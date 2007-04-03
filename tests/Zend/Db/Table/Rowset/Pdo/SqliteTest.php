@@ -19,20 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once('Zend/Db/Table/Abstract.php');
+require_once 'Zend/Db/Table/Rowset/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_ZfTestTable2 extends Zend_Db_Table_Abstract
+class Zend_Db_Table_Rowset_Pdo_SqliteTest extends Zend_Db_Table_Rowset_TestCommon
 {
-    protected $_name = 'zf_test_table2';
-    protected $_referenceMap = array(
-        'News' => array(
-            self::COLUMNS         => array('news_id'),
-            self::REF_TABLE_CLASS => 'Zend_Db_Table_ZfTestTable',
-            self::REF_COLUMNS     => array('id'),
-            self::ON_DELETE       => self::CASCADE,
-            self::ON_UPDATE       => self::CASCADE
-        )
-    );
+
+    public function getDriver()
+    {
+        return 'Pdo_Sqlite';
+    }
+
 }

@@ -19,26 +19,61 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Common class is DB independant
- */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Pdo' . DIRECTORY_SEPARATOR . 'MysqlTest.php';
+require_once 'Zend/Db/Adapter/TestCommon.php';
+require_once 'Zend/Db/Adapter/Mysqli.php';
 
-/**
- * @package    Zend_Db_Adapter_Pdo_MysqlTest
- * @subpackage UnitTests
- */
-class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_Pdo_MysqlTest
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 {
 
-    public function getDriver()
+    public function testDbAdapterQuoteIdentifier()
     {
-        return 'Mysqli';
+        $value = $this->_db->quoteIdentifier('table_name');
+        $this->assertEquals('`table_name`', $value);
+        $value = $this->_db->quoteIdentifier('table_`_name');
+        $this->assertEquals('`table_``_name`', $value);
     }
 
-    public function testExceptionInvalidLoginCredentials()
+    public function testDbAdapterQuote()
     {
-        $params = $this->getParams();
+        // test double quotes are fine
+        $value = $this->_db->quote('St John"s Wort');
+        $this->assertEquals("'St John\\\"s Wort'", $value);
+
+        // test that single quotes are escaped with another single quote
+        $value = $this->_db->quote("St John's Wort");
+        $this->assertEquals("'St John\\'s Wort'", $value);
+
+        // quote an array
+        $value = $this->_db->quote(array("it's", 'all', 'right!'));
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
+
+        // test numeric
+        $value = $this->_db->quote('1');
+        $this->assertEquals("'1'", $value);
+
+        $value = $this->_db->quote(1);
+        $this->assertEquals("1", $value);
+
+        $value = $this->_db->quote(array(1,'2',3));
+        $this->assertEquals("1, '2', 3", $value);
+    }
+
+    public function testDbAdapterQuoteInto()
+    {
+        // test double quotes are fine
+        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
+
+        // test that single quotes are escaped with another single quote
+        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
+    }
+
+    public function testDbAdapterExceptionInvalidLoginCredentials()
+    {
+        $params = $this->_util->getParams();
         $params['password'] = 'xxxxxxxx'; // invalid password
 
         try {
@@ -48,6 +83,11 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_Pdo_MysqlTest
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Mysqli_Exception'), 'Expected to catch Zend_Db_Adapter_Mysqli_Exception, got '.get_class($e));
         }
+    }
+
+    public function getDriver()
+    {
+        return 'Mysqli';
     }
 
 }
