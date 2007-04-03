@@ -447,7 +447,7 @@ class Zend_Controller_Front
     /**
      * Return the dispatcher object.
      *
-     * @return Zend_Controller_Dispatcher_Inteface
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function getDispatcher()
     {
