@@ -1,8 +1,8 @@
 <chapter id="conf">
-    <title>Configuration</title>
+    <title>Configurare</title>
     <para>
-        This section describes configuration for the framework.
-        Ideally, none will be required :)
+        Această secţiune descrie configurarea necesară pentru cadrul de lucru (framework).
+        Ideal, nu este necesară nicio configurare :)
     </para>
 </chapter>
 <!--

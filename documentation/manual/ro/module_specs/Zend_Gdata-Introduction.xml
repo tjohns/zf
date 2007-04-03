@@ -1,98 +1,98 @@
 <sect1 id="zend.gdata.introduction">
-    <title>Introduction to Gdata</title>
+    <title>Introducere în Gdata</title>
     <para>
-        Google Data APIs provide programmatic interface to some of Google's
-        online services.
-        Client applications submit queries and data via HTTP, and retrieve
-        results.
-        The Zend_Gdata component is a PHP 5 interface for accessing Google Data
-        from PHP.
+    	API-ul Google Data oferă o interfaţă pragmatică cu câteva dintre serviciile 
+    	online de la Google.
+    	Aplicaţiile client trimit cereri şi date prin HTTP şi primesc
+    	rezultate.
+    	Componenta Zend_Gdata este o interfaţă PHP 5 pentru acces la Google Data
+    	din PHP.
     </para>
 
     <para>
-        See
+        Vedeţi
         <ulink url="http://code.google.com/apis/gdata/">http://code.google.com/apis/gdata/</ulink>
-        for more information about Google Data API.
+        pentru mai multe informaţii despre API-ul Google Data.
     </para>
 
     <para>
-        The services that are accessible by Zend_Gdata include the
-        following:
+        Serviciile care sunt accesibile prin Zend_Gdata sunt
+        următoarele:
 
         <itemizedlist>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.base">Google Base</link>
-                    provides a search tool for online products,
-                    jobs, events, personal ads, and other types of entries.
-                    People post items and describe them with commonly-named
-                    attributes.
+                    oferă o unealtă de căutare pentru produse online,
+                    slujbe, evenimente, anunţuri personale şi alte tipuri de date.
+                    Oamenii postează date şi le descriu cu atribute cu nume 
+                    comune.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.blogger">Google Blogger</link>
-                    is a popular internet provider of
-                    "push-button publishing" and syndication.
+                    este un furnizor popular de servicii de tip „publicare prin apăsarea butonului”
+                    şi sindicare.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.calendar">Google Calendar</link>
-                    is an online scheduling and collaboration tool.
+                    este o unealtă online pentru manipulat calendare folosite pentru programare şi colaborare.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
-                    allows you to search public source code from many projects.
+                    vă permite să căutaţi în codul sursă public al multor proiecte.                
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <note>
-        <title>Unsupported services</title>
+        <title>Servicii care nu sunt suportate</title>
         <para>
-            Google Data API also supports Google Spreadsheets, but Zend_Gdata
-            does not provide a helper class for Spreadsheets in this release.
+            Google Data API oferă de asemenea Google Spreadsheets, dar Zend_Gdata
+            nu oferă o clasă pentru Spreadsheets în această ediţie.
         </para>
 
         <para>
-            Zend_Gdata does not provide an interface to any other Google
-            service, such as Search, Gmail, Translation, or Maps.
-            Only services that support the Google Data API are supported.
+            Zend_Gdata nu oferă o interfaţă pentru alte servicii Google
+            cum ar fi Căutare (Search), Gmail, Traducere (Translation sau Hărţi (Maps).
+            Sunt suportate doar serviciile incluse în API-ul Google Data.
         </para>
     </note>
 
     <sect2 id="zend.gdata.introduction.authentication">
-        <title>Google Data Client Authentication</title>
+        <title>Autentificarea unu client Google Data</title>
         <para>
-            Most Google Data services require client applications to
-            authenticate against the Google server before accessing
-            private data, or saving or deleting data.
-            There are two implementations of authentication for Google Data:
+            Multe servicii Google Data necesită ca aplicaţiile să se
+            autentifice pe serverul Google înainte de a accesa,
+            salva sau şterge date private.
+            Există două implementări de autentificare pentru Google Data:
             <link linkend="zend.gdata.authsub">AuthSub</link> and
             <link linkend="zend.gdata.clientlogin">ClientLogin</link>.
-            Zend_Gdata offers class interfaces for both of these methods.
+            Zend_Gdata oferă interfeţe sub forma unor clase pentru ambele metode.
         </para>
 
         <para>
-            Most other types of queries against Google Data services do not
-            require authentication.
+        	Majoritatea celorlalte tipuri de cereri către serviciile Google Data nu
+        	necesită autentificare.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.dependencies">
-        <title>Dependencies</title>
+        <title>Dependenţe</title>
         <para>
-            Zend_Gdata makes use of 
-            <link linkend="zend.feed.introduction">Zend_Feed</link> and
-            <link linkend="zend.http.client">Zend_Http_Client</link> to send
-            requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a Zend_Feed object in the
-            format of an Atom or RSS feed.
+            Zend_Gdata utilizează
+            <link linkend="zend.feed.introduction">Zend_Feed</link> şi
+            <link linkend="zend.http.client">Zend_Http_Client</link> pentru a trimite
+            cereri către google.com şi pentru a prelua rezultatele.  Răspunsul la majoritatea
+            cererilor Google Data este primit ca un obiect Zend_Feed în
+            format Atom sau RSS.
         </para>
 
         <para>

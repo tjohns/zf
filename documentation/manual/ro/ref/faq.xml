@@ -1,16 +1,16 @@
 <appendix id="faq">
-    <title>Frequently Asked Questions</title>
+    <title>Întrebări puse frecvent</title>
 
     <qandaset>
         <qandaentry>
             <question>
                 <para>
-                    How do I do X?
+                    Cum fac X?
                 </para>
             </question>
             <answer>
                 <para>
-                    The answer is...
+                    Răspunsul este...
                 </para>
             </answer>
         </qandaentry>
