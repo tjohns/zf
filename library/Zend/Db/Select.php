@@ -684,9 +684,6 @@ class Zend_Db_Select
 
         // force 'ASC' or 'DESC' on each order spec, default is ASC.
         foreach ($spec as $val) {
-            if (preg_match('/\(.*\)/', $val)) {
-                $val = new Zend_Db_Expr($val);
-            }
             if ($val instanceof Zend_Db_Expr) {
                 $expr = $val->__toString();
                 if (empty($expr)) {
@@ -702,7 +699,10 @@ class Zend_Db_Select
                     $val = trim($matches[1]);
                     $direction = $matches[2];
                 }
-                $this->_parts[self::ORDER][] = array(trim($val), $direction);
+                if (preg_match('/\(.*\)/', $val)) {
+                    $val = new Zend_Db_Expr($val);
+                }
+                $this->_parts[self::ORDER][] = array($val, $direction);
             }
         }
 
