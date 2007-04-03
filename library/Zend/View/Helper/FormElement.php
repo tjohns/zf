@@ -62,8 +62,7 @@ abstract class Zend_View_Helper_FormElement {
      * the same thing as formExample(array('name' => ...)).
      * 
      * Note that you cannot pass a 'disable' param; you need to pass
-     * it as an 'attribs' key.  A "'readonly' => 'readonly'" attribs
-     * key-value pair has the same effect as "'disable' => true".
+     * it as an 'attribs' key.  
      * 
      * @access protected
      * 
