@@ -15,6 +15,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
+require_once 'Helper/FormCheckboxTest.php';
 require_once 'Helper/FormTextTest.php';
 require_once 'Helper/HtmlListTest.php';
 
@@ -29,6 +30,7 @@ class Zend_View_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_View');
 
+        $suite->addTestSuite('Zend_View_Helper_FormCheckboxTest');
         $suite->addTestSuite('Zend_View_Helper_FormTextTest');
         $suite->addTestSuite('Zend_View_Helper_HtmlListTest');
 
