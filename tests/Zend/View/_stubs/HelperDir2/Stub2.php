@@ -11,4 +11,10 @@ class Zend_View_Helper_Stub2
 	{
 		return 'bar';
 	}
+
+    public function setView(Zend_View $view)
+    {
+        $this->view = $view;
+        return $this;
+    }
 }

@@ -252,8 +252,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             // load class and create instance
             $class = $this->_loadClass('helper', $name);
             $this->_helper[$name] = new $class();
-            if (property_exists($this->_helper[$name], 'view')) {
-                $this->_helper[$name]->view = $this;
+            if (method_exists($this->_helper[$name], 'setView')) {
+                $this->_helper[$name]->setView($this);
             }
         }
 

@@ -611,7 +611,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(dirname(__FILE__) . '/View/_templates/', $paths[0]);
     }
 
-    public function testHelperViewProperty()
+    public function testHelperViewAccessor()
     {
         $view = new Zend_View();
         $view->addHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/');
