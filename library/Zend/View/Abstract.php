@@ -98,6 +98,13 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_encoding = 'ISO-8859-1';
 
     /**
+     * Strict variables flag; when on, undefined variables accessed in the view 
+     * scripts will trigger notices 
+     * @var boolean
+     */
+    private $_strictVars = false;
+
+    /**
      * Constructor.
      *
      * @param array $config Configuration key-value pairs.
@@ -173,12 +180,18 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
     /**
      * Prevent E_NOTICE for nonexistent values
+     *
+     * If {@link strictVars()} is on, raises a notice.
      * 
-     * @param string $key 
+     * @param  string $key 
      * @return null
      */
     public function __get($key)
     {
+        if ($this->_strictVars) {
+            trigger_error('Key "' . $key . '" does not exist', E_USER_NOTICE);
+        }
+
         return null;
     }
 
@@ -621,6 +634,25 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     public function getEncoding()
     {
         return $this->_encoding;
+    }
+
+    /**
+     * Enable or disable strict vars
+     *
+     * If strict variables are enabled, {@link __get()} will raise a notice 
+     * when a variable is not defined.
+     *
+     * Use in conjunction with {@link Zend_View_Helper_DeclareVars the declareVars() helper}
+     * to enforce strict variable handling in your view scripts.
+     * 
+     * @param  boolean $flag 
+     * @return Zend_View_Abstract
+     */
+    public function strictVars($flag = true)
+    {
+        $this->_strictVars = ($flag) ? true : false;
+
+        return $this;
     }
 
     /**

@@ -666,6 +666,16 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue($found, var_export($filterPaths, 1));
     }
+
+    public function testStrictVars()
+    {
+        $view = new Zend_View();
+        $view->setScriptPath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR . '_templates');
+        $view->strictVars(true);
+        $content = $view->render('testStrictVars.phtml');
+        $this->assertContains('Key "foo" does not exist', $content, $content);
+        $this->assertContains('Key "bar" does not exist', $content);
+    }
 }
 
 class Zend_ViewTest_Extension extends Zend_View
