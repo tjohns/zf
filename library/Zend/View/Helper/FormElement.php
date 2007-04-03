@@ -103,9 +103,6 @@ abstract class Zend_View_Helper_FormElement {
         // disable if readonly
         if (isset($info['attribs']['readonly']) &&
             $info['attribs']['readonly'] == 'readonly') {
-            // disable the element
-            $info['disable'] = true;
-            unset($info['attribs']['readonly']);
         }
         
         // normal disable, overrides readonly
