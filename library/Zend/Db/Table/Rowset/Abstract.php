@@ -184,7 +184,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      * Similar to the current() function for arrays in PHP
      * Required by interface Iterator.
      *
-     * @return mixed current element from the collection
+     * @return Zend_Db_Table_Row_Abstract current element from the collection
      */
     public function current()
     {
