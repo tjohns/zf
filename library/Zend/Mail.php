@@ -130,6 +130,12 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected $_mimeBoundary = null;
 
+    /**
+     * Content type of the message
+     * @var string
+     */
+    protected $_type = null;
+
     /**#@-*/
 
     /**
@@ -137,6 +143,7 @@ class Zend_Mail extends Zend_Mime_Message
      * @var boolean
      */
     public $hasAttachments = false;
+
 
     /**
      * Sets the default mail transport for all following uses of
@@ -169,6 +176,40 @@ class Zend_Mail extends Zend_Mime_Message
     public function getCharset()
     {
         return $this->_charset;
+    }
+
+    /**
+     * Set content type
+     *
+     * Should only be used for manually setting multipart content types.
+     * 
+     * @param  string $type Content type
+     * @return Zend_Mail Implements fluent interface
+     * @throws Zend_Mail_Exception for types not supported by Zend_Mime
+     */
+    public function setType($type)
+    {
+        $allowed = array(
+            Zend_Mime::MULTIPART_ALTERNATIVE,
+            Zend_Mime::MULTIPART_MIXED,
+            Zend_Mime::MULTIPART_RELATED,
+        );
+        if (!in_array($type, $allowed)) {
+            throw new Zend_Mail_Exception('Invalid content type "' . $type . '"');
+        }
+
+        $this->_type = $type;
+        return $this;
+    }
+
+    /**
+     * Get content type of the message
+     * 
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->_type;
     }
 
     /**

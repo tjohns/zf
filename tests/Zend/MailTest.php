@@ -492,4 +492,22 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('Some body text', $mail->getBodyHtml(true));
     }
+
+    public function testTypeAccessor()
+    {
+        $mail = new Zend_Mail();
+        $this->assertNull($mail->getType());
+
+        $mail->setType(Zend_Mime::MULTIPART_ALTERNATIVE);
+        $this->assertEquals(Zend_Mime::MULTIPART_ALTERNATIVE, $mail->getType());
+
+        $mail->setType(Zend_Mime::MULTIPART_RELATED);
+        $this->assertEquals(Zend_Mime::MULTIPART_RELATED, $mail->getType());
+
+        try {
+            $mail->setType('text/plain');
+            $this->fail('Invalid Zend_Mime type should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
 }
