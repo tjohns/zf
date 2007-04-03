@@ -89,4 +89,17 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<li>six</li></ul></li><li>two', $list);
     } 
 
+    public function testMakeNestedDeepUnorderedList()
+    {
+        $items = array('one', array('four', array('six', 'seven', 'eight'), 'five'), 'two', 'three');
+
+        $list = $this->_helper->htmlList($items);
+
+        $this->assertContains('<ul>', $list);
+        $this->assertContains('</ul>', $list);
+        $this->assertContains('one<ul><li>four', $list);
+        $this->assertContains('<li>four<ul><li>six', $list);
+        $this->assertContains('<li>five</li></ul></li><li>two', $list);
+    } 
+
 }
