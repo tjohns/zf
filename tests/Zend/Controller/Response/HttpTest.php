@@ -293,7 +293,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
             'foobar' => "foobar content\n",
             'more'   => "more content\n"
         );
-        $this->assertEquals($expected, $content);
+        $this->assertSame($expected, $content);
     }
 
     public function testInsertBefore()
@@ -309,7 +309,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
             'some'   => "some content\n",
             'more'   => "more content\n"
         );
-        $this->assertEquals($expected, $content);
+        $this->assertSame($expected, $content);
     }
 
     public function testInsertWithFalseParent()
@@ -325,7 +325,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
             'more'   => "more content\n",
             'foobar' => "foobar content\n"
         );
-        $this->assertEquals($expected, $content);
+        $this->assertSame($expected, $content);
     }
 
     public function testSetBodyNamedSegment()
