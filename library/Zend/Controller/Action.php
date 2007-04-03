@@ -172,11 +172,7 @@ abstract class Zend_Controller_Action
         }
 
         require_once 'Zend/View.php';
-        $this->view = new Zend_View(array(
-            'scriptPath' => $baseDir . DIRECTORY_SEPARATOR . 'scripts',
-            'helperPath' => $baseDir . DIRECTORY_SEPARATOR . 'helpers',
-            'filterPath' => $baseDir . DIRECTORY_SEPARATOR . 'filters'
-        ));
+        $this->view = new Zend_View(array('basePath' => $baseDir));
 
         return $this->view;
     }
