@@ -219,12 +219,18 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Return text body Zend_Mime_Part
-     * 
-     * @return false|Zend_Mime_Part
+     * Return text body Zend_Mime_Part or string
+     *
+     * @param  bool textOnly Whether to return just the body text content or the MIME part; defaults to false, the MIME part
+     * @return false|Zend_Mime_Part|string
      */
-    public function getBodyText()
+    public function getBodyText($textOnly = false)
     {
+        if ($textOnly && $this->_bodyText) {
+            $body = $this->_bodyText;
+            return $body->getContent();
+        }
+
         return $this->_bodyText;
     }
 
@@ -255,10 +261,16 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Return Zend_Mime_Part representing body HTML
      * 
-     * @return false|Zend_Mime_Part
+     * @param  bool $htmlOnly Whether to return the body HTML only, or the MIME part; defaults to false, the MIME part
+     * @return false|Zend_Mime_Part|string
      */
-    public function getBodyHtml()
+    public function getBodyHtml($htmlOnly = false)
     {
+        if ($htmlOnly && $this->_bodyHtml) {
+            $body = $this->_bodyHtml;
+            return $body->getContent();
+        }
+
         return $this->_bodyHtml;
     }
 
