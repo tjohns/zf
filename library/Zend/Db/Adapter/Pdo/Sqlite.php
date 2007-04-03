@@ -30,7 +30,7 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 require_once 'Zend/Db/Adapter/Exception.php';
 
 /**
- * Class for connecting to MySQL databases and performing common operations.
+ * Class for connecting to SQLite2 and SQLite3 databases and performing common operations.
  *
  * @category   Zend
  * @package    Zend_Db
