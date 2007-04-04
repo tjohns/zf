@@ -272,7 +272,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $route = new Zend_Controller_Router_Route('authors/:name', array('name' => 'martel'));
         $url = $route->assemble();
 
-        $this->assertSame('authors/martel', $url);
+        $this->assertSame('authors', $url);
     }
 
     public function testAssembleWithDefaultAndValue()
@@ -308,7 +308,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $url = $route->assemble(array(), true);
 
-        $this->assertSame('archive/show', $url);
+        $this->assertSame('', $url);
     }
     
     public function testAssembleWithReset3()
@@ -318,7 +318,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $url = $route->assemble(array(), true);
 
-        $this->assertSame('archive/2005', $url);
+        $this->assertSame('archive', $url);
     }
     
     public function testAssembleWithReset4()
@@ -424,7 +424,49 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('news/index/id/3', $url);
 
         $url = $route->assemble(array('action' => null, 'id' => null));
-        $this->assertSame('news/index', $url);
-
+        $this->assertSame('news', $url);
     }
+
+    public function testAssembleWithRemovedDefaults() // Test for ZF-1197
+    {    
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        
+        $url = $route->assemble(array('id' => 3));
+        $this->assertSame('index/index/id/3', $url);
+
+        $url = $route->assemble(array('action' => 'test'));
+        $this->assertSame('index/test', $url);
+
+        $url = $route->assemble(array('action' => 'test', 'id' => 3));
+        $this->assertSame('index/test/id/3', $url);
+
+        $url = $route->assemble(array('controller' => 'test'));
+        $this->assertSame('test', $url);
+
+        $url = $route->assemble(array('controller' => 'test', 'action' => 'test'));
+        $this->assertSame('test/test', $url);
+
+        $url = $route->assemble(array('controller' => 'test', 'id' => 3));
+        $this->assertSame('test/index/id/3', $url);
+
+        $url = $route->assemble(array());
+        $this->assertSame('', $url);
+
+        $route->match('ctrl');
+
+        $url = $route->assemble(array('id' => 3));
+        $this->assertSame('ctrl/index/id/3', $url);
+
+        $url = $route->assemble(array('action' => 'test'));
+        $this->assertSame('ctrl/test', $url);
+
+        $url = $route->assemble();
+        $this->assertSame('ctrl', $url);
+        
+        $route->match('index');
+        
+        $url = $route->assemble();
+        $this->assertSame('', $url);
+    }
+
 }

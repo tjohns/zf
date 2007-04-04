@@ -201,7 +201,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     {
 
         $url = array();
-
+        $flag = false;
+        
         foreach ($this->_parts as $key => $part) {
 
             $resetPart = false;
@@ -232,6 +233,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     foreach ($data as $var => $value) {
                         if ($value !== null) {
                             $url[$var] = $var . self::URI_DELIMITER . $value;
+                            $flag = true;
                         }
                     }
                 }
@@ -239,8 +241,17 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
 
         }
+        
+        $return = '';
+        
+        foreach (array_reverse($url, true) as $key => $value) {
+            if ($flag || $value !== $this->getDefault($this->_parts[$key]['name'])) {
+                $return = '/' . $value . $return;
+                $flag = true;
+            }
+        }
 
-        return implode(self::URI_DELIMITER, $url);
+        return trim($return, '/');
 
     }
 
