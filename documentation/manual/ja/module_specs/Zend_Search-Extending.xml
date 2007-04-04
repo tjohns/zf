@@ -61,8 +61,8 @@ $index->addDocument($doc);]]></programlisting>
 /** これは独自のテキスト解析器で、数字つきの単語をひとつの言葉として扱います */
 
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+/** Zend_Search_Lucene_Analysis_Analyzer の階層 */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
