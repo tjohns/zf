@@ -191,14 +191,14 @@ abstract class Zend_Pdf_Image
      * Attempts to extract a JPEG Image from the data source.
      *
      * @param Zend_Pdf_FileParserDataSource $dataSource
-     * @return Zend_Pdf_Resource_Image_JPEG May also return null if
+     * @return Zend_Pdf_Resource_Image_Jpeg May also return null if
      *   the data source does not appear to contain valid image data.
      * @throws Zend_Pdf_Exception
      */
     protected static function _extractJpegImage($dataSource)
     {
-        $imageParser = new Zend_Pdf_FileParser_Image_JPEG($dataSource);
-        $image = new Zend_Pdf_Resource_Image_JPEG($imageParser);
+        $imageParser = new Zend_Pdf_FileParser_Image_Jpeg($dataSource);
+        $image = new Zend_Pdf_Resource_Image_Jpeg($imageParser);
         unset($imageParser);
 
         return $image;
@@ -208,7 +208,7 @@ abstract class Zend_Pdf_Image
      * Attempts to extract a PNG Image from the data source.
      *
      * @param Zend_Pdf_FileParserDataSource $dataSource
-     * @return Zend_Pdf_Resource_Image_PNG May also return null if
+     * @return Zend_Pdf_Resource_Image_Png May also return null if
      *   the data source does not appear to contain valid image data.
      * @throws Zend_Pdf_Exception
      */
@@ -225,14 +225,14 @@ abstract class Zend_Pdf_Image
      * Attempts to extract a TIFF Image from the data source.
      *
      * @param Zend_Pdf_FileParserDataSource $dataSource
-     * @return Zend_Pdf_Resource_Image_TIFF May also return null if
+     * @return Zend_Pdf_Resource_Image_Tiff May also return null if
      *   the data source does not appear to contain valid image data.
      * @throws Zend_Pdf_Exception
      */
     protected static function _extractTiffImage($dataSource)
     {
-        $imageParser = new Zend_Pdf_FileParser_Image_TIFF($dataSource);
-        $image = new Zend_Pdf_Resource_Image_TIFF($imageParser);
+        $imageParser = new Zend_Pdf_FileParser_Image_Tiff($dataSource);
+        $image = new Zend_Pdf_Resource_Image_Tiff($imageParser);
         unset($imageParser);
 
         return $image;

@@ -30,7 +30,7 @@ require_once 'Zend/Pdf/FileParser/Image.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_FileParser_Image_PNG extends Zend_Pdf_FileParser_Image
+class Zend_Pdf_FileParser_Image_Png extends Zend_Pdf_FileParser_Image
 {
      protected $_isPNG;
      protected $_width;
