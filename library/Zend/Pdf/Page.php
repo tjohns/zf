@@ -941,7 +941,7 @@ class Zend_Pdf_Page
      * @param float $x2
      * @param float $y2
      */
-    public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2)
+    public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2)
     {
         $this->_addProcSet('PDF');
 

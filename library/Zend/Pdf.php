@@ -65,7 +65,7 @@ require_once 'Zend/Pdf/Color/Html.php';
 require_once 'Zend/Pdf/Resource/Image.php';
 
 /** Zend_Pdf_Image */
-require_once 'Zend/Pdf/Resource/ImageFactory.php';
+require_once 'Zend/Pdf/Image.php';
 
 /** Zend_Pdf_Image_Jpeg */
 require_once 'Zend/Pdf/Resource/Image/Jpeg.php';
@@ -95,19 +95,19 @@ require_once 'Zend/Pdf/Resource/Image/Png.php';
 class Zend_Pdf
 {
   /**** Class Constants ****/
-  
+
     /**
      * Version number of generated PDF documents.
      */
     const PDF_VERSION = 1.4;
-    
+
     /**
      * PDF file header.
      */
     const PDF_HEADER  = "%PDF-1.4\n%\xE2\xE3\xCF\xD3\n";
-     
-  
-  
+
+
+
     /**
      * Pages collection
      *
@@ -575,8 +575,8 @@ class Zend_Pdf
     {
         $this->_javaScript = $javascript;
     }
-    
-    
+
+
     /**
      * Convert date to PDF format (it's close to ASN.1 (Abstract Syntax Notation
      * One) defined in ISO/IEC 8824).
@@ -603,5 +603,5 @@ class Zend_Pdf
         }
         return substr_replace($date, '\'', -2, 0) . '\'';
     }
-     
+
 }
