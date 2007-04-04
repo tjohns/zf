@@ -354,6 +354,7 @@ abstract class Zend_Db_TestUtil_Common
     {
         $this->dropTable($db);
         $this->dropSequence($db);
+        $db->closeConnection();
     }
 
 }
