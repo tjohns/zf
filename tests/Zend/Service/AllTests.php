@@ -61,6 +61,12 @@ require_once 'Zend/Service/AkismetTest.php';
 
 
 /**
+ * @see Zend_Service_Amazon_AllTests
+ */
+require_once 'Zend/Service/Amazon/AllTests.php';
+
+
+/**
  * @see Zend_Service_Audioscrobbler_AllTests
  */
 require_once 'Zend/Service/Audioscrobbler/AllTests.php';
@@ -113,6 +119,7 @@ class Zend_Service_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service');
 
         $suite->addTestSuite('Zend_Service_AkismetTest');
+        $suite->addTest(Zend_Service_Amazon_AllTests::suite());
         $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
         $suite->addTest(Zend_Service_Delicious_AllTests::suite());
         $suite->addTest(Zend_Service_Flickr_AllTests::suite());
