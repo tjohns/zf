@@ -359,7 +359,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('archives/2006/03', $url);
     }
 
-    public function testAssembleWithWildcardUrlVariablesOverwriting()
+    public function testWildcardUrlVariablesOverwriting()
     {
         $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
         $values = $route->match('archives/2006/07/controller/test/year/10000/sort/author');

@@ -224,22 +224,18 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 } else
                     throw new Zend_Controller_Router_Exception($part['name'] . ' is not specified');
 
-            } else {
-
-                if ($part['regex'] != '\*') {
-                    $url[$key] = $part['regex'];
-                } else {
-                    if (!$reset) $data += $this->_params;
-                    foreach ($data as $var => $value) {
-                        if ($value !== null) {
-                            $url[$var] = $var . self::URI_DELIMITER . $value;
-                            $flag = true;
-                        }
-                    }
-                }
-
+            } elseif ($part['regex'] != '\*') {
+                $url[$key] = $part['regex'];
             }
 
+        }
+
+        if (!$reset) $data += $this->_params;
+        foreach ($data as $var => $value) {
+            if ($value !== null) {
+                $url[$var] = $var . self::URI_DELIMITER . $value;
+                $flag = true;
+            }
         }
         
         $return = '';
