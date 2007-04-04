@@ -105,6 +105,16 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Force the connection to close.
+     *
+     * @return void
+     */
+    public function closeConnection()
+    {
+        $this->_connection = null;
+    }
+
+    /**
      * Prepares an SQL statement.
      *
      * @param string $sql The SQL statement with placeholders.

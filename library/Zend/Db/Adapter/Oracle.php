@@ -115,10 +115,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     protected function _connect()
     {
-        /**
-         * @todo should check resource here
-         */
-        if ($this->_connection) {
+        if (is_resource($this->_connection)) {
+            // connection already exists
             return;
         }
 
@@ -141,6 +139,19 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         if (!$this->_connection) {
             throw new Zend_Db_Adapter_Oracle_Exception(oci_error());
         }
+    }
+
+    /**
+     * Force the connection to close.
+     *
+     * @return void
+     */
+    public function closeConnection()
+    {
+        if (is_resource($this->_connection)) {
+            oci_close($this->_connection);
+        }
+        $this->_connection = null;
     }
 
     /**

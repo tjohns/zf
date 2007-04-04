@@ -198,6 +198,17 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Force the connection to close.
+     *
+     * @return void
+     */
+    public function closeConnection()
+    {
+        db2_close($this->_connection);
+        $this->_connection = null;
+    }
+
+    /**
      * Returns an SQL statement for preparation.
      *
      * @param string $sql The SQL statement with placeholders.

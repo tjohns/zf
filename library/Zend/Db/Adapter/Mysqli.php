@@ -210,6 +210,17 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Force the connection to close.
+     *
+     * @return void
+     */
+    public function closeConnection()
+    {
+        $this->_connection->close();
+        $this->_connection = null;
+    }
+
+    /**
      * Prepare a statement and return a PDOStatement-like object.
      *
      * @param  string  $sql  SQL query

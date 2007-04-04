@@ -730,6 +730,13 @@ abstract class Zend_Db_Adapter_Abstract
     abstract protected function _connect();
 
     /**
+     * Force the connection to close.
+     *
+     * @return void
+     */
+    abstract public function closeConnection();
+
+    /**
      * Prepare a statement and return a PDOStatement-like object.
      *
      * @param string|Zend_Db_Select $sql SQL query
