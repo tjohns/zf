@@ -189,31 +189,48 @@ abstract class Zend_Controller_Action
      * specify the named body content segment to set by specifying a $name.
      *
      * @see Zend_Controller_Response_Abstract::appendBody()
-     * @param string|null $action 
-     * @param string|null $name 
-     * @param boolean $noController 
+     * @param  string|null $action Defaults to action registered in request object
+     * @param  string|null $name Response object named path segment to use; defaults to null
+     * @param  bool $noController  Defaults to false; i.e. use controller name as subdir in which to search for view script
      * @return void
-     * @throws Zend_Controller_Exception with bad $action
      */
     public function render($action = null, $name = null, $noController = false)
     {
-        if (null === $action) {
-            $action = $this->getRequest()->getActionName();
-        } elseif (!is_string($action)) {
-            throw new Zend_Controller_Exception('Invalid action specifier for view render');
-        }
-
         $view   = $this->initView();
-        $script = $action . '.' . $this->viewSuffix;
-
-        if (!$noController) {
-            $script = $this->getRequest()->getControllerName() . DIRECTORY_SEPARATOR . $script;
-        }
+        $script = $this->getViewScript($action, $noController);
 
         $this->getResponse()->appendBody(
             $view->render($script),
             $name
         );
+    }
+
+    /**
+     * Construct view script path
+     *
+     * Used by render() to determine the path to the view script.
+     * 
+     * @param  string $action Defaults to action registered in request object
+     * @param  bool $noController  Defaults to false; i.e. use controller name as subdir in which to search for view script
+     * @return string
+     * @throws Zend_Controller_Exception with bad $action
+     */
+    public function getViewScript($action = null, $noController = false)
+    {
+        $request = $this->getRequest();
+        if (null === $action) {
+            $action = $request->getActionName();
+        } elseif (!is_string($action)) {
+            throw new Zend_Controller_Exception('Invalid action specifier for view render');
+        }
+
+        $script = $action . '.' . $this->viewSuffix;
+
+        if (!$noController) {
+            $script = $request->getControllerName() . DIRECTORY_SEPARATOR . $script;
+        }
+
+        return $script;
     }
 
     /**

@@ -275,6 +275,23 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $controller->nameAction();
         $this->assertContains('In the name view', $response->getBody('name'));
     }
+
+    public function testGetViewScript()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('test');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $script = $controller->getViewScript();
+        $this->assertContains('view' . DIRECTORY_SEPARATOR . 'test.phtml', $script);
+
+        $script = $controller->getViewScript('foo');
+        $this->assertContains('view' . DIRECTORY_SEPARATOR . 'foo.phtml', $script);
+    }
 }
 
 class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
