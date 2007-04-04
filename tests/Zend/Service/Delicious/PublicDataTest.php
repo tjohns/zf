@@ -55,10 +55,13 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        Zend_Rest_Client::getHttpClient()->setConfig(array(
+	    $httpClient = new Zend_Http_Client();
+        $httpClient->setConfig(array(
                 'useragent' => 'Zend_Service_Delicious - Unit tests/0.1',
                 'keepalive' => true
         ));
+        Zend_Rest_Client::setHttpClient($httpClient);
+
         $this->_delicious = new Zend_Service_Delicious();
     }
 

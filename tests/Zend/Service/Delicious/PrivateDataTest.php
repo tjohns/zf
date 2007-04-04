@@ -62,10 +62,12 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        Zend_Rest_Client::getHttpClient()->setConfig(array(
+	    $httpClient = new Zend_Http_Client();
+        $httpClient->setConfig(array(
                 'useragent' => 'Zend_Service_Delicious - Unit tests/0.1',
                 'keepalive' => true
         ));
+        Zend_Rest_Client::setHttpClient($httpClient);
 
         $this->_delicious = new Zend_Service_Delicious(self::TEST_UNAME, self::TEST_PASS);
     }
@@ -136,7 +138,7 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testAddDeletePost()
+    public function _testAddDeletePost()
     {
         $newPost = $this->_delicious->createNewPost(self::$TEST_POST_TITLE, self::$TEST_POST_URL)
                                     ->setNotes(self::$TEST_POST_NOTES)
