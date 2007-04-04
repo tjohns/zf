@@ -608,7 +608,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $view->foo);
         $paths = $view->getScriptPaths();
         $this->assertEquals(1, count($paths));
-        $this->assertEquals(dirname(__FILE__) . '/View/_templates/', $paths[0]);
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR . '_templates' . DIRECTORY_SEPARATOR, $paths[0]);
     }
 
     public function testHelperViewAccessor()
@@ -629,15 +629,15 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     public function testSetBasePath()
     {
         $view = new Zend_View();
-        $base = dirname(__FILE__) . '/View';
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
         $view->setBasePath($base);
         $this->_testBasePath($view, $base);
     }
 
     public function testSetBasePathFromConstructor()
     {
-        $base = dirname(__FILE__) . '/View';
-        $view = new Zend_View(array('basePath' => dirname(__FILE__) . '/View'));
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $view = new Zend_View(array('basePath' => $base));
         $this->_testBasePath($view, $base);
     }
 
@@ -675,6 +675,77 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $content = $view->render('testStrictVars.phtml');
         $this->assertContains('Key "foo" does not exist', $content, $content);
         $this->assertContains('Key "bar" does not exist', $content);
+    }
+
+    public function testGetScriptPath()
+    {
+        $view = new Zend_View();
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR . '_templates';
+        $view->setScriptPath($base);
+        $path = $view->getScriptPath('test.phtml');
+        $this->assertEquals($base . DIRECTORY_SEPARATOR . 'test.phtml', $path);
+    }
+
+    public function testGetHelper()
+    {
+        // require so we can do type hinting
+        require_once 'Zend/View/Helper/DeclareVars.php';
+        $view = new Zend_View();
+        $view->declareVars();
+        $helper = $view->getHelper('declareVars');
+        $this->assertTrue($helper instanceof Zend_View_Helper_DeclareVars);
+    }
+
+    public function testGetHelperPath()
+    {
+        require_once 'Zend/View/Helper/DeclareVars.php';
+        $reflection = new ReflectionClass('Zend_View_Helper_DeclareVars');
+        $expected   = $reflection->getFileName();
+
+        $view = new Zend_View();
+        $view->declareVars();
+        $helperPath = $view->getHelperPath('declareVars');
+        $this->assertEquals($expected, $helperPath);
+    }
+
+    public function testGetFilter()
+    {
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR;
+        require_once $base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1' . DIRECTORY_SEPARATOR . 'Foo.php';
+
+        $view = new Zend_View();
+        $view->setScriptPath($base . '_templates');
+        $view->addFilterPath($base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1');
+
+        $filter = $view->getFilter('foo');
+        $this->assertTrue($filter instanceof Zend_View_Filter_Foo);
+    }
+
+    public function testGetFilterPath()
+    {
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR;
+        $expected = $base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1' . DIRECTORY_SEPARATOR . 'Foo.php';
+
+        $view = new Zend_View();
+        $view->setScriptPath($base . '_templates');
+        $view->addFilterPath($base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1');
+
+        $filterPath = $view->getFilterPath('foo');
+        $this->assertEquals($expected, $filterPath);
+    }
+
+    public function testGetFilters()
+    {
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR;
+
+        $view = new Zend_View();
+        $view->setScriptPath($base . '_templates');
+        $view->addFilterPath($base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1');
+        $view->addFilter('foo');
+
+        $filters = $view->getFilters();
+        $this->assertEquals(1, count($filters));
+        $this->assertEquals('foo', $filters[0]);
     }
 }
 

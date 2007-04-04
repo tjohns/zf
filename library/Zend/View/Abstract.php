@@ -555,7 +555,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     public function getFilters()
     {
-        return $this->_filterClass;
+        return $this->_filter;
     }
 
     /**
