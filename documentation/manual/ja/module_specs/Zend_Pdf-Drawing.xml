@@ -408,32 +408,25 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
 /**
  * ページ内の指定した位置に画像を描画します。
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Resource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]>
         </programlisting>
         <para>
-        画像オブジェクトは <code>Zend_Pdf_Image</code>
-        クラスを継承したクラスで表されます。
-        </para>
-        <para>
-        現在は JPG、PNG および TIFF 画像がサポートされています。
+        画像オブジェクトは、<code>Zend_Pdf_Image::imageWithPath($filePath)</code>
+        メソッドで作成しなければなりません (現在は JPG、PNG および TIFF
+        画像をサポートしています)。
         </para>
         <example>
             <title>画像の描画</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-// (以下のいずれかを使用して) 画像オブジェクトを直接作成します
-$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
-$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
-$image = new Zend_Pdf_Image_Png('my_image.png');
-
-// あるいは Zend_Pdf_ImageFactory で適切な形式を読み込みます
-$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+// 画像を読み込みます
+$image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -442,8 +435,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>重要! Zend_Pdf_Image_Jpeg クラスは PHP の GD 拡張モジュールを必要とします。</emphasis>
-            <emphasis>重要! Zend_Pdf_Image_Png クラスでアルファチャネルを使用した画像を扱うには、ZLIB 拡張モジュールを必要とします。</emphasis>
+            <emphasis>重要! JPEG のサポートには PHP の GD 拡張モジュールを必要とします。</emphasis>
+            <emphasis>重要! PNG でアルファチャネルを使用した画像を扱うには、ZLIB 拡張モジュールを必要とします。</emphasis>
         </para>
         <para>
             詳細な情報は、PHP のドキュメント
