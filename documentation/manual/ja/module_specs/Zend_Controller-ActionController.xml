@@ -198,15 +198,204 @@ $this->getResponse()->appendBody($content);
 
             <listitem>
                 <para>
-                    <emphasis>_redirect($url, $code = 302)</emphasis>:
+                    <emphasis>_redirect($url, array $options =
+                        array())</emphasis>:
                     別の場所にリダイレクトします。このメソッドには、URL
-                    のほかにオプションで HTTP 状態コードを指定します。
-                    リダイレクトはその場ですぐ行われ、プログラムの実行はそこで停止します。
+                    のほかに任意でオプション群を指定します。
+                    デフォルトでは、HTTP 302 リダイレクトを行います。
                 </para>
 
                 <para>
-                    状態コードを指定した場合は、リダイレクト時に
-                    PHP の header() コマンドでコードが使用されます。
+                    オプションは、以下のうちのひとつあるいは複数の組み合わせとなります。
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            <emphasis>exit:</emphasis> 即時に終了するかしないか。
+                            これを指定すると、オープンしたいるセッションをすべて閉じた後にリダイレクトします。
+                        </para>
+
+                        <para>
+                            このオプションをコントローラ全体で有効にするには、
+                            アクセスメソッド <code>setRedirectExit()</code> を使用します。
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <emphasis>prependBase:</emphasis> 
+                            リクエストオブジェクトに登録されている基底 URL を
+                            この URL の先頭に付加するかどうか。
+                        </para>
+
+                        <para>
+                            このオプションをコントローラ全体で有効にするには、
+                            アクセスメソッド <code>setRedirectPrependBase()</code> を使用します。
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <emphasis>code:</emphasis> リダイレクトの際にどの HTTP コードを使用するか。
+                            デフォルトでは HTTP 302 を使用しますが、
+                            301 から 306 までの任意の値を使用できます。
+                        </para>
+
+                        <para>
+                            You may set this option globally within the
+                            このオプションをコントローラ全体で有効にするには、
+                            アクセスメソッド <code>setRedirectCode()</code> を使用します。
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>render($action = null, $name = null, $noController
+                    = false)</emphasis>: ビュースクリプトをレンダリングします。
+                    引数を省略した場合は、<code>[コントローラ名]/[アクション名].phtml</code>
+                    (<code>.phtml</code> はプロパティ
+                    <code>$viewSuffix</code> の値です) が要求されたものとみなします。
+                    <code>$action</code> の値を指定すると、
+                    <code>[controller]</code> サブディレクトリ内のテンプレートをレンダリングします。
+                    <code>[controller]</code> サブディレクトリを無視させるには、
+                    <code>$noController</code> に true を渡します。
+                    最後にひとつ。レンダリングされたテンプレートは、レスポンスオブジェクトに出力されます。
+                    もしレスポンスオブジェクト内の特定の部分に出力したい場合は、その値を
+                    <code>$name</code> に渡してください。
+                </para>
+
+                <para>
+                    例を見てみましょう。
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function fooAction()
+    {
+        // my/foo.phtml を出力します
+        $this->render();
+
+        // my/bar.phtml を出力します
+        $this->render('bar');
+
+        // baz.phtml を出力します
+        $this->render('baz', null, true);
+
+        // foo/login.phtml を、レスポンスオブジェクトの 'form' 部に出力します
+        $this->render('login', 'form');
+        
+        // site.phtml を、レスポンスオブジェクトの 'page' 部に出力します
+        $this->render('site', 'page', true);
+    }
+}
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>initView()</emphasis>: ビューオブジェクトを初期化します。
+                    <code>render()</code> は <code>initView()</code>
+                    をコールしてビューオブジェクトを取得しますが、
+                    この初期化はいつでも行うことができます。デフォルトでは、
+                    プロパティ <code>$view</code> を作成します。
+                    デフォルトで使用するのは <code>Zend_View</code> ですが、
+                    <code>Zend_View_Interface</code> を実装したクラスならなんでも使用可能です。
+                </para>
+
+                <para>
+                    デフォルトの実装は、次のようなディレクトリ構造を想定しています。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+applicationOrModule/
+    controllers/
+        IndexController.php
+    views/
+        scripts/
+            index/
+                index.phtml
+        helpers/
+        filters/
+]]></programlisting>
+                
+                <para>
+                    言い換えると、ビュースクリプトが
+                    <code>views/scripts/</code> の配下にあること、そして
+                    <code>views</code> ディレクトリが
+                    controllers ディレクトリと同一階層にあることを想定しているということです。
+                </para>
+
+                <para>
+                    変数の代入やフィルタの登録が必要になった場合などに、
+                    <code>initView()</code> を <code>init()</code>
+                    あるいはアクションメソッドからコールします。たとえば次のようになります。
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // ビューオブジェクトをすぐに初期化します
+        $this->initView();
+    }
+
+    public function fooAction()
+    {
+        // いくつかの変数を初期化します
+        $this->view->foo = 'bar';
+        $this->view->bar = 'baz';
+
+        // ビューをレンダリングします。変数 'foo' および 'bar' には値が代入されています
+        $this->render();
+    }
+}
+
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // アクション単位でビューを初期化します
+        $view = $this->initView();
+
+        // いくつかの変数を初期化します
+        $view->foo = 'bar';
+        $view->bar = 'baz';
+
+        // ビューをレンダリングします。変数 'foo' および 'bar' には値が代入されています
+        $this->render();
+    }
+}
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>getViewScript($action = null, $noController =
+                        false):</emphasis> ビュースクリプトのパスを取得します。
+                    主に <code>render()</code> から使用しますが、
+                    ビュースクリプトのパスを取得したい場面ではいつでも使用できます。
+                    あるいは、このメソッドをオーバーライドすることで、
+                    コントローラがビュースクリプトのパスを決定する方法を変更することもできます。
+                </para>
+
+                <para>
+                    上の <code>render()</code> で詳しく説明したように、デフォルトの機能は
+                    <code>[コントローラ名]/[アクション名].phtml</code> というビュースクリプトを探すというものです。
+                    <code>$action</code> を指定すると、ビュースクリプトのファイル名をオーバーライドします。
+                    また <code>$noController</code> に true を渡すと
+                    controller サブディレクトリを探さないようにします。
+                    プロパティ <code>$viewSuffix</code> をオーバーライドして、
+                    ファイルの拡張子 (デフォルトは .phtml) を変更することもできます。
+                </para>
+
+                <para>
+                    このメソッドをオーバーライドすることで、
+                    ビュースクリプトの名前とパスを決定する機能を変更できます。
                 </para>
             </listitem>
         </itemizedlist>
