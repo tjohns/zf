@@ -127,15 +127,14 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $result = array();
 
         $dirContent = opendir( $this->_dirPath );
-        while ($file = readdir($dirContent)) {
+        while (($file = readdir($dirContent)) !== false) {
             if (($file == '..')||($file == '.'))   continue;
-
-            $fullName = $this->_dirPath . '/' . $file;
 
             if( !is_dir($this->_dirPath . '/' . $file) ) {
                 $result[] = $file;
             }
         }
+        closedir($dirContent);
 
         return $result;
     }
