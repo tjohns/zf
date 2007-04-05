@@ -13,8 +13,17 @@ require_once 'Zend/Session.php';
 class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework_TestCase
 {
 
-    public function __construct()
+    public function setUp()
     {
+        $savePath = ini_get('session.save_path');
+        if (strpos($savePath, ';')) {
+            $savePath = explode(';', $savePath);
+            $savePath = array_pop($savePath);
+        }
+        if (empty($savePath)) {
+            $this->markTestSkipped('Cannot test FlashMessenger due to unavailable session save path');
+        }
+
         Zend_Session::start();
     }
        
