@@ -39,7 +39,7 @@ require_once 'Zend/Auth/Storage/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ADA_Auth_Storage_NonPersistent implements Zend_Auth_Storage_Interface
+class Zend_Auth_Storage_NonPersistent implements Zend_Auth_Storage_Interface
 {
     /**
      * Holds the actual auth data
