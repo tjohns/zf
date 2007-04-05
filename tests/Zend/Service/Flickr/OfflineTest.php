@@ -79,21 +79,16 @@ class Zend_Service_Flickr_OfflineTest extends PHPUnit_Framework_TestCase
     protected $_httpClientAdapterSocket;
 
     /**
-     * Flickr API key
-     *
-     * @var string
-     */
-    protected $_apiKey = 'd6f50aed387bee5dc5bae945a49e7436';
-
-    /**
      * Sets up this test case
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_flickr      = new Zend_Service_Flickr($this->_apiKey);
-        $this->_flickrProxy = new Zend_Service_Flickr_OfflineTest_FlickrProtectedMethodProxy($this->_apiKey);
+        $this->_flickr      = new Zend_Service_Flickr(constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY'));
+        $this->_flickrProxy = new Zend_Service_Flickr_OfflineTest_FlickrProtectedMethodProxy(
+            constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY')
+            );
         $this->_filesPath   = dirname(__FILE__) . '/_files';
 
         /**

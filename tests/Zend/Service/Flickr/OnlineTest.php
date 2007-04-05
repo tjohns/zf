@@ -45,13 +45,6 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
     protected $_flickr;
 
     /**
-     * Flickr API key
-     *
-     * @var string
-     */
-    protected $_apiKey = 'd6f50aed387bee5dc5bae945a49e7436';
-
-    /**
      * Socket based HTTP client adapter
      *
      * @var Zend_Http_Client_Adapter_Socket
@@ -69,7 +62,7 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
          * @see Zend_Service_Flickr
          */
         require_once 'Zend/Service/Flickr.php';
-        $this->_flickr = new Zend_Service_Flickr($this->_apiKey);
+        $this->_flickr = new Zend_Service_Flickr(constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY'));
 
         /**
          * @see Zend_Http_Client_Adapter_Socket
