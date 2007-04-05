@@ -5,8 +5,11 @@
  * @subpackage UnitTests
  */
 
-/** Zend_Controller_Router_Route */
+/** Zend_Controller_Router_Route_Module */
 require_once 'Zend/Controller/Router/Route/Module.php';
+
+/** Zend_Controller_Front */
+require_once 'Zend/Controller/Front.php';
 
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -152,9 +155,9 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $values = $this->route->match('mod/ctrl');
         
         $this->assertType('array', $values);
-        $this->assertSame('mod', $values['m']);
-        $this->assertSame('ctrl', $values['c']);
-        $this->assertSame('index', $values['a']);
+        $this->assertSame('mod', $values['m'], var_export(array_keys($values), 1));
+        $this->assertSame('ctrl', $values['c'], var_export(array_keys($values), 1));
+        $this->assertSame('index', $values['a'], var_export(array_keys($values), 1));
     }
     
     public function testAssembleNoModuleOrController()
