@@ -80,8 +80,8 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
         
         $this->_values = $values;
                      
-        $values = $this->getMappedValues($values);
-        $defaults = $this->getMappedValues($this->_defaults, false, true);
+        $values = $this->_getMappedValues($values);
+        $defaults = $this->_getMappedValues($this->_defaults, false, true);
 
         $return = $values + $defaults;
          
@@ -102,17 +102,21 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
      * @param boolean Should wrong type of keys be preserved or stripped.  
      * @return array An array of mapped values
      */
-    protected function getMappedValues($values, $reversed = false, $preserve = false)
+    protected function _getMappedValues($values, $reversed = false, $preserve = false)
     {
         if ($this->_map === null) {
             return $values; 
         }
-        
+
         $return = array();
         
         foreach ($values as $key => $value) {
             if (is_int($key) && !$reversed) {
-                $index = (array_key_exists($key, $this->_map)) ? $this->_map[$key] : $key;
+                if (array_key_exists($key, $this->_map)) {
+                    $index = $this->_map[$key];
+                } elseif (false === ($index = array_search($key, $this->_map))) {
+                    $index = $key;
+                }
                 $return[$index] = $values[$key];
             } elseif ($reversed) {
                 $index = (!is_int($key)) ? array_search($key, $this->_map, true) : $key;
@@ -138,8 +142,8 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
             throw new Zend_Controller_Router_Exception('Cannot assemble. Reversed route is not specified.');
         }
         
-        $data = $this->getMappedValues($data, true, false);
-        $data += $this->getMappedValues($this->_defaults, true, false);
+        $data = $this->_getMappedValues($data, true, false);
+        $data += $this->_getMappedValues($this->_defaults, true, false);
         $data += $this->_values;
         
         ksort($data);
