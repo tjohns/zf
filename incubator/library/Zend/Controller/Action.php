@@ -528,7 +528,7 @@ abstract class Zend_Controller_Action
      */
     public function dispatch($action)
     {
-        $this->_helper->_notifyActionControllerPreDispatch();  // notify helpers of action pre-dispatch
+        $this->_helper->notifyPreDispatch();  // notify helpers of action pre-dispatch
         $this->preDispatch();
         if ($this->getRequest()->isDispatched()) {
             // preDispatch() didn't change the action, so we can continue
@@ -536,7 +536,7 @@ abstract class Zend_Controller_Action
             $this->postDispatch();
         }
         // whats actually important here is that this action controller is shutting down, regardless of dispatching.
-        $this->_helper->_notifyActionControllerPostDispatch();
+        $this->_helper->notifyPostDispatch();
     }
 
     /**

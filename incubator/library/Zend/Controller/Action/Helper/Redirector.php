@@ -35,7 +35,6 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
  */
 class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_Helper_Abstract 
 {
-
     /**
      * HTTP status code for redirects
      * @var int
@@ -70,8 +69,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     /**
      * Validate HTTP status redirect code
      * 
-     * @param int $code 
+     * @param  int $code 
      * @return true
+     * @throws Zend_Controller_Action_Exception on invalid HTTP status code
      */
     protected function _checkCode($code)
     {
@@ -87,8 +87,8 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     /**
      * Retrieve HTTP status code for {@link _redirect()} behaviour
      * 
-     * @param int $code 
-     * @return Zend_Controller_Action
+     * @param  int $code 
+     * @return Zend_Controller_Action_Helper_Redirector
      */
     public function setCode($code)
     {
@@ -112,8 +112,8 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     /**
      * Retrieve exit flag for {@link _redirect()} behaviour
      * 
-     * @param bool $flag 
-     * @return Zend_Controller_Action
+     * @param  bool $flag 
+     * @return Zend_Controller_Action_Helper_Redirector
      */
     public function setExit($flag)
     {
@@ -137,8 +137,8 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     /**
      * Retrieve 'prepend base' flag for {@link _redirect()} behaviour
      * 
-     * @param bool $flag 
-     * @return Zend_Controller_Action
+     * @param  bool $flag 
+     * @return Zend_Controller_Action_Helper_Redirector
      */
     public function setPrependBase($flag)
     {
@@ -148,10 +148,11 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     
     
     /**
-     * goto() 
+     * Perform a redirect
      *
-     * @param string $url
-     * @param array $options
+     * @param  string $url
+     * @param  array $options
+     * @return void
      */
     public function goto($url, array $options = null)
     {
@@ -206,21 +207,14 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     
     
     /**
-     * _direct()
+     * direct(): Perform helper when called as $this->_helper->redirector($url, $options)
      *
-     * @param array $args
+     * @param  string $url
+     * @param  array $options
+     * @return void
      */
-    public function _direct($args)
+    public function direct($url, array $options = null)
     {
-        if (count($args) > 1) {
-            if (!isset($args['url'])) {
-                throw new Zend_Controller_Action_Exception('Redirector requires a url key when calling with options.');
-            }
-            $this->goto($args['url'], $args);
-        } else {
-            $this->goto($args[0]);
-        }
-
+        $this->goto($url, $options);
     }
-
 }

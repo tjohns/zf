@@ -57,16 +57,31 @@ abstract class Zend_Controller_Action_Helper_Abstract
     }
     
     
-    public function actionControllerInit()
+    /**
+     * Hook into action controller initialization
+     * 
+     * @return void
+     */
+    public function init()
     {
     }
     
     
-    public function actionControllerPreDispatch()
+    /**
+     * Hook into action controller preDispatch() workflow
+     * 
+     * @return void
+     */
+    public function preDispatch()
     {
     }
     
-    public function actionControllerPostDispatch()
+    /**
+     * Hook into action controller postDispatch() workflow
+     * 
+     * @return void
+     */
+    public function postDispatch()
     {
     }
     
@@ -109,9 +124,14 @@ abstract class Zend_Controller_Action_Helper_Abstract
         }
     }
     
-    public function _direct($args)
+    /**
+     * Perform the helper action
+     * 
+     * @return void
+     * @throws Zend_Controller_Action_Exception if unimplemented
+     */
+    public function direct()
     {
         throw new Zend_Controller_Action_Exception('Calling this helper in this manner \$this->_helper->' . $this->getName() . '() is not supported in this Action Helper; try: \$this->_helper->' . $this->getName() . '->desiredMethod()');
     }
-
 }

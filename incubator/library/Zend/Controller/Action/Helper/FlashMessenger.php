@@ -1,7 +1,36 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Controller
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */ 
 
+/** Zend_Session */
 require_once 'Zend/Session.php';
 
+/**
+ * Flash Messenger - implement session-based messages
+ *
+ * @uses       Zend_Controller_Action_Helper_Abstract
+ * @category   Zend
+ * @package    Zend_Controller
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
+ */
 class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Action_Helper_Abstract implements IteratorAggregate, Countable
 {
     /**
@@ -32,7 +61,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
      */
     protected $_namespace = 'default';
     
-    
     /**
      * __construct() - Instance constructor, needed to get iterators, etc
      *
@@ -50,18 +78,17 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     }
     
     /**
-     * actionControllerPostDispatch() - runs after action is dispatched, in this 
+     * postDispatch() - runs after action is dispatched, in this 
      * case, it is resetting the namespace in case we have forwarded to a different
      * action, Flashmessage will be 'clean' (default namespace)
      *
      * @return Zend_Controller_Action_Helper_FlashMessenger
      */
-    public function actionControllerPostDispatch()
+    public function postDispatch()
     {
         $this->resetNamespace();
         return $this;
     }
-    
 
     /**
      * setNamespace() - change the namespace messages are added to, useful for 
@@ -76,7 +103,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         return $this;
     }
     
-    
     /**
      * resetNamespace() - reset the namespace to the default
      *
@@ -87,7 +113,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         $this->setNamespace();
         return $this;
     }
-    
     
     /**
      * addMessage() - Add a message to flash message
@@ -110,7 +135,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         return;
     }
     
-    
     /**
      * hasMessages() - Wether a specific namespace has messages
      *
@@ -121,7 +145,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     {
         return isset(self::$_messages[$this->_namespace]);
     }
-    
     
     /**
      * getMessages() - Get messages from a specific namespace
@@ -138,7 +161,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         return array();
     }
     
-
     /**
      * hasCurrentMessages() - check to see if messages have been added to current
      * namespace within this request
@@ -149,7 +171,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     {
         return isset(self::$_session->{$this->_namespace});
     }
-    
     
     /**
      * getCurrentMessages() - get messages that have been added to the current 
@@ -165,7 +186,6 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         
         return array();
     }
-    
     
     /**
      * getIterator() - complete the IteratorAggregate interface, for iterating
@@ -194,9 +214,4 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         
         return 0;
     }
-    
-
-    
-    
-    
 }

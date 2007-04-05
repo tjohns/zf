@@ -50,9 +50,10 @@ final class Zend_Controller_Action_HelperBroker
      *
      * @var array
      */
-    static protected $_paths = array(
-        array('dir' => 'Zend/Controller/Action/Helper/', 'prefix' => 'Zend_Controller_Action_Helper_')
-        );
+    static protected $_paths = array(array(
+        'dir'    => 'Zend/Controller/Action/Helper/', 
+        'prefix' => 'Zend_Controller_Action_Helper_'
+    ));
     
     /**
      * $_actionController - ActionController reference
@@ -138,32 +139,33 @@ final class Zend_Controller_Action_HelperBroker
     {        
         $this->_actionController = $actionController;
         foreach (self::$_helpers as $helper) {
-            $helper->actionControllerInit();
-        }
-        return;
-    }
-    
-    
-    /**
-     * notifyActionControllerStartup() - called by action controllers dispatch method
-     *
-     */
-    public function _notifyActionControllerPreDispatch()
-    {
-        foreach (self::$_helpers as $helper) {
-            $helper->actionControllerPreDispatch();
+            $helper->init();
         }
     }
     
     
     /**
-     * notifyActionControllerShutdown() - called by action controllers dispatch method
+     * notifyPreDispatch() - called by action controller dispatch method
      *
+     * @return void
      */
-    public function _notifyActionControllerPostDispatch()
+    public function notifyPreDispatch()
     {
         foreach (self::$_helpers as $helper) {
-            $helper->actionControllerPostDispatch();
+            $helper->preDispatch();
+        }
+    }
+    
+    
+    /**
+     * notifyPostDispatch() - called by action controller dispatch method
+     *
+     * @return void
+     */
+    public function notifyPostDispatch()
+    {
+        foreach (self::$_helpers as $helper) {
+            $helper->postDispatch();
         }        
     }
     
@@ -171,7 +173,7 @@ final class Zend_Controller_Action_HelperBroker
     /**
      * getHelper() - get helper by name
      *
-     * @param string $name
+     * @param  string $name
      * @return Zend_Controller_Action_Helper_Abstract
      */
     public function getHelper($name)
@@ -194,9 +196,10 @@ final class Zend_Controller_Action_HelperBroker
     
     
     /**
-     * _loadHelper() - 
+     * _loadHelper()
      *
-     * @param unknown_type $name
+     * @param  string $name
+     * @return void
      */
     protected function _loadHelper($name)
     {
@@ -240,21 +243,21 @@ final class Zend_Controller_Action_HelperBroker
     /**
      * __call()
      *
-     * @param string $method
-     * @param array $args
+     * @param  string $method
+     * @param  array $args
      * @return mixed
      */
     public function __call($method, $args)
     {
         $helper = $this->getHelper($method);
-        return $helper->_direct($args);
+        return call_user_func_array(array($helper, 'direct'), $args);
     }
 
     
     /**
      * __get()
      *
-     * @param string $name
+     * @param  string $name
      * @return Zend_Controller_Action_Helper_Abstract
      */
     public function __get($name)
