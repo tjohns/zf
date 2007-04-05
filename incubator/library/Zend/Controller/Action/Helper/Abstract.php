@@ -123,15 +123,4 @@ abstract class Zend_Controller_Action_Helper_Abstract
             return $full_class_name;
         }
     }
-    
-    /**
-     * Perform the helper action
-     * 
-     * @return void
-     * @throws Zend_Controller_Action_Exception if unimplemented
-     */
-    public function direct()
-    {
-        throw new Zend_Controller_Action_Exception('Calling this helper in this manner \$this->_helper->' . $this->getName() . '() is not supported in this Action Helper; try: \$this->_helper->' . $this->getName() . '->desiredMethod()');
-    }
 }

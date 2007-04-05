@@ -246,11 +246,16 @@ final class Zend_Controller_Action_HelperBroker
      * @param  string $method
      * @param  array $args
      * @return mixed
+     * @throws Zend_Controller_Action_Exception if helper does not have a direct() method
      */
     public function __call($method, $args)
     {
         $helper = $this->getHelper($method);
-        return call_user_func_array(array($helper, 'direct'), $args);
+        if (method_exists($helper, 'direct')) {
+            return call_user_func_array(array($helper, 'direct'), $args);
+        }
+
+        throw new Zend_Controller_Action_Exception('Helper "' . $method . '" does not support overloading via direct()');
     }
 
     
