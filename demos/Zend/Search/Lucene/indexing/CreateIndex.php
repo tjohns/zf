@@ -55,7 +55,7 @@ setlocale(LC_CTYPE, 'en_US.ISO8859-1');
 $indexSourceDir = 'IndexSource';
 $dir = opendir($indexSourceDir);
 while (($file = readdir($dir)) !== false) {
-    if (is_dir($file)) {
+    if (is_dir($indexSourceDir . '/' . $file)) {
         continue;
     }
     if (strcasecmp(substr($file, strlen($file)-5), '.html') != 0) {
