@@ -123,7 +123,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      * @param array $params OPTIONAL values to supply as input to statement parameters
      * @return void
      */
-    public function execute($params = array())
+    public function execute(array $params = array())
     {
         // prepare for mysqli
         $sql = $this->_joinSql();

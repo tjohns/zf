@@ -44,10 +44,9 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * username => (string) Connect to the database as this username.
      * password => (string) Password associated with the username.
-     * database => Either the name of the local Oracle instance, or the
+     * dbname   => Either the name of the local Oracle instance, or the
      *             name of the entry in tnsnames.ora to which you want to connect.
      *
-     * @todo fix inconsistency between "database" used here and "dbname" use elsewhere
      * @var array
      */
     protected $_config = array(
@@ -69,20 +68,14 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * username => (string) Connect to the database as this username.
      * password => (string) Password associated with the username.
-     * database => Either the name of the local Oracle instance, or the
+     * dbname   => Either the name of the local Oracle instance, or the
      *             name of the entry in tnsnames.ora to which you want to connect.
      *
      * @param array $config An array of configuration keys.
      * @throws Zend_Db_Adapter_Exception
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
-        // make sure the config array exists
-        if (! is_array($config)) {
-            throw new Zend_Db_Adapter_Exception('must pass a config array');
-        }
-
-        // we need at least a dbname
         if (! array_key_exists('password', $config) || ! array_key_exists('username', $config)) {
             throw new Zend_Db_Adapter_Exception('config array must have at least a username and a password');
         }

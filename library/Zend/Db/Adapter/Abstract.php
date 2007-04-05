@@ -83,13 +83,8 @@ abstract class Zend_Db_Adapter_Abstract
      * @return void
      * @throws Zend_Db_Adapter_Exception
      */
-    public function __construct($config)
+    public function __construct(array $config = array())
     {
-        // make sure the config array exists
-        if (! is_array($config)) {
-            throw new Zend_Db_Adapter_Exception('Configuration must be an array.');
-        }
-
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
             throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
@@ -134,7 +129,7 @@ abstract class Zend_Db_Adapter_Abstract
      * Prepares and executes an SQL statement with bound data.
      *
      * @param string|Zend_Db_Select $sql The SQL statement with placeholders.
-     * @param array $bind An array of data to bind to the placeholders.
+     * @param mixed $bind An array of data to bind to the placeholders.
      * @return Zend_Db_Statement (may also be PDOStatement in the case of PDO)
      */
     public function query($sql, $bind = array())
@@ -147,10 +142,17 @@ abstract class Zend_Db_Adapter_Abstract
             $sql = $sql->__toString();
         }
 
+        // make sure $bind to an array;
+        // don't use (array) typecasting because
+        // because $bind may be a Zend_Db_Expr object
+        if (!is_array($bind)) {
+            $bind = array($bind);
+        }
+
         // prepare and execute the statement with profiling
         $stmt = $this->prepare($sql);
         $q = $this->_profiler->queryStart($sql);
-        $stmt->execute((array) $bind);
+        $stmt->execute($bind);
         $this->_profiler->queryEnd($q);
 
         // return the results embedded in the prepared statement object
@@ -203,11 +205,11 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Inserts a table row with specified data.
      *
-     * @param string|array|Zend_Db_Expr $table The table to insert data into.
+     * @param mixed $table The table to insert data into.
      * @param array $bind Column-value pairs.
      * @return int The number of affected rows.
      */
-    public function insert($table, $bind)
+    public function insert($table, array $bind)
     {
         // extract and quote col names from the array keys
         $cols = array();
@@ -237,12 +239,12 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Updates table rows with specified data based on a WHERE clause.
      *
-     * @param string|array|Zend_Db_Expr $table The table to update.
+     * @param mixed $table The table to update.
      * @param array $bind Column-value pairs.
-     * @param string $where UPDATE WHERE clause.
+     * @param mixed $where UPDATE WHERE clause.
      * @return int The number of affected rows.
      */
-    public function update($table, $bind, $where)
+    public function update($table, array $bind, $where = '')
     {
         // build "col = ?" pairs for the statement
         $set = array();
@@ -275,11 +277,11 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Deletes table rows based on a WHERE clause.
      *
-     * @param string|array|Zend_Db_Expr $table The table to update.
-     * @param string $where DELETE WHERE clause.
+     * @param mixed $table The table to update.
+     * @param mixed OPTIONAL $where DELETE WHERE clause.
      * @return int The number of affected rows.
      */
-    public function delete($table, $where)
+    public function delete($table, $where = '')
     {
         if (is_array($where)) {
             $where = implode(' AND ', $where);
@@ -321,7 +323,7 @@ abstract class Zend_Db_Adapter_Abstract
      * Uses the current fetchMode for the adapter.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return array
      */
     public function fetchAll($sql, $bind = array())
@@ -338,7 +340,7 @@ abstract class Zend_Db_Adapter_Abstract
      * value.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return string
      */
     public function fetchAssoc($sql, $bind = array())
@@ -358,7 +360,7 @@ abstract class Zend_Db_Adapter_Abstract
      * The first column in each row is used as the array key.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return array
      */
     public function fetchCol($sql, $bind = array())
@@ -375,7 +377,7 @@ abstract class Zend_Db_Adapter_Abstract
      * value.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return string
      */
     public function fetchPairs($sql, $bind = array())
@@ -392,7 +394,7 @@ abstract class Zend_Db_Adapter_Abstract
      * Fetches the first column of the first row of the SQL result.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return string
      */
     public function fetchOne($sql, $bind = array())
@@ -407,7 +409,7 @@ abstract class Zend_Db_Adapter_Abstract
      * Uses the current fetchMode for the adapter.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param array $bind Data to bind into SELECT placeholders.
+     * @param mixed $bind Data to bind into SELECT placeholders.
      * @return array
      */
     public function fetchRow($sql, $bind = array())

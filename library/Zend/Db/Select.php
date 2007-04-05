@@ -432,7 +432,7 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
+     * @param string|array $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
@@ -453,7 +453,7 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
+     * @param string|array $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
@@ -474,7 +474,7 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
+     * @param string|array $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
@@ -491,7 +491,7 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
+     * @param string|array $name The table name.
      * @param string $cond Join on this condition.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
@@ -511,7 +511,7 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
+     * @param string|array $name The table name.
      * @param array|string $cols The columns to select from the joined table.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
@@ -624,7 +624,7 @@ class Zend_Db_Select
      * appears. See {@link where()} for an example
      *
      * @param string $cond The HAVING condition.
-     * @param string $val A single value to quote into the condition.
+     * @param string|Zend_Db_Expr $val A single value to quote into the condition.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function having($cond)
@@ -712,8 +712,8 @@ class Zend_Db_Select
     /**
      * Sets a limit count and offset to the query.
      *
-     * @param int $count The number of rows to return.
-     * @param int $offset Start returning after this many rows.
+     * @param int $count OPTIONAL The number of rows to return.
+     * @param int $offset OPTIONAL Start returning after this many rows.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function limit($count = null, $offset = null)

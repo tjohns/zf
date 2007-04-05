@@ -574,9 +574,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return Zend_Db_Table_Rowset_Abstract Query result from $matchTable
      * @throws Zend_Db_Table_Row_Exception If $matchTable and $intersectionTable are not a tables or are not loadable.
      */ 
-    public function findManyToManyRowset( 
-        $matchTable, $intersectionTable, 
-        $callerRefRule = null, $matchRefRule = null) 
+    public function findManyToManyRowset($matchTable, $intersectionTable, $callerRefRule = null, $matchRefRule = null) 
     { 
         $db = $this->_getTable()->getAdapter();
 
@@ -657,10 +655,12 @@ abstract class Zend_Db_Table_Row_Abstract
      * Turn magic function calls into non-magic function calls
      * to the above methods.
      *
+     * @param string $method
+     * @param array $args
      * @return Zend_Db_Table_Row_Abstract|Zend_Db_Table_Rowset_Abstract
      * @throws Zend_Db_Table_Row_Exception If an invalid method is called.
      */ 
-    protected function __call($method, $args) 
+    protected function __call($method, array $args) 
     { 
 
         /**

@@ -470,7 +470,6 @@ abstract class Zend_Db_Table_Abstract
      * Inserts a new row.
      *
      * @param  array  $data  Column-value pairs.
-     * @param  string $where An SQL WHERE clause.
      * @return integer       The last insert ID.
      */
     public function insert(array $data)
@@ -504,7 +503,7 @@ abstract class Zend_Db_Table_Abstract
      * @param array $oldPrimaryKey
      * @param array $newPrimaryKey
      */ 
-    public function _cascadeUpdate($parentTableClassname, $oldPrimaryKey, $newPrimaryKey) 
+    public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey) 
     { 
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
@@ -535,7 +534,7 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Deletes existing rows.
      *
-     * @param  string $where An SQL WHERE clause.
+     * @param  mixed $where An SQL WHERE clause.
      * @return int           The number of rows deleted.
      */
     public function delete($where)
@@ -549,7 +548,7 @@ abstract class Zend_Db_Table_Abstract
      * @param string $parentTableClassname
      * @param array $primaryKey
      */ 
-    public function _cascadeDelete($parentTableClassname, $primaryKey) 
+    public function _cascadeDelete($parentTableClassname, array $primaryKey) 
     { 
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
@@ -650,8 +649,7 @@ abstract class Zend_Db_Table_Abstract
      * @param int          $offset           OPTIONAL An SQL LIMIT offset.
      * @return Zend_Db_Table_Rowset_Abstract The row results per the Zend_Db_Adapter fetch mode.
      */
-    public function fetchAll($where = null, $order = null,
-        $count = null, $offset = null)
+    public function fetchAll($where = null, $order = null, $count = null, $offset = null)
     {
         $data  = array(
             'table'    => $this,
@@ -670,7 +668,7 @@ abstract class Zend_Db_Table_Abstract
      * @param string|array $where         OPTIONAL An SQL WHERE clause.
      * @param string|array $order         OPTIONAL An SQL ORDER clause.
      * @return Zend_Db_Table_Row_Abstract|null The row results per the
-     *     Zend_Db_Adapter fetch mode, or false if no row found.
+     *     Zend_Db_Adapter fetch mode, or null if no row found.
      */
     public function fetchRow($where = null, $order = null)
     {
@@ -723,8 +721,7 @@ abstract class Zend_Db_Table_Abstract
      * @param int          $offset OPTIONAL An SQL LIMIT offset.
      * @return array               The row results, in FETCH_ASSOC mode.
      */
-    protected function _fetch($where = null, $order = null,
-        $count = null, $offset = null)
+    protected function _fetch($where = null, $order = null, $count = null, $offset = null)
     {
         // selection tool
         $select = $this->_db->select();

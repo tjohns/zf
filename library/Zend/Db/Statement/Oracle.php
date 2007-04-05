@@ -72,7 +72,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Returns the number of columns in the result set.
      *
-     * @return num fields.
+     * @return mixed Integer number of fields, or false.
      */
     public function columnCount()
     {
@@ -87,7 +87,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Retrieves an error code, if any, from the statement.
      *
-     * @return error code
+     * @return mixed Error code, or false.
      */
     public function errorCode()
     {
@@ -108,7 +108,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Retrieves an array of error information, if any, from the statement.
      *
-     * @return array
+     * @return mixed Structured information about the error, or false.
      */
     public function errorInfo()
     {
@@ -140,11 +140,11 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Executes a prepared statement.
      *
-     * @param $params
+     * @param array $params
      * @return void
      * @throws Zend_Db_Statement_Oracle_Exception
      */
-    public function execute($params = null)
+    public function execute(array $params = array())
     {
         $connection = $this->_connection->getConnection();
         if (!$this->_stmt) {
@@ -156,7 +156,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($connection));
         }
 
-        if ($params && is_array($params)) {
+        if ($params) {
             $error = false;
             foreach (array_keys($params) as $name) {
                 if (!oci_bind_by_name($this->_stmt, $name, $params[$name], -1)) {
@@ -190,16 +190,15 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Binds a PHP variable to a parameter in the prepared statement.
      *
-     * @param $parameter
-     * @param $variable
-     * @param $type
-     * @param $length
-     * @param $options
+     * @param mixed   $parameter
+     * @param string  $variable
+     * @param string  $type OPTIONAL
+     * @param integer $length OPTIONAL
+     * @param array   $options OPTIONAL
      * @return void
      * @throws Zend_Db_Statement_Exception
      */
-    public function bindParam($parameter, &$variable, $type = null,
-        $length = null, $options = null)
+    public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
         if (is_integer($parameter)) {
             throw new Zend_Db_Statement_Exception("bind by position is not supported by Oracle adapter");
@@ -230,10 +229,10 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Fetches a row from the result set.
      *
-     * @param $style
-     * @param $cursor
-     * @param $offset
-     * @return $row
+     * @param string  $style OPTIONAL
+     * @param string  $cursor OPTIONAL
+     * @param integer $offset OPTIONAL
+     * @return mixed
      * @throws Zend_Db_Statement_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
@@ -277,7 +276,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Returns the number of rows that were affected by the execution of an SQL statement.
      *
-     * @return num rows
+     * @return mixed Integer number of rows, or false.
      * @throws Zend_Db_Statement_Oracle_Exception
      */
     public function rowCount()
@@ -298,7 +297,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Prepares statement handle
      *
-     * @param $sql
+     * @param string $sql
+     * @return void
      * @throws Zend_Db_Statement_Oracle_Exception
      */
     protected function _prepSql($sql)
@@ -313,9 +313,9 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Fetches an array containing all of the rows from a result set
      *
-     * @param $style
-     * @param $col
-     * @return $result
+     * @param string $style
+     * @param integer $col
+     * @return mixed Result set structured per $style, or false.
      * @throws Zend_Db_Statement_Oracle_Exception
      * @throws Zend_Db_Statement_Exception
      */
@@ -384,8 +384,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Returns the data from a single column in a result set.
      *
-     * @param $col
-     * @return $data
+     * @param integer $col
+     * @return mixed Structured result set, or false.
      * @throws Zend_Db_Statement_Oracle_Exception
      */
     public function fetchColumn($col = 0)
@@ -409,12 +409,12 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     /**
      * Fetches the next row and returns it as an object.
      *
-     * @param $class
-     * @param $config
-     * @return $obj
+     * @param string $class
+     * @param array $config
+     * @return mixed Result set as object, or false.
      * @throws Zend_Db_Statement_Oracle_Exception
      */
-    public function fetchObject($class = 'stdClass', $config = null)
+    public function fetchObject($class = 'stdClass', array $config = array())
     {
         if (!$this->_stmt) {
             return false;

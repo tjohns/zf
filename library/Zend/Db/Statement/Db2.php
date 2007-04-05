@@ -55,7 +55,9 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 
     /**
      * retrieves the next rowset (result set)
+     *
      * @todo not familiar with how to do nextrowset
+     *
      * @throws Zend_Db_Statement_Exception
      */
     public function nextRowset()
@@ -103,7 +105,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Returns the number of columns in the result set.
      *
-     * @return integer Number of fields in statement.
+     * @return mixed Number of fields in statement, or false.
      */
     public function columnCount()
     {
@@ -117,7 +119,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Retrieves a sql state, if any, from the statement.
      *
-     * @return string the error code
+     * @return mixed The error code, or false.
      */
     public function errorCode()
     {
@@ -132,7 +134,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Retrieves an error msg, if any, from the statement.
      *
-     * @return string The statement error message.
+     * @return mixed The statement error message, or false.
      */
     public function errorInfo()
     {
@@ -147,10 +149,11 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Executes a prepared statement.
      *
-     * @param array
+     * @param array $params
      * @return void
+     * @throws Zend_Db_Statement_Db2_Exception
      */
-    public function execute($params = null)
+    public function execute(array $params = array())
     {
         if (!$this->_stmt) {
             $connection = $this->_connection->getConnection();
@@ -162,10 +165,6 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_conn_errormsg($connection),
                 db2_conn_error($connection));
-        }
-
-        if (!is_array($params)) {
-            $params = array($params);
         }
 
         $success = db2_execute($this->_stmt, $params);
@@ -191,11 +190,13 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     }
 
     /**
-     * @param $parameter
-     * @param $variable
-     * @param $type
-     * @param $length
-     * @param $options
+     * Binds a PHP variable to a parameter in the prepared statement.
+     *
+     * @param mixed   $parameter
+     * @param string  $variable
+     * @param string  $type OPTIONAL
+     * @param integer $length OPTIONAL
+     * @param array   $options OPTIONAL
      * @return void
      * @throws Zend_Db_Statement_Db2_Exception
      */
@@ -230,10 +231,11 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Fetches a row from a result set.
      *
-     * @param $style
-     * @param $cursor
-     * @param $offset
-     * @return $row
+     * @param string  $style OPTIONAL
+     * @param string  $cursor OPTIONAL
+     * @param integer $offset OPTIONAL
+     * @return mixed
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
@@ -270,7 +272,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Prepare a statement handle.
      *
-     * @param $sql
+     * @param string $sql
      * @return void
      * @throws Zend_Db_Statement_Db2_Exception
      */
@@ -289,11 +291,11 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     }
 
     /**
-     * @param $class
-     * @param $config
-     * @return $obj
+     * @param string $class
+     * @param array $config
+     * @return mixed
      */
-    public function fetchObject($class = 'stdClass', $config = null)
+    public function fetchObject($class = 'stdClass', array $config = array(0)
     {
         $obj = $this->fetch(Zend_Db::FETCH_OBJ);
         return $obj;
@@ -302,9 +304,9 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Fetches an array containing all of the rows from a result set.
      *
-     * @param $style
-     * @param $col
-     * @return $data
+     * @param string $style
+     * @param integer $col
+     * @return array $data
      */
     public function fetchAll($style = null, $col = null)
     {

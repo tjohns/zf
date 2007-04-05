@@ -99,14 +99,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @param array $config An array of configuration keys.
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
-        // make sure the config array exists
-        if (! is_array($config)) {
-            throw new Zend_Db_Adapter_Db2_Exception('Configuration must be an array.');
-        }
-
-        // we need at least a dbname, a user and a password
         if (! array_key_exists('password', $config)) {
             throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'password' for login credentials.");
         }
@@ -538,86 +532,5 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
         return $limit_sql;
     }
-
-    /**
-     * Inserts a table row with specified data.
-     *
-     * @param string $table The table to insert data into.
-     * @param array $bind Column-value pairs.
-     * @return int The number of affected rows.
-     */
-    /*
-    public function insert($table, $bind)
-    {
-        // col names come from the array keys
-        $cols = array_keys($bind);
-        $values = array_values($bind);
-
-        $sql = '';
-        $values = array();
-        foreach ($bind as $key => $value) {
-            if ($value !== null) {
-                if ($sql) {
-                    $sql .= ', ';
-                }
-                $sql .= $key;
-                $values[] = $value;
-            }
-        }
-
-        $sql = "INSERT INTO $table (" . $sql . ") VALUES (";
-
-        $markers = '';
-        $numParams = count($bind);
-
-        for ($i = 0; $i < $numParams; $i++) {
-            $markers .= '?';
-            if ($i != $numParams - 1 ) {
-                $markers .= ',';
-            }
-        }
-        $sql .= $markers . ')';
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $values);
-
-        $this->_lastInsertTable = $table;
-
-        return $result->rowCount();
-    }
-     */
-
-    /**
-     * Updates table rows with specified data based on a WHERE clause.
-     *
-     * @param string $table The table to udpate.
-     * @param array $bind Column-value pairs.
-     * @param string $where UPDATE WHERE clause.
-     * @return int The number of affected rows.
-     */
-    /*
-    public function update($table, $bind, $where)
-    {
-        // build "col = :col" pairs for the statement
-        $set = array();
-        $values = array_values($bind);
-        $newValues = array();
-        foreach ($bind as $col => $val) {
-            if ($val !== null) {
-                $set[] = "$col = ?";
-                $newValues[] = $val;
-            }
-        }
-
-        // build the statement
-        $sql = "UPDATE $table "
-             . 'SET ' . implode(', ', $set)
-             . (($where) ? " WHERE $where" : '');
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $newValues);
-        return $result->rowCount();
-    }
-*/
 
 }
