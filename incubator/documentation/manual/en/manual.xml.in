@@ -61,13 +61,6 @@
         <xi:include href="module_specs/Zend_Log-Filters.xml" />
     </chapter>
 
-    <chapter id="zend.memory">
-        <title>Zend_Memory</title>
-        <xi:include href="module_specs/Zend_Memory-Overview.xml" />
-        <xi:include href="module_specs/Zend_Memory-MemoryManager.xml" />
-        <xi:include href="module_specs/Zend_Memory-MemoryObjects.xml" />
-    </chapter>
-
     <!--
     <chapter id="zend.soap">
         <title>Zend_Soap</title>
