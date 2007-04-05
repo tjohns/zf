@@ -13,6 +13,8 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 // error_reporting(E_ALL);
 
 require_once 'Router/Route/RegexTest.php';
+require_once 'Action/HelperBrokerTest.php';
+require_once 'Action/Helper/FlashMessengerTest.php';
 
 class Zend_Controller_AllTests
 {
@@ -26,7 +28,9 @@ class Zend_Controller_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
         $suite->addTestSuite('Zend_Controller_Router_Route_RegexTest');
-
+        $suite->addTestSuite('Zend_Controller_Action_HelperBrokerTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
+        
         return $suite;
     }
 }
