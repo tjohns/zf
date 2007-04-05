@@ -410,31 +410,25 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
 /**
  * Wstawia obraz w określonym miejscu na stronie.
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Resource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]>
         </programlisting>
         <para>
-        Obrazy są reprezentowane przez obiekty klasy <code>Zend_Pdf_Image</code>.
-        </para>
-        <para>
-        Obecnie obsługiwane są formaty JPG, PNG oraz TIFF:
+        Obiekty obrazów powinny być tworzone za pomocą metody
+        <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (obecnie 
+        obsługiwane są obrazy JPG, PNG oraz TIFF):
         </para>
         <example>
             <title>Wstawianie obrazów.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-// Utwórz obiekt obrazu bezpośrednio (wybierz jedno z poniższych)
-$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
-$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
-$image = new Zend_Pdf_Image_Png('my_image.png');
-
-// lub użyj klasy Zend_Pdf_ImageFactory aby załadować odpowiedni typ
-$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+// łądujemy obraz
+$image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -443,8 +437,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Ważne! Klasa Zend_Pdf_Image_Jpeg wymaga rozszerzenia PHP GD.</emphasis>
-            <emphasis>Ważne! Klasa Zend_Pdf_Image_Png wymaga rozszerzenia ZLIB skonfigurowanego do obsługi obrazów z kanałem Alpha.</emphasis>
+            <emphasis>Ważne! Obsługa JPEG wymaga rozszerzenia PHP GD.</emphasis>
+            <emphasis>Ważne! Obsługa PNG wymaga rozszerzenia ZLIB skonfigurowanego do obsługi obrazów z kanałem Alpha.</emphasis>
         </para>
         <para>
             Sprawdź dokumentację PHP aby znaleźć bardziej szczegółowe informacje.

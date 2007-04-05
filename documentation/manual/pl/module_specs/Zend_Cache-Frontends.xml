@@ -200,14 +200,15 @@ echo($data);
             <programlisting role="php"><![CDATA[<?php
 
 // jeśli bufor nie istnieje, przechwytywane są dane wyjściowe
-if(!$cache->start('mypage')):
+if (!($cache->start('mypage'))) {
 
-// wyświetlaj jak zawsze
-echo 'Witaj! ';
-echo 'To jest buforowane ('.time().') ';
+    // wyświetlaj jak zawsze
+    echo 'Witaj! ';
+    echo 'To jest buforowane ('.time().') ';
 
-$cache->end(); // kończy się wyświetlanie danych
-endif;
+    $cache->end(); // kończy się wyświetlanie danych
+
+}
 
 echo 'To nie jest nigdy buforowane ('.time().').';
 

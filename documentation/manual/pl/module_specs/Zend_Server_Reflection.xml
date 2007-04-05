@@ -33,14 +33,21 @@ $function = Zend_Server_Reflection::reflectFunction('my_function');
 // Pobierz prototypy
 $prototypes = $reflection->getPrototypes();
 
-// Pobierz typ zwracanej wartości prototypu
-$prototype->getReturnType();
+// Przechodzimy pętlą przez wszystkie prototypy funkcji
+foreach ($prototypes as $prototype) {
 
-// Pobierz parametry prototypu
-$prototype->getParameters();
+    // Pobierz typ zwracanej wartości prototypu
+    echo "Zwracany typ: ", $prototype->getReturnType(), "\n";
+    
+    // Pobierz parametry prototypu
+    $parameters = $prototype->getParameters();
 
-// Pobierz typ prototypu
-$parameter->getType();
+    echo "Parametry: \n";
+    foreach ($parameters as $parameter) {
+        // Pobierz typ prototypu
+        echo "    ", $parameter->getType(), "\n";
+    }
+}
 
 // Pobierz przestrzeń nazw dla klasy, funkcji lub metody
 // Przestrzenie nazw mogą być ustawione podczas tworzenia instancji

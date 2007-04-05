@@ -36,10 +36,10 @@ foreach ($results as $result) {
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
-        <title>Wyszukiwanie użytkowników Flickr</title>
+        <title>Wyszukiwanie zdjęć użytkowników Flickr i informacji o nich</title>
         <para>
-            Klasa <code>Zend_Service_Flickr</code> zapewnia trzy różne możliwości
-            pobierania informacji o użytkowniku serwisu Flickr:
+            Klasa <code>Zend_Service_Flickr</code> zapewnia kilka możliwości
+            pobierania informacji o użytkownikach serwisu Flickr:
         </para>
         <itemizedlist>
             <listitem>
@@ -47,7 +47,8 @@ foreach ($results as $result) {
                     <code>userSearch()</code>: akceptuje w parametrze treść 
                     zapytania w postaci etykiet oddzielonych spacją oraz tablicę 
                     opcji wyszukiwania jako opcjonalny drugi parametr, a zwraca 
-                    obiekt <code>Zend_Service_Flickr_ResultSet</code>.
+                    zestaw zdjęć jako obiekt 
+                    <code>Zend_Service_Flickr_ResultSet</code>.
                 </para>
             </listitem>
             <listitem>
@@ -64,10 +65,10 @@ foreach ($results as $result) {
             </listitem>
         </itemizedlist>
         <example>
-            <title>Wyszukiwanie użytkownika serwisu Flickr na podstawie adresu e-mail</title>
+            <title>Wyszukiwanie publicznych zdjęć użytkownika serwisu Flickr na podstawie adresu e-mail</title>
             <para>
                 W tym przykładzie, posiadamy adres e-mail użytkownika serwisu 
-                Flickr i pobierzemy informacje o użytkowniku używając metody 
+                Flickr i szukamy publicznych zdjęć użytkownika używając metody 
                 <code>userSearch()</code>:
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -109,7 +110,7 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
-        <title>Klasy Zend_Service_Flickr</title>
+        <title>Klasy wyników Zend_Service_Flickr</title>
         <para>
             Poniższe klasy są zwracane przez metody <code>tagSearch()</code> oraz <code>userSearch()</code>:
             <itemizedlist>
@@ -198,12 +199,12 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         <tbody>
                             <row>
                                 <entry>id</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>ID zdjęcia</entry>
                             </row>
                             <row>
                                 <entry>owner</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>Identyfikator NSID właściciela zdjęcia.</entry>
                             </row>
                             <row>
@@ -223,17 +224,17 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                             </row>
                             <row>
                                 <entry>ispublic</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Czy zdjęcie jest publiczne.</entry>
                             </row>
                             <row>
                                 <entry>isfriend</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Czy zdjęcie jest dla Ciebie widoczne ponieważ jesteś przyjacielem właściciela.</entry>
                             </row>
                             <row>
                                 <entry>isfamily</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Czy zdjęcie jest dla Ciebie widoczne ponieważ jesteś rodziną właściciela.</entry>
                             </row>
                             <row>
@@ -242,22 +243,22 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                                 <entry>Licencja pod jaką dostępne jest zdjęcie.</entry>
                             </row>
                             <row>
-                                <entry>date_upload</entry>
+                                <entry>dateupload</entry>
                                 <entry>string</entry>
                                 <entry>Data wgrania zdjęcia.</entry>
                             </row>
                             <row>
-                                <entry>date_taken</entry>
+                                <entry>datetaken</entry>
                                 <entry>string</entry>
                                 <entry>Data zrobienia zdjęcia.</entry>
                             </row>
                             <row>
-                                <entry>owner_name</entry>
+                                <entry>ownername</entry>
                                 <entry>string</entry>
                                 <entry>Wyświetlana nazwa użytkownika.</entry>
                             </row>
                             <row>
-                                <entry>icon_server</entry>
+                                <entry>iconserver</entry>
                                 <entry>string</entry>
                                 <entry>Serwer używany przy dołączaniu adresów URL ikon.</entry>
                             </row>
