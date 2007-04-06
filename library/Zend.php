@@ -37,13 +37,6 @@ require_once 'Zend/Exception.php';
 final class Zend
 {
     /**
-     * Zend Framework version identification - see compareVersion()
-     *
-     * @deprecated Since 0.9.0 -- use Zend_Version::VERSION instead.
-     */
-    const VERSION = '0.9.0dev';
-
-    /**
      * Object registry provides storage for shared objects
      *
      * @var Zend_Registry
@@ -133,47 +126,6 @@ final class Zend
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::isReadable() instead");
         require_once 'Zend/Loader.php';
         return Zend_Loader::isReadable($filename);
-    }
-
-    /**
-     * Return a new exception
-     *
-     * Loads an exception class as specified by $class, and then passes the
-     * message and code arguments to the Exception's constructor, returning the
-     * new Exception object.
-     *
-     * If the exception created is not a true Exception, throws a Zend_Exception
-     * indicating an invalid exception class was passed.
-     *
-     * Usage:
-     * <code>
-     *     throw Zend::exception('Some_Exception', 'exception message');
-     * </code>
-     *
-     * @param string $class
-     * @param string $message Defaults to empty string
-     * @param int $code Defaults to 0
-     * @return Exception
-     * @throws Zend_Exception when invalid exception class passed
-     *
-     * @deprecated Since 0.6.1
-     */
-    public static function exception($class, $message = '', $code = 0)
-    {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.6.1");
-
-        $class = (string) $class;
-
-        require_once 'Zend/Loader.php';
-        Zend_Loader::loadClass($class);
-
-        $exception = new $class($message, $code);
-
-        if (!$exception instanceof Exception) {
-            throw new Zend_Exception('Invalid exception class used in Zend::exception()');
-        }
-
-        return $exception;
     }
 
     /**
