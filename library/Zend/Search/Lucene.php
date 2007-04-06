@@ -556,13 +556,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         }
 
         if ($topScore > 1) {
-            $normalizedScores = array();
-
-            foreach ($scores as $score) {
-                $normalizedScores[] = $score/$topScore;
+            foreach ($hits as $hit) {
+                $hit->score /= $topScore;
             }
-
-            $scores = $normalizedScores;
         }
 
         if (func_num_args() == 1) {
