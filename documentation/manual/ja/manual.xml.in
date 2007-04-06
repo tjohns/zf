@@ -168,10 +168,10 @@
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        <xi:include href="module_specs/Zend_Log-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Log-Simple.xml" />
-        <xi:include href="module_specs/Zend_Log-Levels.xml" />
-        <xi:include href="module_specs/Zend_Log-Advanced.xml" />
+        <xi:include href="module_specs/Zend_Log-Overview.xml" />
+        <xi:include href="module_specs/Zend_Log-Writers.xml" />
+        <xi:include href="module_specs/Zend_Log-Formatters.xml" />
+        <xi:include href="module_specs/Zend_Log-Filters.xml" />
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
