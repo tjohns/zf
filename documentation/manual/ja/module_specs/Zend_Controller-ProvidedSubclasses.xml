@@ -480,6 +480,117 @@ $router->addRoute('login', $loginRoute);
 ]]></programlisting>
         </sect3>
 
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.regex-routes">
+            <title>正規表現のルート</title>
+
+            <para>
+                デフォルトのルートや静的なルートに加えて、正規表現によるルートも使用可能です。
+                このルートは他のものに比べてより強力で柔軟なものですが、
+                多少パフォーマンスは低下します。これは PCRE エンジンを使用していることが原因です。
+            </para>
+
+            <para>
+                <code>Zend_Controller_Router_Route_Regex</code>
+                は正規表現をもとにしたルートを提供します。これは rewrite
+                ルータと組み合わせて使用します。いくつかの例を見てみましょう。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>#</code> を区切り文字として使用します。つまり、
+                    スラッシュ ('/') をエスケープする必要はありませんが、
+                    ハッシュ文字 ('#') はエスケープしなければなりません。
+                </para></listitem>
+
+                <listitem><para>
+                    行頭と行末を表す文字 (それぞれ '^' および '$')
+                    が、すべての式の前後に自動的に付加されます。
+                    したがって、これらは正規表現で指定する必要はありません。
+                    またこれは、URL 全体にマッチする式を書かなければならないということも意味します。
+                    たとえば、指定した URL 'http://example.com/foo/bar/baz/bat'
+                    を 'foo/bar' でマッチさせたければ、
+                    'foo/bar(/.*)?' のように書かなければなりません。
+                </para></listitem>
+
+                <listitem><para>
+                    最初と最後のスラッシュを取り除いてからマッチングを行います。
+                    その結果、URL "http://example.com/foo/bar/"
+                    は "foo/bar" でマッチするようになります。
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                正規表現を使用する利点のひとつに、
+                マッチした要素を取得して後で再利用できることがあります。
+                <code>Zend_Controller_Router_Regex_Route</code>
+                は、二通りの方法でこれを使用できます。以下に例を示します。
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        リクエストオブジェクトのパラメータとして、
+                        「インデックス (integer) =&gt; マッチした内容」
+                        形式で設定します。
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// パスの /foo/bar 以降の部分が、リクエストオブジェクトの
+// キー '1' として取得できます
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar')
+);
+
+// ルーティングの後で、
+$fooPath = $request->getParam('1');
+]]></programlisting>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        ルートのコンストラクタの三番目の引数としてマップを渡し、
+                        インデックスに対応するパラメータのキーを指定します。
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// パスの /foo/bar 以降の部分を、リクエストのキー 'fooPath' に格納します
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar'),
+    array(1 => 'fooPath')
+);
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                正規表現のルートをルータで使用する例を示します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// http://example.com/blog/archive/01-Using_the_Regex_Router.html
+// のような url でブログの過去記事を閲覧します。ここで
+// '01' の部分がキー 'id'、そして 'Using_the_Regex_Router' の部分がキー 'title' となります。
+$blogArchive = new Zend_Controller_Router_Route_Regex(
+    'blog/archive/(\d+)-(.*)\.html',
+    array('controller' => 'blog', 'action' => 'view'), 
+    array(1 => 'id', 2 => 'title')
+);
+$router->addRoute('blogArchive', $blogArchive);
+
+// http://example.com/news/1193328
+// のような url でニュースを閲覧します。ここで
+// '1193328' の部分がキー 'id' となります。
+$newsItem = new Zend_Controlelr_Router_Route_Regex(
+    'news/(\d+)',
+    array('controller' => 'news', 'action' => 'view'),
+    array(1 => 'id')
+);
+$router->addRoute('newsItem', $newsItem);
+]]></programlisting>
+        </sect3>
+
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
             <title>RewriteRouter での Zend_Config の使用法</title>
 
