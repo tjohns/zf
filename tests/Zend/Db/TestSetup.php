@@ -78,14 +78,8 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
             $conn = $this->_db->getConnection();
         } catch (Exception $e) {
             $this->_db = null;
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
-            $this->assertThat(
-                $e->getMessage(),
-                $this->logicalOr(
-                    $this->equalTo('The PDO extension is required for this adapter but not loaded'),
-                    $this->stringContains('driver is not currently installed')
-                )
-            );
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting Zend_Db_Adapter_Exception, got '.get_class($e));
             $this->markTestSkipped($e->getMessage());
         }
     }
