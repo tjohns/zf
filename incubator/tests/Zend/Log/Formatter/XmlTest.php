@@ -45,6 +45,13 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertContains((string)42, $line);
     }
     
+    public function testConfiguringElementMapping()
+    {
+        $f = new Zend_Log_Formatter_Xml('log', array('foo' => 'bar'));
+        $line = $f->format(array('bar' => 'baz'));
+        $this->assertContains('<log><foo>baz</foo></log>', $line);
+    }
+    
     public function testXmlDeclarationIsStripped()
     {
         $f = new Zend_Log_Formatter_Xml();

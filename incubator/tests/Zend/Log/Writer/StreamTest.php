@@ -113,4 +113,20 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSettingNewFormatter()
+    {
+        $stream = fopen('php://memory', 'a');
+        $writer = new Zend_Log_Writer_Stream($stream);
+        $expected = 'foo';
+        
+        $formatter = new Zend_Log_Formatter_Simple($expected);
+        $writer->setFormatter($formatter);
+
+        $writer->write(array('bar'=>'baz'));
+        rewind($stream);
+        $contents = stream_get_contents($stream);
+        fclose($stream);
+
+        $this->assertContains($expected, $contents);        
+    }
 }
