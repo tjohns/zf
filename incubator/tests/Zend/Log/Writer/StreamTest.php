@@ -95,7 +95,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         $contents = stream_get_contents($stream);
         fclose($stream);
 
-        $this->assertRegExp("/{$fields['message']}$/", $contents);
+        $this->assertContains($fields['message'], $contents);
     }
     
     public function testWriteThrowsWhenStreamWriteFails()
