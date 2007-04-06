@@ -86,6 +86,20 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that an exception is thrown if the $dirs argument is 
+     * not a string or an array.
+     */
+    public function testLoaderInvalidDirs()
+    {
+        try {
+            Zend_Loader::loadClass('Zend_Invalid_Dirs', new stdClass());
+            $this->fail('Zend_Exception was expected but never thrown.');
+        } catch (Zend_Exception $e) {
+            $this->assertEquals('Directory argument must be a string or an array', $e->getMessage());
+        }
+    }
+
+    /**
      * Tests that a class can be loaded from the search directories.
      */
     public function testLoaderClassSearchDirs()
@@ -128,6 +142,42 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that loadFile() finds a file in the include_path when $dirs is null
+     */
+    public function testLoaderFileIncludePathEmptyDirs()
+    {
+        $saveIncludePath = get_include_path();
+        set_include_path(implode(array($saveIncludePath, implode(array(dirname(__FILE__), '_files', '_testDir1'), DIRECTORY_SEPARATOR)), PATH_SEPARATOR));
+
+        $result = Zend_Loader::loadFile('Class3.php', null);
+        $this->assertEquals(1, $result);
+
+        try {
+            $result = Zend_Loader::loadFile('Nonexistent.php', null);
+            $this->fail('Zend_Exception was expected but never thrown.');
+        } catch (Exception $e) {
+            $this->assertEquals('File "Nonexistent.php" was not found', $e->getMessage());
+        }
+
+        set_include_path($saveIncludePath);
+    }
+
+    /**
+     * Tests that loadFile() finds a file in the include_path when $dirs is non-null
+     * This was not working vis-a-vis ZF-1174
+     */
+    public function testLoaderFileIncludePathNonEmptyDirs()
+    {
+        $saveIncludePath = get_include_path();
+        set_include_path(implode(array($saveIncludePath, implode(array(dirname(__FILE__), '_files', '_testDir1'), DIRECTORY_SEPARATOR)), PATH_SEPARATOR));
+
+        $result = Zend_Loader::loadFile('Class4.php', implode(PATH_SEPARATOR, array('foo', 'bar')));
+        $this->assertEquals(1, $result);
+
+        set_include_path($saveIncludePath);
+    }
+
+    /**
      * Tests that isReadable works
      */
     public function testLoaderIsReadable()
@@ -139,7 +189,7 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     /**
      * Tests that autoload works for valid classes and interfaces
      */
-    public function testAutoloadLoadsValidClasses()
+    public function testLoaderAutoloadLoadsValidClasses()
     {
         $this->assertEquals('Zend_Db_Profiler_Exception', Zend_Loader::autoload('Zend_Db_Profiler_Exception'));
         $this->assertEquals('Zend_Auth_Storage_Interface', Zend_Loader::autoload('Zend_Auth_Storage_Interface'));
@@ -148,12 +198,12 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     /**
      * Tests that autoload returns false on invalid classes
      */
-    public function testAutoloadFailsOnInvalidClasses()
+    public function testLoaderAutoloadFailsOnInvalidClasses()
     {
         $this->assertFalse(Zend_Loader::autoload('Zend_FooBar_Magic_Abstract'));
     }
 
-    public function testRegisterAutoloadRegisters()
+    public function testLoaderRegisterAutoloadRegisters()
     {
         if (!function_exists('spl_autoload_register')) {
             $this->markTestSkipped("spl_autoload not installed on this PHP installation");
@@ -176,10 +226,10 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         spl_autoload_unregister($expected);
     }
 
-    public function testRegisterAutoloadFailsWithoutSplAutoload()
+    public function testLoaderRegisterAutoloadFailsWithoutSplAutoload()
     {
         if (function_exists('spl_autoload_register')) {
-            $this->markTestSkipped("spl_autoload installed on this PHP installation; cannot test for failure");
+            $this->markTestSkipped("spl_autoload() is installed on this PHP installation; cannot test for failure");
         }
 
         try {
@@ -188,4 +238,19 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
         }
     }
+
+    public function testLoaderRegisterAutoloadInvalidClass()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload() not installed on this PHP installation");
+        }
+
+        try {
+            Zend_Loader::registerAutoload('stdClass');
+            $this->fail('registerAutoload should fail without spl_autoload');
+        } catch (Exception $e) {
+            $this->assertEquals('The class "stdClass" does not have an autoload() method', $e->getMessage());
+        }
+    }
+
 }
