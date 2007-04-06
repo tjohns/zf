@@ -29,14 +29,25 @@
 
         <sect3 id="zend.date.options.fixdst">
 
-            <title>Automatically fixing a DST change</title>
+            <title>DST and Date Math</title>
 
             <para>
-                 Crossing the summer-/wintertime normally an hour is substracted or added depending on the date.
-                 But this can lead to problems for example when you add an month. The missing hour would lead
-                 to a false date because of the change from 00:00:00 to 23:00:00 of the previous day. To prevent 
-                 such problems we added the option 'fix_dst' which is by standard set to true. So you can use
-                 <code>Zend_Date::setOptions(array('fix_dst' => false))</code> to take in count the DST change.
+                When dates are manipulated, sometimes they cross over a DST change, normally resulting in the date
+                losing or gaining an hour.  For exmaple, when adding months to a date before a DST change, if the
+                resulting date is after the DST change, then the resulting date will appear to lose or gain an hour,
+                resulting in the time value of the date changing.  For boundary dates, such as midnight of the first
+                or last day of a month, adding enough months to cross a date boundary results in the date losing
+                an hour and becoming the last hour of the preceding month, giving the appearance of an "off by 1"
+                error.  To avoid this situation, the DST change ignored by using the <code>fix_dst</code> option.
+                When crossing the Summer/Winter DST boundary, normally an hour is substracted or added depending
+                on the date.  For example, date math crossing the Spring DST leads to a date having a day value
+                one less than expected, if the time part of the date was originally 00:00:00.  Since Zend_Date
+                is based on timestamps, and not calendar dates with a time component, the timestamp loses an hour,
+                resulting in the date having a calendar day value one less than expected.
+                To prevent such problems use the option <code>fix_dst</code>, which defaults to true, causing DST
+                to have no effect on date "math" (<code>addMOnth(), subMonth()</code>). Use
+                <code>Zend_Date::setOptions(array('fix_dst' => false))</code> to enable the subtraction or addition
+                of the DST adjustment when performing date "math".
             </para>
 
         </sect3>
