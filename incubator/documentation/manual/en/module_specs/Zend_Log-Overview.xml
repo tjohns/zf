@@ -12,7 +12,7 @@
           <para>
             A Log (instance of <code>Zend_Log</code>) is the object that your
             application uses the most. You can have as many Log objects as you
-            like and they will not interact. A Log object must contain at
+            like; they do not interact. A Log object must contain at
             least one Writer, and can optionally contain one or more Filters.
           </para>
         </listitem><listitem>
@@ -53,7 +53,7 @@ $logger->addWriter($writer);
 ?>]]></programlisting>
 
         It is important to note that the Log must
-        have at least one Writer.  Any number of Writers can be added with the
+        have at least one Writer.  You can add any number of Writers using the
         Log's <code>addWriter()</code> method.
       </para>
 
@@ -109,7 +109,7 @@ $logger->emerg('Emergency message');
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>Using Built-in Priorities</title>
     <para>
-      The <code>Zend_Log</code> class has the following priorities defined:
+      The <code>Zend_Log</code> class defines the following priorities:
 
       <programlisting role="php"><![CDATA[
 EMERG   = 0;  // Emergency: system is unusable
@@ -138,8 +138,8 @@ DEBUG   = 7;  // Debug: debug messages
     <para>
       Priority numbers descend in order of importance. <code>EMERG</code> (0)
       is the most important priority. <code>DEBUG</code> (7) is the least
-      important priority of the built-in priorities. Priorities of lower
-      importance than <code>DEBUG</code> may defined by the user. When
+      important priority of the built-in priorities. You may define priorities
+      of lower importance than <code>DEBUG</code>. When
       selecting the priority for your log message, be aware of this priority
       hierarchy and choose appropriately.
     </para>
@@ -176,7 +176,7 @@ $logger->foo('Foo Message);
     <title>Understanding Log Events</title>
     
     <para>
-      When the <code>log()</code> method or one of its shortcuts is called, a
+      When you call the <code>log()</code> method or one of its shortcuts, a
       log event is created. This is simply an associative array with data
       describing the event that is passed to the writers. The following keys
       are always created in this array: <code>timestamp</code>,
@@ -200,19 +200,19 @@ $logger->setEventItem('pid', getmypid());
         
 ?>]]></programlisting>
 
-      In the example above, a new item named <code>pid</code> will be set and
-      populated with the PID of the current process. Once a new item has been
-      set, it will automatically be sent to all writers along with all of the
+      The example above sets a new item named <code>pid</code> and populates
+      it with the PID of the current process. Once a new item has been
+      set, it is available automatically to all writers along with all of the
       other data event data during logging. An item can be overwritten at any
       time by calling the <code>setEventItem()</code> method again.
     </para>
     
     <para>
-      Setting a new event item with <code>setEventItem()</code> will cause the
+      Setting a new event item with <code>setEventItem()</code> causes the
       new item to be sent to all writers of the logger. However, this does
-      not guarantee that the writers will actually record the item. This is
+      not guarantee that the writers actually record the item. This is
       because the writers won't know what to do with it unless a formatter
-      object informed of the new item. Please see the section on Formatters
+      object is informed of the new item. Please see the section on Formatters
       to learn more.
     </para>
   </sect2>

@@ -41,7 +41,7 @@ $logger->info('Informational message');
 
 ?>]]></programlisting>
 
-      By default, the stream is opened in the append mode (<code>"a"</code>).
+      By default, the stream opens in the append mode (<code>"a"</code>).
       To open it with a different mode, the Zend_Log_Writer_Stream constructor
       accepts an optional second parameter for the mode.
     </para>
@@ -63,8 +63,8 @@ $logger->info('Informational message');
 
 ?>]]></programlisting>
 
-      The mode cannot be specified for existing stream resources. Doing so
-      will result in a <code>Zend_Log_Exception</code>.
+      You cannot specify the mode for existing stream resources. Doing so
+      causes a <code>Zend_Log_Exception</code> to be thrown.
     </para>
   </sect2>
 
@@ -93,9 +93,9 @@ $logger->info('Informational message');
 
 ?>]]></programlisting>
 
-      The code snippet above will write a single row of low data to the database table named 
-      <code>log_table_name</code> table.  The database column named <code>lvl</code> will 
-      receive the priority number and the column named <code>msg</code> will receive the
+      The example above writes a single row of low data to the database table named 
+      <code>log_table_name</code> table.  The database column named <code>lvl</code>
+      receives the priority number and the column named <code>msg</code> receives the
       log messsage.
     </para>
 
