@@ -53,19 +53,19 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
-    public function _getSqlDropTable()
+    public function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
-        return 'DROP TABLE IF EXISTS';
+        return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlCreateSequence()
+    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
-        return 'CREATE SEQUENCE';
+        return 'CREATE SEQUENCE ' . $db->quoteIdentifier($sequenceName);
     }
 
-    protected function _getSqlDropSequence()
+    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
-        return 'DROP SEQUENCE IF EXISTS';
+        return 'DROP SEQUENCE IF EXISTS ' . $db->quoteIdentifier($sequenceName);
     }
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
@@ -75,18 +75,18 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         parent::setUp($db);
     }
 
-    protected function _getDataBugs()
+    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
     {
-        $data = parent::_getDataBugs();
+        $data = parent::_getDataBugs($db);
         foreach ($data as &$row) {
             $row['bug_id'] = new Zend_Db_Expr("NEXTVAL('bugs_seq')");
         }
         return $data;
     }
 
-    protected function _getDataProducts()
+    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
     {
-        $data = parent::_getDataProducts();
+        $data = parent::_getDataProducts($db);
         foreach ($data as &$row) {
             $row['product_id'] = new Zend_Db_Expr("NEXTVAL('products_seq')");
         }

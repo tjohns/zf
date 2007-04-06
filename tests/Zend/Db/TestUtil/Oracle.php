@@ -55,14 +55,22 @@ class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Common
         return $type;
     }
 
-    protected function _getSqlCreateSequence()
+    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        if (in_array($sequenceName, $seqList)) {
+            return null;
+        }
         return 'CREATE SEQUENCE';
     }
 
-    protected function _getSqlDropSequence()
+    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
-        return 'DROP SEQUENCE';
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        if (in_array($sequenceName, $seqList)) {
+            return 'DROP SEQUENCE';
+        }
+        return null;
     }
 
     public function setUp(Zend_Db_Adapter_Abstract $db)

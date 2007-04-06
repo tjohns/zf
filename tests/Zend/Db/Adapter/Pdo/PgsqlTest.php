@@ -34,8 +34,10 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         );
         $rowsAffected = $this->_db->insert('products', $row);
         $this->assertEquals(1, $rowsAffected);
-        $id = $this->_db->lastInsertId('products', null); // implies 'products_seq'
-        $this->assertEquals('4', (string) $id, 'Expected new id to be 4');
+        $lastInsertId = $this->_db->lastInsertId('products', null); // implies 'products_seq'
+        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
+        $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
     }
 
     public function testDbAdapterExceptionInvalidLoginCredentials()

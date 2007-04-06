@@ -28,14 +28,14 @@ abstract class Zend_Db_TestUtil_Common
     protected $_tables = array();
     protected $_sequences = array();
 
-    protected function _getSqlCreateTable()
+    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
-        return 'CREATE TABLE';
+        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable()
+    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
-        return 'DROP TABLE';
+        return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
     }
 
     public function getSqlType($type)
@@ -50,11 +50,15 @@ abstract class Zend_Db_TestUtil_Common
         }
         $tableName = $this->getTableName($tableId);
         $this->dropTable($db, $tableName);
+
         if (isset($this->_tables[$tableName])) {
             return;
         }
-        $sql = $this->_getSqlCreateTable();
-        $sql .= ' ' . $db->quoteIdentifier($tableName) . " (\n\t";
+        $sql = $this->_getSqlCreateTable($db, $tableName);
+        if (!$sql) {
+            return;
+        }
+        $sql .= " (\n\t";
 
         $pKey = null;
         $pKeys = array();
@@ -93,8 +97,10 @@ abstract class Zend_Db_TestUtil_Common
             return;
         }
 
-        $sql = $this->_getSqlDropTable();
-        $sql .= ' ' . $db->quoteIdentifier($tableName);
+        $sql = $this->_getSqlDropTable($db, $tableName);
+        if (!$sql) {
+            return;
+        }
         $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $db->getConnection()->error);
@@ -102,27 +108,26 @@ abstract class Zend_Db_TestUtil_Common
         unset($this->_tables[$tableName]);
     }
 
-    protected function _getSqlCreateSequence()
+    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
         return null;
     }
 
-    protected function _getSqlDropSequence()
+    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
         return null;
     }
 
     public function createSequence($db, $sequenceName)
     {
+        $this->dropSequence($db, $sequenceName);
         if (isset($this->_sequences[$sequenceName])) {
             return;
         }
-        $sql = $this->_getSqlCreateSequence();
+        $sql = $this->_getSqlCreateSequence($db, $sequenceName);
         if (!$sql) {
             return;
         }
-        $this->dropSequence($db, $sequenceName);
-        $sql .= ' ' . $db->quoteIdentifier($sequenceName);
         $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("CREATE SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
@@ -139,11 +144,10 @@ abstract class Zend_Db_TestUtil_Common
             return;
         }
 
-        $sql = $this->_getSqlDropSequence();
+        $sql = $this->_getSqlDropSequence($db, $sequenceName);
         if (!$sql) {
             return;
         }
-        $sql .= ' ' . $db->quoteIdentifier($sequenceName);
         $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
@@ -223,7 +227,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataAccounts()
+    protected function _getDataAccounts(Zend_Db_Adapter_Abstract $db)
     {
         return array(
             array('account_name' => 'mmouse'),
@@ -232,7 +236,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataBugs()
+    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
     {
         return array(
             array(
@@ -271,7 +275,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataProducts()
+    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
     {
         return array(
             array('product_name' => 'Windows'),
@@ -280,7 +284,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataBugsProducts()
+    protected function _getDataBugsProducts(Zend_Db_Adapter_Abstract $db)
     {
         return array(
             array(
@@ -313,7 +317,7 @@ abstract class Zend_Db_TestUtil_Common
     public function populateTable(Zend_Db_Adapter_Abstract $db, $tableId)
     {
         $tableName = $this->getTableName($tableId);
-        $data = $this->{'_getData'.$tableId}();
+        $data = $this->{'_getData'.$tableId}($db);
         foreach ($data as $row) {
             $sql = 'INSERT INTO ' .  $db->quoteIdentifier($tableName);
             $cols = array();

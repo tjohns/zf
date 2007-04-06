@@ -84,8 +84,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
             $db = new Zend_Db_Adapter_Static('scalar');
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
-            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+            $this->assertContains('Argument 1 passed to Zend_Db_Adapter_Abstract::__construct() must be an array, string given', $e->getMessage());
         }
     }
 

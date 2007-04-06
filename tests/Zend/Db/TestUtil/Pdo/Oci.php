@@ -25,15 +25,12 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 {
-    const TABLE_NAME    = 'ZF_TEST_TABLE';
-    const TABLE_NAME_2  = 'ZF_TEST_TABLE2';
-    const SEQUENCE_NAME = 'ZF_TEST_TABLE_SEQ';
-    protected $_textDataType = 'VARCHAR2';
-    protected $_schemaUppercase = true;
 
-    public function getDriver()
+    public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        return 'pdo_OCI';
+        $this->createSequence($db, 'bugs_seq');
+        $this->createSequence($db, 'products_seq');
+        parent::setUp($db);
     }
 
     public function getParams(array $constants = array())
@@ -47,211 +44,77 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
         return $params;
     }
 
-    public function getCreateTableSQL()
+    public function getSqlType($type)
     {
-        $sql = 'CREATE TABLE  '. self::TABLE_NAME . " (
-            id           NUMBER(11) NOT NULL PRIMARY KEY,
-            subtitle     {$this->_textDataType}(100),
-            title        {$this->_textDataType}(100),
-            body         {$this->_textDataType}(100),
-            date_created {$this->_textDataType}(100)
-        )";
-        return $sql;
-    }
-
-    public function getCreateTableSQL2()
-    {
-        $sql = 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
-            news_id       NUMBER(11) NOT NULL,
-            user_id       NUMBER(11) NOT NULL,
-            comment_title {$this->_textDataType}(100),
-            comment_body  {$this->_textDataType}(100),
-            date_posted   {$this->_textDataType}(100)
-        )";
-        return $sql;
-    }
-
-    function getCreateTableSQLIntersection()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
-            news_id     NUMBER(11) NOT NULL,
-            user_id     NUMBER(11) NOT NULL,
-            date_posted {$this->_textDataType}(100),
-            PRIMARY KEY (news_id, user_id, date_posted),
-            FOREIGN KEY (news_id) REFERENCES ' . self::TABLE_NAME . '(news_id),
-            FOREIGN KEY (user_id, date_posted) REFERENCES ' . self::TABLE_NAME_2 . '(user_id, date_posted)
-        )';
-        return $sql;
-    }
-
-    protected function getCreateSequenceSQL()
-    {
-        $sql = 'CREATE SEQUENCE ' . self::SEQUENCE_NAME;
-        return $sql;
-    }
-
-    protected function getDropSequenceSQL()
-    {
-        $sql = 'DROP SEQUENCE ' . self::SEQUENCE_NAME;
-        return $sql;
-    }
-
-    protected function tearDownMetadata()
-    {
-        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES');
-        if (in_array(self::TABLE_NAME, $tableList)) {
-            $this->_db->query($this->getDropTableSQL());
+        if (preg_match('/VARCHAR(.*)/', $type, $matches)) {
+            return 'VARCHAR2' . $matches[1];
         }
-        if (in_array(self::TABLE_NAME_2, $tableList)) {
-            $this->_db->query($this->getDropTableSQL2());
+        if ($type == 'IDENTITY') {
+            return 'NUMBER(11)';
         }
-
-        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
-        if (in_array(self::SEQUENCE_NAME, $seqList)) {
-            $this->_db->query($this->getDropSequenceSQL());
+        if ($type == 'INTEGER') {
+            return 'NUMBER(11)';
         }
-    }
-
-    protected function createTestTable()
-    {
-        $this->tearDownMetadata();
-        $this->_db->query($this->getCreateSequenceSQL());
-        $this->_db->query($this->getCreateTableSQL());
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
-                VALUES (" . self::SEQUENCE_NAME . ".nextval, 'News Item 1', 'Sub title 1', 'This is body 1', '2006-05-01 11:11:11')";
-        $this->_db->query($sql);
-        $sql = 'INSERT INTO ' . self::TABLE_NAME . " (id, title, subTitle, body, date_created)
-                VALUES (" . self::SEQUENCE_NAME . ".nextval, 'News Item 2', 'Sub title 2', 'This is body 2', '2006-05-02 12:12:12')";
-        $this->_db->query($sql);
-    }
-
-    public function testInsert()
-    {
-        $nextId = $this->_db->fetchOne('SELECT ' . self::SEQUENCE_NAME . '.NEXTVAL FROM DUAL');
-        $row = array (
-            'id'           => $nextId,
-            'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
-            'body'         => 'This is body 1',
-            'date_created' => '2006-05-03 13:13:13'
-        );
-        $rows_affected = $this->_db->insert(self::TABLE_NAME, $row);
-        $last_insert_id = $this->_db->lastInsertId(self::TABLE_NAME);
-        $this->assertEquals(3, $last_insert_id); // correct id has been set
-    }
-
-    public function testLimit()
-    {
-        $id = $this->getResultSetKey('id');
-
-        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1);
-
-        $result = $this->_db->query($sql);
-        $rows = $result->fetchAll();
-
-        $this->assertEquals(1, count($rows));
-        $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(1, $rows[0][$id]);
-
-        $sql = $this->_db->limit('SELECT * FROM ' . self::TABLE_NAME, 1, 1);
-
-        $result = $this->_db->query($sql);
-        $rows = $result->fetchAll();
-        $this->assertEquals(1, count($rows));
-        $this->assertEquals(6, count($rows[0]));
-        $this->assertEquals(2, $rows[0][$id]);
-    }
-
-    public function testListTables()
-    {
-        $tables = $this->_db->listTables();
-        $this->assertContains(self::TABLE_NAME, $tables);
-    }
-
-    public function testQuote()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\\\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John\\'s Wort'", $value);
-
-        // quote an array
-        $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
-
-        // test numeric
-        $value = $this->_db->quote('1');
-        $this->assertEquals("'1'", $value);
-
-        $value = $this->_db->quote(1);
-        $this->assertEquals("1", $value);
-
-        $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("1, '2', 3", $value);
-    }
-
-    public function testQuoteIdentifier()
-    {
-        $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals('"table_name"', $value);
-        $value = $this->_db->quoteIdentifier('table_"_name');
-        $this->assertEquals('"table_""_name"', $value);
-    }
-
-    public function testQuoteInto()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\\\"s Wort'", $value);
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John\\'s Wort'", $value);
-    }
-
-    public function testTableInsert()
-    {
-        Zend_Loader::loadClass('Zend_Db_Table_ZfTestTable');
-        $table = $this->getIdentifier(self::TABLE_NAME);
-        $id = $this->getIdentifier('id');
-
-        $tab1 = new Zend_Db_Table_ZfTestTable(
-            array(
-                'db' => $this->_db,
-                'name' => $table,
-                'primary' => $id
-            )
-        );
-
-        $nextId = $this->_db->fetchOne('SELECT ' . self::SEQUENCE_NAME . '.NEXTVAL FROM DUAL');
-        $row = array (
-            'id'           => $nextId,
-            'title'        => 'News Item 3',
-            'subTitle'     => 'Sub title 3',
-            'body'         => 'This is body 1',
-            'date_created' => '2006-05-03 13:13:13'
-        );
-        $insertResult = $tab1->insert($row);
-        $last_insert_id = $this->_db->lastInsertId($table);
-
-        $this->assertEquals($insertResult, (string) $last_insert_id);
-        $this->assertEquals(3, (string) $last_insert_id);
-    }
-
-    public function testExceptionInvalidLoginCredentials()
-    {
-        $params = $this->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Pdo_Oci($params);
-            $db->getConnection(); // force connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+        if ($type == 'DATETIME') {
+            return 'TIMESTAMP';
         }
+        return $type;
+    }
+
+    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    {
+        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES');
+        if (in_array($tableName, $tableList)) {
+            return null;
+        }
+        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);;
+    }
+
+    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    {
+        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES');
+        if (in_array($tableName, $tableList)) {
+            return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
+        }
+        return null;
+    }
+
+    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    {
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        if (in_array($sequenceName, $seqList)) {
+            return null;
+        }
+        return 'CREATE SEQUENCE ' . $db->quoteIdentifier($sequenceName);
+    }
+
+    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    {
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        if (in_array($sequenceName, $seqList)) {
+            return 'DROP SEQUENCE ' . $db->quoteIdentifier($sequenceName);
+        }
+        return null;
+    }
+
+    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
+    {
+        $data = parent::_getDataBugs($db);
+        foreach ($data as &$row) {
+            $row['bug_id'] = new Zend_Db_Expr($db->quoteIdentifier('bugs_seq').'.NEXTVAL');
+            $row['created_on'] = new Zend_Db_Expr($db->quoteInto('DATE ?', $row['created_on']));
+            $row['updated_on'] = new Zend_Db_Expr($db->quoteInto('DATE ?', $row['updated_on']));
+        }
+        return $data;
+    }
+
+    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    {
+        $data = parent::_getDataProducts($db);
+        foreach ($data as &$row) {
+            $row['product_id'] = new Zend_Db_Expr($db->quoteIdentifier('products_seq').'.NEXTVAL');
+        }
+        return $data;
     }
 
 }
