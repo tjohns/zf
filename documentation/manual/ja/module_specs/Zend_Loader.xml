@@ -157,16 +157,19 @@ if (Zend_Loader::isReadable($filename)) {
 
         <para>
             Zend_Loader クラスには、PHP の SPL
-            自動ローダーに登録するためのメソッドが含まれています。それが
-            <code>Zend_Loader::autoload()</code> です。
+            自動ローダーに登録するためのメソッドが含まれています。そのコールバックメソッドが
+            <code>Zend_Loader::autoload()</code> です。利便性を考慮して、
+            Zend_Loader では <code>registerAutoload()</code> 関数を提供しています。
+            この関数は、<code>autoload()</code> メソッドを登録するものです。
+            <code>spl_autoload</code> 拡張モジュールが使用できない環境の場合は、
+            <code>registerAutoload()</code> メソッドは Zend_Exception をスローします。
         </para>
-
 
         <example id="zend.loader.load.autoload.example">
             <title>自動ローダー用コールバックメソッドの登録例</title>
             <programlisting role="php"><![CDATA[<?php
 
-spl_autoload_register(array('Zend_Loader', 'autoload'));
+Zend_Loader::registerAutoload();
 
 ?>]]></programlisting>
         </example>
@@ -174,9 +177,29 @@ spl_autoload_register(array('Zend_Loader', 'autoload'));
         <para>
             Zend Framework の autoload コールバックを登録すると、
             明示的に読み込まなくても Zend Framework のクラスを参照できるようになります。
-            autoload メソッドは、クラスを参照する際に自動的に
+            <code>autoload()</code> メソッドは、クラスを参照する際に自動的に
             <code>Zend_Loader::loadClass()</code> を使用します。
         </para>
+
+        <para>
+            Zend_Loader クラスを継承した場合は、<code>registerAutoload()</code>
+            に引数を追加することができます。この引数で、どのクラスから
+            <code>autoload()</code> メソッドを登録するのかを指定します。
+        </para>
+
+        <example id="zend.loader.load.autoload.example">
+            <title>autoload コールバックメソッドを継承クラスから登録する例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class My_Loader extends Zend_Loader
+{
+    // 独自の機能
+}
+
+Zend_Loader::registerAutoload('My_Loader');
+
+?>]]></programlisting>
+        </example>
 
     </sect2>
 

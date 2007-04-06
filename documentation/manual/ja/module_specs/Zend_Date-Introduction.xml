@@ -128,7 +128,7 @@ date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用
                     <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>
                     によって両方ともサポートしています。
                     日付文字列が PHP の date() フォーマットトークンである
-                    "Y/m/d" や "Y-m-d H:i: s" といった形式になる場合は、
+                    "Y/m/d" や "Y-m-d H:i:s" といった形式になる場合は、
                     Zend_Date が持つ ISO 8601 日付書式の組み込みサポートを使用します。
                 </para>
             </listitem>
