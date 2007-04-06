@@ -42,33 +42,34 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
      * Class constructor
      *
      * @param  null|string  $format  Format specifier for log messages
-     * @throws InvalidArgumentException
+     * @throws Zend_Log_Exception
      */
     public function __construct($format = null)
     {
         if ($format === null) {
-            $format = '%timestamp% %priority%: %message%' . PHP_EOL;
+            $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
         }
         
         if (! is_string($format)) {
-            throw new InvalidArgumentException('Format must be a string');
+            throw new Zend_Log_Exception('Format must be a string');
         }
         
         $this->_format = $format;
     }
 
     /**
-     * Formats a message to be written by the writer.
+     * Formats data into a single line to be written by the writer.
      *
-     * @param  string   $message   message for the log
-     * @param  integer  $priority  priority of message
-     * @return string              formatted message
+     * @param  array    $fields    log data fields
+     * @return string              formatted line to write to the log
      */
-    public function format($message, $priority)
+    public function format($fields)
     {
-        return str_replace(array('%message%', '%priority%', '%timestamp%'),
-                           array($message, $priority, date('c')),
-                           $this->_format);
+        $output = $this->_format;
+        foreach ($fields as $name => $value) {
+            $output = str_replace("%$name%", $value, $output);
+        }
+        return $output;
     }
 
 }

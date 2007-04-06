@@ -26,6 +26,9 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /** Zend_Log */
 require_once 'Zend/Log.php';
 
+/** Zend_Log_Writer_Mock */
+require_once 'Zend/Log/Writer/Mock.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -112,7 +115,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->log('foo', 42);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
+            $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
@@ -124,7 +127,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->nonexistantPriority('');
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
+            $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('/bad log priority/i', $e->getMessage());
         }
     }
@@ -136,7 +139,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $logger->addPriority('BOB', 0);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
+            $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('/existing priorities/i', $e->getMessage());
         }
     
@@ -155,4 +158,29 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         $this->assertContains($message, $logdata);
     }
 
+    // Fields
+
+    public function testLogWritesStandardFields() {
+        $logger = new Zend_Log($mock = new Zend_Log_Writer_Mock);
+        $logger->info('foo');
+
+        $this->assertEquals(1, count($mock->events));
+        $event = array_shift($mock->events);
+
+        $standardFields = array_flip(array('timestamp', 'priority', 'priorityName', 'message'));
+        $this->assertEquals(array(), array_diff_key($event, $standardFields));
+    }
+    
+    public function testLogWritesAndOverwritesExtraFields() {
+        $logger = new Zend_Log($mock = new Zend_Log_Writer_Mock);
+        $logger->setExtraField('foo', 42);
+        $logger->setExtraField($field = 'bar', $value = 43);
+        $logger->info('foo');
+
+        $this->assertEquals(1, count($mock->events));
+        $event = array_shift($mock->events);        
+
+        $this->assertTrue(array_key_exists($field, $event));
+        $this->assertEquals($value, $event[$field]);
+    }
 }

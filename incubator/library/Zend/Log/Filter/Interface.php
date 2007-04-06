@@ -33,10 +33,9 @@ interface Zend_Log_Filter_Interface
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param  string   $message   message for the log
-     * @param  integer  $priority  priority of message
+     * @param  array    $fields    log data fields
      * @return boolean             accepted?
      */
-    public function accept($message, $priority);
+    public function accept($fields);
 
 }

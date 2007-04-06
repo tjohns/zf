@@ -31,12 +31,11 @@
 interface Zend_Log_Formatter_Interface
 {
     /**
-     * Formats a message to be written by the writer.
+     * Formats data into a single line to be written by the writer.
      *
-     * @param  string   $message   message for the log
-     * @param  integer  $priority  priority of message
-     * @return string              formatted message
+     * @param  array    $fields    log data fields
+     * @return string              formatted line to write to the log
      */
-    public function format($message, $priority);
+    public function format($fields);
 
 }

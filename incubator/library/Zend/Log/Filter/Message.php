@@ -42,12 +42,12 @@ class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
      * Filter out any log messages not matching $regexp.
      *
      * @param  string  $regexp     Regular expression to test the log message
-     * @throws InvalidArgumentException
+     * @throws Zend_Log_Exception
      */
     public function __construct($regexp)
     {
         if (@preg_match($regexp, '') === false) {
-            throw new InvalidArgumentException("Invalid regular expression '$regexp'");
+            throw new Zend_Log_Exception("Invalid regular expression '$regexp'");
         }
         $this->_regexp = $regexp;
     }
@@ -55,13 +55,12 @@ class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param  string   $message   message for the log
-     * @param  integer  $priority  priority of message
+     * @param  array    $fields    log data fields
      * @return boolean             accepted?
      */
-    public function accept($message, $priority)
+    public function accept($fields)
     {
-        return preg_match($this->_regexp, $message) > 0;
+        return preg_match($this->_regexp, $fields['message']) > 0;
     }
 
 }

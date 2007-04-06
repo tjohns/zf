@@ -19,9 +19,6 @@
  * @version    $Id$
  */
 
-/** Zend_Log_Exception */
-require_once 'Zend/Log/Exception.php';
-
 /** Zend_Log_Filter_Priority */
 require_once 'Zend/Log/Filter/Priority.php';
 
@@ -60,9 +57,15 @@ class Zend_Log
     private $_filters = array();
 
     /**
+     * @var array of extra log fields
+     */
+    private $_extras = array();
+
+    /**
      * Class constructor.  Create a new logger
      *
      * @param Zend_Log_Writer_Abstract|null  $writer  default writer
+     * @param array                          $extras  extra fields
      */
     public function __construct($writer = null)
     {
@@ -83,7 +86,7 @@ class Zend_Log
      * @param  string  $method  priority name
      * @param  string  $params  message to log
      * @return void
-     * @throws InvalidArgumentException
+     * @throws Zend_Log_Exception
      */
     public function __call($method, $params)
     {
@@ -91,7 +94,7 @@ class Zend_Log
         if (($priority = array_search($priority, $this->_priorities)) !== false) {
             $this->log(array_shift($params), $priority);
         } else {
-            throw new InvalidArgumentException('Bad log priority');
+            throw new Zend_Log_Exception('Bad log priority');
         }
     }
 
@@ -101,26 +104,36 @@ class Zend_Log
      * @param  string   $message   Message to log
      * @param  integer  $priority  Priority of message
      * @return void
-     * @throws InvalidArgumentException
+     * @throws Zend_Log_Exception
      */
     public function log($message, $priority)
     {
-        foreach ($this->_filters as $filter) {
-            if (!$filter->accept($message, $priority)) {
-                return;
-            }
-        }
-
+        // sanity checks
         if (empty($this->_writers)) {
             throw new Zend_Log_Exception('No writers were added');
         }
 
         if (! isset($this->_priorities[$priority])) {
-            throw new InvalidArgumentException('Bad log priority');
+            throw new Zend_Log_Exception('Bad log priority');
         }
 
+        // pack into fields required by filters and writers
+        $fields = array_merge(array('timestamp'    => date('c'),
+                                    'message'      => $message,
+                                    'priority'     => $priority,
+                                    'priorityName' => $this->_priorities[$priority]),
+                              $this->_extras);
+
+        // abort if rejected by the global filters
+        foreach ($this->_filters as $filter) {
+            if (! $filter->accept($fields)) {
+                return;
+            }
+        }
+
+        // send to each writer
         foreach ($this->_writers as $writer) {
-            $writer->log($message, $priority);
+            $writer->write($fields);
         }
     }
 
@@ -129,7 +142,7 @@ class Zend_Log
      *
      * @param  string   $name      Name of priority
      * @param  integer  $priority  Numeric priority
-     * @throws InvalidArgumentException
+     * @throws Zend_Log_InvalidArgumentException
      */
     public function addPriority($name, $priority)
     {
@@ -138,7 +151,7 @@ class Zend_Log
 
         if (isset($this->_priorities[$priority])
             || array_search($name, $this->_priorities)) {
-            throw new InvalidArgumentException('Existing priorities cannot be overwritten');
+            throw new Zend_Log_Exception('Existing priorities cannot be overwritten');
         }
 
         $this->_priorities[$priority] = $name;
@@ -171,6 +184,17 @@ class Zend_Log
     public function addWriter($writer)
     {
         $this->_writers[] = $writer;
+    }
+
+    /**
+     * Set an extra field to pass to the log writers.
+     *
+     * @param  $name    Name of the field
+     * @param  $value   Value of the field
+     * @return void
+     */
+    public function setExtraField($name, $value) {
+        $this->_extras = array_merge($this->_extras, array($name => $value));
     }
 
 }

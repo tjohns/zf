@@ -44,41 +44,54 @@ class Zend_Log_Writer_DbTest extends PHPUnit_Framework_TestCase
         $this->writer = new Zend_Log_Writer_Db($this->db, $this->tableName);
     }
     
+    public function testFormattingIsNotSupported()
+    {
+        try {
+            $this->writer->setFormatter(new stdclass);
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/does not support formatting/i', $e->getMessage());
+        }
+    }
+    
     public function testWriteWithDefaults()
     {
         // log to the mock db adapter
-        $message  = 'message-to-log';
-        $priority = 2;
-        $this->writer->write($message, $priority);
+        $fields = array('message'  => 'foo',
+                        'priority' => 42);
+
+        $this->writer->write($fields);
 
         // insert should be called once...
         $this->assertContains('insert', array_keys($this->db->calls));
         $this->assertEquals(1, count($this->db->calls['insert']));
 
         // ...with the correct table and binds for the database
-        $binds = array('message'  => $message, 
-                       'priority' => $priority);
+        $binds = array('message'  => $fields['message'], 
+                       'priority' => $fields['priority']);
         $this->assertEquals(array($this->tableName, $binds), 
                             $this->db->calls['insert'][0]);
     }
 
     public function testWriteUsesOptionalCustomColumnNames()
     {
-        $this->writer->setOption('fieldMessage',  $messageField = 'new-message-field');
-        $this->writer->setOption('fieldPriority', $priorityField   = 'new-priority-field');
-
+        $this->writer = new Zend_Log_Writer_Db($this->db, $this->tableName,
+                                                array('new-message-field'  => 'message',
+                                                      'new-message-field' => 'priority'));
+    
         // log to the mock db adapter
         $message  = 'message-to-log';
         $priority = 2;
-        $this->writer->write($message, $priority);
+        $this->writer->write(array('message' => $message, 'priority' => $priority));
         
         // insert should be called once...
         $this->assertContains('insert', array_keys($this->db->calls));
         $this->assertEquals(1, count($this->db->calls['insert']));
-
+    
         // ...with the correct table and binds for the database
-        $binds = array($messageField  => $message, 
-                       $priorityField => $priority);
+        $binds = array('new-message-field' => $message, 
+                       'new-message-field' => $priority);
         $this->assertEquals(array($this->tableName, $binds), 
                             $this->db->calls['insert'][0]);
     }

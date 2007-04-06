@@ -42,18 +42,25 @@ class Zend_Log_Formatter_SimpleTest extends PHPUnit_Framework_TestCase
             new Zend_Log_Formatter_Simple(1);
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
+            $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('/must be a string/i', $e->getMessage());
         }
     }
     
     public function testDefaultFormat()
     {
+        $fields = array('timestamp'    => 0,
+                        'message'      => 'foo',
+                        'priority'     => 42,
+                        'priorityName' => 'bar');
+        
         $f = new Zend_Log_Formatter_Simple();
-        $line = $f->format($message = 'message', $priority = 1);
+        $line = $f->format($fields);
 
-        $this->assertContains($message, $line);
-        $this->assertContains((string)$priority, $line);
+        $this->assertContains((string)$fields['timestamp'], $line);
+        $this->assertContains($fields['message'], $line);
+        $this->assertContains($fields['priorityName'], $line);
+        $this->assertContains((string)$fields['priority'], $line);
     }
 
 }

@@ -17,7 +17,7 @@
  * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: Null.php 3980 2007-03-15 21:38:38Z mike $
  */
 
 /** Zend_Log_Writer_Abstract */
@@ -29,18 +29,23 @@ require_once 'Zend/Log/Writer/Abstract.php';
  * @subpackage Writer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: Null.php 3980 2007-03-15 21:38:38Z mike $
  */ 
-class Zend_Log_Writer_Null extends Zend_Log_Writer_Abstract
+class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
 {
+    /**
+     * array of log events
+     */
+    public $events = array();
+    
     /**
      * Write a message to the log.
      *
      * @param  array  $fields  log data fields
      * @return bool            Always True
      */
-    protected function _write($fields)
+    public function _write($fields)
     {
+        $this->events[] = $fields;
     }
-
 }

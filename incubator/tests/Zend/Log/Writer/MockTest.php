@@ -17,17 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
  */
 
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
 
-/** Zend_Log */
-require_once 'Zend/Log.php';
-
-/** Zend_Log_Filter_Message */
-require_once 'Zend/Log/Filter/Message.php';
+/** Zend_Log_Writer_Mock */
+require_once 'Zend/Log/Writer/Mock.php';
 
 /**
  * @category   Zend
@@ -35,26 +32,18 @@ require_once 'Zend/Log/Filter/Message.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
  */
-class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
+class Zend_Log_Writer_MockTest extends PHPUnit_Framework_TestCase
 {
-    public function testMessageFilterRecognizesInvalidRegularExpression()
+    public function testWrite()
     {
-        try {
-            $filter = new Zend_Log_Filter_Message('invalid regexp');
-            $this->fail();
-        } catch (Exception $e) {
-            $this->assertType('Zend_Log_Exception', $e);
-            $this->assertRegexp('/invalid reg/i', $e->getMessage());
-        }
-    }
-    
-    public function testMessageFilter()
-    {
-        $filter = new Zend_Log_Filter_Message('/accept/');
-        $this->assertTrue($filter->accept(array('message' => 'foo accept bar')));
-        $this->assertFalse($filter->accept(array('message' => 'foo reject bar')));
+        $writer = new Zend_Log_Writer_Mock();
+        $this->assertSame(array(), $writer->events);
+
+        $fields = array('foo' => 'bar');
+        $writer->write($fields);
+        $this->assertSame(array($fields), $writer->events);
     }
 
 }

@@ -39,16 +39,16 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
     public function testDefaultFormat()
     {
         $f = new Zend_Log_Formatter_Xml();
-        $line = $f->format($message = 'message', $priority = 1);
+        $line = $f->format(array('message' => 'foo', 'priority' => 42));
 
-        $this->assertContains($message, $line);
-        $this->assertContains((string)$priority, $line);
+        $this->assertContains('foo', $line);
+        $this->assertContains((string)42, $line);
     }
     
     public function testXmlDeclarationIsStripped()
     {
         $f = new Zend_Log_Formatter_Xml();
-        $line = $f->format($message = 'message', $priority = 1);
+        $line = $f->format(array('message' => 'foo', 'priority' => 42));
         
         $this->assertNotContains('<\?xml version=', $line);
     }
@@ -56,7 +56,7 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
     public function testXmlValidates()
     {
         $f = new Zend_Log_Formatter_Xml();
-        $line = $f->format($message = 'message', $priority = 1);
+        $line = $f->format(array('message' => 'foo', 'priority' => 42));
 
         $sxml = @simplexml_load_string($line);
         $this->assertType('SimpleXMLElement', $sxml, 'Formatted XML is invalid');

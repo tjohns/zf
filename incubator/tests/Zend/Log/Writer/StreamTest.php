@@ -83,32 +83,19 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    public function testSettingBadOptionThrows()
-    {
-        try {
-            $writer = new Zend_Log_Writer_Stream('php://memory');
-            $writer->setOption('foo', 42);
-            $this->fail();
-        } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
-            $this->assertRegExp('/unknown option/i', $e->getMessage());
-        }
-    }
-    
     public function testWrite()
     {
         $stream = fopen('php://memory', 'a');
+        $fields = array('message' => 'message-to-log');
 
         $writer = new Zend_Log_Writer_Stream($stream);
-        $writer->write($message = 'message-to-log', $priority = 1);
+        $writer->write($fields);
 
         rewind($stream);
         $contents = stream_get_contents($stream);
         fclose($stream);
 
-        $date  = '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}-\d{2}:\d{2}';
-
-        $this->assertRegExp("/$date $priority: $message/", $contents);
+        $this->assertRegExp("/{$fields['message']}$/", $contents);
     }
     
     public function testWriteThrowsWhenStreamWriteFails()
@@ -118,7 +105,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         fclose($stream);
         
         try {
-            $writer->write('foo', 1);
+            $writer->write(array('message' => 'foo'));
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);

@@ -23,6 +23,9 @@
 /** Zend_Log_Writer_Abstract */
 require_once 'Zend/Log/Writer/Abstract.php';
 
+/** Zend_Log_Formatter_Simple */
+require_once 'Zend/Log/Formatter/Simple.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -33,12 +36,6 @@ require_once 'Zend/Log/Writer/Abstract.php';
  */
 class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
 {
-    /**
-     * Formats the log message before writing.
-     * @var Zend_Log_Formatter_Interface
-     */
-    protected $_formatter;
-    
     /**
      * Holds the PHP stream to log to.
      * @var null|stream
@@ -53,8 +50,6 @@ class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
      */
     public function __construct($streamOrUrl, $mode = 'a')
     {
-        $this->_formatter = new Zend_Log_Formatter_Simple();
-        
         if (is_resource($streamOrUrl)) {
             if (get_resource_type($streamOrUrl) != 'stream') {
                 throw new Zend_Log_Exception('Resource is not a stream');
@@ -71,24 +66,23 @@ class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
                 throw new Zend_Log_Exception($msg);
             }
         }
+
+        $this->_formatter = new Zend_Log_Formatter_Simple();
     }
 
     /**
      * Write a message to the log.
      *
-     * @param  $message    Message to log
-     * @param  $priority   Priority of message
-     * @return bool        Always True
+     * @param  array  $fields  log data fields
+     * @return bool            Always True
      */
-    public function write($message, $priority)
+    protected function _write($fields)
     {
-        $line = $this->_formatter->format($message, $priority);
-
+        $line = $this->_formatter->format($fields);
+        
         if (! @fwrite($this->_stream, $line)) {
             throw new Zend_Log_Exception("Unable to write to stream");
         }        
-
-        return true;
     }
 
 }

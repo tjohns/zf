@@ -34,44 +34,54 @@ require_once 'Zend/Log/Formatter/Interface.php';
 class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
 {
     /**
-     * @var array of options
+     * @var Relates XML elements to log data field keys.
      */
-    protected $_options = array('elementEntry'     => 'log',
-                                'elementTimestamp' => 'timestamp',
-                                'elementMessage'   => 'message',
-                                'elementPriority'  => 'priority',
-                                'lineEnding'       => PHP_EOL);
+    protected $_rootElement;
+
+    /**
+     * @var Relates XML elements to log data field keys.
+     */
+    protected $_elementMap;
 
     /**
      * Class constructor
      *
-     * @param array $options  Options for specifying XML format
+     * @param array $elementMap
      */
-    public function __construct($options = array())
+    public function __construct($rootElement = 'logEntry', $elementMap = null)
     {
-        $this->_options = array_merge($this->_options, $options);
+        $this->_rootElement = $rootElement;
+        $this->_elementMap  = $elementMap;
     }
 
     /**
-     * Formats a message to be written by the writer.
+     * Formats data into a single line to be written by the writer.
      *
-     * @param  string   $message  message for the log
-     * @param  integer  $priority priority of message
-     * @return string             formatted message
+     * @param  array    $fields    log data fields
+     * @return string              formatted line to write to the log
      */
-    public function format($message, $priority)
+    public function format($fields)
     {
+        if ($this->_elementMap === null) {
+            $dataToInsert = $fields;
+        } else {
+            $dataToInsert = array();
+            foreach ($this->_elementMap as $elementName => $fieldKey) {
+                $dataToInsert[$elementName] = $fields[$fieldKey];
+            }
+        }        
+        
         $dom = new DOMDocument();
+        $elt = $dom->appendChild(new DOMElement($this->_rootElement));
 
-        $elt = $dom->appendChild(new DOMElement($this->_options['elementEntry']));
-        $elt->appendChild(new DOMElement($this->_options['elementTimestamp'], date('c')));
-        $elt->appendChild(new DOMElement($this->_options['elementMessage'], $message));
-        $elt->appendChild(new DOMElement($this->_options['elementPriority'], $priority));        
+        foreach ($dataToInsert as $key => $value) {
+            $elt->appendChild(new DOMElement($key, $value));
+        }
         
         $xml = $dom->saveXML();
         $xml = preg_replace('/<\?xml version="1.0"( encoding="[^\"]*")?\?>\n/u', '', $xml);
         
-        return $xml . $this->_options['lineEnding'];
+        return $xml . PHP_EOL;
     }
 
 }

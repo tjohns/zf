@@ -46,12 +46,11 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
     private $_table;
 
     /**
-     * Options to be set by setOption().  Sets the field names in the database table.
+     * Relates database columns names to log data field keys.
      *
-     * @var array
+     * @var null|array
      */
-    protected $_options = array('fieldMessage'  => 'message',
-                                'fieldPriority' => 'priority');
+    private $_columnMap;
 
     /**
      * Class constructor
@@ -59,26 +58,38 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
      * @param Zend_Db_Adapter $db   Database adapter instance
      * @param string $table         Log table in database
      */
-    public function __construct($db, $table)
+    public function __construct($db, $table, $columnMap = null)
     {
         $this->_db    = $db;
         $this->_table = $table;
+        $this->_columnMap = $columnMap;
+    }
+
+    /**
+     * Formatting is not possible on this writer
+     */
+    public function setFormatter($formatter) {
+        throw new Zend_Log_Exception(get_class() . ' does not support formatting');
     }
 
     /**
      * Write a message to the log.
      *
-     * @param  $message    Message to log
-     * @param  $priority   Priority of message
+     * @param  array  $fields  log data fields
      * @return bool        Always True
      */
-    public function write($message, $priority)
+    protected function _write($fields)
     {
-        $fields = array($this->_options['fieldMessage'] => $message,
-                        $this->_options['fieldPriority']   => $priority);
+        if ($this->_columnMap === null) {
+            $dataToInsert = $fields;
+        } else {
+            $dataToInsert = array();
+            foreach ($this->_columnMap as $columnName => $fieldKey) {
+                $dataToInsert[$columnName] = $fields[$fieldKey];
+            }
+        }
         
-        $this->_db->insert($this->_table, $fields);
-        return true;
+        $this->_db->insert($this->_table, $dataToInsert);
     }
 
 }

@@ -47,13 +47,13 @@ class Zend_Log_Filter_PriorityTest extends PHPUnit_Framework_TestCase
 
     public function testPriorityFilterAccept()
     {
-        $this->assertTrue($this->filter->accept('', 2));
-        $this->assertTrue($this->filter->accept('', 1));
+        $this->assertTrue($this->filter->accept(array('priority' => 2)));
+        $this->assertTrue($this->filter->accept(array('priority' => 1)));
     }
 
     public function testPriorityFilterReject()
     {
-        $this->assertFalse($this->filter->accept('', 3));
+        $this->assertFalse($this->filter->accept(array('priority' => 3)));
     } 
 
     public function testConstructorThrowsOnInvalidPriority()
@@ -62,7 +62,7 @@ class Zend_Log_Filter_PriorityTest extends PHPUnit_Framework_TestCase
             new Zend_Log_Filter_Priority('foo');
             $this->fail();
         } catch (Exception $e) {
-            $this->assertType('InvalidArgumentException', $e);
+            $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('/must be an integer/i', $e->getMessage());
         }
     }

@@ -39,7 +39,7 @@ class Zend_Log_Writer_NullTest extends PHPUnit_Framework_TestCase
     public function testWrite()
     {
         $writer = new Zend_Log_Writer_Null();
-        $this->assertTrue($writer->write('foo', 42));
+        $writer->write(array('message' => 'foo', 'priority' => 42));
     }
 
 }

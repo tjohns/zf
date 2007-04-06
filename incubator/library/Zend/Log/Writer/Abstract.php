@@ -23,6 +23,9 @@
 /** Zend_Log_Filter_Priority */
 require_once 'Zend/Log/Filter/Priority.php';
 
+/** Zend_Log_Exception */
+require_once 'Zend/Log/Exception.php';
+
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -34,14 +37,15 @@ require_once 'Zend/Log/Filter/Priority.php';
 abstract class Zend_Log_Writer_Abstract
 {
     /**
-     * @var array of key/value pair options
-     */
-    protected $_options = array();
-
-    /**
      * @var array of Zend_Log_Filter_Interface
      */
     protected $_filters = array();
+
+    /**
+     * Formats the log message before writing.
+     * @var Zend_Log_Formatter_Interface
+     */
+    protected $_formatter;
 
     /**
      * Add a filter specific to this writer.
@@ -61,46 +65,37 @@ abstract class Zend_Log_Writer_Abstract
     /**
      * Log a message to this writer.
      *
-     * @param  string   $message   Message to log
-     * @param  integer  $priority  Priority of message
+     * @param  array     $fields  log data fields
      * @return void
      */
-    public function log($message, $priority)
+    public function write($fields)
     {
         foreach ($this->_filters as $filter) {
-            if (!$filter->accept($message, $priority)) {
+            if (! $filter->accept($fields)) {
                 return;
             }
         }
 
-        $this->write($message, $priority);
+        // exception occurs on error
+        $this->_write($fields);
     }
 
     /**
-     * Sets an option specific to the implementation of the log writer.
+     * Set a new formatter for this writer
      *
-     * @param  $optionKey      Key name for the option to be changed.  Keys are writer-specific
-     * @param  $optionValue    New value to assign to the option
-     * @return bool            True
-     * @throws InvalidArgumentException
+     * @param  Zend_Log_Formatter_Interface $formatter
+     * @return void
      */
-    public function setOption($optionKey, $optionValue)
-    {
-        if (!array_key_exists($optionKey, $this->_options)) {
-            throw new InvalidArgumentException("Unknown option \"$optionKey\".");
-        }
-        $this->_options[$optionKey] = $optionValue;
-
-        return true;
+    public function setFormatter($formatter) {
+        $this->_formatter = $formatter;
     }
 
     /**
      * Write a message to the log.
      *
-     * @param  $message    Message to log
-     * @param  $priority   priority of message
-     * @return bool        Always True
+     * @param  array  $fields  log data fields
+     * @return bool            Always True
      */
-    abstract public function write($message, $priority);
+    abstract protected function _write($fields);
 
 }
