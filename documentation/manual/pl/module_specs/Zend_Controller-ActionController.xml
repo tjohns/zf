@@ -201,43 +201,45 @@ $this->getResponse()->appendBody($content);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            <emphasis>exit:</emphasis> whether or not to exit
-                            immediately. If requested, it will cleanly close any
-                            open sessions and perform the redirect.
+                            <emphasis>exit:</emphasis> określa czy skrypt ma 
+                            zakończyć działanie od razu po przekierowaniu. Jeśli
+                            tak, to skrypt zamknie wszystkie otwarte sesje i
+                            przeprowadzi przekierowanie.
                         </para>
 
                         <para>
-                            You may set this option globally within the
-                            controller using the <code>setRedirectExit()</code>
-                            accessor.
-                        </para>
-                    </listitem>
-
-                    <listitem>
-                        <para>
-                            <emphasis>prependBase:</emphasis> whether or not to
-                            prepend the base URL registered with the request
-                            object to the URL provided.
-                        </para>
-
-                        <para>
-                            You may set this option globally within the
-                            controller using the
-                            <code>setRedirectPrependBase()</code> accessor.
+                            Możesz ustawić tę opcję globalnie wewnątrz 
+                            kontrolera używając metody dostępowej 
+                            <code>setRedirectExit()</code>.
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            <emphasis>code:</emphasis> what HTTP code to utilize
-                            in the redirect. By default, an HTTP 302 is
-                            utilized; any code between 301 and 306 may be used.
+                            <emphasis>prependBase:</emphasis> określa czy bazowy
+                            adres URL zarejestrowany w obiekcie żądania ma być 
+                            dołączony do adresu URL przekierowania.
                         </para>
 
                         <para>
-                            You may set this option globally within the
-                            controller using the
-                            <code>setRedirectCode()</code> accessor.
+                            Możesz ustawić tę opcję globalnie wewnątrz 
+                            kontrolera używając metody dostępowej 
+                            <code>setRedirectPrependBase()</code>.
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <emphasis>code:</emphasis> kod HTTP do użycia 
+                            podczas przekierowania. Domyślnie użyty jest kod 
+                            HTTP 302; może być użyty dowolny kod pomiędzy 301
+                            a 306.
+                        </para>
+
+                        <para>
+                            Możesz ustawić tę opcję globalnie wewnątrz 
+                            kontrolera używając metody dostępowej 
+                            <code>setRedirectCode()</code>.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -246,22 +248,23 @@ $this->getResponse()->appendBody($content);
             <listitem>
                 <para>
                     <emphasis>render($action = null, $name = null, $noController
-                    = false)</emphasis>: render a view script. If no arguments
-                    are passed, it assumes that the script requested is
-                    <code>[controller]/[action].phtml</code> (where
-                    <code>.phtml</code> is the value of the
-                    <code>$viewSuffix</code> property). Passing a value for
-                    <code>$action</code> will render that template in the
-                    <code>[controller]</code> subdirectory. To override using
-                    the <code>[controller]</code> subdirectory, pass a true
-                    value for <code>$noController</code>. Finally, templates are
-                    rendered into the response object; if you wish to render to
-                    a specific named segment in the response object, pass a
-                    value to <code>$name</code>.
+                    = false)</emphasis>: renderuje skrypt widoku. Jeśli nie 
+                    zostały przekazane argumenty, zostanie założone, że 
+                    zażądanym skryptem jest <code>[kontroler]/[akcja].phtml</code> 
+                    (gdzie <code>.phtml</code> jest wartością właściwości 
+                    <code>$viewSuffix</code>). Jeśli przekazano wartość dla 
+                    parametru <code>$action</code>, zostanie zrenderowany 
+                    szablon z podkatalogu <code>[kontroler]</code>. Aby nie 
+                    używać podkatalogu <code>[kontroler]</code>, przekaż 
+                    logiczną wartość true dla parametru 
+                    <code>$noController</code>. Na koniec szablony są 
+                    renderowane do obiektu odpowiedzi; jeśli chcesz zrenderować 
+                    szablon do konkretnego segmentu w obiekcie odpowiedzi, 
+                    przekaż wartość w parametrze <code>$name</code>.
                 </para>
 
                 <para>
-                    Some examples:
+                    Kilka przykładów:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -269,19 +272,19 @@ class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
-        // Renders my/foo.phtml
+        // Renderuje plik my/foo.phtml
         $this->render();
 
-        // Renders my/bar.phtml
+        // Renderuje plik my/bar.phtml
         $this->render('bar');
 
-        // Renders baz.phtml
+        // Renderuje plik baz.phtml
         $this->render('baz', null, true);
 
-        // Renders foo/login.phtml to the 'form' segment of the response object
+        // Renderuje plik foo/login.phtml do segmentu 'form' obiektu odpowiedzi
         $this->render('login', 'form');
         
-        // Renders site.phtml to the 'page' segment of the response object
+        // Renderuje plik site.phtml do segmentu 'page' obiektu odpowiedzi
         $this->render('site', 'page', true);
     }
 }
@@ -290,18 +293,17 @@ class MyController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <emphasis>initView()</emphasis>: initialize the view object.
-                    <code>render()</code> calls <code>initView()</code> in order
-                    to retrieve the view object, but it may be initialized at
-                    any time; by default it populates the <code>$view</code>
-                    property.  By default, it uses <code>Zend_View</code>, but
-                    any class implementing <code>Zend_View_Interface</code> may
-                    be used.
+                    <emphasis>initView()</emphasis>: inicjuje obiekt widoku.
+                    Metoda <code>render()</code> wywołuje <code>initView()</code> 
+                    w celu odebrania obiektu widoku, ale może on być zainicjowany
+                    w dowolnym momencie; domyślnie zapisywany jest on we
+                    właściwości <code>$view</code>. Metoda domyślnie używa 
+                    klasy <code>Zend_View</code>, ale może użyć dowolnej klasy 
+                    implementującej interfejs <code>Zend_View_Interface</code>.
                 </para>
 
                 <para>
-                    The default implementation makes the following assumption of
-                    the directory structure:
+                    Domyślna implementacja zakłada taką strukturę katalogów:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -317,16 +319,17 @@ applicationOrModule/
 ]]></programlisting>
                 
                 <para>
-                    In other words, view scripts are assumed to be in the
-                    <code>views/scripts/</code> subdirectory, and the
-                    <code>views</code> subdirectory is assumed to be a sibling
-                    of the controllers subdirectory.
+                    Innymi słowy, założone jest, że skrypty widoków znajdują się
+                    w podkatalogu <code>views/scripts/</code>, a podkatalog
+                    <code>views</code> znajduje się w tym samym katalogu co 
+                    katalog kontrolerów.
                 </para>
 
                 <para>
-                    Call <code>initView()</code> in either <code>init()</code>
-                    or your action methods if you need to be able to assign
-                    variables, register filters, etc. As examples:
+                    Wywołaj metodę <code>initView()</code> w metodzie 
+                    <code>init()</code> lub w metodach akcji swojego kontrolera
+                    jeśli potrzebujesz przypisać zmienne, zarejestrować filtry
+                    itp. Na przykład:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -334,17 +337,17 @@ class MyController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Initialize view object immediately
+        // Inicjujemy obiekt widoku
         $this->initView();
     }
 
     public function fooAction()
     {
-        // Initialize some variables
+        // Inicjujemy zmienne
         $this->view->foo = 'bar';
         $this->view->bar = 'baz';
 
-        // render the view, with the 'foo' and 'bar' assigned variables
+        // Renderuje widok z przypisanymi zmiennymi 'foo' oraz 'bar'
         $this->render();
     }
 }
@@ -353,14 +356,14 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // Initialize view on a per-action basis:
+        // Inicjujemy obiekt widoku w konkretnej akcji
         $view = $this->initView();
 
-        // Initialize some variables
+        // Inicjujemy zmienne
         $view->foo = 'bar';
         $view->bar = 'baz';
 
-        // render the view, with the 'foo' and 'bar' assigned variables
+        // Renderuje widok z przypisanymi zmiennymi 'foo' oraz 'bar'
         $this->render();
     }
 }
@@ -370,28 +373,28 @@ class FooController extends Zend_Controller_Action
             <listitem>
                 <para>
                     <emphasis>getViewScript($action = null, $noController =
-                        false):</emphasis> retrieve a view script path.
-                    Primarily used by <code>render()</code>, you can call this
-                    at any time to grab a view script path, or override the
-                    method to change how your controller determines the path to
-                    a view script.
+                        false):</emphasis> pobiera ścieżkę skryptów widoków.
+                    Metoda głównie użwana przez metodę <code>render()</code>, 
+                    możesz wywołać ją w dowolnej chwili aby pobrać ścieżkę 
+                    skryptów widoków, lub nadpisać metodę aby zmienić sposób
+                    określania ścieżek do skryptów widoków.
                 </para>
 
                 <para>
-                    As detailed under <code>render()</code>, above, the default
-                    functionality is to look for a view script named
-                    <code>[controller]/[action].phtml</code>. Providing
-                    <code>$action</code> will override the filename of the view
-                    script, and passing a true value to
-                    <code>$noController</code> will override looking in the
-                    controller subdirectory. You may also override the
-                    <code>$viewSuffix</code> property to change the file
-                    extension used (defaults to .phtml).
+                    Jako opisano wyżej w dokumentacji metody <code>render()</code>, 
+                    domyślną funkcjonalnością jesty poszukiwanie skryptu widoku 
+                    nazwanego <code>[kontroler]/[akcja].phtml</code>.                     
+                    Podanie parametru <code>$action</code> nadpisze nazwę pliku
+                    skryptu widoku, a przekazanie logicznej wartości true w
+                    parametrze <code>$noController</code> spowoduje poszukiwanie
+                    pliku z pominięciem podkatalogu kontrolera.
+                    Możesz także nadpisać właściwość <code>$viewSuffix</code> 
+                    aby zmienić używane rozszerzenie plików (domyślnie .phtml).
                 </para>
 
                 <para>
-                    Override this method to provide alternate functionality when
-                    determining the view script name and path.
+                    Nadpisz tę metodę aby zapewnić alternatywną funkcjonalność
+                    określeającą nazwę pliku skryptu widoku oraz ścieżkę.
                 </para>
             </listitem>
         </itemizedlist>

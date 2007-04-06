@@ -163,14 +163,19 @@ if (Zend_Loader::isReadable($filename)) {
         <para>
             Klasa Zend_Loader zawiera metodę, którą możesz zarejestrować jako
             autoloader PHP SPL. Tą metodą jest <code>Zend_Loader::autoload()</code>.
+            Dla wygody klasa Zend_Loader posiada metodę 
+            <code>registerAutoload()</code> rejestrującą swoją własną metodę 
+            <code>autoload()</code>. Jeśli rozszerzenie <code>spl_autoload</code>
+            nie jest zainstalowane w środowisku PHP, to metoda 
+            <code>registerAutoload()</code> wyrzuca wyjątek Zend_Exception.
+            
         </para>
-
 
         <example id="zend.loader.load.autoload.example">
             <title>Przykład zarejestrowania metody autoloadera</title>
             <programlisting role="php"><![CDATA[<?php
 
-spl_autoload_register(array('Zend_Loader', 'autoload'));
+Zend_Loader::registerAutoload();
 
 ?>]]></programlisting>
         </example>
@@ -178,10 +183,31 @@ spl_autoload_register(array('Zend_Loader', 'autoload'));
         <para>
             Po zarejestrowaniu metody autoload z Zend Framework, możesz 
             odwoływać się do klas Zend Framework bez konieczności ładowania 
-            każdej z nich z osobna. Metoda autoload używa metody
+            każdej z nich z osobna. Metoda <code>autoload()</code> używa metody
             <code>Zend_Loader::loadClass()</code> automatycznie gdy odwołujesz 
             się do klasy.
         </para>
+
+        <para>
+            Jeśli rozszerzyłeś klasę Zend_Loader, możesz przekazać opcjonalny
+            argument do metody <code>registerAutoload()</code>, aby określić
+            klasę, której metoda <code>autoload()</code> ma zostać zarejestrowana.
+        </para>
+
+        <example id="zend.loader.load.autoload.example">
+            <title>Przykład rejestrowania metody autoloadera z rozszerzonej 
+                klasy</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class My_Loader extends Zend_Loader
+{
+    // własna funkcjonalność
+}
+
+Zend_Loader::registerAutoload('My_Loader');
+
+?>]]></programlisting>
+        </example>
 
     </sect2>
 
