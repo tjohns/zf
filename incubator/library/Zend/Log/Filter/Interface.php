@@ -33,9 +33,9 @@ interface Zend_Log_Filter_Interface
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param  array    $fields    log data fields
-     * @return boolean             accepted?
+     * @param  array    $event    event data
+     * @return boolean            accepted?
      */
-    public function accept($fields);
+    public function accept($event);
 
 }

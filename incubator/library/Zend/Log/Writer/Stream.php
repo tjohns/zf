@@ -73,12 +73,12 @@ class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  array  $fields  log data fields
-     * @return bool            Always True
+     * @param  array  $event  event data
+     * @return void
      */
-    protected function _write($fields)
+    protected function _write($event)
     {
-        $line = $this->_formatter->format($fields);
+        $line = $this->_formatter->format($event);
         
         if (! @fwrite($this->_stream, $line)) {
             throw new Zend_Log_Exception("Unable to write to stream");

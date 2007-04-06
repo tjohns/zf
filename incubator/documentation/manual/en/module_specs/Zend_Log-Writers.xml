@@ -6,7 +6,7 @@
   </para>
 
   <sect2 id="zend.log.writers.stream">
-    <title>Streams</title>
+    <title>Writing to Streams</title>
     <para>
       <code>Zend_Log_Writer_Stream</code> sends log
       data to a <ulink url="http://www.php.net/stream">PHP stream</ulink>.
@@ -68,17 +68,41 @@ $logger->info('Informational message');
     </para>
   </sect2>
 
-  <!-- TODO
-  <sect2 id="zend.log.writers.stream">
-    <title>Database</title>
+  <sect2 id="zend.log.writers.database">
+    <title>Writing to Databases</title>
     <para>
-      TBD
-    </para>
-  </sect2>
-  -->
+      <code>Zend_Log_Writer_Db</code> writes log information to a database table using
+      <code>Zend_Db</code>.  The constructor of <code>Zend_Log_Writer_Db</code> receives
+      a <code>Zend_Db_Adapter</code> instance, a table name, and a mapping of database
+      columns to event data items:
 
-  <sect2 id="zend.log.writers.stream">
-    <title>Null</title>
+      <programlisting role="php"><![CDATA[<?php
+
+$params = array ('host'     => '127.0.0.1',
+                 'username' => 'malory',
+                 'password' => '******',
+                 'dbname'   => 'camelot');
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+
+$columnMapping = array(array('lvl' => 'priority', 'msg' => 'message'));
+$writer = new Zend_Log_Writer_Stream($db, 'log_table_name', $columnMapping);
+
+$logger = new Zend_Log($writer);
+
+$logger->info('Informational message');
+
+?>]]></programlisting>
+
+      The code snippet above will write a single row of low data to the database table named 
+      <code>log_table_name</code> table.  The database column named <code>lvl</code> will 
+      receive the priority number and the column named <code>msg</code> will receive the
+      log messsage.
+    </para>
+
+  </sect2>
+
+  <sect2 id="zend.log.writers.null">
+    <title>Stubbing Out the Writer</title>
     <para>
       The <code>Zend_Log_Writer_Null</code> is a stub that does not write log data to anything.
       It is useful for disabling logging or stubbing out logging during tests:
@@ -95,8 +119,39 @@ $logger->info('Informational message');
     </para>
   </sect2>
 
+  <sect2 id="zend.log.writers.mock">
+    <title>Testing with the Mock</title>
+    <para>
+      The <code>Zend_Log_Writer_Mock</code> is a very simple writer that records
+      the raw data it receives in an array exposed as a public property.
+      
+      <programlisting role="php"><![CDATA[<?php
+
+$mock = new Zend_Log_Writer_Mock;
+$logger = new Zend_Log($mock);
+
+$logger->info('Informational message');
+
+var_dump($mock->events[0]);
+
+// Array
+// (
+//    [timestamp] => 2007-04-06T07:16:37-07:00
+//    [message] => Informational message
+//    [priority] => 6
+//    [priorityName] => INFO
+// )
+
+?>]]></programlisting>
+    </para>
+
+    <para>
+      To clear the events logged by the mock, simply set <code>$mock->events = array()</code>.
+    </para>
+  </sect2>
+
   <sect2 id="zend.log.writers.compositing">
-    <title>Compositing</title>
+    <title>Compositing Writers</title>
     
     <para>
       There is no composite Writer object. However, a Log instance can write

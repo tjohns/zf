@@ -41,11 +41,11 @@ class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  array  $fields  log data fields
-     * @return bool            Always True
+     * @param  array  $event  event data
+     * @return void
      */
-    public function _write($fields)
+    public function _write($event)
     {
-        $this->events[] = $fields;
+        $this->events[] = $event;
     }
 }

@@ -60,13 +60,13 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
     /**
      * Formats data into a single line to be written by the writer.
      *
-     * @param  array    $fields    log data fields
-     * @return string              formatted line to write to the log
+     * @param  array    $event    event data
+     * @return string             formatted line to write to the log
      */
-    public function format($fields)
+    public function format($event)
     {
         $output = $this->_format;
-        foreach ($fields as $name => $value) {
+        foreach ($event as $name => $value) {
             $output = str_replace("%$name%", $value, $output);
         }
         return $output;

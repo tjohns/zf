@@ -173,8 +173,8 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
     
     public function testLogWritesAndOverwritesExtraFields() {
         $logger = new Zend_Log($mock = new Zend_Log_Writer_Mock);
-        $logger->setExtraField('foo', 42);
-        $logger->setExtraField($field = 'bar', $value = 43);
+        $logger->setEventItem('foo', 42);
+        $logger->setEventItem($field = 'bar', $value = 43);
         $logger->info('foo');
 
         $this->assertEquals(1, count($mock->events));

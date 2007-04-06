@@ -57,7 +57,7 @@ class Zend_Log
     private $_filters = array();
 
     /**
-     * @var array of extra log fields
+     * @var array of extra log event
      */
     private $_extras = array();
 
@@ -65,7 +65,7 @@ class Zend_Log
      * Class constructor.  Create a new logger
      *
      * @param Zend_Log_Writer_Abstract|null  $writer  default writer
-     * @param array                          $extras  extra fields
+     * @param array                          $extras  extra event
      */
     public function __construct($writer = null)
     {
@@ -117,8 +117,8 @@ class Zend_Log
             throw new Zend_Log_Exception('Bad log priority');
         }
 
-        // pack into fields required by filters and writers
-        $fields = array_merge(array('timestamp'    => date('c'),
+        // pack into event required by filters and writers
+        $event = array_merge(array('timestamp'    => date('c'),
                                     'message'      => $message,
                                     'priority'     => $priority,
                                     'priorityName' => $this->_priorities[$priority]),
@@ -126,14 +126,14 @@ class Zend_Log
 
         // abort if rejected by the global filters
         foreach ($this->_filters as $filter) {
-            if (! $filter->accept($fields)) {
+            if (! $filter->accept($event)) {
                 return;
             }
         }
 
         // send to each writer
         foreach ($this->_writers as $writer) {
-            $writer->write($fields);
+            $writer->write($event);
         }
     }
 
@@ -187,13 +187,13 @@ class Zend_Log
     }
 
     /**
-     * Set an extra field to pass to the log writers.
+     * Set an extra item to pass to the log writers.
      *
      * @param  $name    Name of the field
      * @param  $value   Value of the field
      * @return void
      */
-    public function setExtraField($name, $value) {
+    public function setEventItem($name, $value) {
         $this->_extras = array_merge($this->_extras, array($name => $value));
     }
 

@@ -75,17 +75,17 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  array  $fields  log data fields
-     * @return bool        Always True
+     * @param  array  $event  event data
+     * @return void
      */
-    protected function _write($fields)
+    protected function _write($event)
     {
         if ($this->_columnMap === null) {
-            $dataToInsert = $fields;
+            $dataToInsert = $event;
         } else {
             $dataToInsert = array();
             foreach ($this->_columnMap as $columnName => $fieldKey) {
-                $dataToInsert[$columnName] = $fields[$fieldKey];
+                $dataToInsert[$columnName] = $event[$fieldKey];
             }
         }
         

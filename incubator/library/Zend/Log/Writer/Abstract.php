@@ -65,19 +65,19 @@ abstract class Zend_Log_Writer_Abstract
     /**
      * Log a message to this writer.
      *
-     * @param  array     $fields  log data fields
+     * @param  array     $event  log data event
      * @return void
      */
-    public function write($fields)
+    public function write($event)
     {
         foreach ($this->_filters as $filter) {
-            if (! $filter->accept($fields)) {
+            if (! $filter->accept($event)) {
                 return;
             }
         }
 
         // exception occurs on error
-        $this->_write($fields);
+        $this->_write($event);
     }
 
     /**
@@ -93,9 +93,9 @@ abstract class Zend_Log_Writer_Abstract
     /**
      * Write a message to the log.
      *
-     * @param  array  $fields  log data fields
-     * @return bool            Always True
+     * @param  array  $event  log data event
+     * @return void
      */
-    abstract protected function _write($fields);
+    abstract protected function _write($event);
 
 }

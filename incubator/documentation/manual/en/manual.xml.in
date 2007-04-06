@@ -53,6 +53,7 @@
         <title>Zend_Log</title>
         <xi:include href="module_specs/Zend_Log-Overview.xml" />
         <xi:include href="module_specs/Zend_Log-Writers.xml" />
+        <xi:include href="module_specs/Zend_Log-Formatters.xml" />
         <xi:include href="module_specs/Zend_Log-Filters.xml" />
     </chapter>
 

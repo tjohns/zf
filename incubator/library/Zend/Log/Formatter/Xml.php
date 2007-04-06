@@ -57,17 +57,17 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
     /**
      * Formats data into a single line to be written by the writer.
      *
-     * @param  array    $fields    log data fields
-     * @return string              formatted line to write to the log
+     * @param  array    $event    event data
+     * @return string             formatted line to write to the log
      */
-    public function format($fields)
+    public function format($event)
     {
         if ($this->_elementMap === null) {
-            $dataToInsert = $fields;
+            $dataToInsert = $event;
         } else {
             $dataToInsert = array();
             foreach ($this->_elementMap as $elementName => $fieldKey) {
-                $dataToInsert[$elementName] = $fields[$fieldKey];
+                $dataToInsert[$elementName] = $event[$fieldKey];
             }
         }        
         
