@@ -50,6 +50,7 @@ class Zend_Locale_Format
     private static $_signs = array(
         'Default'=>array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Default == Latin
         'Latin'=> array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Latin == Default
+        'Latn' => array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // Latn == Default
         'Arab' => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669 arabic
         'Deva' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F devanagari
         'Beng' => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF bengali
@@ -204,11 +205,17 @@ class Zend_Locale_Format
      */
     public static function convertNumerals($input, $from, $to = null)
     {
+        if (is_string($from)) {
+            $from = ucfirst(strtolower($from));
+        }
         if (!array_key_exists($from, self::$_signs)) {
-            throw new Zend_Locale_Exception("script ($from) is no known script, use 'Latin' for 0-9");
+            throw new Zend_Locale_Exception("Unknown script '$from'. Use 'Latin' for digits 0,1,2,3,4,5,6,7,8,9.");
+        }
+        if (is_string($to)) {
+            $to = ucfirst(strtolower($to));
         }
         if (($to !== null) and (!array_key_exists($to, self::$_signs))) {
-            throw new Zend_Locale_Exception("script ($to) is no known script, use 'Latin' for 0-9");
+            throw new Zend_Locale_Exception("Unknown script '$to'. Use 'Latin' for digits 0,1,2,3,4,5,6,7,8,9.");
         }
         
         if (isset(self::$_signs[$from])) {
