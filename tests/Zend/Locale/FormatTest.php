@@ -651,7 +651,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab'), '110', "110 expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab', 'Deva'), '११०', "११० expected");
+        $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'arab', 'dEVa'), '११०', "११० expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latin', 'Arab'), '١١٠', "١١٠ expected");
+        $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'latn', 'Arab'), '١١٠', "١١٠ expected");
     }
     
     /**
