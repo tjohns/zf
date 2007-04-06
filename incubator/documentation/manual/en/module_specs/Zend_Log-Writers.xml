@@ -64,7 +64,7 @@ $logger->info('Informational message');
 ?>]]></programlisting>
 
       The mode cannot be specified for existing stream resources. Doing so
-      will result in an <code>InvalidArgumentException</code>.
+      will result in a <code>Zend_Log_Exception</code>.
     </para>
   </sect2>
 
