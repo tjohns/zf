@@ -49,27 +49,29 @@ foreach ($results as $result) {
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
-        <title>Поиск пользователя Flickr<!--Finding Flickr Users--></title>
+        <title>Поиск фотографий и информации о пользователе Flickr<!--Finding Flickr Users' Photos and Information--></title>
         <para>
-            <code>Zend_Service_Flickr</code> предоставляет три различных
-            способа получения информации о пользователе Flickr: 
+            <code>Zend_Service_Flickr</code> предоставляет несколько
+            способов получения информации о пользователях Flickr: 
 <!--
-            <code>Zend_Service_Flickr</code> provides three various ways to
-            get Flickr user information:
+            <code>Zend_Service_Flickr</code> provides several ways to get
+            information about Flickr users:
 -->
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>userSearch()</code>: Принимает строку запроса, состоящую из
-                    разделенных пробелами тегов, массив опций поиска
-                    как необязательный второй параметр и возвращает объект 
+                    <code>userSearch()</code>: Принимает строку запроса,
+                    состоящую из разделенных пробелами тегов, массив опций
+                    поиска как необязательный второй параметр и возвращает
+                    набор фотографий в виде объекта
                     <code>Zend_Service_Flickr_ResultSet</code>.
 <!--
                     <code>userSearch()</code>: Accepts a string query of space-delimited
                     tags and an optional second
-                    parameter as an array of search options, and returns a
-                    <code>Zend_Service_Flickr_ResultSet</code> object.
+                    parameter as an array of search options, and returns a set
+                    of photos as a <code>Zend_Service_Flickr_ResultSet</code>
+                    object.
 -->
                 </para>
             </listitem>
@@ -95,14 +97,13 @@ foreach ($results as $result) {
             </listitem>
         </itemizedlist>
         <example>
-            <title>Поиск пользователя по адресу e-mail<!--Finding a Flickr User by E-Mail Address--></title>
+            <title>Поиск открытых фотографий пользователя по адресу e-mail<!--Finding a Flickr User's Public Photos by E-Mail Address--></title>
             <para>
-                В этом примере мы получаем информацию о пользователе
-                через его e-mail, используя метод <code>userSearch()</code>: 
+                В этом примере мы, имея e-mail пользователя Flickr, ищем его
+                открытые фотографии, используя метод <code>userSearch()</code>:    
 <!--
-                In this example, we have a Flickr user's e-mail address,
-                and we fetch the user information by using
-                the <code>userSearch()</code> method:
+                In this example, we have a Flickr user's e-mail address, and we search for the user's public photos by
+                using the <code>userSearch()</code> method:
 -->
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -151,7 +152,7 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
-        <title>Классы Zend_Service_Flickr</title>
+        <title>Классы результатов Zend_Service_Flickr</title>
         <para>
             Следующие классы возвращаются методами <code>tagSearch()</code> и
             <code>userSearch()</code>:
@@ -274,12 +275,12 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         <tbody>
                             <row>
                                 <entry>id</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>ID изображения<!--Image ID--></entry>
                             </row>
                             <row>
                                 <entry>owner</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>NSID владельца фотографии<!--The photo owner's NSID.--></entry>
                             </row>
                             <row>
@@ -299,17 +300,17 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                             </row>
                             <row>
                                 <entry>ispublic</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Является ли фотография общедоступной<!--The photo is public.--></entry>
                             </row>
                             <row>
                                 <entry>isfriend</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Фотография доступна потому, что вы являетесь другом владельца.<!--The photo is visible to you because you are a friend of the owner.--></entry>
                             </row>
                             <row>
                                 <entry>isfamily</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Фотография доступна потому, что вы являетесь членом семьи владельца.<!--The photo is visible to you because you are family of the owner.--></entry>
                             </row>
                             <row>
@@ -318,22 +319,22 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                                 <entry>Лицензия, по которой доступна фотография<!--The license the photo is available under.--></entry>
                             </row>
                             <row>
-                                <entry>date_upload</entry>
+                                <entry>dateupload</entry>
                                 <entry>string</entry>
                                 <entry>Дата загрузки фотографии<!--The date the photo was uploaded.--></entry>
                             </row>
                             <row>
-                                <entry>date_taken</entry>
+                                <entry>datetaken</entry>
                                 <entry>string</entry>
                                 <entry>Дата получения фотографии<!--The date the photo was taken.--></entry>
                             </row>
                             <row>
-                                <entry>owner_name</entry>
+                                <entry>ownername</entry>
                                 <entry>string</entry>
                                 <entry>Ник пользователя<!--The screenname of the owner.--></entry>
                             </row>
                             <row>
-                                <entry>icon_server</entry>
+                                <entry>iconserver</entry>
                                 <entry>string</entry>
                                 <entry>Сервер, используемый в URL иконок<!--The server used in assembling icon URLs.--></entry>
                             </row>

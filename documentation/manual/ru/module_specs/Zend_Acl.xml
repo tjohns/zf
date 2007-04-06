@@ -193,9 +193,9 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
-$acl->allow('member', someResource');
+$acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
 	        До тех пор поканет правил определенных для Роли "<code>someUser</code>" и
                 "<code>someResource</code>", Zend_Acl должен производить поиск правил, которые могут быть определены для Ролей,

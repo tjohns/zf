@@ -48,14 +48,21 @@ $function = Zend_Server_Reflection::reflectFunction('my_function');
 // Получение прототипов
 $prototypes = $reflection->getPrototypes();
 
-// Получение типа возвращаемого прототипом значения
-$prototype->getReturnType();
+// Обход полученных прототипов 
+foreach ($prototypes as $prototype) {
 
-// Получение параметров прототипа
-$prototype->getParameters();
+    // Получение типа возращаемого прототипом значения
+    echo "Return type: ", $prototype->getReturnType(), "\n";
+    
+    // Получение параметров прототипа
+    $parameters = $prototype->getParameters();
 
-// Получение типа параметра
-$parameter->getType();
+    echo "Parameters: \n";
+    foreach ($parameters as $parameter) {
+        // Получение типа параметра
+        echo "    ", $parameter->getType(), "\n";
+    }
+}
 
 // Получение пространства имен для класса, функции или метода
 // Пространства имен могут быть установлены во время инстанцирования (второй аргумент),

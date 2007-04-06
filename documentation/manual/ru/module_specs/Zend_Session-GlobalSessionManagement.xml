@@ -70,7 +70,7 @@
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->asArray()); 
+Zend_Session::setOptions($config->toArray()); 
 ?>]]></programlisting>
             </example>
             Используемый файл "myapp.ini":
@@ -169,11 +169,16 @@ remember_me_seconds = 864000
                         зависит от системы и должно указываться разработчиком с
                         использованием <emphasis role="strong">абсолютного
                         пути</emphasis> к директории, доступной для чтения и
-                        записи процессом PHP.
+                        записи процессом PHP. Если директория на заданном пути
+                        не существует или недоступна, то
+                        <code>Zend_Session</code> бросает исключение во время
+                        старта (т.е. когда вызывается метод
+                        <code>start()</code>)
 <!--
                         string <code>save_path</code> - The correct value is system dependent, and should be provided by
                         the developer using an <emphasis role="strong">absolute path</emphasis> to a directory readable
-                        and writable by the PHP process.
+                        and writable by the PHP process.  If a writable path is not supplied, then <code>Zend_Session
+                        </code> will throw an exception when started (i.e. when <code>start()</code> is called).
 -->
                     </para>
                     <note>

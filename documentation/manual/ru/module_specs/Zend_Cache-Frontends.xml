@@ -254,14 +254,15 @@ echo($data);
 
 // если имеет место промах кэша,
 // то начинается буферизация вывода
-if(!$cache->start('mypage')):
+if (!($cache->start('mypage'))) {
 
-// все выводится, как обычно
-echo 'Hello world! ';
-echo 'This is cached ('.time().') ';
+    // все выводится, как обычно
+    echo 'Hello world! ';
+    echo 'This is cached ('.time().') ';
 
-$cache->end(); // завершение буферизации вывода
-endif;
+    $cache->end(); // завершение буферизации вывода
+
+}
 
 echo 'This is never cached ('.time().').';
 

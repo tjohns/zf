@@ -305,37 +305,29 @@ $pdfPage->setFont($font, 36);
 /**
  * Рисует изображение в заданной позиции на странице.
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Resource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]>        
         </programlisting>
         <para>
-        Объекты изображения представляются потомками класса <code>Zend_Pdf_Image</code>.
+            Объекты изображений должны создаваться через метод
+            <code>Zend_Pdf_Image::imageWithPath($filePath)</code>
+            (сейчас поддерживаются изображения JPG, PNG и TIFF):  
 <!-- 
-        Image objects are represented by descendants of <code>Zend_Pdf_Image</code> class.
--->
-        </para>
-        <para>
-        Сейчас поддерживаются изображения JPG, PNG и TIFF.
-<!-- 
-        JPG, PNG and TIFF images are supported now:
+        Image objects should be created with <code>Zend_Pdf_Image::imageWithPath($filePath)</code> method
+        (JPG, PNG and TIFF images are supported now):
 -->
         </para>
         <example>
-            <title>Рисование изображений<!-- Image drawing.--></title>
+            <title>Рисование изображения<!-- Image drawing.--></title>
             <programlisting role="php"><![CDATA[<?php
 ...
-//Создаем объект изображения непосредственно
-$image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
-$image = new Zend_Pdf_Image_PNG('my_image.png');
-
-//либо используем Zend_Pdf_ImageFactory для загрузки соответствующего типа
-$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+// Загрузка изображения
+$image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -344,13 +336,13 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Важно! Класс <code>Zend_Pdf_Image_JPEG</code> требует
-            сконфигурированного расширения GD.</emphasis>
-            <emphasis>Важно! Класс <code>Zend_Pdf_Image_PNG</code> требует
-            расширения ZLIB, сконфигурированного для работы с изображениями с Альфа-каналом.</emphasis>
+            <emphasis>Важно! Для поддержки JPEG необходимо сконфигурировать
+            расширение GD.</emphasis>
+            <emphasis>Важно! Для поддержки PNG необходимо сконфигурировать
+            расширение ZLIB для работы с изображениями с Альфа-каналом.</emphasis>
 <!-- 
-            <emphasis>Important! Zend_Pdf_Image_JPEG class requires PHP GD extension to be configured.</emphasis>
-            <emphasis>Important! Zend_Pdf_Image_PNG class requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
+            <emphasis>Important! JPEG support requires PHP GD extension to be configured.</emphasis>
+            <emphasis>Important! PNG support requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
 -->
         </para>
         <para>
