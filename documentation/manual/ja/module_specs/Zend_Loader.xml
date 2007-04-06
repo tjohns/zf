@@ -187,7 +187,7 @@ Zend_Loader::registerAutoload();
             <code>autoload()</code> メソッドを登録するのかを指定します。
         </para>
 
-        <example id="zend.loader.load.autoload.example">
+        <example id="zend.loader.load.autoload.example-extended">
             <title>autoload コールバックメソッドを継承クラスから登録する例</title>
             <programlisting role="php"><![CDATA[<?php
 
