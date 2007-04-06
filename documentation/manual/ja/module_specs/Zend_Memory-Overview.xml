@@ -132,7 +132,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <note>
                 <para>
-                    5.2 より前のバージョンお PHP を使用している場合は、
+                    5.2 より前のバージョンの PHP を使用している場合は、
                     value プロパティに直接アクセスするのではなく
                     <link linkend="zend.memory.memory-objects.api.getRef">getRef()</link>
                     メソッドを使用します。
