@@ -4,11 +4,17 @@
  * @subpackage UnitTests
  */
  
- /**
+/**
  * Zend_Cache
  */
 require_once 'Zend/Cache.php';
 require_once 'Zend/Cache/Backend/File.php';
+
+/**
+ * Zend_Log
+ */
+require_once 'Zend/Log.php';
+require_once 'Zend/Log/Writer/Null.php';
 
 /**
  * Common tests for backends
@@ -39,8 +45,12 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     {        
         $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_File(array(
-            'cacheDir' => $this->_cacheDir
+            'cacheDir' => $this->_cacheDir,
         ));  
+
+        $logger = new Zend_Log(new Zend_Log_Writer_Null());
+        $this->_instance->setDirectives(array('logger' => $logger));
+
         parent::setUp();     
     }
     

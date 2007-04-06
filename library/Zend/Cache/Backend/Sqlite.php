@@ -170,9 +170,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         $sql = "INSERT INTO cache (id, content, lastModified, expire) VALUES ('$id', '$data', $mktime, $expire)";
         $res = @sqlite_query($this->_db, $sql);       
         if (!$res) {
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Sqlite::save() : impossible to store the cache id=$id", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_Sqlite::save() : impossible to store the cache id=$id");
             return false;
         }
         $res = true;
@@ -272,9 +270,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         $res = @sqlite_query($this->_db, "DELETE FROM TAG WHERE tag='$tag' AND id='$id'");
         $res = @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
         if (!$res) {        
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id");
             return false;
         }
         return true;
@@ -315,9 +311,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         }
         if (((int) $row['num']) != 1) {
             // old cache structure
-            if ($this->_directives['logging']) {
-                Zend_Log::log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped', Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped');
             return false;
         }
         return true;

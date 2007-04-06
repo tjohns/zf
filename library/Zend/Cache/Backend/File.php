@@ -171,9 +171,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             $hashData = $this->_hash($data, $this->_options['readControlType']);
             if ($hashData != $hashControl) {
                 // Problem detected by the read control !
-                if ($this->_directives['logging']) {
-                    Zend_Log::log('Zend_Cache_Backend_File::load() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
-                }
+                $this->_log('Zend_Cache_Backend_File::load() / readControl : stored hash and computed hash do not match');
                 $this->_remove($file);
                 return false;    
             }
@@ -207,9 +205,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
         if ((!is_dir($this->_options['cacheDir'])) or (!is_writable($this->_options['cacheDir']))) {
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_File::save() : cacheDir doesn't exist or is not writable", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_File::save() : cacheDir doesn't exist or is not writable");
         }
         $this->remove($id); // to avoid multiple files with the same cache id
         $lifetime = $this->getLifetime($specificLifetime);
@@ -329,9 +325,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     {
         if (!@unlink($file)) {
             # we can't remove the file (because of locks or any problem)
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_File::_remove() : we can't remove $file => we are going to try to invalidate it", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_File::_remove() : we can't remove $file => we are going to try to invalidate it");
             return false;
         } 
         return true;

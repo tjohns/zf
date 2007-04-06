@@ -126,6 +126,7 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
 
+    /*
     public function testDispatchValidControllerWithInvalidAction()
     {
         $request = new Zend_Controller_Request_Http();
@@ -140,6 +141,7 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+     */
 
     public function testDispatchInvalidController()
     {

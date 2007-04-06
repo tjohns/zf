@@ -129,9 +129,7 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
         if (!($specificLifetime === false)) {
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_ZendPlatform::save() : non false specifc lifetime is unsuported for this backend", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_ZendPlatform::save() : non false specifc lifetime is unsuported for this backend");
         }
         $lifetime = $this->_directives['lifetime'];
         $result1 = output_cache_put($id, array($data, time()));
@@ -203,9 +201,7 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
             return true;
         }
         if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend");
         }
         $cacheDir = ini_get('zend_accelerator.output_cache_dir');
         if (!$cacheDir) {
@@ -275,9 +271,7 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
         if (!@unlink($file)) {
             # If we can't remove the file (because of locks or any problem), we will touch
             # the file to invalidate it
-            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_ZendPlatform::_remove() : we can't remove $file => we are going to try to invalidate it", Zend_Log::LEVEL_WARNING);
-            }
+            $this->_log("Zend_Cache_Backend_ZendPlatform::_remove() : we can't remove $file => we are going to try to invalidate it");
             if (is_null($this->_directives['lifetime'])) {
                 return false;
             }

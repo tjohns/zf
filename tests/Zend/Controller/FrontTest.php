@@ -198,6 +198,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     /**
      * Test invalid action on valid controller
      */
+    /*
     public function testDispatch2()
     {
         $request = new Zend_Controller_Request_Http('http://example.com/index/foo');
@@ -209,10 +210,12 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+     */
 
     /**
      * Test invalid controller
      */
+    /*
     public function testDispatch3()
     {
         $request = new Zend_Controller_Request_Http('http://example.com/baz');
@@ -224,6 +227,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+     */
 
     /**
      * Test valid action on valid controller; test pre/postDispatch

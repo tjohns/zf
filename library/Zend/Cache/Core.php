@@ -27,18 +27,18 @@
  */
 class Zend_Cache_Core 
 {
-    
+
     // ------------------
     // --- Properties ---
     // ------------------
-    
+
     /**
      * Backend Object
      * 
      * @var object
      */
     private $_backend = null;
-    
+
     /**
      * Available options
      * 
@@ -73,24 +73,25 @@ class Zend_Cache_Core
      * @var array available options
      */
     protected $_options = array(
-        'writeControl' => true, 
-        'caching' => true, 
-        'automaticSerialization' => false,
+        'writeControl'            => true, 
+        'caching'                 => true, 
+        'automaticSerialization'  => false,
         'automaticCleaningFactor' => 10,
-        'lifetime' => 3600,
-        'logging' => false
+        'lifetime'                => 3600,
+        'logging'                 => false,
+        'logger'                  => null
     ); 
-    
+
     /**
      * Array of options which have to be transfered to backend
      */
-    protected static $_directivesList = array('lifetime', 'logging');
-    
+    protected static $_directivesList = array('lifetime', 'logging', 'logger');
+
     /**
      * Not used for the core, just a sort a hint to get a common setOption() method (for the core and for frontends)
      */
     protected $_specificOptions = array();
-               
+
     /**
      * Last used cache id
      * 
@@ -98,11 +99,10 @@ class Zend_Cache_Core
      */
     private $_lastId = null;
 
-    
     // ----------------------
     // --- Public methods ---
     // ----------------------
-     
+
     /**
      * Constructor
      * 
@@ -116,8 +116,10 @@ class Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->_setOption($name, $value);
         }
+
+        $this->_loggerSanity();
     }
-    
+
     /**
      * Set the backend 
      * 
@@ -137,7 +139,7 @@ class Zend_Cache_Core
         }
         $this->_backend->setDirectives($directives);
     }
-    
+
     /**
      * Public frontend to set an option
      * 
@@ -166,7 +168,7 @@ class Zend_Cache_Core
         } 
         Zend_Cache::throwException("Incorrect option name : $name");
     }
-    
+
     /**
      * Set an option
      * 
@@ -183,13 +185,8 @@ class Zend_Cache_Core
             Zend_Cache::throwException("Incorrect option name : $name");
         }
         $this->_options[$name] = $value;
-        if ($name=='logging') {
-            if ((!class_exists('Zend_Log', false)) && ($value)) {
-                Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');    
-            }
-        }
     }
-    
+
     /**
      * Force a new lifetime
      * 
@@ -204,7 +201,7 @@ class Zend_Cache_Core
             'lifetime' => $newLifetime
         ));
     }
-    
+
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 
@@ -231,7 +228,7 @@ class Zend_Cache_Core
         }
         return $data;
     }
-    
+
     /**
      * THIS METHOD IS DEPRECATED : USE LOAD() INSTEAD (same syntax) !
      * 
@@ -239,12 +236,10 @@ class Zend_Cache_Core
      */
     public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
-        if ($this->_options['logging']) {
-            Zend_Log::log("get() method is deprecated => use load() method instead (same syntax) !", Zend_Log::LEVEL_WARNING);
-        }
+        $this->_log("get() method is deprecated => use load() method instead (same syntax) !");
         return $this->load($id, $doNotTestCacheValidity, $doNotUnserialize);
     }
-    
+
     /**
      * Test if a cache is available for the given id 
      *
@@ -260,7 +255,7 @@ class Zend_Cache_Core
         $this->_lastId = $id;
         return $this->_backend->test($id);
     }
-    
+
     /**
      * Save some data in a cache 
      * 
@@ -299,7 +294,7 @@ class Zend_Cache_Core
         if (!$result) {
             // maybe the cache is corrupted, so we remove it !
             if ($this->_options['logging']) {
-                Zend_Log::log("Zend_Cache_Core::save() : impossible to save cache (id=$id)", Zend_Log::LEVEL_WARNING);
+                $this->_log("Zend_Cache_Core::save() : impossible to save cache (id=$id)");
             }
             $this->remove($id);
             return false;
@@ -307,16 +302,14 @@ class Zend_Cache_Core
         if ($this->_options['writeControl']) {
             $data2 = $this->_backend->load($id, true);
             if ($data!=$data2) {
-                if ($this->_options['logging']) {
-                    Zend_Log::log('Zend_Cache_Core::save() / writeControl : written and read data do not match', Zend_Log::LEVEL_WARNING);
-                }
+                $this->_log('Zend_Cache_Core::save() / writeControl : written and read data do not match');
                 $this->remove($id);
                 return false;
             }
         }
         return true;
     }
-    
+
     /**
      * Remove a cache 
      * 
@@ -331,7 +324,7 @@ class Zend_Cache_Core
         self::_validateIdOrTag($id);
         return $this->_backend->remove($id);
     }
-    
+
     /**
      * Clean cache entries
      * 
@@ -358,11 +351,11 @@ class Zend_Cache_Core
         self::_validateTagsArray($tags);
         return $this->_backend->clean($mode, $tags);
     }
-       
+
     // ------------------------------------
     // --- Private or protected methods ---
     // ------------------------------------
-       
+
     /**
      * Validate a cache id or a tag (security, reliable filenames, reserved prefixes...)
      * 
@@ -382,7 +375,7 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-Z0-9_]');
         }
     }
-    
+
     /**
      * Validate a tags array (security, reliable filenames, reserved prefixes...)
      * 
@@ -400,5 +393,57 @@ class Zend_Cache_Core
         }
         reset($tags);
     }
-             
+
+    /**
+     * Make sure if we enable logging that the Zend_Log class
+     * is available.
+     * Create a default log object if none is set.
+     *
+     * @return void
+     * @throws Zend_Cache_Exception
+     */
+    protected function _loggerSanity()
+    {
+        if (!isset($this->_options['logging']) || !$this->_options['logging']) {
+            return;
+        }
+
+        try {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass('Zend_Log');
+        } catch (Zend_Exception $e) {
+            Zend_Cache::throwException('Logging feature is enabled but the Zend_Log class is not available');
+        }
+
+        if (isset($this->_options['logger']) && $this->_options['logger'] instanceof Zend_Log) {
+            return;
+        }
+
+        // Create a default logger to the standard output stream
+        Zend_Loader::loadClass('Zend_Log_Writer_Stream');
+        $logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));
+        $this->_options['logger'] = $logger;
+    }
+
+    /**
+     * Log a message at the WARN (4) priority.
+     *
+     * @param string $message
+     * @return void
+     * @throws Zend_Cache_Exception
+     */
+    protected function _log($message, $priority = 4)
+    {
+        if (!$this->_options['logging']) {
+            return;
+        }
+
+        if (!(isset($this->_options['logger']) || $this->_options['logger'] instanceof Zend_Log)) {
+            Zend_Cache::throwException('Logging is enabled but logger is not set');
+        }
+
+        $logger = $this->_options['logger'];
+        $logger->log($message, $priority);
+    }
+
 }
