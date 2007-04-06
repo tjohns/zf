@@ -1028,7 +1028,7 @@ $rowsCustom = $table->fetchAll($where);
 
         <sect3 id="zend.db.table.extending.insert-update">
 
-            <title>Insert および Update 時の独自ロジックの定義</title>
+            <title>Insert、Update および Delete 時の独自ロジックの定義</title>
 
             <para>
                 テーブルクラスの <code>insert()</code> メソッドや
@@ -1067,11 +1067,15 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                <code>delete()</code> メソッドをオーバーライドすることもできます。
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.extending.finders">
 
-            <title>独自の検索メソッドの定義</title>
+            <title>Zend_Db_Table における独自の検索メソッドの定義</title>
 
             <para>
                 もし特定の条件によるテーブルの検索を頻繁に行うのなら、
@@ -1101,6 +1105,81 @@ class Bugs extends Zend_Db_Table_Abstract
 
 ?>]]></programlisting>
             </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.extending.inflection">
+
+            <title>Zend_Db_Table における語尾変化の定義</title>
+
+            <para>
+                テーブルのクラス名を RDBMS のテーブル名とあわせるために、
+                <emphasis>inflection (語尾変化)</emphasis>
+                と呼ばれる文字列変換を使用することを好む方もいます。
+            </para>
+
+            <para>
+                たとえば、テーブルのクラス名が
+                "<code>BugsProducts</code>" だとすると、クラスのプロパティ
+                <code>$_name</code> を明示的に宣言しなかった場合は
+                データベース内の物理的なテーブル
+                "<code>bugs_products</code>" にマッチします。この関連付けでは、
+                "CamelCase" 形式のクラス名が小文字に変換され、単語の区切りがアンダースコアに変わります。
+            </para>
+
+            <para>
+                データベースのテーブル名を、クラス名とは独立したものにすることもできます。
+                その場合は、テーブルクラスのプロパティ <code>$_name</code>
+                に、そのクラス名を指定します。
+            </para>
+
+            <para>
+                Zend_Db_Table_Abstract は、クラス名とテーブル名を関連付けるための語尾変化は行いません。
+                テーブルクラスで <code>$_name</code> の宣言を省略すると、
+                そのクラス名に正確に一致する名前のテーブルと関連付けられます。
+            </para>
+
+            <para>
+                データベースの識別子を変換することは、適当ではありません。
+                なぜなら、それは不明確な状態を引き起こし、
+                時には識別子にアクセスできなくなってしまうからです。
+                SQL の識別子をデータベース内にあるそのままの形式で扱うことで、
+                Zend_Db_Table_Abstract はシンプルで柔軟なものになっています。
+            </para>
+
+            <para>
+                語尾変化を行いたい場合は、その変換を独自に実装しなければなりません。そのためには
+                テーブルクラスで <code>_setupTableName()</code> メソッドをオーバーライドします。
+                これを行うひとつの方法としては、Zend_Db_Table_Abstract
+                を継承した抽象クラスを作成し、さらにそれを継承したテーブルクラスを作成するという方法があります。
+            </para>
+
+            <example id="zend.db.table.extending.inflection.example">
+                <title>語尾変化を実装した抽象テーブルクラスの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+abstract class MyAbstractTable extends Zend_Db_Table_Abstract
+{
+    protected function _setupTableName()
+    {
+        if (!$this->_name) {
+            $this->_name = myCustomInflector(get_class($this));
+        }
+        parent::_setupTableName();
+    }
+}
+
+class BugsProducts extends MyAbstractTable
+{
+}
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                語尾変化を行う関数を書くのはあなたの役割です。
+                Zend_Framework にはそのような関数はありません。
+            </para>
 
         </sect3>
 
