@@ -55,6 +55,9 @@ class Zend_Log_AllTests
 
     public static function suite()
     {
+        // hack to allow us to view code coverage for Log.php
+        PHPUnit_Util_Filter::removeFileFromFilter('Log.php', 'PEAR');
+
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Log');
 
         $suite->addTestSuite('Zend_Log_LogTest');
