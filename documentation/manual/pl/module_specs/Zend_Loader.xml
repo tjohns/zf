@@ -171,7 +171,7 @@ if (Zend_Loader::isReadable($filename)) {
             
         </para>
 
-        <example id="zend.loader.load.autoload.example">
+        <example id="zend.loader.load.autoload.example-extended">
             <title>Przykład zarejestrowania metody autoloadera</title>
             <programlisting role="php"><![CDATA[<?php
 
