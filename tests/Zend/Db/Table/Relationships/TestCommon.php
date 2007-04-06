@@ -95,7 +95,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Row_Exception'),
                 'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
-            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+            $this->assertEquals('File "class.php" was not found', $e->getMessage());
         }
 
         try {
@@ -150,7 +150,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+            $this->assertEquals('File "class.php" was not found', $e->getMessage());
         }
 
         // Use stdClass instead of table class for destination table
@@ -170,7 +170,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+            $this->assertEquals('File "class.php" was not found', $e->getMessage());
         }
 
         // Use stdClass instead of table class for intersection table
@@ -242,7 +242,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Exception $e) {
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('File "nonexistant\class.php" was not found', $e->getMessage());
+            $this->assertEquals('File "class.php" was not found', $e->getMessage());
         }
 
         try {

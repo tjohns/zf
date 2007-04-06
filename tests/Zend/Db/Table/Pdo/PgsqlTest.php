@@ -56,11 +56,6 @@ class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
         $this->assertEquals(5, $insertResult);
     }
 
-    public function testTableRelationshipCascadingDelete()
-    {
-        $this->markTestIncomplete('Need fix for casting string to integer');
-    }
-
     public function getDriver()
     {
         return 'Pdo_Pgsql';
