@@ -30,7 +30,6 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 //require_once 'Zend/Currency/AllTests.php';
-require_once 'Zend/Log/AllTests.php';
 // require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 
@@ -56,7 +55,6 @@ class Zend_AllTests
 
 // Do not include Zend_Currency as empty testbeds can cause phpunit to crash
 //        $suite->addTest(Zend_Currency_AllTests::suite());
-        $suite->addTest(Zend_Log_AllTests::suite());
         /*
          * To run the unit tests for Zend_Session*:
          * $ cd zftrunk/incubator/tests/Zend/Session
