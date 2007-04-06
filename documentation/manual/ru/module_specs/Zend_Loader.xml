@@ -13,12 +13,12 @@
     <tip>
         <title>Zend_Loader vs. require_once()</title>
         <para>
-            Методы Zend_Loader лучше использовать, если имя файла,
+            Методы Zend_Loader лучше всего использовать, если имя файла,
             которого нужно загрузить, является переменным - например, основано
             на вводе пользователя или аргументе метода. Если вы загружаете файл
             или класс, чье имя является константой, то использование Zend_Loader
-            не дает каких-либо преимуществ по сравнению c традиционным
-            использованием функций PHP, таких, как
+            не дает каких-либо преимуществ по сравнению использованием обычных
+            функций PHP, таких, как
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>. 
 <!--
             The Zend_Loader methods are best used if the filename you need to
@@ -61,7 +61,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
     </example>
 
         <para>
-            Аргумент <code>$filename</code> задает имя файла для загрузки, он
+            Аргумент <code>$filename</code> задает имя файла для загрузки, оно
             не должно содержать пути к файлу. В целях безопасности производится
             проверка <code>$filename</code>. <code>$filename</code> должен
             содержать только алфавитно-цифровые символы, тире ("-"), знак
@@ -81,7 +81,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
             <code>$dirs</code> задает директории для поиска файла. Если он равен
             <code>NULL</code>, то для поиска используется только
             <code>include_path</code>. Если он является строкой или массивом, то
-            файл сначала ищется в данной директории (директориях), затем в
+            файл сначала ищется в данной директории (директориях) и затем в
             <code>include_path</code>.
 <!--
             The <code>$dirs</code> argument specifies directories to search for
@@ -239,10 +239,10 @@ if (Zend_Loader::isReadable($filename)) {
         <para>
             Класс Zend_Loader содержит метод, который вы можете регистрировать
             через автозагрузчик PHP SPL. <code>Zend_Loader::autoload()</code> 
-            является методом обратного вызова. Zend_Loader
-            предоставляет метод <code>registerAutoload()</code> для удобной
-            регистрации своего метода <code>autoload()</code>. Если в среде PHP
-            отсутствует расширение <code>spl_autoload</code>, то метод
+            является методом обратного вызова. Для удобства Zend_Loader
+            предоставляет метод <code>registerAutoload()</code> для регистрации
+            своего метода <code>autoload()</code>. Если в среде PHP отсутствует
+            расширение <code>spl_autoload</code>, то метод
             <code>registerAutoload()</code> бросает исключение Zend_Exception.
 <!--
             The Zend_Loader class contains a method you can register with the
@@ -279,9 +279,9 @@ Zend_Loader::registerAutoload();
         </para>
 
         <para>
-            Если вы расширили класс Zend_Loader, то можете передавать
-            опциональный аргумент методу <code>registerAutoload()</code>, чтобы
-            определить класс, из которого следует регистрировать метод
+            Если вы расширили класс Zend_Loader, то можете передать опциональный
+            аргумент методу <code>registerAutoload()</code>, чтобы определить
+            класс, из которого следует регистрировать метод
             <code>autoload()</code>.
 <!--
             If you have extended the Zend_Loader class, you can give an
@@ -290,7 +290,7 @@ Zend_Loader::registerAutoload();
 -->
         </para>
 
-        <example id="zend.loader.load.autoload.example">
+        <example id="zend.loader.load.autoload.example-extended">
             <title>Пример регистрации метода автозагрузки из расширенного класса<!--Example of registering the autoload callback method from an extended class--></title>
             <programlisting role="php"><![CDATA[<?php
 
