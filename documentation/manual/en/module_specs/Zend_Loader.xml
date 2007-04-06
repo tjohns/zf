@@ -186,7 +186,7 @@ Zend_Loader::registerAutoload();
             the class from which to register an <code>autoload()</code> method.
         </para>
 
-        <example id="zend.loader.load.autoload.example">
+        <example id="zend.loader.load.autoload.example-extended">
             <title>Example of registering the autoload callback method from an
                 extended class</title>
             <programlisting role="php"><![CDATA[<?php
