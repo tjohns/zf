@@ -36,6 +36,8 @@ abstract class Zend_Db_Table_Row_Abstract
 
     /**
      * The data for each column in the row (column_name => value).
+     * The keys must match the physical names of columns in the
+     * table for which this row is defined.
      *
      * @var array
      */
@@ -45,6 +47,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * This is set to a copy of $_data when the data is fetched from
      * a database, specified as a new tuple in the constructor, or
      * when dirty data is posted to the database with save().
+     *
      * @var array
      */ 
     protected $_cleanData = array(); 
@@ -97,6 +100,11 @@ abstract class Zend_Db_Table_Row_Abstract
         }
 
         if (isset($config['data'])) {
+            if (!is_array($config['data'])) {
+                require_once 'Zend/Db/Table/Row/Exception.php';
+                throw new Zend_Db_Table_Row_Exception('Data must be an array');
+            }
+            // @todo: use setFromArray(), which employs _transformColumn().
             $this->_data = $config['data'];
             $this->_cleanData = $this->_data;
         }
@@ -109,19 +117,39 @@ abstract class Zend_Db_Table_Row_Abstract
     }
 
     /**
+     * Transform a column name from the user-specified form
+     * to the physical form used in the database.
+     * You can override this method in a custom Row class
+     * to implement column name mappings, for example inflection.
+     *
+     * @param string $key Column name given.
+     * @return string The column name after transformation applied (none by default).
+     * @throws Zend_Db_Table_Row_Exception if the $key is not a string.
+     */
+    protected function _transformColumn($key)
+    {
+        if (!is_string($key)) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception('Specified column is not a string');
+        }
+        // Perform no transformation by default
+        return $key;
+    }
+
+    /**
      * Retrieve row field value
      *
-     * @param  string $key The column key.
-     * @return string      The mapped column value.
-     * @throws Zend_Db_Table_Row_Exception
+     * @param  string $key The user-specified column name.
+     * @return string      The corresponding column value.
+     * @throws Zend_Db_Table_Row_Exception if the $key is not a column in the row.
      */
     public function __get($key)
     {
+        $key = $this->_transformColumn($key);
         if (!array_key_exists($key, $this->_data)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Specified column \"$key\" is not in the row");
         }
-
         return $this->_data[$key];
     }
 
@@ -135,18 +163,17 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function __set($key, $value)
     {
+        $key = $this->_transformColumn($key);
         // @todo this should permit a primary key value to be set
         // not all table have an auto-generated primary key
-        if (in_array($key, $this->_primary)) {
+        if (in_array($key, (array) $this->_primary)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Changing the primary key value(s) is not allowed");
         }
-
         if (!array_key_exists($key, $this->_data)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Specified column \"$key\" is not in the row");
         }
-
         $this->_data[$key] = $value;
     }
 
@@ -158,6 +185,7 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function __isset($key)
     {
+        $key = $this->_transformColumn($key);
         return array_key_exists($key, $this->_data);
     }
 
@@ -350,13 +378,12 @@ abstract class Zend_Db_Table_Row_Abstract
      * Sets all data in the row from an array.
      *
      * @param array $data
+     * @return void
      */
     public function setFromArray(array $data)
     {
-        foreach ($data as $key => $val) {
-            if (array_key_exists($key, $this->_data)) {
-                $this->_data[$key] = $val;
-            }
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
         }
     }
 
