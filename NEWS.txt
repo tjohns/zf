@@ -1,6 +1,113 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.9.2 / 06-Apr-2007=
+This release resolves the following issues:
+- Zend_Acl
+    ZF-1157 Documentation typo in first example code listing
+    ZF-1165 bug in code example for "Multiple inheritance between Roles"
+    ZF-1168 Documentation clarification: 'Zend_Acl is a "whitelist" implementation...'
+- Zend_Auth
+    ZF-1169 Password checking for HTTP Basic authentication broken
+    ZF-1170 Update HTTP Authentication adapter to use new Result codes
+    ZF-1171 NonPersistent Storage class for Zend_Auth
+    ZF-1205 Fix class prefix in Zend_Auth_Storage_NonPersistent
+- Zend_Config
+    ZF-1070 Example code supplied in 7.4.3.9. Using Zend_Config with the RewriteRouter
+    ZF-1152 Inconsistent method names - asArray() and toArray()
+- Zend_Controller
+    ZF-936  Additional accessors for Zend_View
+    ZF-1069 Example code supplied in Static Routes
+    ZF-1091 Add isXmlHttpRequest() to Zend_Controller_Request_Http
+    ZF-1097 [Zend][Controller][Action] unsetParam() and some suggestions
+    ZF-1122 Zend_Controller_Response_Abstract::insert() - inserts incorrectly when $before flag is 'true'
+    ZF-1130 view suffix overridden when extending Zend_Controller_Action :: initView
+    ZF-1138 clearBody() does not yet permit clearing named segments
+    ZF-1151 FrontControllers phpDocs typing error. Makes code completion difficult for IDEs.
+    ZF-1160 Refactor Zend_Controller_Action::render for easier extendability
+    ZF-1197 Route::assemble should strip right side URL parts which are equal to defaults
+- Zend_Date
+    ZF-1067 Zend_Date::isDate() or Zend_Date::checkDate()
+- Zend_Db
+    ZF-900  Zend_Db_Expr: class to hold fragments of SQL
+    ZF-1044 Clarify argument lists of insert(), update() and delete()
+    ZF-1137 Zend_Db (PDO_MYSQL) Exception does not contain "code"
+    ZF-1143 Comments in Sqlite.php and Pgsql.php refer to MySQL
+    ZF-1149 Problem with describeTable method in Zend_Db_Adapter_Pdo_Pgsql
+    ZF-1181 Correct @return in docblock of Zend_Db_Table_Rowset_Abstract::current()
+    ZF-1195 Add closeConnection() method to Zend_Db_Adapter_Abstract
+- Zend_Db_Adapter_Mysqli
+    ZF-1188 Fix describeTable() and listTables() on MySQL 4.1 with Mysqli Adapter
+- Zend_Db_Select
+    ZF-1121 warning when using Zend_Db_Expr in order()
+    ZF-1158 Erroneous syntax in example
+- Zend_Db_Table
+    ZF-1129 Correct logic in Zend_Db_Table_Row_Abstract::_prepareReference()
+    ZF-1202 Docblock mistake for Zend/Db/Table/Abstract.php::insert()
+    ZF-1214 Support a hook for column name transformations in Zend_Db_Table_Row
+- Zend_Http_Response
+    ZF-1155 enable responseCodeAsText() to return the list of codes
+- Zend_Loader
+    ZF-952  Remove deprecated method Zend::exception()
+    ZF-981  Add autoload() method to Zend_Loader class
+    ZF-1164 Support registerAutoload() for classes extending Zend_Loader
+    ZF-1174 loadClass(): include_path is ignored if $dirs argument is non-null
+- Zend_Locale
+    ZF-1065 New setOptions('date_format' => ...) created a conflict with using the default format for a locale.
+- Zend_Log
+    ZF-270  Trying to log to multiple loggers raises exeption
+    ZF-280  add more predefined field, like %date%
+    ZF-282  add method debug(), info() for supplement to log()
+    ZF-368  Unit Tests for Zend_Log
+    ZF-401  Support output of log levels as string or as integer
+    ZF-1212 Move new object-oriented design of Zend_Log from incubator to core
+- Zend_Mail / Zend_Mime
+    ZF-264  Quoted Printable Problems
+    ZF-328  Zend_Mail / Zend_Mime does not allow use of 'Content-type: multipart/related'
+    ZF-564  Add fluent interfaces to Zend_Mail
+    ZF-638  setBodyText and getBodyText not being reciprocal
+    ZF-924  Zend_Mail Unit Tests failing
+- Zend_Memory
+    ZF-1207 Move to Core
+- Zend_Pdf
+    ZF-990  Incorrect class names for Zend/Pdf/Resource/Image*
+- Zend_Search_Lucene
+    ZF-915 index corrupt while optimizeing
+    ZF-1115 Boolean expression error
+    ZF-1145 Boolean expression error
+    ZF-1150 Index reopening fails if it's used within one script execution.
+- Zend_Server_Reflection
+    ZF-1111 Example usage code in Zend_Server_Reflection is confusing
+- Zend_Service_Amazon
+    ZF-77   Sort does not work for itemSearch()
+    ZF-82   Service_Amazon_Item doesn't return valid information about Tracks.
+    ZF-369  Unit Test Coverage to 90%
+    ZF-622  Incomplete parameter support in itemLookup()
+    ZF-847  Typo in Example: "Search Amazon Using the Traditional API"
+    ZF-850  Misleading internal use of foreach in Zend_Service_Amazon_Item::__construct()
+    ZF-1008 Cannot search by Artist
+    ZF-1118 Problems with Offers and OfferSummary
+- Zend_Service_Flickr
+    ZF-114  Support extra information identified by names with underscores
+    ZF-370  Unit Test Coverage to 90%
+    ZF-997  Support full set of available search options
+    ZF-1177 Multiple requests produce unexpected results due to persistent HTTP client GET parameters
+- Zend_Uri
+    ZF-893  Notice when running Unit Tests
+- Zend_View
+    ZF-780  Setting 'id' attribute for HelperCheckbox and HelperRadio doesn't work
+    ZF-914  Zend_View_Helper_HtmlList incorrectly renders nested lists
+    ZF-1062 Zend_View::init()
+    ZF-1104 Zend_View::setBasePath() improvement
+    ZF-1128 Add fluency to 'assign' method
+    ZF-1136 Zend_View Helpers to be optionally view aware
+    ZF-1142 Allow reporting of an error when mispelled view variables are used.
+    ZF-1146 View Helper ReadOnly behavior transforms type="text" to type="hidden"
+    ZF-1186 Zend_View_Smarty returns wrong value in __isset() method
+    ZF-1192 Failures and errors in Zend_View unit tests
+- Zend_XmlRpc_Client
+    ZF-841  RPC demo broken
+
 =RELEASE 0.9.1 / 23-Mar-2007=
 This release resolves the following issues:
 - Zend_Loader
@@ -15,9 +122,10 @@ This release resolves the following issues:
     ZF-1081 Zend_Controller_ActionTest Unit Tests failing
     ZF-1110 Zend_Controller_Router_Route::assemble shoudn't reset user supplied wildcard parameters
 - Zend_Date
-    ZF-1066 isDate() returns true for dates that do not appear to be valid  
     ZF-1101 getDate() yields results that look inconsistent
 - Zend_Db
+    ZF-50   Name Filter: PDO::CASE_NATURAL lower case column names
+    ZF-54   Missing error handling in query()
     ZF-1031 Zend_Db_* methods should throw only Zend_Db_Exception and/or derivatives
     ZF-1068 Support schema in describeTable()
     ZF-1093 MS SQL Server: use QUOTED_IDENTIFIER
@@ -41,6 +149,7 @@ This release resolves the following issues:
     ZF-1095 Allow other HTTP methods not in the RFC
     ZF-1112 Support arbitrary switching of the adapter for a single HTTP client instance  
 - Zend_Locale
+    ZF-1066 isDate() returns true for dates that do not appear to be valid  
     ZF-1072 Zend_Locale Unit Tests failing
 - Zend_Mail
     ZF-580  Quoted printable remove dot from message
@@ -58,7 +167,6 @@ This release resolves the following issues:
     ZF-1094 issue with examples given for accessing Zend_Registry as on object
 - Zend_Session
     ZF-1102 Zend_Session emits warning when save_path not writeable  
-
 
 =RELEASE 0.9.0 / 16-Mar-2007=
 This release resolves the following issues:
@@ -99,7 +207,10 @@ This release resolves the following issues:
     ZF-1042 Zend_Date incorrectly returns day of week after 2038
 - Zend_Db
     ZF-139  Insert/update do not distinguish strings and SQL expressions
+    ZF-219  insert() parameter is array reference, so it cannot be an array literal
+    ZF-255  Zend_Db_Profiler function name mismatch
     ZF-942  Pdo_Pgsql: lastInsertId cannot find sequence 
+    ZF-1038 Support for Zend_Db_Expr and identifier quoting in insert()/update()/delete()
 - Zend_Db_Adapter_Mysqli
     ZF-381  Mysqli: Zend_Db adapter implementation
     ZF-424  Mysqli: prepare() does not return same object as other adapters
@@ -123,9 +234,11 @@ This release resolves the following issues:
     ZF-38   Zend_Db_Table should allow custom Row objects
     ZF-180  Zend_Db_Table_Row: __get function maps incorrectly to _data
     ZF-190  Make Zend_Db_Rowset, Zend_Db_Row serialisable
+    ZF-219  insert() parameter is array reference, so it cannot be an array literal
     ZF-445  Name Filter: Column Names in camelCaps not Accessible?
     ZF-554  Inefficient instantiation of Zend_Db_Inflector in Zend_Db_Table
     ZF-557  Unexpected behaviour in Zend_Db_Table->find()
+    ZF-572  Notice: Trying to get property of non-object Zend/Db/Table/Row.php
     ZF-619  Zend_Db_Table_Row::toArray() do not camelize the field names
     ZF-627  Schema qualified name will not work with Zend_Db_Table
     ZF-773  Zend_Db_Table_Row needs delete() method
@@ -418,6 +531,7 @@ This release resolves the following issues:
 - Zend_Db:
     ZF-201 PDO Adapter names should begin with 'pdo_'. 
     ZF-511 Zend_Db_Adapter_MySQLi coding standards conformance
+    ZF-584 Oracle: $params sent to factory are not correct
 - Zend_Filter/Zend_Validate: (incubator)
     New prototype implementation.
 - Zend_Gdata:
