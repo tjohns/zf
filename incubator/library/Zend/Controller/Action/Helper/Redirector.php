@@ -215,18 +215,6 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      */
     public function direct($url, array $options = null)
     {
-        /*
-        if (0 == func_num_args()) {
-            throw new Zend_Controller_Action_Exception('Redirector expects at least a URL argument');
-        }
-
-        $args = func_get_args();
-        $url  = array_shift($args);
-        if (0 > count($args)) {
-            $options = array_shift($args);
-        }
-         */
-
         $this->goto($url, $options);
     }
 }
