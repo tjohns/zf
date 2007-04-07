@@ -245,7 +245,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         $return = '';
         
         foreach (array_reverse($url, true) as $key => $value) {
-            if ($flag || $value !== $this->getDefault(@$this->_parts[$key]['name'])) {
+            if ($flag || !isset($this->_parts[$key]['name']) || $value !== $this->getDefault($this->_parts[$key]['name'])) {
                 $return = '/' . $value . $return;
                 $flag = true;
             }
