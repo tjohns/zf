@@ -83,7 +83,7 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                        'msg5' => 'Message 5 (ru)',
                                        'msg6' => 'Message 6 (ru)'
                                       ), 'ru',
-                                 true);
+                                 array('clear' => true));
         $this->assertEquals($adapter->translate('msg2', 'ru'), 'msg2');
         $this->assertEquals($adapter->translate('msg4', 'ru'), 'Message 4 (ru)');
 
@@ -109,7 +109,7 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                          ), 'en');
 
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey'));
+        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey', 'clear' => false));
         $this->assertEquals($adapter->getOptions('testoption'), 'testkey');
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }

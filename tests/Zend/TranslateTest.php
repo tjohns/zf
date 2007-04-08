@@ -114,8 +114,9 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $lang->addTranslation(array('msg2' => 'Message 2'), 'en');
         $this->assertEquals($lang->_('msg2'), 'Message 2');
+        $this->assertEquals($lang->_('msg3'), 'msg3');
 
-        $lang->addTranslation(array('msg3' => 'Message 3'), 'en', true);
+        $lang->addTranslation(array('msg3' => 'Message 3'), 'en', array('clear' => true));
         $this->assertEquals($lang->_('msg2'), 'msg2');
         $this->assertEquals($lang->_('msg3'), 'Message 3');
     }
