@@ -52,6 +52,25 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.extendmonth">
+
+            <title>Calculating months</title>
+
+            <para>
+                When adding or substracting months from an existing date they can sometimes produce an unexpected
+                result when the day of the original date is too high. For example, when adding one month to the 
+                31. January people familiar with SQL will expect to have 28. February as result. On the other
+                side people familiar with Excel will expect to habe 03. March as result. So our problem only 
+                occurs if the resulting month does not have the day which is set in the original date. But there
+                is a simple and selectable solution. By using the <code>extend_month</code> option wou can choose
+                eighter to use SQL behaviour if set to false or Excel behaviour when set to true. The default
+                behaviour for <code>extend_month</code> is false so <code>Zend_Date</code> computes like expected
+                through SQL. Use <code>Zend_Date::setOptions(array('extend_month' => true)); to enable
+                month calculation like it's done in Excel.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">

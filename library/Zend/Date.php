@@ -44,8 +44,9 @@ class Zend_Date extends Zend_Date_DateObject {
     private $_Precision  = 3;
 
     private static $_Options = array(
-        'format_type' => 'iso',              // format for date strings 'iso' or 'php'
-        'fix_dst' => true                    // fix dst on summer/winter time change
+        'format_type'  => 'iso',      // format for date strings 'iso' or 'php'
+        'fix_dst'      => true,       // fix dst on summer/winter time change
+        'extend_month' => false       // false - addMonth like SQL, true like excel
     );
 
     // Class wide Date Constants
@@ -228,6 +229,11 @@ class Zend_Date extends Zend_Date_DateObject {
                     case 'fix_dst' :
                         if (!is_bool($value)) {
                             throw new Zend_Date_Exception("'fix_dst' has to be boolean", $value);
+                        }
+                        break;
+                    case 'extend_month' :
+                        if (!is_bool($value)) {
+                            throw new Zend_Date_Exception("'extend_month' has to be boolean", $value);
                         }
                         break;
                 }
@@ -1479,15 +1485,28 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 // Monthname found
                 if ($cnt < 12) {
+                    $fixday = 0;
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
-                                                 $this->mktime(0, 0, 0, $month, $day, $year, true), $hour);
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day + $fixday, $year, true),
+                                                 $this->mktime(0, 0, 0, $month, $day,           $year, true), $hour);
                 }
 
                 // Monthname not found
@@ -1496,15 +1515,28 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::MONTH :
                 if (is_numeric($date)) {
+                    $fixday = 0;
                     if ($calc == 'add') {
                         $date += $month;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     } else if ($calc == 'sub') {
                         $date = $month - $date;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
-                                                 $this->mktime(0, 0, 0, $month, $day, $year, true), $hour);
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day + $fixday, $year, true),
+                                                 $this->mktime(0, 0, 0, $month, $day,           $year, true), $hour);
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
@@ -1523,15 +1555,28 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 // Monthname found
                 if ($cnt < 12) {
+                    $fixday = 0;
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
-                                                 $this->mktime(0, 0, 0, $month, $day, $year, true), $hour);
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day + $fixday, $year, true),
+                                                 $this->mktime(0, 0, 0, $month, $day,           $year, true), $hour);
                 }
 
                 // Monthname not found
@@ -1540,16 +1585,29 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::MONTH_SHORT :
                 if (is_numeric($date)) {
+                    $fixday = 0;
                     if ($calc == 'add') {
                         $date += $month;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     } else if ($calc == 'sub') {
                         $date = $month - $date;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     }
 
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
-                                                 $this->mktime(0, 0, 0, $month, $day, $year, true), $hour);
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day + $fixday, $year, true),
+                                                 $this->mktime(0, 0, 0, $month, $day,           $year, true), $hour);
                 }
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
@@ -1573,15 +1631,28 @@ class Zend_Date extends Zend_Date_DateObject {
                 
                 // Monthname found
                 if ($cnt < 12) {
+                    $fixday = 0;
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
+                        if (self::$_Options['extend_month'] == false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                            if ($parts['mday'] != $day) {
+                                $fixday -= $parts['mday'];
+                            }
+                        }
                     }
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day, $year, true),
-                                                 $this->mktime(0, 0, 0, $month, $day, $year, true), $hour);
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, $date,  $day + $fixday, $year, true),
+                                                 $this->mktime(0, 0, 0, $month, $day,           $year, true), $hour);
                 }
 
                 // Monthname not found

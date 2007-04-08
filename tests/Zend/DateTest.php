@@ -4279,6 +4279,17 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-01 23:00:00');
         $date->addMonth(1);
         $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-04-02 00:00:00');
+
+        $date = new Zend_Date('2007-01-31 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-01-31 00:00:00');
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-02-28 00:00:00');
+
+        $date = new Zend_Date('2007-01-31 00:00:00', Zend_Date::ISO_8601);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-01-31 00:00:00');
+        Zend_Date::setOptions(array('extend_month' => true));
+        $date->addMonth(1);
+        $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-03 00:00:00');
     }
 
     /**
