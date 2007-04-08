@@ -438,6 +438,76 @@ $translate->addTranslation('path/to/other.csv', 'fr');
 ]]></programlisting>
         </example>
 
+        <para>
+            CSV 文字列の標準の区切り文字は '<code>;</code>' 記号です。
+            しかし、必ずこれでなければならないというわけではありません。
+            オプション '<code>separator</code>' を使用すると、
+            別の区切り文字を使用することができます。
+        </para>
+
+        <para>
+            区切り文字を翻訳文字列に埋め込む必要がある場合は、
+            翻訳文字列内でそれをふたつ続けて記述します。
+            最初の区切り文字が元文字列と翻訳文字列を区切り、
+            ふたつ目の区切り文字が文字列の一部として解釈されます。
+            詳細は、次の例を参照ください。
+        </para>
+
+        <example id="zend.translate.using.source.csv.example2">
+            <title>CSV ファイルの例 その 2</title>
+            <programlisting><![CDATA[
+﻿#Example csv file
+# 元メッセージは 'message,1'
+message,,1,Nachricht1
+# 翻訳は 'Nachricht,2'
+message2,Nachricht,,2
+# 元メッセージは 'message3,'
+message3,,,Nachricht3
+]]></programlisting>
+
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('separator' => ','));
+$translate->addTranslation('path/to/other.csv', 'fr');
+]]></programlisting>
+        </example>
+
+    </sect2>
+
+
+    <sect2 id="zend.translate.using.options">
+
+        <title>アダプタのオプション</title>
+
+        <para>
+            すべてのアダプタで、オプションを使用することができます。
+            もちろん、アダプタによってオプションは異なります。
+            アダプタを作成する際に、オプションを設定することができます。
+            すべてのアダプタで共通のオプションは '<code>clear</code>'
+            で、これは、翻訳データを既存のものに追記するのかしないのかを指定します。
+            標準の動作は、新しい翻訳を既存の翻訳に追記します。
+            しかし、これを指定すると、既存の翻訳データをいったん消去して
+            新しいデータを追加します。消去されるのは選択した言語のみであり、
+            その他の言語は影響を受けません。
+        </para>
+
+        <para>
+            オプションを一時的に設定するには、
+            <code>addTranslation($data, $locale, array $options = array())</code>
+            とオプションの三番目のパラメータを指定します。
+            <code>setOptions()</code> 関数でオプションを設定することもできます。
+        </para>
+
+        <example id="zend.translate.using.options.example">
+            <title>翻訳オプションの使用</title>
+            <programlisting role="php"><![CDATA[
+$options = array('clear' => true);
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
+$translate->addTranslation('path/to/other.csv', 'fr');
+... // 何かをします
+$translate->addTranslation('path/to/new.csv', 'fr', $options); // 言語 fr を消去し、新しい翻訳を使用します
+]]></programlisting>
+        </example>
+
     </sect2>
 
 </sect1>
