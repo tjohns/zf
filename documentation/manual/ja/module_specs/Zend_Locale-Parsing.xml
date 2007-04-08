@@ -466,7 +466,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
 require_once 'Zend/Locale.php';
 
 $string = "١‎٠٠";   // アラビア文字で 100 を表します
-$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Default');
+$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Latn');
 
 print "\n元の内容: ".$string;
 print "\n正規化したもの:".$normal;
@@ -483,7 +483,7 @@ print "\n正規化したもの:".$normal;
 require_once 'Zend/Locale.php';
 
 $string = '123';
-$local = Zend_Locale_Format::convertNumerals($string, 'Default', 'Arab');
+$local = Zend_Locale_Format::convertNumerals($string, 'Latn', 'Arab');
 
 print "\n元の内容: ".$string;
 print "\n地域化したもの:".$local;
