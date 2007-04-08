@@ -614,6 +614,11 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Locale_Format::checkDateFormat('20', array('date_format' => 'dd.MMMM.YYYY')), "false expected");
         $this->assertTrue(Zend_Locale_Format::checkDateFormat('April.2007', array('date_format' => 'MMMM.YYYY')), "true expected");
         $this->assertTrue(Zend_Locale_Format::checkDateFormat('20.April.2007', array('date_format' => 'dd.YYYY')), "true expected");
+
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('2006.04', array('date_format' => 'yyyy.MMMM.dd')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.04.2007 10:11', array('date_format' => 'dd.MMMM.yyyy HH:mm:ss')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.04.2007 10:20', array('date_format' => 'dd.MMMM.yyyy HH:ss:mm')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.04.2007 00:20', array('date_format' => 'dd.MMMM.yyyy ss:mm:HH')), "false expected");
     }
 
 
@@ -626,6 +631,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Locale_Format::checkDateFormat('13:10:55', array('date_format' => 'HH:mm:ss', 'locale' => 'de_AT')), "true expected");
         $this->assertTrue(Zend_Locale_Format::checkDateFormat('11:10:55 am', array('date_format' => 'HH:mm:ss', 'locale' => 'ar_EG')), "true expected");
         $this->assertFalse(Zend_Locale_Format::checkDateFormat('notime'), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('13:10', array('date_format' => 'HH:mm:ss', 'locale' => 'de_AT')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('13', array('date_format' => 'HH:mm', 'locale' => 'de_AT')), "false expected");
+        $this->assertFalse(Zend_Locale_Format::checkDateFormat('00:13', array('date_format' => 'ss:mm:HH', 'locale' => 'de_AT')), "false expected");
     }
 
 
@@ -652,7 +660,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab'), '110', "110 expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'Arab', 'Deva'), '११०', "११० expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('١١٠', 'arab', 'dEVa'), '११०', "११० expected");
-        $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latin', 'Arab'), '١١٠', "١١٠ expected");
+        $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latn', 'Arab'), '١١٠', "١١٠ expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'latn', 'Arab'), '١١٠', "١١٠ expected");
     }
     
