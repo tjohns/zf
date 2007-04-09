@@ -295,7 +295,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      * @param array $config
      * @return mixed
      */
-    public function fetchObject($class = 'stdClass', array $config = array(0)
+    public function fetchObject($class = 'stdClass', array $config = array(0))
     {
         $obj = $this->fetch(Zend_Db::FETCH_OBJ);
         return $obj;
