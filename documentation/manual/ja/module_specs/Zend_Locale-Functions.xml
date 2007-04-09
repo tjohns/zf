@@ -320,6 +320,12 @@ print $locale->toString();
                         <entry>地域化された、全ての国とその国で用いられる言語の一覧</entry>
                         <entry>完全</entry>
                     </row>
+                    <row>
+                        <entry>Characters</entry>
+                        <entry />
+                        <entry>このロケールでの既知の文字の一覧を表す正規表現</entry>
+                        <entry>完全</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
