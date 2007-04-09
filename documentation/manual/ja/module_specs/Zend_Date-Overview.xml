@@ -58,6 +58,29 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.extendmonth">
+
+            <title>月の計算</title>
+
+            <para>
+                ある日付に対して月を足したり引いたりすると、
+                もとの日付が月の最後のほうだった場合に予期せぬ結果となることがあります。
+                たとえば「1月31日」に一ヶ月足すことを考えてみましょう。
+                SQL に慣れている人なら、この結果は「2月28日」になるものと思われるでしょう。
+                一方、Excel を使っている人は、この結果が「3月3日」
+                になるものと考えるのではないでしょうか。
+                つまり、その結果の月に元の日付の日が存在しない場合はどうすればいいのかということです。
+                これを解決するための簡単な方法として、どちらかを選択できるようにしました。
+                <code>extend_month</code> オプションを false にすると
+                SQL 風の挙動になり、true にすると Excel 風の挙動になります。
+                <code>extend_month</code> のデフォルトは false なので、
+                <code>Zend_Date</code> は SQL 風の計算をします。
+                <code>Zend_Date::setOptions(array('extend_month' => true));</code>
+                とすると、Excel と同様の方式で計算することになります。
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">
