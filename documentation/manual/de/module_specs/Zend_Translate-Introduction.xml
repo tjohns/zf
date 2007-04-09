@@ -1,138 +1,134 @@
 <sect1 id="zend.translate.introduction">
 
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        Zend_Translate is the Zend Framework's solution for multilingual
-        applications.
+        Zend_Translate ist die Lösung des Framework's für mehrsprachige Applikationen.
     </para>
 
     <para>
-        In multilingual applications, the content must be translated into
-        several languages and display content depending on the user's language.
-        PHP offers already several ways to handle such problems, however
-        the PHP solution has some problems:
+        In mehrsprachigen Applikationen muß der Inhalt in verschiedene Sprachen übersetzt,
+        und der Inhalt angezeigt werden, abhängig von der Sprache des Benutzers.
+        PHP bietet bereits mehrere Wege um solche Probleme zu behandeln, trotzdem zeigt die
+        Verwendung von PHP einige Probleme:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <emphasis role="strong">Inconsistent API:</emphasis>
-                There is no single API for the different source formats.
-                The usage of gettext for example is very complicated.
+                <emphasis role="strong">Unzureichende API:</emphasis>
+                Es gibt keine API die für die verschiedenen Quellen identisch ist.
+                Die Benutzung von Gettext zum Beispiel ist sehr kompliziert.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">PHP supports only gettext and native array:</emphasis>
-                PHP itself offers only support for array or gettext.
-                All other source formats have to be coded manually,
-                because there is no native support.
+                <emphasis role="strong">PHP unterstützt nur Gettext und Arrays:</emphasis>
+                PHP selbst bietet nur Unterstützung von Arrays oder Gettext.
+                Alle anderen Quellen müssten händisch programmiert werden, weil es keinen
+                eingebauten Support hierfür gibt.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">No detection of the default language:</emphasis>
-                The default language of the user cannot be detected without
-                deeper knowledge of the backgrounds for
-                the different web browsers.
+                <emphasis role="strong">Keine Erkennung der Standard Sprache:</emphasis>
+                Die Standard Sprache eines Benutzers kann nicht ohne tiefere Kenntnisse
+                über die Hintergründe der Web Browser erkannt und benutzt werden.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Gettext is not thread-safe:</emphasis>
-                PHP's gettext library is not thread safe, and it
-                should not be used in a multithreaded environment.
-                This is due to problems with gettext itself, not PHP,
-                but it is an existing problem.
+                <emphasis role="strong">Gettext ist nicht Threadsicher:</emphasis>
+                PHP's Gettext Bibliothek ist nicht Threadsicher und sollte nicht in
+                Multithreaded Umgebungen verwendet werden. Das ist ein Problem der
+                verwendeten Gettext Bibliothek und nicht von PHP selbst. Aber es ist
+                ein bekanntes und noch immer vorhandenes Problem.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Zend_Translate does not have the above problems. This is why we
-        recommend using Zend_Translate instead of PHP's native functions.
-        The benefits of Zend_Translate are:
+        Zend_Translate hat keines der oben angesprochene Probleme. Deswegen wird
+        empfohlen Zend_Translate statt der PHP eigenen Funktionen zu verwenden.
+        Die Vorteile von Zend_Translate sind unter anderem:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <emphasis role="strong">Supports multiple source formats:</emphasis>
-                Zend_Translate supports several source formats, including
-                those supported by PHP, and other formats including TMX
-                and CSV files.
+                <emphasis role="strong">Unterstützt mehrere Quell Formate:</emphasis>
+                Zend_Translate unterstützt verschiedene Quell Formate, natürlich auch
+                die welche von PHP unterstützt werden und andere Formate wie zum
+                Beispiel TMX und CSV Quellen.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Thread-safe gettext:</emphasis>
-                The gettext reader of Zend_Translate is thread-safe.
-                There are no problems using it in multi-threaded environments.
+                <emphasis role="strong">Threadsicheres Gettext:</emphasis>
+                Der Gettext Reader von Zend_Translate ist Threadsicher. Er kann ohne
+                Probleme in Multithreaded Umgebungen verwendet werden.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Easy and generic API:</emphasis>
-                The API of Zend_Translate is very simple and requires only a
-                handful of functions.
-                So it's easy to learn and easy to maintain.
-                All source formats are handled the same way, so if the format
-                of your source files change from Gettext to TMX,
-                you only need to change one line of code to specify the
-                storage adapter.
+                <emphasis role="strong">Einfache und einheitliche API:</emphasis>
+                Die API von Zend_Translate ist sehr einfach und benötigt nur eine
+                handvoll von Funktionen. So ist sie einfach zu lernen und einfach
+                zu warten. Alle Quell Formate werden auf die gleiche Art und Weise
+                gehandhabt, sodas wenn zum Beispiel der Wechsel des Quell Formats
+                von Gettext zu TMX notwendig wird, nur eine einzelne Zeile im Code
+                zu Ändern ist um den anderen Adapter zu spezifizieren.
             </para>
         </listitem>
         <listitem>
             <para>
-                <emphasis role="strong">Detection of the user's standard language:</emphasis>
-                The preferred language of the user accessing the site can be
-                detected and used by Zend_Translate.
+                <emphasis role="strong">Erkennung der Standard Sprache des Benutzers:</emphasis>
+                Die bevorzugte Sprache des Benutzers der auf die Site zugreift kann durch
+                Zend_Translate erkannt und automatisch verwendet werden.
             </para>
         </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">
 
-        <title>Starting multi-lingual</title>
+        <title>Beginnen wir mit der Mehrsprachigkeit</title>
 
         <para>
-            So let's get started with multi-lingual business.
-            What we want to do is translate our string
-            output so the view produces the translated output.
-            Otherwise we would have to write one view
-            for each language, and no one would like to do this.
-            Generally, multi-lingual sites are very simple in their design.
-            There are only four steps you would have to do:
+            Beginnen wir mit dem Mehrsprachigen Business. Was wir also prinzipiell
+            machen ist die Übersetzung unseres Strings, den wir ausgeben wollen,
+            sodas die View die korrekte Übersetzte Ausgabe produziert.
+            Sonst müssten wir für jede Sprache eine eigene View schreiben, und
+            das würde keiner machen wollen. Normalerweise sind mehrsprachige Sites
+            sehr einfach in Ihrem Aufbau. Es sind hierbei nur 4 Schritte zu befolgen:
         </para>
 
         <orderedlist numeration='arabic'>
             <listitem>
                 <para>
-                    Decide which adapter you want to use;
+                    Den Adapter auswählen der Benutzt werden soll;
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Create your view and integrate Zend_Translate in your code;
+                    Die View erzeugen und Zend_Translate in den Code integrieren;
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Create the source file from your code;
+                    Die Quell Datei vom Code erzeugen;
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Translate your source file to the desired language.
+                    Die Quell Datei in die gewünschten Sprachen übersetzen.
                 </para>
             </listitem>
         </orderedlist>
 
         <para>
-            The following sections guide you through all four steps.
-            Read through the next few pages to create your own
-            multi-lingual web application.
+            Die folgenden Abschnitte leiten durch alle vier Abschnitte.
+            Sie sollten sorgfältig studiert werden um eigene Mehrsprachige
+            Web Applikationen erstellen zu können.
         </para>
 
     </sect2>
