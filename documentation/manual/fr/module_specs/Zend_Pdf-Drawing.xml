@@ -408,33 +408,25 @@ $font = Zend_Pdf_Font::fontWithPath($cheminVersPoliceQuelconque,
 /**
  * Insère une image à la position spécifiée dans la page
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Resource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
 ?>]]>
             </programlisting>
         </para>
         <para>
-         Les objets Image hérite de la classe <code>Zend_Pdf_Image</code>.
-        </para>
-        <para>
-         Les images au format JPG, PNG et TIFF sont supportées :
+         Les objets Image peuvent être créés avec la méthode <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (les images JPG, PNG et TIFF sont maintenant supportées) :
         </para>
         <example>
             <title>Insertion d'images</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-//Créer un objet image directement (en choisir un)
-$image = new Zend_Pdf_Image_Jpeg('mon_image.jpg');
-$image = new Zend_Pdf_Image_Tiff('mon_image.tiff');
-$image = new Zend_Pdf_Image_Png('mon_image.png');
-
-//ou utiliser l'objet Zend_Pdf_ImageFactory pour charge le type approprié
-$image = Zend_Pdf_ImageFactory::factory('mon_image.jpg');
+//Charger une image
+$image = new Zend_Pdf_Image::imageWithPath('mon_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -443,8 +435,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Important! La classe Zend_Pdf_Image_JPEG nécessite que l'extension PHP GD soit installé.</emphasis>
-            <emphasis>Important! La classe Zend_Pdf_Image_Png class  nécessite que l'extension ZLIB soit configuré pour accepter les images avec canaux Alpha.</emphasis>
+            <emphasis>Important! Le support JPEG nécessite que l'extension PHP GD soit installé.</emphasis>
+            <emphasis>Important! Le support PNG nécessite que l'extension ZLIB soit configuré pour accepter les images avec canaux Alpha.</emphasis>
         </para>
         <para>
              Lisez la documentation de PHP pour plus d'informations
