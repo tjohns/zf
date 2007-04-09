@@ -4,7 +4,7 @@
 
     <para>
         Die <code>Zend_Date</code> Komponente bietet eine umfangreiche aber einfache API zur Manipulation 
-        von Datum und Zeit.	Die Methoden verarbeiten eine große Auswahl von Datentypen in vielen
+        von Datum und Zeit. Die Methoden verarbeiten eine große Auswahl von Datentypen in vielen
         Kombinationen und erweitern die vorhandenen PHP Datumsfunktionen um eine Vielzahl von Möglichkeiten.
         Die aktuellste Version der Dokumentation finden Sie unter in unserer 
         <ulink url="http://framework.zend.com/wiki/display/ZFDOCDEV/Home">Online Dokumentation 

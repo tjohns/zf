@@ -29,17 +29,24 @@ require_once 'Zend/Server/Reflection.php';
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
 
-// Erhalte Prototypen
+// Prototypen auslesen
 $prototypes = $reflection->getPrototypes();
 
-// Erhalte Prototyp Rückgabetyp
-$prototype->getReturnType();
+// Durch jeden Prototyp laufen für die Funktion
+foreach ($prototypes as $prototype) {
 
-// Erhalte Prototyp Parameter
-$prototype->getParameters();
+    // Rückgabe Typ des Prototypen ausgeben
+    echo "Rückgabe Typ: ", $prototype->getReturnType(), "\n";
 
-// Erhalte Parameter Typ
-$parameter->getType();
+    // Parameter des Prototypen ausgeben
+    $parameters = $prototype->getParameters();
+
+    echo "Parameter: \n";
+    foreach ($parameters as $parameter) {
+        // Parameter Typ ausgeben
+        echo "    ", $parameter->getType(), "\n";
+    }
+}
 
 // Erhalte Namensraum für eine Klasse, Funktion oder Methode.
 // Namensräume können zum Zeitpunkt der Instanzierung gesetzt werden (zweites Argument) oder durch

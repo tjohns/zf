@@ -290,9 +290,9 @@ $router->addRoute(
 
         	<para>
         	    Was nicht sofort erkennbar sein mag, ist, dass die obige Route auf URLs wie 
-        		<code>http://example.com/archive/2005</code> und 
-        		<code>http://example.com/archive</code> passt. Im letzteren Fall hat die Variable 
-        		'year' den Wert 2006.
+        	    <code>http://example.com/archive/2005</code> und 
+        	    <code>http://example.com/archive</code> passt. Im letzteren Fall hat die Variable 
+        	    'year' den Wert 2006.
         	</para>
         
         	<para>
@@ -328,15 +328,15 @@ $router->addRoute(
 );]]></programlisting>
 
             <note>
-        	    <title>Routing Verhalten</title>
-        	    <para>
-        	        Im Gegensatz zu Ruby on Rails wird <code>Zend_Controller_Router_Rewrite</code> 
-        	        für eine Route Standardwerte verwenden, wenn die Anforderungen an die Variablen 
-        	        im vierten Parameter nicht erfüllt werden. Also passt die URL 
-        	        <code>http://example.com/archive/test</code> auf die obige Route und setzt den 
-        	        Parameter 'year' auf 2006. Diese Funktionalität kann sich in Zukunft ändern, da 
-        	        sie im Moment beim Schreiben dieser Dokumentation noch diskutiert wird.
-        	    </para>
+                <title>Routing Verhalten</title>
+                <para>
+                    Im Gegensatz zu Ruby on Rails wird <code>Zend_Controller_Router_Rewrite</code> 
+                    für eine Route Standardwerte verwenden, wenn die Anforderungen an die Variablen 
+                    im vierten Parameter nicht erfüllt werden. Also passt die URL 
+                    <code>http://example.com/archive/test</code> auf die obige Route und setzt den 
+                    Parameter 'year' auf 2006. Diese Funktionalität kann sich in Zukunft ändern, da 
+                    sie im Moment beim Schreiben dieser Dokumentation noch diskutiert wird.
+                </para>
             </note>
 
         </sect3>
@@ -442,7 +442,7 @@ $this->addRoute('default', $compat);]]></programlisting>
 $router->removeDefaultRoutes();]]></programlisting>
 
         </sect3>    
-    
+
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
             <title>Statische Routen</title>
 
@@ -455,7 +455,115 @@ $router->removeDefaultRoutes();]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 $loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
-$router->addRoute('login', $static);
+$router->addRoute('login', $loginRoute);
+]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.regex-routes">
+            <title>Regex Routen</title>
+
+            <para>
+                Zusätzlich zu den Standard und Statischen Routen Typen, ist ein Reguar Expression Routen Typ
+                vorhanden. Diese Route bietet mehr Möglichkeiten und Flexibilität als die anderen, aber
+                auf Kosten der Geschwindigkeit, durch die Verwendung der PCRE Engine.
+            </para>
+
+            <para>
+                <code>Zend_Controller_Router_Route_Regex</code> bietet einen Rexex-basierenden Routen Typ
+                für die Verwendung mit dem Rewrite Router. Einige Regeln sind bei seiner Verwendung zu
+                berücksichtigen:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    Er benutzt das <code>#</code> Zeichen als Trenner. Das bedeutet das man den Schrägstrich
+                    ('/') nicht Escapen muß. Aber Doppelkreuz Zeichen ('#') müssen Escaped werden.
+                </para></listitem>
+
+                <listitem><para>
+                    Zeilen Start- und Endanker (normalerweise '^' und '$') werden automatisch bei allen
+                    Ausdrücken hinzugefügt. Deswegen sollten Sie nicht in den Regulären Ausdrücken
+                    verwendet werden. Das bedeutet auch das Ausdrücke so geschrieben werden sollten, das
+                    sie der kompletten URL entsprechen. Wenn als Beispiel eine URL wie
+                    'http://example.com/foo/bar/baz/bat' angenommen wird und einfach nur 'foo/bar'
+                    gewünscht ist, sollte der Ausdruck 'foo/bar(/.*)?' geschrieben werden.
+                </para></listitem>
+
+                <listitem><para>
+                    Die führenden und endenen Schrägstriche werden vor einem Vergleich getrimmt.
+                    Als Ergebnis wird der Vergleich der URL "http://example.com/foo/bar" zu einer
+                    Rexex von "foo/bar" führen.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                Eine Stärke bei der Verwendung von Regulären Ausdrücken besteht in der Fähigkeit
+                gefundene Segmente für spätere Benutzung zu holen.
+                <code>Zend_Controller_Router_Regex_Route</code> benutzt diese Möglichkeit in zwei Wegen.
+                Entweder:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Setzen von Parametern im Anfrage Objekt als Vergleichs Index
+                        (integer) =&gt; vergleich. Als Beispiel:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// Alles nach /foo/bar im Pfad wird durch den Schlüssel '1' im Anfrage Objekt empfangen werden
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar')
+);
+
+// Nach dem Routen:
+$fooPath = $request->getParam('1');
+]]></programlisting>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Benutzen einer Verknüpfungs-Liste vom Dritten an den Route Konstruktor
+                        übergebenen Parameter um Indezes zu Parameter Schlüssel zu verknüpfen.
+                        Als Beispiel:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// Setze alles nach dem Pfad /foo/bar in den 'fooPath' Anfrage Schlüssel:
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar'),
+    array(1 => 'fooPath')
+);
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                Ein paar Beispiele der Erzeugung von Regex Routen für die Benutzung mit Routern:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Archivierte Blogs sehen mit URL wie:
+// http://example.com/blog/archive/01-Using_the_Regex_Router.html
+// '01' als 'id' Schlüssel setzen, und 'Using_the_Regex_Router' als 'title' Schlüssel
+$blogArchive = new Zend_Controller_Router_Route_Regex(
+    'blog/archive/(\d+)-(.*)\.html',
+    array('controller' => 'blog', 'action' => 'view'), 
+    array(1 => 'id', 2 => 'title')
+);
+$router->addRoute('blogArchive', $blogArchive);
+
+// News Beiträge sehen mit URL wie:
+// http://example.com/news/1193328
+// '1193328' als 'id' Schlüssel benutzen
+$newsItem = new Zend_Controlelr_Router_Route_Regex(
+    'news/(\d+)',
+    array('controller' => 'news', 'action' => 'view'),
+    array(1 => 'id')
+);
+$router->addRoute('newsItem', $newsItem);
 ]]></programlisting>
         </sect3>
 
@@ -463,30 +571,38 @@ $router->addRoute('login', $static);
             <title>Zend_Config mit dem RewriteRouter verwenden</title>
 
             <para>
-            	Manchmal ist es praktischer, eine Konfigurationsdatei mit neuen Routen zu 
-            	aktualisieren, als den Code zu ändern. Dies ist mit Hilfe der 
-            	<code>addConfig()</code> Methode möglich. Im Wesentlichen kann man eine 
-            	Zend_Config kompatible Konfiguration erstellen, in seinem Code einlesen und an den
-            	RewriteRouter übergeben:
+                Manchmal ist es praktischer, eine Konfigurationsdatei mit neuen Routen zu 
+                aktualisieren, als den Code zu ändern. Dies ist mit Hilfe der 
+                <code>addConfig()</code> Methode möglich. Im Wesentlichen kann man eine 
+                Zend_Config kompatible Konfiguration erstellen, in seinem Code einlesen und an den
+                RewriteRouter übergeben:
+            </para>
+
+            <para>
+                Als Beispiel wird die folgende INI Datei angenommen:
             </para>
 
             <programlisting role="php"><![CDATA[
-/**
- * Example INI located at /path/to/config.ini:
- *
- * [production]
- *
- * routes.archive.route = "archive/:year/*"
- * routes.archive.defaults.controller = archive
- * routes.archive.defaults.action = show
- * routes.archive.defaults.year = 2000
- * routes.archive.reqs.year = "\d+"
- *
- * routes.news.type = "Zend_Controller_Router_Route_Static"
- * routes.news.route = "news"
- * routes.news.defaults.controller = "news"
- * routes.news.defaults.action = "list"
- */
+[production]
+
+routes.archive.route = "archive/:year/*"
+routes.archive.defaults.controller = archive
+routes.archive.defaults.action = show
+routes.archive.defaults.year = 2000
+routes.archive.reqs.year = "\d+"
+
+routes.news.type = "Zend_Controller_Router_Route_Static"
+routes.news.route = "news"
+routes.news.defaults.controller = "news"
+routes.news.defaults.action = "list"
+]]></programlisting>
+
+            <para>
+                Die oben angeführte INI Datei kann dann wie folgt in ein 
+                <code>Zend_Config</code> Objekt eingelesen werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');

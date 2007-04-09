@@ -123,7 +123,7 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
-$acl->allow('member', someResource');
+$acl->allow('member', 'someResource');
 
 echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>

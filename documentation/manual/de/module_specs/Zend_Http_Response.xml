@@ -251,11 +251,13 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: 
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>: 
                         Erhalte die Standard HTTP Rückantwort für einen Antwortcode code. Zum 
                         Beispiel wird "Internal Server Error" zurückgegeben, wenn $code gleich 500 
                         ist. Wenn $http11 gleich true ist (Standard), werden die HTTP/1.1 
                         Standardantworten zurück gegeben, andernfalls die HTTP/1.0 Antworten.
+                        Wird $code nicht angegeben, wird diese Methode alle bekannten HTTP Antwortcodes
+                        als assoziatives Array (code => message) zurückgeben.
                     </para>
                 </listitem>
             </itemizedlist>

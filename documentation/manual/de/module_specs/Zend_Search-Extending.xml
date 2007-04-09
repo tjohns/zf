@@ -56,8 +56,8 @@ $index->addDocument($doc);]]></programlisting>
 /** Hier ist ein eigener Textanalysator, der Worte mit Ziffern als einen Begriff behandelt */
 
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+/** Zend_Search_Lucene_Analysis_Analyzer Hirarchie */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {

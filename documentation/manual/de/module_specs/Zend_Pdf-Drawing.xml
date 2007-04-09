@@ -414,32 +414,24 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
 /**
  * Zeichne eine Grafik an der angegebenen Position der Seite.
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Ressource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Ressource_Image $image, $x1, $y1, $x2, $y2);]]>
             </programlisting>
         <para>
-            Grafikobjekte werden durch Ableitungen der <code>Zend_Pdf_Image</code> Klasse 
-            abgebildet.
-        </para>
-        <para>
-            Es werden zur Zeit JPG, PNG und TIFF Grafiken unterstützt:
+            Grafikobjekte sollten mit der Methode <code>Zend_Pdf_Image::imageWithPath($filePath)</code>
+            erzeugt werden. (Es werden zur Zeit JPG, PNG und TIFF Grafiken unterstützt):
         </para>
         <example>
             <title>Zeichnen von Grafiken</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-// Erstelle ein Grafikobjekt direkt (wähle eines aus)
-$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
-$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
-$image = new Zend_Pdf_Image_Png('my_image.png');
-
-// oder verwende Zend_Pdf_ImageFactory um den entsprechenden Typ zu laden
-$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+// Lade die Grafik
+$image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -448,10 +440,9 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Wichtig! Die Zend_Pdf_Image_Jpeg Klasse setzt voraus, dass die GD 
-            Erweiterung für PHP konfiguriert wurde.</emphasis>
-            <emphasis>Wichtig! Die Zend_Pdf_Image_Png Klasse setzt voraus, dass die ZLIB 
-            Erweiterung konfiguriert wurde, um mit Grafiken mit Alphakanal zu arbeiten.</emphasis>
+            <emphasis>Wichtig! JPG Support setzt voraus, dass die GD Erweiterung für PHP konfiguriert wurde.</emphasis>
+            <emphasis>Wichtig! PNG Support setzt voraus, dass die ZLIB Erweiterung konfiguriert wurde, um mit Grafiken
+            mit Alphakanal zu arbeiten.</emphasis>
         </para>
         <para>
             Wende dich an die PHP Dokumentation für weitere Informationen

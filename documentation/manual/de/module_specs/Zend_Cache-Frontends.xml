@@ -199,14 +199,15 @@ echo($data);
                  <programlisting role="php"><![CDATA[<?php
 
 // Wenn es ein Cache Miss ist, wird das puffern der Ausgabe ausgelöst
-if(!$cache->start('mypage')):
+if( ! ($cache->start('mypage'))) {
 
-// Alle wie gewohnt ausgeben
-echo 'Hallo Welt! ';
-echo 'Das wird gecached ('.time().') ';
+    // Alle wie gewohnt ausgeben
+    echo 'Hallo Welt! ';
+    echo 'Das wird gecached ('.time().') ';
 
-$cache->end(); // Ausgabepufferung beenden
-endif;
+    $cache->end(); // Ausgabepufferung beenden
+
+}
 
 echo 'Hier wird nie gecached ('.time().').';
 

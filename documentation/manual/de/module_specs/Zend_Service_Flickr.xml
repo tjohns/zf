@@ -34,17 +34,17 @@ foreach ($results as $result) {
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
-        <title>Flickr Benutzer finden</title>
+        <title>Bilder und Informationen von Flickr Benutzern finden</title>
         <para>
-            <code>Zend_Service_Flickr</code> stellt 3 unterschiedliche Wege zur Verfügung um Informationen
-            über Flickr Benutzer zu bekommen:
+            <code>Zend_Service_Flickr</code> stellt verschiedene unterschiedliche Wege zur Verfügung um
+            Informationen von Flickr Benutzern zu bekommen:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
                     <code>userSearch()</code>: Akzeptiert ein String Abfrage von mit Leerzeichen getrennten Tags
                     und als optionalen zweiten Parameter ein Array mit Such Optionen. Zurückgegeben wird ein
-                    <code>Zend_Service_Flickr_ResultSet</code> Objekt.
+                    Set von Photos als <code>Zend_Service_Flickr_ResultSet</code> Objekt.
                 </para>
             </listitem>
             <listitem>
@@ -61,10 +61,10 @@ foreach ($results as $result) {
             </listitem>
         </itemizedlist>
         <example>
-            <title>Finden eines Flickr Benutzers durch seine E-Mail Adresse</title>
+            <title>Finden von öffentlichen Photos eines Flickr Benutzers durch seine E-Mail Adresse</title>
             <para>
                 In diesem Beispiel haben wir die E-Mail adresse eines Flickr Benutzers und wir holen uns die
-                Benutzer Informationen durch Verwendung der <code>userSearch()</code> Methode:
+                öffentlichen Photos eines Benutzer durch Verwendung der <code>userSearch()</code> Methode:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -105,7 +105,7 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
-        <title>Zend_Service_Flickr Klassen</title>
+        <title>Zend_Service_Flickr Ergebnis Klassen</title>
         <para>
             Die folgenden Klassen werden durch <code>tagSearch()</code> und <code>userSearch()</code> zurückgegeben:
             <itemizedlist>
@@ -119,13 +119,9 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
             <para>Repräsentiert ein Set von Ergebnissen von einer Flickr Suche.</para>
             <note>
                 <para>
-                    Implementiert einen
-                    <code>SeekableIterator</code>
-                    für einfache Iteration (z.B. benutzen von 
-                    <code>foreach</code>
-                    ), sowie einen direkten Zugriff auf ein spezielles Ergebnis durch benutzen von
-                    <code>seek()</code>
-                    .
+                    Implementiert das <code>SeekableIterator</code> Interface für einfache Iteration
+                    (z.B. benutzen von <code>foreach</code>), sowie einen direkten Zugriff auf ein
+                    spezielles Ergebnis durch Benutzen von <code>seek()</code>.
                 </para>
             </note>
             <sect4 id="zend.service.flickr.classes.resultset.properties">
@@ -197,12 +193,12 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                         <tbody>
                             <row>
                                 <entry>id</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>Image ID</entry>
                             </row>
                             <row>
                                 <entry>owner</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>Die NSID des Eigentümers des Photos.</entry>
                             </row>
                             <row>
@@ -222,17 +218,17 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                             </row>
                             <row>
                                 <entry>ispublic</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Ist das Bild öffentlich ?</entry>
                             </row>
                             <row>
                                 <entry>isfriend</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Das Bild ist sichtbar, weil man ein Freund des Eigentümers ist.</entry>
                             </row>
                             <row>
                                 <entry>isfamily</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>Das Bild ist sichtbar, weil man Familienmitglied des Eigentümers ist.</entry>
                             </row>
                             <row>
@@ -241,22 +237,22 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                                 <entry>Die Lizenz des Bildes ist erreichbar unter.</entry>
                             </row>
                             <row>
-                                <entry>date_upload</entry>
+                                <entry>dateupload</entry>
                                 <entry>string</entry>
                                 <entry>Das Datum an dem das Bild hochgeladen wurde.</entry>
                             </row>
                             <row>
-                                <entry>date_taken</entry>
+                                <entry>datetaken</entry>
                                 <entry>string</entry>
                                 <entry>Das Datum an dem das Bild gemacht wurde.</entry>
                             </row>
                             <row>
-                                <entry>owner_name</entry>
+                                <entry>ownername</entry>
                                 <entry>string</entry>
                                 <entry>Der Bildschirmname des Eigentümers.</entry>
                             </row>
                             <row>
-                                <entry>icon_server</entry>
+                                <entry>iconserver</entry>
                                 <entry>string</entry>
                                 <entry>Der Server welcher benutzt wurde um die Icon URL zu erstellen.</entry>
                             </row>
