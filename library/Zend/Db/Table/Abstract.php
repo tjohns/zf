@@ -128,15 +128,15 @@ abstract class Zend_Db_Table_Abstract
      * Each key is a mnemonic name for one reference rule.
      *
      * Each value is also an associative array, with the following keys:
-     * - columns    = array of names of column(s) in the child table.
-     * - refTable   = class name of the parent table.
-     * - refColumns = array of names of column(s) in the parent table,
-     *                in the same order as those in the 'columns' entry.
-     * - onDelete   = "cascade" means that a delete in the parent table also
-     *                causes a delete of referencing rows in the child table.
-     * - onUpdate   = "cascade" means that an update of primary key values in
-     *                the parent table also causes an update of referencing
-     *                rows in the child table.
+     * - columns       = array of names of column(s) in the child table.
+     * - refTableClass = class name of the parent table.
+     * - refColumns    = array of names of column(s) in the parent table,
+     *                   in the same order as those in the 'columns' entry.
+     * - onDelete      = "cascade" means that a delete in the parent table also
+     *                   causes a delete of referencing rows in the child table.
+     * - onUpdate      = "cascade" means that an update of primary key values in
+     *                   the parent table also causes an update of referencing
+     *                   rows in the child table.
      *
      * @var array
      */ 
@@ -160,7 +160,7 @@ abstract class Zend_Db_Table_Abstract
      *                     or key name of registry instance.
      * - name            = table name.
      * - primary         = string or array of primary key(s).
-     * - rowclass        = row class name.
+     * - rowClass        = row class name.
      * - rowsetClass     = rowset class name.
      * - referenceMap    = array structure to declare relationship
      *                     to parent tables.
