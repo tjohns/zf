@@ -354,7 +354,59 @@ $translate->addTranslation('chemin/vers/other.csv', 'fr');
 ]]></programlisting>
         </example>
 
+        <para>
+            Le séparateur standard des fichiers CSV est le signe '<code>;</code>'. Mais celui-ci n'est pas obligatoire. Avec l'option '<code>separator</code>' vous pouvez décider d'utiliser un autre signe de séparation.
+        </para>
+
+        <para>
+            Si vous devez avoir le signe séparateur dans votre traduction vous devez juste le doubler pour être inclus dans la traduction. Un seul signe séparateur séparera l'origine et les chaînes de traduction et deux signes séparateurs écriront le signe séparateur dans la chaîne. Voir l'exemple suivant :
+        </para>
+
+        <example id="zend.translate.using.source.csv.example2">
+            <title>Exemple avec un fichier CSV (2)</title>
+            <programlisting><![CDATA[
+﻿#Example csv file
+# original 'message,1'
+message,,1,Nachricht1
+# translation 'Nachricht,2'
+message2,Nachricht,,2
+# original 'message3,'
+message3,,,Nachricht3
+]]></programlisting>
+
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('csv', 'chemin/vers/matraduction.csv', 'de', array('separator' => ','));
+$translate->addTranslation('chemin/vers/autre.csv', 'fr');
+]]></programlisting>
+        </example>
+
     </sect2>
+
+    <sect2 id="zend.translate.using.options">
+
+        <title>Options pour les adaptateurs</title>
+
+        <para>
+            Les options peuvent être utilisées avec tous les adaptateurs. Bien sûr les options sont différentes pour tous les adaptateurs. Vous pouvez mettre des options quand vous créez l'adaptateur. Pour l'instant il y a une option qui est valable pour tous les adaptateurs. '<code>clear</code>' décide si des données de traduction peuvent être ajoutées à l'existant ou non. Le comportement standard est d'ajouter des nouvelles données de traduction à l'existant. Les données de traduction sont seulement effacées pour la langue choisie. Donc on ne touchera pas aux autres langues.
+        </para>
+
+        <para>
+            Vous pouvez régler des options temporaires en utilisant <code>addTranslation($donnees, $locale, array $options = array())</code> comme troisième paramètre optionel. Ou vous pouvez utiliser la fonction <code>setOptions()</code> pour régler une option.
+        </para>
+
+        <example id="zend.translate.using.options.example">
+            <title>Utiliser les options de traduction </title>
+            <programlisting role="php"><![CDATA[
+$options = array('clear' => true);
+$translate = new Zend_Translate('csv', 'chemin/vers/matraduction.csv', 'de');
+$translate->addTranslation('chemin/vers/autre.csv', 'fr');
+... // do something
+$translate->addTranslation('chemin/vers/nouvelle.csv', 'fr', $options); // efface et remplace la langue fr
+]]></programlisting>
+        </example>
+
+    </sect2>
+
 
 </sect1>
 <!--
