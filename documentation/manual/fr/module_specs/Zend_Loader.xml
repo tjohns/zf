@@ -114,14 +114,14 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Utiliser l'autoloader</title>
 
         <para>
-            La classe Zend_Loader contient une méthode <code>Zend_Loader::autoload()</code> que vous pouvez inscrire dans le PHP SPL autoloader.
+            La classe Zend_Loader contient une méthode <code>Zend_Loader::autoload()</code> que vous pouvez inscrire dans le PHP SPL autoloader. Par commodité, Zend_Loader fournit la fonction <code>registerAutoload()</code> qui enregistre automatiquement sa méthode <code>autoload()</code>. Si l'extension <code>spl_autoload</code> n'est pas présente dans l'environnement PHP, alors la méthode <code>registerAutoload()</code> lèvera une Zend_Exception.
         </para>
 
 
         <example id="zend.loader.load.autoload.example">
-            <title>Exemple d'inscription à la métohde de callback autoloader</title>
+            <title>Exemple d'inscription de la méthode de callback autoloader</title>
             <programlisting role="php"><![CDATA[<?php
-spl_autoload_register(array('Zend_Loader', 'autoload'));
+Zend_Loader::registerAutoload();
 ?>]]></programlisting>
         </example>
 
@@ -129,6 +129,30 @@ spl_autoload_register(array('Zend_Loader', 'autoload'));
             Après avoir inscrit le callback vers l'autoload du Zend Framework, vous pouvez appeler une classe de Zend Framework sans l'avoir explicitement chargé auparavant. La méthode autoload utilise automatiquement <code>Zend_Loader::loadClass()</code> quand vous appelez une classe.
         </para>
 
+        <para>
+            Après enregistrement de la méthode d'autoload du Zend Framework, vous pouvez référencer une classe du Zend Framework sans devoir la charger explicitement. La méthode <code>autoload()</code> utilise automatiquement <code>Zend_Loader::loadClass()</code> quand vous référencez une classe.
+        </para>
+
+        <para>
+            Si vous avez étendu la classe Zend_Loader, vous pouvez passer un argument optionnel à <code>registerAutoload()</code>, pour spécifier la classe de laquelle vous souhaitez enregistrer la méthode <code>autoload()</code>.
+            If you have extended the Zend_Loader class, you can give an
+            optional argument to <code>registerAutoload()</code>, to specify
+            the class from which to register an <code>autoload()</code> method.
+        </para>
+
+        <example id="zend.loader.load.autoload.example-extended">
+            <title>Exemple d'inscription de la méthode de callback autoloader d'une classe étendue</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class Mon_Chargeur extends Zend_Loader
+{
+    // mes propres fonctions
+}
+
+Zend_Loader::registerAutoload('Mon_Chargeur');
+
+?>]]></programlisting>
+        </example>
     </sect2>
 
 </sect1>
