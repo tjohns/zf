@@ -667,7 +667,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @param string|array $where         OPTIONAL An SQL WHERE clause.
      * @param string|array $order         OPTIONAL An SQL ORDER clause.
-     * @return Zend_Db_Table_Row_Abstract|null The row results per the
+     * @return Zend_Db_Table_Row_Abstract The row results per the
      *     Zend_Db_Adapter fetch mode, or null if no row found.
      */
     public function fetchRow($where = null, $order = null)
