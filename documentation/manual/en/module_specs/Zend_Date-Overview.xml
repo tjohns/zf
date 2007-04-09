@@ -65,7 +65,7 @@
                 is a simple and selectable solution. By using the <code>extend_month</code> option wou can choose
                 eighter to use SQL behaviour if set to false or Excel behaviour when set to true. The default
                 behaviour for <code>extend_month</code> is false so <code>Zend_Date</code> computes like expected
-                through SQL. Use <code>Zend_Date::setOptions(array('extend_month' => true)); to enable
+                through SQL. Use <code>Zend_Date::setOptions(array('extend_month' => true));</code> to enable
                 month calculation like it's done in Excel.
             </para>
 
