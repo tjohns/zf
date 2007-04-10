@@ -101,7 +101,7 @@ CREATE TABLE bugs (
         <para>
             Define classes for each of these tables, extending the abstract
             class Zend_Db_Table_Abstract, as described in the
-            section <xref linkend="zend.db.table.defining" />.
+            section <xref linkend="zend.db.table.introduction" />.
             In the class file for each child table, declare the reference
             relationships in the <code>protected $_referenceMap</code>
             and <code>protected $_dependentTables</code>

@@ -37,7 +37,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
             Utiliser <code>Zend_Debug::dump()</code> est ce qui convient le mieux pour le débogage durant le développement de l'application. Vous pouvez facilement ajouter ou retirer du code que vous souhaitez visualiser.
         </para>
         <para>
-            Vous pouvez aussi considérer le composant <link linkend="zend.log.overview.overview">Zend_Log</link> si vous souhaitez rendre permanent du code de débogage. Par exemple, vous pouvez utiliser le niveau de log <code>DEBUG</code> et le flux d'écriture Stream du log pour afficher la chaîne retournée par <code>Zend_Debug::dump()</code>.
+            Vous pouvez aussi considérer le composant <link linkend="zend.log.overview">Zend_Log</link> si vous souhaitez rendre permanent du code de débogage. Par exemple, vous pouvez utiliser le niveau de log <code>DEBUG</code> et le flux d'écriture Stream du log pour afficher la chaîne retournée par <code>Zend_Debug::dump()</code>.
         </para>
     </tip>
 

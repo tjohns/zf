@@ -1,66 +1,63 @@
-<sect1 id="zend.log.filters">
-    <title>Filters</title>
+﻿<sect1 id="zend.log.filters">
+    <title>Filtres</title>
 
     <para>
-      A Filter object blocks a message from being written to the log.
+        Un objet Filter bloque les messages avant l'écriture dans le log.
     </para>
     
     <sect2 id="zend.log.filters.all-writers">
-      <title>Filtering for All Writers</title>
+      <title>Filtrer pour tous les rédacteurs (Writers)</title>
     
       <para>
-        To filter before all writers, you can add any number of Filters to a
-        Log object using the <code>addFilter()</code> method:
+        Pour filtrer avant tous les rédacteurs, vous pouvez ajouter autant de filtres que vous souhaitez à l'objet enregistreur en utilisant la méthode <code>addFilter()</code> :
         
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
 
-$writer = new Zend_Log_Writer_Stream('php://output');
-$logger->addWriter($writer);
+$redacteur = new Zend_Log_Writer_Stream('php://output');
+$logger->addWriter($redacteur);
 
-$filter = new Zend_Log_Filter_Priority(Zend_Log::CRIT);
-$logger->addFilter($filter);
+$filtre = new Zend_Log_Filter_Priority(Zend_Log::CRIT);
+$logger->addFilter($filtre);
 
-// blocked
-$logger->info('Informational message');
+// bloqué
+$logger->info("Message d'information");
 
-// logged
-$logger->emerg('Emergency message');
+// écrit dans le log
+$logger->emerg("Message d'urgence");
 
 ?>]]></programlisting>
 
-        When you add one or more Filters to the Log object, the message must pass
-        through all of the Filters before any Writers receives it.
+        Quand vous ajoutez un ou plusieurs filtres à l'objet enregistreur, le message doit passer par tous les filtres avant que tous les rédacteurs le reçoive.
       </para>
     </sect2>
     
     <sect2 id="zend.log.filters.single-writer">
-      <title>Filtering for a Writer Instance</title>
+      <title>Filtrer pour une seule instance de rédacteur</title>
       
       <para>
-        To filter only on a specific Writer instance, use the
-        <code>addFilter</code> method of that Writer:
+        Pour filtrer seulement sur un instance spécifique de rédacteur, employer la méthode <code>addFilter</code> de ce rédacteur :
       
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
 
-$writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
-$logger->addWriter($writer1);
+$redacteur1 = new Zend_Log_Writer_Stream('/chemin/vers/premier/fichierdelog');
+$logger->addWriter($redacteur1);
 
-$writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
-$logger->addWriter($writer2);
+$redacteur2 = new Zend_Log_Writer_Stream('/chemin/vers/second/fichierdelog');
+$logger->addWriter($redacteur2);
 
-// add a filter only to writer2
+// ajoute le filter seulement pour le redacteur2
 $filter = new Zend_Log_Filter_Priority(Zend_Log::CRIT);
-$writer2->addFilter($filter);
+$redacteur2->addFilter($filter);
 
-// logged to writer1, blocked from writer2
-$logger->info('Informational message');
+// écrit par le redacteur1, bloqué par le redacteur2
+$logger->info("Message d'information");
 
-// logged by both writers
-$logger->emerg('Emergency message');
+// écrit dans les 2 logs
+$logger->emerg("Message d'urgence");
 
 ?>]]></programlisting>      
     </para>

@@ -1,198 +1,156 @@
-<sect1 id="zend.log.overview">
-    <title>Overview</title>
+﻿<sect1 id="zend.log.overview">
+    <title>Présentation</title>
 
     <para>
-      <code>Zend_Log</code> is a component for general purpose logging.
-      It supports multiple log backends, formatting messages sent to the log,
-      and filtering messages from being logged. These functions are divided
-      into the following objects:
-
+        <code>Zend_Log</code> est un composant destiné à tous les usages du log. Il supporte l'écriture multiple centralisée, formate les messages envoyés vers les logs, et filtre des messages de log. Ces fonctions sont divisées en objets suivants :
+        
       <itemizedlist>
         <listitem>
           <para>
-            A Log (instance of <code>Zend_Log</code>) is the object that your
-            application uses the most. You can have as many Log objects as you
-            like; they do not interact. A Log object must contain at
-            least one Writer, and can optionally contain one or more Filters.
+            Un enregisteur (instance de <code>Zend_Log</code>) est l'objet que votre application emploie le plus. Vous pouvez avoir autant d'objets d'enregistreur que vous voulez ; ils n'agissent pas l'un sur l'autre. Un objet enregistreur doit contenir au moins un rédacteur (Writer), et peut optionnellement contenir un ou plusieurs filtres.
           </para>
         </listitem><listitem>
           <para>
-            A Writer (inherits from <code>Zend_Log_Writer_Abstract</code>) is
-            responsible for saving data to storage.
+            Un rédacteur [ou Writer] (hérite de <code>Zend_Log_Writer_Abstract</code>) est responsable de la sauvegarde des données dans le stockage.
           </para>
         </listitem><listitem>
           <para>
-            A Filter (implements <code>Zend_Log_Filter_Interface</code>)
-            blocks log data from being saved. A filter may be applied to an
-            individual Writer, or to a Log where it is applied before all
-            Writers. In either case, filters may be chained.
+            Un filtre (implémente <code>Zend_Log_Filter_Interface</code>) bloque des données de log ne devant pas être écrites. Un filtre peut être appliqué à un rédacteur en particulier, ou à tous les rédacteurs. Dans l'un ou l'autre cas, les filtres peuvent être enchaînés.
           </para>
         </listitem><listitem>
           <para>
-            A Formatter (implements <code>Zend_Log_Formatter_Interface</code>)
-            can format the log data before it is written by a Writer. Each
-            Writer has exactly one Formatter.
+            Un formateur (implémente <code>Zend_Log_Formatter_Interface</code>) peut formater les données de log avant qu'elles soient écrites par un rédacteur. Chaque rédacteur a exactement un formateur.
           </para>
         </listitem>
       </itemizedlist>
     </para>
     
     <sect2 id="zend.log.overview.creating-a-logger">
-      <title>Creating a Log</title>
+      <title>Créer un log</title>
       <para>
-        To get started logging, instantiate a Writer and then pass it to a Log
-        instance:
+        Pour commencer à enregistrer, instanciez un rédacteur et passez le à une instance d'un enregistreur :
         
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
-$writer = new Zend_Log_Writer_Stream('php://output');
+$redacteur = new Zend_Log_Writer_Stream('php://output');
 
-$logger->addWriter($writer);
+$logger->addWriter($redacteur);
 
 ?>]]></programlisting>
 
-        It is important to note that the Log must
-        have at least one Writer.  You can add any number of Writers using the
-        Log's <code>addWriter()</code> method.
+        Il est important de noter que l'enregistreur doit avoir au moins un rédacteur. Vous pouvez ajouter tout nombre de rédacteurs en utilisant la méthode <code>addWriter()</code>.
       </para>
 
       <para>
-        Alternatively, you can pass a Writer directly to constructor of Log as
-        a shortcut:        
+        Alternativement, vous pouvez passer un rédacteur directement au constructeur de l'enregistreur :
 
       <programlisting role="php"><![CDATA[<?php
 
-$writer = new Zend_Log_Writer_Stream('php://output');
-$logger = new Zend_Log($writer);
+$logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));
 
 ?>]]></programlisting>
 
-        The Log is now ready to use.  
+        L'enregistreur est maitenant prêt à être utilisé.
       </para>
     </sect2>
 
     <sect2 id="zend.log.overview.logging-messages">
-      <title>Logging Messages</title>
+      <title>Messages de logs</title>
       
       <para>
-        To log a message, call the <code>log()</code> method of a Log instance
-        and pass it the message with a corresponding priority:
-
+        Pour enregistrer un message, appelez la méthode <code>log()</code> de l'instance de l'enregistreur et passez lui le message avec son niveau de priorité.
       <programlisting role="php"><![CDATA[<?php
 
-$logger->log('Informational message', Zend_Log::INFO);
+$logger->log("Message d'information", Zend_Log::INFO);
 
 ?>]]></programlisting>
 
-      The first parameter of the <code>log()</code> method is a string <code>message</code> and the second
-      parameter is an integer <code>priority</code>.  The priority must be one of the priorities recognized
-      by the Log instance.  This is explained in the next section.
+        Le premier paramètre de la méthode <code>log()</code> est une chaîne <code>message</code> et le deuxième paramètre est une <code>priority</code> fourni en nombre entier. La priorité doit être l'une des priorités identifiées par l'instance de l'enregistreur. Ceci est expliqué dans la prochaine section.
+        
     </para>
       
     <para>
-      A shortcut is also available. Instead of calling the <code>log()</code> method, you can
-      call a method by the same name as the priority:      
+        Un raccourci est également disponible. Au lieu d'appeler la méthode <code>log()</code>, vous pouvez appeler une méthode par le même nom que la priorité :
       
       <programlisting role="php"><![CDATA[<?php
 
-$logger->log('Informational message', Zend_Log::INFO);
-$logger->info('Informational message');
+$logger->log("Message d'information", Zend_Log::INFO);
+$logger->info("Message d'information");
 
-$logger->log('Emergency message', Zend_Log::EMERG);
-$logger->emerg('Emergency message');
+$logger->log("Message d'urgence", Zend_Log::EMERG);
+$logger->emerg("Message d'urgence");
 
 ?>]]></programlisting>
     </para>
   </sect2>
   
   <sect2 id="zend.log.overview.builtin-priorities">
-    <title>Using Built-in Priorities</title>
+    <title>Utiliser les priorités intégrées</title>
     <para>
-      The <code>Zend_Log</code> class defines the following priorities:
+        La classe de <code>Zend_Log</code> définit les priorités suivantes :
 
       <programlisting role="php"><![CDATA[
-EMERG   = 0;  // Emergency: system is unusable
-ALERT   = 1;  // Alert: action must be taken immediately
-CRIT    = 2;  // Critical: critical conditions
-ERR     = 3;  // Error: error conditions
-WARN    = 4;  // Warning: warning conditions
-NOTICE  = 5;  // Notice: normal but significant condition
-INFO    = 6;  // Informational: informational messages
-DEBUG   = 7;  // Debug: debug messages
+EMERG   = 0;  // Urgence : le système est inutilisable
+ALERT   = 1;  // Alerte: une mesure corrective doit être prise immédiatement
+CRIT    = 2;  // Critique : états critiques
+ERR     = 3;  // Erreur: états d'erreur 
+WARN    = 4;  // Avertissement: états d'avertissement
+NOTICE  = 5;  // Notice: normal mais état significatif
+INFO    = 6;  // Information: messages d'informations
+DEBUG   = 7;  // Debug: messages de déboguages
 ]]></programlisting>
 
-      These priorities are always available, and a convenience method of the same name
-      is available for each one.
+        Ces priorités sont toujours disponibles, et une méthode de convenance de même nom est disponible pour chacun.
     </para>
     
     <para>
-      The priorities are not arbitrary. They come from the BSD <code>syslog</code> protocol,
-      which is described in <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink>.
-      The names and corresponding priority numbers are also
-      compatible with another PHP logging system, 
-      <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>,
-      which perhaps promotes interoperability between it and <code>Zend_Log</code>.
+        Les priorités ne sont pas arbitraires. Elles viennent du protocole BSD <code>syslog</code>, qui est décrit dans <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink>. Les noms et les niveaux de priorité correspondants sont également compatibles avec un autre système de log de PHP, <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>, qui favorise l'interopérabilité entre lui et <code>Zend_Log</code>.
     </para>
     
     <para>
-      Priority numbers descend in order of importance. <code>EMERG</code> (0)
-      is the most important priority. <code>DEBUG</code> (7) is the least
-      important priority of the built-in priorities. You may define priorities
-      of lower importance than <code>DEBUG</code>. When
-      selecting the priority for your log message, be aware of this priority
-      hierarchy and choose appropriately.
+        Les numéros de priorité descendent par ordre d'importance. <code>EMERG</code> (0) est la priorité la plus importante. <code>DEBUG</code> (7) est la priorité la moins importante des priorités intégrées. Vous pouvez définir des priorités d'importance inférieure que <code>DEBUG</code>. En choisissant la priorité pour votre message de log, faîtes attention à cette hiérarchie prioritaire et choisissez convenablement.
     </para>
   </sect2>
   
   <sect2 id="zend.log.overview.user-defined-priorities">
-    <title>Adding User-defined Priorities</title>
+    <title>Ajouter ses propres priorités</title>
     
     <para>
-      User-defined priorities can be added at runtime using the Log's
-      <code>addPriority()</code> method:
+        Des priorités définies par l'utilisateur peuvent être ajoutées en cours d'exécution en utilisant la méthode de <code>addPriority()</code> de l'enregistreur :
 
       <programlisting role="php"><![CDATA[<?php
         
-$logger->addPriority('FOO', 8);      
+$logger->addPriority('ESSAI', 8);      
 
 ?>]]></programlisting>
 
-      The snippet above creates a new priority, <code>FOO</code>, whose
-      value is <code>8</code>. The new priority is then available for logging:
+        L'extrait ci-dessus crée une nouvelle priorité, <code>ESSAI</code>, dont la valeur est <code>8</code>. La nouvelle priorité est alors disponible pour l'enregistreur :
     
       <programlisting role="php"><![CDATA[<?php
 
-$logger->log('Foo message', 8);
-$logger->foo('Foo Message);
+$logger->log("Message d'essai", 8);
+$logger->essai("Message d'essai");
 
 ?>]]></programlisting>
 
-      New priorities cannot overwrite existing ones.  
+        Les nouvelles priorités ne peuvent pas surcharger celles existantes.
     </para>    
   </sect2>
 
   <sect2 id="zend.log.overview.understanding-fields">
-    <title>Understanding Log Events</title>
+    <title>Comprendre les événements de logs</title>
     
     <para>
-      When you call the <code>log()</code> method or one of its shortcuts, a
-      log event is created. This is simply an associative array with data
-      describing the event that is passed to the writers. The following keys
-      are always created in this array: <code>timestamp</code>,
-      <code>message</code>, <code>priority</code>, and
-      <code>priorityName</code>.
+        Quand vous appelez la méthode <code>log()</code> ou un de ses raccourcis, un événement de log est créé. C'est simplement un tableau associatif avec des données décrivant l'événement qui est passé aux rédacteurs. Les clés suivantes sont toujours créées dans ce tableau : <code>timestamp</code>, <code>message</code>, <code>priority</code>, et <code>priorityName</code>.
     </para>
 
     <para>
-      The creation of the <code>event</code> array is completely transparent.
-      However, knowledge of the <code>event</code> array is required for adding an
-      item that does not exist in the default set above.
+        La création du tableau <code>event</code> est complètement transparente. Cependant, la connaissance du tableau d'événement est exigée pour ajouter un élément qui n'existerait pas dans le réglage par défaut ci-dessus.
     </para>
     
     <para>
-      To add a new item to every future event, call the <code>setEventItem()</code>
-      method giving a key and a value:
+        Pour ajouter un nouvel élément à chaque futur événement, appeler la méthode <code>setEventItem()</code> en donnant une clé et une valeur :
     
       <programlisting role="php"><![CDATA[<?php
 
@@ -200,20 +158,11 @@ $logger->setEventItem('pid', getmypid());
         
 ?>]]></programlisting>
 
-      The example above sets a new item named <code>pid</code> and populates
-      it with the PID of the current process. Once a new item has been
-      set, it is available automatically to all writers along with all of the
-      other data event data during logging. An item can be overwritten at any
-      time by calling the <code>setEventItem()</code> method again.
+        L'exemple ci-dessus place un nouvel élément nommé <code>pid</code> et lui donne comme valeur le PID du processus courant. Une fois qu'un nouvel élément a été placé, il est disponible automatiquement pour tous les rédacteurs avec toutes les autres données d'événement pendant l'enregistrement. Un élément peut être surchargé à tout moment en appelant une nouvelle fois la méthode <code>setEventItem()</code>.
     </para>
     
     <para>
-      Setting a new event item with <code>setEventItem()</code> causes the
-      new item to be sent to all writers of the logger. However, this does
-      not guarantee that the writers actually record the item. This is
-      because the writers won't know what to do with it unless a formatter
-      object is informed of the new item. Please see the section on Formatters
-      to learn more.
+        Le réglage d'un nouvel élément d'événement avec <code>setEventItem()</code> entraîne que le nouvel élément sera envoyé à tous les rédacteurs de l'enregistreur. Cependant, ceci ne garantit pas que les rédacteurs utilisent réellement l'élément. C'est parce que les rédacteurs ne sauront pas quoi faire avec lui à moins qu'un objet de formateur soit informé du nouvel élément. Veuillez vous reporter à la section sur des formateurs pour en apprendre davantage.
     </para>
   </sect2>
 </sect1>
