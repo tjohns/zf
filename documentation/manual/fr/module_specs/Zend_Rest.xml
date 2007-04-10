@@ -1,23 +1,12 @@
-<sect1 id="zend.rest.introduction">
+﻿<sect1 id="zend.rest.introduction">
     <title>Introduction</title>
 
     <para>
-        REST Web Services use service-specific XML formats. These ad-hoc
-        standards mean that the manner for accessing a REST web service is
-        different for each service. REST web services typically use URL
-        parameters (GET data) or path information for requesting data and POST
-        data for sending data.
+        Les services webs REST utilisent des formats XML spécifiques. Ces normes ad-hoc signifient que la façon d'accéder à un service web REST est différente pour chaque service. Les services webs REST utilise typiquement les paramètres URL (données GET) ou les informations du chemin pour demander des données, et les données POST pour envoyer des données.
     </para>
 
     <para>
-        The Zend Framework provides both Client and Server capabilities, which,
-        when used together allow for a much more "local" interface experience
-        via virtual object property access.  The Server component features
-        automatic exposition of functions and classes using a meaningful and
-        simple XML format. When accessing these services using the Client, it is
-        possible to easily retrieve the return data from the remote call. Should
-        you wish to use the client with a non-Zend_Rest_Server based service, it
-        will still provide easier data access.
+        Le Zend Framework fournit les possibilités de client et de serveur, qui, une fois utilisées ensemble tiennent compte de beaucoup plus d'expérience d'interface "locale" par l'intermédiaire de l'accès aux propriétés d'objet virtuel. Le composant serveur comporte l'exposition automatique des fonctions et des classes employant un format compréhensible et simple de XML. En accédant à ces services via le client, il est possible de rechercher facilement les données retournées lors de l'appel à distance. Si vous souhaitez employer le client avec un service non basé sur le service Zend_Rest_Server, il fournira un accès plus facile aux données.
     </para>
 </sect1>
 

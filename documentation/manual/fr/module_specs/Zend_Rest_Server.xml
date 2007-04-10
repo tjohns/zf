@@ -1,51 +1,51 @@
-<sect1 id="zend.rest.server">
+﻿<sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
 
     <sect2 id="zend.rest.server.introduction">
         <title>Introduction</title>
 
         <para>
-			Zend_Rest_Server is intended as a fully-featured REST server.
+            Zend_Rest_Server est prévu comme un serveur supportant l'ensemble des fonctionnalités d'un serveur REST.
         </para>
     </sect2>
 
     <sect2 id="zend.rest.server.usage">
-        <title>REST Server Usage</title>
+        <title>Utilisation d'un serveur REST</title>
 
 		<example>
-			<title>Basic Zend_Rest_Server Usage - Classes</title>
+			<title>Utilisation basique Zend_Rest_Server - Avec des classes</title>
 
         	<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
-require_once 'My/Service/Class.php';
+require_once 'Mon/Service/Classe.php';
 
 $server = new Zend_Rest_Server();
-$server->setClass('My_Service_Class');
+$server->setClass('Mon_Service_Classe');
 $server->handle();
 ?>]]>
 			</programlisting>
 		</example>
 
 		<example>
-			<title>Basic Zend_Rest_Server Usage - Functions</title>
+			<title>Utilisation basique Zend_Rest_Server - Avec des fonctions</title>
 
 			<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
 /**
- * Say Hello
+ * Dit Bonjour
  *
- * @param string $who
- * @param string $when
+ * @param string $qui
+ * @param string $quand
  * @return string
  */
-function sayHello($who, $when)
+function ditBonjour($qui, $quand)
 {
-	return "Hello $who, Good $when";
+	return "Bonjour $qui, bonne $quand";
 }
 
 $server = new Zend_Rest_Server();
-$server->addFunction('sayHello');
+$server->addFunction('ditBonjour');
 $server->handle();
 ?>]]>
 			</programlisting>
@@ -53,30 +53,25 @@ $server->handle();
     </sect2>
 
 	<sect2 id="zend.rest.server.args">
-		<title>Calling a Zend_Rest_Server Service</title>
+		<title>Appelé un service Zend_Rest_Server</title>
 
 		<para>
-            To call a <code>Zend_Rest_Server</code> service, you must supply a
-            GET/POST <code>method</code> argument with a value that is the
-            method you wish to call. You can then follow that up with any number
-            of arguments using either the name of the argument (i.e. "who") or
-            using <code>arg</code> following by the numeric position of the
-            argument (i.e. "arg1").
+            Pour appeler un service <code>Zend_Rest_Server</code>, vous devez fournir un argument de <code>method</code> GET/POST avec une valeur qui est la méthode que vous souhaitez appeler. Vous pouvez alors ajouter tout nombre d'arguments en utilisant le nom de l'argument (c.-à-d. "qui ") ou en utilisant 'arg' suivi de la position numérique de l'argument (c.-à-d. "arg1").
 		</para>
 
         <note>
-            <title>Numeric index</title>
+            <title>Index numérique</title>
     	    <para>
-                Numeric arguments use a 1-based index.
+                Les arguments numériques utilisent 1 comme point de départ.
             </para>
         </note>
 
 		<para>
-			To call <code>sayHello</code> from the example above, you can use either:
+            Pour appeler le <code>ditBonjour</code> de l'exemple ci-dessus, vous pouvez employer soit :
 		</para>
 
 		<para>
-			<code>?method=sayHello&amp;who=Davey&amp;when=Day</code>
+			<code>?method=ditBonjour&amp;qui=Davey&amp;quand=journée</code>
 		</para>
 
 		<para>
@@ -84,37 +79,36 @@ $server->handle();
 		</para>
 
 		<para>
-			<code>?method=sayHello&amp;arg1=Davey&amp;arg2=Day</code>
+			<code>?method=ditBonjour&amp;arg1=Davey&amp;arg2=journée</code>
 		</para>
     </sect2>
 
 	<sect2 id="zend.rest.server.customstatus">
-		<title>Sending A Custom Status</title>
+		<title>Envoyer un statut personnalisé</title>
 
 		<para>
-            When returning values, to return a custom status, you may return an
-            array with a <code>status</code> key.
+            En envoyant des valeurs, pour ajouter un statut personnalisé, vous pouvez envoyer un tableau avec une clé <code>status</code>.
 		</para>
 
 		<example>
-			<title>Returning Custom Status</title>
+			<title>Renvoyer un statut personnalisé</title>
 			<programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
 /**
- * Say Hello
+ * Dit Bonjour 
  *
- * @param string $who
- * @param string $when
+ * @param string $qui
+ * @param string $quand
  * @return array
  */
-function sayHello($who, $when)
+function ditBonjour($qui, $quand)
 {
-	return array('msg' => "An Error Occurred", 'status' => false);
+	return array('msg' => "Une erreur est apparue", 'status' => false);
 }
 
 $server = new Zend_Rest_Server();
-$server->addFunction('sayHello');
+$server->addFunction('ditBonjour');
 $server->handle();
 ?>]]>
 			</programlisting>
@@ -122,32 +116,31 @@ $server->handle();
 	</sect2>
 
 	<sect2 id="zend.rest.server.customxml">
-		<title>Returning Custom XML Responses</title>
+		<title>Renvoyer une réponse XML personnalisée</title>
 
 		<para>
-            If you wish to return custom XML, simply return a
-            <code>DOMDocument</code>, <code>DOMElement</code> or
-            <code>SimpleXMLElement</code> object.
+            Si vous voulez retourner du XML personnalisé, retournez simplement un objet <code>DOMDocument</code>, <code>DOMElement</code> ou
+            <code>SimpleXMLElement</code>.
 		</para>
 
 		<example>
-			<title>Return Custom XML</title>
+			<title>Renvoyer une réponse XML personnalisée</title>
 
 			<programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
 /**
- * Say Hello
+ * Dit Bonjour
  *
  * @param string $who
  * @param string $when
  * @return SimpleXMLElement
  */
-function sayHello($who, $when)
+function ditBonjour($qui, $quand)
 {
 	$xml ='<?xml version="1.0" encoding="ISO-8859-1"?>
 <mysite>
-	<value>Hey $who! Hope you're having a good $when</value>
+	<value>Salut $qui! J\'espère que tu passes une bonne $when</value>
 	<code>200</code>
 </mysite>';
 
@@ -156,7 +149,7 @@ function sayHello($who, $when)
 }
 
 $server = new Zend_Rest_Server();
-$server->addFunction('sayHello');
+$server->addFunction('ditBonjour');
 
 $server->handle();
 ?>]]>
@@ -164,8 +157,7 @@ $server->handle();
 		</example>
 
 		<para>
-            The response from the service will be returned without modification
-            to the client.
+            La réponse du service sera retournée sans modification au client.
 		</para>
 	</sect2>
 </sect1>
