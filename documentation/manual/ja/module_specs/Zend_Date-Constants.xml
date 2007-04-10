@@ -249,7 +249,7 @@
                         <entry>2009-<emphasis role="strong">02</emphasis>-06T14:53:27+01:00 (02)</entry>
                     </row>
                     <row>
-                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>Zend_Date::MONTH_SHORT</entry>
                         <entry>月 (一桁あるいは二桁の月番号)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
                         <entry>2009-0<emphasis role="strong">2</emphasis>-06T14:53:27+01:00 (2)</entry>
@@ -819,7 +819,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
                     <row>
                         <entry>M</entry>
                         <entry>月 (一桁あるいは二桁)</entry>
-                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>Zend_Date::MONTH_SHORT</entry>
                         <entry><emphasis role="strong">2</emphasis>
                         </entry>
                     </row>
@@ -1245,7 +1245,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
                     <row>
                         <entry>n</entry>
                         <entry>月 (一桁あるいは二桁)</entry>
-                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>Zend_Date::MONTH_SHORT</entry>
                         <entry>M</entry>
                         <entry><emphasis role="strong">2</emphasis>
                         </entry>
