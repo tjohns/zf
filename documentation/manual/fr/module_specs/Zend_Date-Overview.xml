@@ -11,15 +11,65 @@
 
         <title>Zend_Date Options</title>
 
-        <para>
-            Currently, there is only one class-wide option for Zend_Date. Several methods use date format strings, in a
-            way similar to PHP's <code>date()</code>. If you are more comfortable with PHP's date format specifier than
-            with ISO format specifiers, then you can use <code>Zend_Date::setOptions('format' => 'php')</code>.
-            Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
-            Use <code>Zend_Date::setOptions('format' => 'iso')</code> to switch back to the default mode of supporting
-            only ISO date format tokens. For a list of supported format codes, see
-            <xref linkend="zend.date.constants.phpformats" />
-        </para>
+        <sect3 id="zend.date.options.formattype">
+
+            <title>Selecting the date format type</title>
+
+            <para>
+                Several methods use date format strings, in a way similar to PHP's <code>date()</code>. 
+                If you are more comfortable with PHP's date format specifier than with ISO format specifiers, 
+                then you can use <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>.
+                Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
+                Use <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code> to switch back to the default mode of
+                supporting only ISO date format tokens. For a list of supported format codes, see
+                <xref linkend="zend.date.constants.phpformats" />
+            </para>
+            
+        </sect3>
+
+        <sect3 id="zend.date.options.fixdst">
+
+            <title>DST and Date Math</title>
+
+            <para>
+                When dates are manipulated, sometimes they cross over a DST change, normally resulting in the date
+                losing or gaining an hour.  For exmaple, when adding months to a date before a DST change, if the
+                resulting date is after the DST change, then the resulting date will appear to lose or gain an hour,
+                resulting in the time value of the date changing.  For boundary dates, such as midnight of the first
+                or last day of a month, adding enough months to cross a date boundary results in the date losing
+                an hour and becoming the last hour of the preceding month, giving the appearance of an "off by 1"
+                error.  To avoid this situation, the DST change ignored by using the <code>fix_dst</code> option.
+                When crossing the Summer/Winter DST boundary, normally an hour is substracted or added depending
+                on the date.  For example, date math crossing the Spring DST leads to a date having a day value
+                one less than expected, if the time part of the date was originally 00:00:00.  Since Zend_Date
+                is based on timestamps, and not calendar dates with a time component, the timestamp loses an hour,
+                resulting in the date having a calendar day value one less than expected.
+                To prevent such problems use the option <code>fix_dst</code>, which defaults to true, causing DST
+                to have no effect on date "math" (<code>addMOnth(), subMonth()</code>). Use
+                <code>Zend_Date::setOptions(array('fix_dst' => false))</code> to enable the subtraction or addition
+                of the DST adjustment when performing date "math".
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.date.options.extendmonth">
+
+            <title>Calculating months</title>
+
+            <para>
+                When adding or substracting months from an existing date they can sometimes produce an unexpected
+                result when the day of the original date is too high. For example, when adding one month to the 
+                31. January people familiar with SQL will expect to have 28. February as result. On the other
+                side people familiar with Excel will expect to habe 03. March as result. So our problem only 
+                occurs if the resulting month does not have the day which is set in the original date. But there
+                is a simple and selectable solution. By using the <code>extend_month</code> option wou can choose
+                eighter to use SQL behaviour if set to false or Excel behaviour when set to true. The default
+                behaviour for <code>extend_month</code> is false so <code>Zend_Date</code> computes like expected
+                through SQL. Use <code>Zend_Date::setOptions(array('extend_month' => true));</code> to enable
+                month calculation like it's done in Excel.
+            </para>
+
+        </sect3>
 
     </sect2>
 
@@ -452,6 +502,20 @@ print $date;
                                 Use <code>isLeapYear()</code> to determine if the current object is a leap year, or use
                                 Zend_Date::checkLeapYear($year) to check $year, which can be a string, integer, or
                                 instance of <code>Zend_Date</code>. Is the year a leap year?
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>isDate()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">isDate($date, $format = null, $locale = null)</emphasis>
+                            </para>
+                            <para>
+                                This method checks if a given date is a real date and returns true if all checks are ok.
+                                It works like php's checkdate() function but can also check for localized month names and 
+                                for dates extending the range of checkdate()
+                                false
                             </para>
                         </entry>
                     </row>

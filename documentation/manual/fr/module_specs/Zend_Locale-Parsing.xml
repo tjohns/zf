@@ -152,6 +152,78 @@ print $number;
             </note>
         </para>
 
+        <para>
+            Using the option 'number_format' a self defined format for generating a number can be defined.
+            The format itself has to be given in CLDR format as described below. The locale is used to get
+            seperation, precission and other number formatting signs from it. German for example defines
+            ',' as precission seperation and in english the '.' sign is used.
+        </para>
+
+        <table>
+            <title>Format tokens for self generated number formats
+            </title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Token</entry>
+                        <entry>Description</entry>
+                        <entry>Example format</entry>
+                        <entry>Generated output</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>#0</entry>
+                        <entry>Generates a number without precission and seperation</entry>
+                        <entry>#0</entry>
+                        <entry>1234567</entry>
+                    </row>
+                    <row>
+                        <entry>,</entry>
+                        <entry>Generates a seperation with the length from seperation to next seperation or to 0</entry>
+                        <entry>#,##0</entry>
+                        <entry>1,234,567</entry>
+                    </row>
+                    <row>
+                        <entry>#,##,##0</entry>
+                        <entry>Generates a standard seperation of 3 and all following seperations with 2</entry>
+                        <entry>#,##,##0</entry>
+                        <entry>12,34,567</entry>
+                    </row>
+                    <row>
+                        <entry>.</entry>
+                        <entry>Generates a precission</entry>
+                        <entry>#0.#</entry>
+                        <entry>1234567.1234</entry>
+                    </row>
+                    <row>
+                        <entry>0</entry>
+                        <entry>Generates a precission with a defined length</entry>
+                        <entry>#0.00</entry>
+                        <entry>1234567.12</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <example>
+            <title>Using a self defined number format</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toNumber(13547.3678, array('number_format' => '#,#0.00', 'locale' => 'de'));
+
+// will return 1.35.47,36
+print $number;
+
+$number = Zend_Locale_Format::toNumber(13547.3, array('number_format' => '#,##0.00', 'locale' => 'de'));
+
+// will return 13.547,30
+print $number;
+?>]]></programlisting>
+        </example>
+
     </sect2>
 
     <sect2 id="zend.locale.number.test">
@@ -363,7 +435,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
 require_once 'Zend/Locale.php';
 
 $string = "١‎٠٠";   // Arabic for 100
-$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Default');
+$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Latn');
 
 print "\nOriginal: ".$string;
 print "\nNormalized:".$normal;
@@ -380,7 +452,7 @@ print "\nNormalized:".$normal;
 require_once 'Zend/Locale.php';
 
 $string = '123';
-$local = Zend_Locale_Format::convertNumerals($string, 'Default', 'Arab');
+$local = Zend_Locale_Format::convertNumerals($string, 'Latn', 'Arab');
 
 print "\nOriginal: ".$string;
 print "\nLocalize:".$local;

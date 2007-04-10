@@ -477,7 +477,121 @@ $router->removeDefaultRoutes();]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 $loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
-$router->addRoute('login', $static);
+$router->addRoute('login', $loginRoute);
+]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.regex-routes">
+            <title>Regex Routes</title>
+
+            <para>
+                In addition to the default and static route types, a Regular
+                Expression route type is available. This route offers more power
+                and flexibility than the others, but at a slight cost of
+                performance, due to its use of the PCRE engine.
+            </para>
+
+            <para>
+                <code>Zend_Controller_Router_Route_Regex</code> provides a
+                regex-based route type for use with the rewrite router. Some
+                usage rules to consider:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    It uses the <code>#</code> character for a delimiter. This
+                    means that you will not need to escape forward slashes
+                    ('/'), but will need to escape hash characters ('#').
+                </para></listitem>
+
+                <listitem><para>
+                    Line start and line end anchors ('^' and '$', respectively)
+                    are automatically pre- and appended to all expressions.
+                    Thus, you should not use these in your regular expressions.
+                    Also, it means that you should write your expressions to
+                    match the entire URL. As an example, given the URL
+                    'http://example.com/foo/bar/baz/bat', if you simply wish to
+                    match 'foo/bar', you should write your expression as
+                    'foo/bar(/.*)?'.
+                </para></listitem>
+
+                <listitem><para>
+                    The leading and trailing slash are trimmed prior to a match.
+                    As a result, matching the URL "http://example.com/foo/bar/"
+                    would involve a regex of "foo/bar".
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                One strength of using regular expressions is the ability to
+                capture matching segments for use later.
+                <code>Zend_Controller_Router_Regex_Route</code> makes use of
+                this capability in two ways, either:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Setting parameters in the request object as match index
+                        (integer) =&gt; match. As an example:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// Anything after /foo/bar in the path would be retrieved via the key '1' in the
+// request object:
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar')
+);
+
+// After routing:
+$fooPath = $request->getParam('1');
+]]></programlisting>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Using a map list from the third parameter passed to the
+                        route constructor to map indices to parameter keys. As
+                        an example:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+// Place anything after /foo/bar in the path into the 'fooPath' request key:
+$route = new Zend_Controller_Router_Route_Regex(
+    'foo/bar(/.*)?', 
+    array('controller' => 'foo', 'action' => 'bar'),
+    array(1 => 'fooPath')
+);
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                As some examples of creating regex routes to use with your
+                router:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// View archived blogs with urls like:
+// http://example.com/blog/archive/01-Using_the_Regex_Router.html
+// placing '01' as the 'id' key, and 'Using_the_Regex_Router' as the 'title' key
+$blogArchive = new Zend_Controller_Router_Route_Regex(
+    'blog/archive/(\d+)-(.*)\.html',
+    array('controller' => 'blog', 'action' => 'view'), 
+    array(1 => 'id', 2 => 'title')
+);
+$router->addRoute('blogArchive', $blogArchive);
+
+// View news items with urls like:
+// http://example.com/news/1193328
+// placing '1193328' as the 'id' key
+$newsItem = new Zend_Controlelr_Router_Route_Regex(
+    'news/(\d+)',
+    array('controller' => 'news', 'action' => 'view'),
+    array(1 => 'id')
+);
+$router->addRoute('newsItem', $newsItem);
 ]]></programlisting>
         </sect3>
 
@@ -492,23 +606,30 @@ $router->addRoute('login', $static);
                 in and pass it to the RewriteRouter:
             </para>
 
+            <para>
+                As an example, consider the following INI file:
+            </para>
+
             <programlisting role="php"><![CDATA[
-/**
- * Example INI located at /path/to/config.ini:
- *
- * [production]
- *
- * routes.archive.route = "archive/:year/*"
- * routes.archive.defaults.controller = archive
- * routes.archive.defaults.action = show
- * routes.archive.defaults.year = 2000
- * routes.archive.reqs.year = "\d+"
- *
- * routes.news.type = "Zend_Controller_Router_Route_Static"
- * routes.news.route = "news"
- * routes.news.defaults.controller = "news"
- * routes.news.defaults.action = "list"
- */
+[production]
+routes.archive.route = "archive/:year/*"
+routes.archive.defaults.controller = archive
+routes.archive.defaults.action = show
+routes.archive.defaults.year = 2000
+routes.archive.reqs.year = "\d+"
+
+routes.news.type = "Zend_Controller_Router_Route_Static"
+routes.news.route = "news"
+routes.news.defaults.controller = "news"
+routes.news.defaults.action = "list"
+]]></programlisting>
+
+            <para>
+                The above INI file can then be read into a
+                <code>Zend_Config</code> object as follows:
+            </para>
+
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
 $router->addConfig($config, 'routes');

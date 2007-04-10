@@ -311,6 +311,12 @@ print $locale->toString();
                         <entry>List of all countries and the known spoken language within these countries</entry>
                         <entry>Complete</entry>
                     </row>
+                    <row>
+                        <entry>Characters</entry>
+                        <entry />
+                        <entry>List of known characters for this locale, regex syntax.</entry>
+                        <entry>Complete</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -400,7 +406,7 @@ foreach ($lists as $list) {
         </para>
 
         <example>
-            <title>All Languages written in thier native language</title>
+            <title>All Languages written in their native language</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 

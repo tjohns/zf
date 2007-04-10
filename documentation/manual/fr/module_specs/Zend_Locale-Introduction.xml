@@ -128,7 +128,7 @@
         <example>
             <title>Choosing a specific locale</title>
 <programlisting role="php"><![CDATA[<?php
-require_once 'Zend_Locale');
+require_once 'Zend_Locale';
 $locale = new Zend_Locale('de_DE'); // German language _ Germany
 ?>]]></programlisting>
         </example>
@@ -244,8 +244,8 @@ require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
 
 $usLocale = new Zend_Locale('en_US');
-$date = new Zend_Date('2006',Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure_Temperature('100,10',Zend_Measure::TEMPERATURE, $usLocale);
+$date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);
 ?>]]></programlisting>
         </example>
 
@@ -275,7 +275,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
         <para>
             The 'precision' option of a value is used to truncate or stretch extra digits. A value of '-1' disables
             modification of the number of digits in the fractional part of the value. The 'locale' option helps when
-            parsing numbers and dates using separators and month names. The date format 'type' option selects between
+            parsing numbers and dates using separators and month names. The date format 'format_type' option selects between
             CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
             heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
             format for use with <code>toNumber()</code> (see
@@ -286,7 +286,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
 
         <para>
             The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
-            isDate(), getTime(), and isTime() after using setOptions() with a 'date_format'. To use these four methods
+            checkdateFormat() and getTime() after using setOptions() with a 'date_format'. To use these four methods
             with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their
             options.
         </para>
@@ -295,7 +295,28 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             <title>Dates default to correct locale of web users</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'fixdate' => true, 'type' => 'php');
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
+?>]]></programlisting>
+        </example>
+
+        <para>
+            For working with the standard definitions of a locale the option Zend_Locale_Format::STANDARD can be used.
+            Setting the option Zend_Locale_Format::STANDARD for date_format uses the standard definitions from the actual
+            set locale. Setting it for number_format uses the standard number format for this locale.
+            And setting it for locale uses the standard locale for this environment or browser.
+        </para>
+
+        <example>
+            <title>Using STANDARD definitions for setOptions()</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
+// overriding the global set date format
+$date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
+
+// global setting of the standard locale
+Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');
+
 ?>]]></programlisting>
         </example>
 
