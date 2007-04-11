@@ -20,6 +20,13 @@
  * @since      Preview Release 0.2
  */
 
+
+/**
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+
+
 /**
  * Zend_Session_Exception
  *
