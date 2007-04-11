@@ -39,6 +39,11 @@ class Zend_Log_Filter_Priority implements Zend_Log_Filter_Interface
     protected $_priority;
 
     /**
+     * @var string
+     */
+    protected $_operator;
+
+    /**
      * Filter logging by $priority.  By default, it will accept any log
      * event whose priority value is less than or equal to $priority.
      *
