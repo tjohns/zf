@@ -1,31 +1,26 @@
-<sect1 id="zend.memory.memory-manager">
-    <title>Memory Manager</title>
+﻿<sect1 id="zend.memory.memory-manager">
+    <title>Manager de mémoire</title>
 
     <sect2 id="zend.memory.memory-manager.creation">
 
-        <title>Creating a Memory Manager</title>
+        <title>Créer un manager de mémoire</title>
 
         <para>
-            You can create new a memory manager
-            (<code>Zend_Memory_Manager</code> object) using the
-            <code>Zend_Memory::factory($backendName [, $backendOprions])</code>
-            method.
+            Vous pouvez créer un nouveau manager de mémoire (objet <code>Zend_Memory_Manager</code>) en utilisant la méthode <code>Zend_Memory::factory($backendName [, $backendOprions])</code>.
         </para>
 
         <para>
-            The first argument <code>$backendName</code> is a string that
-            names one of the backend implementations supported by Zend_Cache.
+            Le premier argument <code>$backendName</code> est le nom d'un type de backend supporté par <code>Zend_Cache</code>
         </para>
 
         <para>
-            The second argument <code>$backendOptions</code> is an optional
-            backend options array.
+            Le second argument <code>$backendOptions</code> est un tableau optionnel indiquant les options du backend.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directory where to put the swapped memory blocks
+    'cacheDir' => './tmp/' // Dossier où les blocks de mémoire peuvent être stockés
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
@@ -33,13 +28,11 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
 ?>]]></programlisting>
 
         <para>
-            Zend_Memory uses <link linkend="zend.cache.backends">Zend_Cache backends</link>
-            as storage providers.
+            Zend_Memory utilise les <link linkend="zend.cache.backends">backends Zend_Cache</link> comme fournisseurs de stockage.
         </para>
 
         <para>
-            You may use the special name '<code>None</code>' as a backend name,
-            in addition to standard Zend_Cache backends.
+            Vous pouvez de plus utiliser le nom spécial '<code>None</code>' en tant que nom de backend supplémentaire de Zend_Cache.
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -49,82 +42,66 @@ $memoryManager = Zend_Memory::factory('None');
         </para>
 
         <para>
-            If you use '<code>None</code>' as the backend name, then the memory
-            manager never swaps memory blocks.  This is useful if you know that
-            memory is not limited or the overall size of objects never reaches
-            the memory limit.
+            Si vous utilisez '<code>None</code>', alors le manager de mémoire ne mettra pas en cache les blocks de mémoire. Ceci est intéressant si vous savez que la mémoire n'est pas limitée ou la taille complète des objets n'atteint jamais la limite de mémoire.
         </para>
 
         <para>
-            The '<code>None</code>' backend doesn't need any option specified.
+            Le backend '<code>None</code>' ne nécessite aucune option.
         </para>
 
     </sect2>
 
     <sect2 id="zend.memory.memory-manager.objects-management">
 
-        <title>Managing Memory Objects</title>
+        <title>Manager les objets mémoire</title>
 
         <para>
-            This section describes creating and destroying objects in the
-            managed memory, and settings to control memory manager behavior.
+            Cette section décrit la création et la destruction d'objet de mémoire, et les réglages du manager de mémoire.
         </para>
 
         <sect3 id="zend.memory.memory-manager.objects-management.movable">
 
-            <title>Creating Movable Objects</title>
+            <title>Créer des objets mobiles</title>
 
             <para>
-                Create movable objects (objects, which may be swapped) using
-                the <code>Zend_Memory_Manager::create([$data])</code> method:
+                Créer des objets mobiles (objets qui peuvent être mis en cache) en utilisant la méthode <code>Zend_Memory_Manager::create([$data])</code> :
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->create($data);
-
 ?>]]></programlisting>
 
             </para>
 
             <para>
-                The <code>$data</code> argument is optional and used to
-                initialize the object value.  If the <code>$data</code>
-                argument is omitted, the value is an empty string.
+                L'argument <code>$data</code> est optionel et utilisé pour initialiser la valeur de l'objet. Si l'argument <code>$data</code> est omis, la valeur est une chaîne vide.
             </para>
 
         </sect3>
 
         <sect3 id="zend.memory.memory-manager.objects-management.locked">
 
-            <title>Creating Locked Objects</title>
+            <title>Créer des objets vérouillés</title>
 
             <para>
-                Create locked objects (objects, which are not swapped) using
-                the <code>Zend_Memory_Manager::createLocked([$data])</code> method:
+                Créer des objets vérrouillées (objets qui ne doivent pas être mis en cache) en utilisant la méthode <code>Zend_Memory_Manager::createLocked([$data])</code> :
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->createLocked($data);
-
 ?>]]></programlisting>
             </para>
 
             <para>
-                The <code>$data</code> argument is optional and used to
-                initialize the object value.  If the <code>$data</code> 
-                argument is omitted, the value is an empty string.
+                L'argument <code>$data</code> est optionel et utilisé pour initialiser la valeur de l'objet. Si l'argument <code>$data</code> est omis, la valeur est une chaîne vide.
             </para>
 
         </sect3>
 
         <sect3 id="zend.memory.memory-manager.objects-management.destruction">
 
-            <title>Destroying Objects</title>
+            <title>Détruire des objets</title>
 
             <para>
-                Memory objects are automatically destroyed and removed from
-                memory when they go out of scope:
+                Les objets mémoire sont automatiquement détruits et effacés de la mémoire quand ils sont hors de portée :
 
                 <programlisting role="php"><![CDATA[<?php
-
 function foo()
 {
     global $memoryManager, $memList;
@@ -141,18 +118,17 @@ function foo()
 
     ...
 
-    unset($memObject2); // $memObject2 is destroyed here
+    unset($memObject2); // $memObject2 est détruit ici
 
     ...
-    // $memObject1 is destroyed here
-    // but $memObject2 object is still referenced by $memList and is not destroyed
+    // $memObject1 est détruit ici
+    // mais $memObject3 est toujours référencé par $memList et n'est pas détruit
 }
-
 ?>]]></programlisting>
             </para>
 
             <para>
-                This applies to both movable and locked objects.
+                Ceci s'applique aux objets mobiles et verrouillés.
             </para>
 
         </sect3>
@@ -161,72 +137,58 @@ function foo()
 
     <sect2 id="zend.memory.memory-manager.settings">
 
-        <title>Memory Manager Settings</title>
+        <title>Régler le manager de mémoire</title>
 
         <sect3 id="zend.memory.memory-manager.settings.memory-limit">
 
-            <title>Memory Limit</title>
+            <title>Mémoire limite</title>
 
             <para>
-                Memory limit is a number of bytes allowed to be used by loaded
-                movable objects.
+                La mémoire limite est le nombre d'octets autorisés pour être utilisé par des objets mobiles chargés.
             </para>
 
             <para>
-                If loading or creation of an object causes memory usage to
-                exceed of this limit, then the memory manager swaps some other
-                objects.
+                Si le chargement ou la création d'un objet entraîne l'utilisation de mémoire excédant cette limite, alors le manager met en cache un certain nombre d'objet.
             </para>
 
             <para>
-                You can retrieve or set the memory limit setting using the
-                <code>getMemoryLimit()</code> and <code>setMemoryLimit($newLimit)</code>
-                methods:
-                <programlisting role="php"><![CDATA[<?php
+                Vous pouvez récupérer et régler la mémoire limite en utilisant les méthodes <code>getMemoryLimit()</code> et <code>setMemoryLimit($newLimit)</code> :
 
-$oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
-$memoryManager->getMemoryLimit($newLimit);     // Set memory limit in bytes
-
+            <programlisting role="php"><![CDATA[<?php
+$oldLimit = $memoryManager->getMemoryLimit();  // Récupére la mémoire limite en octets
+$memoryManager->setMemoryLimit($newLimit);     //Règle la mémoire limite en octets
 ?>]]></programlisting>
             </para>
 
             <para>
-                A negative value for memory limit means 'no limit'.
+                Une valeur négative pour limite de mémoire équivaut à "pas de limite".
             </para>
 
             <para>
-                The default vaule is two-thirds of the value of
-                '<code>memory_limit</code>' in php.ini or 'no limit' (-1)
-                if '<code>memory_limit</code>' is not set in php.ini.
+                La valeur par défaut est deux-tiers de la valeur de '<code>memory_limit</code>' dans le php.ini ou 'no limit' (-1) si '<code>memory_limit</code>' n'est pas réglé dans le php.ini.
             </para>
 
         </sect3>
 
         <sect3 id="zend.memory.memory-manager.settings.min-size">
 
-            <title>MinSize</title>
+            <title>MinSize (taille minimum)</title>
 
             <para>
-                MinSize is a minimal size of memory objects, which may be
-                swapped by memory manager.  The memory manager does not swap
-                objects that are smaller than this value.  This reduces the
-                number of swap/load operations.
+                MinSize est la taille minimale des objets de mémoire, qui peuvent être mis en cache par le manager de mémoire. Le manager ne met pas en cache des objets plus petits que cette valeur. Ceci réduit le nombre d'opérations de mise de cache/chargement
             </para>
 
             <para>
-                You can retrieve or set the minimum size using the
-                <code>getMinSize()</code> and <code>setMinSize($newSize)</code>
-                methods:
-                <programlisting role="php"><![CDATA[<?php
+                Vous pouvez récupérer et régler la taille minimale en utilisant les méthodes <code>getMinSize()</code> et <code>setMinSize($newSize)</code> :
 
-$oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
-$memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes
-
+            <programlisting role="php"><![CDATA[<?php
+$oldMinSize = $memoryManager->getMinSize();  // Récupère la taille minimale en octets
+$memoryManager->setMinSize($newSize);        //Règle la taille minimale en octets
 ?>]]></programlisting>
             </para>
 
             <para>
-                The default minimum size value is 16KB (16384 bytes).
+                La taille minimum par défaut est 16KB (16384 octets).
             </para>
 
         </sect3>
