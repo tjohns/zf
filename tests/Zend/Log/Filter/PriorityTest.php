@@ -39,22 +39,25 @@ require_once 'Zend/Log/Filter/Priority.php';
  */
 class Zend_Log_Filter_PriorityTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    public function testComparisonDefaultsToLessThanOrEqual()
     {
         // accept at or below priority 2
-        $this->filter = new Zend_Log_Filter_Priority(2);
+        $filter = new Zend_Log_Filter_Priority(2);
+        
+        $this->assertTrue($filter->accept(array('priority' => 2)));
+        $this->assertTrue($filter->accept(array('priority' => 1)));
+        $this->assertFalse($filter->accept(array('priority' => 3)));
     }
 
-    public function testPriorityFilterAccept()
+    public function testComparisonOperatorCanBeChanged()
     {
-        $this->assertTrue($this->filter->accept(array('priority' => 2)));
-        $this->assertTrue($this->filter->accept(array('priority' => 1)));
-    }
+        // accept above priority 2
+        $filter = new Zend_Log_Filter_Priority(2, '>');
 
-    public function testPriorityFilterReject()
-    {
-        $this->assertFalse($this->filter->accept(array('priority' => 3)));
-    } 
+        $this->assertTrue($filter->accept(array('priority' => 3)));
+        $this->assertFalse($filter->accept(array('priority' => 2)));
+        $this->assertFalse($filter->accept(array('priority' => 1)));
+    }
 
     public function testConstructorThrowsOnInvalidPriority()
     {
