@@ -54,19 +54,22 @@
 
         <sect3 id="zend.date.options.extendmonth">
 
-            <title>Calculating months</title>
+            <title>Month Calculations</title>
 
             <para>
-                When adding or substracting months from an existing date they can sometimes produce an unexpected
-                result when the day of the original date is too high. For example, when adding one month to the 
-                31. January people familiar with SQL will expect to have 28. February as result. On the other
-                side people familiar with Excel will expect to habe 03. March as result. So our problem only 
-                occurs if the resulting month does not have the day which is set in the original date. But there
-                is a simple and selectable solution. By using the <code>extend_month</code> option wou can choose
-                eighter to use SQL behaviour if set to false or Excel behaviour when set to true. The default
-                behaviour for <code>extend_month</code> is false so <code>Zend_Date</code> computes like expected
-                through SQL. Use <code>Zend_Date::setOptions(array('extend_month' => true));</code> to enable
-                month calculation like it's done in Excel.
+                When adding or substracting months from an existing date, the resulting value for the day of
+                the month might be unexpected, if the original date fell on a day close to the end of the month.
+                For example, when adding one month to January 31st, people familiar with SQL will expect February
+                28th as the result. On the other side, people familiar with Excel and OpenOffice will expect
+                March 3rd as the result. The problem only occurs, if the resulting month does not have the day,
+                which is set in the original date.  For ZF developers, the desired behavior is selectable using
+                the <code>extend_month</code> option to choose either the SQL behaviour, if set to false,
+                or the spreadsheet behaviour when set to true. The default behaviour for <code>extend_month</code>
+                is false, providing behavior compatible to SQL.  By default, <code>Zend_Date</code> computes month
+                calculations by truncating dates to the end of the month (if necessary), without wrapping into the
+                next month when the original date designates a day of the month exceeding the number of days in
+                the resulting month.  Use <code>Zend_Date::setOptions(array('extend_month' => true));</code>
+                to make month calculations work like popular spreadsheet programs.
             </para>
 
         </sect3>
