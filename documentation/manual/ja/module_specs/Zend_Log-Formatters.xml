@@ -23,7 +23,7 @@
       <programlisting role="php"><![CDATA[<?php
 
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
-$formatter = new Zend_Log_Formatter($format);
+$formatter = new Zend_Log_Formatter_Simple($format);
 
 ?>]]></programlisting>         
     </para>
@@ -60,7 +60,7 @@ $logger->info('there');
   <sect2 id="zend.log.formatters.xml">
     <title>XML へのフォーマット</title>
     <para>
-      <code>Zend_Log_Formatter_XML</code> は、ログのデータを XML 文字列に変換します。
+      <code>Zend_Log_Formatter_Xml</code> は、ログのデータを XML 文字列に変換します。
       デフォルトでは、イベントデータ配列のすべての項目を自動的に記録します。
 
       <programlisting role="php"><![CDATA[<?php
