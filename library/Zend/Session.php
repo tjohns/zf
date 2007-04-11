@@ -118,7 +118,8 @@ class Zend_Session extends Zend_Session_Abstract
      */
     private static $_localOptions = array(
         'strict'                => '_strict',
-        'remember_me_seconds'   => '_rememberMeSeconds'
+        'remember_me_seconds'   => '_rememberMeSeconds',
+        'ignore_save_path'      => '_ignore_save_path'
     );
 
     /**
@@ -141,6 +142,13 @@ class Zend_Session extends Zend_Session_Abstract
      * @var bool
      */
     private static $_destroyed = false;
+
+    /**
+     * Whether or not session save_path must be writable (false = must be writable)
+     *
+     * @var bool
+     */
+    private static $_ignore_save_path = false;
 
     /**
      * Whether or not session must be initiated before usage
@@ -213,7 +221,7 @@ class Zend_Session extends Zend_Session_Abstract
             $savePath = explode(';', $savePath);
             $savePath = realpath(array_pop($savePath));
         }
-        if (!is_writable($savePath)) {
+        if (self::$_ignore_save_path !== true && !is_writable($savePath)) {
             throw new Zend_Session_Exception("Unwritable session.save_path: $savePath");
         }
     }
