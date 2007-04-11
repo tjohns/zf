@@ -81,7 +81,7 @@ class Zend_Memory_Manager
     private $_nextId = 0;
 
     /**
-     * Dinamic list of loaded objects
+     * List of candidates to unload
      *
      * It also represents objects access history. Last accessed objects are moved to the end of array
      *
@@ -92,7 +92,7 @@ class Zend_Memory_Manager
      *
      * @var array
      */
-    private $_loadedObjects = array();
+    private $_unloadCandidates = array();
 
     /**
      * List of object sizes.
@@ -308,15 +308,17 @@ class Zend_Memory_Manager
     public function unlink(Zend_Memory_Container_Movable $container, $id)
     {
         if ($this->_lastModified === $container) {
-            // Drop all object modifications and do nothing
+            // Drop all object modifications
             $this->_lastModified = null;
+            unset($this->_sizes[$id]);
+            return;
         }
 
-        if (isset($this->_loadedObjects[$id])) {
-            $this->_memorySize -= $this->_sizes[$id];
-            unset($this->_loadedObjects[$id]);
+        if (isset($this->_unloadCandidates[$id])) {
+            unset($this->_unloadCandidates[$id]);
         }
 
+        $this->_memorySize -= $this->_sizes[$id];
         unset($this->_sizes[$id]);
     }
 
@@ -339,11 +341,13 @@ class Zend_Memory_Manager
             return;
         }
 
-        // Remove just updated object from loaded objects list
-        if( isset($this->_loadedObjects[$id])) {
-            unset($this->_loadedObjects[$id]);
-            $this->_memorySize -= $this->_sizes[$id];
+        // Remove just updated object from list of candidates to unload
+        if( isset($this->_unloadCandidates[$id])) {
+            unset($this->_unloadCandidates[$id]);
         }
+
+        // Reduce used memory mark
+        $this->_memorySize -= $this->_sizes[$id];
 
         // Commit changes of previously modified object if necessary
         $this->_commit();
@@ -364,11 +368,13 @@ class Zend_Memory_Manager
 
         $id = $container->getId();
 
-        // Move object to "loaded objects list"
-        $this->_loadedObjects[$id] = $container;
-
         // Calculate new object size and increase used memory size by this value
         $this->_memorySize += ($this->_sizes[$id] = strlen($container->getRef()));
+
+        if ($this->_sizes[$id] > $this->_minSize) {
+            // Move object to "unload candidates list"
+            $this->_unloadCandidates[$id] = $container;
+        }
 
         $container->startTrace();
 
@@ -388,22 +394,15 @@ class Zend_Memory_Manager
             return;
         }
 
-        $swapSizeLimit = $this->_minSize;
-
         // walk through loaded objects in access history order
-        foreach ($this->_loadedObjects as $id => $container) {
-            if ($this->_sizes[$id] > $swapSizeLimit) {
-                $this->_swap($container, $id);
+        foreach ($this->_unloadCandidates as $id => $container) {
+            $this->_swap($container, $id);
+            unset($this->_unloadCandidates[$id]);
 
-                if ($this->_memorySize < $this->_memoryLimit) {
-                    // We've swapped enough objects
-                    return;
-                }
+            if ($this->_memorySize < $this->_memoryLimit) {
+                // We've swapped enough objects
+                return;
             }
-
-            /**
-             * @todo Small memory objects should be moved to another list to improve performance
-             */
         }
 
         throw new Zend_Memory_Exception('Memory manager can\'t get enough space.');
@@ -428,7 +427,6 @@ class Zend_Memory_Manager
             $this->_backend->save($container->getRef(), $this->_managerId . $id, $this->_tags);
         }
 
-        unset($this->_loadedObjects[$id]);
         $this->_memorySize -= $this->_sizes[$id];
 
         $container->markAsSwapped();
@@ -453,6 +451,10 @@ class Zend_Memory_Manager
 
         // Add loaded obect to the end of loaded objects list
         $container->setValue($value);
-        $this->_loadedObjects[$id] = $container;
+
+        if ($this->_sizes[$id] > $this->_minSize) {
+            // Add object to the end of "unload candidates list"
+            $this->_unloadCandidates[$id] = $container;
+        }
     }
 }
