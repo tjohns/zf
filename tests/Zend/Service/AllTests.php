@@ -91,6 +91,12 @@ require_once 'Zend/Service/SimpyTest.php';
 
 
 /**
+ * @see Zend_Service_Yahoo_AllTests
+ */
+require_once 'Zend/Service/Yahoo/AllTests.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage UnitTests
@@ -128,6 +134,7 @@ class Zend_Service_AllTests
         } else {
             $suite->addTestSuite('Zend_Service_SimpyTest_Skip');
         }
+        $suite->addTest(Zend_Service_Yahoo_AllTests::suite());
 
         return $suite;
     }

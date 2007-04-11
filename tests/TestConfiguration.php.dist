@@ -273,6 +273,12 @@ define('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY', 'Enter API key here');
 define('TESTS_ZEND_SERVICE_SIMPY_ENABLED', false);
 
 /**
+ * Zend_Service_Yahoo online tests
+ */
+define('TESTS_ZEND_SERVICE_YAHOO_ONLINE_ENABLED', true);
+define('TESTS_ZEND_SERVICE_YAHOO_ONLINE_APPID', 'Enter APPID here');
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
