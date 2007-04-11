@@ -37,10 +37,10 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
 class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Interface
 {
 
-    const URL_VARIABLE = ':';
-    const URI_DELIMITER = '/';
-    const REGEX_DELIMITER = '#';
-    const DEFAULT_REGEX = '.+';
+    protected $_urlVariable = ':';
+    protected $_urlDelimiter = '/';
+    protected $_regexDelimiter = '#';
+    protected $_defaultRegex = '.+';
 
     protected $_parts;
     protected $_defaults = array();
@@ -72,21 +72,21 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     public function __construct($route, $defaults = array(), $reqs = array())
     {
 
-        $route = trim($route, self::URI_DELIMITER);
+        $route = trim($route, $this->_urlDelimiter);
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
 
         if ($route != '') {
 
-            foreach (explode(self::URI_DELIMITER, $route) as $pos => $part) {
+            foreach (explode($this->_urlDelimiter, $route) as $pos => $part) {
 
-                if (substr($part, 0, 1) == self::URL_VARIABLE) {
+                if (substr($part, 0, 1) == $this->_urlVariable) {
                     $name = substr($part, 1);
-                    $regex = (isset($reqs[$name]) ? $reqs[$name] : self::DEFAULT_REGEX);
+                    $regex = (isset($reqs[$name]) ? $reqs[$name] : $this->_defaultRegex);
                     $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
                     $this->_vars[] = $name;
                 } else {
-                    $this->_parts[$pos] = array('regex' => preg_quote($part, self::REGEX_DELIMITER));
+                    $this->_parts[$pos] = array('regex' => preg_quote($part, $this->_regexDelimiter));
                     if ($part != '*') {
                         $this->_staticCount++;
                     }
@@ -133,11 +133,11 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         	$unique = array();
         }
 
-        $path = trim($path, self::URI_DELIMITER);
+        $path = trim($path, $this->_urlDelimiter);
 
         if ($path != '') {
 
-            $path = explode(self::URI_DELIMITER, $path);
+            $path = explode($this->_urlDelimiter, $path);
 
             foreach ($path as $pos => $pathPart) {
 
@@ -153,7 +153,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
                 $part = $this->_parts[$pos];
                 $name = isset($part['name']) ? $part['name'] : null;
-                $regex = self::REGEX_DELIMITER . '^' . $part['regex'] . '$' . self::REGEX_DELIMITER . 'iu';
+                $regex = $this->_regexDelimiter . '^' . $part['regex'] . '$' . $this->_regexDelimiter . 'iu';
 
                 $pathPart = urldecode($pathPart);
 
@@ -232,7 +232,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     if (!$reset) $data += $this->_params;
                     foreach ($data as $var => $value) {
                         if ($value !== null) {
-                            $url[$var] = $var . self::URI_DELIMITER . $value;
+                            $url[$var] = $var . $this->_urlDelimiter . $value;
                             $flag = true;
                         }
                     }

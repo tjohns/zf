@@ -104,7 +104,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
      */
     protected function _getMappedValues($values, $reversed = false, $preserve = false)
     {
-        if ($this->_map === null) {
+        if (count($this->_map) == 0) {
             return $values; 
         }
 
