@@ -750,7 +750,14 @@ class Zend_Controller_Front
                 /**
                  * Dispatch request
                  */
-                $dispatcher->dispatch($request, $response);
+                try {
+                    $dispatcher->dispatch($request, $response);
+                } catch (Exception $e) {
+                    if ($this->throwExceptions()) {
+                        throw $e;
+                    }
+                    $response->setException($e);
+                }
 
                 /**
                  * Notify plugins of dispatch completion
