@@ -1,22 +1,22 @@
 <sect1 id="zend.locale.regions">
 
-    <title>Supported Regions for Locales</title>
+    <title>Unterstützte Regionen für Gebietsschemata</title>
 
     <para>
-        <code>Zend_Locale</code> provides information for the following regions.
+        <code>Zend_Locale</code> bietet Informationen für die folgenden Regionen.
         <table>
-            <title>List of all supported regions</title>
+            <title>Liste aller unterstützten Regionen</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Locale</entry>
+                        <entry>Gebietsschema</entry>
                         <entry>Region</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>AE</entry>
-                        <entry>United Arab Emirates</entry>
+                        <entry>Vereinigte Arabische Emirate</entry>
                     </row>
                     <row>
                         <entry>AF</entry>
@@ -24,43 +24,47 @@
                     </row>
                     <row>
                         <entry>AL</entry>
-                        <entry>Albania</entry>
+                        <entry>Albanien</entry>
                     </row>
                     <row>
                         <entry>AM</entry>
-                        <entry>Armenia</entry>
+                        <entry>Armenien</entry>
                     </row>
                     <row>
                         <entry>AR</entry>
-                        <entry>Argentina</entry>
+                        <entry>Argentinien</entry>
                     </row>
                     <row>
                         <entry>AS</entry>
-                        <entry>American Samoa</entry>
+                        <entry>Amerikanisch-Samoa</entry>
                     </row>
                     <row>
                         <entry>AT</entry>
-                        <entry>Austria</entry>
+                        <entry>Österreich</entry>
                     </row>
                     <row>
                         <entry>AU</entry>
-                        <entry>Australia</entry>
+                        <entry>Australien</entry>
                     </row>
                     <row>
                         <entry>AZ</entry>
-                        <entry>Azerbaijan</entry>
+                        <entry>Aserbaidschan</entry>
                     </row>
                     <row>
                         <entry>BA</entry>
-                        <entry>Bosnia and Herzegovina</entry>
+                        <entry>Bosnien und Herzegowina</entry>
+                    </row>
+                    <row>
+                        <entry>BD</entry>
+                        <entry>Bangladesch</entry>
                     </row>
                     <row>
                         <entry>BE</entry>
-                        <entry>Belgium</entry>
+                        <entry>Belgien</entry>
                     </row>
                     <row>
                         <entry>BG</entry>
-                        <entry>Bulgaria</entry>
+                        <entry>Bulgarien</entry>
                     </row>
                     <row>
                         <entry>BH</entry>
@@ -68,15 +72,15 @@
                     </row>
                     <row>
                         <entry>BN</entry>
-                        <entry>Brunei</entry>
+                        <entry>Brunei Darussalam</entry>
                     </row>
                     <row>
                         <entry>BO</entry>
-                        <entry>Bolivia</entry>
+                        <entry>Bolivien</entry>
                     </row>
                     <row>
                         <entry>BR</entry>
-                        <entry>Brazil</entry>
+                        <entry>Brasilien</entry>
                     </row>
                     <row>
                         <entry>BT</entry>
@@ -84,7 +88,7 @@
                     </row>
                     <row>
                         <entry>BW</entry>
-                        <entry>Botswana</entry>
+                        <entry>Botsuana</entry>
                     </row>
                     <row>
                         <entry>BY</entry>
@@ -96,11 +100,19 @@
                     </row>
                     <row>
                         <entry>CA</entry>
-                        <entry>Canada</entry>
+                        <entry>Kanada</entry>
+                    </row>
+                    <row>
+                        <entry>CD</entry>
+                        <entry>Demokratische Republik Kongo</entry>
+                    </row>
+                    <row>
+                        <entry>CG</entry>
+                        <entry>Kongo</entry>
                     </row>
                     <row>
                         <entry>CH</entry>
-                        <entry>Switzerland</entry>
+                        <entry>Schweiz</entry>
                     </row>
                     <row>
                         <entry>CL</entry>
@@ -112,7 +124,7 @@
                     </row>
                     <row>
                         <entry>CO</entry>
-                        <entry>Colombia</entry>
+                        <entry>Kolumbien</entry>
                     </row>
                     <row>
                         <entry>CR</entry>
@@ -120,35 +132,35 @@
                     </row>
                     <row>
                         <entry>CS</entry>
-                        <entry>Serbia And Montenegro</entry>
+                        <entry>Serbien und Montenegro</entry>
                     </row>
                     <row>
                         <entry>CY</entry>
-                        <entry>Cyprus</entry>
+                        <entry>Zypern</entry>
                     </row>
                     <row>
                         <entry>CZ</entry>
-                        <entry>Czech Republic</entry>
+                        <entry>Tschechische Republik</entry>
                     </row>
                     <row>
                         <entry>DE</entry>
-                        <entry>Germany</entry>
+                        <entry>Deutschland</entry>
                     </row>
                     <row>
                         <entry>DJ</entry>
-                        <entry>Djibouti</entry>
+                        <entry>Dschibuti</entry>
                     </row>
                     <row>
                         <entry>DK</entry>
-                        <entry>Denmark</entry>
+                        <entry>Dänemark</entry>
                     </row>
                     <row>
                         <entry>DO</entry>
-                        <entry>Dominican Republic</entry>
+                        <entry>Dominikanische Republik</entry>
                     </row>
                     <row>
                         <entry>DZ</entry>
-                        <entry>Algeria</entry>
+                        <entry>Algerien</entry>
                     </row>
                     <row>
                         <entry>EC</entry>
@@ -156,11 +168,11 @@
                     </row>
                     <row>
                         <entry>EE</entry>
-                        <entry>Estonia</entry>
+                        <entry>Estland</entry>
                     </row>
                     <row>
                         <entry>EG</entry>
-                        <entry>Egypt</entry>
+                        <entry>Ägypten</entry>
                     </row>
                     <row>
                         <entry>ER</entry>
@@ -168,39 +180,43 @@
                     </row>
                     <row>
                         <entry>ES</entry>
-                        <entry>Spain</entry>
+                        <entry>Spanien</entry>
                     </row>
                     <row>
                         <entry>ET</entry>
-                        <entry>Ethiopia</entry>
+                        <entry>Äthiopien</entry>
                     </row>
                     <row>
                         <entry>FI</entry>
-                        <entry>Finland</entry>
+                        <entry>Finnland</entry>
                     </row>
                     <row>
                         <entry>FO</entry>
-                        <entry>Faroe Islands</entry>
+                        <entry>Färöer</entry>
                     </row>
                     <row>
                         <entry>FR</entry>
-                        <entry>France</entry>
+                        <entry>Frankreich</entry>
                     </row>
                     <row>
                         <entry>GB</entry>
-                        <entry>United Kingdom</entry>
+                        <entry>Vereinigtes Königreich</entry>
                     </row>
                     <row>
                         <entry>GE</entry>
-                        <entry>Georgia</entry>
+                        <entry>Georgien</entry>
+                    </row>
+                    <row>
+                        <entry>GH</entry>
+                        <entry>Ghana</entry>
                     </row>
                     <row>
                         <entry>GL</entry>
-                        <entry>Greenland</entry>
+                        <entry>Grönland</entry>
                     </row>
                     <row>
                         <entry>GR</entry>
-                        <entry>Greece</entry>
+                        <entry>Griechenland</entry>
                     </row>
                     <row>
                         <entry>GT</entry>
@@ -220,19 +236,19 @@
                     </row>
                     <row>
                         <entry>HR</entry>
-                        <entry>Croatia</entry>
+                        <entry>Kroatien</entry>
                     </row>
                     <row>
                         <entry>HU</entry>
-                        <entry>Hungary</entry>
+                        <entry>Ungarn</entry>
                     </row>
                     <row>
                         <entry>ID</entry>
-                        <entry>Indonesia</entry>
+                        <entry>Indonesien</entry>
                     </row>
                     <row>
                         <entry>IE</entry>
-                        <entry>Ireland</entry>
+                        <entry>Irland</entry>
                     </row>
                     <row>
                         <entry>IL</entry>
@@ -240,11 +256,11 @@
                     </row>
                     <row>
                         <entry>IN</entry>
-                        <entry>India</entry>
+                        <entry>Indien</entry>
                     </row>
                     <row>
                         <entry>IQ</entry>
-                        <entry>Iraq</entry>
+                        <entry>Irak</entry>
                     </row>
                     <row>
                         <entry>IR</entry>
@@ -252,19 +268,19 @@
                     </row>
                     <row>
                         <entry>IS</entry>
-                        <entry>Iceland</entry>
+                        <entry>Island</entry>
                     </row>
                     <row>
                         <entry>IT</entry>
-                        <entry>Italy</entry>
+                        <entry>Italien</entry>
                     </row>
                     <row>
                         <entry>JM</entry>
-                        <entry>Jamaica</entry>
+                        <entry>Jamaika</entry>
                     </row>
                     <row>
                         <entry>JO</entry>
-                        <entry>Jordan</entry>
+                        <entry>Jordanien</entry>
                     </row>
                     <row>
                         <entry>JP</entry>
@@ -272,19 +288,19 @@
                     </row>
                     <row>
                         <entry>KE</entry>
-                        <entry>Kenya</entry>
+                        <entry>Kenia</entry>
                     </row>
                     <row>
                         <entry>KG</entry>
-                        <entry>Kyrgyzstan</entry>
+                        <entry>Kirgisistan</entry>
                     </row>
                     <row>
                         <entry>KH</entry>
-                        <entry>Cambodia</entry>
+                        <entry>Kambodscha</entry>
                     </row>
                     <row>
                         <entry>KR</entry>
-                        <entry>South Korea</entry>
+                        <entry>Republik Korea</entry>
                     </row>
                     <row>
                         <entry>KW</entry>
@@ -292,7 +308,7 @@
                     </row>
                     <row>
                         <entry>KZ</entry>
-                        <entry>Kazakhstan</entry>
+                        <entry>Kasachstan</entry>
                     </row>
                     <row>
                         <entry>LA</entry>
@@ -300,7 +316,7 @@
                     </row>
                     <row>
                         <entry>LB</entry>
-                        <entry>Lebanon</entry>
+                        <entry>Libanon</entry>
                     </row>
                     <row>
                         <entry>LI</entry>
@@ -308,39 +324,47 @@
                     </row>
                     <row>
                         <entry>LT</entry>
-                        <entry>Lithuania</entry>
+                        <entry>Litauen</entry>
                     </row>
                     <row>
                         <entry>LU</entry>
-                        <entry>Luxembourg</entry>
+                        <entry>Luxemburg</entry>
                     </row>
                     <row>
                         <entry>LV</entry>
-                        <entry>Latvia</entry>
+                        <entry>Lettland</entry>
                     </row>
                     <row>
                         <entry>LY</entry>
-                        <entry>Libya</entry>
+                        <entry>Libyen</entry>
                     </row>
                     <row>
                         <entry>MA</entry>
-                        <entry>Morocco</entry>
+                        <entry>Marokko</entry>
                     </row>
                     <row>
                         <entry>MC</entry>
                         <entry>Monaco</entry>
                     </row>
                     <row>
+                        <entry>ME</entry>
+                        <entry>Montenegro</entry>
+                    </row>
+                    <row>
                         <entry>MH</entry>
-                        <entry>Marshall Islands</entry>
+                        <entry>Marshallinseln</entry>
                     </row>
                     <row>
                         <entry>MK</entry>
-                        <entry>Macedonia</entry>
+                        <entry>Mazedonien</entry>
                     </row>
                     <row>
                         <entry>MM</entry>
                         <entry>Myanmar</entry>
+                    </row>
+                    <row>
+                        <entry>MN</entry>
+                        <entry>Mongolei</entry>
                     </row>
                     <row>
                         <entry>MO</entry>
@@ -348,7 +372,7 @@
                     </row>
                     <row>
                         <entry>MP</entry>
-                        <entry>Northern Mariana Islands</entry>
+                        <entry>Nördliche Marianen</entry>
                     </row>
                     <row>
                         <entry>MT</entry>
@@ -356,15 +380,31 @@
                     </row>
                     <row>
                         <entry>MV</entry>
-                        <entry>Maldives</entry>
+                        <entry>Malediven</entry>
+                    </row>
+                    <row>
+                        <entry>MW</entry>
+                        <entry>Malawi</entry>
                     </row>
                     <row>
                         <entry>MX</entry>
-                        <entry>Mexico</entry>
+                        <entry>Mexiko</entry>
                     </row>
                     <row>
                         <entry>MY</entry>
                         <entry>Malaysia</entry>
+                    </row>
+                    <row>
+                        <entry>NA</entry>
+                        <entry>Namibia</entry>
+                    </row>
+                    <row>
+                        <entry>NE</entry>
+                        <entry>Niger</entry>
+                    </row>
+                    <row>
+                        <entry>NG</entry>
+                        <entry>Nigeria</entry>
                     </row>
                     <row>
                         <entry>NI</entry>
@@ -372,15 +412,19 @@
                     </row>
                     <row>
                         <entry>NL</entry>
-                        <entry>Netherlands</entry>
+                        <entry>Niederlande</entry>
                     </row>
                     <row>
                         <entry>NO</entry>
-                        <entry>Norway</entry>
+                        <entry>Norwegen</entry>
+                    </row>
+                    <row>
+                        <entry>NP</entry>
+                        <entry>Nepal</entry>
                     </row>
                     <row>
                         <entry>NZ</entry>
-                        <entry>New Zealand</entry>
+                        <entry>Neuseeland</entry>
                     </row>
                     <row>
                         <entry>OM</entry>
@@ -396,7 +440,7 @@
                     </row>
                     <row>
                         <entry>PH</entry>
-                        <entry>Philippines</entry>
+                        <entry>Philippinen</entry>
                     </row>
                     <row>
                         <entry>PK</entry>
@@ -404,7 +448,7 @@
                     </row>
                     <row>
                         <entry>PL</entry>
-                        <entry>Poland</entry>
+                        <entry>Polen</entry>
                     </row>
                     <row>
                         <entry>PR</entry>
@@ -420,19 +464,27 @@
                     </row>
                     <row>
                         <entry>QA</entry>
-                        <entry>Qatar</entry>
+                        <entry>Katar</entry>
                     </row>
                     <row>
                         <entry>RO</entry>
-                        <entry>Romania</entry>
+                        <entry>Rumänien</entry>
+                    </row>
+                    <row>
+                        <entry>RS</entry>
+                        <entry>Serbien</entry>
                     </row>
                     <row>
                         <entry>RU</entry>
-                        <entry>Russia</entry>
+                        <entry>Russische Föderation</entry>
+                    </row>
+                    <row>
+                        <entry>RW</entry>
+                        <entry>Ruanda</entry>
                     </row>
                     <row>
                         <entry>SA</entry>
-                        <entry>Saudi Arabia</entry>
+                        <entry>Saudi-Arabien</entry>
                     </row>
                     <row>
                         <entry>SD</entry>
@@ -440,19 +492,19 @@
                     </row>
                     <row>
                         <entry>SE</entry>
-                        <entry>Sweden</entry>
+                        <entry>Schweden</entry>
                     </row>
                     <row>
                         <entry>SG</entry>
-                        <entry>Singapore</entry>
+                        <entry>Singapur</entry>
                     </row>
                     <row>
                         <entry>SI</entry>
-                        <entry>Slovenia</entry>
+                        <entry>Slowenien</entry>
                     </row>
                     <row>
                         <entry>SK</entry>
-                        <entry>Slovakia</entry>
+                        <entry>Slowakei</entry>
                     </row>
                     <row>
                         <entry>SO</entry>
@@ -464,23 +516,31 @@
                     </row>
                     <row>
                         <entry>SY</entry>
-                        <entry>Syria</entry>
+                        <entry>Syrien</entry>
+                    </row>
+                    <row>
+                        <entry>TG</entry>
+                        <entry>Togo</entry>
                     </row>
                     <row>
                         <entry>TH</entry>
                         <entry>Thailand</entry>
                     </row>
                     <row>
+                        <entry>TJ</entry>
+                        <entry>Tadschikistan</entry>
+                    </row>
+                    <row>
                         <entry>TN</entry>
-                        <entry>Tunisia</entry>
+                        <entry>Tunesien</entry>
                     </row>
                     <row>
                         <entry>TR</entry>
-                        <entry>Turkey</entry>
+                        <entry>Türkei</entry>
                     </row>
                     <row>
                         <entry>TT</entry>
-                        <entry>Trinidad and Tobago</entry>
+                        <entry>Trinidad und Tobago</entry>
                     </row>
                     <row>
                         <entry>TW</entry>
@@ -488,7 +548,7 @@
                     </row>
                     <row>
                         <entry>TZ</entry>
-                        <entry>Tanzania</entry>
+                        <entry>Tansania</entry>
                     </row>
                     <row>
                         <entry>UA</entry>
@@ -496,11 +556,11 @@
                     </row>
                     <row>
                         <entry>UM</entry>
-                        <entry>United States Minor Outlying Islands</entry>
+                        <entry>Amerikanisch-Ozeanien</entry>
                     </row>
                     <row>
                         <entry>US</entry>
-                        <entry>United States</entry>
+                        <entry>Vereinigte Staaten</entry>
                     </row>
                     <row>
                         <entry>UY</entry>
@@ -508,7 +568,7 @@
                     </row>
                     <row>
                         <entry>UZ</entry>
-                        <entry>Uzbekistan</entry>
+                        <entry>Usbekistan</entry>
                     </row>
                     <row>
                         <entry>VE</entry>
@@ -516,7 +576,7 @@
                     </row>
                     <row>
                         <entry>VI</entry>
-                        <entry>U.S. Virgin Islands</entry>
+                        <entry>Amerikanische Jungferninseln</entry>
                     </row>
                     <row>
                         <entry>VN</entry>
@@ -524,19 +584,19 @@
                     </row>
                     <row>
                         <entry>YE</entry>
-                        <entry>Yemen</entry>
+                        <entry>Jemen</entry>
                     </row>
                     <row>
                         <entry>YU</entry>
-                        <entry>Yugoslavian Union</entry>
+                        <entry>Jugoslawien</entry>
                     </row>
                     <row>
                         <entry>ZA</entry>
-                        <entry>South Africa</entry>
+                        <entry>Südafrika</entry>
                     </row>
                     <row>
                         <entry>ZW</entry>
-                        <entry>Zimbabwe</entry>
+                        <entry>Simbabwe</entry>
                     </row>
                 </tbody>
             </tgroup>

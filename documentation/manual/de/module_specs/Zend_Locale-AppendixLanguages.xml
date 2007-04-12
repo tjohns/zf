@@ -1,16 +1,16 @@
 <sect1 id="zend.locale.languages">
 
-    <title>Supported Languages for Locales</title>
+    <title>Unterstützte Sprachen für Gebietsschemata</title>
 
     <para>
-        <code>Zend_Locale</code> provides information for the following languages.
+        <code>Zend_Locale</code> liefert Informationen für die folgenden Sprachen.
         <table>
-            <title>List of all supported languages</title>
+            <title>Liste aller unterstützten Sprachen</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Locale</entry>
-                        <entry>Language</entry>
+                        <entry>Gebietsschema</entry>
+                        <entry>Sprache</entry>
                     </row>
                 </thead>
                 <tbody>
@@ -23,36 +23,40 @@
                         <entry>Afrikaans</entry>
                     </row>
                     <row>
+                        <entry>ak</entry>
+                        <entry>Akan</entry>
+                    </row>
+                    <row>
                         <entry>am</entry>
-                        <entry>Amharic</entry>
+                        <entry>Amharisch</entry>
                     </row>
                     <row>
                         <entry>ar</entry>
-                        <entry>Arabic</entry>
+                        <entry>Arabisch</entry>
                     </row>
                     <row>
                         <entry>as</entry>
-                        <entry>Assamese</entry>
+                        <entry>Assamesisch</entry>
                     </row>
                     <row>
                         <entry>az</entry>
-                        <entry>Azerbaijani</entry>
+                        <entry>Aserbaidschanisch</entry>
                     </row>
                     <row>
                         <entry>be</entry>
-                        <entry>Belarusian</entry>
+                        <entry>Weißrussisch</entry>
                     </row>
                     <row>
                         <entry>bg</entry>
-                        <entry>Bulgarian</entry>
+                        <entry>Bulgarisch</entry>
                     </row>
                     <row>
                         <entry>bn</entry>
-                        <entry>Bengali</entry>
+                        <entry>Bengalisch</entry>
                     </row>
                     <row>
                         <entry>bs</entry>
-                        <entry>Bosnian</entry>
+                        <entry>Bosnisch</entry>
                     </row>
                     <row>
                         <entry>byn</entry>
@@ -60,39 +64,47 @@
                     </row>
                     <row>
                         <entry>ca</entry>
-                        <entry>Catalan</entry>
+                        <entry>Katalanisch</entry>
+                    </row>
+                    <row>
+                        <entry>cch</entry>
+                        <entry>Atsam</entry>
                     </row>
                     <row>
                         <entry>cs</entry>
-                        <entry>Czech</entry>
+                        <entry>Tschechisch</entry>
                     </row>
                     <row>
                         <entry>cy</entry>
-                        <entry>Welsh</entry>
+                        <entry>Kymrisch</entry>
                     </row>
                     <row>
                         <entry>da</entry>
-                        <entry>Danish</entry>
+                        <entry>Dänisch</entry>
                     </row>
                     <row>
                         <entry>de</entry>
-                        <entry>German</entry>
+                        <entry>Deutsch</entry>
                     </row>
                     <row>
                         <entry>dv</entry>
-                        <entry>Divehi</entry>
+                        <entry>Maledivisch</entry>
                     </row>
                     <row>
                         <entry>dz</entry>
-                        <entry>Dzongkha</entry>
+                        <entry>Bhutanisch</entry>
+                    </row>
+                    <row>
+                        <entry>ee</entry>
+                        <entry>Ewe-Sprache</entry>
                     </row>
                     <row>
                         <entry>el</entry>
-                        <entry>Greek</entry>
+                        <entry>Griechisch</entry>
                     </row>
                     <row>
                         <entry>en</entry>
-                        <entry>English</entry>
+                        <entry>Englisch</entry>
                     </row>
                     <row>
                         <entry>eo</entry>
@@ -100,35 +112,43 @@
                     </row>
                     <row>
                         <entry>es</entry>
-                        <entry>Spanish</entry>
+                        <entry>Spanisch</entry>
                     </row>
                     <row>
                         <entry>et</entry>
-                        <entry>Estonian</entry>
+                        <entry>Estnisch</entry>
                     </row>
                     <row>
                         <entry>eu</entry>
-                        <entry>Basque</entry>
+                        <entry>Baskisch</entry>
                     </row>
                     <row>
                         <entry>fa</entry>
-                        <entry>Persian</entry>
+                        <entry>Persisch</entry>
                     </row>
                     <row>
                         <entry>fi</entry>
-                        <entry>Finnish</entry>
+                        <entry>Finnisch</entry>
                     </row>
                     <row>
                         <entry>fo</entry>
-                        <entry>Faroese</entry>
+                        <entry>Färöisch</entry>
                     </row>
                     <row>
                         <entry>fr</entry>
-                        <entry>French</entry>
+                        <entry>Französisch</entry>
+                    </row>
+                    <row>
+                        <entry>fur</entry>
+                        <entry>Friulisch</entry>
                     </row>
                     <row>
                         <entry>ga</entry>
-                        <entry>Irish</entry>
+                        <entry>Irisch</entry>
+                    </row>
+                    <row>
+                        <entry>gaa</entry>
+                        <entry>Ga-Sprache</entry>
                     </row>
                     <row>
                         <entry>gez</entry>
@@ -136,7 +156,7 @@
                     </row>
                     <row>
                         <entry>gl</entry>
-                        <entry>Gallegan</entry>
+                        <entry>Galizisch</entry>
                     </row>
                     <row>
                         <entry>gu</entry>
@@ -147,12 +167,16 @@
                         <entry>Manx</entry>
                     </row>
                     <row>
+                        <entry>ha</entry>
+                        <entry>Hausa</entry>
+                    </row>
+                    <row>
                         <entry>haw</entry>
-                        <entry>Hawaiian</entry>
+                        <entry>Hawaiianisch</entry>
                     </row>
                     <row>
                         <entry>he</entry>
-                        <entry>Hebrew</entry>
+                        <entry>Hebräisch</entry>
                     </row>
                     <row>
                         <entry>hi</entry>
@@ -160,27 +184,35 @@
                     </row>
                     <row>
                         <entry>hr</entry>
-                        <entry>Croatian</entry>
+                        <entry>Kroatisch</entry>
                     </row>
                     <row>
                         <entry>hu</entry>
-                        <entry>Hungarian</entry>
+                        <entry>Ungarisch</entry>
                     </row>
                     <row>
                         <entry>hy</entry>
-                        <entry>Armenian</entry>
+                        <entry>Armenisch</entry>
+                    </row>
+                    <row>
+                        <entry>ia</entry>
+                        <entry>Interlingua</entry>
                     </row>
                     <row>
                         <entry>id</entry>
-                        <entry>Indonesian</entry>
+                        <entry>Indonesisch</entry>
+                    </row>
+                    <row>
+                        <entry>ig</entry>
+                        <entry>Igbo-Sprache</entry>
                     </row>
                     <row>
                         <entry>is</entry>
-                        <entry>Icelandic</entry>
+                        <entry>Isländisch</entry>
                     </row>
                     <row>
                         <entry>it</entry>
-                        <entry>Italian</entry>
+                        <entry>Italienisch</entry>
                     </row>
                     <row>
                         <entry>iu</entry>
@@ -188,23 +220,39 @@
                     </row>
                     <row>
                         <entry>ja</entry>
-                        <entry>Japanese</entry>
+                        <entry>Japanisch</entry>
                     </row>
                     <row>
                         <entry>ka</entry>
-                        <entry>Georgian</entry>
+                        <entry>Georgisch</entry>
+                    </row>
+                    <row>
+                        <entry>kaj</entry>
+                        <entry>Jju</entry>
+                    </row>
+                    <row>
+                        <entry>kam</entry>
+                        <entry>Kamba</entry>
+                    </row>
+                    <row>
+                        <entry>kcg</entry>
+                        <entry>Tyap</entry>
+                    </row>
+                    <row>
+                        <entry>kfo</entry>
+                        <entry>Koro</entry>
                     </row>
                     <row>
                         <entry>kk</entry>
-                        <entry>Kazakh</entry>
+                        <entry>Kasachisch</entry>
                     </row>
                     <row>
                         <entry>kl</entry>
-                        <entry>Kalaallisut</entry>
+                        <entry>Grönländisch</entry>
                     </row>
                     <row>
                         <entry>km</entry>
-                        <entry>Khmer</entry>
+                        <entry>Kambodschanisch</entry>
                     </row>
                     <row>
                         <entry>kn</entry>
@@ -212,35 +260,43 @@
                     </row>
                     <row>
                         <entry>ko</entry>
-                        <entry>Korean</entry>
+                        <entry>Koreanisch</entry>
                     </row>
                     <row>
                         <entry>kok</entry>
                         <entry>Konkani</entry>
                     </row>
                     <row>
+                        <entry>ku</entry>
+                        <entry>Kurdisch</entry>
+                    </row>
+                    <row>
                         <entry>kw</entry>
-                        <entry>Cornish</entry>
+                        <entry>Kornisch</entry>
                     </row>
                     <row>
                         <entry>ky</entry>
-                        <entry>Kirghiz</entry>
+                        <entry>Kirgisisch</entry>
+                    </row>
+                    <row>
+                        <entry>ln</entry>
+                        <entry>Lingala</entry>
                     </row>
                     <row>
                         <entry>lo</entry>
-                        <entry>Lao</entry>
+                        <entry>Laotisch</entry>
                     </row>
                     <row>
                         <entry>lt</entry>
-                        <entry>Lithuanian</entry>
+                        <entry>Litauisch</entry>
                     </row>
                     <row>
                         <entry>lv</entry>
-                        <entry>Latvian</entry>
+                        <entry>Lettisch</entry>
                     </row>
                     <row>
                         <entry>mk</entry>
-                        <entry>Macedonian</entry>
+                        <entry>Mazedonisch</entry>
                     </row>
                     <row>
                         <entry>ml</entry>
@@ -248,7 +304,7 @@
                     </row>
                     <row>
                         <entry>mn</entry>
-                        <entry>Mongolian</entry>
+                        <entry>Mongolisch</entry>
                     </row>
                     <row>
                         <entry>mr</entry>
@@ -256,23 +312,39 @@
                     </row>
                     <row>
                         <entry>ms</entry>
-                        <entry>Malay</entry>
+                        <entry>Malaiisch</entry>
                     </row>
                     <row>
                         <entry>mt</entry>
-                        <entry>Maltese</entry>
+                        <entry>Maltesisch</entry>
                     </row>
                     <row>
                         <entry>nb</entry>
-                        <entry>Norwegian Bokmal</entry>
+                        <entry>Norwegisch Bokmål</entry>
+                    </row>
+                    <row>
+                        <entry>ne</entry>
+                        <entry>Nepalesisch</entry>
                     </row>
                     <row>
                         <entry>nl</entry>
-                        <entry>Dutch</entry>
+                        <entry>Niederländisch</entry>
                     </row>
                     <row>
                         <entry>nn</entry>
-                        <entry>Norwegian Nynorsk</entry>
+                        <entry>Norwegisch Nynorsk</entry>
+                    </row>
+                    <row>
+                        <entry>nr</entry>
+                        <entry>Ndebele-Sprache (Süd)</entry>
+                    </row>
+                    <row>
+                        <entry>nso</entry>
+                        <entry>Sotho-Sprache (Nord)</entry>
+                    </row>
+                    <row>
+                        <entry>ny</entry>
+                        <entry>Chewa-Sprache</entry>
                     </row>
                     <row>
                         <entry>om</entry>
@@ -280,39 +352,47 @@
                     </row>
                     <row>
                         <entry>or</entry>
-                        <entry>Oriya</entry>
+                        <entry>Orija</entry>
                     </row>
                     <row>
                         <entry>pa</entry>
-                        <entry>Punjabi</entry>
+                        <entry>Pandschabisch</entry>
                     </row>
                     <row>
                         <entry>pl</entry>
-                        <entry>Polish</entry>
+                        <entry>Polnisch</entry>
                     </row>
                     <row>
                         <entry>ps</entry>
-                        <entry>Pashto (Pushto)</entry>
+                        <entry>Afghanisch (Paschtu)</entry>
                     </row>
                     <row>
                         <entry>pt</entry>
-                        <entry>Portuguese</entry>
+                        <entry>Portugiesisch</entry>
                     </row>
                     <row>
                         <entry>ro</entry>
-                        <entry>Romanian</entry>
+                        <entry>Rumänisch</entry>
                     </row>
                     <row>
                         <entry>ru</entry>
-                        <entry>Russian</entry>
+                        <entry>Russisch</entry>
+                    </row>
+                    <row>
+                        <entry>rw</entry>
+                        <entry>Ruandisch</entry>
                     </row>
                     <row>
                         <entry>sa</entry>
                         <entry>Sanskrit</entry>
                     </row>
                     <row>
+                        <entry>se</entry>
+                        <entry>Nord-Samisch</entry>
+                    </row>
+                    <row>
                         <entry>sh</entry>
-                        <entry>Serbo-Croatian</entry>
+                        <entry>Serbo-Kroatisch</entry>
                     </row>
                     <row>
                         <entry>sid</entry>
@@ -320,11 +400,11 @@
                     </row>
                     <row>
                         <entry>sk</entry>
-                        <entry>Slovak</entry>
+                        <entry>Slowakisch</entry>
                     </row>
                     <row>
                         <entry>sl</entry>
-                        <entry>Slovenian</entry>
+                        <entry>Slowenisch</entry>
                     </row>
                     <row>
                         <entry>so</entry>
@@ -332,31 +412,43 @@
                     </row>
                     <row>
                         <entry>sq</entry>
-                        <entry>Albanian</entry>
+                        <entry>Albanisch</entry>
                     </row>
                     <row>
                         <entry>sr</entry>
-                        <entry>Serbian</entry>
+                        <entry>Serbisch</entry>
+                    </row>
+                    <row>
+                        <entry>ss</entry>
+                        <entry>Swazi</entry>
+                    </row>
+                    <row>
+                        <entry>st</entry>
+                        <entry>Süd-Sotho-Sprache</entry>
                     </row>
                     <row>
                         <entry>sv</entry>
-                        <entry>Swedish</entry>
+                        <entry>Schwedisch</entry>
                     </row>
                     <row>
                         <entry>sw</entry>
-                        <entry>Swahili</entry>
+                        <entry>Suaheli</entry>
                     </row>
                     <row>
                         <entry>syr</entry>
-                        <entry>Syriac</entry>
+                        <entry>Syrisch</entry>
                     </row>
                     <row>
                         <entry>ta</entry>
-                        <entry>Tamil</entry>
+                        <entry>Tamilisch</entry>
                     </row>
                     <row>
                         <entry>te</entry>
                         <entry>Telugu</entry>
+                    </row>
+                    <row>
+                        <entry>tg</entry>
+                        <entry>Tadschikisch</entry>
                     </row>
                     <row>
                         <entry>th</entry>
@@ -364,23 +456,31 @@
                     </row>
                     <row>
                         <entry>ti</entry>
-                        <entry>Tigrinya</entry>
+                        <entry>Tigrinja</entry>
                     </row>
                     <row>
                         <entry>tig</entry>
                         <entry>Tigre</entry>
                     </row>
                     <row>
+                        <entry>tn</entry>
+                        <entry>Tswana-Sprache</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
-                        <entry>Turkish</entry>
+                        <entry>Türkisch</entry>
+                    </row>
+                    <row>
+                        <entry>ts</entry>
+                        <entry>Tsonga</entry>
                     </row>
                     <row>
                         <entry>tt</entry>
-                        <entry>Tatar</entry>
+                        <entry>Tatarisch</entry>
                     </row>
                     <row>
                         <entry>uk</entry>
-                        <entry>Ukrainian</entry>
+                        <entry>Ukrainisch</entry>
                     </row>
                     <row>
                         <entry>ur</entry>
@@ -388,19 +488,35 @@
                     </row>
                     <row>
                         <entry>uz</entry>
-                        <entry>Uzbek</entry>
+                        <entry>Usbekisch</entry>
+                    </row>
+                    <row>
+                        <entry>ve</entry>
+                        <entry>Venda-Sprache</entry>
                     </row>
                     <row>
                         <entry>vi</entry>
-                        <entry>Vietnamese</entry>
+                        <entry>Vietnamesisch</entry>
                     </row>
                     <row>
                         <entry>wal</entry>
-                        <entry>Walamo</entry>
+                        <entry>Walamo-Sprache</entry>
+                    </row>
+                    <row>
+                        <entry>xh</entry>
+                        <entry>Xhosa</entry>
+                    </row>
+                    <row>
+                        <entry>yo</entry>
+                        <entry>Joruba</entry>
                     </row>
                     <row>
                         <entry>zh</entry>
-                        <entry>Chinese</entry>
+                        <entry>Chinesisch</entry>
+                    </row>
+                    <row>
+                        <entry>zu</entry>
+                        <entry>Zulu</entry>
                     </row>
                 </tbody>
             </tgroup>
