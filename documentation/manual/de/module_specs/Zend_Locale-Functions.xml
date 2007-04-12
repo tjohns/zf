@@ -311,6 +311,12 @@ print $locale->toString();
                         <entry>List of all countries and the known spoken language within these countries</entry>
                         <entry>Complete</entry>
                     </row>
+                    <row>
+                        <entry>Characters</entry>
+                        <entry />
+                        <entry>List of known characters for this locale, regex syntax.</entry>
+                        <entry>Complete</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
