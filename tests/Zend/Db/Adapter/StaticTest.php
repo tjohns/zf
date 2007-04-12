@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,31 +18,56 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * PHPUnit_Framework_TestCase
+ */
 require_once 'PHPUnit/Framework/TestCase.php';
+
+/**
+ * PHPUnit_Util_Filter
+ */
 require_once 'PHPUnit/Util/Filter.php';
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+/**
+ * @see Zend_Db
+ */
 require_once 'Zend/Db.php';
+
+/**
+ * @see Zend_Db_Adapter_Static
+ */
 require_once 'Zend/Db/Adapter/Static.php';
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
 {
 
-    function testFactory()
+    public function testFactory()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    function testConstructorWithoutFactory()
+    public function testConstructorWithoutFactory()
     {
         $db = new Zend_Db_Adapter_Static( array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    function testGetConnection()
+    public function testGetConnection()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
 
@@ -49,14 +75,14 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $this->assertThat($conn, $this->isInstanceOf('Zend_Db_Adapter_Static'));
     }
 
-    function testGetFetchMode()
+    public function testGetFetchMode()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
         $mode = $db->getFetchMode();
         $this->assertType('integer', $mode);
     }
 
-    function testExceptionInvalidDriverName()
+    public function testExceptionInvalidDriverName()
     {
         try {
             $db = Zend_Db::factory(null);
@@ -67,7 +93,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    function testExceptionInvalidOptionsArray()
+    public function testExceptionInvalidOptionsArray()
     {
         try {
             $db = Zend_Db::factory('Static', 'scalar');
@@ -78,17 +104,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    function testExceptionInvalidOptionsArrayWithoutFactory()
-    {
-        try {
-            $db = new Zend_Db_Adapter_Static('scalar');
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertContains('Argument 1 passed to Zend_Db_Adapter_Abstract::__construct() must be an array, string given', $e->getMessage());
-        }
-    }
-
-    function testExceptionNoConfig()
+    public function testExceptionNoConfig()
     {
         try {
             $db = Zend_Db::factory('Static', null);
@@ -99,7 +115,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    function testExceptionNoDatabaseName()
+    public function testExceptionNoDatabaseName()
     {
         try {
             $db = Zend_Db::factory('Static', array());
