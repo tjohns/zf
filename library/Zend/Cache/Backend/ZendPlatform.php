@@ -19,6 +19,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Cache_Backend_Interface
+ */
+require_once 'Zend/Cache/Backend.php';
 
 /**
  * Zend_Cache_Backend_Interface
