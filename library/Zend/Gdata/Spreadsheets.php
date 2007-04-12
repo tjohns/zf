@@ -19,6 +19,11 @@
  */
 
 /**
+ * Zend_Gdata
+ */
+require_once 'Zend/Gdata.php';
+
+/**
  * Zend_Gdata_InvalidArgumentException
  */
 require_once 'Zend/Gdata/InvalidArgumentException.php';
