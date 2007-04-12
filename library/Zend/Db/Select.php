@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,17 +18,20 @@
  * @subpackage Select
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Adapter_Abstract
+ * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
 
 /**
- * Zend_Db_Expr
+ * @see Zend_Db_Expr
  */
 require_once 'Zend/Db/Expr.php';
+
 
 /**
  * Class for SQL SELECT generation and results.
@@ -284,7 +288,7 @@ class Zend_Db_Select
      * The second parameter can be a single string or Zend_Db_Expr object,
      * or else an array of strings or Zend_Db_Expr objects.
      *
-     * The first parameter can be null or an empty string, in which case 
+     * The first parameter can be null or an empty string, in which case
      * no correlation name is generated or prepended to the columns named
      * in the second parameter.
      *
@@ -367,7 +371,7 @@ class Zend_Db_Select
 
     /**
      * Generate a unique correlation name
-     * 
+     *
      * @param string|array $name A qualified identifier.
      * @return string A unique correlation name.
      */
@@ -597,7 +601,7 @@ class Zend_Db_Select
     /**
      * Adds grouping to the query.
      *
-     * @param mixed $spec The column(s) to group by.
+     * @param  array|string $spec The column(s) to group by.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function group($spec)
@@ -607,7 +611,7 @@ class Zend_Db_Select
         }
 
         foreach ($spec as $val) {
-            if (preg_match('/\(.*\)/', $val)) {
+            if (preg_match('/\(.*\)/', (string) $val)) {
                 $val = new Zend_Db_Expr($val);
             }
             $this->_parts[self::GROUP][] = $val;
