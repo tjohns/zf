@@ -1,83 +1,80 @@
 <sect1 id="zend.locale.introduction">
 
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        <code>Zend_Locale</code> is the Frameworks answer to the question, "How can the same application be used around
-        the whole world?" Most people will say, "That's easy. Let's translate all our output to several languages."
-        However, using simple translation tables to map phrases from one language to another is not sufficient.
-        Different regions will have different conventions for first names, surnames, salutory titles, formatting of
-        numbers, dates, times, currencies, etc.
+        <code>Zend_Locale</code> ist die Antwort des Frameworks auf die Frage "Wie kann die selbe Applikation
+        auf der ganzen Welt verwendet werden?". Die meisten Leute werden sagen "Das ist einfach. Lasst uns alle
+        Ausgaben in die unterschiedlichsten Sprachen übersetzen". Aber, eine einfache Übersetzungstabelle die
+        Phrasen von einer Sprache in die andere übersetzt ist nicht genug. Verschiedene Regionen haben auch
+        unterschiedliche Regeln für Vornamen, Nachnamen, Titel, Format von Nummern, Daten, Zeiten, Währungen usw.
     </para>
 
     <para>
-        We need
-        <ulink url="http://en.wikipedia.org/wiki/L10n">Localization</ulink>
-        and complementary
-        <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalization</ulink>
-        . Both are often abbreviated to <code>L10N</code> and <code>I18N</code>. Internationalization refers more to
-        support for use of systems, regardless of special needs unique to groups of users related by language, region,
-        number format conventions, financial conventions, time and date conventions, etc. Localization involves adding
-        explicit support to systems for special needs of these unique groups, such as language translation, and support
-        for local customs or conventions for communicating plurals, dates, times, currencies, names, symbols, sorting
-        and ordering, etc. <code>L10N</code> and <code>I18N</code> compliment each other. The Zend Framework provides
-        support for these through a combination of components, including Zend_Locale, Zend_Date, Zend_Measure,
-        Zend_Translate, Zend_Currency, and Zend_TimeSync.
+        Was wir benötigen ist
+        <ulink url="http://en.wikipedia.org/wiki/L10n">Lokalisierung</ulink>
+        und die vergleichbare
+        <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalisierung</ulink>
+        . Beide werden oft abgekürzt zu <code>L10N</code> und <code>I18N</code>. Internationalisierung bezeichnet
+        mehr die Benutzung von Systemen für die spezielle Benutzung durch eindeutige Gruppen wie zum Beispiel
+        Sprachübersetzung, Unterstützung von lokalen Konventionen für Plurale, Daten, Zeiten, Währungen, Namen,
+        Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10N</code> und <code>I18N</code> sind einander
+        sehr ähnlich. Der Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
+        Komponenten wie Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency und Zend_TimeSync.
     </para>
 
     <sect2 id="zend.locale.whatislocalization">
 
-        <title>What is Localization</title>
+        <title>Was ist Lokalisierung</title>
 
         <para>
-            Localization means that an application (or homepage) can be used from different users which speak different
-            languages. But as you already have expected Localization means more than only translating strings. It
-            includes
+            Lokalisierung bedeutet das eine Anwendung (oder Homepage) von verschiedenen Benutzer verwendet werden
+            kann die unterschiedliche Sprachen sprechen. Aber wie bereits angedeutet heißt Lokalisierung mehr
+            als nur die Übersetzung von Strings. Es beinhaltet
         </para>
 
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <code>Zend_Locale</code> - Backend support of locales available for localization support within
-                    other ZF components.
+                    <code>Zend_Locale</code> - Unterstützung für Gebietsschemata welche Unterstützung für
+                    Lokalisierungen von anderen ZF Komponenten bieten.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Translate</code> - Translating of strings.
+                    <code>Zend_Translate</code> - Übersetzung von Strings.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Date</code> - Localization of dates, times.
+                    <code>Zend_Date</code> - Lokalisierung von Daten und Zeiten.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Calendar</code> - Localization of calendars (support for non-Gregorian calendar systems)
+                    <code>Zend_Calendar</code> - Lokalisierung von Kalendern (Unterstützung für nicht Gregorianische Kalendersysteme)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Currency</code> - Localization of currencies.
+                    <code>Zend_Currency</code> - Lokalisierung von Währungen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Format</code> - Parsing and generating localized numbers.
+                    <code>Zend_Locale_Format</code> - Erkennen und erzeugen von lokalisierten Zahlen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Data</code> - Retrieve localized standard strings as country names, language names
-                    and
-                    <ulink url="http://unicode.org/cldr/">more from the CLDR</ulink>
+                    <code>Zend_Locale_Data</code> - Empfangen von lokalisierten Standard Übersetzungen für
+                    Länder, Sprachen und <ulink url="http://unicode.org/cldr/">mehr aus der CLDR</ulink>
                     .
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>TODO</code> - Localization of collations
+                    <code>TODO</code> - Lokalisierung von Sammlungen
                 </para>
             </listitem>
         </itemizedlist>
@@ -87,124 +84,133 @@
     <sect2 id="zend.locale.whatis">
 
         <title>
-            <ulink url="http://unicode.org/reports/tr35/#Locale">What is a Locale?</ulink>
+            <ulink url="http://unicode.org/reports/tr35/#Locale">Was ist ein Gebietsschema?</ulink>
         </title>
 
         <para>
-            Each computer user makes use of Locales, even when they don't know it. Applications lacking localization
-            support, normally have implicit support for one particular locale (the locale of the author). When a class
-            or function makes use of localization, we say it is <code>locale-aware</code>. How does the code know which
-            localization the user is expecting?
+            Jeder Computer benutzt Gebietsschemata, selbst wenn Sie es nicht wissen. Anwendungen welche keine
+            Unterstützung für Lokalisierung bieten, unterstützen zumindest genau ein Gebietsschema (das
+            Gebietsschema des Authors). Wenn eine Klasse oder Funktion Lokalisierung verwendet sagen wir sie ist
+            Lokalisierbar. Aber wie weiß der Code welches Gebietsschema ein Benutzer erwartet ?
         </para>
 
         <para>
-            A locale string or object identifying a supported locale gives <code>Zend_Locale</code> and it's subclasses
-            access to information about the language and region expected by the user. Correct formatting, normalization,
-            and conversions are made based on this information.
+            Ein Gebietsschema String oder Objekt welches ein unterstütztes Gebietsschema identifiziert, gibt
+            <code>Zend_Locale</code> und dessen Unterklassen Zugriff auf Informationen über die Sprache und
+            Region welche der Benutzer erwartet. Formatierungen, Normalisierungen und Konvertierungen werden
+            anhand dieser Informationen durchgeführt.
         </para>
 
     </sect2>
 
     <sect2 id="zend.locale.representation">
 
-        <title>How are Locales Represented?</title>
+        <title>Wodurch werden Gebietsschemata representiert?</title>
 
         <para>
-            Locale identifiers consist of information about the user's language and preferred/primary geographic region
-            (e.g. state or province of home or workplace). The locale identifier strings used in the Zend Framework are
-            internationally defined standard abbreviations of language and region, written as
-            <code>language_REGION</code>. Both the language and region parts are abbreviated to 2 alphabetic, ASCII
-            characters.
+            Ein Gebietsschema String besteht aus Informationen über die Sprache des Benutzers und die
+            bevorzugte/primäre geographische Region (z.B. Staat oder Region von seinem Zuhause oder Arbeitsplatz).
+            Die Gebietsschema Strings welche im Zend Framework benutzt werden sind international definierte
+            Standard Abkürzungen von Sprachen und Regionen. Sie werden geschrieben als <code>sprache_REGION</code>.
+            Beide Teile, sowohl Sprache als auch Region, werden abgekürzt zu 2 Buchstaben, ASCII Zeichen.
         </para>
 
         <para>
-            A user from USA would expect the language <code>English</code> and the region <code>USA</code>, yielding the
-            locale identifier "en_US". A user in Germany would expect the language <code>German</code> and the region
-            <code>Germany</code>, yielding the locale identifier "de_DE". See the
-            <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">list of pre-defined locale and region combinations</ulink>
-            , if you need to select a specific locale within the Zend Framework.
+            Ein Benutzer von den USA würde die Sprache <code>Englisch</code> und die Region <code>USA</code>
+            erwarten, beschrieben durch das Gebietsschema "en_US". Ein Benutzer von Deutschland würde die Sprache
+            <code>Deutsch</code> und die Region <code>Deutschland</code> erwarten, beschrieben durch das
+            Gebietsschema "de_DE". Hier findest Du eine 
+            <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">Liste von vordefinierten Sprachen und Kombinationen von Regionen</ulink>
+            wenn ein bestimmtes Gebietsschema im Zend Framework ausgewählt werden muß.
         </para>
 
         <example>
-            <title>Choosing a specific locale</title>
+            <title>Auswählen eines speziellen Gebietsschemas</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale';
-$locale = new Zend_Locale('de_DE'); // German language _ Germany
+$locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland
 ?>]]></programlisting>
         </example>
 
         <para>
-            A German user in America might expect the language <code>German</code> and the region <code>USA</code>, but
-            these non-standard mixes are not supported directly as recognized "locales". Instead, if an invalid
-            combination is used, then it will automatically be truncated by dropping the region code. For example,
-            "de_IS" would be truncated to "de", and "xh_RU" would be truncated to "xh", because neither of these
-            combinations are valid. Additionally, if the base language code is not supported (e.g. "zz_US") or does not
-            exist, then a default "root" locale will be used. The "root" locale has default definitions for
-            internationally recognized representations of dates, times, numbers, currencies, etc. The truncation process
-            depends on the requested information, since some combinations of language and region might be valid for one
-            type of data (e.g. dates), but not for another (e.g. currency format).
+            Ein deutscher Benutzer in Amerika würde die Sprache <code>Deutsch</code> und die region <code>USA</code>
+            erwarten, aber diese nicht-standardmäßigen Mischungen werden nicht als direkt als "Gebietsschema"
+            unterstützt und erkannt. Wird stattdessen eine ungültige Kombination benutzt, dann wird Sie automatisch
+            gekürzt, indem die Region entfernt wird. Zum Beispiel würde "de_IS" zu "de" gekürzt werden, und "xh_RU"
+            würde zu "xh" gekürzt werden, weil keiner dieser Kombinationen gültig ist. Zusätzlich, wenn die Sprache
+            nicht unterstützt wird (z.B. "zz_US") oder diese nicht existiert, dann wird ein Standard "root"
+            Gebietsschema benutzt. Dieses "root" Gebietsschema hat Standarddefinitionen für international bekannte
+            Repräsentationen von Daten, Zeiten, Nummern, Währungen usw. Der Prozess der Kürzung hängt von der
+            gewünschten Information ab, weil einige Kombinationen von Sprache und Region für eine gewisse Art von
+            Informationen gültig sind (z.B. Daten) aber für andere nicht (z.B. Währungs Formate).
         </para>
 
         <para>
-            Beware of historical changes, as ZF components do not know about or attempt to track the numerous timezone
-            changes made over many years by many regions. For example,
-            <ulink url="http://www.statoids.com/tus.html">we can see a historical list</ulink>
-            showing dozens of changes made by governments to when and if a particular region observes Daylight Savings
-            Time, and even which timezone a particular geographic area belongs. Thus, when performing date math, the
-            math performed by ZF components will not adjust for these changes, but instead will give the correct time
-            for the timezone using current, modern rules for DST and timezone assignment for geographic regions.
+            Achtung vor historischen Änderungen oder dem Versuch die verschiedenen Änderungen der Zeitzonen die
+            im Laufe der langen Zeit in den vielen Regionen gemacht wurden, da ZF Komponenten darüber nichts
+            wissen. Zum Beispiel kann <ulink url="http://www.statoids.com/tus.html">hier eine historische Liste</ulink>
+            mit dutzenden Änderungen von Regierungen angesehen werden und ob eine Region Sommer-/Winterzeit
+            unterstützt und sogar in welche Zeitzone eine bestimmte geographische Region gehört. Das bedeutet, wenn
+            Datumsberechnungen gemacht werden, wird die Berechnung welche durch die ZF Komponenten durchgeführt wird,
+            nicht an diese Änderungen angepasst. Stattdessen wird die korrekte Uhrzeit benutzt, welche für die aktuell
+            benutzte Zeitzone angegeben wurde, wobei moderne Regeln für Sommer-/Winterzeit und Zeitzonen Zuordnung
+            anhand von geographischen Regionen verwendet werden. 
         </para>
 
     </sect2>
 
     <sect2 id="zend.locale.selection">
 
-        <title>Selecting the Right Locale</title>
+        <title>Auswahl des richtigen Gebietsschemas</title>
 
         <para>
-            For most situations, <code>new Zend_Locale()</code> will automatically select the correct locale, with
-            preference given to information provided by the user's web browser. However, if <code>new
-            Zend_Locale(Zend_Locale::ENVIRONMENT)</code> is used, then preference will be given to using the host
-            server's environment configuration, as described below.
+            In den meisten Situationen wird <code>new Zend_Locale()</code> automatisch das richtige
+            Gebietsschema auswählen, wobei die Informationen benutzt werden welche der Webbrowser des
+            Benutzers zur Verfügung stellt. Wenn statt dessen <code>new Zend_Locale(Zend_Locale::ENVIRONMENT</code>
+            benutzt wird, dann werden die Informationen vom Betriebsystem des hostenden Servers, wie anbei
+            beschrieben, dafür genommen.
         </para>
 
         <example>
-            <title>Automatically selecting a locale</title>
+            <title>Automatische Auswahl des Gebietsschemas</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 $locale  = new Zend_Locale();
-$locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // default behavior, same as above
-$locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // prefer settings on host server
-$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app default settings
+$locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // Standard verhalten, wie eine Zeile weiter oben
+$locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // Bevorzuge die Einstellungen des hostenden Servers
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellungen der Framework Anwendung
 ?>]]></programlisting>
         </example>
 
         <para>
-            The seach algorithm used by <code>Zend_Locale</code> for automatic selection of a locale uses three sources
-            of information:
+            Der Suchalgorithmus, welcher von <code>Zend_Locale</code> für die automatische Auswahl des
+            Gebietsschemas verwendet wird beherrscht drei Informationsquellen:
             <orderedlist>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::BROWSER</code> - The user's Web browser provides information with each
-                        request, which is published by PHP in the global variable <code>HTTP_ACCEPT_LANGUAGE</code>. If
-                        no matching locale can be found, then preference is given to <code>ENVIRONMENT</code> and lastly
-                        <code>FRAMEWORK</code>.
+                        const <code>Zend_Locale::BROWSER</code> - Der Webbrowser des Benutzer welcher die 
+                        Informationen mit jeder Anfrage schickt. Diese wird von PHP durch die globale Variable
+                        <code>HTTP_ACCEPT_LANGUAGE</code> veröffentlicht. Wenn kein passendes
+                        Gebietsschema gefunden wurde, dann wird mit <code>ENVIRONMENT</code> gesucht und
+                        als letztes mit <code>FRAMEWORK</code> gesucht.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::ENVIRONMENT</code> - PHP publishes the host server's locale via the PHP
-                        internal function <code>setlocale()</code>. If no matching locale can be found, then preference
-                        is given to FRAMEWORK and lastly BROWSER.
+                        const <code>Zend_Locale::ENVIRONMENT</code> - PHP veröffentlicht das Gebietsschema
+                        des hostenden Servers über die interne PHP Funktion <code>setlocale()</code>. Wenn
+                        kein passendes Gebietsschema gefunden wurde, dann wird mit <code>FRAMEWORK</code>
+                        und als letztes mit <code>BROWSER</code> gesucht.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::FRAMEWORK</code> - When the Zend Framework has a standardized way of
-                        specifying component defaults (planned, but not yet available), then using this constant during
-                        instantiation will give preference to choosing a locale based on these defaults. If no matching
-                        locale can be found, then preference is given to <code>ENVIRONMENT</code> and lastly
-                        <code>BROWSER</code>.
+                        const <code>Zend_Locale::FRAMEWORK</code> - Wenn der Zend Framework einen standartisierten
+                        Weg zur Verfügung stellt um für Komponenten Standardwerte zu definieren (das ist geplant
+                        aber noch nicht realisiert), dann wird die Verwendung dieser Konstante das
+                        Gebietsschema anhand dieser Standardwerte auswählen. Wenn kein passendes Gebietsschema
+                        gefunden wurde, dann wird mit <code>ENVIRONMENT</code> und als letztes mit
+                        <code>BROWSER</code> gesucht.
                     </para>
                 </listitem>
             </orderedlist>
@@ -214,17 +220,18 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
 
     <sect2 id="zend.locale.interoperate">
 
-        <title>ZF Locale-Aware Classes</title>
+        <title>ZF lokalisierbare Klassen</title>
 
         <para>
-            In the ZF, locale-aware classes rely on <code>Zend_Locale</code> to automatically select a locale, as
-            explained above. For example, in a ZF web application, constructing a date using <code>Zend_Date</code>
-            without specifying a locale results in an object with a locale based on information provided by the current
-            user's web browser.
+            Im ZF sind lokalisierbare Klassen von <code>Zend_Locale</code> abhängig um ein Gebietsschema
+            automatisch auszuwählen, wie im oberen Abschnitt geschrieben. Das Erstellen eines Datums durch
+            Verwendung von <code>Zend_Date</code> ohne die Angabe eines Gebietsschemas führt als Ergebnis zu
+            einem Objekt mit einem Gebietsschema, basierend auf den Informationen welche durch den Webbrowser des
+            Benutzers zur Verfügung gestellt werden.
         </para>
 
         <example>
-            <title>Dates default to correct locale of web users</title>
+            <title>Daten verwenden das aktuelle Gebietsschema des Web Benutzers</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 $date = new Zend_Date('2006',Zend_Date::YEAR);
@@ -232,13 +239,13 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
         </example>
 
         <para>
-            To override this default behavior, and force locale-aware ZF components to use specific locales, regardless
-            of the origin of your website visitors, explicitly specify a locale as the third argument to the
-            constructor.
+            Um dieses Standardverhalten zu übergehen, und die eine lokalisierbare ZF Komponente dazu zu bringen
+            ein spezielles Gebietsschema zu benutzen welches unabhängig vom Gebietsschema des Besucher der
+            Webseite ist, muß als dritter Parameter im Konstruktor das Gebietsschema angegeben werden.
         </para>
 
         <example>
-            <title>Overriding default locale selection</title>
+            <title>Übergehen der Auswahl des standardmäßigen Gebietsschemas</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
@@ -250,12 +257,13 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
         </example>
 
         <para>
-            If you know many objects should all use the same default locale, explicitly specify the default locale to
-            avoid the overhead of each object determining the default locale.
+            Wenn viele Objekte benutzt werden die alle das gleiche Gebietsschema verwenden, sollte das
+            Gebietsschema explizit definiert werden, um die zusätzliche Arbeit des Objekts durch die
+            Eruierung des Standardmäßigen Gebietsschemas zu verringern.
         </para>
 
         <example>
-            <title>Performance optimization when using a default locale</title>
+            <title>Optimierung der Geschwindigkeit durch Benutzung eines Standard Gebietsschemas</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
@@ -273,26 +281,27 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
         <title>Zend_Locale_Format::setOptions(array $options)</title>
 
         <para>
-            The 'precision' option of a value is used to truncate or stretch extra digits. A value of '-1' disables
-            modification of the number of digits in the fractional part of the value. The 'locale' option helps when
-            parsing numbers and dates using separators and month names. The date format 'format_type' option selects between
-            CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
-            heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
-            format for use with <code>toNumber()</code> (see
+            Die Option 'precision' wird benutzt um einen Wert zu verkürzen oder mit extra Ziffern zu strecken.
+            Ein Wert von '-1' verhindert die Veränderung der Anzahl an Ziffern im Nachkomma-Teil des Wertes.
+            Die 'locale' Option hilft wenn Nummern und Daten geparsed werden und hierbei Trennzeichen oder
+            Monatsnamen verwendet werden. Die Datumsformat Option 'format_type' wählt zwischen CLDR/ISO
+            Datumsdefinitionen und PHP's date() Definitionen. Die Option 'fix_date' erlaubt oder verhindert eine
+            Automatik welche versucht falsche Daten zu korrigieren. Die Option 'number_format' definiert ein
+            Standard Format für Nummern bei Verwendung der Funktion <code>toNumber()</code. (siehe
             <xref 
                 linkend= "zend.locale.number.localize"/>
             ).
         </para>
 
         <para>
-            The 'date_format' option can be used to specify a default date format string, but beware of using getDate(),
-            checkdateFormat() and getTime() after using setOptions() with a 'date_format'. To use these four methods
-            with the default date format for a locale, use array('date_format' => null, 'locale' => $locale) for their
-            options.
+            Die Option 'date_format' kann verwendet werden um ein Standard Datumsformat zu definieren. Aber Achtung
+            bei der Verwendung von getDate(), checkDateFormat() und getTime() nach der Verwendung von setOptions()
+            mit einem 'date_format'. Um diese vier Methoden mit einem Standard Datumsformat für ein Gebietsschema
+            zu benutzen, muß array('date_format' => null, 'locale' => $locale) in deren Optionen angegeben werden.
         </para>
 
         <example>
-            <title>Dates default to correct locale of web users</title>
+            <title>Daten die das richtige Gebietsschema des Web Benutzers verwenden</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
@@ -300,21 +309,22 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
         </example>
 
         <para>
-            For working with the standard definitions of a locale the option Zend_Locale_Format::STANDARD can be used.
-            Setting the option Zend_Locale_Format::STANDARD for date_format uses the standard definitions from the actual
-            set locale. Setting it for number_format uses the standard number format for this locale.
-            And setting it for locale uses the standard locale for this environment or browser.
+            Um mit den Standarddefinitionen eines Gebietsschemas zu arbeiten kann die Konstante
+            Zend_Locale_Format::STANDARD verwendet werden. Das Setzen der Konstante Zend_Locale_Format::STANDARD
+            für 'date_format' benutzt die Standarddefinition des aktuellen Gebietsschemas. Das Setzen für
+            'number_format' benutzt das Standard Nummernformat dieses Gebietsschemas. Und das Setzen für 'locale'
+            verwendet das Standard Gebietsschema des Servers oder Browsers.
         </para>
 
         <example>
-            <title>Using STANDARD definitions for setOptions()</title>
+            <title>Verwendung von STANDARD Definitionen für setOptions()</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
-// overriding the global set date format
+// Überladen des global gesetzten Datumsformats
 $date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
 
-// global setting of the standard locale
+// Überladen des global gesetzten Standard Gebietsschemas
 Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');
 
 ?>]]></programlisting>
