@@ -1,0 +1,804 @@
+<sect1 id="zend.controller.router">
+    <title>The Standard Router: Zend_Controller_Router_Rewrite</title>
+    <sect2 id="zend.controller.router.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Controller_Router_Rewrite</code> is the standard
+            framework router. Routing is the process of taking a URI endpoint
+            (that part of the URI which comes after the base URL) and
+            decomposing it into parameters to determine which controller and
+            action of that controller should receive the request. This value of
+            the controller, action and other parameters is packaged into a
+            <code>Zend_Controller_Request_Http</code> object which is then
+            processed by <code>Zend_Controller_Dispatcher_Standard</code>.
+            Routing occurs only once: when the request is initially received and
+            before the first controller is dispatched.
+        </para>
+
+        <para>
+            <code>Zend_Controller_Router_Rewrite</code> is designed to allow for
+            mod_rewrite like functionality using pure php structures. It is very
+            loosely based on Ruby on Rails routing and does not require any
+            prior knowledge of webserver URL rewriting. It is designed to work
+            with a single Apache mod_rewrite rule (one of):
+        </para>
+
+        <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+
+        <para>
+            or:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
+
+        <para>
+            The rewrite router can also be used with the IIS webserver if <ulink
+                url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> has been
+            installed as an Isapi extension with the following rewrite rule:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
+
+        <note>
+            <title>IIS Isapi_Rewrite</title>
+            <para>
+                When using IIS, <code>$_SERVER['REQUEST_URI']</code> will either
+                not exist, or be set as an empty string. In this case,
+                <code>Zend_Controller_Request_Http</code> will attempt to use
+                the <code>$_SERVER['HTTP_X_REWRITE_URL']</code> value set by the
+                Isapi_Rewrite extension.
+            </para>
+        </note>
+
+        <para>
+            If using Lighttpd, the following rewrite rule is valid:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php")]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.router.usage">
+        <title>Using a router</title>
+
+        <para>
+            To properly use the rewrite router you have to instantiate it, add
+            some user defined routes and inject it into the controller.  The
+            following code illustrates the procedure:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/* Create a router */
+
+$router = $ctrl->getRouter(); // returns a rewrite router by default
+$router->addRoute(
+    'user',
+    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+);
+]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.router.basic">
+        <title>Basic Rewrite Router operation</title>
+
+        <para>
+            The heart of the RewriteRouter is the definition of user defined
+            routes. Routes are added by calling the addRoute method of
+            RewriteRouter and passing in a new instance of a class implementing
+            <code>Zend_Controller_Router_Route_Interface</code>. Eg.:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
+
+        <para>
+            Rewrite Router comes with four basic types of routes (one of which
+            is special): 
+        </para>
+
+        <itemizedlist mark="opencircle">
+            <listitem><para><xref linkend="zend.controller.router.standard-routes" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.static-routes" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.regex-routes" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
+        </itemizedlist>
+        
+        <para>
+            Routes may be used numerous times to create a chain or user defined
+            application routing schema. You may use any number of routes in any
+            configuration, with the exception of Module route which should
+            rather be used once and probably as the most generic route (ie. as a
+            default). Each route will be described in greater detail later on.
+        </para>
+
+        <para>
+            The first parameter to addRoute is the name of the route. It is used
+            as a handle for getting the routes out of the router, eg. for URL
+            generation purposes. The second parameter being the route itself.
+        </para>
+
+        <note>
+            <para>
+                The most common use of the route name is through the means of
+                Zend_View url helper:
+            </para>
+                
+            <programlisting role="php"><![CDATA[
+<a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]></programlisting>
+
+            <para>
+                Which would result in the href: <code>user/martel</code>.
+            </para>
+        </note>
+
+        <para>
+            Routing is a simple process of iterating through all provided routes
+            and matching it's definitions to current request URI. When a
+            positive match is found, variable values are returned from the Route
+            instance and are injected into <code>Zend_Controller_Request</code>
+            object for later use in dispatcher as well as in user created
+            controllers. On a negative match next route in chain is checked.
+        </para>
+            
+        <note>
+            <title>Reverse matching</title>
+            <para>
+                Routes are matched in reverse order so make sure your most
+                generic routes are defined first.
+            </para>
+        </note>
+
+        <note>
+            <title>Returned values</title>
+            <para>
+                Values which are returned from routing come from URL parameters
+                or user defined route defaults. These variables are later
+                accessible through the
+                <code>Zend_Controller_Request::getParam()</code> or
+                <code>Zend_Controller_Action::_getParam()</code> methods.
+            </para>
+        </note>
+
+        <para>
+            There are three special variables which can be used in your routes
+            - 'module', 'controller' and 'action'. These special variables are
+            used by Zend_Controller_Dispatcher to find a controller and action
+            to dispatch to.
+        </para>
+
+        <note>
+            <title>Special variables</title>
+            <para>
+                Names of these special variables may be different if you choose
+                to alter the defaults in
+                <code>Zend_Controller_Request_Http</code> by the means of
+                setControllerKey and setActionKey methods.
+            </para>
+        </note>
+
+    </sect2>
+    
+    <sect2 id="zend.controller.router.default-routes">
+        <title>Default routes</title>
+
+        <para>
+            Zend_Controller_Router_Rewrite comes preconfigured with a default
+            route, which will match URIs in the shape of
+            <code>controller/action</code>.  Additionally, a module name may be
+            specified as the first path element, allowing URIs of the form
+            <code>module/controller/action</code>.  Finally, it will also match
+            any additional parameters appended to the URI by default -
+            <code>controller/action/var1/value1/var2/value2</code>.
+        </para>
+
+        <para>
+            Some examples of how such routes are matched:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Assuming the following:
+$ctrl->setControllerDirectory(
+    array(
+        'default' => '/path/to/default/controllers',
+        'news'    => '/path/to/blog/controllers',
+        'blog'    => '/path/to/blog/controllers'
+    )
+);
+
+Module only:
+http://example/news
+    module == news
+
+Invalid module maps to controller name:
+http://example/foo
+    controller == foo
+
+Module + controller:
+http://example/blog/archive
+    module     == blog
+    controller == archive
+
+Module + controller + action:
+http://example/blog/archive/list
+    module     == blog
+    controller == archive
+    action     == list
+
+Module + controller + action + params:
+http://example/blog/archive/list/sort/alpha/date/desc
+    module     == blog
+    controller == archive
+    action     == list
+    sort       == alpha
+    date       == desc
+]]></programlisting>
+
+        <para>
+            The default route is simply a
+            <code>Zend_Controller_Router_Route_Module</code> object stored under
+            the name (index) of 'default' in RewriteRouter. It's created
+            more-or-less like below:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+$this->addRoute('default', $compat);]]></programlisting>
+
+        <para>
+            If you do not want this particular default route in your routing
+            schema, you may override it by creating your own 'default' route
+            (ie. storing it under the name of 'default') or removing it
+            altogether by using <code>removeDefaultRoutes()</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Remove any default routes
+$router->removeDefaultRoutes();]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.controller.router.rewritebase">
+        <title>Base URL and subdirectories</title>
+
+        <para>
+            The rewrite router can be used in subdirectories (eg.
+            <code>http://domain.com/~user/application-root/</code>>) in which
+            case the base URL of the application
+            (<code>/~user/application-root</code>) should be automatically
+            detected by <code>Zend_Controller_Request_Http</code> and used
+            accordingly.
+        </para>
+
+        <para>
+            Should the base URL be detected incorrectly you can override it with
+            your own base path with the help of
+            <code>Zend_Controller_Request_Http</code> by calling the
+            <code>setBaseUrl()</code> method (see <xref
+                linkend="zend.controller.request.http.baseurl" />):
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$request->setBaseUrl(/~user/application-root/);]]></programlisting>
+
+    </sect2>
+    
+    <sect2 id="zend.controller.router.standard-routes">
+        <title>Zend_Controller_Router_Route</title>
+        
+        <para>
+            <code>Zend_Controller_Router_Route</code> is a standard framework
+            route which combines ease of use with flexible route definition.
+            Each route consists primarily of URL mapping (of static and dynamic
+            parts (variables)) and may be initialized with defaults as well as
+            with variable requirements.
+        </para>
+        
+        <para>
+            Let's imagine our fictional application will need some informational
+            page about the content authors. We want to be able to point our web
+            browsers to <code>http://domain.com/author/martel</code> to see the
+            information about this "martel" guy. And the route for such
+            functionality could look like:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    'author/:username', 
+    array(
+        'controller' => 'profile', 
+        'action'     => 'userinfo'
+    )
+);
+
+$router->addRoute('user', $route);]]></programlisting>            
+
+        <para>
+            First parameter in the <code>Zend_Controller_Router_Route</code>
+            constructor is a route definition that will be matched to a URL.
+            Route definition consists of static and dynamic parts separated by
+            the slash ('/') character. Dynamic parts, called variables, are
+            marked by the colon prepended to the variable name  (eg.
+            <code>:username</code>). Static parts are just a simple text (eg.
+            <code>author</code>).
+        </para>
+
+        <note>
+            <title>Character usage</title>
+            <para>
+                Current implementation allows you to use any characters (except
+                a slash) as a variable identifier but it is strongly recommended
+                that one uses only php variable friendly characters.
+                Implementation may be altered in the future which could result
+                in hidden bugs in your code.
+            </para>
+        </note>
+
+        <para>
+            This example route should be matched when you point your browser to
+            <code>'http://domain.com/author/martel'</code> in which case all
+            it's variables will be injected to the
+            <code>Zend_Controller_Request</code> object and will be accessible
+            in your ProfileController. Variables returned by this example may be
+            represented as an array of following key and value pairs:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$values = array(
+  'username'   => 'martel',
+  'controller' => 'profile',
+  'action'     => 'userinfo'
+);]]></programlisting>            
+
+        <para>
+            Later on <code>Zend_Controller_Dispatcher</code> should invoke
+            userinfoAction method of your ProfileController class (in default
+            module) based on these values. There you will be able to access all
+            variables by the means of Zend_Controller_Action::_getParam or
+            Zend_Controller_Request::getParam methods:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+public function userinfoAction() 
+{
+    $request = $this->getRequest();
+    $username = $request->getParam('username');
+    
+    $username = $this->_getParam('username');
+}
+]]></programlisting>    
+
+        <para>
+            Route definition can contain one more special character - a wildcard
+            - represented by '*' symbol. It is used to gather parameters
+            similarly to Module route (var => value pairs defined in the URI).
+            Following route mimicks Module route behavior:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(':controller/:action/*');
+$router->addRoute('default', $route);]]></programlisting>            
+            
+
+        <sect3 id="zend.controller.router.variable-defaults">
+            <title>Variable defaults</title>
+
+            <para>
+                Every variable in the route can have a default and this is what
+                the second parameter of the
+                <code>Zend_Controller_Router_Route</code> constructor is used
+                for. This parameter is an array with keys representing variable
+                names and with values as desired defaults:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    'archive/:year', 
+    array('year' => 2006)
+);
+$router->addRoute('archive', $route);]]></programlisting>
+
+            <para>
+                Above route will match URLs like
+                <code>'http://domain.com/archive/2005'</code> and
+                <code>'http://example.com/archive'</code>. In the latter case
+                the variable year will have an initial default value of 2006.
+            </para>
+
+            <para>
+                This example will result in injecting a year variable to the
+                request object.  And since no routing information is present (no
+                controller and action parameters are defined) application will
+                be dispatched to default controller and action method (which are
+                both defined in
+                <code>Zend_Controller_Dispatcher_Abstract</code>).  To make it
+                more usable you have to provide a valid controller and a valid
+                action as route's defaults:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    'archive/:year', 
+    array(
+        'year'       => 2006, 
+        'controller' => 'archive',
+        'action'     => 'show'
+    )
+);
+$router->addRoute('archive', $route);]]></programlisting>
+
+            <para>
+                This route will then result in dispatching to showAction of
+                ArchiveController.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.controller.router.variable-requirements">
+            <title>Variable requirements</title>
+
+            <para>
+                One can add a third parameter to the
+                <code>Zend_Controller_Router_Route</code> constructor where
+                variable requirements may be set. These are defined as parts of
+                a regular expression:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    'archive/:year', 
+    array(
+        'year'       => 2006, 
+        'controller' => 'archive',
+        'action'     => 'show'
+    ),
+    array('year' => '\d+')
+);
+$router->addRoute('archive', $route);]]></programlisting>
+
+        </sect3>
+
+    <para>
+        With a route defined like above, Rewrite Router will match it only when
+        the year variable will contain numeric data, eg.
+        <code>http://domain.com/archive/2345</code>. URL of
+        <code>http://example.com/archive/test</code> will not be matched and
+        control will be passed to the next route in chain instead.
+    </para>
+
+    </sect2>        
+
+    <sect2 id="zend.controller.router.static-routes">
+        <title>Zend_Controller_Router_Route_Static</title>
+
+        <para>
+            The examples above all use dynamic routes -- routes that contain
+            patterns to match against. Sometimes, however, a particular route is
+            set in stone, and firing up the regular expression engine would be
+            an overkill. The answer to this situation is to use static routes:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route_Static(
+    'login', 
+    array('controller' => 'auth', 'action' => 'login')
+);
+$router->addRoute('login', $route);]]></programlisting>
+
+        <para>
+            Above route will match a URL of
+            <code>http://domain.com/login</code>.
+        </para>
+        
+    </sect2>
+
+    <sect2 id="zend.controller.router.regex-routes">
+        <title>Zend_Controller_Router_Route_Regex</title>
+
+        <para>
+            In addition to the default and static route types, a Regular
+            Expression route type is available. This route offers more power and
+            flexibility over the others, but at a slight cost of complexity. And
+            should be faster than a standard Route at the same time.
+        </para>
+
+        <para>
+            As well as the standard route, this route has to be initialized with
+            route definition and some defaults. Let's create an archive route as
+            an example, similar to the previoulsy defined one, only using Regex
+            route this time:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)', 
+    array(
+        'controller' => 'archive',
+        'action'     => 'show'
+    )
+);
+$router->addRoute('archive', $route);]]></programlisting>
+            
+        <para>
+            Every defined regex subpattern will be injected to the request
+            object. With our above example, after successful matching
+            <code>http://domain.com/archive/2006</code>, the resulting value
+            array may look like:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$values = array(
+  1            => '2006',
+  'controller' => 'archive',
+  'action'     => 'show'
+);]]></programlisting>            
+
+        <note>
+            <para>
+                Leading and trailing slashes are trimmed from the URL in the
+                Router prior to a match. As a result, matching the URL
+                <code>http://domain.com/foo/bar/</code>, would involve a regex
+                of <code>foo/bar</code>.
+            </para>
+        </note>
+
+        <note>
+            <para>
+                Line start and line end anchors ('^' and '$', respectively) are
+                automatically pre- and appended to all expressions.  Thus, you
+                should not use these in your regular expressions.
+            </para>
+        </note>
+
+        <note>
+            <para>
+                This route class uses the <code>#</code> character for a
+                delimiter. This means that you will need to escape hash
+                characters ('#') in your route definitions.  But since these
+                characters aren't passed to the webserver (named anchors), you
+                will rarely need to do so.
+            </para>
+        </note>
+
+        <para>
+            You can get the contents of the defined subpatterns the usual way:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+public function showAction() 
+{
+    $request = $this->getRequest();
+    $year    = $request->getParam(1); // $year = '2006';
+}
+]]></programlisting>    
+
+        <note>
+            <para>Notice the key is an integer (1) instead of a string ('1').</para>
+        </note>
+        
+        <para>
+            This route will not yet work exactly the same as it's standard route
+            counterpart since the default for 'year' is not yet set. And what
+            may not yet be evident we will have a problem with a trailing slash
+            even if we declare default for the year and make the subpattern
+            optional. The solution is to make the whole year part optional along
+            with the slash but catch only the numeric part:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive(?:/(\d+))?', 
+    array(
+        'year'       => '2006',
+        'controller' => 'archive',
+        'action'     => 'show'
+    )
+);
+$router->addRoute('archive', $route);]]></programlisting>
+            
+        <para>
+            Now let's get to the problem you have probably noticed on your own
+            by now. Using integer based keys for parameters is not an easily
+            manageable solution and may be potentially problematic in the long
+            run. And that's where the third parameter comes in. One which
+            represents a map of regex subpatterns to parameter named keys. Let's
+            work on our easier example:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)', 
+    array(
+        'controller' => 'archive',
+        'action' => 'show'
+    ),
+    array(
+        1 => 'year'
+    )
+);
+$router->addRoute('archive', $route);]]></programlisting>
+
+        <para>
+            This will result in following values injected into Request:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$values = array(
+  'year' => '2006',
+  'controller' => 'archive',
+  'action' => 'show'
+);]]></programlisting>            
+
+        <para>
+            The map may be defined in both ways to make it work in any
+            environment (eg. Zend_Config). Keys may contain variable names or
+            subpattern numbers. 
+        </para>
+        
+        <note>
+            <para>
+                Subpattern keys have to be represented by integers.
+            </para>
+        </note>
+        
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)', 
+    array( ... ),
+    array(1 => 'year')
+);
+
+// OR
+         
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)', 
+    array( ... ),
+    array('year' => 1)
+);       
+]]></programlisting>
+           
+        <para>
+            Notice that the numeric index in Request values is now gone and a
+            named variable is shown in it's place. Of course you can mix numeric
+            and named variables if you wish:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)/page/(\d+)', 
+    array( ... ),
+    array('year' => 1)
+);       
+]]></programlisting>
+
+        <para>
+            Which will result in mixed values available in the Request.  Example
+            URL <code>http://domain.com/archive/2006/page/10</code> will result
+            in following values:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$values = array(
+  'year'       => '2006',
+  2            => 10,
+  'controller' => 'archive',
+  'action'     => 'show'
+);]]></programlisting>            
+
+        <para>
+            Since regex is not easily reversed, you will need to prepare reverse
+            URL if you wish to use an url helper or even an assemble method of
+            this class. This reversed path is represented by a string parsable
+            by sprintf() and is defined as a fourth construct parameter:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'archive/(\d+)', 
+    array( ... ),
+    array('year' => 1),
+    'archive/%s'
+);       
+]]></programlisting>
+
+        <para>
+            All of this is something which was already possible by the means of
+            a standard route object, so where's the benefit in using Regex
+            Route, you ask?  You can describe any type of URL without any
+            restrictions.  Imagine you have a blog and wish to create URLs like:
+            <code>http://domain.com/blog/archive/01-Using_the_Regex_Router.html</code>.
+            Now that's something which was not possible before, is it? Here's
+            the solution:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+    'blog/archive/(\d+)-(.+)\.html',
+    array(
+        'controller' => 'blog', 
+        'action'     => 'view'
+    ), 
+    array(
+        1 => 'id', 
+        2 => 'description'
+    ),
+    'blog/archive/%d-%s.html'
+);
+$router->addRoute('blogArchive', $route);
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.controller.router.add-config">
+        <title>Using Zend_Config with the RewriteRouter</title>
+
+        <para>
+            Sometimes its more convenient to update a configuration file with
+            new routes than to change the code. This is possible via the
+            <code>addConfig()</code> method. Basically, you create a
+            Zend_Config-compatible configuration, and in your code read it in
+            and pass it to the RewriteRouter:
+        </para>
+
+        <para>
+            As an example, consider the following INI file:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+[production]
+routes.archive.route = "archive/:year/*"
+routes.archive.defaults.controller = archive
+routes.archive.defaults.action = show
+routes.archive.defaults.year = 2000
+routes.archive.reqs.year = "\d+"
+
+routes.news.type = "Zend_Controller_Router_Route_Static"
+routes.news.route = "news"
+routes.news.defaults.controller = "news"
+routes.news.defaults.action = "list"
+
+routes.archive.type = "Zend_Controller_Router_Route_Regex"
+routes.archive.route = "archive/(\d+)"
+routes.archive.defaults.controller = "archive"
+routes.archive.defaults.action = "show"
+routes.archive.map.1 = "year" 
+; OR: routes.archive.map.year = 1
+]]></programlisting>
+
+        <para>
+            The above INI file can then be read into a <code>Zend_Config</code>
+            object as follows:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
+$router = new Zend_Controller_Router_Rewrite();
+$router->addConfig($config, 'routes');
+]]></programlisting>
+
+        <para>
+            In the above example, we tell the router to use the 'routes' section
+            of the INI file to use for its routes. Each first-level key under
+            that section will be used to define a route name; the above example
+            defines the routes 'archive' and 'news'. Each route then requires,
+            minimally a 'route' entry and one or more 'defaults' entries;
+            optionally one or more 'reqs' (short for 'required') may be
+            provided. All told, these correspond to the three arguments provided
+            to a <code>Zend_Controller_Router_Route_Interface</code> object. An
+            option key, 'type', can be used to specify the route class type to
+            use for that particular route; by default, it uses
+            <code>Zend_Controller_Router_Route</code>. In the example above, the
+            'news' route is defined to use
+            <code>Zend_Controller_Router_Route_Static</code>.
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
