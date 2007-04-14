@@ -1,6 +1,6 @@
 <sect1 id="zend.date.basic">
 
-    <title>Basic Methods</title>
+    <title>Basis Methoden</title>
 
     <para>
         The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"

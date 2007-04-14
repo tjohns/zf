@@ -1,19 +1,19 @@
 <sect1 id="zend.date.overview">
 
-    <title>Zend_Date API Overview</title>
+    <title>Zend_Date API Übersicht</title>
 
     <para>
-        While the <code>Zend_Date</code> API remains simplistic and unitary, its design remains flexible and powerful
-        through the rich permutations of operations and operands.
+        Obwohl die API von <code>Zend_Date</code> simpel und eindeutig ist, ist dessen Design flexibel und
+        mächtig durch die Vielzahl an Möglcihkeiten von Operationen und Operanden.
     </para>
 
     <sect2 id="zend.date.options">
 
-        <title>Zend_Date Options</title>
+        <title>Zend_Date Optionen</title>
 
         <sect3 id="zend.date.options.formattype">
 
-            <title>Selecting the date format type</title>
+            <title>Auswahl der Art des Datumsformats</title>
 
             <para>
                 Several methods use date format strings, in a way similar to PHP's <code>date()</code>. 

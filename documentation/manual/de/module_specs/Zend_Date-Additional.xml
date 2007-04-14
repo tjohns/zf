@@ -1,16 +1,16 @@
 <sect1 id="zend.date.additional">
 
-    <title>Working examples</title>
+    <title>Funktionierende Beispiele</title>
 
     <para>
-        Within this chapter, we will describe several additional functions which are also avaiable through
-        <code>Zend_Date</code>. Of course all described functions have additional examples to show the
-        expexted working and the simple API for the proper using of them.
+        In diesem Kapitel werden wir verschiedene zusätzliche Funkionen beschreiben welche auch durch 
+        <code>Zend_Date</code> verfügbar sind. Natürlich haben alle beschriebene Funktionen auch Beispiele
+        um die Arbeitsweise, und die einfache API für die richtige Benutzung von Ihnen, zu zeigen.
     </para>
 
     <sect2>
 
-        <title>Checking dates</title>
+        <title>Prüfen von Daten</title>
 
         <para>
             Probably most dates you will get as input are strings. But the problem with strings is that

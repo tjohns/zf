@@ -1,6 +1,6 @@
 <sect1 id="zend.date.constants">
 
-    <title>Constants for General Date Functions</title>
+    <title>Konstanten für generelle Datums Funktionen</title>
 
     <para>
         Whenever a <code>Zend_Date</code> method has a <code>$parts</code> parameter, one of the constants below can be

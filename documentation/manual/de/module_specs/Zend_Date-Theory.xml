@@ -1,9 +1,10 @@
 <sect1 id="zend.date.definition.theory">
 
-    <title>Theory of Operation</title>
+    <title>Theorie der Arbeitsweise</title>
 
     <para>
-        Why is there only one class <code>Zend_Date</code> for handling dates and times in the Zend Framework?
+        Warum gibt es nur eine Klasse <code>Zend_Date</code> für das Arbeiten mit Daten und Zeiten im
+        Zend Framework ?
     </para>
 
     <para>
@@ -20,13 +21,13 @@
 
     <sect2 id="zend.date.theory.internals">
 
-        <title>Internals</title>
+        <title>Internes</title>
 
         <para>
             <itemizedlist mark='opencircle'>
                 <listitem>
                     <para>
-                        UNIX Timestamp
+                        UNIX Zeitpunkte
                     </para>
                     <para>
                         All dates and times, even ambiguous ones (e.g. no year), are represented internally as absolute
@@ -48,10 +49,11 @@
                 </listitem>
                 <listitem>
                     <para>
-                        PHP functions
+                        PHP Funktionen
                     </para>
                     <para>
-                        Where possible, <code>Zend_Date</code> usually uses PHP functions to improve performance.
+                        Wo es möglich ist verwendet <code>Zend_Date</code> normalerweise PHP Funktionen um die
+                        Geschwindigkeit zu erhöhen.
                     </para>
                 </listitem>
             </itemizedlist>
