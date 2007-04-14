@@ -1,43 +1,45 @@
 <sect1 id="zend.locale.functions">
 
-    <title>Using Zend_Locale</title>
+    <title>Zend_Locale verwenden</title>
 
     <para>
-        <code>Zend_Locale</code> also provides localized information about locales for each locale, including localized
-        names for other locales, days of the week, month names, etc.
+        <code>Zend_Locale</code> liefert auch lokalisierte Informationen über Gebietsschema für jedes
+        Gebietsschema. Das beinhaltet unser anderem lokalisierte Namen für andere gebietsschema, Tage
+        der Woche, Monatsnamen, usw.
     </para>
 
     <sect2 id="zend.locale.copying">
 
-        <title>Copying, Cloning, and Serializing Locale Objects</title>
+        <title>Kopieren, Klonen und Serialisieren von Gebietsschema Objekten</title>
 
         <para>
-            Use
-            <ulink url="http://php.net/language.oop5.cloning">object cloning</ulink>
-            to duplicate a locale object exactly and efficiently. Most locale-aware methods also accept string
-            representations of locales, such as the result of <code>$locale->toString()</code>.
+            Verwende
+            <ulink url="http://php.net/language.oop5.cloning">Klonen von Objekten</ulink>
+            um Gebietsschema Objekte exakt und effizient zu duplizieren. Die meisten lokalisierbaren
+            Methoden akzeptieren auch einen String welcher das Gebietsschema repräsentiert. Dieser
+            entspricht dem Ergebnis von <code>$locale->toString()</code>.
         </para>
 
         <example>
-            <title>clone</title>
+            <title>Klonen</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('ar');
 
-// Save the $locale object as a serialization
+// Speichere das $locale Objekt als Serialisierung
 $serializedLocale = $locale->serialize();
-// re-create the original object
+// Wiedererstellung des Original Objekts
 $localeObject = unserialize($serializedLocale);
 
-// Obtain a string identification of the locale
+// Erhalte einen String welcher das Gebietsschema identifiziert
 $stringLocale = $locale->toString();
 
-// Make a cloned copy of the $local object
+// Erstelle eine geklonte Kopie des $locale Objektes
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
+print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toString(); auf
 ?>]]></programlisting>
         </example>
 
@@ -45,24 +47,25 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
 
     <sect2 id="zend.locale.equals">
 
-        <title>isEqual() - Equality</title>
+        <title>isEqual() - Gleichheit</title>
 
         <para>
-            <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
-            classes should provide a similar equality check.
+            <code>Zend_Locale</code> bietet auch eine erwartete Funktion zum Vergleichen von zwei
+            Gebietsschema an. Alle lokalisierbaren Klassen sollten eine Vergleichbare Funktion für
+            eine Gleichheitsprüfung anbieten.
         </para>
 
         <example>
-            <title>Check for equal locales</title>
+            <title>Prüfung auf gleiche Gebietsschemata</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
-// Check if locales are equal
+// Prüfe ob die Gebietsschema gleich sind
 if ($locale->isEqual($mylocale) { 
-    print "Locales are equal";
+    print "Die Gebietsschemata sind gleich";
 }
 ?>]]></programlisting>
         </example>
@@ -71,41 +74,40 @@ if ($locale->isEqual($mylocale) {
 
     <sect2 id="zend.locale.getdefault">
 
-        <title>Default locales</title>
+        <title>Standard Gebietsschemata</title>
 
         <para>
-            The method <code>getDefault()</code> returns an array of relevant locales using information from the user's
-            web browser (if available), information from the environment of the host server, and ZF settings. As with
-            the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information
-            to consider
+            Die Methode <code>getDefault()</code> gibt ein Array mit relevanten Gebietsschemata zurück wobei
+            Informationen vom Web Browser des Benutzers (wenn vorhanden), Informationen vom Betriebsystem des
+            Host Servers und ZF Einstellungen benutzt werden. Wie beim Konstruktor von <code>Zend_Locale</code>
+            wählt der erste Parameter die bevorzugte Umgebung von der die Informationen zuerst geholt werden sollen
             <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
-            </link>
-            first. The second parameter toggles between returning all matching locales or only the first/best match.
-            Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
+            </link>. Der zweite Parameter wechselt zwischen der Rückgabe aller gefundenen Gebietsschemata oder
+            nur dem ersten/besten Gebietsschema. Lokalisierbare Komponenten benutzen normalerweise nur das erste
+            Gebietsschema. Wenn vorhanden, wird eine Bewertung der Qualität mit angegeben.
         </para>
 
         <example>
-            <title>Get default locales</title>
+            <title>Das Standard Gebietsschema erhalten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Return all default locales
+// Alle Standard Gebietsschema zurückgeben
 $found = $locale->getDefault();
 print_r($found);
 
-// Return only browser locales
+// Nur die Gebietsschema des Browsers zurück geben
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
 print_r($found2);
 ?>]]></programlisting>
         </example>
 
         <para>
-            To obtain only the default locales relevent to the
-            <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK</code>
-            </link>
-            , use the corresponding method:
+            Um nur die Standard Gebietsschema für <link linkend="zend.locale.selection"><code>BROWSER</code>, 
+            <code>ENVIRONMENT</code>, oder <code>FRAMEWORK</code></link> zu erhalten, können die folgenden
+            Methoden benutzt werden:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -129,14 +131,14 @@ print_r($found2);
 
     <sect2 id="zend.locale.setlocale">
 
-        <title>Set a new locale</title>
+        <title>Ein neues Gebietsschema setzen</title>
 
         <para>
-            A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
-            parameter. If no locale is given, a locale is
-            <link linkend="zend.locale.selection">automatically selected</link>
-            . Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that
-            have references to the existing instance object.
+            Ein neues Gebietsschema kann mit der Funktion <code>setLocale()</code> gesetzt werden. Diese Funktion
+            nimmt einen Gebietsschema String als Parameter an. Wenn kein Gebietsschema angegeben wurde, wird ein
+            <link linkend="zend.locale.selection">automatisch gewähltes</link> Gebietsschema benutzt. Da
+            Zend_Locale Objekte sehr "leicht" sind, existiert diese Methode hauptsächlich um Nebeneffekte
+            auszuschließen, für Klassen die ein existierendes angelegtes Objekt referenzieren.
         </para>
 
         <example>
@@ -146,10 +148,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Actual locale
+// Aktuelles Gebietsschema
 print $locale->toString();
 
-// new locale
+// neues Gebietsschema
 $locale->setLocale('aa_DJ');
 print $locale->toString();
 ?>]]></programlisting>
@@ -159,179 +161,181 @@ print $locale->toString();
 
     <sect2 id="zend.locale.getlocale">
 
-        <title>Getting the language and region</title>
+        <title>Auslesen von Sprache und Region</title>
 
         <para>
-            Use <code>getLanguage()</code> to obtain a string containing the two character language code from the string
-            locale identifier. Use <code>getRegion()</code> to obtain a string containing the two character region code
-            from the string locale identifier.
+            <code>getLanguage()</code> gibt einen String zurück welcher den zwei-Zeichen Code der Sprache des
+            Gebietsschemas enthält. <code>getRegion()</code> gibt einen String zurück welcher den zwei-Zeichen
+            Code der Region des Gebietsschemas enthält.
         </para>
 
     </sect2>
 
     <sect2 id="zend.locale.getdata">
 
-        <title>Obtaining localized strings</title>
+        <title>Lokalisierte Strings beschaffen</title>
 
         <para>
-            <code>getTranslationList()</code> gives you access to localized informations of several types. These
-            information are usefull if you want to display localized data to a customer without the need of translating
-            it. They are already avaiable for your useage.
+            <code>getTranslationList()</code> gibt Zugriff auf viele Arten von lokalisierten Informationen.
+            Diese Informationen sind sehr nützlich wenn man einem Benutzer lokalisierte Daten anzeigen will,
+            ohne das man alles Übersetzen muß. Diese Informationen sind bereits für den Gebrauch vorhanden.
         </para>
 
         <para>
-            You can receive this informations for all languages. But not all of the informations are completly avaiable
-            for all languages. Some of these types are also avaiable through an own function for simplicity. See this
-            list for detailed informations.
+            Man kann diese Informationen für alle Sprachen auslesen. Aber nicht alle dieser Informationen sind
+            komplett für alle Sprachen. Einige dieser Arten sind auch durch eine eigene Funktion erhältlich wegen
+            der Einfachheit. Anbei eine Liste für detailierte Informationen hierüber.
         </para>
 
         <table>
-            <title>Details for getTranslationList($type = null, $locale = null)</title>
+            <title>Details für getTranslationList($type = null, $locale = null)</title>
             <tgroup cols="4">
                 <thead>
                     <row>
                         <entry>Type</entry>
-                        <entry>Additional Function</entry>
-                        <entry>Description</entry>
-                        <entry>Complete</entry>
+                        <entry>Zusätzliche Funktion</entry>
+                        <entry>Beschreibung</entry>
+                        <entry>Vollständigkeit</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>Language</entry>
                         <entry>getLanguageTranslationList</entry>
-                        <entry>Localized list of all languages</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Sprachen</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Script</entry>
                         <entry>getScriptTranslationList</entry>
-                        <entry>Localized list of all scripts</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Sprache aller Schriften/Schreibweisen</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Country</entry>
                         <entry>getCountryTranslationList</entry>
-                        <entry>Localized list of all countries</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Länder</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Territory</entry>
                         <entry>getTerritoryTranslationList</entry>
-                        <entry>Localized list of all territories</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Gegenden/Kontinente</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Calendar</entry>
                         <entry />
-                        <entry>Localized list of all calendar names</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Kalendar-Namen</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Month</entry>
                         <entry />
-                        <entry>Localized list of all month names</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Monatsnamen</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Month_short</entry>
                         <entry />
-                        <entry>Localized list of all abbreviated month names (commonly only 2-4 chars)</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller abgekürzten Monatsnamen (normalerweise nur 2-4 Zeichen)</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Month_narrow</entry>
                         <entry />
-                        <entry>Localized list of all narrowed month names (commonly only one char)</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller eingeengten Monatsnamen (normalerweise nur ein Zeichen)</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Day</entry>
                         <entry />
-                        <entry>Localized list of all day names</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Tage</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Day_short</entry>
                         <entry />
-                        <entry>Localized list of all abbreviated day names (commonly only 2-4 chars)</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller abgekürzten Tage (normalerweise nur 2-4 Zeichen)</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Day_narrow</entry>
                         <entry />
-                        <entry>Localized list of all narrowed day names (commonly only one char)</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller eingeengten Tage (normalerweise nur ein Zeichen)</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Dateformat</entry>
                         <entry />
-                        <entry>Localized list of all formats for dates</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Datumsformate</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Timeformat</entry>
                         <entry />
-                        <entry>Localized list of all formats for times</entry>
-                        <entry>Complete</entry>
+                        <entry>Lokalisierte Liste aller Zeitformate</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Timezone</entry>
                         <entry />
-                        <entry>Localized list of all known timezones</entry>
-                        <entry>Incomplete, they differ between languages</entry>
+                        <entry>Lokalisierte Liste aller bekannten Zeitzonen</entry>
+                        <entry>Nicht komplett, da Sie sich von Sprache zu Sprache unterscheiden</entry>
                     </row>
                     <row>
                         <entry>Currency</entry>
                         <entry />
-                        <entry>Localized list of all known currencies</entry>
-                        <entry>Incomplete, they differ between languages</entry>
+                        <entry>Lokalisierte Liste aller bekannten Währungen</entry>
+                        <entry>Nicht komplett, da Sie sich von Sprache zu Sprache unterscheiden</entry>
                     </row>
                     <row>
                         <entry>Currency_sign</entry>
                         <entry />
-                        <entry>Localized list of all known symbols for currencies</entry>
-                        <entry>Incomplete, they differ between languages</entry>
+                        <entry>Lokalisierte Liste aller bekannten Symbole für Währungen</entry>
+                        <entry>Nicht komplett, da Sie sich von Sprache zu Sprache unterscheiden</entry>
                     </row>
                     <row>
                         <entry>Currency_detail</entry>
                         <entry />
-                        <entry>List of all countries and the actually used currency within that country</entry>
-                        <entry>Complete</entry>
+                        <entry>Liste aller Länder und der aktuell benutzten Währung in diesen Ländern</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Territory_detail</entry>
                         <entry />
-                        <entry>List of all territories and the countries which are included within that territory</entry>
-                        <entry>Complete</entry>
+                        <entry>Liste aller Gegenden/Kontinente und der Länder welche in diesen Gegenden/Kontinenten
+                        enthalten sind</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Language_detail</entry>
                         <entry />
-                        <entry>List of all countries and the known spoken language within these countries</entry>
-                        <entry>Complete</entry>
+                        <entry>Liste aller Länder und der bekannten gesprochenen Sprachen in diesen Ländern</entry>
+                        <entry>Komplett</entry>
                     </row>
                     <row>
                         <entry>Characters</entry>
                         <entry />
-                        <entry>List of known characters for this locale, regex syntax.</entry>
-                        <entry>Complete</entry>
+                        <entry>Liste aller bekannten Zeichen für dieses Gebietsschema, regex Syntax</entry>
+                        <entry>Komplett</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
 
         <para>
-            If you are in need of a single translated value, then you can use <code>getTranslation()</code> instead of
-            <code>getTranslationList()</code>. It returns a single string or an array depending on if the result can
-            have multiple values (f.e. language_detail because a language is spoken in more than one country), or only
-            one value (f.e. language because a language always has only one translated name for it). Both functions
-            accept a type from the list above. As a convenience functions, the following have simple equivalents using
-            the two functions above:
+            Wenn ein einzelner übersetzter Wert benötigt wird, kann stattdessen <code>getTranslation()</code>
+            statt <code>getTranslationList()</code> benutzt werden. Sie gibt einen einzelnen String oder ein Array
+            zurück, abhängig davon ob das Ergebnis mehrere Werte enthalten kann (zum Beispiel 'language_detail'
+            weil eine Sprache in mehr als einem Land gesprochen wird), oder nur einen Wert (zum Beispiel 'language'
+            weil es für eine Sprache immer nur einen Übersetzten Namen gibt). Beide Funktionen akzeptieren die Arten
+            in der oben angeführten Liste. Wegen der Bequemlichkeit gibt es die folgenden einfachen und
+            zu den zwei oben beschriebenen Funktionen auch gleichwertigen Funktionen:
         </para>
 
         <example>
-            <title>Convenience functions for getTranslation()</title>
+            <title>Bequemliche Funktionen für getTranslation()</title>
 <programlisting role="php"><![CDATA[<?php
 getCountryTranslation($what, $locale = null)
 getCountryTranslationList($locale = null)
@@ -345,7 +349,7 @@ getTerritoryTranslationList($locale = null)
         </example>
 
         <para>
-            The example below demonstrates how to obtain the names of things in different languages.
+            Das folgende Beispiel zeigt wie man die Namen für Dinge in verschiedenen Sprachen erhalten kann.
         </para>
 
         <example>
@@ -354,40 +358,41 @@ getTerritoryTranslationList($locale = null)
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
-// prints the names of all countries in German language
-print_r($locale->getTranslationList('country', 'de'));
+// Gibt die Namen aller Länder in der Französischen Sprache aus
+print_r($locale->getTranslationList('country', 'fr'));
 ?>]]></programlisting>
         </example>
 
         <para>
-            The next example shows how to find the name of a language in another language, when the two letter CLDR
-            country code is not known.
+            Das nächste Beispiel zeigt wie der Name einer Sprache in einer anderen Sprache gefunden werden kann,
+            wenn der Zwei-Zeichen Länder-Code der CLDR unbekannt ist.
         </para>
 
         <example>
-            <title>Converting country name in one language to another</title>
+            <title>Konvertierung des Ländernamens von einer Sprache in eine andere Sprache</title>
 <programlisting role="php"><![CDATA[<?php
 require 'Zend/Locale.php';
 $locale = new Zend_Locale('en_US');
 $code2name = $locale->getLanguageTranslationList();
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
-echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
-// output is the German name of the French language
+echo $locale->getLanguageTranslation($frenchCode, 'es');
+// Ausgegeben wird der Spanische Name der Fransösischen Sprache
 ?>]]></programlisting>
         </example>
 
         <para>
-            To gain some familiarity with what is available, try the example and examine the output.
+            Um etwas mehr Erfahrung damit zu bekommen was verfügbar ist, sollen die Beispiele
+            ausprobiert und die Ausgabe angesehen werden.
         </para>
 
         <example>
-            <title>All available translations</title>
+            <title>Alle möglichen Übersetzungen</title>
 <programlisting role="php"><![CDATA[<?php
-// obtain a list of all the translation lists
+// Erhalte eine Liste aller Übersetzungslisten
 $lists = $locale->getTranslationList();
 
-// show all translation lists available (lots of output, all in English language)
+// Zeige alle vorhandenen Übersetzungslisten (viel Ausgabe, alles in der gewählten Sprache)
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
@@ -396,21 +401,23 @@ foreach ($lists as $list) {
         </example>
 
         <para>
-            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
-            try the example below in a web page. Similarly, <code>getCountryTranslationList()</code> and
-            <code>getRegionDisplay()</code> could be used to create a table mapping your native language names for
-            regions to the names of the regions shown in another language. Likewise,
-            <code>getCalendarTranslationList()</code> and <code>getCalendarDisplay()</code> work identically. Use a
-            <code>try .. catch</code> block to handle exceptions that occur when using a locale that does not exist. Not
-            all languages are also locales. In the example, below exceptions are ignored to prevent early termination.
+            Um von Zend_Locale eine Liste aller bekannten Sprachen zu bekommen wobei jede Sprache in Ihrer eigenen
+            Sprache geschrieben wird, kann das untere Beispiel in einer Web Seite benutzt werden. Genauso können
+            <code>getCountryTranslationList()</code> und <code>getRegionDisplay()</code> benutzt werden um eine
+            Tabelle zu erhalten die Namen für Muttersprachen einer Region und Namen für Regionen in einer anderen
+            Sprache zu erhalten. <code>getCalendarTranslationList()</code> und <code>getCalendarDisplay()</code>
+            arbeiten auf die gleiche Art und Weise. Man muß einen <code>try .. catch</code> Block benutzen um
+            Ausnahmen abzufangen die auftreten wenn ein Gebietsschema benutzt wird das nicht existiert. Nicht alle
+            Sprachen sind auch ein Gebietsschema. Im Beispiel werden die Ausnahmen ignoriert um einen frühen
+            Abbruch zu verhindern.
         </para>
 
         <example>
-            <title>All Languages written in thier native language</title>
+            <title>Alle Sprachen geschrieben in Ihrer Muttersprache</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$sourceLanguage = null; // set to your native language code
+$sourceLanguage = null; // Setze hier deine Muttersprache ein
 $locale = new Zend_Locale($sourceLanguage);
 $list = $locale->getLanguageTranslationList();
 
@@ -431,13 +438,14 @@ foreach($list as $language => $content) {
 
     <sect2 id="zend.locale.getquestion">
 
-        <title>Obtaining translations for "yes" and "no"</title>
+        <title>Übersetzungen für "Ja" und "Nein" erhalten</title>
 
         <para>
-            Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
-            to obtain an array containing the correct word(s) or regex strings to use for prompting the user in a
-            particular $locale (defaults to the current object's locale). The array will contain six key-value pairs,
-            for "yes", "no", their abbreviations, and regex string for proper parsing as shown in the example below.
+            Oft müssen Programme eine "Ja" oder "Nein" Rückmeldung eines Benutzers erkennen. <code>getQuestion()</code>
+            gibt ein Array zurück welches die richtigen Wörter oder Regex Strings enthält um einem Benutzer in einer
+            bestimmten $locale zu antworten (Standardmäßig das aktuelle Gebietsschema des Objekts). Das Array enthält
+            sechs Wertepaare, für "Ja", "Nein", deren Abkürzungen und Regex Strings für das korrekte Parsen wie im
+            Beispiel gezeigt.
         </para>
 
         <example>
@@ -447,7 +455,7 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Question strings
+// Strings für Fragen
 print_r($locale->getQuestion('de'));
 
 - - - Output - - -
