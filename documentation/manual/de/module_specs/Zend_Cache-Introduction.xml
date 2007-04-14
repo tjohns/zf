@@ -5,7 +5,7 @@
     </para>
     <para>
       Cachen im Zend Framework wird mit Frontends durchgeführt, wobei Cache Datensätze über Backend Adapter
-      (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...), durch ein flexibles System von
+      (<code>File</code>, <code>Sqlite</code>, <code>Memcached</code>...), durch ein flexibles System von
       IDs und Tags, gespeichert werden. Durch deren Verwendung ist es einfach, spezielle Typen von Datensätzen im 
       Nachhinein zu Löschen (zum Beispiel: "Löschen aller Cache Datensätze welche mit einem bestimmten
       Tag markiert sind").

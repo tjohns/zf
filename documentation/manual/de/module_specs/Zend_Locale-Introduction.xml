@@ -3,7 +3,7 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Locale</code> ist die Antwort des Frameworks auf die Frage "Wie kann die selbe Applikation
+        <code>Zend_Locale</code> ist die Antwort des Frameworks auf die Frage "Wie kann die selbe Anwendung
         auf der ganzen Welt verwendet werden?". Die meisten Leute werden sagen "Das ist einfach. Lasst uns alle
         Ausgaben in die unterschiedlichsten Sprachen übersetzen". Aber, eine einfache Übersetzungstabelle die
         Phrasen von einer Sprache in die andere übersetzt ist nicht genug. Verschiedene Regionen haben auch
@@ -30,7 +30,7 @@
         <para>
             Lokalisierung bedeutet das eine Anwendung (oder Homepage) von verschiedenen Benutzer verwendet werden
             kann die unterschiedliche Sprachen sprechen. Aber wie bereits angedeutet heißt Lokalisierung mehr
-            als nur die Übersetzung von Strings. Es beinhaltet
+            als nur die Übersetzung von Zeichenketten. Es beinhaltet
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -42,7 +42,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Translate</code> - Übersetzung von Strings.
+                    <code>Zend_Translate</code> - Übersetzung von Zeichenketten.
                 </para>
             </listitem>
             <listitem>
@@ -95,7 +95,7 @@
         </para>
 
         <para>
-            Ein Gebietsschema String oder Objekt welches ein unterstütztes Gebietsschema identifiziert, gibt
+            Eine Gebietsschema Zeichenkette oder Objekt welches ein unterstütztes Gebietsschema identifiziert, gibt
             <code>Zend_Locale</code> und dessen Unterklassen Zugriff auf Informationen über die Sprache und
             Region welche der Benutzer erwartet. Formatierungen, Normalisierungen und Konvertierungen werden
             anhand dieser Informationen durchgeführt.
@@ -108,9 +108,9 @@
         <title>Wodurch werden Gebietsschemata representiert?</title>
 
         <para>
-            Ein Gebietsschema String besteht aus Informationen über die Sprache des Benutzers und die
+            Eine Gebietsschema Zeichenkette besteht aus Informationen über die Sprache des Benutzers und die
             bevorzugte/primäre geographische Region (z.B. Staat oder Region von seinem Zuhause oder Arbeitsplatz).
-            Die Gebietsschema Strings welche im Zend Framework benutzt werden sind international definierte
+            Die Gebietsschema Zeichenkette welche im Zend Framework benutzt werden sind international definierte
             Standard Abkürzungen von Sprachen und Regionen. Sie werden geschrieben als <code>sprache_REGION</code>.
             Beide Teile, sowohl Sprache als auch Region, werden abgekürzt zu 2 Buchstaben, ASCII Zeichen.
         </para>
@@ -283,7 +283,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
         <para>
             Die Option 'precision' wird benutzt um einen Wert zu verkürzen oder mit extra Ziffern zu strecken.
             Ein Wert von '-1' verhindert die Veränderung der Anzahl an Ziffern im Nachkomma-Teil des Wertes.
-            Die 'locale' Option hilft wenn Nummern und Daten geparsed werden und hierbei Trennzeichen oder
+            Die 'locale' Option hilft wenn Nummern und Daten analysiert werden und hierbei Trennzeichen oder
             Monatsnamen verwendet werden. Die Datumsformat Option 'format_type' wählt zwischen CLDR/ISO
             Datumsdefinitionen und PHP's date() Definitionen. Die Option 'fix_date' erlaubt oder verhindert eine
             Automatik welche versucht falsche Daten zu korrigieren. Die Option 'number_format' definiert ein

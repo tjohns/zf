@@ -5,17 +5,17 @@
     <para>
         <code>Zend_Locale_Format</code> ist eine interne Komponente welche von Zend_Locale verwendet wird.
         Alle lokalisierbaren Klassen benutzen <code>Zend_Locale_Format</code> für Normalisierung und
-        Lokalisierung von Nummern und Daten. Normalisierung beinhaltet das Parsen von Eingaben von einer
+        Lokalisierung von Nummern und Daten. Normalisierung beinhaltet das Analysieren von Eingaben von einer
         Vielfalt von Werten wie Datumswerte in eine standardisierten, strukturieren Art wie zum Beispiel
         ein PHP Array mit Jahr, Monat und Tages Elementen.
     </para>
 
     <para>
-        Genau der gleiche String der eine Nummer oder ein Datum enthält meint etwas ganz anderes für Leute
+        Genau die gleiche Zeichenkette die eine Zahl oder ein Datum enthält meint etwas ganz anderes für Leute
         mit anderen Regeln und Konventionen. Die Erkennung von Nummern und Daten benötigt Regeln darüber wie diese
-        Strings zu interpretieren sind um diese Werte in eine standardisierte Form zu bringen. Deswegen
+        Zeichenketten zu interpretieren sind um diese Werte in eine standardisierte Form zu bringen. Deswegen
         benötigen alle Methoden in <code>Zend_Locale_Format</code> ein Gebietsschema um Eingabedaten
-        parsen zu können.
+        analysieren zu können.
         <note>
             <title>Standard "root" Gebietsschema</title>
             <para>
@@ -104,7 +104,7 @@ print $number; // wird 13524.6 zurückgeben
         <para>
             <code>toNumber($value, array $options = array())</code> kann Nummern lokalisieren, mit Hilfe
             der <link linkend="zend.locale.regions">unterstützten Gebietsschemata</link>. Diese Funktion
-            gibt einen lokalisierten String der angegebenen Nummer in dem konventionellen Format für ein
+            gibt eine lokalisierte Zeichenkette der angegebenen Nummer in dem konventionellen Format für ein
             definiertes Gebietsschema aus. Die Option 'number_format' definiert ein explizit angegebenes
             nicht standardmäßiges Nummernformat für die Verwendung mit <code>toNumber()</code>.
         </para>
@@ -240,7 +240,7 @@ print $number;
         <title>Testen von Zahlen</title>
 
         <para>
-            <code>isNumber($value, array $options = array())</code> prüft ob ein gegebener String eine Zahl
+            <code>isNumber($value, array $options = array())</code> prüft ob eine gegebene Zeichenkette eine Zahl
             enthält und gibt wahr oder falsch zurück.
         </para>
 
@@ -266,7 +266,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
 
         <para>
             Lokalisierte Gleitkommazahlen können mit <code>getFloat($value, array $options = array())</code>
-            geparsed werden. Es wird eine Gleitkommazahl zurückgegeben.
+            analysiert werden. Es wird eine Gleitkommazahl zurückgegeben.
         </para>
 
         <example>
@@ -289,8 +289,8 @@ print $number;
         <title>Lokalisieren von Gleitkommazahlen</title>
 
         <para>
-            <code>toFloat()</code> kann Gleitkommazahlen lokalisieren. Diese Funktion gibt einen
-            lokalisierten String mit der gegebenen Zahl zurück.
+            <code>toFloat()</code> kann Gleitkommazahlen lokalisieren. Diese Funktion gibt eine
+            lokalisierte Zeichenkette mit der gegebenen Zahl zurück.
         </para>
 
         <example>
@@ -323,7 +323,7 @@ print $number;
         <title>Testen von Gleitkommazahlen</title>
 
         <para>
-            <code>isFloat($value, array $options = array())</code> prüft ob ein gegebener String eine
+            <code>isFloat($value, array $options = array())</code> prüft ob eine gegebene Zeichenkette eine
             Gleitkommazahl enthält und gibt wahr oder falsch zurück.
         </para>
 
@@ -348,7 +348,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
         <title>Integer Zahlen normalisieren</title>
 
         <para>
-            Integer Zahlen können mit der Funktion <code>getInteger()</code> geparsed werden. Es wird ein
+            Integer Zahlen können mit der Funktion <code>getInteger()</code> analysiert werden. Es wird ein
             Integer Wert zurückgegeben.
         </para>
 
@@ -373,7 +373,7 @@ print $number;
 
         <para>
             <code>toInteger($value, array $options = array())</code> kann Integer Zahlen lokalisieren.
-            Diese Funktion gibt einen lokalisierten String anhand der gegebenen Nummer zurück.
+            Diese Funktion gibt eine lokalisierte Zeichenkette anhand der gegebenen Nummer zurück.
         </para>
 
         <example>
@@ -396,7 +396,7 @@ print $number;
         <title>Testen von Integer Zahlen</title>
 
         <para>
-            <code>isInteger($value, array $options = array())</code> prüft ob ein gegebener String eine
+            <code>isInteger($value, array $options = array())</code> prüft ob eine gegebene Zeichenkette eine
             Integer Zahl enthält und gibt wahr oder falsch zurück.
         </para>
 

@@ -16,7 +16,7 @@
             Verwende
             <ulink url="http://php.net/language.oop5.cloning">Klonen von Objekten</ulink>
             um Gebietsschema Objekte exakt und effizient zu duplizieren. Die meisten lokalisierbaren
-            Methoden akzeptieren auch einen String welcher das Gebietsschema repräsentiert. Dieser
+            Methoden akzeptieren auch eine Zeichenkette welche das Gebietsschema repräsentiert. Dieser
             entspricht dem Ergebnis von <code>$locale->toString()</code>.
         </para>
 
@@ -32,7 +32,7 @@ $serializedLocale = $locale->serialize();
 // Wiedererstellung des Original Objekts
 $localeObject = unserialize($serializedLocale);
 
-// Erhalte einen String welcher das Gebietsschema identifiziert
+// Erhalte eine Zeichenkette welche das Gebietsschema identifiziert
 $stringLocale = $locale->toString();
 
 // Erstelle eine geklonte Kopie des $locale Objektes
@@ -135,7 +135,7 @@ print_r($found2);
 
         <para>
             Ein neues Gebietsschema kann mit der Funktion <code>setLocale()</code> gesetzt werden. Diese Funktion
-            nimmt einen Gebietsschema String als Parameter an. Wenn kein Gebietsschema angegeben wurde, wird ein
+            nimmt eine Gebietsschema Zeichenkette als Parameter an. Wenn kein Gebietsschema angegeben wurde, wird ein
             <link linkend="zend.locale.selection">automatisch gewähltes</link> Gebietsschema benutzt. Da
             Zend_Locale Objekte sehr "leicht" sind, existiert diese Methode hauptsächlich um Nebeneffekte
             auszuschließen, für Klassen die ein existierendes angelegtes Objekt referenzieren.
@@ -164,8 +164,8 @@ print $locale->toString();
         <title>Auslesen von Sprache und Region</title>
 
         <para>
-            <code>getLanguage()</code> gibt einen String zurück welcher den zwei-Zeichen Code der Sprache des
-            Gebietsschemas enthält. <code>getRegion()</code> gibt einen String zurück welcher den zwei-Zeichen
+            <code>getLanguage()</code> gibt eine Zeichenkette zurück welche den zwei-Zeichen Code der Sprache des
+            Gebietsschemas enthält. <code>getRegion()</code> gibt eine Zeichenkette zurück welche den Zwei-Zeichen
             Code der Region des Gebietsschemas enthält.
         </para>
 
@@ -173,7 +173,7 @@ print $locale->toString();
 
     <sect2 id="zend.locale.getdata">
 
-        <title>Lokalisierte Strings beschaffen</title>
+        <title>Lokalisierte Zeichenketten beschaffen</title>
 
         <para>
             <code>getTranslationList()</code> gibt Zugriff auf viele Arten von lokalisierten Informationen.
@@ -326,7 +326,7 @@ print $locale->toString();
 
         <para>
             Wenn ein einzelner übersetzter Wert benötigt wird, kann stattdessen <code>getTranslation()</code>
-            statt <code>getTranslationList()</code> benutzt werden. Sie gibt einen einzelnen String oder ein Array
+            statt <code>getTranslationList()</code> benutzt werden. Sie gibt eine einzelne Zeichenkette oder ein Array
             zurück, abhängig davon ob das Ergebnis mehrere Werte enthalten kann (zum Beispiel 'language_detail'
             weil eine Sprache in mehr als einem Land gesprochen wird), oder nur einen Wert (zum Beispiel 'language'
             weil es für eine Sprache immer nur einen Übersetzten Namen gibt). Beide Funktionen akzeptieren die Arten
@@ -442,10 +442,10 @@ foreach($list as $language => $content) {
 
         <para>
             Oft müssen Programme eine "Ja" oder "Nein" Rückmeldung eines Benutzers erkennen. <code>getQuestion()</code>
-            gibt ein Array zurück welches die richtigen Wörter oder Regex Strings enthält um einem Benutzer in einer
+            gibt ein Array zurück welches die richtigen Wörter oder Regex Zeichenketten enthält um einem Benutzer in einer
             bestimmten $locale zu antworten (Standardmäßig das aktuelle Gebietsschema des Objekts). Das Array enthält
-            sechs Wertepaare, für "Ja", "Nein", deren Abkürzungen und Regex Strings für das korrekte Parsen wie im
-            Beispiel gezeigt.
+            sechs Wertepaare, für "Ja", "Nein", deren Abkürzungen und Regex Zeichenketten für das korrekte Analysieren
+            wie im Beispiel gezeigt.
         </para>
 
         <example>
@@ -455,7 +455,7 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
 
-// Strings für Fragen
+// Zeichenketten für Fragen
 print_r($locale->getQuestion('de'));
 
 - - - Output - - -
