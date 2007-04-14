@@ -1,32 +1,33 @@
 <sect1 id="zend.exception.using">
 
-    <title>Using Exceptions</title>
+    <title>Verwenden von Ausnahmen</title>
 
     <para>
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
+        Alle Ausnahmen welche von Zend Framework Klassen geworfen werden
+        sollten eine Ausnahme werfen welche von der Basis Klasse
+        Zend_Exception abgeleitet ist.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Example of catching an exception</title>
+        <title>Beispiel für das Fangen einer Ausnahme</title>
         <programlisting role="php"><![CDATA[<?php
 
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
-    echo "Caught exception: " . get_class($e) . "\n";
-    echo "Message: " . $e->getMessage() . "\n";
-    // other code to recover from the failure.
+    echo "Gefangene Ausnahme: " . get_class($e) . "\n";
+    echo "Nachricht: " . $e->getMessage() . "\n";
+    // anderer Code um den Fehler zu korrigieren.
 }
 
 ?>]]></programlisting>
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework 
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
+        In der Dokumentation der einzelnen Zend Framework Komponenten
+        stehen detailiertere Informationen darüber welche Methoden
+        eine Ausnahme werfen, die Gründe für Ausnahmen und welche
+        Ausnahme-Klassen von Zend_Exception abgeleitet sind.
     </para>
 
 </sect1>
