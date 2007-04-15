@@ -446,30 +446,39 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             これは、不正確な変換によってエラーが発生するのを防ぐためです。
             指定された数値系で数値として扱われない文字は、
             そのまま出力に渡されます。つまり、単位の区切り文字などは変換されないということです。
+            <code>Zend_Locale*</code> コンポーネントは、CLDR が提供するデータに依存しています
+            (<ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_scripts.html?sortby=date">
+                言語ごとの文字の一覧</ulink> を参照ください)。
         </para>
 
         <para>
-            あるウェブフォームから、アラビア文字 "١‎٠٠"
+            CLDR では今後、Europena/Latin 数値のことを "Latin"
+            と呼ぶようになります。4 文字に略した形式は "Latn" です。
+            また、CLDR ではこの数値系のことを "scripts" と呼ぶようになります。
+        </para>
+
+        <para>
+            あるウェブフォームから、東アラビア文字 "١‎٠٠"
             が入力されたとしましょう。
             大半のソフトウェアや PHP の関数は、アラビア数字にしか対応していません。
-            幸いなことに、この入力をそれと同等のアラビア数字 "100"
+            幸いなことに、この入力をそれと同等のラテン数字 "100"
             に変換するのは簡単で、<code>convertNumerals($inputNumeralString,
             $sourceNumeralSystem, $destNumeralSystem)</code> を使用するだけです。
-            これは、数値 <code>$input</code> を
+            これは、数値 <code>$input</code> の script を
             <code>$sourceNumeralSystem</code> から <code>$destNumeralSystem</code>
             に変換したものを返します。
         </para>
 
         <example>
-            <title>アラビア文字から European/Latin への変換</title>
+            <title>東アラビア文字から European/Latin 文字への変換</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$string = "١‎٠٠";   // アラビア文字で 100 を表します
-$normal = Zend_Locale_Format::convertNumerals($string, 'Arab', 'Latn');
+$arabicScript = "١‎٠٠";   // アラビア文字で "100" を表します
+$latinScript = Zend_Locale_Format::convertNumerals($arabicScript, 'Arab', 'Latn');
 
-print "\n元の内容: ".$string;
-print "\n正規化したもの:".$normal;
+print "\n元の内容:   " . $arabicScript;
+print "\n正規化したもの: " . $latinScript;
 ?>]]></programlisting>
         </example>
 
@@ -478,15 +487,30 @@ print "\n正規化したもの:".$normal;
         </para>
 
         <example>
-            <title>European/Latin からアラビア文字への変換</title>
+            <title>ラテン文字から東アラビア文字への変換</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
-$string = '123';
-$local = Zend_Locale_Format::convertNumerals($string, 'Latn', 'Arab');
+$latinScript = '123';
+$arabicScript = Zend_Locale_Format::convertNumerals($latinScript, 'Latn', 'Arab');
 
-print "\n元の内容: ".$string;
-print "\n地域化したもの:".$local;
+print "\n元の内容: ".$latinScript;
+print "\n地域化したもの:".$arabicScript;
+?>]]></programlisting>
+        </example>
+
+        <example>
+            <title>各国語での文字名を使用した、4 文字の CLDR 文字コードの取得</title>
+<programlisting role="php"><![CDATA[<?php
+function getScriptCode($scriptName, $locale)
+{
+    $scripts2names = Zend_Locale_Data::getContent($locale, 'scriptlist');
+    $names2scripts = array_flip($scripts2names);
+    return $names2scripts[$scriptName];
+}
+echo getScriptCode('Latin', 'en'); // 出力は "Latn" となります
+echo getScriptCode('Tamil', 'en'); // 出力は "Taml" となります
+echo getScriptCode('tamoul', 'fr'); // 出力は "Taml" となります
 ?>]]></programlisting>
         </example>
 
