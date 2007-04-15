@@ -3,11 +3,12 @@
     <title>Basis Methoden</title>
 
     <para>
-        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"
-        always imply a calendar date with a time, even when not explicitly mentioned, and vice-versa. The part not
-        specified defaults to an internal representation of "zero". Thus, adding a date having no calendar date and a
-        time value of 12 hours to another date consisting only of a calendar date would result in a date having that
-        calendar date and a time of "noon".
+        Der folgende Abschnitt zeigt die Grundsätzliche Benutzung von <code>Zend_Date</code> hauptsächlich durch
+        Beispiele. Für dieses Handbuch sind "Daten" immer impliziert mit Kalender Daten mit Zeiten, selbst wenn
+        es nicht explizit erwähnt ist und visa-versa. Der Teil der nicht angegeben wird, wird intern standardmäßig
+        mit "null" angenommen. Das bedeutet das ein Datum welches kein Kalenderdatum aber eine Zeit von 12 Stunden
+        und ein anderes Datum welches aus einem Kalenderdatum besteht dazu führt das man ein Datum bekommt das
+        das Kalenderdatum enthält mit einere Uhrzeit von "Mittags".
     </para>
 
     <para>
@@ -20,7 +21,7 @@
 
     <sect2 id="zend.date.basic.creation">
 
-        <title>The current date</title>
+        <title>Das aktuelle Datum</title>
 
         <para>
             Without any arguments, constructing an instance returns an object in the default locale with the current,
@@ -32,13 +33,13 @@
         </para>
 
         <example>
-            <title>Creating the current date</title>
+            <title>Erstellen des aktuellen Datums</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Output of the current timestamp
+// Ausgabe des aktuellen Zeitpunktes
 print $date;
 ?>]]></programlisting>
         </example>
@@ -47,7 +48,7 @@ print $date;
 
     <sect2 id="zend.date.basic.functions">
 
-        <title>Zend_Date by Example</title>
+        <title>Zend_Date durch Beispiele</title>
 
         <para>
             Reviewing basic methods of <code>Zend_Date</code> is a good place to start for those unfamiliar with date
@@ -56,7 +57,7 @@ print $date;
 
         <sect3 id="zend.date.simple.functions.get">
 
-            <title>Ouput a Date</title>
+            <title>Ein Datum ausgeben</title>
 
             <para>
                 The date in a <code>Zend_Date</code> object may be obtained as a localized integer or string using the

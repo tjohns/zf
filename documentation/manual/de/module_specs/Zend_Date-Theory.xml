@@ -8,15 +8,17 @@
     </para>
 
     <para>
-        Many languages split the handling of times and calendar dates into two classes. However, the Zend Framework
-        strives for extreme simplicity, and forcing the developer to manage different objects with different methods for
-        times and dates becomes a burden in many situations. Since <code>Zend_Date</code> methods support working with
-        ambiguous dates that might not include all parts (era, year, month, day, hour, minute, second, timezone),
-        developers enjoy the flexibility and ease of using the same class and the same methods to perform the same
-        manipulations (e.g. addition, subtraction, comparision, merging of date parts, etc.). Splitting the handling of
-        these date fragments into multiple classes would create complications when smooth interoperation is desired with
-        a small learning curve. A single class reduces code duplication for similar operations, without the need for a
-        complex inheritance hierarchy.
+        Viele Sprachen teilen das Arbeiten mit Zeiten und Kalendern in zwei Klassen.  Aber der Zend Framework
+        strebt nach extremer Vereinfachung und die Entwickler zu zwingen verschiedene Objekte mit verschiedenen
+        Methoden für Zeiten und Daten zu verwenden ist in vielen Situationen eine Belastung. Da die Methoden von
+        <code>Zend_Date</code> das Arbeiten mit vieldeutigen Daten unterstützen die möglicherweise nicht alle
+        Datumsabschnitte beinhalten (Zeitalter, Jahr, Monat, Tag, Stunde, Minute, Sekunde, Zeitzone), können
+        Entwickler die Flexibilität und die einfache Handhabung der selben Klasse und der selben Methode geniessen
+        um die gleichen Änderungen durchzuführen (zum Beispiel Addieren, Subtrahieren, Vergleichen, Verbinden
+        von Datumsabschnitten, und vieles mehr). Das Aufteilen der Handhabung dieser Datumsabschnitte in verschiedene
+        Klassen würde Komplikationen hervorrufen wenn einfaches gemeinsames Arbeiten und eine kleine Lernkurve
+        gewünscht sind. Eine einzige Klasse reduziert die Verdopplung von Code für gleichartige Arbeiten, ohne die
+        Notwendigkeit einer komplexen Ableitungshirarchie. 
     </para>
 
     <sect2 id="zend.date.theory.internals">
@@ -30,21 +32,22 @@
                         UNIX Zeitpunkte
                     </para>
                     <para>
-                        All dates and times, even ambiguous ones (e.g. no year), are represented internally as absolute
-                        moments in time, represented as a UNIX timestamp expressing the difference between the desired
-                        time and January 1st, 1970 00:00:00 GMT/UTC. This was only possible, because
-                        <code>Zend_Date</code> is not limited to UNIX timestamps nor integer values. The BCMath
-                        extension is required to support extremely large dates outside of the range Fri, 13 Dec 1901
-                        20:45:54 GMT to Tue, 19 Jan 2038 03:14:07 GMT.
+                        Alle Daten und Zeiten, selbst die mehrdeutigen (z.B. kein Jahr), sind intern dargestellt
+                        in absoluten Momenten der Zeit, repräsentiert als UNIX Zeitpunkt welcher die Differenz zwischen
+                        der gewünschten Zeit und dem 01.Jänner 1970 00:00:00 GMT/UTC darstellt. Das ist nur
+                        deshalb möglich weil <code>Zend_Date</code> nicht durch UNIX Zeitpunkte limitiert ist und
+                        auch nicht durch Integer Zahlen. Die BCMath Erweiterung wird benötigt um extrem große Daten
+                        ausserhalb des Bereichs vom Freitag dem 13.Dezember 1901 20:45:54 GMT bis zum 19.Jänner 2038
+                        03:14:07 GMT zu unterstützen.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Date parts as timestamp offsets
+                        Datumsabschnitte als Offsets in Zeitpunken
                     </para>
                     <para>
-                        Thus, an instance object representing three hours would be expressed as three hours after
-                        January 1st, 1970 00:00:00 GMT/UTC -i.e. 0 + 3 * 60 * 60 = 10800.
+                        Deswegen wird eine Objektinstanz welche drei Stunden repräsentiert ausgedrückt als drei
+                        Stunden nach dem 01.Jänner.1970 00:00:00 GMT/UTC bzw. 0 + 3 * 60 * 60 = 10800 dargestellt.
                     </para>
                 </listitem>
                 <listitem>
