@@ -23,6 +23,10 @@
                         <entry>アフリカーンス語</entry>
                     </row>
                     <row>
+                        <entry>ak</entry>
+                        <entry>アカン語</entry>
+                    </row>
+                    <row>
                         <entry>am</entry>
                         <entry>アムハラ語</entry>
                     </row>
@@ -63,6 +67,10 @@
                         <entry>カタロニア語</entry>
                     </row>
                     <row>
+                        <entry>cch</entry>
+                        <entry>Atsam</entry>
+                    </row>
+                    <row>
                         <entry>cs</entry>
                         <entry>チェコ語</entry>
                     </row>
@@ -85,6 +93,10 @@
                     <row>
                         <entry>dz</entry>
                         <entry>ブータン語</entry>
+                    </row>
+                    <row>
+                        <entry>ee</entry>
+                        <entry>エウェ語</entry>
                     </row>
                     <row>
                         <entry>el</entry>
@@ -127,8 +139,16 @@
                         <entry>フランス語</entry>
                     </row>
                     <row>
+                        <entry>fur</entry>
+                        <entry>フリウリ語</entry>
+                    </row>
+                    <row>
                         <entry>ga</entry>
                         <entry>アイルランド語</entry>
+                    </row>
+                    <row>
+                        <entry>gaa</entry>
+                        <entry>ガ語</entry>
                     </row>
                     <row>
                         <entry>gez</entry>
@@ -145,6 +165,10 @@
                     <row>
                         <entry>gv</entry>
                         <entry>マン島語</entry>
+                    </row>
+                    <row>
+                        <entry>ha</entry>
+                        <entry>ハウサ語</entry>
                     </row>
                     <row>
                         <entry>haw</entry>
@@ -171,8 +195,16 @@
                         <entry>アルメニア語</entry>
                     </row>
                     <row>
+                        <entry>ia</entry>
+                        <entry>インターリングア語</entry>
+                    </row>
+                    <row>
                         <entry>id</entry>
                         <entry>インドネシア語</entry>
+                    </row>
+                    <row>
+                        <entry>ig</entry>
+                        <entry>イボ語</entry>
                     </row>
                     <row>
                         <entry>is</entry>
@@ -193,6 +225,22 @@
                     <row>
                         <entry>ka</entry>
                         <entry>グルジア語</entry>
+                    </row>
+                    <row>
+                        <entry>kaj</entry>
+                        <entry>Jju</entry>
+                    </row>
+                    <row>
+                        <entry>kam</entry>
+                        <entry>カンバ語</entry>
+                    </row>
+                    <row>
+                        <entry>kcg</entry>
+                        <entry>Tyap</entry>
+                    </row>
+                    <row>
+                        <entry>kfo</entry>
+                        <entry>Koro</entry>
                     </row>
                     <row>
                         <entry>kk</entry>
@@ -219,12 +267,20 @@
                         <entry>コンカニ語</entry>
                     </row>
                     <row>
+                        <entry>ku</entry>
+                        <entry>クルド語</entry>
+                    </row>
+                    <row>
                         <entry>kw</entry>
                         <entry>コーンウォール語</entry>
                     </row>
                     <row>
                         <entry>ky</entry>
                         <entry>キルギス語</entry>
+                    </row>
+                    <row>
+                        <entry>ln</entry>
+                        <entry>リンガラ語</entry>
                     </row>
                     <row>
                         <entry>lo</entry>
@@ -267,12 +323,28 @@
                         <entry>ノルウェー語 (ボクモール)</entry>
                     </row>
                     <row>
+                        <entry>ne</entry>
+                        <entry>ネパール語</entry>
+                    </row>
+                    <row>
                         <entry>nl</entry>
                         <entry>オランダ語</entry>
                     </row>
                     <row>
                         <entry>nn</entry>
                         <entry>ノルウェー語 (ニューノルスク)</entry>
+                    </row>
+                    <row>
+                        <entry>nr</entry>
+                        <entry>南ンデベレ語</entry>
+                    </row>
+                    <row>
+                        <entry>nso</entry>
+                        <entry>北部ソト語</entry>
+                    </row>
+                    <row>
+                        <entry>ny</entry>
+                        <entry>ニャンジャ語、チチェワ語、チェワ語</entry>
                     </row>
                     <row>
                         <entry>om</entry>
@@ -307,8 +379,16 @@
                         <entry>ロシア語</entry>
                     </row>
                     <row>
+                        <entry>rw</entry>
+                        <entry>ルワンダ語</entry>
+                    </row>
+                    <row>
                         <entry>sa</entry>
                         <entry>サンスクリット語</entry>
+                    </row>
+                    <row>
+                        <entry>se</entry>
+                        <entry>北サーミ語</entry>
                     </row>
                     <row>
                         <entry>sh</entry>
@@ -339,6 +419,14 @@
                         <entry>セルビア語</entry>
                     </row>
                     <row>
+                        <entry>ss</entry>
+                        <entry>シスワティ語</entry>
+                    </row>
+                    <row>
+                        <entry>st</entry>
+                        <entry>南部ソト語</entry>
+                    </row>
+                    <row>
                         <entry>sv</entry>
                         <entry>スウェーデン語</entry>
                     </row>
@@ -359,6 +447,10 @@
                         <entry>テルグ語</entry>
                     </row>
                     <row>
+                        <entry>tg</entry>
+                        <entry>タジク語</entry>
+                    </row>
+                    <row>
                         <entry>th</entry>
                         <entry>タイ語</entry>
                     </row>
@@ -371,8 +463,16 @@
                         <entry>ティグレ語</entry>
                     </row>
                     <row>
+                        <entry>tn</entry>
+                        <entry>ツワナ語</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
                         <entry>トルコ語</entry>
+                    </row>
+                    <row>
+                        <entry>ts</entry>
+                        <entry>ツォンガ語</entry>
                     </row>
                     <row>
                         <entry>tt</entry>
@@ -391,6 +491,10 @@
                         <entry>ウズベク語</entry>
                     </row>
                     <row>
+                        <entry>ve</entry>
+                        <entry>ベンダ語</entry>
+                    </row>
+                    <row>
                         <entry>vi</entry>
                         <entry>ベトナム語</entry>
                     </row>
@@ -399,8 +503,20 @@
                         <entry>ワッラモ語</entry>
                     </row>
                     <row>
+                        <entry>xh</entry>
+                        <entry>コサ語</entry>
+                    </row>
+                    <row>
+                        <entry>yo</entry>
+                        <entry>ヨルバ語</entry>
+                    </row>
+                    <row>
                         <entry>zh</entry>
                         <entry>中国語</entry>
+                    </row>
+                    <row>
+                        <entry>zu</entry>
+                        <entry>ズールー語</entry>
                     </row>
                 </tbody>
             </tgroup>

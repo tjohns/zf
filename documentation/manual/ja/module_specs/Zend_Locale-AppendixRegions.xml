@@ -55,6 +55,10 @@
                         <entry>ボスニア・ヘルツェゴビナ</entry>
                     </row>
                     <row>
+                        <entry>BD</entry>
+                        <entry>バングラデシュ</entry>
+                    </row>
+                    <row>
                         <entry>BE</entry>
                         <entry>ベルギー</entry>
                     </row>
@@ -97,6 +101,14 @@
                     <row>
                         <entry>CA</entry>
                         <entry>カナダ</entry>
+                    </row>
+                    <row>
+                        <entry>CD</entry>
+                        <entry>コンゴ民主共和国 (キンシャサ)</entry>
+                    </row>
+                    <row>
+                        <entry>CG</entry>
+                        <entry>コンゴ共和国 (ブラザビル)</entry>
                     </row>
                     <row>
                         <entry>CH</entry>
@@ -193,6 +205,10 @@
                     <row>
                         <entry>GE</entry>
                         <entry>グルジア</entry>
+                    </row>
+                    <row>
+                        <entry>GH</entry>
+                        <entry>ガーナ</entry>
                     </row>
                     <row>
                         <entry>GL</entry>
@@ -331,6 +347,10 @@
                         <entry>モナコ</entry>
                     </row>
                     <row>
+                        <entry>ME</entry>
+                        <entry>モンテネグロ</entry>
+                    </row>
+                    <row>
                         <entry>MH</entry>
                         <entry>マーシャル諸島共和国</entry>
                     </row>
@@ -341,6 +361,10 @@
                     <row>
                         <entry>MM</entry>
                         <entry>ミャンマー</entry>
+                    </row>
+                    <row>
+                        <entry>MN</entry>
+                        <entry>モンゴル</entry>
                     </row>
                     <row>
                         <entry>MO</entry>
@@ -359,12 +383,28 @@
                         <entry>モルジブ</entry>
                     </row>
                     <row>
+                        <entry>MW</entry>
+                        <entry>マラウィ</entry>
+                    </row>
+                    <row>
                         <entry>MX</entry>
                         <entry>メキシコ</entry>
                     </row>
                     <row>
                         <entry>MY</entry>
                         <entry>マレーシア</entry>
+                    </row>
+                    <row>
+                        <entry>NA</entry>
+                        <entry>ナミビア</entry>
+                    </row>
+                    <row>
+                        <entry>NE</entry>
+                        <entry>ニジェール</entry>
+                    </row>
+                    <row>
+                        <entry>NG</entry>
+                        <entry>ナイジェリア</entry>
                     </row>
                     <row>
                         <entry>NI</entry>
@@ -377,6 +417,10 @@
                     <row>
                         <entry>NO</entry>
                         <entry>ノルウェー</entry>
+                    </row>
+                    <row>
+                        <entry>NP</entry>
+                        <entry>ネパール</entry>
                     </row>
                     <row>
                         <entry>NZ</entry>
@@ -427,8 +471,16 @@
                         <entry>ルーマニア</entry>
                     </row>
                     <row>
+                        <entry>RS</entry>
+                        <entry>セルビア</entry>
+                    </row>
+                    <row>
                         <entry>RU</entry>
                         <entry>ロシア</entry>
+                    </row>
+                    <row>
+                        <entry>RW</entry>
+                        <entry>ルワンダ</entry>
                     </row>
                     <row>
                         <entry>SA</entry>
@@ -467,8 +519,16 @@
                         <entry>シリア</entry>
                     </row>
                     <row>
+                        <entry>TG</entry>
+                        <entry>トーゴ</entry>
+                    </row>
+                    <row>
                         <entry>TH</entry>
                         <entry>タイ</entry>
+                    </row>
+                    <row>
+                        <entry>TJ</entry>
+                        <entry>タジキスタン</entry>
                     </row>
                     <row>
                         <entry>TN</entry>
