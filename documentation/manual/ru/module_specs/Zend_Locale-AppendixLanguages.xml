@@ -23,6 +23,10 @@
                         <entry>Afrikaans</entry>
                     </row>
                     <row>
+                        <entry>ak</entry>
+                        <entry>Akan</entry>
+                    </row>
+                    <row>
                         <entry>am</entry>
                         <entry>Amharic</entry>
                     </row>
@@ -63,6 +67,10 @@
                         <entry>Catalan</entry>
                     </row>
                     <row>
+                        <entry>cch</entry>
+                        <entry>Atsam</entry>
+                    </row>
+                    <row>
                         <entry>cs</entry>
                         <entry>Czech</entry>
                     </row>
@@ -85,6 +93,10 @@
                     <row>
                         <entry>dz</entry>
                         <entry>Dzongkha</entry>
+                    </row>
+                    <row>
+                        <entry>ee</entry>
+                        <entry>Ewe</entry>
                     </row>
                     <row>
                         <entry>el</entry>
@@ -127,8 +139,16 @@
                         <entry>French</entry>
                     </row>
                     <row>
+                        <entry>fur</entry>
+                        <entry>Friulian</entry>
+                    </row>
+                    <row>
                         <entry>ga</entry>
                         <entry>Irish</entry>
+                    </row>
+                    <row>
+                        <entry>gaa</entry>
+                        <entry>Ga</entry>
                     </row>
                     <row>
                         <entry>gez</entry>
@@ -145,6 +165,10 @@
                     <row>
                         <entry>gv</entry>
                         <entry>Manx</entry>
+                    </row>
+                    <row>
+                        <entry>ha</entry>
+                        <entry>Hausa</entry>
                     </row>
                     <row>
                         <entry>haw</entry>
@@ -171,8 +195,16 @@
                         <entry>Armenian</entry>
                     </row>
                     <row>
+                        <entry>ia</entry>
+                        <entry>Interlingua</entry>
+                    </row>
+                    <row>
                         <entry>id</entry>
                         <entry>Indonesian</entry>
+                    </row>
+                    <row>
+                        <entry>ig</entry>
+                        <entry>Igbo</entry>
                     </row>
                     <row>
                         <entry>is</entry>
@@ -193,6 +225,22 @@
                     <row>
                         <entry>ka</entry>
                         <entry>Georgian</entry>
+                    </row>
+                    <row>
+                        <entry>kaj</entry>
+                        <entry>Jju</entry>
+                    </row>
+                    <row>
+                        <entry>kam</entry>
+                        <entry>Kamba</entry>
+                    </row>
+                    <row>
+                        <entry>kcg</entry>
+                        <entry>Tyap</entry>
+                    </row>
+                    <row>
+                        <entry>kfo</entry>
+                        <entry>Koro</entry>
                     </row>
                     <row>
                         <entry>kk</entry>
@@ -219,12 +267,20 @@
                         <entry>Konkani</entry>
                     </row>
                     <row>
+                        <entry>ku</entry>
+                        <entry>Kurdish</entry>
+                    </row>
+                    <row>
                         <entry>kw</entry>
                         <entry>Cornish</entry>
                     </row>
                     <row>
                         <entry>ky</entry>
                         <entry>Kirghiz</entry>
+                    </row>
+                    <row>
+                        <entry>ln</entry>
+                        <entry>Lingala</entry>
                     </row>
                     <row>
                         <entry>lo</entry>
@@ -267,12 +323,28 @@
                         <entry>Norwegian Bokmal</entry>
                     </row>
                     <row>
+                        <entry>ne</entry>
+                        <entry>Nepali</entry>
+                    </row>
+                    <row>
                         <entry>nl</entry>
                         <entry>Dutch</entry>
                     </row>
                     <row>
                         <entry>nn</entry>
                         <entry>Norwegian Nynorsk</entry>
+                    </row>
+                    <row>
+                        <entry>nr</entry>
+                        <entry>South Ndebele</entry>
+                    </row>
+                    <row>
+                        <entry>nso</entry>
+                        <entry>Northern Sotho</entry>
+                    </row>
+                    <row>
+                        <entry>ny</entry>
+                        <entry>Nyanja; Chichewa; Chewa</entry>
                     </row>
                     <row>
                         <entry>om</entry>
@@ -307,8 +379,16 @@
                         <entry>Russian</entry>
                     </row>
                     <row>
+                        <entry>rw</entry>
+                        <entry>Kinyarwanda</entry>
+                    </row>
+                    <row>
                         <entry>sa</entry>
                         <entry>Sanskrit</entry>
+                    </row>
+                    <row>
+                        <entry>se</entry>
+                        <entry>Northern Sami</entry>
                     </row>
                     <row>
                         <entry>sh</entry>
@@ -339,6 +419,14 @@
                         <entry>Serbian</entry>
                     </row>
                     <row>
+                        <entry>ss</entry>
+                        <entry>Swati</entry>
+                    </row>
+                    <row>
+                        <entry>st</entry>
+                        <entry>Southern Sotho</entry>
+                    </row>
+                    <row>
                         <entry>sv</entry>
                         <entry>Swedish</entry>
                     </row>
@@ -359,6 +447,10 @@
                         <entry>Telugu</entry>
                     </row>
                     <row>
+                        <entry>tg</entry>
+                        <entry>Tajik</entry>
+                    </row>
+                    <row>
                         <entry>th</entry>
                         <entry>Thai</entry>
                     </row>
@@ -371,8 +463,16 @@
                         <entry>Tigre</entry>
                     </row>
                     <row>
+                        <entry>tn</entry>
+                        <entry>Tswana</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
                         <entry>Turkish</entry>
+                    </row>
+                    <row>
+                        <entry>ts</entry>
+                        <entry>Tsonga</entry>
                     </row>
                     <row>
                         <entry>tt</entry>
@@ -391,6 +491,10 @@
                         <entry>Uzbek</entry>
                     </row>
                     <row>
+                        <entry>ve</entry>
+                        <entry>Venda</entry>
+                    </row>
+                    <row>
                         <entry>vi</entry>
                         <entry>Vietnamese</entry>
                     </row>
@@ -399,8 +503,20 @@
                         <entry>Walamo</entry>
                     </row>
                     <row>
+                        <entry>xh</entry>
+                        <entry>Xhosa</entry>
+                    </row>
+                    <row>
+                        <entry>yo</entry>
+                        <entry>Yorubs</entry>
+                    </row>
+                    <row>
                         <entry>zh</entry>
                         <entry>Chinese</entry>
+                    </row>
+                    <row>
+                        <entry>zu</entry>
+                        <entry>Zulu</entry>
                     </row>
                 </tbody>
             </tgroup>
