@@ -13,66 +13,69 @@
         <title>Prüfen von Daten</title>
 
         <para>
-            Probably most dates you will get as input are strings. But the problem with strings is that
-            you can not be sure if the string is a real date. Therefor <code>Zend_Date</code> has spend
-            a own static function to check date strings. <code>Zend_Locale</code> has a own function 
-            <code>getDate($date, $locale);</code> which parses a date and returns the proper and normalized
-            date parts. A monthname for example will be recognised and returned just a month number.
-            But as <code>Zend_Locale</code> does not know anything about dates because it is a 
-            normalizing and localizing class we have integrated a own function <code>isDate($date);</code>
-            which checks this.
+            Die meisten Daten werden normalerweise als Zeichenketten übergeben. Aber das Problem mit Zeichenketten
+            is das man nicht sicher sein kann ob eine Zeichenkette ein echtes Datum enthält. Hierfür gibt es
+            in <code>Zend_Date</code> eine eigene statische Funktion um Datums-Zeichenketten zu prüfen.
+            <code>Zend_Locale</code> hat eine eigene Funktion <code>getDate($date, $locale);</code> welche ein
+            Datum analysiert und die gültigen normalisierten Datumsabschnitte zurück gibt. Ein Monatsname
+            wird zum Beispiel erkannt und anschließend nur die Nummer des Monats zurück gegeben. Aber da
+            <code>Zend_Locale</code> nichts über Daten weiß, da es eine Klasse zum Normalisieren und
+            Lokalisieren ist, haben wir eine eigene Funktion <code>isDate($date);</code> integriert welche das
+            für uns prüft.
         </para>
 
         <para>
-            <code>isDate($date, $format, $locale);</code> can take up to 3 parameters and needs minimum one
-            parameter. So what we need to verify a date is, of course, the date itself as string.
-            The second parameter can be the format which the date is expected to have. If no format is given
-            the standard date format from your locale is used. For details about how formats should look like
-            see the chapter about <link linkend="zend.date.constants.selfdefinedformats">self defined formats</link>
-            .
+            <code>isDate($date, $format, $locale);</code> nimmt bis zu drei Parameter entgegen und benötigt mindestens
+            einen Parameter. Deshalb ist alles was wir für das Prüfen eines Datums benötigen natürlich das Datum
+            selbst als Zeichenkette. Der zweite Parameter kann das Format sein, in welchem das Datum erwartet wird.
+            Wenn kein Format angegeben wurde, wird das Standardformat des verwendeten Gebietsschemas benutzt.
+            Für Details darüber wie Formate aussehen müssen kann im Kapitel über
+            <link linkend="zend.date.constants.selfdefinedformats">selbst definierte Formate</link> nachgeschaut werden.
         </para>
 
         <para>
-            The third parameter is also optional as the second parameter and can be used to give a locale.
-            We need the locale to normalize monthnames and daynames. So with the third parameter we are able
-            to recognise dates like '01.Jänner.2000' or '01.January.2000' depending on the given locale.
+            Der dritte Parameter ist auch optional genauso wie der zweite Parameter und kann verwendet werden um
+            ein Gebietsschema anzugeben. Das gebietsschema wird benötigt um Monats- und Wochentagsnamen zu
+            normalisieren. Mit dem dritten Parameter sind wir also in der Lage Daten zu erkennen wie
+            '01.Jänner.2000' oder '01.January.2000' abhängig von dem angegebenen Gebietsschema.
         </para>
 
         <para>
-            <code>isDate();</code> of course checks if a date does exist. <code>Zend_Date</code> itself does not
-            check a date. So it is possible to create a date like '31.February.2000' with <code>Zend_Date</code>
-            because <code>Zend_Date</code> will automatically correct the date and return the proper date.
-            In our case '03.March.2000'. <code>isDate()</code> on the other side does this check and will return
-            false on '31.February.2000' because it knows that this date is impossible.
+            <code>isDate();</code> prüft natürlich auch ob ein Datum existiert. <code>Zend_Date</code> selbst
+            prüft die Daten nicht. Deshalb ist es möglich ein Datum wie zum Beispiel '31.Februar.2000' mit
+            <code>Zend_Date</code> zu erstellen  weil <code>Zend_Date</code> das Datum automatisch korrigiert und
+            ein gültiges Datum zurück gibt. In unserem Fall den '03.März.2000'. Auf der anderen Seite führt
+            <code>isDate()</code> diese Prüfung durch und gibt beim '31.Februar.2000' falsch zurück, weil sie weiß
+            das dieses Datum unmöglich ist.
         </para>
 
         <example>
-            <title>Checking dates</title>
+            <title>Prüfen von Daten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
-// Checking dates
+// Prüfen des Datums
 $date = '01.03.2000';
 if (Zend_Date::isDate($date)) {
-    print "String $date is a date";
+    print "Zeichenkette $date ist ein Datum";
 } else {
-    print "String $date is NO date";
+    print "Zeichenkette $date ist KEIN Datum";
 }
 
-// Checking localized dates
+// Prüfen eines lokalisierten Datums
 $date = '01 February 2000';
 if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
-    print "String $date is a date";
+    print "Zeichenkette $date ist ein Datum";
 } else {
-    print "String $date is NO date";
+    print "Zeichenkette $date ist KEIN Datum";
 }
 
-// Checking imposible dates
+// Prüfen eines unmöglichen Datums
 $date = '30 February 2000';
 if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
-    print "String $date is a date";
+    print "Zeichenkette $date ist ein Datum";
 } else {
-    print "String $date is NO date";
+    print "Zeichenkette $date ist KEIN Datum";
 }
 ?>]]></programlisting>
         </example>
@@ -81,131 +84,133 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
     <sect2>
 
-        <title>Sunrise and Sunset</title>
+        <title>Sonnenaufgang und Sonnenuntergang</title>
 
         <para>
-            <code>Zend_Date</code> has also functions integrated for getting informations from the sun. Often it is
-            necessary to get the time for sunrise or sunset within a particulary day. This is quite easy with
-            <code>Zend_Date</code> as just the expected day has to be given and additionally location for which
-            the sunrise or sunset has to be calculated.
+            <code>Zend_Date</code> beinhaltet auch Funktionen um Informationen von der Sonne zu erhalten. Oft
+            ist es notwendig die Zeit für Sonnenaugang oder Sonnenuntergang für einen bestimmten Tag zu erhalten.
+            Das ist mit <code>Zend_Date</code> sehr einfach weil nur der gewünschte Tag angegeben werden muß, und
+            zusätzlich die Ortsangabe für den Sonnenaufgang oder Sonnenuntergang berechnet werden soll.
         </para>
 
         <para>
-            As most people do not know the location of their city we have also spent a helper class which provides
-            the location data for about 250 capital and other big cities around the whole world. Most people could
-            use cities near themself as the difference for locations situated to each other can only be measured
-            within some seconds.
+            Da die meisten Personen die genaue Ortsangabe Ihrer Stadt nicht kennen haben wir auch eine Helferklasse
+            spendiert die für etwa 250 Haupt- und Großstädte der ganzen Welt die Daten der Ortsangaben bereithält.
+            Die meisten Personen können Städte in Ihrer näheren Umgebung benutzen, da die Differenz für Ortsangaben
+            welche nahe beineinander liegen nur in Sekunden gemessen werden kann.
         </para>
 
         <para>
-            For creating a listbox and choosing a special city the function <code>Zend_Date_Cities::getCityList</code>
-            can be used. It returns the names of all avaiable predefined cities for the helper class.
+            Für die Erstellung einer Auswahlbox und der Auswahl einer speziellen Stadt kann die Funktion
+            <code>Zend_Date_Cities::getCityList</code>  benutzt werden. Sie gibt die Namen aller verfügbaren
+            vordefinierten Städte der Helferklasse zurück.
         </para>
 
         <example>
-            <title>Getting all avaiable cities</title>
+            <title>Alle verfügbaren Städte ausgeben</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
 
-// Output the complete list of avaiable cities
+// Ausgabe der kompletten Liste aller verfügbaren Städte
 print_r (Zend_Date_Cities::getCityList());
 ?>]]></programlisting>
         </example>
 
         <para>
-            The location itself can be received with the <code>Zend_Date_Cities::City()</code> function.
-            It accepts the name of the city as returned by the <code>Zend_Date_Cities::getCityList()</code>
-            function and optional as second parameter the horizon to set.
+            Die Ortsangabe selbst erhält man mit der Funktion <code>Zend_Date_Cities::City()</code>.
+            Sie akzeptiert den Namen einer Stadt wie durch die Funktion <code>Zend_Date_Cities::getCityList()</code>
+            angegeben und optional als zweiten Parameter den zu setzenden Horizont.
         </para>
 
         <para>
-            There are 4 defined horizons which can be used with locations to receive the exact time of sunset and
-            sunrise. The '<code>horizon</code>' parameter is always optional in all functions. If it is not set, the
-            '<code>effective</code>' horizon is used.
+            Es gibt 4 vordefinierte Horizonte welche mit einer Ortsangabe benutzt werden können um den genauen
+            Zeitpunkt von Sonnenauf- und -untergang zu erhalten. Der '<code>horizon</code>' Parameter ist in allen
+            Funktionen immer optional. Wenn er nicht gesetzt wird, wird der '<code>effective</code>' Horizont benutzt.
         </para>
 
         <table>
-            <title>Types of supported horizons for sunset and sunrise</title>
+            <title>Arten von unterstützten Horizonten für Sonnenauf- und -untergang</title>
             <tgroup cols="3">
                 <thead>
                     <row>
-                        <entry>Horizon</entry>
-                        <entry>Description</entry>
-                        <entry>Useage</entry>
+                        <entry>Horizont</entry>
+                        <entry>Beschreibung</entry>
+                        <entry>Verwendung</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>effective</entry>
-                        <entry>Standard horizon</entry>
-                        <entry>Expects the world to be a ball. This horizon is always used if non is defined.</entry>
+                        <entry>Standard Horizont</entry>
+                        <entry>Nimmt an das die Welt ein Ball ist. Dieser Horizont wird immer benutzt wenn keiner definiert wurde.</entry>
                     </row>
                     <row>
                         <entry>civil</entry>
-                        <entry>Common horizon</entry>
-                        <entry>Often used in common medias like TV or radio</entry>
+                        <entry>Üblicher Horizont</entry>
+                        <entry>Oft in den üblichen Medien wie Fernsehen und Radio benutzt.</entry>
                     </row>
                     <row>
                         <entry>nautic</entry>
-                        <entry>Nautic horizon</entry>
-                        <entry>Often used in sea navigation</entry>
+                        <entry>Nautischer Horizont</entry>
+                        <entry>Oft in der Navigation zu See benutzt.</entry>
                     </row>
                     <row>
                         <entry>astronomic</entry>
-                        <entry>Astronomic horizon</entry>
-                        <entry>Often used for calculation with stars</entry>
+                        <entry>Astronomischer Horizont</entry>
+                        <entry>Oft bei der Berechnung mit Sternen benutzt</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
 
         <para>
-            Of course also a self-defined location can be given and calculated with. Therefor a '<code>latitude</code>'
-            and a '<code>longitude</code>' has to be given and optional the '<code>horizon</code>'.
+            Natürlich kann auch eine selbst-definierte Ortsangabe für die Berechnung benutzt werden. Hierzu ist eine
+            '<code>latitude</code>' und eine '<code>longitude</code>' anzugeben und optional der '<code>horizon</code>'.
         </para>
 
         <example>
-            <title>Getting the location for a city</title>
+            <title>Die Ortsangabe für eine Stadt auslesen</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
 
-// Get the location for a defined city
-// uses the effective horizon as no horizon is defined
+// Die Ortsangabe für eine bestimmte Stadt auslesen
+// Benutzt den effektiven Horizont da kein Horizont angegeben wurde
 print_r (Zend_Date_Cities::City('Vienna'));
 
-// use the nautic horizon
+// Benutzt den nautischen Horizont
 print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
 
-// self definition of a location
+// Selbstdefinition einer Ortsangabe
 $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
 ?>]]></programlisting>
         </example>
 
         <para>
-            As now all needed data can be set the next is to create a <code>Zend_Date</code> object with the day where
-            sunset or sunrise should be calculated. For the calculation there are 3 functions avaiable. It is possible
-            to calculate sunset with '<code>getSunset()</code>', sunrise with '<code>getSunrise()</code>' and all
-            avaiable informations related to the sun with '<code>getSunInfo()</code>'. After the calculation the
-            <code>Zend_Date</code> object will be returned with the calculated time.
+            Da nun alle benötigten Daten angegeben werde können ist der nächste Schritt die Erstellung eines
+            <code>Zend_Date</code> Objekts mit dem Tag für welchen Sonnenauf- oder -untergang berechnet werden sollen.
+            Für die Berechnung stehen 3 Funktionen bereit. Die Berechnung des Sonnenaufganges ist mit
+            '<code>getSunset()</code>', des Sonnenuntergangs mit '<code>getSunrise()</code>' und alle
+            möglichen Informationen welche die Sonne betreffen mit '<code>getSunInfo()</code>' möglich.
+            Nach der Berechnung wird das <code>Zend_Date</code> Objekt mit der berechneten Zeit zurückgegeben.
         </para>
 
         <example>
-            <title>Calculating sun informations</title>
+            <title>Berechnung von Sonneninformationen</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Date/Cities.php';
 
-// Get the location for a defined city
+// Die Ortsangabe einer bestimmten Stadt auslesen
 $city = Zend_Date_Cities::City('Vienna');
 
-// create a date object for the day for which the sun has to be calculated
+// Ein Datumsobjekt erstellen für den Tag für den die Sonne berechnet werden soll
 $date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
 
-// calculate sunset
+// Sonnenuntergang berechnen
 $sunset = $date->getSunset($city);
 print $sunset->get(Zend_Date::ISO_8601);
 
-// calculate all sun informations
+// Alle Sonneninformationen berechnen
 $info = $date->getSunInfo($city);
 foreach ($info as $sun) {
     print "\n" . $sun->get(Zend_Date::ISO_8601);
@@ -217,107 +222,109 @@ foreach ($info as $sun) {
 
     <sect2>
 
-        <title>Timezones</title>
+        <title>Zeitzonen</title>
 
         <para>
-            Timezones are as important as dates itself. There are several timezones depending on where
-            in the world a user lives. So working with dates also means to set the proper timezone.
-            This may sound complicated but it's easier as expected. As already mentioned in the first chapter
-            of <code>Zend_Date</code> the default timezone has to be set. Eigther by <code>php.ini</code> or
-            by definition within the bootstrap file.
+            Zeitzonen sind genauso wichtig wie die Datumsangaben selbst. Es gibt einige Zeitzonen abhängig davon
+            wo auf der Welt der Benutzer lebt. Deshalb bedeutet das Arbeiten mit Daten auch immer das eine
+            gültige Zeitzone gesetzt ist. Das klingt eventuell kompliziert, ist aber viel einfacher als erwartet.
+            Wie schon im ersten Kapitel von <code>Zend_Date</code> erwähnt muß immer eine Standardzeitzone
+            ersetzt werden. Entweder durch <code>php.ini</code> oder durch Definition in der Bootstrap Datei.
         </para>
 
         <para>
-            A <code>Zend_Date</code> object of course also stores the actual timezone. Even if the timezone
-            is changed after the creation of the object it remembers the original timezone and works with it.
-            It is also not necessary to change the timezone within the code with php functions.
-            <code>Zend_Date</code> has two build in functions which makes it possible to handle this.
+            Ein <code>Zend_Date</code> Objekt speichert natürlich die aktuelle Zeitzone. Selbst wenn die
+            Zeitzone nach der Erstellung des Objektes geändert wird, merkt sich das Objekt die originale
+            Zeitzone und arbeitet mit Ihr. Es ist also nicht notwendig die Zeitzone im Code mithilfe von
+            PHP Funktionen zu ändern. <code>Zend_Date</code> hat zwei eingebaute Funktionen die es ermöglichen
+            damit zu Arbeiten.
         </para>
 
         <para>
-            <code>getTimezone()</code> returns the actual set timezone of within the <code>Zend_Date</code>
-            object. Remember that <code>Zend_Date</code> is not coupled with php internals. So the returned
-            timezone is not the timezone of the php script but the timezone of the object.
-            <code>setTimezone($zone)</code> is the second function and makes it possible to set new timezone for
-            <code>Zend_Date</code>. A given timezone is always checked. If it does not exist an exception will
-            be thrown. Additionally the actual scripts or systems timezone can be set to the date object by
-            calling  <code>setTimezone()</code> without the zone parameter. This is also done automatically
-            when the date object is created.
+            <code>getTimezone()</code> gibt die aktuell gesetzte Zeitzone des <code>Zend_Date</code> Objektes
+            zurück. Man sollte in Erinnerung behalten das <code>Zend_Date</code> nicht mit den PHP Internas
+            gekoppelt ist. Deshalb ist die zurückgegebene Zeitzone nicht die des PHP Skripts sondern jene des
+            Objektes. <code>setTimezone($zone)</code> ist die zweite Funktion und ermöglicht es eine neue
+            Zeitzone für <code>Zend_Date</code> zu setzen. Eine angegebene Zeitzone wird immer geprüft. Wenn diese
+            nicht existiert wird eine Ausnahme geworfen. Zusätzlich kann die Zeitzone des aktuellen Skripts oder
+            des Systems für das Datumsobjekt gesetzt werden indem <code>setTimezone()</code> ohne den Parameter
+            zone aufgerufen wird. Das wird auch automatisch gemacht wenn das Datumsobjekt erstellt wird.
         </para>
 
         <example>
-            <title>Working with timezones</title>
+            <title>Arbeiten mit Zeitzonen</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
-// Set a default timezone... this has to be done within the bootstrap file or php.ini
-// We do this here just for having a complete example
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
+// Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
 date_defaut_timezone_set('Europe/Vienna');
 
-// create a date object
+// Erstellen des Datumsobjektes
 $date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
 
-// view our date object
+// Ausgabe des Datumsobjektes
 print $date->getIso();
 
-// what timezone do we have ?
+// Welche Zeitzone ist gesetzt ?
 print $date->getTimezone();
 
-// set another timezone
+// Setzen einer anderen Zeitzone
 $date->setTimezone('America/Chicago');
 
-// what timezone do we now have ?
+// Welche Zeitzone ist jetzt gesetzt ?
 print $date->getTimezone();
 
-// see the changed date object
+// Ausgabe des geänderten Datumsobjektes
 print $date->getIso();
 ?>]]></programlisting>
         </example>
 
         <para>
-            <code>Zend_Date</code> always takes the actual timezone for object creation as showed in the first
-            lines of the example. Changing the timezone within the created object also has an effect to the
-            date itself. Dates are always related to a timezone. Changing the timezone for a <code>Zend_Date</code>
-            object does not change the time of <code>Zend_Date</code>. Remember that internally dates are always
-            stored as timestamps and in GMT. So the timezone means how much hours should be substracted or added
-            to get the actual global time for the own timezone and region.
+            <code>Zend_Date</code> nimmt immer die aktuelle Zeitzone für das Erstellen eines Objektes wie in den
+            ersten Zeilen des Beispiels gezeigt. Das Ändern der Zeitzone für ein <code>Zend_Date</code> Objekt
+            hat einen Effekt auf das Datum selbst. Daten sind immer relativ zu einer Zeitzone. Das Ändern der
+            Zeitzone für ein <code>Zend_Date</code> Objekt ändert nicht die Zeit des <code>Zend_Date</code> Objektes
+            selbst. Man muß sich in Erinnerung halten das Daten intern immer als Zeitpunkte und in der GMT 
+            gespeichert werden. Eine Zeitzone bedeutet also wieviele Stunden subtrahiert oder addiert werden müssen
+            um die aktuelle globale Zeit für die eigene Zeitzone und Region er erhalten.
         </para>
 
         <para>
-            Having the timezone coupled within <code>Zend_Date</code> has another positive effect. It is possible
-            to have several dates with different timezones.
+            Das koppeln der Zeitzone innerhalb von <code>Zend_Date</code> hat einen anderen positiven Nebeneffekt.
+            Es ist möglich verschiedene Daten mit verschiedenen Zeitzonen zu haben.
         </para>
 
         <example>
-            <title>Multiple timezones</title>
+            <title>Mehrere Zeitzonen</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
-// Set a default timezone... this has to be done within the bootstrap file or php.ini
-// We do this here just for having a complete example
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
+// Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
 date_defaut_timezone_set('Europe/Vienna');
 
-// create a date object
+// Erstellen des Datumsobjektes
 $date = new Zend_Date('10.03.2007 00:00:00', Zend_Date::ISO_8601, 'de');
 
-// view our date object
+// Ausgabe des Datumsobjektes
 print $date->getIso();
 
-// the date stays unchanged even after changeing the timezone
+// Das Datum bleibt unverändert selbst nach einer Änderung der Zeitzone
 date_default_timezone_set('America/Chicago');
 print $date->getIso();
 
 $otherdate = clone $date;
 $otherdate->setTimezone('Brazil/Acre');
 
-// view our date object
+// Ausgabe des Datumsobjektes
 print $otherdate->getIso();
 
-// set the object to the actual systems timezone
+// Setzen der aktuellen Zeitzone des Systems für das Objekt
 $lastdate = clone $date;
 $lastdate->setTimezone();
 
-// view our date object
+// Ausgabe des Datumsobjektes
 print $lastdate->getIso();
 ?>]]></programlisting>
         </example>
