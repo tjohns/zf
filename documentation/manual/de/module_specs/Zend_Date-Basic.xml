@@ -4,19 +4,20 @@
 
     <para>
         Der folgende Abschnitt zeigt die Grundsätzliche Benutzung von <code>Zend_Date</code> hauptsächlich durch
-        Beispiele. Für dieses Handbuch sind "Daten" immer impliziert mit Kalender Daten mit Zeiten, selbst wenn
-        es nicht explizit erwähnt ist und visa-versa. Der Teil der nicht angegeben wird, wird intern standardmäßig
+        Beispiele. Für dieses Handbuch sind "Daten" immer implizit Kalenderdaten mit Zeiten, selbst wenn
+        es nicht extra erwähnt ist und visa-versa. Der nicht angegebene Teil wird intern standardmäßig
         mit "null" angenommen. Das bedeutet das ein Datum welches kein Kalenderdatum aber eine Zeit von 12 Stunden
-        und ein anderes Datum welches aus einem Kalenderdatum besteht dazu führt das man ein Datum bekommt das
-        das Kalenderdatum enthält mit einere Uhrzeit von "Mittags".
+        hat und ein anderes Datum welches aus einem Kalenderdatum aber ohne Uhrzeit besteht zusammen
+        zu einem Datum führen welches das Kalenderdatum enthält mit einer Uhrzeit von "Mittags".
     </para>
 
     <para>
-        Setting only a specific date, with no time part, implies a time set to 00:00:00. Conversely, setting only a
-        specific time implies a date internally set to 01.01.1970 plus the number of seconds equal to the elapsed hours,
-        minutes, and seconds identified by the time. Normally, people measure things from a starting point, such as the
-        year 0 A.D. However, many software systems use the first second of the year 1970 as the starting point, and
-        denote times as a timestamp offset counting the number of seconds elapsed from this starting point.
+        Das Setzen eines Datums ohne Zeit bedeutet das die Zeit auf 00:00:00 gesetzt wird. Genauso
+        bedeutet das Setzen einer Zeit ohne Datum das Intern das Datum auf 01.01.1970 gesetzt wird inklusive der
+        Anzahl an Sekunden welche der vergangenen Stunden, Minuten und Sekunden der angegebenen Zeit entsprechen.
+        Normalerweise messen Personen Dinge von einem Startpunkt aus, wie das Jahr 0 A.D. Trotzdem, verwenden die
+        meisten Softwaresysteme die erste Sekunde des Jahres 1970 als Startpunkt und bezeichnen Zeiten als Abstand
+        zum Zeitpunkt durch Zählen der Anzahl an Sekunden die seit diesem dem Startpunkt vergangen sind.
     </para>
 
     <sect2 id="zend.date.basic.creation">
@@ -24,12 +25,12 @@
         <title>Das aktuelle Datum</title>
 
         <para>
-            Without any arguments, constructing an instance returns an object in the default locale with the current,
-            local date using PHP's <code>time()</code> function to obtain the
-            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX timestamp</ulink>
-            for the object. Make sure your PHP environment has the correct
-            <link linkend="zend.date.setdefaulttimezone">default timezone</link>
-            .
+            Ohne jegliche Argumente bedeutet die Erstellung einer Instanz das ein Objekt mit dem aktuellen
+            Gebietsschema und dem aktuellen lokalen Datum zurückgegeben wird, durch Verwendung von PHP's
+            <code>time()</code> Funktion um den aktuellen 
+            <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX Zeitpunkt</ulink> für das Objekt zu erhalten.
+            Man muß sicherstellen das die PHP Umgebung die richtige
+            <link linkend="zend.date.setdefaulttimezone">Standardzeitzone</link> gesetzt hat.
         </para>
 
         <example>
@@ -51,8 +52,9 @@ print $date;
         <title>Zend_Date durch Beispiele</title>
 
         <para>
-            Reviewing basic methods of <code>Zend_Date</code> is a good place to start for those unfamiliar with date
-            objects in other languages or frameworks. A small example will be provided for each method below.
+            Das Durchschauen der Basismethoden von <code>Zend_Date</code> ist ein guter Weg für den Start für
+            jene welche noch nie mit Datums Objekten in anderen Sprachen oder Frameworks gearbeitet haben.
+            Für jede anbei angeführte Methode gibt es ein kleines Beispiel.
         </para>
 
         <sect3 id="zend.date.simple.functions.get">
@@ -60,18 +62,19 @@ print $date;
             <title>Ein Datum ausgeben</title>
 
             <para>
-                The date in a <code>Zend_Date</code> object may be obtained as a localized integer or string using the
-                <code>get()</code> method. There are many available options, which will be explained in later sections.
+                Ein Datum in einem <code>Zend_Date</code> Objekt kann als Integer oder lokalisierte Zeichenkette
+                ausgegeben werden indem man die <code>get()</code> Methode verwendet. Es gibt viele Optionen welche
+                in einer späteren Sektion beschrieben werden.
             </para>
 
             <example>
-                <title>get() - output a date</title>
+                <title>get() - Ausgabe eines Datums</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Output of the desired date
+// Ausgabe des gewünschten Datums
 print $date->get();
 ?>]]></programlisting>
             </example>
@@ -80,21 +83,22 @@ print $date->get();
 
         <sect3 id="zend.date.simple.functions.set">
 
-            <title>Setting a Date</title>
+            <title>Setzen eines Datums</title>
 
             <para>
-                The <code>set()</code> method alters the date stored in the object, and returns the final date value as
-                a timestamp (not an object). Again, there are many options which will be explored in later sections.
+                Die <code>set()</code> Methode verändert das Datum welches im Objekt gespeichert ist und gibt das
+                endgültige Datum als Zeitpunkt (nicht als Objekt) zurück. Auch hier gibt es viele Optionen die in
+                einer späteren Sektion beschrieben werden.
             </para>
 
             <example>
-                <title>set() - set a date</title>
+                <title>set() - Setzen eines Datums</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Setting of a new time
+// Setzen einer neuen Zeit
 $date->set('13:00:00',Zend_Date::TIMES);
 print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
@@ -104,29 +108,29 @@ print $date->get(Zend_Date::W3C);
 
         <sect3 id="zend.date.simple.functions.add">
 
-            <title>Adding and Subtracting Dates</title>
+            <title>Addieren und Subtrahieren von Daten</title>
 
             <para>
-                Adding two dates with <code>add()</code> usually involves adding a real date in time with an artificial
-                timestramp representing a date part, such as 12 hours, as shown in the example below. Both
-                <code>add()</code> and <code>sub()</code> use the same set of options as <code>set()</code>, which will
-                be explained later.
+                Das Addieren von zwei Daten mit <code>add()</code> bedeutet normalerweise das Addieren eines
+                echtes Datums mit einem speziellen Zeitpunkt der einen Datumsabschnitt repräsentiert, wie z.B.
+                12 Stunden, wie im nachfolgenden Beispiel gezeigt. Beide, <code>add()</code> und <code>sub()</code>
+                verwenden die gleichen Optionen wie <code>set()</code>, welche später erklärt werden.
             </para>
 
             <example>
-                <title>add() - adding dates</title>
+                <title>add() - Addieren von Daten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// changes $date by adding 12 hours
+// $date verändern durch addieren von 12 Stunden
 $date->add('12:00:00', Zend_Date::TIMES);
 
-echo "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+echo "Datum über get() = ", $date->get(Zend_Date::W3C), "\n";
 
-// use magic __toString() method to call Zend_Date's toString()
-echo "Date via toString() = ", $date, "\n";
+// benutze die magische __toString() Methode um Zend_Date's toString() aufzurufen
+echo "Datum über toString() = ", $date, "\n";
 ?>]]></programlisting>
             </example>
 
@@ -134,47 +138,49 @@ echo "Date via toString() = ", $date, "\n";
 
         <sect3 id="zend.date.simple.functions.compare">
 
-            <title>Comparation of dates</title>
+            <title>Vergleichen von Daten</title>
 
             <para>
-                All basic <code>Zend_Date</code> methods can operate on entire dates contained in the objects, or can
-                operate on date parts, such as comparing the minutes value in a date to an absolute value. For example,
-                the current minutes in the current time may be compared with a specific number of minutes using
-                <code>compare()</code>, as in the example below.
+                Alle Basis Methoden von <code>Zend_Date</code> können mit kompletten Daten, welche in einem
+                Objekt enthalten sind, arbeiten, oder mit Datumsabschnitten, wie dem Vergleich eines
+                Minutenwertes in einem Datum mit einem absoluten Wert. Zum Beispiel können die aktuellen
+                Minuten der aktuellen Zeit mit einer speziellen Zahl von Minuten verglichen werden durch Verwendung
+                von <code>compare()</code> wie im nachfolgenden Beispiel beschrieben.
             </para>
 
             <example>
-                <title>compare() - compare dates</title>
+                <title>compare() - Vergleichen von Daten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Comparation of both times
+// Vergleichen von beiden Zeiten
 if ($date->compare(10, Zend_Date::MINUTE) == -1) {
-    print "This hour is less than 10 minutes old";
+    print "Diese Stunde ist weniger als 10 Minuten alt";
 } else {
-    print "This hour is at least 10 minutes old";
+    print "Diese Stunde ist mehr als 10 Minuten alt";
 }
 ?>]]></programlisting>
             </example>
 
             <para>
-                For simple equality comparisons, use <code>equals()</code>, which returns a boolean.
+                Für einen einfachen Vergleich der Gleichheit kann <code>equals()</code> verwendet werden,
+                welches ein Boolean zurückgibt.
             </para>
 
             <example>
-                <title>equals() - identify a date or date part</title>
+                <title>equals() - Identifizieren eines Datums oder Datumsabschnittes</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
-// Comparation of the two dates
+// Vergleichen von zwei Zeiten
 if ($date->equals(10, Zend_Date::HOUR)) {
-    print "It's 10 o'clock. Time to get to work.";
+    print "Es ist 10Uhr. Zeit für die Arbeit.";
 } else {
-    print "It is not 10 o'clock. You can keep sleeping.";
+    print "Es ist noch nicht 10Uhr. Du kannst weiterschlafen.";
 }
 ?>]]></programlisting>
             </example>
