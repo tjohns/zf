@@ -104,6 +104,22 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testExceptionInvalidOptionsArrayWithoutFactory()
+    {
+        list($major, $minor, $revision) = explode('.', PHP_VERSION);
+        if ($minor >= 2) {
+            try {
+                $db = new Zend_Db_Adapter_Static('scalar');
+                $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+            } catch (Exception $e) {
+                $this->assertContains('Argument 1 passed to Zend_Db_Adapter_Abstract::__construct() must be an array, '
+                                    . 'string given', $e->getMessage());
+            }
+        } else {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+        }
+    }
+
     public function testExceptionNoConfig()
     {
         try {
