@@ -111,6 +111,9 @@ date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用
                     フォーマットです) となります。" [
                     <ulink url="http://www.php.net/float">http://www.php.net/float</ulink>
                     ]
+                    さらに、float 型そのものの特性により、計算結果に丸め誤差が生じる問題があります。
+                    これを避けるため、ZF の i18n コンポーネントでは
+                    もし BCMath 拡張モジュールが使用可能ならそれを使用するようにしています。
                 </para>
             </listitem>
             <listitem>
