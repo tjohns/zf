@@ -323,7 +323,7 @@ class Zend_Pdf_Page
 
         $idCounter = 1;
         do {
-            $newResName = $type{0} . $idCounter++;
+            $newResName = $type[0] . $idCounter++;
         } while ($this->_pageDictionary->Resources->$type->$newResName !== null);
 
         $this->_pageDictionary->Resources->$type->$newResName = $resObject;

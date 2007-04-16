@@ -226,7 +226,7 @@ class Zend_Pdf
      * @throws Zend_Pdf_Exception
      * @return Zend_Pdf
      */
-    public function __construct(&$source = null, $revision = null, $load = false)
+    public function __construct($source = null, $revision = null, $load = false)
     {
         $this->_objFactory = new Zend_Pdf_ElementFactory(1);
 

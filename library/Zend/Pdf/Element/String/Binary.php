@@ -52,7 +52,7 @@ class Zend_Pdf_Element_String_Binary extends Zend_Pdf_Element_String
         $outStr = '';
 
         for ($count = 0; $count < strlen($inStr); $count++) {
-            $outStr .= sprintf('%02X', ord($inStr{$count}));
+            $outStr .= sprintf('%02X', ord($inStr[$count]));
         }
         return $outStr;
     }
@@ -70,7 +70,7 @@ class Zend_Pdf_Element_String_Binary extends Zend_Pdf_Element_String
         $nextHexCode = '';
 
         for ($count = 0; $count < strlen($inStr); $count++) {
-            $nextCharCode = ord($inStr{$count});
+            $nextCharCode = ord($inStr[$count]);
 
             if( ($nextCharCode >= 48  /*'0'*/ &&
                  $nextCharCode <= 57  /*'9'*/   ) ||
@@ -78,7 +78,7 @@ class Zend_Pdf_Element_String_Binary extends Zend_Pdf_Element_String
                  $nextCharCode <= 102 /*'f'*/   ) ||
                 ($nextCharCode >= 65  /*'A'*/ &&
                  $nextCharCode <= 70  /*'F'*/   ) ) {
-                $nextHexCode .= $inStr{$count};
+                $nextHexCode .= $inStr[$count];
             }
 
             if (strlen($nextHexCode) == 2) {

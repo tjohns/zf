@@ -79,9 +79,9 @@ class Zend_Pdf_Element_Name extends Zend_Pdf_Element
         $outStr = '';
 
         for ($count = 0; $count < strlen($inStr); $count++) {
-            $nextCode = ord($inStr{$count});
+            $nextCode = ord($inStr[$count]);
 
-            switch ($inStr{$count}) {
+            switch ($inStr[$count]) {
                 case '(':
                 // fall through to next case
                 case ')':
@@ -111,7 +111,7 @@ class Zend_Pdf_Element_Name extends Zend_Pdf_Element
                 default:
                     if ($nextCode >= 33 && $nextCode <= 126 ) {
                         // Visible ASCII symbol
-                        $outStr .= $inStr{$count};
+                        $outStr .= $inStr[$count];
                     } else {
                         $outStr .= sprintf('#%02X', $nextCode);
                     }
@@ -134,8 +134,8 @@ class Zend_Pdf_Element_Name extends Zend_Pdf_Element
         $outStr = '';
 
         for ($count = 0; $count < strlen($inStr); $count++) {
-            if ($inStr{$count} != '#' )  {
-                $outStr .= $inStr{$count};
+            if ($inStr[$count] != '#' )  {
+                $outStr .= $inStr[$count];
             } else {
                 // Escape sequence
                 $outStr .= chr(base_convert(substr($inStr, $count+1, 2), 16, 10 ));

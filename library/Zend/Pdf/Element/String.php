@@ -91,7 +91,7 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
                 $lastNL = strlen($outStr);
             }
 
-            $nextCode = ord($inStr{$count});
+            $nextCode = ord($inStr[$count]);
             switch ($nextCode) {
                 // "\n" - line feed (LF)
                 case 10:
@@ -136,7 +136,7 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
                 default:
                     if ($nextCode >= 32 && $nextCode <= 126 ) {
                         // Visible ASCII symbol
-                        $outStr .= $inStr{$count};
+                        $outStr .= $inStr[$count];
                     } else {
                         $outStr .= sprintf('\\%03o', $nextCode);
                     }
@@ -159,8 +159,8 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
         $outStr = '';
 
         for ($count = 0; $count < strlen($inStr); $count++) {
-            if ($inStr{$count} != '\\' || $count == strlen($inStr)-1)  {
-                $outStr .= $inStr{$count};
+            if ($inStr[$count] != '\\' || $count == strlen($inStr)-1)  {
+                $outStr .= $inStr[$count];
             } else { // Escape sequence
                 switch ($inStr{++$count}) {
                     // '\\n' - line feed (LF)
@@ -206,31 +206,31 @@ class Zend_Pdf_Element_String extends Zend_Pdf_Element
                     // "\\\n" or "\\\n\r"
                     case "\n":
                         // skip new line symbol
-                        if ($inStr{$count+1} == "\r") {
+                        if ($inStr[$count+1] == "\r") {
                             $count++;
                         }
                         break;
 
                     default:
-                        if (ord($inStr{$count}) >= ord('0') &&
-                            ord($inStr{$count}) <= ord('9')) {
+                        if (ord($inStr[$count]) >= ord('0') &&
+                            ord($inStr[$count]) <= ord('9')) {
                             // Character in octal representation
                             // '\\xxx'
-                            $nextCode = '0' . $inStr{$count};
+                            $nextCode = '0' . $inStr[$count];
 
-                            if (ord($inStr{$count+1}) >= ord('0') &&
-                                ord($inStr{$count+1}) <= ord('9')) {
+                            if (ord($inStr[$count+1]) >= ord('0') &&
+                                ord($inStr[$count+1]) <= ord('9')) {
                                 $nextCode .= $inStr{++$count};
 
-                                if (ord($inStr{$count+1}) >= ord('0') &&
-                                    ord($inStr{$count+1}) <= ord('9')) {
+                                if (ord($inStr[$count+1]) >= ord('0') &&
+                                    ord($inStr[$count+1]) <= ord('9')) {
                                     $nextCode .= $inStr{++$count};
                                 }
                             }
 
                             $outStr .= chr($nextCode);
                         } else {
-                            $outStr .= $inStr{$count};
+                            $outStr .= $inStr[$count];
                         }
                         break;
                 }
