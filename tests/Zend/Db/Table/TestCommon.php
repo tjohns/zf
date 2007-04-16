@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,25 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestSetup
+ */
 require_once 'Zend/Db/Table/TestSetup.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 {
 
@@ -229,14 +243,19 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableExceptionSetInvalidDefaultAdapter()
     {
-        try {
-            Zend_Db_Table_Abstract::setDefaultAdapter(new stdClass());
-            $this->fail('Expected to catch PHPUnit_Framework_Error');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('PHPUnit_Framework_Error'),
-                'Expecting object of type PHPUnit_Framework_Error, got '.get_class($e));
-            $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, instance of stdClass given", 0, 100);
-            $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
+        list($major, $minor, $revision) = explode('.', PHP_VERSION);
+        if ($minor >= 2) {
+            try {
+                Zend_Db_Table_Abstract::setDefaultAdapter(new stdClass());
+                $this->fail('Expected to catch PHPUnit_Framework_Error');
+            } catch (Exception $e) {
+                $this->assertThat($e, $this->isInstanceOf('PHPUnit_Framework_Error'),
+                    'Expecting object of type PHPUnit_Framework_Error, got '.get_class($e));
+                $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, instance of stdClass given", 0, 100);
+                $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
+            }
+        } else {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
         }
     }
 
@@ -278,7 +297,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals("No object of type Zend_Db_Adapter_Abstract has been specified", $e->getMessage());
         }
 
-        Zend_Registry::set('registered_db', 327); 
+        Zend_Registry::set('registered_db', 327);
         try {
             $table = new Zend_Db_Table_TableBugs(array('db' => 'registered_db'));
         } catch (Exception $e) {
@@ -287,13 +306,18 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals("No object of type Zend_Db_Adapter_Abstract has been specified", $e->getMessage());
         }
 
-        try {
-            Zend_Db_Table_Abstract::setDefaultAdapter(327);
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('PHPUnit_Framework_Error'),
-                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, integer given", 0, 100);
-            $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
+        list($major, $minor, $revision) = explode('.', PHP_VERSION);
+        if ($minor >= 2) {
+            try {
+                Zend_Db_Table_Abstract::setDefaultAdapter(327);
+            } catch (Exception $e) {
+                $this->assertThat($e, $this->isInstanceOf('PHPUnit_Framework_Error'),
+                    'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+                $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, integer given", 0, 100);
+                $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
+            }
+        } else {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
         }
 
     }
