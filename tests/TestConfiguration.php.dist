@@ -253,7 +253,7 @@ define('TESTS_ZEND_MAIL_SMTP_AUTH', false);
 /**
  * Zend_Service_Amazon online tests
  */
-define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED', true);
+define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED', false);
 define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID', 'Enter AWSAccessKeyId here');
 
 /**
