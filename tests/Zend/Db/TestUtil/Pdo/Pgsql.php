@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,16 +18,30 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_TestUtil_Pdo_Common
+ */
 require_once 'Zend/Db/TestUtil/Pdo/Common.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
 {
 
-    function getParams(array $constants = array())
+    public function getParams(array $constants = array())
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_HOSTNAME,
@@ -53,7 +68,14 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
-    public function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    public function setUp(Zend_Db_Adapter_Abstract $db)
+    {
+        $this->createSequence($db, 'bugs_seq');
+        $this->createSequence($db, 'products_seq');
+        parent::setUp($db);
+    }
+
+    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
         return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
     }
@@ -66,13 +88,6 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
     protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
         return 'DROP SEQUENCE IF EXISTS ' . $db->quoteIdentifier($sequenceName);
-    }
-
-    public function setUp(Zend_Db_Adapter_Abstract $db)
-    {
-        $this->createSequence($db, 'bugs_seq');
-        $this->createSequence($db, 'products_seq');
-        parent::setUp($db);
     }
 
     protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)

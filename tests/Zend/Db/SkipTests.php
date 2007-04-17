@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,16 +18,22 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
 
 /**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Db_Skip_CommonTest extends PHPUnit_Framework_TestCase
 {

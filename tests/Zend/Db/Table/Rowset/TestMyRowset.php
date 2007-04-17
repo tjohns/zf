@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -14,39 +15,25 @@
  *
  * @category   Zend
  * @package    Zend_Db
- * @subpackage Adapter
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Exception
+ * @see Zend_Db_Table_Rowset_Abstract
  */
-require_once 'Zend/Db/Exception.php';
+require_once 'Zend/Db/Table/Rowset/Abstract.php';
+
 
 /**
  * @category   Zend
  * @package    Zend_Db
- * @subpackage Adapter
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Adapter_Exception extends Zend_Db_Exception
-{
-    protected $_chainedException = null;
-
-    public function __construct($message = null, Exception $e = null)
-    {
-        if ($e) {
-            $this->_chainedException = $e;
-            $this->code = $e->getCode();
-        }
-        parent::__construct($message);
-    }
-
-    public function getChainedException()
-    {
-        return $this->_chainedException;
-    }
-
-}
+class Zend_Db_Table_Rowset_TestMyRowset extends Zend_Db_Table_Rowset_Abstract
+{}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,15 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Adapter_Abstract
+ * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
+
 
 /**
  * Class for SQL table interface.
@@ -109,14 +113,14 @@ abstract class Zend_Db_Table_Abstract
     protected $_metadata = array();
 
     /**
-     * Default classname for row
+     * Classname for row
      *
      * @var string
      */
     protected $_rowClass = 'Zend_Db_Table_Row';
 
     /**
-     * Default classname for rowset
+     * Classname for rowset
      *
      * @var string
      */
@@ -139,9 +143,9 @@ abstract class Zend_Db_Table_Abstract
      *                   rows in the child table.
      *
      * @var array
-     */ 
-    protected $_referenceMap = array(); 
- 
+     */
+    protected $_referenceMap = array();
+
     /**
      * Simple array of class names of tables that are "children" of the current
      * table, in other words tables that contain a foreign key to this one.
@@ -149,8 +153,8 @@ abstract class Zend_Db_Table_Abstract
      * extend Zend_Db_Table_Abstract.
      *
      * @var array
-     */ 
-    protected $_dependentTables = array(); 
+     */
+    protected $_dependentTables = array();
 
     /**
      * Constructor.
@@ -168,7 +172,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @param  array $config Array of user-specified config options.
      * @throws Zend_Db_Table_Exception
-     * @throws Zend_Exception If Row or Rowset classes specified cannot be loaded.
+     * @return void
      */
     public function __construct(array $config = array())
     {
@@ -220,13 +224,14 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * @param string $classname
-     * @return void
-     * @throws Zend_Exception If $classname cannot be loaded.
+     * @param  string $classname
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
     public function setRowClass($classname)
     {
-        $this->_rowClass = $classname;
+        $this->_rowClass = (string) $classname;
+
+        return $this;
     }
 
     /**
@@ -238,13 +243,14 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * @param string $classname
-     * @return void
-     * @throws Zend_Exception If $classname cannot be loaded.
+     * @param  string $classname
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
     public function setRowsetClass($classname)
     {
-        $this->_rowsetClass = $classname;
+        $this->_rowsetClass = (string) $classname;
+
+        return $this;
     }
 
     /**
@@ -257,11 +263,13 @@ abstract class Zend_Db_Table_Abstract
 
     /**
      * @param array $referenceMap
-     * @return void
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
     public function setReferences(array $referenceMap)
     {
         $this->_referenceMap = $referenceMap;
+
+        return $this;
     }
 
     /**
@@ -294,12 +302,14 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * @param array $dependentTables
-     * @return void
+     * @param  array $dependentTables
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
     public function setDependentTables(array $dependentTables)
     {
         $this->_dependentTables = $dependentTables;
+
+        return $this;
     }
 
     /**
@@ -390,7 +400,7 @@ abstract class Zend_Db_Table_Abstract
             $this->_name = get_class($this);
         }
     }
-        
+
     /**
      * Initialize metadata.
      * Call describeTable() to discover metadata information.
@@ -502,9 +512,9 @@ abstract class Zend_Db_Table_Abstract
      * @param string $parentTableClassname
      * @param array $oldPrimaryKey
      * @param array $newPrimaryKey
-     */ 
-    public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey) 
-    { 
+     */
+    public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey)
+    {
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_UPDATE])) {
@@ -516,11 +526,11 @@ abstract class Zend_Db_Table_Abstract
                                 $newRefs[$map[self::COLUMNS][$i]] = $newPrimaryKey[$map[self::REF_COLUMNS][$i]];
                             }
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
                                 $oldPrimaryKey[$map[self::REF_COLUMNS][$i]]
                             );
                         }
-                        $rowsAffected += $this->update($newRefs, $where); 
+                        $rowsAffected += $this->update($newRefs, $where);
                         break;
                     default:
                         // no action
@@ -547,9 +557,9 @@ abstract class Zend_Db_Table_Abstract
      *
      * @param string $parentTableClassname
      * @param array $primaryKey
-     */ 
-    public function _cascadeDelete($parentTableClassname, array $primaryKey) 
-    { 
+     */
+    public function _cascadeDelete($parentTableClassname, array $primaryKey)
+    {
         $rowsAffected = 0;
         foreach ($this->_referenceMap as $rule => $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_DELETE])) {
@@ -557,11 +567,11 @@ abstract class Zend_Db_Table_Abstract
                     case self::CASCADE:
                         for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?', 
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
                                 $primaryKey[$map[self::REF_COLUMNS][$i]]
                             );
                         }
-                        $rowsAffected += $this->delete($where); 
+                        $rowsAffected += $this->delete($where);
                         break;
                     default:
                         // no action
@@ -570,7 +580,7 @@ abstract class Zend_Db_Table_Abstract
             }
         }
         return $rowsAffected;
-    } 
+    }
 
     /**
      * Fetches rows by primary key.
@@ -715,11 +725,11 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Support method for fetching rows.
      *
-     * @param string|array $where  OPTIONAL An SQL WHERE clause.
-     * @param string|array $order  OPTIONAL An SQL ORDER clause.
-     * @param int          $count  OPTIONAL An SQL LIMIT count.
-     * @param int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return array               The row results, in FETCH_ASSOC mode.
+     * @param  string|array $where  OPTIONAL An SQL WHERE clause.
+     * @param  string|array $order  OPTIONAL An SQL ORDER clause.
+     * @param  int          $count  OPTIONAL An SQL LIMIT count.
+     * @param  int          $offset OPTIONAL An SQL LIMIT offset.
+     * @return array The row results, in FETCH_ASSOC mode.
      */
     protected function _fetch($where = null, $order = null, $count = null, $offset = null)
     {

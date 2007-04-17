@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,15 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Loader
+ * @see Zend_Loader
  */
 require_once 'Zend/Loader.php';
+
 
 /**
  * @category   Zend
@@ -49,9 +53,9 @@ abstract class Zend_Db_Table_Row_Abstract
      * when dirty data is posted to the database with save().
      *
      * @var array
-     */ 
-    protected $_cleanData = array(); 
- 
+     */
+    protected $_cleanData = array();
+
     /**
      * Zend_Db_Table parent class or instance.
      *
@@ -432,7 +436,7 @@ abstract class Zend_Db_Table_Row_Abstract
         foreach ($keys as $key => $val) {
             $where[] = $db->quoteInto($db->quoteIdentifier($key) . ' = ?', $val);
         }
-        
+
         return $where;
     }
 
@@ -445,7 +449,7 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $where = $this->_getWhereQuery();
         $row = $this->_getTable()->fetchRow($where);
-        
+
         if (null === $row) {
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception('Cannot refresh row as parent is missing');
@@ -498,11 +502,11 @@ abstract class Zend_Db_Table_Row_Abstract
     protected function _prepareReference(Zend_Db_Table_Abstract $dependentTable, Zend_Db_Table_Abstract $parentTable, $ruleKey)
     {
         $map = $dependentTable->getReference(get_class($parentTable), $ruleKey);
-        
+
         if (!is_array($map[Zend_Db_Table_Abstract::COLUMNS])) {
             $map[Zend_Db_Table_Abstract::COLUMNS] = (array) $map[Zend_Db_Table_Abstract::COLUMNS];
         }
-        
+
         if (!isset($map[Zend_Db_Table_Abstract::REF_COLUMNS])) {
             $parentInfo = $parentTable->info();
             $map[Zend_Db_Table_Abstract::REF_COLUMNS] = (array) $parentInfo['primary'];
@@ -511,7 +515,7 @@ abstract class Zend_Db_Table_Row_Abstract
         if (!is_array($map[Zend_Db_Table_Abstract::REF_COLUMNS])) {
             $map[Zend_Db_Table_Abstract::REF_COLUMNS] = (array) $map[Zend_Db_Table_Abstract::REF_COLUMNS];
         }
-        
+
         return $map;
     }
 
@@ -522,9 +526,9 @@ abstract class Zend_Db_Table_Row_Abstract
      * @param string                         OPTIONAL $ruleKey
      * @return Zend_Db_Table_Rowset_Abstract Query result from $dependentTable
      * @throws Zend_Db_Table_Row_Exception If $dependentTable is not a table or is not loadable.
-     */ 
-    public function findDependentRowset($dependentTable, $ruleKey = null) 
-    { 
+     */
+    public function findDependentRowset($dependentTable, $ruleKey = null)
+    {
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($dependentTable)) {
@@ -552,8 +556,8 @@ abstract class Zend_Db_Table_Row_Abstract
             $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]];
         }
         return $dependentTable->fetchAll($where);
-    } 
- 
+    }
+
     /**
      * Query a parent table to retrieve the single row matching the current row.
      *
@@ -561,9 +565,9 @@ abstract class Zend_Db_Table_Row_Abstract
      * @param string                        OPTIONAL $ruleKey
      * @return Zend_Db_Table_Row_Abstract   Query result from $parentTable
      * @throws Zend_Db_Table_Row_Exception If $parentTable is not a table or is not loadable.
-     */ 
-    public function findParentRow($parentTable, $ruleKey = null) 
-    { 
+     */
+    public function findParentRow($parentTable, $ruleKey = null)
+    {
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($parentTable)) {
@@ -591,18 +595,18 @@ abstract class Zend_Db_Table_Row_Abstract
             $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::COLUMNS][$i]];
         }
         return $parentTable->fetchRow($where);
-    } 
- 
+    }
+
     /**
-     * @param string|Zend_Db_Table_Abstract  $matchTable
-     * @param string|Zend_Db_Table_Abstract  $intersectionTable
-     * @param string                         OPTIONAL $primaryRefRule
-     * @param string                         OPTIONAL $matchRefRule
+     * @param  string|Zend_Db_Table_Abstract  $matchTable
+     * @param  string|Zend_Db_Table_Abstract  $intersectionTable
+     * @param  string                         OPTIONAL $primaryRefRule
+     * @param  string                         OPTIONAL $matchRefRule
      * @return Zend_Db_Table_Rowset_Abstract Query result from $matchTable
-     * @throws Zend_Db_Table_Row_Exception If $matchTable and $intersectionTable are not a tables or are not loadable.
-     */ 
-    public function findManyToManyRowset($matchTable, $intersectionTable, $callerRefRule = null, $matchRefRule = null) 
-    { 
+     * @throws Zend_Db_Table_Row_Exception If $matchTable or $intersectionTable is not a table class or is not loadable.
+     */
+    public function findManyToManyRowset($matchTable, $intersectionTable, $callerRefRule = null, $matchRefRule = null)
+    {
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($intersectionTable)) {
@@ -622,7 +626,6 @@ abstract class Zend_Db_Table_Row_Abstract
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Intersection table must be a Zend_Db_Table_Abstract, but it is $type");
         }
-        $intersectionTableClass = get_class($intersectionTable);
 
         if (is_string($matchTable)) {
             try {
@@ -641,6 +644,7 @@ abstract class Zend_Db_Table_Row_Abstract
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Match table must be a Zend_Db_Table_Abstract, but it is $type");
         }
+
         $interInfo = $intersectionTable->info();
         $interName = $interInfo['name'];
         $matchInfo = $matchTable->info();
@@ -676,7 +680,7 @@ abstract class Zend_Db_Table_Row_Abstract
         $rowsetClass = $matchTable->getRowsetClass();
         $rowset = new $rowsetClass($config);
         return $rowset;
-    } 
+    }
 
     /**
      * Turn magic function calls into non-magic function calls
@@ -686,48 +690,48 @@ abstract class Zend_Db_Table_Row_Abstract
      * @param array $args
      * @return Zend_Db_Table_Row_Abstract|Zend_Db_Table_Rowset_Abstract
      * @throws Zend_Db_Table_Row_Exception If an invalid method is called.
-     */ 
-    protected function __call($method, array $args) 
-    { 
+     */
+    protected function __call($method, array $args)
+    {
 
         /**
-         * Recognize methods for Has-Many cases: 
-         * findParent<Class>() 
-         * findParent<Class>By<Rule>() 
+         * Recognize methods for Has-Many cases:
+         * findParent<Class>()
+         * findParent<Class>By<Rule>()
          */
         if (preg_match('/^findParent(\w+)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
-            return $this->findParentRow($class, $ruleKey1); 
+            return $this->findParentRow($class, $ruleKey1);
         }
 
         /**
-         * Recognize methods for Many-to-Many cases: 
-         * find<Class1>Via<Class2>() 
-         * find<Class1>Via<Class2>By<Rule>() 
-         * find<Class1>Via<Class2>By<Rule1>And<Rule2>() 
+         * Recognize methods for Many-to-Many cases:
+         * find<Class1>Via<Class2>()
+         * find<Class1>Via<Class2>By<Rule>()
+         * find<Class1>Via<Class2>By<Rule1>And<Rule2>()
          */
         if (preg_match('/^find(\w+)Via(\w+)(?:By(\w+)(?:And(\w+))?)?$/', $method, $matches)) {
             $class    = $matches[1];
             $viaClass = $matches[2];
             $ruleKey1 = isset($matches[3]) ? $matches[3] : null;
             $ruleKey2 = isset($matches[4]) ? $matches[4] : null;
-            return $this->findManyToManyRowset($class, $viaClass, $ruleKey1, $ruleKey2); 
+            return $this->findManyToManyRowset($class, $viaClass, $ruleKey1, $ruleKey2);
         }
 
         /**
-         * Recognize methods for Belongs-To cases: 
-         * find<Class>() 
-         * find<Class>By<Rule>() 
+         * Recognize methods for Belongs-To cases:
+         * find<Class>()
+         * find<Class>By<Rule>()
          */
         if (preg_match('/^find(\w+)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
-            return $this->findDependentRowset($class, $ruleKey1); 
+            return $this->findDependentRowset($class, $ruleKey1);
         }
 
         require_once 'Zend/Db/Table/Row/Exception.php';
         throw new Zend_Db_Table_Row_Exception("Unrecognized method '$method()'");
-    } 
+    }
 
 }

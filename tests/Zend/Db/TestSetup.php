@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,18 +18,41 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-require_once 'Zend/Registry.php';
-require_once 'Zend/Loader.php';
-require_once 'Zend/Db.php';
-require_once 'Zend/Db/Expr.php';
 
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Db
+ */
+require_once 'Zend/Db.php';
+
+/**
+ * PHPUnit_Framework_TestCase
+ */
 require_once 'PHPUnit/Framework/TestCase.php';
+
+/**
+ * PHPUnit_Util_Filter
+ */
 require_once 'PHPUnit/Util/Filter.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
 {
     /**
@@ -64,7 +88,7 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
         Zend_Loader::loadClass($utilClass);
         $this->_util = new $utilClass();
     }
-        
+
     /**
      * Open a new database connection
      */
@@ -79,7 +103,7 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->_db = null;
             $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expecting Zend_Db_Adapter_Exception, got '.get_class($e));
+                'Expecting Zend_Db_Adapter_Exception, got ' . get_class($e));
             $this->markTestSkipped($e->getMessage());
         }
     }
@@ -88,7 +112,7 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
      * Subclasses should call parent::tearDown() after
      * doing their own logic, e.g. deleting metadata.
      */
-    public function tearDown() 
+    public function tearDown()
     {
         $this->_util->tearDown($this->_db);
         $this->_db = null;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,26 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_TestUtil_Common
+ */
 require_once 'Zend/Db/TestUtil/Common.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage Table
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
 {
 
@@ -37,6 +52,14 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         return parent::getParams($constants);
     }
 
+    public function getSqlType($type)
+    {
+        if ($type == 'IDENTITY') {
+            return 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT';
+        }
+        return $type;
+    }
+
     protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
         return 'CREATE TABLE IF NOT EXISTS ' . $db->quoteIdentifier($tableName);
@@ -45,14 +68,6 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
     protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
         return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
-    }
-
-    public function getSqlType($type)
-    {
-        if ($type == 'IDENTITY') {
-            return 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT';
-        }
-        return $type;
     }
 
 }

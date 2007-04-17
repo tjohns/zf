@@ -27,6 +27,12 @@
  */
 require_once 'Zend/Db/Table/TestSetup.php';
 
+/**
+ * @see Zend_Registry
+ */
+require_once 'Zend/Registry.php';
+
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
@@ -76,6 +82,8 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // @todo test
         $table->setRowsetClass('stdClass');
+
+        $this->markTestIncomplete();
     }
 
     public function testTableImplicitName()

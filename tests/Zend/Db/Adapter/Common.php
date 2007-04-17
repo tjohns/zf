@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,35 +18,49 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Registry
+ * @see Zend_Registry
  */
 require_once 'Zend/Registry.php';
 
 /**
- * Zend_Loader
+ * @see Zend_Loader
  */
 require_once 'Zend/Loader.php';
 
 /**
- * Zend_Db
+ * @see Zend_Db
  */
 require_once 'Zend/Db.php';
+
+/**
+ * @see Zend_Db_Expr
+ */
 require_once 'Zend/Db/Expr.php';
 
 /**
- * PHPUnit test case
+ * PHPUnit_Framework_TestCase
  */
 require_once 'PHPUnit/Framework/TestCase.php';
+
+/**
+ * PHPUnit_Util_Filter
+ */
 require_once 'PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
 /**
- * @package    Zend_Db_Adapter_Pdo_Common
+ * @category   Zend
+ * @package    Zend_Db
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 {
@@ -72,9 +87,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     protected $_db;
 
     /**
-     * @param string The name of the identifier, to be transformed.
-     * @return string The name of a column or table, transformed for the
-     * current adapter.
+     * @param  string The name of the identifier, to be transformed.
+     * @return string The name of a column or table, transformed for the current adapter.
      */
     public function getIdentifier($name)
     {
@@ -86,9 +100,8 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string The name of the identifier, to be transformed.
-     * @return string The name of a column or table, transformed for the
-     * current adapter.
+     * @param  string The name of the identifier, to be transformed.
+     * @return string The name of a column or table, transformed for the current adapter.
      */
     public function getResultSetKey($name)
     {
@@ -218,7 +231,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("Tests for Zend_Db adapter $driver are disabled in TestConfiguration.php");
             return;
         }
-        
+
         // open a new connection
         $this->_db = Zend_Db::factory($this->getDriver(), $this->getParams());
 
@@ -1371,7 +1384,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test automatic conversion of SQL functions to 
+     * Test automatic conversion of SQL functions to
      * Zend_Db_Expr, e.g. order('LOWER(title)')
      * should give the same result as
      * order(new Zend_Db_Expr('LOWER(title)')).
@@ -1865,7 +1878,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
             $this->assertEquals("No object of type Zend_Db_Adapter_Abstract has been specified", $e->getMessage());
         }
 
-        Zend_Registry::set('registered_db', 327); 
+        Zend_Registry::set('registered_db', 327);
         try {
             $dbTable = new Zend_Db_Table_ZfTestTable(array('db' => 'registered_db'));
         } catch (Exception $e) {
@@ -1919,12 +1932,12 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->assertFalse($rows->valid());
         $this->assertFalse($rows->current());
 
-        // rewind to beginning 
+        // rewind to beginning
         $rows->rewind();
         $this->assertEquals(0, $rows->key());
         $this->assertTrue($rows->valid());
 
-        // get row at beginning and compare it to 
+        // get row at beginning and compare it to
         // the one we got earlier
         $row1Copy = $rows->current();
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
@@ -2033,7 +2046,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
-        
+
         if (!isset($row1->id)) {
             $this->fail('Column "id" is set but isset() returns false');
         }
@@ -2439,10 +2452,10 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $parentRow1->setFromArray(array('id' => 101));
         $parentRow1->save();
-        
+
         $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
         $this->assertEquals(3, $childRows->count());
-        
+
         $total = 0;
         foreach ($childRows as $row) {
             $total += $row->news_id;
@@ -2454,7 +2467,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 
         $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_ZfTestTable2');
         $this->assertEquals(3, $childRows->count());
-        
+
         $total = 0;
         foreach ($childRows as $row) {
             $total += $row->news_id;
@@ -2488,7 +2501,7 @@ abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
         $this->createTestTable2();
 
         list ($dbTable, $table, $primary2) = $this->getInstanceOfDbTable2();
-        
+
         try {
             $dbTable->getReference('Zend_Db_Table_ZfTestTable', 'Nonexistent');
             $this->fail('Expected to catch Zend_Db_Table_Exception for nonexistent reference rule');

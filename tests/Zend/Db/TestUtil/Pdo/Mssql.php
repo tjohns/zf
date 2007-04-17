@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,16 +18,30 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_TestUtil_Pdo_Common
+ */
 require_once 'Zend/Db/TestUtil/Pdo/Common.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
 {
 
-    function getParams(array $constants = array())
+    public function getParams(array $constants = array())
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME,
@@ -41,7 +56,7 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         return $params;
     }
 
-    function getCreateTableSQL()
+    public function getCreateTableSQL()
     {
         return 'CREATE TABLE  '. self::TABLE_NAME . " (
             id           int IDENTITY,
@@ -52,7 +67,7 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         )";
     }
 
-    function getCreateTableSQL2()
+    public function getCreateTableSQL2()
     {
         return 'CREATE TABLE  '. self::TABLE_NAME_2 . " (
             news_id       int not null,
@@ -63,7 +78,7 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         )";
     }
 
-    function getCreateTableSQLIntersection()
+    public function getCreateTableSQLIntersection()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS '. self::TABLE_NAME_I . '(
             news_id     int not null,

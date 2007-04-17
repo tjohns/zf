@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,25 +18,43 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Select_TestCommon
+ */
 require_once 'Zend/Db/Select/TestCommon.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
 {
     /**
      * Test basic use of the Zend_Db_Select class.
+     *
+     * @return void
      */
-
     public function testSelect()
     {
         $select = $this->_select();
-        $this->assertRegexp('/SELECT\\s+"products".*\\s+FROM\\s+"products"/', $select->__toString()); }
+        $this->assertRegexp('/SELECT\\s+"products".*\\s+FROM\\s+"products"/', $select->__toString());
+    }
 
     /**
      * Test basic use of the Zend_Db_Select class.
+     *
+     * @return void
      */
     public function testSelectQuery()
     {
@@ -47,35 +66,46 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
 
     /**
      * Test Zend_Db_Select specifying columns
+     *
+     * @return void
      */
-
     public function testSelectColumnsScalar()
     {
         $select = $this->_selectColumnsScalar();
-        $this->assertRegexp('/SELECT\\s+"products"."product_name"\\s+FROM "products"/', $select->__toString()); }
+        $this->assertRegexp('/SELECT\\s+"products"."product_name"\\s+FROM "products"/', $select->__toString());
+    }
 
-
+    /**
+     * Test Zend_Db_Select specifying columns
+     *
+     * @return void
+     */
     public function testSelectColumnsArray()
     {
         $select = $this->_selectColumnsArray();
-        $this->assertRegexp('/SELECT\\s+"products"."product_id",\\s+"products"."product_name"\\s+FROM "products"/', $select->__toString()); }
+        $this->assertRegexp('/SELECT\\s+"products"."product_id",\\s+"products"."product_name"\\s+FROM "products"/',
+                            $select->__toString());
+    }
 
     /**
      * Test support for column aliases.
      * e.g. from('table', array('alias' => 'col1')).
+     *
+     * @return void
      */
-
     public function testSelectColumnsAliases()
     {
         $select = $this->_selectColumnsAliases();
-        $this->assertRegexp('/SELECT\\s+"products"."product_name" AS "alias"\\s+FROM "products"/', $select->__toString());
+        $this->assertRegexp('/SELECT\\s+"products"."product_name" AS "alias"\\s+FROM "products"/',
+                            $select->__toString());
     }
 
     /**
      * Test syntax to support qualified column names,
      * e.g. from('table', array('table.col1', 'table.col2')).
+     *
+     * @return void
      */
-
     public function testSelectColumnsQualified()
     {
         $select = $this->_selectColumnsQualified();
@@ -84,8 +114,9 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
 
     /**
      * Test support for columns defined by Zend_Db_Expr.
+     *
+     * @return void
      */
-
     public function testSelectColumnsExpr()
     {
         $select = $this->_selectColumnsExpr();
@@ -411,7 +442,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test automatic conversion of SQL functions to 
+     * Test automatic conversion of SQL functions to
      * Zend_Db_Expr, e.g. order('LOWER(title)')
      * should give the same result as
      * order(new Zend_Db_Expr('LOWER(title)')).

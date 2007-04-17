@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,15 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Table_Row
+ * @see Zend_Db_Table_Row
  */
 require_once 'Zend/Db/Table/Row.php';
+
 
 /**
  * @category   Zend
@@ -240,7 +244,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      */
     public function valid()
     {
-        return $this->_pointer < $this->count();
+        return $this->_pointer < $this->_count;
     }
 
     /**

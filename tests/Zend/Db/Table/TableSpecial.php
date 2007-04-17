@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,11 +18,18 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-require_once('Zend/Db/Table/Abstract.php');
+
+/**
+ * @see Zend_Db_Table_Abstract
+ */
+require_once 'Zend/Db/Table/Abstract.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 
 class Zend_Db_Table_TableSpecial extends Zend_Db_Table_Abstract
 {

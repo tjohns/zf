@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,31 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestSetup
+ */
 require_once 'Zend/Db/Table/TestSetup.php';
+
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_TestSetup
 {
 
@@ -264,10 +284,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         $this->assertThat($parentRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
         $parentRow1 = $parentRows->current();
-        
+
         $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
         $this->assertEquals(3, $childRows->count());
-        
+
         $total = 0;
         foreach ($childRows as $row) {
             $this->assertEquals(1, $row->bug_id);
@@ -275,10 +295,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         $parentRow1->setFromArray(array('bug_id' => 101));
         $parentRow1->save();
-        
+
         $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
         $this->assertEquals(3, $childRows->count());
-        
+
         $total = 0;
         foreach ($childRows as $row) {
             $this->assertEquals(1, $row->bug_id);
@@ -289,7 +309,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
         $this->assertEquals(3, $childRows->count());
-        
+
         $total = 0;
         foreach ($childRows as $row) {
             $this->assertEquals(1, $row->bug_id);
@@ -327,7 +347,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     public function testTableRelationshipGetReferenceException()
     {
         $table = $this->_table['bugs'];
-        
+
         try {
             $table->getReference('Zend_Db_Table_TableAccounts', 'Nonexistent');
             $this->fail('Expected to catch Zend_Db_Table_Exception for nonexistent reference rule');
@@ -351,6 +371,162 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
         }
+    }
+
+    /**
+     * Ensures that findParentRow() returns an instance of a custom row class when passed an instance
+     * of the table class having $_rowClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindParentRowCustomInstance()
+    {
+        $myRowClass = 'Zend_Db_Table_Row_TestMyRow';
+
+        Zend_Loader::loadClass($myRowClass);
+
+        $bug1Reporter = $this->_table['bugs']
+                        ->find(1)
+                        ->current()
+                        ->findParentRow($this->_table['accounts']->setRowClass($myRowClass));
+
+        $this->assertThat($bug1Reporter, $this->isInstanceOf($myRowClass),
+            "Expecting object of type $myRowClass");
+    }
+
+    /**
+     * Ensures that findParentRow() returns an instance of a custom row class when passed a string class
+     * name, where the class has $_rowClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindParentRowCustomClass()
+    {
+        $myRowClass = 'Zend_Db_Table_Row_TestMyRow';
+
+        Zend_Loader::loadClass($myRowClass);
+
+        Zend_Loader::loadClass('Zend_Db_Table_TableAccountsCustom');
+
+        $bug1Reporter = $this->_table['bugs']
+                        ->setReferences(array(
+                            'Reporter' => array(
+                                'columns'           => array('reported_by'),
+                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+                                'refColumns'        => array('account_name')
+                                ),
+                            'Engineer' => array(
+                                'columns'           => array('assigned_to'),
+                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+                                'refColumns'        => array('account_name')
+                                ),
+                            'Verifier' => array(
+                                'columns'           => array('verified_by'),
+                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+                                'refColumns'        => array('account_name')
+                                ),
+                            'Product' => array(
+                                'columns'           => array('product_id'),
+                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+                                'refColumns'        => array('product_id')
+                                )
+                            ))
+                        ->find(1)
+                        ->current()
+                        ->findParentRow(new Zend_Db_Table_TableAccountsCustom(array('db' => $this->_db)));
+
+        $this->assertThat($bug1Reporter, $this->isInstanceOf($myRowClass),
+            "Expecting object of type $myRowClass");
+    }
+
+    /**
+     * Ensures that findDependentRowset() returns an instance of a custom rowset class when passed an instance
+     * of the table class having $_rowsetClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindDependentRowsetCustomInstance()
+    {
+        $myRowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+        Zend_Loader::loadClass($myRowsetClass);
+
+        $bugs = $this->_table['accounts']
+                ->fetchRow($this->_db->quoteInto('account_name = ?', 'mmouse'))
+                ->findDependentRowset($this->_table['bugs']->setRowsetClass($myRowsetClass), 'Engineer');
+
+        $this->assertThat($bugs, $this->isInstanceOf($myRowsetClass),
+            "Expecting object of type $myRowsetClass");
+    }
+
+    /**
+     * Ensures that findDependentRowset() returns an instance of a custom rowset class when passed a string class
+     * name, where the class has $_rowsetClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindDependentRowsetCustomClass()
+    {
+        $myRowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+        Zend_Loader::loadClass($myRowsetClass);
+
+        $bugs = $this->_table['accounts']
+                ->fetchRow($this->_db->quoteInto('account_name = ?', 'mmouse'))
+                ->findDependentRowset('Zend_Db_Table_TableBugsCustom', 'Engineer');
+
+        $this->assertThat($bugs, $this->isInstanceOf($myRowsetClass),
+            "Expecting object of type $myRowsetClass");
+    }
+
+    /**
+     * Ensures that findManyToManyRowset() returns an instance of a custom rowset class when passed an instance
+     * of the table class having $_rowsetClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindManyToManyRowsetCustomInstance()
+    {
+        $myRowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+        Zend_Loader::loadClass($myRowsetClass);
+
+        $bug1Products = $this->_table['bugs']
+                        ->find(1)
+                        ->current()
+                        ->findManyToManyRowset(
+                            $this->_table['products']->setRowsetClass($myRowsetClass),
+                            'Zend_Db_Table_TableBugsProducts'
+                            );
+
+        $this->assertThat($bug1Products, $this->isInstanceOf($myRowsetClass),
+            "Expecting object of type $myRowsetClass");
+    }
+
+    /**
+     * Ensures that findManyToManyRowset() returns an instance of a custom rowset class when passed a string class
+     * name, where the class has $_rowsetClass overridden.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindManyToManyRowsetCustomClass()
+    {
+        $this->markTestIncomplete();
+
+        $myRowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+        Zend_Loader::loadClass($myRowsetClass);
+
+        $bug1Products = $this->_table['bugs']
+                        ->find(1)
+                        ->current()
+                        ->findManyToManyRowset(
+                            'Zend_Db_Table_TableProductsCustom',
+                            'Zend_Db_Table_TableBugsProducts'
+                            );
+
+        $this->assertThat($bug1Products, $this->isInstanceOf($myRowsetClass),
+            "Expecting object of type $myRowsetClass");
     }
 
 }

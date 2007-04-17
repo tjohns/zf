@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,16 +18,30 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/** Zend_Db_Adapter_Exception */
+
+/**
+ * @see Zend_Db
+ */
+require_once 'Zend/Db.php';
+
+/**
+ * @see Zend_Db_Adapter_Exception
+ */
 require_once 'Zend/Db/Adapter/Exception.php';
 
-/** Zend_Db_Profiler */
+/**
+ * @see Zend_Db_Profiler
+ */
 require_once 'Zend/Db/Profiler.php';
 
-/** Zend_Db_Select */
+/**
+ * @see Zend_Db_Select
+ */
 require_once 'Zend/Db/Select.php';
+
 
 /**
  * Class for connecting to SQL databases and performing common operations.
@@ -79,7 +94,7 @@ abstract class Zend_Db_Adapter_Abstract
      * password => (string) Password associated with the username (optional).
      * host     => (string) What host to connect to (default 127.0.0.1).
      *
-     * @param array $config An array of configuration keys.
+     * @param  array $config An array of configuration keys.
      * @return void
      * @throws Zend_Db_Adapter_Exception
      */
