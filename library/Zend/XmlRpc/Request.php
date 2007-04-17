@@ -327,11 +327,13 @@ class Zend_XmlRpc_Request
     protected function _getXmlRpcParams()
     {
         $params = array();
-        foreach ($this->_xmlRpcParams as $param) {
-            $value = $param['value'];
-            $type  = isset($param['type']) ? $param['type'] : null;
+        if (is_array($this->_xmlRpcParams)) {
+            foreach ($this->_xmlRpcParams as $param) {
+                $value = $param['value'];
+                $type  = isset($param['type']) ? $param['type'] : null;
 
-            $params[] = Zend_XmlRpc_Value::getXmlRpcValue($value);
+                $params[] = Zend_XmlRpc_Value::getXmlRpcValue($value);
+            }
         }
 
         return $params;
