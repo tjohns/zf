@@ -777,7 +777,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::MERIDIEM),'vorm.');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::MERIDIEM),'nachm.');
-        $this->assertSame($date->get(Zend_Date::MERIDIEM, 'es'),'PM');
+        $this->assertSame($date->get(Zend_Date::MERIDIEM, 'es'),'p.m.');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::SWATCH),'021');
@@ -903,7 +903,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),false);
+        $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),'CE');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::DATES),'14.02.2009');

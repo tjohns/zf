@@ -432,7 +432,7 @@ class Zend_Locale_Data
 
             case 'defdateformat':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/dateFormats/default', 'type', 'default');
+                             . $value . '\']/dateFormats/default', 'choice', 'default');
                 break;
 
             case 'dateformat':
@@ -443,7 +443,7 @@ class Zend_Locale_Data
 
             case 'deftimeformat':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/timeFormats/default', 'type', 'default');
+                             . $value . '\']/timeFormats/default', 'choice', 'default');
                 break;
 
             case 'timeformat':

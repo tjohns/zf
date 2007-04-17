@@ -353,7 +353,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($value->getTranslation('xxxx', 'dateformat'));
 
         $this->assertEquals($value->getTranslation('full', 'timeformat'), "H:mm' Uhr 'z");
-        $this->assertEquals($value->getTranslation('full', 'timeformat', 'en'), 'h:mm:ss a z');
+        $this->assertEquals($value->getTranslation('full', 'timeformat', 'en'), 'h:mm:ss a v');
         $this->assertFalse($value->getTranslation('xxxx', 'timeformat'));
 
         $this->assertEquals($value->getTranslation('Europe/Berlin', 'timezone'), 'Berlin');
