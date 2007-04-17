@@ -116,7 +116,6 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
             $this->_amazon->itemSearch(array());
             $this->fail('Expected Zend_Service_Exception not thrown');
         } catch (Zend_Service_Exception $e) {
-            $this->assertContains('Required parameters include SearchIndex', $e->getMessage());
         }
     }
 }

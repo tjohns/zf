@@ -81,7 +81,7 @@ class Zend_Service_Amazon_AllTests
 
         $suite->addTestSuite('Zend_Service_Amazon_OfflineTest');
         if (defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
-            constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') !== false &&
+            constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
             defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID')) {
             $suite->addTestSuite('Zend_Service_Amazon_OnlineTest');
         } else {
