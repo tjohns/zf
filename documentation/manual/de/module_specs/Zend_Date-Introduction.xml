@@ -101,7 +101,10 @@
                     des <code>float</code>-Datentyps des verwendeten Servers. "Die Größe von float ist
                     Plattformabhängig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
                     ca. 14 Dezimalstellen ein Standardwert. (das 64 bit IEEE Format)."
-                    [<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>]
+                    [<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>].  
+                    Zusätzlich können inhärente Beschränkungen der Float-Datentypen sowie Rundungsfehler
+                    von Fließkommazahlen Berechnungsfehler verursachen. Um diese Probleme zu vermeiden,
+                    verwenden die ZF i18n Komponenten die BCMatch Extension, wenn verfügbar.
                 </para>
             </listitem>
             <listitem>

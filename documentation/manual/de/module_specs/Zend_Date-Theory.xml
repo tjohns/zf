@@ -38,7 +38,9 @@
                         deshalb möglich weil <code>Zend_Date</code> nicht durch UNIX Zeitpunkte limitiert ist und
                         auch nicht durch Integer Zahlen. Die BCMath Erweiterung wird benötigt um extrem große Daten
                         ausserhalb des Bereichs vom Freitag dem 13.Dezember 1901 20:45:54 GMT bis zum 19.Jänner 2038
-                        03:14:07 GMT zu unterstützen.
+                        03:14:07 GMT zu unterstützen. Zusätzlich können kleine Mathematikfehler aufgrund der 
+                        inhärenten Beschränkungen des Float-Datentyps sowie durch Rundung auftreten, es sei denn,
+                        die BCMath Extension wird verwendet.
                     </para>
                 </listitem>
                 <listitem>
