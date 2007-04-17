@@ -58,7 +58,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         </para>
         <para>
             Zapoznaj się także z komponentem 
-            <link linkend="zend.log.introduction">Zend_Log</link> jeśli chcesz
+            <link linkend="zend.log.overview">Zend_Log</link> jeśli chcesz
             aby kod służący do usuwania błędów był umieszczony w aplikacji na 
             stałe. Na przykład, możesz użyć poziomu raportowania błędów 
             <code>DEBUG</code> i obiektu <code>Zend_Log_Writer_Stream</code>, 

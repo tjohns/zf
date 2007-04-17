@@ -74,11 +74,11 @@ echo $server->handle();]]></programlisting>
         </para>
 
         <para>
-            XML-RPC types do not necessarily map one-to-one to PHP types.
-            However, the code will do its best to guess the appropriate type
-            based on the values listed in @param and @return lines. Some XML-RPC
-            types have no immediate PHP equivalent, however, and should be
-            hinted using the XML-RPC type in the phpdoc. These include:
+            XML-RPC nie mają w typach PHP dokładnych odpowiedników. Jednak skrypt
+            spróbuje dopasować najlepszy typ na podstawie wartości znajdujących 
+            się w polach @param oraz @return. Niektóre typy XML-RPC nie mają
+            dokładnych odpowiedników w typach PHP, więc powinny być rzutowane
+            używając typów XML-RPC w komentarzach phpdoc. Są to:
         </para>
 
         <itemizedlist>
@@ -114,12 +114,12 @@ function myFunc($val1, $val2, $val3)
         </para>
 
         <para>
-            It is perfectly valid to specify multiple types for both params and
-            return values; the XML-RPC specification even suggests that
-            system.methodSignature should return an array of all possible method
-            signatures (i.e., all possible combinations of param and return
-            values). You may do so just as you normally would with
-            PhpDocumentor, using the '|' operator:
+            Poprawne jest określenie wielu typów zarówno dla parametrów jak i
+            dla zwracanych wartości; specyfikacja XML-RPC sugeruje nawet, że
+            metoda system.methodSignature powinna zwracać tablicę wszystkich 
+            możliwych sygnatur metody (np. wszystkie możliwe kombinacje 
+            parametrów i zwracanych wartości). Możesz to zrobić tak jak robisz
+            to w PhpDocumentor, używając operatora '|':
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -136,9 +136,9 @@ function myFunc($val1, $val2, $val3)
 }]]></programlisting>
 
         <para>
-            One note, however: allowing multiple signatures can lead to
-            confusion for developers using the services; generally speaking, an
-            XML-RPC method should only have a single signature.
+            Jedna uwaga: dopuszczanie do utworzenia wielu różnych sygnatur może
+            doprowadzić do dezorientacji programistów używających serwisów; 
+            W zasadzie metoda XML-RPC powinna mieć tylko jedną sygnaturę.
         </para>
     </sect2>
 
@@ -146,11 +146,11 @@ function myFunc($val1, $val2, $val3)
         <title>Używanie przestrzeni nazw</title>
 
         <para>
-            XML-RPC has a concept of namespacing; basically, it allows grouping
-            XML-RPC methods by dot-delimited namespaces. This helps prevent
-            naming collisions between methods served by different classes. As an
-            example, the XML-RPC server is expected to server several methods in
-            the 'system' namespace:
+            XML-RPC posiada system przestrzeni nazw; najprościej mówiąc, pozwala 
+            to na grupowanie metod XML-RPC w przestrzenie nazw oddzielone 
+            znakiem kropki. Ułatwia to zapobieganie konfliktom pomiędzy metodami 
+            pochodzącymi z rożnych klas. Przykładowo, serwer XML-RPC powinien 
+            udostępniać kilka metod w przestrzeni nazw 'system':
         </para>
 
         <itemizedlist>
@@ -183,15 +183,16 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         <title>Własny obiekt żądania</title>
 
         <para>
-            Most of the time, you'll simply use the default request type
-            included with Zend_XmlRpc_Server, Zend_XmlRpc_Request_Http. However,
-            there may be times when you need XML-RPC to be available via the CLI,
-            a GUI, or other environment, or want to log incoming requests. To do
-            so, you may create a custom request object that extends
-            Zend_XmlRpc_Request. The most important thing to remember is to
-            ensure that the getMethod() and getParams() methods are implemented
-            so that the XML-RPC server can retrieve that information in order to
-            dispatch the request.
+            W większości przypadków będziesz używał domyślnego obiektu żądania 
+            dostarczanego przez Zend_XmlRpc_Server, którym jest obiekt
+            Zend_XmlRpc_Request_Http. Jednak czasem możesz chcieć aby usługa 
+            XML-RPC była dostępna przez CLI, GUI lub inne środowisko, lub możesz 
+            chcieć zapisywać informacje o przychodzących żądaniach. Aby to 
+            zrobić, możesz utworzyć własny obiekt żądania, który rozszerza 
+            obiekt Zend_XmlRpc_Request. Najważniejszą rzeczą jest zapamiętanie 
+            aby zawsze implementować metody getMethod() oraz getParams() co 
+            pozwoli na to, że serwer XML-RPC będzie mógł pobrać te informacje w 
+            celu uruchomienia żądania.
         </para>
     </sect2>
 
@@ -214,39 +215,41 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.fault">
-        <title>Handling Exceptions via Faults</title>
+        <title>Obsługa wyjątków poprzez odpowiedzi błędów</title>
 
         <para>
-            Zend_XmlRpc_Server catches Exceptions generated by a dispatched
-            method, and generates an XML-RPC fault response when such an
-            exception is caught. By default, however, the exception messages and
-            codes are not used in a fault response. This is an intentional
-            decision to protect your code; many exceptions expose more
-            information about the code or environment than a developer would
-            necessarily intend (a prime example includes database abstraction or
-            access layer exceptions).
+            Obiekt Zend_XmlRpc_Server łapie wyjątki wyrzucone przez uruchomioną 
+            metodę i generuje odpowiedź błędu (fault) wtedy gdy taki wyjątek
+            zostanie złapany. Domyślnie informacje o wyjątkach i ich kody nie są 
+            używane w odpowiedzi błędu. Jest to celowe zachowanie chroniące twój 
+            kod; wiele wyjątków ujawnia dużo informacji o kodzie oraz środowisku, 
+            czemu programista powinien zapobiec (dobrym przykładem mogą być 
+            informacje o wyjątkach związanych z bazą danych)
         </para>
 
         <para>
-            Exception classes can be whitelisted to be used as fault responses,
-            however. To do so, simply utilize
-            Zend_XmlRpc_Server_Fault::attachFaultException() to pass an
-            exception class to whitelist:
+            Klasy wyjątków, które mają być użyte jako odpowiedzi błędów mogą być
+            dodane do listy dozwolonych wyjątków. Aby to zrobić wystarczy użyć
+            metody Zend_XmlRpc_Server_Fault::attachFaultException() w celu 
+            przekazania klasy wyjątku do listy dozwolonych wyjątków:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
 
         <para>
-            If you utilize an exception class that your other project exceptions
-            inherit, you can then whitelist a whole family of exceptions at a
-            time. Zend_XmlRpc_Server_Exceptions are always whitelisted, to
-            allow reporting specific internal errors (undefined methods, etc.).
+            Jeśli dodasz do listy wyjątków klasę wyjątku z którego dziedziczą
+            inne wyjątki, możesz w ten sposób dodać do listy całą rodzinę 
+            wyjątków za jednym razem. Wyjątki Zend_XmlRpc_Server_Exceptions 
+            zawsze znajdują się na liście dozwolonych wyjątków, aby pozwolić na 
+            informowanie o specyficznych wewnętrznych błędach (niezdefiniowanie 
+            metody itp.).
         </para>
 
         <para>
-            Any exception not specifically whitelisted will generate a fault
-            response with a code of '404' and a message of 'Unknown error'.
+            Każdy wyjątek spoza listy dozwolonych wyjątków spowoduje 
+            wygenerowanie odpowiedzi błędu o kodzie '404' i informacji 
+            'Unknown error' (Nieznany błąd).
         </para>
     </sect2>
 
@@ -286,9 +289,9 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     require_once 'My/Services/Paste.php';
     require_once 'My/Services/Tape.php';
 
-    $server->setClass('My_Services_Glue', 'glue');   // przestrzeń nazwa glue
-    $server->setClass('My_Services_Paste', 'paste'); // przestrzeń nazwa paste
-    $server->setClass('My_Services_Tape', 'tape');   // przestrzeń nazwa tape
+    $server->setClass('My_Services_Glue', 'glue');   // przestrzeń nazw glue
+    $server->setClass('My_Services_Paste', 'paste'); // przestrzeń nazw paste
+    $server->setClass('My_Services_Tape', 'tape');   // przestrzeń nazw tape
 
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
