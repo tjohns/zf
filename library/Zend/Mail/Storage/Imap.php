@@ -142,7 +142,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
             $flags[] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : $flag;
         }
 
-        return new Zend_Mail_Message(array('handler' => $this, 'id' => $id, 'headers' => $header, 'flags' => $flags));
+        return new $this->_messageClass(array('handler' => $this, 'id' => $id, 'headers' => $header, 'flags' => $flags));
     }
 
     /*
