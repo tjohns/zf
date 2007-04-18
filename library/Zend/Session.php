@@ -217,7 +217,7 @@ class Zend_Session extends Zend_Session_Abstract
             }
         }
         $savePath = ini_get('session.save_path');
-        if (strpos($savePath, ';')) {
+        if (strpos($savePath, ';') !== false) {
             $savePath = explode(';', $savePath);
             $savePath = realpath(array_pop($savePath));
         }
