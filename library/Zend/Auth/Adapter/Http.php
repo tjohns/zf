@@ -512,7 +512,16 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
             throw new Zend_Auth_Adapter_Exception('Unable to base64_decode Authorization header value');
         }
 
+        // See ZF-1253. Validate the credentials the same way the digest 
+        // implementation does. If invalid credentials are detected, 
+        // re-challenge the client.
+        if (!ctype_print($auth)) {
+            return $this->_challengeClient();
+        }
         $creds = explode(':', $auth);
+        if (count($creds) > 2) {
+            return $this->_challengeClient();
+        }
 
         $password = $this->_basicResolver->resolve($creds[0], $this->_realm);
         if ($password && $password == $creds[1]) {

@@ -111,8 +111,8 @@ class Zend_Auth_Adapter_Http_ProxyTest extends PHPUnit_Framework_TestCase
     public function __construct()
     {
         $this->_filesPath      = dirname(__FILE__) . '/_files';
-        $this->_basicResolver  = new Zend_Auth_Adapter_Http_Resolver_File("$this->_filesPath/htbasic.1");
-        $this->_digestResolver = new Zend_Auth_Adapter_Http_Resolver_File("$this->_filesPath/htdigest.3");
+        $this->_basicResolver  = new Zend_Auth_Adapter_Http_Resolver_File("{$this->_filesPath}/htbasic.1");
+        $this->_digestResolver = new Zend_Auth_Adapter_Http_Resolver_File("{$this->_filesPath}/htdigest.3");
         $this->_basicConfig    = array(
             'accept_schemes' => 'basic',
             'realm'          => 'Test Realm',
@@ -193,6 +193,18 @@ class Zend_Auth_Adapter_Http_ProxyTest extends PHPUnit_Framework_TestCase
 
         $data = $this->_doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
         $this->_checkOK($data);
+    }
+
+    public function testBasicAuthBadCreds()
+    {
+        // Ensure that credentials containing invalid characters are treated as 
+        // a bad username or password.
+
+        // The expected Basic WWW-Authenticate header value
+        $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
+
+        $data = $this->_doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
+        $this->_checkUnauthorized($data, $basic);
     }
 
     public function testBasicAuthBadUser()
@@ -425,7 +437,7 @@ class Zend_Auth_Adapter_Http_ProxyTest extends PHPUnit_Framework_TestCase
 
         // Make sure the result is true
         $this->assertType('Zend_Auth_Result', $result);
-        $this->assertTrue($result->isValid(), $result);
+        $this->assertTrue($result->isValid());
 
         // Verify we got a 200 response
         $this->assertEquals(200, $status);
