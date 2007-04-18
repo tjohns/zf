@@ -34,16 +34,16 @@ foreach ($results as $result) {
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
-        <title>Finding Flickr Users</title>
+        <title>Finding Flickr Users' Photos and Information</title>
         <para>
-            <code>Zend_Service_Flickr</code> provides three various ways to get Flickr user information:
+            <code>Zend_Service_Flickr</code> provides several ways to get information about Flickr users:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
                     <code>userSearch()</code>: Accepts a string query of space-delimited tags and an optional second
-                    parameter as an array of search options, and returns a <code>Zend_Service_Flickr_ResultSet</code>
-                    object.
+                    parameter as an array of search options, and returns a set of photos as a
+                    <code>Zend_Service_Flickr_ResultSet</code> object.
                 </para>
             </listitem>
             <listitem>
@@ -53,15 +53,16 @@ foreach ($results as $result) {
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByEmail()</code>: Returns a string user ID associated with the given email address string.
+                    <code>getIdByEmail()</code>: Returns a string user ID associated with the given email address
+                    string.
                 </para>
             </listitem>
         </itemizedlist>
         <example>
-            <title>Finding a Flickr User by E-Mail Address</title>
+            <title>Finding a Flickr User's Public Photos by E-Mail Address</title>
             <para>
-                In this example, we have a Flickr user's e-mail address, and we fetch the user information by using
-                the <code>userSearch()</code> method:
+                In this example, we have a Flickr user's e-mail address, and we search for the user's public photos by
+                using the <code>userSearch()</code> method:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -79,8 +80,8 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Retrieving Flickr Image Details</title>
         <para>
-            <code>Zend_Service_Flickr</code> makes it quick and easy to get an image's details based on a given image ID.
-            Just use the <code>getImageDetails()</code> method, as in the following example:
+            <code>Zend_Service_Flickr</code> makes it quick and easy to get an image's details based on a given image
+            ID. Just use the <code>getImageDetails()</code> method, as in the following example:
         </para>
         <example>
             <title>Retrieving Flickr Image Details</title>
@@ -100,7 +101,7 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
-        <title>Zend_Service_Flickr Classes</title>
+        <title>Zend_Service_Flickr Result Classes</title>
         <para>
             The following classes are all returned by <code>tagSearch()</code> and <code>userSearch()</code>:
             <itemizedlist>
@@ -114,13 +115,8 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
             <para>Represents a set of Results from a Flickr search.</para>
             <note>
                 <para>
-                    Implements the
-                    <code>SeekableIterator</code>
-                    for easy iteration (e.g., using
-                    <code>foreach</code>
-                    ), as well as direct access to a specific result using
-                    <code>seek()</code>
-                    .
+                    Implements the <code>SeekableIterator</code> interface for easy iteration (e.g., using
+                    <code>foreach</code>), as well as direct access to a specific result using <code>seek()</code>.
                 </para>
             </note>
             <sect4 id="zend.service.flickr.classes.resultset.properties">
@@ -192,12 +188,12 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         <tbody>
                             <row>
                                 <entry>id</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>Image ID</entry>
                             </row>
                             <row>
                                 <entry>owner</entry>
-                                <entry>int</entry>
+                                <entry>string</entry>
                                 <entry>The photo owner's NSID.</entry>
                             </row>
                             <row>
@@ -217,17 +213,17 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                             </row>
                             <row>
                                 <entry>ispublic</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>The photo is public.</entry>
                             </row>
                             <row>
                                 <entry>isfriend</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>The photo is visible to you because you are a friend of the owner.</entry>
                             </row>
                             <row>
                                 <entry>isfamily</entry>
-                                <entry>boolean</entry>
+                                <entry>string</entry>
                                 <entry>The photo is visible to you because you are family of the owner.</entry>
                             </row>
                             <row>
@@ -236,22 +232,22 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                                 <entry>The license the photo is available under.</entry>
                             </row>
                             <row>
-                                <entry>date_upload</entry>
+                                <entry>dateupload</entry>
                                 <entry>string</entry>
                                 <entry>The date the photo was uploaded.</entry>
                             </row>
                             <row>
-                                <entry>date_taken</entry>
+                                <entry>datetaken</entry>
                                 <entry>string</entry>
                                 <entry>The date the photo was taken.</entry>
                             </row>
                             <row>
-                                <entry>owner_name</entry>
+                                <entry>ownername</entry>
                                 <entry>string</entry>
                                 <entry>The screenname of the owner.</entry>
                             </row>
                             <row>
-                                <entry>icon_server</entry>
+                                <entry>iconserver</entry>
                                 <entry>string</entry>
                                 <entry>The server used in assembling icon URLs.</entry>
                             </row>
