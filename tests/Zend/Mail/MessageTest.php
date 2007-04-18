@@ -133,7 +133,8 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $raw = "sUBject: test\nSubJect: test2\n" . $raw;
         $message = new Zend_Mail_Message(array('raw' => $raw));
 
-        $this->assertEquals($message->getHeader('subject', 'string'),  "test\r\ntest2\r\nmultipart");
+        $this->assertEquals($message->getHeader('subject', 'string'),
+                           'test' . Zend_Mime::LINEEND . 'test2' . Zend_Mime::LINEEND .  'multipart');
         $this->assertEquals($message->getHeader('subject'),  array('test', 'test2', 'multipart'));
     }
 

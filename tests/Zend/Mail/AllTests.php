@@ -18,6 +18,7 @@ require_once 'Zend/Mail/MboxTest.php';
 require_once 'Zend/Mail/MboxFolderTest.php';
 require_once 'Zend/Mail/MaildirTest.php';
 require_once 'Zend/Mail/MaildirFolderTest.php';
+require_once 'Zend/Mail/MaildirWritableTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
 require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
@@ -48,6 +49,7 @@ class Zend_Mail_AllTests
         if (defined('TESTS_ZEND_MAIL_MAILDIR_ENABLED') && constant('TESTS_ZEND_MAIL_MAILDIR_ENABLED')) {
             $suite->addTestSuite('Zend_Mail_MaildirTest');
             $suite->addTestSuite('Zend_Mail_MaildirFolderTest');
+            $suite->addTestSuite('Zend_Mail_MaildirWritableTest');
         }
         if (defined('TESTS_ZEND_MAIL_SMTP_ENABLED') && constant('TESTS_ZEND_MAIL_SMTP_ENABLED') == true) {
             $suite->addTestSuite('Zend_Mail_SmtpTest');

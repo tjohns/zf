@@ -266,9 +266,6 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($mail->hasCreate);
     }
 
-/*
-    noop not yet supported
-
     public function testNoop()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
@@ -279,7 +276,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
             $this->fail('exception raised while doing nothing (noop)');
         }
     }
-*/
+
     public function testCount()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
@@ -342,20 +339,15 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Fair river! in thy bright, clear flow', trim($content));
     }
 
-/*
-    public function testFailedRemove()
+    public function testRemove()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
 
-        try {
-            $mail->removeMessage(1);
-        } catch (Exception $e) {
-            return; // test ok
-        }
-
-        $this->fail('no exception raised while deleting message (mbox is read-only)');
+        $count = $mail->countMessages();
+        $mail->removeMessage(1);
+        $this->assertEquals($mail->countMessages(), $count - 1);
     }
-*/
+
     public function testTooLateCount()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
