@@ -95,12 +95,17 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
 
     public function testExceptionInvalidOptionsArray()
     {
-        try {
-            $db = Zend_Db::factory('Static', 'scalar');
-            $this->fail('Expected to catch Zend_Db_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
-            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+        list($major, $minor, $revision) = explode('.', PHP_VERSION);
+        if ($minor >= 2) {
+            try {
+                $db = Zend_Db::factory('Static', 'scalar');
+                $this->fail('Expected exception not thrown');
+            } catch (Exception $e) {
+                $this->assertContains('Argument 1 passed to Zend_Db::factory() must be an array, string given',
+                                      $e->getMessage());
+            }
+        } else {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
         }
     }
 
@@ -110,7 +115,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         if ($minor >= 2) {
             try {
                 $db = new Zend_Db_Adapter_Static('scalar');
-                $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+                $this->fail('Expected exception not thrown');
             } catch (Exception $e) {
                 $this->assertContains('Argument 1 passed to Zend_Db_Adapter_Abstract::__construct() must be an array, '
                                     . 'string given', $e->getMessage());
@@ -122,12 +127,17 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
 
     public function testExceptionNoConfig()
     {
-        try {
-            $db = Zend_Db::factory('Static', null);
-            $this->fail('Expected to catch Zend_Db_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
-            $this->assertEquals($e->getMessage(), 'Configuration must be an array.');
+        list($major, $minor, $revision) = explode('.', PHP_VERSION);
+        if ($minor >= 2) {
+            try {
+                $db = Zend_Db::factory('Static', null);
+                $this->fail('Expected exception not thrown');
+            } catch (Exception $e) {
+                $this->assertContains('Argument 1 passed to Zend_Db::factory() must be an array, string given',
+                                      $e->getMessage());
+            }
+        } else {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
         }
     }
 

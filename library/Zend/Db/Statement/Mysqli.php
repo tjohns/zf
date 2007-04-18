@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,15 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Statement
+ * @see Zend_Db_Statement
  */
 require_once 'Zend/Db/Statement.php';
+
 
 /**
  * Extends for Mysqli

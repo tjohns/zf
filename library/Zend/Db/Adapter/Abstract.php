@@ -106,7 +106,7 @@ abstract class Zend_Db_Adapter_Abstract
         }
 
         // keep the config
-        $this->_config = array_merge($this->_config, (array) $config);
+        $this->_config = array_merge($this->_config, $config);
 
         // create a profiler object
         $enabled = false;
@@ -143,8 +143,8 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Prepares and executes an SQL statement with bound data.
      *
-     * @param string|Zend_Db_Select $sql The SQL statement with placeholders.
-     * @param mixed $bind An array of data to bind to the placeholders.
+     * @param  string|Zend_Db_Select $sql  The SQL statement with placeholders.
+     * @param  mixed                 $bind An array of data to bind to the placeholders.
      * @return Zend_Db_Statement (may also be PDOStatement in the case of PDO)
      */
     public function query($sql, $bind = array())
@@ -337,8 +337,8 @@ abstract class Zend_Db_Adapter_Abstract
      * Fetches all SQL result rows as a sequential array.
      * Uses the current fetchMode for the adapter.
      *
-     * @param string|Zend_Db_Select $sql An SQL SELECT statement.
-     * @param mixed $bind Data to bind into SELECT placeholders.
+     * @param  string|Zend_Db_Select $sql  An SQL SELECT statement.
+     * @param  mixed                 $bind Data to bind into SELECT placeholders.
      * @return array
      */
     public function fetchAll($sql, $bind = array())

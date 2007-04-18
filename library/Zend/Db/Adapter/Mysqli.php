@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,29 +18,38 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- *
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Adapter_Abstract
+ * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
 
 /**
- * Zend_Db_Profiler
+ * @see Zend_Db_Profiler
  */
 require_once 'Zend/Db/Profiler.php';
 
 /**
- * Zend_Db_Select
+ * @see Zend_Db_Select
  */
 require_once 'Zend/Db/Select.php';
 
 /**
- * Zend_Db_Statement_Mysqli
+ * @see Zend_Db_Statement_Mysqli
  */
 require_once 'Zend/Db/Statement/Mysqli.php';
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage Adapter
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
 {
 
@@ -264,7 +274,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     protected function _beginTransaction()
     {
         $this->_connect();
-        $this->_connection->beginTransaction();
+        $this->_connection->autocommit(false);
     }
 
     /**
@@ -276,17 +286,19 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     {
         $this->_connect();
         $this->_connection->commit();
+        $this->_connection->autocommit(true);
     }
 
     /**
      * Roll-back a transaction.
-
+     *
      * @return void
      */
     protected function _rollBack()
     {
         $this->_connect();
-        $this->_connection->rollBack();
+        $this->_connection->rollback();
+        $this->_connection->autocommit(true);
     }
 
     /**
