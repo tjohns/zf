@@ -94,6 +94,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * - data        = values of columns in this row.
      *
      * @param  array $config OPTIONAL Array of user-specified config options.
+     * @return void
      * @throws Zend_Db_Table_Row_Exception
      */
     public function __construct(array $config = array())
@@ -381,14 +382,16 @@ abstract class Zend_Db_Table_Row_Abstract
     /**
      * Sets all data in the row from an array.
      *
-     * @param array $data
-     * @return void
+     * @param  array $data
+     * @return Zend_Db_Table_Row_Abstract Provides a fluent interface
      */
     public function setFromArray(array $data)
     {
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
+
+        return $this;
     }
 
     /**

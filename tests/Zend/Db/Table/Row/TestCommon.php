@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,25 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestSetup
+ */
 require_once 'Zend/Db/Table/TestSetup.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 {
 
@@ -104,7 +118,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         } catch (Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
-        
+
         if (!isset($row1->bug_id)) {
             $this->fail('Column "id" is set but isset() returns false');
         }
@@ -145,7 +159,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
 
-        $row1->setFromArray($data);
+        $result = $row1->setFromArray($data);
+
+        $this->assertSame($result, $row1);
 
         try {
             $this->assertEquals($data['bug_description'], $row1->bug_description);
