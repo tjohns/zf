@@ -1,21 +1,23 @@
 <sect1 id="zend.measure.introduction">
 
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        <code>Zend_Measure_*</code> classes provide a generic and easy way for working with measurements. Using
-        <code>Zend_Measure_*</code> classes, you can convert measurements into different units of the same type. They
-        can be added, subtracted and compared against each other. From a given input made in the user's native language,
-        the unit of measurement can be automatically extracted. Numerous units of measurement are supported.
+        Die <code>Zend_Measure_*</code> Klassen bieten einen generischen und einfachen Weg um mit Maßeinheiten
+        zu Arbeiten. Durch Verwendung der <code>Zend_Measure_*</code> Klassen können Maßeinheiten in verschiedene
+        andere Maßeinheiten des gleichen Typs konvertiert werden. Diese können Addiert, Subtrahiert und miteinander
+        verglichen werden. Von einer Eingabe in der Muttersprache eines Benutzers können die Einheiten der
+        Maßeinheiten automatische extrahiert werden. Eine Vielzahl an Maßeinheiten wird unterstützt.
     </para>
 
     <example>
-        <title>Converting measurements</title>
+        <title>Konvertieren von Maßeinheiten</title>
         <para>
-            The following introductory example shows automatic conversion of units of measurement. To convert a
-            measurement, its value and its type have to be known. The value can be an integer, a float, or even a string
-            containing a number. Conversions are only possible for units of the same type (mass, area, temperature,
-            velocity, etc.), not between types.
+            Das folgende einführende Beispiel zeigt die automatische Konvertierung von Einheiten von Maßeinheiten.
+            Um eine Maßeinheit zu konvertieren muß dessen Wert und Typ bekannt sein. Der Wert kann ein Integer,
+            ein Float oder sogar eine Zeichenkette sein die eine Zahl enthält. Konvertierungen sind nur für
+            Einheiten des gleichen Typs möglich (Masse, Fläche, Temperatur, Beschleunigung, usw.), nicht zwischen
+            verschiedenen Typen.
         </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -23,37 +25,36 @@ require_once 'Zend/Measure/Length.php';
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::METER, $locale);
 
-// Convert meters to yards
+// Konvertiert Meter zu Yard
 echo $unit->convertTo(Zend_Measure_Length::YARD);
 ?>]]></programlisting>
     </example>
 
     <para>
-        <code>Zend_Measure_*</code> includes support for many different units of measurement. The units of measurement
-        all have a unified notation: <code>Zend_Measure_&lt;TYPE&gt;::NAME_OF_UNIT</code>, where &lt;TYPE&gt;
-        corresponds to a well-known physical or numerical property. . Every unit of measurement consists of a conversion
-        factor and a display unit. A detailed list can be found in the chapter
-        <link linkend="zend.measure.types"><code>Types of measurements</code>
-        </link>
-        .
+        <code>Zend_Measure_*</code> enthält Unterstützung für viele unterschiedliche Arten von Maßeinheiten. Die
+        Arten der Maßeinheiten haben die folgende einheitliche Schreibweise:
+        <code>Zend_Measure_&lt;TYP&gt;::NAME_DER_EINHEIT</code>, wobei &lt;TYP&gt; identisch ist mit einer
+        bekannten physikalischen oder nummerischen Einheit. Jede Maßeinheit besteht aus einem Faktor für die
+        Konvertierung und einer Darstellungseinheit. Eine detailierte Liste kann im Kapitel 
+        <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code></link> gefunden werden.
     </para>
 
     <example>
-        <title>The <code>meter</code> measurement</title>
+        <title>Die Maßeinheit <code>meter</code></title>
         <para>
-            The <code>meter</code> is used for measuring lengths, so its type constant can be found in the
-            <code>Length</code> class. To refer to this unit of measurement, the notation <code>Length::METER</code>
-            must be used. The display unit is <code>m</code>.
+            Der <code>meter</code> wird für das Abmessen von Längen verwendet und kann in der Klasse
+            <code>Length</code> gefunden werden. Um auf diese Maßeinheit zu verweisen muß die Schreibweise
+            <code>Length::METER</code> verwendet werden. Die Darstellungseinheit ist <code>m</code>.
         </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-echo Zend_Measure_Length::STANDARD;  // outputs 'Length::METER'
-echo Zend_Measure_Length::KILOMETER; // outputs 'Length::KILOMETER'
+echo Zend_Measure_Length::STANDARD;  // Ausgabe 'Length::METER'
+echo Zend_Measure_Length::KILOMETER; // Ausgabe 'Length::KILOMETER'
 
 $unit = new Zend_Measure_Length(100,'METER');
 echo $unit;
-// outputs '100 m'
+// Ausgabe '100 m'
 ?>]]></programlisting>
     </example>
 
