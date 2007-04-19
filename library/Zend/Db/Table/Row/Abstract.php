@@ -57,9 +57,9 @@ abstract class Zend_Db_Table_Row_Abstract
     protected $_cleanData = array();
 
     /**
-     * Zend_Db_Table parent class or instance.
+     * Zend_Db_Table_Abstract parent class or instance.
      *
-     * @var Zend_Db_Table
+     * @var Zend_Db_Table_Abstract
      */
     protected $_table = null;
 
@@ -73,7 +73,7 @@ abstract class Zend_Db_Table_Row_Abstract
     protected $_connected = true;
 
     /**
-     * Name of the class of the Zend_Db_Table object.
+     * Name of the class of the Zend_Db_Table_Abstract object.
      *
      * @var string
      */
@@ -397,7 +397,7 @@ abstract class Zend_Db_Table_Row_Abstract
     /**
      * Retrieves an instance of the parent table.
      *
-     * @return Zend_Db_Table
+     * @return Zend_Db_Table_Abstract
      */
     protected function _getTable()
     {
