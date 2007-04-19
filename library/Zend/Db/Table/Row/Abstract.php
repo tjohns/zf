@@ -218,6 +218,16 @@ abstract class Zend_Db_Table_Row_Abstract
     }
 
     /**
+     * Returns the table object, or null if this is disconnected row
+     *
+     * @return Zend_Db_Table_Abstract|null
+     */
+    public function getTable()
+    {
+        return $this->_table;
+    }
+
+    /**
      * Set the table object, to re-establish a live connection
      * to the database for a Row that has been de-serialized.
      *

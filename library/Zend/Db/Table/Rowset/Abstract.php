@@ -45,7 +45,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     protected $_data = array();
 
     /**
-     * Zend_Db_Table object.
+     * Zend_Db_Table_Abstract object.
      *
      * @var Zend_Db_Table_Abstract
      */
@@ -61,7 +61,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     protected $_connected = true;
 
     /**
-     * Zend_Db_Table class name.
+     * Zend_Db_Table_Abstract class name.
      *
      * @var string
      */
@@ -135,6 +135,16 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     public function __wakeup()
     {
         $this->_connected = false;
+    }
+
+    /**
+     * Returns the table object, or null if this is disconnected rowset
+     *
+     * @return Zend_Db_Table_Abstract|null
+     */
+    public function getTable()
+    {
+        return $this->_table;
     }
 
     /**
