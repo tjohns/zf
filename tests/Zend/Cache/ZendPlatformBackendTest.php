@@ -33,15 +33,14 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
         parent::__construct('Zend_Cache_Backend_ZendPlatform');
     }
        
-    public function setUp()
+    public function setUp($notag = false)
     {        
-	if(!function_exists('output_cache_get')) {
-		$this->markTestSkipped('Zend Platform is not installed, skipping test');
-		return;
-	}
-
+        if(!function_exists('output_cache_get')) {
+            $this->markTestSkipped('Zend Platform is not installed, skipping test');
+            return;
+        }
         $this->_instance = new Zend_Cache_Backend_ZendPlatform(array());
-        parent::setUp();          
+        parent::setUp($notag);          
     }
     
     public function tearDown()
@@ -65,7 +64,7 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
 
     public function testGetWithAnExpiredCacheId()
     {
-	sleep(2);
+    sleep(2);
         $this->_instance->setDirectives(array('lifeTime' => 1));
         $this->assertEquals('bar : data to cache', $this->_instance->load('bar', true));
         $this->assertFalse($this->_instance->load('bar'));

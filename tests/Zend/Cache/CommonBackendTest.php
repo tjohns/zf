@@ -29,13 +29,19 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
         $this->_root = dirname(__FILE__);
     }
     
-    public function setUp()
+    public function setUp($notag = false)
     {
         @mkdir($this->getTmpDir());
         $this->_instance->setDirectives(array('logging' => true));
-        $this->_instance->save('bar : data to cache', 'bar', array('tag3', 'tag4'));
-        $this->_instance->save('bar2 : data to cache', 'bar2', array('tag3', 'tag1')); 
-        $this->_instance->save('bar3 : data to cache', 'bar3', array('tag2', 'tag3'));   
+        if ($notag) {
+            $this->_instance->save('bar : data to cache', 'bar');
+            $this->_instance->save('bar2 : data to cache', 'bar2'); 
+            $this->_instance->save('bar3 : data to cache', 'bar3');              
+        } else {
+            $this->_instance->save('bar : data to cache', 'bar', array('tag3', 'tag4'));
+            $this->_instance->save('bar2 : data to cache', 'bar2', array('tag3', 'tag1')); 
+            $this->_instance->save('bar3 : data to cache', 'bar3', array('tag2', 'tag3'));   
+        }
     }
     
     public function getTmpDir()

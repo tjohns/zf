@@ -34,14 +34,14 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
         parent::__construct('Zend_Cache_Backend_Sqlite');
     }
     
-    public function setUp()
+    public function setUp($notag = false)
     {          
         @mkdir($this->getTmpDir());
         $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
             'cacheDBCompletePath' => $this->_cacheDir . 'cache.db'
         ));
-        parent::setUp();       
+        parent::setUp($notag);       
     }
     
     public function tearDown()
