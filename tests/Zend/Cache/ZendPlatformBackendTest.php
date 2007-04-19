@@ -65,10 +65,10 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
     public function testGetWithAnExpiredCacheId()
     {
     sleep(2);
-        $this->_instance->setDirectives(array('lifeTime' => 1));
+        $this->_instance->setDirectives(array('lifetime' => 1));
         $this->assertEquals('bar : data to cache', $this->_instance->load('bar', true));
         $this->assertFalse($this->_instance->load('bar'));
-        $this->_instance->setDirectives(array('lifeTime' => 3600));
+        $this->_instance->setDirectives(array('lifetime' => 3600));
     }
 
     // Because of limitations of this backend...

@@ -96,14 +96,14 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testConstructorCorrectCall()
     {
-        $test = new Zend_Cache_Frontend_File(array('masterFile' => $this->_masterFile, 'lifeTime' => 3600, 'caching' => true));      
+        $test = new Zend_Cache_Frontend_File(array('masterFile' => $this->_masterFile, 'lifetime' => 3600, 'caching' => true));      
     }
     
     public function testConstructorBadCall1()
     {
         # no masterfile
         try {
-            $test = new Zend_Cache_Frontend_File(array('lifeTime' => 3600, 'caching' => true));      
+            $test = new Zend_Cache_Frontend_File(array('lifetime' => 3600, 'caching' => true));      
         } catch (Zend_Cache_Exception $e) {
             return;
         }

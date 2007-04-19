@@ -84,7 +84,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     public function testSetDirectivesCorrectCall()
     {
-        $this->_instance->setDirectives(array('lifeTime' => 3600, 'logging' => true));
+        $this->_instance->setDirectives(array('lifetime' => 3600, 'logging' => true));
     }
     
     public function testSetDirectivesBadArgument()
@@ -101,7 +101,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     {
         // A bad directive (not known by a specific backend) is possible
         // => so no exception here
-        $this->_instance->setDirectives(array('foo' => true, 'lifeTime' => 3600));
+        $this->_instance->setDirectives(array('foo' => true, 'lifetime' => 3600));
     }
     
     public function testSetDirectivesBadDirective2()
@@ -122,14 +122,14 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     public function testSaveWithNullLifeTime()
     {
-        $this->_instance->setDirectives(array('lifeTime' => null));
+        $this->_instance->setDirectives(array('lifetime' => null));
         $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
         $this->assertTrue($res);
     }
     
     public function testSaveWithSpecificLifeTime()
     {
-        $this->_instance->setDirectives(array('lifeTime' => 3600));
+        $this->_instance->setDirectives(array('lifetime' => 3600));
         $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'), 10);
         $this->assertTrue($res);
     }
@@ -161,7 +161,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
          
     public function testTestWithAnExistingCacheIdAndANullLifeTime()
     {
-        $this->_instance->setDirectives(array('lifeTime' => null));
+        $this->_instance->setDirectives(array('lifetime' => null));
         $res = $this->_instance->test('bar');
         if (!$res) {
             $this->fail('test() return false');
@@ -192,7 +192,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     public function testGetWithAnExpiredCacheId()
     {
         $this->_instance->___expire('bar');
-        $this->_instance->setDirectives(array('lifeTime' => -1));
+        $this->_instance->setDirectives(array('lifetime' => -1));
         $this->assertFalse($this->_instance->load('bar'));
         $this->assertEquals('bar : data to cache', $this->_instance->load('bar', true));
     }   

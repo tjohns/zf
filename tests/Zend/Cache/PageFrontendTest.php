@@ -40,13 +40,13 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testConstructorCorrectCall()
     {
-        $test = new Zend_Cache_Frontend_Page(array('lifeTime' => 3600, 'caching' => true));      
+        $test = new Zend_Cache_Frontend_Page(array('lifetime' => 3600, 'caching' => true));      
     }
     
     public function testConstructorUnimplementedOption()
     {
         try {
-            $test = new Zend_Cache_Frontend_Page(array('httpConditional' => true));
+            $test = new Zend_Cache_Frontend_Page(array('http_conditional' => true));
         } catch (Exception $e) {
             return;
         }
@@ -56,7 +56,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorWithBadDefaultOptions()
     {
         try {
-            $test = new Zend_Cache_Frontend_Page(array('defaultOptions' => 'foo'));
+            $test = new Zend_Cache_Frontend_Page(array('default_options' => 'foo'));
         } catch (Exception $e) {
             return;
         }
@@ -66,7 +66,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorWithBadDefaultOptions2()
     {
         try {
-            $test = new Zend_Cache_Frontend_Page(array('defaultOptions' => array('cache' => true, 'foo' => 'bar')));
+            $test = new Zend_Cache_Frontend_Page(array('default_options' => array('cache' => true, 'foo' => 'bar')));
         } catch (Exception $e) {
             return;
         }
@@ -101,8 +101,8 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
 	       '^/article/' => array('cache' => false), 
 	       '^/article/view/' => array(            
 	           'foo' => true,                    
-	           'cacheWithPostVariables' => true,   
-	           'makeIdWithPostVariables' => true,   
+	           'cache_with_post_variables' => true,   
+	           'make_id_with_post_variables' => true,   
 	       )
         );
         try {
@@ -121,8 +121,8 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
 	       '^/article/' => array('cache' => false), 
 	       '^/article/view/' => array(            
 	           'cache' => true,                    
-	           'cacheWithPostVariables' => true,   
-	           'makeIdWithPostVariables' => true,   
+	           'cache_with_post_variables' => true,   
+	           'make_id_with_post_variables' => true,   
 	       )
         );
         $test = new Zend_Cache_Frontend_Page(array('regexps' => $array));        
@@ -130,7 +130,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testConstructorWithGoodDefaultOptions()
     {
-        $test = new Zend_Cache_Frontend_Page(array('defaultOptions' => array('cache' => true)));
+        $test = new Zend_Cache_Frontend_Page(array('default_options' => array('cache' => true)));
     }
     
     public function testStartEndCorrectCall1()
@@ -163,7 +163,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testStartEndCorrectCallWithDebug()
     {
-        $this->_instance->setOption('debugHeader', true);
+        $this->_instance->setOption('debug_header', true);
         ob_start();
         ob_implicit_flush(false);
         if (!($this->_instance->start('123', true))) {

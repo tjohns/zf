@@ -34,7 +34,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     
     protected $_instance;
     protected $_instance2;
-    protected $_cacheDir;
+    protected $_cache_dir;
     
     public function __construct()
     {
@@ -43,9 +43,9 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function setUp($notag = false)
     {        
-        $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
+        $this->_cache_dir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_File(array(
-            'cacheDir' => $this->_cacheDir,
+            'cache_dir' => $this->_cache_dir,
         ));  
 
         $logger = new Zend_Log(new Zend_Log_Writer_Null());
@@ -69,7 +69,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     {
         try {
             $class = new Zend_Cache_Backend_File(array(
-                'fileNamePrefix' => 'foo bar'
+                'file_name_prefix' => 'foo bar'
             ));
         } catch (Zend_Cache_Exception $e) {
             return;
@@ -79,20 +79,20 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function testGetWithANonExistingCacheIdAndANullLifeTime() 
     {
-        $this->_instance->setDirectives(array('lifeTime' => null));
+        $this->_instance->setDirectives(array('lifetime' => null));
         $this->assertFalse($this->_instance->load('barbar'));         
     }
     
     public function testSaveCorrectCallWithHashedDirectoryStructure()
     {
-        $this->_instance->setOption('hashedDirectoryLevel', 2);
+        $this->_instance->setOption('hashed_directory_level', 2);
         $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
         $this->assertTrue($res);
     }
     
     public function testCleanModeAllWithHashedDirectoryStructure()
     {
-        $this->_instance->setOption('hashedDirectoryLevel', 2);
+        $this->_instance->setOption('hashed_directory_level', 2);
         $this->assertTrue($this->_instance->clean('all'));
         $this->assertFalse($this->_instance->test('bar'));
         $this->assertFalse($this->_instance->test('bar2'));
@@ -100,7 +100,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function testSaveWithABadCacheDir()
     {
-        $this->_instance->setOption('cacheDir', '/foo/bar/lfjlqsdjfklsqd/');
+        $this->_instance->setOption('cache_dir', '/foo/bar/lfjlqsdjfklsqd/');
         $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
         $this->assertFalse($res);
     }

@@ -41,7 +41,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     
     public function testConstructorCorrectCall()
     {
-        $test = new Zend_Cache_Core(array('lifeTime' => 3600, 'caching' => true));
+        $test = new Zend_Cache_Core(array('lifetime' => 3600, 'caching' => true));
     }
     
     public function testConstructorBadCall()
@@ -57,7 +57,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     public function testConstructorBadOption()
     {
         try {
-            $test = new Zend_Cache_Core(array('foo' => 'bar', 'lifeTime' => 3600));
+            $test = new Zend_Cache_Core(array('foo' => 'bar', 'lifetime' => 3600));
         } catch (Zend_Cache_Exception $e) {
             return;
         }
@@ -102,7 +102,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     public function testSetOptionBadCall()
     {
         try {
-            $this->_instance->setOption(array('lifeTime'), 1200);        
+            $this->_instance->setOption(array('lifetime'), 1200);        
         } catch (Zend_Cache_Exception $e) {
             return;
         }
@@ -191,7 +191,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     
     public function testSaveCorrectCallNoWriteControl()
     {
-        $this->_instance->setOption('writeControl', false);
+        $this->_instance->setOption('write_control', false);
         $res = $this->_instance->save('data', 'foo', array('tag1', 'tag2'));
         $log = $this->_backend->getLastLog();
         $expected = array(
@@ -270,7 +270,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     
     public function testSaveCorrectCallWithAutomaticCleaning()
     {
-        $this->_instance->setOption('automaticCleaningFactor', 1);
+        $this->_instance->setOption('automatic_cleaning_factor', 1);
         $res = $this->_instance->save('data', 'false', array('tag1', 'tag2'));
         $logs = $this->_backend->getAllLogs();
         $expected = array(
@@ -358,7 +358,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     
     public function testGetCorrectCallWithAutomaticSerialization()
     {
-        $this->_instance->setOption('automaticSerialization', true);
+        $this->_instance->setOption('automatic_serialization', true);
         $res = $this->_instance->load('serialized');
         $this->assertEquals(array('foo'), $res);
     }

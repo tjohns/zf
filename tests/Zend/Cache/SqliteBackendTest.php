@@ -27,7 +27,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     
     protected $_instance;
-    private $_cacheDir;
+    private $_cache_dir;
     
     public function __construct()
     {
@@ -37,9 +37,9 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     public function setUp($notag = false)
     {          
         @mkdir($this->getTmpDir());
-        $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
+        $this->_cache_dir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
-            'cacheDBCompletePath' => $this->_cacheDir . 'cache.db'
+            'cache_db_complete_path' => $this->_cache_dir . 'cache.db'
         ));
         parent::setUp($notag);       
     }
@@ -53,13 +53,13 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function testConstructorCorrectCall()
     {
-        $test = new Zend_Cache_Backend_Sqlite(array('cacheDBCompletePath' => $this->_cacheDir . 'cache.db'));    
+        $test = new Zend_Cache_Backend_Sqlite(array('cache_db_complete_path' => $this->_cache_dir . 'cache.db'));    
     }
     
     public function testConstructorWithABadDBPath()
     {
         try {
-            $test = new Zend_Cache_Backend_Sqlite(array('cacheDBCompletePath' => '/foo/bar/lfjlqsdjfklsqd/cache.db'));
+            $test = new Zend_Cache_Backend_Sqlite(array('cache_db_complete_path' => '/foo/bar/lfjlqsdjfklsqd/cache.db'));
         } catch (Zend_Cache_Exception $e) {
             return;
         }
@@ -69,8 +69,8 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     public function testCleanModeAllWithVacuum()
     {
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
-            'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
-            'automaticVacuumFactor' => 1
+            'cache_db_complete_path' => $this->_cache_dir . 'cache.db',
+            'automatic_vacuum_factor' => 1
         ));
         parent::setUp();    
         $this->assertTrue($this->_instance->clean('all'));
@@ -81,8 +81,8 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     public function testRemoveCorrectCallWithVacuum()
     {   
         $this->_instance = new Zend_Cache_Backend_Sqlite(array(
-            'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
-            'automaticVacuumFactor' => 1
+            'cache_db_complete_path' => $this->_cache_dir . 'cache.db',
+            'automatic_vacuum_factor' => 1
         ));
         parent::setUp();  
         $this->assertTrue($this->_instance->remove('bar'));

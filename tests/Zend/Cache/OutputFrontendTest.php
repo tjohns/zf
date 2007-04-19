@@ -40,7 +40,7 @@ class Zend_Cache_OutputFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testConstructorCorrectCall()
     {
-        $test = new Zend_Cache_Frontend_Output(array('lifeTime' => 3600, 'caching' => true));      
+        $test = new Zend_Cache_Frontend_Output(array('lifetime' => 3600, 'caching' => true));      
     }
     
     public function testStartEndCorrectCall1()
