@@ -41,7 +41,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
         parent::__construct('Zend_Cache_Backend_File');
     }
     
-    public function setUp()
+    public function setUp($notag = false)
     {        
         $this->_cacheDir = $this->getTmpDir() . DIRECTORY_SEPARATOR;
         $this->_instance = new Zend_Cache_Backend_File(array(
@@ -51,7 +51,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
         $logger = new Zend_Log(new Zend_Log_Writer_Null());
         $this->_instance->setDirectives(array('logger' => $logger));
 
-        parent::setUp();     
+        parent::setUp($notag);     
     }
     
     public function tearDown()
