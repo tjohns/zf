@@ -658,7 +658,7 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200,
-   'debugHeader' => true, // デバッグ用
+   'debugHeader' => true, // デバッグします
    'regexps' => array(
        '^/$' => array('cache' => true),         // IndexController 全体をキャッシュします
        '^/index/' => array('cache' => true),    // IndexController 全体をキャッシュします
