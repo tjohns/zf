@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,26 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestSetup
+ */
 require_once 'Zend/Db/Table/TestSetup.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
 {
 
@@ -44,7 +59,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(1, $row1->bug_id);
 
         // advance to next row
-        $this->assertEquals(1, $rows->next());
+        $rows->next();
         $this->assertEquals(1, $rows->key());
         $this->assertTrue($rows->valid());
 
@@ -55,17 +70,16 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $row2->bug_id);
 
         // advance beyond last row
-        $this->assertEquals(2, $rows->next());
+        $rows->next();
         $this->assertEquals(2, $rows->key());
         $this->assertFalse($rows->valid());
-        $this->assertFalse($rows->current());
 
-        // rewind to beginning 
+        // rewind to beginning
         $rows->rewind();
         $this->assertEquals(0, $rows->key());
         $this->assertTrue($rows->valid());
 
-        // get row at beginning and compare it to 
+        // get row at beginning and compare it to
         // the one we got earlier
         $row1Copy = $rows->current();
         $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),

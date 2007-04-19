@@ -192,11 +192,6 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      */
     public function current()
     {
-        // is the pointer at a valid position?
-        if (! $this->valid()) {
-            return false;
-        }
-
         // do we already have a row object for this position?
         if (empty($this->_rows[$this->_pointer])) {
             $this->_rows[$this->_pointer] = new $this->_rowClass(
@@ -228,11 +223,11 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      * Similar to the next() function for arrays in PHP.
      * Required by interface Iterator.
      *
-     * @return int The next pointer value.
+     * @return void
      */
     public function next()
     {
-        return ++$this->_pointer;
+        ++$this->_pointer;
     }
 
     /**
@@ -250,6 +245,8 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     /**
      * Returns the number of elements in the collection.
      *
+     * Implements Countable::count()
+     *
      * @return int
      */
     public function count()
@@ -258,10 +255,10 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     }
 
     /**
-     * Returns true if $this->count > 0, false otherwise.
-     * Required by interface Countable.
+     * Returns true if and only if count($this) > 0.
      *
      * @return bool
+     * @deprecated since 0.9.3; use count() instead
      */
     public function exists()
     {
