@@ -47,10 +47,10 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     /**
      * Available options
      * 
-     * =====> (string) cacheDBCompletePath :
+     * =====> (string) cache_db_complete_path :
      * - the complete path (filename included) of the SQLITE database
      * 
-     * ====> (int) automaticVacuumFactor :
+     * ====> (int) automatic_vacuum_factor :
      * - Disable / Tune the automatic vacuum process
      * - The automatic vacuum process defragment the database file (and make it smaller)
      *   when a clean() or delete() is called
@@ -61,8 +61,8 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @var array available options
      */
     protected $_options = array(
-        'cacheDBCompletePath' => null,
-        'automaticVacuumFactor' => 10
+        'cache_db_complete_path' => null,
+        'automatic_vacuum_factor' => 10
     ); 
   
     /**
@@ -72,6 +72,15 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     private $_db = null;
     
+    /**
+     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
+     *
+     * @var array 
+     */
+    protected $_backwardCompatibilityArray = array(
+        'cacheDBCompletePath' => 'cache_db_complete_path',
+        'automaticVacuumFactor' => 'automatic_vacuum_factor'
+    );
     
     // ----------------------
     // --- Public methods ---
@@ -84,12 +93,14 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function __construct($options = array())
     {      
-        if (!isset($options['cacheDBCompletePath'])) Zend_Cache::throwException('cacheDBCompletePath option has to set');
-        $this->_db = @sqlite_open($options['cacheDBCompletePath']);
-        if (!($this->_db)) {
-            Zend_Cache::throwException("Impossible to open " . $options['cacheDBCompletePath'] . " cache DB file");
-        }
         parent::__construct($options);
+        if (is_null($this->_options['cache_db_complete_path'])) {
+            Zend_Cache::throwException('cache_db_complete_path option has to set');
+        }
+        $this->_db = @sqlite_open($this->_options['cache_db_complete_path']);
+        if (!($this->_db)) {
+            Zend_Cache::throwException("Impossible to open " . $this->_options['cache_db_complete_path'] . " cache DB file");
+        }
     }
     
     /**
@@ -155,7 +166,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         if (!$this->_checkStructureVersion()) {
             $this->_buildStructure();
             if (!$this->_checkStructureVersion()) {
-                Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cacheDBCompletePath']);
+                Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cache_db_complete_path']);
             }
         }    
         $lifetime = $this->getLifetime($specificLifetime);
@@ -239,7 +250,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     public function ___dropDatabaseFile()
     {
         @sqlite_close($this->_db);
-        @unlink($this->_options['cacheDBCompletePath']);
+        @unlink($this->_options['cache_db_complete_path']);
     }
     
     // -----------------------
@@ -251,8 +262,8 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     private function _automaticVacuum() 
     {
-        if ($this->_options['automaticVacuumFactor'] > 0) {
-            $rand = rand(1, $this->_options['automaticVacuumFactor']);
+        if ($this->_options['automatic_vacuum_factor'] > 0) {
+            $rand = rand(1, $this->_options['automatic_vacuum_factor']);
             if ($rand == 1) {
                 @sqlite_query($this->_db, 'VACUUM');
             }

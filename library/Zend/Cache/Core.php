@@ -42,7 +42,7 @@ class Zend_Cache_Core
     /**
      * Available options
      * 
-     * ====> (boolean) writeControl :  
+     * ====> (boolean) write_control :  
      * - Enable / disable write control (the cache is read just after writing to detect corrupt entries)
      * - Enable write control will lightly slow the cache writing but not the cache reading
      * Write control can detect some corrupt cache files but maybe it's not a perfect control
@@ -51,11 +51,11 @@ class Zend_Cache_Core
      * - Enable / disable caching
      * (can be very usefull for the debug of cached scripts)
      * 
-     * ====> (boolean) automaticSerialization :
+     * ====> (boolean) automatic_serialization :
      * - Enable / disable automatic serialization
      * - It can be used to save directly datas which aren't strings (but it's slower)
      * 
-     * ====> (int) automaticCleaningFactor :
+     * ====> (int) automatic_cleaning_factor :
      * - Disable / Tune the automatic cleaning process
      * - The automatic cleaning process destroy too old (for the given life time)
      *   cache files when a new cache file is written :
@@ -73,13 +73,13 @@ class Zend_Cache_Core
      * @var array available options
      */
     protected $_options = array(
-        'writeControl'            => true, 
-        'caching'                 => true, 
-        'automaticSerialization'  => false,
-        'automaticCleaningFactor' => 10,
-        'lifetime'                => 3600,
-        'logging'                 => false,
-        'logger'                  => null
+        'write_control'             => true, 
+        'caching'                   => true, 
+        'automatic_serialization'   => false,
+        'automatic_cleaning_factor' => 10,
+        'lifetime'                  => 3600,
+        'logging'                   => false,
+        'logger'                    => null
     ); 
 
     /**
@@ -98,6 +98,38 @@ class Zend_Cache_Core
      * @var string $_lastId
      */
     private $_lastId = null;
+    
+    /**
+     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
+     *
+     * @var array 
+     */
+    protected $_backwardCompatibilityArray = array(
+        'lifeTime' => 'lifetime',
+        'writeControl' => 'write_control',
+        'automaticSerialization' => 'automatic_serialization',
+        'automaticCleaningFactor' => 'automatic_cleaning_factor',
+        'cachedEntity' => 'cached_entity',
+        'cacheByDefault' => 'cache_by_default',
+        'cachedMethods' => 'cached_methods',
+        'nonCachedMethods' => 'non_cached_methods',
+        'cachedFunctions' => 'cached_functions',
+        'nonCachedFunctions' => 'non_cached_functions',
+        'masterFile' => 'master_file',
+        'httpConditional' => 'http_conditional',
+        'debugHeader' => 'debug_header',
+        'defaultOptions' => 'default_options',
+        'cacheWithGetVariables' => 'cache_with_get_variables',
+        'cacheWithPostVariables' => 'cache_with_post_variables',
+        'cacheWithSessionVariables' => 'cache_with_session_variables',
+        'cacheWithFilesVariables' => 'cache_with_files_variables',
+        'cacheWithCookieVariables' => 'cache_with_cookie_variables',
+        'makeIdWithGetVariables' => 'make_id_with_get_variables',
+        'makeIdWithPostVariables' => 'make_id_with_post_variables',
+        'makeIdWithSessionVariables' => 'make_id_with_session_variables',
+        'makeIdWithFilesVariables' => 'make_id_with_files_variables',
+        'makeIdWithCookieVariables' => 'make_id_with_cookie_variables'
+    );
 
     // ----------------------
     // --- Public methods ---
@@ -116,7 +148,6 @@ class Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->_setOption($name, $value);
         }
-
         $this->_loggerSanity();
     }
 
@@ -151,9 +182,12 @@ class Zend_Cache_Core
     public function setOption($name, $value)
     {
         if (is_string($name)) {
-            // backward compatibily becase of ZF-879 (it will be removed in ZF 1.1)
-            if ($name=='lifeTime') {
-                $name = 'lifetime';
+            if (array_key_exists($name, $this->_backwardCompatibilityArray)) {
+                $tmp = $this->_backwardCompatibilityArray[$name];
+                $this->_log("$name option is deprecated, use $tmp instead (same syntax) !");
+                $name = $tmp;
+            } else {
+                $name = strtolower($name);
             }
             if (array_key_exists($name, $this->_options)) {
                 // This is a Core option
@@ -177,10 +211,6 @@ class Zend_Cache_Core
      */
     private function _setOption($name, $value)
     {
-        // backward compatibily becase of ZF-879 (it will be removed in ZF 1.1)
-        if ($name=='lifeTime') {
-            $name = 'lifetime';
-        }
         if (!is_string($name) || !array_key_exists($name, $this->_options)) {
             Zend_Cache::throwException("Incorrect option name : $name");
         }
@@ -207,7 +237,7 @@ class Zend_Cache_Core
      * 
      * @param string $id cache id
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
-     * @param boolean $doNotUnserialize do not serialize (even if automaticSerialization is true) => for internal use
+     * @param boolean $doNotUnserialize do not serialize (even if automatic_serialization is true) => for internal use
      * @return mixed cached datas (or false)
      */
     public function load($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
@@ -222,7 +252,7 @@ class Zend_Cache_Core
             // no cache available
             return false;
         }
-        if ((!$doNotUnserialize) && $this->_options['automaticSerialization']) {
+        if ((!$doNotUnserialize) && $this->_options['automatic_serialization']) {
             // we need to unserialize before sending the result
             return unserialize($data);
         }
@@ -259,7 +289,7 @@ class Zend_Cache_Core
     /**
      * Save some data in a cache 
      * 
-     * @param mixed $data data to put in cache (can be another type than string if automaticSerialization is on)
+     * @param mixed $data data to put in cache (can be another type than string if automatic_serialization is on)
      * @param cache $id cache id (if not set, the last cache id will be used)
      * @param array $tags cache tags
      * @param int $specificLifetime if != false, set a specific lifetime for this cache record (null => infinite lifetime)
@@ -275,17 +305,17 @@ class Zend_Cache_Core
         }
         self::_validateIdOrTag($id);  
         self::_validateTagsArray($tags);   
-        if ($this->_options['automaticSerialization']) {
+        if ($this->_options['automatic_serialization']) {
             // we need to serialize datas before storing them
             $data = serialize($data);
         } else {
             if (!is_string($data)) {
-                Zend_Cache::throwException("Datas must be string or set automaticSerialization = true");
+                Zend_Cache::throwException("Datas must be string or set automatic_serialization = true");
             }
         }
         // automatic cleaning 
-        if ($this->_options['automaticCleaningFactor'] > 0) {
-            $rand = rand(1, $this->_options['automaticCleaningFactor']);
+        if ($this->_options['automatic_cleaning_factor'] > 0) {
+            $rand = rand(1, $this->_options['automatic_cleaning_factor']);
             if ($rand==1) {
                 $this->clean('old');
             }
@@ -299,10 +329,10 @@ class Zend_Cache_Core
             $this->remove($id);
             return false;
         }
-        if ($this->_options['writeControl']) {
+        if ($this->_options['write_control']) {
             $data2 = $this->_backend->load($id, true);
             if ($data!=$data2) {
-                $this->_log('Zend_Cache_Core::save() / writeControl : written and read data do not match');
+                $this->_log('Zend_Cache_Core::save() / write_control : written and read data do not match');
                 $this->remove($id);
                 return false;
             }
@@ -407,18 +437,15 @@ class Zend_Cache_Core
         if (!isset($this->_options['logging']) || !$this->_options['logging']) {
             return;
         }
-
         try {
             require_once 'Zend/Loader.php';
             Zend_Loader::loadClass('Zend_Log');
         } catch (Zend_Exception $e) {
             Zend_Cache::throwException('Logging feature is enabled but the Zend_Log class is not available');
         }
-
         if (isset($this->_options['logger']) && $this->_options['logger'] instanceof Zend_Log) {
             return;
         }
-
         // Create a default logger to the standard output stream
         Zend_Loader::loadClass('Zend_Log_Writer_Stream');
         $logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));
@@ -437,11 +464,9 @@ class Zend_Cache_Core
         if (!$this->_options['logging']) {
             return;
         }
-
         if (!(isset($this->_options['logger']) || $this->_options['logger'] instanceof Zend_Log)) {
             Zend_Cache::throwException('Logging is enabled but logger is not set');
         }
-
         $logger = $this->_options['logger'];
         $logger->log($message, $priority);
     }

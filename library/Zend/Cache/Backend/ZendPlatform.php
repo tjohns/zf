@@ -207,12 +207,12 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
         if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
             $this->_log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend");
         }
-        $cacheDir = ini_get('zend_accelerator.output_cache_dir');
-        if (!$cacheDir) {
+        $cache_dir = ini_get('zend_accelerator.output_cache_dir');
+        if (!$cache_dir) {
             return false;
         }
-        $cacheDir .= '/.php_cache_api/';
-        return $this->_clean($cacheDir, $mode);
+        $cache_dir .= '/.php_cache_api/';
+        return $this->_clean($cache_dir, $mode);
     }
 
 
