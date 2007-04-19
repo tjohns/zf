@@ -138,7 +138,8 @@ class Zend_Mime
             }
 
             // Ensure we are not splitting across an encoded character
-            if (($pos = strrpos(substr($str, 0, $ptr), '=')) >= $ptr - 2) {
+            $pos = strrpos(substr($str, 0, $ptr), '=');
+            if ($pos !== false && $pos >= $ptr - 2) {
                 $ptr = $pos;
             }
 
