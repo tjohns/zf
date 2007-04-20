@@ -20,11 +20,11 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifeTime' => 7200, // temps de vie du cache de 2 heures
-   'automaticSerialization' => true
+   'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Répertoire où stocker les fichiers de cache
+    'cache_dir' => './tmp/' // Répertoire où stocker les fichiers de cache
 );
 
 // créer un objet Zend_Cache_Core
@@ -50,7 +50,7 @@ if(!$result = $cache->get('myresult')) {
 } else {
 
     // il y a un cache
-    echo "This one is from cache!\n\n";
+    echo "Ceci est issu du cache !\n\n";
 
 }
 
@@ -67,10 +67,10 @@ print_r($result);
             <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
    'lifeTime' => 30,                  // temps de vue du cache de 30 secondes
-   'automaticSerialization' => false  // par défaut
+   'automatic_serialization' => false  // par défaut
 );
 
-$backendOptions = array('cacheDir' => './tmp/');
+$backendOptions = array('cache_dir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 

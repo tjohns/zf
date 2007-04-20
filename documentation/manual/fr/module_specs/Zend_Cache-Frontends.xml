@@ -54,7 +54,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>writeControl</code></entry>
+                              <entry><code>write_control</code></entry>
                               <entry><code>booléen</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -63,7 +63,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticSerialization</code></entry>
+                              <entry><code>automatic_serialization</code></entry>
                               <entry><code>booléen</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
@@ -71,7 +71,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticCleaningFactor</code></entry>
+                              <entry><code>automatic_cleaning_factor</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>0</code></entry>
                               <entry>
@@ -89,7 +89,7 @@
                 Un exemple est donné dans le manuel, tout au début.
             </para>
             <para>
-                Si vous stocker uniquement des chaînes de caractères dans le cache (parce qu'avec l'option "automaticSerialization", il est possible de stocker des booléens), vous pouvez utiliser une construction plus compact comme :
+                Si vous stocker uniquement des chaînes de caractères dans le cache (parce qu'avec l'option "automatic_serialization", il est possible de stocker des booléens), vous pouvez utiliser une construction plus compact comme :
                  <programlisting role="php"><![CDATA[<?php
 // nous avons déjà $cache
 
@@ -214,7 +214,7 @@ echo 'This is never cached ('.time().').';
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>booléen</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -222,7 +222,7 @@ echo 'This is never cached ('.time().').';
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedFunctions</code></entry>
+                              <entry><code>cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -230,7 +230,7 @@ echo 'This is never cached ('.time().').';
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedFunctions</code></entry>
+                              <entry><code>non_cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -287,7 +287,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cachedEntity</code> (required)</entry>
+                              <entry><code>cached_entity</code> (required)</entry>
                               <entry><code>mixed</code></entry>
                               <entry></entry>
                               <entry>
@@ -295,7 +295,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>booléen</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -303,7 +303,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedMethods</code></entry>
+                              <entry><code>cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -311,11 +311,11 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedMethods</code></entry>
+                              <entry><code>non_cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  les nomes des méthodes qui ne doivent jamais être mises en cache
+                                  les noms des méthodes qui ne doivent jamais être mises en cache
                               </entry>
                          </row>
                       </tbody>
@@ -340,7 +340,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => 'test' // Le nom de la classe
+    'cached_entity' => 'test' // Le nom de la classe
 );
 // [...]
 
@@ -363,7 +363,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => new test() // Une instance de la classe
+    'cached_entity' => new test() // Une instance de la classe
 );
 // [...]
 
@@ -400,7 +400,7 @@ $res = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>masterFile (mandatory)</code></entry>
+                              <entry><code>master_file (mandatory)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
@@ -448,7 +448,7 @@ $res = $cache->foobar2('1', '2');
 	                 </thead>
 	                 <tbody>
 	                 	 <row>
-	                          <entry><code>httpConditional</code></entry>
+	                          <entry><code>http_conditional</code></entry>
 	                          <entry><code>booléen</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
@@ -456,7 +456,7 @@ $res = $cache->foobar2('1', '2');
 	                          </entry>
 	                     </row>
 	                     <row>
-	                          <entry><code>debugHeader</code></entry>
+	                          <entry><code>debug_header</code></entry>
 	                          <entry><code>booléen</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
@@ -464,7 +464,7 @@ $res = $cache->foobar2('1', '2');
 	                          </entry>
 	                     </row>
 	                     <row>
-	                     	  <entry><code>defaultOptions</code></entry>
+	                     	  <entry><code>default_options</code></entry>
 	                          <entry><code>array</code></entry>
 	                          <entry><code>array(...see below...)</code></entry>
 	                          <entry>
@@ -477,52 +477,52 @@ $res = $cache->foobar2('1', '2');
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, false par défaut) cacheWithGetVariables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_GET</code>
+	                                          <code>(booléen, false par défaut) cache_with_get_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_GET</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, false par défaut) cacheWithPostVariables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_POST</code>
+	                                          <code>(booléen, false par défaut) cache_with_post_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_POST</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, false par défaut) cacheWithSessionVariables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_SESSION</code>
+	                                          <code>(booléen, false par défaut) cache_with_session_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_SESSION</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, false par défaut) cacheWithFilesVariables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_FILES</code>
+	                                          <code>(booléen, false par défaut) cache_with_files_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_FILES</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, false par défaut) cacheWithCookieVariables</code> : si true, le cache est toujours activé s'il y a des variables dans leétableau <code>$_COOKIE</code>
+	                                          <code>(booléen, false par défaut) cache_with_cookie_variables</code> : si true, le cache est toujours activé s'il y a des variables dans leétableau <code>$_COOKIE</code>
 	                                      </para>
 	                                  </listitem>
 									  <listitem>
 									      <para>
-									          <code>(booléen, true par défaut) makeIdWithGetVariables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_GET</code>
+									          <code>(booléen, true par défaut) make_id_with_get_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_GET</code>
 									      </para>
 									  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, true par défaut) makeIdWithPostVariables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_POST</code>
+	                                          <code>(booléen, true par défaut) make_id_with_post_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_POST</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, true par défaut) makeIdWithSessionVariables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_SESSION</code>
+	                                          <code>(booléen, true par défaut) make_id_with_session_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_SESSION</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, true par défaut) makeIdWithFilesVariables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_FILES</code>
+	                                          <code>(booléen, true par défaut) make_id_with_files_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_FILES</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(booléen, true par défaut) makeIdWithCookieVariables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_COOKIE</code>
+	                                          <code>(booléen, true par défaut) make_id_with_cookie_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_COOKIE</code>
 	                                      </para>
 	                                  </listitem>
 	                              </itemizedlist>
@@ -563,21 +563,21 @@ $cache->start();
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200,
-   'debugHeader' => true, // for debuging
+   'life_time' => 7200,
+   'debug_header' => true, // pour le déboguage
    'regexps' => array(
-       '^/$' => array('cache' => true),         // met en cache la totalité d'IndexController
-       '^/index/' => array('cache' => true),    // met en cache la totalité d'IndexController
-       '^/article/' => array('cache' => false), // nous ne mettons pas en cache l'ArticleController...
-       '^/article/view/' => array(              // ...mais nous mettons en cache l'action "view"
-           'cache' => true,                     // de cet ArticleController
-           'cacheWithPostVariables' => true,    // et nous mettons en cache même lorsqu'il y a des variables dans $_POST
-           'makeIdWithPostVariables' => true,   // (mais le cache sera dépendent du tableau $_POST)
+       '^/$' => array('cache' => true),           // met en cache la totalité d'IndexController
+       '^/index/' => array('cache' => true),      // met en cache la totalité d'IndexController
+       '^/article/' => array('cache' => false),   // nous ne mettons pas en cache l'ArticleController...
+       '^/article/view/' => array(                // ...mais nous mettons en cache l'action "view"
+           'cache' => true,                       // de cet ArticleController
+           'cache_with_post_variables' => true,   // et nous mettons en cache même lorsqu'il y a des variables dans $_POST
+           'make_id_with_post_variables' => true, // (mais le cache sera dépendent du tableau $_POST)
        )
    )
 );
 $backendOptions = array(
-    'cacheDir' => '/tmp/'
+    'cache_dir' => '/tmp/'
 );
 
 // obtenir un objet Zend_Cache_Frontend_Page
