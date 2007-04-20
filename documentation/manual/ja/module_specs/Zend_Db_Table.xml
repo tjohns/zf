@@ -580,6 +580,9 @@ $table->update($data, $where);
         </example>
 
         <para>
+            テーブルの <code>update()</code> メソッドはデータベースアダプタの
+            <link linkend="zend.db.adapter.update"><code>update()</code></link>
+            メソッドへのプロキシなので、
             二番目の引数は、SQL 式の配列とすることができます。
             その場合、それぞれの式が論理演算子 <code>AND</code>
             で連結されます。
@@ -622,6 +625,15 @@ $table->delete($where);
         </example>
 
         <para>
+            二番目の引数は、SQL 式の配列とすることができます。
+            その場合、それぞれの式が論理演算子 <code>AND</code>
+            で連結されます。
+        </para>
+
+        <para>
+            テーブルの <code>delete()</code> メソッドはデータベースアダプタの
+            <link linkend="zend.db.adapter.delete"><code>delete()</code></link>
+            メソッドへのプロキシなので、
             二番目の引数は、SQL 式の配列とすることができます。
             その場合、それぞれの式が論理演算子 <code>AND</code>
             で連結されます。

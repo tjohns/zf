@@ -116,7 +116,7 @@ $value = $db->quote(array('a', 'b', 'c');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
 
 // スカラーをクォートして WHERE 句に使用します
@@ -144,7 +144,7 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成し、適切にクォートした SQL 文で
 // データベースに問い合わせます
 $sql = $db->quoteInto(
@@ -167,7 +167,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成し、データベースに問い合わせます。
 // 今回はプレースホルダのバインドを使用します。
 $result = $db->query(
@@ -187,7 +187,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成し、データベースに問い合わせます。
 // 今回は PDOStatement を用意して手動でバインドします。
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
@@ -216,7 +216,7 @@ $rows = $stmt->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成し、トランザクションを開始します。
 $db->beginTransaction();
 
@@ -253,7 +253,7 @@ try {
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 //
 // INSERT INTO round_table
 //     (noble_title, first_name, favorite_color)
@@ -290,13 +290,11 @@ $last_insert_id = $db->lastInsertId();
         </para>
 
         <para>
-            オプションで WHERE 句を指定することで、どの行を更新するのかを指定できます
-            (WHERE 句はバインドパラメータではないことに注意しましょう。
-            値のクォートは自分で行う必要があります)。
+            オプションで WHERE 句を指定することで、どの行を更新するのかを指定できます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 //
 // UPDATE round_table
 //     SET favorite_color = "yellow"
@@ -319,6 +317,41 @@ $where = $db->quoteInto('first_name = ?', 'Robin');
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            UPDATE クエリで複数の WHERE 句を適用する必要がある場合は、
+            それらを配列形式で <code>update()</code> に渡すことができます。
+            渡した句は AND 演算子で連結されます。OR 演算子で連結する場合は手動で設定しなければなりません。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$set = array('favorite_color' => 'yellow');
+
+// 複数の条件を AND で組み合わせます
+$where   = array(
+    $db->quoteInto('first_name = ?', $firstName),
+    $db->quoteInto('noble_title = ?', $nobleTitle)
+    );
+$count   = $db->update('round_table', $set, $where);
+
+// 複数の条件を OR で組み合わせます
+$firstNameOne = $db->quote($firstNameOne);
+$firstNameTwo = $db->quote($firstNameTwo);
+$where        = "first_name = $firstNameOne OR first_name = $firstNameTwo";
+$count        = $db->update('round_table', $set, $where);
+
+?>]]></programlisting>
+
+        <note>
+            <para>
+                WHERE 句の値や識別子が自動的にクォートされることはありません。
+                クォートが必要な値を使用する場合は、それを自分自身でクォートしなければなりません。
+                データベースアダプタのメソッド <code>quote()</code>、
+                <code>quoteInto()</code> あるいは <code>quoteIdentifier()</code>
+                を使用しましょう。
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.delete">
@@ -334,7 +367,7 @@ $rows_affected = $db->update($table, $set, $where);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 //
 // DELETE FROM round_table
 //     WHERE first_name = "Patsy";
@@ -351,6 +384,22 @@ $where = $db->quoteInto('first_name = ?', 'Patsy');
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            <link linkend="zend.db.adapter.update"><code>update()</code></link> メソッドと同様、
+            WHERE 句の配列を <code>delete()</code> メソッドの引数 <code>$where</code> に指定することができます。
+        </para>
+
+        <note>
+            <para>
+                WHERE 句の値や識別子が自動的にクォートされることはありません。
+                クォートが必要な値を使用する場合は、それを自分自身でクォートしなければなりません。
+                データベースアダプタのメソッド <code>quote()</code>、
+                <code>quoteInto()</code> あるいは <code>quoteIdentifier()</code>
+                を使用しましょう。
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.fetch">
@@ -378,7 +427,7 @@ $rows_affected = $db->delete($table, $where);
         </itemizedlist>
 
         <programlisting role="php"><![CDATA[<?php
-    
+
 // $db オブジェクトを作成し、そして
 
 // すべての行のすべてのカラムを配列として取得します
