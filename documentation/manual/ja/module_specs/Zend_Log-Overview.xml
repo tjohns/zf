@@ -109,6 +109,25 @@ $logger->emerg('Emergency message');
 ?>]]></programlisting>
     </para>
   </sect2>
+
+  <sect2 id="zend.log.overview.destroying-a-logger">
+    <title>ログの破棄</title>
+    <para>
+      ログオブジェクトが不要になったら、ログオブジェクトを指す変数に
+      <code>null</code> を代入してそれを破棄しましょう。これは、
+      アタッチされている各ライターのインスタンスメソッド
+      <code>shutdown()</code> をコールしてからログオブジェクトを破棄します。
+      
+      <programlisting role="php"><![CDATA[<?php
+
+$logger = null;
+
+?>]]></programlisting>
+
+      このように明示的にログを破棄することは必須ではありません。
+      PHP の終了時に、この処理が自動的に行われます。
+    </para>
+  </sect2>
   
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>組み込みの優先度の使用</title>
