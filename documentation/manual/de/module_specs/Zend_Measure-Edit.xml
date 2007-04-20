@@ -1,66 +1,61 @@
 <sect1 id="zend.measure.edit">
 
-    <title>Manipulating Measurements</title>
+    <title>Manipulation von Maßeinheiten</title>
 
     <para>
-        Parsing and normalization of input, combined with output to localized notations makes data accessible to users
-        in different locales. Many additional methods exist in <code>Zend_Measure_*</code> components to manipulate and
-        work with this data, after it has been normalized.
+        Analysieren und normalisieren von Eingaben kombiniert mit der Ausgabe in lokalisierter Schreibweise macht
+        die Daten für Benutzer in fremden Gebietsschemata benutzbar. Viele zusätzliche Methoden existieren in den
+        <code>Zend_Measure_*</code> Komponentenum diese Daten zu manipulieren und mit Ihnen zu arbeiten nachdem Sie
+        normalisiert wurden.
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.convert"><code>Convert</code>
-                </link>
+                <link linkend="zend.measure.edit.convert"><code>Konvertieren</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.add"><code>Add and subtract</code>
-                </link>
+                <link linkend="zend.measure.edit.add"><code>Addieren und Subtrahieren</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.equal"><code>Compare to boolean</code>
-                </link>
+                <link linkend="zend.measure.edit.equal"><code>Identität Vergleichen</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.compare"><code>Compare to greater/smaller</code>
-                </link>
+                <link linkend="zend.measure.edit.compare"><code>Werte Vergleichen</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changevalue"><code>Manually change values</code>
-                </link>
+                <link linkend="zend.measure.edit.changevalue"><code>Werte per Hand ändern</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changetype"><code>Manually change types</code>
-                </link>
+                <link linkend="zend.measure.edit.changetype"><code>Typ per Hand ändern</code></link>
             </para>
         </listitem>
     </itemizedlist>
 
     <sect2 id="zend.measure.edit.convert">
 
-        <title>Convert</title>
+        <title>Konvertieren</title>
 
         <para>
-            Probably the most important feature is the conversion into different units of measurement. The conversion of
-            a unit can be done any number of times using the method <code>convertTo()</code>. Units of measurement can
-            only be converted to other units of the same type (class). Therefore, it is not possible to convert (e.g.) a
-            length into a weight, which would might encourage poor programming practices and allow errors to propagate
-            without exceptions.
+            Das warscheinlich wichtigste Feature ist die Konvertierung in verschiedene Maßeinheiten. Die
+            Konvertierung von Maßeinheiten kann durch verwendung der Methode <code>convertTo()</code> beliebig
+            oft durchgeführt werden. Maßeinheiten können nur in andere Einheiten des gleichen Typs (Klasse)
+            konvertiert werden. Deswegen ist es nicht möglich z.B. eine Länge in ein Gewicht zu konvertieren,
+            was ja schlechte Programmierpraxis und Fehler erlauben würde ohne das eine Ausnahme geworfen wird.
         </para>
 
         <example>
-            <title>Convert</title>
+            <title>Konvertieren</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
 
@@ -70,8 +65,8 @@ $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 
 print "Kilo:".$unit->convertTo('KILOGRAM');
 
-// constants are considered "better practice" than strings
-print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
+// Konstanten sind eine "bessere Praxis" als Zeichenketten
+print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON);
 ?>]]></programlisting>
         </example>
 
@@ -79,59 +74,58 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 
     <sect2 id="zend.measure.edit.add">
 
-        <title>Add and subtract</title>
+        <title>Addieren und Subtrahieren</title>
 
         <para>
-            Measurements can be added together using <code>add()</code> and subtracted using <code>sub()</code>. Each
-            addition will create a new object for the result. The actual object will never be changed by the class. The
-            new object will be of the same type as the originating object. Dynamic objects support a fluid style of
-            programming, where complex sequences of operations can be nested without risk of side-effects altering the
-            input objects.
+            Maßeinheiten können miteinander durch <code>add()</code> addiert und durch <code>sub()</code> subtrahiert
+            werden. Jede Addition erzeugt als Ergebnis ein neues Objekt. Das aktuelle Objekt wird durch die Klasse
+            nicht verändert. Das neue Objekt ist vom selben Typ die das originale Objekt. Dynamische Objekte
+            unterstützen einen flüssigen Programmierstil, bei dem komplexe Sequenzen von Operationen geschachtelt
+            werden können ohne das Risiko eines Nebeneffekts durch die Veränderung des Eingabe Objektes.
         </para>
 
         <para>
             <example>
-                <title>Adding units</title>
+                <title>Werte addieren</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-// Define objects
+// Objekte definieren
 $unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
-// Add $unit2 to $unit 
+// $unit2 zu $unit1 addieren 
 $sum = $unit->add($unit2);
 
-echo $sum; // outputs "300 cm"
+echo $sum; // Ausgabe "300 cm"
 ?>]]></programlisting>
             </example>
         </para>
 
         <note>
-            <title>Automatic conversion</title>
+            <title>Automatische Konvertierung</title>
             <para>
-                Adding one object to another will automatically convert it to the correct unit. It is not neccessary to
-                call
-                <link linkend="zend.measure.edit.convert"><code>convertTo()</code>
-                </link>
-                before adding different units.
+                Beim Addieren eines Objektes zu einem anderen wird dieses automatisch in die richtige Einheit
+                konvertiert. Es ist nicht notwendig 
+                <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> aufzurufen bevor
+                unterschiedliche Einheiten addiert werden.
             </para>
         </note>
 
         <para>
             <example>
-                <title>Subtract</title>
+                <title>Subtrahieren</title>
                 <para>
-                    Subtraction of measurements works just like addition.
+                    Das Subtrahieren von Maßeinheiten funktioniert genauso wie das Addieren.
                 </para>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-// Define objects
+// Objekte definieren
 $unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
-// Subtract $unit2 from $unit
+// $unit2 von $unit subtrahieren
 $sum = $unit->sub($unit2);
 
 echo $sum;
@@ -143,45 +137,46 @@ echo $sum;
 
     <sect2 id="zend.measure.edit.equal">
 
-        <title>Compare</title>
+        <title>Identität Vergleichen</title>
 
         <para>
-            Measurements can also be compared, but without automatic unit conversion. Thus, <code>equals()</code>
-            returns <code>TRUE</code>, only if both the value and the unit of measure are identical.
+            Maßeinheiten können genauso verglichen werden, aber ohne automatische Konvertierung. Das bedeutet das
+            <code>equals()</code> nur dann <code>TRUE</code> zurückgibt wenn beide, sowohl der Wert als auch
+            die Einheit identisch sind.
         </para>
 
         <para>
             <example>
-                <title>Different measurements</title>
+                <title>Unterschiedliche Maßeinheiten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-// Define measurements
+// Maßeinheiten definieren
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 if ($unit->equals($unit2)) {
-    print "Both measurements are identical";
+    print "Beide Maßeinheiten sind identisch";
 } else {
-    print "These are different measurements";
+    print "Das sind unterschiedliche Maßeinheiten";
 }
 ?>]]></programlisting>
             </example>
             <example>
-                <title>Identical measurements</title>
+                <title>Identische Maßeinheiten</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
-// Define measurements
+// Maßeinheiten definieren
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
 $unit2->setType(Zend_Measure_Length::CENTIMETER);
 
 if ($unit->equals($unit2)) {
-    print "Both measurements are identical";
+    print "Beide Maßeinheiten sind identisch";
 } else {
-    print "These are different measurements";
+    print "Das sind unterschiedliche Maßeinheiten";
 }
 ?>]]></programlisting>
             </example>
@@ -191,17 +186,17 @@ if ($unit->equals($unit2)) {
 
     <sect2 id="zend.measure.edit.compare">
 
-        <title>Compare</title>
+        <title>Werte Vergleichen</title>
 
         <para>
-            To determine if a measurement is less than or greater than another, use <code>compare()</code>, which
-            returns 0, -1 or 1 depending on the difference between the two objects. Identical measurements will return
-            0. Lesser ones will return a negative, greater ones a positive value.
+            Um herauszufinden ob eine Maßeinheite kleiner oder größer als eine andere ist kann <code>compare()</code>
+            verwendet werden, was 0, -1 oder 1 zurückgibt, abhängig von der Differenz zwischen den zwei Objekten.
+            Identische Maßeinheiten geben 0 zurück, kleinere einen negativen, und größere einen positiven Wert.
         </para>
 
         <para>
             <example>
-                <title>Difference</title>
+                <title>Differenz</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
@@ -209,9 +204,9 @@ $unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
-print "Equal:".$unit2->compare($unit);
-print "Lesser:".$unit2->compare($unit3);
-print "Greater:".$unit3->compare($unit2);
+print "Gleich:".$unit2->compare($unit);
+print "Kleiner:".$unit2->compare($unit3);
+print "Größer:".$unit3->compare($unit2);
 ?>]]></programlisting>
             </example>
         </para>
@@ -220,16 +215,16 @@ print "Greater:".$unit3->compare($unit2);
 
     <sect2 id="zend.measure.edit.changevalue">
 
-        <title>Manually change values</title>
+        <title>Werte per Hand ändern</title>
 
         <para>
-            To change the value of a measurement explicitly, use <code>setValue()</code>. to overwrite the current
-            value. The parameters are the same as the constructor.
+            Um den Wert einer Maßeinheit explizit zu Ändern, kann <code>setValue()</code> verwendet werden um
+            den aktuellen Wert zu überschreiben. Die Parameter sind identisch mit denen des Konstruktors.
         </para>
 
         <para>
             <example>
-                <title>Changing a value</title>
+                <title>Verändern eines Wertes</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
@@ -252,22 +247,22 @@ echo $unit;
 
     <sect2 id="zend.measure.edit.changetype">
 
-        <title>Manually change types</title>
+        <title>Typ per Hand ändern</title>
 
         <para>
-            To change the type of a measurement without altering its value use <code>setType()</code>.
+            Um den Typ einer Maßeinheit ohne den Wert zu verändern kann <code>setType()</code> verwendet werden.
         </para>
 
         <example>
-            <title>Changing the type</title>
+            <title>Verändern des Typs</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
-echo $unit; // outputs "1 m"
+echo $unit; // Ausgabe "1 m"
 
 $unit->setType(Zend_Measure_Length::KILOMETER);
-echo $unit; // outputs "1000 km"
+echo $unit; // Ausgabe "1000 km"
 ?>]]></programlisting>
         </example>
 
