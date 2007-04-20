@@ -254,10 +254,10 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Updates table rows with specified data based on a WHERE clause.
      *
-     * @param mixed $table The table to update.
-     * @param array $bind Column-value pairs.
-     * @param mixed $where UPDATE WHERE clause.
-     * @return int The number of affected rows.
+     * @param  mixed        $table The table to update.
+     * @param  array        $bind  Column-value pairs.
+     * @param  array|string $where UPDATE WHERE clause(s).
+     * @return int          The number of affected rows.
      */
     public function update($table, array $bind, $where = '')
     {
@@ -292,9 +292,9 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Deletes table rows based on a WHERE clause.
      *
-     * @param mixed $table The table to update.
-     * @param mixed OPTIONAL $where DELETE WHERE clause.
-     * @return int The number of affected rows.
+     * @param  mixed        $table The table to update.
+     * @param  array|string $where DELETE WHERE clause(s).
+     * @return int          The number of affected rows.
      */
     public function delete($table, $where = '')
     {

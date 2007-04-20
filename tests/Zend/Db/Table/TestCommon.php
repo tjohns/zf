@@ -405,6 +405,28 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($data['bug_status'], $row->bug_status);
     }
 
+    public function testTableUpdateWhereArray()
+    {
+        $data = array(
+            'bug_description' => 'Synesthesia',
+            );
+
+        $where = array(
+            'bug_id IN (1, 3)',
+            "bug_status != 'UNKNOWN'"
+            );
+
+        $this->assertEquals(2, $this->_table['bugs']->update($data, $where));
+
+        $count = 0;
+        foreach ($this->_table['bugs']->find(array(1, 3)) as $row) {
+            $this->assertEquals($data['bug_description'], $row->bug_description);
+            ++$count;
+        }
+
+        $this->assertEquals(2, $count);
+    }
+
     public function testTableDelete()
     {
         $table = $this->_table['bugs'];
@@ -415,6 +437,18 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $rows = $table->find(array(1, 2));
         $this->assertEquals(1, $rows->count());
+    }
+
+    public function testTableDeleteWhereArray()
+    {
+        $where = array(
+            'bug_id IN (1, 3)',
+            "bug_status != 'UNKNOWN'"
+            );
+
+        $this->assertEquals(2, $this->_table['bugs']->delete($where));
+
+        $this->assertEquals(0, count($this->_table['bugs']->find(array(1, 3))));
     }
 
     public function testTableFetchNew()

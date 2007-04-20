@@ -497,8 +497,8 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Updates existing rows.
      *
-     * @param array  $data  Column-value pairs.
-     * @param string $where An SQL WHERE clause.
+     * @param  array        $data  Column-value pairs.
+     * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
      * @return int          The number of rows updated.
      */
     public function update(array $data, $where)
@@ -509,9 +509,10 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Called by a row object for the parent table's class during save() method.
      *
-     * @param string $parentTableClassname
-     * @param array $oldPrimaryKey
-     * @param array $newPrimaryKey
+     * @param  string $parentTableClassname
+     * @param  array  $oldPrimaryKey
+     * @param  array  $newPrimaryKey
+     * @return int
      */
     public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey)
     {
@@ -544,8 +545,8 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Deletes existing rows.
      *
-     * @param  mixed $where An SQL WHERE clause.
-     * @return int           The number of rows deleted.
+     * @param  array|string $where SQL WHERE clause(s).
+     * @return int          The number of rows deleted.
      */
     public function delete($where)
     {

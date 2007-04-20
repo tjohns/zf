@@ -168,7 +168,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 If you don't specify the primary key, Zend_Db_Table_Abstract
-                tries to discover the primary key based on the information 
+                tries to discover the primary key based on the information
                 provided by the <code>describeTable()</code> method.
             </para>
 
@@ -227,7 +227,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 <listitem>
                     <para>
                         <code>_setupMetadata()</code>
-                        sets the schema if the table name contains the 
+                        sets the schema if the table name contains the
                         pattern "schema.table";
                         calls <code>describeTable()</code> to get metadata
                         information; defaults the <code>$_cols</code>
@@ -258,7 +258,7 @@ class Bugs extends Zend_Db_Table_Abstract
         <title>Creating an Instance of a Table</title>
 
         <para>
-            Before you use a Table class, create an instance using its 
+            Before you use a Table class, create an instance using its
             constructor.  The constructor's argument is an array of options.
             The most important option to a Table constructor is the
             database adapter instance, representing a live connection
@@ -402,7 +402,7 @@ $table->insert($data);
 
         <para>
             By default, the values in your data array are inserted as
-            literal values, using parameters.  If you need them to be 
+            literal values, using parameters.  If you need them to be
             treated as SQL expressions, you must make sure they are distinct
             from plain strings.  Use an object of type Zend_Db_Expr to do this.
         </para>
@@ -596,9 +596,10 @@ $table->update($data, $where);
         </example>
 
         <para>
-            The second argument can be an array of SQL expressions.
-            The expressions are combined as Boolean terms
-            using an <code>AND</code> operator.
+            Since the table <code>update()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.update"><code>update()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -641,6 +642,13 @@ $table->delete($where);
             The second argument can be an array of SQL expressions.
             The expressions are combined as Boolean terms
             using an <code>AND</code> operator.
+        </para>
+
+        <para>
+            Since the table <code>delete()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.delete"><code>delete()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -768,7 +776,7 @@ $rows = $table->fetchAll($where);
         <para>
             The first argument to this method is an SQL expression that
             is used in a <code>WHERE</code> clause, like those used in the
-            <code>update()</code> and <code>delete()</code> methods 
+            <code>update()</code> and <code>delete()</code> methods
             described earlier.
         </para>
 
@@ -851,7 +859,7 @@ $row = $table->fetchRow($where, $order);
 
         <para>
             This method returns an object of type Zend_Db_Table_Row_Abstract.
-            If the search criteria you specified match no rows in the 
+            If the search criteria you specified match no rows in the
             database table, then <code>fetchRow()</code> returns PHP's
             <code>null</code> value.
         </para>
@@ -1113,7 +1121,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 <code>fetchAll()</code>, but this requires that you duplicate
                 code to form the query conditions if you need to run the
                 query in several places in your application.
-                Therefore it can be convenient to implement a method 
+                Therefore it can be convenient to implement a method
                 in the Table class to perform frequently-used queries
                 against this table.
             </para>
