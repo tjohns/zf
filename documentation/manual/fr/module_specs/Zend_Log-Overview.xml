@@ -7,7 +7,7 @@
       <itemizedlist>
         <listitem>
           <para>
-            Un enregisteur (instance de <code>Zend_Log</code>) est l'objet que votre application emploie le plus. Vous pouvez avoir autant d'objets d'enregistreur que vous voulez ; ils n'agissent pas l'un sur l'autre. Un objet enregistreur doit contenir au moins un rédacteur (Writer), et peut optionnellement contenir un ou plusieurs filtres.
+            Un enregistreur (instance de <code>Zend_Log</code>) est l'objet que votre application emploie le plus. Vous pouvez avoir autant d'objets d'enregistreur que vous voulez ; ils n'agissent pas l'un sur l'autre. Un objet enregistreur doit contenir au moins un rédacteur (Writer), et peut optionnellement contenir un ou plusieurs filtres.
           </para>
         </listitem><listitem>
           <para>
@@ -82,6 +82,19 @@ $logger->log("Message d'urgence", Zend_Log::EMERG);
 $logger->emerg("Message d'urgence");
 
 ?>]]></programlisting>
+    </para>
+  </sect2>
+  
+  <sect2 id="zend.log.overview.destroying-a-logger">
+    <title>Détruire un log</title>
+    <para>
+        Si l'objet enregistreur n'est plus nécessaire, vous devez affectez la valeur <code>null</code> à la variable le contenant pour le détruire. Ceci appellera automatiquement la méthode <code>shutdown()</code> de chaque rédacteur avant que l'objet enregistreur ne soit détruit :
+      
+      <programlisting role="php"><![CDATA[<?php
+$logger = null;
+?>]]></programlisting>
+
+        Explicitement détruire le log de cette façon est facultatif et est exécuté automatiquement à la fermeture de PHP.
     </para>
   </sect2>
   
