@@ -62,11 +62,11 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>writeControl</code></entry>
+                              <entry><code>write_control</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                Ein- / Ausschalten der Schreibkontrolle (der Cace wird gleich gelesen, nachdem
+                                Ein- / Ausschalten der Schreibkontrolle (der Cache wird gleich gelesen, nachdem
                                 er geschrieben wurde, um fehlerhafte Einträge zu finden); das Einschalten der
                                 Schreibkontrolle wird das Schreiben des Caches etwas verlangsamen, aber nicht das
                                 Lesen des Caches (es können defekte Cache Dateien entdeckt werden, aber es ist 
@@ -74,7 +74,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticSerialization</code></entry>
+                              <entry><code>automatic_serialization</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
@@ -83,7 +83,7 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticCleaningFactor</code></entry>
+                              <entry><code>automatic_cleaning_factor</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>10</code></entry>
                               <entry>
@@ -104,7 +104,7 @@
                 Ein Beispiel wird ganz am Anfang des Handbuches gegeben.
             </para>
             <para>
-                Wenn nur Strings in den Cache gespeichert werden (denn mit der "automaticSerialization" Option
+                Wenn nur Strings in den Cache gespeichert werden (denn mit der "automatic_serialization" Option
                 wäre es möglich Booleans zu speichern), kann ein kompakterer Weg wie folgt gewählt werden:
             </para>  
                  <programlisting role="php"><![CDATA[<?php  
@@ -510,15 +510,15 @@ $res = $cache->foobar2('1', '2');
 	                 </thead>
 	                 <tbody>
 	                 	   <row>
-	                          <entry><code>httpConditional</code></entry>
+	                          <entry><code>http_conditional</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              Verwendung des httpConditional Systems (zur Zeit nicht implementiert)
+	                              Verwendung des http_conditional Systems (zur Zeit nicht implementiert)
 	                          </entry>
 	                     </row>
 	                     <row>
-	                          <entry><code>debugHeader</code></entry>
+	                          <entry><code>debug_header</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
@@ -526,7 +526,7 @@ $res = $cache->foobar2('1', '2');
 	                          </entry>
 	                     </row>
 	                     <row>
-	                     	  <entry><code>defaultOptions</code></entry>
+	                     	  <entry><code>default_options</code></entry>
 	                          <entry><code>array</code></entry>
 	                          <entry><code>array(...siehe unten...)</code></entry>
 	                          <entry>
@@ -540,70 +540,70 @@ $res = $cache->foobar2('1', '2');
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, false per Default) cacheWithGetVariables</code> : 
+	                                          <code>(boolean, false per Default) cache_with_get_variables</code> : 
 	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
 	                                          einige Variables im <code>$_GET</code> Array gibt
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, false per Default) cacheWithPostVariables</code> : 
+	                                          <code>(boolean, false per Default) cache_with_post_variables</code> : 
 	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
 	                                          einige Variables im <code>$_POST</code> Array gibt
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, false per Default) cacheWithSessionVariables</code> :
+	                                          <code>(boolean, false per Default) cache_with_session_variables</code> :
 	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es
 	                                          einige Variables im <code>$_SESSION</code> Array gibt
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-        	                                  <code>(boolean, false per Default) cacheWithFilesVariables</code> : 
+        	                                  <code>(boolean, false per Default) cache_with_files_variables</code> : 
         	                                  wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
         	                                  einige Variables im <code>$_FILES</code> Array gibt
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, false per Default) cacheWithCookieVariables</code> : 
+	                                          <code>(boolean, false per Default) cache_with_cookie_variables</code> : 
 	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
 	                                          einige Variables im <code>$_COOKIE</code> Array gibt
         	                              </para>
 	                                  </listitem>
 									  <listitem>
         	                              <para>
-						        			  <code>(boolean, true per Default) makeIdWithGetVariables</code> : 
+						        			  <code>(boolean, true per Default) make_id_with_get_variables</code> : 
 						        			  wenn true, wird die Cache ID vom Inhalt des <code>$_GET</code> 
 						        			  Arrays abhängig sein
         	                              </para>
 									  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, true per Default) makeIdWithPostVariables</code> : 
+	                                          <code>(boolean, true per Default) make_id_with_post_variables</code> : 
 	                                          wenn true, wird die Cache ID vom Inhalt des <code>$_POST</code> 
 	                                          Arrays abhängig sein
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-	                                          <code>(boolean, true per Default) makeIdWithSessionVariables</code> : 
+	                                          <code>(boolean, true per Default) make_id_with_session_variables</code> : 
 	                                          wenn true, wird die Cache ID vom Inhalt des <code>$_SESSION</code> 
 	                                          Arrays abhängig sein
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-        	                                  <code>(boolean, true per Default) makeIdWithFilesVariables</code> : 
+        	                                  <code>(boolean, true per Default) make_id_with_files_variables</code> : 
         	                                  wenn true, wird die Cache ID vom Inhalt des <code>$_FILES</code> 
         	                                  Arrays abhängig sein
         	                              </para>
 	                                  </listitem>
 	                                  <listitem>
         	                              <para>
-        	                                  <code>(boolean, true per Default) makeIdWithCookieVariables</code> : 
+        	                                  <code>(boolean, true per Default) make_id_with_cookie_variables</code> : 
         	                                  wenn true, wird die Cache ID vom Inhalt des <code>$_COOKIE</code> 
         	                                  Arrays abhängig sein
         	                              </para>
@@ -619,7 +619,7 @@ $res = $cache->foobar2('1', '2');
 	                          	  Ein assoziatives Array, um Optionen nur für einige REQUEST_URI zu setzen. Die Schlüssel
 	                          	  sind reguläre Ausdrücke (PCRE), die Werte sind ein assoziatives Array mit spezifischen
 	                          	  Optionen, die gesetzt werden sollen, wenn der reguläre Ausdruck auf $_SERVER['REQUEST_URI']
-	                          	  passt (siehe die defaultOptions für eine Liste der verfügbaren Optionen); wenn verschiedene
+	                          	  passt (siehe die default_options für eine Liste der verfügbaren Optionen); wenn verschiedene
 	                          	  reguläre Ausdrücke auf $_SERVER['REQUEST_URI'] passen, wird nur der letzte verwendet.
 	                          </entry>
 	                     </row>
@@ -657,20 +657,20 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200,
-   'debugHeader' => true, // für das Debugging 
+   'debug_header' => true, // für das Debugging 
    'regexps' => array(
        '^/$' => array('cache' => true),         // cache den gesamten IndexController         
        '^/index/' => array('cache' => true),    // cache den gesamten IndexController
        '^/article/' => array('cache' => false), // wir cachen nicht den ArticleController...
        '^/article/view/' => array(              // ...aber wir cachen die "View" Aktion von 
            'cache' => true,                     // diesem ArticleController
-           'cacheWithPostVariables' => true,    // und wir cachen sogar wenn es einige Variablen in $_POST gibt
-           'makeIdWithPostVariables' => true,   // (aber die Cache Id wird vom $_POST Array abhängig sein)
+           'cache_with_post_variables' => true,    // und wir cachen sogar wenn es einige Variablen in $_POST gibt
+           'make_id_with_post_variables' => true,   // (aber die Cache Id wird vom $_POST Array abhängig sein)
        )
    )	  
 );
 $backendOptions = array(
-    'cacheDir' => '/tmp/' 
+    'cache_dir' => '/tmp/' 
 );
 
 // erhalte ein Zend_Cache_Frontend_Page Objekt

@@ -22,7 +22,7 @@
                  </thead>
                  <tbody>
                       <row>
-                          <entry><code>cacheDir</code></entry>
+                          <entry><code>cache_dir</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>'/tmp/'</code></entry>
                           <entry>
@@ -30,38 +30,38 @@
                           </entry>
                       </row>
                       <row>
-                          <entry><code>fileLocking</code></entry>
+                          <entry><code>file_locking</code></entry>
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Ein- / Ausschalten von fileLocking: kann die Beschädigung des Caches
+                            Ein- / Ausschalten von file_locking: kann die Beschädigung des Caches
                             unter schlechten Bedingungen verhindern, aber es hilft nicht bei
                             Multithreaded Webservern oder bei NFS Filesystemen...
                           </entry>
                       </row>
                       <row>
-                          <entry><code>readControl</code></entry>
+                          <entry><code>read_control</code></entry>
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Ein- / Ausschalten von readControl: eingeschaltet wird ein Kontrollschlüssel
+                            Ein- / Ausschalten von read_control: eingeschaltet wird ein Kontrollschlüssel
                             im Cache File inkludiert und dieser Schlüssel wird mit dem Schlüssel 
                             verglichen, der nach dem Lesen berechnet wird.
                           </entry>
                       </row>
                       <row>
-                          <entry><code>readControlType</code></entry>
+                          <entry><code>read_control_type</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>'crc32'</code></entry>
                           <entry>
-                            Typ der Schreibkontrolle (nur wenn readControl eingeschaltet ist).
+                            Typ der Schreibkontrolle (nur wenn read_control eingeschaltet ist).
                             Mögliche Werte sind :
                             'md5' (bestes, aber am Langsamsten), 'crc32' (etwas weniger sicher, aber schneller, beste
                             Wahl), 'strlen' um nur die Länge zu testen (schnellstes).
                         </entry>
                       </row>
                       <row>
-                          <entry><code>hashedDirectoryLevel</code></entry>
+                          <entry><code>hashed_directory_level</code></entry>
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
@@ -74,7 +74,7 @@
                           </entry>
                       </row>
                       <row>
-                          <entry><code>hashedDirectoryUmask</code></entry>
+                          <entry><code>hashed_directory_umask</code></entry>
                           <entry><code>int</code></entry>
                           <entry><code>0700</code></entry>
                           <entry>
@@ -82,7 +82,7 @@
                         </entry>
                       </row>
                       <row>
-                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>file_name_prefix</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>'zend_cache'</code></entry>
                           <entry>
@@ -116,7 +116,7 @@
                  </thead>
                  <tbody>
                       <row>
-                          <entry><code>cacheDBCompletePath (mandatory)</code></entry>
+                          <entry><code>cache_db_complete_path (mandatory)</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>null</code></entry>
                           <entry>
@@ -124,7 +124,7 @@
                           </entry>
                       </row>
                       <row>
-                          <entry><code>automaticVacuumFactor</code></entry>
+                          <entry><code>automatic_vacuum_factor</code></entry>
                           <entry><code>int</code></entry>
                           <entry><code>10</code></entry>
                           <entry>
