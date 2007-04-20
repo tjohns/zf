@@ -108,7 +108,7 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-               直到开发者指明一个"allow" 规则，Zend_Acl 禁止任何 Role 对任何 Resource 的任何访问权限。
+               除非开发者指明一个"allow" 规则，Zend_Acl 禁止任何 Role 对任何 Resource 的任何访问权限。
             </para>
         </note>
     </sect2>
@@ -117,7 +117,7 @@ $acl = new Zend_Acl();]]></programlisting>
         <title>注册角色(Role)</title>
 
         <para>
-            内容管理系统总是几乎需要一个等级结构的许可来决定它的用户的授权能力。作为示范，“Guest”组允许有限的访问，“Staff”适合大多数的执行日常操作的CMS用户，“Editor”组适合于发布、复核、存档和删除内容，最后“Administrator”组的任务包括所有其它组的内容并包括敏感的信息、用户管理、后台配置数据和备份/导出。这组许可可以被表示为一个 Role 注册表，允许每个组从“”组继承权限，也可以为单一的组提供独特的权限。这些许可可以表示如下：
+            内容管理系统通常需要一个分级的权限系统来决定它的用户的授权能力。作为示范，“Guest”组允许有限的访问，“Staff”适合大多数的执行日常操作的CMS用户，“Editor”组适合于发布、复核、存档和删除内容，最后“Administrator”组的任务包括所有其它组的内容并包括敏感的信息、用户管理、后台配置数据和备份/导出。这组许可可以被表示为一个 Role 注册表，允许每个组从“”组继承权限，也可以为单一的组提供独特的权限。这些许可可以表示如下：
          </para>
 
         <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
