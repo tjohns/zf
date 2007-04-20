@@ -96,6 +96,19 @@ class Zend_Log_Writer_DbTest extends PHPUnit_Framework_TestCase
                             $this->db->calls['insert'][0]);
     }
 
+    public function testShutdownRemovesReferenceToDatabaseInstance()
+    {
+        $this->writer->write(array('message' => 'this should not fail'));
+        $this->writer->shutdown();
+
+        try {
+            $this->writer->write(array('message' => 'this should fail'));
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/shutdown$/i', $e->getMessage());            
+        }
+    }
 }
 
 

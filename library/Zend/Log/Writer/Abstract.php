@@ -91,6 +91,14 @@ abstract class Zend_Log_Writer_Abstract
     }
 
     /**
+     * Perform shutdown activites such as closing open resources
+     *
+     * @return void
+     */
+    public function shutdown()
+    {}
+
+    /**
      * Write a message to the log.
      *
      * @param  array  $event  log data event

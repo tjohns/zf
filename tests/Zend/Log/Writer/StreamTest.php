@@ -113,6 +113,22 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testShutdownClosesStreamResource()
+    {
+        $writer = new Zend_Log_Writer_Stream('php://memory', 'a');
+        $writer->write(array('message' => 'this write should succeed'));
+        
+        $writer->shutdown();
+        
+        try {
+            $writer->write(array('message' => 'this write should fail'));
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('/unable to write/i', $e->getMessage());
+        }
+    }
+
     public function testSettingNewFormatter()
     {
         $stream = fopen('php://memory', 'a');

@@ -71,6 +71,18 @@ class Zend_Log_Writer_Stream extends Zend_Log_Writer_Abstract
     }
 
     /**
+     * Close the stream resource.
+     *
+     * @return void
+     */
+    public function shutdown()
+    {
+        if (is_resource($this->_stream)) {
+            fclose($this->_stream);
+        }
+    }
+
+    /**
      * Write a message to the log.
      *
      * @param  array  $event  event data

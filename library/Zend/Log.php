@@ -78,6 +78,18 @@ class Zend_Log
     }
 
     /**
+     * Class destructor.  Shutdown log writers
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        foreach($this->_writers as $writer) {
+            $writer->shutdown();
+        }
+    }
+
+    /**
      * Undefined method handler allows a shortcut:
      *   $log->priorityName('message')
      *     instead of

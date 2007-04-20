@@ -106,6 +106,24 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testDestructorCallsShutdownOnEachWriter()
+    {
+        $writer1 = new Zend_Log_Writer_Mock();
+        $writer2 = new Zend_Log_Writer_Mock();
+
+        $logger = new Zend_Log();
+        $logger->addWriter($writer1);
+        $logger->addWriter($writer2);
+        
+        $this->assertFalse($writer1->shutdown);
+        $this->assertFalse($writer2->shutdown);
+        
+        $logger = null;
+        
+        $this->assertTrue($writer1->shutdown);
+        $this->assertTrue($writer2->shutdown);
+    }
+
     // Priorities
 
     public function testLogThrowsOnBadLogPriority()

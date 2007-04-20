@@ -68,8 +68,19 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
     /**
      * Formatting is not possible on this writer
      */
-    public function setFormatter($formatter) {
+    public function setFormatter($formatter) 
+    {
         throw new Zend_Log_Exception(get_class() . ' does not support formatting');
+    }
+
+    /**
+     * Remove reference to database adapter
+     *
+     * @return void
+     */
+    public function shutdown() 
+    {
+        $this->_db = null;
     }
 
     /**
@@ -80,6 +91,10 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
      */
     protected function _write($event)
     {
+        if ($this->_db === null) {
+            throw new Zend_Log_Exception('Database adapter instance has been removed by shutdown');
+        }
+        
         if ($this->_columnMap === null) {
             $dataToInsert = $event;
         } else {

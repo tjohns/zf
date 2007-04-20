@@ -39,6 +39,11 @@ class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
     public $events = array();
     
     /**
+     * shutdown called?
+     */
+    public $shutdown = false;
+    
+    /**
      * Write a message to the log.
      *
      * @param  array  $event  event data
@@ -47,5 +52,15 @@ class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
     public function _write($event)
     {
         $this->events[] = $event;
+    }
+    
+    /**
+     * Record shutdown
+     *
+     * @return void
+     */ 
+    public function shutdown()
+    {
+        $this->shutdown = true;
     }
 }
