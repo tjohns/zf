@@ -102,7 +102,7 @@
                  </thead>
                  <tbody>
                       <row>
-                          <entry><code>cache_db_completepath (mandatory)</code></entry>
+                          <entry><code>cache_db_complete_path (mandatory)</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>null</code></entry>
                           <entry>

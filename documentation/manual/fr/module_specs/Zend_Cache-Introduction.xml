@@ -19,7 +19,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // temps de vie du cache de 2 heures
+   'lifetime' => 7200, // temps de vie du cache de 2 heures
    'automatic_serialization' => true
 );
 
@@ -66,7 +66,7 @@ print_r($result);
             A l'intérieur, affichez vos données comme d'habitude toutes les sorties seront misent en cache quand la méthode <code>end()</code> est appelée. A la prochaine exécution, la section complète sera évitée, au profit de la récupération de son cache (si le cache est encore valide).
             <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
-   'lifeTime' => 30,                  // temps de vue du cache de 30 secondes
+   'lifetime' => 30,                  // temps de vue du cache de 30 secondes
    'automatic_serialization' => false  // par défaut
 );
 
