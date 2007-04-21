@@ -43,13 +43,7 @@
         
         <title>转义输出（Escaping Output）</title>
         
-        <para>
-            One of the most important tasks to perform in a view script
-            is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks. 
-            Unless you are using a function, method, or helper that does
-            escaping on its own, you should always escape variables when
-            you output them.
+        <para>       
 			View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞。除非你已经使用一个函数，类方法或协助器（helper）来转义内容，你需要在输出时对变量进行转义。
         </para>
         
@@ -58,10 +52,10 @@
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// bad view-script practice:
+// 不好的做法：
 echo $this->variable;
 
-// good view-script practice:
+// 好的做法：
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
@@ -71,29 +65,26 @@ echo $this->escape($this->variable);
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// create a Zend_View instance
+//创建一个Zend_View实例
 $view = new Zend_View();
 
-// tell it to use htmlentities as the escaping callback
+//设定要使用的转义回调函数(callback)
 $view->setEscape('htmlentities');
 
-// or tell it to use a static class method as the callback
+//或者使用一个静态类方法作为回调函数
 $view->setEscape(array('SomeClass', 'methodName'));
 
-// or even an instance method
+//或者是一个对象实例的类方法
 $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
-// and then render your view
+//最后输出你的视图
 echo $view->render(...);
 ?>]]>
         </programlisting>
         
         <para>
-            The callback function or method should take the value to be
-            escaped as its first parameter, and all other parameters should
-            be optional.
-
+            
 			设定的转义函数会将需要转义的变量作为其第一个参数，其它参数是可选的。
         </para>
         
@@ -102,25 +93,16 @@ echo $view->render(...);
     <sect2 id="zend.view.scripts.templates">
         <title>使用模板系统</title>
 
-        <para>
-            Although PHP is itself a powerful template system, many developers
-            feel it is too powerful or complex for their template designers and
-            will want to use an alternate template engine. Zend_View provides
-            two mechanisms for doing so, the first through view scripts, the
-            second by implementing Zend_View_Interface.
+        <para>          
 
 			许多开发者觉得尽管PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。Zend_View提供了两套机制来同时满足这两种要求，一种是直接通过通过视图脚本，另一种是实现Zend_View_Interface接口。
         </para>
     
         <sect3 id="zend.view.scripts.templates.scripts">
-            <title>Template Systems Using View Scripts</title>
+            <title>使用View脚本的模板系统</title>
             
             <para>
-                A view script may be used to instantiate and manipulate a
-                separate template object, such as a PHPLIB-style template.  The
-                view script for that kind of activity might look something like
-                this:
-				View脚本可能要被用来初始化和操作一个其它模板对象的实例，例如PHPLIB风格的模板。这时View脚本可能是这样的：
+              				View脚本可能要被用来初始化和操作一个其它模板对象的实例，例如PHPLIB风格的模板。这时View脚本可能是这样的：
             </para>
             
             <programlisting role="php"><![CDATA[<?php
@@ -176,10 +158,7 @@ if ($this->books) {
             <title>通过Zend_View_Interface接口使用模板系统</title>
 
             <para>
-                Some may find it easier to simply provide a Zend_View-compatible
-                template engine. <code>Zend_View_Interface</code> defines the
-                minimum interface needed for compatability:
-
+               
 				实现一个与Zend_View兼容的模板系统是很简单的。你只需要实现<code>Zend_View_Interface</code>接口即可，该接口定义了要实现兼容的最低要求。
             </para>
 
@@ -224,11 +203,7 @@ public function render($name);
 ]]></programlisting>
 
             <para>
-                Using this interface, it becomes relatively easy to wrap a
-                third-party template engine as a Zend_View-compatible class. As
-                an example, the following is one potential wrapper for Smarty:
-
-				使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
+                				使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -319,9 +294,8 @@ class Zend_View_Smarty implements Zend_View_Interface
      * @return boolean
      */
     public function __isset($key)
-    {
-        $value = $this->_smarty->get_template_vars($key);
-        return null === $value;
+    {       
+		 return (null !== $this->_smarty->get_template_vars($key));
     }
 
     /**
