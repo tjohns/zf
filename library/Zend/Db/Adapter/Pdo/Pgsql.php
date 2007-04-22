@@ -130,32 +130,48 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         }
 
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
+        // Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+
+        $attnum        = 0;
+        $nspname       = 1;
+        $relname       = 2;
+        $colname       = 3;
+        $type          = 4;
+        $atttypemod    = 5;
+        $complete_type = 6;
+        $default_value = 7;
+        $notnull       = 8;
+        $length        = 9;
+        $contype       = 10;
+        $conkey        = 11;
+
         $desc = array();
         foreach ($result as $key => $row) {
-            if ($row['type'] == 'varchar') {
-                if (preg_match('/character varying(?:\((\d+)\))?/', $row['complete_type'], $matches)) {
+            if ($row[$type] == 'varchar') {
+                if (preg_match('/character varying(?:\((\d+)\))?/', $row[$complete_type], $matches)) {
                     if (isset($matches[1])) {
-                        $row['length'] = $matches[1];
+                        $row[$length] = $matches[1];
                     } else {
-                        $row['length'] = null; // unlimited
+                        $row[$length] = null; // unlimited
                     }
                 }
             }
-            $desc[$row['colname']] = array(
-                'SCHEMA_NAME'      => $row['nspname'],
-                'TABLE_NAME'       => $row['relname'],
-                'COLUMN_NAME'      => $row['colname'],
-                'COLUMN_POSITION'  => $row['attnum'],
-                'DATA_TYPE'        => $row['type'],
-                'DEFAULT'          => $row['default_value'],
-                'NULLABLE'         => (bool) ($row['notnull'] != 't'),
-                'LENGTH'           => $row['length'],
+            $desc[$row[$colname]] = array(
+                'SCHEMA_NAME'      => $row[$nspname],
+                'TABLE_NAME'       => $row[$relname],
+                'COLUMN_NAME'      => $row[$colname],
+                'COLUMN_POSITION'  => $row[$attnum],
+                'DATA_TYPE'        => $row[$type],
+                'DEFAULT'          => $row[$default_value],
+                'NULLABLE'         => (bool) ($row[$notnull] != 't'),
+                'LENGTH'           => $row[$length],
                 'SCALE'            => null, // @todo
                 'PRECISION'        => null, // @todo
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) ($row['contype'] == 'p'),
-                'PRIMARY_POSITION' => isset($row['conkey']) ? array_search($row['attnum'], explode(',', $row['conkey'])) + 1 : null
+                'PRIMARY'          => (bool) ($row[$contype] == 'p'),
+                'PRIMARY_POSITION' => isset($row[$conkey]) ? array_search($row[$attnum], explode(',', $row[$conkey])) + 1 : null
             );
         }
         return $desc;

@@ -135,28 +135,36 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         }
 
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
+        // Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+
+        $cid        = 0;
+        $name       = 1;
+        $type       = 2;
+        $notnull    = 3;
+        $dflt_value = 4;
+        $pk         = 5;
+
         $desc = array();
 
-        $i = 1;
         $p = 1;
         foreach ($result as $key => $row) {
-            $desc[$row['name']] = array(
+            $desc[$row[$name]] = array(
                 'SCHEMA_NAME'      => $schemaName,
                 'TABLE_NAME'       => $tableName,
-                'COLUMN_NAME'      => $row['name'],
-                'COLUMN_POSITION'  => $i,
-                'DATA_TYPE'        => $row['type'],
-                'DEFAULT'          => $row['dflt_value'],
-                'NULLABLE'         => ! (bool) $row['notnull'],
+                'COLUMN_NAME'      => $row[$name],
+                'COLUMN_POSITION'  => $row[$cid]+1,
+                'DATA_TYPE'        => $row[$type],
+                'DEFAULT'          => $row[$dflt_value],
+                'NULLABLE'         => ! (bool) $row[$notnull],
                 'LENGTH'           => null, // @todo
                 'SCALE'            => null, // @todo
                 'PRECISION'        => null, // @todo
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) $row['pk'],
-                'PRIMARY_POSITION' => ((bool) $row['pk']) ? $p++ : 0
+                'PRIMARY'          => (bool) $row[$pk],
+                'PRIMARY_POSITION' => ((bool) $row[$pk]) ? $p++ : 0
             );
-            ++$i;
         }
         return $desc;
     }
