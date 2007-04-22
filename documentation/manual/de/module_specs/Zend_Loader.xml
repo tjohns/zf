@@ -1,38 +1,39 @@
 <sect1 id="zend.loader.load">
 
-    <title>Loading Files and Classes Dynamically</title>
+    <title>Dynamisches Laden von Dateien und Klassen</title>
 
     <para>
-        The Zend_Loader class includes methods to help you load files dynamically.
+        Die Zend_Loader Klasse enthält Methoden die helfen Dateien dynamisch zu laden.
     </para>
 
     <tip>
         <title>Zend_Loader vs. require_once()</title>
         <para>
-            The Zend_Loader methods are best used if the filename you need to
-            load is variable.  For example, if it is based on a parameter from
-            user input or method argument.  If you are loading a file or a
-            class whose name is constant, there is no benefit to using
-            Zend_Loader over using traditional PHP functions such as
+            Die Zend_Loader Methoden werden am Besten verwendet wenn der Dateiname
+            der Verwendet wird variabel ist. Wenn er zum Beispiel auf einem Parameter
+            einer Benutzereinfabe oder eines Arguments einer Methode basiert. Wenn
+            eine Datei oder eine Klasse geladen werden soll deren Name konstant ist,
+            gibt es keinen Vorteil durch die Verwendung von Zend_Loader gegenüber
+            traditionellen PHP Funktionen wie 
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
     </tip>
 
     <sect2 id="zend.loader.load.file">
 
-        <title>Loading Files</title>
+        <title>Dateien laden</title>
 
         <para>
-            The static method <code>Zend_Loader::loadFile()</code> loads a PHP
-            file.  The file loaded may contain any PHP code.
-            The method is a wrapper for the PHP function
+            Die statische Methode <code>Zend_Loader::loadFile()</code> lädt eine
+            PHP Datei. Die geladene Datei kann jeden PHP Code enthalten.
+            Diese Methode ist ein Wrapper für die PHP Funktion
             <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            This method throws <code>Zend_Exception</code> on failure, for example
-            if the specified file does not exist.
+            Diese Methode wirft bei einem Fehler eine <code>Zend_Exception</code>,
+            zum Beispiel wenn die definierte Datei nicht existiert.
         </para>
 
         <example id="zend.loader.load.file.example">
-            <title>Example of loadFile() method</title>
+            <title>Beispiel der loadFile() Methode</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadFile($filename, $dirs=null, $once=false)
@@ -41,43 +42,45 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
     </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to load,
-            which must not contain any path information.
-            A security check is performed on <code>$filename</code>.
-            The <code>$filename</code> may only contain alphanumeric characters,
-            dashes ("-"), underscores ("_"), or periods (".").
-            No such restriction is placed on the <code>$dirs</code> argument.
+            Das <code>$filename</code> Argument definert den Dateinamen der geladen
+            werden soll, und der keine Verzeichnis Informationen enthalten darf.
+            Eine Sicherheitsprüfung wird auf <code>$filename</code>
+            durchgeführt. Das <code>$filename</code> Argument darf nur
+            Alphanumerische Zeichen enthalten, Bindestriche ("-"), Unterstriche ("_")
+            oder Punkte ("."). Das <code>$dirs</code> Argument hat keine dieser
+            Einschränkungen.
         </para>
 
         <para>
-            The <code>$dirs</code> argument specifies directories to search for
-            the file.  If <code>NULL</code>, only the <code>include_path</code>
-            is searched.  If a string or an array, the directory or directories
-            specified will be searched, and then the <code>include_path</code>.
+            Das <code>$dirs</code> Argument definiert das Verzeichnis in welchem
+            nach der Datei gesucht werden soll. Wenn es <code>NULL</code> ist, wird
+            nur anhand vom <code>include_path</code> gesucht. Wenn eine Zeichenkette
+            oder ein Array angegeben wurde, wird das definierte Verzeichnis oder
+            die Verzeichnisse durchsucht, und anschließend der <code>include_path</code>.
         </para>
 
         <para>
-            The <code>$once</code> argument is a boolean.  If <code>TRUE</code>,
-            <code>Zend_Loader::loadFile()</code> uses the PHP function
+            Das <code>$once</code> Argument ist Boolean. Wenn es <code>TRUE</code>
+            ist, verwendet <code>Zend_Loader::loadFile()</code> die PHP Funktion
             <ulink url="http://php.net/include"><code>include_once()</code></ulink>
-            for loading the file, otherwise the PHP function
+            für das Laden der Datei, andernfalls wird die PHP Funktion
             <ulink url="http://php.net/include_once"><code>include()</code></ulink>
-            is used.
+            verwendet.
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.class">
 
-        <title>Loading Classes</title>
+        <title>Klassen laden</title>
 
         <para>
-            The static method <code>Zend_Loader::loadClass($class, $dirs)</code>
-            loads a PHP file and then checks for the existance of the class.
+            Die statische Methode <code>Zend_Loader::loadClass($class, $dirs)</code>
+            lädt eine PHP Datei und prüft anschließend ob die Klasse existiert.
         </para>
 
         <example id="zend.loader.load.class.example">
-            <title>Example of loadClass() method</title>
+            <title>Beispiel der loadClass() Methode</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::loadClass('Container_Tree',
@@ -91,80 +94,82 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            The string specifying the class is converted to a relative path
-            by substituting directory separates for underscores, and appending
-            '.php'.  In the example above, 'Container_Tree' becomes 'Container/Tree.php'.
+            Die Zeichenkette die die Klasse definiert, wird in einen relativen Pfad
+            umgewandelt durch die Annahme das Verzeichnisse mit Unterstrichen
+            getrennt werden und anfügen von '.php'. Im obigen Beispiel wird
+            'Container_Tree' zu 'Container/Tree.php'.
         </para>
 
         <para>
-            If <code>$dirs</code> is a string or an array,
-            <code>Zend_Loader::loadClass()</code> searches the directories in
-            the order supplied.  The first matching file is loaded.  If the file
-            does not exist in the specified <code>$dirs</code>, then the
-            include_path for the PHP environment is searched.
+            Wenn <code>$dirs</code> eine Zeichenkette oder ein Array ist, durchsucht
+            <code>Zend_Loader::loadClass()</code> die Verzeichnisse in der
+            angegebenen Reihenfolge. Die erste passende Datei wird geladen. Wenn die
+            Datei in den definierten Verzeichnissen <code>$dirs</code> nicht existiert
+            wird der include_path der PHP Umgebung durchsucht.
         </para>
 
         <para>
-            If the file is not found or the class does not exist after the load,
-            <code>Zend_Loader::loadClass()</code> throws a Zend_Exception.
+            Wenn die Datei nicht gefunden wird, oder die Klasse nach dem Laden nicht
+            existiert, wirft <code>Zend_Loader::loadClass()</code> eine Zend_Exception.
         </para>
 
         <para>
-            <code>Zend_Loader::loadFile()</code> is used for loading, so the
-            class name may only contain alphanumeric characters and the hyphen
-            ('-'), underscore ('_'), and period ('.').
+            <code>Zend_Loader::loadFile()</code> wird für das Laden verwendet, deswegen
+            darf der Klassenname nur Alphanumerische Zeichen, den Bindestrich ('-'),
+            den Unterstrich ('_') und den Punkt ('.') enthalten.
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.isreadable">
 
-        <title>Testing if a File is Readable</title>
+        <title>Testen ob eine Datei gelesen werden kann</title>
 
         <para>
-            The static method <code>Zend_Loader::isReadable($pathname)</code>
-            returns <code>TRUE</code> if a file at the specified pathname exists
-            and is readable, FALSE otherwise.
+            Die statische Methode <code>Zend_Loader::isReadable($pathname)</code>
+            gibt <code>TRUE</code> zurück wenn eine Datei im angegebenen Pfadnamen
+            existiert und lesbar ist, andernfalls FALSE.
         </para>
 
         <example id="zend.loader.load.isreadable.example">
-            <title>Example of isReadable() method</title>
+            <title>Beispiel der isReadable() Methode</title>
             <programlisting role="php"><![CDATA[<?php
 
 if (Zend_Loader::isReadable($filename)) {
-    // do something with $filename
+    // Mach was mit $filename
 }
 
 ?>]]></programlisting>
         </example>
 
         <para>
-            The <code>$filename</code> argument specifies the filename to
-            check.  This may contain path information.
-            This method is a wrapper for the PHP function
+            Das <code>$filename</code> Argument definiert den Dateinamen der
+            geprüft werden soll. Er darf Pfadinformationen enthalten. Diese Methode
+            ist ein Wrapper für die PHP Funktion
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
-            The PHP function does not search the <code>include_path</code>,
-            while <code>Zend_Loader::isReadable()</code> does.
+            Diese PHP Funktion durchsucht den <code>include_path</code> nicht, wärend
+            <code>Zend_Loader::isReadable()</code> dies macht.
         </para>
 
     </sect2>
 
     <sect2 id="zend.loader.load.autoload">
 
-        <title>Using the Autoloader</title>
+        <title>Verwenden von Autoloaders</title>
 
         <para>
-            The Zend_Loader class contains a method you can register with the
-            PHP SPL autoloader.  <code>Zend_Loader::autoload()</code> is the
-            callback method.  As a convenience, Zend_Loader provides the
-            <code>registerAutoload()</code> function register its
-            <code>autoload()</code> method.  If the <code>spl_autoload</code>
-            extension is not present in your PHP environment, then
-            <code>registerAutoload()</code> method throws a Zend_Exception.
+            Die Zend_Loader Klasse enthält eine Methode die im PHP SPL Autoloader
+            registriert werden kann. <code>Zend_Loader::autoload()</code> ist die
+            Callback Methode. Als Vereinfachung bietet Zend_Loader die
+            <code>registerAutoload()</code> Funktion welche die
+            <code>autoload()</code> Methode registriert. Wenn die
+            <code>spl_autoload</code> Erweiterung in der PHP Umgebung nicht
+            vorhanden ist wird die <code>registerAutoload()</code> Methode eine
+            Zend_Exception werfen.
         </para>
 
         <example id="zend.loader.load.autoload.example">
-            <title>Example of registering the autoloader callback method</title>
+            <title>Beispiel für das registrieren der Autoloader Callback Methode</title>
             <programlisting role="php"><![CDATA[<?php
 
 Zend_Loader::registerAutoload();
@@ -173,27 +178,30 @@ Zend_Loader::registerAutoload();
         </example>
 
         <para>
-            After registering the Zend Framework autoload callback, you can
-            reference classes from the Zend Framework without having to load
-            them explicitly.  The <code>autoload()</code> method uses
-            <code>Zend_Loader::loadClass()</code> automatically when you
-            reference a class.
+            Nach dem registrieren des Zend Framework Autoload Callbacks, können
+            die Klassen des Zend Frameworks referenziert werden ohne das sie
+            explizit geladen werden müssen. Die <code>autoload()</code> Methode
+            verwendet automatisch <code>Zend_Loader::loadClass()</code> wenn eine
+            Klasse referenziert wird.
         </para>
 
         <para>
-            If you have extended the Zend_Loader class, you can give an
-            optional argument to <code>registerAutoload()</code>, to specify
-            the class from which to register an <code>autoload()</code> method.
+            Wenn die Zend_Loader Klasse erweitert wird, kann ein optionales Argument
+            für <code>registerAutoload()</code> angegeben werden, um die Klasse zu
+            definieren von welcher die <code>autoload()</code> Methode registriert
+            werden soll.
         </para>
 
         <example id="zend.loader.load.autoload.example-extended">
-            <title>Example of registering the autoload callback method from an
-                extended class</title>
+            <title>
+                Beispiel für das registrieren der Autoload Callback Methode von einer
+                erweiterten Klasse
+             </title>
             <programlisting role="php"><![CDATA[<?php
 
 class My_Loader extends Zend_Loader
 {
-    // custom functionality
+    // eigene Funktionalitäten
 }
 
 Zend_Loader::registerAutoload('My_Loader');

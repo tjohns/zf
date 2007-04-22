@@ -1,16 +1,17 @@
 <sect1 id="zend.debug.dumping">
 
-    <title>Dumping Variables</title>
+    <title>Variablen ausgeben</title>
 
     <para>
-        The static method <code>Zend_Debug::dump()</code> prints or returns
-        information about an expression.  This simple technique of debugging is
-        common, because it is easy to use in an ad hoc fashion, and requires no
-        initialization, special tools, or debugging environment.
+        Die statische Methode <code>Zend_Debug::dump()</code> druckt oder gibt
+        Informationen, über einen Ausdruck, zurück. Diese einfache Technik des
+        Debuggens ist üblich, weil Sie in einer Ad-Hoc Weise einfach zu Verwenden
+        ist, und Sie benötigt keine Initialisierung, spezielle Tools oder eine
+        Debuggingumgebung.
     </para>
 
     <example id="zend.debug.dumping.example">
-        <title>Example of dump() method</title>
+        <title>Beispiel der dump() Methode</title>
         <programlisting role="php"><![CDATA[<?php
 
 Zend_Debug::dump($var, $label=null, $echo=true)
@@ -19,49 +20,50 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </example>
 
     <para>
-        The <code>$var</code> argument specifies the expression or variable
-        about which the <code>Zend_Debug::dump()</code> method outputs
-        information.
+        Das <code>$var</code> Argument definiert den Ausdruck oder die Variable
+        über die die <code>Zend_Debug::dump()</code> Methode Informationen ausgeben
+        soll.
     </para>
 
     <para>
-        The <code>$label</code> argument is a string to be prepended to the
-        output of <code>Zend_Debug::dump()</code>.  It may be useful, for
-        example, to use labels if you are dumping information about multiple
-        variables on a given screen.
+        Das <code>$label</code> Argument ist eine Zeichenkette die der Ausgabe von
+        <code>Zend_Debug::dump()</code> vorgestellt wurd. Das kann hilfreich sein,
+        zum Beispiel, um Überschriften zu erhalten wenn Informationen über mehrere
+        Variablen auf einen Bildschirm ausgegeben werden.
     </para>
 
     <para>
-        The boolean <code>$echo</code> argument specifies whether the output
-        of <code>Zend_Debug::dump()</code> is echoed or not.
-        If <code>true</code>, the output is echoed.
-        Regardless of the value of the <code>$echo</code> argument, the 
-        return value of this method contains the output.
+        Das boolsche Argument <code>$echo</code> definiert ob die Ausgabe von
+        <code>Zend_Debug::dump()</code> mit Echo ausgegeben wird oder nicht.
+        Wenn Sie <code>true</code> ist, wird mit Echo ausgegeben, sonst nicht.
+        Unabhängig vom Wert des <code>$echo</code> Arguments enthält der
+        Rückgabewert dieser Methode die Ausgabe.
     </para>
 
     <para>
-        It may be helpful to understand that internally, 
-        <code>Zend_Debug::dump()</code> method wraps the PHP function
-        <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.
-        If the output stream is detected as a web presentation, 
-        the output of <code>var_dump()</code> is escaped using
+        Es könnte hilfreich sein, zu verstehen das die <code>Zend_Debug::dump()</code>
+        Methode intern die PHP Funktion 
+        <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>
+        verwendet. Wenn der Ausgabestream als Webdarstellung erkannt wird, wird die
+        Ausgabe von <code>var_dump()</code> mit Hilfe von
         <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink>
-        and wrapped with (X)HTML <code>&lt;pre&gt;</code> tags.
+        ausgeführt und umschlossen mit (X)HTML <code>&lt;pre&gt;</code> Tags.
     </para>
 
     <tip>
-        <title>Debugging with Zend_Log</title>
+        <title>Debuggen mit Zend_Log</title>
         <para>
-            Using <code>Zend_Debug::dump()</code> is best for ad hoc 
-            debugging during software development.  You can add code to dump
-            a variable and then remove the code very quickly.
+            Die Verwendung von <code>Zend_Debug::dump()</code> ist am Besten für
+            Ad-Hoc Debuggen wärend der Software Entwicklung. Es kann Code
+            hinzugefügt werden um eine Variable auszugeben und der Code kann auch
+            wieder sehr schnell entfernt werden.
         </para>
         <para>
-            Also consider the <link linkend="zend.log.overview">Zend_Log</link>
-            component when writing more permanent debugging code.
-            For example, you can use the <code>DEBUG</code> log level and the
-            Stream log writer, to output the string returned by
-            <code>Zend_Debug::dump()</code>.
+            Um permanenteren Debugging-Code zu schreiben sollte die
+            <link linkend="zend.log.overview">Zend_Log</link> Komponente verwendet
+            werden. Zum Beispiel kann der <code>DEBUG</code> Loglevel mit dem
+            Stream Logger verwendet werden um die Zeichenkette auszugeben die durch
+            <code>Zend_Debug::dump()</code> zurückgegeben wird.
         </para>
     </tip>
 
