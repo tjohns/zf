@@ -596,9 +596,10 @@ $table->update($data, $where);
         </example>
 
         <para>
-            The second argument can be an array of SQL expressions.
-            The expressions are combined as Boolean terms
-            using an <code>AND</code> operator.
+            Since the table <code>update()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.update"><code>update()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -641,6 +642,13 @@ $table->delete($where);
             The second argument can be an array of SQL expressions.
             The expressions are combined as Boolean terms
             using an <code>AND</code> operator.
+        </para>
+
+        <para>
+            Since the table <code>delete()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.delete"><code>delete()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -768,7 +776,7 @@ $rows = $table->fetchAll($where);
         <para>
             The first argument to this method is an SQL expression that
             is used in a <code>WHERE</code> clause, like those used in the
-            <code>update()</code> and <code>delete()</code> methods 
+            <code>update()</code> and <code>delete()</code> methods
             described earlier.
         </para>
 

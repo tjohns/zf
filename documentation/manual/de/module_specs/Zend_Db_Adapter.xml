@@ -297,9 +297,7 @@ $last_insert_id = $db->lastInsertId();
 
         <para>
             Es ist möglich, eine WHERE-Klausel zu übergeben um festzulegen, welche Zeilen 
-            aktualisiert werden sollen. (Man beachte, dass die WHERE-Klausel kein verknüpfter Parameter
-            ist, so dass die enthaltenen Werte manuell aufbereitet werden müssen, um 
-            Angriffe per SQL-Injection zu vermeiden.)
+            aktualisiert werden sollen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -326,6 +324,39 @@ $where = $db->quoteInto('first_name = ?', 'Robin');
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            If you have multiple WHERE clauses that should be applied to the UPDATE query, you can provide an array of
+            such clauses to the <code>update()</code> method. These clauses are combined with the AND operator.
+            Combining clauses with the OR operator must be performed manually:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$set = array('favorite_color' => 'yellow');
+
+// multiple conditions combined with AND
+$where   = array(
+    $db->quoteInto('first_name = ?', $firstName),
+    $db->quoteInto('noble_title = ?', $nobleTitle)
+    );
+$count   = $db->update('round_table', $set, $where);
+
+// multiple conditions combined with OR
+$firstNameOne = $db->quote($firstNameOne);
+$firstNameTwo = $db->quote($firstNameTwo);
+$where        = "first_name = $firstNameOne OR first_name = $firstNameTwo";
+$count        = $db->update('round_table', $set, $where);
+
+?>]]></programlisting>
+
+        <note>
+            <para>
+                The values and identifiers of the WHERE clause(s) are not quoted for you.  If you have values or
+                identifiers that require quoting, you are responsible for doing this. Use the <code>quote()</code>,
+                <code>quoteInto()</code>, and <code>quoteIdentifier()</code> methods of the database adapter.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.delete">
@@ -358,6 +389,20 @@ $where = $db->quoteInto('first_name = ?', 'Patsy');
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            As with the <link linkend="zend.db.adapter.update"><code>update()</code></link> method, you may use an
+            array of WHERE clauses for the <code>$where</code> argument to the <code>delete()</code> method.
+        </para>
+
+        <note>
+            <para>
+                The values and identifiers of the WHERE clause(s) are not quoted for you.  If you have values or
+                identifiers that require quoting, you are responsible for doing this. Use the <code>quote()</code>,
+                <code>quoteInto()</code>, and <code>quoteIdentifier()</code> methods of the database adapter.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.fetch">

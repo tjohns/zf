@@ -106,6 +106,25 @@ $logger->emerg('Emergency message');
     </para>
   </sect2>
   
+  <sect2 id="zend.log.overview.destroying-a-logger">
+    <title>Destroying a Log</title>
+    <para>
+      If the Log object is no longer needed, set the variable containing it to
+      <code>null</code> to destroy it. This will automatically call the
+      <code>shutdown()</code> instance method of each attached Writer before
+      the Log object is destroyed:
+      
+      <programlisting role="php"><![CDATA[<?php
+
+$logger = null;
+
+?>]]></programlisting>
+
+      Explicitly destroying the log in this way is optional and is performed
+      automatically at PHP shutdown.
+    </para>
+  </sect2>
+  
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>Using Built-in Priorities</title>
     <para>
