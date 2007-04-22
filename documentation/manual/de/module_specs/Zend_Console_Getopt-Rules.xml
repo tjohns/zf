@@ -1,123 +1,125 @@
 <sect1 id="zend.console.getopt.rules">
-    <title>Declaring Getopt Rules</title>
+    <title>Definieren von Getopt Regeln</title>
     <para>
-        The constructor for the <code>Zend_Console_Getopt</code> class takes
-        from one to three arguments.  The first argument 
-        declares which options are supported by your application.
-        This class supports alternative syntax forms for declaring the options.
-        See the sections below for the format and usage of these syntax forms.
+        Der Constructor für die <code>Zend_Console_Getopt</code> Klasse nimmt
+        ein bis drei Argumente. Das erste Argument definiert welche Optionen durch
+        die Anwendung unterstützt werden. Diese Klasse unterstützt alternative
+        Syntaxformen für das definieren der Optionen. Die nächsten Sektionen geben
+        Auskunft über das Format und die Verwendung dieser Syntaxformen.
     </para>
     <para>
-        The constructor takes two more arguments, both of which are optional.
-        The second argument may contain the command-line arguments.
-        This defaults to <code>$_SERVER['argv']</code>.
+        Der Constructor nimmt zwei weitere Argumente, welche optional sind.
+        Das zweite Argument kann Kommandozeilen Argumente enthalten. Sein
+        Standardwert ist <code>$_SERVER['argv']</code>.
     </para>
     <para>
-        The third argument of the constructor may contain an 
-        configuration options to customize the behavior of
-        <code>Zend_Console_Getopt</code>.
-        See <link linkend="zend.console.getopt.configuration.config">Adding Configuration</link>
-        for reference on the options available.
+        Das dritte Argument des Constructors kann Konfigurationsoptionen enthalten
+        um das Verhalten von <code>Zend_Console_Getopt</code> anzupassen.
+        Siehe <link linkend="zend.console.getopt.configuration.config">Konfiguration hinzufügen</link>
+        für eine Referenz der möglichen Optionen.
     </para>
 
     <sect2 id="zend.console.getopt.rules.short">
-        <title>Declaring Options with the Short Syntax</title>
+        <title>Optionen mit der kurzen Syntax definieren</title>
         <para>
-            <code>Zend_Console_Getopt</code> supports a compact syntax similar
-            to that used by GNU Getopt (see
-            <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>.
-            This syntax supports only single-character flags.  In a single
-            string, you type each of the letters that correspond to flags
-            supported by your application.  A letter followed by a colon
-            character ("<code>:</code>") indicates a flag that requires a
-            parameter.
+            <code>Zend_Console_Getopt</code> unterstützt eine kompakte Syntax wie Sie durch
+            GNU Getopt verwendet wird (siehe 
+            <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>).
+            Diese Syntax unterstützt nur Einzel-Zeichen Flags. In einer einzelnen
+            Zeichenkette, wird jeder Buchstabe angegeben der einem Flag entspricht
+            das durch die Anwendung unterstützt wird. Der Buchstabe, gefolgt von einem
+            Doppelpunkt Zeichen ("<code>:</code>") zeigt ein Flag das einen Parameter
+            benötigt.
         </para>
         <example id="zend.console.getopt.rules.short.example">
-            <title>Using the Short Syntax</title>
+            <title>Verwendung der kurzen Syntax</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
 $opts = new Zend_Console_Getopt('abp:');
 ?>]]></programlisting>
         </example>
         <para>
-            The example above shows using <code>Zend_Console_Getopt</code>
-            to declare that options may be given as "<code>-a</code>",
-            "<code>-b</code>", or "<code>-p</code>".  The latter flag
-            requires a parameter.
+            Das obige Beispiel zeigt die Verwendung von <code>Zend_Console_Getopt</code>
+            um die Optionen zu definieren die als "<code>-a</code>", "<code>-b</code>",
+            oder "<code>-p</code>" angegeben werden können. Das letzte Flag benötigt
+            einen Parameter.
         </para>
         <para>
-            The short syntax is limited to flags of a single character.
-            Aliases, parameter types, and help strings are not supported
-            in the short syntax.
+            Die kurze Syntax ist limitiert auf Flags mit einzelnen Zeichen.
+            Aliase, Parametertypen und Hilfszeichenketten werden in der
+            kurzen Syntax nicht unterstützt.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.rules.long">
-        <title>Declaring Options with the Long Syntax</title>
+        <title>Optionen mit der langen Syntax definieren</title>
         <para>
-            A different syntax with more features is also available.  This
-            syntax allows you to specify aliases for flags, types of option
-            parameters, and also help strings to describe usage to the user.
-            Instead of the single string used in the short syntax to declare
-            the options, the long syntax uses an associative array as the
-            first argument to the constructor.
+            Eine andere Syntax mit mehr Möglichkeiten ist auch vorhanden. Diese
+            Syntax ermöglicht es Aliase für Flags, Typen von Optionsparametern
+            und auch Hilfszeichenkette zu definieren um die Verwendung für den
+            Benutzer zu beschreiben. Statt einer einzelnen Zeichenkette die in der
+            kurzen Syntax verwendet wird um die Optionen zu definieren, verwendet
+            die lange Syntax ein assoziatives Array als erstes Argument für den 
+            Constructor.
         </para>
         <para>
-            The key of each element of the associative array is a string with
-            a format that names the flag, with any aliases, separated by the
-            pipe symbol ("<code>|</code>").  Following this series of flag
-            aliases, if the option requires a parameter, is an equals symbol
-            ("<code>=</code>") with a letter that stands for the
-            <emphasis>type</emphasis> of the parameter:
+            Der Schlüssel jeden Elements des assoziativen Array ist eine
+            Zeichenkette mit einem Format das das Flag benennt, mit jedem Alias,
+            getrennt durch ein Pipe Symbol ("<code>|</code>"). Dieser Serie von
+            Flag Aliasen folgende, wenn die Option einen Parameter benötigt, ist
+            ein Gleichheitszeichen ("<code>=</code>") mit einem Buchstaben der
+            für den <emphasis>Typ</emphasis> dieses Parameters steht:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    "<code>=s</code>" for a string parameter
+                    "<code>=s</code>" für einen Zeichenketten Parameter
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    "<code>=w</code>" for a word parameter
-                    (a string containing no whitespace)
+                    "<code>=w</code>" für einen Wort Parameter
+                    (eine Zeichenkette die keine Leerzeichen enthält)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    "<code>=i</code>" for an integer parameter
+                    "<code>=i</code>" für einen Integer Parameter
                 </para>
             </listitem>
         </itemizedlist>
         <para>
-            If the parameter is optional, use a dash ("<code>-</code>")
-            instead of the equals symbol.
+            Wenn der Parameter optional ist, kann ein Bindestrich ("<code>-</code>")
+            statt des Gleichheitszeichens verwendet werden.
         </para>
         <para>
-            The value of each element in the associative array is a help string
-            to describe to a user how to use your program.  
+            Der Wert jeden Elements in diesem assiziativen Array ist eine
+            Hilfszeichenkette um dem Benutzer zu beschreiben wie das Programm
+            verwendet werden kann.
         </para>
         <example id="zend.console.getopt.rules.long.example">
-            <title>Using the Long Syntax</title>
+            <title>Verwendung der langen Syntax</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
 $opts = new Zend_Console_Getopt(
   array(
-    'apple|a'    => 'This option chooses apple, with no parameter',
-    'banana|b=i' => 'This option chooses banana, with required integer parameter',
-    'pear|p-s'   => 'This option chooses pear, with optional string parameter'
+    'apfel|a'    => 'Diese Option wählt Apfel, ohne Parameter',
+    'banane|b=i' => 'Diese Option wählt Banane, mit benötigtem Integer Parameter',
+    'pfirsich|p-s'   => 'Diese Option wählt Pfirsich, mit optionalem Zeichenketten Parameter'
   )
 );
 ?>]]>
             </programlisting>
         </example>
         <para>
-            In the example declaration above, there are three options.
-            "<code>--apple</code>" and "<code>-a</code>" are aliases for each
-            other, and the option takes no parameter.
-            "<code>--banana</code>" and "<code>-b</code>" are aliases for each
-            other, and the option takes a mandatory integer parameter.
-            Finally, "<code>--pear</code>" and "<code>-p</code>" are aliases
-            for each other, and the option may take an optional string parameter.
+            In der obigen Beispieldefinition, sind drei Optionen.
+            "<code>--apfel</code>" und "<code>-a</code>" sind Aliase füreinander,
+            und diese Option nimmt keinen Parameter.
+            "<code>--banane</code>" und "<code>-b</code>" sind Aliase füreinander,
+            und diese Option nimmt einen notwendigen Integer Parameter.
+            Letztendlich, "<code>--pfirsich</code>" und "<code>-p</code>" sind
+            Aliase füreinander, und diese Option kann einen Optionalen
+            Zeichenketten Parameter annehmen.
         </para>
     </sect2>
 
