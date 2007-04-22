@@ -315,8 +315,75 @@ $row->save();
         <title>行セットクラスの拡張</title>
 
         <para>
-            <emphasis>あとで書く。</emphasis>
+            Zend_Db_Table_Rowset_Abstract を継承した新たな具象クラスを作成し、
+            それを用いて行セットのインスタンスを作成することができます。
+            独自の行クラスを指定するには、テーブルクラスの protected
+            メンバである <code>$_rowsetClass</code> を使用するか、
+            テーブルオブジェクトのコンストラクタの引数の配列で指定します。
         </para>
+
+        <example id="zend.db.table.rowset.extending.example">
+            <title>独自の行セットクラスの指定</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class MyRowset extends Zend_Db_Table_Rowset_Abstract
+{
+    // ...独自の処理
+}
+
+// 独自の行セットを、テーブルクラスの全インスタンスで
+// デフォルトとして使用するように設定します
+class Products extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'products';
+    protected $_rowsetClass = 'MyRowset';
+}
+
+// あるいは、テーブルクラスの特定のインスタンスでのみ
+// 独自の行セットクラスを使用するように設定します
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            一般的には、標準の具象クラス Zend_Db_Rowset
+            でたいていの場合は十分でしょう。しかし、
+            特定のテーブルに固有の処理を行セットに追加したくなることもあります。
+            たとえば、行セット内のすべての行の内容の集計用のメソッドなどです。
+        </para>
+
+        <example id="zend.db.table.rowset.extending.example-aggregate">
+            <title>行セットクラスに新しいメソッドを追加する例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
+{
+    /**
+     * 現在の行セットのなかで、'updated_at' カラムの値が
+     * 最大である行を見つけます
+     */
+    public function getLatestUpdatedRow()
+    {
+        $max_updated_at = 0;
+        $latestRow = null;
+        foreach ($this as $row) {
+            if ($row->updated_at > $max_updated_at) {
+                $latestRow = $row;
+            }
+        }
+        return $latestRow;
+    }
+}
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+    protected $_rowsetClass = 'MyBugsRowset';
+}
+
+?>]]></programlisting>
+        </example>
 
     </sect2>
 

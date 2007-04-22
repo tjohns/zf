@@ -407,16 +407,47 @@ $rowClone->save();
 
         <title>行クラスの拡張</title>
 
+        <para>
+            Zend_Db_Table_Row_Abstract を継承した新たな具象クラスを作成し、
+            それを用いて行のインスタンスを作成することができます。
+            独自の行クラスを指定するには、テーブルクラスの protected
+            メンバである <code>$_rowClass</code> を使用するか、
+            テーブルオブジェクトのコンストラクタの引数の配列で指定します。
+        </para>
+
+        <example id="zend.db.table.row.extending.example">
+            <title>独自の行クラスの指定</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class MyRow extends Zend_Db_Table_Row_Abstract
+{
+    // ...独自の処理
+}
+
+// 独自の行を、テーブルクラスの全インスタンスで
+// デフォルトとして使用するように設定します
+class Products extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'products';
+    protected $_rowClass = 'MyRow';
+}
+
+// あるいは、テーブルクラスの特定のインスタンスでのみ
+// 独自の行クラスを使用するように設定します
+$bugs = new Bugs(array('rowClass' => 'MyRow'));
+
+?>]]></programlisting>
+        </example>
+
         <sect3 id="zend.db.table.row.extending.overriding">
             <title>Zend_Db_Table_Row における Insert、Update および Delete の独自ロジックの定義</title>
 
             <para>
-                Zend_Db_Table_Row_Abstract を継承した新たな具象クラスを作成し、
-                それを用いて行のインスタンスを作成することができます。
                 行クラスは、<code>INSERT</code> や <code>UPDATE</code>、
                 <code>DELETE</code> の操作の前に、対応する protected メソッド
                 <code>_insert()</code>、<code>_update()</code>
                 および <code>_delete()</code> をコールします。
+                行クラスのサブクラスで、これらのメソッドに独自ロジックを追加することができます。
             </para>
 
             <para>

@@ -1190,7 +1190,7 @@ class BugsProducts extends MyAbstractTable
 
             <para>
                 語尾変化を行う関数を書くのはあなたの役割です。
-                Zend_Framework にはそのような関数はありません。
+                Zend Framework にはそのような関数はありません。
             </para>
 
         </sect3>
