@@ -81,6 +81,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $desc = $this->_db->describeTable('products');
 
         $this->assertThat($desc, $this->arrayHasKey('product_name'));
+        $this->assertThat($desc, $this->arrayHasKey('product_id'));
 
         $this->assertThat($desc['product_name'], $this->arrayHasKey('SCHEMA_NAME'));
         $this->assertThat($desc['product_name'], $this->arrayHasKey('TABLE_NAME'));
@@ -107,7 +108,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertFalse(                      $desc['product_name']['PRIMARY']);
         $this->assertEquals('',                  $desc['product_name']['PRIMARY_POSITION']);
 
-        $this->assertTrue(                       $desc['product_id']['PRIMARY']);
+        $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
         $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
     }
 

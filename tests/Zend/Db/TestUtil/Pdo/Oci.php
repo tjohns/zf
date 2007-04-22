@@ -65,7 +65,7 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
             return 'VARCHAR2' . $matches[1];
         }
         if ($type == 'IDENTITY') {
-            return 'NUMBER(11)';
+            return 'NUMBER(11) PRIMARY KEY';
         }
         if ($type == 'INTEGER') {
             return 'NUMBER(11)';

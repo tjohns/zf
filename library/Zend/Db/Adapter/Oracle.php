@@ -281,21 +281,24 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function describeTable($tableName, $schemaName = null)
     {
         $tableName = strtoupper($tableName);
-        $sql = "SELECT T.TABLE_NAME, T.TABLESPACE_NAME, T.COLUMN_NAME, T.DATA_TYPE,
-                T.DATA_DEFAULT, T.NULLABLE, T.COLUMN_ID, T.DATA_LENGTH,
-                T.DATA_SCALE, T.DATA_PRECISION, C.CONSTRAINT_TYPE, CC.POSITION
-            FROM ALL_TAB_COLUMNS T
+
+        $sql = "SELECT TC.TABLE_NAME, TB.TABLESPACE_NAME, TC.COLUMN_NAME, TC.DATA_TYPE,
+                TC.DATA_DEFAULT, TC.NULLABLE, TC.COLUMN_ID, TC.DATA_LENGTH,
+                TC.DATA_SCALE, TC.DATA_PRECISION, C.CONSTRAINT_TYPE, CC.POSITION
+            FROM ALL_TAB_COLUMNS TC
             LEFT JOIN (ALL_CONS_COLUMNS CC JOIN ALL_CONSTRAINTS C
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
-              ON T.TABLE_NAME = CC.TABLE_NAME AND T.COLUMN_NAME = CC.COLUMN_NAME
-            WHERE T.TABLE_NAME = ".$this->quote($tableName);
+              ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
+            JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
+            WHERE TC.TABLE_NAME = ".$this->quote($tableName);
 
         if ($schemaName) {
-            $sql .= " AND T.TABLESPACE_NAME = ".$this->quote($schemaName);
+            $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
         }
 
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
         $desc = array();
         foreach ($result as $key => $row) {
             $desc[$row['COLUMN_NAME']] = array(
