@@ -22,7 +22,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        リンク: 取得、作成、削除
+                        リンク: 作成、取得、更新、削除
                     </para>
                 </listitem>
                 <listitem>
@@ -32,7 +32,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        メモ: 取得、作成、削除
+                        メモ: 作成、取得、更新、削除
                     </para>
                 </listitem>
                 <listitem>
@@ -211,6 +211,14 @@ $simpy->saveNote(
     'Test Note', // タイトル
     'test,note', // タグ
     'This is a test note.' // 説明
+);
+
+/* 既存のメモを上書きします */
+$simpy->saveNote(
+    'Updated Test Note', // タイトル
+    'test,note,updated', // タグ
+    'This is an updated test note.', // 説明
+    $note->getId() // 一意な ID
 );
 
 /* 直近に追加された 10 件のメモを探します */
