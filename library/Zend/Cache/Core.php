@@ -146,7 +146,7 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Options parameter must be an array');
         }  
         while (list($name, $value) = each($options)) {
-            $this->_setOption($name, $value);
+            $this->setOption($name, $value);
         }
         $this->_loggerSanity();
     }
