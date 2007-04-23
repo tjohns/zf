@@ -1,229 +1,230 @@
 <sect1 id="zend.console.getopt.configuration">
-    <title>Configuring Zend_Console_Getopt</title>
+    <title>Konfigurieren von Zend_Console_Getopt</title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
-        <title>Adding Option Rules</title>
+        <title>Regeln für das Hinzufügen von Optionen</title>
         <para>
-            You can add more option rules in addition to those you specified
-            in the <code>Zend_Console_Getopt</code> constructor, using the
-            <code>addRules()</code> method.  The argument to
-            <code>addRules()</code> is the same as the first argument to the
-            class constructor.  It is either a string in the format of the
-            short syntax options specification, or else an associative array 
-            in the format of a long syntax options specification.
-            See <link linkend="zend.console.getopt.rules">Declaring Getopt Rules</link>
-            for details on the syntax for specifying options.
+            Man kann mehr Optionsregeln hinzufügen, zusätzlich zu denen die
+            schon im <code>Zend_Console_Getopt</code> Constructor definiert wurden,
+            durch Verwendung der <code>addRules()</code> Methode. Das Argument für
+            <code>addRules()</code> ist das gleiche wie das erste Argument für den
+            Constructor der Klasse. Es ist entweder eine Zeichenkette im Format der
+            kurzen Syntax wie für das Definieren für Optionen definiert, oder ein
+            assoziatives Array im Format der langen Syntax wie für das Definieren
+            für Optionen definiert. Siehe 
+            <link linkend="zend.console.getopt.rules">Definieren von GetOpt Regeln</link>
+            für Details über die Syntax für die Definition von Optionen.
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
-            <title>Using addRules()</title>
+            <title>Verwenden von addRules()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
-    'verbose|v' => 'Print verbose output'
+    'verbose|v' => 'Druckt zusätzliche Ausgaben'
   )
 );
 ?>]]></programlisting>
         </example>
         <para>
-            The example above shows adding the "<code>--verbose</code>" option
-            with an alias of "<code>-v</code>" to a set of options 
-            defined in the call to the constructor.  Notice that you can mix
-            short format options and long format options in the same instance
-            of <code>Zend_Console_Getopt</code>.
+            Das obige Beispiel zeigt das hinzufügen der "<code>--verbose</code>"
+            Option mit einem Alias von "<code>-v</code>" zu einem Set von Optionen
+            welche bereits im Aufruf durch den Constructor definiert wurden.
+            Man kann kurze Format Optionen und lange Format Optionen in der
+            gleichen Instanz von <code>Zend_Console_Getopt</code> vermischen.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addhelp">
-        <title>Adding Help Messages</title>
+        <title>Hilfstexte hinzufügen</title>
         <para>
-            In addition to specifying the help strings when declaring option
-            rules in the long format, you can associate help strings
-            with option rules using the <code>setHelp()</code>
-            method.  The argument to the <code>setHelp()</code> method is an
-            associative array, in which the key is a flag, and the value is a
-            corresponding help string.
+            Zusätzlich zum Definieren von Hilfstexten bei der Definition
+            von Optionsregeln im langen Format, können Hilfstexte
+            mit Optionsregeln verknüpft werden durch Verwendung der 
+            <code>setHelp()</code> Methode. Das Argument für die
+            <code>setHelp()</code> Methode ist ein assoziatives Array, in welchen der
+            Schlüssel ein Flag ist, und der Wert der betreffende Hilfetext.
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
-            <title>Using setHelp()</title>
+            <title>Verwenden von setHelp()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'This option chooses apple, with no parameter',
-        'b' => 'This option chooses banana, with required integer parameter',
-        'p' => 'This option chooses pear, with optional string parameter'
+        'a' => 'Diese Option wählt Apfel, ohne Parameter',
+        'b' => 'Diese Option wählt Banane, und benötigt einen Integer Parameter',
+        'p' => 'Diese Option wählt Pfirsich, mit einem optionalen Zeichenketten Parameter'
     )
 );
 ?>]]></programlisting>
         </example>
         <para>
-            If you declared options with aliases, you can use any of the 
-            aliases as the key of the associative array.
+            Wenn Optionen mit Aliasen definiert wurden, kann jeder dieser Aliase
+            als Schlüssel für das assizoative Array verwendet werden.
         </para>
         <para>
-            The <code>setHelp()</code> method is the only way to define help
-            strings if you declared the options using the short syntax.
+            Die <code>setHelp()</code> Methode ist der einzige Weg um einen
+            Hilfetext zu definieren wenn die Optionen mit der kurzen Syntax definiert
+            wurden.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addaliases">
-        <title>Adding Option Aliases</title>
+        <title>Aliase für Optionen hinzufügen</title>
         <para>
-            You can declare aliases for options using the <code>setAliases</code>
-            method.  The argument is an associative array, whose key is
-            a flag string declared previously, and whose value is a new
-            alias for that flag.  These aliases are merged with any existing
-            aliases.  In other words, aliases you declared earlier are
-            still in effect.
+            Aliase für Optionen können mit der <code>setAliases</code> Methode
+            definiert werden. Das Argument ist ein assoziatives Array, dessen
+            Schlüssel ein zuvor definiertes Flag, und dessen Wert ein neuer
+            Alias für dieses Flag ist. Diese Aliase werden mit jedem existierenden
+            Alias für dieses Flag gemischt. Mit anderen Worten, die zuvor definierten
+            Aliase sind noch immer in Verwendung.
         </para>
         <para>
-            An alias may be declared only once.  If you try to redefine
-            an alias, a <code>Zend_Console_Getopt_Exception</code> is thrown.
+            Ein Alias kann nur einmal definiert werden. Wenn versucht wird einen
+            Alias nochmals zu definieren wird eine <code>Zend_Console_Getopt_Exception</code>
+            geworfen.
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
-            <title>Using setAliases()</title>
+            <title>Verwenden von setAliases()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
         'a' => 'apple',
         'a' => 'apfel',
-        'p' => 'pear'
+        'p' => 'pfirsich'
     )
 );
 ?>]]></programlisting>
         </example>
         <para>
-            In the example above, after declaring these aliases,
-            "<code>-a</code>", "<code>--apple</code>" and
-            "<code>--apfel</code>" are aliases for each other.
-            Also "<code>-p</code>" and "<code>--pear</code>" are aliases
-            for each other.
+            Im obigen Beispiel sind, nach Definition der Aliase, "<code>-a</code>",
+            "<code>--apple</code>" und "<code>--apfel</code>" Aliase füreinander.
+            Auch "<code>-p</code>" und "<code>--pfirsich</code>" sind füreinander
+            Aliase.
         </para>
         <para>
-            The <code>setAliases()</code> method is the only way to define aliases
-            if you declared the options using the short syntax.
+            Die <code>setAliases()</code> Methode ist der einzige Weg um Aliase
+            zu definieren wenn die Optionen mit der kurzen Syntax definiert wurden.
         </para>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addargs">
-        <title>Adding Argument Lists</title>
+        <title>Argument Listen hinzufügen</title>
         <para>
-            By default, <code>Zend_Console_Getopt</code> uses
-            <code>$_SERVER['argv']</code> for the array of command-line
-            arguments to parse.  You can alternatively specify the array of
-            arguments as the second constructor argument.  Finally, you
-            can append more arguments to those already used using the
-            <code>addArguments()</code> method, or you can replace the current
-            array of arguments using the <code>setArguments()</code> method.
-            In both cases, the parameter to these methods is a simple array of
-            strings.  The former method appends the array to the current
-            arguments, and the latter method substitutes the array for the
-            current arguments.
+            Standardmäßig verwendet <code>Zend_Console_Getopt</code>
+            <code>$_SERVER['argv']</code> für die Analyse des Arrays von
+            Kommandozeilen Argumenten. Alternativ kann das Array mit Argumenten
+            als zweites Argument dem Constructor angegeben werden. Letztendlich
+            können zusätzliche Argumente zu den bereits in verwendung befindlichen
+            hinzugefügt werden, oder es kann das aktuelle Array von Argumenten
+            ersetzt werden mit Hilfe der <code>setArguments()</code> Methode.
+            In beiden Fällen ist der Parameter für diese Methoden ein einfaches
+            Array von Zeichenketten, und die letztere Methode substituiert das Array für
+            seine aktuellen Argumente.
         </para>
         <example id="zend.console.getopt.configuration.addargs.example">
-            <title>Using addArguments() and setArguments()</title>
+            <title>Verwenden von addArguments() und setArguments()</title>
             <programlisting role="php"><![CDATA[<?php
-// By default, the constructor uses $_SERVER['argv']
+// Normalerweise verwendet der Constructor $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
 
-// Append an array to the existing arguments
+// Ein Array zu den bestehenden Argumenten hinzufügen
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
-// Substitute a new array for the existing arguments
+// Ein neues Array als Ersatz für die bestehenden Argumente
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 ?>]]></programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
-        <title>Adding Configuration</title>
+        <title>Konfiguration hinzufügen</title>
         <para>
-            The third parameter to the <code>Zend_Console_Getopt</code>
-            constructor is an array of configuration options that affect
-            the behavior of the object instance returned. You can also
-            specify configuration options using the <code>setOptions()</code>
-            method, or you can set an individual option using the
-            <code>setOption()</code> method.
+            Der dritte Parameter des <code>Zend_Console_Getopt</code> Constructors
+            ist ein Array von Optionen zur Konfiguration welche das Verhalten der
+            zurückgegebenen Objektinstanz beeinflusst. Es können auch durch Verwendung
+            der <code>setOptions()</code> Optionen für die Konfiguration definiert werden,
+            oder es können auch individuelle Optionen mit der <code>setOption()</code>
+            Methode verwendet werden.
         </para>
         <note>
-            <title>Clarifying the term "option"</title>
+            <title>Klarstellung des Ausdrucks "Option"</title>
             <para>
-                The term "option" is used for configuration of the
-                <code>Zend_Console_Getopt</code> class to match terminology 
-                used elsewhere in the Zend Framework.  These are not the same
-                things as the command-line options that are parsed by
-                the <code>Zend_Console_Getopt</code> class.
+                Der Ausdruck "Option" wird für die Konfiguration der <code>Zend_Console_Getopt</code>
+                Klasse verwendet um der Terminologie zu folgen die überall im Zend Framework benutzt
+                wird. Das ist nicht das selbe wie die Kommandozeilen Optionen die von der
+                <code>Zend_Console_Getopt</code> Klasse analysiert werden.
             </para>
         </note>
         <para>
-            The currently supported 
-            options have const definitions in the class.  The options,
-            their const identifiers (with literal values in parentheses)
-            are listed below:
+            Die aktuell unterstützten Optionen sind durch Konstanten in der Klasse definiert.
+            Diese Optionen, bzw deren konstanter Bezeichner (mit wörtlichem Wert in Großschreibweise)
+            sind anbei gelistet:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
                     <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash"),
-                    if true, enables the special flag "<code>--</code>" to
-                    signify the end of flags.  Command-line arguments following
-                    the double-dash signifier are not interpreted as options,
-                    even if the arguments start with a dash.  This configuration
-                    option is true by default.
+                    wenn aktiviert, ermöglicht dieses spezielle Flag "<code>--</code>"
+                    das Ende von Flags zu signieren. Kommendozeilen Argumente welche
+                    dem Doppel-Bindestrich Zeichen folgen werden nicht als Option
+                    interpretiert selbst wenn das Argument mit einem Bindestrich
+                    beginnt. Diese Konfigurationsoption ist standardmäßig aktiviert.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"),
-                    if true, makes flags aliases of each other if they differ
-                    only in their case.  That is, "<code>-a</code>" and
-                    "<code>-A</code>" will be considered to be synonymous flags.
-                    This configuration option is false by default.
+                    wenn aktiviert, werden Flags als Aliase voneinander betrachtet
+                    wenn Sie sich nur in der Groß-/Kleinschreibung unterscheiden.
+                    Das bedeutet das "<code>-a</code>" und "<code>-A</code>" als
+                    gleiche Flags angesehen werden. Diese Konfigurationsoption ist
+                    standardmäßig deaktiviert.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") may have values <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") and <code>Zend_Console_Getopt::MODE_GNU</code>
-                    ("gnu").  It should not be necessary to use this option
-                    unless you extend the class with additional syntax forms.
-                    The two modes supported in the base <code>Zend_Console_Getopt</code>
-                    class are unambiguous.  If the specifier is a string, the
-                    class assumes <code>MODE_GNU</code>, otherwise it assumes
-                    <code>MODE_ZEND</code>.  But if you extend the class and
-                    add more syntax forms, you may need to specify the mode
-                    using this option.
+                    ("ruleMode") kann die Werte <code>Zend_Console_Getopt::MODE_ZEND</code>
+                    ("zend") und <code>Zend_Console_Getopt::MODE_GNU</code>
+                    ("gnu") haben. Diese Option sollte nicht verwendet werden ausser
+                    die Klasse wird erweiter um zusätzliche Syntax Formen zu
+                    unterstützen. Die zwei Modi die in der Basisklasse
+                    <code>Zend_Console_Getopt</code> unterstützt werden sind 
+                    eindeutig. Wenn die Angabe eine Zeichenkette ist, nimmt die Klasse
+                    <code>MODE_GNU</code> an, sonst wird <code>MODE_ZEND</code> angenommen.
+                    Aber wenn die Klasse erweitert wird, und zusätzliche Syntaxformen hinzugefügt
+                    werden, kann der Modus durch Verwendung dieser Option definiert werden.
                 </para>
             </listitem>
         </itemizedlist>
         <para>
-            More configuration options may be added as future enhancements
-            of this class.
+            Zusätzliche Konfigurationsoptionen können in zukünftigen Versionen dieser
+            Klasse hinzugefügt werden.
         </para>
         <para>
-            The two arguments to the <code>setOption()</code> method are
-            a configuration option name and an option value.
+            Die zwei Argumente der <code>setOption()</code> Methode sind ein Name einer
+            Konfigurationsoption und ein Wert für die Option.
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoption">
-            <title>Using setOption()</title>
+            <title>Verwenden von setOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
 ?>]]></programlisting>
         </example>
         <para>
-            The argument to the <code>setOptions()</code> method is
-            an associative array.  The keys of this array are the configuration
-            option names, and the values are configuration values.
-            This is also the array format used in the class constructor.
-            The configuration values you specify are merged with the current
-            configuration; you don't have to list all options.
+            Das Argument für die <code>setOptions()</code> Methode ist ein
+            assoziatives Array. Die Schlüssel dieses Arrays sind die Namen der
+            Konfigurationsoptionen, und die Werte sind die Konfigurationswerte.
+            Das ist also das Array Format welches auch im Constructor der Klasse
+            verwendet wird. Die definierten Konfigurationswerte werden mit der
+            aktuellen Konfiguration zusammengefügt; es müssen also nicht alle
+            Optionen angegeben werden.
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoptions">
-            <title>Using setOptions()</title>
+            <title>Verwenden von setOptions()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
