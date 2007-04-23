@@ -112,7 +112,7 @@ $value = $db->quote(array('a', 'b', 'c');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // tworzymy obiekt $db, zakładając, że adapter to Mysql
 
 // cytujemy łańcuch znaków dla warunku WHERE
@@ -139,7 +139,7 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // tworzymy obiekt $db, a następnie wykonujemy
 // odpowiednio zacytowane zapytanie SQL.
 $sql = $db->quoteInto(
@@ -162,7 +162,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // tworzymy obiekt $db, a następnie wykonujemy zapytanie
 // tym razem używając podmieniania znaczników
 $result = $db->query(
@@ -183,7 +183,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // tworzymy obiekt $db, a następnie wykonujemy zapytanie
 // tym razem przygotowujemy PDOStatement do ręcznego dołączania.
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
@@ -211,7 +211,7 @@ $rows = $stmt->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // utwórz obiekt $db, a następnie rozpocznij transakcję
 $db->beginTransaction();
 
@@ -287,12 +287,11 @@ $last_insert_id = $db->lastInsertId();
 
         <para>
             Możesz przekazać do metody opcjonalny warunek WHERE aby określić, 
-            które wiersze chcesz usunąć. (Zauważ, że warunek WHERE nie jest 
-            dołączanym parametrem, więc musisz sam zacytować jego wartości.)
+            które wiersze chcesz zaktualizować.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // UPDATE round_table
 //     SET favorite_color = "yellow"
@@ -315,6 +314,43 @@ $where = $db->quoteInto('first_name = ?', 'Robin');
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            Jeśli masz kilka warunków WHERE, które powinny być dołączone do 
+            zapytania UPDATE, możesz przekazać tablicę tych warunków do metody 
+            <code>update()</code>. Takie warunki zostaną połączone za pomocą 
+            operatora AND. Łączenie warunków za pomocą operatora OR musi być 
+            przeprowadzone ręcznie:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$set = array('favorite_color' => 'yellow');
+
+// kilka warunków połączonych za pomocą AND
+$where   = array(
+    $db->quoteInto('first_name = ?', $firstName),
+    $db->quoteInto('noble_title = ?', $nobleTitle)
+    );
+$count   = $db->update('round_table', $set, $where);
+
+// kilka warunków połączonych za pomocą OR
+$firstNameOne = $db->quote($firstNameOne);
+$firstNameTwo = $db->quote($firstNameTwo);
+$where        = "first_name = $firstNameOne OR first_name = $firstNameTwo";
+$count        = $db->update('round_table', $set, $where);
+
+?>]]></programlisting>
+
+        <note>
+            <para>
+                Wartości i identyfikatory użyte w warunkach WHERE nie są 
+                automatycznie cytowane. Jeśli masz wartości lub identyfikatory
+                wymagające cytowania, powinieneś sam to zrobić. Użyj metod 
+                <code>quote()</code>, <code>quoteInto()</code>, oraz 
+                <code>quoteIdentifier()</code> adaptera bazy danych.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.delete">
@@ -347,6 +383,24 @@ $where = $db->quoteInto('first_name = ?', 'Patsy');
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
+
+        <para>
+            Tak jak w metodzie 
+            <link linkend="zend.db.adapter.update"><code>update()</code></link>,
+            możesz użyć tablicy warunków WHERE dla argumentu <code>$where</code> 
+            metody <code>delete()</code>.
+        </para>
+
+        <note>
+            <para>
+                Wartości i identyfikatory użyte w warunkach WHERE nie są 
+                automatycznie cytowane. Jeśli masz wartości lub identyfikatory
+                wymagające cytowania, powinieneś sam to zrobić. Użyj metod 
+                <code>quote()</code>, <code>quoteInto()</code>, oraz 
+                <code>quoteIdentifier()</code> adaptera bazy danych.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.fetch">

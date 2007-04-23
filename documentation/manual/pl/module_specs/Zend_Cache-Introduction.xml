@@ -29,11 +29,11 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200, // okres ważności bufora 2 godziny
-   'automaticSerialization' => true
+   'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Katalog w którym mają być składowane pliku bufora
+    'cache_dir' => './tmp/' // Katalog w którym mają być składowane pliku bufora
 );
 
 // pobieranie obiektu Zend_Cache_Core
@@ -90,10 +90,10 @@ print_r($result);
 
 $frontendOptions = array(
    'lifetime' => 30,                  // okres ważności bufora pół minuty
-   'automaticSerialization' => false  // to i tak jest domyślna wartość
+   'automatic_serialization' => false  // to i tak jest domyślna wartość
 );
 
-$backendOptions = array('cacheDir' => './tmp/');
+$backendOptions = array('cache_dir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 
