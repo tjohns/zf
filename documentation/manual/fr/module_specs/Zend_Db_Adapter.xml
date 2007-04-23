@@ -1,4 +1,4 @@
-<sect1 id="zend.db.adapter">
+﻿<sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
 
@@ -7,20 +7,14 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Db_Adapter</code> est l'API d'abstraction pour le Framework Zend. 
-            Basé sur PDO, vous pouvez utiliser <code>Zend_Db_Adapter</code> pour vous connecter sur tout les SGBD supportés, 
-            en utilisant la même API. Les SGB supportés sont entre autres : Microsoft SQL Server, MySQL, PostgreSQL, SQLite.
+            <code>Zend_Db_Adapter</code> est l'API de la couche d'abstraction de base de données pour le Zend Framework. Basé sur PDO, vous pouvez utiliser <code>Zend_Db_Adapter</code> pour vous connecter sur tout les SGBD supportés, en utilisant la même API. Les SGBD supportés sont entre autres : Microsoft SQL Server, MySQL, PostgreSQL, SQLite etc.
         </para>
 
         <para>
-        Pour créer une instance de <code>Zend_Db_Adapter</code> pour vous connecter à votre base de données, 
-        vous devez appeler <code>Zend_Db::factory()</code> avec le nom de l'adapteur et un tableau de paramètres 
-        décrivant la connexion. Par exemple, pour vous connecter à une base de données MySQL appelée "camelot" 
-        sur votre machine locale et avec le nom d'utilisateur "malory" :
+            Pour créer une instance de <code>Zend_Db_Adapter</code> pour vous connecter à votre base de données, vous devez appeler <code>Zend_Db::factory()</code> avec le nom de l'adapteur et un tableau de paramètres décrivant la connexion. Par exemple, pour vous connecter à une base de données MySQL appelée "camelot" sur votre machine locale et avec le nom d'utilisateur "malory" :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Db.php';
 
 $params = array ('host'     => '127.0.0.1',
@@ -29,25 +23,35 @@ $params = array ('host'     => '127.0.0.1',
                  'dbname'   => 'camelot');
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
-
 ?>]]></programlisting>
 
         <para>
-             De la même manière, pour vous connecter à une base de données SQLite appelée "camelot" :
+            De la même manière, pour vous connecter à une base de données SQLite appelée "camelot.sq3" :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Db.php';
 
-$params = array ('dbname' => 'camelot');
+$params = array ('dbname' => 'camelot.sq3');
 
 $db = Zend_Db::factory('PDO_SQLITE', $params);
-
 ?>]]></programlisting>
 
         <para>
-             Quelque soit le SGBD, vous aurez la possibilité d'utiliser exactement la même API pour interroger la base de données.
+            De la même manière, pour vous connecter à une base de données SQLite2 appelée "camelot.sq2" (pour une base en mémoire, ne spécifiez pas de dsnprefix et affectez ":memory:" à dbname) :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot.sq2',
+                 'dsnprefix' => 'sqlite2');
+
+$db = Zend_Db::factory('PDO_SQLITE', $params);
+?>]]></programlisting>
+
+        <para>
+            Quelque soit le SGBD, vous aurez la possibilité d'utiliser exactement la même API pour interroger la base de données.
         </para>
     </sect2>
 
@@ -56,19 +60,15 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
         <title>Se protéger des injections SQL</title>
 
         <para>
-             Vous devriez toujours échapper les valeurs destinées à être utilisées dans une requête SQL; cela permet de se prémunir des injections SQL. 
-             <code>Zend_Db_Adapter</code> fournies deux méthodes (via l'objet PDO) pour vous aider à échapper les valeurs.
+            Vous devriez toujours échapper les valeurs destinées à être utilisées dans une requête SQL ; cela permet de se prémunir des injections SQL. <code>Zend_Db_Adapter</code> fournies deux méthodes (via l'objet PDO) pour vous aider à échapper les valeurs.
         </para>
 
         <para>
-            La première est la méthode <code>quote()</code>. Elle va échapper une valeur scalaire conformément aux spécificités de la base de données.
-            Si vous essayer d'échapper un tableau, la méthode va retourner une chaîne contenant chaque valeur du tableau, séparée par des virgules, 
-            chacune correctement protégée (c'est pratique dans le cas de fonctions qui prennent un paramètre de type liste).
+            La première est la méthode <code>quote()</code>. Elle va échapper une valeur scalaire conformément aux spécificités de la base de données. Si vous essayer d'échapper un tableau, la méthode va retourner une chaîne contenant chaque valeur du tableau, séparée par des virgules, chacune correctement protégée (c'est pratique dans le cas de fonctions qui prennent un paramètre de type liste).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
-// créé un objet $db, on suppose l'utilisation de MySQL
+// crée un objet $db, on suppose l'utilisation de MySQL
 
 // échappement d'un scalaire
 $value = $db->quote('St John"s Wort');
@@ -77,18 +77,14 @@ $value = $db->quote('St John"s Wort');
 // échappement d'un tableau
 $value = $db->quote(array('a', 'b', 'c');
 // $value vaut maintenant '"a", "b", "c"' (une chaîne séparée par des virgules)
-
 ?>]]></programlisting>
 
         <para>
-            La seconde est la méthode <code>quoteInto()</code>. Vous fournissez une requête de base, avec des points d'interrogations comme caractère à 
-            remplacer, et un scalaire ou un tableau à protéger. C'est pratique pour construire rapidemant des requête et des clauses.
-            Les scalaires et les tableaux sont traitées de la même façon que dans la méthode <code>quote()</code>.
+            La seconde est la méthode <code>quoteInto()</code>. Vous fournissez une requête de base, avec des points d'interrogations comme caractère à remplacer, et un scalaire ou un tableau à protéger. C'est pratique pour construire rapidement des requêtes et des clauses. Les scalaires et les tableaux sont traitées de la même façon que dans la méthode <code>quote()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
-// créé un objet $db, on suppose l'utilisation de MySQL
+// crée un objet $db, on suppose l'utilisation de MySQL
 
 // protection d'un scalaire dans une clause WHERE
 $where = $db->quoteInto('id = ?', 1);
@@ -97,7 +93,6 @@ $where = $db->quoteInto('id = ?', 1);
 // protection d'un tableau dans la clause WHERE
 $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
 // $where vaut maintenant 'id IN("1", "2", "3")' (une chaîne séparée par des virgules)
-
 ?>]]></programlisting>
     </sect2>
 
@@ -106,14 +101,11 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
         <title>Requêtes Directes</title>
 
         <para>
-            Une fois que vous avez une instance de <code>Zend_Db_Adapter</code>, vous pouvez exécuter directement des requêtes SQL. 
-            <code>Zend_Db_Adapter</code> passe cette requête dans l'objet PDO sous-jacent, qui les prépare et les exécute, et vous retourne 
-            ensuite une objet <code>PDOStatement</code> pour que vous puissez manipuler les résultats, s'il y en a.
+            Une fois que vous avez une instance de <code>Zend_Db_Adapter</code>, vous pouvez exécuter directement des requêtes SQL. <code>Zend_Db_Adapter</code> passe cette requête dans l'objet PDO sous-jacent, qui les prépare et les exécute, et vous retourne ensuite une objet <code>PDOStatement</code> pour que vous puissez manipuler les résultats, s'il y en a.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-        
-// créé un objet $db et exécute ensuite la requête
+// crée un objet $db et exécute ensuite la requête
 // avec une requête SQL correctement protégée
 $sql = $db->quoteInto(
     'SELECT * FROM example WHERE date > ?',
@@ -126,14 +118,11 @@ $rows = $result->fetchAll();
 ?>]]></programlisting>
 
         <para>
-            Vous pouvez associer automatiquement vos données à la requête. Cela signifie que vous pouvez définir de multiples marqueurs 
-            de remplacement réservés et nommés dans la requête, et ensuite passer un tableau de données qui vont se substituer à ces marqueurs. 
-            Les valeurs de remplacement sont automatiquement protégées, pour prévenir les attaques par injection SQL.
+            Vous pouvez associer automatiquement vos données à la requête. Cela signifie que vous pouvez définir de multiples marqueurs de remplacement réservés et nommés dans la requête, et ensuite passer un tableau de données qui vont se substituer à ces marqueurs. Les valeurs de remplacement sont automatiquement protégées, pour prévenir les attaques par injection SQL.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
-// créé un objet $db, et interroge la base de données.
+// crée un objet $db, et interroge la base de données.
 // cette fois, utilisez un marqueur de remplacement.
 $result = $db->query(
     'SELECT * FROM example WHERE date > :placeholder',
@@ -142,16 +131,13 @@ $result = $db->query(
 
 // utiliser le PDOStatement $result pour récupérer toutes les lignes de résultat dans un tableau
 $rows = $result->fetchAll();
-
 ?>]]></programlisting>
 
         <para>
-            Optionellement, vous pouvez préparer et lier manuellement une instruction SQL. Pour ce faire, utilisez la méthode <code>prepare()</code> pour 
-            obtenir un objet de type <code>PDOStatement</code>, que vous pouvez manipuler directement.
+            Optionellement, vous pouvez préparer et lier manuellement une instruction SQL. Pour ce faire, utilisez la méthode <code>prepare()</code> pour obtenir un objet de type <code>PDOStatement</code>, que vous pouvez manipuler directement.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
 // créé un objet $db, et interroge la base de données.
 // cette fois-ci, utilisez un objet PDOStatement pour une liaison manuelle.
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
@@ -160,7 +146,6 @@ $stmt->execute();
 
 // utiliser le PDOStatement $result pour récupérer toutes les lignes de résultat dans un tableau
 $rows = $stmt->fetchAll();
-
 ?>]]></programlisting>
     </sect2>
 
@@ -169,14 +154,10 @@ $rows = $stmt->fetchAll();
         <title>Transactions</title>
 
         <para>
-            Par défaut, PDO (and ainsi <code>Zend_Db_Adapter</code>) sont en mode "auto-commit". Cela signifie que chaque requête est validée à 
-            chaque exécution. Si vous souhaitez les exécuter à l'intérieur d'une transaction, appelez simplement la méthode <code>beginTransaction()</code> 
-            vous pourrez alors valider (<code>commit()</code>) ou annuler (<code>rollBack()</code>) vos changements. 
-            <code>Zend_Db_Adapter</code> retourne en mode "auto-commit" jusqu'à ce que vous appeliez de nouveau <code>beginTransaction()</code>.
+            Par défaut, PDO (and ainsi <code>Zend_Db_Adapter</code>) sont en mode "auto-commit". Cela signifie que chaque requête est validée à chaque exécution. Si vous souhaitez les exécuter à l'intérieur d'une transaction, appelez simplement la méthode <code>beginTransaction()</code> vous pourrez alors valider (<code>commit()</code>) ou annuler (<code>rollBack()</code>) vos changements. <code>Zend_Db_Adapter</code> retourne en mode "auto-commit" jusqu'à ce que vous appeliez de nouveau <code>beginTransaction()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
 // créé une objet $db, puis débute une transaction.
 $db->beginTransaction();
 
@@ -190,7 +171,6 @@ try {
     $db->rollBack();
     echo $e->getMessage();
 }
-
 ?>]]></programlisting>
     </sect2>
 
@@ -199,18 +179,14 @@ try {
         <title>Insertion de Lignes</title>
 
         <para>
-            Vous avez la possibilité d'utiliser la méthode <code>insert()</code> pour créer une instruction INSERT, et lui lier les données pour l'insertion. 
-            (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
+            Vous avez la possibilité d'utiliser la méthode <code>insert()</code> pour créer une instruction INSERT, et lui lier les données pour l'insertion. (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
         </para>
 
         <para>
-            La valeur retournée n'est <emphasis>pas</emphasis> le dernier identifiant d'insertion, la table ne contenant peut-être pas de colonne auto-incrémentée; 
-            à la place, la valeur retournée est le nombre de lignes affectées (habituellement 1). Si vous souhaitez l'ID du dernier identifiant généré, 
-            appelez la méthode <code>lastInsertId()</code> après l'insertion.
+            La valeur retournée <emphasis>n'est pas</emphasis> le dernier identifiant d'insertion, la table ne contenant peut-être pas de colonne auto-incrémentée ; à la place, la valeur retournée est le nombre de lignes affectées (habituellement 1). Si vous souhaitez l'ID du dernier identifiant généré, appelez la méthode <code>lastInsertId()</code> après l'insertion.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
 //
 // INSERT INTO round_table
 //     (noble_title, first_name, favorite_color)
@@ -231,7 +207,6 @@ $table = 'round_table';
 // insérez la ligne, et récupérez son identifiant
 $rows_affected = $db->insert($table, $row);
 $last_insert_id = $db->lastInsertId();
-
 ?>]]></programlisting>
     </sect2>
 
@@ -240,17 +215,14 @@ $last_insert_id = $db->lastInsertId();
         <title>Mise à jour de lignes</title>
 
         <para>
-            Vous avez la possibilité d'utiliser la méthode <code>update()</code> pour créer une instruction UPDATE et lier vos données pour la mise à jour. 
-            (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
+            Vous avez la possibilité d'utiliser la méthode <code>update()</code> pour créer une instruction UPDATE et lier vos données pour la mise à jour. (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
         </para>
 
         <para>
-            Vous pouvez fournir une clause WHERE facultative pour spécifier quelle ligne mettre à jour. 
-            (Notez que la clause WHERE n'est pas un paramètre échappé, vous devez donc protéger vous-même sa valeur).
+            Vous pouvez fournir une clause WHERE facultative pour spécifier quelle ligne mettre à jour.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
 //
 // UPDATE round_table
 //     SET favorite_color = "yellow"
@@ -271,8 +243,35 @@ $where = $db->quoteInto('first_name = ?', 'Robin');
 
 // mise à jour de la table, et récupération du nombre de lignes affectées
 $rows_affected = $db->update($table, $set, $where);
-
 ?>]]></programlisting>
+
+        <para>
+            Si vous avez des clauses WHERE multiples qui doivent être appliquées à la requête UPDATE, vous pouvez fournir un tableau des clauses à la méthode <code>update()</code>. Ces clauses sont combinées avec l'opérateur <code>AND</code>. L'union de clauses avec l'opérateur <code>OR</code> doit être exécutée manuellement :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$set = array('favorite_color' => 'yellow');
+
+// multiple conditions combined with AND
+$where   = array(
+    $db->quoteInto('first_name = ?', $firstName),
+    $db->quoteInto('noble_title = ?', $nobleTitle)
+    );
+$count   = $db->update('round_table', $set, $where);
+
+// multiple conditions combined with OR
+$firstNameOne = $db->quote($firstNameOne);
+$firstNameTwo = $db->quote($firstNameTwo);
+$where        = "first_name = $firstNameOne OR first_name = $firstNameTwo";
+$count        = $db->update('round_table', $set, $where);
+?>]]></programlisting>
+
+        <note>
+            <para>
+                Les valeurs et les identificateurs de la clause WHERE ne sont pas échappés pour vous. Si vous avez des valeurs ou les identificateurs qui nécessitent d'être échappés, vous êtes responsables de cette protection. Utilisez les méthodes de l'adaptateur de base de données : <code>quote()</code>, <code>quoteInto()</code>, et <code>quoteIdentifier()</code>.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.delete">
@@ -280,13 +279,10 @@ $rows_affected = $db->update($table, $set, $where);
         <title>Suppression de Lignes</title>
 
         <para>
-            Vous avez la possibilité d'utiliser la méthode <code>delete()</code> pour créer une instruction DELETE. 
-            Vous pouvez fournir optionellement une clause WHERE. 
-            (Notez que la clause WHERE n'est pas un paramètre échappé, vous devez donc protéger vous-même sa valeur).
+            Vous avez la possibilité d'utiliser la méthode <code>delete()</code> pour créer une instruction DELETE. Vous pouvez fournir optionellement une clause WHERE. (Notez que la clause WHERE n'est pas un paramètre échappé, vous devez donc protéger vous-même sa valeur).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
 //
 // DELETE FROM round_table
 //     WHERE first_name = "Patsy";
@@ -301,8 +297,18 @@ $where = $db->quoteInto('first_name = ?', 'Patsy');
 
 // mise à jour de la table, et récupération du nombre de lignes affectées
 $rows_affected = $db->delete($table, $where);
-
 ?>]]></programlisting>
+
+        <para>
+            Comme pour la méthode <link linkend="zend.db.adapter.update"><code>update()</code></link>, vous pouvez fournir un tableau des clauses WHERE en tant qu'argument <code>$where</code> de la méthode <code>delete()</code>.
+        </para>
+
+        <note>
+            <para>
+                Les valeurs et les identificateurs de la clause WHERE ne sont pas échappés pour vous. Si vous avez des valeurs ou les identificateurs qui nécessitent d'être échappés, vous êtes responsables de cette protection. Utilisez les méthodes de l'adaptateur de base de données : <code>quote()</code>, <code>quoteInto()</code>, et <code>quoteIdentifier()</code>.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.fetch">
@@ -310,11 +316,7 @@ $rows_affected = $db->delete($table, $where);
         <title>Récupération de lignes</title>
 
         <para>
-            Bien que vous puissiez interroger la base de données directement avec la méthode <code>query()</code> tout ce que vous avez besoin 
-            de faire et des sélectionner des lignes et obtenir le résultat. La série de méthodes <code>fetch*()</code> vous permet de le faire. 
-            Pour chaque méthode <code>fetch*()</code>, vous passez une instruction SQL; si vous utilisez des marqueurs de remplacement dans cette 
-            instruction, vous devrez aussi passer un tableau contenant la valeur à échapper, pour qu'elle soient protégées et remplacées dans la requête. 
-            Les méthodes <code>fetch*()</code> sont :    
+            Bien que vous puissiez interroger la base de données directement avec la méthode <code>query()</code> tout ce que vous avez besoin de faire et des sélectionner des lignes et récupérer le résultat. La série de méthodes <code>fetch*()</code> vous permet de le faire. Pour chaque méthode <code>fetch*()</code>, vous passez une instruction SQL; si vous utilisez des marqueurs de remplacement dans cette instruction, vous devrez aussi passer un tableau contenant la valeur à échapper, pour qu'elle soient protégées et remplacées dans la requête. Les méthodes <code>fetch*()</code> sont :    
         </para>
 
         <itemizedlist>
@@ -327,7 +329,6 @@ $rows_affected = $db->delete($table, $where);
         </itemizedlist>
 
         <programlisting role="php"><![CDATA[<?php
-	
 // crée un objet $db, en ensuite...
 
 // ?? retrouve les colonnes de chaque ligne comme un tableau séquentiel ??
@@ -367,7 +368,6 @@ $result = $db->fetchRow(
     "SELECT * FROM round_table WHERE first_name = :name",
     array('name' => 'Lancelot')
 );
-
 ?>]]></programlisting>
     </sect2>
 
