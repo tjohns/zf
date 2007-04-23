@@ -154,7 +154,7 @@ $p_parameter = $opts->p; // 設定されていない場合は null となりま�
         <para>
             オプション引数およびそのパラメータをコマンドラインからパースした後も、
             まだ追加の引数が残っているかも知れません。これらの引数を取得するには
-            <code>geRemainingArgs()</code> メソッドを使用します。このメソッドは、
+            <code>getRemainingArgs()</code> メソッドを使用します。このメソッドは、
             どのオプションにも属さない文字列の配列を返します。
         </para>
         <example id="zend.console.getopt.fetching.remainingargs.example">
