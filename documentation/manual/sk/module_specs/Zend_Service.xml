@@ -1,22 +1,22 @@
 <sect1 id="zend.service.introduction">
-    <title>Introduction</title>
+    <title>Úvod</title>
     <para>
-        <code>Zend_Service</code> is an abstract class which serves as a
-        foundation for web service implementations, such as SOAP or REST.
+        <code>Zend_Service</code> je abstraktná trieda, ktorá poskytuje základy
+        pre implementáciu web služieb ako napríklad SOAP, alebo REST.
     </para>
     <para>
-        If you need support for generic, XML-based REST services, you may want
-        to look at <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
+        Ak potrebuješ podporu pre všeobecné na XML založené REST služby, možno sa
+        budeš chcieť pozrieť na <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
     </para>
     <para>
-        In addition to being able to extend the <code>Zend_Service</code> and
-        use <code>Zend_Rest_Client</code> for REST-based web services, Zend also
-        provides support for popular web services such as
+        Okrem možnosti rozširenia <code>Zend_Service</code> a použitia
+        <code>Zend_Rest_Client</code> pre web služby založené na REST je k dispozícii
+        podpora pre známe web služby ako
         <link linkend="zend.service.akismet">Akismet</link>,
         <link linkend="zend.service.amazon">Amazon</link>,
-        <link linkend="zend.service.flickr">Flickr</link>, and
-        <link linkend="zend.service.yahoo">Yahoo!</link>. Additional services
-        are coming in the future.
+        <link linkend="zend.service.flickr">Flickr</link> a
+        <link linkend="zend.service.yahoo">Yahoo!</link>. Ostatné web služby
+        pribudnú v blízkej budúcnosti.
     </para>
 </sect1>
 <!--

@@ -1,20 +1,19 @@
 <sect1 id="zend.server.introduction">
-    <title>Introduction</title>
+    <title>Úvod</title>
     <para>
-        The <code>Zend_Server</code> family of classes provides functionality
-        for the various server classes, including
-        <code>Zend_XmlRpc_Server</code>, <code>Zend_Rest_Server</code>,
+        Skupina tried <code>Zend_Server</code> poskytuje funkcionalitu pre viaceré
+        triedy, vrátane <code>Zend_XmlRpc_Server</code>, <code>Zend_Rest_Server</code>,
         <code>Zend_Json_Server</code> and <code>Zend_Soap_Wsdl</code>.
-        <code>Zend_Server_Interface</code> provides an interface that mimics PHP
-        5's <code>SoapServer</code> class; all server classes should implement
-        this interface in order to provide a standard server API.
+        <code>Zend_Server_Interface</code> poskytuje rozhranie ktoré napodobňuje
+        <code>SoapServer</code> triedu v PHP5. Všetky servery by mali mať implementované
+        toto rozhranie aby mohli poskytovať štandardné API.
     </para>
     <para>
-        The <code>Zend_Server_Reflection</code> tree provides a standard
-        mechanism for performing function and class introspection for use as
-        callbacks with the server classes, and provides data suitable for use
-        with <code>Zend_Server_Interface</code>'s <code>getFunctions()</code>
-        and <code>loadFunctions()</code> methods.
+        Skupina tried <code>Zend_Server_Reflection</code> poskytuje nástroje
+        pre zisťovanie informácií o funkciách a triedach ktoré sa používajú
+        ako spätné volania v serverových triedach a poskytuje vhodné údaje pre
+        použitie v metódach rozhrania <code>Zend_Server_Interface</code> (
+        <code>getFunctions()</code> a <code>loadFunctions()</code>).
     </para>
 </sect1>
 <!--
