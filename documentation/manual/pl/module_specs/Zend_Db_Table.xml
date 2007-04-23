@@ -1224,7 +1224,7 @@ class BugsProducts extends MyAbstractTable
             <para>
                 You are responsible for writing the functions to
                 perform inflection transformation.
-                Zend_Framework does not provide such a function.
+                Zend Framework does not provide such a function.
             </para>
 
         </sect3>

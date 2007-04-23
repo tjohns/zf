@@ -299,8 +299,76 @@ $row->save();
         <title>Extending the Rowset class</title>
 
         <para>
-            <emphasis>To be written.</emphasis>
+            You can use an alternative concrete class for instances of Rowsets
+            by extending Zend_Db_Table_Rowset_Abstract.  Specify the custom
+            Rowset class by name either in the <code>$_rowsetClass</code>
+            protected member of a Table class, or in the array argument of the
+            constructor of a Table object.
         </para>
+
+        <example id="zend.db.table.rowset.extending.example">
+            <title>Specifying a custom Rowset class</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class MyRowset extends Zend_Db_Table_Rowset_Abstract
+{
+    // ...customizations
+}
+
+// Specify a custom Rowset to be used by default
+// in all instances of a Table class.
+class Products extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'products';
+    protected $_rowsetClass = 'MyRowset';
+}
+
+// Or specify a custom Rowset to be used in one
+// instance of a Table class.
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Typically, the standard Zend_Db_Rowset concrete class is
+            sufficient for most usage.  However, you might find it useful
+            to add new logic to a Rowset, specific to a given Table.
+            For example, a new method could calculate an aggregate 
+            over all the Rows in the Rowset.
+        </para>
+
+        <example id="zend.db.table.rowset.extending.example-aggregate">
+            <title>Example of Rowset class with a new method</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
+{
+    /**
+     * Find the Row in the current Rowset with the
+     * greatest value in its 'updated_at' column.
+     */
+    public function getLatestUpdatedRow()
+    {
+        $max_updated_at = 0;
+        $latestRow = null;
+        foreach ($this as $row) {
+            if ($row->updated_at > $max_updated_at) {
+                $latestRow = $row;
+            }
+        }
+        return $latestRow;
+    }
+}
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+    protected $_rowsetClass = 'MyBugsRowset';
+}
+
+?>]]></programlisting>
+        </example>
 
     </sect2>
 
