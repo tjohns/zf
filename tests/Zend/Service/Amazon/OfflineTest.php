@@ -63,13 +63,6 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     protected $_amazon;
 
     /**
-     * Socket based HTTP client adapter
-     *
-     * @var Zend_Http_Client_Adapter_Socket
-     */
-    protected $_httpClientAdapterSocket;
-
-    /**
      * HTTP client adapter for testing
      *
      * @var Zend_Http_Client_Adapter_Test
@@ -84,8 +77,6 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_amazon = new Zend_Service_Amazon(constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID'));
-
-        $this->_httpClientAdapterSocket = new Zend_Http_Client_Adapter_Socket();
 
         $this->_httpClientAdapterTest = new Zend_Http_Client_Adapter_Test();
     }
