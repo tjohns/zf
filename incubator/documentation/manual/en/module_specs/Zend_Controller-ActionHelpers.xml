@@ -1,0 +1,80 @@
+<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2003/XInclude">
+	<title>Action Helpers</title>
+
+	<sect2 id="zend.controller.actionhelper.introduction">
+		<title>Introduction</title>
+		<para>
+		    Action Helpers allow developers to inject runtime and/or on-demand
+		    functionality into any Action Controllers that extend Zend_Controller_Action.
+		    Before Action Helpers, the only way to inject functionality into the abstract 
+		    Action Controller was to extend it with the desired common functionality 
+		    as methods of the new extened Action Controller class. Action Helpers aim 
+		    to minimize the necessity to extend the abstract action controller in order 
+		    to inject common Action Controller functionality.
+		</para>
+
+		<para>
+		    There are a number of ways to use Action Helpers.  Action Helpers employ the
+		    use of a brokerage system, similar to the types of brokerage you see in
+		    Zend_View_Helpers, and that of Zend_Controller_Plugin.  Action Helpers 
+		    (like Zend_View_Helpers) are minimally loaded and called on demand; 
+		    maximumly can be instantiated at request time (bootstrap) or action 
+		    controller creation time (init()).  To understand this more fully, please
+		    see the usage section below.
+        </para>
+
+    </sect2>
+
+	<sect2 id="zend.controller.actionhelper.initialization">
+        <title>Helper Initialization</title>
+
+        <para>
+        A helper can be initialized in a couple of different ways, based on your need
+        as well as based on the functionality of that helper.  The first and most easy
+        to use method is "on-demand".  The following example demonstrates different
+        ways to use action helpers on demand from within a dispatched action controller.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?php
+
+// from the dispatched action method
+class SomeController extends Zend_Controller_Action
+{
+    public function myAction()
+    {
+        /**
+         * default method of getting Zend_Controller_Action_Helper_FlashMessenger
+         * instance on-demand
+         */
+        $flashMessenger = $this->_helpers->getHelper('FlashMessenger');
+        $flashMessenger->addMessage('We did something in SomeController/MyAction last request');
+        
+        // equivelant usage:
+        $flashMessenger = $this->_helpers->FlashMessenger;
+        $flashMessenger->addMessage('We did something in SomeController/MyAction last request');
+        
+        // equivelant usage: (as per defined by FlashMessenger Docs via _direct() call)
+        $flashMessenger = $this->_helpers->FlashMessenger('We did something in SomeController/MyAction last request');
+    }
+
+}
+
+]]></programlisting>
+
+    </sect2>
+
+	<sect2 id="zend.controller.actionhelper.stockhelpers">
+	    <title>Built-in Action Helpers</title>
+        <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
+    </sect2>
+    
+	<sect2 id="zend.controller.actionhelper.writingyourown">
+        <title>Writing Your Own Helpers</title>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

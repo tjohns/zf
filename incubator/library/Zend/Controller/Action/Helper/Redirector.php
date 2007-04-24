@@ -55,6 +55,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     protected $_prependBase = true;
     
     
+    protected $_gotoUrl = null;
+    
+    
     /**
      * Retrieve HTTP status code to emit on {@link _redirect()} call
      * 
@@ -148,14 +151,65 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     
     
     /**
-     * Perform a redirect
+     * Perform a redirect to an action/controller/module with params
+     *
+     * @param  string $action
+     * @param  string $controller
+     * @param  string $module
+     * @param  array $params
+     */
+    public function setGoto($action, $controller = null, $module = null, $params = array())
+    {
+        /**
+         * @todo Matthew dev here
+         */
+        
+        
+        
+        $this->_gotoUrl = $url;
+    }
+    
+    
+    public function setGotoUrl($url)
+    {
+        $this->_gotoUrl = $url;
+    }
+    
+    
+    
+    /**
+     * Perform a redirect to an action/controller/module with params
+     *
+     * @param  string $action
+     * @param  string $controller
+     * @param  string $module
+     * @param  array $params
+     */
+    public function goto($action, $controller = null, $module = null, $params = array())
+    {
+        $this->setGoto($action, $controller, $module, $params);
+        
+        /**
+         * @todo Matthew dev here
+         */
+         
+        if ($exit) {
+            $this->exitAndRedirect();
+        }
+    }
+    
+    
+    /**
+     * Perform a redirect to a url
      *
      * @param  string $url
      * @param  array $options
      * @return void
      */
-    public function goto($url, array $options = null)
+    public function gotoUrl($url, array $options = null)
     {
+        $this->setGotoUrl($url);
+        
         // prevent header injections
         $url = str_replace(array("\n", "\r"), '', $url);
 
@@ -195,19 +249,31 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         $response->setRedirect($url, $code);
 
         if ($exit) {
-            // Close session, if started
-            if (isset($_SESSION)) {
-                session_write_close();
-            }
-
-            $response->sendHeaders();
-            exit();
+            $this->exitAndRedirect();
         }
     }
     
     
     /**
+     * exit(): Perform exit for redirector
+     *
+     */
+    public function redirectAndExit()
+    {
+        // Close session, if started
+        if (isset($_SESSION)) {
+            session_write_close();
+        }
+
+        $response->sendHeaders();
+        exit();
+    }
+    
+    
+    /**
      * direct(): Perform helper when called as $this->_helper->redirector($url, $options)
+     *
+     * @todo change this to perform the goto method NOT the gotoUrl method
      *
      * @param  string $url
      * @param  array $options
@@ -215,6 +281,6 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      */
     public function direct($url, array $options = null)
     {
-        $this->goto($url, $options);
+        $this->gotoUrl($url, $options);
     }
 }

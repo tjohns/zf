@@ -1,0 +1,91 @@
+<sect3 id="zend.controller.actionhelpers.redirector">
+	<title>Redirector</title>
+
+	<sect4 id="zend.controller.actionhelper.redirector.introduction">
+		<title>Introduction</title>
+		<para>
+		    The Redirector helper allows you to use a redirector object 
+		    to furfill your applications needs as to redirecting to a new
+		    url.  The has numerous benefits this has over the _redirect()
+		    method such as being able to preconfigure sitewide behavior into
+		    the redirect object, or using the built in 
+		    goto($action, $controller, $module) interface similar to that of
+		    Zend_Controller_Action::_forward().
+		</para>
+
+    </sect4>
+	<sect4 id="zend.controller.actionhelper.redirector.basicusage">
+		<title>Basic Usage Example</title>
+		<para>
+            Please see the usage example below:
+		</para>
+
+        <programlisting role="php"><![CDATA[
+<?php
+// from the dispatched action method
+class SomeController extends Zend_Controller_Action
+{
+
+    /**
+     * Redirector - defined for code completion
+     *
+     * @var Zend_Controller_Action_Helper_Redirector
+     */
+    protected $_redirector = null;
+    
+    
+    public function init()
+    {
+        $this->_redirector = $this->_helpers->getHelper('FlashMessenger');
+        
+        // set the default options for the redirector
+        $this->_redirector->setCode('303')
+                          ->setExit(false)
+                          ->setGoto("this-action", "some-controller");
+    }
+    
+    public function myAction()
+    {
+        /* do some stuff */
+
+        $this->_redirector->redirectAndExit();
+        return; // never reached
+    }
+}
+
+
+// ALTERNATE EXAMPLE
+// from the dispatched action method
+class AlternativeController extends Zend_Controller_Action
+{
+
+    /**
+     * Redirector - defined for code completion
+     *
+     * @var Zend_Controller_Action_Helper_Redirector
+     */
+    protected $_redirector = null;
+    
+    
+    public function init()
+    {
+        $this->_redirector = $this->_helpers->getHelper('FlashMessenger');
+    }
+    
+    public function myAction()
+    {
+        /* do some stuff */
+
+        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        return; // never reached since default is to goto and exit
+    }
+}
+
+]]></programlisting>
+
+    </sect4>
+</sect3>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
