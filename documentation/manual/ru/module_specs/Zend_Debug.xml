@@ -98,7 +98,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         </para>
         <para>
             Также рассмотрите возможность использования компоненты
-            <link linkend="zend.log.introduction">Zend_Log</link> при написании
+            <link linkend="zend.log.overview">Zend_Log</link> при написании
             более долговременного отладочного кода. Например, вы можете
             использовать уровень журналирования <code>DEBUG</code> и
             регистратор Zend_Log_Writer_Stream для вывода строки, возвращенной

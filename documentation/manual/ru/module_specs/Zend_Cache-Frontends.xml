@@ -16,9 +16,10 @@
             </para>
             <note>
                 <para>
-                    Все фронтэнды наследуют от класса <code>Zend_Cache_Core</code>,
-                    поэтому его методы и опции, описанные ниже, должны быть доступны
-                    в других фронтэндах и не будут описываться далее.
+                    Все фронтэнды наследуют от класса
+                    <code>Zend_Cache_Core</code>, поэтому его методы и опции,
+                    описанные ниже, должны быть доступны в других фронтэндах и
+                    не будут описываться далее.
 <!--
                     All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
                     (described below) would also be available in other frontends, therefore they won't be
@@ -30,7 +31,8 @@
         <sect3 id="zend.cache.core.options">
             <title>Доступные опции<!--Available options--></title>
             <para>
-                Эти опции передаются фабричному методу, как было показано в предыдущих примерах.
+                Эти опции передаются фабричному методу, как было показано в
+                предыдущих примерах.
 <!--
                 These options are passed to the factory method as demonstrated in previous examples.
 -->
@@ -81,14 +83,16 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>writeControl</code></entry>
+                              <entry><code>write_сontrol</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                Включает / отключает контроль записи (кэш читается сразу после
-                                записи для выявления поврежденных записей), включение writeControl
-                                немного замедлит запись кэша, но не чтение. Этот контроль может выявить
-                                некоторые поврежденные файлы кэша, но не является совершенным.
+                                Включает / отключает контроль записи (кэш
+                                читается сразу после записи для выявления
+                                поврежденных записей), включение writeControl
+                                немного замедлит запись кэша, но не чтение. Этот
+                                контроль может выявить некоторые поврежденные
+                                файлы кэша, но не является совершенным.
                                 <!--Enable / disable write control (the cache is read 
                                 just after writing to detect corrupt entries), enabling writeControl
                                 will lightly slow the cache writing but not the cache reading (it 
@@ -96,27 +100,32 @@
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticSerialization</code></entry>
+                              <entry><code>automatic_serialization</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                Включает / отключает автоматическую сериализацию, она может
-                                использоваться для сохранения напрямую данных, которые не являются
+                                Включает / отключает автоматическую 
+                                сериализацию, она может использоваться для
+                                сохранения напрямую данных, которые не являются
                                 строками (но это будет меденнее).
                                 <!--Enable / disable automatic serialization, it can be used to save directly datas
                                 which aren't strings (but it's slower)-->            
                               </entry>
                           </row>
                           <row>
-                              <entry><code>automaticCleaningFactor</code></entry>
+                              <entry><code>automatic_cleaning_factor</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>10</code></entry>
                               <entry>
-                    					  Отключает / настраивает автоматический процесс очистки (сборщик мусора) :
-                    					  <code>0</code> означает, что автоматическая чистка кэша не производится,
-                                <code>1</code> означает систематическую очистку кэша,
-                                <code>x (integer) &gt; 1</code> означает, что автоматическая
-                                чистка производится случайным образом 1 раз на x записей кэша.  
+                    					  Отключает / настраивает автоматический процесс
+                                очистки (сборщик мусора) :
+                    					  <code>0</code> означает, что автоматическая
+                                чистка кэша не производится,
+                                <code>1</code> означает систематическую очистку
+                                кэша,
+                                <code>x (integer) &gt; 1</code> означает, что
+                                автоматическая чистка производится случайным
+                                образом 1 раз на x записей кэша.  
                                 <!--Disable / Tune the automatic cleaning process (garbage collector):
                                 0 means no automatic cache cleaning, 1 means systematic cache cleaning
                                 and x &gt; 1 means automatic random cleaning 1 times in x write operations.-->
@@ -136,11 +145,12 @@
 -->
             </para>
             <para>
-            	  Если вы храните в кэше только строки (с опцией <code>automaticSerialization</code>
-                возможно хранить некоторые булевы значения), вы можете использовать
-                более компактную конструкцию, похожую на:
+            	  Если вы храните в кэше только строки (с опцией
+                <code>automatic_serialization</code> возможно хранить некоторые
+                булевы значения), вы можете использовать более компактную
+                конструкцию, похожую на:
 <!--
-                If you store only strings into cache (because with "automaticSerialization" option, it's possible
+                If you store only strings into cache (because with "automatic_serialization" option, it's possible
                 to store some booleans), you can use a more compact construction like:
 -->
             </para>
@@ -166,8 +176,8 @@ if (!($data = $cache->load($id))) {
              
 ?>]]>       </programlisting> 
             <para>
-                Если вы хотите закэшировать несколько блоков или экземпляров данных,
-                то принцип будет тот же:
+                Если вы хотите закэшировать несколько блоков или экземпляров
+                данных, то принцип будет тот же:
 <!--
                 If you want to cache multiple blocks or data instances, the idea is the same:
 -->
@@ -220,8 +230,8 @@ echo($data);
             <para>
                 <code>Zend_Cache_Frontend_Output</code> является фронтэндом,
                 собирающим выходные данные. Он использует буферизацию вывода
-                (output buffering) в PHP для сохранения всего, что выводится между
-                его методами <code>start()</code> и <code>end()</code>.
+                (output buffering) в PHP для сохранения всего, что выводится
+                между его методами <code>start()</code> и <code>end()</code>.
 <!--
                 <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
                 output buffering in PHP to capture everything between its <code>start()</code> and
@@ -244,8 +254,8 @@ echo($data);
         <sect3 id="zend.cache.frontend.output.examples">
             <title>Примеры</title>
             <para>
-                Пример был дан в самом начале данного раздела руководства. Здесь он с
-                небольшими изменениями:
+                Пример был дан в самом начале данного раздела руководства. Здесь
+                он с небольшими изменениями:
 <!--
                 An example is given in the manual at the very beginning. Here it is with minor changes:
 -->
@@ -268,9 +278,9 @@ echo 'This is never cached ('.time().').';
 
 ?>]]>       </programlisting>
             <para>
-                Используя эту форму, довольно легко установить кэширование вывода в
-                уже работающем проекте с незначительным рефакторингом кода или
-                совсем без него. 
+                Используя эту форму, довольно легко установить кэширование
+                вывода в уже работающем проекте с незначительным рефакторингом
+                кода или совсем без него. 
 <!--
                 Using this form it is fairly easy to set up output caching in your already working project
                 with little or no code refactoring.
@@ -286,8 +296,8 @@ echo 'This is never cached ('.time().').';
             <para>
                 <code>Zend_Cache_Frontend_Function</code> сохраняет в кэш
                 результаты вызова функции. Он имеет единственный основной метод
-                <code>call()</code> который принимает имя функции и параметры вызова
-                в массиве.
+                <code>call()</code> который принимает имя функции и параметры
+                вызова в массиве.
 <!--
                 <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
                 a single main method named <code>call()</code> which takes a function name and parameters
@@ -314,7 +324,8 @@ echo 'This is never cached ('.time().').';
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  Если равен true, то вызовы функции по умолчанию кэшируются. 
+                                  Если равен true, то вызовы функции по
+                                  умолчанию кэшируются. 
                                   <!--if true, function calls will be cached by default-->                
                               </entry>
                          </row>
@@ -332,7 +343,8 @@ echo 'This is never cached ('.time().').';
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  Имена функций, которые никогда не должны кэшироваться.
+                                  Имена функций, которые никогда не должны
+                                  кэшироваться.
                                   <!--function names which must never be cached-->               
                               </entry>
                          </row>
@@ -361,9 +373,9 @@ $cache->call('veryExpensiveFunc', $params);
 
 ?>]]>       </programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> достаточно интеллектуален,
-                чтобы кэшировать как возвращаемое функцией значение, так и данные, 
-                выводимые внутри нее.
+                <code>Zend_Cache_Frontend_Function</code> достаточно
+                интеллектуален, чтобы кэшировать как возвращаемое функцией
+                значение, так и данные, выводимые внутри нее.
 <!--
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
                 return value of the function and its internal output.
@@ -371,10 +383,12 @@ $cache->call('veryExpensiveFunc', $params);
             </para>
             <note>
                 <para>
-                    Вы можете передавать любые встроенные, так и определенные пользователем
-                    функции, за исключением <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
-                    <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
-                    и <code>unset()</code>.
+                    Вы можете передавать любые встроенные, так и определенные
+                    пользователем функции, за исключением <code>array()</code>,
+                    <code>echo()</code>, <code>empty()</code>,
+                    <code>eval()</code>, <code>exit()</code>,
+                    <code>isset()</code>, <code>list()</code>,
+                    <code>print()</code> и <code>unset()</code>.
 <!--
                     You can pass any builtin or user defined function with the exception of
                     <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
@@ -664,106 +678,158 @@ $res = $cache->foobar2('1', '2');
 	                 </thead>
 	                 <tbody>
 	                 	 <row>
-	                          <entry><code>httpConditional</code></entry>
+	                          <entry><code>http_conditional</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              Использовать условную систему HTTP (не реализовано на данный момент) 
+	                              Использовать условную систему HTTP (не
+                                реализовано на данный момент) 
 	                              <!--use the httpConditional system (not implemented for the moment)-->                 
 	                          </entry>
 	                     </row>
 	                     <row>
-	                          <entry><code>debugHeader</code></entry>
+	                          <entry><code>debug_header</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              Если установлен в <code>true</code>, то отладочный
-                                текст включается перед каждой кэшируемой страницей. 
+	                              Если установлен в <code>true</code>, то
+                                отладочный текст включается перед каждой
+                                кэшируемой страницей. 
 	                              <!--if true, a debug text is added before each cached pages-->                 
 	                          </entry>
 	                     </row>
 	                     <row>
-	                     	    <entry><code>defaultOptions</code></entry>
+	                     	    <entry><code>default_options</code></entry>
 	                          <entry><code>array</code></entry>
 	                          <entry><code>array(...смотрите далее...)</code></entry>
 	                          <entry>
-	                              Ассоциативный массив опций, включаемых по умолчанию
+	                              Ассоциативный массив опций, включаемых по
+                                умолчанию
 	                              <!--an associative array of default options :--> 
 	                              <itemizedlist>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>cache</code> :
-                                             если <code>true</code>, то кэширование включено
+                                            (<code>boolean, true</code> по
+                                            умолчанию) <code>cache</code> :
+                                            если <code>true</code>, то
+                                            кэширование включено
                                              <!--cache is on if true-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, false</code> по умолчанию) <code>cacheWithGetVariables</code> :
-                                            если <code>true</code>, кэширование включено, даже если в массиве <code>$_GET</code> есть переменные
+                                            (<code>boolean, false</code> по
+                                            умолчанию)
+                                            <code>cache_with_get_variables</code> :
+                                            если <code>true</code>, кэширование
+                                            включено, даже если в массиве
+                                            <code>$_GET</code> есть переменные
                                             <!--if true, cache is still on even if there are some variables in <code>$_GET</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, false</code> по умолчанию) <code>cacheWithPostVariables</code> :
-                                            если <code>true</code>, кэширование включено, даже если в массиве <code>$_POST</code> есть переменные
+                                            (<code>boolean, false</code> по
+                                            умолчанию)
+                                            <code>cache_with_post_variables</code> :
+                                            если <code>true</code>, кэширование
+                                            включено, даже если в массиве
+                                            <code>$_POST</code> есть переменные
                                             <!--if true, cache is still on even if there are some variables in <code>$_POST</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, false</code> по умолчанию) <code>cacheWithSessionVariables</code> :
-                                            если <code>true</code>, кэширование включено, даже если в массиве <code>$_SESSION</code> есть переменные
+                                            (<code>boolean, false</code> по
+                                            умолчанию)
+                                            <code>cache_with_session_variables</code> :
+                                            если <code>true</code>, кэширование
+                                            включено, даже если в массиве
+                                            <code>$_SESSION</code> есть
+                                            переменные
                                             <!--if true, cache is still on even if there are some variables in <code>$_SESSION</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, false</code> по умолчанию) <code>cacheWithFilesVariables</code> :
-                                            если <code>true</code>, кэширование включено, даже если в массиве <code>$_FILES</code> есть переменные
+                                            (<code>boolean, false</code> по
+                                            умолчанию)
+                                            <code>cache_with_files_variables</code> :
+                                            если <code>true</code>, кэширование
+                                            включено, даже если в массиве
+                                            <code>$_FILES</code> есть переменные
                                             <!--if true, cache is still on even if there are some variables in <code>$_FILES</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, false</code> по умолчанию) <code>cacheWithCookieVariables</code> :
-                                            если <code>true</code>, кэширование включено, даже если в массиве <code>$_COOKIE</code> есть переменные
+                                            (<code>boolean, false</code> по
+                                            умолчанию)
+                                            <code>cache_with_cookie_variables</code> :
+                                            если <code>true</code>, кэширование
+                                            включено, даже если в массиве
+                                            <code>$_COOKIE</code> есть
+                                            переменные
                                             <!--if true, cache is still on even if there are some variables in <code>$_COOKIE</code> array-->
                                         </para>
                                     </listitem>
 									                  <listitem>
 									                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>makeIdWithGetVariables</code> :
-                                            если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_GET</code>  
+                                            (<code>boolean, true</code> по
+                                            умолчанию)
+                                            <code>make_id_with_get_variables</code> :
+                                            если <code>true</code>, то
+                                            идентификатор кэша будет зависеть
+                                            от содержимого массива
+                                            <code>$_GET</code>  
                                             <!--if true, the cache id will be dependent of the content of the <code>$_GET</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>makeIdWithPostVariables</code> :
-                                            если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_POST</code>  
+                                            (<code>boolean, true</code> по
+                                            умолчанию)
+                                            <code>make_id_with_post_variables</code> :
+                                            если <code>true</code>, то
+                                            идентификатор кэша будет зависеть
+                                            от содержимого массива
+                                            <code>$_POST</code>  
                                             <!--if true, the cache id will be dependent of the content of the <code>$_POST</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>makeIdWithSessionVariables</code> :
-                                            если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_SESSION</code>  
+                                            (<code>boolean, true</code> по
+                                            умолчанию)
+                                            <code>make_id_with_session_variables</code> :
+                                            если <code>true</code>, то
+                                            идентификатор кэша будет зависеть
+                                            от содержимого массива
+                                            <code>$_SESSION</code>  
                                             <!--if true, the cache id will be dependent of the content of the <code>$_SESSION</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>makeIdWithFilesVariables</code> :
-                                            если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_FILES</code>  
+                                            (<code>boolean, true</code> по
+                                            умолчанию)
+                                            <code>make_id_with_files_variables</code> :
+                                            если <code>true</code>, то
+                                            идентификатор кэша будет зависеть от
+                                            содержимого массива
+                                            <code>$_FILES</code>  
                                             <!--if true, the cache id will be dependent of the content of the <code>$_FILES</code> array-->
                                         </para>
                                     </listitem>
 	                                  <listitem>
 	                                      <para>
-                                            (<code>boolean, true</code> по умолчанию) <code>makeIdWithCookieVariables</code> :
-                                            если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_COOKIE</code>  
+                                            (<code>boolean, true</code> по
+                                            умолчанию)
+                                            <code>make_id_with_cookie_variables</code> :
+                                            если <code>true</code>, то
+                                            идентификатор кэша будет зависеть от
+                                            содержимого массива
+                                            <code>$_COOKIE</code>  
                                             <!--if true, the cache id will be dependent of the content of the <code>$_COOKIE</code> array-->
                                         </para>
                                     </listitem>	                              
@@ -779,12 +845,13 @@ $res = $cache->foobar2('1', '2');
                                 для некоторых REQUEST_URI. Ключами этого массива
                                 являются регулярные выражения (PCRE), значениями —
                                 ассоциативные массивы со специальными опциями,
-                                которые устанавливаются, если $_SERVER['REQUEST_URI']
+                                которые устанавливаются, если
+                                $_SERVER['REQUEST_URI']
                                 соответствует регулярному выражению
-                                (см. defaultOptions в этом списке доступных опций).
-                                Если $_SERVER['REQUEST_URI'] соответствует нескольким
-                                регулярным выражениям, то используется только
-                                последнее из них.
+                                (см. default_options в этом списке доступных
+                                опций). Если $_SERVER['REQUEST_URI']
+                                соответствует нескольким регулярным выражениям,
+                                то используется только последнее из них.
 <!--
                                 an associative array to set options only for some REQUEST_URI, keys are (PCRE) regexps, values are 
 	                          	  associative arrays with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
@@ -800,7 +867,8 @@ $res = $cache->foobar2('1', '2');
     	<sect3 id="zend.cache.frontends.page.examples">
         	<title>Пример</title>
 	        <para>
-	            Использование <code>Zend_Cache_Frontend_Page</code> довольно простое: 
+	            Использование <code>Zend_Cache_Frontend_Page</code> довольно
+              простое: 
 <!--
 	            Use of Zend_Cache_Frontend_Page is really trivial :
 -->
@@ -835,20 +903,20 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200,
-   'debugHeader' => true, // for debuging 
+   'debug_header' => true, // для отладки 
    'regexps' => array(
        '^/$' => array('cache' => true),         // кэширование всего IndexController;         
        '^/index/' => array('cache' => true),    // кэширование всего IndexController;
        '^/article/' => array('cache' => false), // не кэшируем ArticleController...
        '^/article/view/' => array(              // ...но кэшируем действие "view" 
            'cache' => true,                     // контроллера ArticleController;
-           'cacheWithPostVariables' => true,    // кэшируем, даже если есть переменные $_POST
-           'makeIdWithPostVariables' => true,   // (но кэш будет зависеть от массива $_POST)
+           'cache_with_post_variables' => true,    // кэшируем, даже если есть переменные $_POST
+           'make_id_with_post_variables' => true,   // (но кэш будет зависеть от массива $_POST)
        )
    )	  
 );
 $backendOptions = array(
-    'cacheDir' => '/tmp/' 
+    'cache_dir' => '/tmp/' 
 );
 
 // получение объекта Zend_Cache_Frontend_Page

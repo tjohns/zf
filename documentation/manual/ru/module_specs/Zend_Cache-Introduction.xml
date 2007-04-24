@@ -7,10 +7,10 @@
     <para>
         Управление кэшированием в Zend Framework производится через фронтэнды
         (интерфейсные части), записи кэша сохраняются через бэкэнды
-        (адаптеры <code>File</code>, <code>Sqlite</code>, <code>Memcache</code> и др.),
-        с использованием гибкой системы идентификаторов и тегов, благодаря которым
-        можно потом легко удалять определенные типы записей (например:
-        "удалить все записи кэша, помеченные данным тегом").
+        (адаптеры <code>File</code>, <code>Sqlite</code>, <code>Memcache</code>
+        и др.), с использованием гибкой системы идентификаторов и тегов,
+        благодаря которым можно потом легко удалять определенные типы записей
+        (например: "удалить все записи кэша, помеченные данным тегом").
 <!--
         Caching in Zend Framework is operated by frontends while cache
         records are stored through backend adapters (<code>File</code>,
@@ -21,8 +21,9 @@
 -->
     </para>
     <para>
-        Ядро модуля (<code>Zend_Cache_Core</code>) является гибким, универсальным
-        и конфигурируемым. Кроме этого, для особых нужд есть фронтэнды, расширяющие
+        Ядро модуля (<code>Zend_Cache_Core</code>) является гибким,
+        универсальным и конфигурируемым. Кроме этого, для особых нужд есть
+        фронтэнды, расширяющие
         <code>Zend_Cache_Core</code>: <code>Output</code>, <code>File</code>,
         <code>Function</code> и <code>Class</code>.
 <!--
@@ -50,11 +51,11 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200, // время жизни кэша - 2 часа 
-   'automaticSerialization' => true
+   'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // директория, в которой размещаются файлы кэша
+    'cache_dir' => './tmp/' // директория, в которой размещаются файлы кэша
 );
 
 // получение объекта Zend_Cache_Core
@@ -106,10 +107,10 @@ print_r($result);
             <!--Caching output with <code>Zend_Cache</code> output frontend-->
         </title>
         <para>
-            Мы размечаем участки, внутри которых хотим поместить в кэш выходные данные,
-            добавлением условной логики, окружая участок методами <code>start()</code>
-            и <code>end()</code>. Этот пример похож на первый и является
-            основной стратегией кэширования.
+            Мы размечаем участки, внутри которых хотим поместить в кэш выходные
+            данные, добавлением условной логики, окружая участок методами
+            <code>start()</code> и <code>end()</code>. Этот пример похож на
+            первый и является основной стратегией кэширования.
 <!--
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
             encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
@@ -117,9 +118,9 @@ print_r($result);
 -->
         </para><para>
             Внутри выводим данные как обычно — весь вывод будет добавлен в кэш,
-            когда будет достигнут метод <code>end()</code>. При следующем запуске
-            весь участок кода будет пропущен, вместо этого извлекаются данные из кэша
-            (до тех пор, пока записи действительны).
+            когда будет достигнут метод <code>end()</code>. При следующем
+            запуске весь участок кода будет пропущен, вместо этого извлекаются
+            данные из кэша (до тех пор, пока записи действительны).
 <!--
             Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
             method. On the next run, the whole section will be skipped in favor of fetching data from cache 
@@ -130,10 +131,10 @@ print_r($result);
 
 $frontendOptions = array(
    'lifetime' => 30,                  // время жизни кэша - половина минуты
-   'automaticSerialization' => false  // уже установлено по умолчанию
+   'automatic_serialization' => false  // уже установлено по умолчанию
 );
 
-$backendOptions = array('cacheDir' => './tmp/');
+$backendOptions = array('cache_dir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 
@@ -156,10 +157,10 @@ echo 'This is never cached ('.time().').';
            запустить это и обновить страницу несколько раз. Вы заметите,
            что первое число не изменяется, в то время как второе меняется в
            зависимости от текущего времени. Это потому, что первое число
-           было выведено в кэшируемой части и сохранено среди других выходных данных.
-           После того, как пройдет полминуты (мы установили время жизни кэша
-           равным 30 секундам) числа снова должны стать одинаковыми, потому что
-           срок действия кэша истек, сразу после этого производится новое
+           было выведено в кэшируемой части и сохранено среди других выходных
+           данных. После того, как пройдет полминуты (мы установили время жизни
+           кэша равным 30 секундам) числа снова должны стать одинаковыми, потому
+           что срок действия кэша истек, сразу после этого производится новое
            сохранение в кэш.
 <!--
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
@@ -173,11 +174,11 @@ echo 'This is never cached ('.time().').';
        </para>
     </example>
     <note><para>
-        Когда используете <code>Zend_Cache</code>, уделяйте внимание идентификатору
-        кэша (передается методам <code>save()</code> и <code>start()</code>).
-        Он должен быть уникальным для каждого ресурса, который вы кэшируете,
-        иначе не связанные записи кэша могут затирать друг друга, или, что еще
-        хуже, отображаться вместо других.
+        Когда используете <code>Zend_Cache</code>, уделяйте внимание
+        идентификатору кэша (передается методам <code>save()</code> и
+        <code>start()</code>). Он должен быть уникальным для каждого ресурса,
+        который вы кэшируете, иначе не связанные записи кэша могут затирать друг
+        друга, или, что еще хуже, отображаться вместо других.
 <!--
         When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
         and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
