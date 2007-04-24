@@ -686,8 +686,9 @@ abstract class Zend_Db_Table_Row_Abstract
         $stmt = $select->query();
 
         $config = array(
-            'table' => $matchTable,
-            'data'  => $stmt->fetchAll(Zend_Db::FETCH_ASSOC)
+            'table'    => $matchTable,
+            'data'     => $stmt->fetchAll(Zend_Db::FETCH_ASSOC),
+            'rowClass' => $matchTable->getRowClass()
         );
 
         $rowsetClass = $matchTable->getRowsetClass();
