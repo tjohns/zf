@@ -84,6 +84,7 @@ final class Zend_Controller_Action_HelperBroker
      */
     static public function addPrefix($prefix)
     {
+        $prefix = rtrim($prefix, '_');
         $path = str_replace('_', DIRECTORY_SEPARATOR, $prefix);
         self::addPath($path, $prefix);
         return;
@@ -106,10 +107,10 @@ final class Zend_Controller_Action_HelperBroker
      * addPath() - Add path to repositories where Action_Helpers could be found.
      *
      * @param string $path
-     * @param string $prefix
+     * @param string $prefix Optional; defaults to 'Zend_Controller_Action_Helper'
      * @return void
      */
-    static public function addPath($path, $prefix)
+    static public function addPath($path, $prefix = 'Zend_Controller_Action_Helper')
     {
         // make sure it ends in a PATH_SEPARATOR
         if (substr($path, -1, 1) != DIRECTORY_SEPARATOR) {
@@ -117,11 +118,9 @@ final class Zend_Controller_Action_HelperBroker
         }
 
         // make sure it ends in a PATH_SEPARATOR
-        if (substr($prefix, -1, 1) != '_') {
-            $prefix .= '_';
-        }
+        $prefix = rtrim($prefix, '_');
         
-        $info['dir'] = $path;
+        $info['dir']    = $path;
         $info['prefix'] = $prefix;
         
         self::$_paths[] = $info;

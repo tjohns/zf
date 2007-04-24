@@ -151,31 +151,32 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     
     
     /**
-     * Perform a redirect to an action/controller/module with params
+     * Set a redirect URL to an action/controller/module with params
      *
+     * @todo   Build URL ala Zend_Controller_Action::_forward()
      * @param  string $action
      * @param  string $controller
      * @param  string $module
      * @param  array $params
+     * @return void
      */
     public function setGoto($action, $controller = null, $module = null, $params = array())
     {
-        /**
-         * @todo Matthew dev here
-         */
-        
-        
-        
         $this->_gotoUrl = $url;
     }
     
     
+    /**
+     * Set a redirect URL string
+     * 
+     * @todo   Move gotoUrl() functionality into this method
+     * @param  string $url 
+     * @return void
+     */
     public function setGotoUrl($url)
     {
         $this->_gotoUrl = $url;
     }
-    
-    
     
     /**
      * Perform a redirect to an action/controller/module with params
@@ -185,7 +186,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  string $module
      * @param  array $params
      */
-    public function goto($action, $controller = null, $module = null, $params = array())
+    public function goto($action, $controller = null, $module = null, array $params = array())
     {
         $this->setGoto($action, $controller, $module, $params);
         
@@ -194,10 +195,24 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
          */
          
         if ($exit) {
-            $this->exitAndRedirect();
+            $this->redirectAndExit();
         }
     }
     
+    /**
+     * Perform a redirect to an action/controller/module with params, forcing an immdiate exit
+     * 
+     * @param mixed $action 
+     * @param mixed $controller 
+     * @param mixed $module 
+     * @param array $params 
+     * @return void
+     */
+    public function gotoAndExit($action, $controller = null, $module = null, array $params = array())
+    {
+        $this->setGoto($action, $controller, $module, $params);
+        $this->redirectAndExit();
+    }
     
     /**
      * Perform a redirect to a url
@@ -249,10 +264,22 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         $response->setRedirect($url, $code);
 
         if ($exit) {
-            $this->exitAndRedirect();
+            $this->redirectAndExit();
         }
     }
     
+    /**
+     * Set a URL string for a redirect, perform redirect, and immediately exit
+     * 
+     * @param  string $url 
+     * @param  array $options 
+     * @return void
+     */
+    public function gotoUrlAndExit($url, array $options = null)
+    {
+        $this->setExit(true);
+        $this->gotoUrl($url, $options);
+    }
     
     /**
      * exit(): Perform exit for redirector
@@ -261,7 +288,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     public function redirectAndExit()
     {
         // Close session, if started
-        if (isset($_SESSION)) {
+        if (class_exists('Zend_Session', false) && Zend_Session::isStarted()) {
+            Zend_Session::writeClose();
+        } elseif (isset($_SESSION)) {
             session_write_close();
         }
 
