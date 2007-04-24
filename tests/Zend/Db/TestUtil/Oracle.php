@@ -19,83 +19,25 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/TestUtil/Common.php';
-require_once 'Zend/Db/Expr.php';
+/**
+ * @see Zend_Db_TestUtil_Pdo_Oci
+ * @see Zend_Db_TestUtil_Common
+ */
+require_once 'Zend/Db/TestUtil/Pdo/Oci.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Common
+class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Pdo_Oci
 {
 
-    public function getParams(array $constants = array())
+    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
     {
-        $constants = array(
-            'host'     => 'TESTS_ZEND_DB_ADAPTER_ORACLE_HOSTNAME',
-            'username' => 'TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME',
-            'password' => 'TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD',
-            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_ORACLE_DATABASE',
-        );
-        return parent::getParams($constants);
-    }
-
-    public function getSqlType($type)
-    {
-        if (preg_match('/VARCHAR(.*)/', $type, $matches)) {
-            return 'VARCHAR2' . $matches[1];
+        $conn = $db->getConnection();
+        $stmt = oci_parse($conn, $sql);
+        if ($stmt === false) {
+            return false;
         }
-        if ($type == 'IDENTITY') {
-            return 'NUMBER(11) PRIMARY KEY';
-        }
-        if ($type == 'INTEGER') {
-            return 'NUMBER(11)';
-        }
-        if ($type == 'DATETIME') {
-            return 'TIMESTAMP';
-        }
-        return $type;
-    }
-
-    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
-    {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
-        if (in_array($sequenceName, $seqList)) {
-            return null;
-        }
-        return 'CREATE SEQUENCE';
-    }
-
-    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
-    {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
-        if (in_array($sequenceName, $seqList)) {
-            return 'DROP SEQUENCE';
-        }
-        return null;
-    }
-
-    public function setUp(Zend_Db_Adapter_Abstract $db)
-    {
-        $this->createSequence($db, 'bugs_seq');
-        $this->createSequence($db, 'products_seq');
-        parent::setUp($db);
-    }
-
-    protected function _getDataBugs()
-    {
-        $data = parent::_getDataBugs();
-        foreach ($data as &$row) {
-            $row['bug_id'] = new Zend_Db_Expr('bug_seq.NEXTVAL');
-        }
-        return $data;
-    }
-
-    protected function _getDataProducts()
-    {
-        $data = parent::_getDataProducts();
-        foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr('products_seq.NEXTVAL');
-        }
-        return $data;
+        return oci_execute($stmt);
     }
 
 }

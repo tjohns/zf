@@ -43,12 +43,10 @@ class Zend_Db_TestUtil_Pdo_Sqlite extends Zend_Db_TestUtil_Pdo_Common
 
     public function getParams(array $constants = array())
     {
-        $params = array (
-            'username' => 'TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME',
-            'password' => 'TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD',
+        $constants = array (
             'dbname'   => 'TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE'
         );
-        return $params;
+        return parent::getParams($constants);
     }
 
     protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)

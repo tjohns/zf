@@ -43,13 +43,13 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
 
     public function getParams(array $constants = array())
     {
-        $params = array (
-            'host'     => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_HOSTNAME,
-            'username' => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_USERNAME,
-            'password' => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD,
-            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE
+        $constants = array (
+            'host'     => 'TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_HOSTNAME',
+            'username' => 'TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_USERNAME',
+            'password' => 'TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD',
+            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE'
         );
-        return $params;
+        return parent::getParams($constants);
     }
 
     public function getSchema()

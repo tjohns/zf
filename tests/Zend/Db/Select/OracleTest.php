@@ -26,18 +26,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Select_OracleTest extends Zend_Db_Select_TestCommon
 {
 
-    public function testSelect()
-    {
-        $select = $this->_db->select();
-        $this->assertThat($select, $this->isInstanceOf('Zend_Db_Select'));
-
-        $select->from(self::TABLE_NAME);
-        $result = $this->_db->query($select);
-        $row = $result->fetch();
-        $this->assertEquals(5, count($row)); // correct number of fields
-        $this->assertEquals('1', $row['ID']); // correct data
-    }
-
     public function getDriver()
     {
         return 'Oracle';

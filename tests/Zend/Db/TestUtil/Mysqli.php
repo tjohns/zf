@@ -70,4 +70,10 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
     }
 
+    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    {
+        $mysqli = $db->getConnection();
+        return $mysqli->query($sql);
+    }
+
 }

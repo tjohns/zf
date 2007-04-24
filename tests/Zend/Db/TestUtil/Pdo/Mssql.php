@@ -43,17 +43,15 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
 
     public function getParams(array $constants = array())
     {
-        $params = array (
-            'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME,
-            'username' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME,
-            'password' => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD,
-            'dbname'   => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE
+        $constants = array (
+            'host'     => 'TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME',
+            'username' => 'TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME',
+            'password' => 'TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD',
+            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE',
+            'port'     => 'TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT'
         );
-        if (defined('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT')) {
-            $params['port'] = constant('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PORT');
-        }
 
-        return $params;
+        return parent::getParams($constants);
     }
 
     public function getCreateTableSQL()

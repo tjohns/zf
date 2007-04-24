@@ -34,7 +34,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
 {
 
-    public function testExceptionInvalidLoginCredentials()
+    public function testDbAdapterExceptionInvalidLoginCredentials()
     {
         $params = $this->_util->getParams();
         $params['password'] = 'xxxxxxxx'; // invalid password

@@ -101,7 +101,8 @@ abstract class Zend_Db_TestUtil_Common
 
         $sql .= implode(",\n\t", $col);
         $sql .= "\n)";
-        $result = $db->getConnection()->query($sql);
+        $result = $this->_rawQuery($db, $sql);
+        // $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -121,7 +122,8 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $db->getConnection()->query($sql);
+        $result = $this->_rawQuery($db, $sql);
+        // $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -148,7 +150,7 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $db->getConnection()->query($sql);
+        $result = $this->_rawQuery($db, $sql);
         if ($result === false) {
             throw new Zend_Db_Exception("CREATE SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -168,7 +170,8 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $db->getConnection()->query($sql);
+        // $result = $db->getConnection()->query($sql);
+        $result = $this->_rawQuery($db, $sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -352,7 +355,8 @@ abstract class Zend_Db_TestUtil_Common
             }
             $sql .=        ' (' . implode(', ', $cols) . ')';
             $sql .= ' VALUES (' . implode(', ', $vals) . ')';
-            $result = $db->getConnection()->query($sql);
+            $result = $this->_rawQuery($db, $sql);
+            // $result = $db->getConnection()->query($sql);
             if ($result === false) {
                 throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
             }
@@ -380,5 +384,7 @@ abstract class Zend_Db_TestUtil_Common
         $this->dropSequence($db);
         $db->closeConnection();
     }
+
+    protected abstract function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql);
 
 }
