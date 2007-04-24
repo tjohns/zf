@@ -1,7 +1,7 @@
 ﻿<sect1 id="zend.console.getopt.fetching">
     <title>Extraire les options et les arguments</title>
     <para>
-        Après que avoir déclaré les options que l'objet de <code>Zend_Console_Getopt</code> doit identifier, et fournit les arguments de la ligne de commande ou un tableau, vous pouvez interroger l'objet pour connaître les options indiquées par un utilisateur lors d'un appel à votre programme en ligne de commande. La classe implémente les méthodes magiques ainsi vous pouvez interroger directement par les nom d'options.
+        Après avoir déclaré les options que l'objet de <code>Zend_Console_Getopt</code> doit identifier, et fourni les arguments de la ligne de commande ou un tableau, vous pouvez interroger l'objet pour connaître les options indiquées par un utilisateur lors d'un appel à votre programme en ligne de commande. La classe implémente les méthodes magiques ainsi vous pouvez interroger directement par les noms d'options.
     </para>
     <para>
         L'analyse des données est reportée jusqu'à ce que vous invoquiez pour la première fois l'objet <code>Zend_Console_Getopt</code> pour découvrir si une option était renseignée, l'objet exécute alors son analyse. Ceci permet plusieurs appels de méthode pour configurer les options, arguments, messages d'aide, et les options de configuration, avant que l'analyse ne soit lancée.
@@ -49,7 +49,7 @@ try {
     <sect2 id="zend.console.getopt.fetching.byname">
         <title>Extraire les options par nom</title>
         <para>
-            Vous pouvez employer la méthode de <code>getOption()</code> pour connaître la valeur d'une option. Si l'option avait un paramètre, cette méthode retourne la valeur du paramètre. Si l'option n'avait aucun paramètre mais l'utilisateur l'indiquait sur dans la ligne de commande, la méthode retourne <code>true</code>. Autrement la méthode retourne <code>null</code>.
+            Vous pouvez employer la méthode <code>getOption()</code> pour connaître la valeur d'une option. Si l'option avait un paramètre, cette méthode retourne la valeur du paramètre. Si l'option n'avait aucun paramètre mais l'utilisateur l'indiquait sur dans la ligne de commande, la méthode retourne <code>true</code>. Autrement la méthode retourne <code>null</code>.
         </para>
         <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title>Utiliser getOption()</title>
@@ -78,9 +78,9 @@ $p_parameter = $opts->p; // null si non fourni
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.reporting">
-        <title>Reporting Options</title>
+        <title>Rapporter les options</title>
         <para>
-            Il y a plusieurs méthodes pour rapporter l'ensemble complet des options fournies par l'utilisateur sur dans la ligne de commande courante.
+            Il y a plusieurs méthodes pour rapporter l'ensemble complet des options fournies par l'utilisateur dans la ligne de commande courante.
         </para>
         <itemizedlist>
             <listitem>
@@ -90,7 +90,7 @@ $p_parameter = $opts->p; // null si non fourni
             </listitem>
             <listitem>
                 <para>
-                    Comme un tableau : employer la méthode <code>toArray()</code>. Les options sont retournées dans un tableau de chaînes de caractères indexé par des nombres, les chaînes de drapeau sont suivies par les chaînes de paramètre éventuelles.
+                    Comme un tableau : employer la méthode <code>toArray()</code>. Les options sont retournées dans un tableau de chaînes de caractères indexé par des nombres, les chaînes de drapeau sont suivies par les chaînes de paramètres éventuels.
                 </para>
             </listitem>
             <listitem>
