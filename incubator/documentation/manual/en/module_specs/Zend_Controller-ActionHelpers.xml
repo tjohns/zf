@@ -155,12 +155,14 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
 
 	<sect2 id="zend.controller.actionhelper.stockhelpers">
 	    <title>Built-in Action Helpers</title>
+
         <para>
             Zend Framework includes two action helpers by default, a
             FlashMessenger for handling session flash messages, and a
             Redirector, to provide different implementations for redirecting to
             internal and external pages from your application.
         </para>
+
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
     </sect2>

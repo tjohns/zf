@@ -3,6 +3,7 @@
 
 	<sect4 id="zend.controller.actionhelper.redirector.introduction">
 		<title>Introduction</title>
+
 		<para>
             The <code>Redirector</code> helper allows you to use a redirector
             object to fufill your application's needs for redirecting to a new
@@ -46,6 +47,15 @@
 
             <listitem>
                 <para>
+                    <code>setGotoRoute()</code> can be used to set a URL
+                    based on a registered route. Pass in an array of key/value
+                    pairs and a route name, and it will assemble the URL
+                    according to the route type and definition.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <code>setGotoUrl()</code> can be used to set a default URL to
                     use if none is passed to <code>gotoUrl()</code>. Accepts a
                     single URL string.
@@ -68,14 +78,41 @@
         </para>
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>goto()</code> uses <code>setGoto()</code>
+                    (<code>_forward()-like API</code>) to build a URL and
+                    perform a redirect.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>gotoRoute()</code> uses <code>setGotoRoute()</code>
+                    (<code>route-assembly</code>) to build a URL and
+                    perform a redirect.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>gotoUrl()</code> uses <code>setGotoUrl()</code>
+                    (<code>URL string</code>) to build a URL and
+                    perform a redirect.
+                </para>
+            </listitem>
         </itemizedlist>
+
+        <para>
+            Finally, you can determine the current redirect URL at any time
+            using <code>getRedirectUrl()</code>.
+        </para>
     </sect4>
 
 	<sect4 id="zend.controller.actionhelper.redirector.basicusage">
-		<title>Basic Usage Example</title>
+		<title>Basic Usage Examples</title>
 
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 // EXAMPLE 1: SET GLOBAL OPTIONS
 class SomeController extends Zend_Controller_Action
 {
@@ -156,7 +193,41 @@ class ForwardController extends Zend_Controller_Action
         $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }
-]]></programlisting>
+
+// EXAMPLE USING ROUTE ASSEMBLY WITH gotoRoute()
+// Assume the following route has been registered:
+// $route = new Zend_Controller_Router_Route(
+//     'blog/:year/:month/:day/:id',
+//     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+// );
+// $router->addRoute('blogArchive', $route);
+class BlogAdminController extends Zend_Controller_Action
+{
+    /**
+     * Redirector - defined for code completion
+     *
+     * @var Zend_Controller_Action_Helper_Redirector
+     */
+    protected $_redirector = null;
+    
+    public function init()
+    {
+        $this->_redirector = $this->_helpers->getHelper('Redirector');
+    }
+    
+    public function returnAction()
+    {
+        /* do some stuff */
+
+        // Redirect to blog archive. Builds the following URL:
+        // /blog/2006/4/24/42
+        $this->_redirector->gotoRoute(
+            array('year' => 2006, 'month' => 4, 'day' => 24, 'id' => 42),
+            'blogArchive'
+        );
+    }
+}
+?>]]></programlisting>
 
     </sect4>
 </sect3>
