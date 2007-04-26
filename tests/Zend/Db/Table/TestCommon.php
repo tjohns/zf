@@ -535,4 +535,144 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $row1->bug_id);
     }
 
+    /**
+     * Ensures that Zend_Db_Table_Abstract::setDefaultMetadataCache() performs as expected
+     *
+     * @return void
+     */
+    public function testTableSetDefaultMetadataCache()
+    {
+        $cache = $this->_getCache();
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache();
+
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
+    /**
+     * Ensures that Zend_Db_Table_Abstract::setMetadataCache() performs as expected
+     *
+     * @return void
+     */
+    public function testTableSetMetadataCache()
+    {
+        $cache = $this->_getCache();
+
+        $this->assertThat(
+            $this->_table['bugs']->setMetadataCache($cache),
+            $this->isInstanceOf('Zend_Db_Table_Abstract')
+            );
+
+        $this->assertSame($cache, $this->_table['bugs']->getMetadataCache());
+
+        $this->assertThat(
+            $this->_table['bugs']->setMetadataCache(),
+            $this->isInstanceOf('Zend_Db_Table_Abstract')
+            );
+
+        $this->assertNull($this->_table['bugs']->getMetadataCache());
+    }
+
+    /**
+     * Ensures that table metadata caching works as expected when the cache object
+     * is set for the table object.
+     *
+     * @return void
+     */
+    public function testTableMetadataCacheInstance()
+    {
+        $cache = $this->_getCache();
+
+        $tableBugsCustom1 = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+
+        $tableBugsCustom1->setMetadataCache($cache);
+
+        $this->assertThat(
+            $tableBugsCustom1->getMetadataCache(),
+            $this->isInstanceOf('Zend_Cache_Core')
+            );
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache);
+
+        $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+    }
+
+    /**
+     * Ensures that table metadata caching works as expected when the default cache object
+     * is set for the abstract table class.
+     *
+     * @return void
+     */
+    public function testTableMetadataCacheClass()
+    {
+        $cache = $this->_getCache();
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+        $tableBugsCustom1 = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+
+        $this->assertThat(
+            $tableBugsCustom1->getMetadataCache(),
+            $this->isInstanceOf('Zend_Cache_Core')
+            );
+
+        $tableBugsCustom1->setup();
+
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache);
+
+        $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+    }
+
+    /**
+     * Returns a clean Zend_Cache_Core with File backend
+     *
+     * @return Zend_Cache_Core
+     */
+    protected function _getCache()
+    {
+        /**
+         * @see Zend_Cache
+         */
+        require_once 'Zend/Cache.php';
+
+        $frontendOptions = array(
+            'automatic_serialization' => true
+            );
+
+        $backendOptions  = array(
+            'cacheDir'                => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
+            'fileNamePrefix'          => 'Zend_Db_Table_TestCommon'
+            );
+
+        $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+        $cacheFrontend->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        return $cacheFrontend;
+    }
+
 }

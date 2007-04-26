@@ -40,6 +40,31 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
 {
+    public $isMetadataFromCache = false;
+
     protected $_rowClass    = 'Zend_Db_Table_Row_TestMyRow';
     protected $_rowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+    /**
+     * Public proxy to setup functionality
+     *
+     * @return void
+     */
+    public function setup()
+    {
+        $this->_setup();
+    }
+
+    /**
+     * Turnkey for initialization of a table object.
+     *
+     * @return void
+     */
+    protected function _setup()
+    {
+        $this->_setupDatabaseAdapter();
+        $this->_setupTableName();
+        $this->isMetadataFromCache = $this->_setupMetadata();
+        $this->_setupPrimaryKey();
+    }
 }

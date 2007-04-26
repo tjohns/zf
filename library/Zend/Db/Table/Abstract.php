@@ -68,6 +68,13 @@ abstract class Zend_Db_Table_Abstract
     protected static $_defaultDb;
 
     /**
+     * Default cache for information provided by the adapter's describeTable() method.
+     *
+     * @var Zend_Cache_Core
+     */
+    protected static $_defaultMetadataCache = null;
+
+    /**
      * Zend_Db_Adapter_Abstract object.
      *
      * @var Zend_Db_Adapter_Abstract
@@ -111,6 +118,13 @@ abstract class Zend_Db_Table_Abstract
      * @var array
      */
     protected $_metadata = array();
+
+    /**
+     * Cache for information provided by the adapter's describeTable() method.
+     *
+     * @var Zend_Cache_Core
+     */
+    protected $_metadataCache = null;
 
     /**
      * Classname for row
@@ -169,9 +183,9 @@ abstract class Zend_Db_Table_Abstract
      * - referenceMap    = array structure to declare relationship
      *                     to parent tables.
      * - dependentTables = array of child tables.
+     * - metadataCache   = cache for information from adapter describeTable().
      *
      * @param  array $config Array of user-specified config options.
-     * @throws Zend_Db_Table_Exception
      * @return void
      */
     public function __construct(array $config = array())
@@ -352,6 +366,54 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * Sets the default metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
+     *
+     * If $defaultMetadataCache is null, then no metadata cache is used by default.
+     *
+     * @param  Zend_Cache_Core $defaultMetadataCache
+     * @return void
+     */
+    public static function setDefaultMetadataCache(Zend_Cache_Core $defaultMetadataCache = null)
+    {
+        self::$_defaultMetadataCache = $defaultMetadataCache;
+    }
+
+    /**
+     * Gets the default metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
+     *
+     * @return Zend_Cache_Core|null
+     */
+    public static function getDefaultMetadataCache()
+    {
+        return self::$_defaultMetadataCache;
+    }
+
+    /**
+     * Sets the metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
+     *
+     * If $metadataCache is null, then no metadata cache is used.
+     *
+     * @param  Zend_Cache_Core $metadataCache
+     * @return Zend_Db_Table_Adapter_Abstract Provides a fluent interface
+     */
+    public function setMetadataCache(Zend_Cache_Core $metadataCache = null)
+    {
+        $this->_metadataCache = $metadataCache;
+
+        return $this;
+    }
+
+    /**
+     * Gets the metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
+     *
+     * @return Zend_Cache_Core|null
+     */
+    public function getMetadataCache()
+    {
+        return $this->_metadataCache;
+    }
+
+    /**
      * Turnkey for initialization of a table object.
      * Calls other protected methods for individual tasks, to make it easier
      * for a subclass to override part of the setup logic.
@@ -402,16 +464,16 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Initialize metadata.
-     * Call describeTable() to discover metadata information.
+     * Initializes metadata.
      *
-     * @return void
+     * If metadata cannot be loaded from cache, adapter's describeTable() method is called to discover metadata
+     * information. Returns true if and only if the metadata are loaded from cache.
+     *
+     * @return boolean
      * @throws Zend_Db_Table_Exception
      */
     protected function _setupMetadata()
     {
-        // @todo: support for caching the information from describeTable.
-
         if (strpos($this->_name, '.')) {
             list($schemaName, $tableName) = explode('.', $this->_name);
             $this->_schema = $schemaName;
@@ -421,11 +483,45 @@ abstract class Zend_Db_Table_Abstract
             $tableName = $this->_name;
         }
 
-        $this->_metadata = $this->_db->describeTable($tableName, $schemaName);
+        // Assume that metadata will be loaded from cache
+        $isMetadataFromCache = true;
 
-        if (! $this->_cols) {
-            $this->_cols = array_keys($this->_metadata);
+        // If $this has no metadata cache but the class has a default metadata cache
+        if (null === $this->_metadataCache && null !== self::$_defaultMetadataCache) {
+            // Make $this use the default metadata cache of the class
+            $this->setMetadataCache(self::$_defaultMetadataCache);
         }
+
+        // If $this has a metadata cache
+        if (null !== $this->_metadataCache) {
+            // Define the cache identifier where the metadata are saved
+            $cacheId = md5("$schemaName.$tableName");
+        }
+
+        // If $this has no metadata cache or metadata cache misses
+        if (null === $this->_metadataCache || !($metadata = $this->_metadataCache->load($cacheId))) {
+            // Metadata are not loaded from cache
+            $isMetadataFromCache = false;
+            // Fetch metadata from the adapter's describeTable() method
+            $metadata = $this->_db->describeTable($tableName, $schemaName);
+            // If $this has a metadata cache, then cache the metadata
+            if (null !== $this->_metadataCache && !$this->_metadataCache->save($metadata, $cacheId)) {
+                /**
+                 * @see Zend_Db_Table_Exception
+                 */
+                require_once 'Zend/Db/Table/Exception.php';
+                throw new Zend_Db_Table_Exception('Failed saving metadata to metadataCache');
+            }
+        }
+
+        // Assign the metadata to $this
+        $this->_metadata = $metadata;
+
+        // Update the columns
+        $this->_cols = array_keys($this->_metadata);
+
+        // Return whether the metadata were loaded from cache
+        return $isMetadataFromCache;
     }
 
     /**
