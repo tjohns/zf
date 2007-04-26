@@ -579,6 +579,39 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     /**
      * Ensures that table metadata caching works as expected when the cache object
+     * is set in the configuration for a new table object.
+     *
+     * @return void
+     */
+    public function testTableMetadataCacheNew()
+    {
+        $cache = $this->_getCache();
+
+        $tableBugsCustom1 = $this->_getTable(
+            'Zend_Db_Table_TableBugsCustom',
+            array('metadataCache' => $cache)
+            );
+
+        $this->assertThat(
+            $tableBugsCustom1->getMetadataCache(),
+            $this->isInstanceOf('Zend_Cache_Core')
+            );
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache);
+
+        $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+    }
+
+    /**
+     * Ensures that table metadata caching works as expected when the cache object
      * is set for the table object.
      *
      * @return void

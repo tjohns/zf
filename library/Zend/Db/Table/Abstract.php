@@ -45,6 +45,7 @@ abstract class Zend_Db_Table_Abstract
     const PRIMARY          = 'primary';
     const COLS             = 'cols';
     const METADATA         = 'metadata';
+    const METADATA_CACHE   = 'metadataCache';
     const ROW_CLASS        = 'rowClass';
     const ROWSET_CLASS     = 'rowsetClass';
     const REFERENCE_MAP    = 'referenceMap';
@@ -231,6 +232,10 @@ abstract class Zend_Db_Table_Abstract
 
         if (isset($config[self::DEPENDENT_TABLES])) {
             $this->setDependentTables($config[self::DEPENDENT_TABLES]);
+        }
+
+        if (isset($config[self::METADATA_CACHE])) {
+            $this->setMetadataCache($config[self::METADATA_CACHE]);
         }
 
         // continue with automated setup

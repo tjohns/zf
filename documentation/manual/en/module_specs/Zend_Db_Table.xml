@@ -1097,6 +1097,11 @@ $bugs->setMetadataCache($cache);
 
 // $bugs now uses the cache for metadata information
 
+
+// Alternatively, an instance may also be configured upon instantiation
+
+$bugs = new Bugs(array('metadataCache' => $cache));
+
 ?>]]></programlisting>
 
         </example>
