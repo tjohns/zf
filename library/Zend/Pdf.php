@@ -77,6 +77,10 @@ require_once 'Zend/Pdf/Resource/Image/Tiff.php';
 require_once 'Zend/Pdf/Resource/Image/Png.php';
 
 
+/** Zend_Memory */
+require_once 'Zend/Memory.php';
+
+
 /**
  * General entity which describes PDF document.
  * It implements document abstraction with a document level operations.
@@ -158,6 +162,38 @@ class Zend_Pdf
      */
     private $_objFactory = null;
 
+    /**
+     * Memory manager for stream objects
+     *
+     * @var Zend_Memory_Manager|null
+     */
+    private static $_memoryManager = null;
+
+
+    /**
+     * Request used memory manager
+     *
+     * @return Zend_Memory_Manager
+     */
+    static public function getMemoryManager()
+    {
+        if (self::$_memoryManager === null) {
+            self::$_memoryManager = Zend_Memory::factory('none');
+        }
+
+        return self::$_memoryManager;
+    }
+
+    /**
+     * Set user defined memory manager
+     *
+     * @param Zend_Memory_Manager $memoryManager
+     */
+    static public function setMemoryManager(Zend_Memory_Manager $memoryManager)
+    {
+        self::$_memoryManager = $memoryManager;
+    }
+
 
     /**
      * Create new PDF document from a $source string
@@ -198,19 +234,7 @@ class Zend_Pdf
             throw new Zend_Pdf_Exception( "Can not open '$filename' file for writing." );
         }
 
-        if (!$updateOnly) {
-            $pdfData = $this->_trailer->getPDFString();
-
-            while ( strlen($pdfData) > 0 && ($byteCount = fwrite($file, $pdfData)) != false ) {
-                $pdfData = substr($pdfData, $byteCount);
-            }
-        }
-
-        $pdfData = $this->render(true /* get only update info */);
-
-        while ( strlen($pdfData) > 0 && ($byteCount = fwrite($file, $pdfData)) != false ) {
-            $pdfData = substr($pdfData, $byteCount);
-        }
+        $this->render($updateOnly, $file);
 
         fclose($file);
     }
@@ -489,9 +513,10 @@ class Zend_Pdf
      * If $newSegmentOnly is true, then only appended part of PDF is returned.
      *
      * @param boolean $newSegmentOnly
+     * @param resource $outputStream
      * @return string
      */
-    public function render($newSegmentOnly = false)
+    public function render($newSegmentOnly = false, $outputStream = null)
     {
         $this->_dumpPages();
 
@@ -499,9 +524,19 @@ class Zend_Pdf
         // File is always modified by _dumpPages() now, but future implementations may eliminate this.
         if (!$this->_objFactory->isModified()) {
             if ($newSegmentOnly) {
+                // Do nothing, return
                 return '';
-            } else {
+            }
+
+            if ($outputStream === null) {
                 return $this->_trailer->getPDFString();
+            } else {
+                $pdfData = $this->_trailer->getPDFString();
+                while ( strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false ) {
+                    $pdfData = substr($pdfData, $byteCount);
+                }
+
+                return '';
             }
         }
 
@@ -525,7 +560,16 @@ class Zend_Pdf
         // Initialized by zero (specail case - header of linked list of free objects).
         $lastObjNum = 0;
 
-        $pdfSegmentBlocks = ($newSegmentOnly) ? array() : array($this->_trailer->getPDFString());
+        if ($outputStream !== null) {
+            if (!$newSegmentOnly) {
+                $pdfData = $this->_trailer->getPDFString();
+                while ( strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false ) {
+                    $pdfData = substr($pdfData, $byteCount);
+                }
+            }
+        } else {
+            $pdfSegmentBlocks = ($newSegmentOnly) ? array() : array($this->_trailer->getPDFString());
+        }
 
         // Iterate objects to create new reference table
         foreach ($this->_objFactory->listModifiedObjects() as $updateInfo) {
@@ -545,8 +589,17 @@ class Zend_Pdf
             } else {
                 // In-use object cross-reference table entry
                 $xrefSection[]  = sprintf("%010d %05d n \n", $offset, $updateInfo->getGenNum());
-                $pdfSegmentBlocks[] = ($pdfBlock = $updateInfo->getObjectDump());
+
+                $pdfBlock = $updateInfo->getObjectDump();
                 $offset += strlen($pdfBlock);
+
+                if ($outputStream === null) {
+                    $pdfSegmentBlocks[] = $pdfBlock;
+                } else {
+                    while ( strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false ) {
+                        $pdfBlock = substr($pdfBlock, $byteCount);
+                    }
+                }
             }
             $lastObjNum = $objNum;
         }
@@ -566,12 +619,22 @@ class Zend_Pdf
 
         $this->_trailer->Size->value = $this->_objFactory->getObjectCount();
 
-        $pdfSegmentBlocks[] = $xrefTableStr
-                           .  $this->_trailer->toString()
-                           . "startxref\n" . $offset . "\n"
-                           . "%%EOF\n";
+        $pdfBlock = $xrefTableStr
+                 .  $this->_trailer->toString()
+                 . "startxref\n" . $offset . "\n"
+                 . "%%EOF\n";
 
-        return implode('', $pdfSegmentBlocks);
+        if ($outputStream === null) {
+            $pdfSegmentBlocks[] = $pdfBlock;
+
+            return implode('', $pdfSegmentBlocks);
+        } else {
+            while ( strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false ) {
+                $pdfBlock = substr($pdfBlock, $byteCount);
+            }
+
+            return '';
+        }
     }
 
 
