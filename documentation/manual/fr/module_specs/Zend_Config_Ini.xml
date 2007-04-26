@@ -50,6 +50,42 @@ $config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 echo $config->database->host; // affiche "dev.example.com"
 echo $config->database->name; // affiche "dbname"?>]]></programlisting>
     </example>
+    <note>
+    <table>
+        <title>Paramètres du constructeur de Zend_Config_Ini</title>
+        <tgroup cols="2">
+            <thead>
+                  <row>
+                    <entry>Paramètres</entry>
+                    <entry>Notes</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry><code>$filename</code></entry>
+                    <entry>Le fichier INI à charger.</entry>
+                </row>
+                <row>
+                    <entry><code>$section</code></entry>
+                    <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de null à ce paramètre au nul chargera toutes les sections. Alternativement, un tableau de noms de section peut être fourni pour charger des sections multiples.</entry>
+                </row>
+                <row>
+                    <entry><code>$config = false</code></entry>
+                    <entry>Tableau de configuration. Les clés suivantes sont supportées :
+                        <itemizedlist>
+                            <listitem>
+                                <para><emphasis>allowModifications</emphasis> : Mettre à <code>true</code> pour permettre la modification du fichier chargé. Par défaut à <code>false</code>.</para>
+                            </listitem>
+                            <listitem>
+                                <para><emphasis>nestSeparator</emphasis> : Caractère à utiliser en tant que séparateur d'imbrication. Par défaut ".".</para>
+                            </listitem>
+                        </itemizedlist>
+                    </entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
