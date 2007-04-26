@@ -377,7 +377,8 @@ class Zend_Pdf_Parser
 
             $byteCount = filesize($source);
 
-            $data = '';
+            $data = fread($pdfFile, $byteCount);
+            $byteCount -= strlen($data);
             while ( $byteCount > 0 && ($nextBlock = fread($pdfFile, $byteCount)) != false ) {
                 $data .= $nextBlock;
                 $byteCount -= strlen($nextBlock);
@@ -388,7 +389,6 @@ class Zend_Pdf_Parser
         } else {
             $this->_stringParser = new Zend_Pdf_StringParser($source, $factory);
         }
-
 
         $pdfVersionComment = $this->_stringParser->readComment();
         if (substr($pdfVersionComment, 0, 5) != '%PDF-') {

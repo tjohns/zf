@@ -198,7 +198,15 @@ class Zend_Pdf
             throw new Zend_Pdf_Exception( "Can not open '$filename' file for writing." );
         }
 
-        $pdfData = $this->render($updateOnly);
+        if (!$updateOnly) {
+            $pdfData = $this->_trailer->getPDFString();
+
+            while ( strlen($pdfData) > 0 && ($byteCount = fwrite($file, $pdfData)) != false ) {
+                $pdfData = substr($pdfData, $byteCount);
+            }
+        }
+
+        $pdfData = $this->render(true /* get only update info */);
 
         while ( strlen($pdfData) > 0 && ($byteCount = fwrite($file, $pdfData)) != false ) {
             $pdfData = substr($pdfData, $byteCount);
@@ -318,25 +326,30 @@ class Zend_Pdf
         $this->_loadPages($this->_trailer->Root->Pages);
     }
 
+
+
+    /**
+     * List of inheritable attributesfor pages tree
+     *
+     * @var array
+     */
+    private static $_inheritableAttributes = array('Resources', 'MediaBox', 'CropBox', 'Rotate');
+
+
     /**
      * Load pages recursively
      *
      * @param Zend_Pdf_Element_Reference $pages
      * @param array|null $attributes
      */
-    private function _loadPages(Zend_Pdf_Element_Reference $pages, $attributes = null)
+    private function _loadPages(Zend_Pdf_Element_Reference $pages, $attributes = array())
     {
-        static $inheritable = array('Resources', 'MediaBox', 'CropBox', 'Rotate');
-
         if ($pages->getType() != Zend_Pdf_Element::TYPE_DICTIONARY) {
             throw new Zend_Pdf_Exception('Wrong argument');
         }
 
-        if ($attributes === null) {
-            $attributes = array();
-        }
         foreach ($pages->getKeys() as $property) {
-            if (in_array($property, $inheritable)) {
+            if (in_array($property, self::$_inheritableAttributes)) {
                 $attributes[$property] = $pages->$property;
                 $pages->$property = null;
             }
@@ -347,7 +360,7 @@ class Zend_Pdf
             if ($child->Type->value == 'Pages') {
                 $this->_loadPages($child, $attributes);
             } else if ($child->Type->value == 'Page') {
-                foreach ($inheritable as $property) {
+                foreach (self::$_inheritableAttributes as $property) {
                     if ($child->$property === null && array_key_exists($property, $attributes)) {
                         /**
                          * Important note.
@@ -493,9 +506,7 @@ class Zend_Pdf
         }
 
         // offset (from a start of PDF file) of new PDF file segment
-        $segmentOffset = $this->_trailer->getPDFLength();
-        // new PDF file segment itself
-        $pdfSegment = '';
+        $offset = $this->_trailer->getPDFLength();
         // Last Object number in a list of free objects
         $lastFreeObject = $this->_trailer->getLastFreeObject();
 
@@ -514,6 +525,8 @@ class Zend_Pdf
         // Initialized by zero (specail case - header of linked list of free objects).
         $lastObjNum = 0;
 
+        $pdfSegmentBlocks = ($newSegmentOnly) ? array() : array($this->_trailer->getPDFString());
+
         // Iterate objects to create new reference table
         foreach ($this->_objFactory->listModifiedObjects() as $updateInfo) {
             $objNum = $updateInfo->getObjNum();
@@ -531,8 +544,9 @@ class Zend_Pdf
                 $lastFreeObject = $objNum;
             } else {
                 // In-use object cross-reference table entry
-                $xrefSection[]  = sprintf("%010d %05d n \n", $segmentOffset + strlen($pdfSegment), $updateInfo->getGenNum());
-                $pdfSegment .= $updateInfo->getObjectDump();
+                $xrefSection[]  = sprintf("%010d %05d n \n", $offset, $updateInfo->getGenNum());
+                $pdfSegmentBlocks[] = ($pdfBlock = $updateInfo->getObjectDump());
+                $offset += strlen($pdfBlock);
             }
             $lastObjNum = $objNum;
         }
@@ -550,19 +564,14 @@ class Zend_Pdf
             }
         }
 
-        $xrefStartOffset = $segmentOffset + strlen($pdfSegment);
         $this->_trailer->Size->value = $this->_objFactory->getObjectCount();
 
-        $pdfSegment .= $xrefTableStr
-                    .  $this->_trailer->toString()
-                    . "startxref\n" . $xrefStartOffset . "\n"
-                    . "%%EOF\n";
+        $pdfSegmentBlocks[] = $xrefTableStr
+                           .  $this->_trailer->toString()
+                           . "startxref\n" . $offset . "\n"
+                           . "%%EOF\n";
 
-        if ($newSegmentOnly) {
-            return $pdfSegment;
-        } else {
-            return $this->_trailer->getPDFString() . $pdfSegment;
-        }
+        return implode('', $pdfSegmentBlocks);
     }
 
 
