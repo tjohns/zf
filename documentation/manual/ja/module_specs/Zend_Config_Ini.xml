@@ -78,6 +78,42 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 echo $config->database->host; // "dev.example.com" と出力します
 echo $config->database->name; // "dbname" と出力します]]></programlisting>
     </example>
+    <note>
+    <table>
+        <title>Zend_Config_Ini コンストラクタのパラメータ</title>
+        <tgroup cols="2">
+            <thead>
+                  <row>
+                    <entry>パラメータ</entry>
+                    <entry>説明</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry><code>$filename</code></entry>
+                    <entry>読み込む INI ファイル。</entry>
+                </row>
+                <row>
+                    <entry><code>$section</code></entry>
+                    <entry>
+                        ini ファイルの中の、読み込む [section]。
+                        このパラメータを null にすると、すべてのセクションを読み込みます。
+                        また、セクション名の配列を指定すると、複数のセクションを読み込みます。
+                    </entry>
+                </row>
+                <row>
+                    <entry><code>$config = false</code></entry>
+                    <entry>設定項目の配列。以下のキーをサポートしています。
+                        <itemizedlist>
+                            <listitem><para><emphasis>allowModifications</emphasis>: true を指定すると、読み込んだファイルを後で変更することができます。デフォルトは false です。</para></listitem>
+                            <listitem><para><emphasis>nestSeparator</emphasis>: ネストの区切り文字として使用する文字を設定します。デフォルトは "." です。</para></listitem>
+                        </itemizedlist>
+                    </entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
