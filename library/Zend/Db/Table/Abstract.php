@@ -235,7 +235,7 @@ abstract class Zend_Db_Table_Abstract
         }
 
         if (isset($config[self::METADATA_CACHE])) {
-            $this->setMetadataCache($config[self::METADATA_CACHE]);
+            $this->_setMetadataCache($config[self::METADATA_CACHE]);
         }
 
         // continue with automated setup
@@ -396,12 +396,15 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Sets the metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
      *
-     * If $metadataCache is null, then no metadata cache is used.
+     * If $metadataCache is null, then no metadata cache is used. Since there is no opportunity to reload metadata
+     * after instantiation, this method need not be public, particularly because that it would have no effect
+     * results in unnecessary API complexity. To configure the metadata cache, use the metadataCache configuration
+     * option for the class constructor upon instantiation.
      *
      * @param  Zend_Cache_Core $metadataCache
      * @return Zend_Db_Table_Adapter_Abstract Provides a fluent interface
      */
-    public function setMetadataCache(Zend_Cache_Core $metadataCache = null)
+    protected function _setMetadataCache(Zend_Cache_Core $metadataCache = null)
     {
         $this->_metadataCache = $metadataCache;
 
@@ -494,7 +497,7 @@ abstract class Zend_Db_Table_Abstract
         // If $this has no metadata cache but the class has a default metadata cache
         if (null === $this->_metadataCache && null !== self::$_defaultMetadataCache) {
             // Make $this use the default metadata cache of the class
-            $this->setMetadataCache(self::$_defaultMetadataCache);
+            $this->_setMetadataCache(self::$_defaultMetadataCache);
         }
 
         // If $this has a metadata cache

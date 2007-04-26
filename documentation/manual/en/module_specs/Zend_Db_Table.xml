@@ -988,19 +988,19 @@ echo "The table name is " . $info['name'] . "\n";
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis> - This
-                        allows a developer to once set the default cache object to be used for all table classes.
+                        <emphasis role="strong">Call Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis> -
+                        This allows a developer to once set the default cache object to be used for all table classes.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Zend_Db_Table_Abstract::setMetadataCache()</emphasis> - This allows a
-                        developer to set the cache object to be used for a particular table class instance.
+                        <emphasis role="strong">Configure Zend_Db_Table_Abstract::__construct()</emphasis> - This
+                        allows a developer to set the cache object to be used for a particular table class instance.
                     </para>
                 </listitem>
             </itemizedlist>
 
-            In both cases, the single method argument must be either <code>null</code> (i.e., no cache used) or an
+            In both cases, the cache specification must be either <code>null</code> (i.e., no cache used) or an
             instance of <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>. The methods may be used
             in conjunction when it is desirable to have both a default metadata cache and the ability to change the
             cache for individual table objects.
@@ -1079,7 +1079,7 @@ $backendOptions  = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 
-// A table class and instance are also needed
+// A table class is also needed
 
 require_once 'Zend/Db/Table/Abstract.php';
 
@@ -1088,17 +1088,8 @@ class Bugs extends Zend_Db_Table_Abstract
     // ...
 }
 
-$bugs = new Bugs();
 
-
-// Now, set the cache to be used with this table object
-
-$bugs->setMetadataCache($cache);
-
-// $bugs now uses the cache for metadata information
-
-
-// Alternatively, an instance may also be configured upon instantiation
+// Configure an instance upon instantiation
 
 $bugs = new Bugs(array('metadataCache' => $cache));
 
