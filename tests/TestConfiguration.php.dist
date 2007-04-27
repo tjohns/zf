@@ -153,9 +153,13 @@ define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');
  * operations will use ordinary PHP math operators and functions.
  * Otherwise, the bcmath functions will be used for unlimited precision.
  *
+ * If the EXTENDED_COVERAGE property below is false, most of the I18N
+ * unit tests will not be computed... this speeds tests up to 80 minutes
+ * when doing reports. *
  * Edit TestConfiguration.php, not TestConfiguration.php.dist.
  */
 define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', true);
+define('TESTS_ZEND_I18N_EXTENDED_COVERAGE', true);
 
 /**
  * Zend_Locale tests
