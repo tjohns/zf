@@ -95,7 +95,11 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
                 continue;
             }
             if (!empty($content[1])) {
-                $this->_translate[$locale][$content[0]] = substr($content[1], 0, -2);
+                if (feof($this->_file)) {
+                    $this->_translate[$locale][$content[0]] = substr($content[1], 0);
+                } else {
+                    $this->_translate[$locale][$content[0]] = substr($content[1], 0, -2);
+                }
             }
         }
     }
