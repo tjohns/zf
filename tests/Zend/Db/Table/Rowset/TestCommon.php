@@ -51,6 +51,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
 
         // see if we're at the beginning
         $this->assertEquals(0, $rows->key());
+        $this->assertTrue($rows->valid());
 
         // get first row and see if it's the right one
         $row1 = $rows->current();
@@ -74,6 +75,10 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $rows->key());
         $this->assertFalse($rows->valid());
 
+        // current() returns null if beyond last row
+        $row3 = $rows->current();
+        $this->assertNull($row3);
+
         // rewind to beginning
         $rows->rewind();
         $this->assertEquals(0, $rows->key());
@@ -88,12 +93,20 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertSame($row1, $row1Copy);
     }
 
+    public function testTableRowsetEmpty()
+    {
+        $table = $this->_table['bugs'];
+        $rows = $table->fetchAll('bug_id = -1');
+        $this->assertEquals(0, count($rows));
+        $this->assertNull($rows->current());
+    }
+
     public function testTableRowsetToArray()
     {
         $table = $this->_table['bugs'];
 
         $rows = $table->find(array(1, 2));
-        $this->assertEquals(2, $rows->count());
+        $this->assertEquals(2, count($rows));
 
         // iterate through the rowset, because that's the only way
         // to force it to instantiate the individual Rows
@@ -105,7 +118,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $a = $rows->toArray();
 
         $this->assertTrue(is_array($a));
-        $this->assertEquals(count($a), $rows->count());
+        $this->assertEquals(count($a), count($rows));
         $this->assertTrue(is_array($a[0]));
         $this->assertEquals(8, count($a[0]));
         $this->assertEquals('foo', $a[0]['bug_description']);

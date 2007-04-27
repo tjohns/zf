@@ -202,6 +202,10 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      */
     public function current()
     {
+        if ($this->valid() === false) {
+            return null;
+        }
+
         // do we already have a row object for this position?
         if (empty($this->_rows[$this->_pointer])) {
             $this->_rows[$this->_pointer] = new $this->_rowClass(
