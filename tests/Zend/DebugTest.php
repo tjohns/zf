@@ -38,9 +38,56 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_DebugTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testDump()
+    public function testDebugDefaultSapi()
     {
-        // @todo
+        $sapi = php_sapi_name();
+        Zend_Debug::setSapi(null);
+        $data = 'string';
+        $result = Zend_Debug::Dump($data, null, false);
+        $this->assertEquals($sapi, Zend_Debug::getSapi());
+    }
+
+    public function testDebugDump()
+    {
+        Zend_Debug::setSapi('cli');
+        $data = 'string';
+        $result = Zend_Debug::Dump($data, null, false);
+        $result = str_replace(array(PHP_EOL, "\n"), '_', $result);
+        $expected = "__string(6) \"string\"__";
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testDebugCgi()
+    {
+        Zend_Debug::setSapi('cgi');
+        $data = 'string';
+        $result = Zend_Debug::Dump($data, null, false);
+        $this->assertEquals("<pre>string(6) &quot;string&quot;\n</pre>", $result);
+    }
+
+    public function testDebugDumpEcho()
+    {
+        Zend_Debug::setSapi('cli');
+        $data = 'string';
+
+        ob_start();
+        $result1 = Zend_Debug::Dump($data, null, true);
+        $result2 = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertContains('string(6) "string"', $result1);
+        $this->assertEquals($result1, $result2);
+    }
+
+    public function testDebugDumpLabel()
+    {
+        Zend_Debug::setSapi('cli');
+        $data = 'string';
+        $label = 'LABEL';
+        $result = Zend_Debug::Dump($data, $label, false);
+        $result = str_replace(array(PHP_EOL, "\n"), '_', $result);
+        $expected = "_{$label} _string(6) \"string\"__";
+        $this->assertEquals($expected, $result);
     }
 
 }
