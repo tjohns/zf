@@ -1222,7 +1222,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 
-    public function insert($data)
+    public function insert(array $data)
     {
         // タイムスタンプを追加します
         if (empty($data['created_on'])) {
@@ -1231,7 +1231,7 @@ class Bugs extends Zend_Db_Table_Abstract
         return parent::insert($data);
     }
 
-    public function update($data, $where)
+    public function update(array $data, $where)
     {
         // タイムスタンプを追加します
         if (empty($data['updated_on'])) {

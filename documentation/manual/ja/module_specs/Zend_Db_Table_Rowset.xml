@@ -99,6 +99,11 @@ $row    = $rowset->current();
 
         </example>
 
+        <para>
+            行セットに含まれる行数がゼロの場合、<code>current()</code>
+            の返す値は PHP の <code>null</code> 値となります。
+        </para>
+
         <example id="zend.db.table.rowset.iterate.example">
 
             <title>行セットの順次処理</title>
