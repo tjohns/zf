@@ -55,19 +55,19 @@ require_once 'Zend/Db/Adapter/Static.php';
 class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testFactory()
+    public function testDbFactory()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    public function testConstructorWithoutFactory()
+    public function testDbConstructorWithoutFactory()
     {
         $db = new Zend_Db_Adapter_Static( array('dbname' => 'dummy') );
         $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
     }
 
-    public function testGetConnection()
+    public function testDbGetConnection()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
 
@@ -75,14 +75,14 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $this->assertThat($conn, $this->isInstanceOf('Zend_Db_Adapter_Static'));
     }
 
-    public function testGetFetchMode()
+    public function testDbGetFetchMode()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
         $mode = $db->getFetchMode();
         $this->assertType('integer', $mode);
     }
 
-    public function testExceptionInvalidDriverName()
+    public function testDbExceptionInvalidDriverName()
     {
         try {
             $db = Zend_Db::factory(null);
@@ -93,7 +93,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testExceptionInvalidOptionsArray()
+    public function testDbExceptionInvalidOptionsArray()
     {
         list($major, $minor, $revision) = explode('.', PHP_VERSION);
         if ($minor >= 2) {
@@ -101,7 +101,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
                 $db = Zend_Db::factory('Static', 'scalar');
                 $this->fail('Expected exception not thrown');
             } catch (Exception $e) {
-                $this->assertContains('Argument 1 passed to Zend_Db::factory() must be an array, string given',
+                $this->assertContains('Argument 2 passed to Zend_Db::factory() must be an array, string given',
                                       $e->getMessage());
             }
         } else {
@@ -109,7 +109,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testExceptionInvalidOptionsArrayWithoutFactory()
+    public function testDbExceptionInvalidOptionsArrayWithoutFactory()
     {
         list($major, $minor, $revision) = explode('.', PHP_VERSION);
         if ($minor >= 2) {
@@ -125,15 +125,15 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testExceptionNoConfig()
+    public function testDbExceptionNoConfig()
     {
         list($major, $minor, $revision) = explode('.', PHP_VERSION);
         if ($minor >= 2) {
             try {
-                $db = Zend_Db::factory('Static', null);
+                $db = Zend_Db::factory('Static');
                 $this->fail('Expected exception not thrown');
             } catch (Exception $e) {
-                $this->assertContains('Argument 1 passed to Zend_Db::factory() must be an array, string given',
+                $this->assertContains('Configuration must have a key for \'dbname\' that names the database instance.',
                                       $e->getMessage());
             }
         } else {
@@ -141,7 +141,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testExceptionNoDatabaseName()
+    public function testDbExceptionNoDatabaseName()
     {
         try {
             $db = Zend_Db::factory('Static', array());
