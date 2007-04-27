@@ -660,8 +660,9 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Called by parent table's class during delete() method.
      *
-     * @param string $parentTableClassname
-     * @param array $primaryKey
+     * @param  string $parentTableClassname
+     * @param  array  $primaryKey
+     * @return int    Number of affected rows
      */
     public function _cascadeDelete($parentTableClassname, array $primaryKey)
     {
@@ -670,10 +671,20 @@ abstract class Zend_Db_Table_Abstract
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_DELETE])) {
                 switch ($map[self::ON_DELETE]) {
                     case self::CASCADE:
-                        for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
+                        if (!is_array($map[self::COLUMNS])) {
+                            $columns = array($map[self::COLUMNS]);
+                        } else {
+                            $columns = $map[self::COLUMNS];
+                        }
+                        for ($i = 0; $i < count($columns); ++$i) {
+                            if (!is_array($map[self::REF_COLUMNS])) {
+                                $refColumns = array($map[self::REF_COLUMNS]);
+                            } else {
+                                $refColumns = $map[self::REF_COLUMNS];
+                            }
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
-                                $primaryKey[$map[self::REF_COLUMNS][$i]]
+                                $this->_db->quoteIdentifier($columns[$i]) . ' = ?',
+                                $primaryKey[$refColumns[$i]]
                             );
                         }
                         $rowsAffected += $this->delete($where);
