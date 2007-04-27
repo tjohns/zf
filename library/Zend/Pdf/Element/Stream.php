@@ -19,10 +19,19 @@
  */
 
 
-/** Zend_Pdf_Element */
+/**
+ * @see Zend_Pdf
+ */
+require_once 'Zend/Pdf.php';
+
+/**
+ * @see Zend_Pdf_Element
+ */
 require_once 'Zend/Pdf/Element.php';
 
-/** Zend_Memory */
+/**
+ * @see Zend_Memory
+ */
 require_once 'Zend/Memory.php';
 
 /**
