@@ -14,6 +14,7 @@ require_once 'Zend/Search/Lucene/FieldTest.php';
 require_once 'Zend/Search/Lucene/PriorityQueueTest.php';
 
 require_once 'Zend/Search/Lucene/Storage/DirectoryTest.php';
+require_once 'Zend/Search/Lucene/Storage/FileTest.php';
 
 
 class Zend_Search_Lucene_AllTests
@@ -35,6 +36,7 @@ class Zend_Search_Lucene_AllTests
         $suite->addTestSuite('Zend_Search_Lucene_PriorityQueueTest');
 
         $suite->addTestSuite('Zend_Search_Lucene_Storage_DirectoryTest');
+        $suite->addTestSuite('Zend_Search_Lucene_Storage_FileTest');
 
         return $suite;
     }
