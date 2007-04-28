@@ -64,8 +64,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         self::$time = time();
         $date = new Zend_Date(0);
         $this->assertTrue($date instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -80,8 +78,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date  = new Zend_Date('2006-01-01', 'en_US');
         $this->assertTrue($date instanceof Zend_Date);
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2006-01-01T00:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -110,8 +106,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date2  = new Zend_Date('2006-01-01');
         $date2->setTime('01:00:00');
         $this->assertSame($date1string, $date2->get(Zend_Date::ISO_8601));
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -121,8 +115,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $date = new Zend_Date('12345678');
         $this->assertTrue($date instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -132,8 +124,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $date = new Zend_Date('13',Zend_Date::HOUR);
         $this->assertTrue($date instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -144,8 +134,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date('13',null,$locale);
         $this->assertTrue($date instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -156,8 +144,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date('13',Zend_Date::HOUR,$locale);
         $this->assertTrue($date instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -182,8 +168,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->getLocale(), 'ar_EG');
         $date = $date->getTimestamp();
         $this->assertTrue(abs($date - time()) < 2);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -194,8 +178,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(10000000);
         $this->assertSame($date->getTimestamp(), 10000000);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -206,8 +188,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(-100000000);
         $this->assertSame($date->getTimestamp(), -100000000);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -219,8 +199,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
         $result = $date->setTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '10000000');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -236,8 +214,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -249,8 +225,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(0,null,$locale);
         $result = $date->addTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '10000000');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -266,8 +240,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -279,8 +251,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(0,null,$locale);
         $result = $date->subTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '-10000000');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -296,8 +266,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -315,8 +283,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date2 = new Zend_Date(-100,null,$locale);
         $this->assertSame($date1->compareTimestamp($date2), 1);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -328,8 +294,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(0,null,$locale);
         $date->setTimezone(date_default_timezone_get());
         $this->assertSame($date->__toString(),'01.01.1970 05:00:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -406,8 +370,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString("AAA"),'16290');
         $this->assertSame($date->toString("AA"),'16290');
         $this->assertSame($date->toString("A"),'16290');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -671,8 +633,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toValue(Zend_Date::W3C),false);
         $date->setTimezone('UTC');
         $this->assertSame($date->toValue(Zend_Date::W3C),false);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -1065,8 +1025,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         // when get() receives a format string it responses like toString();
         $this->assertSame($date->get('Y'),'2009');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -1083,8 +1041,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(-62362925370,null,$locale);
         $this->assertSame($date->get(Zend_Date::ERA),'v. Chr.');
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'v. Chr.');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -2550,8 +2506,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set(1234567890);
         $date->set('1000', 'xx');
         $this->assertSame($date->get(Zend_Date::W3C),'1970-01-01T05:16:40+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -2928,8 +2882,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set($d2);
         $date->add('1000', 'xx');
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T04:53:30+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3308,8 +3260,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set($d2);
         $date->sub('1000', 'xx');
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T04:20:10+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3337,8 +3287,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);//03.01.2002 15:36:50
         $this->assertSame($date->compare(0,Zend_Date::MILLISECOND),0);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3358,8 +3306,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $newdate = $date->copyPart(Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C), '2002-01-04T04:36:50+05:00');
         $this->assertSame($newdate->get(Zend_Date::W3C), '1970-01-04T05:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3379,8 +3325,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set($d2);
         $this->assertSame($date->equals(3,Zend_Date::DAY),false);
         $this->assertSame($date->equals(4,Zend_Date::DAY),true);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3402,8 +3346,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->isEarlier(3,Zend_Date::DAY),false);
         $this->assertSame($date->isEarlier(4,Zend_Date::DAY),false);
         $this->assertSame($date->isEarlier(5,Zend_Date::DAY),true);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3425,8 +3367,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->isLater(3,Zend_Date::DAY),true);
         $this->assertSame($date->isLater(4,Zend_Date::DAY),false);
         $this->assertSame($date->isLater(5,Zend_Date::DAY),false);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3440,8 +3380,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $result = $date->getTime();
         $this->assertSame($result->get(Zend_Date::W3C),'1970-01-01T04:36:50+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3470,8 +3408,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $t2 = $date->get(Zend_Date::TIMESTAMP);
         $diff = abs($t2 - $t1);
         $this->assertTrue($diff < 2, "Instance of Zend_Date has a significantly different time than returned by setTime(): $diff seconds");
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3498,8 +3434,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $date->addTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T09:03:09+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3526,8 +3460,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $date->subTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:59:51+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3544,8 +3476,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareTime('04:31:30'), 0);
         $this->assertSame($date->compareTime('04:00:30'), 1);
         $this->assertSame($date->compareTime($d2), -1);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3565,8 +3495,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             }
             $this->assertSame($date->get(Zend_Date::W3C),"2009-02-14T$hour:31:30+05:00");
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3580,8 +3508,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $result = $date->getDate();
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T05:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3604,8 +3530,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2008-05-11T04:31:30+05:00');
         $date->setDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T04:31:30+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3637,8 +3561,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $date->addDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T04:31:30+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3670,8 +3592,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $date->subDate($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-06T04:31:30+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3693,8 +3613,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareDate('14.02.2009'), 0);
         $this->assertSame($date->compareDate('15.02.2009'), -1);
         $this->assertSame($date->compareDate($d2), 0);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3709,8 +3627,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->getIso();
         $this->assertTrue(is_string($result));
         $this->assertSame($result,'2002-01-04T04:36:50+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3729,8 +3645,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T00:00:00+05:00');
         $date->setIso($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T04:31:39+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3771,8 +3685,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,$locale);
         $date->addIso($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T04:03:09+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3811,8 +3723,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $date->subIso($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-06T04:59:51+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3834,8 +3744,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareIso('2009-02-14T04:31:30+0500'), 0);
         $this->assertSame($date->compareIso('2010-01-04T05:00:00+0500'), -1);
         $this->assertSame($date->compareIso($d2), -1);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3849,8 +3757,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->getArpa();
         $this->assertTrue(is_string($result));
         $this->assertSame($result,'Fri, 04 Jan 02 04:36:50 +0500');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3870,8 +3776,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2001-05-03T00:00:00+05:00');
         $date->setArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T04:31:39+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3903,8 +3807,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 +0500');
         $arpa = $result->getArpa();
         $this->assertSame($arpa,'Fri, 05 Jan 07 03:35:53 +0500');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3932,8 +3834,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,$locale);
         $date->subArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'-1-12-06T04:59:51+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3955,8 +3855,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 04:31:30 +0500'), 0);
         $this->assertSame($date->compareArpa('Sat, 13 Feb 09 04:31:30 +0500'), 1);
         $this->assertSame($date->compareArpa($d2), -1);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -3969,8 +3867,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->setArpa('Sat, 03 May 01 00:00:00 +0500',$locale);
         $this->assertSame($date->get(Zend_Date::RFC_822),'Thu, 03 May 01 00:00:00 +0500');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4087,8 +3983,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = array('latitude' => 0, 'longitude' => 0);
         $result = $date->getSunrise($result);
         $this->assertTrue($result instanceof Zend_Date);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4117,8 +4011,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($result, true);
         $result = $date->getTimezone();
         $this->assertSame($result, 'America/Chicago');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4141,8 +4033,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // succeed
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4157,8 +4047,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($d2->isToday());
         $this->assertTrue($date->isToday());
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4173,8 +4061,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->subDay(1);
         $this->assertFalse($d2->isYesterday());
         $this->assertTrue($date->isYesterday());
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4190,8 +4076,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->addDay(1);
         $this->assertFalse($d2->isTomorrow());
         $this->assertTrue($date->isTomorrow());
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4228,8 +4112,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($date->isTomorrow());
         $date->_setTime($date->mktime(0, 0, 0, 1, 2, 2006));
         $this->assertTrue($date->isYesterday());
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4243,8 +4125,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $reference = date('U');
         $this->assertTrue(($reference - $date->get(Zend_Date::TIMESTAMP)) < 2);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4263,8 +4143,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof Zend_Date);
         $this->assertSame($result->toString(), '01.01.2009 05:00:00');
         $this->assertSame($d2->getYear()->toString(), '01.01.2021 05:00:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4296,8 +4174,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4360,8 +4236,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C), '2100-04-04T04:00:00+05:00');
         $date->addYear(20);
         $this->assertSame($date->get(Zend_Date::W3C), '2120-04-04T04:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4399,8 +4273,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C), '2100-01-01T04:00:00+05:00');
         $date->subYear(20);
         $this->assertSame($date->get(Zend_Date::W3C), '2080-01-01T04:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4417,8 +4289,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareYear(2009), 0);
         $this->assertSame($date->compareYear(2008), 1);
         $this->assertSame($date->compareYear($d2), 0);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4437,8 +4307,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof Zend_Date);
         $this->assertSame($result->toString(), '01.02.1970 05:00:00');
         $this->assertSame($date->getMonth()->toString(), '01.02.1970 05:00:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4470,8 +4338,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4550,8 +4416,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         Zend_Date::setOptions(array('extend_month' => true));
         $date->addMonth(1);
         $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-03 00:00:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4568,8 +4432,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C), '2019-12-01T04:00:00+05:00');
         $date->subMonth(12);
         $this->assertSame($date->get(Zend_Date::W3C), '2018-12-01T04:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4586,8 +4448,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareMonth(2), 0);
         $this->assertSame($date->compareMonth(3), -1);
         $this->assertSame($date->compareYear($d2), 0);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4599,8 +4459,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('en_Us');
         $set = $date->setLocale($locale);
         $this->assertSame($date->getLocale(),$set);
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4654,8 +4512,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         //Monday 03:45 pm
         $date->addTime('15:45:00');
         $this->assertSame($date->getWeek()->toString(),'15.01.1970 05:00:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4674,8 +4530,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             $weekday = str_pad($day, 2, '0', STR_PAD_LEFT);
             $this->assertSame($dw->toString(), "$weekday.01.1970 00:00:00");
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -4702,8 +4556,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     /**
@@ -5134,8 +4986,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     public function testTimesync()
@@ -5172,8 +5022,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_TimeSync_Exception $e) {
             $this->markTestIncomplete('NTP timeserver not available.');
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     public function testUsePhpDateFormat()
@@ -5387,8 +5235,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->toString('r'), date('r',$date->getTimestamp()));
         $this->assertSame($date->toString('U'), date('U',$date->getTimestamp()));
         Zend_Date::setOptions(array('format_type' => 'iso'));
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     public function testDaylightsaving()
@@ -5398,8 +5244,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($date->get(Zend_Date::W3C), '2007-03-25T16:00:00+05:00');
         $date->set('01:00:00', Zend_Date::TIMES);
         $this->assertEquals($date->get(Zend_Date::W3C), '2007-03-25T01:00:00+05:00');
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     public function testSetOptions()
@@ -5425,8 +5269,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 
     public function testIsDate()
@@ -5438,8 +5280,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Date::isDate('32.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 30:00:00', 'dd.MMMM.YYYY HH:mm:ss', 'de_AT'));
-
-        echo "\n*** ".__FUNCTION__."\tTime = ".(time()-self::$time); self::$time = time();
     }
 }
 
