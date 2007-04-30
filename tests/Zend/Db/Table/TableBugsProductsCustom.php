@@ -28,6 +28,18 @@
 require_once 'Zend/Db/Table/TableBugsProducts.php';
 
 
+/**
+ * @see Zend_Db_Table_Row_TestMyRow
+ */
+require_once 'Zend/Db/Table/Row/TestMyRow.php';
+
+
+/**
+ * @see Zend_Db_Table_Row_TestMyRowset
+ */
+require_once 'Zend/Db/Table/Rowset/TestMyRowset.php';
+
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
@@ -40,16 +52,21 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_TableBugsProductsCustom extends Zend_Db_Table_TableBugsProducts
 {
+    protected $_rowClass    = 'Zend_Db_Table_Row_TestMyRow';
+    protected $_rowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
     protected $_referenceMap    = array(
         'Bug' => array(
-            'columns'           => array('bug_id'),
-            'refTableClass'     => 'Zend_Db_Table_TableBugs',
-            'refColumns'        => array('bug_id')
+            'columns'           => 'bug_id',
+            'refTableClass'     => 'Zend_Db_Table_TableBugsCustom',
+            'refColumns'        => 'bug_id',
+            'onDelete'          => self::CASCADE
         ),
         'Product' => array(
-            'columns'           => array('product_id'),
+            'columns'           => 'product_id',
             'refTableClass'     => 'Zend_Db_Table_TableProductsCustom',
-            'refColumns'        => array('product_id')
+            'refColumns'        => 'product_id',
+            'onDelete'          => 'anything but self::CASCADE'
         )
     );
 }

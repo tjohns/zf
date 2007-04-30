@@ -317,20 +317,89 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     }
      */
 
-    public function testTableRelationshipCascadingDelete()
+    /**
+     * Ensures that basic cascading delete functionality succeeds using strings for single columns
+     *
+     * @return void
+     */
+    public function testTableRelationshipCascadingDeleteUsageBasicString()
     {
-        $table = $this->_table['bugs'];
+        $bug1 = $this->_getTable('Zend_Db_Table_TableBugsCustom')
+                ->find(1)
+                ->current();
 
-        $parentRows = $table->find(1);
-        $parentRow1 = $parentRows->current();
+        $this->assertEquals(
+            3,
+            count($bug1->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find three dependent rows'
+            );
 
-        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
-        $this->assertEquals(3, $childRows->count(), 'Expecting to find three dependent rows');
+        $bug1->delete();
 
-        $parentRow1->delete();
+        $this->assertEquals(
+            0,
+            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll('bug_id = 1')),
+            'Expecting cascading delete to have reduced dependent rows to zero'
+            );
+    }
 
-        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
-        $this->assertEquals(0, $childRows->count(), 'Expecting cascading delete to have reduced dependent rows to zero');
+    /**
+     * Ensures that basic cascading delete functionality succeeds using arrays for single columns
+     *
+     * @return void
+     */
+    public function testTableRelationshipCascadingDeleteUsageBasicArray()
+    {
+        $account1 = $this->_getTable('Zend_Db_Table_TableAccountsCustom')
+                    ->find('mmouse')
+                    ->current();
+
+        $this->assertEquals(
+            1,
+            count($account1->findDependentRowset('Zend_Db_Table_TableBugsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        $account1->delete();
+
+        $tableBugsCustom = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+
+        $this->assertEquals(
+            0,
+            count(
+                $tableBugsCustom->fetchAll(
+                    $tableBugsCustom->getAdapter()
+                                    ->quoteInto('reported_by = ?', 'mmouse')
+                    )
+                ),
+            'Expecting cascading delete to have reduced dependent rows to zero'
+            );
+    }
+
+    /**
+     * Ensures that cascading delete functionality is not run when onDelete != self::CASCADE
+     *
+     * @return void
+     */
+    public function testTableRelationshipCascadingDeleteUsageInvalidNoop()
+    {
+        $product1 = $this->_getTable('Zend_Db_Table_TableProductsCustom')
+                    ->find(1)
+                    ->current();
+
+        $this->assertEquals(
+            1,
+            count($product1->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        $product1->delete();
+
+        $this->assertEquals(
+            1,
+            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll('product_id = 1')),
+            'Expecting to find one dependent row'
+            );
     }
 
     public function testTableRelationshipGetReference()
@@ -408,29 +477,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         Zend_Loader::loadClass('Zend_Db_Table_TableAccountsCustom');
 
-        $bug1Reporter = $this->_table['bugs']
-                        ->setReferences(array(
-                            'Reporter' => array(
-                                'columns'           => array('reported_by'),
-                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
-                                'refColumns'        => array('account_name')
-                                ),
-                            'Engineer' => array(
-                                'columns'           => array('assigned_to'),
-                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
-                                'refColumns'        => array('account_name')
-                                ),
-                            'Verifier' => array(
-                                'columns'           => array('verified_by'),
-                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
-                                'refColumns'        => array('account_name')
-                                ),
-                            'Product' => array(
-                                'columns'           => array('product_id'),
-                                'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
-                                'refColumns'        => array('product_id')
-                                )
-                            ))
+        $bug1Reporter = $this->_getTable('Zend_Db_Table_TableBugsCustom')
                         ->find(1)
                         ->current()
                         ->findParentRow(new Zend_Db_Table_TableAccountsCustom(array('db' => $this->_db)));
@@ -484,7 +531,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         Zend_Loader::loadClass($myRowsetClass);
 
-        $bugs = $this->_table['accounts']
+        $bugs = $this->_getTable('Zend_Db_Table_TableAccountsCustom')
                 ->fetchRow($this->_db->quoteInto('account_name = ?', 'mmouse'))
                 ->findDependentRowset('Zend_Db_Table_TableBugsCustom', 'Engineer');
 
@@ -544,7 +591,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         Zend_Loader::loadClass($myRowsetClass);
 
-        $bug1Products = $this->_table['bugs']
+        $bug1Products = $this->_getTable('Zend_Db_Table_TableBugsCustom')
                         ->find(1)
                         ->current()
                         ->findManyToManyRowset(

@@ -28,6 +28,18 @@
 require_once 'Zend/Db/Table/TableBugs.php';
 
 
+/**
+ * @see Zend_Db_Table_Row_TestMyRow
+ */
+require_once 'Zend/Db/Table/Row/TestMyRow.php';
+
+
+/**
+ * @see Zend_Db_Table_Row_TestMyRowset
+ */
+require_once 'Zend/Db/Table/Rowset/TestMyRowset.php';
+
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
@@ -44,6 +56,32 @@ class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
 
     protected $_rowClass    = 'Zend_Db_Table_Row_TestMyRow';
     protected $_rowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
+
+    protected $_dependentTables = array('Zend_Db_Table_TableBugsProductsCustom');
+
+    protected $_referenceMap    = array(
+        'Reporter' => array(
+            'columns'           => array('reported_by'),
+            'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+            'refColumns'        => array('account_name'),
+            'onDelete'          => self::CASCADE
+        ),
+        'Engineer' => array(
+            'columns'           => 'assigned_to',
+            'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+            'refColumns'        => 'account_name'
+        ),
+        'Verifier' => array(
+            'columns'           => 'verified_by',
+            'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
+            'refColumns'        => 'account_name'
+        ),
+        'Product' => array(
+            'columns'           => 'product_id',
+            'refTableClass'     => 'Zend_Db_Table_TableProductsCustom',
+            'refColumns'        => 'product_id'
+        )
+    );
 
     /**
      * Public proxy to setup functionality

@@ -300,7 +300,7 @@ abstract class Zend_Db_Table_Abstract
     public function getReference($tableClassname, $ruleKey = null)
     {
         $thisClass = get_class($this);
-        if ($ruleKey != null) {
+        if ($ruleKey !== null) {
             if (!isset($this->_referenceMap[$ruleKey])) {
                 require_once "Zend/Db/Table/Exception.php";
                 throw new Zend_Db_Table_Exception("No reference rule \"$ruleKey\" from table $thisClass to table $tableClassname");
@@ -561,6 +561,43 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * Returns a normalized version of the reference map
+     *
+     * @return array
+     */
+    protected function _getReferenceMapNormalized()
+    {
+        $referenceMapNormalized = array();
+
+        foreach ($this->_referenceMap as $rule => $map) {
+
+            $referenceMapNormalized[$rule] = array();
+
+            foreach ($map as $key => $value) {
+                switch ($key) {
+
+                    // normalize COLUMNS and REF_COLUMNS to arrays
+                    case self::COLUMNS:
+                    case self::REF_COLUMNS:
+                        if (!is_array($value)) {
+                            $referenceMapNormalized[$rule][$key] = array($value);
+                        } else {
+                            $referenceMapNormalized[$rule][$key] = $value;
+                        }
+                        break;
+
+                    // other values are copied as-is
+                    default:
+                        $referenceMapNormalized[$rule][$key] = $value;
+                        break;
+                }
+            }
+        }
+
+        return $referenceMapNormalized;
+    }
+
+    /**
      * Returns table information.
      *
      * @return array
@@ -667,24 +704,14 @@ abstract class Zend_Db_Table_Abstract
     public function _cascadeDelete($parentTableClassname, array $primaryKey)
     {
         $rowsAffected = 0;
-        foreach ($this->_referenceMap as $rule => $map) {
+        foreach ($this->_getReferenceMapNormalized() as $rule => $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_DELETE])) {
                 switch ($map[self::ON_DELETE]) {
                     case self::CASCADE:
-                        if (!is_array($map[self::COLUMNS])) {
-                            $columns = array($map[self::COLUMNS]);
-                        } else {
-                            $columns = $map[self::COLUMNS];
-                        }
-                        for ($i = 0; $i < count($columns); ++$i) {
-                            if (!is_array($map[self::REF_COLUMNS])) {
-                                $refColumns = array($map[self::REF_COLUMNS]);
-                            } else {
-                                $refColumns = $map[self::REF_COLUMNS];
-                            }
+                        for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($columns[$i]) . ' = ?',
-                                $primaryKey[$refColumns[$i]]
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
+                                $primaryKey[$map[self::REF_COLUMNS][$i]]
                             );
                         }
                         $rowsAffected += $this->delete($where);
