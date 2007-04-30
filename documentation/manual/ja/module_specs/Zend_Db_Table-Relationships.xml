@@ -36,7 +36,7 @@
             <listitem>
                 <para>
                     <code>Accounts</code>
-                    には、バグ管理データベースのユーザの情報を保存します。
+                    には、バグ管理データベースのユーザを識別する情報を保存します。
                 </para>
             </listitem>
             <listitem>
@@ -64,17 +64,17 @@
         </para>
 
         <programlisting role="sql"><![CDATA[
-CREATE TABLE accounts ( 
-  account_id        PRIMARY KEY, 
+CREATE TABLE accounts (
+  account_id        PRIMARY KEY,
   name              VARCHAR
 );
- 
-CREATE TABLE products ( 
+
+CREATE TABLE products (
   product_id        PRIMARY KEY,
   product_name      VARCHAR
 );
- 
-CREATE TABLE bugs ( 
+
+CREATE TABLE bugs (
   bug_id            PRIMARY KEY,
   product_id        FOREIGN KEY REFERENCES products(product_id),
   reported_by       FOREIGN KEY REFERENCES accounts(account_id),
@@ -139,14 +139,14 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name            = 'bugs';
     protected $_referenceMap    = array(
         'Reporter' => array(
-            'columns'           => array('reported_by'),
+            'columns'           => 'reported_by',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Engineer' => array(
-            'columns'           => array('assigned_to'),
+            'columns'           => 'assigned_to',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Verifier' => array(
             'columns'           => array('verified_by'),
@@ -203,7 +203,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">columns</emphasis> =>
-                    文字列の配列で、従属テーブル内での外部キー列の名前を指定します。
+                    文字列あるいは文字列の配列で、従属テーブル内での外部キー列の名前を指定します。
                 </para>
                 <para>
                     たいていの場合はカラムはひとつだけですが、
@@ -230,7 +230,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">refColumns</emphasis> =>
-                    文字列の配列で、親テーブルの主キーのカラム名を指定します。
+                    文字列あるいは文字列の配列で、親テーブルの主キーのカラム名を指定します。
                 </para>
                 <para>
                     たいていの場合はカラムはひとつだけですが、
@@ -248,7 +248,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">onDelete</emphasis> =>
-                    親テーブルの行が削除されたときに実行する動作を指定します。
+                    親テーブルの行が削除されたときに実行する動作を指定します。詳細は
                     "<xref linkend="zend.db.table.relationships.cascading" />"
                     を参照ください。
                 </para>
@@ -256,7 +256,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">onUpdate</emphasis> =>
-                    親テーブルで主キーカラムの値が更新されたときに実行する動作を指定します。
+                    親テーブルで主キーカラムの値が更新されたときに実行する動作を指定します。詳細は
                     "<xref linkend="zend.db.table.relationships.cascading" />"
                     を参照ください。
                 </para>
@@ -373,7 +373,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 
         <para>
             上のパターンにおいて、<code>&lt;TableClass&gt;</code> および
-            <code>&lt;Rule&gt;()</code> は、それぞれ
+            <code>&lt;Rule&gt;</code> は、それぞれ
             従属テーブルのクラス名、親テーブルとの参照関係を表す
             従属テーブルのルールのキーとなります
         </para>
