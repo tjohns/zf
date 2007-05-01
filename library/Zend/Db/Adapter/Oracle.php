@@ -222,7 +222,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Oracle_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = 'id')
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         if ($tableName !== null) {
             $sequenceName = $tableName;

@@ -144,7 +144,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      * @param string $primaryKey  OPTIONAL Name of primary key column.
      * @return integer
      */
-    public function lastInsertId($tableName = null, $primaryKey = 'id')
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $this->_connect();
         return $this->_connection->lastInsertId();

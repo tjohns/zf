@@ -237,7 +237,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Oracle_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = 'id')
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         if ($tableName !== null) {
             $sequenceName = $tableName;

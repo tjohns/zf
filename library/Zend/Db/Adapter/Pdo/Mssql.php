@@ -236,7 +236,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = 'id')
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $sql = 'SELECT SCOPE_IDENTITY()';
         return (int)$this->fetchOne($sql);
