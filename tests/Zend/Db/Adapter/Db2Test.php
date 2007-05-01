@@ -34,17 +34,15 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 {
 
-    public function testDbAdapterExceptionInvalidLoginCredentials()
+    public function testAdapterExceptionInvalidLoginCredentials()
     {
-        $params = $this->getParams();
+        $params = $this->_util->getParams();
 
         try {
             $db = new Zend_Db_Adapter_Db2('scalar');
             $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+            $this->fail('Expected to catch error');
         } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
-            $this->assertEquals("Configuration must be an array.", $e->getMessage());
         }
 
         try {
@@ -80,6 +78,55 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
         }
 
+    }
+
+    public function testAdapterInsertSequence()
+    {
+        $row = array (
+            'product_id' => $this->_db->nextSequenceId('products_seq'),
+            'product_name' => 'Solaris',
+        );
+        $rowsAffected = $this->_db->insert('products', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $lastInsertId = $this->_db->lastInsertId('products');
+        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
+    }
+
+    /**
+     * Test the Adapter's limit() method.
+     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
+     */
+    public function testAdapterLimit()
+    {
+        $products = $this->_db->quoteIdentifier('products');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1);
+
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(3, count($result[0]),
+            'Expecting column count to be 3');
+        $this->assertEquals(1, $result[0]['product_id'],
+            'Expecting to get product_id 1');
+    }
+
+    public function testAdapterLimitOffset()
+    {
+        $products = $this->_db->quoteIdentifier('products');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
+
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(3, count($result[0]),
+            'Expecting column count to be 3');
+        $this->assertEquals(2, $result[0]['product_id'],
+            'Expecting to get product_id 2');
     }
 
     public function getDriver()

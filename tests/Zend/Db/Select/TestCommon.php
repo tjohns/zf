@@ -143,8 +143,11 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectColumnsExpr()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
         $select = $this->_db->select()
-            ->from('products', new Zend_Db_Expr("products.product_name"));
+            ->from('products', new Zend_Db_Expr($products.'.'.$product_name));
         return $select;
     }
 
@@ -230,9 +233,13 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoin()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+
         $select = $this->_db->select()
             ->from('products')
-            ->join('bugs_products', 'products.product_id = bugs_products.product_id');
+            ->join('bugs_products', "$products.$product_id = $bugs_products.$product_id");
         return $select;
     }
 
@@ -251,10 +258,14 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoinWithCorrelationName()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $xyz1 = $this->_db->quoteIdentifier('xyz1');
+        $xyz2 = $this->_db->quoteIdentifier('xyz2');
+
         $select = $this->_db->select()
             ->from( array('xyz1' => 'products') )
-            ->join( array('xyz2' => 'bugs_products'), 'xyz1.product_id = xyz2.product_id')
-            ->where('xyz1.product_id = 1');
+            ->join( array('xyz2' => 'bugs_products'), "$xyz1.$product_id = $xyz2.$product_id")
+            ->where("$xyz1.$product_id = 1");
         return $select;
     }
 
@@ -273,9 +284,13 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoinInner()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+
         $select = $this->_db->select()
             ->from('products')
-            ->joinInner('bugs_products', 'products.product_id = bugs_products.product_id');
+            ->joinInner('bugs_products', "$products.$product_id = $bugs_products.$product_id");
         return $select;
     }
 
@@ -293,9 +308,13 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoinLeft()
     {
+        $bugs = $this->_db->quoteIdentifier('bugs');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $select = $this->_db->select()
             ->from('bugs')
-            ->joinLeft('bugs_products', 'bugs.bug_id = bugs_products.bug_id');
+            ->joinLeft('bugs_products', "$bugs.$bug_id = $bugs_products.$bug_id");
         return $select;
     }
 
@@ -315,9 +334,13 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoinRight()
     {
+        $bugs = $this->_db->quoteIdentifier('bugs');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $select = $this->_db->select()
             ->from('bugs_products')
-            ->joinRight('bugs', 'bugs_products.bug_id = bugs.bug_id');
+            ->joinRight('bugs', "$bugs_products.$bug_id = $bugs.$bug_id");
         return $select;
     }
 
@@ -358,10 +381,14 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectJoinQualified()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $schema = $this->_util->getSchema();
         $select = $this->_db->select()
             ->from('products')
-            ->join("$schema.bugs_products", 'products.product_id = bugs_products.product_id');
+            ->join("$schema.bugs_products", "$products.$product_id = $bugs_products.$product_id");
         return $select;
     }
 
@@ -379,9 +406,11 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectWhere()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->where('product_id = 2');
+            ->where("$product_id = 2");
         return $select;
     }
 
@@ -400,10 +429,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectWhereAnd()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->where('product_id = 2')
-            ->where('product_id = 1');
+            ->where("$product_id = 2")
+            ->where("$product_id = 1");
         return $select;
     }
 
@@ -421,9 +452,11 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectWhereWithParameter()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->where('product_id = ?', 2);
+            ->where("$product_id = ?", 2);
         return $select;
     }
 
@@ -441,10 +474,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectWhereOr()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->orWhere('product_id = 1')
-            ->orWhere('product_id = 2');
+            ->orWhere("$product_id = 1")
+            ->orWhere("$product_id = 2");
         return $select;
     }
 
@@ -464,10 +499,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectWhereOrWithParameter()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->orWhere('product_id = ?', 1)
-            ->orWhere('product_id = ?', 2);
+            ->orWhere("$product_id = ?", 1)
+            ->orWhere("$product_id = ?", 2);
         return $select;
     }
 
@@ -486,8 +523,10 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectGroupBy()
     {
+        $thecount = $this->_db->quoteIdentifier('thecount');
+
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', new Zend_Db_Expr('count(*) as thecount')))
+            ->from('bugs_products', array('bug_id', new Zend_Db_Expr("COUNT(*) AS $thecount")))
             ->group('bug_id')
             ->order('bug_id');
         return $select;
@@ -513,8 +552,10 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectGroupByQualified()
     {
+        $thecount = $this->_db->quoteIdentifier('thecount');
+
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', new Zend_Db_Expr('count(*) as thecount')))
+            ->from('bugs_products', array('bug_id', new Zend_Db_Expr("COUNT(*) AS $thecount")))
             ->group("bugs_products.bug_id")
             ->order('bug_id');
         return $select;
@@ -540,10 +581,13 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectGroupByExpr()
     {
+        $thecount = $this->_db->quoteIdentifier('thecount');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', new Zend_Db_Expr('count(*) as thecount')))
-            ->group(new Zend_Db_Expr("bug_id+1"))
-            ->order('bug_id');
+            ->from('bugs_products', array('bug_id'=>new Zend_Db_Expr("$bug_id+1"), new Zend_Db_Expr("COUNT(*) AS $thecount")))
+            ->group(new Zend_Db_Expr("$bug_id+1"))
+            ->order(new Zend_Db_Expr("$bug_id+1"));
         return $select;
     }
 
@@ -554,11 +598,14 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result),
             'Expected count of first result set to be 2');
-        $this->assertEquals(1, $result[0]['bug_id']);
+        $this->assertEquals(2, $result[0]['bug_id'],
+            'Expected first bug_id to be 2');
         $this->assertEquals(3, $result[0]['thecount'],
-            'Expected count(*) of first result set to be 2');
-        $this->assertEquals(2, $result[1]['bug_id']);
-        $this->assertEquals(1, $result[1]['thecount']);
+            'Expected count(*) of first group to be 2');
+        $this->assertEquals(3, $result[1]['bug_id'],
+            'Expected second bug_id to be 3');
+        $this->assertEquals(1, $result[1]['thecount'],
+            'Expected count(*) of second group to be 1');
     }
 
     /**
@@ -570,14 +617,14 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
 
     protected function _selectGroupByAutoExpr()
     {
+        $thecount = $this->_db->quoteIdentifier('thecount');
+        $bugs_products = $this->_db->quoteIdentifier('bugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', new Zend_Db_Expr('count(*) as thecount')))
-            ->group("ABS("
-              . $this->_db->quoteIdentifier('bugs_products')
-              . '.'
-              . $this->_db->quoteIdentifier('bug_id')
-              . ")")
-            ->order('bug_id');
+            ->from('bugs_products', array('bug_id'=>"ABS($bugs_products.$bug_id)", new Zend_Db_Expr("COUNT(*) AS $thecount")))
+            ->group("ABS($bugs_products.$bug_id)")
+            ->order("ABS($bugs_products.$bug_id)");
         return $select;
     }
 
@@ -599,9 +646,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     protected function _selectHaving()
     {
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', 'count(*) as thecount'))
+            ->from('bugs_products', array('bug_id', 'COUNT(*) AS thecount'))
             ->group('bug_id')
-            ->having('count(*) > 1')
+            ->having('COUNT(*) > 1')
             ->order('bug_id');
         return $select;
     }
@@ -619,10 +666,10 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     protected function _selectHavingAnd()
     {
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', 'count(*) as thecount'))
+            ->from('bugs_products', array('bug_id', 'COUNT(*) AS thecount'))
             ->group('bug_id')
-            ->having('count(*) > 1')
-            ->having('count(*) = 1')
+            ->having('COUNT(*) > 1')
+            ->having('COUNT(*) = 1')
             ->order('bug_id');
         return $select;
     }
@@ -643,9 +690,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     protected function _selectHavingWithParameter()
     {
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', 'count(*) as thecount'))
+            ->from('bugs_products', array('bug_id', 'COUNT(*) AS thecount'))
             ->group('bug_id')
-            ->having('count(*) > ?', 1)
+            ->having('COUNT(*) > ?', 1)
             ->order('bug_id');
         return $select;
     }
@@ -667,10 +714,10 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     protected function _selectHavingOr()
     {
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', 'count(*) as thecount'))
+            ->from('bugs_products', array('bug_id', 'COUNT(*) AS thecount'))
             ->group('bug_id')
-            ->orHaving('count(*) > 1')
-            ->orHaving('count(*) = 1')
+            ->orHaving('COUNT(*) > 1')
+            ->orHaving('COUNT(*) = 1')
             ->order('bug_id');
         return $select;
     }
@@ -694,10 +741,10 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     protected function _selectHavingOrWithParameter()
     {
         $select = $this->_db->select()
-            ->from('bugs_products', array('bug_id', 'count(*) as thecount'))
+            ->from('bugs_products', array('bug_id', 'COUNT(*) AS thecount'))
             ->group('bug_id')
-            ->orHaving('count(*) > ?', 1)
-            ->orHaving('count(*) = ?', 1)
+            ->orHaving('COUNT(*) > ?', 1)
+            ->orHaving('COUNT(*) = ?', 1)
             ->order('bug_id');
         return $select;
     }
@@ -835,13 +882,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
      */
     protected function _selectOrderByAutoExpr()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $select = $this->_db->select()
             ->from('products')
-            ->order("ABS("
-              . $this->_db->quoteIdentifier('products')
-              . '.'
-              . $this->_db->quoteIdentifier('product_id')
-              . ")");
+            ->order("ABS($products.$product_id)");
         return $select;
     }
 

@@ -26,9 +26,19 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Select_Db2Test extends Zend_Db_Select_TestCommon
 {
 
-    public function testSelectJoinCrossClause()
+    public function testSelectFromQualified()
     {
-        $this->markTestSkipped('DB2 does not support CROSS JOIN');
+        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+    }
+
+    public function testSelectJoinQualified()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+    }
+
+    public function testSelectJoinCross()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support CROSS JOIN');
     }
 
     public function getDriver()

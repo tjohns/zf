@@ -41,25 +41,24 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 {
 
-    public abstract function testDbAdapterExceptionInvalidLoginCredentials();
+    public abstract function testAdapterExceptionInvalidLoginCredentials();
 
     /**
      * Test Adapter's delete() method.
      * Delete one row from test table, and verify it was deleted.
      * Then try to delete a row that doesn't exist, and verify it had no effect.
-     *
-     * @todo: test that require delimited identifiers.
      */
-    public function testDbAdapterDelete()
+    public function testAdapterDelete()
     {
-        $select = $this->_db->select()->from('products')->order('product_id ASC');
+        $product_id = $this->_db->quoteIdentifier('product_id');
 
+        $select = $this->_db->select()->from('products')->order('product_id ASC');
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(3, count($result), 'Expected count of result to be 2');
         $this->assertEquals(1, $result[0]['product_id'], 'Expecting product_id of 0th row to be 1');
 
-        $rowsAffected = $this->_db->delete('products', 'product_id = 2');
+        $rowsAffected = $this->_db->delete('products', "$product_id = 2");
         $this->assertEquals(1, $rowsAffected, 'Expected rows affected to return 1', 'Expecting rows affected to be 1');
 
         $select = $this->_db->select()->from('products')->order('product_id ASC');
@@ -68,7 +67,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(2, count($result), 'Expected count of result to be 2');
         $this->assertEquals(1, $result[0]['product_id'], 'Expecting product_id of 0th row to be 1');
 
-        $rowsAffected = $this->_db->delete('products', 'product_id = 327');
+        $rowsAffected = $this->_db->delete('products', "$product_id = 327");
         $this->assertEquals(0, $rowsAffected, 'Expected rows affected to return 0');
     }
 
@@ -76,7 +75,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * Test Adapter's describeTable() method.
      * Retrieve the adapter's description of the test table and examine it.
      */
-    public function testDbAdapterDescribeTable()
+    public function testAdapterDescribeTable()
     {
         $desc = $this->_db->describeTable('products');
 
@@ -115,9 +114,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's fetchAll() method.
      */
-    public function testDbAdapterFetchAll()
+    public function testAdapterFetchAll()
     {
-        $result = $this->_db->fetchAll('SELECT * FROM products WHERE product_id > ? ORDER BY product_id ASC', 1);
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchAll("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
         $this->assertEquals(2, count($result));
         $this->assertEquals('2', $result[0]['product_id']);
     }
@@ -125,9 +127,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's fetchAssoc() method.
      */
-    public function testDbAdapterFetchAssoc()
+    public function testAdapterFetchAssoc()
     {
-        $result = $this->_db->fetchAssoc('SELECT * FROM products WHERE product_id > ? ORDER BY product_id DESC', 1);
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchAssoc("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id DESC", 1);
         foreach ($result as $idKey => $row) {
             $this->assertEquals($idKey, $row['product_id']);
         }
@@ -136,9 +141,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's fetchCol() method.
      */
-    public function testDbAdapterFetchCol()
+    public function testAdapterFetchCol()
     {
-        $result = $this->_db->fetchCol('SELECT * FROM products WHERE product_id > ? ORDER BY product_id ASC', 1);
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals(2, $result[0]);
         $this->assertEquals(3, $result[1]);
@@ -147,20 +155,28 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's fetchOne() method.
      */
-    public function testDbAdapterFetchOne()
+    public function testAdapterFetchOne()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
         $prod = 'Linux';
-        $result = $this->_db->fetchOne('SELECT product_name FROM products WHERE product_id > ? ORDER BY product_id', 1);
+        $result = $this->_db->fetchOne("SELECT $product_name FROM $products WHERE $product_id > ? ORDER BY $product_id", 1);
         $this->assertEquals($prod, $result);
     }
 
     /**
      * Test the Adapter's fetchPairs() method.
      */
-    public function testDbAdapterFetchPairs()
+    public function testAdapterFetchPairs()
     {
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
         $prod = 'Linux';
-        $result = $this->_db->fetchPairs('SELECT product_id, product_name FROM products WHERE product_id > ? ORDER BY product_id ASC', 1);
+        $result = $this->_db->fetchPairs("SELECT $product_id, $product_name FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals($prod, $result[2]);
     }
@@ -168,9 +184,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's fetchRow() method.
      */
-    public function testDbAdapterFetchRow()
+    public function testAdapterFetchRow()
     {
-        $result = $this->_db->fetchRow('SELECT * FROM products WHERE product_id > ? ORDER BY product_id', 1);
+        $products = $this->_db->quoteIdentifier('products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id", 1);
         $this->assertEquals(2, count($result)); // count columns
         $this->assertEquals(2, $result['product_id']);
     }
@@ -178,41 +197,66 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's insert() method.
      * This requires providing an associative array of column=>value pairs.
-     *
-     * @todo: test that require delimited identifiers.
      */
-    public function testDbAdapterInsert()
+    public function testAdapterInsert()
     {
         $row = array (
-            'product_name' => 'Solaris',
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
         );
-        $rowsAffected = $this->_db->insert('products', $row);
+        $rowsAffected = $this->_db->insert('bugs', $row);
         $this->assertEquals(1, $rowsAffected);
         $id = $this->_db->lastInsertId();
-        $this->assertEquals('4', (string) $id, 'Expected new id to be 4');
+        $this->assertEquals('5', (string) $id, 'Expected new id to be 4');
+    }
+
+    /**
+     * Test the Adapter's insert() method.
+     * This requires providing an associative array of column=>value pairs.
+     */
+    public function testAdapterInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences.');
     }
 
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.
      */
-    public function testDbAdapterLimit()
+    public function testAdapterLimit()
     {
-        $sql = $this->_db->limit('SELECT * FROM products', 1);
+        $products = $this->_db->quoteIdentifier('products');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1);
 
         $stmt = $this->_db->query($sql);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(2, count($result[0]));
-        $this->assertEquals(1, $result[0]['product_id']);
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(2, count($result[0]),
+            'Expecting column count to be 2');
+        $this->assertEquals(1, $result[0]['product_id'],
+            'Expecting to get product_id 1');
+    }
 
-        $sql = $this->_db->limit('SELECT * FROM products', 1, 1);
+    public function testAdapterLimitOffset()
+    {
+        $products = $this->_db->quoteIdentifier('products');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
 
         $stmt = $this->_db->query($sql);
         $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(2, count($result[0]));
-        $this->assertEquals(2, $result[0]['product_id']);
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(2, count($result[0]),
+            'Expecting column count to be 2');
+        $this->assertEquals(2, $result[0]['product_id'],
+            'Expecting to get product_id 2');
     }
 
     /**
@@ -220,13 +264,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * Fetch the list of tables and verify that the test table exists in
      * the list.
      */
-    public function testDbAdapterListTables()
+    public function testAdapterListTables()
     {
         $tables = $this->_db->listTables();
         $this->assertContains('products', $tables);
     }
 
-    public function testDbAdapterQuoteIdentifier()
+    public function testAdapterQuoteIdentifier()
     {
         $value = $this->_db->quoteIdentifier('table_name');
         $this->assertEquals('"table_name"', $value);
@@ -234,19 +278,19 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('"table_""_name"', $value);
     }
 
-    public function testDbAdapterQuote()
+    public function testAdapterQuote()
     {
         // test double quotes are fine
         $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
+        $this->assertEquals("'St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
+        $this->assertEquals("'St John\'s Wort'", $value);
 
         // quote an array
         $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
 
         // test numeric
         $value = $this->_db->quote('1');
@@ -259,24 +303,23 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals("1, '2', 3", $value);
     }
 
-    public function testDbAdapterQuoteInto()
+    public function testAdapterQuoteInto()
     {
         // test double quotes are fine
         $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
 
         // test that single quotes are escaped with another single quote
         $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
-
     /**
-     * @todo testDbAdapterTransactionCommit()
+     * @todo testAdapterTransactionCommit()
      */
 
     /**
-     * @todo testDbAdapterTransactionRollback()
+     * @todo testAdapterTransactionRollback()
      */
 
     /**
@@ -284,24 +327,24 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * Update a single row and verify that the change was made.
      * Attempt to update a row that does not exist, and verify
      * that no change was made.
-     *
-     * @todo: test that requires delimited identifiers.
      */
-    public function testDbAdapterUpdate()
+    public function testAdapterUpdate()
     {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         // Test that we can change the values in
         // an existing row.
         $result = $this->_db->update(
             'products',
             array('product_name' => 'Vista'),
-            'product_id = 1'
+            "$product_id = 1"
         );
         $this->assertEquals(1, $result);
 
         // Query the row to see if we have the new values.
         $select = $this->_db->select();
         $select->from('products');
-        $select->where('product_id = 1');
+        $select->where("$product_id = 1");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
 
@@ -313,12 +356,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $result = $this->_db->update(
             'products',
             array('product_name' => 'Vista'),
-            'product_id = 327'
+            "$product_id = 327"
         );
         $this->assertEquals(0, $result);
     }
 
-    public function testDbAdapterExceptionInvalidLimitArgument()
+    public function testAdapterExceptionInvalidLimitArgument()
     {
         $exceptionSeen = false;
         try {

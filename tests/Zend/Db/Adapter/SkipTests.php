@@ -39,7 +39,7 @@ abstract class Zend_Db_Adapter_Skip_CommonTest extends PHPUnit_Framework_TestCas
         $this->markTestSkipped("Testing Zend_Db_Adapter_$driver is not enabled in TestConfiguration.php");
     }
 
-    public function testDbAdapter()
+    public function testAdapter()
     {
         // this is here only so we have at least one test
     }

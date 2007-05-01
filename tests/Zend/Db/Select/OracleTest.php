@@ -26,6 +26,16 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Select_OracleTest extends Zend_Db_Select_TestCommon
 {
 
+    public function testSelectFromQualified()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+    }
+
+    public function testSelectJoinQualified()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+    }
+
     public function getDriver()
     {
         return 'Oracle';
