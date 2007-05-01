@@ -463,20 +463,16 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                MySQL, Microsoft SQL Server, and SQLite are examples of
+                RDBMS brands that support auto-incrementing primary keys.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
 
             <title>Using a Table with a Sequence</title>
-
-            <note>
-                <para>
-                    Support for natural keys is not implemented in
-                    Zend_Db_Table in the current version;
-                    the proposed usage below does not work yet,
-                    but it is planned for Zend Framework 1.0.
-                </para>
-            </note>
 
             <para>
                 A sequence is a database object that generates a unique
@@ -506,20 +502,16 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                Oracle, PostgreSQL, and IBM DB2 are examples of RDBMS
+                brands that support sequence objects in the database.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-natural">
 
             <title>Using a Table with a Natural Key</title>
-
-            <note>
-                <para>
-                    Support for natural keys is not implemented in
-                    Zend_Db_Table in the current version;
-                    the proposed usage below does not work yet,
-                    but it is planned for Zend Framework 1.0.
-                </para>
-            </note>
 
             <para>
                 Some tables have a natural key.  This means that the key is
