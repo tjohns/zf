@@ -448,20 +448,16 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                MySQL、Microsoft SQL Server そして SQLite
+                などの RDBMS が、主キーの自動インクリメントをサポートしています。
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
 
             <title>シーケンスを持つテーブルの使用</title>
-
-            <note>
-                <para>
-                    自然キーのサポートは、現在のバージョンの
-                    Zend_Db_Table では実装されていません。したがって、
-                    以下に示す使用例は、まだ動作しません。これは
-                    Zend Framework 1.0 で使用できるようになる予定です。
-                </para>
-            </note>
 
             <para>
                 シーケンスとはデータベースのオブジェクトの一種で、
@@ -491,20 +487,16 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                Oracle、PostgreSQL そして IBM DB2 などの RDBMS が、
+                データベースでのシーケンスオブジェクトをサポートしています。
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-natural">
 
             <title>自然キーを持つテーブルの使用</title>
-
-            <note>
-                <para>
-                    自然キーのサポートは、現在のバージョンの
-                    Zend_Db_Table では実装されていません。したがって、
-                    以下に示す使用例は、まだ動作しません。これは
-                    Zend Framework 1.0 で使用できるようになる予定です。
-                </para>
-            </note>
 
             <para>
                 自然キーを持つテーブルもあります。自然キーとは、

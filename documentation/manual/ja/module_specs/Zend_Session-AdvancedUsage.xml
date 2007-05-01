@@ -62,7 +62,7 @@ Zend_Session::start();
                     2. 間違い: PHP の <code>
                     <ulink url="http://www.php.net/session_start">session_start()</ulink>
                     </code> 関数を直接使用してはいけません。
-                    <code>session_start()</code> を直接使用した後で Zend_Session_Namespace を使用すると、
+                    <code>session_start()</code> を直接使用した後で Zend_Session_Namespace を使用した場合は、
                     <code>Zend_Session::start()</code> が例外 ("session has already been started")
                     をスローします。Zend_Session_Namespace を使用するか
                     明示的に <code>Zend_Session::start()</code> で開始した後で

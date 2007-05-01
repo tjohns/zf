@@ -197,7 +197,10 @@ $row->save();
 
             <para>
                 指定したテーブルに新しい行を作成するには、テーブルクラスの
-                <code>fetchNew()</code> メソッドを使用します。
+                <code>createRow()</code> メソッドを使用します。
+                取得した行のフィールドに対してはオブジェクト指向のインターフェイスでアクセスできますが、
+                <code>save()</code> メソッドをコールするまでは
+                実際にデータベースの内容が変更されることはありません。
             </para>
 
             <example id="zend.db.table.write.insert.example">
@@ -205,7 +208,7 @@ $row->save();
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
-$newRow = $bugs->fetchNew();
+$newRow = $bugs->createRow();
 
 // アプリケーションに応じて適切にカラムの値を設定します
 $newRow->bug_description = '...description...';
@@ -216,6 +219,38 @@ $newRow->save();
 
 ?>]]></programlisting>
             </example>
+
+            <para>
+                createRow() メソッドのオプションの引数として、連想配列を渡すことができます。
+                この連想配列では、新しい行のフィールドに代入する値を指定します。
+            </para>
+
+            <example id="zend.db.table.write.insert.example">
+                <title>テーブルに新しい行を作成し、値を代入する例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$data = array(
+    'bug_description' => '...説明...',
+    'bug_status'      => 'NEW'
+);
+
+$bugs = new Bugs();
+$newRow = $bugs->createRow($data);
+
+// 新しい行をデータベースに INSERT します
+$newRow->save();
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    Zend_Db_Table の初期のリリースであ、<code>createRow()</code>
+                    メソッドは <code>fetchNew()</code> という名前でした。
+                    今後は新しい名前を用いることを推奨しますが、
+                    過去との互換性を確保するため古い名前も使用できるようになっています。
+                </para>
+            </note>
 
         </sect3>
 
@@ -236,7 +271,7 @@ $newRow->save();
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
-$newRow = $bugs->fetchNew();
+$newRow = $bugs->createRow();
 
 // データを連想配列形式にします
 $data = array(
