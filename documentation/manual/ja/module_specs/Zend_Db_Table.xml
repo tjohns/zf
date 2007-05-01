@@ -453,6 +453,16 @@ class Bugs extends Zend_Db_Table_Abstract
                 などの RDBMS が、主キーの自動インクリメントをサポートしています。
             </para>
 
+            <para>
+                PostgreSQL の <code>SERIAL</code> 記法を使用すると、
+                テーブル名とカラム名をもとにして暗黙的にシーケンスを定義します。
+                新しい行を作成した際にはこのシーケンスを用いてキーの値を生成します。
+                IBM DB2 には、これと同等の動作をする <code>IDENTITY</code> という記法があります。
+                これらの記法を使用する場合は、Zend_Db_Table クラスで
+                <code>$_sequence</code> を <code>true</code> と設定し、
+                自動インクリメントを有効にしてください。
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
