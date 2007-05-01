@@ -468,6 +468,16 @@ class Bugs extends Zend_Db_Table_Abstract
                 RDBMS brands that support auto-incrementing primary keys.
             </para>
 
+            <para>
+                PostgreSQL has a <code>SERIAL</code> notation that implicitly
+                defines a sequence based on the table and column name, and uses
+                the sequence to generate key values for new rows.
+                IBM DB2 has an <code>IDENTITY</code> notation that works similarly.
+                If you use either of these notations, treat your Zend_Db_Table 
+                class as having an auto-incrementing column with respect to
+                declaring the <code>$_sequence</code> member as <code>true</code>.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
@@ -505,6 +515,15 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 Oracle, PostgreSQL, and IBM DB2 are examples of RDBMS
                 brands that support sequence objects in the database.
+            </para>
+
+            <para>
+                PostgreSQL and IBM DB2 also have syntax that defines
+                sequences implicitly and associated with columns.
+                If you use this notation, treat the table as having
+                an auto-incrementing key column.  Define the sequence
+                name as a string only in cases where you would invoke
+                the sequence explicitly to get the next key value.
             </para>
 
         </sect3>
