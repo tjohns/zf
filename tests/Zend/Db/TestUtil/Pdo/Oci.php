@@ -78,16 +78,20 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
-        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES');
+        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES '
+            . $db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        );
         if (in_array($tableName, $tableList)) {
             return null;
         }
-        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);;
+        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);
     }
 
     protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
     {
-        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES');
+        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES '
+            . $db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        );
         if (in_array($tableName, $tableList)) {
             return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
         }
@@ -96,7 +100,9 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
+            . $db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        );
         if (in_array($sequenceName, $seqList)) {
             return null;
         }
@@ -105,7 +111,9 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES');
+        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
+            . $db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        );
         if (in_array($sequenceName, $seqList)) {
             return 'DROP SEQUENCE ' . $db->quoteIdentifier($sequenceName);
         }

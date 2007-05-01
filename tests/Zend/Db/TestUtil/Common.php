@@ -45,7 +45,19 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 abstract class Zend_Db_TestUtil_Common
 {
+    /**
+     * @var Zend_Db_Adapter_Abstract
+     */
+    protected $_db = null;
+
+    /**
+     * @var array
+     */
     protected $_tables = array();
+
+    /**
+     * @var array
+     */
     protected $_sequences = array();
 
     protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
@@ -102,7 +114,6 @@ abstract class Zend_Db_TestUtil_Common
         $sql .= implode(",\n\t", $col);
         $sql .= "\n)";
         $result = $this->_rawQuery($db, $sql);
-        // $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -123,7 +134,6 @@ abstract class Zend_Db_TestUtil_Common
             return;
         }
         $result = $this->_rawQuery($db, $sql);
-        // $result = $db->getConnection()->query($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $db->getConnection()->error);
         }
@@ -170,7 +180,6 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        // $result = $db->getConnection()->query($sql);
         $result = $this->_rawQuery($db, $sql);
         if ($result === false) {
             throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
@@ -228,7 +237,7 @@ abstract class Zend_Db_TestUtil_Common
     protected function _getColumnsAccounts()
     {
         return array(
-            'account_name' => 'VARCHAR(100)',
+            'account_name' => 'VARCHAR(100) NOT NULL',
             'PRIMARY KEY'  => 'account_name'
         );
     }
@@ -244,8 +253,8 @@ abstract class Zend_Db_TestUtil_Common
     protected function _getColumnsBugsProducts()
     {
         return array(
-            'bug_id'       => 'INTEGER',
-            'product_id'   => 'INTEGER',
+            'bug_id'       => 'INTEGER NOT NULL',
+            'product_id'   => 'INTEGER NOT NULL',
             'PRIMARY KEY'  => 'bug_id,product_id'
         );
     }
@@ -356,7 +365,6 @@ abstract class Zend_Db_TestUtil_Common
             $sql .=        ' (' . implode(', ', $cols) . ')';
             $sql .= ' VALUES (' . implode(', ', $vals) . ')';
             $result = $this->_rawQuery($db, $sql);
-            // $result = $db->getConnection()->query($sql);
             if ($result === false) {
                 throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
             }
@@ -365,6 +373,7 @@ abstract class Zend_Db_TestUtil_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
+        $this->_db = $db;
         $this->createTable($db, 'Accounts');
         $this->populateTable($db, 'Accounts');
 
