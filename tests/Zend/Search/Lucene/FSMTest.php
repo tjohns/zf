@@ -7,7 +7,7 @@
 
 
 /**
- * Zend_Search_Lucene_PriorityQueue
+ * Zend_Search_Lucene_FSM
  */
 require_once 'Zend/Search/Lucene/FSM.php';
 

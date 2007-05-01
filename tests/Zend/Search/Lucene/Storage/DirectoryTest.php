@@ -7,7 +7,7 @@
 
 
 /**
- * Zend_Search_Lucene_PriorityQueue
+ * Zend_Search_Lucene_Storage_Directory_Filesystem
  */
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 

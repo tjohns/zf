@@ -7,7 +7,7 @@
 
 
 /**
- * Zend_Search_Lucene_PriorityQueue
+ * Zend_Search_Lucene_Field
  */
 require_once 'Zend/Search/Lucene/Field.php';
 
