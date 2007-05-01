@@ -95,8 +95,11 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableRowsetEmpty()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $rows = $table->fetchAll('bug_id = -1');
+
+        $rows = $table->fetchAll("$bug_id = -1");
         $this->assertEquals(0, count($rows));
         $this->assertNull($rows->current());
     }

@@ -26,6 +26,28 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
 {
 
+    public function testTableInsert()
+    {
+        $table = $this->_getTable('Zend_Db_Table_TableBugs',
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'bugs_seq'));
+        $row = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => new Zend_Db_Expr(
+                $this->_db->quoteInto('DATE ?', '2007-04-02')),
+            'updated_on'      => new Zend_Db_Expr(
+                $this->_db->quoteInto('DATE ?', '2007-04-02')),
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
+        );
+        $insertResult         = $table->insert($row);
+        $lastInsertId         = $this->_db->lastInsertId('bugs');
+        $lastSequenceId       = $this->_db->lastSequenceId('bugs_seq');
+        $this->assertEquals($insertResult, $lastInsertId);
+        $this->assertEquals($insertResult, $lastSequenceId);
+        $this->assertEquals(5, $insertResult);
+    }
+
     public function getDriver()
     {
         return 'Oracle';

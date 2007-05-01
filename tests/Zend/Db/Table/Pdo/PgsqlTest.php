@@ -26,20 +26,16 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
 {
 
-    public function testTableInsertAutoIncrement()
+    public function testTableInsert()
     {
-        $driver = $this->getDriver();
-        $this->markTestSkipped("$driver does not support auto-increment.");
+        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
     }
 
     public function testTableInsertSequence()
     {
-        $this->markTestIncomplete('Pending solution for ZF-1140');
-        return;
-
-        $table = $this->_table['bugs'];
+        $table = $this->_getTable('Zend_Db_Table_TableBugs',
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'bugs_seq'));
         $row = array (
-            'bug_id'          => new Zend_Db_Expr("NEXTVAL('bugs_seq')"),
             'bug_description' => 'New bug',
             'bug_status'      => 'NEW',
             'created_on'      => '2007-04-02',
@@ -50,7 +46,6 @@ class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
         $insertResult         = $table->insert($row);
         $lastInsertId         = $this->_db->lastInsertId('bugs');
         $lastSequenceId       = $this->_db->lastSequenceId('bugs_seq');
-
         $this->assertEquals($insertResult, $lastInsertId);
         $this->assertEquals($insertResult, $lastSequenceId);
         $this->assertEquals(5, $insertResult);

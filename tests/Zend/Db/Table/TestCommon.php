@@ -330,7 +330,23 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     }
 
-    public function testTableFind()
+    public function testTableFindSingle()
+    {
+        $table = $this->_table['bugs'];
+        $row1 = $table->find(1);
+        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+    }
+
+    public function testTableFindMultiple()
+    {
+        $table = $this->_table['bugs'];
+        $rows = $table->find(array(1, 2));
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+    }
+
+    public function testTableFindExceptionMissingKey()
     {
         $table = $this->_table['bugs'];
         try {
@@ -340,15 +356,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertThat($e, $this->isInstanceOf('Zend_Db_Table_Exception'),
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
         }
+    }
 
-        $row1 = $table->find(1);
-        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
-
-        $rows = $table->find(array(1, 2));
-        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
-
+    public function testTableFindExceptionIncorrectKeyCount()
+    {
+        $table = $this->_table['bugs'];
         try {
             $table->find(1, 2);
             $this->fail('Expected to catch Zend_Db_Table_Exception for incorrect key count');
@@ -358,7 +370,35 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
-    public function testTableInsertAutoIncrement()
+/*
+    public function testTableFindCompoundSingle()
+    {
+        $table = $this->_table['bugs_products'];
+    }
+ */
+
+/*
+    public function testTableFindCompoundMultiple()
+    {
+        $table = $this->_table['bugs_products'];
+    }
+ */
+
+/*
+    public function testTableFindCompoundExceptionIncorrectKeyCount()
+    {
+        $table = $this->_table['bugs_products'];
+    }
+ */
+
+/*
+    public function testTableFindCompoundMultipleExceptionIncorrectValueCount()
+    {
+        $table = $this->_table['bugs_products'];
+    }
+ */
+
+    public function testTableInsert()
     {
         $table = $this->_table['bugs'];
         $row = array (
@@ -378,18 +418,41 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableInsertSequence()
     {
-        $driver = $this->getDriver();
-        $this->markTestSkipped("$driver does not support sequences.");
+        $this->markTestSkipped($this->getDriver().' does not support sequences.');
     }
+
+/*
+    public function testTableInsertSpecifyPrimaryKey()
+    {
+        $table = $this->_table['bugs'];
+        $row = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
+        );
+        $insertResult = $table->insert($row);
+    }
+ */
+
+/*
+    public function testTableInsertCompoundPrimaryKey()
+    {
+        $table = $this->_table['bugs_products'];
+    }
+ */
 
     public function testTableUpdate()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
         $data = array(
             'bug_description' => 'Implement Do What I Mean function',
             'bug_status'      => 'INCOMPLETE'
         );
         $table = $this->_table['bugs'];
-        $result = $table->update($data, 'bug_id = 2');
+        $result = $table->update($data, "$bug_id = 2");
         $this->assertEquals(1, $result);
 
         // Query the row to see if we have the new values.
@@ -407,13 +470,16 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableUpdateWhereArray()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
         $data = array(
             'bug_description' => 'Synesthesia',
-            );
+        );
 
         $where = array(
-            'bug_id IN (1, 3)',
-            "bug_status != 'UNKNOWN'"
+            "$bug_id IN (1, 3)",
+            "$bug_status != 'UNKNOWN'"
             );
 
         $this->assertEquals(2, $this->_table['bugs']->update($data, $where));
@@ -429,11 +495,13 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableDelete()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
         $rows = $table->find(array(1, 2));
         $this->assertEquals(2, $rows->count());
 
-        $table->delete('bug_id = 2');
+        $table->delete("$bug_id = 2");
 
         $rows = $table->find(array(1, 2));
         $this->assertEquals(1, $rows->count());
@@ -441,9 +509,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableDeleteWhereArray()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
         $where = array(
-            'bug_id IN (1, 3)',
-            "bug_status != 'UNKNOWN'"
+            "$bug_id IN (1, 3)",
+            "$bug_status != 'UNKNOWN'"
             );
 
         $this->assertEquals(2, $this->_table['bugs']->delete($where));
@@ -451,12 +522,31 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(0, count($this->_table['bugs']->find(array(1, 3))));
     }
 
-    public function testTableFetchNew()
+    public function testTableCreateRow()
     {
         $table = $this->_table['bugs'];
-        $row = $table->fetchNew();
+        $row = $table->createRow();
         $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
+        $this->assertTrue(isset($row->bug_description));
+    }
+
+    public function testTableCreateRowWithData()
+    {
+        $table = $this->_table['bugs'];
+        $data = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
+        );
+        $row = $table->createRow($data);
+        $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
+            'Expecting object of type Zend_Db_Table_Row_Abstract');
+        $this->assertTrue(isset($row->bug_description));
+        $this->assertEquals('New bug', $row->bug_description);
     }
 
     public function testTableFetchRow()
@@ -465,28 +555,39 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $row = $table->fetchRow();
         $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
-
+        $this->assertTrue(isset($row->bug_description));
     }
 
     public function testTableFetchRowWhere()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $row = $table->fetchRow('bug_id = 2');
+        $row = $table->fetchRow("$bug_id = 2");
         $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
         $this->assertEquals(2, $row->bug_id);
     }
 
-    public function testTableFetchRowOrder()
+    public function testTableFetchRowOrderAsc()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
 
-        $row = $table->fetchRow('bug_id > 1', 'bug_id ASC');
+        $row = $table->fetchRow("$bug_id > 1", "bug_id ASC");
         $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
         $this->assertEquals(2, $row->bug_id);
+    }
 
-        $row = $table->fetchRow(null, 'bug_id DESC');
+    public function testTableFetchRowOrderDesc()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        $table = $this->_table['bugs'];
+
+        $row = $table->fetchRow(null, "bug_id DESC");
         $this->assertThat($row, $this->isInstanceOf('Zend_Db_Table_Row_Abstract'),
             'Expecting object of type Zend_Db_Table_Row_Abstract');
         $this->assertEquals(4, $row->bug_id);
@@ -494,8 +595,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableFetchRowEmpty()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $row = $table->fetchRow('bug_id = -1');
+
+        $row = $table->fetchRow("$bug_id = -1");
         $this->assertEquals(null, $row,
             'Expecting null result for non-existent row');
     }
@@ -514,8 +618,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableFetchAllWhere()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $rows = $table->fetchAll('bug_id = 2');
+
+        $rows = $table->fetchAll("$bug_id = 2");
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
         $this->assertEquals(1, count($rows));
@@ -540,8 +647,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableFetchAllOrderExpr()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $rows = $table->fetchAll(null, new Zend_Db_Expr('bug_id + 1 DESC'));
+
+        $rows = $table->fetchAll(null, new Zend_Db_Expr("$bug_id + 1 DESC"));
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset'),
             'Expecting object of type Zend_Db_Table_Rowset');
         $this->assertEquals(4, count($rows));
@@ -566,8 +676,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableFetchAllEmpty()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
-        $rows = $table->fetchAll('bug_id = -1');
+
+        $rows = $table->fetchAll("$bug_id = -1");
         $this->assertEquals(0, count($rows));
     }
 
@@ -602,12 +715,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $tableBugsCustom1 = $this->_getTable(
             'Zend_Db_Table_TableBugsCustom',
             array('metadataCache' => $cache)
-            );
+        );
 
         $this->assertThat(
             $tableBugsCustom1->getMetadataCache(),
             $this->isInstanceOf('Zend_Cache_Core')
-            );
+        );
 
         $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
 
@@ -668,12 +781,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $frontendOptions = array(
             'automatic_serialization' => true
-            );
+        );
 
         $backendOptions  = array(
             'cacheDir'                => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
             'fileNamePrefix'          => 'Zend_Db_Table_TestCommon'
-            );
+        );
 
         $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 

@@ -48,9 +48,11 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
     public function testTableRelationshipFindParentRow()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
 
-        $childRows = $table->fetchAll('bug_id = 1');
+        $childRows = $table->fetchAll("$bug_id = 1");
         $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
 
@@ -67,9 +69,11 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
     public function testTableRelationshipMagicFindParentRow()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
 
-        $childRows = $table->fetchAll('bug_id = 1');
+        $childRows = $table->fetchAll("$bug_id = 1");
         $this->assertThat($childRows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
 
@@ -104,9 +108,11 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
     public function testTableRelationshipFindParentRowException()
     {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $table = $this->_table['bugs'];
 
-        $childRows = $table->fetchAll('bug_id = 1');
+        $childRows = $table->fetchAll("$bug_id = 1");
         $childRow1 = $childRows->current();
 
         try {
@@ -336,9 +342,11 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         $bug1->delete();
 
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
         $this->assertEquals(
             0,
-            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll('bug_id = 1')),
+            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll("$bug_id = 1")),
             'Expecting cascading delete to have reduced dependent rows to zero'
             );
     }
@@ -350,6 +358,8 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
      */
     public function testTableRelationshipCascadingDeleteUsageBasicArray()
     {
+        $reported_by = $this->_db->quoteIdentifier('reported_by');
+
         $account1 = $this->_getTable('Zend_Db_Table_TableAccountsCustom')
                     ->find('mmouse')
                     ->current();
@@ -369,7 +379,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
             count(
                 $tableBugsCustom->fetchAll(
                     $tableBugsCustom->getAdapter()
-                                    ->quoteInto('reported_by = ?', 'mmouse')
+                                    ->quoteInto("$reported_by = ?", 'mmouse')
                     )
                 ),
             'Expecting cascading delete to have reduced dependent rows to zero'
@@ -395,9 +405,11 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         $product1->delete();
 
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
         $this->assertEquals(
             1,
-            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll('product_id = 1')),
+            count($this->_getTable('Zend_Db_Table_TableBugsProductsCustom')->fetchAll("$product_id = 1")),
             'Expecting to find one dependent row'
             );
     }
@@ -499,8 +511,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         Zend_Loader::loadClass($myRowsetClass);
 
+        $account_name = $this->_db->quoteIdentifier('account_name');
+
         $bugs = $this->_table['accounts']
-                ->fetchRow($this->_db->quoteInto('account_name = ?', 'mmouse'))
+                ->fetchRow($this->_db->quoteInto("$account_name = ?", 'mmouse'))
                 ->findDependentRowset(
                     $this->_table['bugs']
                         ->setRowsetClass($myRowsetClass)
@@ -531,8 +545,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
 
         Zend_Loader::loadClass($myRowsetClass);
 
+        $account_name = $this->_db->quoteIdentifier('account_name');
+
         $bugs = $this->_getTable('Zend_Db_Table_TableAccountsCustom')
-                ->fetchRow($this->_db->quoteInto('account_name = ?', 'mmouse'))
+                ->fetchRow($this->_db->quoteInto("$account_name = ?", 'mmouse'))
                 ->findDependentRowset('Zend_Db_Table_TableBugsCustom', 'Engineer');
 
         $this->assertThat($bugs, $this->isInstanceOf($myRowsetClass),
