@@ -1,6 +1,6 @@
 <sect1 id="zend.session.globalsessionmanagement">
 
-    <title>Global Session Management</title>
+    <title>Globales Session Management</title>
 
     <para>
         The default behavior of sessions can be modified using the static methods in Zend_Session. All management and

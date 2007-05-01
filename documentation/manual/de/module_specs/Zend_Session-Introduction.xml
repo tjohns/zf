@@ -1,70 +1,59 @@
 <sect1 id="zend.session.introduction">
 
-    <title>Einleitung</title>
+    <title>Einführung</title>
 
     <para>
-        Siehe
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">die aktuellste 
-        veröffentlichte Version dieses Dokuments</ulink>. Das Zend-Framework-Auth-Team freut sich 
-        außerdem über jegliches Feedback und Beiträge auf der Mailing-Liste:
+        Hier
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">kann die zuletzt veröffentlichte Version
+        dieses Dokuments</ulink> gefunden werden. Das Zend Framework Auth Team begrüsst Feedback und Beiträge in
+        der Mailing Liste:
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
     </para>
 
     <para>
-        Bei einer in PHP geschriebenen Web-Applikation steht eine 
-        <emphasis role="bold">Session</emphasis> für eine logische Eins-Zu-Eins-Verbindung zwischen 
-        auf dem Server beständig gehaltenen Daten und einem bestimmten Client (zum Beispiel einem 
-        Web-Browser). <code>Zend_Session</code> hilft beim Verwalten und Aufbewahren von 
-        Session-Daten, der logischen Ergänzung zu Cookie-Daten, über mehrere Seitenaufrufe eines 
-        Clients hinweg. Anders als die in Cookies gespeicherten Daten werden die Session-Daten 
-        nicht client-seitig gespeichert und stehen dem Client nur zur Verfügung, wenn das 
-        server-seitige Script freiwillig die Daten durch eine Antwort auf eine Anfrage des Clients 
-        verfügbar macht. Im Umfeld der Zend_Session-Komponente und in dieser Dokumentation steht 
-        der Begriff Session-Daten für server-seitige Daten gespeichert in <code>$_SESSION[]</code>, 
-        die durch <code>Zend_Session</code> verwaltet und individuell von den 
-        <code>Zend_Session_Namespace</code> Zugriffsobjekten verändert werden.
-        <emphasis role="bold">Session Namensräume</emphasis> stellen einen Zugriff auf die 
-        Sessiondaten unter Verwendung klassischer 
-        <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">Namensräume</ulink>,
-        die logisch als benannte Gruppen mit assoziativen Arrays mit Schlüsselstrings (ähnlich wie 
-        normale PHP Arrays) implementiert wurden.
+        In Web Anwendungen die mit PHP geschrieben sind, repräsentiert eine <emphasis role="bold">Session</emphasis>
+        eine logische Eins-zu-Eins Verbindung zwischen fixen Daten auf dem Server und einem bestimmten
+        Benutzer Client (z.B. einem Web Browser). <code>Zend_Session</code> hilft beim Verwalten und Aufbewahren
+        von Session Daten, einer logischen Verbindung von Cookie Daten über mehrere Seitenaufrufe hinweg durch
+        den gleichen Client. Anders als Cookie Daten, werden Session Daten nicht beim Client gespeichert und stehen
+        diesem nur dann zur Verfügung wenn der Server-seitige Sourcecode diese Daten freiwillig zur Verfügung stellt
+        und diese vom Client angefragt werden. Innerhalb dieser Komponente und der Dokumentation bezeichnen
+        Session Daten die Server-seitigen Daten welche in <code>$_SESSION[]</code> gespeicher, durch
+        <code>Zend_Session</code> verwaltet und durch <code>Zend_Session_Namespace</code> Zugriffsobjekte
+        individuell verändert werden. <emphasis role="bold">Session Namensräume</emphasis> gestatten den Zugriff auf
+        Session Daten durch Verwendung klassischer
+        <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">Namensräume</ulink> welche
+        durch logische, namentlich gruppierte, assoziative Arrays, dessen Schlüssel mit Zeichenketten benannt sind
+        (ähnlich wie bei normalen PHP Arrays), implementiert sind.
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> erstellt eine Instanz eines Zugriffsobjektes für 
-        Namensräume aus <code>$_SESSION[]</code>. Die <code>Zend_Session</code> ist ein Wrapper für 
-        das bestehende PHP ext/session mit einem Administrations- und Verwaltungsinterface sowie 
-        der Bereitstellung einer API für <code>Zend_Session_Namespace</code>, um Session 
-        Namensräume beizubehalten. <code>Zend_Session_Namespace</code> stellt eine standardisierte, 
-        objektorientierte Schnittstelle für den Umgang mit Namensräumen, die innerhalb des Standard 
-        Session Mechanismus von PHP bereit gehalten werden. Unterstützung besteht sowohl für 
-        anonymen und authentifizierten Sessions. Zend_Auth, die Authentifizierungs-Komponente des 
-        Zend Frameworks, verwendet Zend_Session_Namespace, um einige Informationen im Zusammenhang 
-        mit authentifizieren Benutzer im "Zend_Auth" Namensraum zu speichern. Da 
-        <code>Zend_Session</code> intern die normalen ext/session Funktionen von PHP verwendet, 
-        sind alle regulären Konfigurations-Optionen und -Einstellungen nutzbar (siehe
-        <ulink
-      url="http://www.php.net/session">http://www.php.net/session</ulink>
-        ), mit dem Bonus des Komforms über ein objektorientiertes Interface and Standardwerte, um
-        sowohl die beste Lösung und eine reibungslose Integration in das Zend Framework 
-        bereitzustellen. Eine Standard Session-Id, entweder in einem Client Cookie oder den URLs 
-        gespeichert, hält also die Verbindung zwischen einem Client und bestehenden Session-Daten 
-        aufrecht.
+        <code>Zend_Session_Namespace</code> erzeugt Instanzen von Zugriffsobjekten für benannte Abschnitte von
+        <code>$_SESSION[]</code>. Die <code>Zend_Session</code> Komponente wrappt die bestehende PHP Erweiterung
+        ext/session mit einem Administrations und Management Interface sowie einer API für
+        <code>Zend_Session_Namespace</code> um Session Namensräume zu erlauben. <code>Zend_Session_Namespace</code>
+        bietet ein standardisiertes, objekt-orientiertes Interface für das Arbeiten mit Namensräumen welche
+        innerhalb von PHP's Standard Session Mechanismum bereitgehalten werden. Es werden sowohl anonyme als auch
+        "login" Session Namensräume unterstützt. <code>Zend_Auth</code>, die Authentifizierungs-Komponente des
+        ZF verwendet <code>Zend_Session_Namespace</code> um einige Informationen, welche mit den authentifizierten
+        Benutzern verbunden sind, innerhalb des "Zend_Auth" Namensraums zu speichern. Da <code>Zend_Session</code>
+        intern die normalen PHP ext/session Funktionen verwendet, sind alle bekannten Konfigurationsoptionen und
+        Einstellungen vorhanden (siehe  <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>),
+        mit dem Bonus und Komfort durch ein Objekt-orientiertes Interface und unterstützt standardmäßig beides,
+        sowohl die beste Lösung als auch eine reibungslose Integration innerhalb des Zend Frameworks. Deshalb hält
+        eine standardmäßige PHP Session ID, welche entweder in einem Client-Cookie gespeichert oder in einer URL
+        integriert ist, die Verbindung zwischen Client und bestehenden Sessiondaten aufrecht.
     </para>
 
     <para>
-        Der standardmäßig vorhandene 
-        <ulink
-      url="http://www.php.net/manual/de/function.session-set-save-handler.php">ext/session
-      save handler</ulink>
-        löst nicht das Problem, diese Verbindung in Szenarien aufrecht zu erhalten, in denen ein 
-        Client sich mit einem beliebigen Server eines Server-Clusters verbinden kann, da die 
-        bestehenden Session-Daten nur lokal auf einem Server gespeichert werden. Eine Liste 
-        zusätzlicher, geeigneter Speicher-Module wird zur Verfügung gestellt werden wenn diese 
-        verfügbar sind. Mitglieder der Community werden ermutigt, Speicher-Module in der
-        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Liste 
-        vorzuschlagen und einzusenden. Ein Zend_Db kompatibles Speicher-Modul wurde in der Liste 
-        bereits veröffentlicht.
+        Das standardmäßige
+        <ulink url="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session Speichermodul</ulink>
+        löst das Problem des Verwaltens dieser Verbindung nicht, wenn sich ein Client zu einem beliebigen Server aus
+        einem Cluster von Servern verbinden kann, da Sessiondaten nur im lokalen Server gespeichert werden. Eine Liste
+        von zusätzlichen, geeigneten Speichermodule wird, sobald Sie vorhanden ist, zur Verfügung gestellt. Mitglieder
+        der Community werden ermutigt Speichermodule vorzuschlagen und an die 
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Mailing-Liste zu senden.
+        Ein Zend_Db kompatibles Speichermodul wurde schon in der Liste veröffentlicht.
     </para>
 
 </sect1>
