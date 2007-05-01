@@ -40,7 +40,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     protected $_urlVariable = ':';
     protected $_urlDelimiter = '/';
     protected $_regexDelimiter = '#';
-    protected $_defaultRegex = '.+';
+    protected $_defaultRegex = null;
 
     protected $_parts;
     protected $_defaults = array();
@@ -86,7 +86,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
                     $this->_vars[] = $name;
                 } else {
-                    $this->_parts[$pos] = array('regex' => preg_quote($part, $this->_regexDelimiter));
+                    $this->_parts[$pos] = array('regex' => $part);
                     if ($part != '*') {
                         $this->_staticCount++;
                     }
@@ -145,7 +145,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     return false;
                 }
 
-                if ($this->_parts[$pos]['regex'] == '\*') {
+                if ($this->_parts[$pos]['regex'] == '*') {
                     $parts = array_slice($path, $pos);
                     $this->_getWildcardData($parts, $unique);
                     break;
@@ -153,12 +153,21 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
                 $part = $this->_parts[$pos];
                 $name = isset($part['name']) ? $part['name'] : null;
-                $regex = $this->_regexDelimiter . '^' . $part['regex'] . '$' . $this->_regexDelimiter . 'iu';
-
                 $pathPart = urldecode($pathPart);
-
-                if (!preg_match($regex, $pathPart)) {
-                    return false;
+                
+                if ($name === null) {
+                    if ($part['regex'] != $pathPart) {
+                        return false;
+                    }
+                } elseif ($part['regex'] === null) {
+                    if (strlen($pathPart) == 0) {
+                        return false;
+                    } 
+                } else {
+                    $regex = $this->_regexDelimiter . '^' . $part['regex'] . '$' . $this->_regexDelimiter . 'iu';
+                    if (!preg_match($regex, $pathPart)) {
+                        return false;
+                    }
                 }
 
                 if ($name !== null) {
@@ -226,7 +235,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
             } else {
 
-                if ($part['regex'] != '\*') {
+                if ($part['regex'] != '*') {
                     $url[$key] = $part['regex'];
                 } else {
                     if (!$reset) $data += $this->_params;
