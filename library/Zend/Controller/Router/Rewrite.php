@@ -262,13 +262,13 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 
             $request->setParam($param, $value);
             
-            if ($param == $request->getModuleKey()) {
+            if ($param === $request->getModuleKey()) {
                 $request->setModuleName($value);
             }
-            if ($param == $request->getControllerKey()) {
+            if ($param === $request->getControllerKey()) {
                 $request->setControllerName($value);
             }
-            if ($param == $request->getActionKey()) {
+            if ($param === $request->getActionKey()) {
                 $request->setActionName($value);
             }
                      

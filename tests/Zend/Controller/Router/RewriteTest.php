@@ -350,6 +350,20 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('defctrl', $token->getControllerName());
         $this->assertSame('defact', $token->getActionName());
     }
+    
+    public function testNumericallyIndexedReturnParams()
+    {
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/archive/2006');
+
+        $this->_router->addRoute('test', new Zend_Controller_Router_Route_Mockup());
+
+        $token = $this->_router->route($request);
+
+        $this->assertSame('index', $token->getControllerName());
+        $this->assertSame('index', $token->getActionName());
+        $this->assertSame('first_parameter_value', $token->getParam(0));
+    }
+
 }
 
 /**
@@ -392,4 +406,18 @@ class Zend_Controller_Router_RewriteTest_Dispatcher extends Zend_Controller_Disp
  */
 class Zend_Controller_Router_RewriteTest_Request_Incorrect extends Zend_Controller_Request_Abstract
 {
+}
+
+class Zend_Controller_Router_Route_Mockup implements Zend_Controller_Router_Route_Interface 
+{
+    public function match($path) 
+    {
+        return array(
+            "controller" => "index",
+            "action" => "index",
+            0 => "first_parameter_value"
+        );     
+    }
+    public static function getInstance(Zend_Config $config) {}
+    public function assemble($data = array()) {}
 }
