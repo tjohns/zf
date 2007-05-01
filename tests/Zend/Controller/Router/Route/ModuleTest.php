@@ -289,6 +289,60 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $url = $this->route->assemble($params);
         $this->assertEquals('def/con', $url);
     }
+    
+    public function testAssembleWithReset()
+    {
+        $values = $this->route->match('mod/con/act/sort/name');
+
+        $url = $this->route->assemble(array('action' => 'new'), true);
+
+        $this->assertSame('default/defctrl/new', $url);
+    }
+    
+    public function testAssembleWithReset2()
+    {
+        $values = $this->route->match('mod/con/act/sort/name');
+
+        $url = $this->route->assemble(array('controller' => 'new'), true);
+
+        $this->assertSame('default/new', $url);
+    }
+
+    public function testAssembleWithReset3()
+    {
+        $values = $this->route->match('mod/con/act/sort/name');
+
+        $url = $this->route->assemble(array('controller' => 'new', 'action' => 'test'), true);
+
+        $this->assertSame('default/new/test', $url);
+    }
+
+    public function testAssembleResetOneVariable()
+    {    
+        $values = $this->route->match('mod/con/act');
+
+        $url = $this->route->assemble(array('action' => null), false);
+
+        $this->assertSame('mod/con', $url);
+    }
+
+    public function testAssembleResetOneVariable2()
+    {    
+        $values = $this->route->match('mod/con/act');
+
+        $url = $this->route->assemble(array('controller' => null), false);
+
+        $this->assertSame('mod/defctrl/act', $url);
+    }
+
+    public function testAssembleResetOneVariable3()
+    {    
+        $values = $this->route->match('mod/con/act');
+
+        $url = $this->route->assemble(array('module' => null), false);
+
+        $this->assertSame('default/con/act', $url);
+    }
 
     public function testGetInstance()
     {

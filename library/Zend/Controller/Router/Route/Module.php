@@ -189,11 +189,21 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
             $this->_setRequestKeys();
         }
 
-        $params = $data + $this->_values + $this->_defaults;
+        $params = (!$reset) ? $this->_values : array();
 
+        foreach ($data as $key => $value) {
+            if ($value !== null) {
+                $params[$key] = $value;
+            } elseif (isset($params[$key])) {
+                unset($params[$key]);
+            }
+        }
+
+        $params += $this->_defaults;
+        
         $url = '';
 
-        if ($this->_moduleValid || isset($data[$this->_moduleKey])) {
+        if ($this->_moduleValid || array_key_exists($this->_moduleKey, $data)) {
             $module = $params[$this->_moduleKey];
         }
         unset($params[$this->_moduleKey]);
