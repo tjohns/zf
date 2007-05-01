@@ -120,7 +120,9 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
                 $return[$index] = $values[$key];
             } elseif ($reversed) {
                 $index = (!is_int($key)) ? array_search($key, $this->_map, true) : $key;
-                $return[$index] = $values[$key];
+                if (false !== $index) {
+                    $return[$index] = $values[$key];
+                }
             } elseif ($preserve) {
                 $return[$key] = $value;
             }

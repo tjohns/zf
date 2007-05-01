@@ -342,6 +342,27 @@ class Zend_Controller_Router_Route_RegexTest extends PHPUnit_Framework_TestCase
         $this->assertSame('users/vicki', $url);
     }
     
+    
+    public function testAssembleZF1332()
+    {
+        $route = new Zend_Controller_Router_Route_Regex(
+            '(.+)\.([0-9]+)-([0-9]+)\.html',
+            array('module' => 'default', 'controller' => 'content.item', 'action' => 'forward'),
+            array(1 => 'name', 2 => 'id', 3 => 'class'),
+            '%s.%s-%s.html'
+         );
+        
+        $route->match('uml-explained-composition.72-3.html');
+                
+        $url = $route->assemble();
+
+        $this->assertSame('uml-explained-composition.72-3.html', $url);
+
+        $url = $route->assemble(array('name' => 'post_name', 'id' => '12', 'class' => 5));
+        
+        $this->assertSame('post_name.12-5.html', $url);
+    }
+    
     public function testGetInstance()
     {
         require_once 'Zend/Config.php';
