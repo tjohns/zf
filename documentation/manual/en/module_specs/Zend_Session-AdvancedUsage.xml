@@ -55,7 +55,7 @@ Zend_Session::start();
                 <para>
                     2. Wrong: Do not use PHP's <code>
                     <ulink url="http://www.php.net/session_start">session_start()</ulink>
-                    </code> function directly If you use <code>session_start()</code> directly, and then start using
+                    </code> function directly. If you use <code>session_start()</code> directly, and then start using
                     Zend_Session_Namespace, an exception will be thrown by <code>Zend_Session::start()</code> ("session
                     has already been started"). If you call <code>session_start()</code>, after using
                     Zend_Session_Namespace or starting <code>Zend_Session::start()</code> explicitly, an error of level
