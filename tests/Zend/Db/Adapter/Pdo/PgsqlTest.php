@@ -26,18 +26,20 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
-    public function testAdapterInsert()
+    public function testAdapterInsertSequence()
     {
         $row = array (
-            'product_id'   => new Zend_Db_Expr("NEXTVAL('products_seq')"),
+            'product_id' => $this->_db->nextSequenceId('products_seq'),
             'product_name' => 'Solaris',
         );
         $rowsAffected = $this->_db->insert('products', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('products', null); // implies 'products_seq'
+        $lastInsertId = $this->_db->lastInsertId('products');
         $lastSequenceId = $this->_db->lastSequenceId('products_seq');
-        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
-        $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
+        $this->assertEquals((string) $lastInsertId, (string) $lastSequenceId,
+            'Expected last insert id to be equal to last sequence id');
+        $this->assertEquals('4', (string) $lastInsertId,
+            'Expected new id to be 4');
     }
 
     public function testAdapterExceptionInvalidLoginCredentials()

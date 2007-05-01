@@ -57,10 +57,31 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return 'public';
     }
 
+    /**
+     * For PostgreSQL, override the Products table to use an
+     * explicit sequence-based column.
+     */
+    protected function _getColumnsProducts()
+    {
+        return array(
+            'product_id'   => 'INT NOT NULL PRIMARY KEY',
+            'product_name' => 'VARCHAR(100)'
+        );
+    }
+
+    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    {
+        $data = parent::_getDataProducts($db);
+        foreach ($data as &$row) {
+            $row['product_id'] = new Zend_Db_Expr('NEXTVAL('.$db->quote('products_seq').')');
+        }
+        return $data;
+    }
+
     public function getSqlType($type)
     {
         if ($type == 'IDENTITY') {
-            return 'INTEGER NOT NULL PRIMARY KEY';
+            return 'SERIAL PRIMARY KEY';
         }
         if ($type == 'DATETIME') {
             return 'TIMESTAMP';
@@ -70,7 +91,6 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->createSequence($db, 'bugs_seq');
         $this->createSequence($db, 'products_seq');
         parent::setUp($db);
     }
@@ -88,24 +108,6 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
     protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
     {
         return 'DROP SEQUENCE IF EXISTS ' . $db->quoteIdentifier($sequenceName);
-    }
-
-    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
-    {
-        $data = parent::_getDataBugs($db);
-        foreach ($data as &$row) {
-            $row['bug_id'] = new Zend_Db_Expr("NEXTVAL('bugs_seq')");
-        }
-        return $data;
-    }
-
-    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
-    {
-        $data = parent::_getDataProducts($db);
-        foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr("NEXTVAL('products_seq')");
-        }
-        return $data;
     }
 
 }

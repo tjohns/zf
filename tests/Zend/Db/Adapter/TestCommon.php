@@ -210,8 +210,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         );
         $rowsAffected = $this->_db->insert('bugs', $row);
         $this->assertEquals(1, $rowsAffected);
-        $id = $this->_db->lastInsertId();
-        $this->assertEquals('5', (string) $id, 'Expected new id to be 4');
+        $id = $this->_db->lastInsertId('bugs', 'bug_id');
+        $this->assertEquals('5', (string) $id,
+            'Expected new id to be 5');
     }
 
     /**

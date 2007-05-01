@@ -410,10 +410,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'assigned_to'     => 'goofy'
         );
         $insertResult = $table->insert($row);
-        $last_insert_id = $this->_db->lastInsertId();
+        $lastInsertId = $this->_db->lastInsertId('bugs', 'bug_id');
+        $lastSequenceId = $this->_db->lastSequenceId('bugs_bug_id_seq');
 
-        $this->assertEquals($insertResult, $last_insert_id);
-        $this->assertEquals(5, $last_insert_id);
+        $this->assertEquals($insertResult, $lastInsertId);
+        $this->assertEquals($insertResult, $lastSequenceId);
+        $this->assertEquals(5, $lastInsertId);
     }
 
     public function testTableInsertSequence()
