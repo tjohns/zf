@@ -147,8 +147,7 @@ class Zend_Validate_EmailAddress implements Zend_Validate_Interface
         if ($this->_validateMx) {
             if ($this->validateMxSupported()) {
                 $result = dns_get_mx($hostname, $mxHosts);
-                var_dump($result, $mxHosts);
-                if (count($result) < 1) {
+                if (count($mxHosts) < 1) {
                     $hostnameResult = false;
                     $this->_messages[] = "'$hostname' does not appear to have a valid MX record for the email address"
                                        . "'$valueString'";
