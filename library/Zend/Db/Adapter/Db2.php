@@ -245,6 +245,27 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Quote a raw string.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        /**
+         * Some releases of the IBM DB2 extension appear
+         * to be missing the db2_escape_string() method.
+         * The method was added in ibm_db2.c revision 1.53
+         * according to cvs.php.net.  But the function is
+         * not present in my build of PHP 5.2.1.
+         */
+        if (function_exists('db2_escape_string')) {
+            return db2_escape_string($value);
+        }
+        return parent::_quote($value);
+    }
+
+    /**
      * @return string
      */
     public function getQuoteIdentifierSymbol()
@@ -308,7 +329,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $tableName = strtoupper($tableName);
         $sql = "SELECT DISTINCT c.tabschema, c.tabname, c.colname, c.colno,
               c.typename, c.default, c.nulls, c.length, c.scale,
               c.identity, tc.type AS tabconsttype, k.colseq
@@ -361,7 +381,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT PREVIOUS VALUE FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         if ($result) {
@@ -383,7 +403,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT NEXT VALUE FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         if ($result) {
@@ -411,7 +431,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @return integer
      * @throws Zend_Db_Adapter_Db2_Exception
      */
-    public function lastInsertId($tableName = null, $primaryKey = 'id')
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $this->_connect();
 
