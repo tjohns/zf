@@ -36,54 +36,87 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $this->markTestSkipped('SQLite does not support qualified table names');
     }
 
+    public function testSelectJoinRight()
+    {
+        $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
+    }
+
     public function testSelectGroupBy()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
+        $select = $this->_selectGroupBy();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(3, count($result),
+            'Expected count of first result set to be 2');
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount'],
+            'Expected count(*) of first result set to be 2');
+        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(1, $result[1]['thecount']);
     }
 
     public function testSelectGroupByQualified()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
-    }
-
-    public function testSelectGroupByExpr()
-    {
-        $this->markTestIncomplete('Pending fix for ZF-884');
-    }
-
-    public function testSelectGroupByAutoExpr()
-    {
-        $this->markTestIncomplete('Pending fix for ZF-884');
+        $select = $this->_selectGroupByQualified();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(3, count($result),
+            'Expected count of first result set to be 2');
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount'],
+            'Expected count(*) of first result set to be 2');
+        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(1, $result[1]['thecount']);
     }
 
     public function testSelectHaving()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
-    }
-
-    public function testSelectHavingAnd()
-    {
-        $this->markTestIncomplete('Pending fix for ZF-884');
+        $select = $this->_selectHaving();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount']);
     }
 
     public function testSelectHavingWithParameter()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
+        $select = $this->_selectHavingWithParameter();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount']);
     }
 
     public function testSelectHavingOr()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
+        $select = $this->_selectHavingOr();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount']);
+        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(1, $result[1]['thecount']);
     }
 
     public function testSelectHavingOrWithParameter()
     {
-        $this->markTestIncomplete('Pending fix for ZF-884');
-    }
-
-    public function testSelectJoinRight()
-    {
-        $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
+        $select = $this->_selectHavingOrWithParameter();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $bug_id = '"bugs_products"."bug_id"';
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(3, $result[0]['thecount']);
+        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(1, $result[1]['thecount']);
     }
 
     public function getDriver()
