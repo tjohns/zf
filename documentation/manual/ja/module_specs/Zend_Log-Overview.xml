@@ -187,7 +187,7 @@ $logger->addPriority('FOO', 8);
       <programlisting role="php"><![CDATA[<?php
 
 $logger->log('Foo message', 8);
-$logger->foo('Foo Message);
+$logger->foo('Foo Message');
 
 ?>]]></programlisting>
 
