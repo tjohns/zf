@@ -28,11 +28,6 @@
 require_once 'Zend/Db.php';
 
 /**
- * @see Zend_Db_Adapter_Exception
- */
-require_once 'Zend/Db/Adapter/Exception.php';
-
-/**
  * @see Zend_Db_Profiler
  */
 require_once 'Zend/Db/Profiler.php';
@@ -102,6 +97,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
         }
 

@@ -19,12 +19,10 @@
  */
 
 
-/** Zend_Db_Statement */
+/**
+ * @see Zend_Db_Statement
+ */
 require_once 'Zend/Db/Statement.php';
-
-/** Zend_Db_Statement_Db2_Exception */
-require_once 'Zend/Db/Statement/Db2/Exception.php';
-
 
 /**
  * Extends for DB2 native adapter.
@@ -62,6 +60,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      */
     public function nextRowset()
     {
+        require_once 'Zend/Db/Statement/Db2/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -78,6 +77,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         $num = db2_num_rows($this->_stmt);
 
         if ($num === false) {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg($this->_stmt),
                 db2_stmt_error($this->_stmt));
@@ -162,6 +162,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         }
 
         if (!$this->_stmt) {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_conn_errormsg($connection),
                 db2_conn_error($connection));
@@ -170,6 +171,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         $success = db2_execute($this->_stmt, $params);
 
         if (!$success) {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg($this->_stmt),
                 db2_stmt_error($this->_stmt));
@@ -204,6 +206,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     {
         Zend_Db_Statement::bindParam($parameter, $variable, $length, $options);
         if (!is_int($parameter)) {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception('Binding parameters by name is not supported in the DB2 Adapter');
         }
 
@@ -219,11 +222,13 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 
         if ($parameter > 0 && $parameter <= count($this->_sqlParam)) {
             if (!db2_bind_param($this->_stmt, $parameter, "variable", $type, $datatype)) {
+                require_once 'Zend/Db/Statement/Db2/Exception.php';
                 throw new Zend_Db_Statement_Db2_Exception(
                     db2_stmt_errormsg($this->_stmt),
                     db2_stmt_error($this->_stmt));
             }
         } else {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception("Position '$parameter' not valid");
         }
     }
@@ -261,6 +266,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
                 $fetch_function = "db2_fetch_object";
                 break;
             default:
+                require_once 'Zend/Db/Statement/Db2/Exception.php';
                 throw new Zend_Db_Statement_Db2_Exception('invalid fetch mode specified');
                 break;
         }
@@ -284,6 +290,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         $this->_stmt = db2_prepare($connection, $sql);
 
         if (!$this->_stmt) {
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg($this->_stmt),
                 db2_stmt_error($this->_stmt));

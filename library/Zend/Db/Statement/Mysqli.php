@@ -65,7 +65,6 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      * Returns the number of rows that were affected by the execution of an SQL statement.
      *
      * @return int Number of rows affected.
-     * @throws Zend_Db_Adapter_Exception
      */
     public function rowCount()
     {
@@ -257,6 +256,5 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
 
         return $data;
     }
-
 
 }

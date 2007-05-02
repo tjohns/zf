@@ -19,10 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Db_Statement_Exception */
-require_once 'Zend/Db/Statement/Exception.php';
+/**
+ * @see Zend_Db
+ */
+require_once 'Zend/Db.php';
 
-/** Zend_Db_Statement_Interface */
+/**
+ * @see Zend_Db_Statement_Interface
+ */
 require_once 'Zend/Db/Statement/Interface.php';
 
 /**
@@ -162,6 +166,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 // bind by position, 1-based
                 $this->_bindParam[$parameter-1] =& $variable;
             } else {
+                require_once 'Zend/Db/Statement/Exception.php';
                 throw new Zend_Db_Statement_Exception("position '$parameter' not valid");
             }
         } else {
@@ -174,6 +179,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
             if (is_integer($key)) {
                 $this->_bindParam[$key] =& $variable;
             } else {
+                require_once 'Zend/Db/Statement/Exception.php';
                 throw new Zend_Db_Statement_Exception("parameter name '$parameter' not valid");
             }
         }
@@ -278,6 +284,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 $this->_fetchMode = $mode;
                 break;
             default:
+                require_once 'Zend/Db/Statement/Exception.php';
                 throw new Zend_Db_Statement_Exception('Invalid fetch mode specified');
                 break;
         }
@@ -293,6 +300,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function nextRowset()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -306,6 +314,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function rowCount()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -335,6 +344,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function closeCursor()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -348,6 +358,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function columnCount()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -361,6 +372,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function errorCode()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -374,6 +386,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function errorInfo()
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -388,6 +401,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function execute(array $params = array())
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
@@ -405,6 +419,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
+        require_once 'Zend/Db/Statement/Exception.php';
         throw new Zend_Db_Statement_Exception(__FUNCTION__ . ' not implemented');
     }
 
