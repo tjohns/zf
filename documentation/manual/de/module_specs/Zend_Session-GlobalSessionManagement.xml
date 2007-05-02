@@ -37,7 +37,7 @@
         </para>
 
         <example>
-            <title>Using Zend_Config to Configure Zend_Session</title>
+            <title>Verwenden von Zend_Config um Zend_Session zu konfigurieren</title>
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
@@ -53,7 +53,7 @@ Zend_Session::setOptions($config->toArray());
             <title>myapp.ini</title>
 <programlisting role="php">
 <![CDATA[
-;  Defaults for our live servers
+;  Standard für unsere Live Server
 [live]
 ; bug_compat_42
 ; bug_compat_warn
@@ -70,7 +70,7 @@ Zend_Session::setOptions($config->toArray());
 ; gc_probability
 ; hash_bits_per_character
 ; hash_function
-; name should be unique for each PHP application sharing the same domain name
+; name sollte für jede PHP Anwendung eindeutig sein und den selben Domain Namen verwenden
 name = UNIQUE_NAME
 ; referer_check
 ; save_handler
@@ -84,13 +84,13 @@ name = UNIQUE_NAME
 ; strict = on|off
 
 
-; Our sandbox server uses the same settings as our live server,
-; except as overridden below:
+; Unser Samdbox Server verwendet die selben Einstellungen wie unser Live-Server,
+; ausser wie anbei überschrieben
 [sandbox : live]
-; Don't forget to create this directory and make it rwx (readable and modifiable) by PHP.
+; Nicht vergessen dieses Verzeichnis zu erstellen und mach es rwx (lesbar und änderbar) durch PHP.
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
-; When persisting session id cookies, request a TTL of 10 days
+; Beim Analysieren von Session ID Cookies, frage nach einer TTL von 10 Tagen
 remember_me_seconds = 864000
 ]]></programlisting>
         </example>
@@ -99,7 +99,7 @@ remember_me_seconds = 864000
 
     <sect2 id="zend.session.options">
 
-        <title>Options</title>
+        <title>Optionen</title>
 
         <para>
             Most options shown above need no explanation beyond that found in the standard PHP documentation.
@@ -259,7 +259,7 @@ remember_me_seconds = 864000
 
         <sect3 id="zend.session.regenerateid.intro">
 
-            <title>Introduction: Session Identifiers</title>
+            <title>Einführung: Session Identifizierer</title>
 
             <para>
                 Introduction: Best practice in relation to using sessions with ZF calls for using a browser cookie (i.e.
