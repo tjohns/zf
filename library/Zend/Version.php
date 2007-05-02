@@ -31,7 +31,7 @@ final class Zend_Version
     /**
      * Zend Framework version identification - see compareVersion()
      */
-    const VERSION = '0.9.2beta';
+    const VERSION = '0.9.3beta';
 
     /**
      * Compare the specified Zend Framework version string $version
