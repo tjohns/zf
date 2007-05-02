@@ -20,6 +20,7 @@ require_once 'Zend/Search/Lucene/Index/DictionaryLoaderTest.php';
 require_once 'Zend/Search/Lucene/Index/FieldInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueueTest.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfoTest.php';
+require_once 'Zend/Search/Lucene/Index/SegmentMergerTest.php';
 require_once 'Zend/Search/Lucene/Index/TermInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/TermTest.php';
 
@@ -49,6 +50,7 @@ class Zend_Search_Lucene_AllTests
         $suite->addTestSuite('Zend_Search_Lucene_Index_FieldInfoTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_SegmentInfoPriorityQueueTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_SegmentInfoTest');
+        $suite->addTestSuite('Zend_Search_Lucene_Index_SegmentMergerTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_TermInfoTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_TermTest');
 
