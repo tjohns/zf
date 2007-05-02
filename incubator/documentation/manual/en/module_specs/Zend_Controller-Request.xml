@@ -54,11 +54,12 @@
 
         <para>
             Additionally, the request object is particularly useful in testing.
-            The developer may craft the request environment, including
-            module, controller, action, parameters, URI, etc, and pass the request
+            The developer may craft the request environment, including module,
+            controller, action, parameters, URI, etc, and pass the request
             object to the front controller to test application flow. When paired
-            with the response object, elaborate and precise unit testing of
-            MVC applications becomes possible.
+            with the <link linkend="zend.controller.response">response
+                object</link>, elaborate and precise unit testing of MVC
+            applications becomes possible.
         </para>
     </sect2>
 

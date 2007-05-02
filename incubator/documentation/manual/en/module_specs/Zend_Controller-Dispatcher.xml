@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.dispatcher">
-    <title>Zend_Controller_Dispatcher</title>
+    <title>The Dispatcher</title>
 
     <para>
         Dispatching is the process of taking the request object,

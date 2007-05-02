@@ -186,13 +186,121 @@ if ($this->_hasParam('id') {
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.controller.action.viewintegration">
+        <title>View Integration</title>
+
+        <para>
+            <code>Zend_Controller_Action</code> provides a rudimentary and
+            flexible mechanism for view integration. Two methods accomplish
+            this, <code>initView()</code> and <code>render()</code>; the former
+            method lazy-loads the <code>$view</code> public property, and the
+            latter renders a view based on the current requested action, using
+            the directory hierarchy to determine the script path.
+        </para>
+
+        <sect3 id="zend.controller.action.viewintegration.initview">
+            <title>View Initialization</title>
+
+            <para>
+                <code>initView()</code> initializes the view object.
+                <code>render()</code> calls <code>initView()</code> in order to
+                retrieve the view object, but it may be initialized at any time;
+                by default it populates the <code>$view</code> property with a
+                <code>Zend_View</code> object, but any class implementing
+                <code>Zend_View_Interface</code> may be used. If
+                <code>$view</code> is already initialized, it simply returns
+                that property.
+            </para>
+
+            <para>
+                The default implementation makes the following assumption of
+                the directory structure:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+applicationOrModule/
+    controllers/
+        IndexController.php
+    views/
+        scripts/
+            index/
+                index.phtml
+        helpers/
+        filters/
+]]></programlisting>
+            
+            <para>
+                In other words, view scripts are assumed to be in the
+                <code>views/scripts/</code> subdirectory, and the
+                <code>views</code> subdirectory is assumed to be a sibling ofe
+                functionality when determining the view script name and path.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.controller.action.viewintegration.render">
+            <title>Rendering Views</title>
+
+            <para>
+                <code>render()</code> has the following signature:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+string render(string $action = null, string $name = null, bool $noController = false);
+?>]]></programlisting>
+
+            <para>
+                <code>render()</code> renders a view script. If no arguments are
+                passed, it assumes that the script requested is
+                <code>[controller]/[action].phtml</code> (where
+                <code>.phtml</code> is the value of the <code>$viewSuffix</code>
+                property). Passing a value for <code>$action</code> will render
+                that template in the <code>[controller]</code> subdirectory. To
+                override using the <code>[controller]</code> subdirectory, pass
+                a true value for <code>$noController</code>. Finally, templates
+                are rendered into the response object; if you wish to render to
+                a specific <link
+                    linkend="zend.controller.response.namedsegments">named
+                    segment</link> in the response object, pass a value to
+                <code>$name</code>.
+            </para>
+
+            <para>
+                Some examples:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function fooAction()
+    {
+        // Renders my/foo.phtml
+        $this->render();
+
+        // Renders my/bar.phtml
+        $this->render('bar');
+
+        // Renders baz.phtml
+        $this->render('baz', null, true);
+
+        // Renders foo/login.phtml to the 'form' segment of the response object
+        $this->render('login', 'form');
+        
+        // Renders site.phtml to the 'page' segment of the response object
+        $this->render('site', 'page', true);
+    }
+}
+]]></programlisting>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.action.utilmethods">
         <title>Utility Methods</title>
 
         <para>
-            Besides the accessors, <code>Zend_Controller_Action</code> has
-            several utility methods for performing common tasks from within your
-            action methods (or from pre-/post-dispatch).
+            Besides the accessors and view integration methods,
+            <code>Zend_Controller_Action</code> has several utility methods for
+            performing common tasks from within your action methods (or from
+            pre-/post-dispatch).
         </para>
 
         <itemizedlist>
@@ -262,88 +370,6 @@ if ($this->_hasParam('id') {
                         </para>
                     </listitem>
                 </itemizedlist>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <code>render($action = null, $name = null, $noController
-                    = false)</code>: render a view script. If no arguments
-                    are passed, it assumes that the script requested is
-                    <code>[controller]/[action].phtml</code> (where
-                    <code>.phtml</code> is the value of the
-                    <code>$viewSuffix</code> property). Passing a value for
-                    <code>$action</code> will render that template in the
-                    <code>[controller]</code> subdirectory. To override using
-                    the <code>[controller]</code> subdirectory, pass a true
-                    value for <code>$noController</code>. Finally, templates are
-                    rendered into the response object; if you wish to render to
-                    a specific named segment in the response object, pass a
-                    value to <code>$name</code>.
-                </para>
-
-                <para>
-                    Some examples:
-                </para>
-
-                <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
-{
-    public function fooAction()
-    {
-        // Renders my/foo.phtml
-        $this->render();
-
-        // Renders my/bar.phtml
-        $this->render('bar');
-
-        // Renders baz.phtml
-        $this->render('baz', null, true);
-
-        // Renders foo/login.phtml to the 'form' segment of the response object
-        $this->render('login', 'form');
-        
-        // Renders site.phtml to the 'page' segment of the response object
-        $this->render('site', 'page', true);
-    }
-}
-]]></programlisting>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <code>initView()</code>: initialize the view object.
-                    <code>render()</code> calls <code>initView()</code> in order
-                    to retrieve the view object, but it may be initialized at
-                    any time; by default it populates the <code>$view</code>
-                    property.  By default, it uses <code>Zend_View</code>, but
-                    any class implementing <code>Zend_View_Interface</code> may
-                    be used.
-                </para>
-
-                <para>
-                    The default implementation makes the following assumption of
-                    the directory structure:
-                </para>
-
-                <programlisting role="php"><![CDATA[
-applicationOrModule/
-    controllers/
-        IndexController.php
-    views/
-        scripts/
-            index/
-                index.phtml
-        helpers/
-        filters/
-]]></programlisting>
-                
-                <para>
-                    In other words, view scripts are assumed to be in the
-                    <code>views/scripts/</code> subdirectory, and the
-                    <code>views</code> subdirectory is assumed to be a sibling
-                    ofe functionality when
-                    determining the view script name and path.
-                </para>
             </listitem>
         </itemizedlist>
     </sect2>
