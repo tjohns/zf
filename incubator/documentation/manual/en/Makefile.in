@@ -94,6 +94,7 @@ check1: $(MANUAL_LINT_XML)
 
 clean:
 	-rm -f html/*.html
+	-rm -Rf html/figures
 	-rm -f _temp_*.xml
 
 cleanall: clean
