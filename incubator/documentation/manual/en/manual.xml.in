@@ -42,10 +42,10 @@
         <xi:include href="module_specs/Zend_Controller-QuickStart.xml" />
         <xi:include href="module_specs/Zend_Controller-Basics.xml" />
         <xi:include href="module_specs/Zend_Controller-Request.xml" />
-        <xi:include href="module_specs/Zend_Controller-Router.xml" />
+        <xi:include href="module_specs/Zend_Controller-Router.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Controller-Dispatcher.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
-        <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml"/>
+        <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Controller-Response.xml" />
         <xi:include href="module_specs/Zend_Controller-Plugins.xml" />
         <xi:include href="module_specs/Zend_Controller-Modular.xml" />
