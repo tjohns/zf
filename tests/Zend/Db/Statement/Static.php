@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,24 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * PHPUnit_Util_Filter
+ */
 require_once 'PHPUnit/Util/Filter.php';
+
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @see Zend_Db_Statement_Interface
+ */
 require_once 'Zend/Db/Statement/Interface.php';
+
 
 /**
  * Emulates a PDOStatement for native database adapters.
@@ -35,7 +48,6 @@ require_once 'Zend/Db/Statement/Interface.php';
  */
 class Zend_Db_Statement_Static implements Zend_Db_Statement_Interface
 {
-
     /**
      * binds a PHP variable to an output column in a result set
      */

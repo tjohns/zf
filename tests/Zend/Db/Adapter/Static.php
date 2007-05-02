@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,30 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * PHPUnit_Util_Filter
+ */
 require_once 'PHPUnit/Util/Filter.php';
+
+
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @see Zend_Db_Adapter_Abstract
+ */
 require_once 'Zend/Db/Adapter/Abstract.php';
+
+
+/**
+ * @see Zend_Db_Statement_Static
+ */
 require_once 'Zend/Db/Statement/Static.php';
+
 
 /**
  * Class for connecting to SQL databases and performing common operations.
@@ -36,10 +54,73 @@ require_once 'Zend/Db/Statement/Static.php';
  */
 class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
 {
+    /**
+     * The number of seconds to sleep upon query execution
+     *
+     * @var integer
+     */
+    protected $_onQuerySleep = 0;
 
     /**
-     * Abstract Methods
+     * Sets the number of seconds to sleep upon query execution
+     *
+     * @param  integer $seconds
+     * @return Zend_Db_Adapter_Static Provides a fluent interface
      */
+    public function setOnQuerySleep($seconds = 0)
+    {
+        $this->_onQuerySleep = (integer) $seconds;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of seconds to sleep upon query execution
+     *
+     * @return integer
+     */
+    public function getOnQuerySleep()
+    {
+        return $this->_onQuerySleep;
+    }
+
+    /**
+     * Prepares and executes a SQL statement with bound data.
+     *
+     * @param  string|Zend_Db_Select $sql  The SQL statement with placeholders.
+     * @param  mixed                 $bind An array of data to bind to the placeholders.
+     * @return Zend_Db_Statement (may also be PDOStatement in the case of PDO)
+     */
+    public function query($sql, $bind = array())
+    {
+        // connect to the database if needed
+        $this->_connect();
+
+        // is the $sql a Zend_Db_Select object?
+        if ($sql instanceof Zend_Db_Select) {
+            $sql = $sql->__toString();
+        }
+
+        // make sure $bind to an array;
+        // don't use (array) typecasting because
+        // because $bind may be a Zend_Db_Expr object
+        if (!is_array($bind)) {
+            $bind = array($bind);
+        }
+
+        // prepare and execute the statement with profiling
+        $stmt = $this->prepare($sql);
+        $q = $this->_profiler->queryStart($sql);
+        if ($this->_onQuerySleep > 0) {
+            sleep($this->_onQuerySleep);
+        }
+        $stmt->execute($bind);
+        $this->_profiler->queryEnd($q);
+
+        // return the results embedded in the prepared statement object
+        $stmt->setFetchMode($this->_fetchMode);
+        return $stmt;
+    }
 
     /**
      * Returns a list of the tables in the database.
@@ -121,8 +202,8 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
     /**
      * Prepare a statement and return a PDOStatement-like object.
      *
-     * @param string|Zend_Db_Select $sql SQL query
-     * @return Zend_Db_Statment|PDOStatement
+     * @param  string|Zend_Db_Select $sql SQL query
+     * @return Zend_Db_Statment_Static
      */
     public function prepare($sql)
     {
