@@ -1,5 +1,72 @@
 <sect1 id="zend.controller.dispatcher">
     <title>Zend_Controller_Dispatcher</title>
+
+    <para>
+        Dispatching is the process of taking the request object,
+        <code>Zend_Controller_Request_Abstract</code>, extracting the module
+        name, controller name, action name, and optional parameters
+        contained in it, and then instantiating a controller and calling an
+        action of that controller. If any of the module, controller, or
+        action are not found, it will use default values for them.
+        <code>Zend_Controller_Dispatcher_Standard</code> specifies
+        <code>index</code> for each of the controller and action defaults
+        and <code>default</code> for the module default value, but allows
+        the developer to change the default values for the controller and
+        action using the <code>setDefaultController()</code>,
+        <code>setDefaultAction()</code> methods, respectively.
+    </para>
+
+    <note>
+        <para>
+            You may not change the name of the default module.
+        </para>
+    </note>
+
+    <para>
+        Dispatching happens in a loop in the front controller. Before
+        dispatching occurs, the front controller routes the request to find
+        user specified values for the module, controller, action, and optional
+        parameters. It then enters a dispatch loop, dispatching the request.
+    </para>
+
+    <para>
+        At the beginning of each iteration, it sets a flag in the request
+        object indicating that the action has been dispatched. If an action
+        or pre/postDispatch plugin resets that flag, the dispatch loop will
+        continue and attempt to dispatch the new request. By changing the
+        controller and/or action in the request and resetting the dispatched
+        flag, the developer may define a chain of requests to perform.
+    </para>
+
+    <para>
+        The action controller method that controlls such dispatching is
+        <code>_forward()</code>; call this method from any of the
+        pre/postDispatch() or action methods, providing an action, controller,
+        module, and optionally any additional parameters you may wish to
+        send to the new action:
+    </para>
+    
+    <programlisting role="php"><![CDATA[<?php
+public function fooAction()
+{
+    // forward to another action in the current controller and module:
+    $this->_forward('bar', null, null, array('baz' => 'bogus'));
+}
+
+public function barAction()
+{
+    // forward to an action in another controller, FooController::bazAction(),
+    // in the current module:
+    $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
+}
+
+public function bazAction()
+{
+    // forward to an action in another controller in another module,
+    // Foo_BarController::bazAction():
+    $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
+}
+?>]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
