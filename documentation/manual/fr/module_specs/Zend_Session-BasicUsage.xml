@@ -1,85 +1,67 @@
-<sect1 id="zend.session.basicusage">
+﻿<sect1 id="zend.session.basicusage">
 
     <title>Basic Usage</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> instances provide the primary API for manipulating session data in the Zend
-        Framework. Namespaces are used to segregate all session data, although a default namespace exists for those who
-        only want one namespace for all their session data. <code>Zend_Session</code> utilizes ext/session and its
-        special <code>$_SESSION</code> superglobal as the storage mechanism for session state data. While
-        <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain from directly
-        accessing it, so that <code>Zend_Session</code> and <code>Zend_Session_Namespace</code> can most effectively and
-        securely provide its suite of session related functionality.
+        Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de session dans le Zend Framework. Les espaces de nommage sont utilisés pour isoler toutes les données de session, bien qu'un espace de nommage par défaut existe pour ceux qui veulent juste un endroit pour stocker toutes leurs données de session. <code>Zend_Session</code> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme méchanisme de stockage pour les données d'état de session. Bien que <code>$_SESSION</code> est toujours disponible dans l'espace global de PHP, les développeurs devraient s'abstenir d'accéder directement à lui, alors que <code>Zend_Session</code> et <code>Zend_Session_Namespace</code> fournissent le plus efficacement et solidement sa suite de fonctionnalités liées à session.
     </para>
 
     <sect2 id="zend.session.basicexamples">
 
-        <title>Tutorial Examples</title>
+        <title>Tutoriel d'exemples</title>
 
         <para>
-            If no namespace is specified when instantiating Zend_Session, all data will be transparently stored in a
-            namespace called "<code>Default</code>". <code>Zend_Session</code> is not intended to work directly on the
-            contents of session namespace containers. Instead, we use <code>Zend_Session_Namespace</code>. The example
-            below demonstrates use of this default namespace, showing how to count the number of times a user views
-            pages on your website. To test this example, add the following code to your ZF bootstrap area:
+            Si aucun espaces de nommage n'est spécifié lors de l'instanciation de Zend_Session, toutes les données sont stockées de manière transparente dans un espace de nommage appelé "<code>Default</code>". <code>Zend_Session</code> n'est pas prévu pour fonctionner directement sur le contenu des conteneurs des espaces de nommage. Au lieu de cela, nous utilisons <code>Zend_Session_Namespace</code>. L'exemple ci-dessous montre l'utilisation de cet espace de nommage par défaut, en montrant comment compter le nombre de fois qu'un utilisateur a vu une page sur le site web. Pour tester cet exemple, ajouter le code suivant à votre fichier d'amorçage ZF :
         </para>
 
         <example>
-            <title>Counting Page Views</title>
+            <title>Compter le nombre de pages vues</title>
 <programlisting role="php">
 <![CDATA[<?php
     require_once 'Zend/Session.php';
 
     $defaultNamespace = new Zend_Session_Namespace('Default');
 
-    // use the magic method __isset() in Zend_Session_Namespace:
+    // Utiliser la méthode magique __isset() dans Zend_Session_Namespace:
     if (isset($defaultNamespace->numberOfPageRequests)) {
-        $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+        $defaultNamespace->numberOfPageRequests++; // ceci s'incrémente à chaque chargement de page.
     } else {
-        $defaultNamespace->numberOfPageRequests = 1; // first time
+        $defaultNamespace->numberOfPageRequests = 1; // première page
     }
 
-    echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
+    echo "Page demandée lors de cette session : ", $defaultNamespace->numberOfPageRequests;
 ?>]]></programlisting>
         </example>
 
         <para>
-            One of the many benefits of Zend_Session_Namespace results when multiple modules use Zend_Session_Namespace
-            and obtain data encapsulation for their session data. Zend_Session can be passed an optional $namespace
-            argument in the constructor, which allows other components, modules, and developer specific code to be
-            assured that their data is protected by a partition between data areas used by other components, modules,
-            and developer code. Namespacing provides an effective and popular way to "secure" a subset of session state
-            data against accidental changes. Namespace names are restricted to character sequences represented as
-            non-empty PHP strings that do not begin with an underscore ('_') character. Only core components included in
-            the Zend Framework should use namespace names starting with 'Zend_'.
+            L'un des nombreux avantages de Zend_Session_Namespace apparaît quand de multiples modules utilisent Zend_Session_Namespace et obtiennent une encapsulation pour leurs propres données de session. Zend_Session peut recevoir un paramètre facultatif $namespace dans son constructeur, ce qui permet aux autres composants, modules, et code spécifique d'être assuré que leurs données sont protégées par une cloison entre les zones de données utilisées par les autres composants, modules et code spécifique. Les espaces de nommage fournissent une manière efficace et populaire de protéger un sous-ensemble de données de session contre un changement accidentel. Les noms des espaces de nommage sont limités des chaînes de caractères PHP non-vides qui ne commencent par un tiret-bas ("_"). De plus, seuls les composants coeur du Zend Framework devraient employer un nom d'espage de nommage commençant par "Zend_".
         </para>
 
         <example>
-            <title>New Way: Namespaces Avoid Collisions</title>
+            <title>Nouvelle méthode : les espaces de nommage évitent les collisions</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // in the Zend_Auth component
+    // Dans le composant Zend_Auth
     require_once 'Zend/Session.php';
     $authNamespace = new Zend_Session_Namespace('Zend_Auth');
-    $authNamespace->user = "myusername";
+    $authNamespace->user = "monusername";
 
-    // in a web services component
-    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
-    $webServiceNamespace->user = "mywebusername";
+    // Dans un composant service web
+    $webServiceNamespace = new Zend_Session_Namespace('Un_Service_Web');
+    $webServiceNamespace->user = "monwebusername";
 ?>]]></programlisting>
         </example>
 
         <para>
-            The example above achieves the same effect as the code below, except that the session objects above preserve
-            encapsulation of session data within their respective namespaces.
+            L'exemple ci-dessus réalise la même chose que celui ci-dessous, excepté que les objets de session ci-dessus préserve l'encapsulation des données de session dans leur espace de nommage respectif.
         </para>
 
         <example>
-            <title>Old Way: PHP Session Access</title>
+            <title>Ancienne méthode : accès aux sessions PHP</title>
 <programlisting role="php">
 <![CDATA[<?php
-    $_SESSION['Zend_Auth']['user'] = "myusername";
-    $_SESSION['Some_Web_Service']['user'] = "mywebusername";
+    $_SESSION['Zend_Auth']['user'] = "monusername";
+    $_SESSION['Un_Service_Web']['user'] = "monebusername";
 ?>]]></programlisting>
         </example>
 
@@ -87,23 +69,21 @@
 
     <sect2 id="zend.session.iteration">
 
-        <title>Iterating Over Session Namespaces</title>
+        <title>Enumérer les espaces de nommage de session</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> provides the full
-            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate interface</ulink>
-            , including support for the <code>foreach</code> statement:
+            <code>Zend_Session_Namespace</code> fournit une <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">interface IteratorAggregate</ulink> complète, incluant le support de l'instruction <code>foreach</code> :
         </para>
 
         <example>
-            <title>Session Iteration</title>
+            <title>Enumeration des sessions</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // Zend_Session is iteratable
+    // Zend_Session est énumérable
     require_once 'Zend/Session.php';
-    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
-    foreach ($aNamespace as $index => $value) {
-        echo "aNamespace->$index = '$value';\n";
+    $aNamespace = new Zend_Session_Namespace('un_namespace_avec_des_donnes_presentes');
+    foreach ($aNamespace as $index => $valeur) {
+        echo "aNamespace->$index = '$valeur';\n";
     }
 ?>]]></programlisting>
         </example>
@@ -112,20 +92,18 @@
 
     <sect2 id="zend.session.accessors">
 
-        <title>Accessors for Session Namespaces</title>
+        <title>Accesseurs pour les espaces de nommage de session</title>
 
         <para>
-            The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods. The
-            magic methods should not be used directly, except from within a subclass of Zend_Session. Instead, use the
-            normal operators to invoke these magic methods, such as:
+            Les accesseurs usuels sont disponibles avec les méthodes magiques __set(), __unset(), __isset(), et __get(). Les méthodes magiques ne devraient pas être utilisées directement, excepté à l'intérieur d'une sous-classe de Zend_Session. Au lieu de cela, utilisez les opérateurs normaux pour appeler ces méthodes magiques, comme :
         </para>
 
         <example>
-            <title>Accessing Session Data</title>
+            <title>Accéder aux données de session</title>
 <programlisting role="php">
 <![CDATA[<?php
-            $object->property = $value; echo
-            (isset($object->property) ? 'set' : 'unset');
+            $object->property = $valeur;
+            echo (isset($object->property) ? 'set' : 'unset');
 ?>]]></programlisting>
         </example>
 
