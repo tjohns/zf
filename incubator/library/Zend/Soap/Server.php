@@ -377,7 +377,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function setWsdl($wsdl)
     {
-        $this->_validateUrn($wsdl);
+        $this->validateUrn($wsdl);
         $this->_wsdl = $wsdl;
         return $this;
     }
