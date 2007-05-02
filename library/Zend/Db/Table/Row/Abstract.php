@@ -119,7 +119,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         // Retrieve primary keys from table schema
         if ($table = $this->_getTable()) {
-            $info = $this->_getTable()->info();
+            $info = $table->info();
             $this->_primary = (array) $info['primary'];
         }
     }
@@ -471,7 +471,7 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception('Cannot refresh row as parent is missing');
         }
 
-        $this->_data = $this->_getTable()->fetchRow($where)->toArray();
+        $this->_data = $row->toArray();
         $this->_cleanData = $this->_data;
     }
 
