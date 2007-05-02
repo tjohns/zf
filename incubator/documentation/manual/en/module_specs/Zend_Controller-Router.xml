@@ -104,9 +104,9 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         </para>
 
         <itemizedlist mark="opencircle">
-            <listitem><para><xref linkend="zend.controller.router.standard-routes" /></para></listitem>
-            <listitem><para><xref linkend="zend.controller.router.static-routes" /></para></listitem>
-            <listitem><para><xref linkend="zend.controller.router.regex-routes" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
         
