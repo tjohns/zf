@@ -701,7 +701,7 @@ abstract class Zend_Db_Table_Abstract
             if (count($primary) == 1) {
                 return $data[$pk0];
             } else {
-                return array_intersect_assoc($data, array_flip($primary));
+                return array_intersect_key($data, array_flip($primary));
             }
         }
 
@@ -851,12 +851,19 @@ abstract class Zend_Db_Table_Abstract
         }
 
         $whereList = array();
+        $numberTerms = 0;
         foreach ($args as $keyPosition => $keyValues) {
             // Coerce the values to an array.
             // Don't simply typecast to array, because the values
             // might be Zend_Db_Expr objects.
             if (!is_array($keyValues)) {
                 $keyValues = array($keyValues);
+            }
+            if ($numberTerms == 0) {
+                $numberTerms = count($keyValues);
+            } else if (count($keyValues) != $numberTerms) {
+                require_once 'Zend/Db/Table/Exception.php';
+                throw new Zend_Db_Table_Exception("Missing value(s) for the primary key");
             }
             for ($i = 0; $i < count($keyValues); ++$i) {
                 $whereList[$i][$keyPosition] = $keyValues[$i];
