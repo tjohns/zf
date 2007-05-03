@@ -13,9 +13,6 @@ require_once 'Zend/Search/Lucene/FSMTest.php';
 require_once 'Zend/Search/Lucene/FieldTest.php';
 require_once 'Zend/Search/Lucene/PriorityQueueTest.php';
 
-require_once 'Zend/Search/Lucene/Storage/DirectoryTest.php';
-require_once 'Zend/Search/Lucene/Storage/FileTest.php';
-
 require_once 'Zend/Search/Lucene/Index/DictionaryLoaderTest.php';
 require_once 'Zend/Search/Lucene/Index/FieldInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueueTest.php';
@@ -23,6 +20,11 @@ require_once 'Zend/Search/Lucene/Index/SegmentInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/SegmentMergerTest.php';
 require_once 'Zend/Search/Lucene/Index/TermInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/TermTest.php';
+
+require_once 'Zend/Search/Lucene/Storage/DirectoryTest.php';
+require_once 'Zend/Search/Lucene/Storage/FileTest.php';
+
+require_once 'Zend/Search/Lucene/SearchTest.php';
 
 
 class Zend_Search_Lucene_AllTests
@@ -57,6 +59,8 @@ class Zend_Search_Lucene_AllTests
 
         $suite->addTestSuite('Zend_Search_Lucene_Storage_DirectoryTest');
         $suite->addTestSuite('Zend_Search_Lucene_Storage_FileTest');
+
+        $suite->addTestSuite('Zend_Search_Lucene_SearchTest');
 
 
         return $suite;
