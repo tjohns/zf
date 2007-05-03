@@ -96,6 +96,11 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     protected $_rows = array();
 
     /**
+     * @var boolean
+     */
+    protected $_stored = false;
+
+    /**
      * Constructor.
      */
     public function __construct(array $config)
@@ -110,6 +115,9 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         if (isset($config['data'])) {
             $this->_data       = $config['data'];
         }
+        if (isset($config['stored'])) {
+            $this->_stored     = $config['stored'];
+        }
 
         // set the count of rows
         $this->_count = count($this->_data);
@@ -122,7 +130,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      */
     public function __sleep()
     {
-        return array('_data', '_tableClass', '_rowClass', '_pointer', '_count', '_rows');
+        return array('_data', '_tableClass', '_rowClass', '_pointer', '_count', '_rows', '_stored');
     }
 
     /**
@@ -211,7 +219,8 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
             $this->_rows[$this->_pointer] = new $this->_rowClass(
                 array(
                     'table'   => $this->_table,
-                    'data'    => $this->_data[$this->_pointer]
+                    'data'    => $this->_data[$this->_pointer],
+                    'stored'  => $this->_stored
                 )
             );
         }

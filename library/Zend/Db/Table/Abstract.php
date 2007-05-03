@@ -906,6 +906,7 @@ abstract class Zend_Db_Table_Abstract
             'table'    => $this,
             'data'     => $this->_fetch($where, $order, $count, $offset),
             'rowClass' => $this->_rowClass,
+            'stored'   => true
         );
 
         Zend_Loader::loadClass($this->_rowsetClass);
@@ -935,7 +936,8 @@ abstract class Zend_Db_Table_Abstract
 
         $data = array(
             'table'   => $this,
-            'data'    => $rows[0]
+            'data'    => $rows[0],
+            'stored'  => true
         );
 
         Zend_Loader::loadClass($this->_rowClass);
@@ -968,7 +970,8 @@ abstract class Zend_Db_Table_Abstract
 
         $config = array(
             'table'   => $this,
-            'data'    => $data
+            'data'    => $data,
+            'stored'  => false
         );
 
         Zend_Loader::loadClass($this->_rowClass);
