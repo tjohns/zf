@@ -118,9 +118,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         $hits = $index->find('submitting');
 
-        $this->assertEquals(count($hits), 4);
-        $expectedResultset = array(array(6, 0.183289, 'IndexSource/contributing.newpackage.html'),
-                                   array(2, 0.114555, 'IndexSource/contributing.patches.html'),
+        $this->assertEquals(count($hits), 3);
+        $expectedResultset = array(array(2, 0.114555, 'IndexSource/contributing.patches.html'),
                                    array(7, 0.112241, 'IndexSource/contributing.bugs.html'),
                                    array(8, 0.112241, 'IndexSource/contributing.html'));
 
