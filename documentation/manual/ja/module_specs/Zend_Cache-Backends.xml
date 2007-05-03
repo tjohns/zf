@@ -1,6 +1,6 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache のバックエンド</title>
-    
+
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
@@ -9,7 +9,7 @@
         </para>
         <para>
             使用可能なオプションは次のとおりです。
-        </para>          
+        </para>
         <table>
             <title>使用可能なオプション</title>
             <tgroup cols="4">
@@ -193,7 +193,7 @@
                       <row>
                           <entry><code>compression</code></entry>
                           <entry><code>boolean</code></entry>
-                          <entry><code>flase</code></entry>
+                          <entry><code>false</code></entry>
                           <entry>
                              その場での圧縮処理を行いたい場合に true を指定します。
                           </entry>
@@ -233,7 +233,7 @@
             このバックエンドではオプションを使用しません。
         </para>
     </sect2>
-</sect1> 
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->
