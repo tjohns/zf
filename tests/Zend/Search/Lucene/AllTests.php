@@ -43,9 +43,6 @@ class Zend_Search_Lucene_AllTests
         $suite->addTestSuite('Zend_Search_Lucene_FieldTest');
         $suite->addTestSuite('Zend_Search_Lucene_PriorityQueueTest');
 
-        $suite->addTestSuite('Zend_Search_Lucene_Storage_DirectoryTest');
-        $suite->addTestSuite('Zend_Search_Lucene_Storage_FileTest');
-
         $suite->addTestSuite('Zend_Search_Lucene_Index_DictionaryLoaderTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_FieldInfoTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_SegmentInfoPriorityQueueTest');
@@ -53,6 +50,13 @@ class Zend_Search_Lucene_AllTests
         $suite->addTestSuite('Zend_Search_Lucene_Index_SegmentMergerTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_TermInfoTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_TermTest');
+        /**
+         * SegmentWriter class, its subclasses and Writer class are completely tested within
+         * Lucene::addDocument and Lucene::optimize testing
+         */
+
+        $suite->addTestSuite('Zend_Search_Lucene_Storage_DirectoryTest');
+        $suite->addTestSuite('Zend_Search_Lucene_Storage_FileTest');
 
 
         return $suite;
