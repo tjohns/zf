@@ -26,23 +26,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Db2Test extends Zend_Db_Table_TestCommon
 {
 
-    public function testTableInsertSequence()
-    {
-        $table = $this->_getTable('Zend_Db_Table_TableProducts',
-            array(Zend_Db_Table_Abstract::SEQUENCE => 'products_seq'));
-
-        $row = array (
-            'product_name' => 'Solaris'
-        );
-
-        $insertResult         = $table->insert($row);
-        $lastInsertId         = $this->_db->lastInsertId('products');
-        $lastSequenceId       = $this->_db->lastSequenceId('products_seq');
-        $this->assertEquals($insertResult, $lastInsertId);
-        $this->assertEquals($insertResult, $lastSequenceId);
-        $this->assertEquals(4, $insertResult);
-    }
-
     public function getDriver()
     {
         return 'Db2';

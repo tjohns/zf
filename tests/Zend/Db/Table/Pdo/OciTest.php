@@ -28,7 +28,7 @@ class Zend_Db_Table_Pdo_OciTest extends Zend_Db_Table_TestCommon
 
     public function testTableInsert()
     {
-        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+        $this->markTestSkipped($this->getDriver().' does not support auto-increment keys.');
     }
 
     public function testTableInsertSequence()

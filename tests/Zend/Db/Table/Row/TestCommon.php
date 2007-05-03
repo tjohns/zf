@@ -191,7 +191,18 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableRowSaveInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+        $table = $this->_getTable('Zend_Db_Table_TableProducts',
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'products_seq'));
+        $data = array (
+            'product_name' => 'Solaris'
+        );
+        $row3 = $table->createRow($data);
+        $row3->save();
+        try {
+            $this->assertEquals(4, $row3->product_id);
+        } catch (Exception $e) {
+            $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
+        }
     }
 
     public function testTableRowSaveUpdate()

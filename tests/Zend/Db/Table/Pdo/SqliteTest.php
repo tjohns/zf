@@ -26,6 +26,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Pdo_SqliteTest extends Zend_Db_Table_TestCommon
 {
 
+    public function testTableInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver().' does not support sequences.');
+    }
+
     public function testDbTableSchemaSpecified()
     {
         $this->markTestSkipped('SQLite does not support qualified table names');

@@ -330,20 +330,22 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     }
 
-    public function testTableFindSingle()
+    public function testTableFindSingleRow()
     {
         $table = $this->_table['bugs'];
-        $row1 = $table->find(1);
-        $this->assertThat($row1, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
+        $rows = $table->find(1);
+        $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+        $this->assertEquals(1, count($rows));
     }
 
-    public function testTableFindMultiple()
+    public function testTableFindMultipleRows()
     {
         $table = $this->_table['bugs'];
         $rows = $table->find(array(1, 2));
         $this->assertThat($rows, $this->isInstanceOf('Zend_Db_Table_Rowset_Abstract'),
             'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+        $this->assertEquals(2, count($rows));
     }
 
     public function testTableFindExceptionMissingKey()
@@ -371,14 +373,14 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     }
 
 /*
-    public function testTableFindCompoundSingle()
+    public function testTableFindCompoundSingleRow()
     {
         $table = $this->_table['bugs_products'];
     }
  */
 
 /*
-    public function testTableFindCompoundMultiple()
+    public function testTableFindCompoundMultipleRows()
     {
         $table = $this->_table['bugs_products'];
     }
@@ -410,37 +412,28 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'assigned_to'     => 'goofy'
         );
         $insertResult = $table->insert($row);
-        $lastInsertId = $this->_db->lastInsertId('bugs', 'bug_id');
-        $lastSequenceId = $this->_db->lastSequenceId('bugs_bug_id_seq');
-
+        $lastInsertId = $this->_db->lastInsertId();
         $this->assertEquals($insertResult, $lastInsertId);
-        $this->assertEquals($insertResult, $lastSequenceId);
         $this->assertEquals(5, $lastInsertId);
     }
 
     public function testTableInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver().' does not support sequences.');
-    }
-
-/*
-    public function testTableInsertSpecifyPrimaryKey()
-    {
-        $table = $this->_table['bugs'];
+        $table = $this->_getTable('Zend_Db_Table_TableProducts',
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'products_seq'));
         $row = array (
-            'bug_description' => 'New bug',
-            'bug_status'      => 'NEW',
-            'created_on'      => '2007-04-02',
-            'updated_on'      => '2007-04-02',
-            'reported_by'     => 'micky',
-            'assigned_to'     => 'goofy'
+            'product_name' => 'Solaris'
         );
-        $insertResult = $table->insert($row);
+        $insertResult         = $table->insert($row);
+        $lastInsertId         = $this->_db->lastInsertId('products');
+        $lastSequenceId       = $this->_db->lastSequenceId('products_seq');
+        $this->assertEquals($insertResult, $lastInsertId);
+        $this->assertEquals($insertResult, $lastSequenceId);
+        $this->assertEquals(4, $insertResult);
     }
- */
 
 /*
-    public function testTableInsertCompoundPrimaryKey()
+    public function testTableInsertNaturalCompound()
     {
         $table = $this->_table['bugs_products'];
     }

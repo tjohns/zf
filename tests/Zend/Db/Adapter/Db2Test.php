@@ -80,19 +80,6 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     }
 
-    public function testAdapterInsertSequence()
-    {
-        $row = array (
-            'product_id' => $this->_db->nextSequenceId('products_seq'),
-            'product_name' => 'Solaris',
-        );
-        $rowsAffected = $this->_db->insert('products', $row);
-        $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('products');
-        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
-        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
-    }
-
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.

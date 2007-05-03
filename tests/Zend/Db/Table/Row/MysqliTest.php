@@ -26,6 +26,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Row_MysqliTest extends Zend_Db_Table_Row_TestCommon
 {
 
+    public function testTableRowSaveInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+    }
+
     public function getDriver()
     {
         return 'Mysqli';

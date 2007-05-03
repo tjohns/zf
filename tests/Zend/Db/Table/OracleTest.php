@@ -28,6 +28,11 @@ class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
 
     public function testTableInsert()
     {
+        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+    }
+
+    public function testTableInsertSequence()
+    {
         $table = $this->_getTable('Zend_Db_Table_TableBugs',
             array(Zend_Db_Table_Abstract::SEQUENCE => 'bugs_seq'));
         $row = array (

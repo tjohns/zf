@@ -26,6 +26,30 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
+    /**
+     * Test the Adapter's insert() method.
+     * This requires providing an associative array of column=>value pairs.
+     */
+    public function testAdapterInsert()
+    {
+        $row = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
+        );
+        $rowsAffected = $this->_db->insert('bugs', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $lastInsertId = $this->_db->lastInsertId('bugs', 'bug_id');
+        $lastSequenceId = $this->_db->lastSequenceId('bugs_bug_id_seq');
+        $this->assertEquals((string) $lastInsertId, (string) $lastSequenceId,
+            'Expected last insert id to be equal to last sequence id');
+        $this->assertEquals('5', (string) $lastInsertId,
+            'Expected new id to be 5');
+    }
+
     public function testAdapterInsertSequence()
     {
         $row = array (

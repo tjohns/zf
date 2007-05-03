@@ -210,18 +210,22 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         );
         $rowsAffected = $this->_db->insert('bugs', $row);
         $this->assertEquals(1, $rowsAffected);
-        $id = $this->_db->lastInsertId('bugs', 'bug_id');
-        $this->assertEquals('5', (string) $id,
+        $lastInsertId = $this->_db->lastInsertId();
+        $this->assertEquals('5', (string) $lastInsertId,
             'Expected new id to be 5');
     }
 
-    /**
-     * Test the Adapter's insert() method.
-     * This requires providing an associative array of column=>value pairs.
-     */
     public function testAdapterInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support sequences.');
+        $row = array (
+            'product_id' => $this->_db->nextSequenceId('products_seq'),
+            'product_name' => 'Solaris',
+        );
+        $rowsAffected = $this->_db->insert('products', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $lastInsertId = $this->_db->lastInsertId('products');
+        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
     }
 
     /**
