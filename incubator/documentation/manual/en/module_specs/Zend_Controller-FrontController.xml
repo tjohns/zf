@@ -184,7 +184,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
 // easy step:
 Zend_Controller_Front::run('../application/controllers');
 ?>]]></programlisting>
-        </listitem>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.front.methods.environment">
