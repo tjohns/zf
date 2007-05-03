@@ -344,6 +344,7 @@ else {
 
         <para>
             If you need to modify the array after assigning it to a session namespace key, fetch the array, then
+            modify it and save the array back to the session namespace.
         </para>
 
         <example>
