@@ -104,6 +104,11 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->_testValidUri('http://localhost.localdomain');
     }
+    
+    public function testSquareBrackets()
+    {
+    	$this->_testValidUri('https://example.com/foo/?var[]=1&var[]=2&some[thing]=3');
+    }
 
     /**
      * Test a known valid URI
