@@ -373,6 +373,124 @@ class MyController extends Zend_Controller_Action
             </listitem>
         </itemizedlist>
     </sect2>
+
+    <sect2 id="zend.controller.action.subclassing">
+        <title>Subclassing the Action Controller</title>
+
+        <para>
+            By design, <code>Zend_Controller_Action</code> must be subclassed
+            in order to create an action controller. At the minimum, you will
+            need to define action methods that the controller may call.
+        </para>
+
+        <para>
+            Besides creating useful functionality for your web applications, you
+            may also find that you're repeating much of the same setup or
+            utility methods in your various controllers; if so, creating a
+            common base controller class that extends
+            <code>Zend_Controller_Action</code> could solve such redundancy.
+        </para>
+
+        <sect3 id="zend.controller.action.subclassing.call">
+            <title>How to Handle Non-Existent Actions</title>
+
+            <para>
+                If a request to a controller is made that includes an undefined
+                action method, <code>Zend_Controller_Action::__call()</code>
+                will be invoked. <code>__call()</code> is, of course, PHP's
+                magic method for method overloading.
+            </para>
+
+            <para>
+                By default, this method throws a
+                <code>Zend_Controller_Action_Exception</code> indicating the
+                requested action was not found in the controller. You should
+                override this functionality if you wish to perform other
+                operations.
+            </para>
+
+            <para>
+                For instance, if you wish to display an error message, you might
+                write something like this:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function __call($method, $args)
+    {
+        if ('Action' == substr($method, -6)) {
+            // If the action method was not found, render the error template
+            return $this->render('error');
+        }
+
+        // all other methods throw an exception
+        throw new Exception('Invalid method "' . $method . '" called');
+    }
+}
+?>]]></programlisting>
+            
+            <para>
+                Another possibility is that you may want to forward on to a
+                default controller page:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function indexAction()
+    {
+        $this->render();
+    }
+
+    public function __call($method, $args)
+    {
+        if ('Action' == substr($method, -6)) {
+            // If the action method was not found, forward to the index action
+            return $this->_forward('index');
+        }
+
+        // all other methods throw an exception
+        throw new Exception('Invalid method "' . $method . '" called');
+    }
+}
+?>]]></programlisting>
+        </sect3>
+
+        <para>
+            Besides overriding <code>__call()</code>, each of the
+            initialization, utility, accessor, view, and dispatch hook methods
+            mentioned previously in this chapter may be overridden in order to
+            customize your controllers. As an example, if you are storing your
+            view object in a registry, you may want to modify your
+            <code>initView()</code> method with code resembling the following:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+abstract class My_Base_Controller extends Zend_Controller_Action
+{
+    public function initView()
+    {
+        if (null === $this->view) {
+            if (Zend_Registry::isRegistered('view')) {
+                $this->view = Zend_Registry::get('view');
+            } else {
+                $this->view = new Zend_View();
+                $this->view->setBasePath(dirname(__FILE__) . '/../views');
+            }
+        }
+
+        return $this->view;
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            Hopefully, from the information in this chapter, you can see the
+            flexibility of this particular component and how you can shape it to
+            your application's or site's needs.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

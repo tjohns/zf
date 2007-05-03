@@ -359,6 +359,47 @@ $router->addConfig($config, 'routes');
             <code>Zend_Controller_Router_Route_Static</code>.
         </para>
     </sect2>
+
+    <sect2 id="zend.controller.router.subclassing">
+        <title>Subclassing the Router</title>
+
+        <para>
+            The standard rewrite router should provide most functionality you
+            may need; most often, you will only need to create a new route type
+            in order to provide new or modified functionality over the provided
+            routes.
+        </para>
+
+        <para>
+            That said, you may at some point find yourself wanting to use a
+            different routing paradigm.  The interface
+            <code>Zend_Controller_Router_Interface</code> provides the minimal
+            information required to create a router, and consists of a single
+            method.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+interface Zend_Controller_Router_Interface
+{
+  /**
+   * @param  Zend_Controller_Request_Abstract $request
+   * @throws Zend_Controller_Router_Exception
+   * @return Zend_Controller_Request_Abstract
+   */
+  public function route(Zend_Controller_Request_Abstract $request);
+}
+?>]]></programlisting>
+
+        <para>
+            Routing only occurs once: when the request is first received into
+            the system.  The purpose of the router is to determine the
+            controller, action, and optional parameters based on the request
+            environment, and then set them in the request.  The request object
+            is then passed to the dispatcher.  If it is not possible to map a
+            route to a dispatch token, the router should do nothing to the
+            request object.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

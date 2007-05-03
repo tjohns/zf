@@ -429,6 +429,47 @@ Zend_Controller_Front::run('../application/controllers');
             </listitem>
         </itemizedlist>
     </sect2>
+
+    <sect2 id="zend.controller.front.subclassing">
+        <title>Subclassing the Front Controller</title>
+
+        <para>
+            To subclass the Front Controller, at the very minimum you will need
+            to override the <code>getInstance()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class My_Controller_Front extends Zend_Controller_Front
+{
+    public static function getInstance()
+    {
+        if (null === self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+}
+]]></programlisting>
+
+        <para>
+            Overriding the <code>getInstance()</code> method ensures that
+            subsequent calls to
+            <code>Zend_Controller_Front::getInstance()</code> will return an
+            instance of your new subclass instead of a
+            <code>Zend_Controller_Front</code> instance -- this is particularly
+            useful for some of the alternate routers and view helpers. 
+        </para>
+
+        <para>
+            Typically, you will not need to subclass the front controller unless
+            you need to add new functionality (for instance, a plugin
+            autoloader, or a way to specify action helper paths). Some points
+            where you may want to alter behaviour may include modifying how
+            controller directories are stored, or what default router or
+            dispatcher are used.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

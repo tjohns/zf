@@ -132,6 +132,109 @@ $front->dispatch();
 ]]></programlisting>
     </sect2>
 
+    <sect2 id="zend.controller.response.headers">
+        <title>Manipulating Headers</title>
+
+        <para>
+            As stated previously, one aspect of the response object's duties is
+            to collect and emit HTTP response headers.  A variety of methods
+            exist for this:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>canSendHeaders()</code> is used to determine if
+                    headers have already been sent. It takes an optional flag
+                    indicating whether or not to throw an exception if headers
+                    have already been sent. This can be overridden by setting
+                    the property <code>headersSentThrowsException</code> to
+                    <code>false</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setHeader($name, $value, $replace = false)</code> is
+                    used to set an individual header. By default, it does not
+                    replace existing headers of the same name in the object;
+                    however, setting <code>$replace</code> to true will force it
+                    to do so.
+                </para>
+
+                <para>
+                    Before setting the header, it checks with
+                    <code>canSendHeaders()</code> to see if this operation is
+                    allowed at this point, and requests that an exception be
+                    thrown.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setRedirect($url, $code = 302)</code> sets an HTTP
+                    Location header for a redirect. If an HTTP status code has
+                    been provided, it will use that status code.
+                </para>
+
+                <para>
+                    Internally, it calls <code>setHeader()</code> with the
+                    <code>$replace</code> flag on to ensure only one such header
+                    is ever sent.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getHeaders()</code> returns an array of all headers.
+                    Each array element is an array with the keys 'name' and
+                    'value'.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearHeaders()</code> clears all registered headers.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setRawHeader()</code> can be used to set headers that
+                    are not key/value pairs, such as an HTTP status header.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getRawHeaders()</code> returns any registered raw
+                    headers.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearRawHeaders()</code> clears any registered raw
+                    headers.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearAllHeaders()</code> clears both regular key/value
+                    headers as well as raw headers.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            In addition to the above methods, there are accessors for setting
+            and retrieving the HTTP response code for the current request,
+            <code>setHttpResponseCode()</code> and
+            <code>getHttpResponseCode()</code>.
+        </para>
+    </sect2>
+
     <sect2 id="zend.controller.response.namedsegments">
         <title>Named Segments</title>
 
@@ -273,6 +376,31 @@ array(
                 </para>
             </listitem>
         </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.response.subclassing">
+        <title>Subclassing the Response Object</title>
+
+        <para>
+            The purpose of the response object is to collect headers and content
+            from the various actions and plugins and return them to the client;
+            secondarily, it also collects any errors (exceptions) that occur in
+            order to process them, return them, or hide them from the end user.
+        </para>
+
+        <para>
+            The base response class is
+            <code>Zend_Controller_Response_Abstract</code>, and any subclass you
+            create should extend that class or one of its derivatives. The
+            various methods available have been listed in the previous sections.
+        </para>
+
+        <para>
+            Reasons to subclass the response object include modifying how output
+            is returned based on the request environment (e.g., not sending
+            headers for CLI or PHP-GTK requests), adding functionality to return
+            a final view based on content stored in named segments, etc.
+        </para>
     </sect2>
 </sect1>
 <!--

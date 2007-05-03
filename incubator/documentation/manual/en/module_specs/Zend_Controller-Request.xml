@@ -191,6 +191,117 @@ $response   = $controller->dispatch();
 
         </sect3>
     </sect2>
+
+    <sect2 id="zend.controller.request.subclassing">
+        <title>Subclassing the Request Object</title>
+
+        <para>
+            The base request class used for all request objects is the abstract
+            class <code>Zend_Controller_Request_Abstract</code>. At its most
+            basic, it defines the following methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+abstract class Zend_Controller_Request_Abstract
+{
+    /**
+     * @return string
+     */
+    public function getControllerName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setControllerName($value);
+
+    /**
+     * @return string
+     */
+    public function getActionName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setActionName($value);
+
+    /**
+     * @return string
+     */
+    public function getControllerKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setControllerKey($key);
+
+    /**
+     * @return string
+     */
+    public function getActionKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setActionKey($key);
+
+    /**
+     * @param string $key 
+     * @return mixed
+     */
+    public function getParam($key);
+
+    /**
+     * @param string $key 
+     * @param mixed $value 
+     * @return self
+     */
+    public function setParam($key, $value);
+
+    /**
+     * @return array
+     */
+     public function getParams();
+
+    /**
+     * @param array $array 
+     * @return self
+     */
+    public function setParams(array $array);
+
+    /**
+     * @param boolean $flag 
+     * @return self
+     */
+    public function setDispatched($flag = true);
+
+    /**
+     * @return boolean
+     */
+    public function isDispatched();
+}
+]]></programlisting>
+
+        <para>
+            The request object is a container for the request environment. The
+            controller chain really only needs to know how to set and retrieve the
+            controller, action, optional parameters, and dispatched status. By
+            default, the request will search its own parameters using the
+            controller or action keys in order to determine the controller and
+            action.
+        </para>
+
+        <para>
+            Extend this class, or one of its derivatives, when you need the
+            request class to interact with a specific environment in order to
+            retrieve data for use in the above tasks. Examples include <link
+                linkend="zend.controller.request.http">the HTTP
+                environment</link>, a CLI environment, or a PHP-GTK environment.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
