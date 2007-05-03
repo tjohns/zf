@@ -3,11 +3,13 @@
     <title>Globales Session Management</title>
 
     <para>
-        The default behavior of sessions can be modified using the static methods in Zend_Session. All management and
-        manipulation of global session management occurs using Zend_Session, including configuration of the
-        <ulink url="http://www.php.net/session#session.configuration">usual options provided by ext/session</ulink>
-        , using <code>Zend_Session::setOptions()</code>. For example, failure to insure the use of a safe save_path or a
-        unique cookie name by ext/session using <code>Zend_Session::setOptions()</code> may result in security issues.
+        Das Standardverhalten von Sessions kann mit Hilfe der statischen Methoden in Zend_Session geändert werden.
+        Das komplette Management und die Manipulation des globalen Session Managements findet durch Verwendung
+        von Zend_Session statt, was auch die Konfiguration der 
+        <ulink url="http://www.php.net/session#session.configuration">üblichen Optionen, welche von ext/session unterstützt werden,</ulink>
+        durch <code>Zend_Session::setOptions()</code> enthält. Zum Beispiel kann, das fehlerhafte Versichern das ein
+        sicherer save_path oder ein eindeutiger Cookiename von ext/session durch
+        <code>Zend_Session::setOptions()</code> verwendet wird, zu einem Sicherheitsproblem werden.
     </para>
 
     <sect2 id="zend.session.setoptions">
@@ -15,25 +17,23 @@
         <title>Zend_Session::setOptions()</title>
 
         <para>
-            When the first session namespace is requested, Zend_Session will autostart itself, unless already started
-            explicitly by using
-            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code>
-            </link>
-            . The underlying PHP session will use defaults from Zend_Session, unless modified first by
-            <code>Zend_Session::setOptions()</code>.
+            Wenn der erste Session Namensraum angefragt wird, startet Zend_Session selbsttätig, egal ob es bereits
+            explizit gestartet wurde mit Hilfe von
+            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code></link>.
+            Die darunterliegende PHP Session verwendet die Standards von Zend_Session, unabhängig davon ob Sie
+            zuerst durch <code>Zend_Session::setOptions()</code> modifiziert wurde.
         </para>
 
         <para>
-            To pass the options just pass the basename (the non <code>session.</code> part) as part of an array to
-            <code>Zend_Session::setOptions()</code>. Without setting any options, Zend_Session will utilize the
-            recommended options first, then the default php.ini settings. Community feedback about best practices for
-            these options should be sent to
-            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
-            .
+            Um die Optionen zu übergeben muß nur der Basisname (der nicht <code>session.</code> Teil) als Teil eines
+            Arrays an <code>Zend_Session::setOptions()</code> übergeben werden. Ohne das irgendeine Option gesetzt
+            wird, wird Zend_Session zuerst die benötigten Optionen anwenden und anschließend die standard php.ini
+            Einstellungen. Feedback der Community über die beste Handhabung für diese Optionen sollte gesendet werden
+            an <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
         </para>
 
         <para>
-            To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
+            Um diese Komponente "automatisch" zu konfigurieren bei Verwendung einer ".ini" Datei mit Zend_Config_Ini:
         </para>
 
         <example>
@@ -46,7 +46,7 @@ Zend_Session::setOptions($config->toArray());
         </example>
 
         <para>
-            The corresponding "myapp.ini" file:
+            Die dazugehörende "myapp.ini" Datei:
         </para>
 
         <example>
@@ -84,10 +84,10 @@ name = UNIQUE_NAME
 ; strict = on|off
 
 
-; Unser Samdbox Server verwendet die selben Einstellungen wie unser Live-Server,
+; Unser Sandbox Server verwendet die selben Einstellungen wie unser Live-Server,
 ; ausser wie anbei überschrieben
 [sandbox : live]
-; Nicht vergessen dieses Verzeichnis zu erstellen und mach es rwx (lesbar und änderbar) durch PHP.
+; Nicht vergessen, dieses Verzeichnis zu erstellen und es rwx machen (lesbar und änderbar) durch PHP.
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; Beim Analysieren von Session ID Cookies, frage nach einer TTL von 10 Tagen
@@ -102,61 +102,67 @@ remember_me_seconds = 864000
         <title>Optionen</title>
 
         <para>
-            Most options shown above need no explanation beyond that found in the standard PHP documentation.
+            Die meisten oben gezeigten Optionen benötigen keine Erklärung über jene der standard PHP
+            Dokumentation hinaus.
             <itemizedlist mark='opencircle'>
                 <listitem>
                     <para>
-                        boolean <code>strict</code> - disables automatic starting of <code>Zend_Session</code> when
-                        using <code>new Zend_Session_Namespace()</code>.
+                        boolean <code>strict</code> - verhindert das automatische Starten von <code>Zend_Session</code>
+                        wenn <code>new Zend_Session_Namespace()</code> verwendet wird.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        integer <code>remember_me_seconds</code> - how long should session id cookie persist, after user
-                        agent has ended (i.e. browser window closed)
+                        integer <code>remember_me_seconds</code> - Wie lange soll das Session Id Cookie bestehen,
+                        nachdem der Benutzer Agent beendet wurde (z.B. Fenster des Browsers geschlossen)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        string <code>save_path</code> - The correct value is system dependent, and should be provided by
-                        the developer using an <emphasis role="strong">absolute path</emphasis> to a directory readable
-                        and writable by the PHP process.  If a writable path is not supplied, then <code>Zend_Session
-                        </code> will throw an exception when started (i.e. when <code>start()</code> is called).
+                        string <code>save_path</code> - Der richtige Wert ist abhängig vom System, und sollte
+                        vom Entwickler auf einen <emphasis role="strong">absoluten Pfad</emphasis> zu einem
+                        Verzeichnis bereitgestellt werden, welches durch den PHP Prozess lesbar und beschreibbar ist.
+                        Wenn kein schreibbarer Pfad gegeben ist, wird <code>Zend_Session</code> eine Ausnahme
+                        werden sobald Sie gestartet wird (z.B. wenn <code>start()</code> aufgerufen wird).
                     </para>
                     <note>
-                        <title>Security Risk</title>
+                        <title>Sicherheits Risiko</title>
                         <para>
-                            If the path is readable by other applications, then session hijacking might be possible. If
-                            the path is writable by other applications, then
-                            <ulink url="http://en.wikipedia.org/wiki/Session_poisoning">session poisoning</ulink>
-                            might be possible. If this path is shared with other users or other PHP applications,
-                            various security issues might occur, including theft of session content, hijacking of
-                            sessions, and collision of garbage collection (e.g. another user's application might cause
-                            PHP to delete your application's session files).
+                            Wenn der Pfad von einer anderen Anwendung aus lesbar ist, kann die Entführung der
+                            Session möglich sein. Wenn der Pfad von einer anderen Anwendung aus beschreibbar ist,
+                            kann die <ulink url="http://en.wikipedia.org/wiki/Session_poisoning">Session 
+                            vergiftet</ulink> werden. Wenn der Pfad mit anderen Benutzern oder anderen PHP
+                            Anwendungen geteilt wird, können verschiedenste Sicherheitsprobleme auftreten. Das
+                            inkludiert Diebstahl von Inhalten der Session, Entführung von Sessions und Kollisionen
+                            der Müllsammlung (z.B. eine andere Anwendung eines Benutzers können PHP veranlassen
+                            die eigenen Session Dateien zu löschen).
                         </para>
                         <para>
-                            For example, an attacker can visit the victim's website to obtain a session cookie. Then
-                            edit the cookie path to his own domain on the same server, before visiting his own website
-                            to execute <code>var_dump($_SESSION)</code>. Armed with detailed knowledge of the victim's
-                            use of data in their sessions, the attacker can then modify the session state (poisoning the
-                            session), alter the cookie path back to the victim's website, and then make requests from
-                            the victim's website using the poisoned session. Even if two applications on the same server
-                            do not have read/write access to the other application's save_path, if the save_path is
-                            guessable, and the attacker has control over one of these two websites, the attacker could
-                            alter their website's save_path to use the other's save_path, and thus accomplish session
-                            poisoning, under some common configurations of PHP. Thus, the value for save_path should not
-                            be made public knowledge, and should be altered to a secure location unique to each
-                            application.
+                            Zum Beispiel kann ein Angreifer die Webseite des Opfers besuchen um ein Session Cookie
+                            zu erhalten. Dann den Cookie Pfad auf die eigene Domain auf dem gleichen Server ändern,
+                            bevor er die eigene Webseite besucht um <code>var_dump($_SESSION)</code> auszuführen.
+                            Bewaffnet mit detailiertem Wissen über die Verwendung von Daten in den Sessions des
+                            Opfers, kann der Angreifer den Sessionstatus verändern (Vergiften der Session),
+                            den Cookie Pfad auf die Webseite des Opfers zurück ändern, und anschließend eine Anfrage
+                            von der Webseite des Opfers, mithilfe der vergifteten Session, durchführen. Selbst wenn
+                            zwei Anwendungen auf dem gleichen Server keinen Lese-/Schreibzugriff auf den jeweils
+                            anderen save_path der Anwendung haben. Wenn der save_path erahnbar ist und der
+                            Angreifer die Kontrolle über eine der zwei Webseiten hat, kann der Angreifer den
+                            save_path seiner Webseiten ändern um dem anderen save_path zu verwenden und somit
+                            die Vergiftung der Session durchführen, in den meisten üblichen PHP Konfigurationen.
+                            Deshalb sollte der Wert für save_path nicht öffentlich bekanntgegeben werden, und er
+                            sollte geändert werden um dem Pfad eindeutig für jede Anwendung zu sichern.
                         </para>
                     </note>
                 </listitem>
                 <listitem>
                     <para>
-                        string <code>name</code> - The correct value is system dependent, and should be provided by the
-                        developer using a short value <emphasis role="strong">unique</emphasis> to the ZF application.
+                        string <code>name</code> - Der richtige Wert ist abhängig vom System and sollte vom
+                        Entwickler, durch Verwenden eines kleinen Wertes, bereitgestellt werden, welcher
+                        für jede ZF Anwendung <emphasis role="strong">eindeutig</emphasis> ist.
                     </para>
                     <note>
-                        <title>Security Risk</title>
+                        <title>Sicherheits Risiko</title>
                         <para>
                             If the <code>php.ini</code> setting for <code>session.name</code> is the same (e.g. the
                             default "PHPSESSID"), and there are two or more PHP applications accessible through the same
@@ -171,7 +177,7 @@ remember_me_seconds = 864000
                         boolean <code>use_only_cookies</code> - In order to avoid introducing additional security risks,
                         do not alter the default value of this option.
                         <note>
-                            <title>Security Risk</title>
+                            <title>Sicherheits Risiko</title>
                             <para>
                                 If this setting is not enabled, an attacker can easily fix victim's session ids, using
                                 links on the attacker's website, such as
