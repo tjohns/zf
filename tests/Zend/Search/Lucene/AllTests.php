@@ -13,6 +13,8 @@ require_once 'Zend/Search/Lucene/FSMTest.php';
 require_once 'Zend/Search/Lucene/FieldTest.php';
 require_once 'Zend/Search/Lucene/PriorityQueueTest.php';
 
+require_once 'Zend/Search/Lucene/AnalysisTest.php';
+
 require_once 'Zend/Search/Lucene/Index/DictionaryLoaderTest.php';
 require_once 'Zend/Search/Lucene/Index/FieldInfoTest.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueueTest.php';
@@ -44,6 +46,8 @@ class Zend_Search_Lucene_AllTests
         $suite->addTestSuite('Zend_Search_Lucene_FSMTest');
         $suite->addTestSuite('Zend_Search_Lucene_FieldTest');
         $suite->addTestSuite('Zend_Search_Lucene_PriorityQueueTest');
+
+        $suite->addTestSuite('Zend_Search_Lucene_AnalysisTest');
 
         $suite->addTestSuite('Zend_Search_Lucene_Index_DictionaryLoaderTest');
         $suite->addTestSuite('Zend_Search_Lucene_Index_FieldInfoTest');
