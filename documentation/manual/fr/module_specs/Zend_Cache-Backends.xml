@@ -114,7 +114,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>10</code></entry>
                           <entry>
-                            Désactive/Paramètre le processus de vidange automatique. Celui-ci défragement le fichier de base de données (et diminue sa taille) quand clean() ou delete() est appelé : 0 pour une vidange automatique ; 1 pour une vidange systématique (quand clean() ou delete() est appelé) ; x (entier) > 1 pour une vidange automatique aléatoirement 1 fois sur x clean() ou delete().
+                            Désactive / Paramètre le processus de vidange automatique. Celui-ci défragemente le fichier de base de données (et diminue sa taille) quand clean() ou delete() est appelé : 0 pour une vidange automatique ; 1 pour une vidange systématique (quand clean() ou delete() est appelé) ; x (entier) > 1 pour une vidange automatique aléatoirement 1 fois sur x clean() ou delete().
                           </entry>
                       </row>
                   </tbody>
@@ -124,7 +124,7 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            Ces backends stockent les enregistrements de cache dans un serveur memcached. <ulink url="http://www.danga.com/memcached/">memcached</ulink> est un système de cache en mémoire distribuée, de haute performance. Pour utiliser ce backend, vous devez avoir un démon memcached et l'extension PECL<ulink url="http://pecl.php.net/package/memcache">memcache</ulink>.
+            Ces backends stockent les enregistrements de cache dans un serveur memcached. <ulink url="http://www.danga.com/memcached/">memcached</ulink> est un système de cache en mémoire distribuée, de haute performance. Pour utiliser ce backend, vous devez avoir un démon memcached et l'extension PECL <ulink url="http://pecl.php.net/package/memcache">memcache</ulink>.
         </para>
         <para>
             ATTENTION : avec ce backend, les balises ("tags") ne sont pas supportées pour le moment comme l'argument "doNotTestCacheValidity=true".
@@ -149,7 +149,7 @@
                           <entry><code>array</code></entry>
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
-                              Un tableau de serveurs memcached; chaque server memcached est décrit par un tableau associatif : 'host' => (string) : le nom du serveur memcached, 'port' => (int) : le port du serveur memcached, 'persistent' => (bool) : utilisation ou pas des connexions persistentes pour ce serveur memcached.
+                              Un tableau de serveurs memcached ; chaque serveur memcached est décrit par un tableau associatif : 'host' => (string) : le nom du serveur memcached, 'port' => (int) : le port du serveur memcached, 'persistent' => (bool) : utilisation ou pas des connexions persistentes pour ce serveur memcached.
                           </entry>
                       </row>
                       <row>
