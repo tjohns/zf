@@ -26,15 +26,15 @@
 
         <para>
             In this section, we use an example database that shows
-            several types of relationships between tables.  
+            several types of relationships between tables.
             This database tracks bugs in a software development
-            project.  The database contains three tables: 
+            project.  The database contains three tables:
         </para>
-        
+
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Accounts</code> stores identities of
+                    <code>Accounts</code> stores information about
                     each user of the bug-tracking database.
                 </para>
             </listitem>
@@ -61,17 +61,17 @@
         </para>
 
         <programlisting role="sql"><![CDATA[
-CREATE TABLE accounts ( 
-  account_id        PRIMARY KEY, 
+CREATE TABLE accounts (
+  account_id        PRIMARY KEY,
   name              VARCHAR
 );
- 
-CREATE TABLE products ( 
+
+CREATE TABLE products (
   product_id        PRIMARY KEY,
   product_name      VARCHAR
 );
- 
-CREATE TABLE bugs ( 
+
+CREATE TABLE bugs (
   bug_id            PRIMARY KEY,
   product_id        FOREIGN KEY REFERENCES products(product_id),
   reported_by       FOREIGN KEY REFERENCES accounts(account_id),
@@ -100,8 +100,7 @@ CREATE TABLE bugs (
 
         <para>
             Define classes for each of these tables, extending the abstract
-            class Zend_Db_Table_Abstract, as described in the
-            section <xref linkend="zend.db.table.introduction" />.
+            class Zend_Db_Table_Abstract, as described in <xref linkend="zend.db.table.defining" />.
             In the class file for each child table, declare the reference
             relationships in the <code>protected $_referenceMap</code>
             and <code>protected $_dependentTables</code>
@@ -109,7 +108,7 @@ CREATE TABLE bugs (
         </para>
 
         <para>
-            Below is the PHP class definitions for these tables:
+            Below are the PHP class definitions for these tables:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -133,14 +132,14 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name            = 'bugs';
     protected $_referenceMap    = array(
         'Reporter' => array(
-            'columns'           => array('reported_by'),
+            'columns'           => 'reported_by',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Engineer' => array(
-            'columns'           => array('assigned_to'),
+            'columns'           => 'assigned_to',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Verifier' => array(
             'columns'           => array('verified_by'),
@@ -201,7 +200,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">columns</emphasis> =>
-                    An array of strings, naming the foreign key column name(s)
+                    A string or an array of strings naming the foreign key column name(s)
                     in the dependent table.
                 </para>
                 <para>
@@ -221,7 +220,7 @@ class Bugs extends Zend_Db_Table_Abstract
                     references to the same parent table.  In the example
                     database, there is one reference from the <code>bugs</code>
                     table to the <code>products</code> table, but three
-                    references from the <code>bugs</code> table to the 
+                    references from the <code>bugs</code> table to the
                     <code>accounts</code> table.
                     Put each reference in a separate entry in
                     the <code>$_referenceMap</code> array.
@@ -230,14 +229,14 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">refColumns</emphasis> =>
-                    An array of strings, naming primary key column names in
+                    A string or an array of strings naming the primary key column name(s) in
                     the parent table.
                 </para>
                 <para>
                     It's common for this to be a single column, but
                     some tables have multi-column keys.
                     If the reference uses a
-                    multi-column key, the order of columns in the 
+                    multi-column key, the order of columns in the
                     <code>'columns'</code> entry must match the order of
                     columns in the <code>'refColumns'</code> entry.
                 </para>
@@ -253,8 +252,8 @@ class Bugs extends Zend_Db_Table_Abstract
                     <emphasis role="strong">onDelete</emphasis> =>
                     The rule for an action to execute if a row is
                     deleted in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    See <xref linkend="zend.db.table.relationships.cascading" /> for
+                    more information.
                 </para>
             </listitem>
             <listitem>
@@ -262,8 +261,8 @@ class Bugs extends Zend_Db_Table_Abstract
                     <emphasis role="strong">onUpdate</emphasis> =>
                     The rule for an action to execute if values in
                     primary key columns are updated in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    See <xref linkend="zend.db.table.relationships.cascading" /> for
+                    more information.
                 </para>
             </listitem>
         </itemizedlist>
@@ -380,7 +379,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 
         <para>
             In the patterns above, <code>&lt;TableClass&gt;</code> and
-            <code>&lt;Rule&gt;()</code> are strings that correspond
+            <code>&lt;Rule&gt;</code> are strings that correspond
             to the class name of the dependent table, and the dependent
             table's rule key that references the parent table.
         </para>
@@ -577,7 +576,7 @@ $engineer          = $bug1->findParentAccountsByEngineer();
 
         <para>
             If you have a Row object as the result of a query on one table
-            in a many-to-many relationship (for purposes of the example, 
+            in a many-to-many relationship (for purposes of the example,
             call this the "origin" table), you can fetch corresponding rows
             in the other table (call this the "destination" table)
             via an intersection table.
@@ -609,7 +608,7 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]])
             The second argument <code>$intersectionTable</code> can be a string
             that specifies the intersection table between the two tables in
             the the many-to-many relationship by its class name.
-            You can also specify the intersection table by using an object 
+            You can also specify the intersection table by using an object
             of that table class.
         </para>
 
@@ -636,7 +635,7 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
         <para>
             The third and fourth arguments <code>$rule1</code> and
             <code>$rule2</code> are optional.
-            These are strings that name the rule keys in the 
+            These are strings that name the rule keys in the
             <code>$_referenceMap</code> array of the intersection table.
         </para>
 
@@ -644,14 +643,14 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
             The <code>$rule1</code> key names the rule for the relationship
             from the intersection table to the origin table.  In this example,
             this is the relationship from <code>Bugs</code> to
-            <code>Accounts</code>.  
+            <code>Accounts</code>.
         </para>
 
         <para>
             The <code>$rule2</code> key names the rule for the relationship
             from the intersection table to the destination table.  In this example,
             this is the relationship from <code>Bugs</code> to
-            <code>Products</code>.  
+            <code>Products</code>.
         </para>
 
         <para>
@@ -896,7 +895,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 This means that if your database implements and enforces
                 referential integrity constraints, a cascading
-                <code>UPDATE</code> executed by a Zend_Db_Table class 
+                <code>UPDATE</code> executed by a Zend_Db_Table class
                 conflicts with the constraint, and results in a referential
                 integrity violation.
                 You can use cascading <code>UPDATE</code> in Zend_Db_Table
@@ -922,7 +921,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 but before you delete the parent row.  That client program
                 may see the parent row with no dependent rows, and assume
                 this is the intended state of the data.
-                There is no way for that client to know that its query 
+                There is no way for that client to know that its query
                 read the database in the middle of a change.
             </para>
 
