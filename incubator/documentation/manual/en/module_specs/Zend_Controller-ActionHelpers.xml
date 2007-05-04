@@ -169,9 +169,101 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
     
 	<sect2 id="zend.controller.actionhelper.writingyourown">
         <title>Writing Your Own Helpers</title>
+
+        <para>
+            Action helpers extend
+            <code>Zend_Controller_Action_Helper_Abstract</code>, an abstract
+            class that provides the basic interface and functionality required
+            by the helper broker. These include the following methods:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setActionController()</code> is used to set the current
+                    action controller.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>init()</code>, triggered by the helper broker at
+                    instantiation, can be used to trigger initialization in the
+                    helper; this can be useful for resetting state when multiple
+                    controllers use the same helper in chained actions.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>preDispatch()</code>, is triggered prior to a
+                    dispatched action.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>postDispatch()</code> is triggered when a dispatched
+                    action is done -- even if a <code>preDispatch()</code>
+                    plugin has skipped the action. Mainly useful for cleanup.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getRequest()</code> retrieves the current request
+                    object.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getResponse()</code> retrieves the current response
+                    object.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getName()</code> retrieves the helper name. It
+                    retrieves the portion of the class name following the last
+                    underscore character, or the full class name otherwise. As
+                    an example, if the class is named
+                    <code>Zend_Controller_Action_Helper_Redirector</code>, it
+                    will return <code>Redirector</code>; a class named
+                    <code>FooMessage</code> will simply return itself.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            You may optionally include a <code>direct()</code> method in your
+            helper class. If defined, it allows you to treat the helper as a
+            method of the helper broker, in order to allow easy, one-off usage
+            of the helper. As an example, the <link
+                linkref="zend.controller.actionhelpers.redirector">redirector</link>
+            defines <code>direct()</code> as an alias of <code>goto()</code>,
+            allowing use of the helper like this:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Redirect to /blog/view/item/id/42
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
+?>]]></programlisting>
+        
+        <para>
+            Internally, the helper broker's <code>__call()</code> method looks
+            for a helper named <code>redirector</code>, then checks to see if
+            that helper has a defined <code>direct</code> class, and calls it
+            with the arguments provided.
+        </para>
+
+        <para>
+            Once you have created your own helper class, you may provide access
+            to it as described in the sections above.
+        </para>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

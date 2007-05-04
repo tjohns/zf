@@ -43,7 +43,20 @@ abstract class Zend_Controller_Action_Helper_Abstract
      */
     protected $_actionController = null;
 
-    
+    /**
+     * Request object
+     * 
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
+
+    /**
+     * Response object
+     * 
+     * @var Zend_Controller_Response_Abstract
+     */
+    protected $_response;
+
     /**
      * setActionController()
      *
@@ -56,7 +69,6 @@ abstract class Zend_Controller_Action_Helper_Abstract
         return $this;
     }
     
-    
     /**
      * Hook into action controller initialization
      * 
@@ -65,7 +77,6 @@ abstract class Zend_Controller_Action_Helper_Abstract
     public function init()
     {
     }
-    
     
     /**
      * Hook into action controller preDispatch() workflow
@@ -92,9 +103,12 @@ abstract class Zend_Controller_Action_Helper_Abstract
      */
     public function getRequest() 
     {
-        return $this->_actionController->getRequest();
-    }
+        if (null === $this->_request) {
+            $this->_request = $this->_actionController->getRequest();
+        }
 
+        return $this->_request;
+    }
 
     /**
      * getResponse() -
@@ -103,9 +117,12 @@ abstract class Zend_Controller_Action_Helper_Abstract
      */
     public function getResponse()
     {
-        return $this->_actionController->getResponse();
+        if (null === $this->_response) {
+            $this->_response = $this->_actionController->getResponse();
+        }
+
+        return $this->_response;
     }
-    
     
     /**
      * getName() 

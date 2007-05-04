@@ -35,9 +35,8 @@ require_once 'Zend/Loader.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-final class Zend_Controller_Action_HelperBroker
+class Zend_Controller_Action_HelperBroker
 {
-   
     /**
      * $_helpers - Helper array
      *
@@ -62,7 +61,6 @@ final class Zend_Controller_Action_HelperBroker
      */
     protected $_actionController;
     
-    
     /**
      * addHelper() - Add helper objects
      *
@@ -75,7 +73,6 @@ final class Zend_Controller_Action_HelperBroker
         self::$_helpers[$helper_name] = $helper;
         return;
     }
-    
     
     /**
      * addPrefix() - Add repository of helpers by prefix
@@ -90,7 +87,6 @@ final class Zend_Controller_Action_HelperBroker
         return;
     }
     
-    
     /**
      * resetHelpers()
      * 
@@ -101,7 +97,6 @@ final class Zend_Controller_Action_HelperBroker
         self::$_helpers = array();
         return;
     }
-    
     
     /**
      * addPath() - Add path to repositories where Action_Helpers could be found.
@@ -127,7 +122,6 @@ final class Zend_Controller_Action_HelperBroker
         return;
     }
 
-       
     /**
      * __construct() -
      *
@@ -142,7 +136,6 @@ final class Zend_Controller_Action_HelperBroker
         }
     }
     
-    
     /**
      * notifyPreDispatch() - called by action controller dispatch method
      *
@@ -155,7 +148,6 @@ final class Zend_Controller_Action_HelperBroker
         }
     }
     
-    
     /**
      * notifyPostDispatch() - called by action controller dispatch method
      *
@@ -167,7 +159,6 @@ final class Zend_Controller_Action_HelperBroker
             $helper->postDispatch();
         }        
     }
-    
     
     /**
      * getHelper() - get helper by name
@@ -238,7 +229,6 @@ final class Zend_Controller_Action_HelperBroker
         throw new Zend_Controller_Action_Exception('Action Helper by name ' . $name . ' not found.');
     }
     
-    
     /**
      * __call()
      *
@@ -257,7 +247,6 @@ final class Zend_Controller_Action_HelperBroker
         throw new Zend_Controller_Action_Exception('Helper "' . $method . '" does not support overloading via direct()');
     }
 
-    
     /**
      * __get()
      *
@@ -268,5 +257,4 @@ final class Zend_Controller_Action_HelperBroker
     {
         return $this->getHelper($name);
     }
-    
 }
