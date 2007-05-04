@@ -1,7 +1,113 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 0.9.2 / 06-Apr-2007=
+=RELEASE 0.9.3 / 04-May-2007 / based on revision 4720 =
+This release resolves the following issues:
+  ZF-1340 Update Zend Introduction documentation
+  ZF-1288 Remove deprecated class Zend.php
+- Zend_Auth
+  ZF-1148 Zend_Auth_Adapter_DbTable getResultRowObject logic error
+- Zend_Cache
+  ZF-1256 Zend/Cache/Backend/ZendPlatform.php missing require_once
+  ZF-1278 small typo in manual
+  ZF-1329 Small typo in Zend_Cache_Backend_Memcached options.
+- Zend_Config
+  ZF-1272 Docblock of __construct from Zend_Config_Ini is incomplete
+- Zend_Controller
+  ZF-1159 route matching part of uri optimization
+  ZF-1201 Generate url in _redirect as Zend_View_Helper_Url or _forward
+  ZF-1211 Notice in Zend/Controller/Router/Route.php
+  ZF-1217 Notices when running Zend_Controller_Router tests
+  ZF-1230 Zend_Controller_Router_Route - URI_DELIMITER as const is limiting
+  ZF-1239 Update Rewrite Router docs to reflect current usage
+  ZF-1251 Zend_Controller_Plugin does not allow postDispatch notification
+  ZF-1281 dispatch() does not render Zend_Controller_Response's exceptions
+  ZF-1291 module "default" not a valid module name but is the default module
+  ZF-1297 Zend_Controller plugins documentation error
+  ZF-1300 Wrong comparison with module/controller/action name
+  ZF-1321 Zend_Controller_Router_Route_Module::assemble() ignores parameter
+  ZF-1323 Zend_Controller_Response doc: $response->sendOutput() doesn't exist
+  ZF-1332 Zend_Controller_Route_Regex assemble working incorrectly
+- Zend_Date
+  ZF-1176 addMonth() produces unexpected results (caused by DST adjustment...)
+  ZF-1238 Docs: Change Zend_Date::MONTH_DIGIT to Zend_Date::MONTH_SHORT
+  ZF-1317 Unit tests for Zend_Date are slow
+- Zend_Db
+  ZF-884  SQLite: associative array result set keys contains correlation names
+  ZF-1060 Some Zend_Db classes do not load Zend_Db class dependency
+  ZF-1204 Support array for $where parameter of update() and delete()
+  ZF-1223 parse error in Zend_Db_Statement_Db2
+  ZF-1229 Examples of multiple terms in WHERE clauses
+  ZF-1268 PDO: support alternate case mappings in describeTable()
+  ZF-1304 Zend_Db_Adapter_StaticTest failures
+  ZF-1311 PDO_OCI: Support connection params in tnsnames.ora 
+- Zend_Db_Adapter_Mysqli
+  ZF-1162 Mysqli driver is handling transactions incorrectly
+- Zend_Db_Adapter_Oracle
+  ZF-1244 Oracle: describeTable() TABLESPACE_NAME Problem
+- Zend_Db_Profiler
+  ZF-1299 Unit tests for Profiler
+- Zend_Db_Table
+  ZF-37   Support multi-column primary keys in Zend_Db_Table
+  ZF-191  Allow setting primary key values when creating/updating rows
+  ZF-858  Zend_Db_Table should cache metadata
+  ZF-859  Zend_Db_Table_Row should UPDATE only columns that have been changed
+  ZF-1131 Fluent interface for Row->setFromArray() method
+  ZF-1140 Support sequences and natural keys on insert()
+  ZF-1166 Rewrite Zend_Db_Table_Row/Rowset manual sections
+  ZF-1185 Table relationships methods return standard Row/Rowset, not custom
+  ZF-1221 Improve Zend_Db_Table_Abstract::fetchRow() docblock for IDE support
+  ZF-1224 wrong array key in Zend_Db_Table_Abstract comment
+  ZF-1270 Error on deleting row with cascading delete
+  ZF-1287 Document Zend_Db_Table_Rowset countable interface
+  ZF-1293 Zend_Db_Table_Rowset_Abstract::exists() is unrelated to Countable
+  ZF-1296 Row and Rowset to provide getTable()
+  ZF-1320 Rowset::current() should return null instead of an error
+  ZF-1334 Remove redundant database query in Zend_Db_Table_Row_Abstract
+  ZF-1336 Change Table::fetchNew() method to createRow(), deprecate fetchNew()
+  ZF-1341 Support _postInsert, _postUpdate, _postDelete hooks for Row
+- Zend_Gdata
+  ZF-1258 Zend/Gdata/CodeSearch.php missing require_once
+  ZF-1259 Zend/Gdata/Spreadsheets.php missing require_once
+- Zend_Locale
+  ZF-772  API method name improvement: toNumberSystem() => convertNumerals()
+- Zend_Log
+  ZF-1220 Stream class used in doc example where Db class should be used
+  ZF-1240 Implement a method to close resources in Zend_Log writers
+  ZF-1242 Mistake in Zend_Log_Formatter code example
+- Zend_Mail / Zend_Mime
+  ZF-1193 Failure in Zend_Mail_MessageTest::testMultipleHeader()
+  ZF-1236 timeout in Zend/Mime.php
+  ZF-1252 Imap: delete message
+- Zend_Pdf
+  ZF-12   Reduce memory footprint of Zend_Pdf streams
+  ZF-1316 Reduce memory footprint of Zend_Pdf for PDF parsing and rendering
+  ZF-1342 Unit tests should be extended to get necessary code coverage
+- Zend_Search_Lucene
+  ZF-1161 Zend_Search_Lucene unit tests
+- Zend_Service_Amazon
+  ZF-1283 Zend_Service_Amazon_OfflineTest Unit Tests Failing
+- Zend_Service_Delicious
+  ZF-1265 Zend/Service/Delicious/Post.php missing require_once
+- Zend_Service_Yahoo
+  ZF-371  Unit Test Coverage to 90%
+  ZF-1255 Zend_Service_Yahoo_NewsResultSet should require_once its parent class
+- Zend_Session
+  ZF-1247 Zend/Session/Exception.php missing require_once
+  ZF-1337 Zend_Session_Namespace does not load its dependencies
+- Zend_Translate
+  ZF-1208 way to escape ";" in Csv Adapter
+  ZF-1319 Zend Translate csv files not correctly interpreted
+- Zend_Uri
+  ZF-1326 Zend_Uri_Http does not validate URIs with '[' or ']' in query string
+- Zend_Validate
+  ZF-1074 Zend_Validate Unit Tests failing
+- Zend_XmlRpc_Server
+  ZF-1227 Mistake into phpdoc of Zend_XmlRpcServer
+- Total of 77 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
+=RELEASE 0.9.2 / 06-Apr-2007 / based on revision 4421 =
 This release resolves the following issues:
 - Zend_Acl
     ZF-1157 Documentation typo in first example code listing
@@ -107,8 +213,10 @@ This release resolves the following issues:
     ZF-1192 Failures and errors in Zend_View unit tests
 - Zend_XmlRpc_Client
     ZF-841  RPC demo broken
+- Total of 81 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.9.1 / 23-Mar-2007=
+=RELEASE 0.9.1 / 23-Mar-2007 / based on revision 4224 =
 This release resolves the following issues:
 - Zend_Loader
     ZF-1089 Document Zend_Loader::autoload()
@@ -131,6 +239,7 @@ This release resolves the following issues:
     ZF-1093 MS SQL Server: use QUOTED_IDENTIFIER
     ZF-1108 describeTableInformationSchema() incorrectly returns columns as primary keys
     ZF-1117 MySQL: describeTableInformationSchema is too slow
+    ZF-1123 Zend_Db_Table_Abstract bug using information schema table to describe tables
 - Zend_Db_Adapter_Mysqli
     ZF-1039 Mysqli: use real_escape_string() for quoting
 - Zend_Db_Select
@@ -138,6 +247,7 @@ This release resolves the following issues:
 - Zend_Db_Table
     ZF-45   Zend_Db_Table::fetchRow() should return NULL for no resulting rows
     ZF-174  Documentation mistake in 'Adding Domain Logic' example
+    ZF-1063 Add Zend_Db_Table_Row methods to find rows in related tables
     ZF-1080 Zend/Db/Table/Row/Abstract.php missing opening <
     ZF-1084 Zend_Db_Table implicit table name feature failing
     ZF-1107 Zend_Db_Table_Abstract->fetchAll: 'rowClass' index typo
@@ -167,8 +277,10 @@ This release resolves the following issues:
     ZF-1094 issue with examples given for accessing Zend_Registry as on object
 - Zend_Session
     ZF-1102 Zend_Session emits warning when save_path not writeable  
+- Total of 44 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.9.0 / 16-Mar-2007=
+=RELEASE 0.9.0 / 16-Mar-2007 / based on revision 4117 =
 This release resolves the following issues:
 - Zend_Acl
     ZF-950  Unclear explanation of multiple inheritance between Roles
@@ -235,12 +347,14 @@ This release resolves the following issues:
     ZF-180  Zend_Db_Table_Row: __get function maps incorrectly to _data
     ZF-190  Make Zend_Db_Rowset, Zend_Db_Row serialisable
     ZF-219  insert() parameter is array reference, so it cannot be an array literal
+    ZF-307  Confusion about inflected versus native in $_cols array
     ZF-445  Name Filter: Column Names in camelCaps not Accessible?
     ZF-554  Inefficient instantiation of Zend_Db_Inflector in Zend_Db_Table
     ZF-557  Unexpected behaviour in Zend_Db_Table->find()
     ZF-572  Notice: Trying to get property of non-object Zend/Db/Table/Row.php
     ZF-619  Zend_Db_Table_Row::toArray() do not camelize the field names
     ZF-627  Schema qualified name will not work with Zend_Db_Table
+    ZF-629  Implement __isset() in Zend_Table_Row class
     ZF-773  Zend_Db_Table_Row needs delete() method
     ZF-956  Support Zend_Db_Expr in Zend_Db_Table_Row
     ZF-962  Zend_Db_Table::insert() has wrong param in docblock
@@ -309,10 +423,10 @@ This release resolves the following issues:
 - Zend_XmlRpc_Client & Server
     ZF-1025 Zend_XmlRpc_Request should not cast incoming XML encoding
     ZF-1027 Zend_XmlRpc_Request_Http should have a getRawRequest() method
-- Total of 109 issues resolved; for a detailed list, see the changelog
+- Total of 118 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.8.0 / 16-Feb-2007=
+=RELEASE 0.8.0 / 16-Feb-2007 / based on revision 3550 =
 This release resolves the following issues:
 - Documentation
     ZF-709 Deleted documentation chapters are not erased in wiki
@@ -489,10 +603,10 @@ This release resolves the following issues:
     ZF-906 $_SESSION might be modified after Zend_Session::writeClose()
 - Zend_XmlRpc_Client / Zend_XmlRpc_Server
     ZF-771 XmlRpc value encoding can cause conflicts with server and client
-- Total of 133 issues resolved; for a detailed list, see the changelog
+- Total of 134 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.7.0 / 18-Jan-2007=
+=RELEASE 0.7.0 / 18-Jan-2007 / based on revision 2899 =
 This release resolves the following issues:
 - Zend.php:
     ZF-35 ZF Version check
@@ -599,10 +713,10 @@ This release resolves the following issues:
     ZF-706 Cannot specify id attribute for hidden fields in 0.6.0
     ZF-727 Loading of helpers is not LIFO
     ZF-752 Wrong error message in Zend_View_Abstract
-- Total of 90 issues resolved; for a detailed list, see the changelog
+- Total of 91 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.6.0 / 16-Dec-2006=
+=RELEASE 0.6.0 / 16-Dec-2006 / based on revision 2410 =
 - Zend_Acl: new architecture (incubator).
 - Zend_Auth: new component (incubator).
 - Zend_Cache_Backend_ZendPlatform: new class (incubator).
@@ -623,10 +737,10 @@ This release resolves the following issues:
 - Zend_Uri: new documentation.
 - Zend_XmlRpc_Client,Server: improvements, documentation, moved to core library.
 - Many improvements to documentation and testing coverage.
-- 124 issues resolved; for a detailed list, see the changelog
+- Total of 124 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.2.0 / 29-Oct-2006=
+=RELEASE 0.2.0 / 29-Oct-2006 / based on revision 1468 =
 - New MVC implementation
 - New HTTP request and response objects make it easy to automate unit
   testing for web apps without a web server, and also make it possible
@@ -641,13 +755,13 @@ This release resolves the following issues:
 - New Session component
 - New Web Services clients for Delicious and Audioscrobbler
 - New Registry component
-- 72 issues resolved; for a detailed list, see the changelog
+- Total of 72 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
-=RELEASE 0.1.5 / 10-Jul-2006=
+=RELEASE 0.1.5 / 10-Jul-2006 / based on revision 892 =
 - release notes can be found in the issue tracker at http://framework.zend.com/issues under the project changelog.
 
-=RELEASE 0.1.4 / 29-Jun-2006=
+=RELEASE 0.1.4 / 29-Jun-2006 / based on revision 757 =
 - Zend_InputFilter moved to Zend_Filter_Input (Mike, Chris)
 - Fixed bug in Zend_Http_Client_File::delete() (Mike, Ralf)
 - Fixed bug in Zend_Pdf_Filter_ASCIIHEX::decode() (Mike, Ralf)
@@ -686,7 +800,7 @@ This release resolves the following issues:
 - Zend_Cache promoted to core library. (admin)
 - Additional release notes from issue tracker: http://framework.zend.com/issues/secure/ReleaseNote.jspa?projectId=10000&styleName=Html&version=10000
 
-=RELEASE 0.1.3 / 18-Apr-2006=
+=RELEASE 0.1.3 / 18-Apr-2006 / based on revision 223 =
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
 - Zend_InputFilter has test* methods for retrieving valid data. (Chris)
 - Fixed bug in Zend_View_Abstract::__isset(). Reported by James Simmons. (Mike)
