@@ -1,6 +1,6 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
-    
+
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
@@ -8,7 +8,7 @@
         </para>
         <para>
             Mögliche Optionen sind :
-        </para>          
+        </para>
         <table>
             <title>Mögliche Optionen</title>
             <tgroup cols="4">
@@ -65,7 +65,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
-                             Level der gehashten Verzeichnis Struktur: 0 heißt "keine gehashte 
+                             Level der gehashten Verzeichnis Struktur: 0 heißt "keine gehashte
                              Verzeichnis Strutur, 1 heißt "ein Level von Verzeichnissen", 2 heißt
                              "zwei Levels"...
                              Diese Option kann den Cache nur dann schneller machen, wenn viele Tausende
@@ -86,7 +86,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>'zend_cache'</code></entry>
                           <entry>
-                          	Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig 
+                          	Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig
                           	umgehen, weil ein zu generischer Wert in einem System Cache Verzeichnis
                           	(wie /tmp) kann beim Löschen des Caches zu großen Problemen führen.
                         </entry>
@@ -173,15 +173,15 @@
                           <entry>
                               Ein Array von Memcached Servern; jeder Memcached Server wird durch ein
                               assoziatives Array beschrieben :
-                              'host' => (string) : Der Name des Memcached Servers, 
-                              'port' => (int) : Der Port des Memcached Servers, 
+                              'host' => (string) : Der Name des Memcached Servers,
+                              'port' => (int) : Der Port des Memcached Servers,
                               'persistent' => (bool) : Persistente Verbindungen für diesen Memcached Server verwenden oder nicht
                           </entry>
                       </row>
                       <row>
                           <entry><code>compression</code></entry>
                           <entry><code>boolean</code></entry>
-                          <entry><code>flase</code></entry>
+                          <entry><code>false</code></entry>
                           <entry>
                              true wenn on-the-fly Kompression verwendet werden soll
                           </entry>
@@ -193,7 +193,7 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_APC</title>
         <para>
-            Dieses Backend speichert Cache Datensätze im Shared Memory durch die 
+            Dieses Backend speichert Cache Datensätze im Shared Memory durch die
             <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternativer PHP Cache) Erweiterung
             (welche natürlich für die Verwendung dieses Backends benötigt wird).
         </para>
@@ -208,13 +208,13 @@
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
         <para>
-            Dieses Backend verwendet die Content Caching API des 
-            <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> Produktes. 
-            Natürlich muss man die Zend Platform installiert haben, um dieses Backend verwenden zu 
+            Dieses Backend verwendet die Content Caching API des
+            <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> Produktes.
+            Natürlich muss man die Zend Platform installiert haben, um dieses Backend verwenden zu
 			können.
         </para>
         <para>
-			Dieses Backend unterstützt Tags, aber nicht den <code>CLEANING_MODE_NOT_MATCHING_TAG</code> 
+			Dieses Backend unterstützt Tags, aber nicht den <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
 			Löschmodus.
         </para>
         <para>

@@ -1,10 +1,13 @@
 <sect1 id="zend.introduction">
     <title>Einführung</title>
     <para>
-    Die Zend Klasse ist die Basisklasse des Zend Frameworks. Diese Klasse wurde entwickelt, um 
-    dem DRY-Prinzip (Don't Repeat Yourself - Wiederhole dich nicht) zu folgen. Sie enthält 
-    nur statische Methoden, welche die Funktionalitäten enthalten, die von den meisten Komponenten 
-    des Zend Framework benötigt werden.
+        Das Zend Framework ist ein qualitativ hochwertiges Open Source Framework für die 
+        Entwicklung von Webanwendungen und Web Sercies mit PHP.
+    </para>
+    <para>
+        Im Sinne des PHP Geistes entwickelt, bietet das Zend Framework einfach anzuwendende
+        und leistungsfähige Funktionalitäten. Es stellt Lösungen bereit, um moderne, 
+        widerstandsfähige und sichere Websites zu erstellen.
     </para>
 </sect1>
 <!--
