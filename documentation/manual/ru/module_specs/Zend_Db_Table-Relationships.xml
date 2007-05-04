@@ -1,6 +1,6 @@
 <sect1 id="zend.db.table.relationships">
 
-    <title>Zend_Db_Table Relationships</title>
+    <title>Связи между таблицами Zend_Db_Table</title>
 
     <sect2 id="zend.db.table.relationships.introduction">
 
@@ -50,10 +50,10 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Accounts</code> (учетные записи) хранит данные по всем
-                    пользователям системы отслеживания ошибок.
+                    <code>Accounts</code> (учетные записи) хранит информацию
+                    о всех пользователях системы отслеживания ошибок.
 <!--
-                    <code>Accounts</code> stores identities of
+                    <code>Accounts</code> stores information about
                     each user of the bug-tracking database.
 -->
                 </para>
@@ -151,14 +151,14 @@ CREATE TABLE bugs (
 
         <para>
             Определите классы для каждой из этих таблиц, расширяя абстрактный
-            класс Zend_Db_Table_Abstract, как описано в разделе <xref
+            класс Zend_Db_Table_Abstract, как описано в <xref
             linkend="zend.db.table.defining" />. В классах объявите связи между
             таблицами в массивах <code>protected $_referenceMap</code>
             и <code>protected $_dependentTables</code>.
 <!--
             Define classes for each of these tables, extending the abstract
-            class Zend_Db_Table_Abstract, as described in the
-            section <xref linkend="zend.db.table.defining" />.
+            class Zend_Db_Table_Abstract, as described in
+            <xref linkend="zend.db.table.defining" />.
             In the class file for each child table, declare the reference
             relationships in the <code>protected $_referenceMap</code>
             and <code>protected $_dependentTables</code>
@@ -169,7 +169,7 @@ CREATE TABLE bugs (
         <para>
             Ниже приведено определение классов для этих таблиц:
 <!--
-            Below is the PHP class definitions for these tables:
+            Below are the PHP class definitions for these tables:
 -->
         </para>
 
@@ -194,14 +194,14 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name            = 'bugs';
     protected $_referenceMap    = array(
         'Reporter' => array(
-            'columns'           => array('reported_by'),
+            'columns'           => 'reported_by',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Engineer' => array(
-            'columns'           => array('assigned_to'),
+            'columns'           => 'assigned_to',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => 'account_id'
         ),
         'Verifier' => array(
             'columns'           => array('verified_by'),
@@ -293,10 +293,10 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">columns</emphasis> =>
-                    Массив строк, в котором перечислены имена столбцов внешних
-                    ключей в зависимой таблице.
+                    Строка или массив строк, в котором перечислены имена
+                    столбцов внешних ключей в зависимой таблице.
 <!--
-                    An array of strings, naming the foreign key column name(s)
+                    A string or an array of strings naming the foreign key column name(s)
                     in the dependent table.
 -->
                 </para>
@@ -345,11 +345,11 @@ class Bugs extends Zend_Db_Table_Abstract
             <listitem>
                 <para>
                     <emphasis role="strong">refColumns</emphasis> =>
-                    Массив строк, в котором перечислены имена столбцов первичных
-                    ключей в родительской таблице.
+                    Строка или массив строк, в котором перечислены имена
+                    столбцов первичного ключа в родительской таблице.
 <!--
                     <emphasis role="strong">refColumns</emphasis> =>
-                    An array of strings, naming primary key column names in
+                    A string or an array of strings naming the primary key column name(s) in
                     the parent table.
 -->
                 </para>
@@ -385,13 +385,13 @@ class Bugs extends Zend_Db_Table_Abstract
                 <para>
                     <emphasis role="strong">onDelete</emphasis> =>
                     Правило для действия, выполняемого, когда в родительской
-                    таблице удаляется строка. См. раздел "<xref
-                    linkend="zend.db.table.relationships.cascading" />".
+                    таблице удаляется строка. За более подробной информацией см.
+                    "<xref linkend="zend.db.table.relationships.cascading" />".
 <!--
                     The rule for an action to execute if a row is
                     deleted in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    See "<xref linkend="zend.db.table.relationships.cascading" />" for
+                    more information.
 -->
                 </para>
             </listitem>
@@ -400,14 +400,14 @@ class Bugs extends Zend_Db_Table_Abstract
                     <emphasis role="strong">onUpdate</emphasis> =>
                     Правило для действия, выполняемого, когда изменяются
                     значения в столбцах первичного ключа родительской таблицы.
-                    См. раздел "<xref
-                    linkend="zend.db.table.relationships.cascading" />".
+                    За более подробной информацией см.
+                    "<xref linkend="zend.db.table.relationships.cascading" />".
 <!--
                     <emphasis role="strong">onUpdate</emphasis> =>
                     The rule for an action to execute if values in
                     primary key columns are updated in the parent table.
-                    See the "<xref linkend="zend.db.table.relationships.cascading" />"
-                    section.
+                    See "<xref linkend="zend.db.table.relationships.cascading" />" for
+                    more information.
 -->
                 </para>
             </listitem>
@@ -464,7 +464,7 @@ $row->findDependentRowset($table, [$rule])
         <example id="zend.db.table.relationships.fetching.dependent.example">
             <title>Извлечение зависимых строк<!--Fetching a Dependent Rowset--></title>
             <para>
-                Этот пример демонстрирует получение объекта Row из таблицы
+                Этот пример демонстрирует получение объекта строки из таблицы
                 <code>Accounts</code> и поиск ошибок в таблице
                 <code>Bugs</code>, о которых сообщил данный пользователь.
 <!--
@@ -518,7 +518,7 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
         <example id="zend.db.table.relationships.fetching.dependent.example-by">
             <title>Извлечение зависимых строк по определенному правилу<!--Fetching a Dependent Rowset By a Specific Rule--></title>
             <para>
-                Этот пример демонстрирует получение объекта Row из таблицы
+                Этот пример демонстрирует получение объекта строки из таблицы
                 <code>Accounts</code> и поиск ошибок в таблице
                 <code>Bugs</code>, устранение которых назначено данному
                 пользователю. Ключ правила, соответствующий этой связи в данном
@@ -548,7 +548,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
             специальный механизм, называемый "магический метод".
             Zend_Db_Table_Row_Abstract вызывает метод:
             <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>,
-            если вы вызываете метод объекта Row,
+            если вы вызываете метод объекта строки,
             соответствующий одному из следующих шаблонов:
 <!--
             Alternatively, you can query rows from a dependent table using
@@ -575,12 +575,12 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 
         <para>
             В этих шаблонах <code>&lt;TableClass&gt;</code> и
-            <code>&lt;Rule&gt;()</code> являются именем класса зависимой таблицы
+            <code>&lt;Rule&gt;</code> являются именем класса зависимой таблицы
             и ключом правила зависимой таблицы, ссылающегося на родительскую
             таблицу.
 <!--
             In the patterns above, <code>&lt;TableClass&gt;</code> and
-            <code>&lt;Rule&gt;()</code> are strings that correspond
+            <code>&lt;Rule&gt;</code> are strings that correspond
             to the class name of the dependent table, and the dependent
             table's rule key that references the parent table.
 -->
@@ -1343,7 +1343,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 <emphasis role="strong">Каскадные операции, вызываемые
-                Zend_Db_Table, не являются элементарными.</emphasis>
+                Zend_Db_Table, не являются атомарными.</emphasis>
 <!--
                 <emphasis role="strong">Cascading operations invoked by Zend_Db_Table are not atomic.</emphasis>
 -->
@@ -1373,7 +1373,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 Каскадное удаление меньше страдает от проблем нарушения
                 ссылочной целостности. Вы можете удалить зависимые строки в
-                неэлементарном действии до удаления родительской строки, на
+                неатомарном действии до удаления родительской строки, на
                 которую они ссылаются.
 <!--
                 Cascading <code>DELETE</code> suffers less from the
@@ -1384,7 +1384,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                Тем не менее, неэлементарность операций изменения и удаления в
+                Тем не менее, неатомарность операций изменения и удаления в
                 БД приводит к тому, что есть риск того, что другой пользователь
                 БД будет видеть противоречивые данные. Например, если вы удалите
                 строку и все зависимые строки, то есть небольшая вероятность
@@ -1410,7 +1410,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                Проблема неэлементарных измнений может быть частично решена
+                Проблема неатомарных измнений может быть частично решена
                 использованием транзакций для изолирования ваших изменений. Но
                 некоторые СУРБД не поддерживают транзакции или позволяют
                 клиентам читать "грязные" изменения в БД, которые не были еще
