@@ -34,6 +34,18 @@ class Zend_Pdf_Element_StreamTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($streamObj->getType(), Zend_Pdf_Element::TYPE_STREAM);
     }
 
+    public function testValueAccess()
+    {
+        $streamObj = new Zend_Pdf_Element_Stream("some text (\x00\x01\x02)\n");
+        $this->assertEquals($streamObj->value->getRef(), "some text (\x00\x01\x02)\n");
+
+        $valueRef = &$streamObj->value->getRef();
+        $valueRef = "another text (\x02\x03\x04)\n";
+        $streamObj->value->touch();
+
+        $this->assertEquals($streamObj->value->getRef(), "another text (\x02\x03\x04)\n");
+    }
+
     public function testToString()
     {
         $streamObj = new Zend_Pdf_Element_Stream("some text (\x00\x01\x02)\n");

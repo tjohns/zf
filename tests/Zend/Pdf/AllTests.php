@@ -6,6 +6,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Zend/Pdf/ProcessingTest.php';
+require_once 'Zend/Pdf/DrawingTest.php';
+
 require_once 'Zend/Pdf/Element/AllTests.php';
 
 class Zend_Pdf_AllTests
@@ -18,6 +21,9 @@ class Zend_Pdf_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Pdf');
+
+        $suite->addTestSuite('Zend_Pdf_ProcessingTest');
+        $suite->addTestSuite('Zend_Pdf_DrawingTest');
 
         $suite->addTest(Zend_Pdf_Element_AllTests::suite());
 
