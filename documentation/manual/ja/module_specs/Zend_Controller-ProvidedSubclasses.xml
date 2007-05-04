@@ -201,40 +201,69 @@ $router->addRoute(
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
-            <title>基本的なルーティング</title>
+            <title>基本的な RewriteRouter の操作法</title>
 
             <para>
                 RewriteRouter で最も重要なのが、ユーザ定義のルーティングです。
-                これは、RewriteRouter の addRoute メソッドをコールして作成します。
-                このメソッドに、<code>Zend_Controller_Router_Route</code>
-                の新しいインスタンスを渡します。
+                これは、RewriteRouter の addRoute メソッドをコールして追加します。
+                このメソッドに、<code>Zend_Controller_Router_Route_Interface</code>
+                を実装したクラスの新しいインスタンスを渡します。
             </para>
 
             <programlisting role="php"><![CDATA[
 $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
             <para>
-                最初のパラメータがこのルートの名前です。現在は多少冗長性が残ってしまっていますが、
-                将来は、URL ビューヘルパーの中でこれを使用し、ビュー内で簡単に
-                URL を生成できるようになる予定です。
-                ここで定義したルートを使用する方法も知っておく必要があるでしょう。
-                事前に定義したルートを取得するには、RewriteRouter の getRoute
-                メソッドを使用します。二番目のパラメータは、
-                <code>Zend_Controller_Router_Route</code> のインスタンスです。
+                Rewrite ルータには、4 種類の基本的なルーティング方式があります
+                (そのうちのひとつは特別なものです)。
+            </para>
+
+            <itemizedlist mark="opencircle">
+                <listitem><para><xref linkend="zend.controller.providedsubclasses.rewriterouter.standard-routes" /></para></listitem>
+                <listitem><para><xref linkend="zend.controller.providedsubclasses.rewriterouter.static-routes" /></para></listitem>
+                <listitem><para><xref linkend="zend.controller.providedsubclasses.rewriterouter.regex-routes" /></para></listitem>
+                <listitem><para><xref linkend="zend.controller.providedsubclasses.rewriterouter.default-routes" /> *</para></listitem>
+            </itemizedlist>
+            
+            <para>
+                これらのルーティングは、チェインやユーザ定義のルーティング方式を作成する際に何度も使用します。
+                任意の設定でお好みの数のルーティングを使用することができますが、
+                Module ルートだけは例外です。これを使用するのは一度だけで、
+                もっとも汎用的なルート (デフォルト) として使用します。
+                個々のルーティング方式については、後ほど詳細に説明します。
             </para>
 
             <para>
-                <code>Zend_Controller_Router_Route</code> のコンストラクタの最初のパラメータは、
-                その URL に関連付けるルートです。
-                例えば、上の例で示したルートは <code>http://example.com/user/martel</code>
-                に対応します。ルート内のコロンは URL 変数を意味します。ルーティングに成功すると、
-                これらの変数は Zend_Controller_Request に注入されます。
-                その後は Zend_Controller_Request::getParam や
-                Zend_Controller_Action::_getParam メソッドでアクセスできるようになります。
-                今回の例では、username という名前のパラメータに
-                'martel' という値が設定されます。
+                addRoute への最初のパラメータはルートの名前です。
+                これを使用して、ルータがルートを処理します。
+                たとえば URL の生成などに使用します。
+                二番目のパラメータはルート自身となります。
             </para>
 
+            <note>
+                <para>
+                    ルート名のもっとも一般的な使用例は、
+                    Zend_View の url ヘルパーです。
+                </para>
+                    
+                <programlisting role="php"><![CDATA[
+<a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]></programlisting>
+
+                <para>
+                    これは <code>user/martel</code> へのリンクとなります。
+                </para>
+
+            </note>
+
+            <para>
+                ルーティング処理は、定義されたすべてのルートから
+                リクエスト URI にマッチする定義を探すことによって行います。
+                マッチするものが見つかれば、ルートのインスタンスから変数の値が返され、
+                それを Zend_Controller_Request オブジェクトに注入します。
+                これを、後にディスパッチャやユーザが作成したコントローラで使用します。
+                マッチするものが見つからない場合は、チェイン内の次のルートを調べます。
+            </para>
+                
             <note>
                 <title>定義の順番</title>
                 <para>
@@ -244,25 +273,17 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </note>
 
             <note>
-                <title>許可される文字</title>
-                <para>
-                    現在の実装では、変数の識別子としてスラッシュ (/)
-                    以外のあらゆる文字を使用可能ですが、できるだけ PHP
-                    の変数で使用可能な範囲の文字のみを使用することを強く推奨します。
-                    この実装は将来変更される予定ですので、(PHP
-                    の変数で使用できない文字を用いていると)
-                    バグを引き起こす可能性があります。
-                </para>
+                <title>返される値</title>
+                ルーティングの結果返される値は、URL パラメータあるいは
+                ユーザ定義のルータのデフォルト値です。これらの値は、後ほど
+                Zend_Controller_Request::getParam あるいは Zend_Controller_Action::_getParam
+                メソッドでアクセスできます。
             </note>
 
             <para>
-                ルートで使用される変数のうち、':controller' および ':action'
-                のふたつは特別な扱いとなります。これらの特殊変数は、URL から
-                コントローラとアクションを決定するために使用されます。
-                ':action' 変数は、そのルートあるいはデフォルトパラメータとして
-                常に定義されていなければなりません。
-                ':controller' 変数がもし定義されていない場合は、デフォルト値として
-                IndexController が使用されます。
+                ルートで使用される変数のうち、'module'、'controller' および 'action'
+                の 3 つは特別な扱いとなります。これらの特殊変数は、Zend_Controller_Dispatcher
+                がディスパッチ先のコントローラとアクションを決定するために使用されます。
             </para>
 
             <note>
@@ -274,152 +295,55 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
                 </para>
             </note>
 
-            <programlisting role="php"><![CDATA[
-$router->addRoute(
-    'user', new Zend_Controller_Router_Route(':controller/:action')
-);]]></programlisting>
-
-            <para>
-                このルートが定義されているときにブラウザで
-                'http://example.com/news/latest' を選択すると、
-                <code>Zend_Controller_Dispatcher</code> は NewsController クラスの
-                latestAction を起動します。
-            </para>
-
         </sect3>
-
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.variable-defaults">
-            <title>変数のデフォルト値</title>
-
-            <para>
-                ルートの中の変数には、すべてデフォルト値を設定することができます。
-                デフォルト値を設定するには、<code>Zend_Controller_Router_Route</code>
-                のコンストラクタの二番目のパラメータを使用します。
-                このパラメータは配列形式となります。配列のキーに変数名、
-                そのキーに対応する値としてデフォルト値を設定します。
-            </para>
-
-            <programlisting role="php"><![CDATA[
-$router->addRoute(
-    'archive', new Zend_Controller_Router_Route('archive/:year', array('year' => 2006))
-);]]></programlisting>
-
-            <para>
-                ちょっとわかりにくいかもしれませんが、このルートは例えば
-                'http://example.com/archive/2005' および
-                'http://example.com/archive' にマッチします。後者の場合、変数 year
-                の値は 2006 となります。
-            </para>
-
-            <para>
-                上の例は、単に year 変数の内容をリクエストに注入するだけのものです。
-                コントローラやアクションを設定していないので、ルーティングは行われません。
-                この例が使い物になるようにするには、
-                コントローラとアクションのデフォルト値を設定しなければなりません。
-            </para>
-
-            <programlisting role="php"><![CDATA[
-$router->addRoute(
-    'archive',
-    new Zend_Controller_Router_Route('archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show')
-);]]></programlisting>
-
-            <para>
-                このルートは、ArchiveController の showAction を実行します。
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.variable-requirements">
-            <title>変数の制限</title>
-
-            <para>
-                <code>Zend_Controller_Router_Route</code> に三番目のパラメータを追加し、
-                変数に関する制限事項を設定することができます。
-                この制限は、正規表現で設定します。
-            </para>
-
-            <programlisting role="php"><![CDATA[
-$router->addRoute(
-    'archive',
-    new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'))
-);]]></programlisting>
-
-            <note>
-                <title>ルートのマッチング</title>
-                <para>
-                    Ruby on Rails とは異なり、ZF の RewriteRouter は
-                    三番目のパラメータの制限を満たさない場合にもルートにマッチし、
-                    デフォルト値を使用するようになっています。
-                    そのため、URL 'http://example.com/archive/test' は上のルートにマッチし、
-                    year は 2006 に設定されます。この機能は将来変更される予定で、
-                    このマニュアルを書いている時点ではまだ議論中です。
-                </para>
-            </note>
-
-        </sect3>
-
-        <sect3 id="zend.controller.providedsubclasses.rewriterouter.rewritebase">
-            <title>ベース URL およびサブディレクトリ</title>
-
-            <para>
-                Rewrite ルータはサブディレクトリ内でも使用可能です。
-                ベース URL の自動検出が <code>Zend_Controller_Request_Http</code>
-                によって行われます。
-            </para>
-
-            <para>
-                ベース URL の検出に失敗する場合は、
-                <code>Zend_Controller_Request_Http</code> のメソッド <code>setBaseUrl()</code>
-                を使用してベースパスを上書き指定することができます
-                (<xref linkend="zend.controller.providedsubclasses.request.http.baseurl" /> を参照ください)。
-            </para>
-
-        </sect3>
-
+        
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.default-routes">
             <title>デフォルトのルート</title>
 
             <para>
-                Zend_Controller_Router_Rewrite では、デフォルトのルートがひとつ事前に定義されています。
-                これは <code>'controller/action'</code> 形式の URI にマッチします。
-                さらに、モジュール名を最初のパス要素として指定することができます。これにより、
-                <code>'module/controller/action</code> 形式の URI が使用できます。
-                また、URI に追加されたパラメータにもデフォルトでマッチします。
+                Zend_Controller_Router_Rewrite がデフォルトのルートとして設定されています。
+                これは <code>controller/action</code> 形式の URI にマッチします。
+                さらに、パス要素の最初の部分にモジュール名を指定することができます。つまり
+                <code>module/controller/action</code> のような URI も可能です。
+                また、URI にパラメータを追加した形式、つまり
+                <code>controller/action/var1/value1/var2/value2</code>
+                のような URI にもデフォルトで対応しています。
             </para>
 
             <para>
-                ルートがどのようにマッチするのか、例を見てみましょう。
+                ルータのマッチ処理についての例を示します。
             </para>
 
             <programlisting role="php"><![CDATA[
-// 以下のようになっているものとします
-// $ctrl->setControllerDirectory(array(
-//     'default' => '/path/to/default/controllers',
-//     'news'    => '/path/to/blog/controllers',
-//     'blog'    => '/path/to/blog/controllers'
-// ));
+// 以下の設定を前提とします
+$ctrl->setControllerDirectory(
+    array(
+        'default' => '/path/to/default/controllers',
+        'news'    => '/path/to/blog/controllers',
+        'blog'    => '/path/to/blog/controllers'
+    )
+);
 
-モジュールのみ:
+モジュールのみ
 http://example/news
     module == news
 
-無効なモジュールとコントローラとの対応:
+無効なモジュール名は、コントローラ名として扱われます
 http://example/foo
     controller == foo
 
-モジュール + コントローラ:
+モジュール + コントローラ
 http://example/blog/archive
     module     == blog
     controller == archive
 
-モジュール + コントローラ + アクション:
+モジュール + コントローラ + アクション
 http://example/blog/archive/list
     module     == blog
     controller == archive
     action     == list
 
-モジュール + コントローラ + アクション + パラメータ:
+モジュール + コントローラ + アクション + パラメータ
 http://example/blog/archive/list/sort/alpha/date/desc
     module     == blog
     controller == archive
@@ -429,42 +353,233 @@ http://example/blog/archive/list/sort/alpha/date/desc
 ]]></programlisting>
 
             <para>
-                デフォルトのルータは、
-                <code>Zend_Controller_Router_Route_Module</code>
-                オブジェクトに何も設定せずに作成したインスタンスです。
+                デフォルトのルートは、<code>Zend_Controller_Router_Route_Module</code>
+                オブジェクトを 'default' という名前 (インデックス) で
+                RewriteRouter に保存したものです。
+                これは、以下のようにして作成します。
             </para>
 
             <programlisting role="php"><![CDATA[
-// ルータ v1 との互換性のためのルート
-$compat = new Zend_Controller_Router_Route_Module();
+$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
 $this->addRoute('default', $compat);]]></programlisting>
 
-            <note>
-                <title>マッチする URI</title>
-                <para>
-                    <code>Zend_Controller_Router_Rewrite</code> は、過去との互換性を考慮して設定されています。
-                    <code>controller/action</code> 形式の URI
-                    にパラメータが付加されたパターンにも自動的にマッチします。
-                    デフォルト値や必須値を持っている限り、
-                    パラメータを付加したからといって新しいルートを追加する必要はありません。
-                    これらの追加パラメータにアクセスするには
-                    <code>Zend_Controller_Action::_getParam()</code> メソッドを使用します。
-                </para>
-            </note>
-
             <para>
-                デフォルトのルートを使用したくない場合は、
-                <code>removeDefaultRoutes()</code> で削除します。
+                このデフォルトルートが不要な場合は、独自の 'デフォルト' ルートで上書きします
+                (つまり、'default' という名前で保存します)。
+                あるいは、<code>removeDefaultRoutes()</code>
+                で削除することもできます。
             </para>
 
             <programlisting role="php"><![CDATA[
-// 互換性のためのデフォルトルートを削除します
+// すべてのデフォルトルートを削除します
 $router->removeDefaultRoutes();]]></programlisting>
 
         </sect3>
 
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.rewritebase">
+            <title>ベース URL およびサブディレクトリ</title>
+
+            <para>
+                Rewrite ルータはサブディレクトリ
+                (例. <code>http://domain.com/~user/application-root/</code>>)
+                内でも使用可能です。この場合、アプリケーションのベース URL
+                (<code>/~user/application-root</code>) の自動検出が
+                <code>Zend_Controller_Request_Http</code> によって行われ、適切に使用されます。
+            </para>
+
+            <para>
+                ベース URL の検出に失敗する場合は、
+                <code>Zend_Controller_Request_Http</code> のメソッド <code>setBaseUrl()</code>
+                を使用してベースパスを上書き指定することができます
+                (<xref linkend="zend.controller.providedsubclasses.request.http.baseurl" /> を参照ください)。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$request->setBaseUrl(/~user/application-root/);]]></programlisting>
+
+        </sect3>
+        
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.standard-routes">
+            <title>Zend_Controller_Router_Route</title>
+            
+            <para>
+            <code>Zend_Controller_Router_Route</code> はフレームワークの標準のルートです。
+            簡単に利用でき、柔軟なルート定義が可能です。各ルートには、まず
+            (静的および動的な) URL のマッピングが含まれ、
+            そしてデフォルト値および変数についての制限を指定して初期化します。
+            </para>
+            
+            <para>
+                とある架空のアプリケーションで、コンテンツの作者情報のページが必要になったとしましょう。
+                ブラウザで <code>http://domain.com/author/martel</code>
+                にアクセスした際に、"martel" とかいう人についての情報を見たいわけです。
+                この機能を実現するためのルートは、次のようになります。
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+             'author/:username', 
+             array('controller' => 'profile', 'action' => 'userinfo')
+         );
+
+$router->addRoute('user', $route);]]></programlisting>            
+
+            <para>
+                <code>Zend_Controller_Router_Route</code>
+                のコンストラクタの最初のパラメータは、ルートの定義です。
+                これを URL にマッチさせます。ルート定義は静的な部分と動的な部分で構成され、
+                それをスラッシュ ('/') で連結します。
+                動的な部分を変数と予備、変数名の前にコロンをつけて
+                (例. <code>:username</code>) 表します。
+                静的な部分は単なるテキスト (例. <code>author</code>) です。
+            </para>
+
+            <note>
+                <title>文字の使用法</title>
+                <para>
+                    現在の実装では、(スラッシュ以外の)
+                    任意の文字を変数名として使用できます。しかし、
+                    PHP の変数名として使用できる文字だけを用いることを強く推奨します。
+                    このようにしておくことで、
+                    将来実装が変更されたときにバグを引き起こす可能性を抑えられます。
+                </para>
+            </note>
+
+            <para>
+                この例のルートは、ブラウザで
+                <code>'http://domain.com/author/martel'</code> を指した際にマッチします。
+                この場合、すべての変数の値が <code>Zend_Controller_Request</code>
+                オブジェクトに注入され、ProfileController からアクセスできるようになります。
+                この例が返す変数は、以下のようなキーと値のペアを持つ配列となります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = array(
+  'username' => 'martel',
+  'controller' => 'profile',
+  'action' => 'userinfo'
+);]]></programlisting>            
+
+            <para>
+                その後、<code>Zend_Controller_Dispatcher</code> は
+                (デフォルトモジュールの) ProfileController クラスにある
+                userinfoAction メソッドを実行します。変数にアクセスするには、
+                Zend_Controller_Action::_getParam あるいは Zend_Controller_Request::getParam
+                メソッドを使用します。
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+public function userinfoAction() 
+{
+    $request = $this->getRequest();
+    $username = $request->getParam('username');
+    
+    $username = $this->_getParam('username');
+}
+]]></programlisting>    
+
+            <para>
+                ルート定義には、特殊文字 (ワイルドカード)
+                を含めることができます。これは '*' 記号で表します。
+                これを使用して、Module ルートと同様にパラメータを扱う
+                (変数名 => 値 のペアを URI で定義する) ことができます。
+                次のルートは、Module ルートの挙動をまねたものです。
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(':controller/:action/*');
+$router->addRoute('default', $route);]]></programlisting>            
+            
+
+        <sect4 id="zend.controller.providedsubclasses.rewriterouter.variable-defaults">
+            <title>変数のデフォルト</title>
+
+            <para>
+                ルートで使用するすべての変数についてデフォルト値を指定することができます。
+                これは、 <code>Zend_Controller_Router_Route</code>
+                のコンストラクタの 2 番目のパラメータで指定します。
+                このパラメータは、変数名をキーとする配列で、
+                対応する値にそのデフォルト値を指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+             'archive/:year', 
+             array(
+                 'year' => 2006
+             )
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+
+            <para>
+                上のルートは <code>'http://domain.com/archive/2005'</code> および
+                <code>'http://example.com/archive'</code> 
+                のような URL にマッチします。後者の場合、変数 year にはデフォルト値である
+                2006 が設定されます。
+            </para>
+
+            <para>
+                この例は、year 変数をリクエストオブジェクトに注入することになります。
+                そしてルーティング情報が存在しない
+                (コントローラやアクションのパラメータが定義されていない) ので、
+                アプリケーションはデフォルトのコントローラのデフォルトアクションメソッド
+                (ともに <code>Zend_Controller_Dispatcher_Abstract</code> で定義されています)
+                にディスパッチします。より使いやすくするには、
+                ルートのデフォルトとしてコントローラとアクションを定義しておく必要があります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+             'archive/:year', 
+             array(
+                 'year' => 2006, 
+                 'controller' => 'archive',
+                 'action' => 'show'
+             )
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+
+            <para>
+                このルートは、ArchiveController の showAction を実行します。
+            </para>
+
+        </sect4>
+
+        <sect4 id="zend.controller.providedsubclasses.rewriterouter.variable-requirements">
+            <title>変数の制約</title>
+
+            <para>
+                <code>Zend_Controller_Router_Route</code> のコンストラクタの
+                三番目のパラメータで、変数の制約を指定することができます。
+                これは、正規表現で指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+             'archive/:year', 
+             array(
+                 'year' => 2006, 
+                 'controller' => 'archive',
+                 'action' => 'show'
+             ),
+             array('year' => '\d+')
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+
+        </sect4>
+
+        <para>
+            上の例のルートでは、year 変数の値が数値データである場合にのみ
+            Rewrite ルータにマッチします。つまり
+            <code>http://domain.com/archive/2345</code> はマッチしますが
+            <code>http://example.com/archive/test</code> はマッチしません。
+            この場合はチェイン内の次のルートに処理を移します。
+        </para>
+
+        </sect3>        
+
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
-            <title>静的なルート</title>
+            <title>Zend_Controller_Router_Route_Static</title>
 
             <para>
                 これまでの例では、すべて動的なルートを使用していました。
@@ -475,120 +590,252 @@ $router->removeDefaultRoutes();]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$loginRoute = new Zend_Controller_Router_Route_Static('login', array('controller' => 'login', 'action' => 'form'));
-$router->addRoute('login', $loginRoute);
-]]></programlisting>
+$route = new Zend_Controller_Router_Route_Static(
+             'login', 
+             array('controller' => 'auth', 'action' => 'login')
+         );
+$router->addRoute('login', $route);]]></programlisting>
+
+        <para>
+            上のルートは <code>http://domain.com/login</code> という URL
+            にマッチします。
+        </para>
+        
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.regex-routes">
-            <title>正規表現のルート</title>
+            <title>Zend_Controller_Router_Route_Regex</title>
 
             <para>
                 デフォルトのルートや静的なルートに加えて、正規表現によるルートも使用可能です。
                 このルートは他のものに比べてより強力で柔軟なものですが、
-                多少パフォーマンスは低下します。これは PCRE エンジンを使用していることが原因です。
+                多少複雑になってしまいます。そして、より高速になります。
             </para>
 
             <para>
-                <code>Zend_Controller_Router_Route_Regex</code>
-                は正規表現をもとにしたルートを提供します。これは rewrite
-                ルータと組み合わせて使用します。いくつかの例を見てみましょう。
+                標準のルートと同様、このルートを初期化する際にはルートの定義とデフォルトを指定する必要があります。
+                サンプルとして、archive ルートを作成してみましょう。
+                これは先ほど定義してものとほぼ同じですが、今回は Regex ルートを使用しています。
             </para>
-
-            <itemizedlist>
-                <listitem><para>
-                    <code>#</code> を区切り文字として使用します。つまり、
-                    スラッシュ ('/') をエスケープする必要はありませんが、
-                    ハッシュ文字 ('#') はエスケープしなければなりません。
-                </para></listitem>
-
-                <listitem><para>
-                    行頭と行末を表す文字 (それぞれ '^' および '$')
-                    が、すべての式の前後に自動的に付加されます。
-                    したがって、これらは正規表現で指定する必要はありません。
-                    またこれは、URL 全体にマッチする式を書かなければならないということも意味します。
-                    たとえば、指定した URL 'http://example.com/foo/bar/baz/bat'
-                    を 'foo/bar' でマッチさせたければ、
-                    'foo/bar(/.*)?' のように書かなければなりません。
-                </para></listitem>
-
-                <listitem><para>
-                    最初と最後のスラッシュを取り除いてからマッチングを行います。
-                    その結果、URL "http://example.com/foo/bar/"
-                    は "foo/bar" でマッチするようになります。
-                </para></listitem>
-            </itemizedlist>
-
-            <para>
-                正規表現を使用する利点のひとつに、
-                マッチした要素を取得して後で再利用できることがあります。
-                <code>Zend_Controller_Router_Regex_Route</code>
-                は、二通りの方法でこれを使用できます。以下に例を示します。
-            </para>
-
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        リクエストオブジェクトのパラメータとして、
-                        「インデックス (integer) =&gt; マッチした内容」
-                        形式で設定します。
-                    </para>
-
-                    <programlisting role="php"><![CDATA[<?php
-// パスの /foo/bar 以降の部分が、リクエストオブジェクトの
-// キー '1' として取得できます
+            
+            <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'foo/bar(/.*)?', 
-    array('controller' => 'foo', 'action' => 'bar')
-);
-
-// ルーティングの後で、
-$fooPath = $request->getParam('1');
-]]></programlisting>
-                </listitem>
-
-                <listitem>
-                    <para>
-                        ルートのコンストラクタの三番目の引数としてマップを渡し、
-                        インデックスに対応するパラメータのキーを指定します。
-                    </para>
-
-                    <programlisting role="php"><![CDATA[<?php
-// パスの /foo/bar 以降の部分を、リクエストのキー 'fooPath' に格納します
-$route = new Zend_Controller_Router_Route_Regex(
-    'foo/bar(/.*)?', 
-    array('controller' => 'foo', 'action' => 'bar'),
-    array(1 => 'fooPath')
-);
-]]></programlisting>
-                </listitem>
-            </itemizedlist>
-
+             'archive/(\d+)', 
+             array(
+                 'controller' => 'archive',
+                 'action' => 'show'
+             )
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+            
             <para>
-                正規表現のルートをルータで使用する例を示します。
+                定義された正規表現のパターンが、リクエストオブジェクトに注入されます。
+                上の例では、<code>http://domain.com/archive/2006</code>
+                がマッチした後の結果の値は次のような配列になります。
             </para>
 
             <programlisting role="php"><![CDATA[
-// http://example.com/blog/archive/01-Using_the_Regex_Router.html
-// のような url でブログの過去記事を閲覧します。ここで
-// '01' の部分がキー 'id'、そして 'Using_the_Regex_Router' の部分がキー 'title' となります。
-$blogArchive = new Zend_Controller_Router_Route_Regex(
-    'blog/archive/(\d+)-(.*)\.html',
-    array('controller' => 'blog', 'action' => 'view'), 
-    array(1 => 'id', 2 => 'title')
-);
-$router->addRoute('blogArchive', $blogArchive);
+$values = array(
+  1 => '2006',
+  'controller' => 'archive',
+  'action' => 'show'
+);]]></programlisting>            
 
-// http://example.com/news/1193328
-// のような url でニュースを閲覧します。ここで
-// '1193328' の部分がキー 'id' となります。
-$newsItem = new Zend_Controlelr_Router_Route_Regex(
-    'news/(\d+)',
-    array('controller' => 'news', 'action' => 'view'),
-    array(1 => 'id')
-);
-$router->addRoute('newsItem', $newsItem);
+            <note>
+                <para>
+                    ルータとのマッチングを行う前に、URL の先頭と最後のスラッシュは取り除かれます。
+                    結果として、URL <code>http://domain.com/foo/bar/</code>
+                    は正規表現 <code>foo/bar</code> にマッチすることになります。
+                </para>
+            </note>
+
+            <note>
+                <para>
+                    行頭と行末を表す文字 (それぞれ '^' および '$')
+                    が、すべての式の前後に自動的に付加されます。
+                    したがって、これらは正規表現で指定する必要はありません。
+                </para>
+            </note>
+
+            <note>
+                <para>
+                    このルートクラスは、区切り文字として <code>#</code> を使用します。
+                    つまり、ルート定義の中にハッシュ文字 ('#')
+                    がある場合は、それをエスケープする必要があるということです。
+                    しかし、この文字 (アンカー) は通常はウェブサーバに渡されることはないので、
+                    エスケープが必要になることはまずないでしょう。
+                </para>
+            </note>
+
+            <para>
+                定義されたサブパターンの内容は、通常通りの方法で取得できます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+public function showAction() 
+{
+    $request = $this->getRequest();
+    $year = $request->getParam(1); // $year = '2006';
+}
+]]></programlisting>    
+
+            <note>
+                <para>このキーは、文字列 ('1') ではなく数値の 1 であることに注意しましょう。</para>
+            </note>
+            
+            <para>
+                このルートは、標準のルートとまったく同様に動作するわけではありません。
+                'year' のデフォルトが設定されていないからです。
+                また、year のデフォルトを設定してこれをオプション扱いにしたとしても、
+                最後のスラッシュをどうするかという問題が残ります。
+                これを解決するには、year 部をスラッシュを含めてオプションにし、
+                その数値部のみを取得するようにします。
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive(?:/(\d+))?', 
+             array(
+                 'year' => '2006',
+                 'controller' => 'archive',
+                 'action' => 'show'
+             )
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+            
+            <para>
+                まだ問題が残っていることにおそらくお気づきでしょう。
+                パラメータとして数値のキーを使用するのはなかなか難しく、
+                長い目で見れば問題を引き起こす可能性が高くなります。
+                そこで三番目のパラメータの登場です。
+                このパラメータは、正規表現サブパターンとパラメータ名のキーを関連付けます。
+                簡単な例を見てみましょう。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive/(\d+)', 
+             array(
+                 'controller' => 'archive',
+                 'action' => 'show'
+             ),
+             array(
+                1 => 'year'
+             )
+         );
+$router->addRoute('archive', $route);]]></programlisting>
+
+            <para>
+                これは、リクエストオブジェクトに以下のように注入されます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = array(
+  'year' => '2006',
+  'controller' => 'archive',
+  'action' => 'show'
+);]]></programlisting>            
+
+            <para>
+                関連付けは両方の方法で定義でき、任意の環境 (例. Zend_Config) で動作します。
+                キーには変数名あるいはサブパターン番号のいずれかを含めることができます。
+            </para>
+            
+            <note>
+                <para>
+                    サブパターンのキーは整数値でなければなりません。
+                </para>
+            </note>
+            
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive/(\d+)', 
+             array( ... ),
+             array(
+                1 => 'year'
+             )
+         );
+
+// あるいは
+         
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive/(\d+)', 
+             array( ... ),
+             array(
+                'year' => 1
+             )
+         );       
 ]]></programlisting>
+           
+            <para>
+                リクエストの値から数値キーが消え、代わりに名前がつけられたことに注目しましょう。
+                もちろん、お望みなら数値での指定と名前での指定を共用することもできます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive/(\d+)/page/(\d+)', 
+             array( ... ),
+             array(
+                'year' => 1
+             )
+         );       
+]]></programlisting>
+
+            <para>
+                この結果、リクエスト内には数値キーと名前つきキーが共存することになります。
+                たとえば、URL <code>http://domain.com/archive/2006/page/10</code>
+                は次のような値になります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = array(
+  'year' => '2006',
+  2 => 10,
+  'controller' => 'archive',
+  'action' => 'show'
+);]]></programlisting>            
+
+            <para>
+                正規表現を簡単に反転させることはできないので、
+                url ヘルパーやこのクラスのメソッドを使用するには
+                逆の URL を準備しておく必要があります。
+                逆方向のパスは sprintf() 形式の文字列で表し、
+                コンストラクタの四番目のパラメータとして指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'archive/(\d+)', 
+             array( ... ),
+             array(
+                'year' => 1
+             ),
+             'archive/%s'
+         );       
+]]></programlisting>
+
+            <para>
+                これまで説明してきたことは、すべて標準のルートオブジェクトでも可能なことです。
+                それでは、Regex ルートを使用するメリットはいったい何なのでしょう?
+                これを使用すると、あらゆる形式の URL を制約なしに定義することができます。
+                仮に、あなたが blog を持っており
+                <code>http://domain.com/blog/archive/01-Using_the_Regex_Router.html</code>
+                のような URL を作成したいと考えたとしましょう。
+                これまでの内容を組み合わせると、答えはこのようになります。
+            </para>
+
+
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Regex(
+             'blog/archive/(\d+)-(.+)\.html',
+             array('controller' => 'blog', 'action' => 'view'), 
+             array(1 => 'id', 2 => 'description'),
+             'blog/archive/%d-%s.html'
+         );
+$router->addRoute('blogArchive', $route);
+]]></programlisting>
+
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
@@ -618,6 +865,13 @@ routes.news.type = "Zend_Controller_Router_Route_Static"
 routes.news.route = "news"
 routes.news.defaults.controller = "news"
 routes.news.defaults.action = "list"
+
+routes.archive.type = "Zend_Controller_Router_Route_Regex"
+routes.archive.route = "archive/(\d+)"
+routes.archive.defaults.controller = "archive"
+routes.archive.defaults.action = "show"
+routes.archive.map.1 = "year" 
+; あるいは: routes.archive.map.year = 1
 ]]></programlisting>
 
             <para>
