@@ -118,7 +118,7 @@ final class Zend_Controller_Action_HelperBroker
         }
 
         // make sure it ends in a PATH_SEPARATOR
-        $prefix = rtrim($prefix, '_');
+        $prefix = rtrim($prefix, '_') . '_';
         
         $info['dir']    = $path;
         $info['prefix'] = $prefix;
@@ -230,8 +230,8 @@ final class Zend_Controller_Action_HelperBroker
                     }
                     
                     self::$_helpers[$helper->getName()] = $helper;
+                    return;
                 }
-                return;
             }
         }
         
