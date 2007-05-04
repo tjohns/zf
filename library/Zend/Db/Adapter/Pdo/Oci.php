@@ -149,10 +149,10 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
             WHERE TC.TABLE_NAME = ".$this->quote($tableName);
-
         if ($schemaName) {
             $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
         }
+        $sql .= ' ORDER BY TC.COLUMN_ID';
 
         $stmt = $this->query($sql);
 

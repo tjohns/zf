@@ -124,10 +124,10 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                     AND a.attnum = ANY(co.conkey) AND co.contype = 'p')
                 LEFT OUTER JOIN pg_attrdef AS d ON d.adrelid = c.oid AND d.adnum = a.attnum
             WHERE a.attnum > 0 AND c.relname = ".$this->quote($tableName);
-
         if ($schemaName) {
             $sql .= " AND n.nspname = ".$this->quote($schemaName);
         }
+        $sql .= ' ORDER BY a.attnum';
 
         $stmt = $this->query($sql);
 

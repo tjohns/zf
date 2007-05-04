@@ -344,6 +344,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         if ($schemaName) {
             $sql .= " AND c.tabschema = ".$this->quote($schemaName);
         }
+        $sql .= " ORDER BY c.colno";
 
         $desc = array();
         $stmt = $this->query($sql);

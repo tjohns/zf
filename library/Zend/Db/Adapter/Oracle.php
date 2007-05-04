@@ -280,8 +280,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $tableName = strtoupper($tableName);
-
         $sql = "SELECT TC.TABLE_NAME, TB.TABLESPACE_NAME, TC.COLUMN_NAME, TC.DATA_TYPE,
                 TC.DATA_DEFAULT, TC.NULLABLE, TC.COLUMN_ID, TC.DATA_LENGTH,
                 TC.DATA_SCALE, TC.DATA_PRECISION, C.CONSTRAINT_TYPE, CC.POSITION
@@ -291,30 +289,45 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
             WHERE TC.TABLE_NAME = ".$this->quote($tableName);
-
         if ($schemaName) {
             $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
         }
+        $sql .= ' ORDER BY TC.COLUMN_ID';
 
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
+        // Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+
+        $table_name      = 0;
+        $tablespace_name = 1;
+        $column_name     = 2;
+        $data_type       = 3;
+        $data_default    = 4;
+        $nullable        = 5;
+        $column_id       = 6;
+        $data_length     = 7;
+        $data_scale      = 8;
+        $data_precision  = 9;
+        $constraint_type = 10;
+        $position        = 11;
 
         $desc = array();
         foreach ($result as $key => $row) {
-            $desc[$row['COLUMN_NAME']] = array(
-                'SCHEMA_NAME'      => $row['TABLESPACE_NAME'],
-                'TABLE_NAME'       => $row['TABLE_NAME'],
-                'COLUMN_NAME'      => $row['COLUMN_NAME'],
-                'COLUMN_POSITION'  => $row['COLUMN_ID'],
-                'DATA_TYPE'        => $row['DATA_TYPE'],
-                'DEFAULT'          => $row['DATA_DEFAULT'],
-                'NULLABLE'         => (bool) ($row['NULLABLE'] == 'Y'),
-                'LENGTH'           => $row['DATA_LENGTH'],
-                'SCALE'            => $row['DATA_SCALE'],
-                'PRECISION'        => $row['DATA_PRECISION'],
+            $desc[$row[$column_name]] = array(
+                'SCHEMA_NAME'      => $row[$tablespace_name],
+                'TABLE_NAME'       => $row[$table_name],
+                'COLUMN_NAME'      => $row[$column_name],
+                'COLUMN_POSITION'  => $row[$column_id],
+                'DATA_TYPE'        => $row[$data_type],
+                'DEFAULT'          => $row[$data_default],
+                'NULLABLE'         => (bool) ($row[$nullable] == 'Y'),
+                'LENGTH'           => $row[$data_length],
+                'SCALE'            => $row[$data_scale],
+                'PRECISION'        => $row[$data_precision],
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) ($row['constraint_type'] == 'P'),
-                'PRIMARY_POSITION' => $row['position']
+                'PRIMARY'          => (bool) ($row[$constraint_type] == 'P'),
+                'PRIMARY_POSITION' => $row[$position]
             );
         }
         return $desc;

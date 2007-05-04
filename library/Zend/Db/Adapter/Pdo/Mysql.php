@@ -145,8 +145,8 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
                 'DEFAULT'          => $row[$default],
                 'NULLABLE'         => (bool) ($row[$null] == 'YES'),
                 'LENGTH'           => $length,
-                'PRECISION'        => $precision,
                 'SCALE'            => $scale,
+                'PRECISION'        => $precision,
                 'UNSIGNED'         => $unsigned,
                 'PRIMARY'          => (bool) (strtoupper($row[$key]) == 'PRI'),
                 'PRIMARY_POSITION' => ((bool) (strtoupper($row[$key]) == 'PRI') ? $p++ : 0)

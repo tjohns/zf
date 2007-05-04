@@ -183,8 +183,8 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 'DEFAULT'          => $row['Default'],
                 'NULLABLE'         => (bool) ($row['Null'] == 'YES'),
                 'LENGTH'           => $row['Length'],
-                'PRECISION'        => $row['Precision'],
                 'SCALE'            => $row['Scale'],
+                'PRECISION'        => $row['Precision'],
                 'UNSIGNED'         => $row['Unsigned'],
                 'PRIMARY'          => (bool) (strtoupper($row['Key']) == 'PRI'),
                 'PRIMARY_POSITION' => ((bool) (strtoupper($row['Key']) == 'PRI') ? $p++ : 0)
