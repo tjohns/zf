@@ -789,7 +789,6 @@ class Zend_Controller_Front
             return $response;
         }
 
-        $response->sendHeaders();
-        $response->outputBody();
+        $response->sendResponse();
     }
 }
