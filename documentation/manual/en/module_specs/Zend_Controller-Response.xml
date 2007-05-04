@@ -21,16 +21,16 @@ $front->throwExceptions(true);
 
         <para>
             To send the response output, including headers, use
-            <code>sendOutput()</code>.
+            <code>sendResponse()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendOutput();
+$response->sendResponse();
 ]]></programlisting>
 
         <note>
             <para>
-                By default, the front controller calls <code>sendOutput()</code>
+                By default, the front controller calls <code>sendResponse()</code>
                 when it has finished dispatching the request; typically you will
                 never need to call it. However, if you wish to manipulate the
                 response or use it in testing, you can override this
@@ -44,7 +44,7 @@ $response = $front->dispatch();
 
 // do some more processing, such as logging...
 // and then send the output:
-$response->sendOutput();
+$response->sendResponse();
 ?>]]></programlisting>
         </note>
             
@@ -124,7 +124,7 @@ $front->dispatch($request, $response);
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
-$response->sendOutput();
+$response->sendResponse();
 
 // or:
 $front->throwExceptions(true);
