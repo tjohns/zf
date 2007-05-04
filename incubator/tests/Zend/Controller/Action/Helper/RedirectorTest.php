@@ -15,6 +15,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
+require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Action/Helper/Redirector.php';
 require_once 'Zend/Controller/Request/Http.php';
@@ -178,117 +179,150 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->assertEquals('/news/view/item/id/42', $this->redirector->getRedirectUrl());
     }
 
-    /**
-     * @todo Implement testSetGotoRoute().
-     */
     public function testSetGotoRoute()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $route = new Zend_Controller_Router_Route(
+            'blog/archive/:id',
+            array('controller' => 'blog', 'action' => 'view', 'id' => false),
+            array('id' => '\d+')
         );
+        $router->addRoute('blogArchive', $route);
+
+        $this->redirector->setGotoRoute(
+            array('id' => 281),
+            'blogArchive'
+        );
+
+        $this->assertEquals('/blog/archive/281', $this->redirector->getRedirectUrl());
     }
 
-    /**
-     * @todo Implement testSetGotoUrl().
-     */
     public function testSetGotoUrl()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->redirector->setGotoUrl('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->redirector->getRedirectUrl());
+    }
+
+    public function testSetGotoUrlWithBaseUrlUsingPrependBaseProperty()
+    {
+        $this->request->setBaseUrl('/my');
+        $this->redirector->setPrependBase(true);
+        $this->redirector->setGotoUrl('/foo/bar');
+        $this->assertEquals('/my/foo/bar', $this->redirector->getRedirectUrl());
+    }
+
+    public function testSetGotoUrlWithBaseUrlUsingPrependBaseOption()
+    {
+        $this->request->setBaseUrl('/my');
+        $this->redirector->setGotoUrl('/foo/bar', array('prependBase' => true));
+        $this->assertEquals('/my/foo/bar', $this->redirector->getRedirectUrl());
+    }
+
+    public function testSetGotoUrlWithHttpCodeUsingCodeProperty()
+    {
+        $this->redirector->setCode(301);
+        $this->redirector->setGotoUrl('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->redirector->getRedirectUrl());
+        $this->assertEquals(301, $this->response->getHttpResponseCode());
+    }
+
+    public function testSetGotoUrlWithHttpCodeUsingCodeOption()
+    {
+        $this->redirector->setGotoUrl('/foo/bar', array('code' => 301));
+        $this->assertEquals('/foo/bar', $this->redirector->getRedirectUrl());
+        $this->assertEquals(301, $this->response->getHttpResponseCode());
     }
 
     /**
-     * @todo Implement testGoto().
+     * goto() is an alias for setGoto(); just do a single test case
      */
     public function testGoto()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $request = $this->request;
+        $request->setModuleName('blog')
+                ->setControllerName('list')
+                ->setActionName('all');
+
+        $this->redirector->goto('error');
+        $this->assertEquals('/blog/list/error', $this->redirector->getRedirectUrl());
     }
 
-    /**
-     * @todo Implement testGotoAndExit().
-     */
     public function testGotoAndExit()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $this->markTestSkipped(
+          "Testing Zend_Controller_Action_Helper_Redirector::gotoAndExit() would break the test suite"
         );
     }
 
     /**
-     * @todo Implement testGotoRoute().
+     * gotoRoute() is an alias for setGotoRoute()
      */
     public function testGotoRoute()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $route = new Zend_Controller_Router_Route(
+            'blog/archive/:id',
+            array('controller' => 'blog', 'action' => 'view', 'id' => false),
+            array('id' => '\d+')
         );
+        $router->addRoute('blogArchive', $route);
+
+        $this->redirector->gotoRoute(
+            array('id' => 281),
+            'blogArchive'
+        );
+
+        $this->assertEquals('/blog/archive/281', $this->redirector->getRedirectUrl());
     }
 
-    /**
-     * @todo Implement testGotoRouteAndExit().
-     */
     public function testGotoRouteAndExit()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $this->markTestSkipped(
+          "Testing Zend_Controller_Action_Helper_Redirector::gotoRouteAndExit() would break the test suite"
         );
     }
 
     /**
-     * @todo Implement testGotoUrl().
+     * gotoUrl() is an alias for setGotoUrl()
      */
     public function testGotoUrl()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->redirector->gotoUrl('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->redirector->getRedirectUrl());
     }
 
-    /**
-     * @todo Implement testGotoUrlAndExit().
-     */
     public function testGotoUrlAndExit()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $this->markTestSkipped(
+          "Testing Zend_Controller_Action_Helper_Redirector::gotoUrlAndExit() would break the test suite"
         );
     }
 
-    /**
-     * @todo Implement testRedirectAndExit().
-     */
     public function testRedirectAndExit()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+        $this->markTestSkipped(
+          "Testing Zend_Controller_Action_Helper_Redirector::redirectAndExit() would break the test suite"
         );
     }
 
     /**
-     * @todo Implement testDirect().
+     * direct() is an alias for goto(), which is an alias for setGoto()
      */
     public function testDirect()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $request = $this->request;
+        $request->setModuleName('blog')
+                ->setControllerName('list')
+                ->setActionName('all');
+
+        $this->redirector->direct('error');
+        $this->assertEquals('/blog/list/error', $this->redirector->getRedirectUrl());
     }
 }
 
+/**
+ * Test controller for use with redirector tests
+ */
 class Zend_Controller_Action_Helper_Redirector_TestController extends Zend_Controller_Action
 {
 }

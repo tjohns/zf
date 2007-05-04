@@ -258,8 +258,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
                 $prependBase = ($options['prependBase']) ? true : false;
             }
             if (isset($options['code'])) {
-                $this->_checkCode($options['code']);
-                $code = $options['code'];
+                $this->setCode($options['code']);
             }
         }
 
@@ -286,13 +285,13 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  string $controller
      * @param  string $module
      * @param  array $params
-     * @return voide
+     * @return void
      */
     public function goto($action, $controller = null, $module = null, array $params = array())
     {
         $this->setGoto($action, $controller, $module, $params);
         
-        if ($exit) {
+        if ($this->getExit()) {
             $this->redirectAndExit();
         }
     }
@@ -327,7 +326,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     {
         $this->setGotoRoute($urlOptions, $name, $reset);
 
-        if ($exit) {
+        if ($this->getExit()) {
             $this->redirectAndExit();
         }
     }
@@ -356,11 +355,11 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array $options
      * @return void
      */
-    public function gotoUrl($url, array $options = null)
+    public function gotoUrl($url, array $options = array())
     {
         $this->setGotoUrl($url, $options);
         
-        if ($exit) {
+        if ($this->getExit()) {
             $this->redirectAndExit();
         }
     }
