@@ -158,34 +158,36 @@ remember_me_seconds = 864000
                 <listitem>
                     <para>
                         string <code>name</code> - Der richtige Wert ist abhängig vom System and sollte vom
-                        Entwickler, durch Verwenden eines kleinen Wertes, bereitgestellt werden, welcher
+                        Entwickler, durch Verwenden eines bestimmten Wertes, bereitgestellt werden, welcher
                         für jede ZF Anwendung <emphasis role="strong">eindeutig</emphasis> ist.
                     </para>
                     <note>
                         <title>Sicherheits Risiko</title>
                         <para>
-                            If the <code>php.ini</code> setting for <code>session.name</code> is the same (e.g. the
-                            default "PHPSESSID"), and there are two or more PHP applications accessible through the same
-                            domain name (e.g. <code>http://www.somewebhost.com/~youraccount/index.php</code>), then they
-                            will share the same session data for website visitors that visit both websites.
-                            Additionally, possible corruption of session data may result.
+                            Wenn die <code>php.ini</code> Einstellung für <code>session.name</code> die selbe ist
+                            (z.B. die standardmäßige "PHPSESSID"), und es zwei oder mehr PHP Anwendungen gibt die
+                            über den selben Domain Namen erreichbar sind (z.B.
+                            <code>http://www.somewebhost.com/~youraccount/index.php</code>), dann werden Sie miteinander
+                            für alle Besucher die beide Webseiten besuchen, die selben Session Daten teilen.
+                            Zusätzlich, könnte das auch zu einer Verfälschung von Session Daten führen.
                         </para>
                     </note>
                 </listitem>
                 <listitem>
                     <para>
-                        boolean <code>use_only_cookies</code> - In order to avoid introducing additional security risks,
-                        do not alter the default value of this option.
+                        boolean <code>use_only_cookies</code> - Um zusätzliche Sicherheitsrisiken zu vermeiden,
+                        sollte der Standardwert dieser Option nicht verändert werden.
                         <note>
                             <title>Sicherheits Risiko</title>
                             <para>
-                                If this setting is not enabled, an attacker can easily fix victim's session ids, using
-                                links on the attacker's website, such as
-                                <code>http://www.victim-website.com/index.php?PHPSESSID=fixed_session_id</code>. The
-                                fixation works, if the victim does not already have a session id cookie for
-                                victim-website.com. Once a victim is using a known session id, the attacker can then
-                                attempt to hijack the session by pretending to be the victim, and emulating the victim's
-                                user agent.
+                                Wenn diese Einstellung nicht aktiviert wird, kann ein Angreifer einfach die
+                                Session Id des Opfers ändern indem ein Link auf der Webseite des Angreifers
+                                verwendet wird, wie z.B.
+                                <code>http://www.victim-website.com/index.php?PHPSESSID=fixed_session_id</code>.
+                                Die Änderung funtioniert, wenn das Opfer nicht schon ein Session Id Cookie für
+                                victom-website.com besitzt. Sobald ein Opfer eine bekannte Session Id benutzt, kann
+                                der Angreifer versuchen die Session zu übernehmen indem er sich verstellt und
+                                vorgibt das Opfer zu sein, und den UserAgent des Opfers emuliert.
                             </para>
                         </note>
                     </para>
@@ -197,60 +199,65 @@ remember_me_seconds = 864000
 
     <sect2 id="zend.session.errors">
 
-        <title>Errors</title>
+        <title>Fehler</title>
 
         <sect3 id="zend.session.errors.headerssent">
 
-            <title>Headers already sent</title>
+            <title>Header schon gesendet</title>
 
             <para>
-                If you see the error message, "Cannot modify header information - headers already sent", or, "You must
-                call .. before any output has been sent to the browser; output started in ...", then carefully examine
-                the immediate cause (function or method) associated with the message. Any actions that require sending
-                HTTP headers, such as modifying the browser's cookie, must be done before sending normal output
-                (unbuffered output), except when using PHP's output buffering.
+                Wenn die Fehler Nachricht, "Cannot modify header information - headers already sent", oder "You must
+                call .. before any output has been sent to the browser; output started in ...", sollte der
+                direkte Grund (Funktion oder Methode) der mit dieser Nachricht gekoppelt ist sorgfältig begutachtet
+                werden. Jede Aktion die das senden von HTTP Headern benötigt, wie z.B. das modifizieren von Browser
+                Cookies, muß vor dem senden von normaler Ausgabe (ungepufferter Ausgabe) durchgeführt werden,
+                ausser wenn PHP's Ausgabebuffer verwendet wird.
             </para>
 
             <itemizedlist mark='opencircle'>
                 <listitem>
                     <para>
                         Using
-                        <ulink url="http://php.net/outcontrol">output buffering</ulink>
-                        often is sufficient to prevent this issue, and may help improve performance. For example, in
-                        <code>php.ini</code>, "<code>output_buffering = 65535</code>" enables output buffering with a
-                        64K buffer. Even though output buffering might be a good tactic on production servers to
-                        increase performance, relying only on buffering to resolve the "headers already sent" problem is
-                        not sufficient. Make sure the application will never exceed this buffer size, or else the
-                        problem will occur intermittently, whenever the output sent (prior to the HTTP headers) exceeds
-                        the buffer size.
+                        <ulink url="http://php.net/outcontrol">Puffern der Ausgabe</ulink>
+                        ist oft notwendig um dieses Problem zu verhindern, und hilft bei der Steigerung der
+                        Geschwindigkeit. Zum Beispiel aktiviert "<code>output_buffering = 65535</code>" in der 
+                        <code>php.ini</code> das puffern der Ausgabe mit einem 64k Puffer. Selbst wenn das Puffern
+                        der Ausgabe eine gute Taktik ist um auf Produktionsservern die Geschwindigkeit zu
+                        Erhöhen, ist das Vertrauen auf das Puffern, um das Problem "headers already sent" zu
+                        beheben, nicht ausreichend. Es muß sicher gestellt werden das die Anwendung die Puffer
+                        Größe nie überschreitet, andernfalls wird das Problem von Zeit zu Zeit wieder auftreten,
+                        wann auch immer eine Ausgabe gesendet wird (vor den HTTP Headern) die die Puffergröße
+                        überschreitet.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Alternatively, try rearranging the application logic, so that actions manipulating headers are
-                        performed prior to sending any output whatsoever.
+                        Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
+                        welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        If a Zend_Session method is involved in causing the error message, examine the method carefully,
-                        and make sure it's use really is needed in the application. For example, the default usage of
-                        <code>destroy()</code> also sends an HTTP header to expire the client-side session cookie. If
-                        this is not needed, then use <code>destroy(false)</code>. In HTTP, the instructions for
-                        modifying (e.g. expiring) cookies are sent with HTTP headers.
+                        Wenn eine Methode von Zend_Session als Verursacher der Fehlermeldung involviert ist,
+                        sollte die Methode sorgfältig begutachtet werden und es ist sicher zu stellen das Sie auch
+                        wirklich in der Anwendung benötigt wird. Zum Beispiel sendet auch die standardmäßige
+                        Verwendung von <code>destroy()</code> einen HTTP Header um das Session Cookie auf der Seite
+                        des Clients ablaufen zu lassen. In HTTP werden die Anweisungen für das Ändern (z.B.
+                        löschen) von Cookies im HTTP Header gesendet.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Alternatively, try rearranging the application logic, so that actions manipulating headers are
-                        performed prior to sending any output whatsoever.
+                        Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
+                        welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Remove any closing "<code>?&gt;</code>" tags, if they occur at the end of a PHP source file.
-                        They are not needed, and newlines and other nearly invisible whitespace following the closing
-                        tag can trigger output to the client.
+                        Jedes schließende "<code>?&gt;</code>" Tag sollte entfernt werden, wenn es am Ende einer
+                        PHP Source Datei steht. Sie werden nicht benötigt und neue Zeilen und andere beinahe
+                        unsichtbare Leerzeichen welche dem schließenden Tag folgen können die Ausgabe an den
+                        Client anstoßen.
                     </para>
                 </listitem>
             </itemizedlist>
