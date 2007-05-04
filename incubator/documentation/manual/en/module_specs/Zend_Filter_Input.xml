@@ -1,0 +1,348 @@
+<sect1 id="zend.filter.input">
+    <title>Zend_Filter_Input</title>
+
+    <para>
+        Zend_Filter_Input provides a declarative interface to apply multiple
+        filters and validators to collections of data.
+    </para>
+
+    <para>
+        The input data are formatted as an associative array.  The keys are
+        field names, and the values are data values.  The standard
+        <code>$_GET</code> and <code>$_POST</code> superglobal variables in PHP
+        are examples of this format.  You can use either of these variables as
+        input data for Zend_Filter_Input.
+    </para>
+
+    <sect2 id="zend.filter.input.declaring">
+
+        <title>Declaring Filters and Validators</title>
+
+        <para>
+            To create an instance of Zend_Filter_Input, you need to declare an
+            array of filters and validators to apply to data fields by name.
+            This associative array maps a field name to a filter or
+            validator or a chain of filters or validators.
+            The following example declares that the field 'month' will be
+            filtered by Zend_Filter_Digits, and the field 'account' will be
+            filtered by Zend_Filter_StringTrim.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$filters = array( 
+    'month'   => 'digits',
+    'account' => 'stringTrim'
+); 
+]]></programlisting>
+
+        <para>
+            Each key in the array above is the name of the field to which to
+            apply the filter. Each value can be a string scalar if you need
+            to apply only one filter to the field, or an array if you need
+            to apply a chain of filters to the field.
+            Each value can be a string, which is mapped to a class name, or
+            else an instance of an object that implements Zend_Filter_Interface.
+        </para>
+
+        <para>
+            The example below declares a chain of filters for the field
+            'month', including Zend_Filter_Digits specified by a string,
+            followed by Zend_Filter_StringTrim specified by an object instance.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$filters = array( 
+    'month'   => array('digits', new Zend_Filter_StringTrim()),
+    'account' => 'stringTrim'
+); 
+]]></programlisting>
+
+        <para>
+            Declare validators with a similar array, mapping fields to
+            validators.  You can use strings to name the validator, or
+            an object instance, or an array of strings or objects.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// You can create the validator object prior to the declaration
+// of the $validators array; this can allow you to use a single
+// validator object instance for more than one rule.
+$strlen = new Zend_Validate_StringLength(3, 8);
+
+$validators = array( 
+    'month'   => new Zend_Validate_Between(1, 12),
+    'account' => array('alnum', $strlen)
+); 
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.filter.input.running">
+
+        <title>Creating the Filter and Validator Processor</title>
+
+        <para>
+            After declaring the filters and validators arrays, use them as
+            arguments in the constructor of Zend_Filter_Input.  This returns an
+            object that knows all your filtering and validating rules, and you
+            can use this object to process one or more sets of input data.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$input = new Zend_Filter_Input($filters, $validators);
+]]></programlisting>
+
+        <para>
+            You can specify input data either as the third constructor argument,
+            or using the <code>setData()</code> method.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// Add data in constructor 
+$input = new Zend_Filter_Input($filters, $validators, $data); 
+ 
+// Another way to specify the data (replaces any data specified previously)
+$input->setData($newData); 
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.filter.input.results">
+
+        <title>Retrieving Validated Fields and other Reports</title>
+
+        <para>
+            After the filters and validators are done, you can retrieve reports
+            of missing, unknown, and invalid fields.  You can also get the
+            values of fields after filters have been applied.
+        </para>
+
+        <para>
+            Fields that are not declared in the validator array at all but
+            appear in the input are reported as an unknown field. Fields that
+            don't pass their validation are reported as an invalid field.
+            Fields that are not present in the input data are reported as
+            missing, if they are declared with the metacommand
+            <code>'presence'=>'required'</code> (see the later section on
+            metacommands).
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+if ($input->hasInvalid()) { 
+  $list = $input->getInvalid(); 
+} 
+ 
+if ($input->hasMissing()) { 
+  $list = $input->getMissing(); 
+} 
+ 
+if ($input->hasUnknown()) { 
+  $list = $input->getUnknown(); 
+} 
+]]></programlisting>
+
+        <para>
+            Filters are applied to the input data before validators.
+            Some filters can be used to escape output to make it safe to
+            display in HTML or other output channels.
+            You can get field values in escaped format using a magic accessor.
+            There are also non-magic accessor methods for getting the field
+            values in escaped or unescaped format.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$m = $input->month;                 // escaped output from magic accessor
+$m = $input->getEscaped('month');   // escaped output
+$m = $input->getUnescaped('month'); // not escaped 
+]]></programlisting>
+
+        <para>
+            By default, escaped output is filtered with the
+            Zend_Filter_HtmlEntities filter.  You can specify a different
+            filter for escaping output. You can use the options array in the
+            constructor, or else <code>setDefaultEscapeFilter()</code>. You can
+            specify this filter as a string or as an object in either case.
+            You can specify an object instance of a filter chain if you need
+            multiple filters to be applied to implement escaping.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// Use Zend_Filter_Trim for escaping output 
+$options = array('escape_filter' => 'trim'); 
+$input = new Zend_Filter_Input($filters, $validators, $data, $options); 
+ 
+// Use Zend_Filter_HtmlEntities for escaping output 
+$input->setDefaultEscapeFilter(new Zend_Filter_HtmlEntities()); 
+]]></programlisting>
+
+        <para>
+            Filters to escape output should be run in this way, to make
+            sure they run after validation.  If escaping filters were run
+            before validation, the process of validation would be more
+            complex, and it would be harder to provide both escaped and
+            unescaped versions of the data.  So it is recommended to
+            declare filters to escape output using
+            <code>setDefaultEscapeFilter()</code>, not in the $filters array.
+        </para>
+
+        <para>
+            There is only one method <code>getEscaped()</code>, and therefore
+            you can specify only one filter for escaping (although this filter
+            can be a filter chain).  If you need a single instance of
+            Zend_Filter_Input to return escaped output using more than one
+            filtering method, you should subclass Zend_Filter_Input and
+            implement new methods to get values in different ways.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.filter.input.metacommands">
+
+        <title>Using Metacommands to Control Zend_Filter_Input Behavior</title>
+
+        <para>
+            In addition to declaring the mapping from fields to filters
+            or validators, you can specify some "metacommands" in the array
+            declarations, to control some optional behavior of
+            Zend_Filter_Input.  Metacommands appear as string-indexed
+            entries in a given filter or validator array value.
+        </para>
+
+        <para>
+            For example, if the key of the $filters or $validators arrays
+            are not the same as the name of the field, you can specify the
+            field name with the <emphasis role="strong">'fields'</emphasis>
+            metacommand.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$filters = array( 
+    'month' = array( 
+        'digits',        // filter name at integer index [0] 
+        'fields' => 'mo' // field name at string index ['field'] 
+    ) 
+); 
+]]></programlisting>
+
+        <para>
+            In the example above, the filter rule applies the 'digits'
+            filter to the field 'mo'.  The string 'month' simply becomes 
+            a mnemonic key for this filtering rule; it is not used as
+            the field name if the field is specified with the 'fields'
+            metacommand.
+        </para>
+
+        <para>
+            Another use of the 'fields' metacommand is to specify fields
+            for filters or validators that require multiple fields as input.
+            If the value of the 'fields' metacommand is an array, the argument
+            to the corresponding filter or validator is an array of the values
+            of those fields.  For example, it is common for users to specify a
+            password string in two fields, and they must type the same string
+            in both fields.  You could implement a validator class that takes
+            an array argument, and returns true if all the values in the array
+            are equal to each other.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$validators = array( 
+    'password' = array( 
+        'equals',
+        'fields' => array('password1', 'password2')
+    ) 
+); 
+// Invokes hypothetical class Zend_Validate_Equals, passing an array argument
+]]></programlisting>
+
+        <para>
+            Each entry in the validator array may have a metacommand called
+            <emphasis role="strong">'presence'</emphasis>.
+            If the value of this metacommand is 'required' then the field must
+            be present in the input, or else it is reported as a missing field.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$validators = array( 
+    'month' = array( 
+        'digits',
+        'presence' => 'required'
+    ) 
+); 
+]]></programlisting>
+
+        <para>
+            Each entry in the validator array may have a metacommand called
+            <emphasis role="strong">'allowEmpty'</emphasis>.
+            If the value of this metacommand is <code>true</code> then the
+            field passes validation if it is present in the input data, but has
+            the value of an empty string (<code>''</code>).  Otherwise the
+            validator is applied to the empty string and the input might not be
+            reported as valid.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$validators = array( 
+    'comment' = array( 
+        'alnum',
+        'allowEmpty' => true
+    ) 
+); 
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.filter.input.namespaces">
+
+        <title>Adding Filter Class Namespaces</title>
+
+        <para>
+            By default, when you declare a filter or validator as a string,
+            Zend_Filter_Input searches for the corresponding classes under
+            the Zend_Filter or Zend_Validate namespaces.  That is, 
+            a filter 'digits' is found in the class Zend_Filter_Digits.
+        </para>
+
+        <para>
+            If you write your own filter or validator classes, or use filters
+            or validators provided by a third-party, the classes may exist in
+            different namespaces than Zend_Filter or Zend_Validate.  You can
+            tell Zend_Filter_Input to search more namespaces.  Specify
+            namespaces in the constructor options or using the addNamespace()
+            method.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+$options = array('namespace' => 'My_Namespace'); 
+$input = new Zend_Filter_Input($filters, $validators, $data, $options); 
+ 
+$input->addNamespace('Other_Namespace'); 
+ 
+// Now the search order is:
+// 1. My_Namespace, 2. Other_Namespace, 3. Zend_Filter, 4. Zend_Validate 
+]]></programlisting>
+
+        <para>
+            You cannot remove Zend_Filter and Zend_Validate as namespaces, you
+            can only add namespaces.  User-defined namespaces are searched
+            first, Zend namespaces are searched last.
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
