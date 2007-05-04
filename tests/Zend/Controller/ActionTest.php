@@ -2,6 +2,7 @@
 require_once 'Zend/Controller/Action.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'Zend/Controller/Action/Helper/Redirector.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
@@ -17,8 +18,9 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
                 'bar' => 'baz'
             )
         );
-        $this->_controller->setRedirectExit(false);
         Zend_Controller_Front::getInstance()->resetInstance();
+        $redirector = $this->_controller->getHelper('redirector');
+        $redirector->setExit(false);
     }
 
     public function tearDown()
@@ -291,6 +293,21 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
         $script = $controller->getViewScript('foo');
         $this->assertContains('view' . DIRECTORY_SEPARATOR . 'foo.phtml', $script);
+    }
+
+    public function testGetHelper()
+    {
+        $redirector = $this->_controller->getHelper('redirector');
+        $this->assertTrue($redirector instanceof Zend_Controller_Action_Helper_Abstract);
+        $this->assertTrue($redirector instanceof Zend_Controller_Action_Helper_Redirector);
+    }
+
+    public function testGetHelperCopy()
+    {
+        $redirector = $this->_controller->getHelper('redirector');
+        $copy       = $this->_controller->getHelperCopy('redirector');
+        $this->assertNotSame($redirector, $copy);
+        $this->assertTrue($copy instanceof Zend_Controller_Action_Helper_Redirector);
     }
 }
 

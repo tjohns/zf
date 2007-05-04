@@ -238,6 +238,23 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     /**
      * Set a redirect URL string
      * 
+     * By default, emits a 302 HTTP status header, prepends base URL as defined 
+     * in request object if url is relative, and halts script execution by 
+     * calling exit().
+     *
+     * $options is an optional associative array that can be used to control 
+     * redirect behaviour. The available option keys are:
+     * - exit: boolean flag indicating whether or not to halt script execution when done
+     * - prependBase: boolean flag indicating whether or not to prepend the base URL when a relative URL is provided
+     * - code: integer HTTP status code to use with redirect. Should be between 300 and 307.
+     *
+     * _redirect() sets the Location header in the response object. If you set 
+     * the exit flag to false, you can override this header later in code 
+     * execution.
+     *
+     * If the exit flag is true (true by default), _redirect() will write and 
+     * close the current session, if any.
+     *
      * @param  string $url 
      * @param  array $options
      * @return void

@@ -13,6 +13,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 // error_reporting(E_ALL);
 
 require_once 'ActionTest.php';
+require_once 'Action/HelperBrokerTest.php';
+require_once 'Action/Helper/FlashMessengerTest.php';
+require_once 'Action/Helper/RedirectorTest.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 require_once 'Plugin/BrokerTest.php';
@@ -37,6 +40,9 @@ class Zend_Controller_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
         $suite->addTestSuite('Zend_Controller_ActionTest');
+        $suite->addTestSuite('Zend_Controller_Action_HelperBrokerTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
         $suite->addTestSuite('Zend_Controller_Dispatcher_StandardTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
         $suite->addTestSuite('Zend_Controller_Plugin_BrokerTest');
