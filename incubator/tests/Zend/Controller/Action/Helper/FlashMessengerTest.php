@@ -12,7 +12,6 @@ require_once 'Zend/Session.php';
 
 class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         $savePath = ini_get('session.save_path');
@@ -39,7 +38,4 @@ class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework
         $response = $controller->dispatch($request);
         $this->assertEquals('Zend_Controller_Action_Helper_FlashMessenger123456', $response->getBody());
     }
-    
-    
-    
 }
