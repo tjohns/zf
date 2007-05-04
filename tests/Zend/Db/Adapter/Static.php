@@ -276,4 +276,16 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
         return $sql . " LIMIT $count OFFSET $offset";
     }
 
+    /**
+     * @return array
+     */
+    public function getErrorInfo()
+    {
+        return array(
+            0 => null,
+            1 => 0,
+            2 => 'mock error'
+        );
+    }
+
 }

@@ -28,7 +28,7 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
 
     public function testAdapterExceptionInvalidLoginCredentials()
     {
-        $this->markTestSkipped('SQLite does not support login credentials');
+        $this->markTestSkipped($this->getDriver() . ' does not support login credentials');
     }
 
     public function testAdapterQuote()

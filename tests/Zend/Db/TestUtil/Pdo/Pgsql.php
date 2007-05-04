@@ -41,6 +41,13 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
 {
 
+    public function setUp(Zend_Db_Adapter_Abstract $db)
+    {
+        $this->_db = $db;
+        $this->createSequence('zfproducts_seq');
+        parent::setUp($db);
+    }
+
     public function getParams(array $constants = array())
     {
         $constants = array (
@@ -69,11 +76,11 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         );
     }
 
-    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataProducts()
     {
-        $data = parent::_getDataProducts($db);
+        $data = parent::_getDataProducts();
         foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr('NEXTVAL('.$db->quote('products_seq').')');
+            $row['product_id'] = new Zend_Db_Expr('NEXTVAL('.$this->_db->quote('zfproducts_seq').')');
         }
         return $data;
     }
@@ -89,25 +96,19 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
-    public function setUp(Zend_Db_Adapter_Abstract $db)
+    protected function _getSqlDropTable($tableName)
     {
-        $this->createSequence($db, 'products_seq');
-        parent::setUp($db);
+        return 'DROP TABLE IF EXISTS ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateSequence($sequenceName)
     {
-        return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
+        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
     }
 
-    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlDropSequence($sequenceName)
     {
-        return 'CREATE SEQUENCE ' . $db->quoteIdentifier($sequenceName);
-    }
-
-    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
-    {
-        return 'DROP SEQUENCE IF EXISTS ' . $db->quoteIdentifier($sequenceName);
+        return 'DROP SEQUENCE IF EXISTS ' . $this->_db->quoteIdentifier($sequenceName);
     }
 
 }

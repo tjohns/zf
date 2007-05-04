@@ -60,19 +60,19 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         return $type;
     }
 
-    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateTable($tableName)
     {
-        return 'CREATE TABLE IF NOT EXISTS ' . $db->quoteIdentifier($tableName);
+        return 'CREATE TABLE IF NOT EXISTS ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlDropTable($tableName)
     {
-        return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
+        return 'DROP TABLE IF EXISTS ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    protected function _rawQuery($sql)
     {
-        $mysqli = $db->getConnection();
+        $mysqli = $this->_db->getConnection();
         return $mysqli->query($sql);
     }
 

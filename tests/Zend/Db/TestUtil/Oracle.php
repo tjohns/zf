@@ -30,9 +30,9 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Pdo_Oci
 {
 
-    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    protected function _rawQuery($sql)
     {
-        $conn = $db->getConnection();
+        $conn = $this->_db->getConnection();
         $stmt = oci_parse($conn, $sql);
         if ($stmt === false) {
             return false;

@@ -40,7 +40,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_TableBugsProducts extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'bugs_products';
+    protected $_name = 'zfbugs_products';
 
     protected $_referenceMap    = array(
         'Bug' => array(

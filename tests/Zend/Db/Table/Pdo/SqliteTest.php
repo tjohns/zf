@@ -33,7 +33,7 @@ class Zend_Db_Table_Pdo_SqliteTest extends Zend_Db_Table_TestCommon
 
     public function testDbTableSchemaSpecified()
     {
-        $this->markTestSkipped('SQLite does not support qualified table names');
+        $this->markTestSkipped($this->getDriver() . ' does not support qualified table names');
     }
 
     public function getDriver()

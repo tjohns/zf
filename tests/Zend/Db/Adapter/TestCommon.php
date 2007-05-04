@@ -52,22 +52,22 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $select = $this->_db->select()->from('products')->order('product_id ASC');
+        $select = $this->_db->select()->from('zfproducts')->order('product_id ASC');
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(3, count($result), 'Expected count of result to be 2');
         $this->assertEquals(1, $result[0]['product_id'], 'Expecting product_id of 0th row to be 1');
 
-        $rowsAffected = $this->_db->delete('products', "$product_id = 2");
+        $rowsAffected = $this->_db->delete('zfproducts', "$product_id = 2");
         $this->assertEquals(1, $rowsAffected, 'Expected rows affected to return 1', 'Expecting rows affected to be 1');
 
-        $select = $this->_db->select()->from('products')->order('product_id ASC');
+        $select = $this->_db->select()->from('zfproducts')->order('product_id ASC');
         $result = $this->_db->fetchAll($select);
 
         $this->assertEquals(2, count($result), 'Expected count of result to be 2');
         $this->assertEquals(1, $result[0]['product_id'], 'Expecting product_id of 0th row to be 1');
 
-        $rowsAffected = $this->_db->delete('products', "$product_id = 327");
+        $rowsAffected = $this->_db->delete('zfproducts', "$product_id = 327");
         $this->assertEquals(0, $rowsAffected, 'Expected rows affected to return 0');
     }
 
@@ -77,26 +77,32 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterDescribeTable()
     {
-        $desc = $this->_db->describeTable('products');
+        $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertThat($desc, $this->arrayHasKey('product_name'));
-        $this->assertThat($desc, $this->arrayHasKey('product_id'));
+        $cols = array(
+            'product_id',
+            'product_name'
+        );
+        $this->assertEquals($cols, array_keys($desc));
 
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('SCHEMA_NAME'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('TABLE_NAME'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('COLUMN_NAME'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('COLUMN_POSITION'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('DATA_TYPE'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('DEFAULT'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('NULLABLE'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('LENGTH'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('SCALE'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('PRECISION'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('UNSIGNED'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('PRIMARY'));
-        $this->assertThat($desc['product_name'], $this->arrayHasKey('PRIMARY_POSITION'));
+        $keys = array(
+            'SCHEMA_NAME',
+            'TABLE_NAME',
+            'COLUMN_NAME',
+            'COLUMN_POSITION',
+            'DATA_TYPE',
+            'DEFAULT',
+            'NULLABLE',
+            'LENGTH',
+            'SCALE',
+            'PRECISION',
+            'UNSIGNED',
+            'PRIMARY',
+            'PRIMARY_POSITION'
+        );
+        $this->assertEquals($keys, array_keys($desc['product_name']));
 
-        $this->assertEquals('products',          $desc['product_name']['TABLE_NAME']);
+        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
         $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
         $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
@@ -116,7 +122,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchAll()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $result = $this->_db->fetchAll("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
@@ -129,7 +135,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchAssoc()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $result = $this->_db->fetchAssoc("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id DESC", 1);
@@ -143,7 +149,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchCol()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
@@ -157,7 +163,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchOne()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
@@ -171,7 +177,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchPairs()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
@@ -186,7 +192,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterFetchRow()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id", 1);
@@ -208,7 +214,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'reported_by'     => 'micky',
             'assigned_to'     => 'goofy'
         );
-        $rowsAffected = $this->_db->insert('bugs', $row);
+        $rowsAffected = $this->_db->insert('zfbugs', $row);
         $this->assertEquals(1, $rowsAffected);
         $lastInsertId = $this->_db->lastInsertId();
         $this->assertEquals('5', (string) $lastInsertId,
@@ -218,13 +224,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function testAdapterInsertSequence()
     {
         $row = array (
-            'product_id' => $this->_db->nextSequenceId('products_seq'),
+            'product_id' => $this->_db->nextSequenceId('zfproducts_seq'),
             'product_name' => 'Solaris',
         );
-        $rowsAffected = $this->_db->insert('products', $row);
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('products');
-        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $lastInsertId = $this->_db->lastInsertId('zfproducts');
+        $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
     }
 
@@ -234,7 +240,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterLimit()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1);
 
@@ -250,7 +256,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     public function testAdapterLimitOffset()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
 
@@ -272,7 +278,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function testAdapterListTables()
     {
         $tables = $this->_db->listTables();
-        $this->assertContains('products', $tables);
+        $this->assertContains('zfproducts', $tables);
     }
 
     public function testAdapterQuoteIdentifier()
@@ -340,7 +346,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // Test that we can change the values in
         // an existing row.
         $result = $this->_db->update(
-            'products',
+            'zfproducts',
             array('product_name' => 'Vista'),
             "$product_id = 1"
         );
@@ -348,7 +354,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         // Query the row to see if we have the new values.
         $select = $this->_db->select();
-        $select->from('products');
+        $select->from('zfproducts');
         $select->where("$product_id = 1");
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
@@ -359,7 +365,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // Test that update affects no rows if the WHERE
         // clause matches none.
         $result = $this->_db->update(
-            'products',
+            'zfproducts',
             array('product_name' => 'Vista'),
             "$product_id = 327"
         );
@@ -370,18 +376,22 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $exceptionSeen = false;
         try {
-            $sql = $this->_db->limit('SELECT * FROM products', 0);
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception');
+            $sql = $this->_db->limit('SELECT * FROM zfproducts', 0);
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
             $exceptionSeen = true;
         }
         $this->assertTrue($exceptionSeen);
 
         $exceptionSeen = false;
         try {
-            $sql = $this->_db->limit('SELECT * FROM products', 1, -1);
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception');
+            $sql = $this->_db->limit('SELECT * FROM zfproducts', 1, -1);
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
             $exceptionSeen = true;
         }
         $this->assertTrue($exceptionSeen);

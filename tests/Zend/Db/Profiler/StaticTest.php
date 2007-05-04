@@ -58,11 +58,11 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
                 'profiler' => false
             )
         );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'),
+        $this->assertType('Zend_Db_Adapter_Abstract', $db,
             'Expected object of type Zend_Db_Adapter_Abstract, got '.get_class($db));
 
         $prof = $db->getProfiler();
-        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'),
+        $this->assertType('Zend_Db_Profiler', $prof,
             'Expected object of type Zend_Db_Profiler, got '.get_class($prof));
         $this->assertFalse($prof->getEnabled());
 
@@ -72,11 +72,11 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
                 'profiler' => true
             )
         );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'),
+        $this->assertType('Zend_Db_Adapter_Abstract', $db,
             'Expected object of type Zend_Db_Adapter_Abstract, got '.get_class($db));
 
         $prof = $db->getProfiler();
-        $this->assertThat($prof, $this->isInstanceOf('Zend_Db_Profiler'),
+        $this->assertType('Zend_Db_Profiler', $prof,
             'Expected object of type Zend_Db_Profiler, got '.get_class($prof));
         $this->assertTrue($prof->getEnabled());
     }
@@ -384,10 +384,8 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
 
         $queryId = $prof->queryStart('sql');
 
-        $this->assertThat(
-            $prof->getQueryProfile($queryId),
-            $this->isInstanceOf('Zend_Db_Profiler_Query')
-            );
+        $this->assertType('Zend_Db_Profiler_Query',
+            $prof->getQueryProfile($queryId));
     }
 
     /**
@@ -558,10 +556,8 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
 
         $prof->queryStart('sql 2');
 
-        $this->assertThat(
-            $queryProfile = $prof->getLastQueryProfile(),
-            $this->isInstanceOf('Zend_Db_Profiler_Query')
-            );
+        $this->assertType('Zend_Db_Profiler_Query',
+            $queryProfile = $prof->getLastQueryProfile());
 
         $this->assertEquals('sql 2', $queryProfile->getQuery());
 

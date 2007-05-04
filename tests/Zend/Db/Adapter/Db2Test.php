@@ -51,8 +51,9 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'password' for login credentials.", $e->getMessage());
         }
 
@@ -62,8 +63,9 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'username' for login credentials.", $e->getMessage());
         }
 
@@ -73,8 +75,9 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
             $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Db2_Exception'), 'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
         }
 
@@ -86,7 +89,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterLimit()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1);
 
@@ -102,7 +105,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterLimitOffset()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
 

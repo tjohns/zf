@@ -28,12 +28,12 @@ class Zend_Db_Select_Pdo_PgsqlTest extends Zend_Db_Select_TestCommon
 
     public function testSelectGroupByExpr()
     {
-        $this->markTestSkipped("PostgreSQL does not support expressions in GROUP BY");
+        $this->markTestSkipped($this->getDriver() . ' does not support expressions in GROUP BY');
     }
 
     public function testSelectGroupByAutoExpr()
     {
-        $this->markTestSkipped("PostgreSQL does not support expressions in GROUP BY");
+        $this->markTestSkipped($this->getDriver() . ' does not support expressions in GROUP BY');
     }
 
     public function getDriver()

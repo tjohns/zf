@@ -40,10 +40,10 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
             'reported_by'     => 'micky',
             'assigned_to'     => 'goofy'
         );
-        $rowsAffected = $this->_db->insert('bugs', $row);
+        $rowsAffected = $this->_db->insert('zfbugs', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('bugs', 'bug_id');
-        $lastSequenceId = $this->_db->lastSequenceId('bugs_bug_id_seq');
+        $lastInsertId = $this->_db->lastInsertId('zfbugs', 'bug_id');
+        $lastSequenceId = $this->_db->lastSequenceId('zfbugs_bug_id_seq');
         $this->assertEquals((string) $lastInsertId, (string) $lastSequenceId,
             'Expected last insert id to be equal to last sequence id');
         $this->assertEquals('5', (string) $lastInsertId,
@@ -53,13 +53,13 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     public function testAdapterInsertSequence()
     {
         $row = array (
-            'product_id' => $this->_db->nextSequenceId('products_seq'),
+            'product_id' => $this->_db->nextSequenceId('zfproducts_seq'),
             'product_name' => 'Solaris',
         );
-        $rowsAffected = $this->_db->insert('products', $row);
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('products');
-        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $lastInsertId = $this->_db->lastInsertId('zfproducts');
+        $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
         $this->assertEquals((string) $lastInsertId, (string) $lastSequenceId,
             'Expected last insert id to be equal to last sequence id');
         $this->assertEquals('4', (string) $lastInsertId,
@@ -75,8 +75,8 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
             $db = new Zend_Db_Adapter_Pdo_Pgsql($params);
             $db->getConnection(); // force connection
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'),
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }

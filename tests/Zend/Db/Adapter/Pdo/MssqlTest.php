@@ -63,8 +63,9 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
             $db = new Zend_Db_Adapter_Pdo_Mssql($params);
             $db->getConnection(); // force connection
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }
 

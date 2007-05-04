@@ -67,7 +67,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $this->assertEquals($keys, array_keys($info));
 
-        $this->assertEquals('bugs', $info['name']);
+        $this->assertEquals('zfbugs', $info['name']);
 
         $this->assertEquals(8, count($info['cols']));
         $cols = array(
@@ -105,19 +105,19 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         Zend_Loader::loadClass('Zend_Db_Table_TableSpecial');
         // TableSpecial.php contains class bugs_products too.
-        $table = new bugs_products(array('db' => $this->_db));
+        $table = new zfbugs_products(array('db' => $this->_db));
         $info = $table->info();
         $this->assertContains('name', array_keys($info));
-        $this->assertEquals('bugs_products', $info['name']);
+        $this->assertEquals('zfbugs_products', $info['name']);
     }
 
     public function testTableOptionName()
     {
         $table = $this->_getTable('Zend_Db_Table_TableSpecial',
-            array('name' => 'bugs'));
+            array('name' => 'zfbugs'));
         $info = $table->info();
         $this->assertContains('name', array_keys($info));
-        $this->assertEquals($info['name'], 'bugs');
+        $this->assertEquals($info['name'], 'zfbugs');
     }
 
     public function testTableOptionAdapter()
@@ -350,7 +350,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $table = $this->_table['bugs'];
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(1, count($rowset));
     }
 
@@ -359,7 +359,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $table = $this->_table['bugs'];
         $rowset = $table->find(array(1, 2));
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(2, count($rowset));
     }
 
@@ -394,7 +394,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $table = $this->_table['bugs_products'];
         $rowset = $table->find(1, 2);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(1, count($rowset));
     }
 
@@ -453,13 +453,13 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableInsertSequence()
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',
-            array(Zend_Db_Table_Abstract::SEQUENCE => 'products_seq'));
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'zfproducts_seq'));
         $row = array (
             'product_name' => 'Solaris'
         );
         $insertResult         = $table->insert($row);
-        $lastInsertId         = $this->_db->lastInsertId('products');
-        $lastSequenceId       = $this->_db->lastSequenceId('products_seq');
+        $lastInsertId         = $this->_db->lastInsertId('zfproducts');
+        $lastSequenceId       = $this->_db->lastSequenceId('zfproducts_seq');
         $this->assertEquals($insertResult, $lastInsertId);
         $this->assertEquals($insertResult, $lastSequenceId);
         $this->assertEquals(4, $insertResult);

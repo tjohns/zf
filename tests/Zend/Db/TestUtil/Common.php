@@ -60,14 +60,14 @@ abstract class Zend_Db_TestUtil_Common
      */
     protected $_sequences = array();
 
-    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateTable($tableName)
     {
-        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlDropTable($tableName)
     {
-        return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
+        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
     }
 
     public function getSqlType($type)
@@ -75,18 +75,18 @@ abstract class Zend_Db_TestUtil_Common
         return $type;
     }
 
-    public function createTable($db, $tableId, array $columns = array())
+    public function createTable($tableId, array $columns = array())
     {
         if (!$columns) {
             $columns = $this->{'_getColumns'.$tableId}();
         }
         $tableName = $this->getTableName($tableId);
-        $this->dropTable($db, $tableName);
+        $this->dropTable($tableName);
 
         if (isset($this->_tables[$tableName])) {
             return;
         }
-        $sql = $this->_getSqlCreateTable($db, $tableName);
+        $sql = $this->_getSqlCreateTable($tableName);
         if (!$sql) {
             return;
         }
@@ -98,13 +98,13 @@ abstract class Zend_Db_TestUtil_Common
             $pKey = $columns['PRIMARY KEY'];
             unset($columns['PRIMARY KEY']);
             foreach (explode(',', $pKey) as $pKeyCol) {
-                $pKeys[] = $db->quoteIdentifier($pKeyCol);
+                $pKeys[] = $this->_db->quoteIdentifier($pKeyCol);
             }
             $pKey = implode(', ', $pKeys);
         }
 
         foreach ($columns as $columnName => $type) {
-            $col[] = $db->quoteIdentifier($columnName) . ' ' . $this->getSqlType($type);
+            $col[] = $this->_db->quoteIdentifier($columnName) . ' ' . $this->getSqlType($type);
         }
 
         if ($pKey) {
@@ -113,76 +113,76 @@ abstract class Zend_Db_TestUtil_Common
 
         $sql .= implode(",\n\t", $col);
         $sql .= "\n)";
-        $result = $this->_rawQuery($db, $sql);
+        $result = $this->_rawQuery($sql);
         if ($result === false) {
-            throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
+            throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
         }
         $this->_tables[$tableName] = true;
     }
 
-    public function dropTable($db, $tableName = null)
+    public function dropTable($tableName = null)
     {
         if (!$tableName) {
             foreach (array_keys($this->_tables) as $tab) {
-                $this->dropTable($db, $tab);
+                $this->dropTable($tab);
             }
             return;
         }
 
-        $sql = $this->_getSqlDropTable($db, $tableName);
+        $sql = $this->_getSqlDropTable($tableName);
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($db, $sql);
+        $result = $this->_rawQuery($sql);
         if ($result === false) {
-            throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $db->getConnection()->error);
+            throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
         }
         unset($this->_tables[$tableName]);
     }
 
-    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlCreateSequence($sequenceName)
     {
         return null;
     }
 
-    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlDropSequence($sequenceName)
     {
         return null;
     }
 
-    public function createSequence($db, $sequenceName)
+    public function createSequence($sequenceName)
     {
-        $this->dropSequence($db, $sequenceName);
+        $this->dropSequence($sequenceName);
         if (isset($this->_sequences[$sequenceName])) {
             return;
         }
-        $sql = $this->_getSqlCreateSequence($db, $sequenceName);
+        $sql = $this->_getSqlCreateSequence($sequenceName);
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($db, $sql);
+        $result = $this->_rawQuery($sql);
         if ($result === false) {
-            throw new Zend_Db_Exception("CREATE SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
+            throw new Zend_Db_Exception("CREATE SEQUENCE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
         }
         $this->_sequences[$sequenceName] = true;
     }
 
-    public function dropSequence($db, $sequenceName = null)
+    public function dropSequence($sequenceName = null)
     {
         if (!$sequenceName) {
             foreach (array_keys($this->_sequences) as $seq) {
-                $this->dropSequence($db, $seq);
+                $this->dropSequence($seq);
             }
             return;
         }
 
-        $sql = $this->_getSqlDropSequence($db, $sequenceName);
+        $sql = $this->_getSqlDropSequence($sequenceName);
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($db, $sql);
+        $result = $this->_rawQuery($sql);
         if ($result === false) {
-            throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $db->getConnection()->error);
+            throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
         }
         unset($this->_sequences[$sequenceName]);
     }
@@ -205,10 +205,10 @@ abstract class Zend_Db_TestUtil_Common
     }
 
     protected $_tableName = array(
-        'Accounts'      => 'accounts',
-        'Products'      => 'products',
-        'Bugs'          => 'bugs',
-        'BugsProducts'  => 'bugs_products',
+        'Accounts'      => 'zfaccounts',
+        'Products'      => 'zfproducts',
+        'Bugs'          => 'zfbugs',
+        'BugsProducts'  => 'zfbugs_products',
         'special'       => 'My Table',
     );
 
@@ -259,7 +259,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataAccounts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataAccounts()
     {
         return array(
             array('account_name' => 'mmouse'),
@@ -268,7 +268,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataBugs()
     {
         return array(
             array(
@@ -307,7 +307,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataProducts()
     {
         return array(
             array('product_name' => 'Windows'),
@@ -316,7 +316,7 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataBugsProducts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataBugsProducts()
     {
         return array(
             array(
@@ -346,27 +346,27 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
-    public function populateTable(Zend_Db_Adapter_Abstract $db, $tableId)
+    public function populateTable($tableId)
     {
         $tableName = $this->getTableName($tableId);
-        $data = $this->{'_getData'.$tableId}($db);
+        $data = $this->{'_getData'.$tableId}();
         foreach ($data as $row) {
-            $sql = 'INSERT INTO ' .  $db->quoteIdentifier($tableName);
+            $sql = 'INSERT INTO ' .  $this->_db->quoteIdentifier($tableName);
             $cols = array();
             $vals = array();
             foreach ($row as $col => $val) {
-                $cols[] = $db->quoteIdentifier($col);
+                $cols[] = $this->_db->quoteIdentifier($col);
                 if ($val instanceof Zend_Db_Expr) {
                     $vals[] = $val->__toString();
                 } else {
-                    $vals[] = $db->quote($val);
+                    $vals[] = $this->_db->quote($val);
                 }
             }
             $sql .=        ' (' . implode(', ', $cols) . ')';
             $sql .= ' VALUES (' . implode(', ', $vals) . ')';
-            $result = $this->_rawQuery($db, $sql);
+            $result = $this->_rawQuery($sql);
             if ($result === false) {
-                throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $db->getConnection()->error);
+                throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
             }
         }
     }
@@ -374,26 +374,26 @@ abstract class Zend_Db_TestUtil_Common
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
         $this->_db = $db;
-        $this->createTable($db, 'Accounts');
-        $this->populateTable($db, 'Accounts');
+        $this->createTable('Accounts');
+        $this->populateTable('Accounts');
 
-        $this->createTable($db, 'Products');
-        $this->populateTable($db, 'Products');
+        $this->createTable('Products');
+        $this->populateTable('Products');
 
-        $this->createTable($db, 'Bugs');
-        $this->populateTable($db, 'Bugs');
+        $this->createTable('Bugs');
+        $this->populateTable('Bugs');
 
-        $this->createTable($db, 'BugsProducts');
-        $this->populateTable($db, 'BugsProducts');
+        $this->createTable('BugsProducts');
+        $this->populateTable('BugsProducts');
     }
 
-    public function tearDown(Zend_Db_Adapter_Abstract $db)
+    public function tearDown()
     {
-        $this->dropTable($db);
-        $this->dropSequence($db);
-        $db->closeConnection();
+        $this->dropTable();
+        $this->dropSequence();
+        $this->_db->closeConnection();
     }
 
-    protected abstract function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql);
+    protected abstract function _rawQuery($sql);
 
 }

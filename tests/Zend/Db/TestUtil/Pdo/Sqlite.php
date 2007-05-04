@@ -49,14 +49,14 @@ class Zend_Db_TestUtil_Pdo_Sqlite extends Zend_Db_TestUtil_Pdo_Common
         return parent::getParams($constants);
     }
 
-    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateTable($tableName)
     {
-        return 'CREATE TABLE IF NOT EXISTS ' . $db->quoteIdentifier($tableName);
+        return 'CREATE TABLE IF NOT EXISTS ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlDropTable($tableName)
     {
-        return 'DROP TABLE IF EXISTS ' . $db->quoteIdentifier($tableName);
+        return 'DROP TABLE IF EXISTS ' . $this->_db->quoteIdentifier($tableName);
     }
 
     public function getSqlType($type)

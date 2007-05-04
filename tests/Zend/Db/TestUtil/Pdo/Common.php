@@ -31,8 +31,8 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 abstract class Zend_Db_TestUtil_Pdo_Common extends Zend_Db_TestUtil_Common
 {
-    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    protected function _rawQuery($sql)
     {
-        return $db->getConnection()->query($sql);
+        return $this->_db->getConnection()->query($sql);
     }
 }

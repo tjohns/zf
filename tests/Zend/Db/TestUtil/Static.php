@@ -49,7 +49,7 @@ class Zend_Db_TestUtil_Static extends Zend_Db_TestUtil_Common
         return $constants;
     }
 
-    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    protected function _rawQuery($sql)
     {
         // no-op
     }

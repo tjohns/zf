@@ -100,7 +100,7 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
         $this->_db = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         try {
             $conn = $this->_db->getConnection();
-        } catch (Exception $e) {
+        } catch (Zend_Exception $e) {
             $this->_db = null;
             $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting Zend_Db_Adapter_Exception, got ' . get_class($e));
@@ -114,7 +114,7 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $this->_util->tearDown($this->_db);
+        $this->_util->tearDown();
         $this->_db = null;
     }
 

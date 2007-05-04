@@ -28,17 +28,17 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
 
     public function testSelectFromQualified()
     {
-        $this->markTestSkipped('SQLite does not support qualified table names');
+        $this->markTestSkipped($this->getDriver() . ' does not support qualified table names');
     }
 
     public function testSelectJoinQualified()
     {
-        $this->markTestSkipped('SQLite does not support qualified table names');
+        $this->markTestSkipped($this->getDriver() . ' does not support qualified table names');
     }
 
     public function testSelectJoinRight()
     {
-        $this->markTestSkipped('SQLite does not support RIGHT OUTER JOIN');
+        $this->markTestSkipped($this->getDriver() . ' does not support RIGHT OUTER JOIN');
     }
 
     public function testSelectGroupBy()
@@ -46,13 +46,15 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectGroupBy();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(3, count($result),
             'Expected count of first result set to be 2');
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount'],
             'Expected count(*) of first result set to be 2');
-        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(2, $result[1][$key]);
         $this->assertEquals(1, $result[1]['thecount']);
     }
 
@@ -61,13 +63,15 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectGroupByQualified();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(3, count($result),
             'Expected count of first result set to be 2');
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount'],
             'Expected count(*) of first result set to be 2');
-        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(2, $result[1][$key]);
         $this->assertEquals(1, $result[1]['thecount']);
     }
 
@@ -76,9 +80,11 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectHaving();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(2, count($result));
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount']);
     }
 
@@ -87,9 +93,11 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectHavingWithParameter();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(2, count($result));
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount']);
     }
 
@@ -98,11 +106,13 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectHavingOr();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(3, count($result));
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount']);
-        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(2, $result[1][$key]);
         $this->assertEquals(1, $result[1]['thecount']);
     }
 
@@ -111,11 +121,13 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectHavingOrWithParameter();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
-        $bug_id = '"bugs_products"."bug_id"';
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $key = "$bugs_products.$bug_id";
         $this->assertEquals(3, count($result));
-        $this->assertEquals(1, $result[0][$bug_id]);
+        $this->assertEquals(1, $result[0][$key]);
         $this->assertEquals(3, $result[0]['thecount']);
-        $this->assertEquals(2, $result[1][$bug_id]);
+        $this->assertEquals(2, $result[1][$key]);
         $this->assertEquals(1, $result[1]['thecount']);
     }
 

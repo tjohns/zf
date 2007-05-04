@@ -31,7 +31,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
      */
     public function testStatementFetchAll()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
@@ -46,7 +46,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
      */
     public function testStatementFetchColumn()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
@@ -61,12 +61,13 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
      */
     public function testStatementFetchObject()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
         $result = $stmt->fetchObject();
-        $this->assertThat($result, $this->isInstanceOf('stdClass'), 'Expecting object of type stdClass, got '.get_class($result));
+        $this->assertType('stdClass', $result,
+            'Expecting object of type stdClass, got '.get_class($result));
         $this->assertEquals('Linux', $result->product_name);
     }
 

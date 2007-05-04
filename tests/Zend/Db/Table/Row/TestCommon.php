@@ -46,7 +46,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertTrue($rowset->exists());
         $this->assertEquals(1, count($rowset));
     }
@@ -63,7 +63,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         );
 
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
             $bug_description = $row1->bug_description;
@@ -81,10 +81,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         $a = $row1->toArray();
 
@@ -108,10 +108,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
             $this->assertEquals(1, $row1->bug_id);
@@ -132,10 +132,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
             $row1->bug_description = 'foo';
@@ -156,10 +156,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         $result = $row1->setFromArray($data);
 
@@ -194,7 +194,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSaveInsertSequence()
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',
-            array(Zend_Db_Table_Abstract::SEQUENCE => 'products_seq'));
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'zfproducts_seq'));
         $data = array (
             'product_name' => 'Solaris'
         );
@@ -218,10 +218,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         $row1->setFromArray($data);
         $row1->save();
@@ -242,10 +242,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
             $row1->setTable($table2);
@@ -263,10 +263,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         $column = 'doesNotExist';
 
@@ -286,10 +286,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         $column = 'doesNotExist';
 
@@ -309,10 +309,10 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract');
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $row1 = $rowset->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
             $row1->bug_id = 6;
@@ -334,7 +334,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
         $this->assertEquals($row1->toArray(), $row1New->toArray());
     }
 
@@ -349,7 +349,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
         $row1New->bug_description = 'New description';
 
         try {
@@ -373,7 +373,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
 
         try {
             $connected = $row1New->setTable($table);
@@ -407,7 +407,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
 
         try {
             $connected = $row1New->setTable($table);
@@ -435,7 +435,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
-            'Expecting object of type Zend_Db_Table_Row_Abstract');
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
 
         $table2 = $this->_table['products'];
         $connected = false;

@@ -43,8 +43,9 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->createSequence($db, 'bugs_seq');
-        $this->createSequence($db, 'products_seq');
+        $this->_db = $db;
+        $this->createSequence('zfbugs_seq');
+        $this->createSequence('zfproducts_seq');
         parent::setUp($db);
     }
 
@@ -76,66 +77,66 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
-    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES '
-            . $db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES '
+            . $this->_db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
         );
         if (in_array($tableName, $tableList)) {
             return null;
         }
-        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlDropTable($tableName)
     {
-        $tableList = $db->fetchCol('SELECT table_name FROM ALL_TABLES '
-            . $db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES '
+            . $this->_db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
         );
         if (in_array($tableName, $tableList)) {
-            return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
         }
         return null;
     }
 
-    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlCreateSequence($sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
-            . $db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
+            . $this->_db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
         );
         if (in_array($sequenceName, $seqList)) {
             return null;
         }
-        return 'CREATE SEQUENCE ' . $db->quoteIdentifier($sequenceName);
+        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
     }
 
-    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlDropSequence($sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
-            . $db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
+            . $this->_db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
         );
         if (in_array($sequenceName, $seqList)) {
-            return 'DROP SEQUENCE ' . $db->quoteIdentifier($sequenceName);
+            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
         }
         return null;
     }
 
-    protected function _getDataBugs(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataBugs()
     {
-        $data = parent::_getDataBugs($db);
+        $data = parent::_getDataBugs();
         foreach ($data as &$row) {
-            $row['bug_id'] = new Zend_Db_Expr($db->quoteIdentifier('bugs_seq').'.NEXTVAL');
-            $row['created_on'] = new Zend_Db_Expr($db->quoteInto('DATE ?', $row['created_on']));
-            $row['updated_on'] = new Zend_Db_Expr($db->quoteInto('DATE ?', $row['updated_on']));
+            $row['bug_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfbugs_seq').'.NEXTVAL');
+            $row['created_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['created_on']));
+            $row['updated_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['updated_on']));
         }
         return $data;
     }
 
-    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataProducts()
     {
-        $data = parent::_getDataProducts($db);
+        $data = parent::_getDataProducts();
         foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr($db->quoteIdentifier('products_seq').'.NEXTVAL');
+            $row['product_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq').'.NEXTVAL');
         }
         return $data;
     }

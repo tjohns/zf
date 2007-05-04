@@ -58,13 +58,13 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
     public function testDbFactory()
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy') );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
+        $this->assertType('Zend_Db_Adapter_Abstract', $db);
     }
 
     public function testDbConstructorWithoutFactory()
     {
         $db = new Zend_Db_Adapter_Static( array('dbname' => 'dummy') );
-        $this->assertThat($db, $this->isInstanceOf('Zend_Db_Adapter_Abstract'));
+        $this->assertType('Zend_Db_Adapter_Abstract', $db);
     }
 
     public function testDbGetConnection()
@@ -72,7 +72,7 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
 
         $conn = $db->getConnection();
-        $this->assertThat($conn, $this->isInstanceOf('Zend_Db_Adapter_Static'));
+        $this->assertType('Zend_Db_Adapter_Static', $conn);
     }
 
     public function testDbGetFetchMode()
@@ -87,8 +87,9 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         try {
             $db = Zend_Db::factory(null);
             $this->fail('Expected to catch Zend_Db_Exception');
-        } catch (Zend_Db_Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Exception'));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Exception', $e,
+                'Expected exception of type Zend_Db_Exception, got '.get_class($e));
             $this->assertEquals($e->getMessage(), 'Adapter name must be specified in a string.');
         }
     }
@@ -146,8 +147,9 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         try {
             $db = Zend_Db::factory('Static', array());
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expected exception of type Zend_Db_Adapter_Exception, got '.get_class($e));
             $this->assertEquals($e->getMessage(), "Configuration must have a key for 'dbname' that names the database instance.");
         }
     }

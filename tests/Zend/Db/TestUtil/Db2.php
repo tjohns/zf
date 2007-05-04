@@ -28,7 +28,8 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->createSequence($db, 'products_seq');
+        $this->_db = $db;
+        $this->createSequence('zfproducts_seq');
         parent::setUp($db);
     }
 
@@ -61,11 +62,11 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         );
     }
 
-    protected function _getDataProducts(Zend_Db_Adapter_Abstract $db)
+    protected function _getDataProducts()
     {
-        $data = parent::_getDataProducts($db);
+        $data = parent::_getDataProducts();
         foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr('NEXTVAL FOR '.$db->quoteIdentifier('products_seq'));
+            $row['product_id'] = new Zend_Db_Expr('NEXTVAL FOR '.$this->_db->quoteIdentifier('zfproducts_seq'));
         }
         return $data;
     }
@@ -81,53 +82,53 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         return $type;
     }
 
-    protected function _getSqlCreateTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
-            . $db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
+            . $this->_db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
         );
         if (in_array($tableName, $tableList)) {
             return null;
         }
-        return 'CREATE TABLE ' . $db->quoteIdentifier($tableName);;
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);;
     }
 
-    protected function _getSqlDropTable(Zend_Db_Adapter_Abstract $db, $tableName)
+    protected function _getSqlDropTable($tableName)
     {
-        $tableList = $db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
-            . $db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
+            . $this->_db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
         );
         if (in_array($tableName, $tableList)) {
-            return 'DROP TABLE ' . $db->quoteIdentifier($tableName);
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
         }
         return null;
     }
 
-    protected function _getSqlCreateSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlCreateSequence($sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
-            . $db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
+            . $this->_db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
         );
         if (in_array($sequenceName, $seqList)) {
             return null;
         }
-        return 'CREATE SEQUENCE ' . $db->quoteIdentifier($sequenceName) . ' AS INT START WITH 1 INCREMENT BY 1 MINVALUE 1';
+        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName) . ' AS INT START WITH 1 INCREMENT BY 1 MINVALUE 1';
     }
 
-    protected function _getSqlDropSequence(Zend_Db_Adapter_Abstract $db, $sequenceName)
+    protected function _getSqlDropSequence($sequenceName)
     {
-        $seqList = $db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
-            . $db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
+            . $this->_db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
         );
         if (in_array($sequenceName, $seqList)) {
-            return 'DROP SEQUENCE ' . $db->quoteIdentifier($sequenceName) . ' RESTRICT';
+            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName) . ' RESTRICT';
         }
         return null;
     }
 
-    protected function _rawQuery(Zend_Db_Adapter_Abstract $db, $sql)
+    protected function _rawQuery($sql)
     {
-        $conn = $db->getConnection();
+        $conn = $this->_db->getConnection();
         // echo "Db2::_rawQuery(): sql = \n  $sql;\n";
         $result = @db2_exec($conn, $sql);
         if ($result === false) {

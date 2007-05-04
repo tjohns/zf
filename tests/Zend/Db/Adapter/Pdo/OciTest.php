@@ -29,13 +29,13 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
     public function testAdapterInsert()
     {
         $row = array (
-            'product_id'   => new Zend_Db_Expr($this->_db->quoteIdentifier('products_seq').'.NEXTVAL'),
+            'product_id'   => new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq').'.NEXTVAL'),
             'product_name' => 'Solaris',
         );
-        $rowsAffected = $this->_db->insert('products', $row);
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId('products', null); // implies 'products_seq'
-        $lastSequenceId = $this->_db->lastSequenceId('products_seq');
+        $lastInsertId = $this->_db->lastInsertId('zfproducts', null); // implies 'products_seq'
+        $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
     }
@@ -49,8 +49,9 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
             $db = new Zend_Db_Adapter_Pdo_Oci($params);
             $db->getConnection(); // force connection
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Exception'), 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }
 
@@ -60,7 +61,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
      */
     public function testAdapterLimit()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1);
 
@@ -76,7 +77,7 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
 
     public function testAdapterLimitOffset()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
 

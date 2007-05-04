@@ -42,8 +42,8 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         try {
             $db = new Zend_Db_Adapter_Oracle($params);
             $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
-        } catch (Exception $e) {
-            $this->assertThat($e, $this->isInstanceOf('Zend_Db_Adapter_Oracle_Exception'),
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Oracle_Exception', $e,
                 'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
         }
     }
@@ -54,7 +54,7 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterLimit()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1);
 
@@ -70,7 +70,7 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterLimitOffset()
     {
-        $products = $this->_db->quoteIdentifier('products');
+        $products = $this->_db->quoteIdentifier('zfproducts');
 
         $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
 
