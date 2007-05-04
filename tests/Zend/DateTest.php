@@ -22,8 +22,19 @@
  */
 
 error_reporting( E_ALL | E_STRICT ); // now required for each test suite
-// define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
-define('TESTS_ZEND_I18N_EXTENDED_COVERAGE', true); // uncomment to disable extended unit tests
+/**
+ * These const values control some testing behavior.
+ * They may be defined here or in TestConfiguration.php.
+ */
+if (!defined('TESTS_ZEND_LOCALE_BCMATH_ENABLED')) {
+    // Set to false to disable usage of bcmath extension by Zend_Date
+    define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', true);
+}
+if (!defined('TESTS_ZEND_I18N_EXTENDED_COVERAGE')) {
+    // Set to true to run full Zend_Date unit tests.
+    // Set to false to run a good subset of Zend_Date unit tests.
+    define('TESTS_ZEND_I18N_EXTENDED_COVERAGE', true);
+}
 
 
 /**
@@ -49,7 +60,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_DateTest extends PHPUnit_Framework_TestCase
 {
-    protected static $time;
 
     public function setUp()
     {
@@ -61,7 +71,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testCreation()
     {
-        self::$time = time();
         $date = new Zend_Date(0);
         $this->assertTrue($date instanceof Zend_Date);
     }
