@@ -198,7 +198,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         }
         $paramsString = implode('/', $paramsNormalized);
 
-        $url = $module . '/' . $controller . '/' . $paramsString;
+        $url = $module . '/' . $controller . '/' . $action . '/' . $paramsString;
         $url = '/' . trim($url, '/');
 
         $this->_redirect($url);
