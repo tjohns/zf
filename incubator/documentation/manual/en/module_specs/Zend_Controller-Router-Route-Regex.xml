@@ -138,8 +138,7 @@ $values = array(
 
     <para>
         The map may be defined in either direction to make it work in any
-        environment (eg. Zend_Config does not allow numeric keys). Keys may
-        contain variable names or subpattern indexes:
+        environment. Keys may contain variable names or subpattern indexes:
     </para>
     
    

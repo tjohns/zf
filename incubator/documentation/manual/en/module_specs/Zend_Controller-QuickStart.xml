@@ -5,12 +5,15 @@
         <title>Introduction</title>
         <para>
             <code>Zend_Controller</code> is the heart of Zend Framework's MVC
-            system. MVC stands for Model-View-Controller, and is a design
-            pattern targetted at separating application logic from display
-            logic. <code>Zend_Controller_Front</code> implements a Front
-            Controller pattern, in which all requests are intercepted by the
-            front controller and dispatched to individual Action Controllers
-            based on the URL requested.
+            system. MVC stands for <ulink
+                url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink>
+            and is a design pattern targeted at separating application logic
+            from display logic. <code>Zend_Controller_Front</code> implements a
+            <ulink
+                url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front
+                Controller</ulink> pattern, in which all requests are
+            intercepted by the front controller and dispatched to individual
+            Action Controllers based on the URL requested.
         </para>
         <para>
             The <code>Zend_Controller</code> system was built with extensibility
@@ -26,7 +29,7 @@
         <title>Quick Start</title>
 
         <para>
-            If you need more in-depth information, see the following chapters.
+            If you need more in-depth information, see the following sections.
             If you just want to get up and running quickly, read on.
         </para>
 
@@ -85,6 +88,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
                 (PDFs, text files, etc), add their extensions to the switch, or
                 create your own rewrite rules.
             </para>
+
+            <note>
+                <para>
+                    The above rewrite rules are for Apache; for examples of
+                    rewrite rules for other web servers, see the <link
+                        linkend="zend.controller.router.introduction">router
+                        documentation</link>.
+                </para>
+            </note>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.bootstrap">

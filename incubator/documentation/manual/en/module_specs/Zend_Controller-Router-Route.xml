@@ -5,7 +5,7 @@
         <code>Zend_Controller_Router_Route</code> is the standard framework
         route. It combines ease of use with flexible route definition.  Each
         route consists primarily of URL mapping (of static and dynamic parts
-        (variables)), and may be initialized with defaults as well as with
+        (variables)) and may be initialized with defaults as well as with
         variable requirements.
     </para>
     
@@ -40,17 +40,17 @@ $router->addRoute('user', $route);]]></programlisting>
     <note>
         <title>Character usage</title>
         <para>
-            Current implementation allows you to use any characters (except a
-            slash) as a variable identifier but it is strongly recommended that
-            one uses only php variable friendly characters.  Implementation may
-            be altered in the future which could result in hidden bugs in your
-            code.
+            The current implementation allows you to use any character (except a
+            slash) as a variable identifier, but it is strongly recommended that
+            one uses only characters that are valid for PHP variable
+            identifiers. Future implementations may alter this behaviour, which
+            could result in hidden bugs in your code.
         </para>
     </note>
 
     <para>
         This example route should be matched when you point your browser to
-        <code>http://domain.com/author/martel</code> in which case all its
+        <code>http://domain.com/author/martel</code>, in which case all its
         variables will be injected to the <code>Zend_Controller_Request</code>
         object and will be accessible in your <code>ProfileController</code>.
         Variables returned by this example may be represented as an array of

@@ -5,7 +5,7 @@
         <title>Usage</title>
 
         <para>
-            The response object is the logical pair to the <link
+            The response object is the logical counterpart to the <link
                 linkend="zend.controller.request">request object</link>. Its
             purpose is to collate content and/or headers so that they may be
             returned en masse. Additionally, the front controller will pass any
@@ -72,7 +72,7 @@ $this->getResponse()
                 If using the action controller <link
                     linkend="zend.controller.action.viewintegration">view
                     integration</link>, you do not need to set the rendered view
-                script content in the response object as
+                script content in the response object, as
                 <code>Zend_Controller_Action::render()</code> does this by default.
             </para>
         </note>

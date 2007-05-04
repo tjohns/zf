@@ -6,9 +6,10 @@
             <code>Zend_Controller_Router_Rewrite</code> is the standard
             framework router. Routing is the process of taking a URI endpoint
             (that part of the URI which comes after the base URL) and
-            decomposing it into parameters to determine which controller and
-            action of that controller should receive the request. This value of
-            the controller, action and other parameters is packaged into a
+            decomposing it into parameters to determine which module,
+            controller, and action of that controller should receive the
+            request. This values of the module, controller, action and other
+            parameters are packaged into a
             <code>Zend_Controller_Request_Http</code> object which is then
             processed by <code>Zend_Controller_Dispatcher_Standard</code>.
             Routing occurs only once: when the request is initially received and
@@ -17,7 +18,7 @@
 
         <para>
             <code>Zend_Controller_Router_Rewrite</code> is designed to allow for
-            mod_rewrite like functionality using pure php structures. It is very
+            mod_rewrite-like functionality using pure php structures. It is very
             loosely based on Ruby on Rails routing and does not require any
             prior knowledge of webserver URL rewriting. It is designed to work
             with a single Apache mod_rewrite rule (one of):
@@ -113,15 +114,15 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         <para>
             Routes may be used numerous times to create a chain or user defined
             application routing schema. You may use any number of routes in any
-            configuration, with the exception of Module route which should
-            rather be used once and probably as the most generic route (ie. as a
+            configuration, with the exception of the Module route, which should
+            rather be used once and probably as the most generic route (i.e., as a
             default). Each route will be described in greater detail later on.
         </para>
 
         <para>
             The first parameter to addRoute is the name of the route. It is used
-            as a handle for getting the routes out of the router, eg. for URL
-            generation purposes. The second parameter being the route itself.
+            as a handle for getting the routes out of the router (e.g., for URL
+            generation purposes). The second parameter being the route itself.
         </para>
 
         <note>
@@ -140,11 +141,12 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 
         <para>
             Routing is a simple process of iterating through all provided routes
-            and matching it's definitions to current request URI. When a
-            positive match is found, variable values are returned from the Route
-            instance and are injected into <code>Zend_Controller_Request</code>
-            object for later use in dispatcher as well as in user created
-            controllers. On a negative match next route in chain is checked.
+            and matching its definitions to current request URI. When a positive
+            match is found, variable values are returned from the Route instance
+            and are injected into the <code>Zend_Controller_Request</code>
+            object for later use in the dispatcher as well as in user created
+            controllers. On a negative match result, the next route in the chain
+            is checked.
         </para>
             
         <note>
@@ -158,10 +160,9 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         <note>
             <title>Returned values</title>
             <para>
-                Values which are returned from routing come from URL parameters
-                or user defined route defaults. These variables are later
-                accessible through the
-                <code>Zend_Controller_Request::getParam()</code> or
+                Values returned from routing come from URL parameters or user
+                defined route defaults. These variables are later accessible
+                through the <code>Zend_Controller_Request::getParam()</code> or
                 <code>Zend_Controller_Action::_getParam()</code> methods.
             </para>
         </note>
@@ -176,10 +177,11 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         <note>
             <title>Special variables</title>
             <para>
-                Names of these special variables may be different if you choose
-                to alter the defaults in
-                <code>Zend_Controller_Request_Http</code> by the means of
-                setControllerKey and setActionKey methods.
+                The names of these special variables may be different if you
+                choose to alter the defaults in
+                <code>Zend_Controller_Request_Http</code> by means of the
+                <code>setControllerKey</code> and <code>setActionKey</code>
+                methods.
             </para>
         </note>
 
@@ -254,7 +256,7 @@ $this->addRoute('default', $compat);]]></programlisting>
         <para>
             If you do not want this particular default route in your routing
             schema, you may override it by creating your own 'default' route
-            (ie. storing it under the name of 'default') or removing it
+            (i.e., storing it under the name of 'default') or removing it
             altogether by using <code>removeDefaultRoutes()</code>:
         </para>
 
@@ -268,7 +270,7 @@ $router->removeDefaultRoutes();]]></programlisting>
         <title>Base URL and subdirectories</title>
 
         <para>
-            The rewrite router can be used in subdirectories (eg.
+            The rewrite router can be used in subdirectories (e.g.,
             <code>http://domain.com/~user/application-root/</code>>) in which
             case the base URL of the application
             (<code>/~user/application-root</code>) should be automatically
@@ -278,8 +280,8 @@ $router->removeDefaultRoutes();]]></programlisting>
 
         <para>
             Should the base URL be detected incorrectly you can override it with
-            your own base path with the help of
-            <code>Zend_Controller_Request_Http</code> by calling the
+            your own base path by using
+            <code>Zend_Controller_Request_Http</code> and calling the
             <code>setBaseUrl()</code> method (see <xref
                 linkend="zend.controller.request.http.baseurl" />):
         </para>
@@ -300,7 +302,7 @@ $request->setBaseUrl(/~user/application-root/);]]></programlisting>
         <title>Using Zend_Config with the RewriteRouter</title>
 
         <para>
-            Sometimes its more convenient to update a configuration file with
+            Sometimes it is more convenient to update a configuration file with
             new routes than to change the code. This is possible via the
             <code>addConfig()</code> method. Basically, you create a
             Zend_Config-compatible configuration, and in your code read it in
@@ -348,7 +350,7 @@ $router->addConfig($config, 'routes');
             of the INI file to use for its routes. Each first-level key under
             that section will be used to define a route name; the above example
             defines the routes 'archive' and 'news'. Each route then requires,
-            minimally a 'route' entry and one or more 'defaults' entries;
+            at minimum, a 'route' entry and one or more 'defaults' entries;
             optionally one or more 'reqs' (short for 'required') may be
             provided. All told, these correspond to the three arguments provided
             to a <code>Zend_Controller_Router_Route_Interface</code> object. An

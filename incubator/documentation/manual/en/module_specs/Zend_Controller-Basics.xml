@@ -132,7 +132,7 @@
                 <para>
                     <code>Zend_Controller_Action</code> is the base action
                     controller component.  Each controller is a single class
-                    that extends the <code>Zend_Controller_Action class</code>,
+                    that extends the <code>Zend_Controller_Action class</code>
                     and should contain one or more action methods.
                 </para>
             </listitem>

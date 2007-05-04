@@ -5,16 +5,20 @@
         <title>Overview</title>
 
         <para>
-            <code>Zend_Controller_Front</code> implements a Front Controller
-            pattern used in Model-View-Controller (MVC) applications. Its
-            purpose is to initialize the request environment, route the incoming
-            request, and then dispatch any discovered actions; it aggregates any
-            responses and returns them when the process is complete.
+            <code>Zend_Controller_Front</code> implements a <ulink
+                url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front
+                Controller pattern</ulink> used in <ulink
+                url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller
+                (MVC)</ulink> applications. Its purpose is to initialize the
+            request environment, route the incoming request, and then dispatch
+            any discovered actions; it aggregates any responses and returns them
+            when the process is complete.
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> also implements the Singleton
-            pattern, meaning only a single instance of it may be available at
+            <code>Zend_Controller_Front</code> also implements the <ulink
+                url="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton
+            pattern</ulink>, meaning only a single instance of it may be available at
             any given time. This allows it to also act as a registry on which
             the other objects in the dispatch process may draw.
         </para>
@@ -124,7 +128,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <para>
                 If no request or response object are passed in,
                 <code>dispatch()</code> will check for previously registered
-                objects and use those, or instantiate default versions to use in
+                objects and use those or instantiate default versions to use in
                 its process (in both cases, the HTTP flavor will be used as the
                 default).
             </para>
@@ -211,7 +215,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)DefaultControllerName()</code> let you
                     specify a different name to use for the default controller
-                    ('index' is used otherwise), and retrieve the current value.
+                    ('index' is used otherwise) and retrieve the current value.
                     They proxy to <link
                         linkend="zend.controller.dispatcher">the
                         dispatcher</link>.
@@ -222,7 +226,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)DefaultActionName()</code> let you specify a
                     different name to use for the default action ('index' is
-                    used otherwise), and retrieve the current value.  They proxy
+                    used otherwise) and retrieve the current value.  They proxy
                     to <link linkend="zend.controller.dispatcher">the
                         dispatcher</link>.
                 </para>
@@ -232,7 +236,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)Request()</code> let you specify <link
                         linkend="zend.controller.request">the request</link>
-                    class or object to use during the dispatch process, and to
+                    class or object to use during the dispatch process and to
                     retrieve the current object. When setting the request
                     object, you may pass in a request class name, in which case
                     the method will load the class file and instantiate it.
@@ -243,7 +247,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)Router()</code> let you specify <link
                         linkend="zend.controller.router">the router</link>
-                    class or object to use during the dispatch process, and to
+                    class or object to use during the dispatch process and to
                     retrieve the current object. When setting the router
                     object, you may pass in a router class name, in which case
                     the method will load the class file and instantiate it.
@@ -260,7 +264,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)BaseUrl()</code> let you specify <link
                         linkend="zend.controller.request.http.baseurl">the base
-                        URL</link> to strip when routing requests, and to
+                        URL</link> to strip when routing requests and to
                     retrieve the current value. The value is provided to the
                     request object just prior to routing.
                 </para>
@@ -271,7 +275,7 @@ Zend_Controller_Front::run('../application/controllers');
                     <code>(set|get)Dispatcher()</code> let you specify <link
                         linkend="zend.controller.dispatcher">the
                         dispatcher</link> class or object to use during the
-                    dispatch process, and to retrieve the current object. When
+                    dispatch process and retrieve the current object. When
                     setting the dispatcher object, you may pass in a dispatcher
                     class name, in which case the method will load the class
                     file and instantiate it.
@@ -288,7 +292,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)Response()</code> let you specify <link
                         linkend="zend.controller.response">the response</link>
-                    class or object to use during the dispatch process, and to
+                    class or object to use during the dispatch process and to
                     retrieve the current object. When setting the response
                     object, you may pass in a response class name, in which case
                     the method will load the class file and instantiate it.
@@ -403,7 +407,7 @@ Zend_Controller_Front::run('../application/controllers');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>useDefaultControllerAlways()</code> is used to hint to
+                    <code>useDefaultControllerAlways</code> is used to hint to
                     <link linkend="zend.controller.dispatcher">the
                         dispatcher</link> to use the default controller in the
                     default module for any request that is not dispatchable

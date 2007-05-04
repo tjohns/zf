@@ -1,18 +1,18 @@
 <sect3 id="zend.controller.actionhelpers.redirector">
-	<title>Redirector</title>
+    <title>Redirector</title>
 
-	<sect4 id="zend.controller.actionhelper.redirector.introduction">
-		<title>Introduction</title>
+    <sect4 id="zend.controller.actionhelper.redirector.introduction">
+        <title>Introduction</title>
 
-		<para>
+        <para>
             The <code>Redirector</code> helper allows you to use a redirector
             object to fufill your application's needs for redirecting to a new
-            url.  The has numerous benefits this has over the
-            <code>_redirect()</code> method such as being able to preconfigure
-            sitewide behavior into the redirector object, or using the built in
+            URL. It provides numerous benefits over the
+            <code>_redirect()</code> method, such as being able to preconfigure
+            sitewide behavior into the redirector object or using the built in
             <code>goto($action, $controller, $module, $params)</code> interface
             similar to that of <code>Zend_Controller_Action::_forward()</code>.
-		</para>
+        </para>
 
         <para>
             The <code>Redirector</code> has a number of methods that can be used
@@ -65,7 +65,7 @@
             <listitem>
                 <para>
                     <code>setPrependBase()</code> can be used to prepend the
-                    request object's base URL to a url specified with
+                    request object's base URL to a URL specified with
                     <code>setGotoUrl()</code>, <code>gotoUrl()</code>, or
                     <code>gotoUrlAndExit()</code>.
                 </para>
@@ -109,11 +109,20 @@
         </para>
     </sect4>
 
-	<sect4 id="zend.controller.actionhelper.redirector.basicusage">
-		<title>Basic Usage Examples</title>
+    <sect4 id="zend.controller.actionhelper.redirector.basicusage">
+        <title>Basic Usage Examples</title>
 
-        <programlisting role="php"><![CDATA[<?php
-// EXAMPLE 1: SET GLOBAL OPTIONS
+        <example>
+            <title>Setting Options</title>
+
+            <para>
+                This example overrides several options, including setting the
+                HTTP status code to use in the redirect ('303'), not defaulting
+                to exit on redirect, and defining a default URL to use when
+                redirecting.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
 class SomeController extends Zend_Controller_Action
 {
     /**
@@ -139,12 +148,25 @@ class SomeController extends Zend_Controller_Action
     {
         /* do some stuff */
 
+        // Redirect to a previously registered URL, and force an exit to occur
+        // when done:
         $this->_redirector->redirectAndExit();
         return; // never reached
     }
 }
+?>]]></programlisting>
+        </example>
 
+        <example>
+            <title>Using Defaults</title>
 
+            <para>
+                This example assumes that the defaults are used, which means
+                that any redirect will result in an immediate
+                <code>exit()</code>.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
 // ALTERNATIVE EXAMPLE
 class AlternativeController extends Zend_Controller_Action
 {
@@ -168,8 +190,22 @@ class AlternativeController extends Zend_Controller_Action
         return; // never reached since default is to goto and exit
     }
 }
+?>]]></programlisting>
+        </example>
 
-// EXAMPLE USING _forward() API IN goto()
+        <example>
+            <title>Using goto()'s _forward() API</title>
+
+            <para>
+                <code>goto()</code>'s API mimics that of
+                <code>Zend_Controller_Action::_forward()</code>. The primary
+                difference is that it builds a URL from the parameters passed,
+                and using the default <code>:module/:controller/:action/*</code>
+                format of the default router. It then redirects instead of
+                chaining the action.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
 class ForwardController extends Zend_Controller_Action
 {
     /**
@@ -193,14 +229,35 @@ class ForwardController extends Zend_Controller_Action
         $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }
+?>]]></programlisting>
+        </example>
 
-// EXAMPLE USING ROUTE ASSEMBLY WITH gotoRoute()
-// Assume the following route has been registered:
-// $route = new Zend_Controller_Router_Route(
-//     'blog/:year/:month/:day/:id',
-//     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
-// );
-// $router->addRoute('blogArchive', $route);
+        <example>
+            <title>Using route assembly with gotoRout()</title>
+
+            <para>
+                The following example uses the <link
+                    linkref="zend.controller.router">router's</link>
+                <code>assemble()</code> method to create a URL based on an
+                associative array of parameters passed. It assumes the following
+                route has been registered:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    'blog/:year/:month/:day/:id',
+    array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+);
+$router->addRoute('blogArchive', $route);
+?>]]></programlisting>
+
+            <para>
+                Given an array with year set to 2006, month to 4, day to 24, and
+                id to 42, it would then build the URL
+                <code>/blog/2006/4/24/42</code>.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
 class BlogAdminController extends Zend_Controller_Action
 {
     /**
@@ -228,7 +285,7 @@ class BlogAdminController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-
+        </example>
     </sect4>
 </sect3>
 <!--

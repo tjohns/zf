@@ -15,7 +15,7 @@
             <code>index</code> for each of the controller and action defaults
             and <code>default</code> for the module default value, but allows
             the developer to change the default values for the controller and
-            action using the <code>setDefaultController()</code>,
+            action using the <code>setDefaultController()</code>
             <code>setDefaultAction()</code> methods, respectively.
         </para>
 

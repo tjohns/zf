@@ -47,9 +47,9 @@
 
         <para>
             The request object is passed to the front controller, or if none is
-            provided, instantiated at the beginning of the dispatch process,
-            before routing occurs. It is passed through to every object in the
-            dispatch chain.
+            provided, it is instantiated at the beginning of the dispatch
+            process, before routing occurs. It is passed through to every object
+            in the dispatch chain.
         </para>
 
         <para>
@@ -114,9 +114,9 @@
 
             <para>
                 You may also set user parameters in the request object using
-                <code>setParam()</code>, and retrieve these later using
+                <code>setParam()</code> and retrieve these later using
                 <code>getParam()</code>. The router makes use of this
-                functionality to set parameters matched in the request URI into 
+                functionality to set parameters matched in the request URI into
                 the request object.
             </para>
 

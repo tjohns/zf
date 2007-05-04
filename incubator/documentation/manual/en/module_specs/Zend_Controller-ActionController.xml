@@ -61,7 +61,7 @@ class FooController extends Zend_Controller_Action
         <para>
             While you can always override the action controller's constructor,
             we do not recommend this. Zend_Controller_Action::__construct()
-            performs some important tasks, such as registring the request and
+            performs some important tasks, such as registering the request and
             response objects, as well as any custom invocation arguments passed
             in from the front controller. If you must override the constructor,
             be sure to call <code>parent::__construct($request, $response,
@@ -232,8 +232,11 @@ applicationOrModule/
             <para>
                 In other words, view scripts are assumed to be in the
                 <code>views/scripts/</code> subdirectory, and the
-                <code>views</code> subdirectory is assumed to be a sibling ofe
-                functionality when determining the view script name and path.
+                <code>views</code> subdirectory is assumed to contain sibling 
+                functionality (helpers, filters). When determining the view
+                script name and path, the <code>views/scripts/</code> directory
+                will be used as the base path, with a directories named after the
+                individual controllers providing a hierarchy of view scripts.
             </para>
         </sect3>
 
