@@ -408,7 +408,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
             session_write_close();
         }
 
-        $response->sendHeaders();
+        $this->getResponse()->sendHeaders();
         exit();
     }
     
