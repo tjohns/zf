@@ -1,7 +1,7 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 0.9.3 / 04-May-2007 / based on revision 4724 =
+=RELEASE 0.9.3 / 04-May-2007 / based on revision 4727 =
 This release resolves the following issues:
   ZF-1340 Update Zend Introduction documentation
   ZF-1288 Remove deprecated class Zend.php
@@ -28,6 +28,7 @@ This release resolves the following issues:
   ZF-1321 Zend_Controller_Router_Route_Module::assemble() ignores parameter
   ZF-1323 Zend_Controller_Response doc: $response->sendOutput() doesn't exist
   ZF-1332 Zend_Controller_Route_Regex assemble working incorrectly
+  ZF-1344 Undefined variable: response, in ...\Action\Helper\Redirector.php
 - Zend_Date
   ZF-1176 addMonth() produces unexpected results (caused by DST adjustment...)
   ZF-1238 Docs: Change Zend_Date::MONTH_DIGIT to Zend_Date::MONTH_SHORT
