@@ -75,7 +75,7 @@ print $number; // wird 13524.678 zurückgeben
 
             <para>
                 Auch die Genauigkeit des dezimalen Ergebnisses kann zu einer gewünschten Länge abgeschnitten werden
-                mithilfe von <code>getNumber()</code. Wenn keine Genauigkeit angegeben wurde, wird nichts
+                mithilfe von <code>getNumber()</code>. Wenn keine Genauigkeit angegeben wurde, wird nichts
                 abgeschnitten. Für die Angabe der Genauigkeit dürfen nur PHP Interger Zahlen verwendet werden.
                 Das Ergebnis wird nicht gerundet. Deswegen wird "1.6" auch "1" und nicht "2" zurückgeben, wenn als
                 Genauigkeit null angegeben wurde.

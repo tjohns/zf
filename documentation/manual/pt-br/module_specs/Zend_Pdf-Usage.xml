@@ -34,6 +34,11 @@ try {
     if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
         // Create new PDF if file doesn't exist
         $pdf = new Zend_Pdf();
+
+        if (!isset($argv[2])) {
+            // force complete file rewriting (instead of updating)
+            $argv[2] = $argv[1];
+        }
     } else {
         // Throw an exception if it's not the "Can't open file" exception
         throw $e;

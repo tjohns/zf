@@ -7,7 +7,7 @@
         bei der Konvertierung und Normalisierung zwischen verschiedenen Formaten und verschiedenen Gebietsschemata.
         Für die Manipulation von Datumszeichenketten die bereits übereinstimmen mit 
         <link linkend="zend.date.constants">einem der vielen international erkannten Standardformate, oder einem der
-        lokalisierten Datumsformat</ulink> welche von <code>Zend_Date</code> verwendet werden.
+        lokalisierten Datumsformat</link> welche von <code>Zend_Date</code> verwendet werden.
         Die Verwendung von vordefinierten Formate bietet Vorteile, wie die Benutzung von gut getestetem Code, und
         die Sicherheit von Beweglichkeit und Interoperabilität (abhängig vom benutzten Standard). Das unten angeführte
         Beispiel folgt nicht dieser Empfehlung, da die Benutzung von nicht standardmäßigen Datumsformaten die

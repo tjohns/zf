@@ -287,7 +287,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             Monatsnamen verwendet werden. Die Datumsformat Option 'format_type' wählt zwischen CLDR/ISO
             Datumsdefinitionen und PHP's date() Definitionen. Die Option 'fix_date' erlaubt oder verhindert eine
             Automatik welche versucht falsche Daten zu korrigieren. Die Option 'number_format' definiert ein
-            Standard Format für Nummern bei Verwendung der Funktion <code>toNumber()</code. (siehe
+            Standard Format für Nummern bei Verwendung der Funktion <code>toNumber()</code>. (siehe
             <xref 
                 linkend= "zend.locale.number.localize"/>
             ).

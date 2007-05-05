@@ -241,7 +241,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
             helper class. If defined, it allows you to treat the helper as a
             method of the helper broker, in order to allow easy, one-off usage
             of the helper. As an example, the <link
-                linkref="zend.controller.actionhelpers.redirector">redirector</link>
+                linkend="zend.controller.actionhelpers.redirector">redirector</link>
             defines <code>direct()</code> as an alias of <code>goto()</code>,
             allowing use of the helper like this:
         </para>

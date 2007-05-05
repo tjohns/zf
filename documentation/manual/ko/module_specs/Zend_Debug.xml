@@ -57,7 +57,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
             a variable and then remove the code very quickly.
         </para>
         <para>
-            Also consider the <link linkend="zend.log.introduction">Zend_Log</link>
+            Also consider the <link linkend="zend.log.overview">Zend_Log</link>
             component when writing more permanent debugging code.
             For example, you can use the <code>DEBUG</code> log level and the
             Stream log writer, to output the string returned by

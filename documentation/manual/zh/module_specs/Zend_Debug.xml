@@ -43,7 +43,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
 			使用<code>Zend_Debug::dump()</code>很方便在开发项目时Debug，你可以很容易地增加或移除它。
         </para>
         <para>
-		你也可以考虑使用<link linkend="zend.log.introduction">Zend_Log</link>来debug，用于更长期的非短暂性的调试和监控。
+		你也可以考虑使用<link linkend="zend.log.overview">Zend_Log</link>来debug，用于更长期的非短暂性的调试和监控。
 		例如，你可以使用<code>DEBUG</code>记录级别和Stream记录器来输出<code>Zend_Debug::dump()</code>返回的信息。          
         </para>
     </tip>

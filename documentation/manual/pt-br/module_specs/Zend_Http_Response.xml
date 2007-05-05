@@ -241,10 +241,12 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: Get
-                        the standard HTTP response message for a response code $code. For example, 
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>: 
+                        Get the standard HTTP response message for a response code $code. For example, 
                         will return "Internal Server Error" if $code is 500. If $http11 is true (default),
                         will return HTTP/1.1 standard messages - otherwise HTTP/1.0 messages will be returned.
+                        If $code is not specified, this method will return all known HTTP response codes as an 
+                        associative (code => message) array. 
                     </para>
                 </listitem>
             </itemizedlist>

@@ -462,10 +462,14 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id'
+        'p.product_id = l.product_id',
         array() ); // empty list of columns
 
 ?>]]></programlisting>
+                <para>
+                    Note the empty <code>array()</code> in the above example
+                    in place of a list of columns from the joined table.
+                </para>
             </example>
 
             <para>
@@ -741,7 +745,7 @@ $prod = 'Apple';
 $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
-    ->where('price < $minimumPrice OR price > $maximumPrice')
+    ->where("price < $minimumPrice OR price > $maximumPrice")
     ->where('product_name = ?', $prod);
 
 ?>]]></programlisting>

@@ -96,7 +96,9 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
                     your server. "The size of a float is platform-dependent, although a maximum of ~1.8e308 with a
                     precision of roughly 14 decimal digits is a common value (that's 64 bit IEEE format)." [
                     <ulink url="http://www.php.net/float">http://www.php.net/float</ulink>
-                    ]
+                    ].  Additionally, inherent limitations of float data types, and rounding error of float numbers
+                    may introduce errors into calculations.  To avoid these problems, the ZF i18n components use
+                    BCMath extension, if available.
                 </para>
             </listitem>
             <listitem>
@@ -110,7 +112,7 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
                     <ulink url="http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html">MySQL</ulink>
                     differ a little from each other, both are supported by <code>Zend_Date</code> using the
                     <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>
-                    format specification constant. When date strings conform to "Y/m/d" or "Y-m-d H:i: s", according to
+                    format specification constant. When date strings conform to "Y/m/d" or "Y-m-d H:i:s", according to
                     PHP date() format tokens, use Zend_Date's built-in support for ISO 8601 formatted dates.
                 </para>
             </listitem>

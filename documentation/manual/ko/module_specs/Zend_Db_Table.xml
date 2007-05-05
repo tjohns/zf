@@ -168,7 +168,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 If you don't specify the primary key, Zend_Db_Table_Abstract
-                tries to discover the primary key based on the information 
+                tries to discover the primary key based on the information
                 provided by the <code>describeTable()</code> method.
             </para>
 
@@ -227,7 +227,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 <listitem>
                     <para>
                         <code>_setupMetadata()</code>
-                        sets the schema if the table name contains the 
+                        sets the schema if the table name contains the
                         pattern "schema.table";
                         calls <code>describeTable()</code> to get metadata
                         information; defaults the <code>$_cols</code>
@@ -258,7 +258,7 @@ class Bugs extends Zend_Db_Table_Abstract
         <title>Creating an Instance of a Table</title>
 
         <para>
-            Before you use a Table class, create an instance using its 
+            Before you use a Table class, create an instance using its
             constructor.  The constructor's argument is an array of options.
             The most important option to a Table constructor is the
             database adapter instance, representing a live connection
@@ -402,7 +402,7 @@ $table->insert($data);
 
         <para>
             By default, the values in your data array are inserted as
-            literal values, using parameters.  If you need them to be 
+            literal values, using parameters.  If you need them to be
             treated as SQL expressions, you must make sure they are distinct
             from plain strings.  Use an object of type Zend_Db_Expr to do this.
         </para>
@@ -463,20 +463,26 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                MySQL, Microsoft SQL Server, and SQLite are examples of
+                RDBMS brands that support auto-incrementing primary keys.
+            </para>
+
+            <para>
+                PostgreSQL has a <code>SERIAL</code> notation that implicitly
+                defines a sequence based on the table and column name, and uses
+                the sequence to generate key values for new rows.
+                IBM DB2 has an <code>IDENTITY</code> notation that works similarly.
+                If you use either of these notations, treat your Zend_Db_Table 
+                class as having an auto-incrementing column with respect to
+                declaring the <code>$_sequence</code> member as <code>true</code>.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
 
             <title>Using a Table with a Sequence</title>
-
-            <note>
-                <para>
-                    Support for natural keys is not implemented in
-                    Zend_Db_Table in the current version;
-                    the proposed usage below does not work yet,
-                    but it is planned for Zend Framework 1.0.
-                </para>
-            </note>
 
             <para>
                 A sequence is a database object that generates a unique
@@ -506,20 +512,25 @@ class Bugs extends Zend_Db_Table_Abstract
 ?>]]></programlisting>
             </example>
 
+            <para>
+                Oracle, PostgreSQL, and IBM DB2 are examples of RDBMS
+                brands that support sequence objects in the database.
+            </para>
+
+            <para>
+                PostgreSQL and IBM DB2 also have syntax that defines
+                sequences implicitly and associated with columns.
+                If you use this notation, treat the table as having
+                an auto-incrementing key column.  Define the sequence
+                name as a string only in cases where you would invoke
+                the sequence explicitly to get the next key value.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-natural">
 
             <title>Using a Table with a Natural Key</title>
-
-            <note>
-                <para>
-                    Support for natural keys is not implemented in
-                    Zend_Db_Table in the current version;
-                    the proposed usage below does not work yet,
-                    but it is planned for Zend Framework 1.0.
-                </para>
-            </note>
 
             <para>
                 Some tables have a natural key.  This means that the key is
@@ -596,9 +607,10 @@ $table->update($data, $where);
         </example>
 
         <para>
-            The second argument can be an array of SQL expressions.
-            The expressions are combined as Boolean terms
-            using an <code>AND</code> operator.
+            Since the table <code>update()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.update"><code>update()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -641,6 +653,13 @@ $table->delete($where);
             The second argument can be an array of SQL expressions.
             The expressions are combined as Boolean terms
             using an <code>AND</code> operator.
+        </para>
+
+        <para>
+            Since the table <code>delete()</code> method proxies to the database adapter
+            <link linkend="zend.db.adapter.delete"><code>delete()</code></link> method, the second argument can be an
+            array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
+            operator.
         </para>
 
         <note>
@@ -768,7 +787,7 @@ $rows = $table->fetchAll($where);
         <para>
             The first argument to this method is an SQL expression that
             is used in a <code>WHERE</code> clause, like those used in the
-            <code>update()</code> and <code>delete()</code> methods 
+            <code>update()</code> and <code>delete()</code> methods
             described earlier.
         </para>
 
@@ -851,7 +870,7 @@ $row = $table->fetchRow($where, $order);
 
         <para>
             This method returns an object of type Zend_Db_Table_Row_Abstract.
-            If the search criteria you specified match no rows in the 
+            If the search criteria you specified match no rows in the
             database table, then <code>fetchRow()</code> returns PHP's
             <code>null</code> value.
         </para>
@@ -953,6 +972,159 @@ echo "The table name is " . $info['name'] . "\n";
                 </para>
             </listitem>
         </itemizedlist>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.metadata.caching">
+
+        <title>Caching Table Metadata</title>
+
+        <para>
+            By default, <code>Zend_Db_Table_Abstract</code> queries the underlying database for
+            <link linkend="zend.db.table.info">table metadata</link> upon instantiation of a table object. That is,
+            when a new table object is created, the object's default behavior is to fetch the table metadata from
+            the database using the adapter's <code>describeTable()</code> method.
+        </para>
+
+        <para>
+            In some circumstances, particularly when many table objects are instantiated against the same database
+            table, querying the database for the table metadata for each instance may be undesirable from a
+            performance standpoint. In such cases, users may benefit by caching the table metadata retrieved from the
+            database.
+        </para>
+
+        <para>
+            There are two primary ways in which a user may take advantage of table metadata caching:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Call Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis> -
+                        This allows a developer to once set the default cache object to be used for all table classes.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Configure Zend_Db_Table_Abstract::__construct()</emphasis> - This
+                        allows a developer to set the cache object to be used for a particular table class instance.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            In both cases, the cache specification must be either <code>null</code> (i.e., no cache used) or an
+            instance of <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>. The methods may be used
+            in conjunction when it is desirable to have both a default metadata cache and the ability to change the
+            cache for individual table objects.
+        </para>
+
+        <example id="zend.db.table.metadata.caching-default">
+
+            <title>Using a Default Metadata Cache for all Table Objects</title>
+
+            <para>
+                The following code demonstrates how to set a default metadata cache to be used for all table objects:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// First, set up the Cache
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+    'automatic_serialization' => true
+    );
+
+$backendOptions  = array(
+    'cacheDir'                => 'cacheDir'
+    );
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+
+// Next, set the cache to be used with all table objects
+
+require_once 'Zend/Db/Table/Abstract.php';
+
+Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+
+// A table class is also needed
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    // ...
+}
+
+
+// Each instance of Bugs now uses the default metadata cache
+
+$bugs = new Bugs();
+
+?>]]></programlisting>
+
+        </example>
+
+        <example id="zend.db.table.metadata.caching-instance">
+
+            <title>Using a Metadata Cache for a Specific Table Object</title>
+
+            <para>
+                The following code demonstrates how to set a metadata cache for a specific table object instance:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// First, set up the Cache
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+    'automatic_serialization' => true
+    );
+
+$backendOptions  = array(
+    'cacheDir'                => 'cacheDir'
+    );
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+
+// A table class is also needed
+
+require_once 'Zend/Db/Table/Abstract.php';
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    // ...
+}
+
+
+// Configure an instance upon instantiation
+
+$bugs = new Bugs(array('metadataCache' => $cache));
+
+?>]]></programlisting>
+
+        </example>
+
+        <note>
+
+            <title>Automatic Serialization with the Cache Frontend</title>
+
+            <para>
+                Since the information returned from the adapter's describeTable() method is an array, ensure that the
+                <code>automatic_serialization</code> option is set to <code>true</code> for the
+                <code>Zend_Cache_Core</code> frontend.
+            </para>
+
+        </note>
+
+        <para>
+            Though the above examples use <code>Zend_Cache_Backend_File</code>, developers may use whatever cache
+            backend is appropriate for the situation. Please see <link linkend="zend.cache">Zend_Cache</link> for more
+            information.
+        </para>
 
     </sect2>
 
@@ -1074,7 +1246,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 
-    public function insert($data)
+    public function insert(array $data)
     {
         // add a timestamp
         if (empty($data['created_on'])) {
@@ -1083,7 +1255,7 @@ class Bugs extends Zend_Db_Table_Abstract
         return parent::insert($data);
     }
 
-    public function update($data, $where)
+    public function update(array $data, $where)
     {
         // add a timestamp
         if (empty($data['updated_on'])) {
@@ -1113,7 +1285,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 <code>fetchAll()</code>, but this requires that you duplicate
                 code to form the query conditions if you need to run the
                 query in several places in your application.
-                Therefore it can be convenient to implement a method 
+                Therefore it can be convenient to implement a method
                 in the Table class to perform frequently-used queries
                 against this table.
             </para>
@@ -1216,7 +1388,7 @@ class BugsProducts extends MyAbstractTable
             <para>
                 You are responsible for writing the functions to
                 perform inflection transformation.
-                Zend_Framework does not provide such a function.
+                Zend Framework does not provide such a function.
             </para>
 
         </sect3>

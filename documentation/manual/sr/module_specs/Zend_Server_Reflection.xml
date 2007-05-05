@@ -32,14 +32,21 @@ $function = Zend_Server_Reflection::reflectFunction('my_function');
 // Get prototypes
 $prototypes = $reflection->getPrototypes();
 
-// Get prototype return type
-$prototype->getReturnType();
+// Loop through each prototype for the function
+foreach ($prototypes as $prototype) {
 
-// Get prototype parameters
-$prototype->getParameters();
+    // Get prototype return type
+    echo "Return type: ", $prototype->getReturnType(), "\n";
+    
+    // Get prototype parameters
+    $parameters = $prototype->getParameters();
 
-// Get parameter type
-$parameter->getType();
+    echo "Parameters: \n";
+    foreach ($parameters as $parameter) {
+        // Get parameter type
+        echo "    ", $parameter->getType(), "\n";
+    }
+}
 
 // Get namespace for a class, function, or method.
 // Namespaces may be set at instantiation time (second argument), or using

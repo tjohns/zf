@@ -55,7 +55,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
             vypíše hodnotu proměnné a pak ho zase rychle odstranit. 
         </para>
         <para>
-            Je možné také používat knihovnu <link linkend="zend.log.introduction">Zend_Log</link>
+            Je možné také používat knihovnu <link linkend="zend.log.overview">Zend_Log</link>
             pro dlouhodobé ladění kódu. 
             Např. můžete používat <code>DEBUG</code> log level a výsledek metody
             <code>Zend_Debug::dump()</code> zapisovat do logu.

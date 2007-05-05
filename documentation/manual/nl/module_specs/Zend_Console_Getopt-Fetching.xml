@@ -154,7 +154,7 @@ $p_parameter = $opts->p; // null if not set
             After option arguments and their parameters have been
             parsed from the command-line, there may be additional arguments
             remaining.  You can query these arguments using the 
-            <code>geRemainingArgs()</code> method.  This method returns
+            <code>getRemainingArgs()</code> method.  This method returns
             an array of the strings that were not part of any options.
         </para>
         <example id="zend.console.getopt.fetching.remainingargs.example">

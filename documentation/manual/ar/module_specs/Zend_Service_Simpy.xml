@@ -19,17 +19,17 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        Links: Get, Create, Delete
+                        Links: Create, Retrieve, Update, Delete
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Tags: Get, Delete, Rename, Merge, Split
+                        Tags: Retrieve, Delete, Rename, Merge, Split
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Notes: Get, Create, Delete
+                        Notes: Create, Retrieve, Update, Delete
                     </para>
                 </listitem>
                 <listitem>
@@ -206,6 +206,14 @@ $simpy->saveNote(
     'Test Note', // Title
     'test,note', // Tags
     'This is a test note.' // Description
+);
+
+/* Overwrite an existing note */
+$simpy->saveNote(
+    'Updated Test Note', // Title
+    'test,note,updated', // Tags
+    'This is an updated test note.', // Description
+    $note->getId() // Unique identifier
 );
 
 /* Search for the 10 most recently added notes */

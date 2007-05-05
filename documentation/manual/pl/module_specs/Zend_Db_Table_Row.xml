@@ -198,15 +198,18 @@ $row->save();
 
             <para>
                 You can create a new row for a given table with the
-                <code>fetchNew()</code> method of the table class.
+                <code>createRow()</code> method of the table class.
+                You can access fields of this row with the object-oriented
+                interface, but the row is not stored in the database
+                until you call the <code>save()</code> method.
             </para>
 
-            <example id="zend.db.table.write.insert.example">
+            <example id="zend.db.table.row.write.insert.example">
                 <title>Example of creating a new row for a table</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
-$newRow = $bugs->fetchNew();
+$newRow = $bugs->createRow();
 
 // Set column values as appropriate for your application
 $newRow->bug_description = '...description...';
@@ -217,6 +220,40 @@ $newRow->save();
 
 ?>]]></programlisting>
             </example>
+
+            <para>
+                The optional argument to the createRow() method is
+                an associative array, with which you can populate
+                fields of the new row.
+            </para>
+
+            <example id="zend.db.table.row.write.insert.example2">
+                <title>Example of populating a new row for a table</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$data = array(
+    'bug_description' => '...description...',
+    'bug_status'      => 'NEW'
+);
+
+$bugs = new Bugs();
+$newRow = $bugs->createRow($data);
+
+// INSERT the new row to the database
+$newRow->save();
+
+?>]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    The <code>createRow()</code> method was called
+                    <code>fetchNew()</code> in earlier releases of
+                    Zend_Db_Table.  You are encouraged to use the new method
+                    name, even though the old name continues to work for the
+                    sake of backward compatibility.
+                </para>
+            </note>
 
         </sect3>
 
@@ -232,12 +269,12 @@ $newRow->save();
                 both for new rows and for rows you need to update.
             </para>
 
-            <example id="zend.db.table.write.set-from-array.example">
+            <example id="zend.db.table.row.write.set-from-array.example">
                 <title>Example of using setFromArray() to set values in a new Row</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
-$newRow = $bugs->fetchNew();
+$newRow = $bugs->createRow();
 
 // Data are arranged in an associative array
 $data = array(

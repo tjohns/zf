@@ -104,7 +104,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
             регистратор Zend_Log_Writer_Stream для вывода строки, возвращенной
             <code>Zend_Debug::dump()</code>.
 <!--
-            Also consider the <link linkend="zend.log.introduction">Zend_Log</link>
+            Also consider the <link linkend="zend.log.overview">Zend_Log</link>
             component when writing more permanent debugging code.
             For example, you can use the <code>DEBUG</code> log level and the
             Stream log writer, to output the string returned by

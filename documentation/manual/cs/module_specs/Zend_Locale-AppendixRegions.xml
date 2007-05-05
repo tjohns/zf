@@ -55,6 +55,10 @@
                         <entry>Bosnia and Herzegovina</entry>
                     </row>
                     <row>
+                        <entry>BD</entry>
+                        <entry>Bangladesh</entry>
+                    </row>
+                    <row>
                         <entry>BE</entry>
                         <entry>Belgium</entry>
                     </row>
@@ -97,6 +101,14 @@
                     <row>
                         <entry>CA</entry>
                         <entry>Canada</entry>
+                    </row>
+                    <row>
+                        <entry>CD</entry>
+                        <entry>Congo (Kinshasa)</entry>
+                    </row>
+                    <row>
+                        <entry>CG</entry>
+                        <entry>Congo (Brazzaville)</entry>
                     </row>
                     <row>
                         <entry>CH</entry>
@@ -193,6 +205,10 @@
                     <row>
                         <entry>GE</entry>
                         <entry>Georgia</entry>
+                    </row>
+                    <row>
+                        <entry>GH</entry>
+                        <entry>Ghana</entry>
                     </row>
                     <row>
                         <entry>GL</entry>
@@ -331,6 +347,10 @@
                         <entry>Monaco</entry>
                     </row>
                     <row>
+                        <entry>ME</entry>
+                        <entry>Montenegro</entry>
+                    </row>
+                    <row>
                         <entry>MH</entry>
                         <entry>Marshall Islands</entry>
                     </row>
@@ -341,6 +361,10 @@
                     <row>
                         <entry>MM</entry>
                         <entry>Myanmar</entry>
+                    </row>
+                    <row>
+                        <entry>MN</entry>
+                        <entry>Mongolia</entry>
                     </row>
                     <row>
                         <entry>MO</entry>
@@ -359,12 +383,28 @@
                         <entry>Maldives</entry>
                     </row>
                     <row>
+                        <entry>MW</entry>
+                        <entry>Malawi</entry>
+                    </row>
+                    <row>
                         <entry>MX</entry>
                         <entry>Mexico</entry>
                     </row>
                     <row>
                         <entry>MY</entry>
                         <entry>Malaysia</entry>
+                    </row>
+                    <row>
+                        <entry>NA</entry>
+                        <entry>Namibia</entry>
+                    </row>
+                    <row>
+                        <entry>NE</entry>
+                        <entry>Niger</entry>
+                    </row>
+                    <row>
+                        <entry>NG</entry>
+                        <entry>Nigeria</entry>
                     </row>
                     <row>
                         <entry>NI</entry>
@@ -377,6 +417,10 @@
                     <row>
                         <entry>NO</entry>
                         <entry>Norway</entry>
+                    </row>
+                    <row>
+                        <entry>NP</entry>
+                        <entry>Nepal</entry>
                     </row>
                     <row>
                         <entry>NZ</entry>
@@ -427,8 +471,16 @@
                         <entry>Romania</entry>
                     </row>
                     <row>
+                        <entry>RS</entry>
+                        <entry>Serbia</entry>
+                    </row>
+                    <row>
                         <entry>RU</entry>
                         <entry>Russia</entry>
+                    </row>
+                    <row>
+                        <entry>RW</entry>
+                        <entry>Rwanda</entry>
                     </row>
                     <row>
                         <entry>SA</entry>
@@ -467,8 +519,16 @@
                         <entry>Syria</entry>
                     </row>
                     <row>
+                        <entry>TG</entry>
+                        <entry>Togo</entry>
+                    </row>
+                    <row>
                         <entry>TH</entry>
                         <entry>Thailand</entry>
+                    </row>
+                    <row>
+                        <entry>TJ</entry>
+                        <entry>Tajikistan</entry>
                     </row>
                     <row>
                         <entry>TN</entry>

@@ -156,26 +156,50 @@ if (Zend_Loader::isReadable($filename)) {
         <para>
             The Zend_Loader class contains a method you can register with the
             PHP SPL autoloader.  <code>Zend_Loader::autoload()</code> is the
-            method.
+            callback method.  As a convenience, Zend_Loader provides the
+            <code>registerAutoload()</code> function register its
+            <code>autoload()</code> method.  If the <code>spl_autoload</code>
+            extension is not present in your PHP environment, then
+            <code>registerAutoload()</code> method throws a Zend_Exception.
         </para>
-
 
         <example id="zend.loader.load.autoload.example">
             <title>Example of registering the autoloader callback method</title>
             <programlisting role="php"><![CDATA[<?php
 
-spl_autoload_register(array('Zend_Loader', 'autoload'));
+Zend_Loader::registerAutoload();
 
 ?>]]></programlisting>
         </example>
 
         <para>
-            After registering the Zend Framework autoload callback,
-            you can reference classes from the Zend Framework without
-            having to load them explicitly.  The autoload method uses
-            <code>Zend_Loader::loadClass()</code> automatically
-            when you reference a class.
+            After registering the Zend Framework autoload callback, you can
+            reference classes from the Zend Framework without having to load
+            them explicitly.  The <code>autoload()</code> method uses
+            <code>Zend_Loader::loadClass()</code> automatically when you
+            reference a class.
         </para>
+
+        <para>
+            If you have extended the Zend_Loader class, you can give an
+            optional argument to <code>registerAutoload()</code>, to specify
+            the class from which to register an <code>autoload()</code> method.
+        </para>
+
+        <example id="zend.loader.load.autoload.example-extended">
+            <title>Example of registering the autoload callback method from an
+                extended class</title>
+            <programlisting role="php"><![CDATA[<?php
+
+class My_Loader extends Zend_Loader
+{
+    // custom functionality
+}
+
+Zend_Loader::registerAutoload('My_Loader');
+
+?>]]></programlisting>
+        </example>
 
     </sect2>
 

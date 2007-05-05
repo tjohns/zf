@@ -237,7 +237,7 @@ class ForwardController extends Zend_Controller_Action
 
             <para>
                 The following example uses the <link
-                    linkref="zend.controller.router">router's</link>
+                    linkend="zend.controller.router">router's</link>
                 <code>assemble()</code> method to create a URL based on an
                 associative array of parameters passed. It assumes the following
                 route has been registered:

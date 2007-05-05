@@ -26,11 +26,11 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200, // cache lifetime of 2 hours 
-   'automaticSerialization' => true
+   'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directory where to put the cache files
+    'cache_dir' => './tmp/' // Directory where to put the cache files
 );
 
 // getting a Zend_Cache_Core object
@@ -83,10 +83,10 @@ print_r($result);
 
 $frontendOptions = array(
    'lifetime' => 30,                  // cache lifetime of half a minute
-   'automaticSerialization' => false  // this is default anyway
+   'automatic_serialization' => false  // this is default anyway
 );
 
-$backendOptions = array('cacheDir' => './tmp/');
+$backendOptions = array('cache_dir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 

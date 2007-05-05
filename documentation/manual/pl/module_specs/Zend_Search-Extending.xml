@@ -54,8 +54,8 @@ $index->addDocument($doc);]]></programlisting>
 /** Here is a custom text analyser, which treats words with digits as one term */
 
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+/** Zend_Search_Lucene_Analysis_Analyzer hierarchy */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {

@@ -393,31 +393,24 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
 /**
  * Draw an image at the specified position on the page.
  *
- * @param Zend_Pdf_Image $image
+ * @param Zend_Pdf_Resource_Image $image
  * @param float $x1
  * @param float $y1
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]>
         </programlisting>
         <para>
-        Image objects are represented by descendants of <code>Zend_Pdf_Image</code> class.
-        </para>
-        <para>
-        JPG, PNG and TIFF images are supported now:
+        Image objects should be created with <code>Zend_Pdf_Image::imageWithPath($filePath)</code> method
+        (JPG, PNG and TIFF images are supported now):
         </para>
         <example>
             <title>Image drawing.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-//Create image object directly (choose one)
-$image = new Zend_Pdf_Image_Jpeg('my_image.jpg');
-$image = new Zend_Pdf_Image_Tiff('my_image.tiff');
-$image = new Zend_Pdf_Image_Png('my_image.png');
-
-//or use the Zend_Pdf_ImageFactory to load the appropriate type
-$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+// load image
+$image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
@@ -426,8 +419,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Important! Zend_Pdf_Image_Jpeg class requires PHP GD extension to be configured.</emphasis>
-            <emphasis>Important! Zend_Pdf_Image_Png class requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
+            <emphasis>Important! JPEG support requires PHP GD extension to be configured.</emphasis>
+            <emphasis>Important! PNG support requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
         </para>
         <para>
             Refer to the PHP documentation for detailed information

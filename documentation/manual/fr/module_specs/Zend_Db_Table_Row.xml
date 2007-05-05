@@ -204,7 +204,7 @@ $row->save();
                 until you call the <code>save()</code> method.
             </para>
 
-            <example id="zend.db.table.write.insert.example">
+            <example id="zend.db.table.row.write.insert.example">
                 <title>Example of creating a new row for a table</title>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -227,7 +227,7 @@ $newRow->save();
                 fields of the new row.
             </para>
 
-            <example id="zend.db.table.write.insert.example">
+            <example id="zend.db.table.row.write.insert.example2">
                 <title>Example of populating a new row for a table</title>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -269,7 +269,7 @@ $newRow->save();
                 both for new rows and for rows you need to update.
             </para>
 
-            <example id="zend.db.table.write.set-from-array.example">
+            <example id="zend.db.table.row.write.set-from-array.example">
                 <title>Example of using setFromArray() to set values in a new Row</title>
                 <programlisting role="php"><![CDATA[<?php
 

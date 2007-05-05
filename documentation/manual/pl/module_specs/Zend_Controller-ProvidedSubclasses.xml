@@ -287,11 +287,13 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 
             <note>
                 <title>Zwracane wartości</title>
-                Wartości zwracane przez proces routingu pochodzą z parametrów
-                URL lub z domyślnych wartości zmiennych zdefiniowanych w trasach.
-                Te zmiene są później dostępne za pomocą metod 
-                Zend_Controller_Request::getParam oraz 
-                Zend_Controller_Action::_getParam.
+                <para>
+                    Wartości zwracane przez proces routingu pochodzą z parametrów
+                    URL lub z domyślnych wartości zmiennych zdefiniowanych w trasach.
+                    Te zmiene są później dostępne za pomocą metod 
+                    Zend_Controller_Request::getParam oraz 
+                    Zend_Controller_Action::_getParam.
+                </para>
             </note>
 
             <para>
