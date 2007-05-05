@@ -81,6 +81,7 @@ library/Zend/Validate/Ip.php
 library/Zend/Validate/Hostname.php
 library/Zend/Validate/Interface.php
 tests/AllTests.php
+tests/TestHelper.php
 tests/TestConfiguration.php.dist
 tests/Zend/AllTests.php
 tests/Zend/Gdata/AllTests.php
