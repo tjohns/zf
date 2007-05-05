@@ -1,7 +1,7 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 0.9.3 / 04-May-2007 / based on revision 4720 =
+=RELEASE 0.9.3 / 04-May-2007 / based on revision 4724 =
 This release resolves the following issues:
   ZF-1340 Update Zend Introduction documentation
   ZF-1288 Remove deprecated class Zend.php
