@@ -28,7 +28,8 @@ require_once 'Zend/Feed/EntryAbstract.php';
 
 
 /**
- * Concrete class for working with RSS items.
+ * @deprecated since 1.0.0
+ * @see        Zend_Feed_Entry_Rss
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -37,11 +38,4 @@ require_once 'Zend/Feed/EntryAbstract.php';
  */
 class Zend_Feed_EntryRss extends Zend_Feed_EntryAbstract
 {
-    /**
-     * Root XML element for RSS items.
-     *
-     * @var string
-     */
-    protected $_rootElement = 'item';
-
 }

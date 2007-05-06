@@ -11,7 +11,7 @@
     <para>
         <code>Zend_Feed</code> の構成は、基底クラス <code>Zend_Feed</code>、
         フィードやエントリを扱うための基底抽象クラス <code>Zend_Feed_Abstract</code>
-        および <code>Zend_Feed_EntryAbstract</code>、RSS や Atom
+        および <code>Zend_Feed_Entry_Abstract</code>、RSS や Atom
         用のフィードクラスとエントリクラスの実装、
         そして自然な方法でそれらを操作するためのヘルパーから成り立っています。
     </para>

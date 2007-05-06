@@ -22,7 +22,7 @@
  * Die eigene Klasse für Einträge kennt automatisch die Feed URI (optional)
  * und kann automatisch weitere Namensräume hinzufügen
  */
-class MyEntry extends Zend_Feed_EntryAtom
+class MyEntry extends Zend_Feed_Entry_Atom
 {
 
     public function __construct($uri = 'http://www.example.com/myfeed/',

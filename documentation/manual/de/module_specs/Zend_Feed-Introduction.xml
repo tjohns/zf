@@ -12,7 +12,7 @@
     <para>
         <code>Zend_Feed</code> besteht aus der Basisklasse <code>Zend_Feed</code>, sowie den beiden 
         abstrakten Basisklassen <code>Zend_Feed_Abstract</code> und 
-        <code>Zend_Feed_EntryAbstract</code> für die Darstellung von Feeds und Einträgen, aus 
+        <code>Zend_Feed_Entry_Abstract</code> für die Darstellung von Feeds und Einträgen, aus 
         speziellen Implementationen von Feeds und Einträgen für RSS und Atom sowie einem Helfer,
         der hinter den Kulissen die natürliche Syntax ermöglicht.
     </para>

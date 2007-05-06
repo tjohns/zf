@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Feed_EntryAtom
+ * @see Zend_Feed_Entry_Atom
  */
-require_once 'Zend/Feed/EntryAtom.php';
+require_once 'Zend/Feed/Entry/Atom.php';
 
 
 /**
@@ -40,7 +40,7 @@ class Zend_Feed_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testIsInitialized()
     {
-        $e = new Zend_Feed_EntryAtom();
+        $e = new Zend_Feed_Entry_Atom();
         $e->author->name['last'] = 'hagenbuch';
         $e->author->name['first'] = 'chuck';
         $e->author->name->{'chuck:url'} = 'marina.horde.org';
@@ -76,7 +76,7 @@ class Zend_Feed_ElementTest extends PHPUnit_Framework_TestCase
 	<updated>2005-11-07T08:15:57-08:00</updated>
 </entry>";
 
-        $entry = new Zend_Feed_EntryAtom('uri', $xml);
+        $entry = new Zend_Feed_Entry_Atom('uri', $xml);
 
         $this->assertTrue($entry->summary instanceof Zend_Feed_Element, '__get access should return an Zend_Feed_Element instance');
         $this->assertFalse($entry->summary() instanceof Zend_Feed_Element, 'method access should not return an Zend_Feed_Element instance');

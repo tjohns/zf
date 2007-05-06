@@ -43,7 +43,7 @@ echo $entry->saveXML();
         <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
         <programlisting role="php"><![CDATA[<?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // id is always assigned by the server in Atom
 $entry->title = 'my custom entry';
 $entry->author->name = 'Example Author';

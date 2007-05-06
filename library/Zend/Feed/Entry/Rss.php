@@ -17,30 +17,31 @@
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id:$
  */
 
 
 /**
- * @see Zend_Feed
+ * @see Zend_Feed_Entry_Abstract
  */
-require_once 'Zend/Feed.php';
-
-/**
- * @see Zend_Feed_Element
- */
-require_once 'Zend/Feed/Element.php';
+require_once 'Zend/Feed/Entry/Abstract.php';
 
 
 /**
- * @deprecated since 1.0.0
- * @see        Zend_Feed_Entry_Abstract
+ * Concrete class for working with RSS items.
  *
  * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Entry_Abstract
+class Zend_Feed_Entry_Rss extends Zend_Feed_Entry_Abstract
 {
+    /**
+     * Root XML element for RSS items.
+     *
+     * @var string
+     */
+    protected $_rootElement = 'item';
+
 }

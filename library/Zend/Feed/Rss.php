@@ -27,9 +27,9 @@
 require_once 'Zend/Feed/Abstract.php';
 
 /**
- * @see Zend_Feed_EntryRss
+ * @see Zend_Feed_Entry_Rss
  */
-require_once 'Zend/Feed/EntryRss.php';
+require_once 'Zend/Feed/Entry/Rss.php';
 
 
 /**
@@ -53,7 +53,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
      *
      * @var string
      */
-    protected $_entryClassName = 'Zend_Feed_EntryRss';
+    protected $_entryClassName = 'Zend_Feed_Entry_Rss';
 
     /**
      * The element name for individual channel elements (RSS <item>s).

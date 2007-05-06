@@ -38,7 +38,7 @@
 * Специальный класс публикации знает URI ленты и может автоматически
 * добавлять дополнительные пространства имен
  */
-class MyEntry extends Zend_Feed_EntryAtom
+class MyEntry extends Zend_Feed_Entry_Atom
 {
 
     public function __construct($uri = 'http://www.example.com/myfeed/',

@@ -55,7 +55,7 @@ Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
-Zend_Loader::loadClass('Zend_Feed_EntryAtom');
+Zend_Loader::loadClass('Zend_Feed_Entry_Atom');
 Zend_Loader::loadClass('Zend_Http_Client');
 
 /**
@@ -308,7 +308,7 @@ function createEvent ($client, $title = 'Tennis with Beth',
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
   Zend_Feed::registerNamespace('gd', 'http://schemas.google.com/g/2005');
-  $newEntry = new Zend_Feed_EntryAtom();
+  $newEntry = new Zend_Feed_Entry_Atom();
   $newEntry->title = trim($title);
   $newEntry->{'gd:where'}['valueString'] = $where;
 
@@ -327,7 +327,7 @@ function createEvent ($client, $title = 'Tennis with Beth',
  *
  * @param Zend_Http_Client $client The authenticated client object
  * @param string $eventId The event ID string
- * @return Zend_Feed_EntryAtom if the event is found, null if it's not
+ * @return Zend_Feed_Entry_Atom if the event is found, null if it's not
  */
 function getAtomEntry ($client, $eventId) 
 {
@@ -373,7 +373,7 @@ function updateAtomEntry ($client, $eventId, $newTitle)
 
 /**
  * Deletes the event specified by retrieving the atom entry object
- * and calling Zend_Feed_EntryAtom::delete() method.  This is for
+ * and calling Zend_Feed_Entry_Atom::delete() method.  This is for
  * example purposes only, as it is inefficient to retrieve the entire
  * atom entry only for the purposes of deleting it.
  *

@@ -19,12 +19,12 @@
     <para>
         Программно <code>Zend_Feed</code> состоит из базового класса
         <code>Zend_Feed</code>, абстрактных базовых классов <code>Zend_Feed_Abstract</code>
-        и <code>Zend_Feed_EntryAbstract</code> для представления лент и публикаций,
+        и <code>Zend_Feed_Entry_Abstract</code> для представления лент и публикаций,
         конкретных реализаций лент и публикаций для RSS и Atom, а также
         "закулисных" помощников для обеспечения работы естетственного синтаксиса.
 <!--
         Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_EntryAbstract</code> base classes for
+        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_Entry_Abstract</code> base classes for
         representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
         a behind-the-scenes helper for making the natural syntax magic work.
 -->

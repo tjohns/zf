@@ -78,7 +78,7 @@ echo $entry->saveXML();
         <programlisting role="php"><![CDATA[
 <?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // id уже присвоен сервером
 $entry->title = 'my custom entry';
 $entry->author->name = 'Example Author';

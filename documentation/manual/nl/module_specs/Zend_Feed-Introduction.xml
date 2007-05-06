@@ -11,7 +11,7 @@
 
     <para>
 		Programmeerswijs bestaat <code>Zend_Feed</code> uit een basisklasse <code>Zend_Feed</code>, de abstracte
-		klasse <code>Zend_Feed_Abstract</code> en de basisklasse <code>Zend_Feed_EntryAbstract</code> om
+		klasse <code>Zend_Feed_Abstract</code> en de basisklasse <code>Zend_Feed_Entry_Abstract</code> om
 		Feeds en Entries voor te stellen, om specifieke implementaties van feeds en entries voor RSS en Atom
 		voor te stellen, en een achter-de-scène helper om de intuïtieve syntax magie te doen werken.
     </para>

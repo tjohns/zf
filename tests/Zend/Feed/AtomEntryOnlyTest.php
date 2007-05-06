@@ -45,8 +45,8 @@ class Zend_Feed_AtomEntryOnlyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $feed->count(), 'The entry-only feed should report one entry.');
 
         foreach ($feed as $entry);
-        $this->assertEquals('Zend_Feed_EntryAtom', get_class($entry),
-                            'The single entry should be an instance of Zend_Feed_EntryAtom');
+        $this->assertEquals('Zend_Feed_Entry_Atom', get_class($entry),
+                            'The single entry should be an instance of Zend_Feed_Entry_Atom');
 
         $this->assertEquals('1', $entry->id(), 'The single entry should have id 1');
         $this->assertEquals('Bug', $entry->title(), 'The entry\'s title should be "Bug"');

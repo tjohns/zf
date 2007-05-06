@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Feed_EntryAtom
+ * @see Zend_Feed_Entry_Atom
  */
-require_once 'Zend/Feed/EntryAtom.php';
+require_once 'Zend/Feed/Entry/Atom.php';
 
 /**
  * @see Zend_Http_Client_File
@@ -58,7 +58,7 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase
     {
         Zend_Feed::setHttpClient(new TestClient());
 
-        $entry = new Zend_Feed_EntryAtom();
+        $entry = new Zend_Feed_Entry_Atom();
 
         /* Give the entry its initial values. */
         $entry->title = 'Entry 1';
@@ -85,8 +85,8 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase
         $contents = file_get_contents(dirname(__FILE__) .  '/_files/AtomPublishingTest-before-update.xml');
 
         /* The base feed URI is the same as the POST URI, so just supply the
-         * Zend_Feed_EntryAtom object with that. */
-        $entry = new Zend_Feed_EntryAtom($this->_uri, $contents);
+         * Zend_Feed_Entry_Atom object with that. */
+        $entry = new Zend_Feed_Entry_Atom($this->_uri, $contents);
 
         /* Initial state. */
         $this->assertEquals('2005-05-23T16:26:00-08:00', $entry->updated(), 'Initial state of updated timestamp does not match');

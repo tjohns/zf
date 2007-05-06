@@ -48,7 +48,7 @@ echo $entry->saveXML();
         <title>独自の名前空間の要素としての Atom エントリの作成</title>
         <programlisting role="php"><![CDATA[<?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // Atom では id は常にサーバから割り当てられます
 $entry->title = 'カスタムエントリ';
 $entry->author->name = '著者名';

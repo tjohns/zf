@@ -7,7 +7,7 @@
     </para>
 
     <para>
-    	<code>Zend_Feed</code>由一个<code>Zend_Feed</code>基类、一个<code>Zend_Feed_Abstract</code>抽象类以及一个用于表示Feed和条目的<code>Zend_Feed_EntryAbstract</code>基类组成。这些类封装了 RSS 和 Atom 的feed和条目特性的，提供了一套自然的方法使他们用起来变得异常简单。
+    	<code>Zend_Feed</code>由一个<code>Zend_Feed</code>基类、一个<code>Zend_Feed_Abstract</code>抽象类以及一个用于表示Feed和条目的<code>Zend_Feed_Entry_Abstract</code>基类组成。这些类封装了 RSS 和 Atom 的feed和条目特性的，提供了一套自然的方法使他们用起来变得异常简单。
     </para>
 
     <para>

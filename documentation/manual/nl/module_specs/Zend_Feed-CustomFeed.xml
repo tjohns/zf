@@ -20,7 +20,7 @@
  * De aangepaste entry klasse kent automatisch de feed URI (optioneel) en
  * kan automatisch extra namespaces toevoegen.
  */
-class MyEntry extends Zend_Feed_EntryAtom
+class MyEntry extends Zend_Feed_Entry_Atom
 {
 
     public function __construct($uri = 'http://www.example.com/myfeed/',

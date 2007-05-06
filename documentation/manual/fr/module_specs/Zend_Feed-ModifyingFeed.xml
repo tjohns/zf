@@ -53,7 +53,7 @@ de noms.
         <programlisting role="php"><![CDATA[
 <?php
 
-$entree = new Zend_Feed_EntryAtom();
+$entree = new Zend_Feed_Entry_Atom();
 // en Atom, id est toujours affecté par le serveur
 $entree->title = 'mon entrée perso';
 $entree->author->name = 'Auteur';

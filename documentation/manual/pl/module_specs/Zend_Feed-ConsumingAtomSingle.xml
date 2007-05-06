@@ -35,7 +35,7 @@ $entry = $feed->current();
         <title>Bezpośrednie użycie obiektu wpisu dla pojedynczego wpisu kanału Atom</title>
         <programlisting role="php"><![CDATA[<?php
 
-$entry = new Zend_Feed_EntryAtom('http://atom.example.com/feed/1');
+$entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
 echo $entry->title();
 
 ?>]]>   </programlisting>

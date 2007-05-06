@@ -35,11 +35,11 @@ seule balise <code>&lt;entry&gt;</code> :
     </para>
 
     <example id="zend.feed.consuming-atom-single-entry.example.entryatom">
-        <title>Utiliser directement l'objet Zend_Feed_EntryAtom</title>
+        <title>Utiliser directement l'objet Zend_Feed_Entry_Atom</title>
         <programlisting role="php"><![CDATA[
 <?php
 
-$entree = new Zend_Feed_EntryAtom('http://atom.exemple.com/flux/1');
+$entree = new Zend_Feed_Entry_Atom('http://atom.exemple.com/flux/1');
 echo $entree->title();
 
 ?>]]>   </programlisting>

@@ -48,7 +48,7 @@ echo $entry->saveXML();
         <title>Tworzenie wpisu Atom z elementami własnej przestrzeni nazw</title>
         <programlisting role="php"><![CDATA[<?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // id w Atom jest zawsze nadane przez serwer
 $entry->title = 'mój własny wpis';
 $entry->author->name = 'Przykładowy autor';

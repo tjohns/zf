@@ -27,9 +27,9 @@
 require_once 'Zend/Feed/Abstract.php';
 
 /**
- * @see Zend_Feed_EntryAtom
+ * @see Zend_Feed_Entry_Atom
  */
-require_once 'Zend/Feed/EntryAtom.php';
+require_once 'Zend/Feed/Entry/Atom.php';
 
 
 /**
@@ -55,7 +55,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
      *
      * @var string
      */
-    protected $_entryClassName = 'Zend_Feed_EntryAtom';
+    protected $_entryClassName = 'Zend_Feed_Entry_Atom';
 
     /**
      * The element name for individual feed elements (Atom <entry>

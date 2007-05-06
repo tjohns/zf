@@ -12,7 +12,7 @@
 
     <para>
         Programowo <code>Zend_Feed</code> składa się z bazowej klasy <code>Zend_Feed</code>,
-        abstrakcyjnych klas <code>Zend_Feed_Abstract</code> oraz <code>Zend_Feed_EntryAbstract</code> 
+        abstrakcyjnych klas <code>Zend_Feed_Abstract</code> oraz <code>Zend_Feed_Entry_Abstract</code> 
         reprezentujących kanały informacyjne i ich wpisy, specyficznych implementacji
         kanałów i wpisów dla RSS i Atom, oraz z pomocników odpowiedzialnych za 
         naturalną składnię.

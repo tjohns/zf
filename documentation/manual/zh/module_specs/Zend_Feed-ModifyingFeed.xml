@@ -36,7 +36,7 @@ echo $entry->saveXML();
         <programlisting role="php"><![CDATA[
 <?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // Atom的id总是由服务器分配
 $entry->title = 'my custom entry';
 $entry->author->name = 'Example Author';

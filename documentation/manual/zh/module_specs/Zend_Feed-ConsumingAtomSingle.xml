@@ -30,7 +30,7 @@ $entry = $feed->current();
         <title>用条目对象直接访问Atom Feed的单个条目</title>
         <programlisting role="php"><![CDATA[<?php
 
-$entry = new Zend_Feed_EntryAtom('http://atom.example.com/feed/1');
+$entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
 echo $entry->title();
 
 ?>]]>   </programlisting>

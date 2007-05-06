@@ -16,7 +16,7 @@
         Sur le plan de la programmation, <code>Zend_Feed</code> est constitué 
         d'une classe de base <code>Zend_Feed</code> et de classes de base 
         abstraites <code>Zend_Feed_Abstract</code> et 
-        <code>Zend_Feed_EntryAbstract</code>, permettant de représenter 
+        <code>Zend_Feed_Entry_Abstract</code>, permettant de représenter 
         respectivement des flux et des entrées; <code>Zend_Feed</code> contient 
         aussi des implémentations particulières de ces classes abstraites pour 
         les flux et entrées RSS et Atom ainsi qu'un assistant en coulisses qui 

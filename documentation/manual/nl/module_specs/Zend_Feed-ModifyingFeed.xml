@@ -45,7 +45,7 @@ echo $entry->saveXML();
         <programlisting role="php"><![CDATA[
 <?php
 
-$entry = new Zend_Feed_EntryAtom();
+$entry = new Zend_Feed_Entry_Atom();
 // id wordt altijd via de server toegewezen in Atom
 $entry->title = 'mijn aangepaste entry';
 $entry->author->name = 'Voorbeeldauteur';
