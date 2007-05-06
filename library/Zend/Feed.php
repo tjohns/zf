@@ -321,7 +321,7 @@ class Zend_Feed
                 try {
                     // checks if we need to canonize the given uri
                     try {
-                        $uri = Zend_Uri::factory($attributes['href']);
+                        $uri = Zend_Uri::factory((string) $attributes['href']);
                     } catch (Zend_Uri_Exception $e) {
                         // canonize the uri
                         $path = (string) $attributes['href'];
