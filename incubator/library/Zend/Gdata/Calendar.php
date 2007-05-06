@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata_Calendar
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+/**
+ * @see Zend_Gdata
+ */
+require_once('Zend/Gdata.php');
+
+/**
+ * @see Zend_Gdata_Data
+ */
+require_once('Zend/Gdata/Data.php');
+
+/**
+ * @see Zend_Gdata_Calendar_EventFeed
+ */
+require_once('Zend/Gdata/Calendar/EventFeed.php');
+
+/**
+ * @see Zend_Gdata_Calendar_EventEntry
+ */
+require_once('Zend/Gdata/Calendar/EventEntry.php');
+
+/**
+ * @see Zend_Gdata_Calendar_ListFeed
+ */
+require_once('Zend/Gdata/Calendar/ListFeed.php');
+
+/**
+ * @see Zend_Gdata_Calendar_ListEntry
+ */
+require_once('Zend/Gdata/Calendar/ListEntry.php');
+
+/**
+ * Service class for interacting with the Google Calendar data API 
+ * @link http://code.google.com/apis/gdata/calendar.html
+ *
+ * @category   Zend
+ * @package    Zend_Gdata_Calendar
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Calendar extends Zend_Gdata
+{
+
+    const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
+    const CALENDAR_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
+    const AUTH_SERVICE_NAME = 'cl';
+    const NAMESPACE_URI = 'http://schemas.google.com/gCal/2005';
+
+    protected $_defaultPostUri = self::CALENDAR_POST_URI;
+
+    /**
+     * Create Gdata_Calendar object
+     */
+    public function __construct($client = null)
+    {
+        parent::__construct($client);
+        $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
+        $this->registerPackage('Zend_Gdata_Calendar');
+        Zend_Gdata_Data::registerNamespace('gCal', Zend_Gdata_Calendar::NAMESPACE_URI);
+    }
+
+    /**
+     * Retreive feed object
+     *
+     * @return Zend_Gdata_Calendar_EventFeed
+     */
+    public function getCalendarEventFeed($uri = null)
+    {
+        return parent::getFeed($uri,'Zend_Gdata_Calendar_EventFeed');
+    }
+
+    /**
+     * Retreive entryobject
+     *
+     * @return Zend_Gdata_Calendar_EventEntry
+     */
+    public function getCalendarEventEntry($uri = null)
+    {
+        return parent::getEntry($uri,'Zend_Gdata_Calendar_EventEntry');
+    }
+
+
+    /**
+     * Retrieve feed object
+     *
+     * @return Zend_Gdata_Calendar_ListFeed
+     */
+    public function getCalendarListFeed()
+    {
+        $uri = self::CALENDAR_FEED_URI;
+        if (isset($this->_params['_user'])) {
+            $uri .= '/' . $this->_params['_user'];
+        } else {
+            $uri .= '/default';
+        }
+        return parent::getFeed($uri,'Zend_Gdata_Calendar_ListFeed');
+    }
+
+    /**
+     * Retreive entryobject
+     *
+     * @return Zend_Gdata_Calendar_ListEntry
+     */
+    public function getCalendarListEntry($uri = null)
+    {
+        return parent::getEntry($uri,'Zend_Gdata_Calendar_ListEntry');
+    }
+
+    public function insertEvent($event, $uri=null)
+    {
+        if ($uri == null) {
+            $uri = $this->defaultPostUri;
+        }
+        $response = $this->post($event, $uri);
+        return new Zend_Gdata_Calendar_EventEntry(null, $response->getBody());
+    }
+
+}
