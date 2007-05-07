@@ -72,9 +72,12 @@ class Zend_Db_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Db');
 
         /**
-         * Static tests are always enabled
+         * Static tests should always be enabled,
+         * but if they're not, don't throw an error.
          */
-        define('TESTS_ZEND_DB_ADAPTER_STATIC_ENABLED', true);
+        if (!defined('TESTS_ZEND_DB_ADAPTER_STATIC_ENABLED')) {
+            define('TESTS_ZEND_DB_ADAPTER_STATIC_ENABLED', true);
+        }
 
         self::_addDbTestSuites($suite, 'Static');
 
