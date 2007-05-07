@@ -40,7 +40,7 @@
  * argument to set_include_path in the code below.
  *
  * NOTE: As this is sample code, not all of the functions do full error
- * handling.  Please see getAtomEntry for an example of how errors could
+ * handling.  Please see getEvent for an example of how errors could
  * be handled and the online code samples for additional information.
  */
 
@@ -48,6 +48,8 @@
 $D = DIRECTORY_SEPARATOR;
 set_include_path(
     dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}library"
+    . PATH_SEPARATOR .
+    dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}..{$D}library"
     . PATH_SEPARATOR . get_include_path());
 
 require_once 'Zend/Loader.php';
@@ -55,8 +57,6 @@ Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
-Zend_Loader::loadClass('Zend_Feed_EntryAtom');
-Zend_Loader::loadClass('Zend_Feed_Exception');
 Zend_Loader::loadClass('Zend_Http_Client');
 
 /**
@@ -196,15 +196,18 @@ function outputCalendarMagicCookie($user, $magicCookie)
 {
   $client = new Zend_Http_Client();
   $gdataCal = new Zend_Gdata_Calendar($client);
-  $gdataCal->setUser($user);
-  $gdataCal->setVisibility('private-' . $magicCookie);
-  $gdataCal->setProjection('full');
-  $eventFeed = $gdataCal->getCalendarFeed();
+  $query = $gdataCal->newEventQuery();
+  $query->setUser($user);
+  $query->setVisibility('private-' . $magicCookie);
+  $query->setProjection('full');
+  $eventFeed = $gdataCal->getCalendarEventFeed($query);
   echo "<ul>\n";
   foreach ($eventFeed as $event) {
-    echo "\t<li>" . $event->title() . "</li>\n";
+    echo "\t<li>" . $event->title->text . "</li>\n";
+    $sl = $event->getLink('self')->href;
   }
   echo "</ul>\n";
+  var_dump( $entry = $gdataCal->getCalendarEventEntry($sl) );
 }
 
 /** 
@@ -218,10 +221,10 @@ function outputCalendarList($client)
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
   $calFeed = $gdataCal->getCalendarListFeed();
-  echo "<h1>" . $calFeed->title() . "</h1>\n";
+  echo "<h1>" . $calFeed->title->text . "</h1>\n";
   echo "<ul>\n";
   foreach ($calFeed as $calendar) {
-    echo "\t<li>" . $calendar->title() . "</li>\n";
+    echo "\t<li>" . $calendar->title->text . "</li>\n";
   }
   echo "</ul>\n";
 } 
@@ -238,20 +241,27 @@ function outputCalendarList($client)
 function outputCalendar($client) 
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
-  $gdataCal->setUser('default');
-  $gdataCal->setVisibility('private');
-  $gdataCal->setProjection('full');
-  $gdataCal->setOrderby('starttime');
-  // a setter method for the futureevents query parameter is not available 
-  // in Zend_Gdata_Calendar, but it can be set using the "magic" setter methods
-  // which are implicitly invoked by setting the 'futureevents' identifier 
-  // as if it was a member of the $gdataCal object
-  $gdataCal->futureevents = 'true';
-  $eventFeed = $gdataCal->getCalendarFeed();
+  $query = $gdataCal->newEventQuery();
+  $query->setUser('default');
+  $query->setVisibility('private');
+  $query->setProjection('full');
+  $query->setOrderby('starttime');
+  $query->setFutureevents('true');
+  $eventFeed = $gdataCal->getCalendarEventFeed($query);
+  // option 2
+  // $eventFeed = $gdataCal->getCalendarEventFeed($query->getQueryUrl());
   echo "<ul>\n";
   foreach ($eventFeed as $event) {
-    echo "\t<li>" . $event->title() . ' - ' . $event->{'gd:when'}['startTime'] . 
-         ' (' . $event->id() . ")</li>\n";
+    echo "\t<li>" . $event->title->text .  " (" . $event->id->text . ")\n";
+    // Zend_Gdata_App_Extensions_Title->__toString() is defined, so the
+    // following will also work on PHP >= 5.2.0
+    //echo "\t<li>" . $event->title .  " (" . $event->id . ")\n";
+    echo "\t\t<ul>\n";
+    foreach ($event->when as $when) {
+      echo "\t\t\t<li>Starts: " . $when->startTime . "</li>\n";
+    }
+    echo "\t\t</ul>\n";
+    echo "\t</li>\n";
   }
   echo "</ul>\n";
 }
@@ -271,20 +281,28 @@ function outputCalendar($client)
  * @param string $endDate The end date in YYYY-MM-DD format
  * @return void
  */
-function outputCalendarByDateRange($client, $startDate, $endDate) 
+function outputCalendarByDateRange($client, $startDate='2007-05-01', 
+                                   $endDate='2007-08-01') 
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
-  $gdataCal->setUser('default');
-  $gdataCal->setVisibility('private');
-  $gdataCal->setProjection('full');
-  $gdataCal->setOrderby('starttime');
-  $gdataCal->setStartMin($startDate);
-  $gdataCal->setStartMax($endDate);
-  $eventFeed = $gdataCal->getCalendarFeed();
+  $query = $gdataCal->newEventQuery();
+  $query->setUser('default');
+  $query->setVisibility('private');
+  $query->setProjection('full');
+  $query->setOrderby('starttime');
+  $query->setStartMin($startDate);
+  $query->setStartMax($endDate);
+  $eventFeed = $gdataCal->getCalendarEventFeed($query);
   echo "<ul>\n";
   foreach ($eventFeed as $event) {
-    echo "\t<li>" . $event->title() . ' - ' . $event->{'gd:when'}['startTime'] . 
-         ' (' . $event->id() . ")</li>\n";
+    echo "\t<li>" . $event->title->text .  " (" . $event->id->text . ")\n";
+    echo "\t\t<ul>\n";
+    foreach ($event->when as $when) {
+      echo "\t\t\t<li>Starts: " . $when->startTime . "</li>\n";
+      echo "\t\t</ul>\n";
+      echo "\t</li>\n";
+    }
+    echo "\t\t</ul>\n";
   }
   echo "</ul>\n";
 }
@@ -301,15 +319,22 @@ function outputCalendarByDateRange($client, $startDate, $endDate)
 function outputCalendarByFullTextQuery($client, $fullTextQuery='tennis') 
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
-  $gdataCal->setUser('default');
-  $gdataCal->setVisibility('private');
-  $gdataCal->setProjection('full');
-  $gdataCal->setQuery($fullTextQuery);
-  $eventFeed = $gdataCal->getCalendarFeed();
+  $query = $gdataCal->newEventQuery();
+  $query->setUser('default');
+  $query->setVisibility('private');
+  $query->setProjection('full');
+  $query->setQuery($fullTextQuery);
+  $eventFeed = $gdataCal->getCalendarEventFeed($query);
   echo "<ul>\n";
   foreach ($eventFeed as $event) {
-    echo "\t<li>" . $event->title() . ' - ' . $event->{'gd:when'}['startTime'] . 
-         ' (' . $event->id() . ")</li>\n";
+    echo "\t<li>" . $event->title->text .  " (" . $event->id->text . ")\n";
+    echo "\t\t<ul>\n";
+    foreach ($event->when as $when) {
+      echo "\t\t\t<li>Starts: " . $when->startTime . "</li>\n";
+      echo "\t\t</ul>\n";
+      echo "\t</li>\n";
+    }
+    echo "\t\t</ul>\n";
   }
   echo "</ul>\n";
 }
@@ -332,20 +357,21 @@ function createEvent ($client, $title = 'Tennis with Beth',
     $startDate = '2008-01-20', $startTime = '10:00', 
     $endDate = '2008-01-20', $endTime = '11:00', $tzOffset = '-08')
 {
-  $gdataCal = new Zend_Gdata_Calendar($client);
-  Zend_Feed::registerNamespace('gd', 'http://schemas.google.com/g/2005');
-  $newEntry = new Zend_Feed_EntryAtom();
-  $newEntry->title = trim($title);
-  $newEntry->{'gd:where'}['valueString'] = $where;
+  $gc = new Zend_Gdata_Calendar($client);
+  $newEntry = $gc->newEventEntry();
+  $newEntry->title = $gc->newTitle(trim($title));
+  $newEntry->where  = array($gc->newWhere($where));
 
-  $newEntry->content = $desc;
-  $newEntry->content['type'] = 'text';
+  $newEntry->content = $gc->newContent($desc);
+  $newEntry->content->type = 'text';
 
-  $when = $newEntry->{'gd:when'};
-  $when['startTime'] = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
-  $when['endTime'] = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
+  $when = $gc->newWhen();
+  $when->startTime = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
+  $when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
+  $newEntry->when = array($when);
 
-  $gdataCal->post($newEntry->saveXML());
+  $createdEntry = $gc->insertEvent($newEntry);
+  return $createdEntry->id->text;
 }
 
 /**
@@ -362,14 +388,13 @@ function createRecurringEvent ($client, $title = 'Tennis with Beth',
     $desc='Meet for a quick lesson', $where = 'On the courts', 
     $recurData = null)
 {
-  $gdataCal = new Zend_Gdata_Calendar($client);
-  Zend_Feed::registerNamespace('gd', 'http://schemas.google.com/g/2005');
-  $newEntry = new Zend_Feed_EntryAtom();
-  $newEntry->title = trim($title);
-  $newEntry->{'gd:where'}['valueString'] = $where;
+  $gc = new Zend_Gdata_Calendar($client);
+  $newEntry = $gc->newEventEntry();
+  $newEntry->title = $gc->newTitle(trim($title));
+  $newEntry->where = array($gc->newWhere($where));
 
-  $newEntry->content = $desc;
-  $newEntry->content['type'] = 'text';
+  $newEntry->content = $gc->newContent($desc);
+  $newEntry->content->type = 'text';
 
   /**
    * Due to the length of this recurrence syntax, we did not specify
@@ -382,34 +407,31 @@ function createRecurringEvent ($client, $title = 'Tennis with Beth',
         "RRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20070904\r\n";
   }
 
-  $newEntry->{'gd:recurrence'} = $recurData;
+  $newEntry->recurrence = $gc->newRecurrence($recurData);
 
-  $gdataCal->post($newEntry->saveXML());
+  $gc->post($newEntry->saveXML());
 }
 
 /**
- * Returns an atom entry object representing the event with the specified ID.
+ * Returns an entry object representing the event with the specified ID.
  *
  * @param Zend_Http_Client $client The authenticated client object
  * @param string $eventId The event ID string
- * @return Zend_Feed_EntryAtom if the event is found, null if it's not
+ * @return Zend_Gdata_Calendar_EventEntry if the event is found, null if it's not
  */
-function getAtomEntry ($client, $eventId) 
+function getEvent($client, $eventId) 
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
-  $gdataCal->setUser('default');
-  $gdataCal->setVisibility('private');
-  $gdataCal->setProjection('full');
-  $gdataCal->setEvent($eventId);
+  $query = $gdataCal->newEventQuery();
+  $query->setUser('default');
+  $query->setVisibility('private');
+  $query->setProjection('full');
+  $query->setEvent($eventId);
 
   try {
-    $eventFeed = $gdataCal->getCalendarFeed();
-    if ($eventFeed->valid()) {
-      return $eventFeed->current();
-    } else  {
-      return null;
-    }
-  } catch (Zend_Feed_Exception $fe) {
+    $eventEntry = $gdataCal->getCalendarEventEntry($query);
+    return $eventEntry;
+  } catch (Zend_Gdata_App_Exception $e) {
     return null;
   }
 }
@@ -422,17 +444,18 @@ function getAtomEntry ($client, $eventId)
  * @param Zend_Http_Client $client The authenticated client object
  * @param string $eventId The event ID string
  * @param string $newTitle The new title to set on this event 
- * @return Zend_Feed_EntryAtom The updated entry
+ * @return Zend_Gdata_Calendar_EventEntry The updated entry
  */
-function updateAtomEntry ($client, $eventId, $newTitle) 
+function updateEvent ($client, $eventId, $newTitle) 
 {
-  if ($eventOld = getAtomEntry($client, $eventId)) {
-    echo "Old title: " . $eventOld->title() . "<br />\n";
-    $eventOld->title = $newTitle;
+  $gdataCal = new Zend_Gdata_Calendar($client);
+  if ($eventOld = getEvent($client, $eventId)) {
+    echo "Old title: " . $eventOld->title->text . "<br />\n";
+    $eventOld->title = $gdataCal->newTitle($newTitle);
     $eventOld->save();
 
-    $eventNew = getAtomEntry($client, $eventId);
-    echo "New title: " . $eventNew->title() . "<br />\n";
+    $eventNew = getEvent($client, $eventId);
+    echo "New title: " . $eventNew->title->text . "<br />\n";
     return $eventNew;
   } else {
     return null;
@@ -449,15 +472,16 @@ function updateAtomEntry ($client, $eventId, $newTitle)
  * @param string $eventId The event ID string
  * @param string $name The name of the extended property
  * @param string $value The value of the extended property
- * @return Zend_Feed_EntryAtom The updated entry
+ * @return Zend_Gdata_Calendar_EventEntry The updated entry
  */
 function addExtendedProperty ($client, $eventId, 
     $name='http://www.example.com/schemas/2005#mycal.id', $value='1234') 
 {
-  if ($event = getAtomEntry($client, $eventId)) {
-    $extProp = $event->{'gd:extendedProperty'};
-    $extProp['name'] = $name; 
-    $extProp['value'] = $value;
+  $gc = new Zend_Gdata_Calendar($client);
+  if ($event = getEvent($client, $eventId)) {
+    $extProp = $gc->newExtendedProperty($name, $value);
+    $extProps = array_merge($event->extendedProperty, array($extProp));
+    $event->extendedProperty = $extProps;
     $eventNew = $event->save();
     return $eventNew;
   } else {
@@ -472,53 +496,20 @@ function addExtendedProperty ($client, $eventId,
  * @param Zend_Http_Client $client The authenticated client object
  * @param string $eventId The event ID string
  * @param int $minutes Minutes before event to set reminder
- * @return Zend_Feed_EntryAtom The updated entry
+ * @return Zend_Gdata_Calendar_EventEntry The updated entry
  */
-function addReminder($client, $eventId, $minutes=15)
+function setReminder($client, $eventId, $minutes=15)
 {
-  if ($event = getAtomEntry($client, $eventId)) {
- 
-    
-  //  $link = new Zend_Feed_Element($event->getDOM()->ownerDocument->createElement('link'));
-  //  $link->rel = 'foo';
-  //  $link->href = 'bar';
-    //print_r($links);
-    //$links = $event->{link};
-    //print_r($links);
-/*
-    if (is_array($links)) {
-      print_r($links);
-      //$link = $event->_element->createElement('link');
- //     $links[3]['rel'] = 'foo';
- //     $links[3]['href'] = 'bar';
-
-      $foo = $event->createElement('linked');
-      var_dump($foo);
-      //$event->{link} = $links;
-      //var_dump($link);
-      //$event->_element->appendChild($link);
-      //var_dump($event->_element);
-      print $event->saveXML();
-
-      $links = $event->{link};
-      print_r($links);
-    } else {
-      print 'not an array';
-      print $links;
+  $gc = new Zend_Gdata_Calendar($client);
+  $method = "alert";
+  if ($event = getEvent($client, $eventId)) {
+    $times = $event->when;
+    foreach ($times as $when) {
+        $reminder = $gc->newReminder();
+        $reminder->setMinutes($minutes);
+        $reminder->setMethod($method);
+        $when->reminder = array($reminder);
     }
-*/
-    Zend_Feed::registerNamespace('gd', 'http://schemas.google.com/g/2005');
-    $when = $event->{when};
-    $reminder = $when->getDOM()->appendChild(new DOMElement('gd:reminder','','http://schemas.google.com/g/2005'));
-    $reminder->setAttribute('minutes', $minutes);
-
-/*
-    $when = $event->{'gd:when'};
-    $reminder = $when->{'gd:reminder'};
-    $reminder['minutes'] = $minutes;
-*/
-    print $event->saveXML();
-
     $eventNew = $event->save();
     return $eventNew;
   } else {
@@ -536,9 +527,9 @@ function addReminder($client, $eventId, $minutes=15)
  * @param string $eventId The event ID string
  * @return void
  */
-function deleteAtomEntryById ($client, $eventId) 
+function deleteEventById ($client, $eventId) 
 {
-  $event = getAtomEntry($client, $eventId);
+  $event = getEvent($client, $eventId);
   $event->delete();
 }
 
@@ -551,7 +542,7 @@ function deleteAtomEntryById ($client, $eventId)
  * @param string $url The url for the event to be deleted 
  * @return void
  */
-function deleteAtomEntryByUrl ($client, $url) 
+function deleteEventByUrl ($client, $url) 
 {
   $gdataCal = new Zend_Gdata_Calendar($client);
   $gdataCal->delete($url);
@@ -612,46 +603,46 @@ if ($argc >= 2) {
              "<username> <password>\n";
       }
       break;
-    case 'updateAtomEntry':
+    case 'updateEvent':
       if ($argc == 6) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        updateAtomEntry($client, $argv[4], $argv[5]); 
+        updateEvent($client, $argv[4], $argv[5]); 
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<eventId> <newTitle>\n";
       }
       break;
-    case 'addReminder':
+    case 'setReminder':
       if ($argc == 6) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        addReminder($client, $argv[4], $argv[5]); 
+        setReminder($client, $argv[4], $argv[5]); 
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<eventId> <minutes>\n";
       }
       break;
     case 'addExtendedProperty':
-      if ($argc == 8) { 
+      if ($argc == 7) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        addReminder($client, $argv[4], $argv[5], $argv[6], $argv[7]);
+        addExtendedProperty($client, $argv[4], $argv[5], $argv[6]);
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<eventId> <name> <value>\n";
       }
       break;
-    case 'deleteAtomEntryById':
+    case 'deleteEventById':
       if ($argc == 5) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        deleteAtomEntryById($client, $argv[4]); 
+        deleteEventById($client, $argv[4]); 
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<eventId>\n";
       }
       break;
-    case 'deleteAtomEntryByUrl':
+    case 'deleteEventByUrl':
       if ($argc == 5) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        deleteAtomEntryByUrl($client, $argv[4]); 
+        deleteEventByUrl($client, $argv[4]); 
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<eventUrl>\n";
@@ -660,8 +651,9 @@ if ($argc >= 2) {
     case 'createEvent':
       if ($argc == 12) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        createEvent($client, $argv[4], $argv[5], $argv[6], $argv[7], $argv[8],
-            $argv[9], $argv[10], $argv[11]);
+        $id = createEvent($client, $argv[4], $argv[5], $argv[6], $argv[7], 
+            $argv[8], $argv[9], $argv[10], $argv[11]);
+        print "Event created with ID: $id\n";
       } else {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<title> <description> <where> " .
@@ -695,9 +687,9 @@ if ($argc >= 2) {
        "outputCalendarByDateRange\n" .
        "outputCalendarByFullTextQuery\n" .
        "outputCalendarList\n" .
-       "updateAtomEntry\n" .
-       "deleteAtomEntryById\n" .
-       "deleteAtomEntryByUrl\n" .
+       "updateEvent\n" .
+       "deleteEventById\n" .
+       "deleteEventByUrl\n" .
        "createEvent\n" .
        "createRecurringEvent\n";
 } else {
