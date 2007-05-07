@@ -138,7 +138,7 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
         $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8();
 
         // UTF-8 text with a cyrillic symbols
-        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово');
+        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово', 'UTF-8');
 
         $this->assertEquals(count($tokenList), 3);
 
@@ -163,7 +163,7 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
         $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num();
 
         // UTF-8 text with a cyrillic symbols
-        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово');
+        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово', 'UTF-8');
 
         $this->assertEquals(count($tokenList), 3);
 
