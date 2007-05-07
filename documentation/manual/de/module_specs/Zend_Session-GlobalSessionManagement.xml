@@ -510,18 +510,20 @@ if (!isset($defaultNamespace->initialized))
         <title>writeClose($readonly = true)</title>
 
         <para>
-            Shutdown the sesssion, close writing and detach $_SESSION from the back-end storage mechanism. This will
-            complete the internal data transformation on this request. The optional $readonly boolean parameter can
-            remove write access (i.e. throw error if any Zend_Session_Namespace or Zend_Session methods attempt writes).
+            Beendet die Session, schließt das schreiben und entfernt $_SESSION vom Backend Speicher Mechanismus. Das
+            vervollständigt die interne Transformation der Daten auf diese Anfrage. Der optionale boolsche $readonly
+            parameter entfernt den Schreibzugriff (z.B. wirft einen Fehler wenn irgendeine Zend_Session_Namespace
+            oder Zend_Session Methode versucht zu schreiben).
         </para>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
-                By default, <code>$readonly</code> is enabled and further actions involving writing to the session data
-                store will throw an error. However, some legacy application might expect $_SESSION to remain writeable
-                after ending the session via session_write_close(). Although not considered "best practice", the
-                <code>$readonly</code> option is available for those who need it.
+                Standardmäßig ist <code>$readonly</code> aktiviert und weitere Aktionen welche in den Session Daten
+                Speicher schreiben werfen einen Fehler. Trotzdem könnten einige besondere Anwendungen erwarten das
+                $_SESSION beschreibbar bleibt nachdem die Session mittels session_write_close() beendet wurde.
+                Obwohl das nicht die "beste Praxis" ist, ist die <code>$readonly</code> für jene vorhanden die Sie
+                benötigen.
             </para>
         </note>
 
@@ -532,8 +534,8 @@ if (!isset($defaultNamespace->initialized))
         <title>expireSessionCookie()</title>
 
         <para>
-            This method sends an expired session id cookie, causing the client to delete the session cookie. Sometimes
-            this technique is used to perform a client-side logout.
+            Diese Methode sendet ein abgelaufenes Session Id Cookie, was den Client dazu bringt den Session Cookie
+            zu löschen. Manchmal wird diese Technik dazu verwendet einen Logout auf der Seite des Client auszuführen.
         </para>
 
     </sect2>
@@ -543,10 +545,9 @@ if (!isset($defaultNamespace->initialized))
         <title>setSaveHandler(Zend_Session_SaveHandler_Interface $interface)</title>
 
         <para>
-            Most developers will find the default save handler sufficient. This method provides an object-oriented
-            wrapper for <code>
-            <ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink>
-            </code>.
+            Die meisten Entwickler werden den Standardmäßigen Speicher Handle ausreichend finden. Diese Methode
+            bietet einen objekt-orientierten Wrapper für <code>
+            <ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink></code>.
         </para>
 
     </sect2>
@@ -556,15 +557,15 @@ if (!isset($defaultNamespace->initialized))
         <title>namespaceIsset($namespace)</title>
 
         <para>
-            Use this method to determine if a session namespace exists, or if a particular index exists in a particular
-            namespace.
+            Diese Methode kann dazu verwendet werden um  herauszufinden ob ein Session Namensraum existiert, oder ob
+            ein bestimmter Index in einem bestimmten Namensraum existiert.
         </para>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
-                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session has been
-                started).
+                Ein Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B. bevor Zend_Session
+                gestartet wurde).
             </para>
         </note>
 
@@ -575,21 +576,20 @@ if (!isset($defaultNamespace->initialized))
         <title>namespaceUnset($namespace)</title>
 
         <para>
-            Instead of creating a Zend_Session instance for a namespace, and iterating over its contents to unset each
-            entry, use <code>Zend_Session::namespaceUnset($namespace)</code> to efficiently unset (remove) an entire
-            namespace and its contents. As with all arrays in PHP, if a variable containing an array is unset, and the
-            array contains other objects, those objects will remain available, if they were also stored by reference in
-            other array/objects that remain accessible via other variables. So <code>namespaceUnset()</code> does not
-            perform a "deep" unsetting/deleting of the contents of the entries in the namespace. For a more detailed
-            explanation, please see
-            <ulink url="http://php.net/references">References Explained</ulink>
-            in the PHP manual.
+            Statt eine Zend_Session Instanz für einen Namensraum zu erstellen, und über dessen Inhalt zu iterieren
+            um jeden Eintrag zu entfernen, sollte <code>Zend_Session::namespaceUnset($namespace)</code> verwendet
+            werden um effektiv den kompletten Namensraum und dessen Inhalt zu entfernen. Wie mit allen Arrays in PHP,
+            wenn eine Variable die ein Array enthält entfernt wird, und das Array andere Objekte enthält, werden
+            diese verfügbar bleiben, wenn diese durch Referenz in anderen Array/Objekten gespeichert sind, die durch
+            anderen Variablen erreichbar bleiben. <code>namespaceUnset()</code> führt kein "tiefes" entfernen/löschen
+            von Inhalten eines Eintrages im Namensraum durch. Für eine detailiertere Erklärung sollte im PHP
+            Handbuch unter <ulink url="http://php.net/references">Referenzen erklärt</ulink> nachgesehen werden.
         </para>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
-                An error will be thrown if the namespace is not writable (e.g. after <code>destroy()</code>).
+                Ein Fehler wird geworfen wenn der Namensraum nicht beschreibbar ist (z.B. nach <code>destroy()</code>).
             </para>
         </note>
 
@@ -600,18 +600,20 @@ if (!isset($defaultNamespace->initialized))
         <title>namespaceGet($namespace)</title>
 
         <para>
-            DEPRECATED: Use <code>getIterator()</code> in Zend_Session_Namespace. This method returns an array of the
-            contents of <code>$namespace</code>. If you have logical reasons to keep this method publicly accessible,
-            please provide feedback to the
-            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
-            mail list. Actually, all participation on any relevant topic is welcome :)
+            DEPRECATED: <code>getIterator()</code> in Zend_Session_Namespace sollte verwendet werden. Diese Methode
+            gibt ein Array mit dem Inhlat von 
+            
+            This method returns an array of the <code>$namespace</code> zurück. Wenn es logische Gründe gibt
+            diese Methode öffentlich aufrufbar zu lassen bitte ein Feedback auf die
+            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Mailingliste geben.
+            Aktuell ist jede Anteilnahme an irgendeinem relevanten Thema sehr willkommen :)
         </para>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
-                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session has been
-                started).
+                Win Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B bevor Zend_Session
+                gestartet wurde).
             </para>
         </note>
 
@@ -622,17 +624,18 @@ if (!isset($defaultNamespace->initialized))
         <title>getIterator()</title>
 
         <para>
-            Use <code>getIterator()</code> to obtain an iterable array containing the names of all namespaces.
+            <code>getIterator()</code> kann verwendet werden, um ein durchsuchbares Array zu erhalten, das
+            die Namen aller Namensräume enthält.
         </para>
 
         <example>
-            <title>Unsetting All Namespaces</title>
+            <title>Entfernen aller Namensräume</title>
 <programlisting role="php"><![CDATA[<?php
 foreach(Zend_Session::getIterator() as $space) {
     try {
         $core->namespaceUnset($space);
     } catch (Zend_Session_Exception $e) {
-        return; // possible if Zend_Session::stop() has been executed
+        return; // Möglich wenn Zend_Session::stop() ausgeführt wurde
     }
 }
 
@@ -640,10 +643,10 @@ foreach(Zend_Session::getIterator() as $space) {
         </example>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
-                An error will be thrown if Zend_Session is not marked as readable (e.g. before Zend_Session has been
-                started).
+                Ein Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B. bevor Zend_Session
+                gestartet wurde).
             </para>
         </note>
 
