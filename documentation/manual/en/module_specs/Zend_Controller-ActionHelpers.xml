@@ -35,7 +35,7 @@
         </para>
 
         <para>
-            The helper broker is stored as the <code>$_helpers</code> member of
+            The helper broker is stored as the <code>$_helper</code> member of
             <code>Zend_Controller_Action</code>; use the broker to retrieve or
             call on helpers. Some methods for doing so include:
         </para>
@@ -48,7 +48,7 @@
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$flashMessenger = $this->_helpers->getHelper('FlashMessenger');
+$flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('We did something in the last request');
 ]]></programlisting>
             </listitem>
@@ -61,7 +61,7 @@ $flashMessenger->addMessage('We did something in the last request');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$flashMessenger = $this->_helpers->FlashMessenger;
+$flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('We did something in the last request');
 ]]></programlisting>
             </listitem>
@@ -76,7 +76,7 @@ $flashMessenger->addMessage('We did something in the last request');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$this->_helpers->FlashMessenger('We did something in the last request');
+$this->_helper->FlashMessenger('We did something in the last request');
 ]]></programlisting>
             </listitem>
         </itemizedlist>
