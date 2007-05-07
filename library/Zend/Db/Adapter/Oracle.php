@@ -118,7 +118,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         }
 
         if (isset($this->_config['dbname'])) {
-            $this->_connection = oci_connect(
+            $this->_connection = @oci_connect(
                 $this->_config['username'],
                 $this->_config['password'],
                 $this->_config['dbname']);
@@ -159,6 +159,18 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $stmt = new Zend_Db_Statement_Oracle($this, $sql);
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
+    }
+
+    /**
+     * Quote a raw string.
+     *
+     * @param string $value     Raw string
+     * @return string           Quoted string
+     */
+    protected function _quote($value)
+    {
+        $value = str_replace("'", "''", $value);
+        return "'" . addcslashes($value, "\000\n\r\\\032") . "'";
     }
 
     /**
@@ -288,7 +300,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
-            WHERE TC.TABLE_NAME = ".$this->quote($tableName);
+            WHERE TC.TABLE_NAME = ".strtoupper($this->quote($tableName));
         if ($schemaName) {
             $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
         }
@@ -459,5 +471,102 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         return $this->_execute_mode;
     }
 
+
+    /**
+     * Quote an identifier.
+     *
+     * Oracle allows 'CREATE "table"', but does not allow 'DROP/INSERT INTO/SELECT FROM "table"'
+     * We don't want to implement a fully featured SQL parser here, so let's just don't quote the identifier.
+     *
+     * @param  string $value The identifier or expression.
+     * @return string        The quoted identifier and alias.
+     */
+    protected function _quoteIdentifier($value)
+    {
+        $q = $this->getQuoteIdentifierSymbol();
+        return str_replace("$q", "$q$q", $value);
+    }
+
+    /**
+     * Inserts a table row with specified data.
+     *
+     * Oracle does not support anonymous ('?') binds.
+     *
+     * @param mixed $table The table to insert data into.
+     * @param array $bind Column-value pairs.
+     * @return int The number of affected rows.
+     */
+    public function insert($table, array $bind)
+    {
+        $i = 0;
+        // extract and quote col names from the array keys
+        $cols = array();
+        $vals = array();
+        foreach ($bind as $col => $val) {
+            $cols[] = $this->quoteIdentifier($col);
+            if ($val instanceof Zend_Db_Expr) {
+                $vals[] = $val->__toString();
+                unset($bind[$col]);
+            } else {
+                $vals[] = ':'.$col.$i;
+                unset($bind[$col]);
+                $bind[':'.$col.$i] = $val;
+            }
+            $i++;
+        }
+
+        // build the statement
+        $sql = "INSERT INTO "
+             . $this->quoteIdentifier($table)
+             . ' (' . implode(', ', $cols) . ') '
+             . 'VALUES (' . implode(', ', $vals) . ')';
+
+        // execute the statement and return the number of affected rows
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->rowCount();
+        return $result;
+    }
+
+    /**
+     * Updates table rows with specified data based on a WHERE clause.
+     *
+     * @param  mixed        $table The table to update.
+     * @param  array        $bind  Column-value pairs.
+     * @param  array|string $where UPDATE WHERE clause(s).
+     * @return int          The number of affected rows.
+     */
+    public function update($table, array $bind, $where = '')
+    {
+        $i = 0;
+        // build "col = ?" pairs for the statement
+        $set = array();
+        foreach ($bind as $col => $val) {
+            if ($val instanceof Zend_Db_Expr) {
+                $val = $val->__toString();
+                unset($bind[$col]);
+            } else {
+                unset($bind[$col]);
+                $bind[':'.$col.$i] = $val;
+                $val = ':'.$col.$i;
+            }
+            $set[] = $this->quoteIdentifier($col) . ' = ' . $val;
+            $i++;
+        }
+
+        if (is_array($where)) {
+            $where = implode(' AND ', $where);
+        }
+
+        // build the statement
+        $sql = "UPDATE "
+             . $this->quoteIdentifier($table)
+             . ' SET ' . implode(', ', $set)
+             . (($where) ? " WHERE $where" : '');
+
+        // execute the statement and return the number of affected rows
+        $stmt = $this->query($sql, $bind);
+        $result = $stmt->rowCount();
+        return $result;
+    }
 }
 
