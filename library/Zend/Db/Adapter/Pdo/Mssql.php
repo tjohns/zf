@@ -109,8 +109,6 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
      *
-     * @todo [ZF-1268] use FETCH_NUM instead of FETCH_ASSOC to avoid PDO_CASE conflicts.
-     * @todo Discover column position.
      * @todo Discover column primary key position.
      * @todo Discover integer unsigned property.
      *
@@ -120,46 +118,56 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
+        /**
+         * Discover metadata information about this table.
+         */
         $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($tableName);
         $stmt = $this->query($sql);
-        // @todo: change to FETCH_NUM
-        $result = $stmt->fetchAll(Zend_Db::FETCH_BOTH);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
-        // @todo: change to integers according to keys returned in FETCH_NUM result set
-        $column_name = 'column_name';
-        $table_name  = 'table_name';
-        $column_def  = 'column_def';
-        $type_name   = 'type_name';
-        $nullable    = 'nullable';
-        $length      = 'length';
-        $scale       = 'scale';
-        $precision   = 'precision';
+        $table_name  = 2;
+        $column_name = 3;
+        $type_name   = 5;
+        $precision   = 6;
+        $length      = 7;
+        $scale       = 8;
+        $nullable    = 10;
+        $column_def  = 12;
 
+        /**
+         * Discover primary key column(s) for this table.
+         */
         $sql = "exec sp_pkeys @table_name = " . $this->quoteIdentifier($tableName);
         $stmt = $this->query($sql);
-        // @todo: change to FETCH_NUM
-        $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_BOTH);
-
-        // @todo: change to integers according to keys returned in FETCH_NUM result set
-        $pkey_column_name = 'coumn_name';
-
-        foreach ($primaryKeysResult as $row) {
-            $primaryKeyColumn[$row[$pkey_column_name]] = true;
+        $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $pkey_column_name = 3;
+        foreach ($primaryKeysResult as $pkeysRow) {
+            $primaryKeyColumn[$pkeysRow[$pkey_column_name]] = true;
         }
 
         $desc = array();
+        $p = 1;
         foreach ($result as $key => $row) {
-            list($type, $rest) = explode(' ', $row[$type_name], 2);
+            list($type) = explode(' ', $row[$type_name], 2);
 
-            if (array_key_exists($primaryKeyColumn, $row[$column_name])) {
-                $is_primary = true;
-            }
+            $isPrimary = array_key_exists($primaryKeyColumn, $row[$column_name]);
+            /**
+             * @todo: discover primary column position more accurately.
+             * I.e. the position of the column in the primary key constraint,
+             * not the position of the column in the table.  Default to a
+             * local count variable for now, as we do for MySQL and SQLite.
+             * This at least works when the order of columns returned from
+             * "exec sp_columns" happens to be in the same order the
+             * columns are declared in the primary key constraint.
+             * Of course this only affects compound primary keys.
+             */
+            $primaryPosition = $isPrimary ? $p++ : null;
 
             $desc[$row[$column_name]] = array(
                 'SCHEMA_NAME'      => null, // @todo
                 'TABLE_NAME'       => $row[$table_name],
                 'COLUMN_NAME'      => $row[$column_name],
-                'COLUMN_POSITION'  => null, // @todo
+                'COLUMN_POSITION'  => (int) $row[$column_position],
                 'DATA_TYPE'        => $type,
                 'DEFAULT'          => $row[$column_def],
                 'NULLABLE'         => (bool) $row[$nullable],
@@ -167,8 +175,8 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
                 'SCALE'            => $row[$scale],
                 'PRECISION'        => $row[$precision],
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) $is_primary,
-                'PRIMARY_POSITION' => null // @todo
+                'PRIMARY'          => (bool) $isPrimary,
+                'PRIMARY_POSITION' => $primaryPosition
             );
         }
         return $desc;
