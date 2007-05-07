@@ -1,11 +1,11 @@
 <sect1 id="zend.validate.introduction">
 
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        The Zend_Validate component provides a set of commonly needed validators. It also provides a simple
-        validator chaining mechanism by which multiple validators may be applied to a single datum in a
-        user-defined order.
+        Die Zend_Validate Komponente bietet ein Set von üblich verwendeten Prüfungen. Sie bietet auch einen einfachen
+        Prüf-Ketten-Mechanismus mit welchem mehrfache Prüfungen zu einem einfachen Wert in einer benutzer-definierten
+        Art und Weise zugeordnet werden können.
     </para>
 
     <para>
@@ -13,46 +13,48 @@
     </para>
 
     <para>
-        A validator examines its input with respect to some requirements and produces a boolean result -
-        whether the input successfully validates against the requirements. If the input does not meet the
-        requirements, a validator may additionally provide information about which requirement(s) the input
-        does not meet.
+        Eine Prüfung untersucht seine Eingabe mit Obacht auf einige Anforderungen und produziert ein boolsches
+        Ergebnis - wenn die Eingabe erfolgreich gegen die Anforderungen geprüft werden konnte. Wenn die Eingabe
+        den Anforderungen nicht entspricht, kann die Prüfung zusätzliche Informationen darüber bieten, welche
+        der Anforderungen die Eingabe nicht entspricht.
     </para>
 
     <para>
-        For example, a web application might require that a username be between six and twelve characters in
-        length and may only contain alphanumeric characters. A validator can be used for ensuring that
-        usernames meet these requirements. If a chosen username does not meet one or both of the requirements,
-        it would be useful to know which of the requirements the username fails to meet.
+        Eine WebAnwendung, zum Beispiel, könnte erfordern das ein Benutzername zwischen sechs und zwölf Zeichen
+        lang ist und dürfte nur alphanummerische Zeichen  enthalten. Eine Prüfung kann dafür verwendet werden um
+        sicherzustellen das Benutzernamen diesen Anforderungen entsprechen. Wenn ein gewählter Benutzername einer
+        oder beiden Anforderungen nicht entspricht, wäre es nützlich zu wissen welche der Anforderungen der
+        Benutzername nicht entsprochen hat.
     </para>
 
     <para>
-        Having defined validation in this way provides the foundation for
-        <code>Zend_Validate_Interface</code>, which defines two methods, <code>isValid()</code> and
-        <code>getMessages()</code>. The <code>isValid()</code> method performs validation upon the provided
-        value, returning <code>true</code> if and only if the value passes against the validation criteria. If
-        <code>isValid()</code> returns <code>false</code>, the <code>getMessages()</code> is provided to
-        return an array of messages explaining the reason(s) for validation failure.
+        Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <code>Zend_Validate_Interface</code>
+        welche zwei Methoden definiert, <code>isValid()</code> und <code>getMessages()</code>. Die
+        <code>isValid()</code> Methode führt eine Prüfung über die angegebenen Werte aus, und gibt nur dann
+        <code>true</code> zurück wenn der Wert gegenüber den Kriterien der Prüfung entsprochen hat. Wenn
+        <code>isValid()</code> <code>false</code> zurück gibt, bietet <code>getMessages()</code> ein Array von
+        Nachrichten welche die Gründe für die fehlgeschlagene Prüfung beschreiben.
     </para>
 
     <note>
         <para>
-            The <code>getMessages()</code> returns validation failure messages for the most recent
-            <code>isValid()</code> call only, since <code>isValid()</code> clears any messages existing from a previous <code>isValid()</code> call.
+            <code>getMessages()</code> gibt die Fehlermeldungen der Prüfungen zurück, allerdings nur für die
+            zuletzt durchgeführte Prüfung, da <code>isValid()</code> alle Nachrichten entfernt die von einem
+            vorherigen <code>isValid()</code> Aufruf existiert haben.
         </para>
     </note>
 
     <para>
-        The following example illustrates validation of an e-mail address:
+        Das folgende Beispiel zeigt die Prüfung einer E-Mail Adresse:
 
         <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
-    // email appears to be valid
+    // EMail scheint gültig zu sein
 } else {
-    // email is invalid; print the reasons
+    // EMail is ungültig; schreibe die Gründ
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
