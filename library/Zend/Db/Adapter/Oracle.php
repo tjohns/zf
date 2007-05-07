@@ -300,7 +300,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
-            WHERE TC.TABLE_NAME = ".strtoupper($this->quote($tableName));
+            WHERE TC.TABLE_NAME = ".$this->quote($tableName);
         if ($schemaName) {
             $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
         }
@@ -484,7 +484,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected function _quoteIdentifier($value)
     {
         $q = $this->getQuoteIdentifierSymbol();
-        return str_replace("$q", "$q$q", $value);
+        return ($q . str_replace("$q", "$q$q", $value) . $q);
     }
 
     /**

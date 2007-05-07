@@ -30,29 +30,5 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
     {
         return 'Oracle';
     }
-  
-	public function testStatementFetchAll()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $result = $stmt->fetchAll();
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(2, count($result[0]));
-        $this->assertEquals(2, $result[0]['PRODUCT_ID']);
-    }
-
-    public function testStatementFetchObject()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $result = $stmt->fetchObject();
-        $this->assertType('stdClass', $result,
-            'Expecting object of type stdClass, got '.get_class($result));
-        $this->assertEquals('Linux', $result->PRODUCT_NAME);
-    }
 
 }
