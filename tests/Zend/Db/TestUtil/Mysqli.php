@@ -73,7 +73,12 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
     protected function _rawQuery($sql)
     {
         $mysqli = $this->_db->getConnection();
-        return $mysqli->query($sql);
+        $retval = $mysqli->query($sql);
+        if (!$retval) {
+            $e = $mysqli->error;
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
+        }
     }
 
 }

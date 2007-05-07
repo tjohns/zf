@@ -34,10 +34,17 @@ class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Pdo_Oci
     {
         $conn = $this->_db->getConnection();
         $stmt = oci_parse($conn, $sql);
-        if ($stmt === false) {
-            return false;
+        if (!$stmt) {
+            $e = oci_error($conn);
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL parse error for \"$sql\": ".$e['message']);
         }
-        return @oci_execute($stmt);
+        $retval = oci_execute($stmt);
+        if (!$retval) {
+            $e = oci_error($conn);
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL execute error for \"$sql\": ".$e['message']);
+        }
     }
 
 }

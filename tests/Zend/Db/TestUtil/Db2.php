@@ -129,10 +129,11 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();
-        // echo "Db2::_rawQuery(): sql = \n  $sql;\n";
-        $result = @db2_exec($conn, $sql);
-        if ($result === false) {
-            throw new Zend_Db_Exception(db2_stmt_errormsg());
+        $result = db2_exec($conn, $sql);
+        if (!$result) {
+            $e = db2_stmt_errormsg();
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
         }
     }
 
