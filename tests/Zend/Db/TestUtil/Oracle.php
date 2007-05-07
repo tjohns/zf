@@ -37,7 +37,7 @@ class Zend_Db_TestUtil_Oracle extends Zend_Db_TestUtil_Pdo_Oci
         if ($stmt === false) {
             return false;
         }
-        return oci_execute($stmt);
+        return @oci_execute($stmt);
     }
 
 }
