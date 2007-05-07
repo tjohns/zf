@@ -159,7 +159,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
         if ($params) {
             $error = false;
             foreach (array_keys($params) as $name) {
-                if (!oci_bind_by_name($this->_stmt, $name, $params[$name], -1)) {
+                if (!@oci_bind_by_name($this->_stmt, $name, $params[$name], -1)) {
                     $error = true;
                     break;
                 }
@@ -170,7 +170,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             }
         }
 
-        if (!oci_execute($this->_stmt, $this->_connection->_getExecuteMode())) {
+        if (!@oci_execute($this->_stmt, $this->_connection->_getExecuteMode())) {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
@@ -338,7 +338,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             $style = $this->_fetchMode;
         }
 
-        $flags = 0;
+        $flags = OCI_FETCHSTATEMENT_BY_ROW;
 
         switch ($style) {
             case Zend_Db::FETCH_BOTH:
@@ -354,6 +354,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             case Zend_Db::FETCH_OBJ:
                 break;
             case Zend_Db::FETCH_COLUMN:
+                $flags = $flags &~ OCI_FETCHSTATEMENT_BY_ROW;
+                $flags |= OCI_FETCHSTATEMENT_BY_COLUMN;
                 $flags |= OCI_NUM;
                 break;
             default:
@@ -365,7 +367,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
         /* @todo XXX how to handle $col ? */
 
         $result = Array();
-        if ($flags) { /* not Zend_Db::FETCH_OBJ */
+        if ($flags != OCI_FETCHSTATEMENT_BY_ROW) { /* not Zend_Db::FETCH_OBJ */
             if (! ($rows = oci_fetch_all($this->_stmt, $result, 0, -1, $flags) )) {
                 if ($error = oci_error($this->_stmt)) {
                     require_once 'Zend/Db/Statement/Oracle/Exception.php';
