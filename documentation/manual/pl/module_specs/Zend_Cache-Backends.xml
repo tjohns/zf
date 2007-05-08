@@ -180,7 +180,7 @@
                       <row>
                           <entry><code>compression</code></entry>
                           <entry><code>boolean</code></entry>
-                          <entry><code>flase</code></entry>
+                          <entry><code>false</code></entry>
                           <entry>
                              wartość true jeśli chcesz użyć kompresji w locie
                           </entry>

@@ -16,9 +16,10 @@
             Jakkolwiek, wiadomości o wyjątkach oraz informacje o backtrace 
             często zawierają wrażliwe informacje o systemie, jak np. zapytania 
             SQL, informacje o lokacjach plików i wiele innych. Aby pomóc ci 
-            chronić swój serwis, domyślnie Zend_Controller_Front łapie wszystkie 
-            wyjątki i rejestruje je w obiekcie odpowiedzi; z kolei, obiekt 
-            odpowiedzi domyślnie nie wyświetla wiadomości o wyjątkach.
+            chronić swój serwis, domyślnie <code>Zend_Controller_Front</code> 
+            łapie wszystkie wyjątki i rejestruje je w obiekcie odpowiedzi; z 
+            kolei, obiekt odpowiedzi domyślnie nie wyświetla wiadomości o 
+            wyjątkach.
         </para>
     </sect2>
 
@@ -32,7 +33,7 @@
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Controller_Front::throwExceptions()</para>
+                <para><code>Zend_Controller_Front::throwExceptions()</code></para>
 
                 <para>
                     Przekazująć logiczną wartość true do tej metody, możesz 
@@ -58,7 +59,7 @@ try {
             </listitem>
 
             <listitem>
-                <para>Zend_Controller_Response_Abstract::renderExceptions()</para>
+                <para><code>Zend_Controller_Response_Abstract::renderExceptions()</code></para>
 
                 <para>
                     Przekazując logiczną wartość true do tej metody, możesz
@@ -70,17 +71,21 @@ try {
             </listitem>
 
             <listitem>
-                <para>Zend_Controller_Front::returnResponse() oraz
-                    Zend_Controller_Response_Abstract::isException()</para>
+                <para>
+                    <code>Zend_Controller_Front::returnResponse()</code> oraz
+                    <code>Zend_Controller_Response_Abstract::isException()</code>
+                </para>
 
                 <para>
                     Przekazanie wartości logicznej true do metody 
-                    Zend_Controller_Front::returnResponse(), spowoduje, że 
-                    obiekt Zend_Controller_Front::dispatch() nie będzie 
+                    <code>Zend_Controller_Front::returnResponse()</code>, 
+                    spowoduje, że obiekt 
+                    <code>Zend_Controller_Front::dispatch()</code> nie będzie 
                     renderował odpowiedzi, a zamiast tego ją zwróci. Gdy już
                     masz odpowiedź, możesz sprawdzić czy są w niej wyjątki
-                    używając metody isException(), a następnie odebrać wyjątki
-                    używając metody getException(). Na przykład:
+                    używając metody <code>isException()</code>, a następnie 
+                    odebrać wyjątki używając metody <code>getException()</code>. 
+                    Na przykład:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -97,8 +102,9 @@ if ($response->isException()) {
                 
                 <para>
                     Główną zaletą, dzięki której ta metoda umożliwia więcej niż
-                    Zend_Controller_Front::throwExceptions(), jest to, że możesz
-                    warunkowo wyświetlać odpowiedź po obsłudze wyjątków.
+                    <code>Zend_Controller_Front::throwExceptions()</code>, jest 
+                    to, że możesz warunkowo wyświetlać odpowiedź po obsłudze 
+                    wyjątków.
                 </para>
             </listitem>
         </itemizedlist>
@@ -120,14 +126,14 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    Zend_Controller_Dispatcher::dispatch() domyślnie wyrzuci
-                    wyjątek jeśli zażądano nieprawidłowego kontrolera. Są dwa
-                    zalecane sposoby na obsłużenie tego:
+                    <code>Zend_Controller_Dispatcher::dispatch()</code> 
+                    domyślnie wyrzuci wyjątek jeśli zażądano nieprawidłowego 
+                    kontrolera. Są dwa zalecane sposoby na obsłużenie tego:
                 </para>
 
                 <itemizedlist>
                     <listitem>
-                        <para>Ustawienie parametru 'useDefaultControllerAlways'.</para>
+                        <para>Ustawienie parametru <code>useDefaultControllerAlways</code>.</para>
 
                         <para>
                             W twoim kontrolerze frontowym, lub w obiekcie 
@@ -154,8 +160,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
                     <listitem>
                         <para>
-                            Wyjątek wyrzucany przez metodę dispatch() jest
-                            wyjątkiem Zend_Controller_Dispatcher_Exception 
+                            Wyjątek wyrzucany przez metodę <code>dispatch()</code> 
+                            jest wyjątkiem <code>Zend_Controller_Dispatcher_Exception</code> 
                             zawierającym tekst 'Invalid controller specified'. 
                             Użyj jednej z metod opisanych w <link 
                             linkend="zend.controller.exceptions.handling">poprzedniej
@@ -168,7 +174,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    Metoda Zend_Controller_Action::__call() wyrzuci wyjątek
+                    Metoda <code>Zend_Controller_Action::__call()</code> wyrzuci 
+                    wyjątek <code>Zend_Controller_Action_Exception</code>
                     jeśli nie może uruchomić nieistniejącej metody akcji. 
                     Najczęściej będziesz chciał użyć jakiejś domyślnej akcji
                     w kontrolerze w tego typu sprawach. Przykładowe metody 
@@ -178,8 +185,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Rozszerzenie klasy Zend_Controller_Action i 
-                            nadpisanie metody __call(). Na przykład:
+                            Rozszerzenie klasy <code>Zend_Controller_Action</code> 
+                            i nadpisanie metody <code>__call()</code>. Na przykład:
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php
@@ -206,8 +213,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            Rozszerzenie klasy Zend_Controller_Dispatcher o
-                            nadpisanie metody getAction(), ktora sprawdza czy
+                            Rozszerzenie klasy <code>Zend_Controller_Dispatcher</code> o
+                            nadpisanie metody <code>getAction()</code>, ktora sprawdza czy
                             akcja istnieje. Na przykład:
                         </para>
 
@@ -254,19 +261,19 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
                     <listitem>
                         <para>
-                            Użycie metody Zend_Controller_Action::preDispatch() 
-                            lub Zend_Controller_Plugin_Abstract::preDispatch() 
+                            Użycie metody <code>Zend_Controller_Action::preDispatch()</code>
+                            lub <code>Zend_Controller_Plugin_Abstract::preDispatch()</code> 
                             do zidentyfikowania nieprawidłowych akcji.
                         </para>
 
                         <para>
-                            Rozszerzając klasę Zend_Controller_Action i
-                            modyfikując metodę preDispatch(), możesz 
+                            Rozszerzając klasę <code>Zend_Controller_Action</code> i
+                            modyfikując metodę <code>preDispatch()</code>, możesz 
                             zmodyfikować wszystkie twoje kontrolery w taki 
                             sposób, aby przenosiły one żądanie do innej akcji
                             lub przekierowywały zamiast uruchamiać akcję.
                             Kod wyglądałby podobnie kod nadpisujący metodę 
-                            __call(), który został przedstawiony wyżej.
+                            <code>__call()</code>, który został przedstawiony wyżej.
                         </para>
 
                         <para>

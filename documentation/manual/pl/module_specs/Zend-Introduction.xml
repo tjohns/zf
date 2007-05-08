@@ -1,10 +1,13 @@
 <sect1 id="zend.introduction">
     <title>Wstęp</title>
     <para>
-    Klasa Zend jest podstawową klasą Zend Framework. Została ona wydzielona
-    według zasady DRY (Don't Repeat Yourself - Nie Powtarzaj Siebie). Klasa zawiera
-    jedynie statyczne metody, a te metody zawierają funkcjonalność wymaganą przez 
-    wiele komponentów Zend Framework.
+        Zend Framework is a high quality and open source framework for 
+        developing Web Applications and Web Services with PHP.
+    </para>
+    <para>
+        Built in the true PHP spirit, the Zend Framework delivers ease-of-use 
+        and powerful functionality. It provides solutions for building modern, 
+        robust, and secure websites.
     </para>
 </sect1>
 <!--

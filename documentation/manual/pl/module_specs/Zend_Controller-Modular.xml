@@ -14,9 +14,10 @@
 docroot/
     index.php
 application/
-    controllers/
-        IndexController.php
-        FooController.php
+    default/
+        controllers/
+            IndexController.php
+            FooController.php
     blog/
         controllers/
             IndexController.php
@@ -53,37 +54,38 @@ application/
             Pierwszym krokiem użycia modułów jest zmodyfikowanie sposobu 
             określania listy ścieżek do kontrolerów w kontrolerze frontowym.
             W podstawowej wersji MVC, przekazujesz tablicę lub łańcuch znaków
-            do metody setControllerDirectory(), lub ścieżkę do metody 
-            addControllerDirectory(). Gdy używasz modułów, musisz także 
-            odpowiednio zmienić wywołania tych metod.
+            do metody <code>setControllerDirectory()</code>, lub ścieżkę do 
+            metody <code>addControllerDirectory()</code>. Gdy używasz modułów, 
+            musisz także odpowiednio zmienić wywołania tych metod.
         </para>
 
         <para>
-            W metodzie setControllerDirectory(), musisz przekazać tablicę 
-            asocjacyjną i określić pary klucz/wartość w postaci 
-            moduł/ścieżka. Specjalny klucz 'default' będzie użyty dla globalnych 
-            kontrolerów (tych, które nie potrzebują przestrzeni nazw). Wszystkie 
-            wpisy powinny zawierać łańcuch znaków wskazujący na pojedyncza 
-            ścieżkę. Na przykład:
+            W metodzie <code>setControllerDirectory()</code>, musisz przekazać 
+            tablicę asocjacyjną i określić pary klucz/wartość w postaci 
+            moduł/ścieżka. Specjalny klucz <code>default</code> będzie użyty dla 
+            globalnych kontrolerów (tych, które nie potrzebują przestrzeni nazw). 
+            Wszystkie wpisy powinny zawierać łańcuch znaków wskazujący na 
+            pojedynczą ścieżkę, a klucz <code>default</code> musi istnieć. Na 
+            przykład:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));
-]]></programlisting>
+?>]]></programlisting>
 
         <para>
-            Metoda addControllerDirectory() przyjmuje opcjonalny drugi argument.
-            Gdy używasz modułów, przekaż nazwę modułu jak drugi argument; jeśli
-            nie określisz drugiego argumentu, ścieżka zostanie dodana dla 
-            domyślnej przestrzeni nazw. Na przykład:
+            Metoda <code>addControllerDirectory()</code> przyjmuje opcjonalny 
+            drugi argument. Gdy używasz modułów, przekaż nazwę modułu jak drugi 
+            argument; jeśli nie określisz drugiego argumentu, ścieżka zostanie 
+            dodana dla domyślnej przestrzeni nazw. Na przykład:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-]]></programlisting>
+?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.modular.router">

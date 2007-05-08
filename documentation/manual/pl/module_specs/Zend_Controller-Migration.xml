@@ -6,9 +6,52 @@
         Zend Framework we wczesnej wersji, postępuj według poniższych wskazówek 
         aby przeprowadzić migrację swoich skryptów aby używały nowej architektury.
     </para>
+    
+    <sect2 id="zend.controller.migration.fromzeroninetwo">
+        <title>Migracja z wersji 0.9.2 do 0.9.3 lub nowszej</title>
+
+        <para>
+            0.9.3 introduces <link
+            linkend="zend.controller.actionhelpers">action helpers</link>.
+            As part of this change, the following methods have been removed as
+            they are now encapsulated in the <link
+            linkend="zend.controller.actionhelpers.redirector">redirector
+            action helper</link>:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setRedirectCode()</code>; użyj
+                    <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectPrependBase()</code>; użyj
+                    <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectExit()</code>; użyj
+                    <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Read the <link linkend="zend.controller.actionhelpers">action
+            helpers documentation</link> for more information on how to
+            retrieve and manipulate helper objects, and the <link
+            linkend="zend.controller.actionhelpers.redirector">redirector
+            helper documentation</link> for more information on setting
+            redirect options (as well as alternate methods for redirecting).
+        </para>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromzerosix">
-        <title>Migracja z wersji 0.6.0 do 0.8.0</title>
+        <title>Migracja z wersji 0.6.0 do 0.8.0 lub nowszej</title>
 
         <para>
             Od czasu poprzednich zmian, najbardziej podstawowe użycie 
@@ -199,12 +242,12 @@ echo $response;
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 zamiast tokena dispatchera przyjmuje i zwraca teraz 
-                obiekt <xref linkend="zend.controller.overview.request" />.
+                obiekt <xref linkend="zend.controller.request" />.
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
-                przyjmuje i zwraca obiekt <xref linkend="zend.controller.overview.request" />
+                przyjmuje i zwraca obiekt <xref linkend="zend.controller.request" />
                 zamiast tokena dispatchera.
             </para></listitem>
 
@@ -326,7 +369,7 @@ public function __call($method, $args)
                 Interfejs <code>Zend_Controller_Plugin_Interface</code> został
                 zamieniony na <code>Zend_Controller_Plugin_Abstract</code>. 
                 Wszystkie metody przyjmują i zwracają obiekt 
-                <xref linkend="zend.controller.overview.request" />
+                <xref linkend="zend.controller.request" />
                 zamiast tokena dispatchera.
             </para></listitem>
         </itemizedlist>

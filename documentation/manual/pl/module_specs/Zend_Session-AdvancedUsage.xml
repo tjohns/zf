@@ -81,6 +81,7 @@ Zend_Session::start();
                     chcesz aby wszystkie żądania używały sesji, bezwarunkowo 
                     umieść wywołanie tej funkcji na początku, w twoim pliku 
                     ładującym ZF. 
+
                     Sessions have some overhead. If some requests need 
                     sessions, but other requests will not need to use sessions, 
                     then:
@@ -380,6 +381,7 @@ else {
 
         <para>
             If you need to modify the array after assigning it to a session namespace key, fetch the array, then
+            modify it and save the array back to the session namespace.
         </para>
 
         <example>
