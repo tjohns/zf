@@ -224,4 +224,13 @@ abstract class Zend_Gdata_App_Base
         }
     }
 
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
+     */
+    public function __toString()
+    {
+        return $this->_text;
+    }
+
 }

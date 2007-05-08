@@ -42,17 +42,9 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'text':
-            $this->_text = $attribute->nodeValue;
-            break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
-    }
-
-    public function __toString()
-    {
-        return $this->_text;
     }
 
     public function getType()

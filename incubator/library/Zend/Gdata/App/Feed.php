@@ -68,6 +68,22 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iter
      */
     protected $_entryIndex = 0;
 
+    /**
+     * Set the HTTP client instance
+     *
+     * Sets the HTTP client object to use for retrieving the feed.
+     *
+     * @param  Zend_Http_Client $httpClient
+     * @return Zend_Gdata_App_Feed Provides a fluent interface
+     */
+    public function setHttpClient(Zend_Http_Client $httpClient)
+    {
+        $this->_httpClient = $httpClient;
+        foreach ($this->_entry as $entry) {
+            $entry->setHttpClient($httpClient);
+        }
+        return $this;
+    }
 
     /**
      * Make accessing some individual elements of the feed easier.

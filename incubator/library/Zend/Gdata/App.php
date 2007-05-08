@@ -20,11 +20,6 @@
  */
 
 /**
- * Zend_Gdata_Feed
- */
-require_once 'Zend/Feed.php';
-
-/**
  * Zend_Gdata_App_Exception
  */
 require_once 'Zend/Gdata/App/Exception.php';
@@ -97,9 +92,6 @@ class Zend_Gdata_App
      */
     public function __construct($client = null)
     {
-        if ($client != null) {
-            Zend_Feed::setHttpClient($client); 
-        }
         $this->setHttpClient($client);
     }
 
