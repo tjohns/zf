@@ -118,8 +118,7 @@ class Zend_Session extends Zend_Session_Abstract
      */
     private static $_localOptions = array(
         'strict'                => '_strict',
-        'remember_me_seconds'   => '_rememberMeSeconds',
-        'ignore_save_path'      => '_ignore_save_path'
+        'remember_me_seconds'   => '_rememberMeSeconds'
     );
 
     /**
@@ -142,13 +141,6 @@ class Zend_Session extends Zend_Session_Abstract
      * @var bool
      */
     private static $_destroyed = false;
-
-    /**
-     * Whether or not session save_path must be writable (false = must be writable)
-     *
-     * @var bool
-     */
-    private static $_ignore_save_path = false;
 
     /**
      * Whether or not session must be initiated before usage
@@ -215,14 +207,6 @@ class Zend_Session extends Zend_Session_Abstract
             else {
                 throw new Zend_Session_Exception("Unknown option: $user_option_name = $user_option_value");
             }
-        }
-        $savePath = ini_get('session.save_path');
-        if (strpos($savePath, ';') !== false) {
-            $savePath = explode(';', $savePath);
-            $savePath = realpath(array_pop($savePath));
-        }
-        if (self::$_ignore_save_path !== true && !is_writable($savePath)) {
-            throw new Zend_Session_Exception("Unwritable session.save_path: $savePath");
         }
     }
 
@@ -383,7 +367,20 @@ class Zend_Session extends Zend_Session_Abstract
             throw new Zend_Session_Exception('session has already been started by session.auto-start or session_start()');
         }
 
+        /**
+         * Hack to throw exceptions on start instead of php errors
+         * @see http://framework.zend.com/issues/browse/ZF-1325
+         */
+        set_error_handler(array('Zend_Session_Exception', 'handleSessionStartError'), E_ALL);
         session_start();
+        restore_error_handler();
+        if (Zend_Session_Exception::$sessionStartError !== null) {
+           set_error_handler(array('Zend_Session_Exception', 'handleSilentWriteClose'), E_ALL);
+           session_write_close();
+           restore_error_handler();
+           throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
+        } 
+        
         parent::$_readable = true;
         parent::$_writable = true;
         self::$_sessionStarted = true;
@@ -737,4 +734,5 @@ class Zend_Session extends Zend_Session_Abstract
     {
         return parent::$_readable;
     }
+
 }

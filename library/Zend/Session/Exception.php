@@ -36,5 +36,35 @@ require_once 'Zend/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Session_Exception extends Zend_Exception
-{ 
+{
+    /**
+     * sessionStartError
+     *
+     * @see http://framework.zend.com/issues/browse/ZF-1325
+     * @var string PHP Error Message
+     */
+    static public $sessionStartError = null;
+
+    /**
+     * handleSessionStartError() - interface for set_error_handler()
+     *
+     * @see http://framework.zend.com/issues/browse/ZF-1325
+     * @var int
+     * @var string
+     */
+    static public function handleSessionStartError($errno, $errstr)
+    {
+        self::$sessionStartError = $errstr;
+    }
+
+    /**
+     * handleSilentWriteClose() - interface for set_error_handler()
+     *
+     * @see http://framework.zend.com/issues/browse/ZF-1325
+     * @var int
+     * @var string
+     */
+    static public function handleSilentWriteClose($errno, $errstr)
+    { 
+    } 
 }
