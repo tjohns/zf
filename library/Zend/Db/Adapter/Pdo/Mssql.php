@@ -150,7 +150,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         foreach ($result as $key => $row) {
             list($type) = explode(' ', $row[$type_name], 2);
 
-            $isPrimary = array_key_exists($primaryKeyColumn, $row[$column_name]);
+            $isPrimary = array_key_exists($row[$column_name], $primaryKeyColumn);
             /**
              * @todo: discover primary column position more accurately.
              * I.e. the position of the column in the primary key constraint,
