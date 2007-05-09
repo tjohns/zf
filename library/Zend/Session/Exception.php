@@ -22,7 +22,7 @@
 
 
 /**
- * Zend_Exception
+ * @see Zend_Exception
  */
 require_once 'Zend/Exception.php';
 
@@ -30,8 +30,8 @@ require_once 'Zend/Exception.php';
 /**
  * Zend_Session_Exception
  *
- * @category Zend
- * @package Zend_Session
+ * @category   Zend
+ * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -48,9 +48,10 @@ class Zend_Session_Exception extends Zend_Exception
     /**
      * handleSessionStartError() - interface for set_error_handler()
      *
-     * @see http://framework.zend.com/issues/browse/ZF-1325
-     * @var int
-     * @var string
+     * @see    http://framework.zend.com/issues/browse/ZF-1325
+     * @param  int    $errno
+     * @param  string $errstr
+     * @return void
      */
     static public function handleSessionStartError($errno, $errstr)
     {
@@ -60,11 +61,12 @@ class Zend_Session_Exception extends Zend_Exception
     /**
      * handleSilentWriteClose() - interface for set_error_handler()
      *
-     * @see http://framework.zend.com/issues/browse/ZF-1325
-     * @var int
-     * @var string
+     * @see    http://framework.zend.com/issues/browse/ZF-1325
+     * @param  int    $errno
+     * @param  string $errstr
+     * @return void
      */
     static public function handleSilentWriteClose($errno, $errstr)
-    { 
-    } 
+    {
+    }
 }

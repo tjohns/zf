@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -13,63 +14,69 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Session_TestHelper
+ * @package    Zend_Session
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
-// http://en.wikipedia.org/wiki/White_box_testing
 
-require_once 'PathHelper.php';
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+
+/**
+ * @see Zend_Session
+ */
 require_once 'Zend/Session.php';
 
-if ($argc < 2) {
-    echo "usage: $argv[0] <test name>\n";
-    exit;
-}
 
-error_reporting ( E_ALL | E_STRICT );
-
-class Zend_Session_TestHelper extends Zend_Session_PathHelper
+/**
+ * White box testing for Zend_Session
+ *
+ * @category   Zend
+ * @package    Zend_Session
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @see        http://en.wikipedia.org/wiki/White_box_testing
+ */
+class Zend_Session_TestHelper
 {
-
-    /*
-     * which test do we run (corresponds to test* function in this class)
+    /**
+     * Runs the test method specified via command line arguments.
+     *
+     * @param  array $argv
+     * @return integer
      */
-    private $test;
-
-    public function __construct($argv)
+    public function run(array $argv)
     {
-        //$test = empty($_GET['test']) ? '' : substr(preg_replace('/[^a-zA-Z0-9_]/', '', $_GET['test']),0,32);
-        $test = empty($argv[1]) ? '' : substr(preg_replace('/[^a-zA-Z0-9_]/', '', $argv[1]),0,32);
-        $this->test = '_ZF_'.$test;
-        if (strlen($this->test) > 4) {
-            if (method_exists($this, $this->test)) {
-                #echo "Found: \$this->test={$this->test}\n";
-                array_shift($argv);
-                array_shift($argv);
-                $this->run($argv);
-                exit;
-            }
+        if (!isset($argv[0]) || !isset($argv[1])) {
+            echo "Usage: {$argv[0]} <test name>\n";
+            return 1;
         }
-        echo "INVALID: test=", htmlspecialchars($test);
-        exit;
+
+        $testMethod = 'do' . ucfirst($argv[1]);
+
+        if (!method_exists($this, $testMethod)) {
+            echo "Invalid test: '{$argv[1]}'\n";
+            return 2;
+        }
+
+        array_shift($argv);
+        array_shift($argv);
+
+        return $this->$testMethod($argv);
     }
 
-    public function run($argv)
-    {
-        #echo "run({$this->test});\n";
-        $this->{$this->test}($argv);
-    }
-
-    public function _ZF_testing()
-    {
-        echo "PASS";
-    }
-
-    public function _ZF_expireAll($args)
+    /**
+     * @param  array $args
+     * @return integer Always returns zero.
+     */
+    public function doExpireAll(array $args)
     {
         Zend_Session::setOptions(array('remember_me_seconds' => 15, 'gc_probability' => 2));
         session_id($args[0]);
@@ -86,9 +93,15 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         Zend_Session::expireSessionCookie();
         Zend_Session::writeClose();
         echo $result;
+
+        return 0;
     }
 
-    public function _ZF_setArray($args)
+    /**
+     * @param  array $args
+     * @return integer Always returns zero.
+     */
+    public function doSetArray(array $args)
     {
         $GLOBALS['fpc'] = 'set';
         session_id($args[0]);
@@ -114,9 +127,15 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         }
 
         Zend_Session::writeClose();
+
+        return 0;
     }
 
-    public function _ZF_getArray($args)
+    /**
+     * @param  array $args
+     * @return integer Always returns zero.
+     */
+    public function doGetArray(array $args)
     {
         $GLOBALS['fpc'] = 'get';
         session_id($args[0]);
@@ -133,7 +152,13 @@ class Zend_Session_TestHelper extends Zend_Session_PathHelper
         // file_put_contents('out.sesstiontest.get', print_r($s->someArray, true));
         Zend_Session::writeClose();
         echo $result;
-    }
-} 
 
-$testHelper = new Zend_Session_TestHelper($argv);
+        return 0;
+    }
+}
+
+
+$testHelper = new Zend_Session_TestHelper();
+
+exit($testHelper->run($argv));
+

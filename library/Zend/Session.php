@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -20,30 +21,27 @@
  * @since      Preview Release 0.2
  */
 
-/**
- * Zend
- */
-require_once 'Zend/Loader.php';
 
 /**
- * Zend_Session_Abstract
+ * @see Zend_Session_Abstract
  */
 require_once 'Zend/Session/Abstract.php';
 
 /**
- * Zend_Session_Namespace
+ * @see Zend_Session_Namespace
  */
 require_once 'Zend/Session/Namespace.php';
 
 /**
- * Zend_Session_Exception
+ * @see Zend_Session_Exception
  */
 require_once 'Zend/Session/Exception.php';
 
 /**
- * Zend_Session_SaveHandler_Interface
+ * @see Zend_Session_SaveHandler_Interface
  */
 require_once 'Zend/Session/SaveHandler/Interface.php';
+
 
 /**
  * Zend_Session
@@ -175,17 +173,17 @@ class Zend_Session extends Zend_Session_Abstract
     /**
      * setOptions - set both the class specified
      *
-     * @param array $userOptions - pass-by-keyword style array of <option name, option value> pairs
+     * @param  array $userOptions - pass-by-keyword style array of <option name, option value> pairs
      * @throws Zend_Session_Exception
      * @return void
      */
-    public static function setOptions(Array $userOptions = array())
+    public static function setOptions(array $userOptions = array())
     {
         // set default options on first run only (before applying user settings)
         if (!self::$_defaultOptionsSet) {
-            foreach (self::$_defaultOptions as $default_option_name => $default_option_value) {
-                if (isset(self::$_defaultOptions[$default_option_name])) {
-                    ini_set('session.' . $default_option_name, $default_option_value);
+            foreach (self::$_defaultOptions as $defaultOptionName => $defaultOptionValue) {
+                if (isset(self::$_defaultOptions[$defaultOptionName])) {
+                    ini_set("session.$defaultOptionName", $defaultOptionValue);
                 }
             }
 
@@ -193,19 +191,19 @@ class Zend_Session extends Zend_Session_Abstract
         }
 
         // set the options the user has requested to set
-        foreach ($userOptions as $user_option_name => $user_option_value) {
+        foreach ($userOptions as $userOptionName => $userOptionValue) {
 
-            $user_option_name = strtolower($user_option_name);
+            $userOptionName = strtolower($userOptionName);
 
             // set the ini based values
-            if (array_key_exists($user_option_name, self::$_defaultOptions)) {
-                ini_set('session.' . $user_option_name, $user_option_value);
+            if (array_key_exists($userOptionName, self::$_defaultOptions)) {
+                ini_set("session.$userOptionName", $userOptionValue);
             }
-            elseif (isset(self::$_localOptions[$user_option_name])) {
-                self::${self::$_localOptions[$user_option_name]} = $user_option_value;
+            elseif (isset(self::$_localOptions[$userOptionName])) {
+                self::${self::$_localOptions[$userOptionName]} = $userOptionValue;
             }
             else {
-                throw new Zend_Session_Exception("Unknown option: $user_option_name = $user_option_value");
+                throw new Zend_Session_Exception("Unknown option: $userOptionName = $userOptionValue");
             }
         }
     }
@@ -379,8 +377,8 @@ class Zend_Session extends Zend_Session_Abstract
            session_write_close();
            restore_error_handler();
            throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
-        } 
-        
+        }
+
         parent::$_readable = true;
         parent::$_writable = true;
         self::$_sessionStarted = true;
@@ -640,6 +638,13 @@ class Zend_Session extends Zend_Session_Abstract
      */
     private static function _processValidators()
     {
+        if (count($_SESSION['__ZF']['VALID']) > 0) {
+            /**
+             * @see Zend_Loader
+             */
+            require_once 'Zend/Loader.php';
+        }
+
         foreach ($_SESSION['__ZF']['VALID'] as $validator_name => $valid_data) {
             Zend_Loader::loadClass($validator_name);
             $validator = new $validator_name;

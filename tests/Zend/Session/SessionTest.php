@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -15,68 +16,83 @@
  * @category   Zend
  * @package    Zend_Session
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
-// http://en.wikipedia.org/wiki/Black_box_testing
-
-require_once 'Zend/Session.php';
 
 /**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @see Zend_Session
+ */
+require_once 'Zend/Session.php';
+
+
+/**
+ * Black box testing for Zend_Session
+ *
+ * @category   Zend
  * @package    Zend_Session
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @see        http://en.wikipedia.org/wiki/Black_box_testing
  */
 class Zend_SessionTest extends PHPUnit_Framework_TestCase
 {
-    private $script = null;
+    /**
+     * Helper script invoked via exec()
+     *
+     * @var string
+     */
+    protected $_script = null;
 
-    private $error_list = array();
+    /**
+     * Storage for session.save_path, so that unit tests may change the value without side effect
+     *
+     * @var string
+     */
+    protected $_savePath;
 
-    private $savePath;
-
-    public function __construct() {
-        $this->script = "php " . (dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php ';
-        /*
-         * You should also add a *custom*:
-         * Zend_Session::setOptions(array('save_path' => 'See http://framework.zend.com/wiki/x/bTU'));
-         * The correct value is system dependent, and should be provided by the developer using
-         * an absolute path to a directory readable and writable by the PHP process.
-         */
-    }
-
-    public function setUp()
+    /**
+     * Initializes instance data
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $this->old_error_reporting_level = error_reporting( E_ALL | E_STRICT );
-        set_error_handler ( array ( &$this, 'errorHandler' ) );
+        $this->_script   = 'php ' . escapeshellarg(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php'
+            );
+
+        $this->_savePath = ini_get('session.save_path');
     }
 
+    /**
+     * Cleanup operations after each test method is run
+     *
+     * @return void
+     */
     public function tearDown()
     {
-        if (isset($this->savePath)) {
-            Zend_Session::setOptions(array('save_path' => $this->savePath));
-            unset($this->savePath);
-        }
+        ini_set('session.save_path', $this->_savePath);
 
-        $old = error_reporting( E_ALL | E_STRICT );
-        $this->assertTrue ( $old === (error_reporting( E_ALL | E_STRICT )),
-            'something associated with a particular test altered error_reporting to something other than E_STRICT');
-        restore_error_handler();
+        $this->assertSame(
+            E_ALL | E_STRICT,
+            error_reporting( E_ALL | E_STRICT ),
+            'A test altered error_reporting to something other than E_ALL | E_STRICT'
+            );
+
         Zend_Session_Namespace::unlockAll();
-        // @todo: cleanup
-        if (count($this->error_list)) {
-            echo "**** Errors: ";
-            print_r($this->error_list);
-        }
 
         // unset all namespaces
-        foreach(Zend_Session::getIterator() as $space) {
+        foreach (Zend_Session::getIterator() as $space) {
             try {
                 Zend_Session::namespaceUnset($space);
             } catch (Zend_Session_Exception $e) {
@@ -86,28 +102,24 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function errorHandler ( $errno, $errstr, $errfile, $errline )
-    {
-        $this->error_list[] = array ( 'number' => $errno, 'string' => $errstr, 'file' => $errfile, 'line' => $errline );
-    }
-
-    /*
+    /**
      * Sorts the compound result returned by SessionTestHelper, so that the
      * order of iteration over namespace items do not impact analysis of test results.
      *
-     * @param array $result - output of exec()'ing SessionTestHelper
-     * @return string - sorted alphabetically
+     * @param  array $result output of exec()'ing SessionTestHelper
+     * @return string sorted alphabetically
      */
-    public function sortResult($result)
+    public function sortResult(array $result)
     {
         $results = explode(';', array_pop($result));
         sort($results);
         return implode(';', $results);
     }
 
-    /*
-     * test session id manipulations
-     * expect isRegenerated flag == true
+    /**
+     * test session id manipulations; expect isRegenerated flag == true
+     *
+     * @return void
      */
     public function testRegenerateId()
     {
@@ -130,39 +142,31 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /*
-     * test setting core options
-     * expect no exceptions
+    /**
+     * Ensures that setOptions() behaves as expected
+     *
+     * @return void
      */
     public function testSetOptions()
     {
-        $this->savePath = ini_get('session.save_path');
-
         try {
             Zend_Session::setOptions(array('foo' => 'break me'));
-            $this->fail('No exception was returned when trying to set an invalid option');
+            $this->fail('Expected Zend_Session_Exception not thrown when trying to set an invalid option');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/unknown.option/i', $e->getMessage());
         }
-        try {
-            Zend_Session::setOptions(array('save_path' => '1;777;/tmp'));
-            Zend_Session::setOptions(array('save_path' => '2;/tmp'));
-            Zend_Session::setOptions(array('save_path' => '/tmp'));
-        } catch (Zend_Session_Exception $e) {
-            var_dump($e);
-            $this->fail('No exception was expected when using a save_path of "1;777;/tmp"');
-        }
-        try {
-            Zend_Session::setOptions(array('save_path' => '/totallybogussavepath'));
-            $this->fail('No exception was returned when trying to set an invalid save_path');
-        } catch (Zend_Session_Exception $e) {
-            $this->assertRegexp('/Unwritable session/i', $e->getMessage());
-        }
+
+        Zend_Session::setOptions(array('save_path' => '1;777;/tmp'));
+
+        Zend_Session::setOptions(array('save_path' => '2;/tmp'));
+
+        Zend_Session::setOptions(array('save_path' => '/tmp'));
     }
 
     /**
-     * test for initialisation without parameter
-     * expect instance
+     * test for initialisation without parameter; expect instance
+     *
+     * @return void
      */
     public function testInit()
     {
@@ -171,8 +175,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test for initialisation with empty string
-     * expect failure
+     * test for initialisation with empty string; expect failure
+     *
+     * @return void
      */
     public function testInitEmpty()
     {
@@ -183,22 +188,24 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             return;
         }
         $this->fail('No exception was returned when trying to create a namespace having the empty string as '
-            . 'its name; expected Zend_Session_Exception'); 
+            . 'its name; expected Zend_Session_Exception');
     }
 
     /**
-     * test for initialisation with Session parameter
-     * expect instance
+     * test for initialisation with Session parameter; expect instance
+     *
+     * @return void
      */
     public function testInitSession()
     {
         $s = new Zend_Session_Namespace('namespace');
-        $this->assertTrue($s instanceof Zend_Session_Namespace,'Zend_Session Object not returned');
+        $this->assertTrue($s instanceof Zend_Session_Namespace, 'Zend_Session_Namespace object not returned');
     }
 
     /**
-     * test for initialisation with single instance
-     * expected instance
+     * test for initialisation with single instance; expected instance
+     *
+     * @return void
      */
     public function testInitSingleInstance()
     {
@@ -211,12 +218,14 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             return;
         }
         $this->fail('No exception was returned when creating a duplicate session for the same namespace, '
-            . 'even though "single instance" was specified; expected Zend_Session_Exception'); 
+            . 'even though "single instance" was specified; expected Zend_Session_Exception');
     }
 
     /**
-     * test for retrieval of non-existent keys in a valid namespace
-     * expected null value returned by getter for an unset key
+     * test for retrieval of non-existent keys in a valid namespace; expected null value
+     * returned by getter for an unset key
+     *
+     * @return void
      */
     public function testNamespaceGetNull()
     {
@@ -231,19 +240,20 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test for existence of namespace
-     * expected true
+     * test for existence of namespace; expected true
+     *
+     * @return void
      */
     public function testNamespaceIsset()
     {
         try {
-            $this->assertFalse(Zend_Session::namespaceIsset('trees'), 
+            $this->assertFalse(Zend_Session::namespaceIsset('trees'),
                 'namespaceIsset() should have returned false for a namespace with no keys set');
             $s = new Zend_Session_Namespace('trees');
-            $this->assertFalse(Zend_Session::namespaceIsset('trees'), 
+            $this->assertFalse(Zend_Session::namespaceIsset('trees'),
                 'namespaceIsset() should have returned false for a namespace with no keys set');
             $s->cherry = 'bing';
-            $this->assertTrue(Zend_Session::namespaceIsset('trees'), 
+            $this->assertTrue(Zend_Session::namespaceIsset('trees'),
                 'namespaceIsset() should have returned true for a namespace with keys set');
         } catch (Zend_Session_Exception $e) {
             $this->fail('Unexpected exception returned when attempting to fetch the value of non-existent key');
@@ -251,8 +261,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test magic methods with improper variable interpolation
-     * expect no exceptions
+     * test magic methods with improper variable interpolation; expect no exceptions
+     *
+     * @return void
      */
     public function testMagicMethodsEmpty()
     {
@@ -265,7 +276,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $name = ''; // simulate a common bug, where user refers to an unset/empty variable
             $s->$name = 'pear';
             $this->fail('No exception was returned when trying to __set() a key named ""; expected '
-                . 'Zend_Session_Exception'); 
+                . 'Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/non.empty.string/i', $e->getMessage());
         }
@@ -274,7 +285,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $name = ''; // simulate a common bug, where user refers to an unset/empty variable
             $nothing = $s->$name;
             $this->fail('No exception was returned when trying to __set() a key named ""; expected '
-                . 'Zend_Session_Exception'); 
+                . 'Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/non.empty.string/i', $e->getMessage());
         }
@@ -283,7 +294,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $name = ''; // simulate a common bug, where user refers to an unset/empty variable
             if (isset($s->$name)) { true; }
             $this->fail('No exception was returned when trying to __set() a key named ""; expected '
-                . 'Zend_Session_Exception'); 
+                . 'Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/non.empty.string/i', $e->getMessage());
         }
@@ -292,15 +303,17 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             $name = ''; // simulate a common bug, where user refers to an unset/empty variable
             unset($s->$name);
             $this->fail('No exception was returned when trying to __set() a key named ""; expected '
-                . 'Zend_Session_Exception'); 
+                . 'Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/non.empty.string/i', $e->getMessage());
         }
     }
 
     /**
-     * test for proper separation of namespace "spaces"
-     * expect variables in different namespaces are different variables (i.e. not shared values)
+     * test for proper separation of namespace "spaces"; expect variables in different namespaces are
+     * different variables (i.e., not shared values)
+     *
+     * @return void
      */
     public function testInitNamespaces()
     {
@@ -321,8 +334,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test for detection of illegal namespace names
-     * expect exception complaining about name beginning with an underscore
+     * test for detection of illegal namespace names; expect exception complaining about name beginning
+     * with an underscore
+     *
+     * @return void
      */
     public function testInitNamespaceUnderscore()
     {
@@ -336,8 +351,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test iteration
-     * expect native PHP foreach statement is able to properly iterate all items in a session namespace
+     * test iteration; expect native PHP foreach statement is able to properly iterate all items in a session namespace
+     *
+     * @return void
      */
     public function testGetIterator()
     {
@@ -346,24 +362,28 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'pear';
         $s->o = 'orange';
         $result = '';
-        foreach ($s->getIterator() as $key => $val)
+        foreach ($s->getIterator() as $key => $val) {
             $result .= "$key === $val;";
+        }
         $this->assertTrue($result === 'a === apple;p === pear;o === orange;',
-            'iteration over default Zend_Session namespace failed: result="'.$result.'"');
+            'iteration over default Zend_Session namespace failed: result="' . $result . '"');
         $s = new Zend_Session_Namespace('namespace');
         $s->g = 'guava';
         $s->p = 'peach';
         $s->p = 'plum';
         $result = '';
-        foreach ($s->getIterator() as $key => $val)
+        foreach ($s->getIterator() as $key => $val) {
             $result .= "$key === $val;";
+        }
         $this->assertTrue($result === 'g === guava;p === plum;',
             'iteration over named Zend_Session namespace failed');
     }
 
     /**
-     * test locking of the Default namespace (i.e. make namespace readonly)
-     * expect exceptions when trying to write to locked namespace
+     * test locking of the Default namespace (i.e. make namespace readonly); expect exceptions when trying to write to
+     * locked namespace
+     *
+     * @return void
      */
     public function testLock()
     {
@@ -374,7 +394,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         try {
             $s->o = 'orange';
             $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
-                . 'after marking the namespace as read-only; expected Zend_Session_Exception'); 
+                . 'after marking the namespace as read-only; expected Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             // session namespace 'single' already exists and is set to be the only instance of this namespace
             $this->assertRegexp('/read.only/i', $e->getMessage());
@@ -387,7 +407,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         try {
             $s->o = 'orange';
             $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
-                . 'after marking the namespace as read-only; expected Zend_Session_Exception'); 
+                . 'after marking the namespace as read-only; expected Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             // session namespace 'single' already exists and is set to be the only instance of this namespace
             $this->assertRegexp('/read.only/i', $e->getMessage());
@@ -395,8 +415,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test locking of named namespaces (i.e. make namespace readonly)
-     * expect exceptions when trying to write to locked namespace
+     * test locking of named namespaces (i.e. make namespace readonly); expect exceptions when trying to write
+     * to locked namespace
+     *
+     * @return void
      */
     public function testLockNamespace()
     {
@@ -407,7 +429,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         try {
             $s->o = 'orange';
             $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
-                . 'after marking the namespace as read-only; expected Zend_Session_Exception'); 
+                . 'after marking the namespace as read-only; expected Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             // session namespace 'single' already exists and is set to be the only instance of this namespace
             $this->assertRegexp('/read.only/i', $e->getMessage());
@@ -425,15 +447,16 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         try {
             $s->o = 'orange';
             $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
-                . 'after marking the namespace as read-only; expected Zend_Session_Exception'); 
+                . 'after marking the namespace as read-only; expected Zend_Session_Exception');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/read.only/i', $e->getMessage());
         }
     }
 
     /**
-     * test unlocking of the Default namespace (i.e. make namespace readonly)
-     * expected no exceptions
+     * test unlocking of the Default namespace (i.e. make namespace readonly); expected no exceptions
+     *
+     * @return void
      */
     public function testUnlock()
     {
@@ -458,11 +481,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     /**
      * test combinations of locking and unlocking of the Default namespace (i.e. make namespace readonly)
      * expected no exceptions
+     *
+     * @return void
      */
     public function testUnLockAll()
     {
         $sessions = array('one', 'two', 'default', 'three');
-        foreach($sessions as $namespace) {
+        foreach ($sessions as $namespace) {
             $s = new Zend_Session_Namespace($namespace);
             $s->a = 'apple';
             $s->p = 'pear';
@@ -481,13 +506,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
                 $s->p = 'prune';
                 $s->f = 'fig';
                 $this->fail('No exception was returned when setting a variable in the "Default" namespace, '
-                    . 'after marking the namespace as read-only; expected Zend_Session_Exception'); 
+                    . 'after marking the namespace as read-only; expected Zend_Session_Exception');
             } catch (Zend_Session_Exception $e) {
                 $this->assertRegexp('/read.only/i', $e->getMessage());
             }
         }
         $s->unlockAll();
-        foreach($sessions as $namespace) {
+        foreach ($sessions as $namespace) {
             $this->assertFalse($s->isLocked(), 'isLocked() returned incorrect status (locked)');
             $s->p = 'pear';
             $s->f = 'fig';
@@ -496,9 +521,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test isLocked() unary comparison operator under various situations
-     * expect lock status remains synchronized with last call to unlock() or lock()
-     * expect no exceptions
+     * test isLocked() unary comparison operator under various situations; expect lock status remains synchronized
+     * with last call to unlock() or lock(); expect no exceptions
+     *
+     * @return void
      */
     public function testIsLocked()
     {
@@ -527,8 +553,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test unlocking of named namespaces (i.e. make namespace readonly)
-     * expect no exceptions
+     * test unlocking of named namespaces (i.e., make namespace readonly); expect no exceptions
+     *
+     * @return void
      */
     public function testUnLockNamespace()
     {
@@ -553,9 +580,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test isLocked() unary comparison operator under various situations
-     * expect lock status remains synchronized with last call to unlock() or lock()
-     * expect no exceptions
+     * test isLocked() unary comparison operator under various situations; expect lock status remains synchronized with
+     * last call to unlock() or lock(); expect no exceptions
+     *
+     * @return void
      */
     public function testIsLockedNamespace()
     {
@@ -587,8 +615,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test unsetAll keys in default namespace
-     * expect namespace contains only keys not unset()
+     * test unsetAll keys in default namespace; expect namespace contains only keys not unset()
+     *
+     * @return void
      */
     public function testUnsetAll()
     {
@@ -619,8 +648,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test unset() keys in default namespace
-     * expect namespace contains only keys not unset()
+     * test unset() keys in default namespace; expect namespace contains only keys not unset()
+     *
+     * @return void
      */
     public function testUnset()
     {
@@ -648,8 +678,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test unset() keys in non-default namespace
-     * expect namespace contains only keys not unset()
+     * test unset() keys in non-default namespace; expect namespace contains only keys not unset()
+     *
+     * @return void
      */
     public function testUnsetNamespace()
     {
@@ -676,8 +707,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test unsetAll keys in default namespace
-     * expect namespace will contain no keys
+     * test unsetAll keys in default namespace; expect namespace will contain no keys
+     *
+     * @return void
      */
     public function testUnsetAllNamespace()
     {
@@ -708,8 +740,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test expiration of namespaces and namespace variables by seconds
-     * expect expiration of specified keys/namespace
+     * test expiration of namespaces and namespace variables by seconds; expect expiration of specified keys/namespace
+     *
+     * @return void
      */
     public function testSetExpirationSeconds()
     {
@@ -723,17 +756,18 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $id = Zend_Session::getId();
         session_write_close(); // release session so process below can use it
         sleep(4); // not long enough for things to expire
-        exec($this->script . "expireAll $id expireAll", $result);
+        exec("$this->_script expireAll $id expireAll", $result, $returnValue);
+
         $result = $this->sortResult($result);
         $expect = ';a === apple;o === orange;p === pear';
-        $this->assertTrue($result === $expect, 
+        $this->assertTrue($result === $expect,
             "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
 
         sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
-        exec($this->script . "expireAll $id expireAll", $result);
-        $result = array_pop($result);
-        $this->assertTrue($result === '',
-            "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+        exec("$this->_script expireAll $id expireAll", $result, $returnValue);
+
+        $this->assertNull(array_pop($result));
+
         session_start(); // resume artificially suspended session
 
         // We could split this into a separate test, but actually, if anything leftover from above
@@ -746,7 +780,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
         session_write_close(); // release session so process below can use it
         sleep(6); // not long enough for things to expire
-        exec($this->script . "expireAll $id expireGuava", $result);
+        exec("$this->_script expireAll $id expireGuava", $result, $returnValue);
         $result = $this->sortResult($result);
         session_start(); // resume artificially suspended session
         $this->assertTrue($result === ';p === plum',
@@ -754,8 +788,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test expiration of namespaces by hops
-     * expect expiration of specified namespace in the proper number of hops
+     * test expiration of namespaces by hops; expect expiration of specified namespace in the proper number of hops
+     *
+     * @return void
      */
     public function testSetExpireSessionHops()
     {
@@ -769,8 +804,8 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $id = session_id();
         session_write_close(); // release session so process below can use it
 
-        for ($i = 1; $i <= ($expireBeforeHop+2); $i++) {
-            exec($this->script . "expireAll $id expireAll", $result);
+        for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            exec("$this->_script expireAll $id expireAll", $result, $returnValue);
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $this->assertTrue($result === '',
@@ -784,23 +819,29 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test expiration of namespace variables by hops
-     * expect expiration of specified keys in the proper number of hops
+     * test expiration of namespace variables by hops; expect expiration of specified keys in the proper number of hops
+     *
+     * @return void
      */
     public function testSetExpireSessionVarsByHops1()
     {
         $this->setExpireSessionVarsByHops();
     }
 
-    /* sanity check .. we should be able to repeat this test without problems */
+    /**
+     * sanity check .. we should be able to repeat this test without problems
+     *
+     * @return void
+     */
     public function testSetExpireSessionVarsByHops2()
     {
         $this->setExpireSessionVarsByHops();
     }
 
     /**
-     * test expiration of namespace variables by hops
-     * expect expiration of specified keys in the proper number of hops
+     * test expiration of namespace variables by hops; expect expiration of specified keys in the proper number of hops
+     *
+     * @return void
      */
     public function setExpireSessionVarsByHops()
     {
@@ -814,8 +855,8 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $id = session_id();
         session_write_close(); // release session so process below can use it
 
-        for ($i = 1; $i <= ($expireBeforeHop +2); $i++) {
-            exec($this->script . "expireAll $id expireGuava", $result);
+        for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            exec("$this->_script expireAll $id expireGuava", $result);
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $this->assertTrue($result === ';p === plum',
@@ -829,17 +870,20 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         session_start(); // resume artificially suspended session
     }
 
+    /**
+     * @todo PHP 5.2.1 is required (fixes a bug with magic __get() returning by reference)
+     * @see  http://framework.zend.com/issues/browse/ZF-800
+     */
     public function testArrays()
     {
+        $this->markTestIncomplete();
         $s = new Zend_Session_Namespace('aspace');
-        // http://framework.zend.com/issues/browse/ZF-800
-        $this->markTestIncomplete(); // PHP 5.2.1 is required (fixes a bug with magic __get() returning by reference)
         $id = Zend_Session::getId();
         $this->assertSame($id, session_id());
         $s->top = 'begin';
         session_write_close(); // release session so process below can use it
-        exec($this->script . "setArray $id aspace 1 2 3 4 5", $result);
-        exec($this->script . "getArray $id aspace", $result);
+        exec("$this->_script setArray $id aspace 1 2 3 4 5", $result);
+        exec("$this->_script getArray $id aspace", $result);
         $result = array_pop($result);
         $expect = 'top === begin;astring === happy;someArray === Array;(;[0]=>aspace;[1]=>1;[2]=>2;[3]=>3;[4]=>4;[5]=>5;[bee]=>honey;[ant]=>sugar;[dog]=>cat;);;serializedArray === a:8:{i:0;s:6:"aspace";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";s:3:"ant";s:5:"sugar";s:3:"dog";s:3:"cat";};';
         $this->assertTrue($result === $expect,
@@ -848,8 +892,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test expiration of namespace variables by hops
-     * expect expiration of specified keys in the proper number of hops
+     * test expiration of namespace variables by hops; expect expiration of specified keys in the proper number of hops
+     *
+     * @return void
      */
     public function testSetExpireSessionVarsByHopsOnUse()
     {
@@ -863,15 +908,15 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $id = session_id();
         session_write_close(); // release session so process below can use it
         // we are not accessing (using) the "expireGuava" namespace, so these hops should have no effect
-        for ($i = 1; $i <= ($expireBeforeHop +2); $i++) {
-            exec($this->script . "expireAll $id notused", $result);
+        for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            exec("$this->_script expireAll $id notused", $result);
             $result = $this->sortResult($result);
             $this->assertTrue($result === '',
                     "iteration over named Zend_Session namespace failed (result='$result'; hop #$i)");
         }
 
-        for ($i = 1; $i <= ($expireBeforeHop +2); $i++) {
-            exec($this->script . "expireAll $id expireGuava", $result);
+        for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            exec("$this->_script expireAll $id expireGuava", $result);
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $expect = ';p === plum';
@@ -888,5 +933,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         Zend_Session::destroy();
     }
 
-    // DO NOT put tests below testSetExpireSessionVarsByHopsOnUse(), since the session is destroy()'d.
+    /**
+     * @todo DO NOT put tests below testSetExpireSessionVarsByHopsOnUse(), since the session is destroy()'d.
+     */
 }
