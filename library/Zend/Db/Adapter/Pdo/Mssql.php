@@ -133,6 +133,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         $scale       = 8;
         $nullable    = 10;
         $column_def  = 12;
+        $column_position = 16;
 
         /**
          * Discover primary key column(s) for this table.
