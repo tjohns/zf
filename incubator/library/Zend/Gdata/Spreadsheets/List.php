@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category     Zend
+ * @package        Zend_Gdata
+ * @copyright    Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license        http://framework.zend.com/license/new-bsd         New BSD License
+ * @version        $Id: Entry.php 3941 2007-03-14 21:36:13Z darby $
+ */
+
+
+/**
+ * @see Zend_Gdata_EntryAtom
+ */
+require_once 'Zend/Gdata/Entry.php';
+
+/**
+ * @see Zend_Gdata_EntryAtom
+ */
+require_once 'Zend/Gdata/Spreadsheets/Extension/Custom.php';
+
+
+/**
+ * Concrete class for working with Atom entries.
+ *
+ * @category     Zend
+ * @package        Zend_Gdata
+ * @copyright    Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license        http://framework.zend.com/license/new-bsd         New BSD License
+ */
+class Zend_Gdata_Spreadsheets_List extends Zend_Gdata_Entry
+{
+
+    protected $_entryClassName = 'Zend_Gdata_Spreadsheets_List';
+
+    protected $_custom = array();
+    
+    public function getDOM($doc = null)
+    {
+        $element = parent::getDOM($doc);
+        if (!empty($this->_custom)) {
+            foreach ($this->_custom as $custom) {
+                $element->appendChild($custom->getDOM($element->ownerDocument));
+            }
+        }
+        return $element;
+    }
+    
+    protected function takeChildFromDOM($child)
+    {
+        switch ($child->namespaceURI) {
+        case Zend_Gdata_Data::lookupNamespace('gsx');
+            $custom = new Zend_Gdata_Spreadsheets_Extension_Custom($child->localName);
+            $custom->transferFromDOM($child);
+            $this->_custom[] = $custom;
+            break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+    
+    public function getCustom() {
+        return $this->_custom;
+    }
+    
+    public function setCustom($custom) {
+        $this->_custom = $custom;
+        return $this;
+    }
+
+}
