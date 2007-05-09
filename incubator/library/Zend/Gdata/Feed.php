@@ -25,6 +25,21 @@
 require_once 'Zend/Gdata/App/Feed.php';
 
 /**
+ * @see Zend_Gdata_Extension_OpenSearchTotalResults
+ */
+require_once 'Zend/Gdata/Extension/OpenSearchTotalResults.php';
+
+/**
+ * @see Zend_Gdata_Extension_OpenSearchStartIndex
+ */
+require_once 'Zend/Gdata/Extension/OpenSearchStartIndex.php';
+
+/**
+ * @see Zend_Gdata_Extension_OpenSearchItemsPerPage
+ */
+require_once 'Zend/Gdata/Extension/OpenSearchItemsPerPage.php';
+
+/**
  * The GData flavor of an Atom Feed 
  *
  * @category   Zend
@@ -41,5 +56,99 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      * @var string
      */
     protected $_entryClassName = 'Zend_Gdata_Entry';
+
+    /**
+     * The opensearch:totalResults element
+     * 
+     * @var string
+     */
+    protected $_totalResults = null;
+
+    /**
+     * The opensearch:startIndex element
+     * 
+     * @var string
+     */
+    protected $_startIndex = null;
+
+    /**
+     * The opensearch:itemsPerPage element
+     * 
+     * @var string
+     */
+    protected $_itemsPerPage = null;
+
+    public function getDOM($doc = null)
+    {
+        $element = parent::getDOM($doc);
+        if ($this->_totalResults != null) {
+            $element->appendChild($this->_totalResults->getDOM($element->ownerDocument));
+        }
+        if ($this->_startIndex != null) {
+            $element->appendChild($this->_startIndex->getDOM($element->ownerDocument));
+        }
+        if ($this->_itemsPerPage != null) {
+            $element->appendChild($this->_itemsPerPage->getDOM($element->ownerDocument));
+        }
+        return $element;
+    }
+
+    /**
+     * Creates individual Entry objects of the appropriate type and
+     * stores them in the $_entry array based upon DOM data.
+     *
+     * @param DOMNode $child The DOMNode to process
+     */
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+        switch ($absoluteNodeName) {
+        case Zend_Gdata_Data::lookupNamespace('opensearch') . ':' . 'totalResults':
+            $totalResults = new Zend_Gdata_Extension_OpenSearchTotalResults();
+            $totalResults->transferFromDOM($child);
+            $this->_totalResults = $totalResults;
+            break;
+        case Zend_Gdata_Data::lookupNamespace('opensearch') . ':' . 'startIndex':
+            $startIndex = new Zend_Gdata_Extension_OpenSearchStartIndex();
+            $startIndex->transferFromDOM($child);
+            $this->_startIndex = $startIndex;
+            break;
+        case Zend_Gdata_Data::lookupNamespace('opensearch') . ':' . 'itemsPerPage':
+            $itemsPerPage = new Zend_Gdata_Extension_OpenSearchItemsPerPage();
+            $itemsPerPage->transferFromDOM($child);
+            $this->_itemsPerPage = $itemsPerPage;
+            break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+
+    function setTotalResults($value) {
+        $this->_totalResults = $value;
+        return $this;
+    }
+
+    function getTotalResults() {
+        return $this->_totalResults;
+    }
+
+    function setStartIndex($value) {
+        $this->_startIndex = $value;
+        return $this;
+    }
+
+    function getStartIndex() {
+        return $this->_startIndex;
+    }
+
+    function setItemsPerPage($value) {
+        $this->_itemsPerPage = $value;
+        return $this;
+    }
+
+    function getItemsPerPage() {
+        return $this->_itemsPerPage;
+    }
 
 }

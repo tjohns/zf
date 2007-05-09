@@ -106,6 +106,16 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iter
         }
     }
 
+
+    public function getDOM($doc = null)
+    {
+        $element = parent::getDOM($doc); 
+        foreach ($this->_entry as $entry) {
+            $element->appendChild($entry->getDOM($element->ownerDocument));
+        }
+        return $element;
+    }
+
     /**
      * Creates individual Entry objects of the appropriate type and
      * stores them in the $_entry array based upon DOM data.

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,20 +13,19 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_App_Extension
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Gdata
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Http/Client.php';
+
 /**
- * @see Zend_Gdata_App_Extension
+ * @package Zend_Gdata
+ * @subpackage UnitTests
  */
-require_once 'Zend/Gdata/App/Extension.php';
-
-class Zend_Gdata_App_Extension_Title extends Zend_Gdata_App_Extension
+class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
 {
-
-    protected $_rootElement = 'title';
-    protected $_rootNamespace = 'atom';
 
 }

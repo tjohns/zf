@@ -20,29 +20,14 @@
  */
 
 /**
- * Zend_Gdata
+ * Zend_Gdata_App_util
  */
-require_once('Zend/Gdata.php');
+require_once('Zend/Gdata/App/Util.php');
 
 /**
  * Zend_Gdata_Query
  */
 require_once('Zend/Gdata/Query.php');
-
-/**
- * Zend_Gdata_Calendar
- */
-require_once('Zend/Gdata/Calendar.php');
-
-/**
- * Zend_Gdata_Data
- */
-require_once('Zend/Gdata/Data.php');
-
-/**
- * Zend_Gdata_App_InvalidArgumentException
- */
-require_once('Zend/Gdata/App/InvalidArgumentException.php');
 
 /**
  * Assists in constructing queries for Google Calendar events 
@@ -165,7 +150,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      */
     public function issetComments()
     {
@@ -173,7 +158,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      */
     public function issetEvent()
     {
@@ -181,7 +166,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      */
     public function issetProjection()
     {
@@ -189,7 +174,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      */
     public function issetUser()
     {
@@ -197,7 +182,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      */
     public function issetVisibility()
     {
@@ -211,9 +196,9 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     public function setStartMax($value)
     {
         if ($value != null) {
-            $this->_params['start-max'] = self::formatTimestamp($value);
+            $this->_params['start-max'] = Zend_Gdata_App_Util::formatTimestamp($value);
         } else {
-            unset($_params['start-max']);
+            unset($this->_params['start-max']);
         }
         return $this;
     }
@@ -225,29 +210,53 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     public function setStartMin($value)
     {
         if ($value != null) {
-            $this->_params['start-min'] = self::formatTimestamp($value);
+            $this->_params['start-min'] = Zend_Gdata_App_Util::formatTimestamp($value);
         } else {
-            unset($_params['start-min']);
+            unset($this->_params['start-min']);
         }
         return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function issetStartMin()
+    {
+        return isset($this->_params['start-min']);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function issetStartMax()
+    {
+        return isset($this->_params['start-max']);
     }
 
     /**
      * @param string $value
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
      */
-    public function setOrderby($value)
+    public function setOrderBy($value)
     {
         if ($value != null) {
             $this->_params['orderby'] = $value;
         } else {
-            unset($_params['orderby']);
+            unset($this->_params['orderby']);
         }
         return $this;
     }
 
     /**
-     * @returns int startMax
+     * @return boolean
+     */
+    public function issetOrderBy()
+    {
+        return isset($this->_params['orderby']);
+    }
+
+    /**
+     * @return int start-max
      */
     public function getStartMax()
     {
@@ -259,7 +268,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @returns int startMin
+     * @return int start-min 
      */
     public function getStartMin()
     {
@@ -271,9 +280,9 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return string orderBy
+     * @return string orderby
      */
-    public function getOrderby()
+    public function getOrderBy()
     {
         if (array_key_exists('orderby', $this->_params)) {
             return $this->_params['orderby'];
@@ -283,12 +292,165 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return string futureevents
+     * @return string sortorder 
      */
-    public function getFutureevents()
+    public function getSortOrder()
+    {
+        if (array_key_exists('sortorder', $this->_params)) {
+            return $this->_params['sortorder'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return string sortorder 
+     */
+    public function setSortOrder($value)
+    {
+        if ($value != null) {
+            $this->_params['sortorder'] = $value;
+        } else {
+            unset($this->_params['sortorder']);
+        }
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     * TODO are isset and unset implementations needed for query
+     * classes and other data model classes?
+     */
+    public function issetRecurrenceExpansionStart()
+    {
+        return isset($this->_params['recurrence-expansion-start']);
+    }
+
+    /**
+     * @return string recurrence-expansion-start 
+     */
+    public function getRecurrenceExpansionStart()
+    {
+        if (array_key_exists('recurrence-expansion-start', $this->_params)) {
+            return $this->_params['recurrence-expansion-start'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return string recurrence-expansion-start
+     */
+    public function setRecurrenceExpansionStart($value)
+    {
+        if ($value != null) {
+            $this->_params['recurrence-expansion-start'] = Zend_Gdata_App_Util::formatTimestamp($value);
+        } else {
+            unset($this->_params['recurrence-expansion-start']);
+        }
+        return $this;
+    }
+
+
+    /**
+     * @return boolean
+     * TODO are isset and unset implementations needed for query
+     * classes and other data model classes?
+     */
+    public function issetRecurrenceExpansionEnd()
+    {
+        return isset($this->_params['recurrence-expansion-end']);
+    }
+
+    /**
+     * @return string recurrence-expansion-end 
+     */
+    public function getRecurrenceExpansionEnd()
+    {
+        if (array_key_exists('recurrence-expansion-end', $this->_params)) {
+            return $this->_params['recurrence-expansion-end'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return string recurrence-expansion-end
+     */
+    public function setRecurrenceExpansionEnd($value)
+    {
+        if ($value != null) {
+            $this->_params['recurrence-expansion-end'] = Zend_Gdata_App_Util::formatTimestamp($value);
+        } else {
+            unset($this->_params['recurrence-expansion-end']);
+        }
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     * TODO are isset and unset implementations needed for query
+     * classes and other data model classes?
+     */
+    public function issetSingleEvents()
+    {
+        return isset($this->_params['singleevents']);
+    }
+
+    /**
+     * @return string singleevents 
+     */
+    public function getSingleEvents()
+    {
+        if (array_key_exists('singleevents', $this->_params)) {
+            return $this->_params['singleevents'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return string singleevents
+     */
+    public function setSingleEvents($value)
+    {
+        if (is_bool($value)) {
+            $this->_params['singleevents'] = $value?'true':'false';
+        } else {
+            $this->_params['singleevents'] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     * TODO are isset and unset implementations needed for query
+     * classes and other data model classes?
+     */
+    public function issetSortOrder()
+    {
+        return isset($this->_params['sortorder']);
+    }
+
+    /**
+     * @return string futureevents
+     * TODO - Should the query param functons check the values this strictly?
+     */
+    public function getFutureEvents()
     {
         if (array_key_exists('futureevents', $this->_params)) {
-            return $this->_params['futureevents'];
+            switch ($this->_params['futureevents']) {
+                case 'true':
+                    return true;    
+                    break;
+                case 'false': 
+                    return false;
+                    break;
+                default:
+                    throw new Zend_Gdata_App_Exception(
+                            'Invalid query param value for futureevents: ' .
+                            $value);
+            }
         } else {
             return null;
         }
@@ -297,65 +459,32 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     /**
      * @param string $value
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
+     * TODO should we be this strict with values?
      */
-    public function setFutureevents($value)
+    public function setFutureEvents($value)
     {
         if ($value != null) {
-            $this->_params['futureevents'] = $value;
+            if (is_bool($value)) {
+                $this->_params['futureevents'] = $value?'true':'false';
+            } else {
+                throw new Zend_Gdata_App_Exception(
+                        'Invalid query param value for futureevents: ' .  
+                        $value);
+            }
         } else {
-            unset($_params['futureevents']);
+            unset($this->_params['futureevents']);
         }
         return $this;
     }
 
     /**
-     * @returns boolean
+     * @return boolean
      * TODO are isset and unset implementations needed for query
      * classes and other data model classes?
      */
-    public function issetFutureevents()
+    public function issetFutureEvents()
     {
         return isset($this->_params['futureevents']);
-    }
-
-    public function __get($name)
-    {
-        $method = 'get'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method));
-        } else {
-            throw new Exception('Property ' . $name . '  does not exist');
-        }
-    }
-
-    public function __set($name, $val)
-    {
-        $method = 'set'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method), $val);
-        } else {
-            throw new Exception('Property ' . $name . '  does not exist');
-        }
-    }
-
-    public function __isset($name)
-    {
-        $method = 'isset'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method), $val);
-        } else {
-            throw new Exception('Property ' . $name . '  does not exist');
-        }
-    }
-
-    public function __unset($name)
-    {
-        $method = 'set'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method), null);
-        } else {
-            throw new Exception('Property ' . $name . '  does not exist');
-        }
     }
 
     /**

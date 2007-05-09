@@ -84,6 +84,7 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
                 $client->setRawData($this->saveXML());
                 $response = $client->request('PUT');
             }
+            /* TODO - more information in the exception */
             if ($response->getStatus() !== 200) {
                 throw new Zend_Gdata_App_Exception('Expected response code 200, got ' . $response->getStatus());
             }

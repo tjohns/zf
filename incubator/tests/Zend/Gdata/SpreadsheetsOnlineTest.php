@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,20 +13,30 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_App_Extension
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Gdata
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @see Zend_Gdata_App_Extension
- */
-require_once 'Zend/Gdata/App/Extension.php';
+require_once 'Zend/Gdata/Spreadsheets.php';
+require_once 'Zend/Http/Client.php';
 
-class Zend_Gdata_App_Extension_Title extends Zend_Gdata_App_Extension
+/**
+ * @package Zend_Gdata
+ * @subpackage UnitTests
+ */
+class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
 {
 
-    protected $_rootElement = 'title';
-    protected $_rootNamespace = 'atom';
+    public function setUp()
+    {
+        $this->gdata = new Zend_Gdata_Spreadsheets(new Zend_Http_Client());
+    }
+
+    public function testSpreadsheets()
+    {
+        $this->assertTrue(true);
+    }
 
 }

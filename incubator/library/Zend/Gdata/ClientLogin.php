@@ -73,7 +73,7 @@ class Zend_Gdata_ClientLogin
      * @throws Zend_Gdata_App_AuthException
      * @throws Zend_Gdata_App_HttpException
      */
-    public function getHttpClient($email, $password, $service = 'xapi',
+    public static function getHttpClient($email, $password, $service = 'xapi',
         $client = null,
         $source = self::DEFAULT_SOURCE)
     {

@@ -144,9 +144,9 @@ abstract class Zend_Gdata_App_Base
     protected function takeAttributeFromDOM($attribute)
     {
         $this->_extensionAttributes[] =
-                array(namespaceURI => $attribute->namespaceURI,
-                      name => $attribute->localName,
-                      value => $attribute->nodeValue);
+                array('namespaceURI' => $attribute->namespaceURI,
+                      'name' => $attribute->localName,
+                      'value' => $attribute->nodeValue);
     }
 
     /**

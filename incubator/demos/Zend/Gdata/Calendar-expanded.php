@@ -176,7 +176,7 @@ function processPageLoad()
  */
 function getClientLoginHttpClient($user, $pass) 
 {
-  $service = 'cl'; // the service name for calendar
+  $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 
   $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
   return $client;

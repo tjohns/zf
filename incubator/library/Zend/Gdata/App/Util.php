@@ -22,7 +22,7 @@
 /**
  * @see 'Zend_Gdata_App_InvalidArgumentException
 */
-require_once 'Zend/Gdata/App/InvalidArgumentException';
+require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
 /**
  * Utility class for static functions needed by Zend_Gdata_App

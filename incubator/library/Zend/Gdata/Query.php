@@ -35,6 +35,11 @@ require_once 'Zend/Gdata/App/HttpException.php';
 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
 /**
+ * Zend_Gdata_App_Util
+ */
+require_once 'Zend/Gdata/App/Util.php';
+
+/**
  * Provides a mechanism to build a query URL for GData services.
  * Queries are not defined for APP, but are provided by GData services
  * as an extension.
@@ -143,7 +148,7 @@ class Zend_Gdata_Query
         if ($value != null) {
             $this->_params['alt'] = $value;
         } else {
-            unset($_params['alt']);
+            unset($this->_params['alt']);
         }
         return $this;
     }
@@ -157,7 +162,7 @@ class Zend_Gdata_Query
         if ($value != null) {
             $this->_params['max-results'] = $value;
         } else {
-            unset($_params['max-results']);
+            unset($this->_params['max-results']);
         }
         return $this; 
     }
@@ -171,7 +176,7 @@ class Zend_Gdata_Query
         if ($value != null) {
             $this->_params['q'] = $value;
         } else {
-            unset($_params['q']);
+            unset($this->_params['q']);
         }
         return $this; 
     }
@@ -185,7 +190,7 @@ class Zend_Gdata_Query
         if ($value != null) {
             $this->_params['start-index'] = $value;
         } else {
-            unset($_params['start-index']);
+            unset($this->_params['start-index']);
         }
         return $this; 
     }
@@ -197,9 +202,9 @@ class Zend_Gdata_Query
     public function setUpdatedMax($value)
     {
         if ($value != null) {
-            $this->_params['updated-max'] = formatTimestamp($value);
+            $this->_params['updated-max'] = Zend_Gdata_App_Util::formatTimestamp($value);
         } else {
-            unset($_params['updated-max']);
+            unset($this->_params['updated-max']);
         }
         return $this; 
     }
@@ -211,11 +216,11 @@ class Zend_Gdata_Query
     public function setUpdatedMin($value)
     {
         if ($value != null) {
-            $this->_params['updated-min'] = formatTimestamp($value);
+            $this->_params['updated-min'] = Zend_Gdata_App_Util::formatTimestamp($value);
         } else {
-            unset($_params['updated-min']);
+            unset($this->_params['updated-min']);
         }
-        return getUpdatedMin(); 
+        return $this; 
     }
 
     /**
@@ -338,132 +343,43 @@ class Zend_Gdata_Query
         return array_key_exists('updated-min', $this->_params);
     }
 
-    /**
-     * @param string $var
-     * @param string $value
-     */
-    protected function __set($var, $value)
+    public function __get($name)
     {
-        switch ($var) {
-            case 'query':
-                return setQuery($value);
-                break;
-            case 'maxResults':
-                return setMaxResults($value);
-                break;
-            case 'startIndex':
-                return setStartIndex($value);
-                break;
-            case 'updatedMin':
-                return setUpdatedMin($value);
-                break;
-            case 'updatedMax':
-                return setUpdatedMax($value);
-                break;
-            default:
-                return setParam($value);
-                break;
+        $method = 'get'.ucfirst($name);
+        if (method_exists($this, $method)) {
+            return call_user_func(array(&$this, $method));
+        } else { 
+            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
 
-    /**
-     *  Convert timestamp into RFC 3339 date string.
-     *  2005-04-19T15:30:00
-     *
-     * @param int $timestamp
-     */
-    public static function formatTimestamp($timestamp)
+    public function __set($name, $val)
     {
-        if (ctype_digit($timestamp)) {
-            return date('Y-m-d\TH:i:s', $timestamp);
+        $method = 'set'.ucfirst($name);
+        if (method_exists($this, $method)) {
+            return call_user_func(array(&$this, $method), $val);
         } else {
-            $ts = strtotime($timestamp);
-            if ($ts === false) {
-                throw new Zend_Gdata_App_InvalidArgumentException("Invalid timestamp: $timestamp.");
-            }
-            return date('Y-m-d\TH:i:s', $ts);
+            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
 
-    /**
-     * @param string $var
-     * @returns mixed property value
-     */
-    protected function __get($var)
+    public function __isset($name)
     {
-        switch ($var) {
-            case 'query':
-                return getQuery();
-                break;
-            case 'maxResults':
-                return getMaxResults();
-                break;
-            case 'startIndex':
-                return getStartIndex();
-                break;
-            case 'updatedMin':
-                return getUpdatedMin();
-                break;
-            case 'updatedMax':
-                return getUpdatedMax();
-                break;
-            default:
-                return getParam($var);
-                break;
+        $method = 'isset'.ucfirst($name);
+        if (method_exists($this, $method)) {
+            return call_user_func(array(&$this, $method));
+        } else {
+            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
 
-    /**
-     * @param string $var
-     * @returns bool
-     */
-    protected function __isset($var)
+    public function __unset($name)
     {
-        switch ($var) {
-            case 'query':
-                return issetQuery();
-            case 'maxResults':
-                return issetMaxResults();
-                break;
-            case 'startIndex':
-                return issetStartIndex();
-                break;
-            case 'updatedMin':
-                return issetUpdatedMin();
-                break;
-            case 'updatedMax':
-                return issetUpdatedMax();
-                break;
-            default:
-                return issetParam($var);
-                break;
-        }
-    }
-
-    /**
-     * @param string $var
-     */
-    protected function __unset($var)
-    {
-        switch ($var) {
-            case 'query':
-                setQuery(null);
-                break;
-            case 'maxResults':
-                setMaxResults(null);
-                break;
-            case 'startIndex':
-                setStartIndex(null); 
-                break;
-            case 'updatedMin':
-                setUpdatedMin(null);
-                break;
-            case 'updatedMax':
-                setUpdatedMax(null);
-                break;
-            default:
-                unsetParam($var);
-                break;
+        $method = 'set'.ucfirst($name);
+        if (method_exists($this, $method)) {
+            return call_user_func(array(&$this, $method), null);
+        } else {
+            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
 
