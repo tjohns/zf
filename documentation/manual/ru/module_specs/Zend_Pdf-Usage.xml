@@ -38,10 +38,21 @@ if (!isset($argv[1])) {
     exit;
 }
 
-if (file_exists($argv[1])) {
+try {
     $pdf = Zend_Pdf::load($argv[1]);
-} else {
-    $pdf = new Zend_Pdf();
+} catch (Zend_Pdf_Exception $e) {
+    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+        // Создается новый PDF, если файл не существует
+        $pdf = new Zend_Pdf();
+
+        if (!isset($argv[2])) {
+            // Полная перезапись файла вместо обновления
+            $argv[2] = $argv[1];
+        }
+    } else {
+        // Бросок исключения, если это не исключение "Can't open file"
+        throw $e;
+    }
 }
 
 //------------------------------------------------------------------------------------

@@ -1,15 +1,21 @@
 <sect1 id="zend.introduction">
     <title>Введение</title>
     <para>
-        Класс Zend — основной класс Zend Framework. Он создан вследствие соблюдения
-        фрэймвоком принципа DRY (Don't Repeat Yourself — не повторяйся). Класс содержит
-        только статические методы, и эти методы содержат необходимый для многих
-        компонент функционал.
-<!--        
-        The Zend class is the foundation class of the Zend Framework.  This
-        class evolved out of the framework's adherence to the DRY principle (Don't Repeat
-        Yourself).  It contains only static methods, and these methods
-        contain functionality that is required by many components in the Zend Framework.
+        Zend Framework - высококачественный фреймворк с открытыми исходниками для разработки веб-приложений и веб-сервисов с использованием PHP.
+<!--
+        Zend Framework is a high quality and open source framework for developing Web
+        Applications and Web Services with PHP.
+-->
+    </para>
+    <para>
+        Построенный в соответствии с настоящим духом PHP Zend Framework
+        предлагает мощный и легкий в использовании функционал. Он предоставляет
+        решения для построения устойчивых к ошибкам, современных и безопасных
+        веб-сайтов.
+<!--
+        Built in the true PHP spirit, the Zend Framework delivers ease-of-use and
+        powerful functionality. It provides solutions for building modern, robust, and
+        secure websites.
 -->
     </para>
 </sect1>

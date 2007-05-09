@@ -239,7 +239,7 @@
                       <row>
                           <entry><code>compression</code></entry>
                           <entry><code>boolean</code></entry>
-                          <entry><code>flase</code></entry>
+                          <entry><code>false</code></entry>
                           <entry>
                              <code>true</code>, если вы хотите использовать
                              компрессию на лету
