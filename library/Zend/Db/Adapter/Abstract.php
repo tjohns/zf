@@ -252,15 +252,18 @@ abstract class Zend_Db_Adapter_Abstract
      *
      * @param  mixed        $table The table to update.
      * @param  array        $bind  Column-value pairs.
-     * @param  array|string $where UPDATE WHERE clause(s).
+     * @param  mixed        $where UPDATE WHERE clause(s).
      * @return int          The number of affected rows.
      */
     public function update($table, array $bind, $where = '')
     {
-        // build "col = ?" pairs for the statement
+        /**
+         * Build "col = ?" pairs for the statement,
+         * except for Zend_Db_Expr which is treated literally.
+         */
         $set = array();
         foreach ($bind as $col => $val) {
-        	if ($val instanceof Zend_Db_Expr) {
+            if ($val instanceof Zend_Db_Expr) {
                 $val = $val->__toString();
                 unset($bind[$col]);
             } else {
@@ -269,17 +272,19 @@ abstract class Zend_Db_Adapter_Abstract
             $set[] = $this->quoteIdentifier($col) . ' = ' . $val;
         }
 
-        if (is_array($where)) {
-            $where = implode(' AND ', $where);
-        }
+        $where = $this->_whereExpr($where);
 
-        // build the statement
+        /**
+         * Build the UPDATE statement
+         */
         $sql = "UPDATE "
              . $this->quoteIdentifier($table)
              . ' SET ' . implode(', ', $set)
              . (($where) ? " WHERE $where" : '');
 
-        // execute the statement and return the number of affected rows
+        /**
+         * Execute the statement and return the number of affected rows
+         */
         $stmt = $this->query($sql, array_values($bind));
         $result = $stmt->rowCount();
         return $result;
@@ -289,24 +294,51 @@ abstract class Zend_Db_Adapter_Abstract
      * Deletes table rows based on a WHERE clause.
      *
      * @param  mixed        $table The table to update.
-     * @param  array|string $where DELETE WHERE clause(s).
+     * @param  mixed        $where DELETE WHERE clause(s).
      * @return int          The number of affected rows.
      */
     public function delete($table, $where = '')
     {
-        if (is_array($where)) {
-            $where = implode(' AND ', $where);
-        }
+        $where = $this->_whereExpr($where);
 
-        // build the statement
+        /**
+         * Build the DELETE statement
+         */
         $sql = "DELETE FROM "
              . $this->quoteIdentifier($table)
              . (($where) ? " WHERE $where" : '');
 
-        // execute the statement and return the number of affected rows
+        /**
+         * Execute the statement and return the number of affected rows
+         */
         $stmt = $this->query($sql);
         $result = $stmt->rowCount();
         return $result;
+    }
+
+    /**
+     * Convert an array, string, or Zend_Db_Expr object
+     * into a string to put in a WHERE clause.
+     *
+     * @param mixed $where
+     * @return string
+     */
+    protected function _whereExpr($where)
+    {
+        if (empty($where)) {
+            return $where;
+        }
+        if (!is_array($where)) {
+            $where = array($where);
+        }
+        foreach ($where as &$term) {
+            if ($term instanceof Zend_Db_Expr) {
+                $term = $term->__toString();
+            }
+            $term = '(' . $term . ')';
+        }
+        $where = implode(' AND ', $where);
+        return $where;
     }
 
     /**
