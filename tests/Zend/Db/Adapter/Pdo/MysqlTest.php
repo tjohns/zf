@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,32 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Adapter_Pdo_TestCommon
+ */
 require_once 'Zend/Db/Adapter/Pdo/TestCommon.php';
+
+
+/**
+ * @see Zend_Db_Adapter_Pdo_Mysql
+ */
 require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
@@ -50,7 +70,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         }
     }
 
-    function getDriver()
+    public function getDriver()
     {
         return 'pdo_Mysql';
     }
