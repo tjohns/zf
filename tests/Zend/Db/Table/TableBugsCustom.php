@@ -64,7 +64,8 @@ class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
             'columns'           => array('reported_by'),
             'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
             'refColumns'        => array('account_name'),
-            'onDelete'          => self::CASCADE
+            'onDelete'          => self::CASCADE,
+            'onUpdate'          => self::CASCADE
         ),
         'Engineer' => array(
             'columns'           => 'assigned_to',

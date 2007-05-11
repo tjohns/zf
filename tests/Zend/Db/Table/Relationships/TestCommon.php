@@ -281,47 +281,139 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         }
     }
 
-    /*
-    public function testTableRelationshipCascadingUpdate()
+    /**
+     * Ensures that basic cascading update functionality succeeds using strings for single columns
+     *
+     * @return void
+     */
+    public function testTableRelationshipCascadingUpdateUsageBasicString()
     {
-        $table = $this->_table['bugs'];
+        $bug = $this->_getTable('Zend_Db_Table_TableBugsCustom')
+                ->find(1)
+                ->current();
 
-        $parentRows = $table->find(1);
-        $this->assertType('Zend_Db_Table_Rowset_Abstract', $parentRows,
-            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($parentRows));
-        $parentRow1 = $parentRows->current();
+        $this->assertEquals(
+            3,
+            count($bugProducts = $bug->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find three dependent rows'
+            );
 
-        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
-        $this->assertEquals(3, $childRows->count());
+        $bug->bug_id = 333;
 
-        $total = 0;
-        foreach ($childRows as $row) {
-            $this->assertEquals(1, $row->bug_id);
+        $bug->save();
+
+        $this->assertEquals(
+            3,
+            count($bugProducts = $bug->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find three dependent rows'
+            );
+
+        foreach ($bugProducts as $bugProduct) {
+            $this->assertEquals(333, $bugProduct->bug_id);
         }
 
-        $parentRow1->setFromArray(array('bug_id' => 101));
-        $parentRow1->save();
+        $bug->bug_id = 1;
 
-        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
-        $this->assertEquals(3, $childRows->count());
+        $bug->save();
 
-        $total = 0;
-        foreach ($childRows as $row) {
-            $this->assertEquals(1, $row->bug_id);
-        }
+        $this->assertEquals(
+            3,
+            count($bugProducts = $bug->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find three dependent rows'
+            );
 
-        $parentRow1->setFromArray(array('bug_id' => 1));
-        $parentRow1->save();
-
-        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugsProducts');
-        $this->assertEquals(3, $childRows->count());
-
-        $total = 0;
-        foreach ($childRows as $row) {
-            $this->assertEquals(1, $row->bug_id);
+        foreach ($bugProducts as $bugProduct) {
+            $this->assertEquals(1, $bugProduct->bug_id);
         }
     }
+
+    /**
+     * Ensures that basic cascading update functionality succeeds using arrays for single columns
+     *
+     * @return void
      */
+    public function testTableRelationshipCascadingUpdateUsageBasicArray()
+    {
+        $account1 = $this->_getTable('Zend_Db_Table_TableAccountsCustom')
+                    ->find('mmouse')
+                    ->current();
+
+        $this->assertEquals(
+            1,
+            count($account1->findDependentRowset('Zend_Db_Table_TableBugsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        $account1->account_name = 'daisy';
+
+        $account1->save();
+
+        $this->assertEquals(
+            1,
+            count($account1Bugs = $account1->findDependentRowset('Zend_Db_Table_TableBugsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        foreach ($account1Bugs as $account1Bug) {
+            $this->assertEquals('daisy', $account1Bug->reported_by);
+        }
+
+        $account1->account_name = 'mmouse';
+
+        $account1->save();
+
+        $this->assertEquals(
+            1,
+            count($account1Bugs = $account1->findDependentRowset('Zend_Db_Table_TableBugsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        foreach ($account1Bugs as $account1Bug) {
+            $this->assertEquals('mmouse', $account1Bug->reported_by);
+        }
+    }
+
+    /**
+     * Ensures that cascading update functionality is not run when onUpdate != self::CASCADE
+     *
+     * @return void
+     */
+    public function testTableRelationshipCascadingUpdateUsageInvalidNoop()
+    {
+        $product1 = $this->_getTable('Zend_Db_Table_TableProductsCustom')
+                    ->find(1)
+                    ->current();
+
+        $this->assertEquals(
+            1,
+            count($product1->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        $product1->product_id = 333;
+
+        $product1->save();
+
+        $this->assertEquals(
+            0,
+            count($product1BugsProducts = $product1->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        $product1->product_id = 1;
+
+        $product1->save();
+
+        $this->assertEquals(
+            1,
+            count($product1BugsProducts = $product1->findDependentRowset('Zend_Db_Table_TableBugsProductsCustom')),
+            'Expecting to find one dependent row'
+            );
+
+        foreach ($product1BugsProducts as $product1BugsProduct) {
+            $this->assertEquals(1, $product1BugsProduct->product_id);
+        }
+    }
 
     /**
      * Ensures that basic cascading delete functionality succeeds using strings for single columns

@@ -110,7 +110,7 @@ abstract class Zend_Db_Table_Abstract
     /**
      * The primary key column or columns.
      * A compound key should be declared as an array.
-     * You may declare a single-column primary key 
+     * You may declare a single-column primary key
      * as a string.
      *
      * @var mixed
@@ -711,7 +711,7 @@ abstract class Zend_Db_Table_Abstract
              * or IDENTITY column.
              */
             return $this->_db->lastInsertId();
-        } 
+        }
 
         /**
          * The last case:  the user did not specify a value for the primary
@@ -749,7 +749,7 @@ abstract class Zend_Db_Table_Abstract
     public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey)
     {
         $rowsAffected = 0;
-        foreach ($this->_referenceMap as $rule => $map) {
+        foreach ($this->_getReferenceMapNormalized() as $rule => $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_UPDATE])) {
                 switch ($map[self::ON_UPDATE]) {
                     case self::CASCADE:

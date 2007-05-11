@@ -60,13 +60,15 @@ class Zend_Db_Table_TableBugsProductsCustom extends Zend_Db_Table_TableBugsProdu
             'columns'           => 'bug_id',
             'refTableClass'     => 'Zend_Db_Table_TableBugsCustom',
             'refColumns'        => 'bug_id',
-            'onDelete'          => self::CASCADE
+            'onDelete'          => self::CASCADE,
+            'onUpdate'          => self::CASCADE
         ),
         'Product' => array(
             'columns'           => 'product_id',
             'refTableClass'     => 'Zend_Db_Table_TableProductsCustom',
             'refColumns'        => 'product_id',
-            'onDelete'          => 'anything but self::CASCADE'
+            'onDelete'          => 'anything but self::CASCADE',
+            'onUpdate'          => 'anything but self::CASCADE'
         )
     );
 }
