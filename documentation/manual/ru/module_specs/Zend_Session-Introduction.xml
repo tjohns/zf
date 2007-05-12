@@ -4,14 +4,13 @@
 
     <para>
         См.
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">
+        <ulink url="http://framework.zend.com/wiki/x/iVc">
         самую последнюю опубликованную версию этого документа</ulink>.
         Приветствуются отзывы и предложения в списке рассылки <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>. 
 <!--
         See
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">the most recent published
-        version of this document</ulink>
-        . Also, the Zend Framework Auth team greatly appreciates your feedback and contributions on our email list:
+        <ulink url="http://framework.zend.com/wiki/x/iVc">the most recently published version of this document</ulink>.
+        Also, the Zend Framework Auth team greatly appreciates your feedback and contributions on our email list:
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
 -->
     </para>
