@@ -56,6 +56,8 @@ html: html/index.html
 html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
 	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) $(MANUAL_XML)
+	@echo "Copying manual figures (recursively)..."
+	-[ -d figures ] && cp -r figures html/figures
 
 $(MANUAL_XML): $(MANUAL_XML).in
 	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
@@ -92,6 +94,7 @@ check1: $(MANUAL_LINT_XML)
 
 clean:
 	-rm -f html/*.html
+	-rm -Rf html/figures
 	-rm -f _temp_*.xml
 
 cleanall: clean

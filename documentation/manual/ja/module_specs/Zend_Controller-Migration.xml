@@ -8,8 +8,52 @@
         新しい仕組みに対応させてください。
     </para>
 
+    <sect2 id="zend.controller.migration.fromzeroninetwo">
+        <title>0.9.2 から 0.9.3 以降への移行</title>
+
+        <para>
+            0.9.3 では <link
+                linkend="zend.controller.actionhelpers">アクションヘルパー</link>
+            が利用できるようになりました。この変更にともない、以下のメソッドが削除され、
+            <link linkend="zend.controller.actionhelpers.redirector">リダイレクタ
+            アクションヘルパー</link> に組み込まれました。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setRedirectCode()</code> の代わりに
+                    <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>
+                    を使用します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectPrependBase()</code> の代わりに
+                    <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>
+                    を使用します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectExit()</code> の代わりに
+                    <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>
+                    を使用します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            ヘルパーオブジェクトの取得方法や操作方法についての詳細は
+            <link linkend="zend.controller.actionhelpers">アクションヘルパーのドキュメント</link> を、
+            そしてリダイレクトの設定方法（新しいメソッドなど）についての詳細は
+            <link linkend="zend.controller.actionhelpers.redirector">リダイレクタ
+            アクションヘルパーのドキュメント</link> を参照ください。
+        </para>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzerosix">
-        <title>0.6.0 から 0.8.0 への移行</title>
+        <title>0.6.0 から 0.8.0 以降への移行</title>
 
         <para>
             前回変更された、もっとも基本的な MVC コンポーネントの使用法は、そのまま同じです。
@@ -187,14 +231,14 @@ echo $response;
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 は、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request" />
+                <xref linkend="zend.controller.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
                 は、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request" />
+                <xref linkend="zend.controller.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
@@ -314,7 +358,7 @@ public function __call($method, $args)
                 <code>Zend_Controller_Plugin_Interface</code> は
                 <code>Zend_Controller_Plugin_Abstract</code> に置き換えられました。
                 すべてのメソッドは、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request" />
+                <xref linkend="zend.controller.request" />
                 をやり取りするようになりました。
             </para></listitem>
         </itemizedlist>

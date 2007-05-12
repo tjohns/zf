@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.exceptions">
     <title>MVC での例外</title>
 
-	<sect2 id="zend.controller.exceptions.introduction">
-		<title>導入</title>
+    <sect2 id="zend.controller.exceptions.introduction">
+        <title>導入</title>
 
         <para>
             Zend Framework の MVC コンポーネントは、
@@ -18,7 +18,7 @@
             システムの重要な情報が含まれていることがあります。
             たとえば SQL 文の内容やファイルの位置といった情報です。
             あなたのサイトを守るため、デフォルトでは
-            Zend_Controller_Front がすべての例外を捕捉し、
+            <code>Zend_Controller_Front</code> がすべての例外を捕捉し、
             それをレスポンスオブジェクトに登録するようになっています。
             また、レスポンスオブジェクトは、
             デフォルトではそれらの例外メッセージを表示しません。
@@ -34,7 +34,7 @@
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Controller_Front::throwExceptions()</para>
+                <para><code>Zend_Controller_Front::throwExceptions()</code></para>
 
                 <para>
                     このメソッドに true を渡すと、
@@ -58,7 +58,7 @@ try {
             </listitem>
 
             <listitem>
-                <para>Zend_Controller_Response_Abstract::renderExceptions()</para>
+                <para><code>Zend_Controller_Response_Abstract::renderExceptions()</code></para>
 
                 <para>
                     このメソッドに true を渡すと、
@@ -70,15 +70,17 @@ try {
             </listitem>
 
             <listitem>
-                <para>Zend_Controller_Front::returnResponse() および
-                    Zend_Controller_Response_Abstract::isException()</para>
+                <para>
+                    <code>Zend_Controller_Front::returnResponse()</code> および
+                    <code>Zend_Controller_Response_Abstract::isException()</code>
+                </para>
 
                 <para>
-                    Zend_Controller_Front::returnResponse() に true を渡すと、
-                    Zend_Controller_Front::dispatch() はレスポンスをレンダリングせず、
+                    <code>Zend_Controller_Front::returnResponse()</code> に true を渡すと、
+                    <code>Zend_Controller_Front::dispatch()</code> はレスポンスをレンダリングせず、
                     そのまま返します。レスポンスを受け取った後で、
-                    処理すべき例外があるかどうかを isException()
-                    メソッドで調べ、その内容を getException() メソッドで取得します。
+                    処理すべき例外があるかどうかを <code>isException()</code>
+                    メソッドで調べ、その内容を <code>getException()</code> メソッドで取得します。
                     たとえば次のようになります。
                 </para>
 
@@ -95,7 +97,7 @@ if ($response->isException()) {
 ]]></programlisting>
                 
                 <para>
-                    Zend_Controller_Front::throwExceptions()
+                    <code>Zend_Controller_Front::throwExceptions()</code>
                     に比べてこの方法が優れている点は、例外を処理した後で、
                     それをレンダリングするかどうかを判断できるところです。
                 </para>
@@ -119,14 +121,14 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    Zend_Controller_Dispatcher::dispatch() は、デフォルトでは、
+                    <code>Zend_Controller_Dispatcher::dispatch()</code> は、デフォルトでは、
                     無効なコントローラがリクエストされた際に例外をスローします。
                     この例外への対処方法としては、次のふたつを推奨します。
                 </para>
 
                 <itemizedlist>
                     <listitem>
-                        <para>パラメータ 'useDefaultControllerAlways' を設定します。</para>
+                        <para>パラメータ <code>useDefaultControllerAlways</code> を設定します。</para>
 
                         <para>
                             フロントコントローラかディスパッチャのいずれかで、
@@ -152,8 +154,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
                     <listitem>
                         <para>
-                            dispatch() がスローする例外は
-                            Zend_Controller_Dispatcher_Exception で、この中には
+                            <code>dispatch()</code> がスローする例外は
+                            <code>Zend_Controller_Dispatcher_Exception</code> で、この中には
                             'Invalid controller specified' というテキストが含まれます。
                             <link linkend="zend.controller.exceptions.handling">
                             先ほどの節</link>
@@ -166,8 +168,9 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    Zend_Controller_Action::__call() は、存在しないアクションを
-                    メソッドにディスパッチできなかった場合に例外をスローします。
+                    <code>Zend_Controller_Action::__call()</code> は、存在しないアクションを
+                    メソッドにディスパッチできなかった場合に
+                    <code>Zend_Controller_Action_Exception</code> をスローします。
                     このような場合は、何らかのデフォルトアクションを
                     コントローラで使用したいことでしょう。そのためには次のようにします。
                 </para>
@@ -175,8 +178,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Zend_Controller_Action のサブクラスを作成し、
-                            __call() メソッドをオーバーライドします。
+                            <code>Zend_Controller_Action</code> のサブクラスを作成し、
+                            <code>__call()</code> メソッドをオーバーライドします。
                             たとえば次のようになります。
                         </para>
 
@@ -203,8 +206,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            Zend_Controller_Dispatcher のサブクラスを作成し、
-                            getAction() メソッドをオーバーライドして、
+                            <code>Zend_Controller_Dispatcher</code> のサブクラスを作成し、
+                            <code>getAction()</code> メソッドをオーバーライドして、
                             アクションが存在するかどうかを調べます。
                             たとえば次のようになります。
                         </para>
@@ -250,18 +253,18 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
                     <listitem>
                         <para>
-                            Zend_Controller_Action::preDispatch() あるいは
-                            Zend_Controller_Plugin_Abstract::preDispatch()
+                            <code>Zend_Controller_Action::preDispatch()</code> あるいは
+                            <code>Zend_Controller_Plugin_Abstract::preDispatch()</code>
                             を使用して、無効なアクションを判別します。
                         </para>
 
                         <para>
-                            Zend_Controller_Action のサブクラスを作成して
-                            preDispatch() を変更することで、
+                            <code>Zend_Controller_Action</code> のサブクラスを作成して
+                            <code>preDispatch()</code> を変更することで、
                             実際にアクションをディスパッチする前に
                             コントローラ内で別のアクションに転送したり
                             リダイレクトしたりすることが可能となります。
-                            このコードは、先ほど説明した __call()
+                            このコードは、先ほど説明した <code>__call()</code>
                             をオーバーライドするコードと似たものになります。
                         </para>
 
@@ -315,7 +318,6 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
         </itemizedlist>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

@@ -14,9 +14,10 @@
 docroot/
     index.php
 application/
-    controllers/
-        IndexController.php
-        FooController.php
+    default/
+        controllers/
+            IndexController.php
+            FooController.php
     blog/
         controllers/
             IndexController.php
@@ -54,37 +55,38 @@ application/
             モジュールを使用するための第一歩となるのが、
             フロントコントローラでのコントローラディレクトリの設定方法を変更することです。
             基本的な MVC 版では、配列あるいは文字列を
-            setControllerDirectory() に渡すか、あるいはパスを addControllerDirectory()
+            <code>setControllerDirectory()</code> に渡すか、あるいはパスを <code>addControllerDirectory()</code>
             に渡していました。モジュールを使用する場合は、
             これらのメソッドコールを少々変更する必要があります。
         </para>
 
         <para>
-            setControllerDirectory() では、連想配列を渡す必要があります。
+            <code>setControllerDirectory()</code> では、連想配列を渡す必要があります。
             連想配列のキーにはモジュール名、そしてその値としてディレクトリのパスを指定します。
-            特別な名前 'default' をキーにすると、グローバルコントローラ
+            特別な名前 <code>default</code> をキーにすると、グローバルコントローラ
             (モジュール名前空間を必要としないもの) を指定できます。
             すべてのエントリは、ひとつのパスをさす文字列のキーを含まなければなりません。
+            また、<code>default</code> というキーが必ず存在しなければなりません。
             次の例のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));
-]]></programlisting>
+?>]]></programlisting>
 
         <para>
-            addControllerDirectory() では、オプションの二番目の引数を受け付けます。
+            <code>addControllerDirectory()</code> では、オプションの二番目の引数を受け付けます。
             モジュールを使用する際には、モジュール名を二番目の引数で渡します。
-            指定しない場合は、そのパスはデフォルトの名前空間に追加されます。
+            指定しない場合は、そのパスは <code>default</code> 名前空間に追加されます。
             次の例のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-]]></programlisting>
+?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.modular.router">
@@ -129,12 +131,11 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
             <code>useGlobalDefault</code> を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->setParam('useGlobalDefault', true);
-]]></programlisting>
+?>]]></programlisting>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
