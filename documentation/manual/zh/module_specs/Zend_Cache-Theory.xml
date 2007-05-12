@@ -1,71 +1,57 @@
 <sect1 id="zend.cache.theory">
-    <title>The theory of caching</title>
+    <title>缓存原理</title>
     <para>
-        There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
-        to identify cache records. The second one is the <code>'lifeTime'</code> directive as seen in the
-        examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
-        is conditional execution so that parts of your code can be skipped entirely, boosting performance.
-        The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
-        false for a cache miss if that makes sense for the nature of a frontend. That enables end-users to
-        wrap parts of the code they would like to cache (and skip) in <code>if(){ ... }</code> statements where
-        the condition is a Zend_Cache method itself. On the end if these blocks you must save what you've
-        generated, however (eg. <code>Zend_Cache_Core::save()</code>).
+        在Zend_Cache中有三个关键概念.一是用于标识缓存纪录的唯一标识符(一个字符串).二是<code>'lifeTime'</code>指令,正如例子中所见,
+     它定义了缓存纪录的生命期(超过该值,缓存纪录被销毁).第三个关键概念是条件执行,你的部分代码可用被跳过,以加速性能.
+        前端函数(例如. <code>Zend_Cache_Core::get()</code>)在缓存不命中时返回false,这使用户能处理<code>if(){ ... }</code>
+     语句中的条件,包含代码中他们所要缓存(或者跳过)的部分,最后是否必须保存这些你曾经生成的块(例如: <code>Zend_Cache_Core::save()</code>).
     </para>
     <note><para>
-        The conditional execution design of your generating code is not necessary in some frontends
-        (<code>Function</code>, for an example) when the whole logic is implemented inside the frontend.
+                在有些前端<code>Function</code>中不需要条件执行,例如,当整个逻辑在前端内部实现的时候.
     </para></note>
     <note><para>
-        'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
-        words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
-        generate your data (as you would normally do) and have it cached. When you have a cache hit, on the
-        other hand, the backend automatically fetches the record from cache transparently.
+    '缓存命中'是一个词汇,它表示当一个缓存纪录发现可用,是有效的并且是'fresh'的(换言之,就是还没有过期).'Cache miss' 表示当在缓存中找不到需要的数据时,发生缓存不命中.
+        当一个Cache miss发生是,你必须生成你的数据,并使它被缓存.而对于缓存命中,后端自动透明地从Cache中取回缓存纪录.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>The <code>Zend_Cache</code> factory method</title>
+        <title><code>Zend_Cache</code> 工厂方法 </title>
         <para>
-            A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
-            in the following example :
+            下面的示例给出了一个构造可用的<code>Zend_Cache</code>前端实例的好方法:
         </para>
             <programlisting role="php"><![CDATA[<?php
         
-# We "load" the Zend_Cache factory 
+# "load" Zend_Cache 工厂 
 require 'Zend/Cache.php'; 
 
-# We choose a backend (for example 'File' or 'Sqlite'...)
+# 选择一个后端(例如'File'或者'Sqlite'...)
 $backendName = '[...]';
 
-# We choose a frontend (for example 'Core', 'Output', 'Page'...)
+# 选择一个前端(例如'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# We set an array of options for the choosen frontend
+# 为选择的前端设置一个选项数组
 $frontendOptions = array([...]);
 
-# We set an array of options for the choosen backend
+# 为选择的后端设置一个选项数组
 $backendOptions = array([...]);
 
-# We make the good instance 
-# (of course, the two last arguments are optional)
+# 创建实例(当然,最后两个参数是可选的)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 ?>]]></programlisting> 
         <para>
-            In the following examples we will assume that the <code>$cache</code> variable holds a
-            valid, instantiated frontend as shown and that you understand how to pass parametres
-            to your chosen backends.
+            在下面的例子中我们假设变量<code>$cache</code>保存有一个有效的,已实例化的前端,并且你知道该如何给你选择的后端传递参数.
         </para>
         <note><para>
-            Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
-            frontends and backends yourself will not work as expected.
+            必须使用<code>Zend_Cache::factory()</code>来得到前端实例.你自己 直接实例化的 前端或者后端 不能按照期望工作.
         </para></note>
     </sect2>
     
     <sect2 id="zend.cache.tags">
-        <title>Tagging records</title>
+        <title>标记纪录</title>
         <para>
-            Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
-            method, you can set an array of tags to apply for this record. Then you will be 
-            able to clean all cache records tagged with a given tag (or tags):
+        标记是给缓存纪录分类的一种方法.当你使用<code>save()</code>方法保存一个缓存时,你可以给该缓存纪录设置一个或多个标记,多个标记以数组形式组织在一起
+        此后你不再需要该缓存纪录使,你可以清除所有指定标记的缓存纪录.
         </para>
         <programlisting role="php"><![CDATA[<?php
              
@@ -76,8 +62,7 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
     <sect2 id="zend.cache.clean">
         <title>Cleaning the cache</title>
         <para>
-            To remove/invalidate in particular cache id, you can use the <code>remove()</code>
-            method :
+            删除特定id的Cache纪录,使用<code>remove()</code>方法:
         </para>
         <programlisting role="php"><![CDATA[<?php 
              
@@ -85,20 +70,19 @@ $cache->remove('idToRemove');
             
 ?>]]></programlisting>            
         <para>
-            To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
-            method. For example to remove all cache records :
+            在单个操作中删除多个Cache纪录,可以使用<code>clean()</code>方法.例如,删除所有的缓存纪录:
         </para>
         <programlisting role="php"><![CDATA[<?php 
 
-// clean all records
+// 清除所有缓存纪录
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
-// clean only outdated
+// 仅清除过期的
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
 ?>]]>   </programlisting>    
         <para>
-            If you want to remove cache entries matching the tags 'tagA' and 'tagC':
+            如果你想删除标记为'tagA'和'tagC'的缓存项:
         </para>
         <programlisting role="php"><![CDATA[<?php 
              
@@ -106,9 +90,9 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             
 ?>]]>   </programlisting>
         <para>
-            Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
-            <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
-            latter are, as their names suggest, combined with an array of tags in cleaning operations.
+            可用的清除模式有:<code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
+      <code>CLEANING_MODE_MATCHING_TAG</code> 和 <code>CLEANING_MODE_NOT_MATCHING_TAG</code>.
+            后面的,正如它名称所暗示的,在清除操作中组合了一个标记数组,对其中的每个元素作处理.
         </para>
     </sect2>
 </sect1>
