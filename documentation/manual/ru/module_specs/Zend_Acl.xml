@@ -109,8 +109,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>
-	О Ролях
+        <title>О Ролях
 <!-- 	
 	About Roles
 -->
@@ -152,8 +151,7 @@
  -->	    
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-            <title>
-	    Множественное наследование Ролей
+            <title>Множественное наследование Ролей
 <!-- 	    
 	    Multiple inheritance between Roles
  -->
@@ -251,8 +249,7 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></pro
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>
-	Создание списка контроля доступа (ACL)
+        <title>Создание списка контроля доступа (ACL)
 <!--
 	Creating the Access Control List (ACL)
 -->
@@ -478,8 +475,7 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-        <title>
-	Определение Контроля Доступа
+        <title>Определение контроля доступа
 <!-- 	
 	Defining Access Controls
  -->	
@@ -554,8 +550,7 @@ $acl->allow('administrator');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-        <title>
-	Запрос ACL
+        <title>Запрос к ACL
 <!-- 	
 	Querying the ACL
  -->	
