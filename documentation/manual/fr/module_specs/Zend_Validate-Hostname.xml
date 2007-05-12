@@ -3,11 +3,7 @@
     <title>Validation des noms de domaine</title>
 
     <para>
-        Zend_Validate_Hostname vous permet de valider un nom de domaine sur la base d'un ensemble
-        de spécifications connues. Il est ainsi possible de valider trois types différents de
-        noms de domaine : un nom de domaine qualifié (ex : domaine.com), une adresse IP (ex : 1.2.3.4)
-        ou un nom de domaine local (ex : localhost). Par défaut, seul les noms de domaines qualifiés
-        sont acceptés. 
+        Zend_Validate_Hostname vous permet de valider un nom de domaine sur la base d'un ensemble de spécifications connues. Il est ainsi possible de valider trois types différents de noms de domaine : un nom de domaine qualifié (ex : domaine.com), une adresse IP (ex : 1.2.3.4) ou un nom de domaine local (ex : localhost). Par défaut, seul les noms de domaine qualifiés sont acceptés. 
     </para>
 
     <para>
@@ -39,18 +35,11 @@ if ($validateur->isValid($domaine)) {
     </para>
 
     <para>
-        Il peut se trouver que vous souhaitez valider des adresses IP, des noms de domaine locaux 
-        ou toute combinaison de tous les types disponibles. Cette opération peut être effectuée
-        en passant un paramètre à Zend_Validate_Hostname au moment de l'instanciation. Le paramètre
-        doit être un entier qui détermine quels types de noms de domaine sont admis. Il est 
-        recommandé d'utiliser les constantes de la classe Zend_Validate_Hostname. 
+        Il peut se trouver que vous souhaitez valider des adresses IP, des noms de domaine locaux ou toute combinaison de tous les types disponibles. Cette opération peut être effectuée en passant un paramètre à Zend_Validate_Hostname au moment de l'instanciation. Le paramètre doit être un entier qui détermine quels types de noms de domaine sont admis. Il est recommandé d'utiliser les constantes de la classe Zend_Validate_Hostname. 
     </para>
 
     <para>
-        Les constantes de Zend_Validate_Hostname sont : <code>ALLOW_DNS</code> qui autorise uniquement
-        les noms de domaine qualifiés, <code>ALLOW_IP</code> qui autorise les adresses IP, <code>ALLOW_LOCAL</code>
-        qui autorise les domaines locaux et <code>ALLOW_ALL</code> qui autorise les trois types précédents.
-        Pour vérifier uniquement les adresses IP, vous pouvez utiliser l'exemple suivant :
+        Les constantes de Zend_Validate_Hostname sont : <code>ALLOW_DNS</code> qui autorise uniquement les noms de domaine qualifiés, <code>ALLOW_IP</code> qui autorise les adresses IP, <code>ALLOW_LOCAL</code> qui autorise les domaines locaux et <code>ALLOW_ALL</code> qui autorise les trois types précédents. Pour vérifier uniquement les adresses IP, vous pouvez utiliser l'exemple suivant :
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Hostname.php';
 $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
@@ -66,10 +55,7 @@ if ($validateur->isValid($hostname)) {
     </para>
 
     <para>
-        Vous pouvez utiliser <code>ALLOW_ALL</code> pour accepter tous les types de
-        domaines. De même, vous pouvez créer des configurations combinant ces différents types. Par exemple, 
-        pour accepter les domaines qualifiés et les domaines locaux, instanciez votre objet Zend_Validate_Hostname
-        de la manière suivante : 
+        Vous pouvez utiliser <code>ALLOW_ALL</code> pour accepter tous les types de domaines. De même, vous pouvez créer des configurations combinant ces différents types. Par exemple, pour accepter les domaines qualifiés et les domaines locaux, instanciez votre objet Zend_Validate_Hostname de la manière suivante : 
         <programlisting role="php"><![CDATA[<?php
 $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
 ?>]]></programlisting>
@@ -81,7 +67,7 @@ $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zen
     </para>
     
     <para>
-        Certains noms de domaines nationaux (Country Code Top Level Domains ou ccTLD), comme .de (Allemagne), supporte les caractères internationaux dans leurs nom de domaines. Ceci est connu sous le nom de Nom de Domaine International (IDN). Ces domaines peuvent être vérifiés par Zend_Validate_Hostname grâce aux caractères étendus qui sont utilisés dans le processus de validation.
+        Certains noms de domaines nationaux (Country Code Top Level Domains ou ccTLD), comme .de (Allemagne), supporte les caractères internationaux dans leurs noms de domaine. Ceci est connu sous le nom de Nom de Domaine International (IDN). Ces domaines peuvent être vérifiés par Zend_Validate_Hostname grâce aux caractères étendus qui sont utilisés dans le processus de validation.
         
         Pour l'instant, la liste des ccTLD supportés inclus : at, ch, li, de, fi, hu, no, se.
         
@@ -97,7 +83,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
 
         Si vous essayez de vérifier un nom de domaine IDN qui n'est pas actuellement soutenu il est probable qu'il retournera une erreur s'il y a des caractères internationaux. Quand un fichier de ccTLD spécifiant les caratères supplémentaires n'existe pas dans Zend/Validate/Hostname,une validation de nom de domaine normale est réalisée.
         
-        Notez cependant que les IDNs sont seulement validés si vous autorisez la validation des nom de domaines.
+        Notez cependant que les IDNs sont seulement validés si vous autorisez la validation des noms de domaine.
     </para>
     
     <para>
@@ -115,10 +101,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
         
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à <code>$validator->setValidateTld()</code> pour activer ou désactiver la validation TLD.
 
-        Notez cependant que les TLDs sont seulement validés si vous autorisez la validation des nom de domaines.
+        Notez cependant que les TLDs sont seulement validés si vous autorisez la validation des noms de domaine.
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
