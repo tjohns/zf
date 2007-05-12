@@ -246,7 +246,7 @@ abstract class Zend_Date_DateObject {
             }
 
             $date += (self::$_monthTable[$month - 1] - $day);
-            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second)) + $difference);
+            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second))) + $difference;
 
             // gregorian correction for 5.Oct.1582
             if ($date < -12220185600) {
