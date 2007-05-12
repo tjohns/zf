@@ -18,7 +18,7 @@
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname();
 if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+    // hostname appears to be valid
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator->getMessages() as $message) {
@@ -49,7 +49,7 @@ if ($validator->isValid($hostname)) {
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
 if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+    // hostname appears to be valid
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator->getMessages() as $message) {
@@ -76,7 +76,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
     </para>
     
     <para>
-        一些国家代码顶级域名（ccTLDs），例如de（德国），在域名中支持国际字符。这些就是大家所知的国际域名（IDN）。这些域名可以用Zend_Validate_Hostname通过用于校验处理的扩展字符来匹配。
+        一些国家代码顶级域名（ccTLDs），例如'de'（德国），在域名中支持国际字符。这些就是大家所知的国际域名（IDN）。这些域名可以用Zend_Validate_Hostname通过用于校验处理的扩展字符来匹配。
         
         目前支持ccTLDs的有：at, ch, li, de, fi, hu, no, se.
                 
