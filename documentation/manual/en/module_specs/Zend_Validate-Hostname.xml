@@ -85,7 +85,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
     </para>
     
     <para>
-        Some Country Code Top Level Domains (ccTLDs), such as de (Germany), support international 
+        Some Country Code Top Level Domains (ccTLDs), such as 'de' (Germany), support international 
         characters in domain names. These are known as International Domain Names (IDN). These domains 
         can be matched by Zend_Validate_Hostname via extended characters that are used in the validation 
         process. 
