@@ -131,6 +131,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * UNSIGNED         => boolean; unsigned property of an integer type
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
+     * IDENTITY         => integer; true if column is auto-generated with unique values
      *
      * @todo Discover integer unsigned property.
      *
@@ -156,7 +157,9 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
 
         $stmt = $this->query($sql);
 
-        // Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+        /**
+         * Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+         */
         $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         $table_name      = 0;
@@ -174,6 +177,15 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
 
         $desc = array();
         foreach ($result as $key => $row) {
+            list ($primary, $primaryPosition, $identity) = array(false, null, false);
+            if ($row[$constraint_type] == 'P') {
+                $primary = true;
+                $primaryPosition = $row[$position];
+                /**
+                 * Oracle does not support auto-increment keys.
+                 */
+                $identity = false;
+            }
             $desc[$row[$column_name]] = array(
                 'SCHEMA_NAME'      => $row[$tablespace_name],
                 'TABLE_NAME'       => $row[$table_name],
@@ -186,8 +198,9 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
                 'SCALE'            => $row[$data_scale],
                 'PRECISION'        => $row[$data_precision],
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) ($row[$constraint_type] == 'P'),
-                'PRIMARY_POSITION' => $row[$position]
+                'PRIMARY'          => $primary,
+                'PRIMARY_POSITION' => $primaryPosition,
+                'IDENTITY'         => $identity
             );
         }
         return $desc;

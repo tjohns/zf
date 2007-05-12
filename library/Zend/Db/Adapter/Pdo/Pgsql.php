@@ -94,6 +94,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      * UNSIGNED         => boolean; unsigned property of an integer type
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
+     * IDENTITY         => integer; true if column is auto-generated with unique values
      *
      * @todo Discover integer unsigned property.
      *
@@ -158,6 +159,12 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                     }
                 }
             }
+            list($primary, $primaryPosition, $identity) = array(false, null, false);
+            if ($row[$contype] == 'p') {
+                $primary = true;
+                $primaryPosition = array_search($row[$attnum], explode(',', $row[$conkey])) + 1;
+                $identity = (bool) (preg_match('/^nextval/', $row[$default_value]));
+            }
             $desc[$row[$colname]] = array(
                 'SCHEMA_NAME'      => $row[$nspname],
                 'TABLE_NAME'       => $row[$relname],
@@ -170,8 +177,9 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 'SCALE'            => null, // @todo
                 'PRECISION'        => null, // @todo
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) ($row[$contype] == 'p'),
-                'PRIMARY_POSITION' => isset($row[$conkey]) ? array_search($row[$attnum], explode(',', $row[$conkey])) + 1 : null
+                'PRIMARY'          => $primary,
+                'PRIMARY_POSITION' => $primaryPosition,
+                'IDENTITY'         => $identity
             );
         }
         return $desc;

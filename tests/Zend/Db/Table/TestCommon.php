@@ -120,6 +120,14 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($info['name'], 'zfbugs');
     }
 
+    public function testTableArgumentAdapter()
+    {
+        $table = $this->_getTable('Zend_Db_Table_TableBugs',
+            $this->_db);
+        $db = $table->getAdapter();
+        $this->assertSame($this->_db, $db);
+    }
+
     public function testTableOptionAdapter()
     {
         $table = $this->_getTable('Zend_Db_Table_TableBugs',
@@ -254,31 +262,60 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableSetDefaultAdapter()
     {
+        /**
+         * Don't use _getTable() method because it defaults the adapter
+         */
+        Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
         Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $this->assertSame($this->_db, $db);
-        // don't use _getTable() method because it defaults the adapter
-        Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
         $table = new Zend_Db_Table_TableBugs();
         $db = $table->getAdapter();
         $this->assertSame($this->_db, $db);
     }
 
-    public function testTableExceptionSetInvalidDefaultAdapter()
+    public function testTableSetDefaultAdapterNull()
     {
-        list($major, $minor, $revision) = explode('.', PHP_VERSION);
-        if ($minor >= 2) {
-            try {
-                Zend_Db_Table_Abstract::setDefaultAdapter(new stdClass());
-                $this->fail('Expected to catch PHPUnit_Framework_Error');
-            } catch (Exception $e) {
-                $this->assertType('PHPUnit_Framework_Error', $e,
-                    'Expecting object of type PHPUnit_Framework_Error, got '.get_class($e));
-                $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, instance of stdClass given", 0, 100);
-                $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
-            }
-        } else {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+        Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $this->assertSame($this->_db, $db);
+        Zend_Db_Table_Abstract::setDefaultAdapter();
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());
+    }
+
+    public function testTableSetDefaultAdapterRegistry()
+    {
+        /**
+         * Don't use _getTable() method because it defaults the adapter
+         */
+        Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
+        Zend_Registry::set('registered_db', $this->_db);
+        Zend_Db_Table_Abstract::setDefaultAdapter('registered_db');
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $this->assertSame($this->_db, $db);
+        $table = new Zend_Db_Table_TableBugs();
+        $db = $table->getAdapter();
+        $this->assertSame($this->_db, $db);
+    }
+
+    public function testTableSetDefaultAdapterException()
+    {
+        try {
+            Zend_Db_Table_Abstract::setDefaultAdapter(new stdClass());
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Db_Adapter_Abstract, or a Registry key where a Zend_Db_Adapter_Abstract object is stored", $e->getMessage());
+        }
+
+        try {
+            Zend_Db_Table_Abstract::setDefaultAdapter(327);
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Db_Adapter_Abstract, or a Registry key where a Zend_Db_Adapter_Abstract object is stored", $e->getMessage());
         }
     }
 
@@ -308,41 +345,34 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
-    public function testTableExceptionNoAdapter()
+    public function testTableAdapterException()
     {
         Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
 
+        /**
+         * options array points 'db' to integer scalar
+         */
         try {
             $table = new Zend_Db_Table_TableBugs(array('db' => 327));
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $this->assertEquals("No object of type Zend_Db_Adapter_Abstract has been specified", $e->getMessage());
+            $this->assertEquals("Argument must be of type Zend_Db_Adapter_Abstract, or a Registry key where a Zend_Db_Adapter_Abstract object is stored", $e->getMessage());
         }
 
+        /**
+         * options array points 'db' to Registry key containing integer scalar
+         */
         Zend_Registry::set('registered_db', 327);
         try {
             $table = new Zend_Db_Table_TableBugs(array('db' => 'registered_db'));
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $this->assertEquals("No object of type Zend_Db_Adapter_Abstract has been specified", $e->getMessage());
+            $this->assertEquals("Argument must be of type Zend_Db_Adapter_Abstract, or a Registry key where a Zend_Db_Adapter_Abstract object is stored", $e->getMessage());
         }
-
-        list($major, $minor, $revision) = explode('.', PHP_VERSION);
-        if ($minor >= 2) {
-            try {
-                Zend_Db_Table_Abstract::setDefaultAdapter(327);
-            } catch (Exception $e) {
-                $this->assertType('PHPUnit_Framework_Error', $e,
-                    'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-                $mesg = substr("Argument 1 passed to Zend_Db_Table_Abstract::setDefaultAdapter() must be an instance of Zend_Db_Adapter_Abstract, integer given", 0, 100);
-                $this->assertEquals($mesg, substr($e->getMessage(), 0, 100));
-            }
-        } else {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-        }
-
     }
 
     public function testTableFindSingleRow()
@@ -779,6 +809,28 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertNull(Zend_Db_Table_Abstract::getDefaultMetadataCache());
     }
 
+    public function testTableSetDefaultMetadataCacheRegistry()
+    {
+        $cache = $this->_getCache();
+        Zend_Registry::set('registered_metadata_cache', $cache);
+        Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
+        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
+    public function testTableMetadataCacheRegistry()
+    {
+        $cache = $this->_getCache();
+
+        Zend_Registry::set('registered_metadata_cache', $cache);
+
+        $tableBugsCustom1 = $this->_getTable(
+            'Zend_Db_Table_TableBugsCustom',
+            array('metadataCache' => 'registered_metadata_cache')
+        );
+
+        $this->assertSame($cache, $tableBugsCustom1->getMetadataCache());
+    }
+
     /**
      * Ensures that table metadata caching works as expected when the cache object
      * is set in the configuration for a new table object.
@@ -842,6 +894,57 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $tableBugsCustom1->setup();
 
         $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+    }
+
+    public function testTableSetDefaultMetadataCacheException()
+    {
+        try {
+            Zend_Db_Table_Abstract::setDefaultMetadataCache(new stdClass());
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored", $e->getMessage());
+        }
+
+        try {
+            Zend_Db_Table_Abstract::setDefaultMetadataCache(327);
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored", $e->getMessage());
+        }
+    }
+
+    public function testTableMetadataCacheException()
+    {
+        Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
+
+        /**
+         * options array points 'metadataCache' to integer scalar
+         */
+        try {
+            $table = new Zend_Db_Table_TableBugs(array('metadataCache' => 327));
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored", $e->getMessage());
+        }
+
+        /**
+         * options array points 'metadataCache' to Registry key containing integer scalar
+         */
+        Zend_Registry::set('registered_metadata_cache', 327);
+        try {
+            $table = new Zend_Db_Table_TableBugs(array('metadataCache' => 'registered_metadata_cache'));
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals("Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored", $e->getMessage());
+        }
     }
 
     /**

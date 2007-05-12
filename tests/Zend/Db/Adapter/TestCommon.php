@@ -75,7 +75,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * Test Adapter's describeTable() method.
      * Retrieve the adapter's description of the test table and examine it.
      */
-    public function testAdapterDescribeTable()
+    public function testAdapterDescribeTableHasColumns()
     {
         $desc = $this->_db->describeTable('zfproducts');
 
@@ -84,6 +84,11 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'product_name'
         );
         $this->assertEquals($cols, array_keys($desc));
+    }
+
+    public function testAdapterDescribeTableMetadataFields()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
 
         $keys = array(
             'SCHEMA_NAME',
@@ -98,23 +103,58 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'PRECISION',
             'UNSIGNED',
             'PRIMARY',
-            'PRIMARY_POSITION'
+            'PRIMARY_POSITION',
+            'IDENTITY'
         );
         $this->assertEquals($keys, array_keys($desc['product_name']));
+    }
+
+    public function testAdapterDescribeTableAttributeColumn()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
 
         $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
         $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
         $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
         $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
-        $this->assertTrue(                       $desc['product_name']['NULLABLE']);
+        $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
         $this->assertEquals(0,                   $desc['product_name']['SCALE']);
         $this->assertEquals(0,                   $desc['product_name']['PRECISION']);
-        $this->assertFalse(                      $desc['product_name']['PRIMARY']);
-        $this->assertEquals('',                  $desc['product_name']['PRIMARY_POSITION']);
+        $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
+        $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
+        $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
+    }
 
+    public function testAdapterDescribeTablePrimaryKeyColumn()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
+
+        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME']);
+        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME']);
+        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION']);
+        $this->assertEquals('',                  $desc['product_id']['DEFAULT']);
+        $this->assertFalse(                      $desc['product_id']['NULLABLE'], 'Expected product_id not to be nullable');
+        $this->assertEquals(0,                   $desc['product_id']['SCALE']);
+        $this->assertEquals(0,                   $desc['product_id']['PRECISION']);
         $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
         $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
+    }
+
+    /**
+     * Test that an auto-increment key reports itself.
+     * This is not supported in all RDBMS brands, so we test
+     * it separately from the full describe tests above.
+     */
+    public function testAdapterDescribeTablePrimaryAuto()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
+
+        $auto = $desc['product_id']['IDENTITY'];
+        if ($auto === null) {
+            $this->markTestIncomplete($this->getDriver() . ' needs to learn how to discover auto-increment keys');
+        }
+        $this->assertTrue($desc['product_id']['IDENTITY']);
     }
 
     /**

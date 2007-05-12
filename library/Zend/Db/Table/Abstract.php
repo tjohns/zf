@@ -43,6 +43,7 @@ require_once 'Zend/Db.php';
 abstract class Zend_Db_Table_Abstract
 {
 
+    const ADAPTER          = 'db';
     const SCHEMA           = 'schema';
     const NAME             = 'name';
     const PRIMARY          = 'primary';
@@ -116,6 +117,18 @@ abstract class Zend_Db_Table_Abstract
      * @var mixed
      */
     protected $_primary = null;
+
+    /**
+     * If your primary key is a compound key, and one of the columns uses
+     * an auto-increment or sequence-generated value, set _identity
+     * to the ordinal index in the $_primary array for that column.
+     * Note this index is the position of the column in the primary key,
+     * not the position of the column in the table.  The primary key
+     * array is 1-based.
+     *
+     * @var integer
+     */
+    protected $_identity = 1;
 
     /**
      * Define the logic for new values in the primary key.
@@ -198,63 +211,50 @@ abstract class Zend_Db_Table_Abstract
      * - dependentTables = array of child tables.
      * - metadataCache   = cache for information from adapter describeTable().
      *
-     * @param  array $config Array of user-specified config options.
+     * @param  mixed $config Array of user-specified config options, or just the Db Adapter.
      * @return void
      */
-    public function __construct(array $config = array())
+    public function __construct($config = array())
     {
-        // set a custom Zend_Db_Adapter connection
-        if (isset($config['db'])) {
+        /**
+         * Allow one a scalar argument to be the Adapter object or Registry key.
+         */
+        if (!is_array($config)) {
+            $config = array(self::ADAPTER => $config);
+        }
 
-            // convenience variable
-            $db = $config['db'];
-
-            // use an object from the registry?
-            if (is_string($db)) {
-                $db = Zend_Registry::get($db);
+        foreach ($config as $key => $value) {
+            switch ($key) {
+            case self::ADAPTER:
+                $this->_setAdapter($value);
+                break;
+            case self::NAME:
+                $this->_name = $value;
+                break;
+            case self::PRIMARY:
+                $this->_primary = (array) $value;
+                break;
+            case self::ROW_CLASS:
+                $this->setRowClass($value);
+                break;
+            case self::ROWSET_CLASS:
+                $this->setRowsetClass($value);
+                break;
+            case self::REFERENCE_MAP:
+                $this->setReferences($value);
+                break;
+            case self::DEPENDENT_TABLES:
+                $this->setDependentTables($value);
+                break;
+            case self::METADATA_CACHE:
+                $this->_setMetadataCache($value);
+                break;
+            case self::SEQUENCE:
+                $this->_setSequence($value);
+                break;
             }
-
-            // save the connection
-            $this->_db = $db;
         }
 
-        // set default table name if supplied
-        if (isset($config[self::NAME])) {
-            $this->_name = $config[self::NAME];
-        }
-
-        // set primary key name if supplied
-        if (isset($config[self::PRIMARY])) {
-            $this->_primary = (array) $config[self::PRIMARY];
-        }
-
-        // set default row classname if supplied
-        if (isset($config[self::ROW_CLASS])) {
-            $this->setRowClass($config[self::ROW_CLASS]);
-        }
-
-        // set default rowset classname if supplied
-        if (isset($config[self::ROWSET_CLASS])) {
-            $this->setRowsetClass($config[self::ROWSET_CLASS]);
-        }
-
-        if (isset($config[self::REFERENCE_MAP])) {
-            $this->setReferences($config[self::REFERENCE_MAP]);
-        }
-
-        if (isset($config[self::DEPENDENT_TABLES])) {
-            $this->setDependentTables($config[self::DEPENDENT_TABLES]);
-        }
-
-        if (isset($config[self::METADATA_CACHE])) {
-            $this->_setMetadataCache($config[self::METADATA_CACHE]);
-        }
-
-        if (isset($config[self::SEQUENCE])) {
-            $this->_setSequence($config[self::SEQUENCE]);
-        }
-
-        // continue with automated setup
         $this->_setup();
     }
 
@@ -358,22 +358,32 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Sets the default Zend_Db_Adapter_Abstract for all Zend_Db_Table objects.
      *
-     * @param  Zend_Db_Adapter_Abstract
+     * @param  mixed $db Either an Adapter object, or a string naming a Registry key
      * @return void
      */
-    public static final function setDefaultAdapter(Zend_Db_Adapter_Abstract $db)
+    public static final function setDefaultAdapter($db = null)
     {
-        Zend_Db_Table_Abstract::$_defaultDb = $db;
+        Zend_Db_Table_Abstract::$_defaultDb = self::_setupAdapter($db);
     }
 
     /**
      * Gets the default Zend_Db_Adapter_Abstract for all Zend_Db_Table objects.
      *
-     * @return Zend_Db_Adapter_Abstract
+     * @return Zend_Db_Adapter_Abstract or null
      */
     public static final function getDefaultAdapter()
     {
         return self::$_defaultDb;
+    }
+
+    /**
+     * @param  mixed $db Either an Adapter object, or a string naming a Registry key
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
+     */
+    protected final function _setAdapter($db)
+    {
+        $this->_db = self::_setupAdapter($db);
+        return $this;
     }
 
     /**
@@ -387,22 +397,43 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * @param  mixed $db Either an Adapter object, or a string naming a Registry key
+     * @return Zend_Db_Adapter_Abstract
+     * @throws Zend_Db_Table_Exception
+     */
+    protected static final function _setupAdapter($db)
+    {
+        if ($db === null) {
+            return null;
+        }
+        if (is_string($db)) {
+            require_once 'Zend/Registry.php';
+            $db = Zend_Registry::get($db);
+        }
+        if (!$db instanceof Zend_Db_Adapter_Abstract) {
+            require_once 'Zend/Db/Table/Exception.php';
+            throw new Zend_Db_Table_Exception('Argument must be of type Zend_Db_Adapter_Abstract, or a Registry key where a Zend_Db_Adapter_Abstract object is stored');
+        }
+        return $db;
+    }
+
+    /**
      * Sets the default metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
      *
      * If $defaultMetadataCache is null, then no metadata cache is used by default.
      *
-     * @param  Zend_Cache_Core $defaultMetadataCache
+     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
      * @return void
      */
-    public static function setDefaultMetadataCache(Zend_Cache_Core $defaultMetadataCache = null)
+    public static function setDefaultMetadataCache($metadataCache = null)
     {
-        self::$_defaultMetadataCache = $defaultMetadataCache;
+        self::$_defaultMetadataCache = self::_setupMetadataCache($metadataCache);
     }
 
     /**
      * Gets the default metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
      *
-     * @return Zend_Cache_Core|null
+     * @return Zend_Cache_Core or null
      */
     public static function getDefaultMetadataCache()
     {
@@ -417,14 +448,44 @@ abstract class Zend_Db_Table_Abstract
      * results in unnecessary API complexity. To configure the metadata cache, use the metadataCache configuration
      * option for the class constructor upon instantiation.
      *
-     * @param  Zend_Cache_Core $metadataCache
-     * @return Zend_Db_Table_Adapter_Abstract Provides a fluent interface
+     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
-    protected function _setMetadataCache(Zend_Cache_Core $metadataCache = null)
+    protected function _setMetadataCache($metadataCache)
     {
-        $this->_metadataCache = $metadataCache;
-
+        $this->_metadataCache = self::_setupMetadataCache($metadataCache);
         return $this;
+    }
+
+    /**
+     * Gets the metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
+     *
+     * @return Zend_Cache_Core or null
+     */
+    public function getMetadataCache()
+    {
+        return $this->_metadataCache;
+    }
+
+    /**
+     * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     * @return Zend_Cache_Core
+     * @throws Zend_Db_Table_Exception
+     */
+    protected static final function _setupMetadataCache($metadataCache)
+    {
+        if ($metadataCache === null) {
+            return null;
+        }
+        if (is_string($metadataCache)) {
+            require_once 'Zend/Registry.php';
+            $metadataCache = Zend_Registry::get($metadataCache);
+        }
+        if (!$metadataCache instanceof Zend_Cache_Core) {
+            require_once 'Zend/Db/Table/Exception.php';
+            throw new Zend_Db_Table_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
+        }
+        return $metadataCache;
     }
 
     /**
@@ -447,22 +508,11 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Gets the metadata cache for information returned by Zend_Db_Adapter_Abstract::describeTable().
-     *
-     * @return Zend_Cache_Core|null
-     */
-    public function getMetadataCache()
-    {
-        return $this->_metadataCache;
-    }
-
-    /**
      * Turnkey for initialization of a table object.
      * Calls other protected methods for individual tasks, to make it easier
      * for a subclass to override part of the setup logic.
      *
      * @return void
-     * @throws Zend_Db_Table_Exception
      */
     protected function _setup()
     {
@@ -480,14 +530,8 @@ abstract class Zend_Db_Table_Abstract
      */
     protected function _setupDatabaseAdapter()
     {
-        // get the database adapter
         if (! $this->_db) {
             $this->_db = self::getDefaultAdapter();
-        }
-
-        if (! $this->_db instanceof Zend_Db_Adapter_Abstract) {
-            require_once 'Zend/Db/Table/Exception.php';
-            throw new Zend_Db_Table_Exception('No object of type Zend_Db_Adapter_Abstract has been specified');
         }
     }
 
@@ -581,6 +625,9 @@ abstract class Zend_Db_Table_Abstract
             foreach ($this->_metadata as $col) {
                 if ($col['PRIMARY']) {
                     $this->_primary[ $col['PRIMARY_POSITION'] ] = $col['COLUMN_NAME'];
+                    if ($col['IDENTITY']) {
+                        $this->_identity = $col['PRIMARY_POSITION'];
+                    }
                 }
             }
         }
@@ -595,9 +642,14 @@ abstract class Zend_Db_Table_Abstract
         }
 
         $primary = (array) $this->_primary;
-        $pk0 = current($primary);
-        if ($this->_sequence === true && get_class($this->_db) == 'Zend_Db_Adapter_Pdo_Pgsql') {
-            $this->_sequence = "{$this->_name}_{$pk0}_seq";
+        $pkIdentity = $primary[(int)$this->_identity];
+
+        /**
+         * Special case for PostgreSQL: a SERIAL key implicitly uses a sequence
+         * object whose name is "<table>_<column>_seq".
+         */
+        if ($this->_sequence === true && $this->_db instanceof Zend_Db_Adapter_Pdo_Pgsql) {
+            $this->_sequence = "{$this->_name}_{$pkIdentity}_seq";
         }
     }
 
@@ -673,7 +725,7 @@ abstract class Zend_Db_Table_Abstract
          * it's the _first_ column in the compound key.
          */
         $primary = (array) $this->_primary;
-        $pk0 = current($primary);
+        $pkIdentity = $primary[(int)$this->_identity];
 
         /**
          * If this table uses a database sequence object and the data does not
@@ -681,8 +733,8 @@ abstract class Zend_Db_Table_Abstract
          * to the row.  We assume that only the first column in a compound
          * primary key takes a value from a sequence.
          */
-        if (is_string($this->_sequence) && !isset($data[$pk0])) {
-            $data[$pk0] = $this->_db->nextSequenceId($this->_sequence);
+        if (is_string($this->_sequence) && !isset($data[$pkIdentity])) {
+            $data[$pkIdentity] = $this->_db->nextSequenceId($this->_sequence);
         }
 
         /**
@@ -690,7 +742,7 @@ abstract class Zend_Db_Table_Abstract
          */
         $this->_db->insert($this->_name, $data);
 
-        if (isset($data[$pk0])) {
+        if (isset($data[$pkIdentity])) {
             /**
              * Return the primary key value or array of values(s) if the
              * primary key is compound.  This handles the case of natural keys
@@ -698,10 +750,11 @@ abstract class Zend_Db_Table_Abstract
              * auto-increment keys when the user specifies a value, thus
              * overriding the auto-increment logic.
              */
+            $pkData = array_intersect_key($data, array_flip($primary));
             if (count($primary) == 1) {
-                return $data[$pk0];
+                return current($pkData);
             } else {
-                return array_intersect_key($data, array_flip($primary));
+                return $pkData;
             }
         }
 

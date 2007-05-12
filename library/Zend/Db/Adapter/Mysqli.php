@@ -119,6 +119,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      * UNSIGNED         => boolean; unsigned property of an integer type
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
+     * IDENTITY         => integer; true if column is auto-generated with unique values
      *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
@@ -126,8 +127,10 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        // @todo: use INFORMATION_SCHEMA someday when
-        // MySQL's implementation isn't dog slow.
+        /**
+         * @todo: use INFORMATION_SCHEMA someday when
+         * MySQL's implementation isn't too slow.
+         */
 
         if ($schemaName) {
             $sql = 'DESCRIBE ' . $this->quoteIdentifier("$schemaName.$tableName");
@@ -135,8 +138,10 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName);
         }
 
-        // Use mysqli extension API, because DESCRIBE doesn't work
-        // well as a prepared statement on MySQL 4.1.
+        /**
+         * Use mysqli extension API, because DESCRIBE doesn't work
+         * well as a prepared statement on MySQL 4.1.
+         */
         if ($queryResult = $this->getConnection()->query($sql)) {
             while ($row = $queryResult->fetch_assoc()) {
                 $result[] = $row;
@@ -150,10 +155,13 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         $desc = array();
 
         $row_defaults = array(
-            'Length'    => null,
-            'Scale'     => null,
-            'Precision' => null,
-            'Unsigned'  => null
+            'Length'          => null,
+            'Scale'           => null,
+            'Precision'       => null,
+            'Unsigned'        => null,
+            'Primary'         => false,
+            'PrimaryPosition' => null,
+            'Identity'        => false
         );
         $i = 1;
         $p = 1;
@@ -171,8 +179,20 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 $row['Scale'] = $matches[2];
             } else if (preg_match('/^((?:big|medium|small)?int)\((\d+)\)/', $row['Type'], $matches)) {
                 $row['Type'] = $matches[1];
-                // The optional argument of a MySQL int type is not precision
-                // or length; it is only a hint for display width.
+                /**
+                 * The optional argument of a MySQL int type is not precision
+                 * or length; it is only a hint for display width.
+                 */
+            }
+            if (strtoupper($row['Key']) == 'PRI') {
+                $row['Primary'] = true;
+                $row['PrimaryPosition'] = $p;
+                if ($row['Extra'] == 'auto_increment') {
+                    $row['Identity'] = true;
+                } else {
+                    $row['Identity'] = false;
+                }
+                ++$p;
             }
             $desc[$row['Field']] = array(
                 'SCHEMA_NAME'      => null,
@@ -186,8 +206,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 'SCALE'            => $row['Scale'],
                 'PRECISION'        => $row['Precision'],
                 'UNSIGNED'         => $row['Unsigned'],
-                'PRIMARY'          => (bool) (strtoupper($row['Key']) == 'PRI'),
-                'PRIMARY_POSITION' => ((bool) (strtoupper($row['Key']) == 'PRI') ? $p++ : 0)
+                'PRIMARY'          => $row['Primary'],
+                'PRIMARY_POSITION' => $row['PrimaryPosition'],
+                'IDENTITY'         => $row['Identity']
             );
             ++$i;
         }

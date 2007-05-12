@@ -320,6 +320,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * UNSIGNED         => boolean; unsigned property of an integer type
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
+     * IDENTITY         => integer; true if column is auto-generated with unique values
      *
      * @todo Discover integer unsigned property.
      *
@@ -350,6 +351,18 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         foreach ($result as $key => $row) {
+            list ($primary, $primaryPosition, $identity) = array(false, null, false);
+            if ($row['TABCONSTTYPE'] == 'P') {
+                $primary = true;
+                $primaryPosition = $row['COLSEQ'];
+            }
+            /**
+             * In IBM DB2, an column can be IDENTITY
+             * even if it is not part of the PRIMARY KEY.
+             */
+            if ($row['IDENTITY'] == 'Y') {
+                $identity = true;
+            }
             $desc[$row['COLNAME']] = array(
                 'SCHEMA_NAME'      => $row['TABSCHEMA'],
                 'TABLE_NAME'       => $row['TABNAME'],
@@ -362,8 +375,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 'SCALE'            => $row['SCALE'],
                 'PRECISION'        => ($row['TYPENAME'] == 'DECIMAL' ? $row['LENGTH'] : 0),
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) ($row['TABCONSTTYPE'] == 'P' || $row['IDENTITY'] == 'Y'),
-                'PRIMARY_POSITION' => $row['COLSEQ']
+                'PRIMARY'          => $primary,
+                'PRIMARY_POSITION' => $primaryPosition,
+                'IDENTITY'         => $identity
             );
         }
 

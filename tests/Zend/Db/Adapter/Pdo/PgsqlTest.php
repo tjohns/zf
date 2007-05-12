@@ -26,6 +26,15 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
+    public function testAdapterDescribeTablePrimaryAuto()
+    {
+        $desc = $this->_db->describeTable('zfbugs');
+
+        $this->assertTrue($desc['bug_id']['PRIMARY']);
+        $this->assertEquals(1, $desc['bug_id']['PRIMARY_POSITION']);
+        $this->assertTrue($desc['bug_id']['IDENTITY']);
+    }
+
     /**
      * Test the Adapter's insert() method.
      * This requires providing an associative array of column=>value pairs.

@@ -83,6 +83,15 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     }
 
+    public function testAdapterDescribeTablePrimaryAuto()
+    {
+        $desc = $this->_db->describeTable('zfbugs');
+
+        $this->assertTrue($desc['bug_id']['PRIMARY']);
+        $this->assertEquals(1, $desc['bug_id']['PRIMARY_POSITION']);
+        $this->assertTrue($desc['bug_id']['IDENTITY']);
+    }
+
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.

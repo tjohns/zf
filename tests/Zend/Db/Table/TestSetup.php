@@ -58,7 +58,7 @@ abstract class Zend_Db_Table_TestSetup extends Zend_Db_TestSetup
 
     protected function _getTable($tableClass, $options = array())
     {
-        if (!isset($options['db'])) {
+        if (is_array($options) && !isset($options['db'])) {
             $options['db'] = $this->_db;
         }
         Zend_Loader::loadClass($tableClass);
