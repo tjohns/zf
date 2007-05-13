@@ -89,7 +89,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
     
     <para>
         国別コードトップレベルドメイン (Country Code Top Level Domains: ccTLDs)
-        の一部、たとえば de (ドイツ) などでは、ドメイン名の中に国際化文字の使用をサポートしています。
+        の一部、たとえば 'de' (ドイツ) などでは、ドメイン名の中に国際化文字の使用をサポートしています。
         これは、国際化ドメイン名 (International Domain Names: IDN) といわれるものです。
         これらのドメインについても、Zend_Validate_Hostname
         の検証プロセスで使用する文字を拡張することで検証することができます。
