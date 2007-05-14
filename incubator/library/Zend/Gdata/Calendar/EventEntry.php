@@ -70,7 +70,7 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case Zend_Gdata_Data::lookupNamespace('gd') . ':' . 'extendedProperty'; 
+            case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'extendedProperty'; 
                 $extProp = new Zend_Gdata_Extension_ExtendedProperty();
                 $extProp->transferFromDOM($child);
                 $this->_extendedProperty[] = $extProp;

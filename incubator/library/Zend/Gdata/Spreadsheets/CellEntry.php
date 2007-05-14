@@ -59,7 +59,7 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_Data::lookupNamespace('gs') . ':' . 'cell';
+        case Zend_Gdata_App_Data::lookupNamespace('gs') . ':' . 'cell';
             $cell = new Zend_Gdata_Spreadsheets_Extension_Cell();
             $cell->transferFromDOM($child);
             $this->_cell = $cell;
@@ -70,12 +70,25 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
         }
     }
     
-    public function getCell() {
+    public function getCell()
+    {
         return $this->_cell;
     }
     
-    public function setCell($cell) {
+    public function setCell($cell)
+    {
         $this->_cell = $cell;
+        return $this;
+    }
+    
+    public function issetCell()
+    {
+        return isset($this->_cell);
+    }
+    
+    public function unsetCell()
+    {
+        $this->_cell = null;
         return $this;
     }
 

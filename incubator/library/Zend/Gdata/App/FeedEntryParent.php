@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once 'Zend/Gdata/Data.php';
+require_once 'Zend/Gdata/App/Data.php';
 
 /**
  * @see Zend_Gdata_App_Exception
@@ -35,9 +35,19 @@ require_once 'Zend/Gdata/App/Exception.php';
 require_once 'Zend/Gdata/App/Extension/Element.php';
 
 /**
- * @see Zend_Gdata_App_Extension_Element
+ * @see Zend_Gdata_App_Extension_Author
 */
-require_once 'Zend/Gdata/App/Extension/Element.php';
+require_once 'Zend/Gdata/App/Extension/Author.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Category
+*/
+require_once 'Zend/Gdata/App/Extension/Category.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Contributor
+*/
+require_once 'Zend/Gdata/App/Extension/Contributor.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Id
@@ -45,19 +55,24 @@ require_once 'Zend/Gdata/App/Extension/Element.php';
 require_once 'Zend/Gdata/App/Extension/Id.php';
 
 /**
+ * @see Zend_Gdata_App_Extension_Link
+ */
+require_once 'Zend/Gdata/App/Extension/Link.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Rights
+ */
+require_once 'Zend/Gdata/App/Extension/Rights.php';
+
+/**
  * @see Zend_Gdata_App_Extension_Title
  */
 require_once 'Zend/Gdata/App/Extension/Title.php';
 
 /**
- * @see Zend_Gdata_App_Extension_Content
+ * @see Zend_Gdata_App_Extension_Updated
  */
-require_once 'Zend/Gdata/App/Extension/Content.php';
-
-/**
- * @see Zend_Gdata_App_Extension_Link
- */
-require_once 'Zend/Gdata/App/Extension/Link.php';
+require_once 'Zend/Gdata/App/Extension/Updated.php';
 
 /**
  * Abstract class for common functionality in entries and feeds
@@ -77,10 +92,14 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     protected $_httpClient = null;
 
+    protected $_author = array();
+    protected $_category = array();
+    protected $_contributor = array();
     protected $_id = null;
-    protected $_title = null;
     protected $_link = array();
-    protected $_content = null;
+    protected $_rights = null;
+    protected $_title = null;
+    protected $_updated = null;
 
     /**
      * Constructs a Feed or Entry
@@ -146,17 +165,29 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_title != null) {
-            $element->appendChild($this->_title->getDOM($element->ownerDocument));
+        foreach ($this->_author as $author) {
+            $element->appendChild($author->getDOM($element->ownerDocument));
+        }
+        foreach ($this->_category as $category) {
+            $element->appendChild($category->getDOM($element->ownerDocument));
+        }
+        foreach ($this->_contributor as $contributor) {
+            $element->appendChild($contributor->getDOM($element->ownerDocument));
         }
         if ($this->_id != null) {
             $element->appendChild($this->_id->getDOM($element->ownerDocument));
         }
-        if ($this->_content != null) {
-            $element->appendChild($this->_content->getDOM($element->ownerDocument));
-        }
         foreach ($this->_link as $link) {
             $element->appendChild($link->getDOM($element->ownerDocument));
+        }
+        if ($this->_rights != null) {
+            $element->appendChild($this->_rights->getDOM($element->ownerDocument));
+        }
+        if ($this->_title != null) {
+            $element->appendChild($this->_title->getDOM($element->ownerDocument));
+        }
+        if ($this->_updated != null) {
+            $element->appendChild($this->_updated->getDOM($element->ownerDocument));
         }
         return $element;
     }
@@ -165,25 +196,45 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_Data::lookupNamespace('atom') . ':' . 'id':
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'author':
+            $author = new Zend_Gdata_App_Extension_Author();
+            $author->transferFromDOM($child);
+            $this->_author[] = $author;
+            break;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'category':
+            $category = new Zend_Gdata_App_Extension_Category();
+            $category->transferFromDOM($child);
+            $this->_category[] = $category;
+            break;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'contributor':
+            $contributor = new Zend_Gdata_App_Extension_Contributor();
+            $contributor->transferFromDOM($child);
+            $this->_contributor[] = $contributor;
+            break;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'id':
             $id = new Zend_Gdata_App_Extension_Id();
             $id->transferFromDOM($child);
             $this->_id = $id;
             break;
-        case Zend_Gdata_Data::lookupNamespace('atom') . ':' . 'title':
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'link':
+            $link = new Zend_Gdata_App_Extension_Link();
+            $link->transferFromDOM($child);
+            $this->_link[] = $link;
+            break;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'rights':
+            $rights = new Zend_Gdata_App_Extension_Rights();
+            $rights->transferFromDOM($child);
+            $this->_rights = $rights;
+            break;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'title':
             $title = new Zend_Gdata_App_Extension_Title();
             $title->transferFromDOM($child);
             $this->_title = $title;
             break;
-        case Zend_Gdata_Data::lookupNamespace('atom') . ':' . 'content':
-            $content = new Zend_Gdata_App_Extension_Content();
-            $content->transferFromDOM($child);
-            $this->_content = $content;
-            break;
-        case Zend_Gdata_Data::lookupNamespace('atom') . ':' . 'link':
-            $link = new Zend_Gdata_App_Extension_Link();
-            $link->transferFromDOM($child);
-            $this->_link[] = $link;
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'updated':
+            $updated = new Zend_Gdata_App_Extension_Updated();
+            $updated->transferFromDOM($child);
+            $this->_updated = $updated;
             break;
         default:
             parent::takeChildFromDOM($child);
@@ -191,41 +242,82 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
         }
     }
 
-    public function getTitle()
+    /**
+     * @return Zend_Gdata_App_Extension_Author
+     */
+    public function getAuthor()
     {
-        return $this->_title;
+        return $this->_author;
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Title $value 
-     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     * @param array $value 
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
      */
-    public function setTitle($value)
+    public function setAuthor($value)
     {
-        $this->_title = $value;
+        $this->_author = $value;
         return $this; 
-    }
-
-    public function getContent()
-    {
-        return $this->_content;
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Content $value 
-     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     * @return Zend_Gdata_App_Extension_Category
      */
-    public function setContent($value)
+    public function getCategory()
     {
-        $this->_content = $value;
+        return $this->_category;
+    }
+
+    /**
+     * @param array $value 
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
+     */
+    public function setCategory($value)
+    {
+        $this->_category = $value;
         return $this; 
     }
 
+    /**
+     * @return Zend_Gdata_App_Extension_Contributor
+     */
+    public function getContributor()
+    {
+        return $this->_contributor;
+    }
+
+    /**
+     * @param array $value 
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
+     */
+    public function setContributor($value)
+    {
+        $this->_contributor = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_Id
+     */
     public function getId()
     {
         return $this->_id;
     }
 
+    /**
+     * @param Zend_Gdata_App_Extension_Id $value
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
+     */
+    public function setId($value) 
+    {
+        $this->_id = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $rel The rel value of the link to be found.  If null, 
+     * the array of links is returned
+     */
     public function getLink($rel = null)
     {
         if ($rel == null) {
@@ -238,6 +330,102 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
             }
             return null;
         }
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Link
+     */
+    public function getEditLink()
+    {
+        return getLink('edit');
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Link
+     */
+    public function getNextLink()
+    {
+        return getLink('next');
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Link
+     */
+    public function getLicenseLink()
+    {
+        return getLink('license');
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Link
+     */
+    public function getAlternateLink()
+    {
+        return getLink('alternate');
+    }
+
+    /**
+     * @param array $value The array of Zend_Gdata_App_Extension_Link elements
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
+     */
+    public function setLink($value)
+    {
+        $this->_link = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_Rights
+     */
+    public function getRights()
+    {
+        return $this->_rights;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Rights $value
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
+     */
+    public function setRights($value) 
+    {
+        $this->_rights = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Title
+     */
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Title $value 
+     * @return Zend_Gdata_App_Feed_Entry_Parent Provides a fluent interface
+     */
+    public function setTitle($value)
+    {
+        $this->_title = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Updated
+     */
+    public function getUpdated()
+    {
+        return $this->_update;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Updated $value 
+     * @return Zend_Gdata_App_Feed_Entry_Parent Provides a fluent interface
+     */
+    public function setUpdated($value)
+    {
+        $this->_update = $value;
+        return $this; 
     }
 
 }

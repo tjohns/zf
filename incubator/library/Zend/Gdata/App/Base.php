@@ -25,6 +25,11 @@
 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
 /**
+ * @see Zend_Gdata_App_Data
+ */
+require_once 'Zend/Gdata/App/Data.php';
+
+/**
  * Abstract class for all XML elements
  *
  * @category   Zend
@@ -100,7 +105,7 @@ abstract class Zend_Gdata_App_Base
         if ($this->_rootNamespaceURI != null) { 
             $element = $doc->createElementNS($this->_rootNamespaceURI, $this->_rootElement);
         } elseif ($this->_rootNamespace !== null) {
-            $element = $doc->createElementNS(Zend_Gdata_Data::lookupNamespace($this->_rootNamespace), $this->_rootElement);
+            $element = $doc->createElementNS(Zend_Gdata_App_Data::lookupNamespace($this->_rootNamespace), $this->_rootElement);
         } else {
             $element = $doc->createElement($this->_rootElement);
         }
@@ -166,6 +171,27 @@ abstract class Zend_Gdata_App_Base
         }
     }
 
+    public function transferFromXML($xml)
+    {
+        if ($xml) {
+            // Load the feed as an XML DOMDocument object
+            @ini_set('track_errors', 1);
+            $doc = new DOMDocument();
+            $success = @$doc->loadXML($xml);
+            @ini_restore('track_errors');
+            if (!$success) {
+                throw new Zend_Gdata_App_Exception("DOMDocument cannot parse XML: $php_errormsg");
+            }
+            $element = $doc->getElementsByTagName($this->_rootElement)->item(0);
+            if (!$element) {
+                throw new Zend_Gdata_App_Exception('No root <' . $this->_rootElement . '> element');
+            }
+            $this->transferFromDOM($element);
+        } else {
+            throw new Zend_Gdata_App_Exception('XML passed to transferFromXML cannot be null');
+        }
+    }
+
     /**
      * Converts this element and all children into XML using getDOM()
      *
@@ -175,6 +201,15 @@ abstract class Zend_Gdata_App_Base
     {
         $element = $this->getDOM();
         return $element->ownerDocument->saveXML($element);
+    }
+
+    /**
+     * Alias for saveXML() returns XML content for this element and all
+     * children
+     */
+    public function getXML()
+    {
+        return saveXML();
     }
 
     /**

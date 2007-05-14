@@ -25,9 +25,9 @@
 require_once 'Zend/Gdata/Entry.php';
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once 'Zend/Gdata/Data.php';
+require_once 'Zend/Gdata/App/Data.php';
 
 /**
  * @see Zend_Gdata_Extension
@@ -83,5 +83,15 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
     public function getColumnName()
     {
         return $this->_rootElement;
+    }
+    
+    public function issetColumnName()
+    {
+        return isset($this->_rootElement);
+    }
+    
+    public function unsetColumnName()
+    {
+        $this_rootElement = null;
     }
 }

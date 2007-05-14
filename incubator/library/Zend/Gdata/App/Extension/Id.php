@@ -28,16 +28,5 @@ class Zend_Gdata_App_Extension_Id extends Zend_Gdata_App_Extension
 {
 
     protected $_rootElement = 'id';
-    protected $_rootNamespace = 'atom';
-
-    public function __construct($text = null)
-    {
-        $this->_text = $text;
-    }
-
-    public function __toString()
-    {
-        return $this->_text;
-    }
 
 }

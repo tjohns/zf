@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once 'Zend/Gdata/Data.php';
+require_once 'Zend/Gdata/App/Data.php';
 
 /**
  * @see Zend_Gdata_Extension
@@ -45,7 +45,7 @@ require_once 'Zend/Gdata/Extension/Reminder.php';
 class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:when';
+    protected $_rootElement = 'when';
     protected $_reminder = array();
     protected $_startTime = null;
     protected $_endTime = null;
@@ -79,7 +79,7 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case Zend_Gdata_Data::lookupNamespace('gd') . ':' . 'reminder'; 
+            case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'reminder'; 
                 $reminder = new Zend_Gdata_Extension_Reminder();
                 $reminder->transferFromDOM($child);
                 $this->_reminder[] = $reminder;

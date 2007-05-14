@@ -20,21 +20,21 @@
  */
 
 /**
- * @see Zend_Gdata_App_Extension
+ * @see Zend_Gdata_App_Extension_Text
  */
-require_once 'Zend/Gdata/App/Extension.php';
+require_once 'Zend/Gdata/App/Extension/Text.php';
 
-class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension
+class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
 {
 
     protected $_rootElement = 'content';
-    protected $_type = 'text';
+    protected $_src = null;
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_type != null) {
-            $element->setAttribute('type', $this->_type);
+        if ($this->_src != null) {
+            $element->setAttribute('src', $this->_src);
         }
         return $element;
     }
@@ -42,20 +42,30 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
+        case 'src':
+            $this->_src = $attribute->nodeValue;
+            break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
 
-    public function getType()
+    /**
+     * @return Zend_Gdata_App_Extension_Src 
+     */
+    public function getSrc()
     {
-        return $this->_type;
+        return $this->_src;
     }
 
-    public function setType($value)
+    /**
+     * @param Zend_Gdata_App_Extension_Src $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setSrc($value)
     {
-        $this->_type = $value;
-        return $this;
+        $this->_src = $value;
+        return $this; 
     }
-
+    
 }

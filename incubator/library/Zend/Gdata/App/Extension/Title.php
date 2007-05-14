@@ -20,14 +20,13 @@
  */
 
 /**
- * @see Zend_Gdata_App_Extension
+ * @see Zend_Gdata_App_Extension_Text
  */
-require_once 'Zend/Gdata/App/Extension.php';
+require_once 'Zend/Gdata/App/Extension/Text.php';
 
-class Zend_Gdata_App_Extension_Title extends Zend_Gdata_App_Extension
+class Zend_Gdata_App_Extension_Title extends Zend_Gdata_App_Extension_Text
 {
 
     protected $_rootElement = 'title';
-    protected $_rootNamespace = 'atom';
 
 }

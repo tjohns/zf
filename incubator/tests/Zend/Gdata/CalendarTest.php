@@ -20,6 +20,7 @@
  */
 
 require_once 'Zend/Gdata/Calendar.php';
+require_once 'Zend/Gdata/Calendar/EventFeed.php';
 require_once 'Zend/Http/Client.php';
 require_once 'Zend/Http/Client/Adapter/Test.php';
 
@@ -32,7 +33,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $eventFeedText = file_get_contents(
-                'Zend/Gdata/Calendar/TestDataEventFeedSample1.xml',
+                'Zend/Gdata/Calendar/_files/TestDataEventFeedSample1.xml',
                 true);
         $this->eventFeed = new Zend_Gdata_Calendar_EventFeed(null, 
                 $eventFeedText);

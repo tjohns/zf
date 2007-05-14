@@ -25,9 +25,9 @@
 require_once 'Zend/Gdata/Entry.php';
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once 'Zend/Gdata/Data.php';
+require_once 'Zend/Gdata/App/Data.php';
 
 /**
  * @see Zend_Gdata_Extension
@@ -50,13 +50,16 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
     protected $_row = null;
     protected $_col = null;
     protected $_inputValue = null;
+    protected $_numericValue = null;
 
-    public function __construct($row = null, $col = null, $inputValue = null) 
+    public function __construct($text = null, $row = null, $col = null, $inputValue = null, $numericValue = null) 
     {
         parent::__construct();
+        $this->setText($text);
         $this->_row = $row; 
         $this->_col = $col; 
         $this->_inputValue = $inputValue; 
+        $this->_numericValue = $numericValue;
     }
 
     public function getDOM($doc = null)
@@ -64,7 +67,8 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         $element = parent::getDOM($doc);
         $element->setAttribute('row', $this->_row);
         $element->setAttribute('col', $this->_col);
-        $element->setAttribute('inputValue', $this->_inputValue);
+        if ($this->_inputValue) $element->setAttribute('inputValue', $this->_inputValue);
+        if ($this->_numericValue) $element->setAttribute('numericValue', $this->_numericValue);
         return $element;
     }
 
@@ -79,6 +83,9 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
             break;
         case 'inputValue':
             $this->_inputValue = $attribute->nodeValue;
+            break;
+        case 'numericValue':
+            $this->_numericValue = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -100,6 +107,51 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         return $this->_inputValue;
     }
     
+    public function getNumericValue()
+    {
+        return $this->_numericValue;
+    }
+    
+    public function issetRow()
+    {
+        return isset($this->_row);
+    }
+    
+    public function issetColumn()
+    {
+        return isset($this->_col);
+    }
+    
+    public function issetInputValue()
+    {
+        return isset($this->_inputValue);
+    }
+    
+    public function issetNumericValue()
+    {
+        return isset($this->_numericValue);
+    }
+    
+    public function unsetRow()
+    {
+        $this->_row = null;
+    }
+    
+    public function unsetColumn()
+    {
+        $this->_col = null;
+    }
+    
+    public function unsetInputValue()
+    {
+        $this->_inputValue = null;
+    }
+    
+    public function unsetNumericValue()
+    {
+        $this->_numericValue = null;
+    }
+    
     public function setRow($row) 
     { 
         $this->_row = $row;
@@ -116,6 +168,11 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
     { 
         $this->_inputValue = $inputValue;
         return $this;
+    }
+    
+    public function setNumericValue($numericValue)
+    {
+        $this->_numericValue = $numericValue;
     }
     
 }

@@ -22,10 +22,13 @@
 
 error_reporting( E_ALL | E_STRICT );
 
+/**
+ * Read in user-defined test configuration if available; otherwise, read default test configuration
+ */
 if (is_readable('TestConfiguration.php')) {
-    require_once('TestConfiguration.php');
+    require_once 'TestConfiguration.php';
 } else {
-    require_once('TestConfiguration.php.dist');
+    require_once 'TestConfiguration.php.dist';
 }
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -36,8 +39,21 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
      * of the box and helps prevent finding other copies of the framework that
      * might be present.
      */
-    $zf_top = dirname(dirname(dirname(dirname(__FILE__))));
-    set_include_path($zf_top . DIRECTORY_SEPARATOR . 'library'
+/*
+    $zf_incubator_top = dirname(dirname(dirname(dirname(__FILE__))));
+    $zf_top = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+    set_include_path(
+          $zf_incubator_top . DIRECTORY_SEPARATOR . 'library'
+          . PATH_SEPARATOR 
+          . $zf_top . DIRECTORY_SEPARATOR . 'library'
+          . PATH_SEPARATOR 
+          . $zf_incubator_top . DIRECTORY_SEPARATOR . 'tests'
+         . PATH_SEPARATOR . get_include_path());
+*/
+    set_include_path(
+          $zf_incubator_top . DIRECTORY_SEPARATOR . 'library'
+          . PATH_SEPARATOR 
+          . $zf_top . DIRECTORY_SEPARATOR . 'library'
          . PATH_SEPARATOR . get_include_path());
 }
 
@@ -49,11 +65,26 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
  */
 require_once 'Zend/Gdata/AppTest.php';
 require_once 'Zend/Gdata/App/UtilTest.php';
+require_once 'Zend/Gdata/App/AuthorTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
-require_once 'Zend/Gdata/DataTest.php';
 require_once 'Zend/Gdata/SpreadsheetsTest.php';
+require_once 'Zend/Gdata/SpreadsheetsTest.php';
+require_once 'Zend/Gdata/Spreadsheets/ColCountTest.php';
+require_once 'Zend/Gdata/Spreadsheets/RowCountTest.php';
+require_once 'Zend/Gdata/Spreadsheets/CellTest.php';
+require_once 'Zend/Gdata/Spreadsheets/CustomTest.php';
+require_once 'Zend/Gdata/Spreadsheets/WorksheetEntryTest.php';
+require_once 'Zend/Gdata/Spreadsheets/CellEntryTest.php';
+require_once 'Zend/Gdata/Spreadsheets/ListEntryTest.php';
+require_once 'Zend/Gdata/Spreadsheets/SpreadsheetFeedTest.php';
+require_once 'Zend/Gdata/Spreadsheets/WorksheetFeedTest.php';
+require_once 'Zend/Gdata/Spreadsheets/CellFeedTest.php';
+require_once 'Zend/Gdata/Spreadsheets/ListFeedTest.php';
+require_once 'Zend/Gdata/Spreadsheets/DocumentQueryTest.php';
+require_once 'Zend/Gdata/Spreadsheets/CellQueryTest.php';
+require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
 
 /**
  * Tests that do require online access to servers
@@ -82,11 +113,25 @@ class Zend_Gdata_AllTests
          */
         //$suite->addTestSuite('Zend_Gdata_AppTest');
         $suite->addTestSuite('Zend_Gdata_App_UtilTest');
+        $suite->addTestSuite('Zend_Gdata_App_AuthorTest');
         $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
-        $suite->addTestSuite('Zend_Gdata_DataTest');
-        //$suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
+        $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_ColCountTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_RowCountTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_CustomTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_WorksheetEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_ListEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_SpreadsheetFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_WorksheetFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_ListFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_DocumentQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Spreadsheets_ListQueryTest');
 
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
         constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&

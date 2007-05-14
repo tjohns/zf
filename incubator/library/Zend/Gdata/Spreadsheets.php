@@ -24,9 +24,9 @@
 require_once('Zend/Gdata.php');
 
 /**
- * Zend_Gdata_Data
+ * Zend_Gdata_App_Data
  */
-require_once('Zend/Gdata/Data.php');
+require_once('Zend/Gdata/App/Data.php');
 
 /**
  * Zend_Gdata_Spreadsheets_SpreadsheetFeed
@@ -68,6 +68,10 @@ require_once('Zend/Gdata/Spreadsheets/CellEntry.php');
  */
 require_once('Zend/Gdata/Spreadsheets/ListEntry.php');
 
+require_once('Zend/Gdata/Spreadsheets/DocumentQuery.php');
+require_once('Zend/Gdata/Spreadsheets/ListQuery.php');
+require_once('Zend/Gdata/Spreadsheets/CellQuery.php');
+
 /**
  * Gdata Spreadsheets
  *
@@ -95,11 +99,18 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         parent::__construct($client);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
         $this->registerPackage('Zend_Gdata_Spreadsheets');
-        Zend_Gdata_Data::registerNamespace('gs', Zend_Gdata_Spreadsheets::NAMESPACE_URI);
-        Zend_Gdata_Data::registerNamespace('gsx', Zend_Gdata_Spreadsheets::EXT_NAMESPACE_URI);
+        Zend_Gdata_App_Data::registerNamespace('gs', Zend_Gdata_Spreadsheets::NAMESPACE_URI);
+        Zend_Gdata_App_Data::registerNamespace('gsx', Zend_Gdata_Spreadsheets::EXT_NAMESPACE_URI);
         $this->_server = 'spreadsheets.google.com';
     }
     
+    /**
+     * Gets a spreadsheet feed.
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return SpreadsheetFeed
+     */
     public function getSpreadsheetFeed($query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection;
@@ -107,6 +118,14 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_SpreadsheetFeed');
     }
     
+    /**
+     * Gets a spreadsheet entry.
+     * @param string $key The key for the requested spreadsheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return SpreadsheetEntry
+     */
     public function getSpreadsheetEntry($key, $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection.'/'.$key;
@@ -114,6 +133,14 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_SpreadsheetEntry');
     }
     
+    /**
+     * Gets a worksheet feed.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return WorksheetFeed
+     */
     public function getWorksheetFeed($key, $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
@@ -121,6 +148,15 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_WorksheetFeed');
     }
     
+    /**
+     * Gets a worksheet entry.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param string $wkshtId The id of the requested worksheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return WorksheetEntry
+     */
     public function GetWorksheetEntry($key, $wkshtId, $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
@@ -128,6 +164,15 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_WorksheetEntry');
     }
     
+    /**
+     * Gets a cell feed.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param string $wkshtId (optional) The id of the requested worksheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return CellFeed
+     */
     public function getCellFeed($key, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
@@ -135,6 +180,16 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_CellFeed');
     }
     
+    /**
+     * Gets a cell entry.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param string $cell The id of the desired cell
+     * @param string $wkshtId (optional) The id of the requested worksheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return CellEntry
+     */
     public function getCellEntry($key, $cell, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$cell;
@@ -142,6 +197,15 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_CellEntry');
     }
     
+    /**
+     * Gets a list feed.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param string $wkshtId (optional) The id of the requested worksheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return ListFeed
+     */
     public function getListFeed($key, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/list/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
@@ -150,6 +214,16 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_ListFeed');
     }
     
+    /**
+     * Gets a list entry.
+     * @param string $key The key for the corresponding spreadsheet
+     * @param string $rowId The id of the desired row
+     * @param string $wkshtId (optional) The id of the requested worksheet
+     * @param DocumentQuery $query (optional) Query parameters
+     * @param string $visibility (optional) Visibility
+     * @param string $projection (optional) Projection
+     * @return ListEntry
+     */
     public function getListEntry($key, $rowId, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
     {
         $uri = 'http://'.$this->_server.'/feeds/list/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$rowId;
@@ -157,17 +231,31 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_ListEntry');
     }
     
+    /**
+     * Updates an existing cell.
+     * @param int $row The row containing the cell to update
+     * @param int $col The column containing the cell to update
+     * @param int $inputValue The new value for the cell
+     * @param string $key The key for the spreadsheet to be updated
+     * @param string $wkshtId (optional) The worksheet to be updated
+     * @return CellEntry The updated cell entry.
+     */
     public function updateCell($row, $col, $inputValue, $key, $wkshtId = 'default') 
     {
-        $newCell = new Zend_Gdata_Spreadsheets_Extension_Cell($row, $col, $inputValue);
         $cell = 'R'.$row.'C'.$col;
         $entry = $this->getCellEntry($key, $cell, $wkshtId);
-        $entry->cell->setInputValue($inputValue);
-        $editLink = $entry->getLink('edit');
-        $response = $this->put($entry, $editLink->href);
+        $entry->setCell(new Zend_Gdata_Spreadsheets_Extension_Cell(null, $row, $col, $inputValue));
+        $response = $entry->save();
         return $response;
     }
     
+    /**
+     * Inserts a new row with provided data.
+     * @param array $rowData An array of column header to row data
+     * @param string $key The key of the spreadsheet to modify
+     * @param string $wkshtId (optional) The worksheet to modify
+     * @return ListEntry The inserted row
+     */
     public function insertRow($rowData, $key, $wkshtId = 'default')
     {
         $newEntry = new Zend_Gdata_Spreadsheets_ListEntry();
@@ -182,9 +270,21 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         $feed = $this->getListFeed($key, $wkshtId);
         $editLink = $feed->getLink('http://schemas.google.com/g/2005#post');
         $response = $this->post($newEntry, $editLink->href);
-        return $response;
+        
+        $body = $response->getBody();
+        $doc = new DOMDocument();
+        $doc->loadXML($body);
+        $returnEntry = new Zend_Gdata_Spreadsheets_ListEntry();
+        $returnEntry->transferFromDom($doc->documentElement);
+        $returnEntry->setHttpClient($feed->getHttpClient());
+        return $returnEntry;
     }
     
+    /**
+     * Updates an existing row with provided data.
+     * @param ListEntry $entry The row to update
+     * @param array $newRowData An array of column header to row data
+     */
     public function updateRow($entry, $newRowData)
     {
         $newCustomArr = array();
@@ -195,10 +295,14 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
             $newCustomArr[] = $newCustom;
         }
         $entry->setCustom($newCustomArr);
-        $editLink = $entry->getLink('edit');
-        return $this->put($entry, $editLink);
+        
+        return $entry->save();
     }
     
+    /**
+     * Deletes an existing row .
+     * @param ListEntry $entry The row to delete
+     */
     public function deleteRow($entry)
     {
         $entry->delete();

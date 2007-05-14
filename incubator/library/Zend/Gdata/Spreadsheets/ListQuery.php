@@ -91,6 +91,15 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     */
+    public function unsetSpreadsheetQuery()
+    {
+        unset($this->_params['sq']);
+        return $this;
+    }
+    
+    /**
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -127,6 +136,15 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     */
+    public function unsetOrderBy()
+    {
+        unset($this->_params['orderby']);
+        return $this;
+    }
+    
+    /**
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -160,6 +178,15 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
     public function issetReverse()
     {
         return isset($this->_params['reverse']);
+    }
+    
+    /**
+     * Unsets value.
+     */
+    public function unsetReverse()
+    {
+        unset($this->_params['reverse']);
+        return $this;
     }
     
     /**

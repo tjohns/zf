@@ -36,24 +36,45 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
 {
 
     protected $_rootElement = 'link';
-    protected $_rel = null;
     protected $_href = null;
+    protected $_rel = null;
+    protected $_type = null;
+    protected $_hrefLang = null;
+    protected $_title = null;
+    protected $_length = null;
 
-    public function __construct($rel = null, $href = null, $text = null)
+    public function __construct($href = null, $rel = null, $type = null,
+            $hrefLang = null, $title = null, $length = null,  $text = null)
     {
-        $this->_rel = $rel;
+        parent::__construct($text);
         $this->_href = $href;
-        $this->_text = $text;
+        $this->_rel = $rel;
+        $this->_type = $type;
+        $this->_hrefLang = $hrefLang;
+        $this->_title = $title;
+        $this->_length = $length;
     }
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
+        if ($this->_href != null) {
+            $element->setAttribute('href', $this->_href);
+        }
         if ($this->_rel != null) {
             $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_href != null) {
-            $element->setAttribute('href', $this->_href);
+        if ($this->_type != null) {
+            $element->setAttribute('type', $this->_type);
+        }
+        if ($this->_hrefLang != null) {
+            $element->setAttribute('hrefLang', $this->_hrefLang);
+        }
+        if ($this->_title != null) {
+            $element->setAttribute('title', $this->_title);
+        }
+        if ($this->_length != null) {
+            $element->setAttribute('length', $this->_length);
         }
         return $element;
     }
@@ -61,15 +82,135 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
+        case 'href':
+            $this->_href = $attribute->nodeValue;
+            break;
         case 'rel':
             $this->_rel = $attribute->nodeValue;
             break;
-        case 'href':
-            $this->_href = $attribute->nodeValue;
+        case 'type':
+            $this->_type = $attribute->nodeValue;
+            break;
+        case 'hrefLang':
+            $this->_hrefLang = $attribute->nodeValue;
+            break;
+        case 'title':
+            $this->_title = $attribute->nodeValue;
+            break;
+        case 'length':
+            $this->_length = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Href 
+     */
+    public function getHref()
+    {
+        return $this->_href;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Href $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setHref($value)
+    {
+        $this->_href = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Rel 
+     */
+    public function getRel()
+    {
+        return $this->_rel;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Rel $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setRel($value)
+    {
+        $this->_rel = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Type 
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Type $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setType($value)
+    {
+        $this->_type = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_HrefLang 
+     */
+    public function getHrefLang()
+    {
+        return $this->_hrefLang;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_HrefLang $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setHrefLang($value)
+    {
+        $this->_hrefLang = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Title 
+     */
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Title $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setTitle($value)
+    {
+        $this->_title = $value;
+        return $this; 
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Length 
+     */
+    public function getLength()
+    {
+        return $this->_length;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Length $value 
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setLength($value)
+    {
+        $this->_length = $value;
+        return $this; 
     }
 
 }

@@ -62,12 +62,12 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_Data::lookupNamespace('gCal') . ':' . 'color';
+        case Zend_Gdata_App_Data::lookupNamespace('gCal') . ':' . 'color';
             $color = new Zend_Gdata_Calendar_Extension_Color();
             $color->transferFromDOM($child);
             $this->_color = $color;
             break;
-        case Zend_Gdata_Data::lookupNamespace('gCal') . ':' . 'accesslevel';
+        case Zend_Gdata_App_Data::lookupNamespace('gCal') . ':' . 'accesslevel';
             $accessLevel = new Zend_Gdata_Calendar_Extension_AccessLevel();
             $accessLevel->transferFromDOM($child);
             $this->_accessLevel = $accessLevel;

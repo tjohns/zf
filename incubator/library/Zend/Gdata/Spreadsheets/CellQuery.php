@@ -91,6 +91,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     *
+     */
+    public function unsetMinRow()
+    {
+        unset($this->_params['min-row']);
+        return $this;
+    }
+    
+    /**
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -124,6 +134,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     public function issetMaxRow()
     {
         return isset($this->_params['max-row']);
+    }
+    
+    /**
+     * Unsets value.
+     *
+     */
+    public function unsetMaxRow()
+    {
+        unset($this->_params['max-row']);
+        return $this;
     }
     
     /**
@@ -163,6 +183,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     *
+     */
+    public function unsetMinCol()
+    {
+        unset($this->_params['min-col']);
+        return $this;
+    }
+    
+    /**
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -196,6 +226,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     public function issetMaxCol()
     {
         return isset($this->_params['max-col']);
+    }
+    
+    /**
+     * Unsets value.
+     *
+     */
+    public function unsetMaxCol()
+    {
+        unset($this->_params['max-col']);
+        return $this;
     }
     
     /**
@@ -235,6 +275,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     *
+     */
+    public function unsetRange()
+    {
+        unset($this->_params['range']);
+        return $this;
+    }
+    
+    /**
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -268,6 +318,16 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     public function issetReturnEmpty()
     {
         return isset($this->_params['return-empty']);
+    }
+    
+    /**
+     * Unsets value.
+     *
+     */
+    public function unsetReturnEmpty()
+    {
+        unset($this->_params['return-empty']);
+        return $this;
     }
     
     /**

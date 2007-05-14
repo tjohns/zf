@@ -25,9 +25,9 @@
 require_once('Zend/Gdata.php');
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once('Zend/Gdata/Data.php');
+require_once('Zend/Gdata/App/Data.php');
 
 /**
  * @see Zend_Gdata_Calendar_EventFeed
@@ -76,7 +76,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         parent::__construct($client);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
         $this->registerPackage('Zend_Gdata_Calendar');
-        Zend_Gdata_Data::registerNamespace('gCal', Zend_Gdata_Calendar::NAMESPACE_URI);
+        Zend_Gdata_App_Data::registerNamespace('gCal', Zend_Gdata_Calendar::NAMESPACE_URI);
     }
 
     /**

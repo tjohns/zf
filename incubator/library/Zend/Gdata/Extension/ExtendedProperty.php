@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Gdata_Data
+ * @see Zend_Gdata_App_Data
  */
-require_once 'Zend/Gdata/Data.php';
+require_once 'Zend/Gdata/App/Data.php';
 
 /**
  * @see Zend_Gdata_Extension

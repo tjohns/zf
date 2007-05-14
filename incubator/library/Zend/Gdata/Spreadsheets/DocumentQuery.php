@@ -127,6 +127,24 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Unsets value.
+     */
+    public function unsetTitle()
+    {
+        unset($this->_params['title']);
+        return $this;
+    }
+    
+    /**
+     * Unsets value.
+     */
+    public function unsetTitleExact()
+    {
+        unset($this->_params['title-exact']);
+        return $this;
+    }
+    
+    /**
      * @return string url
      */
     public function getQueryUrl()

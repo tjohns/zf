@@ -25,9 +25,9 @@
 require_once 'Zend/Gdata/App/Entry.php';
 
 /**
- * @see Zend_Gdata_App_FeedEntryParent
+ * @see Zend_Gdata_App_FeedSourceParent
  */
-require_once 'Zend/Gdata/App/FeedEntryParent.php';
+require_once 'Zend/Gdata/App/FeedSourceParent.php';
 
 /**
  * Atom feed class
@@ -37,21 +37,9 @@ require_once 'Zend/Gdata/App/FeedEntryParent.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iterator 
+class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Iterator
 {
 
-    /**
-     * The classname for individual feed elements.
-     *
-     * @var string
-     */
-    protected $_entryClassName = 'Zend_Gdata_App_Entry';
-
-    /**
-     * Root XML element for Atom entries.
-     *
-     * @var string
-     */
     protected $_rootElement = 'feed';
 
     /**
@@ -67,23 +55,6 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iter
      * @var int
      */
     protected $_entryIndex = 0;
-
-    /**
-     * Set the HTTP client instance
-     *
-     * Sets the HTTP client object to use for retrieving the feed.
-     *
-     * @param  Zend_Http_Client $httpClient
-     * @return Zend_Gdata_App_Feed Provides a fluent interface
-     */
-    public function setHttpClient(Zend_Http_Client $httpClient)
-    {
-        $this->_httpClient = $httpClient;
-        foreach ($this->_entry as $entry) {
-            $entry->setHttpClient($httpClient);
-        }
-        return $this;
-    }
 
     /**
      * Make accessing some individual elements of the feed easier.
@@ -126,7 +97,7 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iter
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_Data::lookupNamespace('atom') . ':' . 'entry':
+        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'entry':
             $newEntry = new $this->_entryClassName(
                 null,
                 $child);
@@ -202,11 +173,21 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedEntryParent implements Iter
     /**
      * Returns Entry elements from this feed
      *
-     * @return array Zend_Feed_App_Entry array
+     * @return array Zend_Gdata_App_Entry array
      */
     public function getEntry()
     {
         return $this->_entry;
+    }
+
+    /**
+     * @param array The array of Zend_Gdata_App_Entry elements
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */ 
+    public function setEntry($value)
+    {
+        $this->_entry = $value;
+        return $this;
     }
 
 }

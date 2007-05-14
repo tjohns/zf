@@ -85,6 +85,11 @@ class Zend_Gdata_App
      */
     protected $_defaultPostUri = null;
 
+    protected $_registeredPackages = array(
+            'Zend_Gdata_App_Extension',
+            'Zend_Gdata_App');
+
+
     /**
      * Create Gdata object
      *
@@ -93,6 +98,18 @@ class Zend_Gdata_App
     public function __construct($client = null)
     {
         $this->setHttpClient($client);
+    }
+
+    /**
+     * Adds a Zend Framework package to the $_registeredPackages array.
+     * This array is searched when using the magic __call method below
+     * to instantiante new objects.
+     *
+     * @param string $name The name of the package (eg Zend_Gdata_App)
+     */
+    public function registerPackage($name) 
+    {
+        array_unshift($this->_registeredPackages, $name);
     }
 
     /**
@@ -394,6 +411,60 @@ class Zend_Gdata_App
             } 
         } catch (Zend_Gdata_App_HttpException $e) {
             throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+        }
+    }
+
+    /**
+     * Provides a magic factory method to instantiate new objects with
+     * shorter syntax than would otherwise be required by the Zend Framework
+     * naming conventions.  For instance, to construct a new 
+     * Zend_Gdata_Calendar_Extension_Color, a developer simply needs to do
+     * $gCal->newColor().  For this magic constructor, packages are searched
+     * in the same order as which they appear in the $_registeredPackages
+     * array
+     *
+     * @param string $method The method name being called
+     * @param array $args The arguments passed to the call
+     * @throws Zend_Gdata_App_Exception
+     */
+    public function __call($method, $args) 
+    {
+        if (substr($method, 0, 3) == 'new') {
+            $class = substr($method, 3);
+            if ($class === FALSE) {
+                throw new Zend_Gdata_App_Exception(
+                        'Class name not provided');
+            }
+            $foundClassName = null;
+            foreach ($this->_registeredPackages as $name) {
+                 try {
+                     Zend_Loader::loadClass("${name}_${class}");
+                     $foundClassName = "${name}_${class}";
+                     break;
+                 } catch (Zend_Exception $e) {
+                     // package wasn't here- continue searching
+                 }
+            }
+            if ($foundClassName != null) {
+                $first = TRUE;
+                $argString = '';
+                for ($i = 0; $i < count($args); $i++) {
+                    if (! $first) {
+                        $argString .= ', ';
+                    }
+                    $argString .= "\$args[${i}]";
+                    $first = FALSE;
+                }
+                eval("\$returnVal = new ${foundClassName}(${argString});");
+                return $returnVal; 
+                //$reflectionObj = new ReflectionClass($foundClassName);
+                //return $reflectionObj->newInstanceArgs($args);
+            } else {
+                throw new Zend_Gdata_App_Exception(
+                        "Unable to find '${class}' in registered packages");
+            }
+        } else {
+           throw new Zend_Gdata_App_Exception("No such method ${method}");
         }
     }
 
