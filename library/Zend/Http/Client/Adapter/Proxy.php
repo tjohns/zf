@@ -49,7 +49,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      * @var array
      */
     protected $config = array(
-        'ssltransport'  => 'sslv2',
+        'ssltransport'  => 'ssl',
         'proxy_host'    => '',
         'proxy_port'    => 8080,
         'proxy_user'    => '',
@@ -148,7 +148,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         $request .= "\r\n" . $body;
         
         // Send the request
-        if (! fwrite($this->socket, $request)) {
+        if (! @fwrite($this->socket, $request)) {
             throw new Zend_Http_Client_Adapter_Exception("Error writing request to proxy server");
         }
         
