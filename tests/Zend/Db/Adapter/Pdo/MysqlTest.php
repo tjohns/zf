@@ -72,7 +72,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 
     public function getDriver()
     {
-        return 'pdo_Mysql';
+        return 'Pdo_Mysql';
     }
 
 }
