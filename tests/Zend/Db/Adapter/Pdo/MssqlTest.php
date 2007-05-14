@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,29 +18,35 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
 /**
- * Common class is DB independant
+ * Common class is DB independent
  */
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Common.php';
 
 
 /**
- * @package    Zend_Db_Adapter_Pdo_MssqlTest
+ * @category   Zend
+ * @package    Zend_Db
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_Common
 {
 
-    function getDriver()
+    public function getDriver()
     {
-        return 'pdo_Mssql';
+        return 'Pdo_Mssql';
     }
 
-    function getParams()
+    public function getParams()
     {
         $params = array (
             'host'     => TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME,
