@@ -114,6 +114,136 @@ echo $view->render('booklist.php');
         
     </sect2>
     
+    <sect2 id="zend.view.introduction.options">
+        <title>オプション</title>
+
+        <para>
+            <code>Zend_View</code> のオプションを設定すると、
+            ビュースクリプトの振る舞いを変更することができます。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>basePath:</code> は
+                    スクリプトやヘルパー、そしてフィルタを配置する基底パスを指定します。
+                    次のようなディレクトリ構成を想定しています。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+base/path/
+    helpers/
+    filters/
+    scripts/
+]]]></programlisting>
+
+                <para>
+                    これを設定するには <code>setBasePath()</code> か
+                    <code>addBasePath()</code>、あるいはコンストラクタのオプション
+                    <code>basePath</code> を使用します。
+                </para>
+            </listitem>
+
+            <listitem><para>
+                <code>encoding:</code> は <code>htmlentities()</code> や
+                <code>htmlspecialchars()</code> などで使用する文字エンコーディングを表します。
+                デフォルトは ISO-8859-1 (latin1) です。
+                <code>setEncoding()</code> か、コンストラクタのオプション
+                <code>encoding</code> で設定します。
+            </para></listitem>
+
+            <listitem><para>
+                <code>escape:</code> は <code>escape()</code>
+                で使用するコールバックを表します。<code>setEscape()</code>
+                か、コンストラクタのオプション <code>escape</code>
+                で設定します。
+            </para></listitem>
+
+            <listitem><para>
+                <code>filter:</code> は、ビュースクリプトをレンダリングした後で使用するフィルタを表します。
+                <code>setFilter()</code> か <code>addFilter()</code>、
+                あるいはコンストラクタのオプション <code>filter</code>
+                で設定します。
+            </para></listitem>
+
+            <listitem><para>
+                <code>strictVars:</code> は、初期化していない変数に <code>Zend_View</code>
+                からアクセスしようとした際に notice や warning を発生させるようにします。
+                <code>strictVars(true)</code> か、あるいはコンストラクタのオプション
+                <code>strictVars</code> で設定します。
+            </para></listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.view.introduction.accessors">
+        <title>ユーティリティメソッド</title>
+
+        <para>
+            通常は、<code>assign()</code> と <code>render()</code>、
+            あるいはフィルタ、ヘルパー、スクリプトのパス用の設定メソッドだけで十分事足りるでしょう。
+            しかし、<code>Zend_View</code> を独自に拡張したい場合や
+            その内部にアクセスしたい場合のために、さらにいくつかのメソッドを用意しています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>getVars()</code> は、設定されているすべての変数を返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearVars()</code> は、すべての変数の値を消去します。
+                    ビュースクリプトを再利用する際に、
+                    これまで使用していた変数を残しておきたいときなどに便利です。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getScriptPath($script)</code>
+                    は、指定したビュースクリプトのパスを取得します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getScriptPaths()</code>
+                    は、登録されているすべてのスクリプトパスを取得します。
+                    script paths.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getHelperPath($helper)</code>
+                    は、指定したヘルパークラスのパスを取得します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getHelperPaths()</code>
+                    は、登録されているすべてのヘルパーパスを取得します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getFilterPath($filter)</code>
+                    は、指定したフィルタクラスのパスを取得します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getFilterPaths()</code>
+                    は、登録されているすべてのフィルタパスを取得します。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

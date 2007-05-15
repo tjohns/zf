@@ -7,37 +7,66 @@
         (例えば日付のフォーマット、フォーム要素の作成、リンクの作成など)。
         このような作業を行うために、ヘルパークラスを使用することができます。
     </para>
+
+    <para>
+        ヘルパーの正体は、単なるクラスです。たとえば 'fooBar' という名前のヘルパーを使用するとしましょう。
+        デフォルトでは、クラス名の先頭には <code>'Zend_View_Helper_'</code>
+        がつきます (ヘルパーのパスを設定する際に、これは独自のものに変更できます)。
+        そしてクラス名の最後の部分がヘルパーの名前となります。
+        このとき、単語の先頭は大文字にしなければなりません。つまり、
+        ヘルパーのクラス名は <code>Zend_View_Helper_FooBar</code>
+        となります。このクラスには、最低限ヘルパー名と同じ名前 (camelCase 形式にしたもの)
+        のメソッド <code>fooBar()</code> が含まれていなければなりません。
+    </para>
     
+    <note>
+        <para>
+            ヘルパー名は常に camelCase 形式となります。
+            つまり、最初は常に小文字となります。
+        </para>
+    </note>
+
     <para>
         ビュースクリプト内でヘルパーを使用するには、
-        $this->helperName() をコールします。これをコールすると、裏側では
-        Zend_View が Zend_View_Helper_HelperName クラスを読み込み、
-        そのクラスのインスタンスを作成して helperName() メソッドをコールします。
-        オブジェクトのインスタンスは Zend_View インスタンスの中に残り続け、
-        後で $this->helperName() がコールされたときには再利用されます。
+        <code>$this->helperName()</code> をコールします。これをコールすると、裏側では
+        <code>Zend_View</code> が <code>Zend_View_Helper_HelperName</code> クラスを読み込み、
+        そのクラスのインスタンスを作成して <code>helperName()</code> メソッドをコールします。
+        オブジェクトのインスタンスは <code>Zend_View</code> インスタンスの中に残り続け、
+        後で <code>$this->helperName()</code> がコールされたときには再利用されます。
     </para>
 
    
     <sect2 id="zend.view.helpers.initial">
-    
         <title>付属のヘルパー</title>
         
         <para>
-            Zend_View には、はじめからいくつかのヘルパークラスが付属しています。
-            これらはすべて、フォーム要素の生成に関するものです。
-            それぞれのヘルパーは、適切なエスケープ処理を自動的に行います。
-            以下に一覧を示します。
+            <code>Zend_View</code> には、はじめからいくつかのヘルパークラスが付属しています。
+            これらのほとんどはフォーム要素の生成に関するもので、
+            適切なエスケープ処理を自動的に行います。
+            さらに、ルートにもとづいた URL と HTML の一覧を作成したり、
+            変数を宣言したりするものもあります。
+            現在付属しているヘルパーは、次のとおりです。
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                formButton($name, $value, $attribs): &lt;input
+                <code>declareVars():</code>
+                <code>strictVars()</code> を使用する際に同時に使用します。
+                このヘルパーを使用すると、テンプレート変数を宣言することができます。
+                この変数は、すでにビュースクリプトで設定されているものでもいないものでもかまいません。
+                また、同時にデフォルト値も設定します。
+                このメソッドへの引数として配列を渡すとデフォルト値を設定します。
+                それ以外の場合は、もしその変数が存在しない場合は空文字列を設定します。
+            </para></listitem>
+
+            <listitem><para>
+                <code>formButton($name, $value, $attribs):</code> &lt;input
                 type="button" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formCheckbox($name, $value, $attribs, $options):
+                <code>formCheckbox($name, $value, $attribs, $options):</code>
                 &lt;input type="checkbox" /&gt; 要素を作成します。
                 $options パラメータは配列で、最初の値が
                 "checked" に対応する値、2 番目が "unchecked" に対応する値となります
@@ -46,22 +75,22 @@
             </para></listitem>
             
             <listitem><para>
-                formFile($name, $value, $attribs): &lt;input
+                <code>formFile($name, $value, $attribs):</code> &lt;input
                 type="file" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formHidden($name, $value, $attribs): &lt;input
+                <code>formHidden($name, $value, $attribs):</code> &lt;input
                 type="hidden" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formPassword($name, $value, $attribs): &lt;input
+                <code>formPassword($name, $value, $attribs):</code> &lt;input
                 type="password" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formRadio($name, $value, $attribs, $options):
+                <code>formRadio($name, $value, $attribs, $options):</code>
                 一連の &lt;input type="radio" /&gt; 要素を、
                 $options の要素ごとに作成します。$options は、
                 ラジオボタンの値をキー、ラベルを値とする配列となります。
@@ -69,12 +98,12 @@
             </para></listitem>
             
             <listitem><para>
-                formReset($name, $value, $attribs): &lt;input
+                <code>formReset($name, $value, $attribs):</code> &lt;input
                 type="reset" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formSelect($name, $value, $attribs, $options):
+                <code>formSelect($name, $value, $attribs, $options):</code>
                 &lt;select&gt;...&lt;/select&gt; ブロックを作成します。
                 $options の要素ごとに &lt;option&gt; を作成します。
                 $options は、選択肢の値をキー、
@@ -83,20 +112,34 @@
             </para></listitem>
             
             <listitem><para>
-                formSubmit($name, $value, $attribs): &lt;input
+                <code>formSubmit($name, $value, $attribs):</code> &lt;input
                 type="submit" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formText($name, $value, $attribs): &lt;input
+                <code>formText($name, $value, $attribs):</code> &lt;input
                 type="text" /&gt; 要素を作成します。
             </para></listitem>
             
             <listitem><para>
-                formTextarea($name, $value, $attribs): 
+                <code>formTextarea($name, $value, $attribs):</code>
                 &lt;textarea&gt;...&lt;/textarea&gt; ブロックを作成します。
             </para></listitem>
-            
+
+            <listitem><para>
+                <code>url($urlOptions, $name, $reset):</code>
+                指定したルートにもとづく URL 文字列を作成します。
+                <code>$urlOptions</code> は、そのルートで使用する
+                キー/値 のペアの配列となります。
+            </para></listitem>
+
+            <listitem><para>
+                <code>htmlList($items, $ordered, $attribs):</code>
+                <code>$items</code> で渡した内容をもとに
+                順序つきリストあるいは順序なしリストを作成します。
+                <code>$items</code> が多次元配列の場合は、入れ子状のリストとなります。
+            </para></listitem>
+
         </itemizedlist>
         
         <para>
@@ -150,15 +193,14 @@
     </sect2>
     
     <sect2 id="zend.view.helpers.paths">
-        
         <title>ヘルパーのパス</title>
         
         <para>
             ビュースクリプトと同様、
-            Zend_View がヘルパークラスを探すパスをコントローラから積み重ねて指定することができます。
-            デフォルトでは、Zend_View は "Zend/View/Helper/*" からヘルパークラスを探します。
-            Zend_View に別の場所を探すように指定するには
-            setHelperPath() および addHelperPath() メソッドを使用します。
+            <code>Zend_View</code> がヘルパークラスを探すパスをコントローラから積み重ねて指定することができます。
+            デフォルトでは、<code>Zend_View</code> は "Zend/View/Helper/*" からヘルパークラスを探します。
+            <code>Zend_View</code> に別の場所を探すように指定するには
+            <code>setHelperPath()</code> および <code>addHelperPath()</code> メソッドを使用します。
             さらに、クラスプレフィックスを指定することもできます。
             これにより、ヘルパークラスに名前空間を設定できるようになります。
             デフォルトでクラスプレフィックスを指定しなかった場合は、
@@ -175,8 +217,8 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 
         
         <para>
-            addHelperPath() メソッドを使用すると、検索パスを「積み重ねる」
-            ことができます。これを使用すると、Zend_View
+            <code>addHelperPath()</code> メソッドを使用すると、検索パスを「積み重ねる」
+            ことができます。これを使用すると、<code>Zend_View</code>
             は一番最後に追加されたパスからヘルパークラスを探し始めます。
             これにより、付属しているヘルパーの内容を上書きしたり、
             新しいヘルパーを追加したりすることができるようになります。
@@ -199,7 +241,6 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
     </sect2>
     
     <sect2 id="zend.view.helpers.custom">
-        
         <title>独自のヘルパーを書く</title>
         
         <para>
@@ -235,7 +276,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             </para></listitem>
             
             <listitem><para>
-                クラスは、ヘルパーメソッドと同じ名前のファイルに作成しなければなりません。
+                クラスは、ヘルパークラスと同じ名前のファイルに作成しなければなりません。
                 再び "specialPurpose" ヘルパーを例にとると、ファイル名は
                 "SpecialPurpose.php" でなければなりません。
             </para></listitem>
@@ -243,16 +284,17 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         
         <para>
             指定したヘルパーパスのどこかにヘルパークラスのファイルを配置すると、
-            Zend_View は自動的にそれを読み込んでインスタンスを作成し、
+            <code>Zend_View</code> は自動的にそれを読み込んでインスタンスを作成し、
             必要に応じて実行します。
         </para>
         
         <para>
-            SpecialPurpose ヘルパーのコードの例を示します。
+            <code>SpecialPurpose</code> ヘルパーのコードの例を示します。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_SpecialPurpose {
+class My_View_Helper_SpecialPurpose 
+{
     protected $_count = 0;
     public function specialPurpose()
     {
@@ -265,9 +307,9 @@ class My_View_Helper_SpecialPurpose {
         </programlisting>
         
         <para>
-            そして、ビュースクリプト内で SpecialPurpose
+            そして、ビュースクリプト内で <code>SpecialPurpose</code>
             ヘルパーを必要なだけコールします。いちどインスタンスが作成された後は、
-            Zend_View インスタンスの中でそれが持続します。
+            <code>Zend_View</code> インスタンスの中でそれが持続します。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -286,8 +328,39 @@ echo $this->specialPurpose();
 'The Jerk' を 3 回見ました。]]>
         </programlisting>
         
+        <para>
+            時には <code>Zend_View</code> オブジェクトを使用したくなることもあるでしょう。
+            たとえば登録されているエンコーディングを使用する必要があったり、
+            ヘルパー内で別のビュースクリプトをレンダリングしたくなったりといった場合です。
+            ビューオブジェクトにアクセスするには、ヘルパークラス内で次のような
+            <code>setView($view)</code> メソッドを定義しなければなりません。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_View_Helper_ScriptPath
+{
+    public $view;
+
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+    }
+
+    public function scriptPath($script)
+    {
+        return $this->view->getScriptPath($script);
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            ヘルパークラスで <code>setView()</code> メソッドを定義しておくと、
+            最初にインスタンスが作成される際に自動的にこのメソッドがコールされ、
+            現在のビューオブジェクトが引数として渡されます。
+            渡されたオブジェクトをクラス内でどのように管理するかは特に決まっていません。
+            お好みの方法で管理してください。
+        </para>
     </sect2>
-    
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
