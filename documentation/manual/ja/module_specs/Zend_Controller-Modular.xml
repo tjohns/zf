@@ -87,6 +87,61 @@ $front->setControllerDirectory(array(
         <programlisting role="php"><![CDATA[<?php
 $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 ?>]]></programlisting>
+
+        <para>
+            結局のところ、モジュールのディレクトリを設定する一番お手軽な方法は、
+            共通のモジュールディレクトリの配下に同じ構造でモジュールを保持しておくことです。
+            これを行うのが <code>addModuleDirectory()</code> メソッドです。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * 次のような構造を想定しています
+ * application/
+ *     modules/
+ *         default/
+ *             controllers/
+ *         foo/
+ *             controllers/
+ *         bar/
+ *             controllers/
+ */
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+
+        <para>
+            上の例は <code>default</code>、
+            <code>foo</code> および <code>bar</code> というモジュールを定義しており、
+            それぞれのモジュール内に <code>controllers</code>
+            ディレクトリを保持しています。
+        </para>
+
+        <para>
+            モジュール内のコントローラディレクトリ名を変更するには、
+            <code>setModuleControllerDirectoryName()</code> を使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * コントローラのディレクトリを、次のように 'con' に変更します
+ * application/
+ *     modules/
+ *         default/
+ *             con/
+ *         foo/
+ *             con/
+ *         bar/
+ *             con/
+ */
+$front->setModuleControllerDirectoryName('con');
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+        
+        <note><para>
+            モジュール内でコントローラディレクトリを使用しない場合は、
+            <code>setModuleControllerDirectoryName()</code>
+            に空の文字列を指定します。
+        </para></note>
     </sect2>
 
     <sect2 id="zend.controller.modular.router">
