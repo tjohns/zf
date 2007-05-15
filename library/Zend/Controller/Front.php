@@ -644,13 +644,34 @@ class Zend_Controller_Front
     /**
      * Unregister a plugin.
      *
-     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @param  string|Zend_Controller_Plugin_Abstract $plugin Plugin class or object to unregister
      * @return Zend_Controller_Front
      */
-    public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
+    public function unregisterPlugin($plugin)
     {
         $this->_plugins->unregisterPlugin($plugin);
         return $this;
+    }
+
+    /**
+     * Retrieve a plugin or plugins by class
+     * 
+     * @param  string $class 
+     * @return false|Zend_Controller_Plugin_Abstract|array
+     */
+    public function getPlugin($class)
+    {
+        return $this->_plugins->getPlugin($class);
+    }
+
+    /**
+     * Retrieve all plugins
+     * 
+     * @return array
+     */
+    public function getPlugins()
+    {
+        return $this->_plugins->getPlugins();
     }
 
     /**

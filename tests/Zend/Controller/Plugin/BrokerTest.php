@@ -36,6 +36,74 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('123456', $plugin->getResponse()->getBody());
     }
 
+    public function testUnregisterPluginWithObject()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $plugins = $broker->getPlugins();
+        $this->assertEquals(1, count($plugins));
+        $broker->unregisterPlugin($plugin);
+        $plugins = $broker->getPlugins();
+        $this->assertEquals(0, count($plugins));
+    }
+
+    public function testUnregisterPluginByClassName()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $plugins = $broker->getPlugins();
+        $this->assertEquals(1, count($plugins));
+        $broker->unregisterPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin');
+        $plugins = $broker->getPlugins();
+        $this->assertEquals(0, count($plugins));
+    }
+
+    public function testGetPlugins()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $plugins = $broker->getPlugins();
+        $this->assertEquals(1, count($plugins));
+        $this->assertSame($plugin, $plugins[0]);
+    }
+
+    public function testGetPluginByName()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $retrieved = $broker->getPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin');
+        $this->assertTrue($retrieved instanceof Zend_Controller_Plugin_BrokerTest_TestPlugin);
+        $this->assertSame($plugin, $retrieved);
+    }
+
+    public function testGetPluginByNameReturnsFalseWithBadClassName()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $retrieved = $broker->getPlugin('TestPlugin');
+        $this->assertFalse($retrieved);
+    }
+
+    public function testGetPluginByNameReturnsArray()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+
+        $plugin2 = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin2);
+
+        $retrieved = $broker->getPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin');
+        $this->assertTrue(is_array($retrieved));
+        $this->assertEquals(2, count($retrieved));
+        $this->assertSame($plugin, $retrieved[0]);
+        $this->assertSame($plugin2, $retrieved[1]);
+    }
 }
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
