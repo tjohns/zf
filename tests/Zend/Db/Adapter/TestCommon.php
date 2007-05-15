@@ -471,11 +471,17 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterQueryBogus()
     {
+        /**
+         * @todo Fix inconsistencies between adapters
+         * @see  http://framework.zend.com/issues/browse/ZF-1383
+         */
         try {
             $this->_db->query('Bogus query');
-            $this->fail('Expected Zend_Db_Adapter_Exception not thrown');
+            $this->fail('Expected exception not thrown');
         } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertContains('SQLSTATE', $e->getMessage());
+            // pdo_mysql throws Zend_Db_Adapter_Exception
+        } catch (Zend_Db_Statement_Mysqli_Exception $e) {
+            // mysqli throws Zend_Db_Statement_Mysqli_Exception
         }
     }
 
@@ -486,11 +492,17 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterQueryTableBogus()
     {
+        /**
+         * @todo Fix inconsistencies between adapters
+         * @see  http://framework.zend.com/issues/browse/ZF-1383
+         */
         try {
             $this->_db->query('SELECT * FROM BogusTable');
-            $this->fail('Expected Zend_Db_Adapter_Exception not thrown');
+            $this->fail('Expected exception not thrown');
         } catch (Zend_Db_Adapter_Exception $e) {
-            $this->assertContains('SQLSTATE', $e->getMessage());
+            // pdo_mysql throws Zend_Db_Adapter_Exception
+        } catch (Zend_Db_Statement_Mysqli_Exception $e) {
+            // mysqli throws Zend_Db_Statement_Mysqli_Exception
         }
     }
 }
