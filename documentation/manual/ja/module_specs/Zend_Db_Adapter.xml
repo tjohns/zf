@@ -70,6 +70,33 @@ $db = Zend_Db::factory('pdoSqlite', $params);
             どの場合についても、まったく同じ API
             でデータベースに対する問い合わせを行うことができます。
         </para>
+
+        <para>
+            PDO アダプタの中には、作成時にオプションを指定できるものもあります。
+            たとえば、以下の例では、<code>PDO_MYSQL</code>
+            アダプタを作成する際に <code>MYSQL_ATTR_MAX_BUFFER_SIZE</code>
+            を指定しています。
+
+            <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array(
+    'host'              => '127.0.0.1',
+    'username'          => 'malory',
+    'password'          => '******',
+    'dbname'            => 'camelot',
+    'driver_options'    => array(
+        PDO::MYSQL_ATTR_MAX_BUFFER_SIZE => 10 * 1024 * 1024
+        )
+    );
+
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+
+?>]]></programlisting>
+
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
