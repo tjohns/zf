@@ -46,6 +46,10 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
+    public function getDriver()
+    {
+        return 'Pdo_Mysql';
+    }
 
     public function testAdapterQuoteIdentifier()
     {
@@ -70,9 +74,26 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         }
     }
 
-    public function getDriver()
+    /**
+     * Ensures that driver_options are properly passed along to PDO
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-285
+     * @return void
+     */
+    public function testAdapterDriverOptions()
     {
-        return 'Pdo_Mysql';
-    }
+        $params = $this->_util->getParams();
 
+        $params['driver_options'] = array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+
+        $this->assertTrue((boolean) $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY));
+
+        $params['driver_options'] = array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+
+        $this->assertFalse((boolean) $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY));
+    }
 }

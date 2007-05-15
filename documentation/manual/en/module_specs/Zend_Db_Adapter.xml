@@ -68,6 +68,31 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
             Either way, you will be able to use the exact same API to
             query the database.
         </para>
+
+        <para>
+            PDO adapters may be provided driver options upon creation, as in the following example, where a
+            <code>PDO_MYSQL</code> adapter is created with a specific <code>MYSQL_ATTR_MAX_BUFFER_SIZE</code>:
+
+            <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array(
+    'host'              => '127.0.0.1',
+    'username'          => 'malory',
+    'password'          => '******',
+    'dbname'            => 'camelot',
+    'driver_options'    => array(
+        PDO::MYSQL_ATTR_MAX_BUFFER_SIZE => 10 * 1024 * 1024
+        )
+    );
+
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+
+?>]]></programlisting>
+
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">

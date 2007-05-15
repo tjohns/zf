@@ -84,7 +84,7 @@ abstract class Zend_Db_Adapter_Abstract
      * $config is an array of key/value pairs containing configuration
      * options.  These options are common to most adapters:
      *
-     * dbname   => (string) The name of the database to user (required)
+     * dbname   => (string) The name of the database to use (required).
      * username => (string) Connect to the database as this username (optional).
      * password => (string) Password associated with the username (optional).
      * host     => (string) What host to connect to (default 127.0.0.1).

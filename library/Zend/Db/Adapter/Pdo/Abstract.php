@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,10 +18,15 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/** Zend_Db_Adapter_Abstract */
+
+/**
+ * @see Zend_Db_Adapter_Abstract
+ */
 require_once 'Zend/Db/Adapter/Abstract.php';
+
 
 /**
  * Class for connecting to SQL databases and performing common operations using PDO.
@@ -33,6 +39,31 @@ require_once 'Zend/Db/Adapter/Abstract.php';
  */
 abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 {
+    /**
+     * Constructor.
+     *
+     * $config is an array of key/value pairs containing configuration
+     * options:
+     *
+     * dbname         => (string) The name of the database to use (required).
+     * username       => (string) Connect to the database as this username (optional).
+     * password       => (string) Password associated with the username (optional).
+     * host           => (string) What host to connect to (default 127.0.0.1).
+     * driver_options => (array)  A key=>value array of PDO driver-specific connection options (optional).
+     *
+     * @param  array $config An array of configuration keys.
+     * @return void
+     */
+    public function __construct(array $config = array())
+    {
+        parent::__construct($config);
+
+        if (isset($config['driver_options'])) {
+            $this->_config['driver_options'] = $config['driver_options'];
+        } else {
+            $this->_config['driver_options'] = array();
+        }
+    }
 
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
@@ -44,9 +75,10 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         // baseline of DSN parts
         $dsn = $this->_config;
 
-        // don't pass the username and password in the DSN
+        // don't pass the username, password, and driver_options in the DSN
         unset($dsn['username']);
         unset($dsn['password']);
+        unset($dsn['driver_options']);
 
         // use all remaining parts in the DSN
         foreach ($dsn as $key => $val) {
@@ -86,12 +118,13 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             $this->_connection = new PDO(
                 $this->_dsn(),
                 $this->_config['username'],
-                $this->_config['password']
+                $this->_config['password'],
+                $this->_config['driver_options']
             );
 
             $this->_profiler->queryEnd($q);
 
-            // force names to lower case
+            // leave columns as returned by the database driver
             $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
 
             // always use exceptions.

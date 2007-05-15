@@ -94,9 +94,6 @@ abstract class Zend_Db_TestSetup extends PHPUnit_Framework_TestCase
      */
     protected function _setUpAdapter()
     {
-        $driver = $this->getDriver();
-        $params = $this->_util->getParams();
-
         $this->_db = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         try {
             $conn = $this->_db->getConnection();
