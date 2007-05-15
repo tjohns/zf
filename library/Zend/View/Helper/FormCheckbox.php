@@ -35,8 +35,8 @@ require_once 'Zend/View/Helper/FormElement.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement {
-    
+class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement 
+{
     /**
      * Generates a 'checkbox' element.
      * 
@@ -95,9 +95,9 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement {
             // the "unchecked" option is returned to the server instead.
             $xhtml = $this->_hidden($name, $options[1]) 
                    . '<input type="checkbox"'
-                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"'
-                   . ' value="' . htmlspecialchars($options[0], ENT_COMPAT, 'UTF-8') . '"';
+                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
+                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"'
+                   . ' value="' . htmlspecialchars($options[0], ENT_COMPAT, $this->view->getEncoding()) . '"';
             
             // is it checked already?
             if ($value == $options[0]) {

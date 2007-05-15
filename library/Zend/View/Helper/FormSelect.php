@@ -35,8 +35,8 @@ require_once 'Zend/View/Helper/FormElement.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
-    
+class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement 
+{
     /**
      * Generates 'select' list of options.
      * 
@@ -95,7 +95,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
                     // add the hidden value
                     $opt = $this->_hidden($name, $opt_value);
                     // add the display label
-                    $opt .= htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8');
+                    $opt .= htmlspecialchars($opt_label, ENT_COMPAT, $this->view->getEncoding());
                     // add to the list
                     $list[] = $opt;
                 }
@@ -107,8 +107,8 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
             // enabled.
             // the surrounding select element first.
             $xhtml = '<select'
-                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
+                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"'
                    . $this->_htmlAttribs($attribs)
                    . ">\n\t";
             
@@ -118,7 +118,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
 
                 if (is_array($opt_label)) {
                     $list[] = '<optgroup '
-                            . 'label="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') .'">';
+                            . 'label="' . htmlspecialchars($opt_value, ENT_COMPAT, $this->view->getEncoding()) .'">';
                     foreach ($opt_label as $val => $lab) {
                         $list[] = $this->_build($val, $lab, $value);
                     }
@@ -147,15 +147,15 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
     protected function _build($value, $label, $selected)
     {
         $opt = '<option'
-             . ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
-             . ' label="' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . '"';
+             . ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"'
+             . ' label="' . htmlspecialchars($label, ENT_COMPAT, $this->view->getEncoding()) . '"';
              
         // selected?
         if (in_array($value, $selected)) {
             $opt .= ' selected="selected"';
         }
         
-        $opt .= '>' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . "</option>";
+        $opt .= '>' . htmlspecialchars($label, ENT_COMPAT, $this->view->getEncoding()) . "</option>";
         
         return $opt;
     }

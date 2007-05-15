@@ -35,8 +35,8 @@ require_once 'Zend/View/Helper/FormElement.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormReset extends Zend_View_Helper_FormElement {
-    
+class Zend_View_Helper_FormReset extends Zend_View_Helper_FormElement 
+{
     /**
      * Generates a 'reset' button.
      * 
@@ -59,12 +59,12 @@ class Zend_View_Helper_FormReset extends Zend_View_Helper_FormElement {
         
         // always enabled
         $xhtml = '<input type="reset"'
-               . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
-               . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"';
+               . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
+               . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"';
         
         // add a value if one is given
         if (! empty($value)) {
-            $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"';
+            $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"';
         }
         
         // add attributes, close, and return
