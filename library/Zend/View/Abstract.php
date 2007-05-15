@@ -168,6 +168,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             $this->addFilter($config['filter']);
         }
 
+        // strict vars
+        if (array_key_exists('strictVars', $config)) {
+            $this->strictVars($config['strictVars']);
+        }
+
         $this->init();
     }
 
@@ -309,6 +314,31 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         $this->setScriptPath($path . 'scripts');
         $this->setHelperPath($path . 'helpers');
         $this->setFilterPath($path . 'filters');
+        return $this;
+    }
+
+    /**
+     * Given a base path, add script, helper, and filter paths relative to it
+     *
+     * Assumes a directory structure of:
+     * <code>
+     * basePath/
+     *     scripts/
+     *     helpers/
+     *     filters/
+     * </code>
+     * 
+     * @param string $path 
+     * @return Zend_View_Abstract
+     */
+    public function addBasePath($path)
+    {
+        $path  = rtrim($path, '/');
+        $path  = rtrim($path, '\\');
+        $path .= DIRECTORY_SEPARATOR;
+        $this->addScriptPath($path . 'scripts');
+        $this->addHelperPath($path . 'helpers');
+        $this->addFilterPath($path . 'filters');
         return $this;
     }
 

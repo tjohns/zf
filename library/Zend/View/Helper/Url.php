@@ -34,12 +34,12 @@ class Zend_View_Helper_Url {
      * 
      * @access public
      * 
-     * @param array $urlOptions Options passed to the assemble method of the Route object.
-     * @param mixed $name The name of a Route to use. If null it will use the current Route
-     * 
+     * @param  array $urlOptions Options passed to the assemble method of the Route object.
+     * @param  mixed $name The name of a Route to use. If null it will use the current Route
+     * @param  bool $reset Whether or not to reset the route defaults with those provided
      * @return string Url for the link href attribute.
      */
-    public function url($urlOptions = array(), $name = null, $reset = false)
+    public function url(array $urlOptions = array(), $name = null, $reset = false)
     {
         
         $ctrl = Zend_Controller_Front::getInstance();

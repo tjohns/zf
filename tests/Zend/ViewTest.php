@@ -634,6 +634,18 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->_testBasePath($view, $base);
     }
 
+    public function testAddBasePath()
+    {
+        $view = new Zend_View();
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $view->addBasePath($base);
+        $this->_testBasePath($view, $base);
+
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View2';
+        $view->addBasePath($base);
+        $this->_testBasePath($view, $base);
+    }
+
     public function testSetBasePathFromConstructor()
     {
         $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
