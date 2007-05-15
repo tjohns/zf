@@ -66,8 +66,93 @@
         exception registered with the response object.
     </para>
 
+    <sect4 id="zend.controller.plugins.standard.errorhandler.fourohfour">
+        <title>Using the ErrorHandler as a 404 Handler</title>
+
+        <para>
+            Since the ErrorHandler plugin captures not only application errors,
+            but also errors in the controller chain arising from missing
+            controller classes and/or action methods, it can be used as a 404
+            handler. To do so, you will need to have your error controller check
+            the exception type.
+        </para>
+
+        <para>
+            Exceptions captured are logged in an object registered in the
+            request. To retrieve it, use
+            <code>Zend_Controller_Action::_getParam('error_handler')</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ErrorController extends Zend_Controller_Action
+{
+    public function errorAction()
+    {
+        $errors = $this->_getRequest('error_handler');
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            Once you have the error object, you can get the type via
+            <code>$errors->type</code>. It will be one of the following:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
+                    indicating the controller was not found.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
+                    indicating the requested action was not found.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
+                    indicating other exceptions.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            You can then test for either of the first two types, and, if so,
+            indicate a 404 page:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ErrorController extends Zend_Controller_Action
+{
+    public function errorAction()
+    {
+        $errors = $this->_getRequest('error_handler');
+
+        switch ($errors->type) {
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+                // 404 error -- controller or action not found
+                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+
+                // ... get some output to display...
+                break;
+            default:
+                // application error; display error page, but don't change
+                // status code
+                break;
+        }
+    }
+}
+?>]]></programlisting>
+    </sect4>
+
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
-        <title>Examples</title>
+        <title>Plugin Usage Examples</title>
 
         <example>
             <title>Standard usage</title>
@@ -110,6 +195,47 @@ $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin($plugin);
 ?>]]></programlisting>
         </example>
+    </sect4>
+    <sect4 id="zend.controller.plugins.standard.errorhandler.controllerexamples">
+        <title>Error Controller Example</title>
+
+        <para>
+            In order to use the Error Handler plugin, you need an error
+            controller. Below is a simple example.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ErrorController extends Zend_Controller_Action
+{
+    public function errorAction()
+    {
+        $errors = $this->_getRequest('error_handler');
+
+        switch ($errors->type) {
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+                // 404 error -- controller or action not found
+                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+
+                $content =<<<EOH
+<h1>Error!</h1>
+<p>The page you requested was not found.</p>
+EOH;
+                break;
+            default:
+                // application error
+                $content =<<<EOH
+<h1>Error!</h1>
+<p>An unexpected error occurred with your request. Please try again later.</p>
+EOH;
+                break;
+        }
+        $this->initView();
+        $this->view->content = $content;
+        $this->render();
+    }
+}
+?>]]></programlisting>
     </sect4>
 </sect3>
 <!--
