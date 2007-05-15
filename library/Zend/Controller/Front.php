@@ -85,6 +85,12 @@ class Zend_Controller_Front
     protected $_invokeParams = array();
 
     /**
+     * Subdirectory within a module containing controllers; defaults to 'controllers'
+     * @var string
+     */
+    protected $_moduleControllerDirectoryName = 'controllers';
+
+    /**
      * Instance of Zend_Controller_Plugin_Broker
      * @var Zend_Controller_Plugin_Broker
      */
@@ -177,6 +183,9 @@ class Zend_Controller_Front
                 case '_returnResponse':
                     $this->{$name} = false;
                     break;
+                case '_moduleControllerDirectoryName':
+                    $this->{$name} = 'controllers';
+                    break;
                 default:
                     $this->{$name} = null;
                     break;
@@ -219,12 +228,7 @@ class Zend_Controller_Front
             $module = 'default';
         }
 
-        if (!is_string($directory) || !is_dir($directory) || !is_readable($directory)) {
-            require_once 'Zend/Controller/Exception.php';
-            throw new Zend_Controller_Exception("Directory \"$directory\" not found or not readable");
-        }
-
-        $this->_controllerDir[$module] = rtrim($directory, '/\\');
+        $this->_controllerDir[$module] = rtrim((string) $directory, '/\\');
 
         return $this;
     }
@@ -260,6 +264,55 @@ class Zend_Controller_Front
     public function getControllerDirectory()
     {
         return $this->_controllerDir;
+    }
+
+    /**
+     * Specify a directory as containing modules
+     *
+     * Iterates through the directory, adding any subdirectories as modules; 
+     * the subdirectory within each module named after {@link $_moduleControllerDirectoryName}
+     * will be used as the controller directory path.
+     * 
+     * @param  string $path 
+     * @return Zend_Controller_Front
+     */
+    public function addModuleDirectory($path)
+    {
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $file) {
+            if ($file->isDot() || !$file->isDir()) {
+                continue;
+            }
+
+            $module    = $file->getFilename();
+            $moduleDir = $file->getPathname() . DIRECTORY_SEPARATOR . $this->getModuleControllerDirectoryName();
+            $this->addControllerDirectory($moduleDir, $module);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set the directory name within a module containing controllers
+     * 
+     * @param  string $name
+     * @return Zend_Controller_Front
+     */
+    public function setModuleControllerDirectoryName($name = 'controllers')
+    {
+        $this->_moduleControllerDirectoryName = (string) $name;
+
+        return $this;
+    }
+
+    /**
+     * Return the directory name within a module containing controllers
+     * 
+     * @return string
+     */
+    public function getModuleControllerDirectoryName()
+    {
+        return $this->_moduleControllerDirectoryName;
     }
 
     /**

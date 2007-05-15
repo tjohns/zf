@@ -436,4 +436,25 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $body = $response->getBody();
         $this->assertContains('Admin_Foo::bar action called', $body, $body);
     }
+
+    public function testModuleControllerDirectoryName()
+    {
+        $this->assertEquals('controllers', $this->_controller->getModuleControllerDirectoryName());
+        $this->_controller->setModuleControllerDirectoryName('foobar');
+        $this->assertEquals('foobar', $this->_controller->getModuleControllerDirectoryName());
+    }
+
+    public function testAddModuleDirectory()
+    {
+        $moduleDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules';
+        $this->_controller->addModuleDirectory($moduleDir);
+        $controllerDirs = $this->_controller->getControllerDirectory();
+        $this->assertTrue(isset($controllerDirs['foo']));
+        $this->assertTrue(isset($controllerDirs['bar']));
+        $this->assertTrue(isset($controllerDirs['default']));
+
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'foo', $controllerDirs['foo']);
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $controllerDirs['bar']);
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
+    }
 }

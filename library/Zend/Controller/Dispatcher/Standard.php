@@ -239,7 +239,12 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $loadFile    = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
         $dir         = dirname($loadFile);
         $file        = basename($loadFile);
-        Zend_Loader::loadFile($file, $dir, true);
+
+        try {
+            Zend_Loader::loadFile($file, $dir, true);
+        } catch (Zend_Exception $e) {
+            throw new Zend_Controller_Dispatcher_Exception('Cannot load controller class "' . $className . '" from file "' . $file . '" in directory "' . $dir . '"');
+        }
 
         if ('default' != $this->_curModule) {
             $className = $this->formatModuleName($this->_curModule) . '_' . $className;
