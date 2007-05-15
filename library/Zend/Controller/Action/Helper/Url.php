@@ -20,16 +20,20 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
+/** Zend_Controller_Action_Helper_Abstract */
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
+
 /**
  * Helper for creating URLs for redirects and other tasks
  * 
+ * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Controller_Action_Helper_Url 
+class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Abstract
 {
     /**
      * Create URL based on default route
