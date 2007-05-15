@@ -1,0 +1,117 @@
+<sect3 id="zend.controller.plugins.standard.errorhandler">
+    <title>Zend_Controller_Plugins_ErrorHandler</title>
+
+    <para>
+        <code>Zend_Controller_Plugins_ErrorHandler</code> provides a drop-in
+        plugin for handling exceptions thrown by your application, including
+        those resulting from missing controllers or actions; it is an
+        alternative to the methods listed in the <link
+            linkend="zend.controller.exceptions">MVC Exceptions section</link>.
+    </para>
+
+    <para>
+        By default, <code>Zend_Controller_Plugins_ErrorHandler</code> will
+        forward to <code>ErrorController::errorAction()</code> in the default
+        module. You may set alternate values for these by using the various
+        accessors available to the plugin:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <code>setErrorHandlerModule()</code> sets the controller module
+                to use.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>setErrorHandlerController()</code> sets the controller 
+                to use.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>setErrorHandlerAction()</code> sets the controller action 
+                to use.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>setErrorHandler()</code> takes an associative array, which
+                may contain any of the keys 'module', 'controller', or 'action',
+                with which it will set the appropriate values.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>
+        Additionally, you may pass an optional associative array to the
+        constructor, which will then proxy to <code>setErrorHandler()</code>.
+    </para>
+
+    <para>
+        <code>Zend_Controller_Plugin_ErrorHandler</code> registers a
+        <code>postDispatch()</code> hook and checks for exceptions registered in
+        <link linkend="zend.controller.response">the response object</link>. If
+        any are found, it attempts to forward to the registered error handler
+        action.
+    </para>
+
+    <para>
+        If an exception occurs dispatching the error handler, the plugin will
+        tell the front controller to throw exceptions, and rethrow the last
+        exception registered with the response object.
+    </para>
+
+    <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
+        <title>Examples</title>
+
+        <example>
+            <title>Standard usage</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Plugin/ErrorHandler.php';
+
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
+?>]]></programlisting>
+        </example>
+
+        <example>
+            <title>Setting a different error handler</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Plugin/ErrorHandler.php';
+
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
+    'module'     => 'mystuff',
+    'controller' => 'static',
+    'action'     => 'error'
+)));
+?>]]></programlisting>
+        </example>
+
+        <example>
+            <title>Using accessors</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Plugin/ErrorHandler.php';
+
+$plugin = new Zend_Controller_Plugin_ErrorHandler();
+$plugin->setErrorHandlerModule('mystuff')
+       ->setErrorHandlerController('static')
+       ->setErrorHandlerAction('error');
+
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin($plugin);
+?>]]></programlisting>
+        </example>
+    </sect4>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->
