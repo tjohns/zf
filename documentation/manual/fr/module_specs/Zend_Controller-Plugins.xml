@@ -186,6 +186,36 @@ $front->dispatch();
             a registered event method, that method will not be triggered.
         </note>
     </sect2>
+
+    <sect2 id="zend.controller.plugins.manipulating">
+        <title>Retrieving and Manipulating Plugins</title>
+
+        <para>
+            On occasion, you may need to unregister or retrieve a plugin. The
+            following methods of the front controller allow you to do so:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>getPlugin($class)</code> allows you to retrieve a
+                    plugin by class name. If no plugins match, it returns false.
+                    If more than one plugin of that class is registered, it
+                    returns an array.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>getPlugins()</code> retrieves the entire plugin stack.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>unregisterPlugin($plugin)</code> allows you to remove
+                    a plugin from the stack. You may pass a plugin object, or
+                    the class name of the plugin you wish to unregister. If you
+                    pass the class name, any plugins of that class will be
+                    removed.
+            </para></listitem>
+        </itemizedlist>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

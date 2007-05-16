@@ -53,6 +53,26 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
         <para>
             Quelque soit le SGBD, vous aurez la possibilité d'utiliser exactement la même API pour interroger la base de données.
         </para>
+        
+        <para>
+            Les adaptateurs PDO peuvent fournir des options de drivers au moment de la création, comme décrit dans l'exemple suivant, où le l'adaptateur <code>PDO_MYSQL</code> avec l'option spécifique <code>MYSQL_ATTR_MAX_BUFFER_SIZE</code> :
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+$params = array(
+    'host'              => '127.0.0.1',
+    'username'          => 'malory',
+    'password'          => '******',
+    'dbname'            => 'camelot',
+    'driver_options'    => array(
+        PDO::MYSQL_ATTR_MAX_BUFFER_SIZE => 10 * 1024 * 1024
+        )
+    );
+
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+?>]]></programlisting>
+
+        </para>
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
