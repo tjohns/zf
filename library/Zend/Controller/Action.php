@@ -418,7 +418,7 @@ abstract class Zend_Controller_Action
                  .'() does not exist and was not trapped in __call()';
         }
 
-        throw new Zend_Controller_Exception($msg);
+        throw new Zend_Controller_Action_Exception($msg);
     }
 
     /**
