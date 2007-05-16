@@ -372,9 +372,13 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         }
 
         if ($required !== null) {
-            $this->_resVector = array_diff_key($required, $prohibited);
+            $this->_resVector = (count($prohibited) > 0) ?
+                                           array_diff_key($required, $prohibited) :
+                                           $required;
         } else {
-            $this->_resVector = array_diff_key($optional, $prohibited);
+            $this->_resVector = (count($prohibited) > 0) ?
+                                           array_diff_key($optional, $prohibited) :
+                                           $optional;
         }
 
         ksort($this->_resVector, SORT_NUMERIC);
