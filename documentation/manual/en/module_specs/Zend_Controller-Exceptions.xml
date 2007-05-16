@@ -32,13 +32,40 @@
 
         <itemizedlist>
             <listitem>
+                <para>
+                    By default, the <link
+                        linkend="zend.controller.plugins.standard.errorhandler">error
+                    handler plugin</link> is registered and active. This plugin
+                    was designed to handle:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>Errors due to missing controllers or actions</para></listitem>
+
+                    <listitem><para>Errors occurring within action controllers</para></listitem>
+                </itemizedlist>
+
+                <para>
+                    It operates as a <code>postDispatch()</code> plugin, and
+                    checks to see if a dispatcher, action controller, or
+                    other exception has occurred. If so, it forwards to an error
+                    handler controller.
+                </para>
+
+                <para>
+                    This handler will cover most exceptional situations, and
+                    handle missing controllers and actions gracefully.
+                </para>
+            </listitem>
+
+            <listitem>
                 <para><code>Zend_Controller_Front::throwExceptions()</code></para>
 
                 <para>
                     By passing a boolean true value to this method, you can tell
                     the front controller that instead of aggregating exceptions
-                    in the response object, you'd rather handle them yourself.
-                    As an example:
+                    in the response object or using the error handler plugin,
+                    you'd rather handle them yourself.  As an example:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -52,7 +79,8 @@ try {
 
                 <para>
                     This method is probably the easiest way to add custom
-                    exception handling to your front controller application.
+                    exception handling covering the full range of possible
+                    exceptions to your front controller application.
                 </para>
             </listitem>
 
@@ -100,7 +128,8 @@ if ($response->isException()) {
                     The primary advantage this method offers over
                     <code>Zend_Controller_Front::throwExceptions()</code> is to
                     allow you to conditionally render the response after
-                    handling the exception.
+                    handling the exception. This will catch any exception in the
+                    controller chain, unlike the error handler plugin.
                 </para>
             </listitem>
         </itemizedlist>

@@ -187,11 +187,18 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
      * postDispatch() plugin hook -- check for exceptions and dispatch error 
      * handler if necessary
      *
+     * If the 'noErrorHandler' front controller flag has been set, 
+     * returns early.
+     *
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
+        if (Zend_Controller_Front::getInstance()->getParam('noErrorHandler')) {
+            return;
+        }
+
         $response = $this->getResponse();
 
         if ($this->_isInsideErrorHandlerLoop) {

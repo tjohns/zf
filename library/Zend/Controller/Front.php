@@ -37,6 +37,9 @@ require_once 'Zend/Controller/Router/Interface.php';
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 
+/** Zend_Controller_Plugin_ErrorHandler */
+require_once 'Zend/Controller/Plugin/ErrorHandler.php';
+
 /** Zend_Controller_Response_Abstract */
 require_once 'Zend/Controller/Response/Abstract.php';
 
@@ -141,6 +144,7 @@ class Zend_Controller_Front
     private function __construct()
     {
         $this->_plugins = new Zend_Controller_Plugin_Broker();
+        $this->_plugins->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
     }
 
     /**

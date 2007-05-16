@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.plugins">
+<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2003/XInclude">
     <title>Plugins</title>
 
     <sect2 id="zend.controller.plugins.introduction">
@@ -215,6 +215,17 @@ $front->dispatch();
                     removed.
             </para></listitem>
         </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.plugins.standard">
+        <title>Plugins Included in the Standard Distribution</title>
+
+        <para>
+            Zend Framework includes a plugin for error handling in its standard
+            distribution.
+        </para>
+
+        <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
     </sect2>
 </sect1>
 <!--

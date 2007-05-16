@@ -5,8 +5,7 @@ if (!defined("PHPUnit_MAIN_METHOD"))
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Plugin_ErrorHandlerTest::main");
     $basePath = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
     set_include_path(
-        $basePath . DIRECTORY_SEPARATOR . 'incubator' . DIRECTORY_SEPARATOR . 'tests'
-        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'incubator' . DIRECTORY_SEPARATOR . 'library'
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
         . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
         . PATH_SEPARATOR . get_include_path()
     );
@@ -231,6 +230,21 @@ class Zend_Controller_Plugin_ErrorHandlerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($errorHandler instanceof ArrayObject);
         $this->assertTrue($errorHandler->request instanceof Zend_Controller_Request_Http);
         $this->assertNotSame($this->request, $errorHandler->request);
+    }
+
+    public function testPostDispatchQuitsWithFalseUserErrorHandlerParam()
+    {
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        $front->setParam('noErrorHandler', true);
+
+        $this->response->setException(new Zend_Controller_Dispatcher_Exception('Testing controller exception'));
+        $this->request->setModuleName('foo')
+                      ->setControllerName('bar')
+                      ->setActionName('baz');
+        $this->plugin->postDispatch($this->request);
+
+        $this->assertNull($this->request->getParam('error_handler'));
     }
 }
 
