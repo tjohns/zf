@@ -457,4 +457,25 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $controllerDirs['bar']);
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
     }
+
+    public function testDefaultModule()
+    {
+        $dispatcher = $this->_controller->getDispatcher();
+        $this->assertEquals($dispatcher->getDefaultModule(), $this->_controller->getDefaultModule());
+        $this->_controller->setDefaultModule('foobar');
+        $this->assertEquals('foobar', $this->_controller->getDefaultModule());
+        $this->assertEquals($dispatcher->getDefaultModule(), $this->_controller->getDefaultModule());
+    }
+
+    public function testErrorHandlerPluginRegisteredByDefault()
+    {
+        $plugins = $this->_controller->getPlugins();
+        $this->assertEquals(1, count($plugins));
+        $this->assertTrue($plugins[0] instanceof Zend_Controller_Plugin_ErrorHandler);
+
+        $this->_controller->resetInstance();
+        $plugins = $this->_controller->getPlugins();
+        $this->assertEquals(1, count($plugins));
+        $this->assertTrue($plugins[0] instanceof Zend_Controller_Plugin_ErrorHandler);
+    }
 }

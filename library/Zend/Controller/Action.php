@@ -161,7 +161,7 @@ abstract class Zend_Controller_Action
         $module  = $request->getModuleName();
         $dirs    = $this->getFrontController()->getControllerDirectory();
         if (empty($module) || !isset($dirs[$module])) {
-            $module = 'default';
+            $module = $this->getFrontController()->getDispatcher()->getDefaultModule();
         }
         $baseDir = dirname($dirs[$module]) . DIRECTORY_SEPARATOR . 'views';
         if (!file_exists($baseDir) || !is_dir($baseDir)) {

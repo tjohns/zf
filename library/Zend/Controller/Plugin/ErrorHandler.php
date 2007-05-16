@@ -52,10 +52,10 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
     const EXCEPTION_OTHER = 'EXCEPTION_OTHER';
 
     /**
-     * Module to use for errors; defaults to 'default'
+     * Module to use for errors; defaults to default module in dispatcher
      * @var string 
      */
-    protected $_errorModule = 'default';
+    protected $_errorModule;
 
     /**
      * Controller to use for errors; defaults to 'error'
@@ -136,6 +136,9 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
      */
     public function getErrorHandlerModule()
     {
+        if (null === $this->_errorModule) {
+            $this->_errorModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+        }
         return $this->_errorModule;
     }
 
@@ -195,7 +198,8 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
      */
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if (Zend_Controller_Front::getInstance()->getParam('noErrorHandler')) {
+        $frontController = Zend_Controller_Front::getInstance();
+        if ($frontController->getParam('noErrorHandler')) {
             return;
         }
 
@@ -205,7 +209,6 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
             $exceptions = $response->getException();
             if (count($exceptions) > $this->_exceptionCountAtFirstEncounter) {
                 // Exception thrown by error handler; tell the front controller to throw it
-                $frontController = Zend_Controller_Front::getInstance();
                 $frontController->throwExceptions(true);
                 throw array_pop($exceptions);
             }
@@ -241,9 +244,9 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
             // Forward to the error handler
             $request->setParam('error_handler', $error)
-                    ->setModuleName($this->_errorModule)
-                    ->setControllerName($this->_errorController)
-                    ->setActionName($this->_errorAction)
+                    ->setModuleName($this->getErrorHandlerModule())
+                    ->setControllerName($this->getErrorHandlerController())
+                    ->setActionName($this->getErrorHandlerAction())
                     ->setDispatched(false);
         }
     }

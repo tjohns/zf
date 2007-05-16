@@ -335,6 +335,13 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertContains("Foo_Admin_IndexController::indexAction() called", $body, $body);
     }
 
+    public function testDefaultModule()
+    {
+        $this->assertEquals('default', $this->_dispatcher->getDefaultModule());
+        $this->_dispatcher->setDefaultModule('foobar');
+        $this->assertEquals('foobar', $this->_dispatcher->getDefaultModule());
+    }
+
     public function testModuleValid()
     {
         $this->assertTrue($this->_dispatcher->isValidModule('default'));

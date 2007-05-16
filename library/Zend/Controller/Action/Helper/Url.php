@@ -23,6 +23,9 @@
 /** Zend_Controller_Action_Helper_Abstract */
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
+/** Zend_Controller_Front */
+require_once 'Zend/Controller/Front.php';
+
 /**
  * Helper for creating URLs for redirects and other tasks
  * 
@@ -57,7 +60,7 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
         }
 
         $url = $controller . '/' . $action;
-        if ('default' != $module) {
+        if ($module != Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule()) {
             $url = $module . '/' . $url;
         }
 

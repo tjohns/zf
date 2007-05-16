@@ -201,7 +201,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
 
         if (null === $module) {
             $module = $request->getModuleName();
-            if ('default' == $module) {
+            if ($module == $dispatcher->getDefaultModule()) {
                 $module = '';
             }
         }

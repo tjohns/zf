@@ -227,10 +227,10 @@ class Zend_Controller_Front
      * @return Zend_Controller_Front
      * @throws Zend_Controller_Exception if directory not found or readable
      */
-    public function addControllerDirectory($directory, $module = 'default')
+    public function addControllerDirectory($directory, $module = null)
     {
         if (empty($module) || is_numeric($module) || !is_string($module)) {
-            $module = 'default';
+            $module = $this->getDispatcher()->getDefaultModule();
         }
 
         $this->_controllerDir[$module] = rtrim((string) $directory, '/\\');
@@ -246,14 +246,21 @@ class Zend_Controller_Front
      *
      * @param string|array $directory Path to Zend_Controller_Action controller 
      * classes or array of such paths
+     * @param  string $module Optional module name to use with string $directory
      * @return Zend_Controller_Front
      */
-    public function setControllerDirectory($directory)
+    public function setControllerDirectory($directory, $module = null)
     {
         $this->_controllerDir = array();
 
-        foreach ((array) $directory as $module => $path) {
-            $this->addControllerDirectory($path, $module);
+        if (is_string($directory)) {
+            $this->addControllerDirectory($directory, $module);
+        } elseif (is_array($directory)) {
+            foreach ((array) $directory as $module => $path) {
+                $this->addControllerDirectory($path, $module);
+            }
+        } else {
+            throw new Zend_Controller_Exception('Controller directory spec must be either a string or an array');
         }
 
         return $this;
@@ -364,6 +371,29 @@ class Zend_Controller_Front
     public function getDefaultAction()
     {
         return $this->getDispatcher()->getDefaultAction();
+    }
+
+    /**
+     * Set the default module name
+     *
+     * @param string $module
+     * @return Zend_Controller_Front
+     */
+    public function setDefaultModule($module)
+    {
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setDefaultModule($module);
+        return $this;
+    }
+
+    /**
+     * Retrieve the default module 
+     *
+     * @return string
+     */
+    public function getDefaultModule()
+    {
+        return $this->getDispatcher()->getDefaultModule();
     }
 
     /**
