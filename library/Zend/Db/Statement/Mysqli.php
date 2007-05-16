@@ -62,6 +62,31 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     protected $_values;
 
     /**
+     * Constructor.
+     *
+     * @param  Zend_Db_Adapter_Abstract $connection
+     * @param  string|Zend_Db_Select    $sql
+     * @throws Zend_Db_Statement_Mysqli_Exception
+     * @return void
+     */
+    public function __construct($connection, $sql)
+    {
+        parent::__construct($connection, $sql);
+
+        $mysqli = $this->_connection->getConnection();
+
+        $this->_stmt = $mysqli->prepare($this->_joinSql());
+
+        if ($this->_stmt === false || $mysqli->errno) {
+            /**
+             * @see Zend_Db_Statement_Mysqli_Exception
+             */
+            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli prepare error: " . $mysqli->error);
+        }
+    }
+
+    /**
      * Returns the number of rows that were affected by the execution of an SQL statement.
      *
      * @return int Number of rows affected.
@@ -128,16 +153,6 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      */
     public function execute(array $params = array())
     {
-        // prepare for mysqli
-        $sql = $this->_joinSql();
-        $mysqli = $this->_connection->getConnection();
-
-        $this->_stmt = $mysqli->prepare($sql);
-        if ($this->_stmt === false || $mysqli->errno) {
-            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli prepare error: " . $mysqli->error);
-        }
-
         // retain metadata
         $this->_meta = $this->_stmt->result_metadata();
         if ($this->_stmt->errno) {
