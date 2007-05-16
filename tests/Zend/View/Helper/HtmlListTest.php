@@ -1,29 +1,59 @@
 <?php
+// Call Zend_View_Helper_HtmlListTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HtmlListTest::main");
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once 'Zend/View.php';
 require_once 'Zend/View/Helper/HtmlList.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * @var Zend_View_Helper_HtmlList
      */
-    protected $_helper;
+    public $helper;
 
-    public function setUp()
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
     {
-        $this->_helper = new Zend_View_Helper_HtmlList();
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_HtmlListTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    /**
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
+     *
+     * @access protected
+     */
+    protected function setUp()
+    {
+        $this->view = new Zend_View();
+        $this->helper = new Zend_View_Helper_HtmlList();
+        $this->helper->setView($this->view);
     }
 
     public function tearDown()
     {
-        unset($this->_helper);
+        unset($this->helper);
     }
 
     public function testMakeUnorderedList()
     {
         $items = array('one', 'two', 'three');
 
-        $list = $this->_helper->htmlList($items);
+        $list = $this->helper->htmlList($items);
 
         $this->assertContains('<ul>', $list);
         $this->assertContains('</ul>', $list);
@@ -36,7 +66,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
     {
         $items = array('one', 'two', 'three');
 
-        $list = $this->_helper->htmlList($items, true);
+        $list = $this->helper->htmlList($items, true);
 
         $this->assertContains('<ol>', $list);
         $this->assertContains('</ol>', $list);
@@ -50,7 +80,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $items = array('one', 'two', 'three');
         $attribs = array('class' => 'selected', 'name' => 'list');
 
-        $list = $this->_helper->htmlList($items, false, $attribs);
+        $list = $this->helper->htmlList($items, false, $attribs);
 
         $this->assertContains('<ul', $list);
         $this->assertContains('class="selected"', $list);
@@ -66,7 +96,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $items = array('one', 'two', 'three');
         $attribs = array('class' => 'selected', 'name' => 'list');
 
-        $list = $this->_helper->htmlList($items, true, $attribs);
+        $list = $this->helper->htmlList($items, true, $attribs);
 
         $this->assertContains('<ol', $list);
         $this->assertContains('class="selected"', $list);
@@ -81,7 +111,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
     {
         $items = array('one', array('four', 'five', 'six'), 'two', 'three');
 
-        $list = $this->_helper->htmlList($items);
+        $list = $this->helper->htmlList($items);
 
         $this->assertContains('<ul>', $list);
         $this->assertContains('</ul>', $list);
@@ -93,7 +123,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
     {
         $items = array('one', array('four', array('six', 'seven', 'eight'), 'five'), 'two', 'three');
 
-        $list = $this->_helper->htmlList($items);
+        $list = $this->helper->htmlList($items);
 
         $this->assertContains('<ul>', $list);
         $this->assertContains('</ul>', $list);
@@ -102,4 +132,9 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<li>five</li></ul></li><li>two', $list);
     } 
 
+}
+
+// Call Zend_View_Helper_HtmlListTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_View_Helper_HtmlListTest::main") {
+    Zend_View_Helper_HtmlListTest::main();
 }

@@ -87,6 +87,14 @@
             </para></listitem>
             
             <listitem><para>
+                <code>formLabel($name, $value, $attribs):</code> Creates a
+                &lt;label&gt; element, setting the <code>for</code> attribute to
+                <code>$name</code>, and the actual label text to
+                <code>$value</code>. If <code>disable</code> is passed in
+                <code>attribs</code>, nothing will be returned.
+            </para></listitem>
+
+             <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> Creates an
                 &lt;input type="password" /&gt; element.
             </para></listitem>
