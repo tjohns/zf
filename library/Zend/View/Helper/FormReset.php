@@ -59,12 +59,12 @@ class Zend_View_Helper_FormReset extends Zend_View_Helper_FormElement
         
         // always enabled
         $xhtml = '<input type="reset"'
-               . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
-               . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"';
+               . ' name="' . $this->view->escape($name) . '"'
+               . ' id="' . $this->view->escape($id) . '"';
         
         // add a value if one is given
         if (! empty($value)) {
-            $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"';
+            $xhtml .= ' value="' . $this->view->escape($value) . '"';
         }
         
         // add attributes, close, and return

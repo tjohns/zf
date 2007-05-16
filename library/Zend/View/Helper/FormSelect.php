@@ -95,7 +95,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
                     // add the hidden value
                     $opt = $this->_hidden($name, $opt_value);
                     // add the display label
-                    $opt .= htmlspecialchars($opt_label, ENT_COMPAT, $this->view->getEncoding());
+                    $opt .= $this->view->escape($opt_label);
                     // add to the list
                     $list[] = $opt;
                 }
@@ -107,8 +107,8 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
             // enabled.
             // the surrounding select element first.
             $xhtml = '<select'
-                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"'
+                   . ' name="' . $this->view->escape($name) . '"'
+                   . ' id="' . $this->view->escape($id) . '"'
                    . $this->_htmlAttribs($attribs)
                    . ">\n\t";
             
@@ -118,7 +118,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
 
                 if (is_array($opt_label)) {
                     $list[] = '<optgroup '
-                            . 'label="' . htmlspecialchars($opt_value, ENT_COMPAT, $this->view->getEncoding()) .'">';
+                            . 'label="' . $this->view->escape($opt_value) .'">';
                     foreach ($opt_label as $val => $lab) {
                         $list[] = $this->_build($val, $lab, $value);
                     }
@@ -147,15 +147,15 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
     protected function _build($value, $label, $selected)
     {
         $opt = '<option'
-             . ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"'
-             . ' label="' . htmlspecialchars($label, ENT_COMPAT, $this->view->getEncoding()) . '"';
+             . ' value="' . $this->view->escape($value) . '"'
+             . ' label="' . $this->view->escape($label) . '"';
              
         // selected?
         if (in_array($value, $selected)) {
             $opt .= ' selected="selected"';
         }
         
-        $opt .= '>' . htmlspecialchars($label, ENT_COMPAT, $this->view->getEncoding()) . "</option>";
+        $opt .= '>' . $this->view->escape($label) . "</option>";
         
         return $opt;
     }

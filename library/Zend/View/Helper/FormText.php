@@ -61,13 +61,13 @@ class Zend_View_Helper_FormText extends Zend_View_Helper_FormElement
         if ($disable) {
             // disabled
             $xhtml = $this->_hidden($name, $value)
-                   . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding());
+                   . $this->view->escape($value);
         } else {
             // enabled
             $xhtml = '<input type="text"'
-                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"'
-                   . ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"'
+                   . ' name="' . $this->view->escape($name) . '"'
+                   . ' id="' . $this->view->escape($id) . '"'
+                   . ' value="' . $this->view->escape($value) . '"'
                    . $this->_htmlAttribs($attribs)
                    . ' />';
         }

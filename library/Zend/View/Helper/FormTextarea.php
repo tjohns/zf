@@ -80,7 +80,7 @@ class Zend_View_Helper_FormTextarea extends Zend_View_Helper_FormElement
         
             // disabled.
             $xhtml = $this->_hidden($name, $value)
-                   . nl2br(htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()));
+                   . nl2br($this->view->escape($value));
             
         } else {
         
@@ -97,10 +97,10 @@ class Zend_View_Helper_FormTextarea extends Zend_View_Helper_FormElement
             }
             
             // now build the element.
-            $xhtml = '<textarea name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"'
+            $xhtml = '<textarea name="' . $this->view->escape($name) . '"'
+                   . ' id="' . $this->view->escape($id) . '"'
                    . $this->_htmlAttribs($attribs) . '>'
-                   . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '</textarea>';
+                   . $this->view->escape($value) . '</textarea>';
             
         }
         

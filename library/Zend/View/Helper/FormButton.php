@@ -61,18 +61,18 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
         if ($disable) {
         
             // disabled. no hidden value because it can't be clicked.
-            $xhtml = '[' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . ']';
+            $xhtml = '[' . $this->view->escape($value) . ']';
             
         } else {
         
             // enabled
             $xhtml = '<input type="button"'
-                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, $this->view->getEncoding()) . '"'
-                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, $this->view->getEncoding()) . '"';
+                   . ' name="' . $this->view->escape($name) . '"'
+                   . ' id="' . $this-view->escape($id) . '"';
             
             // add a value if one is given
             if (! empty($value)) {
-                $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, $this->view->getEncoding()) . '"';
+                $xhtml .= ' value="' . $this->view->escape($value) . '"';
             }
             
             // add attributes and close
