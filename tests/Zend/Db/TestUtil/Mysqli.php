@@ -48,6 +48,7 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
             'username' => 'TESTS_ZEND_DB_ADAPTER_MYSQL_USERNAME',
             'password' => 'TESTS_ZEND_DB_ADAPTER_MYSQL_PASSWORD',
             'dbname'   => 'TESTS_ZEND_DB_ADAPTER_MYSQL_DATABASE',
+            'port'     => 'TESTS_ZEND_DB_ADAPTER_MYSQL_PORT'
         );
         return parent::getParams($constants);
     }

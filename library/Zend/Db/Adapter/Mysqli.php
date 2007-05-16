@@ -226,13 +226,21 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         if ($this->_connection) {
             return;
         }
+
+        if (isset($this->_config['port'])) {
+            $port = (integer) $this->_config['port'];
+        } else {
+            $port = null;
+        }
+
         // Suppress connection warnings here.
         // Throw an exception instead.
         @$this->_connection = new mysqli(
             $this->_config['host'],
             $this->_config['username'],
             $this->_config['password'],
-            $this->_config['dbname']
+            $this->_config['dbname'],
+            $port
         );
         if ($this->_connection === false || mysqli_connect_errno()) {
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
