@@ -270,7 +270,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * The value of each array element is an associative array
      * with the following keys:
      *
-     * SCHEMA_NAME      => string; name of database or schema
+     * SCHEMA_NAME      => string; name of schema
      * TABLE_NAME       => string;
      * COLUMN_NAME      => string; column name
      * COLUMN_POSITION  => number; ordinal position of column in table
@@ -293,17 +293,17 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "SELECT TC.TABLE_NAME, TB.TABLESPACE_NAME, TC.COLUMN_NAME, TC.DATA_TYPE,
+        $sql = "SELECT TC.TABLE_NAME, TB.OWNER, TC.COLUMN_NAME, TC.DATA_TYPE,
                 TC.DATA_DEFAULT, TC.NULLABLE, TC.COLUMN_ID, TC.DATA_LENGTH,
                 TC.DATA_SCALE, TC.DATA_PRECISION, C.CONSTRAINT_TYPE, CC.POSITION
             FROM ALL_TAB_COLUMNS TC
             LEFT JOIN (ALL_CONS_COLUMNS CC JOIN ALL_CONSTRAINTS C
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
-            JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME)
+            JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME AND TB.OWNER = TC.OWNER)
             WHERE TC.TABLE_NAME = ".$this->quote($tableName);
         if ($schemaName) {
-            $sql .= " AND TB.TABLESPACE_NAME = ".$this->quote($schemaName);
+            $sql .= " AND TB.OWNER = ".$this->quote($schemaName);
         }
         $sql .= ' ORDER BY TC.COLUMN_ID';
 
@@ -315,7 +315,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         $table_name      = 0;
-        $tablespace_name = 1;
+        $owner           = 1;
         $column_name     = 2;
         $data_type       = 3;
         $data_default    = 4;
@@ -339,7 +339,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 $identity = false;
             }
             $desc[$row[$column_name]] = array(
-                'SCHEMA_NAME'      => $row[$tablespace_name],
+                'SCHEMA_NAME'      => $row[$owner],
                 'TABLE_NAME'       => $row[$table_name],
                 'COLUMN_NAME'      => $row[$column_name],
                 'COLUMN_POSITION'  => $row[$column_id],
