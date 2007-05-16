@@ -182,6 +182,7 @@ class Zend_Controller_Front
                     break;
                 case '_plugins':
                     $this->{$name} = new Zend_Controller_Plugin_Broker();
+                    $this->{$name}->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
                     break;
                 case '_throwExceptions':
                 case '_returnResponse':
