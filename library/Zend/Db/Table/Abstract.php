@@ -316,18 +316,19 @@ abstract class Zend_Db_Table_Abstract
     public function getReference($tableClassname, $ruleKey = null)
     {
         $thisClass = get_class($this);
+        $refMap = $this->_getReferenceMapNormalized();
         if ($ruleKey !== null) {
-            if (!isset($this->_referenceMap[$ruleKey])) {
+            if (!isset($refMap[$ruleKey])) {
                 require_once "Zend/Db/Table/Exception.php";
                 throw new Zend_Db_Table_Exception("No reference rule \"$ruleKey\" from table $thisClass to table $tableClassname");
             }
-            if ($this->_referenceMap[$ruleKey][self::REF_TABLE_CLASS] != $tableClassname) {
+            if ($refMap[$ruleKey][self::REF_TABLE_CLASS] != $tableClassname) {
                 require_once "Zend/Db/Table/Exception.php";
                 throw new Zend_Db_Table_Exception("Reference rule \"$ruleKey\" does not reference table $tableClassname");
             }
-            return $this->_referenceMap[$ruleKey];
+            return $refMap[$ruleKey];
         }
-        foreach ($this->_referenceMap as $reference) {
+        foreach ($refMap as $reference) {
             if ($reference[self::REF_TABLE_CLASS] == $tableClassname) {
                 return $reference;
             }
@@ -630,6 +631,11 @@ abstract class Zend_Db_Table_Abstract
                     }
                 }
             }
+        } else if (!is_array($this->_primary)) {
+            $this->_primary = array(1 => $this->_primary);
+        } else if (isset($this->_primary[0])) {
+            array_unshift($this->_primary, null);
+            unset($this->_primary[0]);
         }
 
         if (! array_intersect((array) $this->_primary, $this->_cols) == (array) $this->_primary) {
