@@ -74,7 +74,7 @@ class Zend_Filter_Input
      * rules that did not pass validation to the array of messages returned
      * by the validator chain.
      */
-    protected $_invalidFields = array();
+    protected $_invalidMessages = array();
 
     /**
      * @var array After processing data, this contains mapping of validation
@@ -159,10 +159,10 @@ class Zend_Filter_Input
     /**
      * @return array
      */
-    public function getInvalid()
+    public function getMessages()
     {
         $this->_process();
-        return $this->_invalidFields;
+        return $this->_invalidMessages;
     }
 
     /**
@@ -184,41 +184,57 @@ class Zend_Filter_Input
     }
 
     /**
-     * @return string
+     * @param string $fieldName OPTIONAL
+     * @return mixed
      */
-    public function getEscaped($fieldName)
+    public function getEscaped($fieldName = null)
     {
         $this->_process();
         $escapeFilter = $this->_getDefaultEscapeFilter();
 
-        if (isset($this->_validFields[$fieldName])) {
-            if (is_array($this->_validFields[$fieldName])) {
-                return array_map(array($escapeFilter, 'filter'), $this->_validFields[$fieldName]);
-            } else {
-                return $escapeFilter->filter($this->_validFields[$fieldName]);
-            }
-        } else {
-            return null;
+        if ($fieldName === null) {
+            return $this->_escapeRecursive($this->_validFields);
         }
+        if (isset($this->_validFields[$fieldName])) {
+            return $this->_escapeRecursive($this->_validFields[$fieldName]);
+        }
+        return null;
     }
 
     /**
-     * @param string $fieldName
-     * @return string
+     * @param mixed $value
+     * @return mixed
      */
-    public function getUnescaped($fieldName)
+    protected function _escapeRecursive($data)
+    {
+        if (!is_array($data)) {
+            return $this->_getDefaultEscapeFilter()->filter($data);
+        }
+        foreach ($data as &$element) {
+            $element = $this->_escapeRecursive($element);
+        }
+        return $data;
+    }
+
+    /**
+     * @param string $fieldName OPTIONAL
+     * @return mixed
+     */
+    public function getUnescaped($fieldName = null)
     {
         $this->_process();
+        if ($fieldName === null) {
+            return $this->_validFields;
+        }
         if (isset($this->_validFields[$fieldName])) {
             return $this->_validFields[$fieldName];
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
      * @param string $fieldName
-     * @return string
+     * @return mixed
      */
     public function __get($fieldName)
     {
@@ -231,7 +247,7 @@ class Zend_Filter_Input
     public function hasInvalid()
     {
         $this->_process();
-        return !(empty($this->_invalidFields));
+        return !(empty($this->_invalidMessages));
     }
 
     /**
@@ -250,6 +266,15 @@ class Zend_Filter_Input
     {
         $this->_process();
         return !(empty($this->_unknownFields));
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasValid()
+    {
+        $this->_process();
+        return !(empty($this->_validFields));
     }
 
     /**
@@ -291,7 +316,7 @@ class Zend_Filter_Input
          * Reset to initial state
          */
         $this->_validFields = array();
-        $this->_invalidFields = array();
+        $this->_invalidMessages = array();
         $this->_missingFields = array();
         $this->_unknownFields = array();
 
@@ -386,7 +411,7 @@ class Zend_Filter_Input
             if (!isset($filterRule[self::FILTER_CHAIN])) {
                 $filterRule[self::FILTER_CHAIN] = new Zend_Filter();
                 foreach ($filterList as $filter) {
-                    if (is_string($filter)) {
+                    if (is_string($filter) || is_array($filter)) {
                         $filter = $this->_getFilter($filter);
                     }
                     $filterRule[self::FILTER_CHAIN]->addFilter($filter);
@@ -508,7 +533,7 @@ class Zend_Filter_Input
                 $validatorRule[self::VALIDATOR_CHAIN] = new Zend_Validate();
                 foreach ($validatorList as $validator) {
 
-                    if (is_string($validator)) {
+                    if (is_string($validator) || is_array($validator)) {
                         $validator = $this->_getValidator($validator);
                     }
                     $validatorRule[self::VALIDATOR_CHAIN]->addValidator($validator, $validatorRule[self::BREAK_CHAIN]);
@@ -534,7 +559,7 @@ class Zend_Filter_Input
          * We have to wait until all rules have been processed because
          * a given field may be referenced by multiple rules.
          */
-        foreach (array_keys($this->_missingFields) + array_keys($this->_invalidFields) as $rule) {
+        foreach (array_keys($this->_missingFields) + array_keys($this->_invalidMessages) as $rule) {
             foreach ((array) $this->_validatorRules[$rule][self::FIELDS] as $field) {
                 unset($this->_data[$field]);
             }
@@ -584,7 +609,7 @@ class Zend_Filter_Input
          */
         if (count((array) $validatorRule[self::FIELDS]) > 1) {
             if (!$validatorRule[self::VALIDATOR_CHAIN]->isValid($data)) {
-                $this->_invalidFields[$validatorRule[self::RULE]] = $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
+                $this->_invalidMessages[$validatorRule[self::RULE]] = $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
                 return;
             }
         } else {
@@ -597,9 +622,9 @@ class Zend_Filter_Input
                         }
                     }
                     if (!$validatorRule[self::VALIDATOR_CHAIN]->isValid($value)) {
-                        $this->_invalidFields[$validatorRule[self::RULE]] =
+                        $this->_invalidMessages[$validatorRule[self::RULE]] =
                             array_merge(
-                                (array) $this->_invalidFields[$validatorRule[self::RULE]],
+                                (array) $this->_invalidMessages[$validatorRule[self::RULE]],
                                 $validatorRule[self::VALIDATOR_CHAIN]->getMessages()
                             );
                         unset($this->_validFields[$fieldKey]);
@@ -624,7 +649,7 @@ class Zend_Filter_Input
     }
 
     /**
-     * @param string $classBaseName
+     * @param mixed $classBaseName
      * @return Zend_Filter_Interface
      */
     protected function _getFilter($classBaseName)
@@ -633,7 +658,7 @@ class Zend_Filter_Input
     }
 
     /**
-     * @param string $classBaseName
+     * @param mixed $classBaseName
      * @return Zend_Validate_Interface
      */
     protected function _getValidator($classBaseName)
@@ -642,19 +667,29 @@ class Zend_Filter_Input
     }
 
     /**
-     * @param string $derivedFrom
-     * @param string $classBaseName
-     * @return mixed
+     * @param string $interface
+     * @param mixed $classBaseName
+     * @return mixed object implementing Zend_Filter_Interface or Zend_Validate_Interface
      * @throws Zend_Filter_Exception
      */
-    protected function _getFilterOrValidator($derivedFrom, $classBaseName)
+    protected function _getFilterOrValidator($interface, $classBaseName)
     {
+        $args = array();
+        if (is_array($classBaseName)) {
+            $args = $classBaseName;
+            $classBaseName = array_shift($args);
+        }
         foreach ($this->_namespaces as $namespace) {
             $className = $namespace . '_' . ucfirst($classBaseName);
             try {
                 Zend_Loader::loadClass($className);
-                $object = new $className();
-                if ($object instanceof $derivedFrom) {
+                $class = new ReflectionClass($className);
+                if ($class->implementsInterface((string) $interface)) {
+                    if ($class->hasMethod('__construct')) {
+                        $object = $class->newInstanceArgs($args);
+                    } else {
+                        $object = $class->newInstance();
+                    }
                     return $object;
                 }
             } catch (Zend_Exception $e) {
@@ -662,7 +697,7 @@ class Zend_Filter_Input
             }
         }
         require_once 'Zend/Filter/Exception.php';
-        throw new Zend_Filter_Exception("Could not find a class based on name '$classBaseName' extending $derivedFrom");
+        throw new Zend_Filter_Exception("Could not find a class based on name '$classBaseName' implementing $interface");
     }
 
 }

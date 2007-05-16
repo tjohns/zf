@@ -81,27 +81,55 @@ $filters = array(
         </para>
 
         <para>
-            Each value in the array can be a string scalar if you need to apply
-            only one filter to the field, or an array if you need to apply a
-            chain of filters to the field.  Each filter can be a string, which
-            is mapped to a class name, or else an instance of an object that
-            implements Zend_Filter_Interface.
+            If you need to apply only one filter to the field, each value in
+            the array can be a string scalar, which is mapped to a class name,
+            or an instance of an object that implements Zend_Filter_Interface.
+        </para>
+
+        <para>
+            You can also declare a chain of filters in an array.  Each element
+            of this array can be a string,  an instance of an object that
+            implements Zend_Filter_Interface, or an array.  The array contains
+            a string naming the filter class, followed by arguments that will
+            be passed to the filter's constructor.
         </para>
 
         <para>
             The example below declares a chain of two filters for the field
             'month'. The first filter is Zend_Filter_Digits specified by a
             string, followed by Zend_Filter_StringTrim specified by an object
-            instance.
+            instance.  The example also shows declaring a filter using an
+            array.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
 $filters = array( 
-    'month'   => array('Digits', new Zend_Filter_StringTrim()),
-    'account' => 'StringTrim'
+    // Declaring a chain of two filters, the first by a string
+    // and the second by an object.
+    'month'   => array(
+        'Digits',
+        new Zend_Filter_StringTrim()
+    ),
+    // Declaring a filter and its argument as an array.
+    'account' => array(
+        array('StringTrim', " \t'\"")
+    )
 ); 
 ]]></programlisting>
+
+        <note>
+            <para>
+                If you use the array format to declar a filter, you must make
+                an array for the rule, even if the rule has only one filter as
+                in the example above.  This avoids ambiguity between the rule
+                array and the filter declaration array.  If you try to declare
+                a single filter as an array but not inside a rule array, the
+                argument will be interpreted as the name of the second filter
+                in a chain.  It's likely that the value does not match any
+                existing filter class name, and an exception will be thrown.
+            </para>
+        </note>
 
         <para>
             Declare validators with a similar array, mapping fields to
@@ -270,8 +298,8 @@ if ($input->hasUnknown()) {
 
             <para>
                 All fields that are neither invalid, missing, nor unknown are
-                considered valid.  You can get values for valid fields a magic
-                accessor.  There are also non-magic accessor methods
+                considered valid.  You can get values for valid fields using a
+                magic accessor.  There are also non-magic accessor methods
                 <code>getEscaped()</code> and <code>getUnescaped()</code>.
             </para>
 
@@ -376,6 +404,12 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
                 field name with the 'fields' metacommand.
             </para>
 
+            <para>
+                You can specify this metacommand using the class constant
+                <code>Zend_Filter_Input::FIELDS</code> instead of the
+                string.
+            </para>
+
             <programlisting role="php"><![CDATA[<?php
 
 $filters = array( 
@@ -444,6 +478,12 @@ $validators = array(
                 reported as a missing field.
             </para>
 
+            <para>
+                You can specify this metacommand using the class constant
+                <code>Zend_Filter_Input::PRESENCE</code> instead of the
+                string.
+            </para>
+
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array( 
@@ -481,6 +521,12 @@ $validators = array(
                 input data, but has the value of an empty string.
             </para>
 
+            <para>
+                You can specify this metacommand using the class constant
+                <code>Zend_Filter_Input::ALLOW_EMPTY</code> instead of the
+                string.
+            </para>
+
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array( 
@@ -497,14 +543,14 @@ $validators = array(
 
         </sect3>
 
-        <sect3 id="zend.filter.input.metacommands.allow-empty">
+        <sect3 id="zend.filter.input.metacommands.break-chain">
 
             <title>The <code>BREAK_CHAIN</code> metacommand</title>
 
             <para>
-                By default if a rule has more than one validator, 
-                all validators are applied to the input, and the resulting messages contain
-                all error messages caused by the input.
+                By default if a rule has more than one validator, all
+                validators are applied to the input, and the resulting messages
+                contain all error messages caused by the input.
             </para>
 
             <para>
@@ -514,6 +560,12 @@ $validators = array(
                 not checked against subsequent validators in the chain, so it
                 might cause more violations even if you correct the one
                 reported.
+            </para>
+
+            <para>
+                You can specify this metacommand using the class constant
+                <code>Zend_Filter_Input::BREAK_CHAIN</code> instead of the
+                string.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -564,6 +616,102 @@ $input = new Zend_Filter_Input(null, $validators);
 
         </sect3>
 
+        <sect3 id="zend.filter.input.metacommands.errors">
+
+            <title>The <code>ERRORS</code> metacommand</title>
+
+            <para>
+                You can specify error messages for each validator in a rule
+                using the metacommand 'errors'.  The value of this metacommand
+                varies based on whether you have multiple validators in the
+                rule, or if you want to set the message for a specific error
+                condition in a given validator.
+            </para>
+
+            <para>
+                You can specify this metacommand using the class constant
+                <code>Zend_Filter_Input::ERRORS</code> instead of the
+                string.
+            </para>
+
+            <para>
+                Below is a simple example of setting the default error message 
+                for a single validator.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$validators = array(
+    'month' => array(
+        'digits',
+        'errors' => 'A month must consist only of digits'
+    )
+);
+]]></programlisting>
+
+            <para>
+                If you have multiple validators for which you want to set the
+                error message, you should use an array for the value of the
+                'errors' metacommand.
+            </para>
+
+            <para>
+                Each element of this array is applied to the validator at the
+                same index position.  You can specify a message for the
+                validator at position <emphasis>n</emphasis> by using the value
+                <emphasis>n</emphasis> as the array index.  Thus you can allow
+                some validators to use their default message, while setting the
+                message for a subsequent validator in the chain.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$validators = array(
+    'month' => array(
+        'digits',
+        new Zend_Validate_Between(1, 12),
+        'errors' => array(
+            // use default message for validator [0]
+            // set new message for validator [1]
+            1 => 'A month value must be between 1 and 12'
+        )
+    )
+);
+]]></programlisting>
+
+            <para>
+                If one of your validators has multiple error messages, they are
+                identified by a message key.  There are different keys in each
+                validator class, serving as identifiers for error messages that
+                the respective validator class might generate.  You can use
+                these keys in the 'errors' metacommand by passing an
+                associative array instead of a string.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$validators = array(
+    'month' => array(
+        'digits', new Zend_Validate_Between(1, 12),
+        'errors' => array(
+            'A month must consist only of digits'
+            array(
+                'tooLow'  => 'Month value %value% must be greater than %min%',
+                'tooHigh' => 'Month value %value% must be less than %max%'
+            )
+        )
+    )
+);
+]]></programlisting>
+
+            <para>
+                You should refer to documentation for each validator class to
+                know if it has multiple error messages, and what are the keys
+                of these messages.
+            </para>
+
+        </sect3>
+
         <sect3 id="zend.filter.input.metacommands.global">
 
             <title>Using options to set metacommands for all rules</title>
@@ -595,7 +743,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
             <para>
-                The 'fields' metacommand cannot be set using this technique.
+                The 'fields' and 'errors' metacommands cannot be set using this
+                technique.
             </para>
 
         </sect3>

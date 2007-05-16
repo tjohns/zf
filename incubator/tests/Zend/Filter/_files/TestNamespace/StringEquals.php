@@ -47,6 +47,7 @@ class TestNamespace_StringEquals implements Zend_Validate_Interface
      */
     public function isValid($value)
     {
+        $this->_messages = array();
         $initial = (string) current((array)$value);
         foreach ((array) $value as $element) {
             if ((string) $element != $initial) {
