@@ -212,4 +212,22 @@ class Zend_Translate {
     {
         return $this->_adapter->translate($messageId, $locale);
     }
+
+
+    /**
+     * Checks if a given string can be translated
+     * returns boolean
+     * 
+     * @param  string              $messageId  Translation string
+     * @param  boolean             $original   OPTIONAL Allow translation only for original language
+     *                                         when true, a translation for 'en_US' would give false when it can
+     *                                         be translated with 'en' only
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
+     *                                         see Zend_Locale for more information
+     * @return boolean
+     */
+    public function isTranslated($messageId, $original = false, $locale = null)
+    {
+        return $this->_adapter->isTranslated($messageId, $original, $locale);
+    }
 }

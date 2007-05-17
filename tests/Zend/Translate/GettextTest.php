@@ -61,6 +61,17 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5');
     }
 
+    public function testIsTranslated()
+    {
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
+
+        $this->assertEquals($adapter->isTranslated('Message 1'), true);
+        $this->assertEquals($adapter->isTranslated('Message 6'), false);
+        $this->assertEquals($adapter->isTranslated('Message 1', true), true);
+        $this->assertEquals($adapter->isTranslated('Message 1', true, 'en'), false);
+        $this->assertEquals($adapter->isTranslated('Message 1', false, 'es'), false);
+    }
+
     public function testLoadTranslationData()
     {
         $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo', 'en');
