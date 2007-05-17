@@ -26,7 +26,7 @@ require_once 'Zend/Http/Client.php';
 /**
  * Zend_Gdata_App_AuthException
  */
-require_once 'Zend/Gdata/AuthException.php';
+require_once 'Zend/Gdata/App/AuthException.php';
 
 /**
  * Zend_Gdata_App_HttpException
