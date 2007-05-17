@@ -1,18 +1,17 @@
 <sect1 id="zend.controller.response">
-    <title>The Response Object</title>
+    <title>Das Response Objekt</title>
 
     <sect2 id="zend.controller.response.usage">
-        <title>Usage</title>
+        <title>Verwendung</title>
 
         <para>
-            The response object is the logical counterpart to the <link
-                linkend="zend.controller.request">request object</link>. Its
-            purpose is to collate content and/or headers so that they may be
-            returned en masse. Additionally, the front controller will pass any
-            caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions. This functionality may be overridden
-            by setting
-            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+            Das Response Objekt ist das logische Gegenstück zum <link
+                linkend="zend.controller.request">Request Objekt</link>. Sein Zweck ist es, 
+            Inhalte und / oder Header zu vereinigen, um sie in einem Rutsch zu versenden. 
+            Zusätzlich übergibt der Front Controller alle aufgefangenen Ausnahmen an das Response
+            Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen. Dies 
+            Funktionalität kann durch Setzen von 
+            <code>Zend_Controller_Front::throwExceptions(true)</code> überschrieben werden.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -20,8 +19,8 @@ $front->throwExceptions(true);
 ]]></programlisting>
 
         <para>
-            To send the response output, including headers, use
-            <code>sendResponse()</code>.
+            Um die Ausgabe der Response, inklusiver der gesetzten Header, zu senden, verwendet man
+            <code>sendResponse()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -49,22 +48,21 @@ $response->sendResponse();
         </note>
             
         <para>
-            Developers should make use of the response object in their action
-            controllers. Instead of directly rendering output and sending
-            headers, push them to the response object:
+            Entwickler sollten das Response Objekt in ihren Aktionscontrollern verwenden. Statt 
+            die Ausgabe direkt zu machen und Header zu versenden, sollten diese an des Response
+            Objekt übergeben werden:
         </para>
 
         <programlisting role="php"><![CDATA[
-// Within an action controller action:
-// Set a header
+// Innerhalb einer Controller Aktion:
+// Setze einen Header
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
 ]]></programlisting>
 
         <para>
-            By doing this, all headers get sent at once, just prior to
-            displaying the content.
+            Dadurch werden alle Header in einem Rutsch versendet, genau vor der Anzeige des Inhalts.
         </para>
 
         <note>
@@ -78,55 +76,55 @@ $this->getResponse()
         </note>
 
         <para>
-            Should an exception occur in an application, check the response object's
-            <code>isException()</code> flag, and retrieve the exception using
-            <code>getException()</code>. Additionally, one may create custom
-            response objects that redirect to error pages, log exception messages,
-            do pretty formatting of exception messages (for development
-            environments), etc.
+            Sollte in der Applikation eine Ausnahme auftreten, überprüft man den 
+            <code>isException()</code> Schalter des Response Objektes und erhält die Ausnahme durch
+            Verwendung von <code>getException()</code>. Zusätzlich kann man ein eigenes Response 
+            Objekt erstellen, dass zu einer Fehlerseite umleitet, die Nachricht der Ausnahme loggt,
+            die Nachricht der Ausnahme schön formatiert ausgibt (für Entwicklungsumgebungen), usw.
         </para>
 
         <para>
-            You may retrieve the response object following the front controller
-            dispatch(), or request the front controller to return the response
-            object instead of rendering output.
+            Man kann das Response Objekt im Anschluß an die dispatch() Methode des Front Controllers
+            erhalten oder den Front Controller auffordern, dass Response Objekt zurückzugeben
+            statt den Inhalt auszugeben.
         </para>
 
         <programlisting role="php"><![CDATA[
-// retrieve post-dispatch:
+// Erhalten nach dem Dispatch:
 $front->dispatch();
 $response = $front->getResponse();
 if ($response->isException()) {
     // log, mail, etc...
 }
 
-// Or, have the front controller dispatch() process return it
+// Oder den Front Controller dispatch Prozess auffordern, es zurück zu geben
 $front->returnResponse(true);
 $response = $front->dispatch();
 
-// do some processing...
+// mache irgend was...
 
-// finally, echo the response
+// zum Schluß, gebe die Antwort aus
 $response->sendResponse();
 ]]></programlisting>
 
         <para>
-            By default, exception messages are not displayed. This behaviour may be
-            overridden by calling <code>renderExceptions()</code>, or enabling the
-            front controller to throwExceptions(), as shown above:
+            Standardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch 
+            den Aufruf von <code>renderException()</code> überschrieben werden oder indem der 
+            Front Controller aufgefordert wird, die Exceptions durch throwExceptions() auszuwerfen,
+            wie oben gezeigt: 
         </para>
 
         <programlisting role="php"><![CDATA[
 $response->renderExceptions(true);
 $front->dispatch($request, $response);
 
-// or:
+// oder:
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions();
 $response->sendResponse();
 
-// or:
+// oder:
 $front->throwExceptions(true);
 $front->dispatch();
 ]]></programlisting>

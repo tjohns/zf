@@ -1,105 +1,94 @@
 <sect1 id="zend.controller.request">
-    <title>The Request Object</title>
+    <title>Das Request Objekt</title>
     <sect2 id="zend.controller.request.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
         <para>
-            The request object is a simple value object that is passed between
-            <code>Zend_Controller_Front</code> and the router, dispatcher, and
-            controller classes.  It packages the names of the requested module,
-            controller, action, and optional parameters, as well as the rest of
-            the request environment, be it HTTP, the CLI, or PHP-GTK.
+            Das Request Objekt ist eine einfaches Wertobjekt, das zwischen 
+            <code>Zend_Controller_Front</code> und den Router, Dispatcher und Controller Klassen
+            übergeben wird. Es enthält sowohl die Definition des Controllers, der Aktion und der 
+            Parameter, die an die Aktion übergeben werden sollen, als auch den Rest der 
+            Anfrageumgebung, seit es HTTP, CLI oder PHP-GTK.
         </para>
 
         <itemizedlist>
             <listitem><para>
-                The module name is accessed by
-                <code>getModuleName()</code> and
-                <code>setModuleName()</code>.
+                Auf den Modul Namen kann über <code>getModuleName()</code> und
+                <code>setModuleName()</code> zugegriffen werden.
             </para></listitem>
-
             <listitem><para>
-                The controller name is accessed by
-                <code>getControllerName()</code> and
-                <code>setControllerName()</code>.
+                Auf den Controller Namen kann über <code>getControllerName()</code> und
+                <code>setControllerName()</code> zugegriffen werden.
             </para></listitem>
-
             <listitem><para>
-                The name of the action to call within that controller is
-                accessed by <code>getActionName()</code> and
-                <code>setActionName()</code>.
+                Auf den Namen der Aktion, die in diesem Controller aufgerufen wird, kann über 
+                accessed by <code>getActionName()</code> und <code>setActionName()</code> 
+                zugegriffen werden.
             </para></listitem>
-
             <listitem><para>
-                Parameters to be accesible by the action are an associative array
-                of key/value pairs that are retrieved by <code>getParams()</code>
-                and set with <code>setParams()</code>, or individually by
-                <code>getParam()</code> and <code>setParam()</code>.
+                Parameter, die von der Aktion ansprechbar sind, bestehen aus einem assoziativen
+                Array mit Schlüssel/Wert Paaren, auf die komplett per <code>getParams()</code> und 
+                <code>setParams()</code> oder einzeln per <code>getParam()</code> und 
+                <code>setParam()</code> zugegriffen werden kann.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Based on the type of request, there may be more methods available.
-            The default request used, <code>Zend_Controller_Request_Http</code>,
-            for instance, has methods for retrieving the request URI, path
-            information, <code>$_GET</code> and <code>$_POST</code> parameters,
-            etc.
+            Abhängig vom Typ der Anfrage können auch weitere Methoden verfügbar sein. Das 
+            verwendete Standard Request Object <code>Zend_Controller_Request_Http</code> stellt z.B.
+            Methoden zum Abfragen der Request URI, Pfadinformationen, <code>$_GET</code> und 
+            <code>$_POST</code> Parameter usw. bereit.
         </para>
 
         <para>
-            The request object is passed to the front controller, or if none is
-            provided, it is instantiated at the beginning of the dispatch
-            process, before routing occurs. It is passed through to every object
-            in the dispatch chain.
+            Das Request Objekt wird an den Front Controller übergeben oder, wenn keines bereit 
+            gestellt wurde, am Anfang des Dispatcher Prozesses instanziert, bevor das Routing 
+            beginnt. Es wird an jedes Objekt in der Dispatcherkette übergeben.
         </para>
 
         <para>
-            Additionally, the request object is particularly useful in testing.
-            The developer may craft the request environment, including module,
-            controller, action, parameters, URI, etc, and pass the request
-            object to the front controller to test application flow. When paired
-            with the <link linkend="zend.controller.response">response
-                object</link>, elaborate and precise unit testing of MVC
-            applications becomes possible.
+            Zusätzlich ist das Request Object besonders beim Testen sehr nützlich. Der Entwickler
+            kann die Anfrageumgebung von Hand erstellen, inklusive Controller, Aktion, Parameter, 
+            URI usw. und das Request Objekt an den Front Controller übrgeben, um den Ablauf der
+            Applikation zu testen. Zusammen mit dem 
+            <link linkend="zend.controller.response">Response Objekt</link> sind durchdachte und 
+            genaue Unit Tests für eine MVC Applikation möglich.
         </para>
     </sect2>
 
     <sect2 id="zend.controller.request.http">
-        <title>HTTP Requests</title>
+        <title>HTTP Anfragen</title>
 
         <sect3 id="zend.controller.request.http.dataacess">
-            <title>Accessing Request Data</title>
+            <title>Auf Request Daten zugreifen</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> encapsulates access to
-                relevant values such as the key name and value for the
-                controller and action router variables, and all additional
-                parameters parsed from the URI. It additionally allows access to
-                values contained in the superglobals as public members, and
-                manages the current Base URL and Request URI.  Superglobal
-                values cannot be set on a request object, instead use the
-                setParam/getParam methods to set or retrieve user parameters.
+                <code>Zend_Controller_Request_Http</code> kapselt den Zugriff auf relevante Werte
+                wie der Schlüssel und Wert für Controller und Action Variablen des Routers und alle
+                zusätzlichen Parameter, die aus der URI ermittelt wurden. Es erlaubt zusätzlich 
+                den Zugriff auf superglobale Werte als öffentliche Eigenschaften und verwaltet 
+                die aktuelle Basis URL und Request URI. Superglobale Werte können in einem Request 
+                Objekt nicht gesetzt werden, stattdessen verwendet man die setParam/getParam 
+                Methoden um Benutzerparameter zu setzen oder zu erhalten.
             </para>
 
             <note>
-                <title>Superglobal data</title>
+                <title>Superglobale Daten</title>
                 <para>
-                    When accessing superglobal data through
-                    <code>Zend_Controller_Request_Http</code> as public member
-                    properties, it is necessary to keep in mind that the
-                    property name (superglobal array key) is matched to a
-                    superglobal in a specific order of precedence: 1. GET, 2.
-                    POST, 3. COOKIE, 4. SERVER, 5. ENV.
+                    Beim Zugriff auf superglobale Daten über die öffentlichen Eigenschaften von 
+                    <code>Zend_Controller_Request_Http</code> ist es notwendig, darauf zu achten, 
+                    dass der Eigenschaftsname (der superglobale Arrayschlüssel) einem superglobalen
+                    Wert in einer bestimmten Reihenfolge entspricht: 1. GET, 2. POST, 3. COOKIE, 
+                    4. SERVER, 5. ENV.
                 </para>
             </note>
 
             <para>
-                Specific superglobals can be accessed using a public method as
-                an alternative. For example, the raw value of
-                <code>$_POST['user']</code> can be accessed by calling
-                <code>getPost('user')</code> on the request object. These
-                include <code>getQuery()</code> for retrieving
-                <code>$_GET</code> elements, and <code>getHeader()</code> for
-                retrieving request headers.
+                Auf spezifische superglobale Werte kann alternativ über eine öffentliche Methode 
+                zugegriffen werden. Zum Beispiel kann auf den unverarbeitete Wert von 
+                <code>$_POST['user']</code> durch Aufruf der <code>getPost('user')</code> Methode 
+                des Request Objekts zugegriffen werden. Diese beinhalten <code>getQuery()</code>,
+                um <code>$_GET</code> Elemente zu erhalten und <code>getHeader()</code>, um 
+                Request Header zu erhalten.
             </para>
 
             <note>
@@ -135,46 +124,42 @@
         </sect3>
 
         <sect3 id="zend.controller.request.http.baseurl">
-            <title>Base Url and Subdirectories</title>
+            <title>Basis Url und Unterverzeichnisse</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> allows
-                Zend_Controller_Router_Rewrite to be used in subdirectories.
-                Zend_Controller_Request_Http will attempt to automatically
-                detect your base URL and set it accordingly.
+                <code>Zend_Controller_Request_Http</code> erlaubt, dass Zend_Controller_Router_Rewrite 
+                in einem Unterverzeichnis verwendet werden kann. Zend_Controller_Request_Http 
+                versucht, die Basis URL automatisch zu erkennen und entsprechend zu setzen.
             </para>
 
             <para>
-                For example, if you keep your <code>index.php</code> in a
-                webserver subdirectory named
-                <code>/projects/myapp/index.php</code>, base URL (rewrite base)
-                should be set to <code>/projects/myapp</code>. This string will
-                then be stripped from the beginning of the path before
-                calculating any route matches. This frees one from the necessity
-                of prepending it to any of your routes. A route of
-                <code>'user/:username'</code> will match URIs like
-                <code>http://localhost/projects/myapp/user/martel</code> and
+                Wenn man zum Beispiel seine <code>index.php</code> in einem Webserverunterverzeichnis 
+                mit Namen <code>/projects/myapp/index.php</code> verwendet, sollte die Basis URL
+                (die Rewrite Basis) auf <code>/projects/myapp</code> gesetzt werden. Dieser String
+                wird dann vom Anfang des Pfades entfernt, bevor irgend welche Routingtreffer 
+                ermittelt werden. Dies befreit einem davon, es an den Anfang jeder Route setzen zu 
+                müssen. Eine Route <code>'user/:username'</code> passt auf URIs wie 
+                <code>http://localhost/projects/myapp/user/martel</code> und
                 <code>http://example.com/user/martel</code>.
             </para>
 
             <note>
-                <title>URL detection is case sensitive</title>
+                <title>URL Erkennung beachtet Groß- und Kleinschreibung</title>
                 <para>
-                    Automatic base URL detection is case sensitive, so make sure your URL
-                    will match a subdirectory name in a filesystem (even on Windows
-                    machines). If it doesn't, an exception will be raised.
+                    Die automatische Erkennung der Basis URL beachtet die Groß- und Kleinschreibung,
+                    weshalb man sicherstellen sollte, dass die URL einem Unterverzeichnis im 
+                    Dateisystem entspricht (sogar auf einem Windows Rechner). Andernfalls wird eine 
+                    Ausnahme geworfen.
                 </para>
             </note>
 
             <para>
-                Should base URL be detected incorrectly you can override it
-                with your own base path with the help of the
-                <code>setBaseUrl()</code> method of either the
-                <code>Zend_Controller_Request_Http</code> class, or the
-                <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>,
-                which will proxy it into the request object. Example usage to
-                set a custom base URL:
+                Sollte die Basis URL falsch erkannt werden, kann man diese auch mit einem eigenen
+                Pfad mit Hilfe der <code>setBaseUrl()</code> Methode der 
+                <code>Zend_Controller_Request_Http</code> Klasse oder der 
+                <code>Zend_Controller_Front</code> Klasse überschreiben. Die einfachste Methode ist 
+                die von <code>Zend_Controller_Front</code>, welche es an das Request Object weiter 
+                leitet. Beispiel, um eine eigene Basis URL zu setzen:
             </para>
 
             <programlisting role="php"><![CDATA[<?php

@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.quickstart">
-    <title>Zend_Controller Quick Start</title>
+    <title>Zend_Controller Schnellstart</title>
 
     <sect2 id="zend.controller.quickstart.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
         <para>
             <code>Zend_Controller</code> is the heart of Zend Framework's MVC
             system. MVC stands for <ulink
@@ -16,12 +16,12 @@
             Action Controllers based on the URL requested.
         </para>
         <para>
-            The <code>Zend_Controller</code> system was built with extensibility
-            in mind, either by subclassing the existing classes, writing new
-            classes that implement the various interfaces and abstract classes
-            that form the foundation of the controller family of classes, or
-            writing plugins or action helpers to augment or manipulate the
-            functionality of the system.
+            Das <code>Zend_Controller</code> System wurde im Sinne der Erweiterungsmöglichkeiten 
+            entwickelt, entweder durch Erstellen von Subklassen, welche die bestehenden Klassen 
+            erweitern, oder durch Erstellen neuer Klassen, welche die verschiedenen Interfaces 
+            und abstrakten Klassen implementieren, welche das Fundament der Controller 
+            Klassenfamilie bilden, oder durch das Schreiben von Plugins und Action Helper, um die
+            Funktionalität des Systems zu erweitern oder zu verändern.
         </para>
     </sect2>
 

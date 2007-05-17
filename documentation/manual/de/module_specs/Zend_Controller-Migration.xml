@@ -2,9 +2,9 @@
     <title>Migrating from Previous Versions</title>
 
     <para>
-        The API of the MVC components has changed over time. If you started
-        using Zend Framework in an early version, follow the guidelines below to
-        migrate your scripts to use the new architecture.
+        Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer das Zend Framework bereits 
+        in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit die Skripte die
+        neue Archtitekur verwenden.
     </para>
 
     <sect2 id="zend.controller.migration.fromzeroninetwo">
@@ -51,11 +51,10 @@
     </sect2>
 
     <sect2 id="zend.controller.migration.fromzerosix">
-        <title>Migrating from 0.6.0 to 0.8.0 or newer</title>
+        <title>Migration von 0.6.0 nach 0.8.0 oder neuer</title>
 
         <para>
-            Per previous changes, the most basic usage of the MVC components
-            remains the same:
+            Durch bisherige Änderungen bleibt die wesentliche Verwendung der MVC Komponenten gleich:
         </para>
         
         <programlisting role="php"><![CDATA[
@@ -64,58 +63,55 @@ Zend_Controller_Front::run('/path/to/controllers');
 ]]></programlisting>
 
         <para>
-            However, the directory structure underwent an overhaul, several
-            components were removed, and several others either renamed or added.
-            Changes include:
+            Dennoch wurde die Verzeichnisstruktur gründliche überarbeitet, verschiedene Komponenten
+            wurden entfernt und mehrere andere umbenannt und hinzugefügt. Die Änderungen beinhalten:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router</code> was removed in favor of
-                    the rewrite router.
+                    <code>Zend_Controller_Router</code> wurde entfernt für den Rewrite Router 
+                    entfernt.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_RewriteRouter</code> was renamed to
-                    <code>Zend_Controller_Router_Rewrite</code>, and promoted to
-                    the standard router shipped with the framework;
-                    <code>Zend_Controller_Front</code> will use it by default if
-                    no other router is supplied.
+                    <code>Zend_Controller_RewriteRouter</code> wurde in 
+                    <code>Zend_Controller_Router_Rewrite</code> umbenannt und zum Standard Router 
+                    befördert, der mit dem Framework ausgeliefert wird; 
+                    <code>Zend_Controller_Front</code> wird ihn als Standard verwenden, wenn kein
+                    anderer Router übergeben wird.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    A new route class for use with the rewrite router was
-                    introduced,
-                    <code>Zend_Controller_Router_Route_Module</code>; it covers
-                    the default route used by the MVC, and has support for <link
-                        linkend="zend.controller.modular">controller
-                        modules</link>.
+                    Eine neue Route Klasse für die Verwendung mit dem Rewrite Router wurde 
+                    eingeführt: <code>Zend_Controller_Router_Route_Module</code>; sie deckt die
+                    Standardrouten ab, die vom MVC verwendet werden und bietet die Unterstützung
+                    für <link linkend="zend.controller.modular">Controller Module</link>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_StaticRoute</code> was renamed
-                    to <code>Zend_Controller_Router_Route_Static</code>.
+                    <code>Zend_Controller_Router_StaticRoute</code> wurde umbenannt in 
+                    <code>Zend_Controller_Router_Route_Static</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher</code> was renamed
+                    <code>Zend_Controller_Dispatcher</code> wurde umbenannt in
                     <code>Zend_Controller_Dispatcher_Standard</code>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::_forward()</code>'s arguments
-                    have changed. The signature is now:
+                    <code>Zend_Controller_Action::_forward()</code>'s Argumente wurden geändert. 
+                    Die Signatur ist nun:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -123,25 +119,24 @@ final protected function _forward($action, $controller = null, $module = null, a
 ]]></programlisting>
 
                 <para>
-                    <code>$action</code> is always required; if no controller is
-                    specified, an action in the current controller is assumed.
-                    <code>$module</code> is always ignored unless
-                    <code>$controller</code> is specified. Finally, any
-                    <code>$params</code> provided will be appended to the
-                    request object. If you do not require the controller or
-                    module, but still need to pass parameters, simply specify
-                    null for those values.
+                    <code>$action</code> wird immer benötigt; wenn kein Controller angegeben wird,
+                    wird eine Action im aktuellen Controller angenommen. <code>$module</code> wird
+                    immer ignoriert, es sei denn <code>$controller</code> wird angegeben. 
+                    Schließlich werden alle übergebenen Parameter <code>$params</code> an das
+                    Request Objekt angehängt. Wenn man keinen Controller oder kein Modul angeben, 
+                    aber dennoch Parameter übergeben möchte, gibt man einfach null für diese Werte
+                    an.
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.migration.fromzerotwo">
-        <title>Migrating from 0.2.0 or before to 0.6.0</title>
+        <title>Migration von 0.2.0 oder früher nach 0.6.0</title>
 
         <para>
-            The most basic usage of the MVC components has not changed; you can
-            still do each of the following:
+            Die grundlegende Verwendung der MVC Komponenten hat sich nicht verändert; man kann immer
+            noch das folgende machen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -150,56 +145,53 @@ Zend_Controller_Front::run('/path/to/controllers');
 ]]></programlisting>
 
         <programlisting role="php"><![CDATA[
-/* -- create a router -- */
+/* -- Erstelle einen Router -- */
 $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user', 'user/:username', array('controller' => 'user',
 'action' => 'info'));
 
-/* -- set it in a controller -- */
+/* -- Setze ihn im Controller -- */
 $ctrl = Zend_Controller_Front::getInstance();
 $ctrl->setRouter($router);
 
-/* -- set controller directory and dispatch -- */
+/* -- Setze da Controller Verzeichnis und starte die Verarbeitung -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
 $ctrl->dispatch();
 ]]></programlisting>
 
         <para>
-            We encourage use of the Response object to aggregate content and
-            headers. This will allow for more flexible output format switching
-            (for instance, JSON or XML instead of XHTML) in your applications.
-            By default, <code>dispatch()</code> will render the response, sending both
-            headers and rendering any content. You may also have the front
-            controller return the response using <code>returnResponse()</code>,
-            and then render the response using your own logic. A future version
-            of the front controller may enforce use of the response object via
-            output buffering.
+            Wir empfehlen die Verwendung des Response Objektes, um Inhalte und Header zu sammeln.
+            Dies erlaubt den flexibleren Wechsel von Ausgabeformaten (z.B. JSON oder XML statt 
+            XHTML) in deiner Applikation. Standardmäßig verarbeitet <code>dispatch()</code> die
+            Antwort, sendet Header und gibt die Inhalte aus. Man kann den Front Controller auch
+            auffordern, die Antwort durch <code>returnResponse()</code> zurückzugeben und die
+            Antwort dann auf eigene Weise ausgeben. Eine zukünftige Version des Front Controllers
+            könnte die Verwendung des Response Objektes durch Output Buffering erzwingen.
         </para>
 
         <para>
-            There are many additional features that extend the existing API,
-            and these are noted in the documentation.
+            Es gibt viele weitere zusätzliche Funktionalitäten, welche die vorherige API erweitern. 
+            Diese sind in der Dokumentation aufgeführt.
         </para>
 
         <para>
-            The main changes you will need to be aware of will be found when
-            subclassing the various components. Key amongst these are:
+            Die meisten Änderungen, die man beachten muss, betreffen das Erweitern der diversen
+            Komponenten. Die wichtigsten davon sind:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::dispatch()</code> by default
-                    traps exceptions in the response object, and does not render
-                    them, in order to prevent sensitive system information from
-                    being rendered. You can override this in several ways:
+                    <code>Zend_Controller_Front::dispatch()</code> fängt standardmäßig die Ausnahmen
+                    im Response Objekt ab und gibt sie nicht aus, um sicherzugehen, dass keine 
+                    sensitiven Systeminformationen ausgegeben werden. Man kann dies auf mehrere
+                    Arten überschreiben:
                 </para>
 
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Set <code>throwExceptions()</code> in the front
-                            controller:
+                            Setzen von <code>throwExceptions()</code> im Front Controller:
                         </para>
                         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
@@ -208,15 +200,14 @@ $front->throwExceptions(true);
 
                     <listitem>
                         <para>
-                            Set <code>renderExceptions()</code> in the response
-                            object:
+                            Setzen von <code>renderExceptions()</code> im Response objekt:
                         </para>
                         <programlisting role="php"><![CDATA[
 $response->renderExceptions(true);
 $front->setResponse($response);
 $front->dispatch();
 
-// or:
+// oder:
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
@@ -228,110 +219,106 @@ echo $response;
 
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
-                now accepts and returns a <xref linkend="zend.controller.request" />
-                object instead of a dispatcher token.
+                akzeptiert und gibt nun ein <xref linkend="zend.controller.request" />
+                Objekt anstelle eines Dispatcher Token zurück.
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
-                now accepts and returns a <xref linkend="zend.controller.request" />
-                object instead of a dispatcher token.
+                akzeptiert und gibt nun ein <xref linkend="zend.controller.request" />
+                Objekt anstelle eines Dispatcher Token zurück.
             </para></listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Action</code> changes include:</para>
+                <para><code>Zend_Controller_Action</code> Änderungen beinhalten:</para>
 
                 <itemizedlist>
                     <listitem><para>
-                        The constructor now accepts exactly three arguments,
+                        Der Konstruktur akzeptiert nun genau drei Argumente, 
                         <code>Zend_Controller_Request_Abstract $request</code>, 
-                        <code>Zend_Controller_Response_Abstract $response</code>, 
-                        and <code>array $params (optional)</code>.
-                        <code>Zend_Controller_Action::__construct()</code> uses
-                        these to set the request, response, and invokeArgs
-                        properties of the object, and if overriding the
-                        constructor, you should do so as well. Better yet, use
-                        the <code>init()</code> method to do any instance
-                        configuration, as this method is called as the final
-                        action of the constructor.
+                        <code>Zend_Controller_Response_Abstract $response</code>, und 
+                        <code>array $params (optional)</code>.
+                        <code>Zend_Controller_Action::__construct()</code> verwendet diese, um die
+                        Request, Response und invokeArgs Eigenschaften für das Objekt zu setzen, und
+                        beim Überschreiben des Konstrukturs sollte man dies ebenfalls tun. Besser 
+                        ist es, die <code>init()</code> Methode zu verwenden, um jedwede 
+                        Instanzkonfiguration durchzuführen, weil diese Methode als letzte Methode 
+                        des Konstrukturs aufgerufen wird.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>run()</code> is no longer defined as final, but is
-                        also no longer used by the front controller; it's sole
-                        purpose is for using the class as a page controller. It
-                        now takes two optional arguments, a
+                        <code>run()</code> ist nicht länger als final definiert, wird aber auch 
+                        nicht länger vom Front Controller verwendet; sein einziger Zweck ist, dass
+                        die Klasse auch als Page Controller verwendet werden kann. Sie nimmt nun 
+                        zwei optionale Argument an, ein 
                         <code>Zend_Controller_Request_Abstract $request</code> 
-                        and a <code>Zend_Controller_Response_Abstract $response</code>.
+                        und ein <code>Zend_Controller_Response_Abstract $response</code>.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>indexAction()</code> no longer needs to be
-                        defined, but is encouraged as the default action. This
-                        allows using the RewriteRouter and action controllers to
-                        specify different default action methods.
+                        <code>indexAction()</code> muss nicht mehr länger definiert werden, aber 
+                        wird als Standardaktion empfohlen. Dies erlaubt dem RewriteRouter und den
+                        Action Controllern andere Standardaktionsmethoden zu definieren.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>__call()</code> should be overridden to handle any
-                        undefined actions automatically.
+                        <code>__call()</code> sollte überschrieben werden, um jede undefinierte 
+                        Aktion automatisch verarbeiten zu können.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>_redirect()</code> now takes an optional second
-                        argument, the HTTP code to return with the redirect, and
-                        an optional third argument, <code>$prependBase</code>,
-                        that can indicate that the base URL registered with the
-                        request object should be prepended to the url specified.
+                        <code>_redirect()</code> nimmt nun ein optionales zweites Argument entgegen,
+                        den HTTP Code, der mit dem Redirect zurückgegeben werden soll, und ein 
+                        optionales drittes Argument <code>$prependBase</code>, das angibt, dass die 
+                        im Request Objekt registrierte Basis URL der übergebenen URL voran gestellt
+                        werden soll.
                     </para></listitem>
-
+                    
                     <listitem>
                         <para>
-                            The <code>_action</code> property is no longer set.
-                            This property was a <code>Zend_Controller_Dispatcher_Token</code>, 
-                            which no longer exists in the current incarnation.
-                            The sole purpose of the token was to provide
-                            information about the requested controller, action,
-                            and URL parameters. This information is now
-                            available in the request object, and can be accessed
-                            as follows:
+                            Die <code>_action</code> Eigenschaft wird nicht mehr gesetzt. Diese
+                            Eigenschaft war ein <code>Zend_Controller_Dispatcher_Token</code>, der
+                            in der aktuellen Inkarnation nicht mehr länger existiert. Der einzige
+                            Zweck des Tokens war, Informationen über angeforderte Controller,
+                            Aktion und URL Parameter bereit zu stellen. Diese Infrmationen ist nun
+                            im Request Objekt verfügbar und kann wie folgt abgerufen werden:
                         </para>
 
                         <programlisting role="php"><![CDATA[
-// Retrieve the requested controller name
-// Access used to be via: $this->_action->getControllerName().
-// The example below uses getRequest(), though you may also directly access the
-// $_request property; using getRequest() is recommended as a parent class may
-// override access to the request object.
+// Hole den angeforderten Controllernamen
+// Der Zugriff erfolgte bisher über: $this->_action->getControllerName().
+// Das Beispiel unten verwendet getRequest(), obwohl man auch direkt auf die 
+// $_request Eigenschaft zugreifen kann; die Verwendung von getRequest() wird empfohlen, da
+// eine Elternklasse den Zugriff auf das Request Objekt überschreiben könnte
 $controller = $this->getRequest()->getControllerName();
 
-// Retrieve the requested action name
-// Access used to be via: $this->_action->getActionName().
+// Hole den angeforderten Aktionsnamen
+// Der Zugriff erfolgte bisher über: $this->_action->getActionName().
 $action = $this->getRequest()->getActionName();
 
-// Retrieve the request parameters
-// This hasn't changed; the _getParams() and _getParam() methods simply proxy to
-// the request object now.
+// Hole die Anfrageparameter
+// Dies hat sich nicht verändert; die _getParams() und _getParam() Methoden leiten nun
+// einfach auf das Request Objekt weiter.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
-                                           // 'default' as default value if not found
+$foo = $this->_getParam('foo', 'default'); // fordere den 'foo' Parameter an und verwende
+                                           // 'default', wenn kein Standardwert gefunden werden kann
 
 ]]></programlisting>
                     </listitem>
 
                     <listitem>
                         <para>
-                            <code>noRouteAction()</code> has been removed. The
-                            appropriate way to handle non-existent action
-                            methods should you wish to route them to a default
-                            action is using <code>__call()</code>:
+                            <code>noRouteAction()</code> wurde entfernt. Der geeignete Weg, um 
+                            nicht vorhandene Aktionsmethoden abzufangen, wenn man sie an eine
+                            Standardaktion weiter leiten möchte, sollte die Verwendung von 
+                            <code>__call()</code> sein:
                         </para>
 
                         <programlisting role="php"><![CDATA[
 public function __call($method, $args)
 {
-    // If an unmatched 'Action' method was requested, pass on to the default
-    // action method:
+    // Wenn eine nicht vorhandene 'Action' Methode angefordert wurde, leite auf die Standard
+    // Aktionsmethode um:
     if ('Action' == substr($method, -6)) {
         return $this->defaultAction();
     }
@@ -344,17 +331,17 @@ public function __call($method, $args)
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> has
-                been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code> 
-                instead (or Zend_Controller_Request_Http::setBaseUrl(), if using
-                that request class).
+                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> wurde entfernt. 
+                Stattdessen soll <code>Zend_Controller_Front::setBaseUrl()</code> verwendet werden
+                (oder Zend_Controller_Request_Http::setBaseUrl(), wenn die Request Klasse verwendet 
+                wird).
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Plugin_Interface</code> was replaced
-                by <code>Zend_Controller_Plugin_Abstract</code>. All methods now
-                accept and return a <xref linkend="zend.controller.request" />
-                object instead of a dispatcher token.
+                <code>Zend_Controller_Plugin_Interface</code> wurde durch 
+                by <code>Zend_Controller_Plugin_Abstract</code> ersetzt. Alle Methoden nehmen nun
+                ein <xref linkend="zend.controller.request" /> Objekt statt eines 
+                Dispatcher Tokens entgegen bzw. geben es zurück.
             </para></listitem>
         </itemizedlist>
     </sect2>

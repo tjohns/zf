@@ -1,47 +1,43 @@
 <sect1 id="zend.controller.dispatcher">
-    <title>The Dispatcher</title>
+    <title>Der Dispatcher</title>
 
     <sect2 id="zend.controller.dispatcher.overview">
-        <title>Overview</title>
+        <title>Überblick</title>
 
         <para>
-            Dispatching is the process of taking the request object,
-            <code>Zend_Controller_Request_Abstract</code>, extracting the module
-            name, controller name, action name, and optional parameters
-            contained in it, and then instantiating a controller and calling an
-            action of that controller. If any of the module, controller, or
-            action are not found, it will use default values for them.
-            <code>Zend_Controller_Dispatcher_Standard</code> specifies
-            <code>index</code> for each of the controller and action defaults
-            and <code>default</code> for the module default value, but allows
-            the developer to change the default values for each using the
-            <code>setDefaultController()</code>,
-            <code>setDefaultAction()</code>, and <code>setDefaultModule()</code>
-            methods, respectively.
+            Dispatching ist der Prozess, das Request Objekt
+            <code>Zend_Controller_Request_Abstract</code> zu übernehmen, die dort enthaltenen
+            Modul, Controller und Aktion Namen sowie die optionalen Parameter zu extrahieren und
+            dann den Controller zu instanzieren und die Aktion dieses Controllers aufzurufen.
+            Wenn kein Modul, kein Controller oder keine Aktion gefunden wurde, werden dafür
+            Standardwerte verwendet.  <code>Zend_Controller_Dispatcher_Standard</code> legt
+            <code>index</code> für beide als Standardwert fest, aber erlaubt dem Entwickler auch,
+            diese durch Verwendung der <code>setDefaultController()</code>, 
+            <code>setDefaultAction()</code> und <code>setDefaultModule()</code> Methoden zu
+            verändern.
         </para>
 
         <para>
-            Dispatching happens in a loop in the front controller. Before
-            dispatching occurs, the front controller routes the request to find
-            user specified values for the module, controller, action, and optional
-            parameters. It then enters a dispatch loop, dispatching the request.
+            Dispatching läuft innerhalb einer Schleife im Front Controller ab. Vor dem Dispatching
+            fragt der Front Controller den Request ab, um benutzerspezifizierte Werte für Modul,
+            Controller, Aktion und optionale Parameter zu finden. Dann startet er die Dispatch 
+            Schleife, um die Anfrage zu verarbeiten. 
         </para>
 
         <para>
-            At the beginning of each iteration, it sets a flag in the request
-            object indicating that the action has been dispatched. If an action
-            or pre/postDispatch plugin resets that flag, the dispatch loop will
-            continue and attempt to dispatch the new request. By changing the
-            controller and/or action in the request and resetting the dispatched
-            flag, the developer may define a chain of requests to perform.
+            Zu Beginn jeden Durchlaufes setzt er im Request Objekt einen Schalter, der angibt, dass
+            die Aktion verarbeitet worden ist. Wenn eine Aktion oder ein pre/postDispatch Plugin
+            diesen Schalter zurücksetzt, wird die Dispatch Schleife fortgesetzt und versucht, die
+            neue Anfrage zu verarbeiten. Durch Ändern des Controllers und / oder der Aktion im 
+            Request Objekt und Zuürcksetzen des Verarbeitungsstatus, kann der Entwickler eine zu 
+            durchlaufende Anfragekette definieren.
         </para>
 
         <para>
-            The action controller method that controlls such dispatching is
-            <code>_forward()</code>; call this method from any of the
-            pre/postDispatch() or action methods, providing an action, controller,
-            module, and optionally any additional parameters you may wish to
-            send to the new action:
+            Die Controller Methode, die solch eine Verarbeitung kontrolliert lautet
+            <code>_forward()</code>; rufe diese Methode von einer beliebigen pre/postDispatch()
+            oderAktionsmethode auf und übergebe Aktion, Controller, Modul und beliebige optionale
+            Parameter, die du zur neuen Aktion übersenden möchtest:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -71,9 +67,9 @@ public function bazAction()
         <title>Subclassing the Dispatcher</title>
 
         <para>
-            <code>Zend_Controller_Front</code> will first call the router to
-            determine the first action in the request. It then enters a dispatch
-            loop, which calls on the dispatcher to dispatch the action.
+            <code>Zend_Controller_Front</code> ruft zuerst den Router auf, um die erste Aktion 
+            für den Request zu ermitteln. Danach startet es die Dispatch Schleife, welche
+            den Dispatcher aufruft, um die Aktion zu verarbeiten.
         </para>
 
         <para>
