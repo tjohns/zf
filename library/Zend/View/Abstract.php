@@ -145,7 +145,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
         // base path
         if (array_key_exists('basePath', $config)) {
-            $this->setBasePath($config['basePath']);
+            $prefix = 'Zend_View';
+            if (array_key_exists('basePathPrefix', $config)) {
+                $prefix = $config['basePathPrefix'];
+            }
+            $this->setBasePath($config['basePath'], $prefix);
         }
 
         // user-defined view script path
@@ -155,12 +159,20 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
         // user-defined helper path
         if (array_key_exists('helperPath', $config)) {
-            $this->addHelperPath($config['helperPath']);
+            $prefix = 'Zend_View_Helper';
+            if (array_key_exists('helperPathPrefix', $config)) {
+                $prefix = $config['helperPathPrefix'];
+            }
+            $this->addHelperPath($config['helperPath'], $prefix);
         }
 
         // user-defined filter path
         if (array_key_exists('filterPath', $config)) {
-            $this->addFilterPath($config['filterPath']);
+            $prefix = 'Zend_View_Filter';
+            if (array_key_exists('filterPathPrefix', $config)) {
+                $prefix = $config['filterPathPrefix'];
+            }
+            $this->addFilterPath($config['filterPath'], $prefix);
         }
 
         // user-defined filters
@@ -303,17 +315,19 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      *     filters/
      * </code>
      * 
-     * @param string $path 
+     * @param  string $path 
+     * @param  string $prefix Prefix to use for helper and filter paths
      * @return Zend_View_Abstract
      */
-    public function setBasePath($path)
+    public function setBasePath($path, $classPrefix = 'Zend_View')
     {
-        $path  = rtrim($path, '/');
-        $path  = rtrim($path, '\\');
-        $path .= DIRECTORY_SEPARATOR;
+        $path        = rtrim($path, '/');
+        $path        = rtrim($path, '\\');
+        $path       .= DIRECTORY_SEPARATOR;
+        $classPrefix = rtrim($classPrefix, '_') . '_';
         $this->setScriptPath($path . 'scripts');
-        $this->setHelperPath($path . 'helpers');
-        $this->setFilterPath($path . 'filters');
+        $this->setHelperPath($path . 'helpers', $classPrefix . 'Helper');
+        $this->setFilterPath($path . 'filters', $classPrefix . 'Filter');
         return $this;
     }
 
@@ -328,17 +342,19 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      *     filters/
      * </code>
      * 
-     * @param string $path 
+     * @param  string $path 
+     * @param  string $prefix Prefix to use for helper and filter paths
      * @return Zend_View_Abstract
      */
-    public function addBasePath($path)
+    public function addBasePath($path, $classPrefix = 'Zend_View')
     {
-        $path  = rtrim($path, '/');
-        $path  = rtrim($path, '\\');
-        $path .= DIRECTORY_SEPARATOR;
+        $path        = rtrim($path, '/');
+        $path        = rtrim($path, '\\');
+        $path       .= DIRECTORY_SEPARATOR;
+        $classPrefix = rtrim($classPrefix, '_') . '_';
         $this->addScriptPath($path . 'scripts');
-        $this->addHelperPath($path . 'helpers');
-        $this->addFilterPath($path . 'filters');
+        $this->addHelperPath($path . 'helpers', $classPrefix . 'Helper');
+        $this->addFilterPath($path . 'filters', $classPrefix . 'Filter');
         return $this;
     }
 

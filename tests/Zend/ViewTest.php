@@ -451,12 +451,14 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $filterPath = $this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
 
         $config = array(
-            'escape'     => 'strip_tags',
-            'encoding'   => 'UTF-8',
-            'scriptPath' => $scriptPath,
-            'helperPath' => $helperPath,
-            'filterPath' => $filterPath,
-            'filter'     => 'urlencode',
+            'escape'           => 'strip_tags',
+            'encoding'         => 'UTF-8',
+            'scriptPath'       => $scriptPath,
+            'helperPath'       => $helperPath,
+            'helperPathPrefix' => 'My_View_Helper',
+            'filterPath'       => $filterPath,
+            'filterPathPrefix' => 'My_View_Filter',
+            'filter'           => 'urlencode',
         );
 
         $view = new Zend_View($config);
@@ -466,21 +468,27 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains($this->normalizePath($scriptPath), $scriptPaths);
 
-        $found = false;
+        $found  = false;
+        $prefix = false;
         foreach ($helperPaths as $pathInfo) {
             if (strstr($pathInfo['dir'], $helperPath)) {
-                $found = true;
+                $found  = true;
+                $prefix = $pathInfo['prefix'];
             }
         }
         $this->assertTrue($found, var_export($helperPaths, 1));
+        $this->assertEquals('My_View_Helper_', $prefix);
 
-        $found = false;
+        $found  = false;
+        $prefix = false;
         foreach ($filterPaths as $pathInfo) {
             if (strstr($pathInfo['dir'], $filterPath)) {
-                $found = true;
+                $found  = true;
+                $prefix = $pathInfo['prefix'];
             }
         }
         $this->assertTrue($found, var_export($filterPaths, 1));
+        $this->assertEquals('My_View_Filter_', $prefix);
     }
 
     public function testUnset()
@@ -646,6 +654,14 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->_testBasePath($view, $base);
     }
 
+    public function testAddBasePathWithClassPrefix()
+    {
+        $view = new Zend_View();
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $view->addBasePath($base, 'My_Foo');
+        $this->_testBasePath($view, $base, 'My_Foo');
+    }
+
     public function testSetBasePathFromConstructor()
     {
         $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
@@ -653,30 +669,57 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->_testBasePath($view, $base);
     }
 
-    protected function _testBasePath(Zend_View $view, $base)
+    public function testSetBasePathWithClassPrefix()
+    {
+        $view = new Zend_View();
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $view->setBasePath($base, 'My_Foo');
+        $this->_testBasePath($view, $base, 'My_Foo');
+    }
+
+    public function testSetBasePathFromConstructorWithClassPrefix()
+    {
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $view = new Zend_View(array('basePath' => $base, 'basePathPrefix' => 'My_Foo'));
+        $this->_testBasePath($view, $base);
+    }
+
+    protected function _testBasePath(Zend_View $view, $base, $classPrefix = null)
     {
         $scriptPaths = $view->getScriptPaths();
         $helperPaths = $view->getHelperPaths();
         $filterPaths = $view->getFilterPaths();
         $this->assertContains($base . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR, $scriptPaths);
 
-        $found = false;
+        $found  = false;
+        $prefix = false;
         foreach ($helperPaths as $path) {
             if ($path['dir'] == $base . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR) {
-                $found = true;
+                $found  = true;
+                $prefix = $path['prefix'];
                 break;
             }
         }
         $this->assertTrue($found, var_export($helperPaths, 1));
+        if (null !== $classPrefix) {
+            $this->assertTrue($prefix !== false);
+            $this->assertEquals($classPrefix . '_Helper_', $prefix);
+        }
 
-        $found = false;
+        $found  = false;
+        $prefix = false;
         foreach ($filterPaths as $path) {
             if ($path['dir'] == $base . DIRECTORY_SEPARATOR . 'filters' . DIRECTORY_SEPARATOR) {
-                $found = true;
+                $found  = true;
+                $prefix = $path['prefix'];
                 break;
             }
         }
         $this->assertTrue($found, var_export($filterPaths, 1));
+        if (null !== $classPrefix) {
+            $this->assertTrue($prefix !== false);
+            $this->assertEquals($classPrefix . '_Filter_', $prefix);
+        }
     }
 
     public function testStrictVars()
