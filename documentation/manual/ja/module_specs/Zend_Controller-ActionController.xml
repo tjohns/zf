@@ -273,6 +273,18 @@ string render(string $action = null, string $name = null, bool $noController = f
                 <code>$name</code> の値を指定します。
             </para>
 
+            <note><para>
+                    コントローラやアクションの名前には区切り文字
+                    ('_' や '.'、'-') を含めることができるので、
+                    render() はスクリプト名を決定する際にこれらの文字を
+                    '-' に正規化します。内部的には、
+                    ディスパッチャで設定されている単語やパスの区切り文字を正規化時に用います。
+                    したがって、<code>/foo.bar/baz-bat</code> へのリクエストの際に
+                    レンダリングされるスクリプトは <code>foo-bar/baz-bat.phtml</code> です。
+                    アクションメソッド名が camelCase 方式の場合、
+                    ビュースクリプトのファイル名では単語が '-' で区切られることに注意しましょう。
+            </para></note>
+
             <para>
                 例を見てみましょう。
             </para>
@@ -296,6 +308,12 @@ class MyController extends Zend_Controller_Action
         
         // site.phtml をレンダリングし、レスポンスオブジェクトの 'page' の部分に返します
         $this->render('site', 'page', true);
+    }
+
+    public function bazBatAction()
+    {
+        // my/baz-bat.phtml をレンダリングします
+        $this->render();
     }
 }
 ]]></programlisting>
