@@ -4425,6 +4425,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         Zend_Date::setOptions(array('extend_month' => true));
         $date->addMonth(1);
         $this->assertSame($date->toString('yyyy-MM-dd HH:mm:ss'), '2007-03-03 00:00:00');
+
+        date_default_timezone_set('America/Chicago');
+        $date = new Zend_Date(1577858400,$locale);
+        $date->setTimeZone(date_default_timezone_get());
+        $this->assertSame($date->get(Zend_Date::ISO_8601), '2020-01-01T00:00:00-06:00');
+        $date->addMonth(12);
+        $this->assertSame($date->get(Zend_Date::ISO_8601), '2021-01-01T00:00:00-06:00');
+        
     }
 
     /**
