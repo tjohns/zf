@@ -72,6 +72,32 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
         <para>
             So oder so kann immer die gleiche API verwendet werden um Abfragen auf die Datenbank durchzuführen.
         </para>
+
+        <para>
+            PDO adapters können Treiberoptionen bei der Erstellung erhalten, wie das folgende
+            Beispiel zeigt, bei dem ein <code>PDO_MYSQL</code> Adapter mit einem spezifischen
+            <code>MYSQL_ATTR_MAX_BUFFER_SIZE</code> Wert erstellt wird:
+
+            <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array(
+    'host'              => '127.0.0.1',
+    'username'          => 'malory',
+    'password'          => '******',
+    'dbname'            => 'camelot',
+    'driver_options'    => array(
+        PDO::MYSQL_ATTR_MAX_BUFFER_SIZE => 10 * 1024 * 1024
+        )
+    );
+
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+
+?>]]></programlisting>
+
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">

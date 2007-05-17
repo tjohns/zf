@@ -10,11 +10,30 @@
     </para>
     
     <para>
-        Um einen Helfer in deinem View Skript zu verwenden, rufe ihn mittels $this->helperName() 
-        auf. Im Hintergrund wird Zend_View die Klasse Zend_View_Helper_HelperName laden, eine 
-        Objektinstanz der Klasse erstellen und deren Methode helperName() aufrufen. Die 
-        Objektinstanz bleibt innerhalb der Zend_View Instanz bestehen und wird bei allen weiteren 
-        Aufrufen von $this->helperName() wiederverwendet.
+        A helper is simply a class. Let's say we want a helper named 'fooBar'.
+        By default, the class is prefixed with <code>'Zend_View_Helper_'</code>
+        (you can specify a custom prefix when setting a helper path), and the
+        last segment of the class name is the helper name; this segment should
+        be TitleCapped; the full class name is then:
+        <code>Zend_View_Helper_FooBar</code>. This class should contain at the
+        minimum a single method, named after the helper, and camelCased:
+        <code>fooBar()</code>.
+    </para>
+    
+    <note>
+        <para>
+            Helper names are always camelCased, i.e., they never begin with an
+            uppercase character.
+        </para>
+    </note>
+
+    <para>
+        Um einen Helfer in deinem View Skript zu verwenden, rufe ihn mittels
+        <code>$this->helperName()</code> auf. Im Hintergrund wird <code>Zend_View</code> die Klasse
+        <code>Zend_View_Helper_HelperName</code> laden, eine Objektinstanz der Klasse erstellen und
+        deren Methode <code>helperName()</code> aufrufen. Die Objektinstanz bleibt innerhalb der
+        <code>Zend_View</code> Instanz bestehen und wird bei allen weiteren Aufrufen von 
+        <code>$this->helperName()</code> wiederverwendet.
     </para>
     
     <sect2 id="zend.view.helpers.initial">
@@ -22,20 +41,32 @@
         <title>Vorhandene Helfer</title>
         
         <para>
-            Zend_View enthält bereits einige vorhandene Helferklassen, die sich alle auf die 
-            Erstellung von Formularelementen beziehen. Alle führen die entsprechende 
-            Ausgabemaskierung automatisch durch. Diese sind: 
+            <code>Zend_View enthält</code> bereits einige vorhandene Helferklassen, die sich alle 
+            auf die Erstellung von Formularelementen beziehen und die notwendige Maskierung der 
+            Ausgaben automatisch vornehmen. Zusätzlich gibt es Helfer zum Erstellen Routen-basierter
+            URLS and HTML Listen, genauso wie für das Deklarieren von Variablen. Die aktuell 
+            gelieferten Helfer beinhalten: 
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                formButton($name, $value, $attribs): Erstellt ein &lt;input type="button" /&gt; 
-                Element.
+                <code>declareVars():</code> Primarily for use when using
+                <code>strictVars()</code>, this helper can be used to declare
+                template variables that may or may not already be set in the
+                view object, as well as to set default values.  Arrays passed as
+                arguments to the method will be used to set default values;
+                otherwise, if the variable does not exist, it is set to an empty
+                string.
+            </para></listitem>
+
+            <listitem><para>
+                <code>formButton($name, $value, $attribs)</code>: Erstellt ein 
+                &lt;input type="button" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formCheckbox($name, $value, $attribs, $options): Erstellt ein 
+                <code>formCheckbox($name, $value, $attribs, $options)</code>: Erstellt ein 
                 &lt;input type="checkbox" /&gt; Element. Der $options Parameter ist ein Array, bei
                 dem der erste Wert der ausgewählte Wert ("checked") und der zweite Wert der 
                 nicht ausgewählte Wert ("unchecked") angibt (die Standardwerte sind '1' und '0').
@@ -44,34 +75,34 @@
             </para></listitem>
             
             <listitem><para>
-                formFile($name, $value, $attribs): Erstellt ein &lt;input type="file" /&gt; 
-                Element.
+                <code>formFile($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="file" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formHidden($name, $value, $attribs): Erstellt ein &lt;input type="hidden" /&gt; 
-                Element.
+                <code>formHidden($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="hidden" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formPassword($name, $value, $attribs): Erstellt ein an &lt;input type="password" /&gt; 
-                Element.
+                <code>formPassword($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="password" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formRadio($name, $value, $attribs, $options): Erstellt eine Reihe von 
+                <code>formRadio($name, $value, $attribs, $options)</code>: Erstellt eine Reihe von 
                 &lt;input type="radio" /&gt; Elementen, eine für jeden der $options Elemente. 
                 Im $options Array ist der Elementschlüssel der Wert und der Elementwert die 
                 Bezeichnung des Radio-Buttons. Der $value Radiobutton wird für dich vorgewählt.
             </para></listitem>
             
             <listitem><para>
-                formReset($name, $value, $attribs): Erstellt eine &lt;input type="reset" /&gt; 
-                Element.
+                <code>formReset($name, $value, $attribs)</code>: Erstellt ein 
+                &lt;input type="reset" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formSelect($name, $value, $attribs, $options): Erstellt einen 
+                <code>formSelect($name, $value, $attribs, $options)</code>: Erstellt einen 
                 &lt;select&gt;...&lt;/select&gt; block mit einer &lt;option&gt;one für jedes
                 $options Element. Im $options Array ist der Elementschlüssel der Optionswert und 
                 der Elementwert die Optionsbezeichnung. Die $value Optionen werden für dich 
@@ -79,19 +110,34 @@
             </para></listitem>
             
             <listitem><para>
-                formSubmit($name, $value, $attribs): Erstellt ein &lt;input type="submit" /&gt; 
-                Element.
+                <code>formSubmit($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="submit" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formText($name, $value, $attribs): Erstellt ein &lt;input type="text" /&gt; Element.
+                <code>formText($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="text" /&gt; Element.
             </para></listitem>
             
             <listitem><para>
-                formTextarea($name, $value, $attribs): Erstellt einen
+                <code>formTextarea($name, $value, $attribs)</code>: Erstellt einen
                 &lt;textarea&gt;...&lt;/textarea&gt; Block.
             </para></listitem>
             
+            <listitem><para>
+                <code>url($urlOptions, $name, $reset):</code> Creates a URL
+                string based on a named route. <code>$urlOptions</code> should
+                be an associative array of key/value pairs used by the
+                particular route.
+            </para></listitem>
+
+            <listitem><para>
+                <code>htmlList($items, $ordered, $attribs):</code> generates
+                unordered and ordered lists based on the <code>$items</code>
+                passed to it. If <code>$items</code> is a multidimensional
+                array, a nested list will be built.
+            </para></listitem>
+
         </itemizedlist>
         
         <para>
@@ -146,16 +192,16 @@
     </sect2>
     
     <sect2 id="zend.view.helpers.paths">
-        
         <title>Helfer Pfade</title>
         
         <para>
-            Wie bei den View Skripten kann der Controller für Zend_View auch einen Stapel an Pfaden 
-            festlegen, in dem nach Hilfsklassen gesucht werden soll. Standardmäßig sucht Zend_View
-            in "Zend/View/Helper/*" nach Hilfsklassen. Du kannst Zend_View mit Hilfe der Methoden
-            setHelperPath() und addHelperPath() mitteilen, auch in anderen Verzeichnissen zu suchen.
+            Wie bei den View Skripten kann der Controller für <code>Zend_View</code> auch einen
+            Stapel an Pfaden festlegen, in dem nach Hilfsklassen gesucht werden soll. Standardmäßig
+            sucht <code>Zend_View</code> in "Zend/View/Helper/*" nach Hilfsklassen. Du kannst
+            <code>Zend_View</code> mit Hilfe der Methoden <code>setHelperPath()</code> und 
+            <code>addHelperPath()</code> mitteilen, auch in anderen Verzeichnissen zu suchen.
             Zusätzlich kann man einen Klassenpräfix angeben, um Helfer in dem bereit gestellten Pfad
-            verwenden zu können, um eigene Namensräume für die Helferklassen zu verwenden. 
+            verwenden zu können, um eigene Namensräume für die Helferklassen zu verwenden.
             Standardmäßig wird 'Zend_View_Helper_' angenommen, wenn kein Präfix angegeben wird.
         </para>
         
@@ -168,10 +214,10 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
         </programlisting>
         
         <para>
-            Durch Verwendung der addHelperPath() Methode können die Pfade "gestapelt" werden. Wenn 
-            du Pfade zu diesem Stapelspeicher hinzufügst, wird Zend_View im zuletzt hinzugefügten 
-            Pfad nach der angeforderten Hilfsklasse schauen. Dies erlaubt dir, zu den vorhandenen 
-            Helfern weitere hinzufügen oder diese durch eigene zu ersetzen. 
+            Durch Verwendung der <code>addHelperPath()</code> Methode können die Pfade "gestapelt"
+            werden. Wenn du Pfade zu diesem Stapelspeicher hinzufügst, wird <code>Zend_View</code>
+            im zuletzt hinzugefügten Pfad nach der angeforderten Hilfsklasse schauen. Dies erlaubt
+            dir, zu den vorhandenen Helfern weitere hinzufügen oder diese durch eigene zu ersetzen.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -192,7 +238,6 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
     </sect2>
     
     <sect2 id="zend.view.helpers.custom">
-        
         <title>Eigene Helfer schreiben</title>
         
         <para>
@@ -232,16 +277,18 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         </itemizedlist>
         
         <para>
-            Platziere die Hilfsklasse irgendwo in deinem Stapelspeicher für Hilfspfade und Zend_View 
-            wird den Helfer automatisch für dich laden, instanziieren, speichern und ausführen. 
+            Platziere die Hilfsklasse irgendwo in deinem Stapelspeicher für Hilfspfade und
+            <code>Zend_View</code> wird den Helfer automatisch für dich laden, instanziieren,
+            speichern und ausführen. 
         </para>
         
         <para>
-            Hier ist ein Beispiel für unseren SpecialPurpose Helfer:
+            Hier ist ein Beispiel für unseren <code>SpecialPurpose</code> Helfer:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_SpecialPurpose {
+class My_View_Helper_SpecialPurpose
+{
     protected $_count = 0;
     public function specialPurpose()
     {
@@ -254,9 +301,9 @@ class My_View_Helper_SpecialPurpose {
         </programlisting>
         
         <para>
-            Dann rufst du in einem View Skript den SpecialPurpose Helfer so oft auf, wie du 
-            möchtest; er wird einmal instanziiert und bleibt für die Lebensdauer der Zend_View
-            Instanz bestehen.
+            Dann rufst du in einem View Skript den <code>SpecialPurpose</code> Helfer so oft auf,
+            wie du möchtest; er wird einmal instanziiert und bleibt für die Lebensdauer der
+            <code>Zend_View</code> Instanz bestehen.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -276,6 +323,37 @@ Ich habe 'The Jerk' 2 Mal(e) gesehen.
 Ich habe 'The Jerk' 3 Mal(e) gesehen.]]>
         </programlisting>
         
+        <para>
+            Sometimes you will need access to the calling <code>Zend_View</code>
+            object -- for instance, if you need to use the registered encoding,
+            or want to render another view script as part of your helper. To get
+            access to the view object, your helper class should have a
+            <code>setView($view)</code> method, like the following:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_View_Helper_ScriptPath
+{
+    public $view;
+
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+    }
+
+    public function scriptPath($script)
+    {
+        return $this->view->getScriptPath($script);
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            If your helper class has a <code>setView()</code> method, it will be
+            called when the helper class is first instantiated, and passed the
+            current view object. It is up to you to persist the object in your
+            class, as well as determine how it should be accessed.
+        </para>
     </sect2>
     
 </sect1>
