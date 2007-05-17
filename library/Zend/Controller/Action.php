@@ -44,6 +44,12 @@ require_once 'Zend/Controller/Response/Abstract.php';
 abstract class Zend_Controller_Action
 {
     /**
+     * Word delimiters (used for normalizing view script paths)
+     * @var array
+     */
+    protected $_delimiters;
+
+    /**
      * Array of arguments provided to the constructor, minus the 
      * {@link $_request Request object}.
      * @var array 
@@ -221,10 +227,20 @@ abstract class Zend_Controller_Action
             throw new Zend_Controller_Exception('Invalid action specifier for view render');
         }
 
+        if (null === $this->_delimiters) {
+            $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
+            $wordDelimiters = $dispatcher->getWordDelimiter();
+            $pathDelimiters = $dispatcher->getPathDelimiter();
+            $this->_delimiters = array_unique(array_merge($wordDelimiters, (array) $pathDelimiters));
+        }
+
+        $action = str_replace($this->_delimiters, '-', $action);
         $script = $action . '.' . $this->viewSuffix;
 
         if (!$noController) {
-            $script = $request->getControllerName() . DIRECTORY_SEPARATOR . $script;
+            $controller = $request->getControllerName();
+            $controller = str_replace($this->_delimiters, '-', $controller);
+            $script = $controller . DIRECTORY_SEPARATOR . $script;
         }
 
         return $script;

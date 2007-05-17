@@ -278,6 +278,20 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertContains('In the name view', $response->getBody('name'));
     }
 
+    public function testRenderNormalizesScriptName()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('foo.bar')
+                ->setActionName('baz_bat');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'FooBarController.php';
+        $controller = new FooBarController($request, $response);
+
+        $controller->bazBatAction();
+        $this->assertContains('Inside foo-bar/baz-bat.phtml', $response->getBody());
+    }
+
     public function testGetViewScript()
     {
         $request = new Zend_Controller_Request_Http();
