@@ -96,19 +96,48 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
+    protected function _getSqlCreateTable($tableName)
+    {
+        $tableList = $this->_db->fetchCol('SELECT relname AS table_name FROM pg_class '
+            . $this->_db->quoteInto(' WHERE relkind = \'r\' AND relname = ?', $tableName)
+        );
+        if (in_array($tableName, $tableList)) {
+            return null;
+        }
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
+    }
+
     protected function _getSqlDropTable($tableName)
     {
-        return 'DROP TABLE IF EXISTS ' . $this->_db->quoteIdentifier($tableName);
+        $tableList = $this->_db->fetchCol('SELECT relname AS table_name FROM pg_class '
+            . $this->_db->quoteInto(' WHERE relkind = \'r\' AND relname = ?', $tableName)
+        );
+        if (in_array($tableName, $tableList)) {
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        }
+        return null;
     }
 
     protected function _getSqlCreateSequence($sequenceName)
     {
+        $seqList = $this->_db->fetchCol('SELECT relname AS sequence_name FROM pg_class '
+            . $this->_db->quoteInto(' WHERE relkind = \'S\' AND relname = ?', $sequenceName)
+        );
+        if (in_array($sequenceName, $seqList)) {
+            return null;
+        }
         return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
     }
 
     protected function _getSqlDropSequence($sequenceName)
     {
-        return 'DROP SEQUENCE IF EXISTS ' . $this->_db->quoteIdentifier($sequenceName);
+        $seqList = $this->_db->fetchCol('SELECT relname AS sequence_name FROM pg_class '
+            . $this->_db->quoteInto(' WHERE relkind = \'S\' AND relname = ?', $sequenceName)
+        );
+        if (in_array($sequenceName, $seqList)) {
+            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
+        }
+        return null;
     }
 
 }
