@@ -38,4 +38,7 @@ require_once 'Zend/Feed/EntryAbstract.php';
  */
 class Zend_Feed_EntryAtom extends Zend_Feed_Entry_Atom
 {
+    public function __contruct($uri = null, $element = null) {
+        trigger_error("Deprecated class 'Zend_Feed_EntryAtom', use 'Zend_Feed_Entry_Atom' instead.", E_USER_NOTICE);
+    }
 }

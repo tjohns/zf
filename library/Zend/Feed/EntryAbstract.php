@@ -43,4 +43,7 @@ require_once 'Zend/Feed/Element.php';
  */
 abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Entry_Abstract
 {
+    public function __contruct($uri = null, $element = null) {
+        trigger_error("Deprecated class 'Zend_Feed_EntryAbstract', use 'Zend_Feed_Entry_Abstract' instead.", E_USER_NOTICE);
+    }
 }

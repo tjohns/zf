@@ -36,6 +36,9 @@ require_once 'Zend/Feed/EntryAbstract.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_EntryRss extends Zend_Feed_EntryAbstract
+class Zend_Feed_EntryRss extends Zend_Feed_Entry_Rss
 {
+    public function __construct ($uri = null, $element = null) {
+        trigger_error("Deprecated class 'Zend_Feed_EntryRss', use 'Zend_Feed_Entry_Rss' instead.", E_USER_NOTICE);
+    }
 }
