@@ -100,10 +100,13 @@ class Zend_Db_AllTests
 
     protected static function _addDbTestSuites($suite, $driver)
     {
+        $skipTestClass = "Zend_Db_Skip_{$driver}Test";
         $DRIVER = strtoupper($driver);
         $enabledConst = "TESTS_ZEND_DB_ADAPTER_{$DRIVER}_ENABLED";
         if (!defined($enabledConst) || constant($enabledConst) != true) {
-            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            $skipTest = new $skipTestClass();
+            $skipTest->message = "this Adapter is not enabled in TestConfiguration.php";
+            $suite->addTest($skipTest);
             return;
         }
 
@@ -117,20 +120,27 @@ class Zend_Db_AllTests
         );
 
         if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
-            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            $skipTest = new $skipTestClass();
+            $skipTest->message = "extension '{$ext[$driver]}' is not loaded";
+            $suite->addTest($skipTest);
             return;
         }
 
         if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
             // check for PDO extension
             if (!extension_loaded('pdo')) {
-                $suite->addTestSuite("Zend_Db_Skip_PdoTest");
+                $skipTest = new $skipTestClass();
+                $skipTest->message = "extension 'PDO' is not loaded";
+                $suite->addTest($skipTest);
                 return;
             }
 
             // check the PDO driver is available
-            if (!in_array(strtolower($matches[1]), PDO::getAvailableDrivers())) {
-                $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            $pdo_driver = strtolower($matches[1]);
+            if (!in_array($pdo_driver, PDO::getAvailableDrivers())) {
+                $skipTest = new $skipTestClass();
+                $skipTest->message = "PDO driver '{$pdo_driver}' is not available";
+                $suite->addTest($skipTest);
                 return;
             }
         }
@@ -162,7 +172,9 @@ class Zend_Db_AllTests
             $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");
 
         } catch (Zend_Exception $e) {
-            $suite->addTestSuite("Zend_Db_Skip_{$driver}Test");
+            $skipTest = new $skipTestClass();
+            $skipTest->message = "cannot load test classes: " . $e->getMessage();
+            $suite->addTest($skipTest);
         }
     }
 

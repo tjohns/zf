@@ -21,12 +21,11 @@
  * @version    $Id$
  */
 
-
-/**
- * PHPUnit test case
- */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'PHPUnit/Util/Filter.php';
+
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @category   Zend
@@ -37,15 +36,21 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 abstract class Zend_Db_Skip_CommonTest extends PHPUnit_Framework_TestCase
 {
+    public $message = null;
+
     abstract public function getDriver();
 
     public function setUp()
     {
         $driver = $this->getDriver();
-        $this->markTestSkipped("Testing Zend_Db_Adapter_$driver is not enabled");
+        $message = 'Skipping ' . $this->getDriver();
+        if ($this->message) {
+            $message .= ': ' . $this->message;
+        }
+        $this->markTestSkipped($message);
     }
 
-    public function testDbAdapter()
+    public function testDb()
     {
         // this is here only so we have at least one test
     }
