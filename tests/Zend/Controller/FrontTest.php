@@ -458,6 +458,23 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
     }
 
+    public function testGetControllerDirectoryByModuleName()
+    {
+        $moduleDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules';
+        $this->_controller->addModuleDirectory($moduleDir);
+        $barDir = $this->_controller->getControllerDirectory('bar');
+        $this->assertNotNull($barDir);
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $barDir);
+    }
+
+    public function testGetControllerDirectoryByModuleNameReturnsNullOnBadModule()
+    {
+        $moduleDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules';
+        $this->_controller->addModuleDirectory($moduleDir);
+        $dir = $this->_controller->getControllerDirectory('_bazbat');
+        $this->assertNull($dir);
+    }
+
     public function testDefaultModule()
     {
         $dispatcher = $this->_controller->getDispatcher();

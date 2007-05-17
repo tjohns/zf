@@ -269,13 +269,26 @@ class Zend_Controller_Front
     /**
      * Retrieve controller directory
      *
-     * Retrieves stored controller directory
+     * Retrieves:
+     * - Array of all controller directories if no $name passed
+     * - String path if $name passed and exists as a key in controller directory array
+     * - null if $name passed but does not exist in controller directory keys
      *
-     * @return array
+     * @param  string $name Default null
+     * @return array|string|null
      */
-    public function getControllerDirectory()
+    public function getControllerDirectory($name = null)
     {
-        return $this->_controllerDir;
+        if (null === $name) {
+            return $this->_controllerDir;
+        }
+
+        $name = (string) $name;
+        if (isset($this->_controllerDir[$name])) {
+            return $this->_controllerDir[$name];
+        }
+
+        return null;
     }
 
     /**
