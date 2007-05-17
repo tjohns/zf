@@ -34,11 +34,39 @@
 
         <itemizedlist>
             <listitem>
+                <para>
+                    デフォルトでは、
+                    <link linkend="zend.controller.plugins.standard.errorhandler">
+                    エラーハンドラプラグイン</link> が登録され、有効になっています。
+                    このプラグインは、次のようなエラーを処理するように設計されています。
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>コントローラやアクションが存在しない場合に発生するエラー</para></listitem>
+
+                    <listitem><para>アクションコントローラ内で発生するエラー</para></listitem>
+                </itemizedlist>
+
+                <para>
+                    このプラグインは <code>postDispatch()</code>
+                    プラグインとして動作し、ディスパッチャやアクションコントローラで
+                    他の例外が発生していないかどうかを調べます。発生していた場合は、
+                    エラーハンドラコントローラに処理を転送します。
+                </para>
+
+                <para>
+                    このハンドラは大半の例外状況をカバーし、
+                    コントローラやアクションが存在しない場合の対応を行います。
+                </para>
+            </listitem>
+
+            <listitem>
                 <para><code>Zend_Controller_Front::throwExceptions()</code></para>
 
                 <para>
                     このメソッドに true を渡すと、
-                    フロントコントローラがレスポンスオブジェクトに例外をまとめるかわりに
+                    フロントコントローラがレスポンスオブジェクトに例外をまとめたり
+                    エラーハンドラプラグインを使用したりするかわりに
                     例外を自分自身で処理できるようになります。たとえば次のようになります。
                 </para>
 
@@ -54,6 +82,7 @@ try {
                 <para>
                     これが、自分のアプリケーションで独自の例外処理を行うための
                     もっとも簡単な方法でしょう。
+                    この方法で、発生しうるすべての例外を処理することができます。
                 </para>
             </listitem>
 
@@ -100,6 +129,8 @@ if ($response->isException()) {
                     <code>Zend_Controller_Front::throwExceptions()</code>
                     に比べてこの方法が優れている点は、例外を処理した後で、
                     それをレンダリングするかどうかを判断できるところです。
+                    エラーハンドラプラグインとは異なり、
+                    これはコントローラチェイン内で発生したすべての例外を捕捉します。
                 </para>
             </listitem>
         </itemizedlist>

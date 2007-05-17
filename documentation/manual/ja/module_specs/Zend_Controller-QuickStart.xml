@@ -226,6 +226,57 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 ]]></programlisting>
         </sect3>
 
+        <sect3 id="zend.controller.quickstart.go.errorhandler">
+            <title>エラーコントローラの作成</title>
+
+            <para>
+                デフォルトで、
+                <link linkend="zend.controller.plugins.standard.errorhandler">
+                エラーハンドラプラグイン</link> が登録されています。
+                このプラグインを使用するには、エラー処理用のコントローラが必要です。
+                デフォルト設定では、デフォルトモジュールの
+                <code>ErrorController</code> に <code>errorAction</code>
+                というメソッドがあることを想定しています。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+/** Zend_Controller_Action */
+require_once 'Zend/Controller/Action.php';
+
+class ErrorController extends Zend_Controller_Action
+{
+    public function errorAction()
+    {
+        $this->render();
+    }
+}
+]]></programlisting>
+            
+            <para>
+                先ほど説明したディレクトリ構成により、このファイルは
+                <code>application/controllers/ErrorController.php</code>
+                に配置されることになります。これとは別に、ビュースクリプト
+                <code>application/views/scripts/error/error.phtml</code>
+                が必要です。その中身は、たとえば次のようになるでしょう。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>エラー</title>
+</head>
+<body>
+    <h1>エラーが発生しました</h1>
+    <p>エラーが発生しました。後ほどもう一度お試しください。</p>
+</body>
+</html>
+]]></programlisting>
+        </sect3>
+
         <sect3 id="zend.controller.quickstart.go.finish">
             <title>実際に見てみましょう!</title>
 

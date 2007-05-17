@@ -85,6 +85,15 @@
             </para></listitem>
             
             <listitem><para>
+                <code>formLabel($name, $value, $attribs):</code>
+                &lt;label&gt; 要素を作成します。<code>for</code> 属性の値は
+                <code>$name</code> に、そしてラベルのテキストは
+                <code>$value</code> になります。
+                <code>attribs</code> に <code>disable</code>
+                を渡すと、結果を何も返しません。
+            </para></listitem>
+
+             <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> &lt;input
                 type="password" /&gt; 要素を作成します。
             </para></listitem>

@@ -14,14 +14,9 @@
             では、コントローラとアクションのデフォルトはどちらも
             <code>index</code> で、モジュールのデフォルトは <code>default</code> です。しかし、
             <code>setDefaultController()</code> メソッドや
-            <code>setDefaultAction()</code> メソッドでこれらを変更することもできます。
+            <code>setDefaultAction()</code> メソッド、そして
+            <code>setDefaultModule()</code> でこれらを変更することもできます。
         </para>
-
-        <note>
-            <para>
-                デフォルトのモジュール名は変更しないほうがいいでしょう。
-            </para>
-        </note>
 
         <para>
             ディスパッチ処理が発生するのは、フロントコントローラでのループの内部です。

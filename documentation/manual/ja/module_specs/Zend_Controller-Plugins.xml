@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.plugins">
+<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2003/XInclude">
     <title>プラグイン</title>
 
     <sect2 id="zend.controller.plugins.introduction">
@@ -206,6 +206,17 @@ $front->dispatch();
                     クラス名を渡すと、一致するプラグインがすべて削除されます。
             </para></listitem>
         </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.plugins.standard">
+        <title>標準の配布パッケージに含まれるプラグイン</title>
+
+        <para>
+            Zend Framework の配布パッケージには、
+            エラー処理用のプラグインが標準で組み込まれています。
+        </para>
+
+        <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
     </sect2>
 </sect1>
 <!--
