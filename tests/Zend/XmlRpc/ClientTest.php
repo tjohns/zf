@@ -46,6 +46,13 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertSame($httpClient, $xmlrpcClient->getHttpClient());
     }
 
+    public function testSettingHttpClientViaContructor()
+    {
+        $xmlrpcClient = new Zend_XmlRpc_Client('http://foo', $this->httpClient);
+        $httpClient   = $xmlrpcClient->getHttpClient();
+        $this->assertSame($this->httpClient, $httpClient);
+    }
+
     // Request & Response
 
     public function testLastRequestAndResponseAreInitiallyNull()
@@ -203,7 +210,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_XmlRpc_Client_ServerIntrospection', $introspector);
         $this->assertSame($introspector, $xmlrpcClient->getIntrospector());
     }
-    
+
     public function testSettingAndGettingIntrospector()
     {
         $xmlrpcClient = new Zend_XmlRpc_Client('http://foo');
