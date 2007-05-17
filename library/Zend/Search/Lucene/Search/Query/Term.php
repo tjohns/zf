@@ -51,12 +51,12 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     private $_docVector = null;
 
     /**
-     * Term positions vector.
-     * Array: docId => array( pos1, pos2, ... )
+     * Term freqs vector.
+     * array(docId => freq, ...)
      *
      * @var array
      */
-    private $_termPositions;
+    private $_termFreqs;
 
 
     /**
@@ -132,7 +132,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     public function execute($reader)
     {
         $this->_docVector = array_flip($reader->termDocs($this->_term));
-        $this->_termPositions = $reader->termPositions($this->_term);
+        $this->_termFreqs = $reader->termFreqs($this->_term);
 
         // Initialize weight if it's not done yet
         $this->_initWeight($reader);
@@ -160,7 +160,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     public function score( $docId, $reader )
     {
         if (isset($this->_docVector[$docId])) {
-            return $reader->getSimilarity()->tf(count($this->_termPositions[$docId]) ) *
+            return $reader->getSimilarity()->tf($this->_termFreqs[$docId]) *
                    $this->_weight->getValue() *
                    $reader->norm($docId, $this->_term->field) *
                    $this->getBoost();

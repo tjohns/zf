@@ -316,6 +316,18 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
     }
 
     /**
+     * Returns an array of all term freqs.
+     * Return array structure: array( docId => freq, ...)
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @return integer
+     */
+    public function termFreqs(Zend_Search_Lucene_Index_Term $term)
+    {
+        return $this->_index->termFreqs($term);
+    }
+
+    /**
      * Returns an array of all term positions in the documents.
      * Return array structure: array( docId => array( pos1, pos2, ...), ...)
      *

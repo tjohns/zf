@@ -67,12 +67,12 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     /**
      * Terms positions vectors.
      * Array of Arrays:
-     * term1Id => (docId => array( pos1, pos2, ... ), ...)
-     * term2Id => (docId => array( pos1, pos2, ... ), ...)
+     * term1Id => (docId => freq, ...)
+     * term2Id => (docId => freq, ...)
      *
      * @var array
      */
-    private $_termsPositions = array();
+    private $_termsFreqs = array();
 
 
     /**
@@ -328,7 +328,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 break;
             }
 
-            $this->_termsPositions[$termId] = $reader->termPositions($term);
+            $this->_termsFreqs[$termId] = $reader->termFreqs($term);
         }
 
         ksort($this->_resVector, SORT_NUMERIC);
@@ -368,7 +368,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 $optional += $termDocs;
             }
 
-            $this->_termsPositions[$termId] = $reader->termPositions($term);
+            $this->_termsFreqs[$termId] = $reader->termFreqs($term);
         }
 
         if ($required !== null) {
@@ -402,7 +402,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         $score = 0.0;
 
         foreach ($this->_terms as $termId=>$term) {
-            $score += $reader->getSimilarity()->tf(count($this->_termsPositions[$termId][$docId]) ) *
+            $score += $reader->getSimilarity()->tf($this->_termsFreqs[$termId][$docId]) *
                       $this->_weights[$termId]->getValue() *
                       $reader->norm($docId, $term->field);
         }
@@ -439,12 +439,12 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         $matchedTerms = 0;
         foreach ($this->_terms as $termId=>$term) {
             // Check if term is
-            if ($this->_signs[$termId] !== false &&            // not prohibited
-                isset($this->_termsPositions[$termId][$docId]) // matched
+            if ($this->_signs[$termId] !== false &&        // not prohibited
+                isset($this->_termsFreqs[$termId][$docId]) // matched
                ) {
                 $matchedTerms++;
                 $score +=
-                      $reader->getSimilarity()->tf(count($this->_termsPositions[$termId][$docId]) ) *
+                      $reader->getSimilarity()->tf($this->_termsFreqs[$termId][$docId]) *
                       $this->_weights[$termId]->getValue() *
                       $reader->norm($docId, $term->field);
             }

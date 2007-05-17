@@ -160,6 +160,34 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
         $this->assertTrue($segmentInfo->getTermInfo(new Zend_Search_Lucene_Index_Term('nonusedterm', 'contents')) === null);
     }
 
+    public function testTermFreqs()
+    {
+        $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_files/_source');
+        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo('_1', 2, $directory);
+
+        $termPositions = $segmentInfo->termFreqs(new Zend_Search_Lucene_Index_Term('bgcolor', 'contents'));
+        $this->assertTrue($termPositions == array(0 => 3, 1 => 1));
+
+        $termPositions = $segmentInfo->termFreqs(new Zend_Search_Lucene_Index_Term('bgcolor', 'contents'), 10);
+        $this->assertTrue($termPositions == array(10 => 3, 11 => 1));
+    }
+
+    public function testTermPositions()
+    {
+        $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_files/_source');
+        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo('_1', 2, $directory);
+
+        $termPositions = $segmentInfo->termPositions(new Zend_Search_Lucene_Index_Term('bgcolor', 'contents'));
+        $this->assertTrue($termPositions == array(0 => array(69, 239, 370),
+                                                  1 => array(58)
+                                                 ));
+
+        $termPositions = $segmentInfo->termPositions(new Zend_Search_Lucene_Index_Term('bgcolor', 'contents'), 10);
+        $this->assertTrue($termPositions == array(10 => array(69, 239, 370),
+                                                  11 => array(58)
+                                                 ));
+    }
+
     public function testNorm()
     {
         $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_files/_source');
