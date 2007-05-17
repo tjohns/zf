@@ -267,6 +267,19 @@ string render(string $action = null, string $name = null, bool $noController = f
                 <code>$name</code>.
             </para>
 
+            <note><para>
+                    Since controller and action names may contain word delimiter
+                    characters such as '_', '.', and '-', render() normalizes
+                    these to '-' when determining the script name. Internally,
+                    it uses the dispatcher's word and path delimiters to do this
+                    normalization. Thus, a request to
+                    <code>/foo.bar/baz-bat</code> will render the script
+                    <code>foo-bar/baz-bat.phtml</code>. If your action method
+                    contains camelCasing, please remember that this will result
+                    in '-' separated words when determining the view script
+                    file name.
+            </para></note>
+
             <para>
                 Some examples:
             </para>
@@ -290,6 +303,12 @@ class MyController extends Zend_Controller_Action
         
         // Renders site.phtml to the 'page' segment of the response object
         $this->render('site', 'page', true);
+    }
+
+    public function bazBatAction()
+    {
+        // Renders my/baz-bat.phtml
+        $this->render();
     }
 }
 ]]></programlisting>
