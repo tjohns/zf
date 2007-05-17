@@ -43,6 +43,9 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     public function __construct($value = null) 
     {
         parent::__construct();
+        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
         $this->_value = $value; 
     }
 

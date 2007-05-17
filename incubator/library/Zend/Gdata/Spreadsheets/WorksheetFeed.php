@@ -36,6 +36,14 @@ require_once 'Zend/Gdata/Feed.php';
 class Zend_Gdata_Spreadsheets_WorksheetFeed extends Zend_Gdata_Feed
 {
 
+    public function __construct($uri = null, $element = null)
+    {
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($uri, $element);
+    }
+
     /**
      * The classname for individual feed elements.
      *

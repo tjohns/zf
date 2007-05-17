@@ -66,17 +66,17 @@ abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'name':
+        case $this->lookupNamespace('atom') . ':' . 'name':
             $name = new Zend_Gdata_App_Extension_Name();
             $name->transferFromDOM($child);
             $this->_name = $name;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'email':
+        case $this->lookupNamespace('atom') . ':' . 'email':
             $email = new Zend_Gdata_App_Extension_Email();
             $email->transferFromDOM($child);
             $this->_email = $email;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'uri':
+        case $this->lookupNamespace('atom') . ':' . 'uri':
             $uri = new Zend_Gdata_App_Extension_Uri();
             $uri->transferFromDOM($child);
             $this->_uri = $uri;

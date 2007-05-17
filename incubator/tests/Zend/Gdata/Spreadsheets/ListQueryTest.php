@@ -36,23 +36,33 @@ class Zend_Gdata_Spreadsheets_ListQueryTest extends PHPUnit_Framework_TestCase
 
     public function testSpreadsheetQuery()
     {
+        $this->assertTrue($this->docQuery->getSpreadsheetQuery() == null);
         $this->docQuery->setSpreadsheetQuery('first=john&last=smith');
         $this->assertTrue($this->docQuery->getSpreadsheetQuery() == 'first=john&last=smith');
         $this->assertTrue($this->docQuery->getQueryString() == '?sq=first%3Djohn%26last%3Dsmith');
+        $this->docQuery->setSpreadsheetQuery(null);
+        $this->assertTrue($this->docQuery->getSpreadsheetQuery() == null);
     }
+    
     
     public function testOrderBy()
     {
+        $this->assertTrue($this->docQuery->getOrderBy() == null);
         $this->docQuery->setOrderBy('column:first');
         $this->assertTrue($this->docQuery->getOrderBy() == 'column:first');
         $this->assertTrue($this->docQuery->getQueryString() == '?orderby=column%3Afirst');
+        $this->docQuery->setOrderBy(null);
+        $this->assertTrue($this->docQuery->getOrderBy() == null);
     }
     
     public function testReverse()
     {
+        $this->assertTrue($this->docQuery->getReverse() == null);
         $this->docQuery->setReverse('true');
         $this->assertTrue($this->docQuery->getReverse() == 'true');
         $this->assertTrue($this->docQuery->getQueryString() == '?reverse=true');
+        $this->docQuery->setReverse(null);
+        $this->assertTrue($this->docQuery->getReverse() == null);
     }
 
 }

@@ -36,44 +36,62 @@ class Zend_Gdata_Spreadsheets_CellQueryTest extends PHPUnit_Framework_TestCase
 
     public function testMinRow()
     {
+        $this->assertTrue($this->docQuery->getMinRow() == null);
         $this->docQuery->setMinRow('1');
         $this->assertTrue($this->docQuery->getMinRow() == '1');
         $this->assertTrue($this->docQuery->getQueryString() == '?min-row=1');
+        $this->docQuery->setMinRow(null);
+        $this->assertTrue($this->docQuery->getMinRow() == null);
     }
     
     public function testMaxRow()
     {
+        $this->assertTrue($this->docQuery->getMaxRow() == null);
         $this->docQuery->setMaxRow('2');
         $this->assertTrue($this->docQuery->getMaxRow() == '2');
         $this->assertTrue($this->docQuery->getQueryString() == '?max-row=2');
+        $this->docQuery->setMaxRow(null);
+        $this->assertTrue($this->docQuery->getMaxRow() == null);
     }
     
     public function testMinCol()
     {
+        $this->assertTrue($this->docQuery->getMinCol() == null);
         $this->docQuery->setMinCol('3');
         $this->assertTrue($this->docQuery->getMinCol() == '3');
         $this->assertTrue($this->docQuery->getQueryString() == '?min-col=3');
+        $this->docQuery->setMinCol(null);
+        $this->assertTrue($this->docQuery->getMinCol() == null);
     }
     
     public function testMaxCol()
     {
+        $this->assertTrue($this->docQuery->getMaxCol() == null);
         $this->docQuery->setMaxCol('4');
         $this->assertTrue($this->docQuery->getMaxCol() == '4');
         $this->assertTrue($this->docQuery->getQueryString() == '?max-col=4');
+        $this->docQuery->setMaxCol(null);
+        $this->assertTrue($this->docQuery->getMaxCol() == null);
     }
     
     public function testRange()
     {
+        $this->assertTrue($this->docQuery->getRange() == null);
         $this->docQuery->setRange('A1:B4');
         $this->assertTrue($this->docQuery->getRange() == 'A1:B4');
         $this->assertTrue($this->docQuery->getQueryString() == '?range=A1%3AB4');
+        $this->docQuery->setRange(null);
+        $this->assertTrue($this->docQuery->getRange() == null);
     }
     
     public function testReturnEmpty()
     {
+        $this->assertTrue($this->docQuery->getReturnEmpty() == null);
         $this->docQuery->setReturnEmpty('false');
         $this->assertTrue($this->docQuery->getReturnEmpty() == 'false');
         $this->assertTrue($this->docQuery->getQueryString() == '?return-empty=false');
+        $this->docQuery->setReturnEmpty(null);
+        $this->assertTrue($this->docQuery->getReturnEmpty() == null);
     }
 
 }

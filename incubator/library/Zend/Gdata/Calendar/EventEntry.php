@@ -54,6 +54,14 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     protected $_sendEventNotifications = null;
     protected $_extendedProperty = array();
 
+    public function __construct($uri = null, $element = null)
+    {
+        parent::__construct($uri, $element);
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+    }
+
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
@@ -70,7 +78,7 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'extendedProperty'; 
+            case $this->lookupNamespace('gd') . ':' . 'extendedProperty'; 
                 $extProp = new Zend_Gdata_Extension_ExtendedProperty();
                 $extProp->transferFromDOM($child);
                 $this->_extendedProperty[] = $extProp;

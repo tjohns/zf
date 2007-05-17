@@ -40,6 +40,14 @@ require_once 'Zend/Gdata/App/NoSuchMethodException.php';
 class Zend_Gdata_Entry extends Zend_Gdata_App_Entry
 {
 
+    public function __construct($uri = null, $element = null)
+    {
+        parent::__construct($uri, $element);
+        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri); 
+        }
+    }
+
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);

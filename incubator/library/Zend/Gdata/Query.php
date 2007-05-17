@@ -132,14 +132,6 @@ class Zend_Gdata_Query
     }
 
     /**
-     * @param string $name
-     */
-    public function issetParam($name)
-    {
-        return array_key_exists($name, $this->_params);
-    }
-
-    /**
      * @param string $value
      * @return Zend_Gdata_Query Provides a fluent interface
      */
@@ -295,54 +287,6 @@ class Zend_Gdata_Query
         }
     }
 
-    /**
-     * @returns bool  
-     */
-    public function issetAlt()
-    {
-        return array_key_exists('alt', $this->_params);
-    }
-
-    /**
-     * @returns int maxResults
-     */
-    public function issetMaxResults()
-    {
-        return array_key_exists('max-results', $this->_params);
-    }
-
-    /**
-     * @returns string query
-     */
-    public function issetQuery()
-    {
-        return array_key_exists('q', $this->_params);
-    }
-
-    /**
-     * @returns int startIndex
-     */
-    public function issetStartIndex()
-    {
-        return array_key_exists('q', $this->_params);
-    }
-
-    /**
-     * @returns int updatedMax
-     */
-    public function issetUpdatedMax()
-    {
-        return array_key_exists('updated-max', $this->_params);
-    }
-
-    /**
-     * @returns int updatedMin
-     */
-    public function issetUpdatedMin()
-    {
-        return array_key_exists('updated-min', $this->_params);
-    }
-
     public function __get($name)
     {
         $method = 'get'.ucfirst($name);
@@ -358,26 +302,6 @@ class Zend_Gdata_Query
         $method = 'set'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method), $val);
-        } else {
-            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
-        }
-    }
-
-    public function __isset($name)
-    {
-        $method = 'isset'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method));
-        } else {
-            throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
-        }
-    }
-
-    public function __unset($name)
-    {
-        $method = 'set'.ucfirst($name);
-        if (method_exists($this, $method)) {
-            return call_user_func(array(&$this, $method), null);
         } else {
             throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }

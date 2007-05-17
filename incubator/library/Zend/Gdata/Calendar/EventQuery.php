@@ -150,46 +150,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return boolean
-     */
-    public function issetComments()
-    {
-        return isset($this->_comments);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetEvent()
-    {
-        return isset($this->_event);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetProjection()
-    {
-        return isset($this->_projection);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetUser()
-    {
-        return isset($this->_user);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetVisibility()
-    {
-        return isset($this->_visibility);
-    }
-
-    /**
      * @param int $value
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
      */
@@ -218,22 +178,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return boolean
-     */
-    public function issetStartMin()
-    {
-        return isset($this->_params['start-min']);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetStartMax()
-    {
-        return isset($this->_params['start-max']);
-    }
-
-    /**
      * @param string $value
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
      */
@@ -245,14 +189,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
             unset($this->_params['orderby']);
         }
         return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function issetOrderBy()
-    {
-        return isset($this->_params['orderby']);
     }
 
     /**
@@ -317,16 +253,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetRecurrenceExpansionStart()
-    {
-        return isset($this->_params['recurrence-expansion-start']);
-    }
-
-    /**
      * @return string recurrence-expansion-start 
      */
     public function getRecurrenceExpansionStart()
@@ -353,16 +279,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
 
 
     /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetRecurrenceExpansionEnd()
-    {
-        return isset($this->_params['recurrence-expansion-end']);
-    }
-
-    /**
      * @return string recurrence-expansion-end 
      */
     public function getRecurrenceExpansionEnd()
@@ -385,16 +301,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
             unset($this->_params['recurrence-expansion-end']);
         }
         return $this;
-    }
-
-    /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetSingleEvents()
-    {
-        return isset($this->_params['singleevents']);
     }
 
     /**
@@ -423,18 +329,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetSortOrder()
-    {
-        return isset($this->_params['sortorder']);
-    }
-
-    /**
      * @return string futureevents
-     * TODO - Should the query param functons check the values this strictly?
      */
     public function getFutureEvents()
     {
@@ -449,7 +344,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
                 default:
                     throw new Zend_Gdata_App_Exception(
                             'Invalid query param value for futureevents: ' .
-                            $value);
+                            $value . ' It must be a boolean.');
             }
         } else {
             return null;
@@ -478,16 +373,6 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetFutureEvents()
-    {
-        return isset($this->_params['futureevents']);
-    }
-
-    /**
      * @return string url
      */
     public function getQueryUrl()
@@ -495,24 +380,24 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
         if ($uri == null) {
             $uri = $this->_defaultFeedUri;
         }
-        if ($this->issetUser()) {
+        if ($this->getUser() != null) {
             $uri .= '/' . $this->getUser();
         } else { 
             $uri .= '/default';
         }
-        if ($this->issetVisibility()) {
+        if ($this->getVisibility() != null) {
             $uri .= '/' . $this->getVisibility();
         } else {
             $uri .= '/public';
         }
-        if ($this->issetProjection()) {
+        if ($this->getProjection() != null) {
             $uri .= '/' . $this->getProjection();
         } else {
             $uri .= '/full';
         }
-        if ($this->issetEvent()) {
+        if ($this->getEvent() != null) {
             $uri .= '/' . $this->getEvent();
-            if ($this->issetComments()) {
+            if ($this->getComments() != null) {
                 $uri .= '/comments/' . $this->getComments();
             }
         }

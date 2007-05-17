@@ -52,6 +52,9 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
     public function __construct($column = null, $value = null) 
     {
         parent::__construct($value);
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
         $this->_rootElement = $column;
     }
 
@@ -85,13 +88,4 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
         return $this->_rootElement;
     }
     
-    public function issetColumnName()
-    {
-        return isset($this->_rootElement);
-    }
-    
-    public function unsetColumnName()
-    {
-        $this_rootElement = null;
-    }
 }

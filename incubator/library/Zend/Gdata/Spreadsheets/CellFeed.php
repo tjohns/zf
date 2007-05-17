@@ -62,6 +62,15 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
     protected $_rowCount = null;
     protected $_colCount = null;
 
+    public function __construct($uri = null, $element = null)
+    {
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($uri, $element);
+        ////////////var_dump($this->_namespaces);
+    }
+
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
@@ -76,14 +85,17 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
     
     protected function takeChildFromDOM($child)
     {
+        //var_dump($this->_namespaces);
+//var_dump(Zend_Gdata_Spreadsheets::$namespaces);
+        //var_dump($this->_namespaces);
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case Zend_Gdata_App_Data::lookupNamespace('gs') . ':' . 'rowCount';
+            case $this->lookupNamespace('gs') . ':' . 'rowCount';
                 $rowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
                 $rowCount->transferFromDOM($child);
                 $this->_rowCount = $rowCount;
                 break;
-            case Zend_Gdata_App_Data::lookupNamespace('gs') . ':' . 'colCount';
+            case $this->lookupNamespace('gs') . ':' . 'colCount';
                 $colCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
                 $colCount->transferFromDOM($child);
                 $this->_colCount = $colCount;
@@ -115,27 +127,5 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
         $this->_colCount = $colCount;
         return $this;
     }
-    
-    public function issetRowCount()
-    {
-        return isset($this->_rowCount);
-    }
-    
-    public function issetColumnCount()
-    {
-        return isset($this->_colCount);
-    }
-    
-    public function unsetRowCount()
-    {
-        $this->_rowCount = null;
-        return $this;
-    }
-    
-    public function unsetColumnCount()
-    {
-        $this->_colCount = null;
-        return $this;
-    }
-    
+
 }

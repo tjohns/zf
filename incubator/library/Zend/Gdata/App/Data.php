@@ -34,12 +34,14 @@ class Zend_Gdata_App_Data
     /**
      * @var array
      */
+/*
     protected static $_namespaces = array(
         'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
         'atom'       => 'http://www.w3.org/2005/Atom',
         'rss'        => 'http://blogs.law.harvard.edu/tech/rss',
         'gd'      => 'http://schemas.google.com/g/2005'
     );
+*/
 
     /**
      * Get the full version of a namespace prefix
@@ -64,7 +66,7 @@ class Zend_Gdata_App_Data
      *
      * Takes a prefix and a full namespace URI and adds them to the
      * list of registered namespaces for use by
-     * Zend_Gdata_App_Data::lookupNamespace().
+     * $this->lookupNamespace().
      *
      * @param  string $prefix The namespace prefix
      * @param  string $namespaceURI The full namespace URI

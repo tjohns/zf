@@ -54,8 +54,10 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
 
     public function __construct($text = null, $row = null, $col = null, $inputValue = null, $numericValue = null) 
     {
-        parent::__construct();
-        $this->setText($text);
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($text);
         $this->_row = $row; 
         $this->_col = $col; 
         $this->_inputValue = $inputValue; 
@@ -110,46 +112,6 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
     public function getNumericValue()
     {
         return $this->_numericValue;
-    }
-    
-    public function issetRow()
-    {
-        return isset($this->_row);
-    }
-    
-    public function issetColumn()
-    {
-        return isset($this->_col);
-    }
-    
-    public function issetInputValue()
-    {
-        return isset($this->_inputValue);
-    }
-    
-    public function issetNumericValue()
-    {
-        return isset($this->_numericValue);
-    }
-    
-    public function unsetRow()
-    {
-        $this->_row = null;
-    }
-    
-    public function unsetColumn()
-    {
-        $this->_col = null;
-    }
-    
-    public function unsetInputValue()
-    {
-        $this->_inputValue = null;
-    }
-    
-    public function unsetNumericValue()
-    {
-        $this->_numericValue = null;
     }
     
     public function setRow($row) 

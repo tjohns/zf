@@ -83,6 +83,15 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      */
     protected $_itemsPerPage = null;
 
+    public function __construct($uri = null, $element = null)
+    {
+        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($uri, $element);
+//var_dump($this->namespaces);
+    }
+
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
@@ -108,17 +117,17 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('opensearch') . ':' . 'totalResults':
+        case $this->lookupNamespace('opensearch') . ':' . 'totalResults':
             $totalResults = new Zend_Gdata_Extension_OpenSearchTotalResults();
             $totalResults->transferFromDOM($child);
             $this->_totalResults = $totalResults;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('opensearch') . ':' . 'startIndex':
+        case $this->lookupNamespace('opensearch') . ':' . 'startIndex':
             $startIndex = new Zend_Gdata_Extension_OpenSearchStartIndex();
             $startIndex->transferFromDOM($child);
             $this->_startIndex = $startIndex;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('opensearch') . ':' . 'itemsPerPage':
+        case $this->lookupNamespace('opensearch') . ':' . 'itemsPerPage':
             $itemsPerPage = new Zend_Gdata_Extension_OpenSearchItemsPerPage();
             $itemsPerPage->transferFromDOM($child);
             $this->_itemsPerPage = $itemsPerPage;

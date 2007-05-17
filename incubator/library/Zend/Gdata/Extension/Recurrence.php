@@ -28,16 +28,5 @@ class Zend_Gdata_Extension_Recurrence extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'recurrence';
-    protected $_rootNamespace = 'gd';
-
-    public function __construct($text = null)
-    {
-        $this->_text = $text;
-    }
-
-    public function __toString()
-    {
-        return $this->_text;
-    }
 
 }

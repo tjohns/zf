@@ -88,8 +88,9 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     const SPREADSHEETS_POST_URI = 'http://spreadsheets.google.com/feeds/spreadsheets/private/full';
     const AUTH_SERVICE_NAME = 'wise';
     
-    const NAMESPACE_URI = 'http://schemas.google.com/spreadsheets/2006';
-    const EXT_NAMESPACE_URI = 'http://schemas.google.com/spreadsheets/2006/extended';
+    public static $namespaces = array(
+        'gs' => 'http://schemas.google.com/spreadsheets/2006',
+        'gsx' => 'http://schemas.google.com/spreadsheets/2006/extended');
     
     /**
      * Create Gdata_Spreadsheets object
@@ -99,136 +100,180 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         parent::__construct($client);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
         $this->registerPackage('Zend_Gdata_Spreadsheets');
-        Zend_Gdata_App_Data::registerNamespace('gs', Zend_Gdata_Spreadsheets::NAMESPACE_URI);
-        Zend_Gdata_App_Data::registerNamespace('gsx', Zend_Gdata_Spreadsheets::EXT_NAMESPACE_URI);
         $this->_server = 'spreadsheets.google.com';
     }
     
     /**
      * Gets a spreadsheet feed.
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A DocumentQuery or a URI specifying the feed location.
      * @return SpreadsheetFeed
      */
-    public function getSpreadsheetFeed($query = null, $visibility = 'private', $projection = 'full')
+    public function getSpreadsheetFeed($location = null)
     {
-        $uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location == null)
+        {
+            $uri = self::SPREADSHEETS_FEED_URI;
+        } 
+        else if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
+        {
+            if ($location->getDocumentType() == null)
+            {
+                $location->setDocumentType('spreadsheets');
+            }
+            $uri = $location->getQueryUrl();
+        }
+        else
+        {
+            $uri = $location;
+        }    
+            
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_SpreadsheetFeed');
     }
     
     /**
      * Gets a spreadsheet entry.
-     * @param string $key The key for the requested spreadsheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A DocumentQuery or a URI specifying the entry location.
      * @return SpreadsheetEntry
      */
-    public function getSpreadsheetEntry($key, $query = null, $visibility = 'private', $projection = 'full')
+    public function getSpreadsheetEntry($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection.'/'.$key;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection.'/'.$key;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
+        {
+            if ($location->getDocumentType() == null)
+            {
+                $location->setDocumentType('spreadsheets');
+            }
+            $uri = $location->getQueryUrl();
+        }
+        else
+        {
+            $uri = $location;
+        }  
+
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_SpreadsheetEntry');
     }
     
     /**
      * Gets a worksheet feed.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A DocumentQuery or a URI specifying the feed location.
      * @return WorksheetFeed
      */
-    public function getWorksheetFeed($key, $query = null, $visibility = 'private', $projection = 'full')
+    public function getWorksheetFeed($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
+        {
+            if ($location->getDocumentType() == null)
+            {
+                $location->setDocumentType('worksheets');
+            }
+            $uri = $location->getQueryUrl();
+        }
+        else
+        {
+            $uri = $location;
+        }  
+        
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_WorksheetFeed');
     }
     
     /**
      * Gets a worksheet entry.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param string $wkshtId The id of the requested worksheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A DocumentQuery or a URI specifying the entry location.
      * @return WorksheetEntry
      */
-    public function GetWorksheetEntry($key, $wkshtId, $query = null, $visibility = 'private', $projection = 'full')
+    public function GetWorksheetEntry($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
+        {
+            if ($location->getDocumentType() == null)
+            {
+                $location->setDocumentType('worksheets');
+            }
+            $uri = $location->getQueryUrl();
+        }
+        else
+        {
+            $uri = $location;
+        }  
+        
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_WorksheetEntry');
     }
     
     /**
      * Gets a cell feed.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param string $wkshtId (optional) The id of the requested worksheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A CellQuery or a URI specifying the feed location.
      * @return CellFeed
      */
-    public function getCellFeed($key, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
+    public function getCellFeed($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery)
+            $uri = $location->getQueryUrl();
+        else
+            $uri = $location;
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_CellFeed');
     }
     
     /**
      * Gets a cell entry.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param string $cell The id of the desired cell
-     * @param string $wkshtId (optional) The id of the requested worksheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A CellQuery or a URI specifying the entry location.
      * @return CellEntry
      */
-    public function getCellEntry($key, $cell, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
+    public function getCellEntry($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$cell;
-        if ($query) $uri .= $query->getQueryString();
+        //$uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$cell;
+        //if ($query) $uri .= $query->getQueryString();
+        
+        if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery)
+            $uri = $location->getQueryUrl();
+        else
+            $uri = $location;
+            
         return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_CellEntry');
     }
     
     /**
      * Gets a list feed.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param string $wkshtId (optional) The id of the requested worksheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A ListQuery or a URI specifying the feed location.
      * @return ListFeed
      */
-    public function getListFeed($key, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
+    public function getListFeed($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/list/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
-        if ($query) $uri .= $query->getQueryString();
+        if ($location instanceof Zend_Gdata_Spreadsheets_ListQuery)
+            $uri = $location->getQueryUrl();
+        else
+            $uri = $location;
         
         return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_ListFeed');
     }
     
     /**
      * Gets a list entry.
-     * @param string $key The key for the corresponding spreadsheet
-     * @param string $rowId The id of the desired row
-     * @param string $wkshtId (optional) The id of the requested worksheet
-     * @param DocumentQuery $query (optional) Query parameters
-     * @param string $visibility (optional) Visibility
-     * @param string $projection (optional) Projection
+     * @param string $location A ListQuery or a URI specifying the entry location.
      * @return ListEntry
      */
-    public function getListEntry($key, $rowId, $wkshtId = 'default', $query = null, $visibility = 'private', $projection = 'full')
+    public function getListEntry($location)
     {
-        $uri = 'http://'.$this->_server.'/feeds/list/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$rowId;
-        if ($query) $uri .= $query->getQueryString();
-        return parent::getFeed($uri, 'Zend_Gdata_Spreadsheets_ListEntry');
+        if ($location instanceof Zend_Gdata_Spreadsheets_ListQuery)
+            $uri = $location->getQueryUrl();
+        else
+            $uri = $location;
+        
+        return parent::getEntry($uri, 'Zend_Gdata_Spreadsheets_ListEntry');
     }
     
     /**
@@ -243,7 +288,13 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     public function updateCell($row, $col, $inputValue, $key, $wkshtId = 'default') 
     {
         $cell = 'R'.$row.'C'.$col;
-        $entry = $this->getCellEntry($key, $cell, $wkshtId);
+        
+        $query = new Zend_Gdata_Spreadsheets_CellQuery();
+        $query->setSpreadsheetKey($key);
+        $query->setWorksheetId($wkshtId);
+        $query->setCellId($cell);
+        
+        $entry = $this->getCellEntry($query);
         $entry->setCell(new Zend_Gdata_Spreadsheets_Extension_Cell(null, $row, $col, $inputValue));
         $response = $entry->save();
         return $response;
@@ -267,17 +318,21 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
             $newCustomArr[] = $newCustom;
         }
         $newEntry->setCustom($newCustomArr);
-        $feed = $this->getListFeed($key, $wkshtId);
-        $editLink = $feed->getLink('http://schemas.google.com/g/2005#post');
-        $response = $this->post($newEntry, $editLink->href);
         
-        $body = $response->getBody();
-        $doc = new DOMDocument();
-        $doc->loadXML($body);
-        $returnEntry = new Zend_Gdata_Spreadsheets_ListEntry();
-        $returnEntry->transferFromDom($doc->documentElement);
+        $query = new Zend_Gdata_Spreadsheets_ListQuery();
+        $query->setSpreadsheetKey($key);
+        $query->setWorksheetId($wkshtId);
+        
+        $feed = $this->getListFeed($query);
+        $editLink = $feed->getLink('http://schemas.google.com/g/2005#post');
+        
+        /*$response = $this->post($newEntry, $editLink->href);
+        
+        $returnEntry = new Zend_Gdata_Spreadsheets_ListEntry(null, $response->getBody());
         $returnEntry->setHttpClient($feed->getHttpClient());
-        return $returnEntry;
+        return $returnEntry;*/
+        
+        return $this->insertEntry($editLink->href, $newEntry->saveXML(), 'Zend_Gdata_Spreadsheets_ListEntry');
     }
     
     /**

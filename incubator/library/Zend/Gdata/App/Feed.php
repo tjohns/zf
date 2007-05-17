@@ -97,7 +97,7 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Ite
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'entry':
+        case $this->lookupNamespace('atom') . ':' . 'entry':
             $newEntry = new $this->_entryClassName(
                 null,
                 $child);

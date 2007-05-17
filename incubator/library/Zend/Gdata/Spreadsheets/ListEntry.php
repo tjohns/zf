@@ -46,6 +46,14 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
     protected $_entryClassName = 'Zend_Gdata_Spreadsheets_ListEntry';
 
     protected $_custom = array();
+
+    public function __construct($uri = null, $element = null)
+    {
+        parent::__construct($uri, $element);
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+    }
     
     public function getDOM($doc = null)
     {
@@ -61,7 +69,7 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
     protected function takeChildFromDOM($child)
     {
         switch ($child->namespaceURI) {
-        case Zend_Gdata_App_Data::lookupNamespace('gsx');
+        case $this->lookupNamespace('gsx');
             $custom = new Zend_Gdata_Spreadsheets_Extension_Custom($child->localName);
             $custom->transferFromDOM($child);
             $this->_custom[] = $custom;
@@ -80,17 +88,6 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
     public function setCustom($custom) 
     {
         $this->_custom = $custom;
-        return $this;
-    }
-    
-    public function issetCustom()
-    {
-        return isset($this->_custom);
-    }
-    
-    public function unsetCustom()
-    {
-        $this->_custom = null;
         return $this;
     }
 

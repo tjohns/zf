@@ -92,22 +92,22 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'where';
+        case $this->lookupNamespace('gd') . ':' . 'where';
             $where = new Zend_Gdata_Extension_Where();
             $where->transferFromDOM($child);
             $this->_where[] = $where;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'when';
+        case $this->lookupNamespace('gd') . ':' . 'when';
             $when = new Zend_Gdata_Extension_When();
             $when->transferFromDOM($child);
             $this->_when[] = $when;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'recurrence';
+        case $this->lookupNamespace('gd') . ':' . 'recurrence';
             $recurrence = new Zend_Gdata_Extension_Recurrence();
             $recurrence->transferFromDOM($child);
             $this->_recurrence = $recurrence;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('gd') . ':' . 'eventStatus';
+        case $this->lookupNamespace('gd') . ':' . 'eventStatus';
             $eventStatus = new Zend_Gdata_Extension_EventStatus();
             $eventStatus->transferFromDOM($child);
             $this->_eventStatus = $eventStatus;

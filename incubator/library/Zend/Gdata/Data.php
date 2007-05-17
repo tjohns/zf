@@ -114,11 +114,13 @@ class Zend_Gdata_Data
     /**
      * @var array
      */
+/*
     protected static $_namespaces = array(
         'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
         'atom'       => 'http://www.w3.org/2005/Atom',
         'rss'        => 'http://blogs.law.harvard.edu/tech/rss',
         'gd'      => 'http://schemas.google.com/g/2005'
+*/
     );
 
     /**

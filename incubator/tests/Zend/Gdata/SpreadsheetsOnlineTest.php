@@ -48,11 +48,37 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
             $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
         }
+        
+        $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
+        $feed = $this->gdata->getSpreadsheetFeed($query);
+        $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_SpreadsheetFeed);
+        foreach ($feed->entries as $entry) {
+            $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
+            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+        }
+        
+        $uri = $query->getQueryUrl();
+        $feed = $this->gdata->getSpreadsheetFeed($uri);
+        $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_SpreadsheetFeed);
+        foreach ($feed->entries as $entry) {
+            $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
+            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+        }
     }
     
     public function testGetWorksheetFeed()
     {
-        $feed = $this->gdata->getWorksheetFeed($this->sprKey);
+        $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $feed = $this->gdata->getWorksheetFeed($query);
+        $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_WorksheetFeed);
+        foreach ($feed->entries as $entry) {
+            $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_WorksheetEntry);
+            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+        }
+        
+        $uri = $query->getQueryUrl();
+        $feed = $this->gdata->getWorksheetFeed($uri);
         $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_WorksheetFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_WorksheetEntry);
@@ -62,7 +88,10 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
     
     public function testGetCellFeed()
     {
-        $feed = $this->gdata->getCellFeed($this->sprKey, $this->wksId);
+        $query = new Zend_Gdata_Spreadsheets_CellQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setWorksheetId($this->wksId);
+        $feed = $this->gdata->getCellFeed($query);
         $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_CellFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
@@ -72,7 +101,10 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
     
     public function testGetListFeed()
     {
-        $feed = $this->gdata->getListFeed($this->sprKey, $this->wksId);
+        $query = new Zend_Gdata_Spreadsheets_ListQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setWorksheetId($this->wksId);
+        $feed = $this->gdata->getListFeed($query);
         $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_ListFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
@@ -82,32 +114,48 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
     
     public function testGetSpreadsheetEntry()
     {
-        $entry = $this->gdata->getSpreadsheetEntry($this->sprKey);
+        $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $entry = $this->gdata->getSpreadsheetEntry($query);
+        $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
+        
+        $query = new Zend_Gdata_Spreadsheets_DocumentQuery(Zend_Gdata_Spreadsheets::SPREADSHEETS_FEED_URI . '/private/full/' . $this->sprKey);
+        $query->setSpreadsheetKey($this->sprKey);
+        $entry = $this->gdata->getSpreadsheetEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
     }
     
     public function testGetWorksheetEntry()
     {
-        $entry = $this->gdata->getWorksheetEntry($this->sprKey, $this->wksId);
+        $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setWorksheetId($this->wksId);
+        $entry = $this->gdata->getWorksheetEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_WorksheetEntry);
     }
     
     public function testGetCellEntry()
     {
-        $entry = $this->gdata->getCellEntry($this->sprKey, 'R1C1');
+        $query = new Zend_Gdata_Spreadsheets_CellQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setCellId('R1C1');
+        $entry = $this->gdata->getCellEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
     }
     
     public function testGetListEntry()
     {
-        $entry = $this->gdata->getListEntry($this->sprKey, '1');
+        $query = new Zend_Gdata_Spreadsheets_ListQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setRowId('1');
+        $entry = $this->gdata->getListEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
     }
     
     public function testUpdateCell()
     {
         $this->gdata->updateCell(5, 1, 'updated data', $this->sprKey, $this->wksId);
-        $this->gdata->updateCell(5, 1, null, $this->sprKey);
+        $this->gdata->updateCell(5, 1, '', $this->sprKey, $this->wksId);
     }
     
     public function testInsertUpdateRow()
@@ -120,7 +168,7 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->insertRow($rowData, $this->sprKey);
         $rowData['a1'] = 'newer';
         $entry = $this->gdata->updateRow($entry, $rowData);
-        $entry->delete();
+        $this->gdata->deleteRow($entry);
     }
 
 }

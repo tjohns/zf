@@ -77,6 +77,11 @@ class Zend_Gdata extends Zend_Gdata_App
             'Zend_Gdata_App_Extension',
             'Zend_Gdata_App');
 
+    public static $namespaces = array(
+        'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
+        'rss' => 'http://blogs.law.harvard.edu/tech/rss',
+        'gd' => 'http://schemas.google.com/g/2005');
+
     /**
      * Create Gdata object
      *

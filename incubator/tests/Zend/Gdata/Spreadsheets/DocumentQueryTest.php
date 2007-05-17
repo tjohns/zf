@@ -36,16 +36,22 @@ class Zend_Gdata_Spreadsheets_DocumentQueryTest extends PHPUnit_Framework_TestCa
 
     public function testTitle()
     {
+        $this->assertTrue($this->docQuery->getTitle() == null);
         $this->docQuery->setTitle('test title');
         $this->assertTrue($this->docQuery->getTitle() == 'test title');
         $this->assertTrue($this->docQuery->getQueryString() == '?title=test+title');
+        $this->docQuery->setTitle(null);
+        $this->assertTrue($this->docQuery->getTitle() == null);
     }
     
     public function testTitleExact()
     {
+        $this->assertTrue($this->docQuery->getTitleExact() == null);
         $this->docQuery->setTitleExact('test title');
         $this->assertTrue($this->docQuery->getTitleExact() == 'test title');
         $this->assertTrue($this->docQuery->getQueryString() == '?title-exact=test+title');
+        $this->docQuery->setTitleExact(null);
+        $this->assertTrue($this->docQuery->getTitleExact() == null);
     }
 
 }

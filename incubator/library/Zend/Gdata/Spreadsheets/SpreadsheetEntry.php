@@ -36,6 +36,14 @@ require_once 'Zend/Gdata/Entry.php';
 class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
 {
 
-  protected $_entryClassName = 'Zend_Gdata_Spreadsheets_SpreadsheetEntry';
+    protected $_entryClassName = 'Zend_Gdata_Spreadsheets_SpreadsheetEntry';
+
+    public function __construct($uri = null, $element = null)
+    {
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($uri, $element);
+    }
   
 }

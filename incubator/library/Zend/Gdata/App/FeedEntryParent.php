@@ -124,7 +124,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
                 $this->transferFromDOM($element);
             }
         } else {
-	    $this->transferFromDOM($element);
+	        $this->transferFromDOM($element);
         }
     }
 
@@ -196,42 +196,42 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'author':
+        case $this->lookupNamespace('atom') . ':' . 'author':
             $author = new Zend_Gdata_App_Extension_Author();
             $author->transferFromDOM($child);
             $this->_author[] = $author;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'category':
+        case $this->lookupNamespace('atom') . ':' . 'category':
             $category = new Zend_Gdata_App_Extension_Category();
             $category->transferFromDOM($child);
             $this->_category[] = $category;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'contributor':
+        case $this->lookupNamespace('atom') . ':' . 'contributor':
             $contributor = new Zend_Gdata_App_Extension_Contributor();
             $contributor->transferFromDOM($child);
             $this->_contributor[] = $contributor;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'id':
+        case $this->lookupNamespace('atom') . ':' . 'id':
             $id = new Zend_Gdata_App_Extension_Id();
             $id->transferFromDOM($child);
             $this->_id = $id;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'link':
+        case $this->lookupNamespace('atom') . ':' . 'link':
             $link = new Zend_Gdata_App_Extension_Link();
             $link->transferFromDOM($child);
             $this->_link[] = $link;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'rights':
+        case $this->lookupNamespace('atom') . ':' . 'rights':
             $rights = new Zend_Gdata_App_Extension_Rights();
             $rights->transferFromDOM($child);
             $this->_rights = $rights;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'title':
+        case $this->lookupNamespace('atom') . ':' . 'title':
             $title = new Zend_Gdata_App_Extension_Title();
             $title->transferFromDOM($child);
             $this->_title = $title;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'updated':
+        case $this->lookupNamespace('atom') . ':' . 'updated':
             $updated = new Zend_Gdata_App_Extension_Updated();
             $updated->transferFromDOM($child);
             $this->_updated = $updated;

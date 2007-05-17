@@ -42,9 +42,14 @@ require_once('Zend/Gdata/Query.php');
 class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
 {
 
-    const SPREADSHEETS_FEED_URI = 'http://spreadsheets.google.com/feeds/spreadsheets';
+    const SPREADSHEETS_FEED_URI = 'http://spreadsheets.google.com/feeds';
     
     protected $_defaultFeedUri = self::SPREADSHEETS_FEED_URI;
+    protected $_documentType;
+    protected $_visibility = 'private';
+    protected $_projection = 'full';
+    protected $_spreadsheetKey = null;
+    protected $_worksheetId = null;
     
     /**
      * Create Zend_Gdata_Spreadsheets_DocumentQuery object
@@ -52,6 +57,96 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     public function __construct()
     {
         parent::__construct();
+    }
+    
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Spreadsheets_CellQuery Provides a fluent interface
+     */
+    public function setSpreadsheetKey($value)
+    {
+        $this->_spreadsheetKey = $value;
+        return $this;
+    }
+    
+    /**
+     * @return string spreadsheet key
+     */
+    public function getSpreadsheetKey()
+    {
+        return $this->_spreadsheetKey;
+    }
+    
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Spreadsheets_CellQuery Provides a fluent interface
+     */
+    public function setWorksheetId($value)
+    {
+        $this->_worksheetId = $value;
+        return $this;
+    }
+    
+    /**
+     * @return string worksheet id
+     */
+    public function getWorksheetId()
+    {
+        return $this->_worksheetId;
+    }
+    
+    /**
+     * @param string $value spreadsheets or worksheets
+     * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
+     */
+    public function setDocumentType($value)
+    {
+        $this->_documentType = $value;
+        return $this;
+    }
+    
+    /**
+     * @return string document type
+     */
+    public function getDocumentType()
+    {
+        return $this->_documentType;
+    }
+    
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
+     */
+    public function setProjection($value)
+    {
+        $this->_projection = $value;
+        return $this;
+    }
+
+    /**
+     * @return string visibility
+     * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
+     */
+    public function setVisibility($value)
+    {
+        $this->_visibility = $value;
+        return $this;
+    }
+    
+    /**
+     * @return string projection
+     */
+    public function getProjection()
+    {
+        return $this->_projection;
+    }
+    
+    /**
+     * @return string visibility
+     */
+    public function getVisibility()
+    {
+        return $this->_visibility;
     }
     
     /**
@@ -106,52 +201,56 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
         }
     }
     
-    /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetTitle()
+    private function appendVisibilityProjection()
     {
-        return isset($this->_params['title']);
+        $uri = '';
+        
+        if ($this->_visibility != null) {
+            $uri .= '/'.$this->_visibility;
+        } else {
+            throw new Zend_Gdata_App_Exception('A visibility must be provided for document queries.');
+        }
+        
+        if ($this->_projection != null) {
+            $uri .= '/'.$this->_projection;
+        } else {
+            throw new Zend_Gdata_App_Exception('A projection must be provided for document queries.');
+        }
+        
+        return $uri;
     }
     
-    /**
-     * @return boolean
-     * TODO are isset and unset implementations needed for query
-     * classes and other data model classes?
-     */
-    public function issetTitleExact()
-    {
-        return isset($this->_params['title-exact']);
-    }
-    
-    /**
-     * Unsets value.
-     */
-    public function unsetTitle()
-    {
-        unset($this->_params['title']);
-        return $this;
-    }
-    
-    /**
-     * Unsets value.
-     */
-    public function unsetTitleExact()
-    {
-        unset($this->_params['title-exact']);
-        return $this;
-    }
     
     /**
      * @return string url
      */
     public function getQueryUrl()
     {
-        if ($uri == null) {
-            $uri = $this->_defaultFeedUri;
+        $uri = $this->_defaultFeedUri;
+    
+        if ($this->_documentType != null) {
+            $uri .= '/'.$this->_documentType;
+        } else {
+            throw new Zend_Gdata_App_Exception('A document type must be provided for document queries.');
         }
+    
+        if ($this->_documentType == 'spreadsheets') {
+            $uri .= $this->appendVisibilityProjection();
+            if ($this->_spreadsheetKey != null) {
+                $uri .= '/'.$this->_spreadsheetKey;
+            }
+        } else if ($this->_documentType == 'worksheets') {
+            if ($this->_spreadsheetKey != null) {
+                $uri .= '/'.$this->_spreadsheetKey;
+            } else {
+                throw new Zend_Gdata_App_Exception('A spreadsheet key must be provided for worksheet document queries.');
+            }
+            $uri .= $this->appendVisibilityProjection();
+            if ($this->_worksheetId != null) {
+                $uri .= '/'.$this->_worksheetId;
+            }
+        }
+        
         $uri .= $this->getQueryString();
         return $uri;
     }

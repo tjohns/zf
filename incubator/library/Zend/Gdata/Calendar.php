@@ -64,9 +64,11 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
     const CALENDAR_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
     const AUTH_SERVICE_NAME = 'cl';
-    const NAMESPACE_URI = 'http://schemas.google.com/gCal/2005';
 
     protected $_defaultPostUri = self::CALENDAR_POST_URI;
+
+    public static $namespaces = array(
+            'gCal' => 'http://schemas.google.com/gCal/2005');
 
     /**
      * Create Gdata_Calendar object
@@ -76,7 +78,6 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         parent::__construct($client);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
         $this->registerPackage('Zend_Gdata_Calendar');
-        Zend_Gdata_App_Data::registerNamespace('gCal', Zend_Gdata_Calendar::NAMESPACE_URI);
     }
 
     /**

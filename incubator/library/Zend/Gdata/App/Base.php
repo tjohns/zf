@@ -71,6 +71,13 @@ abstract class Zend_Gdata_App_Base
      */
     protected $_text = null;
 
+    /**
+     * @var array
+     */
+    protected $_namespaces = array(
+        'atom'       => 'http://www.w3.org/2005/Atom'
+    );
+
     public function __construct($text = null)
     {
         $this->_text = $text;
@@ -105,7 +112,7 @@ abstract class Zend_Gdata_App_Base
         if ($this->_rootNamespaceURI != null) { 
             $element = $doc->createElementNS($this->_rootNamespaceURI, $this->_rootElement);
         } elseif ($this->_rootNamespace !== null) {
-            $element = $doc->createElementNS(Zend_Gdata_App_Data::lookupNamespace($this->_rootNamespace), $this->_rootElement);
+            $element = $doc->createElementNS($this->lookupNamespace($this->_rootNamespace), $this->_rootElement);
         } else {
             $element = $doc->createElement($this->_rootElement);
         }
@@ -213,6 +220,40 @@ abstract class Zend_Gdata_App_Base
     }
 
     /**
+     * Get the full version of a namespace prefix
+     *
+     * Looks up a prefix (atom:, etc.) in the list of registered
+     * namespaces and returns the full namespace URI if
+     * available. Returns the prefix, unmodified, if it's not
+     * registered.
+     *
+     * @return string
+     */
+    public function lookupNamespace($prefix)
+    {
+        return isset($this->_namespaces[$prefix]) ?
+            $this->_namespaces[$prefix] :
+            $prefix;
+    }
+
+
+    /**
+     * Add a namespace and prefix to the registered list
+     *
+     * Takes a prefix and a full namespace URI and adds them to the
+     * list of registered namespaces for use by
+     * $this->lookupNamespace().
+     *
+     * @param  string $prefix The namespace prefix
+     * @param  string $namespaceURI The full namespace URI
+     * @return void
+     */
+    public function registerNamespace($prefix, $namespaceURI)
+    {
+        $this->_namespaces[$prefix] = $namespaceURI;
+    }
+
+    /**
      * Magic getter to allow acces like $entry->foo to call $entry->getFoo()
      * Alternatively, if no getFoo() is defined, but a $_foo protected variable
      * is defined, this is returned.
@@ -256,6 +297,44 @@ abstract class Zend_Gdata_App_Base
         } else {
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Property ' . $name . '  does not exist');
+        }
+    }
+
+    /**
+     * Magic __isset method 
+     *
+     * @param string $name 
+     */
+    public function __isset($name)
+    {
+        if (isset($this->{'_' . $name})) {
+            if (is_array($this->{'_' . $name})) {
+                if (count($this->{'_' . $name}) > 0) {
+                    return true; 
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Magic __unset method 
+     *
+     * @param string $name 
+     */
+    public function __unset($name)
+    {
+        if (isset($this->{'_' . $name})) {
+            if (is_array($this->{'_' . $name})) {
+                $this->{'_' . $name} = array();
+            } else {
+                $this->{'_' . $name} = null;
+            }
         }
     }
 

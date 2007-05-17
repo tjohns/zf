@@ -43,7 +43,7 @@ class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
     {
         $absoluteNodeDraft = $child->draftspaceURI . ':' . $child->localDraft;
         switch ($absoluteNodeDraft) {
-        case Zend_Gdata_App_Data::lookupDraftspace('atom') . ':' . 'draft':
+        case $this->lookupDraftspace('atom') . ':' . 'draft':
             $draft = new Zend_Gdata_App_Extension_Draft();
             $draft->transferFromDOM($child);
             $this->_draft = $draft;

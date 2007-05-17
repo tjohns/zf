@@ -52,6 +52,14 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
     
     protected $_rowCount = null;
     protected $_colCount = null;
+
+    public function __construct($uri = null, $element = null)
+    {
+        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+            $this->registerNamespace($nsPrefix, $nsUri);
+        }
+        parent::__construct($uri, $element);
+    }
     
     public function getDOM($doc = null)
     {
@@ -69,12 +77,12 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case Zend_Gdata_App_Data::lookupNamespace('gs') . ':' . 'rowCount';
+            case $this->lookupNamespace('gs') . ':' . 'rowCount';
                 $rowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
                 $rowCount->transferFromDOM($child);
                 $this->_rowCount = $rowCount;
                 break;
-            case Zend_Gdata_App_Data::lookupNamespace('gs') . ':' . 'colCount';
+            case $this->lookupNamespace('gs') . ':' . 'colCount';
                 $colCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
                 $colCount->transferFromDOM($child);
                 $this->_colCount = $colCount;
@@ -104,28 +112,6 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
     public function setColumnCount($colCount)
     {
         $this->_colCount = $colCount;
-        return $this;
-    }
-    
-    public function issetRowCount()
-    {
-        return isset($this->_rowCount);
-    }
-    
-    public function issetColumnCount()
-    {
-        return isset($this->_colCount);
-    }
-    
-    public function unsetRowCount()
-    {
-        $this->_rowCount = null;
-        return $this;
-    }
-    
-    public function unsetColumnCount()
-    {
-        $this->_colCount = null;
         return $this;
     }
 

@@ -46,19 +46,19 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setUpdatedMin($updatedMin);
         $this->query->setUpdatedMax($updatedMax);
-        $this->assertTrue(isset($this->query->updatedMin));
-        $this->assertTrue(isset($this->query->updatedMax));
-        $this->assertTrue(isset($this->query->user));
+        $this->assertTrue($this->query->updatedMin != null);
+        $this->assertTrue($this->query->updatedMax != null);
+        $this->assertTrue($this->query->user != null);
         $this->assertEquals(Zend_Gdata_App_Util::formatTimestamp($updatedMin), $this->query->getUpdatedMin());
         $this->assertEquals(Zend_Gdata_App_Util::formatTimestamp($updatedMax), $this->query->getUpdatedMax());
         $this->assertEquals(self::GOOGLE_DEVELOPER_CALENDAR, $this->query->getUser());
 
-        unset($this->query->updatedMin);
-        $this->assertFalse(isset($this->query->updatedMin));
-        unset($this->query->updatedMax);
-        $this->assertFalse(isset($this->query->updatedMax));
-        unset($this->query->user);
-        $this->assertFalse(isset($this->query->user));
+        $this->query->updatedMin = null;
+        $this->assertFalse($this->query->updatedMin != null);
+        $this->query->updatedMax = null;
+        $this->assertFalse($this->query->updatedMax != null);
+        $this->query->user = null;
+        $this->assertFalse($this->query->user != null);
     }
 
     public function testStartMinMaxParam()
@@ -69,17 +69,17 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setStartMin($startMin);
         $this->query->setStartMax($startMax);
-        $this->assertTrue(isset($this->query->startMin));
-        $this->assertTrue(isset($this->query->startMax));
+        $this->assertTrue($this->query->startMin != null);
+        $this->assertTrue($this->query->startMax != null);
         $this->assertEquals(Zend_Gdata_App_Util::formatTimestamp($startMin), $this->query->getStartMin());
         $this->assertEquals(Zend_Gdata_App_Util::formatTimestamp($startMax), $this->query->getStartMax());
 
-        unset($this->query->startMin);
-        $this->assertFalse(isset($this->query->startMin));
-        unset($this->query->startMax);
-        $this->assertFalse(isset($this->query->startMax));
-        unset($this->query->user);
-        $this->assertFalse(isset($this->query->user));
+        $this->query->startMin = null;
+        $this->assertFalse($this->query->startMin != null);
+        $this->query->startMax = null;
+        $this->assertFalse($this->query->startMax != null);
+        $this->query->user = null;
+        $this->assertFalse($this->query->user != null);
     }
 
     public function testVisibilityParam()
@@ -88,10 +88,10 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $visibility = 'private';
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setVisibility($visibility);
-        $this->assertTrue(isset($this->query->visibility));
+        $this->assertTrue($this->query->visibility != null);
         $this->assertEquals($visibility, $this->query->getVisibility());
-        unset($this->query->visibility);
-        $this->assertFalse(isset($this->query->visibility));
+        $this->query->visibility = null;
+        $this->assertFalse($this->query->visibility != null);
     }
 
     public function testProjectionParam()
@@ -100,10 +100,10 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $projection = 'composite';
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setProjection($projection);
-        $this->assertTrue(isset($this->query->projection));
+        $this->assertTrue($this->query->projection != null);
         $this->assertEquals($projection, $this->query->getProjection());
-        unset($this->query->projection);
-        $this->assertFalse(isset($this->query->projection));
+        $this->query->projection = null;
+        $this->assertFalse($this->query->projection != null);
     }
 
     public function testOrderbyParam()
@@ -112,10 +112,10 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $orderby = 'starttime';
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setOrderby($orderby);
-        $this->assertTrue(isset($this->query->orderby));
+        $this->assertTrue($this->query->orderby != null);
         $this->assertEquals($orderby, $this->query->getOrderby());
-        unset($this->query->orderby);
-        $this->assertFalse(isset($this->query->orderby));
+        $this->query->orderby = null;
+        $this->assertFalse($this->query->orderby != null);
     }
 
     public function testEventParam()
@@ -123,10 +123,10 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->query->resetParameters();
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->query->setEvent(self::ZEND_CONFERENCE_EVENT);
-        $this->assertTrue(isset($this->query->event));
+        $this->assertTrue($this->query->event != null);
         $this->assertEquals(self::ZEND_CONFERENCE_EVENT, $this->query->getEvent());
-        unset($this->query->event);
-        $this->assertFalse(isset($this->query->event));
+        $this->query->event = null;
+        $this->assertFalse($this->query->event != null);
     }
 
     public function testCommentsParam()
@@ -134,9 +134,9 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->query->resetParameters();
         $comment = 'we need to reschedule';
         $this->query->setComments($comment);
-        $this->assertTrue(isset($this->query->comments));
+        $this->assertTrue($this->query->comments != null);
         $this->assertEquals($comment, $this->query->getComments());
-        unset($this->query->comments);
+        $this->query->comments = null;
         $this->assertFalse(isset($this->query->comments));
     }
 

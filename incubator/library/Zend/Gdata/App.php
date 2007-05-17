@@ -359,6 +359,30 @@ class Zend_Gdata_App
     }
 
     /**
+     * Inserts an entry to a given URI and returns the response as a fully formed Entry.
+     * @param string $uri POST URI
+     * @param (string|Zend_Gdata_App_Entry) $data
+     * @param string returnClass The class of entry to be returned.
+     * @return Zend_Gdata_App_Entry The entry returned by the service after insertion.
+     */
+    public function insertEntry($uri, $data, $returnClass='Zend_Gdata_App_Entry')
+    {
+        if (is_string($data)) {
+            $rawData = $data;
+        } elseif ($data instanceof Zend_Gdata_App_Entry) {
+            $rawData = $data->saveXML();
+        } else {
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
+        }
+        $response = $this->post($rawData, $uri);
+        
+        $returnEntry = new $returnClass(null, $response->getBody());
+        $returnEntry->setHttpClient(self::getstaticHttpClient());
+        return $returnEntry;
+    }
+
+    /**
      * Delete an entry
      *
      * TODO Determine if App should call Entry to Delete or the opposite.  

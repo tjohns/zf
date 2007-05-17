@@ -63,5 +63,19 @@ class Zend_Gdata_Spreadsheets_CellFeedTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($newCellFeed->getColumnCount() instanceof Zend_Gdata_Spreadsheets_Extension_ColCount);
         $this->assertTrue($newCellFeed->getColumnCount()->getText() == '20');
     }
+    
+    public function testGetSetCounts()
+    {
+        $newRowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
+        $newRowCount->setText("20");
+        $newColCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
+        $newColCount->setText("50");
+        
+        $this->cellFeed->setRowCount($newRowCount);
+        $this->cellFeed->setColumnCount($newColCount);
+        
+        $this->assertTrue($this->cellFeed->getRowCount()->getText() == "20");
+        $this->assertTrue($this->cellFeed->getColumnCount()->getText() == "50");
+    }
 
 }

@@ -98,27 +98,27 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'content':
+        case $this->lookupNamespace('atom') . ':' . 'content':
             $content = new Zend_Gdata_App_Extension_Content();
             $content->transferFromDOM($child);
             $this->_content = $content;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'published':
+        case $this->lookupNamespace('atom') . ':' . 'published':
             $published = new Zend_Gdata_App_Extension_Published();
             $published->transferFromDOM($child);
             $this->_published = $published;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'source':
+        case $this->lookupNamespace('atom') . ':' . 'source':
             $source = new Zend_Gdata_App_Extension_Source();
             $source->transferFromDOM($child);
             $this->_source = $source;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'summary':
+        case $this->lookupNamespace('atom') . ':' . 'summary':
             $summary = new Zend_Gdata_App_Extension_Summary();
             $summary->transferFromDOM($child);
             $this->_summary = $summary;
             break;
-        case Zend_Gdata_App_Data::lookupNamespace('atom') . ':' . 'control':
+        case $this->lookupNamespace('atom') . ':' . 'control':
             $control = new Zend_Gdata_App_Extension_Control();
             $control->transferFromDOM($child);
             $this->_control = $control;

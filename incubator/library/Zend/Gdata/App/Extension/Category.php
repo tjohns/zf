@@ -83,23 +83,6 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return boolean 
-     */
-    public function issetTerm()
-    {
-        return ($this->_term != null && count($this->_term) > 0);
-    }
-
-    /**
-     * @return Zend_Gdata_App_Extension_Category Provides a fluent interface 
-     */
-    public function unsetTerm()
-    {
-        $this->_term = array();
-        return $this;
-    }
-
-    /**
      * @return Zend_Gdata_App_Extension_Scheme 
      */
     public function getScheme()
@@ -115,23 +98,6 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     {
         $this->_scheme = $value;
         return $this; 
-    }
-
-    /**
-     * @return boolean 
-     */
-    public function issetScheme()
-    {
-        return ($this->_scheme != null && count($this->_scheme) > 0);
-    }
-
-    /**
-     * @return Zend_Gdata_App_Extension_Category Provides a fluent interface 
-     */
-    public function unsetScheme()
-    {
-        $this->_scheme = array();
-        return $this;
     }
 
     /**
@@ -154,21 +120,4 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
         return $this; 
     }
 
-    /**
-     * @return boolean 
-     */
-    public function issetLabel()
-    {
-        return ($this->_label != null && count($this->_label) > 0);
-    }
-
-    /**
-     * @return Zend_Gdata_App_Extension_Category Provides a fluent interface 
-     */
-    public function unsetLabel()
-    {
-        $this->_label = array();
-        return $this;
-    }
-    
 }
