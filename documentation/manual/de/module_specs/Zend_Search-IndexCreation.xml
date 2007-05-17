@@ -130,7 +130,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         <title>Indexoptimierung</title>
 
         <para>
-            Ein Lucene Index bestehtis aus Segmenten. Jedes Segment ist ein komplett unabhängiger Datensatz.
+            Ein Lucene Index besteht aus Segmenten. Jedes Segment ist ein komplett unabhängiger Datensatz.
         </para>
         <para>
             Lucene Indexsegmentdateien können aufgrund ihrer Natur nicht aktualisiert werden. Eine Segmentaktualisierung
