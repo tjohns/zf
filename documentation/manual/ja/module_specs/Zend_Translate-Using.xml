@@ -473,7 +473,6 @@ $translate->addTranslation('path/to/other.csv', 'fr');
 
     </sect2>
 
-
     <sect2 id="zend.translate.using.options">
 
         <title>アダプタのオプション</title>
@@ -505,6 +504,49 @@ $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
 $translate->addTranslation('path/to/other.csv', 'fr');
 ... // 何かをします
 $translate->addTranslation('path/to/new.csv', 'fr', $options); // 言語 fr を消去し、新しい翻訳を使用します
+]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.istranslated">
+
+        <title>翻訳の確認</title>
+
+        <para>
+            通常は、テキストが翻訳されているかどうかを気にすることはありません。
+            しかし、そのテキストが翻訳されているかどうかを、ソースコードから調べたいこともあるでしょう。
+            そんな場合に使用するメソッドが <code>isTranslated()</code> です。
+        </para>
+
+        <para>
+            <code>isTranslated($messageId, $original = false, $locale = null)</code>
+            の最初のパラメータには、翻訳されているかどうかを調べたいテキストを指定します。
+            また、オプションの三番目のパラメータには、翻訳を調べたいロケールを指定します。
+            オプションの二番目のパラメータで指定するのは、
+            その言語に完全に一致した翻訳があるのか、あるいはもう少し広い範囲の翻訳を使用するのかという内容です。
+            たとえば、あるテキストについて 'en' の翻訳はあるが 'en_US' の翻訳はないといった場合、
+            通常は 'en' の翻訳を取得することになるでしょう。しかし <code>$original</code>
+            を true にしておくと、このような場合は <code>isTranslated()</code> は false を返すようになります。
+        </para>
+
+        <example id="zend.translate.using.istranslated.example">
+            <title>テキストの翻訳が存在するかどうかの確認</title>
+            <programlisting role="php"><![CDATA[
+$english = array('message1' => 'Nachricht 1',
+                 'message2' => 'Nachricht 2',
+                 'message3' => 'Nachricht 3');
+$translate = new Zend_Translate('array', $english, 'de_AT');
+
+if ($translate->isTranslated('message1')) {
+    print "'message1' の翻訳が存在します";
+}
+if (!($translate->isTranslated('message1', true, 'de'))) {
+    print "'message1' は 'de' に翻訳することはできません。'de_AT' 用の翻訳しかありません";
+}
+if ($translate->isTranslated('message1', false, 'de')) {
+    print "'message1' は 'de_AT' に翻訳できます。もし存在しない場合は代替として 'de' を使用できます";
+}
 ]]></programlisting>
         </example>
 
