@@ -1,6 +1,18 @@
 <?php
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'Zend/XmlRpc/Value.php';
+require_once 'Zend/XmlRpc/Value/Scalar.php';
+require_once 'Zend/XmlRpc/Value/Collection.php';
+require_once 'Zend/XmlRpc/Value/Array.php';
+require_once 'Zend/XmlRpc/Value/Base64.php';
+require_once 'Zend/XmlRpc/Value/Boolean.php';
+require_once 'Zend/XmlRpc/Value/DateTime.php';
+require_once 'Zend/XmlRpc/Value/Double.php';
+require_once 'Zend/XmlRpc/Value/Integer.php';
+require_once 'Zend/XmlRpc/Value/String.php';
+require_once 'Zend/XmlRpc/Value/Struct.php';
+
 /**
  * Test case for Zend_XmlRpc_Value
  *
@@ -230,7 +242,20 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
                                     Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
                     
         $this->assertXmlRpcType('dateTime', $val);
-        $this->assertSame(strtotime($native), $val->getValue()); 
+        $this->assertSame(strtotime($native), strtotime($val->getValue())); 
+    }
+
+    public function testMarshalDateTimeFromNativeStringProducesIsoOutput()
+    {   
+        $native = '1997-07-16T19:20+01:00';
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($native,
+                                    Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
+                    
+        $this->assertXmlRpcType('dateTime', $val);
+
+        $expected = date('c', strtotime($native));
+        $received = $val->getValue();
+        $this->assertEquals($expected, $received);
     }
 
     public function testMarshalDateTimeFromNativeInteger()
@@ -240,7 +265,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
                                     Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
                     
         $this->assertXmlRpcType('dateTime', $val);
-        $this->assertSame($native, $val->getValue()); 
+        $this->assertSame($native, strtotime($val->getValue())); 
     }
 
     public function testMarshalDateTimeFromXmlRpc()
@@ -253,7 +278,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
 
         $this->assertXmlRpcType('dateTime', $val);
         $this->assertEquals('dateTime.iso8601', $val->getType());
-        $this->assertSame(strtotime($iso8601), $val->getValue());
+        $this->assertSame(strtotime($iso8601), strtotime($val->getValue()));
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());                    
     }

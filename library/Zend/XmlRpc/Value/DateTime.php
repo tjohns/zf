@@ -65,7 +65,7 @@ class Zend_XmlRpc_Value_DateTime extends Zend_XmlRpc_Value_Scalar
      */
     public function getValue()
     {
-        return strtotime($this->_value);
+        return $this->_value;
     }
 
 }
