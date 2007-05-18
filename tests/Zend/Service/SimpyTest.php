@@ -23,6 +23,12 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+
+/**
  * @see Zend_Service_Simpy
  */
 require_once 'Zend/Service/Simpy.php';
@@ -95,9 +101,9 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
     {
     	try {
             extract($this->_link);
-            
+
             /**
-             * Delete the link if it already exists and bypass the exception 
+             * Delete the link if it already exists and bypass the exception
              * that would be thrown as a result
              */
             try {
@@ -560,10 +566,14 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
 }
 
 
-class Zend_Service_SimpyTest_Skip extends Zend_Service_SimpyTest
+class Zend_Service_SimpyTest_Skip extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->markTestSkipped('Zend_Service_Simpy tests not enabled in TestConfiguration.php');
+    }
+
+    public function testNothing()
+    {
     }
 }

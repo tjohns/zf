@@ -21,26 +21,17 @@
  * @version    $Id$
  */
 
-error_reporting( E_ALL | E_STRICT );
-
-if (is_readable('TestConfiguration.php')) {
-    require_once('TestConfiguration.php');
-} else {
-    require_once('TestConfiguration.php.dist');
-}
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_AllTests::main');
-
-    /**
-     * Prepend library/ to the include_path.  This allows the tests to run out
-     * of the box and helps prevent finding other copies of the framework that
-     * might be present.
-     */
-    $zf_top = dirname(dirname(dirname(dirname(__FILE__))));
-    set_include_path($zf_top . DIRECTORY_SEPARATOR . 'library'
-         . PATH_SEPARATOR . get_include_path());
 }
+
+
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 
 /**
  * PHPUnit_Framework_TestSuite
@@ -129,7 +120,7 @@ class Zend_Service_AllTests
         $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
         $suite->addTest(Zend_Service_Delicious_AllTests::suite());
         $suite->addTest(Zend_Service_Flickr_AllTests::suite());
-        if (defined('TESTS_ZEND_SERVICE_SIMPY_ENABLED') && constant('TESTS_ZEND_SERVICE_SIMPY_ENABLED') !== false) {
+        if (defined('TESTS_ZEND_SERVICE_SIMPY_ENABLED') && constant('TESTS_ZEND_SERVICE_SIMPY_ENABLED')) {
             $suite->addTestSuite('Zend_Service_SimpyTest');
         } else {
             $suite->addTestSuite('Zend_Service_SimpyTest_Skip');
