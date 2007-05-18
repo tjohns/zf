@@ -145,12 +145,3 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
         }
     }
 }
-
-
-class Zend_Service_Delicious_PublicDataTest_Skip extends Zend_Service_Delicious_PublicDataTest
-{
-    public function setUp()
-    {
-        $this->markTestSkipped('Zend_Service_Delicious tests not enabled in TestConfiguration.php');
-    }
-}
