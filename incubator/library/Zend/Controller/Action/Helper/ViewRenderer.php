@@ -354,6 +354,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * - _noRender is false
      * - action controller is present
      * - request has not been re-dispatched (i.e., _forward() has not been called)
+     * - response is not a redirect
      * 
      * @return void
      */
@@ -361,7 +362,8 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     {
         if (!$this->_noRender 
             && (null !== $this->_actionController)
-            && $this->getRequest()->isDispatched())
+            && $this->getRequest()->isDispatched()
+            && !$this->getResponse()->isRedirect())
         {
             $this->_actionController->render($this->_scriptAction, $this->_responseSegment, $this->_noController);
         }
