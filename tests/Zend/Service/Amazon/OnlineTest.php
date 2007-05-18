@@ -326,11 +326,15 @@ class Zend_Service_Amazon_OnlineTest extends PHPUnit_Framework_TestCase
 }
 
 
-class Zend_Service_Amazon_OnlineTest_Skip extends Zend_Service_Amazon_OnlineTest
+class Zend_Service_Amazon_OnlineTest_Skip extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->markTestSkipped('Zend_Service_Amazon online tests not enabled with an access key ID in '
                              . 'TestConfiguration.php');
+    }
+
+    public function testNothing()
+    {
     }
 }

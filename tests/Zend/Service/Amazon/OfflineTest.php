@@ -90,23 +90,9 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     {
         try {
             $amazon = new Zend_Service_Amazon(constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID'), 'oops');
-            $this-fail('Expected Zend_Service_Exception not thrown');
-        } catch (Zend_Service_Exception $e) {
-            $this->assertContains('Unknown country code', $e->getMessage());
-        }
-    }
-
-    /**
-     * Ensures that itemSearch() throws an exception if the SearchIndex option is missing
-     *
-     * @return void
-     */
-    public function testItemSearchOptionSearchIndexMissing()
-    {
-        try {
-            $this->_amazon->itemSearch(array());
             $this->fail('Expected Zend_Service_Exception not thrown');
         } catch (Zend_Service_Exception $e) {
+            $this->assertContains('Unknown country code', $e->getMessage());
         }
     }
 }
