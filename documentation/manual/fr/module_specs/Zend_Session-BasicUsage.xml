@@ -1,9 +1,9 @@
 ﻿<sect1 id="zend.session.basicusage">
 
-    <title>Basic Usage</title>
+    <title>Usage basique</title>
 
     <para>
-        Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de session dans le Zend Framework. Les espaces de nommage sont utilisés pour isoler toutes les données de session, bien qu'un espace de nommage par défaut existe pour ceux qui veulent juste un endroit pour stocker toutes leurs données de session. <code>Zend_Session</code> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme méchanisme de stockage pour les données d'état de session. Bien que <code>$_SESSION</code> est toujours disponible dans l'espace global de PHP, les développeurs devraient s'abstenir d'accéder directement à lui, alors que <code>Zend_Session</code> et <code>Zend_Session_Namespace</code> fournissent le plus efficacement et solidement sa suite de fonctionnalités liées à session.
+        Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de session dans le Zend Framework. Les espaces de nommage sont utilisés pour isoler toutes les données de session, bien qu'un espace de nommage par défaut existe pour ceux qui veulent juste un endroit pour stocker toutes leurs données de session. <code>Zend_Session</code> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme méchanisme de stockage pour les données d'état de session. Bien que <code>$_SESSION</code> est toujours disponible dans l'espace global de PHP, les développeurs devraient s'abstenir d'accéder directement à lui, alors que <code>Zend_Session</code> et <code>Zend_Session_Namespace</code> fournissent le plus efficacement et solidement leur suite de fonctionnalités liées à session.
     </para>
 
     <sect2 id="zend.session.basicexamples">
@@ -34,7 +34,7 @@
         </example>
 
         <para>
-            L'un des nombreux avantages de Zend_Session_Namespace apparaît quand de multiples modules utilisent Zend_Session_Namespace et obtiennent une encapsulation pour leurs propres données de session. Zend_Session peut recevoir un paramètre facultatif $namespace dans son constructeur, ce qui permet aux autres composants, modules, et code spécifique d'être assuré que leurs données sont protégées par une cloison entre les zones de données utilisées par les autres composants, modules et code spécifique. Les espaces de nommage fournissent une manière efficace et populaire de protéger un sous-ensemble de données de session contre un changement accidentel. Les noms des espaces de nommage sont limités des chaînes de caractères PHP non-vides qui ne commencent par un tiret-bas ("_"). De plus, seuls les composants coeur du Zend Framework devraient employer un nom d'espage de nommage commençant par "Zend_".
+            L'un des nombreux avantages de Zend_Session_Namespace apparaît quand de multiples modules utilisent Zend_Session_Namespace et obtiennent une encapsulation pour leurs propres données de session. Zend_Session peut recevoir un paramètre facultatif $namespace dans son constructeur, ce qui permet aux autres composants, modules, et code spécifique d'être assuré que leurs données sont protégées par une cloison entre les zones de données utilisées par les autres composants, modules et code spécifique. Les espaces de nommage fournissent une manière efficace et populaire de protéger un sous-ensemble de données de session contre un changement accidentel. Les noms des espaces de nommage sont limités à des chaînes de caractères PHP non-vides qui ne commencent par un tiret-bas ("_"). De plus, seuls les composants coeur du Zend Framework devraient employer un nom d'espage de nommage commençant par "Zend_".
         </para>
 
         <example>
