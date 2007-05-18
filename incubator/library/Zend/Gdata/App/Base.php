@@ -94,6 +94,29 @@ abstract class Zend_Gdata_App_Base
         return $this;
     }
 
+    public function getExtensionElements()
+    {
+        return $this->_extensionElements;
+    }
+
+    public function setExtensionElements($value)
+    {
+        $this->_extensionElements = $value;
+        return $this;
+    }
+
+
+    public function getExtensionAttributes()
+    {
+        return $this->_extensionAttributes;
+    }
+
+    public function setExtensionAttributes($value)
+    {
+        $this->_extensionAttributes = $value;
+        return $this;
+    }
+
     /**
      * Retrieves a DOMElement which corresponds to this element and all 
      * child properties.  This is used to build an entry back into a DOM
@@ -122,8 +145,8 @@ abstract class Zend_Gdata_App_Base
         foreach ($this->_extensionElements as $extensionElement) {
             $element->appendChild($extensionElement->getDOM($element->ownerDocument));
         }
-        foreach ($this->_extensionAttributes as $extensionAttribute) {
-            $element->setAttribute($extensionAttribute['name'], $extensionAttribute['value']);
+        foreach ($this->_extensionAttributes as $attribute) {
+            $element->setAttribute($attribute['name'], $attribute['value']);
         }
         return $element;
     }
@@ -155,8 +178,11 @@ abstract class Zend_Gdata_App_Base
      */
     protected function takeAttributeFromDOM($attribute)
     {
-        $this->_extensionAttributes[] =
-                array('namespaceURI' => $attribute->namespaceURI,
+        $arrayIndex = ($attribute->namespaceURI != '')?(
+                $attribute->namespaceURI . ':' . $attribute->name):
+                $attribute->name;
+        $this->_extensionAttributes[$arrayIndex] =
+                array('namespaceUri' => $attribute->namespaceURI,
                       'name' => $attribute->localName,
                       'value' => $attribute->nodeValue);
     }
@@ -245,12 +271,12 @@ abstract class Zend_Gdata_App_Base
      * $this->lookupNamespace().
      *
      * @param  string $prefix The namespace prefix
-     * @param  string $namespaceURI The full namespace URI
+     * @param  string $namespaceUri The full namespace URI
      * @return void
      */
-    public function registerNamespace($prefix, $namespaceURI)
+    public function registerNamespace($prefix, $namespaceUri)
     {
-        $this->_namespaces[$prefix] = $namespaceURI;
+        $this->_namespaces[$prefix] = $namespaceUri;
     }
 
     /**
