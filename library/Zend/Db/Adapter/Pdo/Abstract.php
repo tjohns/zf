@@ -207,7 +207,14 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         try {
             return parent::query($sql, $bind);
         } catch (PDOException $e) {
-            throw new Zend_Db_Adapter_Exception($e->getMessage(), $e);
+            /**
+             * @see Zend_Db_Statement_Exception
+             */
+            require_once 'Zend/Db/Statement/Exception.php';
+            /**
+             * @todo: chain PDOException
+             */
+            throw new Zend_Db_Statement_Exception($e->getMessage());
         }
     }
 
