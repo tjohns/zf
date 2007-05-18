@@ -31,6 +31,9 @@ class Zend_Gdata_App_AuthorTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp() {
+        $this->authorText = file_get_contents(
+                'Zend/Gdata/App/_files/AuthorElementSample1.xml',
+                true);
         $this->author = new Zend_Gdata_App_Extension_Author();
     }
       
@@ -58,41 +61,46 @@ class Zend_Gdata_App_AuthorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(count($newAuthor2->extensionElements), 1);
         $this->assertEquals($newAuthor2->name->text, 'Jeff Scudder');
     }
-}
 
-/*
     public function testEmptyAuthorToAndFromStringShouldMatch() {
-      string_from_author = $this->author->ToString();
-      new_author = atom.AuthorFromString(string_from_author);
-      string_from_new_author = new_author->ToString();
-      $this->assertTrue(string_from_author == string_from_new_author);
+        $authorXml = $this->author->saveXML();
+        $newAuthor = new Zend_Gdata_App_Extension_Author();
+        $newAuthor->transferFromXML($authorXml);
+        $newAuthorXml = $newAuthor->saveXML();
+        $this->assertTrue($authorXml == $newAuthorXml);
     }
 
     public function testAuthorWithNameToAndFromStringShouldMatch() {
-      $this->author->name = atom.Name();
-      $this->author->name.text = 'Jeff Scudder'
-      string_from_author = $this->author->ToString();
-      new_author = atom.AuthorFromString(string_from_author);
-      string_from_new_author = new_author->ToString();
-      $this->assertTrue(string_from_author == string_from_new_author);
-      $this->assertTrue($this->author->name.text == new_author->name.text);
+        $this->author->name = new Zend_Gdata_App_Extension_Name('Jeff Scudder');
+        $authorXml = $this->author->saveXML();
+        $newAuthor = new Zend_Gdata_App_Extension_Author();
+        $newAuthor->transferFromXML($authorXml);
+        $newAuthorXml = $newAuthor->saveXML();
+        $this->assertTrue($authorXml == $newAuthorXml);
     }
 
-    public function testExtensionElements() {
-      $this->author->extension_attributes['foo1'] = 'bar'
-      $this->author->extension_attributes['foo2'] = 'rab'
-      $this->assertTrue($this->author->extension_attributes['foo1'] == 'bar');
-      $this->assertTrue($this->author->extension_attributes['foo2'] == 'rab');
-      new_author = atom.AuthorFromString($this->author->ToString());
-      $this->assertTrue(new_author->extension_attributes['foo1'] == 'bar');
-      $this->assertTrue(new_author->extension_attributes['foo2'] == 'rab');
+    public function testExtensionAttributes() {
+        $extensionAttributes = $this->author->extensionAttributes;
+        $extensionAttributes['foo1'] = array('name'=>'foo1', 'value'=>'bar');
+        $extensionAttributes['foo2'] = array('name'=>'foo2', 'value'=>'rab');
+        $this->author->extensionAttributes = $extensionAttributes;
+        $this->assertEquals('bar', $this->author->extensionAttributes['foo1']['value']);
+        $this->assertEquals('rab', $this->author->extensionAttributes['foo2']['value']);
+        $authorXml = $this->author->saveXML();
+        $newAuthor = new Zend_Gdata_App_Extension_Author();
+        $newAuthor->transferFromXML($authorXml);
+        //var_dump($this->author);
+        //print $authorXml;
+        $this->assertEquals('bar', $newAuthor->extensionAttributes['foo1']['value']);
+        $this->assertEquals('rab', $newAuthor->extensionAttributes['foo2']['value']);
     }
 
     public function testConvertFullAuthorToAndFromString() {
-      author = atom.AuthorFromString(test_data.TEST_AUTHOR);
-      $this->assertTrue(author->name.text == 'John Doe');
-      $this->assertTrue(author->email.text == 'johndoes@someemailadress.com');
-      $this->assertTrue(author->uri.text == 'http://www.google.com');
+        $this->author->transferFromXML($this->authorText);
+        $this->assertEquals($this->author->name->text, 'John Doe');
+        $this->assertEquals($this->author->email->text, 
+                'johndoes@someemailadress.com');
+        $this->assertEquals($this->author->uri->text, 'http://www.google.com');
+    }
 
-*/
-
+}
