@@ -303,10 +303,11 @@ class MyController extends Zend_Controller_Action
         // baz.phtml をレンダリングします
         $this->render('baz', null, true);
 
-        // foo/login.phtml をレンダリングし、レスポンスオブジェクトの 'form' の部分に返します
+        // my/login.phtml をレンダリングし、レスポンスオブジェクトの 'form' の部分に返します
         $this->render('login', 'form');
         
         // site.phtml をレンダリングし、レスポンスオブジェクトの 'page' の部分に返します
+        // 'my/' ディレクトリは使用しません
         $this->render('site', 'page', true);
     }
 
