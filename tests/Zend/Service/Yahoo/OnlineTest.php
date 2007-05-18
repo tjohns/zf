@@ -221,10 +221,14 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
 }
 
 
-class Zend_Service_Yahoo_OnlineTest_Skip extends Zend_Service_Yahoo_OnlineTest
+class Zend_Service_Yahoo_OnlineTest_Skip extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $this->markTestSkipped('Zend_Service_Yahoo online tests not enabled with an APPID in TestConfiguration.php');
+    }
+
+    public function testNothing()
+    {
     }
 }
