@@ -431,6 +431,29 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($body['some']));
         $this->assertTrue(isset($body['superfluous']));
     }
+
+    public function testIsRedirectInitiallyFalse()
+    {
+        $this->assertFalse($this->_response->isRedirect());
+    }
+
+    public function testIsRedirectWhenRedirectSet()
+    {
+        $this->_response->setRedirect('http://framework.zend.com/');
+        $this->assertTrue($this->_response->isRedirect());
+    }
+
+    public function testIsRedirectWhenRawLocationHeaderSet()
+    {
+        $this->_response->setRawHeader('Location: http://framework.zend.com/');
+        $this->assertTrue($this->_response->isRedirect());
+    }
+
+    public function testIsRedirectWhen3xxResponseCodeSet()
+    {
+        $this->_response->setHttpResponseCode(301);
+        $this->assertTrue($this->_response->isRedirect());
+    }
 }
 
 require_once 'Zend/Controller/Action.php';
