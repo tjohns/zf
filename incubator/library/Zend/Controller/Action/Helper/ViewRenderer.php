@@ -103,6 +103,12 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_scriptAction    = null;
 
     /**
+     * Flag: has the view been initialized?
+     * @var boolean
+     */
+    protected $_viewInitialized = false;
+
+    /**
      * View script suffix
      * @var string
      */
@@ -189,6 +195,12 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function initView($path = null, $prefix = null, array $options = array())
     {
+        if ($this->_viewInitialized) {
+            return;
+        }
+
+        $this->_viewInitialized = true;
+
         if (null === $this->view) {
             $this->setView(new Zend_View());
         }
@@ -294,7 +306,12 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function setResponseSegment($name)
     {
-        $this->_responseSegment = (string) $name;
+        if (null === $name) {
+            $this->_responseSegment = null;
+        } else {
+            $this->_responseSegment = (string) $name;
+        }
+
         return $this;
     }
 
@@ -331,6 +348,28 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
+     * Set view script suffix 
+     * 
+     * @param  string $suffix 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setViewSuffix($suffix)
+    {
+        $this->_viewSuffix = (string) $suffix;
+        return $this;
+    }
+
+    /**
+     * Get view script suffix 
+     * 
+     * @return string
+     */
+    public function getViewSuffix()
+    {
+        return $this->_viewSuffix;
+    }
+
+    /**
      * Set options for rendering a view script
      * 
      * @param  string $action View script to render
@@ -340,9 +379,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function setRender($action = null, $name = null, $noController = false)
     {
-        $this->_scriptAction    = (string) $action;
-        $this->_responseSegment = (string) $name;
-        $this->_noController    = ($noController) ? true : false;
+        $this->setScriptAction($action)
+             ->setResponseSegment($name)
+             ->setNoController($noController);
 
         return $this;
     }
@@ -367,6 +406,8 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         {
             $this->_actionController->render($this->_scriptAction, $this->_responseSegment, $this->_noController);
         }
+
+        $this->_viewInitialized = false;
     }
 
     /**

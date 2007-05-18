@@ -23,7 +23,8 @@ require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Http.php';
 require_once 'Zend/View.php';
 
-require_once './../../_files/modules/foo/controllers/IndexController.php';
+require_once dirname(__FILE__) . '/../../_files/modules/foo/controllers/IndexController.php';
+require_once dirname(__FILE__) . '/../../_files/modules/bar/controllers/IndexController.php';
 
 /**
  * Test class for Zend_Controller_Action_Helper_ViewRenderer.
@@ -119,6 +120,39 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertSame($this->front, $this->helper->getFrontController());
     }
 
+    protected function _checkDefaults($module = 'foo', $count = 1)
+    {
+        $this->assertTrue(isset($this->helper->view));
+        $this->assertTrue($this->helper->view instanceof Zend_View);
+        $this->assertFalse($this->helper->getNoRender());
+        $this->assertNull($this->helper->getResponseSegment());
+        $this->assertNull($this->helper->getScriptAction());
+
+        $scriptPaths = $this->helper->view->getScriptPaths();
+        $this->assertEquals($count, count($scriptPaths));
+        $this->assertContains($module, $scriptPaths[0]);
+
+        $helperPaths = $this->helper->view->getHelperPaths();
+        $test        = ucfirst($module) . '_View_Helper_';
+        $found       = false;
+        foreach ($helperPaths as $info) {
+            if ($test == $info['prefix']) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, 'Did not find auto-initialized helper path: ' . var_export($helperPaths, 1));
+
+        $filterPaths = $this->helper->view->getFilterPaths();
+        $test        = ucfirst($module) . '_View_Filter_';
+        $found = false;
+        foreach ($filterPaths as $info) {
+            if ($test == $info['prefix']) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, 'Did not find auto-initialized filter path: ' . var_export($filterPaths, 1));
+    }
+
     public function testInitViewWithDefaults()
     {
         $this->request->setModuleName('foo')
@@ -127,44 +161,93 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->setActionController($controller);
 
         $this->helper->initView();
-        $this->assertTrue(isset($this->helper->view));
-        $this->assertTrue($this->helper->view instanceof Zend_View);
-        $this->assertFalse($this->helper->getNoRender());
-        $this->assertNull($this->helper->getResponseSegment());
-        $this->assertNull($this->helper->getScriptAction());
-
-        $scriptPaths = $this->helper->view->getScriptPaths();
-        $this->assertEquals(1, count($scriptPaths));
-        $this->assertContains('foo', $scriptPaths[0]);
-
-        $helperPaths = $this->helper->view->getHelperPaths();
-        $found = false;
-        foreach ($helperPaths as $info) {
-            if ('Foo_View_Helper_' == $info['prefix']) {
-                $found = true;
-            }
-        }
-        $this->assertTrue($found, 'Did not find auto-initialized helper path: ' . var_export($helperPaths, 1));
-
-        $filterPaths = $this->helper->view->getFilterPaths();
-        $found = false;
-        foreach ($filterPaths as $info) {
-            if ('Foo_View_Filter_' == $info['prefix']) {
-                $found = true;
-            }
-        }
-        $this->assertTrue($found, 'Did not find auto-initialized filter path: ' . var_export($filterPaths, 1));
+        $this->_checkDefaults();
     }
 
-    /**
-     * @todo Implement testPreDispatch().
-     */
-    public function testPreDispatch()
+    public function testInitViewCannotBeCalledTwiceForSameAction()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->request->setModuleName('foo')
+                      ->setControllerName('index');
+        $controller = new Foo_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+
+        $this->helper->initView();
+        $this->helper->initView('/foo/bar/baz', 'Foo_Bar_Baz', array('encoding' => 'ISO-8858-1'));
+        $this->_checkDefaults();
+    }
+
+    public function testInitViewCanBeCalledAfterPostDispatch()
+    {
+        $this->request->setModuleName('foo')
+                      ->setControllerName('index');
+        $controller = new Foo_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+
+        $this->helper->initView();
+        $this->helper->setNoRender();
+        $this->helper->postDispatch();
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $this->helper->initView();
+        $this->_checkDefaults('bar', 2);
+    }
+
+    public function testPreDispatchWithDefaults()
+    {
+        $this->request->setModuleName('foo')
+                      ->setControllerName('index');
+        $controller = new Foo_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+
+        $this->helper->preDispatch();
+        $this->_checkDefaults();
+    }
+
+    public function testInitViewWithOptions()
+    {
+        $this->request->setModuleName('foo')
+                      ->setControllerName('index');
+        $controller = new Foo_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+
+        $viewDir = dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 2) . DIRECTORY_SEPARATOR . 'views';
+        $this->helper->initView($viewDir, 'Baz_Bat', array(
+            'noRender'        => true,
+            'noController'    => true,
+            'viewSuffix'      => 'php',
+            'scriptAction'    => 'foo',
+            'responseSegment' => 'baz'
+        ));
+
+        $this->assertTrue($this->helper->getNoRender());
+        $this->assertTrue($this->helper->getNoController());
+        $this->assertEquals('php', $this->helper->getViewSuffix());
+        $this->assertEquals('foo', $this->helper->getScriptAction());
+        $this->assertEquals('baz', $this->helper->getResponseSegment());
+
+        $scriptPaths = $this->helper->view->getScriptPaths();
+        $scriptPath  = $scriptPaths[0];
+        $this->assertContains($viewDir, $scriptPath);
+
+        $helperPaths = $this->helper->view->getHelperPaths();
+        $found       = false;
+        foreach ($helperPaths as $path) {
+            if ('Baz_Bat_Helper_' == $path['prefix']) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, 'Helper prefix not set according to spec: ' . var_export($helperPaths, 1));
+
+        $filterPaths = $this->helper->view->getFilterPaths();
+        $found       = false;
+        foreach ($filterPaths as $path) {
+            if ('Baz_Bat_Filter_' == $path['prefix']) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, 'Filter prefix not set according to spec' . var_export($filterPaths, 1));
     }
 
     public function testNoRenderFlag()
@@ -207,37 +290,81 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertTrue($this->helper->getNoController());
     }
 
-    /**
-     * @todo Implement testSetRender().
-     */
-    public function testSetRender()
+    protected function _checkRenderProperties()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertEquals('foo', $this->helper->getScriptAction());
+        $this->assertEquals('bar', $this->helper->getResponseSegment());
+        $this->assertTrue($this->helper->getNoController());
     }
 
-    /**
-     * @todo Implement testPostDispatch().
-     */
-    public function testPostDispatch()
+    public function testSetRenderSetsProperties()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->helper->setRender('foo', 'bar', true);
+        $this->_checkRenderProperties();
     }
 
-    /**
-     * @todo Implement testDirect().
-     */
-    public function testDirect()
+    public function testPostDispatchRendersAppropriateScript()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(true);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertContains('Rendered index/test.phtml in bar module', $content);
+    }
+
+    public function testPostDispatchDoesNothingOnForward()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(false);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertNotContains('Rendered index/test.phtml in bar module', $content);
+        $this->assertTrue(empty($content));
+    }
+
+    public function testPostDispatchDoesNothingOnRedirect()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(true);
+        $this->response->setHttpResponseCode(302);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertNotContains('Rendered index/test.phtml in bar module', $content);
+        $this->assertTrue(empty($content));
+    }
+
+    public function testPostDispatchDoesNothingWithNoController()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(true);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertNotContains('Rendered index/test.phtml in bar module', $content);
+        $this->assertTrue(empty($content));
+    }
+
+    public function testDirectProxiesToSetRender()
+    {
+        $this->helper->direct('foo', 'bar', true);
+        $this->_checkRenderProperties();
     }
 }
 
