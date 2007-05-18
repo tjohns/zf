@@ -201,7 +201,7 @@ class Zend_Controller_Action_HelperBroker
 
             $class = $prefix . $name;
                         
-            if (class_exists($class)) {
+            if (class_exists($class, false)) {
                 $helper = new $class();
                 
                 if (!$helper instanceof Zend_Controller_Action_Helper_Abstract) {
