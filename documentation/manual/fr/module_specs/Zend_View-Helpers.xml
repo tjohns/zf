@@ -51,6 +51,10 @@
             </para></listitem>
 
             <listitem><para>
+                <code>formLabel($name, $value, $attribs)</code> : crée un élément &lt;label&gt;, en réglant l'attribut <code>for</code> avec <code>$name</code>, et le texte du label avec <code>$value</code>. Si <code>disable</code> est fourni via <code>attribs</code>, rien n'est retourné.
+            </para></listitem>
+
+            <listitem><para>
                 <code>formPassword($name, $value, $attribs)</code> : crée un élément &lt;input type="password" /&gt;.
             </para></listitem>
 

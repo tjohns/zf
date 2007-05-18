@@ -407,6 +407,38 @@ $translate->addTranslation('chemin/vers/nouvelle.csv', 'fr', $options); // effac
 
     </sect2>
 
+    <sect2 id="zend.translate.using.istranslated">
+
+        <title>Vérifier les traductions</title>
+
+        <para>
+            Normalement le texte sera traduit sans aucun calcul. Mais il est quelquefois nécessaire si un texte est traduit ou non dans la source. Dans ce cas la méthode <code>isTranslated()</code> peut être utilisé.        </para>
+
+        <para>
+            <code>isTranslated($messageId, $original = false, $locale = null)</code> prend comme premier paramètre le texte dont vous voulez vérifier que la traduction est possible. Et comme troisème paramètre optionnel la langue dont vous voulez connaître la traduction. Le second paramètre optionnel détermine si la traduction est fixée à la langue déclarée ou si une autre langue peut être utilisée. Si vous avez un texte qui peut être traduit en "fr" mais pas en "fr_fr" vous obtiendriez normalement la traduction fournie, mais avec <code>$original</code> réglé à <code>true</code>, la méthode <code>isTranslated()</code> retournera <code>false</code> dans ce cas.
+        </para>
+
+        <example id="zend.translate.using.istranslated.example">
+            <title>Vérifier si une texte est traduisible</title>
+            <programlisting role="php"><![CDATA[
+$english = array('message1' => 'Nachricht 1',
+                 'message2' => 'Nachricht 2',
+                 'message3' => 'Nachricht 3');
+$translate = new Zend_Translate('array', $english, 'de_AT');
+
+if ($translate->isTranslated('message1')) {
+    print "'message1' peut être traduit";
+}
+if (!($translate->isTranslated('message1', true, 'de'))) {
+    print "'message1' ne peut pas être traduit en 'de', il est seulement disponible en 'de_AT'";
+}
+if ($translate->isTranslated('message1', false, 'de')) {
+    print "'message1' peut être traduit en 'de_AT' et par conséquent en 'de'";
+}
+]]></programlisting>
+        </example>
+
+    </sect2>
 
 </sect1>
 <!--
