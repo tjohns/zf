@@ -34,6 +34,41 @@ class Zend_Gdata_Spreadsheets_ListQueryTest extends PHPUnit_Framework_TestCase
         $this->docQuery = new Zend_Gdata_Spreadsheets_ListQuery();
     }
 
+    public function testWorksheetId()
+    {
+        $this->assertTrue($this->docQuery->getWorksheetId() == 'default');
+        $this->docQuery->setWorksheetId('123');
+        $this->assertTrue($this->docQuery->getWorksheetId() == '123');
+    }
+    
+    public function testSpreadsheetKey()
+    {
+        $this->assertTrue($this->docQuery->getSpreadsheetKey() == null);
+        $this->docQuery->setSpreadsheetKey('abc');
+        $this->assertTrue($this->docQuery->getSpreadsheetKey() == 'abc');
+    }
+    
+    public function testRowId()
+    {
+        $this->assertTrue($this->docQuery->getRowId() == null);
+        $this->docQuery->setRowId('xyz');
+        $this->assertTrue($this->docQuery->getRowId() == 'xyz');
+    }
+    
+    public function testProjection()
+    {
+        $this->assertTrue($this->docQuery->getProjection() == 'full');
+        $this->docQuery->setProjection('abc');
+        $this->assertTrue($this->docQuery->getProjection() == 'abc');
+    }
+    
+    public function testVisibility()
+    {
+        $this->assertTrue($this->docQuery->getVisibility() == 'private');
+        $this->docQuery->setVisibility('xyz');
+        $this->assertTrue($this->docQuery->getVisibility() == 'xyz');
+    }
+
     public function testSpreadsheetQuery()
     {
         $this->assertTrue($this->docQuery->getSpreadsheetQuery() == null);

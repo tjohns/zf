@@ -97,6 +97,13 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
             $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
         }
+        
+        $feed = $this->gdata->getCellFeed($query->getQueryUrl());
+        $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_CellFeed);
+        foreach ($feed->entries as $entry) {
+            $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
+            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+        }
     }
     
     public function testGetListFeed()
@@ -105,6 +112,13 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $query->setSpreadsheetKey($this->sprKey);
         $query->setWorksheetId($this->wksId);
         $feed = $this->gdata->getListFeed($query);
+        $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_ListFeed);
+        foreach ($feed->entries as $entry) {
+            $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
+            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+        }
+        
+        $feed = $this->gdata->getListFeed($query->getQueryUrl());
         $this->assertTrue($feed instanceof Zend_Gdata_Spreadsheets_ListFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
@@ -119,9 +133,7 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->getSpreadsheetEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
         
-        $query = new Zend_Gdata_Spreadsheets_DocumentQuery(Zend_Gdata_Spreadsheets::SPREADSHEETS_FEED_URI . '/private/full/' . $this->sprKey);
-        $query->setSpreadsheetKey($this->sprKey);
-        $entry = $this->gdata->getSpreadsheetEntry($query);
+        $entry = $this->gdata->getSpreadsheetEntry($query->getQueryUrl());
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry);
     }
     
@@ -132,6 +144,9 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $query->setWorksheetId($this->wksId);
         $entry = $this->gdata->getWorksheetEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_WorksheetEntry);
+        
+        $entry = $this->gdata->getWorksheetEntry($query->getQueryUrl());
+        $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_WorksheetEntry);
     }
     
     public function testGetCellEntry()
@@ -140,6 +155,9 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $query->setSpreadsheetKey($this->sprKey);
         $query->setCellId('R1C1');
         $entry = $this->gdata->getCellEntry($query);
+        $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
+        
+        $entry = $this->gdata->getCellEntry($query->getQueryUrl());
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
     }
     
@@ -150,11 +168,22 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $query->setRowId('1');
         $entry = $this->gdata->getListEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
+        
+        $entry = $this->gdata->getListEntry($query->getQueryUrl());
+        $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
     }
     
     public function testUpdateCell()
     {
         $this->gdata->updateCell(5, 1, 'updated data', $this->sprKey, $this->wksId);
+        
+        $query = new Zend_Gdata_Spreadsheets_CellQuery();
+        $query->setSpreadsheetKey($this->sprKey);
+        $query->setCellId('R5C1');
+        $entry = $this->gdata->getCellEntry($query);
+        $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_CellEntry);
+        $this->assertTrue($entry->cell->getText() == 'updated data');
+        
         $this->gdata->updateCell(5, 1, '', $this->sprKey, $this->wksId);
     }
     

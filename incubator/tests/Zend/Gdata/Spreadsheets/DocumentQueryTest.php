@@ -53,5 +53,33 @@ class Zend_Gdata_Spreadsheets_DocumentQueryTest extends PHPUnit_Framework_TestCa
         $this->docQuery->setTitleExact(null);
         $this->assertTrue($this->docQuery->getTitleExact() == null);
     }
+    
+    public function testWorksheetId()
+    {
+        $this->assertTrue($this->docQuery->getWorksheetId() == null);
+        $this->docQuery->setWorksheetId('123');
+        $this->assertTrue($this->docQuery->getWorksheetId() == '123');
+    }
+    
+    public function testSpreadsheetKey()
+    {
+        $this->assertTrue($this->docQuery->getSpreadsheetKey() == null);
+        $this->docQuery->setSpreadsheetKey('abc');
+        $this->assertTrue($this->docQuery->getSpreadsheetKey() == 'abc');
+    }
+    
+    public function testProjection()
+    {
+        $this->assertTrue($this->docQuery->getProjection() == 'full');
+        $this->docQuery->setProjection('abc');
+        $this->assertTrue($this->docQuery->getProjection() == 'abc');
+    }
+    
+    public function testVisibility()
+    {
+        $this->assertTrue($this->docQuery->getVisibility() == 'private');
+        $this->docQuery->setVisibility('xyz');
+        $this->assertTrue($this->docQuery->getVisibility() == 'xyz');
+    }
 
 }
