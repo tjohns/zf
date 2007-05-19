@@ -26,6 +26,16 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Row_Pdo_MssqlTest extends Zend_Db_Table_Row_TestCommon
 {
 
+    public function testTableRowSaveInsert()
+    {
+        $this->markTestIncomplete($this->getDriver() . ': DEFAULT or NULL are not allowed as explicit identity values.');
+    }
+
+    public function testTableRowSetPrimaryKey()
+    {
+        $this->markTestSkipped($this->getDriver() . ' cannot update identity columns.');
+    }
+
     public function testTableRowSaveInsertSequence()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support sequences');

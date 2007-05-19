@@ -278,6 +278,7 @@ abstract class Zend_Db_TestUtil_Common
                 'updated_on'      => '2007-04-01',
                 'reported_by'     => 'goofy',
                 'assigned_to'     => 'mmouse',
+                'verified_by'     => 'dduck'
             ),
             array(
                 'bug_description' => 'Implement Do What I Mean function',
@@ -302,7 +303,9 @@ abstract class Zend_Db_TestUtil_Common
                 'bug_status'      => 'INCOMPLETE',
                 'created_on'      => '2007-04-04',
                 'updated_on'      => '2007-04-04',
-                'reported_by'     => 'mmouse'
+                'reported_by'     => 'mmouse',
+                'assigned_to'     => 'goofy',
+                'verified_by'     => 'dduck'
             )
         );
     }

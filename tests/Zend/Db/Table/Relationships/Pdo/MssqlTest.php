@@ -26,6 +26,16 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Relationships_Pdo_MssqlTest extends Zend_Db_Table_Relationships_TestCommon
 {
 
+    public function testTableRelationshipCascadingUpdateUsageBasicString()
+    {
+        $this->markTestSkipped($this->getDriver() . ' cannot update identity columns.');
+    }
+
+    public function testTableRelationshipCascadingUpdateUsageInvalidNoop()
+    {
+        $this->markTestSkipped($this->getDriver() . ' cannot update identity columns.');
+    }
+
     public function getDriver()
     {
         return 'Pdo_Mssql';

@@ -60,6 +60,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         // don't pass the username and password in the DSN
         unset($dsn['username']);
         unset($dsn['password']);
+        unset($dsn['driver_options']);
         if (isset($dsn['port'])) {
             $dsn['host'] .= ',' . $port;
             unset($dsn['port']);
@@ -73,6 +74,18 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         // $dsn = $this->_pdoType . ':' . implode(';', $dsn);
         $dsn = 'mssql' . ':' . implode(';', $dsn);
         return $dsn;
+    }
+
+    /**
+     * @return void
+     */
+    protected function _connect()
+    {
+        if ($this->_connection) {
+            return;
+        }
+        parent::_connect();
+        $this->_connection->exec('SET QUOTED_IDENTIFIER ON');
     }
 
     /**
@@ -108,6 +121,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * UNSIGNED         => boolean; unsigned property of an integer type
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
+     * PRIMARY_AUTO     => integer; position of auto-generated column in primary key
      *
      * @todo Discover column primary key position.
      * @todo Discover integer unsigned property.
@@ -142,27 +156,29 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         $stmt = $this->query($sql);
         $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $pkey_column_name = 3;
+        $pkey_key_seq = 4;
         foreach ($primaryKeysResult as $pkeysRow) {
-            $primaryKeyColumn[$pkeysRow[$pkey_column_name]] = true;
+            $primaryKeyColumn[$pkeysRow[$pkey_column_name]] = $pkeysRow[$pkey_key_seq];
         }
 
         $desc = array();
         $p = 1;
         foreach ($result as $key => $row) {
-            list($type) = explode(' ', $row[$type_name], 2);
+            $identity = false;
+            $words = explode(' ', $row[$type_name], 2);
+            if (isset($words[0])) {
+                $type = $words[0];
+                if (isset($words[1])) {
+                    $identity = (bool) preg_match('/identity/', $words[1]);
+                }
+            }
 
             $isPrimary = array_key_exists($row[$column_name], $primaryKeyColumn);
-            /**
-             * @todo: discover primary column position more accurately.
-             * I.e. the position of the column in the primary key constraint,
-             * not the position of the column in the table.  Default to a
-             * local count variable for now, as we do for MySQL and SQLite.
-             * This at least works when the order of columns returned from
-             * "exec sp_columns" happens to be in the same order the
-             * columns are declared in the primary key constraint.
-             * Of course this only affects compound primary keys.
-             */
-            $primaryPosition = $isPrimary ? $p++ : null;
+            if ($isPrimary) {
+                $primaryPosition = $primaryKeyColumn[$row[$column_name]];
+            } else {
+                $primaryPosition = null;
+            }
 
             $desc[$row[$column_name]] = array(
                 'SCHEMA_NAME'      => null, // @todo
@@ -176,8 +192,9 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
                 'SCALE'            => $row[$scale],
                 'PRECISION'        => $row[$precision],
                 'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => (bool) $isPrimary,
-                'PRIMARY_POSITION' => $primaryPosition
+                'PRIMARY'          => $isPrimary,
+                'PRIMARY_POSITION' => $primaryPosition,
+                'IDENTITY'         => $identity
             );
         }
         return $desc;

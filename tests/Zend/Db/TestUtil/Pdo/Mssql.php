@@ -54,4 +54,48 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         return parent::getParams($constants);
     }
 
+    public function getSqlType($type)
+    {
+        if ($type == 'IDENTITY') {
+            return 'INT NOT NULL IDENTITY PRIMARY KEY';
+        }
+        return $type;
+    }
+
+    protected function _getColumnsBugs()
+    {
+        return array(
+            'bug_id'          => 'IDENTITY',
+            'bug_description' => 'VARCHAR(100) NULL',
+            'bug_status'      => 'VARCHAR(20) NULL',
+            'created_on'      => 'DATETIME NULL',
+            'updated_on'      => 'DATETIME NULL',
+            'reported_by'     => 'VARCHAR(100) NULL',
+            'assigned_to'     => 'VARCHAR(100) NULL',
+            'verified_by'     => 'VARCHAR(100) NULL'
+        );
+    }
+
+    protected function _getSqlCreateTable($tableName)
+    {
+        $tableList = $this->_db->fetchAll(
+            $this->_db->quoteInto('exec sp_tables @table_name = ?', $tableName)
+        );
+        if (count($tableList) > 0 && $tableName == $tableList[0]['TABLE_NAME']) {
+            return null;
+        }
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
+    }
+
+    protected function _getSqlDropTable($tableName)
+    {
+        $tableList = $this->_db->fetchAll(
+            $this->_db->quoteInto('exec sp_tables @table_name = ?', $tableName)
+        );
+        if (count($tableList) > 0 && $tableName == $tableList[0]['TABLE_NAME']) {
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        }
+        return null;
+    }
+
 }

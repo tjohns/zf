@@ -784,7 +784,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
-            ->order(array('product_id', 'product_id'));
+            ->order(array('product_name', 'product_id'));
         return $select;
     }
 
@@ -794,8 +794,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result),
-            'Expected count of result set to be 2');
-        $this->assertEquals(1, $result[0]['product_id']);
+            'Expected count of result set to be 3');
+        $this->assertEquals('Linux', $result[0]['product_name']);
+        $this->assertEquals(2, $result[0]['product_id']);
     }
 
     protected function _selectOrderByAsc()
@@ -906,6 +907,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
+            ->order('product_id')
             ->limit(1);
         return $select;
     }
@@ -923,6 +925,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
+            ->order('product_id')
             ->limit(); // no limit
         return $select;
     }
@@ -939,6 +942,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
+            ->order('product_id')
             ->limit(1, 1);
         return $select;
     }
@@ -959,6 +963,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
+            ->order('product_id')
             ->limitPage(1, 1); // first page, length 1
         return $select;
     }
@@ -976,6 +981,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     {
         $select = $this->_db->select()
             ->from('zfproducts')
+            ->order('product_id')
             ->limitPage(2, 1); // second page, length 1
         return $select;
     }

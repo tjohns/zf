@@ -252,7 +252,8 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'created_on'      => '2007-04-02',
             'updated_on'      => '2007-04-02',
             'reported_by'     => 'micky',
-            'assigned_to'     => 'goofy'
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
         );
         $rowsAffected = $this->_db->insert('zfbugs', $row);
         $this->assertEquals(1, $rowsAffected);
@@ -281,8 +282,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function testAdapterLimit()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $sql = $this->_db->limit("SELECT * FROM $products", 1);
+        $sql = $this->_db->limit("SELECT * FROM $products ORDER BY $product_id", 1);
 
         $stmt = $this->_db->query($sql);
         $result = $stmt->fetchAll();
@@ -297,8 +299,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function testAdapterLimitOffset()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
+        $sql = $this->_db->limit("SELECT * FROM $products ORDER BY $product_id", 1, 1);
 
         $stmt = $this->_db->query($sql);
         $result = $stmt->fetchAll();

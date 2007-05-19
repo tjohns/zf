@@ -434,7 +434,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectOrderByArray();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC, "product_id" ASC', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_name" ASC, "product_id" ASC', $sql);
     }
 
 
@@ -499,7 +499,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectLimit();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" LIMIT 1 OFFSET 0', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC LIMIT 1 OFFSET 0', $sql);
     }
 
 
@@ -507,7 +507,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectLimitNone();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts"', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC', $sql);
     }
 
 
@@ -515,7 +515,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectLimitOffset();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" LIMIT 1 OFFSET 1', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC LIMIT 1 OFFSET 1', $sql);
     }
 
     /**
@@ -526,7 +526,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectLimitPageOne();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" LIMIT 1 OFFSET 0', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC LIMIT 1 OFFSET 0', $sql);
     }
 
 
@@ -534,7 +534,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     {
         $select = $this->_selectLimitPageTwo();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" LIMIT 1 OFFSET 1', $sql);
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC LIMIT 1 OFFSET 1', $sql);
     }
 
     public function getDriver()

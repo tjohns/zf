@@ -472,7 +472,8 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'created_on'      => '2007-04-02',
             'updated_on'      => '2007-04-02',
             'reported_by'     => 'micky',
-            'assigned_to'     => 'goofy'
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
         );
         $insertResult = $table->insert($row);
         $lastInsertId = $this->_db->lastInsertId();
@@ -742,7 +743,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableFetchAllOrder()
     {
         $table = $this->_table['bugs'];
-        $rowset = $table->fetchAll(null, "bug_id DESC");
+        $rowset = $table->fetchAll(null, 'bug_id DESC');
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(4, count($rowset));
@@ -771,7 +772,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableFetchAllLimit()
     {
         $table = $this->_table['bugs'];
-        $rowset = $table->fetchAll(null, null, 2, 1);
+        $rowset = $table->fetchAll(null, 'bug_id ASC', 2, 1);
         $this->assertType('Zend_Db_Table_Rowset', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset, got '.get_class($rowset));
         $this->assertEquals(2, count($rowset));
