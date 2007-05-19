@@ -64,16 +64,16 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     /**
      * Constructor.
      *
-     * @param  Zend_Db_Adapter_Abstract $connection
+     * @param  Zend_Db_Adapter_Abstract $adapter
      * @param  string|Zend_Db_Select    $sql
      * @throws Zend_Db_Statement_Mysqli_Exception
      * @return void
      */
-    public function __construct($connection, $sql)
+    public function __construct($adapter, $sql)
     {
-        parent::__construct($connection, $sql);
+        parent::__construct($adapter, $sql);
 
-        $mysqli = $this->_connection->getConnection();
+        $mysqli = $this->_adapter->getConnection();
 
         $this->_stmt = $mysqli->prepare($this->_joinSql());
 
@@ -87,13 +87,30 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     }
 
     /**
+     * Retrieves the next rowset (result set)
+     * for a SQL statement that has multiple result sets.
+     * An example is a stored procedure that returns
+     * the results of multiple queries.
+     *
+     * @throws Zend_Db_Statement_Mysqli_Exception
+     */
+    public function nextRowset()
+    {
+        /**
+         * @see Zend_Db_Statement_Mysqli_Exception
+         */
+        require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+        throw new Zend_Db_Statement_Mysqli_Exception(__FUNCTION__.'() is not implemented');
+    }
+
+    /**
      * Returns the number of rows that were affected by the execution of an SQL statement.
      *
      * @return int Number of rows affected.
      */
     public function rowCount()
     {
-        $mysqli = $this->_connection->getConnection();
+        $mysqli = $this->_adapter->getConnection();
         return $mysqli->affected_rows;
     }
 
@@ -115,10 +132,10 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      */
     public function columnCount()
     {
-        if ($this->_meta) {
+        if (isset($this->_meta) && $this->_meta) {
             return $this->_meta->field_count;
         }
-        return null;
+        return 0;
     }
 
     /**
@@ -139,7 +156,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function errorInfo()
     {
         return array(
-            substr($this->_stmt->sqlstate, 5),
+            substr($this->_stmt->sqlstate, 0, 5),
             $this->_stmt->errno,
             $this->_stmt->error,
         );
@@ -149,7 +166,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      * Executes a prepared statement.
      *
      * @param array $params OPTIONAL values to supply as input to statement parameters
-     * @return void
+     * @return bool
      */
     public function execute(array $params = array())
     {
@@ -197,7 +214,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         }
 
         // execute the statement
-        $this->_stmt->execute();
+        return $this->_stmt->execute();
     }
 
 

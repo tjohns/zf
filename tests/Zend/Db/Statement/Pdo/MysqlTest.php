@@ -19,12 +19,28 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Statement/TestCommon.php';
+require_once 'Zend/Db/Statement/Pdo/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_TestCommon
+class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_Pdo_TestCommon
 {
+
+    public function testStatementNextRowset()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = $this->_db->prepare($select->__toString());
+        try {
+            $stmt->nextRowset();
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
+        } catch (PDOException $e) {
+            $this->assertType('PDOException', $e,
+                'Expecting object of type PDOException, got '.get_class($e));
+            $this->assertEquals('SQLSTATE[HYC00]: Optional feature not implemented', $e->getMessage());
+        }
+        $stmt->closeCursor();
+    }
 
     public function getDriver()
     {

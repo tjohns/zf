@@ -26,6 +26,105 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
 {
 
+    public function testStatementConstruct()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $sql = $select->__toString();
+        $stmt = new Zend_Db_Statement_Oracle($this->_db, $sql);
+        $this->assertType('Zend_Db_Statement_Oracle', $stmt);
+    }
+
+    public function testStatementErrorCodeKeyViolation()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+    }
+
+    public function testStatementErrorInfoKeyViolation()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+    }
+
+    public function testStatementExecuteWithParams()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
+        $stmt->execute(array('product_id' => 4, 'product_name' => 'Solaris'));
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id = 4");
+        $result = $this->_db->fetchAll($select);
+        $stmt->closeCursor();
+
+        $this->assertEquals(array(array('product_id'=>4, 'product_name'=>'Solaris')), $result);
+    }
+
+    public function testStatementFetchAllStyleBoth()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        $result = $stmt->fetchAll(Zend_Db::FETCH_BOTH);
+
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(2, count($result[0]));
+        $this->assertEquals(2, $result[0][0]);
+        $this->assertEquals('Linux', $result[0][1]);
+        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
+        // $this->assertEquals(2, $result[0]['product_id']);
+        // $this->assertEquals('Linux', $result[0]['product_name']);
+    }
+
+    public function testStatementBindParamByInteger()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $id   = 4;
+        $name = 'Solaris';
+
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
+        try {
+            $stmt->bindParam(1, $id);
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Oracle_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Oracle_Exception, got '.get_class($e));
+            $this->assertEquals('ORA-28553 Invalid bind-variable position', $e->getMessage());
+        }
+    }
+
+    public function testStatementBindColumnByInteger()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
+    }
+
+    public function testStatementBindColumnByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
+    }
+
+    public function testStatementNextRowset()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = $this->_db->prepare($select->__toString());
+        try {
+            $stmt->nextRowset();
+            $this->fail('Expected to catch Zend_Db_Statement_Oracle_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Oracle_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Oracle_Exception, got '.get_class($e));
+            $this->assertEquals('HYC00 Optional feature not implemented', $e->getMessage());
+        }
+        $stmt->closeCursor();
+    }
+
     public function getDriver()
     {
         return 'Oracle';

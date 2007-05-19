@@ -67,6 +67,27 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
         return true;
     }
 
+    /**
+     * Retrieves the next rowset (result set)
+     * for a SQL statement that has multiple result sets.
+     * An example is a stored procedure that returns
+     * the results of multiple queries.
+     *
+     * @throws Zend_Db_Statement_Oracle_Exception
+     */
+    public function nextRowset()
+    {
+        /**
+         * @see Zend_Db_Statement_Oracle_Exception
+         */
+        require_once 'Zend/Db/Statement/Oracle/Exception.php';
+        throw new Zend_Db_Statement_Oracle_Exception(
+            array(
+                'code'    => 'HYC00',
+                'message' => 'Optional feature not implemented'
+            )
+        );
+    }
 
     /**
      * Returns the number of columns in the result set.
@@ -140,12 +161,12 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * Executes a prepared statement.
      *
      * @param array $params
-     * @return void
+     * @return bool
      * @throws Zend_Db_Statement_Oracle_Exception
      */
     public function execute(array $params = array())
     {
-        $connection = $this->_connection->getConnection();
+        $connection = $this->_adapter->getConnection();
         if (!$this->_stmt) {
             $sql = $this->_joinSql();
             $this->_stmt = oci_parse($connection, $sql);
@@ -170,7 +191,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             }
         }
 
-        if (!@oci_execute($this->_stmt, $this->_connection->_getExecuteMode())) {
+        $retval = @oci_execute($this->_stmt, $this->_adapter->_getExecuteMode());
+        if ($retval === false) {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
@@ -187,6 +209,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
         if ($this->_keys) {
             $this->_values = array_fill(0, count($this->_keys), null);
         }
+
+        return $retval;
     }
 
     /**
@@ -204,8 +228,15 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     {
         if (is_integer($parameter)) {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception("bind by position is not supported by Oracle adapter");
-        } else if (is_string($parameter)) {
+            throw new Zend_Db_Statement_Oracle_Exception(
+                array(
+                    'code'    => 'ORA-28553',
+                    'message' => 'Invalid bind-variable position'
+                )
+            );
+        }
+
+        if (is_string($parameter)) {
             // bind by name. make sure it has a colon on it.
             if ($parameter[0] != ':') {
                 $parameter = ":$parameter";
@@ -221,13 +252,19 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
                 $length = -1;
             }
 
-            if (!oci_bind_by_name($this->_stmt, $parameter, $variable, $length, $type)) {
+            $retval = @oci_bind_by_name($this->_stmt, $parameter, $variable, $length, $type);
+            if ($retval === false) {
                 require_once 'Zend/Db/Statement/Oracle/Exception.php';
                 throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
             }
         } else {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception('invalid $parameter value');
+            throw new Zend_Db_Statement_Oracle_Exception(
+                array(
+                    'code'    => 'ORA-28553',
+                    'message' => 'Invalid bind-variable position'
+                )
+            );
         }
     }
 
@@ -311,7 +348,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      */
     protected function _prepSql($sql)
     {
-        $connection = $this->_connection->getConnection();
+        $connection = $this->_adapter->getConnection();
         $this->_stmt = oci_parse($connection, $sql);
         if (!$this->_stmt) {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';

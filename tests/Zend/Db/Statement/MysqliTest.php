@@ -26,6 +26,45 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
 {
 
+    public function testStatementConstruct()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $sql = $select->__toString();
+        $stmt = new Zend_Db_Statement_Mysqli($this->_db, $sql);
+        $this->assertType('Zend_Db_Statement_Mysqli', $stmt);
+    }
+
+    public function testStatementRowCount()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $stmt = $this->_db->prepare("DELETE FROM $products WHERE $product_id = 1");
+
+        $n = $stmt->rowCount();
+        $this->assertType('integer', $n);
+        $this->assertEquals(-1, $n, 'Expecting row count to be -1 before executing query');
+
+        $stmt->execute();
+
+        $n = $stmt->rowCount();
+        $stmt->closeCursor();
+
+        $this->assertType('integer', $n);
+        $this->assertEquals(1, $n, 'Expected row count to be one after executing query');
+    }
+
+    public function testStatementBindParamByInteger()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support bound parameters yet.');
+    }
+
+    public function testStatementBindParamByName()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support binding parameter by name.');
+    }
+
     public function getDriver()
     {
         return 'Mysqli';

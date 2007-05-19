@@ -148,10 +148,13 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchAll()
     {
-        $result = $this->_db->fetchAll('SELECT * FROM zfproducts WHERE product_id > :id ORDER BY product_id ASC', array(":id"=>1));
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchAll("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1));
         $this->assertEquals(2, count($result));
-        $this->assertThat($result[0], $this->arrayHasKey('PRODUCT_ID'));
-        $this->assertEquals('2', $result[0]['PRODUCT_ID']);
+        $this->assertThat($result[0], $this->arrayHasKey('product_id'));
+        $this->assertEquals('2', $result[0]['product_id']);
     }
 
     /**
@@ -159,10 +162,13 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchAssoc()
     {
-        $result = $this->_db->fetchAssoc('SELECT * FROM zfproducts WHERE product_id > :id ORDER BY product_id DESC', array(":id"=>1));
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchAssoc("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id DESC", array(":id"=>1));
         foreach ($result as $idKey => $row) {
-            $this->assertThat($row, $this->arrayHasKey('PRODUCT_ID'));
-            $this->assertEquals($idKey, $row['PRODUCT_ID']);
+            $this->assertThat($row, $this->arrayHasKey('product_id'));
+            $this->assertEquals($idKey, $row['product_id']);
         }
     }
 
@@ -171,7 +177,10 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchCol()
     {
-        $result = $this->_db->fetchCol('SELECT * FROM zfproducts WHERE product_id > :id ORDER BY product_id ASC', array(":id"=>1));
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1));
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals(2, $result[0]);
         $this->assertEquals(3, $result[1]);
@@ -182,8 +191,12 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchOne()
     {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
         $prod = 'Linux';
-        $result = $this->_db->fetchOne('SELECT PRODUCT_NAME FROM zfproducts WHERE product_id > :id ORDER BY product_id', array(":id"=>1));
+        $result = $this->_db->fetchOne("SELECT $product_name FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
         $this->assertEquals($prod, $result);
     }
 
@@ -192,8 +205,12 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchPairs()
     {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
         $prod = 'Linux';
-        $result = $this->_db->fetchPairs('SELECT product_id, PRODUCT_NAME FROM zfproducts WHERE product_id > :id ORDER BY product_id ASC', array(":id"=>1));
+        $result = $this->_db->fetchPairs("SELECT $product_id, $product_name FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1));
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals($prod, $result[2]);
     }
@@ -203,9 +220,12 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterFetchRow()
     {
-        $result = $this->_db->fetchRow('SELECT * FROM zfproducts WHERE product_id > :id ORDER BY product_id', array(":id"=>1));
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
         $this->assertEquals(2, count($result)); // count columns
-        $this->assertEquals(2, $result['PRODUCT_ID']);
+        $this->assertEquals(2, $result['product_id']);
     }
 
     public function testAdapterInsert()

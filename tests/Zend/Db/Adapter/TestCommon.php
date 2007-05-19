@@ -414,27 +414,21 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     public function testAdapterExceptionInvalidLimitArgument()
     {
-        $exceptionSeen = false;
         try {
             $sql = $this->_db->limit('SELECT * FROM zfproducts', 0);
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
 
-        $exceptionSeen = false;
         try {
             $sql = $this->_db->limit('SELECT * FROM zfproducts', 1, -1);
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
-            $exceptionSeen = true;
         }
-        $this->assertTrue($exceptionSeen);
     }
 
     /**
@@ -471,17 +465,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterQueryBogus()
     {
-        /**
-         * @todo Fix inconsistencies between adapters
-         * @see  http://framework.zend.com/issues/browse/ZF-1383
-         */
         try {
             $this->_db->query('Bogus query');
             $this->fail('Expected exception not thrown');
-        } catch (Zend_Db_Adapter_Exception $e) {
-            // pdo_mysql throws Zend_Db_Adapter_Exception
-        } catch (Zend_Db_Statement_Mysqli_Exception $e) {
-            // mysqli throws Zend_Db_Statement_Mysqli_Exception
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
     }
 
@@ -492,17 +481,12 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      */
     public function testAdapterQueryTableBogus()
     {
-        /**
-         * @todo Fix inconsistencies between adapters
-         * @see  http://framework.zend.com/issues/browse/ZF-1383
-         */
         try {
             $this->_db->query('SELECT * FROM BogusTable');
             $this->fail('Expected exception not thrown');
-        } catch (Zend_Db_Adapter_Exception $e) {
-            // pdo_mysql throws Zend_Db_Adapter_Exception
-        } catch (Zend_Db_Statement_Mysqli_Exception $e) {
-            // mysqli throws Zend_Db_Statement_Mysqli_Exception
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
     }
 }

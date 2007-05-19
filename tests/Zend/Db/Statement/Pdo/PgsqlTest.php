@@ -19,11 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Statement/TestCommon.php';
+require_once 'Zend/Db/Statement/Pdo/TestCommon.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Statement_Pdo_PgsqlTest extends Zend_Db_Statement_TestCommon
+class Zend_Db_Statement_Pdo_PgsqlTest extends Zend_Db_Statement_Pdo_TestCommon
 {
 
     public function getDriver()
