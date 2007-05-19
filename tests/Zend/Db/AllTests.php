@@ -62,6 +62,9 @@ require_once 'Zend/Db/SkipTests.php';
  */
 class Zend_Db_AllTests
 {
+
+    protected static $_skipTestSuite = null;
+
     public static function main()
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
@@ -95,18 +98,19 @@ class Zend_Db_AllTests
         self::_addDbTestSuites($suite, 'Pdo_Pgsql');
         self::_addDbTestSuites($suite, 'Pdo_Sqlite');
 
+        if (self::$_skipTestSuite !== null) {
+            $suite->addTest(self::$_skipTestSuite);
+        }
+
         return $suite;
     }
 
     protected static function _addDbTestSuites($suite, $driver)
     {
-        $skipTestClass = "Zend_Db_Skip_{$driver}Test";
         $DRIVER = strtoupper($driver);
         $enabledConst = "TESTS_ZEND_DB_ADAPTER_{$DRIVER}_ENABLED";
         if (!defined($enabledConst) || constant($enabledConst) != true) {
-            $skipTest = new $skipTestClass();
-            $skipTest->message = "this Adapter is not enabled in TestConfiguration.php";
-            $suite->addTest($skipTest);
+            self::_skipTestSuite($driver, "this Adapter is not enabled in TestConfiguration.php");
             return;
         }
 
@@ -120,27 +124,21 @@ class Zend_Db_AllTests
         );
 
         if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
-            $skipTest = new $skipTestClass();
-            $skipTest->message = "extension '{$ext[$driver]}' is not loaded";
-            $suite->addTest($skipTest);
+            self::_skipTestSuite($driver, "extension '{$ext[$driver]}' is not loaded");
             return;
         }
 
         if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
             // check for PDO extension
             if (!extension_loaded('pdo')) {
-                $skipTest = new $skipTestClass();
-                $skipTest->message = "extension 'PDO' is not loaded";
-                $suite->addTest($skipTest);
+                self::_skipTestSuite($driver, "extension 'PDO' is not loaded");
                 return;
             }
 
             // check the PDO driver is available
             $pdo_driver = strtolower($matches[1]);
             if (!in_array($pdo_driver, PDO::getAvailableDrivers())) {
-                $skipTest = new $skipTestClass();
-                $skipTest->message = "PDO driver '{$pdo_driver}' is not available";
-                $suite->addTest($skipTest);
+                self::_skipTestSuite($driver, "PDO driver '{$pdo_driver}' is not available");
                 return;
             }
         }
@@ -172,10 +170,21 @@ class Zend_Db_AllTests
             $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");
 
         } catch (Zend_Exception $e) {
-            $skipTest = new $skipTestClass();
-            $skipTest->message = "cannot load test classes: " . $e->getMessage();
-            $suite->addTest($skipTest);
+            self::_skipTestSuite($driver, "cannot load test classes: " . $e->getMessage());
         }
+    }
+
+    protected static function _skipTestSuite($driver, $message = '')
+    {
+        $skipTestClass = "Zend_Db_Skip_{$driver}Test";
+        $skipTest = new $skipTestClass();
+        $skipTest->message = $message;
+
+        if (self::$_skipTestSuite === null) {
+            self::$_skipTestSuite = new PHPUnit_Framework_TestSuite('Zend_Db skipped test suites');
+        }
+
+        self::$_skipTestSuite->addTest($skipTest);
     }
 
 }
