@@ -132,6 +132,7 @@ class Zend_Controller_Action_HelperBroker
     {        
         $this->_actionController = $actionController;
         foreach (self::$_helpers as $helper) {
+            $helper->setActionController($actionController);
             $helper->init();
         }
     }
