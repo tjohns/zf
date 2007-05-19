@@ -298,10 +298,11 @@ class MyController extends Zend_Controller_Action
         // Renders baz.phtml
         $this->render('baz', null, true);
 
-        // Renders foo/login.phtml to the 'form' segment of the response object
+        // Renders my/login.phtml to the 'form' segment of the response object
         $this->render('login', 'form');
         
-        // Renders site.phtml to the 'page' segment of the response object
+        // Renders site.phtml to the 'page' segment of the response object; does
+        // not use the 'my/' subirectory
         $this->render('site', 'page', true);
     }
 
