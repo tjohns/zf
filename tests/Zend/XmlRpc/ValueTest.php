@@ -242,6 +242,8 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
                                     Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
                     
         $this->assertXmlRpcType('dateTime', $val);
+
+        $expected = '1997-07-16T19:20+01:00';
         $this->assertSame(strtotime($native), strtotime($val->getValue())); 
     }
 
@@ -254,6 +256,8 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertXmlRpcType('dateTime', $val);
 
         $expected = date('c', strtotime($native));
+        $expected = substr($expected, 0, strlen($expected) - 6);
+        $expected = str_replace('-', '', $expected);
         $received = $val->getValue();
         $this->assertEquals($expected, $received);
     }
