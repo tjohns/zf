@@ -43,16 +43,29 @@ class Zend_Gdata_App_HttpException extends Zend_Gdata_App_Exception
 {
 
     protected $_httpClientException = null;
+    protected $_response = null;
 
-    public function __construct($message = null, $e = null)
+    public function __construct($message = null, $e = null, $response = null)
     {
         $this->_httpClientException = $e;
+        $this->_response = $response;
         parent::__construct($message);
     }
 
     public function getHttpClientException()
     {
         return $this->_httpClientException;
+    }
+
+    public function setResponse($response)
+    {
+        $this->_response = $response;
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return $this->_response;
     }
 
 }

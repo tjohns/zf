@@ -20,16 +20,6 @@
  */
 
 /**
- * @see Zend_Gdata_App_Data
- */
-require_once 'Zend/Gdata/App/Data.php';
-
-/**
- * @see Zend_Gdata_App_Exception
- */
-require_once 'Zend/Gdata/App/Exception.php';
-
-/**
  * @see Zend_Gdata_App_Extension_Element
 */
 require_once 'Zend/Gdata/App/Extension/Element.php';
@@ -115,10 +105,12 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
                 $success = @$doc->loadXML($element);
                 @ini_restore('track_errors');
                 if (!$success) {
+                    require_once 'Zend/Gdata/App/Exception.php';
                     throw new Zend_Gdata_App_Exception("DOMDocument cannot parse XML: $php_errormsg");
                 }
                 $element = $doc->getElementsByTagName($this->_rootElement)->item(0);
                 if (!$element) {
+                    require_once 'Zend/Gdata/App/Exception.php';
                     throw new Zend_Gdata_App_Exception('No root <' . $this->_rootElement . '> element found, cannot parse feed.');
                 }
                 $this->transferFromDOM($element);
@@ -337,7 +329,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getEditLink()
     {
-        return getLink('edit');
+        return $this->getLink('edit');
     }
 
     /**
@@ -345,7 +337,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getNextLink()
     {
-        return getLink('next');
+        return $this->getLink('next');
     }
 
     /**
@@ -353,7 +345,15 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getLicenseLink()
     {
-        return getLink('license');
+        return $this->getLink('license');
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Link
+     */
+    public function getSelfLink()
+    {
+        return $this->getLink('self');
     }
 
     /**
@@ -361,7 +361,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getAlternateLink()
     {
-        return getLink('alternate');
+        return $this->getLink('alternate');
     }
 
     /**
@@ -415,7 +415,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getUpdated()
     {
-        return $this->_update;
+        return $this->_updated;
     }
 
     /**
@@ -424,7 +424,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function setUpdated($value)
     {
-        $this->_update = $value;
+        $this->_updated = $value;
         return $this; 
     }
 

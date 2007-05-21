@@ -40,6 +40,11 @@ require_once 'Zend/Gdata/Extension/EventStatus.php';
 require_once 'Zend/Gdata/Extension/ExtendedProperty.php';
 
 /**
+ * @see Zend_Gdata_Extension_OriginalEvent
+ */
+require_once 'Zend/Gdata/Extension/OriginalEvent.php';
+
+/**
  * Data model class for a Google Calendar Event Entry 
  *
  * @category   Zend
@@ -53,6 +58,7 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     protected $_entryClassName = 'Zend_Gdata_Calendar_EventEntry';
     protected $_sendEventNotifications = null;
     protected $_extendedProperty = array();
+    protected $_originalEvent = array();
 
     public function __construct($uri = null, $element = null)
     {
@@ -71,6 +77,10 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
                         $extProp->getDOM($element->ownerDocument));
             }
         }
+        if ($this->_originalEvent != null) {
+            $element->appendChild(
+                    $this->_originalEvent->getDOM($element->ownerDocument));
+        }
         return $element;
     }
     
@@ -82,6 +92,11 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
                 $extProp = new Zend_Gdata_Extension_ExtendedProperty();
                 $extProp->transferFromDOM($child);
                 $this->_extendedProperty[] = $extProp;
+                break;
+            case $this->lookupNamespace('gd') . ':' . 'originalEvent'; 
+                $originalEvent = new Zend_Gdata_Extension_OriginalEvent();
+                $originalEvent ->transferFromDOM($child);
+                $this->_originalEvent = $originalEvent;
                 break;
         default:
             parent::takeChildFromDOM($child);
@@ -97,6 +112,17 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     public function setExtendedProperty($value) 
     {
         $this->_extendedProperty = $value;
+        return $this;
+    }
+
+    public function getOriginalEvent() 
+    {
+        return $this->_originalEvent;
+    }
+
+    public function setOriginalEvent($value) 
+    {
+        $this->_originalEvent = $value;
         return $this;
     }
 

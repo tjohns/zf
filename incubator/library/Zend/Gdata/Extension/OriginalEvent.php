@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata_Extension
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,50 +25,71 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the gCal:accessLevel element used by the Calendar data API
+ * @see Zend_Gdata_Feed
+ */
+require_once 'Zend/Gdata/Feed.php';
+
+/**
+ * Concrete class for working with Atom entries.
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata_Extension
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
+class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
 {
 
-    protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'gCal:accesslevel';
-    protected $_value = null;
-
-    public function __construct($value = null) 
-    {
-        parent::__construct();
-        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
-        $this->_value = $value; 
-    }
+    protected $_rootElement = 'gd:originalEvent';
+    protected $_id = null; 
+    protected $_href = null; 
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_id != null) {
+            $element->setAttribute('id', $this->_id);
+        }
+        if ($this->_href != null) {
+            $element->setAttribute('href', $this->_href);
+        }
         return $element;
     }
 
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'value':
-            $this->_value = $attribute->nodeValue;
+        case 'id':
+            $this->_id = $attribute->nodeValue;
+            break;
+        case 'href':
+            $this->_href = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
 
-    public function __toString() 
+    public function getId()
     {
-        return $this->_value;
+        return $this->_id;
+    }
+
+    public function setId($value)
+    {
+        $this->_id = $value;
+        return $this;
+    }
+
+    public function getHref()
+    {
+        return $this->_href;
+    }
+
+    public function setHref($value)
+    {
+        $this->_href = $value;
+        return $this;
     }
 
 }

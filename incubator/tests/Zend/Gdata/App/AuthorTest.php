@@ -81,9 +81,9 @@ class Zend_Gdata_App_AuthorTest extends PHPUnit_Framework_TestCase
         $newAuthor->transferFromXML($authorXml);
         $newAuthorXml = $newAuthor->saveXML();
         $this->assertTrue($authorXml == $newAuthorXml);
-	$this->assertEquals('Jeff Scudder', $newAuthor->name->text);
-	$this->assertEquals('api.jscudder@gmail.com', $newAuthor->email->text);
-	$this->assertEquals('http://code.google.com/apis/gdata/', $newAuthor->uri->text);
+        $this->assertEquals('Jeff Scudder', $newAuthor->name->text);
+        $this->assertEquals('api.jscudder@gmail.com', $newAuthor->email->text);
+        $this->assertEquals('http://code.google.com/apis/gdata/', $newAuthor->uri->text);
     }
 
     public function testExtensionAttributes() {

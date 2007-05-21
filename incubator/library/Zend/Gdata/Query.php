@@ -20,21 +20,6 @@
  */
 
 /**
- * Zend_Gdata_App_Exception
- */
-require_once 'Zend/Gdata/App/Exception.php';
-
-/**
- * Zend_Gdata_App_HttpException
- */
-require_once 'Zend/Gdata/App/HttpException.php';
-
-/**
- * Zend_Gdata_App_InvalidArgumentException
- */
-require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-
-/**
  * Zend_Gdata_App_Util
  */
 require_once 'Zend/Gdata/App/Util.php';
@@ -60,17 +45,25 @@ class Zend_Gdata_Query
     protected $_params = array();
 
     /**
-     * Default URI to which to POST.
+     * Default URL
      *
      * @var string
      */
-    protected $_defaultPostUri = null;
+    protected $_defaultFeedUri = null;
+
+    /**
+     * Base URL
+     *
+     * @var string
+     */
+    protected $_url = null;
 
     /**
      * Create Gdata_Query object
      */
-    public function __construct()
+    public function __construct($url = null)
     {
+        $this->_url = $url;
     }
 
     /**
@@ -105,11 +98,13 @@ class Zend_Gdata_Query
      */
     public function getQueryUrl()
     {
-        if ($uri == null) {
-            $uri = $this->_defaultFeedUri; 
+        if ($this->_url == null) {
+            $url = $this->_defaultFeedUri; 
+        } else {
+            $url = $this->_url;
         }
-        $uri .= $this->getQueryString();
-        return $uri;
+        $url .= $this->getQueryString();
+        return $url;
     }
 
     /**
@@ -128,7 +123,7 @@ class Zend_Gdata_Query
      */
     public function getParam($name)
     {
-        return $this->_params[$value];
+        return $this->_params[$name];
     }
 
     /**
@@ -293,6 +288,7 @@ class Zend_Gdata_Query
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method));
         } else { 
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
@@ -303,6 +299,7 @@ class Zend_Gdata_Query
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method), $val);
         } else {
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }

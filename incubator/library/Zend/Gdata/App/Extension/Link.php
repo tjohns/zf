@@ -68,7 +68,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
             $element->setAttribute('type', $this->_type);
         }
         if ($this->_hrefLang != null) {
-            $element->setAttribute('hrefLang', $this->_hrefLang);
+            $element->setAttribute('hreflang', $this->_hrefLang);
         }
         if ($this->_title != null) {
             $element->setAttribute('title', $this->_title);
@@ -91,7 +91,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
         case 'type':
             $this->_type = $attribute->nodeValue;
             break;
-        case 'hrefLang':
+        case 'hreflang':
             $this->_hrefLang = $attribute->nodeValue;
             break;
         case 'title':

@@ -37,9 +37,15 @@ require_once 'Zend/Gdata/App/FeedSourceParent.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Iterator
+class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent 
+        implements Iterator, ArrayAccess
 {
 
+    /**
+     * The root xml element of this data element
+     * 
+     * @var string 
+     */
     protected $_rootElement = 'feed';
 
     /**
@@ -64,7 +70,7 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Ite
      * using foreach ($feed->entries as $entry) or foreach
      * ($feed->entry as $entry).
      *
-     * @param  string $var The property to access.
+     * @param  string $var The property to get.
      * @return mixed
      */
     public function __get($var)
@@ -77,7 +83,11 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Ite
         }
     }
 
-
+    /**
+     * Retrieves the DOM model representing this object and all children
+     *
+     * @param 
+     */
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc); 
@@ -188,6 +198,51 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Ite
     {
         $this->_entry = $value;
         return $this;
+    }
+
+    /**
+     * Required by the ArrayAccess interface
+     *
+     * @param int $key The index to set
+     * @param Zend_Gdata_App_Entry $value The value to set
+     * @return void
+     */
+    public function offsetSet($key, $value) {
+        $this->_entry[$key] = $value;
+    }
+
+    /**
+     * Required by the ArrayAccess interface
+     *
+     * @param int $key The index to get
+     * @param Zend_Gdata_App_Entry $value The value to set
+     */
+    public function offsetGet($key) {
+        if (array_key_exists($key, $this->_entry)) {
+            return $this->_entry[$key];
+        }
+    }
+
+    /**
+     * Required by the ArrayAccess interface
+     *
+     * @param int $key The index to set
+     * @param Zend_Gdata_App_Entry $value The value to set
+     */
+    public function offsetUnset($key) {
+        if (array_key_exists($key, $this->_entry)) {
+            unset($this->_entry[$key]);
+        }
+    }
+
+    /**
+     * Required by the ArrayAccess interface
+     *
+     * @param int $key The index to check for existence
+     * @return boolean
+     */
+    public function offsetExists($offset) {
+        return (array_key_exists($key, $this->_entry));
     }
 
 }

@@ -19,16 +19,6 @@
  */
 
 /**
- * Zend_Gdata
- */
-require_once('Zend/Gdata.php');
-
-/**
- * Zend_Gdata_App_Data
- */
-require_once('Zend/Gdata/App/Data.php');
-
-/**
  * Zend_Gdata_Spreadsheets_SpreadsheetFeed
  */
 require_once('Zend/Gdata/Spreadsheets/SpreadsheetFeed.php');

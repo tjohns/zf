@@ -20,29 +20,14 @@
  */
 
 /**
- * Zend_Gdata_App_Exception
- */
-require_once 'Zend/Gdata/App/Exception.php';
-
-/**
  * Zend_Gdata_Feed
  */
 require_once 'Zend/Gdata/Feed.php';
 
 /**
- * Zend_Gdata_App_HttpException
- */
-require_once 'Zend/Gdata/App/HttpException.php';
-
-/**
  * Zend_Gdata_Http_Client
  */
 require_once 'Zend/Http/Client.php';
-
-/**
- * Zend_Gdata_App_InvalidArgumentException
- */
-require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
 /**
  * Provides Atom Publishing Protocol (APP) functionality.  This class and all
@@ -85,10 +70,14 @@ class Zend_Gdata_App
      */
     protected $_defaultPostUri = null;
 
+    /**
+     * Packages to search for classes when using magic __call method, in order.
+     *
+     * @var array 
+     */
     protected $_registeredPackages = array(
             'Zend_Gdata_App_Extension',
             'Zend_Gdata_App');
-
 
     /**
      * Create Gdata object
@@ -106,6 +95,7 @@ class Zend_Gdata_App
      * to instantiante new objects.
      *
      * @param string $name The name of the package (eg Zend_Gdata_App)
+     * @return void
      */
     public function registerPackage($name) 
     {
@@ -115,7 +105,8 @@ class Zend_Gdata_App
     /**
      * Retreive feed object
      *
-     * @param string $uri
+     * @param string $uri The uri from which to retrieve the feed
+     * @param string $className The class which is used as the return type
      * @return Zend_Gdata_App_Feed
      */
     public function getFeed($uri, $className='Zend_Gdata_App_Feed')
@@ -128,6 +119,7 @@ class Zend_Gdata_App
      * Retreive entry object
      *
      * @param string $uri
+     * @param string $className The class which is used as the return type
      * @return Zend_Gdata_App_Entry
      */
     public function getEntry($uri, $className='Zend_Gdata_App_Entry')
@@ -139,6 +131,8 @@ class Zend_Gdata_App
     /**
 
     /**
+     * Get the Zend_Http_Client object used for communication 
+     *
      * @return Zend_Http_Client
      */
     public function getHttpClient()
@@ -147,7 +141,9 @@ class Zend_Gdata_App
     }
 
     /**
-     * @param Zend_Http_Client $client
+     * Set the Zend_Http_Client object used for communication 
+     *
+     * @param Zend_Http_Client $client The client to use for communication
      * @throws Zend_Gdata_App_HttpException
      * @return Zend_Gdata_App Provides a fluent interface
      */
@@ -157,6 +153,7 @@ class Zend_Gdata_App
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException('Argument is not an instance of Zend_Http_Client.');
         }
         $client->setConfig(array('strictredirects' => true));
@@ -172,7 +169,7 @@ class Zend_Gdata_App
      * Sets the static HTTP client object to use for retrieving the feed.
      *
      * @param  Zend_Http_Client $httpClient
-     * @return Zend_Gdata_App_Feed Provides a fluent interface
+     * @return void
      */
     public static function setStaticHttpClient(Zend_Http_Client $httpClient)
     {
@@ -183,15 +180,11 @@ class Zend_Gdata_App
     /**
      * Gets the HTTP client object. If none is set, a new Zend_Http_Client will be used.
      *
-     * @return Zend_Http_Client_Abstract
+     * @return Zend_Http_Client
      */
     public static function getStaticHttpClient()
     {
         if (!self::$_staticHttpClient instanceof Zend_Http_Client) {
-            /**
-             * @see Zend_Http_Client
-             */
-            require_once 'Zend/Http/Client.php';
             self::$_staticHttpClient = new Zend_Http_Client();
         }
         return self::$_staticHttpClient;
@@ -207,15 +200,13 @@ class Zend_Gdata_App
      * X-Method-Override header will be sent with a value of PUT or
      * DELETE as appropriate.
      *
-     * @param  boolean $override Whether to override PUT and DELETE.
-     * @return Zend_Gdata_Feed Provides a fluent interface
+     * @param  boolean $override Whether to override PUT and DELETE with POST.
+     * @return void
      */
     public static function setHttpMethodOverride($override = true)
     {
         self::$_httpMethodOverride = $override;
-        return $this;
     }
-
 
     /**
      * Get the HTTP override state
@@ -231,6 +222,8 @@ class Zend_Gdata_App
      * Imports a feed located at $uri.
      *
      * @param  string $uri
+     * @param  Zend_Http_Client $client The client used for communication
+     * @param  string $className The class which is used as the return type
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_App_Feed
      */
@@ -239,8 +232,10 @@ class Zend_Gdata_App
         $client->setUri($uri);
         $response = $client->request('GET');
         if ($response->getStatus() !== 200) {
-            require_once 'Zend/Gdata/App/Exception.php';
-            throw new Zend_Gdata_App_Exception('Feed failed to load, got response code ' . $response->getStatus());
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+            $exception->setResponse($response);
+            throw $exception;
         }
         $feedContent = $response->getBody();
         $feed = self::importString($feedContent, $className);
@@ -257,6 +252,7 @@ class Zend_Gdata_App
      * Imports a feed represented by $string.
      *
      * @param  string $string
+     * @param  string $className The class which is used as the return type
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_App_Feed
      */
@@ -282,6 +278,7 @@ class Zend_Gdata_App
      * Imports a feed from a file located at $filename.
      *
      * @param  string $filename
+     * @param  string $className The class which is used as the return type
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_Feed
      */
@@ -300,7 +297,7 @@ class Zend_Gdata_App
     /**
      * POST data to Google with authorization headers set
      *
-     * @param (string|Zend_Gdata_Event) $data
+     * @param mixed $data The Zend_Gdata_App_Entry or XML to post
      * @param string $uri POST URI
      * @return Zend_Http_Response
      * @throws Zend_Gdata_App_Exception
@@ -309,11 +306,13 @@ class Zend_Gdata_App
      */
     public function post($data, $uri= null)
     {
+        require_once 'Zend/Http/Client/Exception.php';
         if (is_string($data)) {
             $rawData = $data;
         } elseif ($data instanceof Zend_Gdata_App_Entry) {
             $rawData = $data->saveXML();
         } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
         } 
@@ -321,6 +320,7 @@ class Zend_Gdata_App
             $uri = $this->_defaultPostUri;
         }
         if ($uri == null) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to post.');
         }
         $this->_httpClient->setUri($uri);
@@ -329,6 +329,7 @@ class Zend_Gdata_App
         try {
             $response = $this->_httpClient->request('POST');
         } catch (Zend_Http_Client_Exception $e) {
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
         }
         /**
@@ -353,7 +354,10 @@ class Zend_Gdata_App
         }
         
         if (!$response->isSuccessful()) {
-            throw new Zend_Gdata_App_Exception('Post to Google failed. Reason: ' . $response->getBody());
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+            $exception->setResponse($response);
+            throw $exception;
         }
         return $response;
     }
@@ -361,23 +365,24 @@ class Zend_Gdata_App
     /**
      * Inserts an entry to a given URI and returns the response as a fully formed Entry.
      * @param string $uri POST URI
-     * @param (string|Zend_Gdata_App_Entry) $data
-     * @param string returnClass The class of entry to be returned.
+     * @param mixed  $data The Zend_Gdata_App_Entry or XML to post
+     * @param string $className The class of entry to be returned.
      * @return Zend_Gdata_App_Entry The entry returned by the service after insertion.
      */
-    public function insertEntry($uri, $data, $returnClass='Zend_Gdata_App_Entry')
+    public function insertEntry($uri, $data, $className='Zend_Gdata_App_Entry')
     {
         if (is_string($data)) {
             $rawData = $data;
         } elseif ($data instanceof Zend_Gdata_App_Entry) {
             $rawData = $data->saveXML();
         } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
         }
         $response = $this->post($rawData, $uri);
         
-        $returnEntry = new $returnClass(null, $response->getBody());
+        $returnEntry = new $className(null, $response->getBody());
         $returnEntry->setHttpClient(self::getstaticHttpClient());
         return $returnEntry;
     }
@@ -388,8 +393,8 @@ class Zend_Gdata_App
      * TODO Determine if App should call Entry to Delete or the opposite.  
      * Suspecect opposite would mkae more sense
      * 
-     * @param string $data
-     * @throws Zend_Gdata_App_HttpException
+     * @param string $data The Zend_Gdata_App_Entry or URL to delete
+     * @throws Zend_Gdata_App_Exception
      */
     public function delete($data)
     {
@@ -399,14 +404,11 @@ class Zend_Gdata_App
         } elseif ($data instanceof Zend_Gdata_App_Entry) {
             $entry = $data; 
         } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
         } 
-        try {
-            $entry->delete();
-        } catch (Zend_Gdata_App_HttpException $e) {
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
-        }
+        $entry->delete();
         return true;
     }
 
@@ -418,24 +420,23 @@ class Zend_Gdata_App
      * take an optional URL to override URL used in the entry, or if an
      * edit URI/ID is not present in the entry
      *
-     * @param string $data Entry or XML (w/ID and link rel='edit')
-     * @throws Zend_Gdata_App_HttpException
+     * @param mixed $data Zend_Gdata_App_Entry or XML (w/ID and link rel='edit')
+     * @return Zend_Gdata_App_Entry The entry returned from the server
+     * @throws Zend_Gdata_App_Exception
      */
     public function put($data)
     {
-        try {
-            if (is_string($data)) {
-                $entry = new Zend_Gdata_App_Entry(null, $data);
-                $entry->save();
-            } elseif ($data instanceof Zend_Gdata_App_Entry) {
-                $data->save();
-            } else {
-                throw new Zend_Gdata_App_InvalidArgumentException(
-                        'You must specify the data to post as either a XML string or a child of Zend_Gdata_App_Entry');
-            } 
-        } catch (Zend_Gdata_App_HttpException $e) {
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
-        }
+        if (is_string($data)) {
+            $entry = new Zend_Gdata_App_Entry(null, $data);
+            $entry->setHttpClient($this->_httpClient); 
+            return $entry->save();
+        } elseif ($data instanceof Zend_Gdata_App_Entry) {
+            return $data->save();
+        } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'You must specify the data to post as either a XML string or a child of Zend_Gdata_App_Entry');
+        } 
     }
 
     /**
@@ -453,12 +454,8 @@ class Zend_Gdata_App
      */
     public function __call($method, $args) 
     {
-        if (substr($method, 0, 3) == 'new') {
-            $class = substr($method, 3);
-            if ($class === FALSE) {
-                throw new Zend_Gdata_App_Exception(
-                        'Class name not provided');
-            }
+        if (preg_match('/^new(\w+)/', $method, $matches)) {
+            $class = $matches[1];
             $foundClassName = null;
             foreach ($this->_registeredPackages as $name) {
                  try {
@@ -470,19 +467,8 @@ class Zend_Gdata_App
                  }
             }
             if ($foundClassName != null) {
-                $first = TRUE;
-                $argString = '';
-                for ($i = 0; $i < count($args); $i++) {
-                    if (! $first) {
-                        $argString .= ', ';
-                    }
-                    $argString .= "\$args[${i}]";
-                    $first = FALSE;
-                }
-                eval("\$returnVal = new ${foundClassName}(${argString});");
-                return $returnVal; 
-                //$reflectionObj = new ReflectionClass($foundClassName);
-                //return $reflectionObj->newInstanceArgs($args);
+                $reflectionObj = new ReflectionClass($foundClassName);
+                return $reflectionObj->newInstanceArgs($args);
             } else {
                 throw new Zend_Gdata_App_Exception(
                         "Unable to find '${class}' in registered packages");

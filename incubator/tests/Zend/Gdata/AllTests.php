@@ -66,9 +66,16 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Gdata/AppTest.php';
 require_once 'Zend/Gdata/App/UtilTest.php';
 require_once 'Zend/Gdata/App/AuthorTest.php';
+require_once 'Zend/Gdata/App/CategoryTest.php';
+require_once 'Zend/Gdata/App/ContentTest.php';
+require_once 'Zend/Gdata/App/ControlTest.php';
+require_once 'Zend/Gdata/App/FeedTest.php';
+require_once 'Zend/Gdata/App/GeneratorTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
+require_once 'Zend/Gdata/QueryTest.php';
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
+require_once 'Zend/Gdata/Calendar/EventEntryTest.php';
 require_once 'Zend/Gdata/SpreadsheetsTest.php';
 require_once 'Zend/Gdata/SpreadsheetsTest.php';
 require_once 'Zend/Gdata/Spreadsheets/ColCountTest.php';
@@ -91,6 +98,7 @@ require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
  * and authentication credentials
  */
 
+require_once 'Zend/Gdata/GdataOnlineTest.php';
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
 
@@ -111,12 +119,19 @@ class Zend_Gdata_AllTests
         /**
          * Tests that do not require online access to servers
          */
-        //$suite->addTestSuite('Zend_Gdata_AppTest');
+        $suite->addTestSuite('Zend_Gdata_AppTest');
         $suite->addTestSuite('Zend_Gdata_App_UtilTest');
         $suite->addTestSuite('Zend_Gdata_App_AuthorTest');
+        $suite->addTestSuite('Zend_Gdata_App_CategoryTest');
+        $suite->addTestSuite('Zend_Gdata_App_ContentTest');
+        $suite->addTestSuite('Zend_Gdata_App_ControlTest');
+        $suite->addTestSuite('Zend_Gdata_App_FeedTest');
+        $suite->addTestSuite('Zend_Gdata_App_GeneratorTest');
         $suite->addTestSuite('Zend_Gdata_GdataTest');
+        $suite->addTestSuite('Zend_Gdata_QueryTest');
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_EventEntryTest');
         $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ColCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_RowCountTest');
@@ -141,6 +156,7 @@ class Zend_Gdata_AllTests
              * Tests that do require online access to servers
              * and authentication credentials
              */
+            $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
             $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
             $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
         } else {

@@ -25,24 +25,9 @@
 require_once 'Zend/Feed.php';
 
 /**
- * Zend_Gdata_Exception
- */
-require_once 'Zend/Gdata/Exception.php';
-
-/**
  * Zend_Gdata_App
  */
 require_once 'Zend/Gdata/App.php';
-
-/**
- * Zend_Gdata_HttpException
- */
-require_once 'Zend/Gdata/HttpException.php';
-
-/**
- * Zend_Gdata_InvalidArgumentException
- */
-require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  * Provides functionality to interact with Google data APIs
@@ -61,6 +46,11 @@ require_once 'Zend/Gdata/InvalidArgumentException.php';
 class Zend_Gdata extends Zend_Gdata_App
 {
 
+    /**
+     * Service name for use with Google's authentication mechanisms
+     *
+     * @var string
+     */
     const AUTH_SERVICE_NAME = 'xapi';
 
     /**
@@ -70,6 +60,11 @@ class Zend_Gdata extends Zend_Gdata_App
      */
     protected $_defaultPostUri = null;
 
+    /**
+     * Packages to search for classes when using magic __call method, in order.
+     *
+     * @var array 
+     */
     protected $_registeredPackages = array(
             'Zend_Gdata_Kind',
             'Zend_Gdata_Extension',
@@ -77,6 +72,11 @@ class Zend_Gdata extends Zend_Gdata_App
             'Zend_Gdata_App_Extension',
             'Zend_Gdata_App');
 
+    /**
+     * Namespaces used for GData data 
+     *
+     * @var array 
+     */
     public static $namespaces = array(
         'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
         'rss' => 'http://blogs.law.harvard.edu/tech/rss',
@@ -95,7 +95,8 @@ class Zend_Gdata extends Zend_Gdata_App
     /**
      * Retreive feed object
      *
-     * @param (string|Zend_Gdata_Query) $location
+     * @param mixed $location The location as string or Zend_Gdata_Query
+     * @param string $className The class type to use for returning the feed
      * @return Zend_Gdata_Feed
      */     
     public function getFeed($location, $className='Zend_Gdata_Feed')
@@ -105,6 +106,7 @@ class Zend_Gdata extends Zend_Gdata_App
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
+            require_once 'Zend/Gdata/InvalidArgumentException.php';
             throw new Zend_Gdata_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');
@@ -115,7 +117,7 @@ class Zend_Gdata extends Zend_Gdata_App
     /**
      * Retreive entry object
      *
-     * @param (string) $location
+     * @param mixed $location The location as string or Zend_Gdata_Query
      * @return Zend_Gdata_Feed
      */     
     public function getEntry($location, $className='Zend_Gdata_Entry')
@@ -125,6 +127,7 @@ class Zend_Gdata extends Zend_Gdata_App
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
+            require_once 'Zend/Gdata/InvalidArgumentException.php';
             throw new Zend_Gdata_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');

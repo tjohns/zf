@@ -25,11 +25,6 @@
 require_once 'Zend/Gdata/Entry.php';
 
 /**
- * @see Zend_Gdata_App_Data
- */
-require_once 'Zend/Gdata/App/Data.php';
-
-/**
  * @see Zend_Gdata_Extension
  */
 require_once 'Zend/Gdata/Extension.php';

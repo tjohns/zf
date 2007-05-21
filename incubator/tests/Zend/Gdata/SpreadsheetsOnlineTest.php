@@ -187,7 +187,7 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $this->gdata->updateCell(5, 1, '', $this->sprKey, $this->wksId);
     }
     
-    public function testInsertUpdateRow()
+    public function testInsertUpdateDeleteRow()
     {
         $rowData = array();
         $rowData['a1'] = 'new';
@@ -198,6 +198,34 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $rowData['a1'] = 'newer';
         $entry = $this->gdata->updateRow($entry, $rowData);
         $this->gdata->deleteRow($entry);
+    }
+
+    public function testInsertUpdateDeleteRow2()
+    {
+        $rowData = array();
+        $rowData['a1'] = 'new';
+        $rowData['b1'] = 'row';
+        $rowData['c1'] = 'data';
+        $rowData['d1'] = 'here';
+        $entry = $this->gdata->insertRow($rowData, $this->sprKey);
+        $rowData['a1'] = 'newer';
+        $entry = $this->gdata->updateRow($entry, $rowData);
+        $ssTest = new Zend_Gdata_Spreadsheets($entry->getHttpClient());
+        $ssTest->delete($entry->getEditLink()->href);
+    }
+
+    public function testInsertUpdateDeleteRow3()
+    {
+        $rowData = array();
+        $rowData['a1'] = 'new';
+        $rowData['b1'] = 'row';
+        $rowData['c1'] = 'data';
+        $rowData['d1'] = 'here';
+        $entry = $this->gdata->insertRow($rowData, $this->sprKey);
+        $rowData['a1'] = 'newer';
+        $entry = $this->gdata->updateRow($entry, $rowData);
+        $ssTest = new Zend_Gdata_Spreadsheets($entry->getHttpClient());
+        $ssTest->delete($entry);
     }
 
 }

@@ -25,9 +25,9 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * @see Zend_Gdata_Extension_Reminder
+ * @see Zend_Gdata_Extension_FeedLink
  */
-require_once 'Zend/Gdata/Extension/Reminder.php';
+require_once 'Zend/Gdata/Extension/FeedLink.php';
 
 /**
  * Concrete class for working with Atom entries.
@@ -37,35 +37,21 @@ require_once 'Zend/Gdata/Extension/Reminder.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
+class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'when';
-    protected $_reminder = array();
-    protected $_startTime = null;
-    protected $_endTime = null;
-
-    public function __construct($startTime = null, $endTime = null)
-    {
-        parent::__construct();
-        $this->setStartTime($startTime);
-        $this->setEndTime($endTime);
-    }
+    protected $_rootElement = 'comments';
+    protected $_rel = null; 
+    protected $_feedLink = null; 
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_startTime != null) {
-            $element->setAttribute('startTime', $this->_startTime);
+        if ($this->_rel != null) {
+            $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_endTime != null) {
-            $element->setAttribute('endTime', $this->_endTime);
-        }
-        if ($this->_reminder != null) {
-            foreach ($this->_reminder as $reminder) {
-                $element->appendChild(
-                        $reminder->getDOM($element->ownerDocument));
-            }
+        if ($this->_feedLink != null) {
+            $element->appendChild($this->_feedLink->getDOM($element->ownerDocument));
         }
         return $element;
     }
@@ -74,10 +60,10 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'reminder'; 
-                $reminder = new Zend_Gdata_Extension_Reminder();
-                $reminder->transferFromDOM($child);
-                $this->_reminder[] = $reminder;
+            case $this->lookupNamespace('gd') . ':' . 'feedLink'; 
+                $feedLink = new Zend_Gdata_Extension_FeedLink();
+                $feedLink->transferFromDOM($child);
+                $this->_feedLink = $feedLink;
                 break;
         default:
             parent::takeChildFromDOM($child);
@@ -88,42 +74,33 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'startTime':
-            $this->_startTime = $attribute->nodeValue;
-            break;
-        case 'endTime':
-            $this->_endTime = $attribute->nodeValue;
+        case 'rel':
+            $this->_rel = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
 
-    public function __toString() 
+    public function getRel()
     {
-        return 'Starts: ' . $this->getStartTime() . ' ' .
-               'Ends: ' .  $this->getEndTime();
+        return $this->_rel;
     }
 
-    public function getStartTime()
+    public function setRel($value)
     {
-        return $this->_startTime;
-    }
-
-    public function setStartTime($value)
-    {
-        $this->_startTime = $value;
+        $this->_rel = $value;
         return $this;
     }
 
-    public function getEndTime()
+    public function getFeedLink()
     {
-        return $this->_endTime;
+        return $this->_feedLink;
     }
 
-    public function setEndTime($value)
+    public function setFeedLink($value)
     {
-        $this->_endTime = $value;
+        $this->_feedLink = $value;
         return $this;
     }
 

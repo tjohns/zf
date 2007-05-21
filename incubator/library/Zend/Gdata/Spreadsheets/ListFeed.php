@@ -17,9 +17,7 @@
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Atom.php 4300 2007-04-02 13:35:41Z slaanesh $
  */
-
 
 /**
  * @see Zend_Gdata_Feed

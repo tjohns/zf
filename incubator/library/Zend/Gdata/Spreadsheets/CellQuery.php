@@ -310,32 +310,33 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
      */
     public function getQueryUrl()
     {
-//$uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
-//if ($query) $uri .= $query->getQueryString();
-    
         $uri = $this->_defaultFeedUri;
         
         if ($this->_spreadsheetKey != null) {
             $uri .= '/'.$this->_spreadsheetKey;
         } else {
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A spreadsheet key must be provided for cell queries.');
         }
         
         if ($this->_worksheetId != null) {
             $uri .= '/'.$this->_worksheetId;
         } else {
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A worksheet id must be provided for cell queries.');
         }
         
         if ($this->_visibility != null) {
             $uri .= '/'.$this->_visibility;
         } else {
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A visibility must be provided for cell queries.');
         }
         
         if ($this->_projection != null) {
             $uri .= '/'.$this->_projection;
         } else {
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A projection must be provided for cell queries.');
         }
         

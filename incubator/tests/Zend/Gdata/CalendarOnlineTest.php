@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -29,6 +30,7 @@ require_once 'Zend/Http/Client.php';
  */
 class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
 {
+
     const GOOGLE_DEVELOPER_CALENDAR = 'developer-calendar@google.com';
     const ZEND_CONFERENCE_EVENT = 'bn2h4o4mc3a03ci4t48j3m56pg';
 
@@ -44,7 +46,8 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
     public function testCalendarListFeed() 
     {
         $calFeed = $this->gdata->getCalendarListFeed();
-        $this->assertEquals($calFeed->title->text, "gdata ops's Calendar List");
+        $this->assertTrue(strpos($calFeed->title->text, 'Calendar List') 
+                !== false);
         $calCount = 0;
         foreach ($calFeed as $calendar) {
             $calCount++;
@@ -52,4 +55,14 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($calCount > 0);
     } 
 
+    public function testCalendarOnlineFeed()
+    {
+        $eventFeed = $this->gdata->getCalendarEventFeed();
+        foreach ($eventFeed as $event) {
+            $title = $event->title;
+            $times = $event->when;
+            $location = $event->where;
+            $recurrence = $event->recurrence;
+        } 
+    }
 }

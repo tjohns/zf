@@ -25,11 +25,6 @@
 require_once 'Zend/Gdata/App/Entry.php';
 
 /**
- * @see Zend_Gdata_App_NoSuchMethodException
- */
-require_once 'Zend/Gdata/App/NoSuchMethodException.php';
-
-/**
  * Represents the GData flavor of an Atom entry
  *
  * @category   Zend
@@ -40,29 +35,13 @@ require_once 'Zend/Gdata/App/NoSuchMethodException.php';
 class Zend_Gdata_Entry extends Zend_Gdata_App_Entry
 {
 
+    protected $_entryClassName = 'Zend_Gdata_Entry';
+
     public function __construct($uri = null, $element = null)
     {
         parent::__construct($uri, $element);
         foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri); 
-        }
-    }
-
-    public function getDOM($doc = null)
-    {
-        $element = parent::getDOM($doc);
-        if (! $element->hasAttributeNS('http://www.w3.org/2000/xmlns/', 'gd') ) {
-            $element->setAttributeNS('http://www.w3.org/2000/xmlns/','xmlns:'.'gd','http://schemas.google.com/g/2005');
-        }
-        return $element;
-    }
-
-    protected function takeChildFromDOM($child)
-    {
-        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName) {
-        default:
-          parent::takeChildFromDOM($child);
         }
     }
 

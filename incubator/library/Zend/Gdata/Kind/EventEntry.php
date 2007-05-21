@@ -25,11 +25,6 @@
 require_once 'Zend/Gdata/Entry.php';
 
 /**
- * @see Zend_Gdata_App_Data
- */
-require_once 'Zend/Gdata/App/Data.php';
-
-/**
  * @see Zend_Gdata_App_Extension
  */
 require_once 'Zend/Gdata/App/Extension.php';
@@ -50,6 +45,16 @@ require_once 'Zend/Gdata/Extension/When.php';
 require_once 'Zend/Gdata/Extension/Recurrence.php';
 
 /**
+ * @see Zend_Gdata_Extension_EventStatus
+ */
+require_once 'Zend/Gdata/Extension/EventStatus.php';
+
+/**
+ * @see Zend_Gdata_Extension_Comments
+ */
+require_once 'Zend/Gdata/Extension/Comments.php';
+
+/**
  * Data model for the GData Event "Kind".  Google Calendar has a separate 
  * EventEntry class which extends this.
  *
@@ -65,6 +70,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     protected $_where = array();
     protected $_recurrence = null; 
     protected $_eventStatus = null;
+    protected $_comments = null;
   
     public function getDOM($doc = null)
     {
@@ -84,6 +90,9 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
         }
         if ($this->_eventStatus != null) {
             $element->appendChild($this->_eventStatus->getDOM($element->ownerDocument));
+        }
+        if ($this->_comments != null) {
+            $element->appendChild($this->_comments->getDOM($element->ownerDocument));
         }
         return $element;
     }
@@ -111,6 +120,11 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
             $eventStatus = new Zend_Gdata_Extension_EventStatus();
             $eventStatus->transferFromDOM($child);
             $this->_eventStatus = $eventStatus;
+            break;
+        case $this->lookupNamespace('gd') . ':' . 'comments';
+            $comments = new Zend_Gdata_Extension_Comments();
+            $comments->transferFromDOM($child);
+            $this->_comments = $comments;
             break;
         default:
             parent::takeChildFromDOM($child);
@@ -160,6 +174,36 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     public function setRecurrence($value)
     {
         $this->_recurrence = $value;
+        return $this;
+    }
+
+    public function getEventStatus()
+    {
+        return $this->_eventStatus;
+    } 
+
+    /**
+     * @param array $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */
+    public function setEventStatus($value)
+    {
+        $this->_eventStatus = $value;
+        return $this;
+    }
+
+    public function getComments()
+    {
+        return $this->_comments;
+    } 
+
+    /**
+     * @param array $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */
+    public function setComments($value)
+    {
+        $this->_comments = $value;
         return $this;
     }
 

@@ -24,14 +24,9 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * Zend_Gdata_App_AuthException
+ * Zend_Http_Client_Exception
  */
-require_once 'Zend/Gdata/App/AuthException.php';
-
-/**
- * Zend_Gdata_App_HttpException
- */
-require_once 'Zend/Gdata/App/HttpException.php';
+require_once 'Zend/Http/Client/Exception.php';
 
 /**
  * Class to facilitate Google's "Account Authentication
@@ -78,6 +73,7 @@ class Zend_Gdata_ClientLogin
         $source = self::DEFAULT_SOURCE)
     {
         if (! ($email && $password)) {
+            require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException('Please set your Google credentials before trying to authenticate');
         }
 
@@ -85,6 +81,7 @@ class Zend_Gdata_ClientLogin
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException('Client is not an instance of Zend_Http_Client.');
         }
 
@@ -108,6 +105,7 @@ class Zend_Gdata_ClientLogin
         try {
             $response = $client->request('POST');
         } catch (Zend_Http_Client_Exception $e) {
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
         }
         ob_end_clean();
@@ -130,6 +128,7 @@ class Zend_Gdata_ClientLogin
             return $client;
 
         } elseif ($response->getStatus() == 403) {
+            require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException('Authentication with Google failed. Reason: ' .
                 (isset($goog_resp['Error']) ? $goog_resp['Error'] : 'Unspecified.'));
         }

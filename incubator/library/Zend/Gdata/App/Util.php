@@ -20,11 +20,6 @@
  */
 
 /**
- * @see 'Zend_Gdata_App_InvalidArgumentException
-*/
-require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-
-/**
  * Utility class for static functions needed by Zend_Gdata_App
  *
  * @category   Zend
@@ -49,6 +44,7 @@ class Zend_Gdata_App_Util
         } else {
             $ts = strtotime($timestamp);
             if ($ts === false) {
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException("Invalid timestamp: $timestamp.");
             }
             return date('Y-m-d\TH:i:s', $ts);

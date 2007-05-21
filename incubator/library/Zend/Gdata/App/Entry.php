@@ -67,10 +67,46 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
      */
     protected $_rootElement = 'entry';
 
+    /**
+     * Class name for each entry in this feed* 
+     *
+     * @var string
+     */
+    protected $_entryClassName = 'Zend_Gdata_App_Entry';
+
+    /**
+     * atom:content element
+     *
+     * @var Zend_Gdata_App_Extension_Content 
+     */
     protected $_content = null;
+
+    /**
+     * atom:published element
+     *
+     * @var Zend_Gdata_App_Extension_Published
+     */
     protected $_published = null;
+
+    /**
+     * atom:source element
+     *
+     * @var Zend_Gdata_App_Extension_Source
+     */
     protected $_source = null;
+
+    /**
+     * atom:summary element
+     *
+     * @var Zend_Gdata_App_Extension_Summary
+     */
     protected $_summary = null;
+
+    /**
+     * app:control element
+     *
+     * @var Zend_Gdata_App_Extension_Control
+     */
     protected $_control = null;
 
     public function getDOM($doc = null)
@@ -118,7 +154,7 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
             $summary->transferFromDOM($child);
             $this->_summary = $summary;
             break;
-        case $this->lookupNamespace('atom') . ':' . 'control':
+        case $this->lookupNamespace('app') . ':' . 'control':
             $control = new Zend_Gdata_App_Extension_Control();
             $control->transferFromDOM($child);
             $this->_control = $control;
@@ -134,6 +170,9 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
      * Zend_Http_Client to do a HTTP PUT to the edit link stored in this 
      * entry's link collection.  Body for the PUT is generated using the
      * saveXML method (which calls getDOM).
+     *
+     * @return Zend_Gdata_App_Entry The updated entry
+     * @throws Zend_Gdata_App_Exception
      */
     public function save()
     {
@@ -161,13 +200,15 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
                 $client->setRawData($this->saveXML());
                 $response = $client->request('PUT');
             }
-            /* TODO - more information in the exception */
             if ($response->getStatus() !== 200) {
-                throw new Zend_Gdata_App_Exception('Expected response code 200, got ' . $response->getStatus());
+                require_once 'Zend/Gdata/App/HttpException.php';
+                $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+                $exception->setResponse($response);
+                throw $exception;
             }
-
             // Update internal properties using $client->responseBody;
-            $returnEntry = new $this->_entryClassName(null, $response->getBody());
+            $entryClassName = get_class($this);
+            $returnEntry = new $entryClassName(null, $response->getBody());
             $returnEntry->setHttpClient($client);
             return $returnEntry;
         } else {
@@ -179,6 +220,9 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
      * Deletes this entry to the server using the referenced 
      * Zend_Http_Client to do a HTTP DELETE to the edit link stored in this 
      * entry's link collection.  
+     *
+     * @return boolean The success of the delete operation
+     * @throws Zend_Gdata_App_Exception
      */
     public function delete()
     {
@@ -205,7 +249,10 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
                 $response = $client->request('DELETE');
             }
             if ($response->getStatus() !== 200) {
-                throw new Zend_Gdata_App_Exception('Expected response code 200, got ' . $response->getStatus());
+                require_once 'Zend/Gdata/App/HttpException.php';
+                $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+                $exception->setResponse($response);
+                throw $exception;
             }
             return true;
         } else {

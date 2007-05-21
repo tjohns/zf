@@ -27,6 +27,7 @@ require_once 'Zend/Gdata/App/Extension.php';
 class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
 {
 
+    protected $_rootNamespace = 'app';
     protected $_rootElement = 'control';
     protected $_draft = null;
 
@@ -41,9 +42,9 @@ class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
 
     protected function takeChildFromDOM($child)
     {
-        $absoluteNodeDraft = $child->draftspaceURI . ':' . $child->localDraft;
-        switch ($absoluteNodeDraft) {
-        case $this->lookupDraftspace('atom') . ':' . 'draft':
+        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+        switch ($absoluteNodeName) {
+        case $this->lookupNamespace('app') . ':' . 'draft':
             $draft = new Zend_Gdata_App_Extension_Draft();
             $draft->transferFromDOM($child);
             $this->_draft = $draft;

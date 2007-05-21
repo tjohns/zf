@@ -14,12 +14,10 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category     Zend
- * @package        Zend_Gdata
+ * @package      Zend_Gdata
  * @copyright    Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @license        http://framework.zend.com/license/new-bsd         New BSD License
- * @version        $Id: Entry.php 3941 2007-03-14 21:36:13Z darby $
+ * @license      http://framework.zend.com/license/new-bsd         New BSD License
  */
-
 
 /**
  * @see Zend_Gdata_Entry
@@ -30,7 +28,6 @@ require_once 'Zend/Gdata/Entry.php';
  * @see Zend_Gdata_Spreadsheets_Extension_Custom
  */
 require_once 'Zend/Gdata/Spreadsheets/Extension/Custom.php';
-
 
 /**
  * Concrete class for working with List entries.
