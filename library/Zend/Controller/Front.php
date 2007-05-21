@@ -789,9 +789,9 @@ class Zend_Controller_Front
         /**
          * Set base URL of request object, if available
          */
-        if (is_callable(array($request, 'setBaseUrl'))) {
+        if (is_callable(array($this->_request, 'setBaseUrl'))) {
             if (null !== ($baseUrl = $this->getBaseUrl())) {
-                $request->setBaseUrl($baseUrl);
+                $this->_request->setBaseUrl($baseUrl);
             }
         }
 
@@ -800,7 +800,7 @@ class Zend_Controller_Front
          */
         if (null !== $response) {
             $this->setResponse($response);
-        } elseif ((null === $response) && (null === ($response = $this->getResponse()))) {
+        } elseif ((null === $this->_response) && (null === ($this->_response = $this->getResponse()))) {
             require_once 'Zend/Controller/Response/Http.php';
             $response = new Zend_Controller_Response_Http();
             $this->setResponse($response);
@@ -810,8 +810,8 @@ class Zend_Controller_Front
          * Register request and response objects with plugin broker
          */
         $this->_plugins
-             ->setRequest($request)
-             ->setResponse($response);
+             ->setRequest($this->_request)
+             ->setResponse($this->_response);
 
         /**
          * Initialize router
@@ -824,7 +824,7 @@ class Zend_Controller_Front
          */
         $dispatcher = $this->getDispatcher();
         $dispatcher->setParams($this->getParams())
-                   ->setResponse($response);
+                   ->setResponse($this->_response);
 
         // Begin dispatch
         try {
@@ -835,37 +835,37 @@ class Zend_Controller_Front
             /**
             * Notify plugins of router startup
             */
-            $this->_plugins->routeStartup($request);
+            $this->_plugins->routeStartup($this->_request);
 
-            $router->route($request);
+            $router->route($this->_request);
 
             /**
             * Notify plugins of router completion
             */
-            $this->_plugins->routeShutdown($request);
+            $this->_plugins->routeShutdown($this->_request);
 
             /**
              * Notify plugins of dispatch loop startup
              */
-            $this->_plugins->dispatchLoopStartup($request);
+            $this->_plugins->dispatchLoopStartup($this->_request);
 
             /**
-             *  Attempt to dispatch the controller/action. If the $request
+             *  Attempt to dispatch the controller/action. If the $this->_request
              *  indicates that it needs to be dispatched, move to the next
              *  action in the request.
              */
             do {
-                $request->setDispatched(true);
+                $this->_request->setDispatched(true);
 
                 /**
                  * Notify plugins of dispatch startup
                  */
-                $this->_plugins->preDispatch($request);
+                $this->_plugins->preDispatch($this->_request);
 
                 /**
                  * Skip requested action if preDispatch() has reset it
                  */
-                if (!$request->isDispatched()) {
+                if (!$this->_request->isDispatched()) {
                     continue;
                 }
 
@@ -873,25 +873,25 @@ class Zend_Controller_Front
                  * Dispatch request
                  */
                 try {
-                    $dispatcher->dispatch($request, $response);
+                    $dispatcher->dispatch($this->_request, $this->_response);
                 } catch (Exception $e) {
                     if ($this->throwExceptions()) {
                         throw $e;
                     }
-                    $response->setException($e);
+                    $this->_response->setException($e);
                 }
 
                 /**
                  * Notify plugins of dispatch completion
                  */
-                $this->_plugins->postDispatch($request);
-            } while (!$request->isDispatched());
+                $this->_plugins->postDispatch($this->_request);
+            } while (!$this->_request->isDispatched());
         } catch (Exception $e) {
             if ($this->throwExceptions()) {
                 throw $e;
             }
 
-            $response->setException($e);
+            $this->_response->setException($e);
         }
 
         /**
@@ -904,13 +904,13 @@ class Zend_Controller_Front
                 throw $e;
             }
 
-            $response->setException($e);
+            $this->_response->setException($e);
         }
 
         if ($this->returnResponse()) {
-            return $response;
+            return $this->_response;
         }
 
-        $response->sendResponse();
+        $this->_response->sendResponse();
     }
 }

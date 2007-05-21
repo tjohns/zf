@@ -495,4 +495,20 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($plugins));
         $this->assertTrue($plugins[0] instanceof Zend_Controller_Plugin_ErrorHandler);
     }
+
+    public function testReplaceRequestAndResponseMidStream()
+    {
+        $request = new Zend_Controller_Request_Http('http://example.com/index/replace');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $response = new Zend_Controller_Response_Http();
+        $responsePost = $this->_controller->dispatch($request, $response);
+
+        $requestPost  = $this->_controller->getRequest();
+
+        $this->assertNotSame($request, $requestPost);
+        $this->assertNotSame($response, $responsePost);
+
+        $this->assertContains('Reset action called', $responsePost->getBody());
+        $this->assertNotContains('Reset action called', $response->getBody());
+    }
 }
