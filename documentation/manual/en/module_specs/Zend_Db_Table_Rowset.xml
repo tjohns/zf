@@ -292,11 +292,6 @@ $row->save();
             Rowset.
         </para>
 
-        <para>
-            This reactivates only the one specific Rowset object, not any other Rowset objects, or the Rows contained
-            in them, even if those Rows correspond to the same database rows in a Rowset you have activated.
-        </para>
-
     </sect2>
 
     <sect2 id="zend.db.table.rowset.extending">

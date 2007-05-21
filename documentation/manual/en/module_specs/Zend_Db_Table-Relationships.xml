@@ -25,86 +25,9 @@
         <title>Defining Relationships</title>
 
         <para>
-            In this section, we use an example database that shows
-            several types of relationships between tables.
-            This database tracks bugs in a software development
-            project.  The database contains three tables:
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <code>Accounts</code> stores information about
-                    each user of the bug-tracking database.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Products</code> stores information about
-                    each product for which a bug can be logged.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Bugs</code> stores information about bugs,
-                    including the product that has the bug,
-                    the person who reported the bug,
-                    the person who is assigned to fix the bug,
-                    and the person who is assigned to verify the fix.
-                </para>
-            </listitem>
-        </itemizedlist>
-
-        <para>
-            The following SQL data definition language pseudocode
-            describes the tables in this example database.
-        </para>
-
-        <programlisting role="sql"><![CDATA[
-CREATE TABLE accounts (
-  account_id        PRIMARY KEY,
-  name              VARCHAR
-);
-
-CREATE TABLE products (
-  product_id        PRIMARY KEY,
-  product_name      VARCHAR
-);
-
-CREATE TABLE bugs (
-  bug_id            PRIMARY KEY,
-  product_id        FOREIGN KEY REFERENCES products(product_id),
-  reported_by       FOREIGN KEY REFERENCES accounts(account_id),
-  assigned_to       FOREIGN KEY REFERENCES accounts(account_id),
-  verified_by       FOREIGN KEY REFERENCES accounts(account_id),
-  bug_description   VARCHAR,
-  bug_status        VARCHAR
-);]]>
-        </programlisting>
-
-        <para>
-            The <code>products</code> table has a one-to-many relationship to
-            the <code>bugs</code> table.
-            The <code>accounts</code> table also has a one-to-many relationship
-            to the <code>bugs</code> table.
-            Thus the <code>products</code> table has a many-to-many relationship
-            to the <code>accounts</code> table.
-        </para>
-
-        <para>
-            Also notice that the <code>bugs</code> table contains multiple
-            foreign key references to the <code>accounts</code> table.
-            Each of these foreign keys may reference a different row in the
-            <code>accounts</code> table for a given bug.
-        </para>
-
-        <para>
-            Define classes for each of these tables, extending the abstract
-            class Zend_Db_Table_Abstract, as described in <xref linkend="zend.db.table.defining" />.
-            In the class file for each child table, declare the reference
-            relationships in the <code>protected $_referenceMap</code>
-            and <code>protected $_dependentTables</code>
-            array variables.
+            Define classes for each of your tables, extending the abstract
+            class Zend_Db_Table_Abstract, as described in
+            <xref linkend="zend.db.table.defining" />.
         </para>
 
         <para>
@@ -158,10 +81,12 @@ class Bugs extends Zend_Db_Table_Abstract
         </programlisting>
 
         <para>
-            Declare the <code>$_dependentTables</code> array in the
-            class for the parent table.  List the class name for each
-            dependent table.  Use the class name, not the physical name
-            of the SQL table.
+            If you use Zend_Db_Table to emulate cascading UPDATE and DELETE
+            operations, declare the <code>$_dependentTables</code> array in the
+            class for the parent table.  Skip this step if you rely on
+            referential integrity constraints in the RDBMS server to implement
+            cascading operations.  List the class name for each dependent
+            table.  Use the class name, not the physical name of the SQL table.
         </para>
 
         <para>
