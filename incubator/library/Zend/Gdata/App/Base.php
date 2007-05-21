@@ -240,7 +240,7 @@ abstract class Zend_Gdata_App_Base
      */
     public function getXML()
     {
-        return saveXML();
+        return $this->saveXML();
     }
 
     /**
