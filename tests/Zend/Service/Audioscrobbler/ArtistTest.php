@@ -1,12 +1,29 @@
 <?php
 
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Service_Audioscrobbler
+ * @see Zend_Service_Audioscrobbler
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
@@ -15,15 +32,19 @@ require_once 'Zend/Service/Audioscrobbler.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
 {
     var $header = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n";
-    
-	public function testGetRelatedArtists()
+
+    public function testGetRelatedArtists()
     {
         try {
             $test_response = $this->header .
@@ -50,7 +71,7 @@ class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
                             </similarartists>';
             $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
             $as->set('artist', 'Metallica');
-	    $response = $as->artistGetRelatedArtists();
+            $response = $as->artistGetRelatedArtists();
             $artist = $response->artist[0];
             $this->assertEquals(count($response->artist), 2);
             $this->assertEquals((string)$artist->name, 'Iron Maiden');
@@ -62,9 +83,9 @@ class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
 
     }
 
-	public function testGetFans()
-	{
-		try {
+    public function testGetFans()
+    {
+        try {
             $test_response = $this->header .
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <fans artist="Metallica">
@@ -80,21 +101,21 @@ class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
                             </user>
                             </fans>
                             ';
-			$as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
-			$as->set('artist', 'Metallica');
-			$response = $as->artistGetTopFans();
+            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+            $as->set('artist', 'Metallica');
+            $response = $as->artistGetTopFans();
                         $user = $response->user[0];
-			$this->assertEquals((string)$response['artist'], 'Metallica');
-			$this->assertEquals((string)$user->url, 'http://www.last.fm/user/Liquid_Fire/');
-			return;
-		} catch (Exception $e) {
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$user->url, 'http://www.last.fm/user/Liquid_Fire/');
+            return;
+        } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-		}
-	}
-	
-	public function testTopTracks()
-	{
-		try {
+        }
+    }
+
+    public function testTopTracks()
+    {
+        try {
             $test_response = $this->header .
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <mostknowntracks artist="Metallica">
@@ -111,22 +132,22 @@ class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
                                 <url>http://www.last.fm/music/Metallica/_/Enter+Sandman</url>
                             </track>
                             </mostknowntracks>';
-			$as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
-			$as->set('artist', 'Metallica');
-			$response = $as->artistGetTopTracks();
+            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+            $as->set('artist', 'Metallica');
+            $response = $as->artistGetTopTracks();
                         $track = $response->track[0];
-			$this->assertEquals((string)$response['artist'], 'Metallica');
-			$this->assertEquals((string)$track->name, 'Nothing Else Matters');
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$track->name, 'Nothing Else Matters');
                         $this->assertEquals((int)$track->reach, 7481);
-			return;
-		} catch (Exception $e) {
-			$this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-		}
-	}
-	
-	public function testTopAlbums()
-	{
-		try {
+            return;
+        } catch (Exception $e) {
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
+        }
+    }
+
+    public function testTopAlbums()
+    {
+        try {
             $test_response = $this->header .
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <topalbums artist="Metallica">
@@ -156,53 +177,51 @@ class Zend_Service_Audioscrobbler_ArtistTest extends PHPUnit_Framework_TestCase
                             </album>
                             </topalbums>
                             ';
-			$as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
-			$as->set('artist', 'Metallica');
-			$response = $as->artistGetTopAlbums();
+            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+            $as->set('artist', 'Metallica');
+            $response = $as->artistGetTopAlbums();
                         $album = $response->album[0];
-			$this->assertEquals((string)$response['artist'], 'Metallica');
-			$this->assertEquals((string)$album->name, 'Master of Puppets');
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$album->name, 'Master of Puppets');
                         $this->assertEquals((string)$album->coverart->small, 'http://static.last.fm/coverart/50x50/1411810.jpg');
-			return;
-		} catch (Exception $e) {
-			$this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-		}
-	}
-	
-	public function testTopTags()
-	{
-		try {
+            return;
+        } catch (Exception $e) {
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
+        }
+    }
+
+    public function testTopTags()
+    {
+        try {
             $test_response = $this->header .
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <toptags artist="Metallica">
                             <tag>
-                                <name>metal</name> 
+                                <name>metal</name>
                                 <count>100</count>
                                 <url>http://www.last.fm/tag/metal</url>
                             </tag>
                             <tag>
-                                <name>heavy metal</name> 
+                                <name>heavy metal</name>
                                 <count>24</count>
                                 <url>http://www.last.fm/tag/heavy%20metal</url>
                             </tag>
                             <tag>
-                                <name>thrash metal</name> 
+                                <name>thrash metal</name>
                                 <count>18</count>
                                 <url>http://www.last.fm/tag/thrash%20metal</url>
                             </tag>
                             </toptags>
                             ';
-			$as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
-			$as->set('artist', 'Metallica');
-			$response = $as->artistGetTopTags();
+            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+            $as->set('artist', 'Metallica');
+            $response = $as->artistGetTopTags();
                         $tag = $response->tag[0];
-			$this->assertEquals((string)$response['artist'], 'Metallica');
-			$this->assertEquals((string)$tag->name, 'metal');
+            $this->assertEquals((string)$response['artist'], 'Metallica');
+            $this->assertEquals((string)$tag->name, 'metal');
                         $this->assertEquals((int)$tag->count, 100);
-		} catch (Exception $e) {
-			$this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-		}
-	}
+        } catch (Exception $e) {
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
+        }
+    }
 }
-
-?>

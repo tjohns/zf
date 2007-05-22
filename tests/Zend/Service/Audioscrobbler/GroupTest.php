@@ -1,12 +1,29 @@
 <?php
 
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Service_Audioscrobbler
+ * @see Zend_Service_Audioscrobbler
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
@@ -15,15 +32,19 @@ require_once 'Zend/Service/Audioscrobbler.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
 {
     var $header = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n";
-    
-	public function testWeeklyChartList()
+
+    public function testWeeklyChartList()
     {
         try {
             $testing_response = $this->header .
@@ -56,7 +77,7 @@ class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
 ';
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('group', urlencode('Jazz Club'));
-	    $response = $as->groupGetWeeklyChartList();
+            $response = $as->groupGetWeeklyChartList();
             $chart = $response->chart[0];
             $this->assertEquals((int)$chart['from'], 1159099200);
             $this->assertEquals((string)$response['group'], 'Jazz Club');
@@ -66,7 +87,7 @@ class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
         }
 
     }
-    
+
     public function testWeeklyArtistChartList()
     {
         try {
@@ -147,18 +168,18 @@ class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
 ';
             $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $as->set('group', urlencode('Jazz Club'));
-	    $response = $as->groupGetWeeklyArtistChartList();
+            $response = $as->groupGetWeeklyArtistChartList();
             $this->assertNotNull(count($response));
-	    $artist = $response->artist[1];
+            $artist = $response->artist[1];
             $this->assertEquals((string)$artist->name, 'The Beatles');
             $this->assertEquals((string)$artist->url, 'http://www.last.fm/music/The+Beatles');
-	    $this->assertEquals((string)$response['group'], 'Jazz Club');
+            $this->assertEquals((string)$response['group'], 'Jazz Club');
             return;
         } catch (Exception $e ) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-        }        
+        }
     }
-    
+
     public function testWeeklyAlbumChartList()
     {
         try {
@@ -261,11 +282,11 @@ class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-          
+
     public function testPreviousWeeklyChartList()
     {
         try {
-            $testing_response = $this->header . 
+            $testing_response = $this->header .
 '<?xml version="1.0" encoding="UTF-8"?>
 <weeklyartistchart group="Jazz Club" from="1114965332" to="1115570132">
 </weeklyartistchart>
@@ -286,5 +307,3 @@ class Zend_Service_Audioscrobbler_GroupTest extends PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

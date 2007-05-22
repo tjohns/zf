@@ -1,12 +1,29 @@
 <?php
 
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Service_Audioscrobbler
+ * @see Zend_Service_Audioscrobbler
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
@@ -15,14 +32,18 @@ require_once 'Zend/Service/Audioscrobbler.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
 {
     var $header = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n";
-    
+
     public function testGetTopTags()
     {
         try {
@@ -33,7 +54,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
                 $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
     public function testGetTopArtists()
     {
          try {
@@ -67,9 +88,9 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
             } catch (Exception $e ) {
                     $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-            }       
+            }
     }
-    
+
     public function testGetTopAlbums()
     {
         try {
@@ -85,7 +106,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
     <coverart>
         <small>http://images.amazon.com/images/P/B00008US8R.01._SCMZZZZZZZ_.jpg</small>
         <medium>http://images.amazon.com/images/P/B00008US8R.01._SCMZZZZZZZ_.jpg</medium>
-        <large>http://images.amazon.com/images/P/B00008US8R.01._SCMZZZZZZZ_.jpg</large> 
+        <large>http://images.amazon.com/images/P/B00008US8R.01._SCMZZZZZZZ_.jpg</large>
     </coverart>
 </album>
 <album name="Elephant" count="74" streamable="yes">
@@ -97,7 +118,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
     <coverart>
         <small>http://images-eu.amazon.com/images/P/B00007KN36.02.THUMBZZZ.jpg</small>
         <medium>http://images-eu.amazon.com/images/P/B00007KN36.02.MZZZZZZZ.jpg</medium>
-        <large>http://images-eu.amazon.com/images/P/B00007KN36.02.LZZZZZZZ.jpg</large> 
+        <large>http://images-eu.amazon.com/images/P/B00007KN36.02.LZZZZZZZ.jpg</large>
     </coverart>
 </album>
 </tag>
@@ -111,8 +132,8 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
-    public function testGetTopTracks() 
+
+    public function testGetTopTracks()
     {
         try {
             $testing_response = $this->header .
@@ -152,7 +173,5 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
-}
 
-?>
+}

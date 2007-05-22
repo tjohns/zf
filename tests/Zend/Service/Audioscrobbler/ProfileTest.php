@@ -1,11 +1,29 @@
 <?php
-/**
- * @package    Zend_Service_Audioscrobbler
- * @subpackage UnitTests
- */
 
 /**
- * Zend_Service_Audioscrobbler
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Service_Audioscrobbler
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+
+/**
+ * @see Zend_Service_Audioscrobbler
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
@@ -14,9 +32,13 @@ require_once 'Zend/Service/Audioscrobbler.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Service_Audioscrobbler
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
 {
@@ -31,17 +53,17 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         }
 
     }
-    
+
     public function testGetProfileInfo()
     {
         try {
             $test_response = "HTTP/1.1 200 OK\r\n" .
                             "Content-type: text/xml\r\n" .
-                            "\r\n" . 
+                            "\r\n" .
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <profile id="1000002" cluster="2" username="RJ">
                             <url>http://www.last.fm/user/RJ/</url>
-                             
+
                                 <realname>Richard Jones</realname>
                                         <mbox_sha1sum>1b374543545e01bc8d555a6a57c637f61f999fdf</mbox_sha1sum>
                                         <registered unixtime="1037793040">Nov 20, 2002</registered>
@@ -50,10 +72,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                             <country>United Kingdom</country>
                                     <playcount>45043</playcount>
                                         <avatar>http://static.last.fm/avatar/0f4bda3a8e49e714c26ef610e2893454.jpg</avatar>
-                            </profile>'; 
-            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+                            </profile>';
+            $as = new Zend_Service_Audioscrobbler(true, $test_response);
             $as->set('user', 'RJ');
-	    $response = $as->userGetProfileInformation();            
+            $response = $as->userGetProfileInformation();
             $this->assertNotNull($response);
             return;
         } catch (Exception $e ) {
@@ -61,24 +83,24 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         }
 
     }
-    
-	public function testGetBadProfileInfo()
-	{
-		$as = new Zend_Service_Audioscrobbler();
-		$as->set('user', 'kljadsfjllkj');
-		
-		try {
-			$response = $as->userGetProfileInformation();
+
+    public function testGetBadProfileInfo()
+    {
+        $as = new Zend_Service_Audioscrobbler();
+        $as->set('user', 'kljadsfjllkj');
+
+        try {
+            $response = $as->userGetProfileInformation();
             $this->assertNull($response);
-            
-		} catch (Exception $e) {
+
+        } catch (Exception $e) {
             return;
         }
 
-        $this->fail('Exception was not thrown when submitting bad user info');    
+        $this->fail('Exception was not thrown when submitting bad user info');
     }
 
-    public function testUserGetTopArtists( ) 
+    public function testUserGetTopArtists( )
     {
         try {
             $test_response = "HTTP/1.1 200 OK\r\n" .
@@ -96,7 +118,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <image>http://static.last.fm/proposedimages/sidebar/6/4209/432600.jpg</image>
                             </artist>
                             </topartists>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+            $as = new Zend_Service_Audioscrobbler(true, $test_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopArtists();
             $artist = $response->artist[0];
@@ -108,7 +130,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    
+
     public function testUserGetTopAlbums( )
     {
         try {
@@ -131,7 +153,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 </image>
                             </album>
                             </topalbums>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'Frith');
             $response = $as->userGetTopAlbums();
             $album = $response->album[0];
@@ -142,7 +164,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e ."] thrown by test");
         }
     }
-    
+
     public function testUserGetTopTracks( )
     {
         try {
@@ -168,7 +190,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <url>http://www.last.fm/music/Portishead/_/Cowboys</url>
                             </track>
                             </toptracks>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopTracks();
             $track = $response->track[0];
@@ -181,7 +203,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testUserGetTopTags( ) 
+    public function testUserGetTopTags( )
     {
         try {
             $testing_response = "HTTP/1.1 200 OK\r\n" .
@@ -205,7 +227,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <url>http://www.last.fm/tag/mellow</url>
                             </tag>
                             </toptags>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetTopTags();
             $tag = $response->tag[1];
@@ -217,7 +239,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [$e] thrown by test");
         }
     }
-    
+
     public function testUserGetTopTagsForArtist()
     {
         try {
@@ -237,7 +259,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <url>http://www.last.fm/tag/80s</url>
                             </tag>
                             </artisttags>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $as->set('artist', 'Metallica');
             $response = $as->userGetTopTagsForArtist();
@@ -249,23 +271,27 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
+    /**
+     * Ensures that userGetTopTagsForArtist() throws an exception when based on bad parameters
+     *
+     * @return void
+     */
     public function testBadUserGetTopTagsForArtist()
     {
+        $testingResponse = "HTTP/1.1 200 OK\r\n"
+                         . "Content-type: text/xml\r\n"
+                         . "\r\n"
+                         . "ERROR: Missing 'subject' parameter in querystring";
+        $as = new Zend_Service_Audioscrobbler(true, $testingResponse);
         try {
-            $testing_response = "HTTP/1.1 200 OK\r\n" .
-                            "Content-type: text/xml\r\n" .
-                            "\r\n" .
-                            "ERROR: Missing 'subject' parameter in querystring";
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
             $response = $as->userGetTopTagsForArtist();
-        } catch (Exception $e) {
-            return;
+            $this->fail('userGetTopTagsForArtist() did not throw exception based on bad parameters');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('SimpleXML', $e->getMessage());
         }
-        
-        $this->fail("Function did not throw exception based on bad parameters");
     }
-    
+
     public function testUserGetTopTagsForAlbum()
     {
         try {
@@ -275,7 +301,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <albumtags user="RJ" album="Ride the Lightning" artist="Metallica">
                             </albumtags>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $as->set('artist', 'Metallica');
             $as->set('album', 'Ride The Lightning');
@@ -284,7 +310,8 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->assertEquals((string)strtolower($response['artist']), strtolower('Metallica'));
             $this->assertEquals((string)strtolower($response['album']), strtolower('Ride The Lightning'));
         } catch (Exception $e) {
-            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");          }
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
+        }
     }
 
     public function testUserGetTopTagsForTrack()
@@ -296,10 +323,10 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                             '<?xml version="1.0" encoding="UTF-8"?>
                             <tracktags user="RJ" artist="Metallica" track="Nothing Else Matters">
                             </tracktags>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
-			$as->set('artist', 'Metallica');
-			$as->set('track', 'Nothing Else Matters');
+            $as->set('artist', 'Metallica');
+            $as->set('track', 'Nothing Else Matters');
             $response = $as->userGetTopTagsForTrack();
             $this->assertEquals((string)$response['user'], 'RJ');
             $this->assertEquals((string)$response['artist'], 'Metallica');
@@ -308,7 +335,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: ]" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
     public function testUserGetFriends()
     {
         try {
@@ -322,17 +349,17 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <image>http://static.last.fm/avatar/9ca899b8f20b7173d47983cc0533be8c.gif</image>
                                 <connections>
                                     </connections>
-                                
+
                                 </user>
                             <user username="Korean_Cowboy">
                                 <url>http://www.last.fm/user/Korean_Cowboy/</url>
                                 <image>http://static.last.fm/avatar/091614ec2288764362c94f047d207336.jpg</image>
                                 <connections>
                                     </connections>
-                                
+
                                 </user>
                             </friends>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetFriends();
             $this->assertEquals((string)$response['user'], 'RJ');
@@ -341,7 +368,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
     public function testUserGetNeighbours()
     {
         try {
@@ -361,7 +388,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                 <match>93.12</match>
                             </user>
                             </neighbours>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetNeighbours();
             $this->assertEquals((string)$response['user'], 'RJ');
@@ -372,7 +399,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
     public function testUserRecentTracks()
     {
         try {
@@ -396,7 +423,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                         <date uts="1173202787">6 Mar 2007, 17:39</date>
                             </track>
                             </recenttracks>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetRecentTracks();
             $track = $response->track[0];
@@ -407,7 +434,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-    
+
     public function testUserRecentBannedTracks()
     {
         try {
@@ -429,7 +456,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                     <date uts="1161129235">17 Oct 2006, 23:53</date>
                                 </track>
                                 </recentbannedtracks>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetRecentBannedTracks();
             $track = $response->track[0];
@@ -463,7 +490,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                     <date uts="1162310037">31 Oct 2006, 15:53</date>
                                 </track>
                                 </recentlovedtracks>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetRecentLovedTracks();
             $track = $response->track[1];
@@ -474,7 +501,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
-    }    
+    }
 
     public function testUserGetWeeklyChartList()
     {
@@ -490,7 +517,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                     <chart from="1111924801" to="1112529601"/>
                                     <chart from="1112529601" to="1113134401"/>
                                 </weeklychartlist>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyChartList();
             $chart = $response->chart[0];
@@ -524,7 +551,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                         <url>http://www.last.fm/music/Guano+Apes</url>
                                 </artist>
                                 </weeklyartistchart>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyArtistChart();
             $this->assertEquals((string)$response['user'], 'RJ');
@@ -534,7 +561,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }
     }
-    
+
     public function testUserGetWeeklyAlbumChart()
     {
         try {
@@ -558,7 +585,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                     <url>http://www.last.fm/music/Guano+Apes/Walking+on+a+Thin+Line</url>
                                 </album>
                                 </weeklyalbumchart>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $response = $as->userGetWeeklyAlbumChart();
             $album = $response->album[0];
@@ -592,7 +619,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                         <url>http://www.last.fm/music/The+Doors</url>
                                 </artist>
                                 </weeklyartistchart>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
@@ -631,7 +658,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                     <url>http://www.last.fm/music/Nirvana/Nirvana</url>
                                 </album>
                                 </weeklyalbumchart>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
@@ -644,7 +671,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         } catch ( Exception $e) {
             $this->fail("Exception: [" . $e->getMessage(). "] thrown by test");
         }
- 
+
     }
 
     public function testUserGetPreviousWeeklyTrackChart()
@@ -670,7 +697,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
                                                 <url>http://www.last.fm/music/Nine+Inch+Nails/_/All+the+Love+in+the+World</url>
                                     </track>
                                 </weeklytrackchart>';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
+            $as = new Zend_Service_Audioscrobbler(true, $testing_response);
             $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
