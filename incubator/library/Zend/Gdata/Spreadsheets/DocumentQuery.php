@@ -52,7 +52,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     protected $_worksheetId = null;
     
     /**
-     * Create Zend_Gdata_Spreadsheets_DocumentQuery object
+     * Constructs a new Zend_Gdata_Spreadsheets_DocumentQuery object.
      */
     public function __construct()
     {
@@ -60,6 +60,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the spreadsheet key for this query.
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_CellQuery Provides a fluent interface
      */
@@ -70,6 +71,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the spreadsheet key for this query.
      * @return string spreadsheet key
      */
     public function getSpreadsheetKey()
@@ -78,6 +80,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the worksheet id for this query.
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_CellQuery Provides a fluent interface
      */
@@ -88,6 +91,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the worksheet id for this query.
      * @return string worksheet id
      */
     public function getWorksheetId()
@@ -96,6 +100,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the document type for this query.
      * @param string $value spreadsheets or worksheets
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -106,6 +111,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the document type for this query.
      * @return string document type
      */
     public function getDocumentType()
@@ -114,6 +120,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the projection for this query.
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -124,6 +131,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
 
     /**
+     * Sets the visibility for this query.
      * @return string visibility
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -134,6 +142,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the projection for this query.
      * @return string projection
      */
     public function getProjection()
@@ -142,6 +151,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the visibility for this query.
      * @return string visibility
      */
     public function getVisibility()
@@ -150,6 +160,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the title attribute for this query.
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -164,6 +175,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Sets the title-exact attribute for this query.
      * @param string $value
      * @return Zend_Gdata_Spreadsheets_DocumentQuery Provides a fluent interface
      */
@@ -178,6 +190,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the title attribute for this query.
      * @return string title
      */
     public function getTitle()
@@ -190,6 +203,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the title-exact attribute for this query.
      * @return string title-exact
      */
     public function getTitleExact()
@@ -222,6 +236,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     
     
     /**
+     * Gets the full query URL for this query.
      * @return string url
      */
     public function getQueryUrl()
@@ -256,6 +271,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     }
     
     /**
+     * Gets the attribute query string for this query.
      * @return string query string
      */
     public function getQueryString()

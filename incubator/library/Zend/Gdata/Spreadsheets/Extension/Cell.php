@@ -47,6 +47,14 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
     protected $_inputValue = null;
     protected $_numericValue = null;
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_Extension_Cell element.
+     * @param string $text (optional) Text contents of the element.
+     * @param string $row (optional) Row attribute of the element.
+     * @param string $col (optional) Column attribute of the element.
+     * @param string $inputValue (optional) Input value attribute of the element.
+     * @param string $numericValue (optional) Numeric value attribute of the element.
+     */
     public function __construct($text = null, $row = null, $col = null, $inputValue = null, $numericValue = null) 
     {
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
@@ -89,44 +97,76 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         }
     }
 
+    /**
+     * Gets the row attribute of the Cell element.
+     * @return string Row of the Cell.
+     */
     public function getRow()
     {
         return $this->_row;
     }
     
+    /**
+     * Gets the column attribute of the Cell element.
+     * @return string Column of the Cell.
+     */
     public function getColumn()
     {
         return $this->_col;
     }
     
+    /**
+     * Gets the input value attribute of the Cell element.
+     * @return string Input value of the Cell.
+     */
     public function getInputValue() 
     {
         return $this->_inputValue;
     }
     
+    /**
+     * Gets the numeric value attribute of the Cell element.
+     * @return string Numeric value of the Cell.
+     */
     public function getNumericValue()
     {
         return $this->_numericValue;
     }
     
+    /**
+     * Sets the row attribute of the Cell element.
+     * @param string $row New row of the Cell.
+     */
     public function setRow($row) 
     { 
         $this->_row = $row;
         return $this;
     }
     
+    /**
+     * Sets the column attribute of the Cell element.
+     * @param string $col New column of the Cell.
+     */
     public function setColumn($col) 
     { 
         $this->_col = $col;
         return $this;
     }
     
+    /**
+     * Sets the input value attribute of the Cell element.
+     * @param string $inputValue New input value of the Cell.
+     */
     public function setInputValue($inputValue) 
     { 
         $this->_inputValue = $inputValue;
         return $this;
     }
     
+    /**
+     * Sets the numeric value attribute of the Cell element.
+     * @param string $numericValue New numeric value of the Cell.
+     */
     public function setNumericValue($numericValue)
     {
         $this->_numericValue = $numericValue;

@@ -44,6 +44,11 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
 
     protected $_custom = array();
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_ListEntry object.
+     * @param string $uri (optional)
+     * @param DOMElement $element An existing XML element on which to base this new object.
+     */
     public function __construct($uri = null, $element = null)
     {
         parent::__construct($uri, $element);
@@ -77,11 +82,19 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
         }
     }
     
+    /**
+     * Gets the row elements contained by this list entry.
+     * @return array The custom row elements in this list entry
+     */
     public function getCustom() 
     {
         return $this->_custom;
     }
     
+    /**
+     * Sets the row elements contained by this list entry.
+     * @param array $custom The custom row elements to be contained in this list entry
+     */
     public function setCustom($custom) 
     {
         $this->_custom = $custom;

@@ -44,6 +44,11 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
 
     protected $_cell;
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_CellEntry object.
+     * @param string $uri (optional)
+     * @param DOMElement $element (optional) The DOMElement on which to base this object.
+     */
     public function __construct($uri = null, $element = null)
     {
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
@@ -76,11 +81,19 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
         }
     }
     
+    /**
+     * Gets the Cell element of this Cell Entry.
+     * @return Zend_Gdata_Spreadsheets_Extension_Cell
+     */
     public function getCell()
     {
         return $this->_cell;
     }
     
+    /**
+     * Sets the Cell element of this Cell Entry.
+     * @param $cell Zend_Gdata_Spreadsheets_Extension_Cell $cell
+     */
     public function setCell($cell)
     {
         $this->_cell = $cell;

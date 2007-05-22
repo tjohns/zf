@@ -44,6 +44,11 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
     protected $_rootElement = null; // The name of the column
     protected $_rootNamespace = 'gsx';
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_Extension_Custom object.
+     * @param string $column (optional) The column/tag name of the element.
+     * @param string $value (optional) The text content of the element.
+     */
     public function __construct($column = null, $value = null) 
     {
         parent::__construct($value);
@@ -72,12 +77,20 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
         $this->_rootElement = $node->localName;
     }
 
+    /**
+     * Sets the column/tag name of the element.
+     * @param string $column The new column name.
+     */
     public function setColumnName($column)
     {
         $this->_rootElement = $column;
         return $this;
     }
     
+    /**
+     * Gets the column name of the element
+     * @return string The column name.
+     */
     public function getColumnName()
     {
         return $this->_rootElement;

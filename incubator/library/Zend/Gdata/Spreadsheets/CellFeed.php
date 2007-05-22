@@ -58,16 +58,31 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
     */
     protected $_feedClassName = 'Zend_Gdata_Spreadsheets_CellFeed';
 
+    /**
+    * The row count for the feed.
+    *
+    * @var Zend_Gdata_Spreadsheets_Extension_RowCount
+    */
     protected $_rowCount = null;
+    
+    /**
+    * The column count for the feed.
+    *
+    * @var Zend_Gdata_Spreadsheets_Extension_ColCount
+    */
     protected $_colCount = null;
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_CellFeed object.
+     * @param string $uri (optional)
+     * @param DOMElement $element (optional) The XML Element on which to base this object.
+     */
     public function __construct($uri = null, $element = null)
     {
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
         parent::__construct($uri, $element);
-        ////////////var_dump($this->_namespaces);
     }
 
     public function getDOM($doc = null)
@@ -84,9 +99,6 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
     
     protected function takeChildFromDOM($child)
     {
-        //var_dump($this->_namespaces);
-//var_dump(Zend_Gdata_Spreadsheets::$namespaces);
-        //var_dump($this->_namespaces);
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
             case $this->lookupNamespace('gs') . ':' . 'rowCount';
@@ -105,22 +117,38 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
         }
     }
     
+    /**
+     * Gets the row count for this feed.
+     * @return string The row count for the feed.
+     */
     public function getRowCount()
     {
         return $this->_rowCount;
     }
     
+    /**
+     * Gets the column count for this feed.
+     * @return string The column count for the feed.
+     */
     public function getColumnCount()
     {
         return $this->_colCount;
     }
     
+    /**
+     * Sets the row count for this feed.
+     * @param string $rowCount The new row count for the feed.
+     */
     public function setRowCount($rowCount)
     {
         $this->_rowCount = $rowCount;
         return $this;
     }
     
+    /**
+     * Sets the column count for this feed.
+     * @param string $colCount The new column count for the feed.
+     */
     public function setColumnCount($colCount)
     {
         $this->_colCount = $colCount;

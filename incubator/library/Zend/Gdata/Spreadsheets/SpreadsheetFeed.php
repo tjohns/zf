@@ -48,6 +48,11 @@ class Zend_Gdata_Spreadsheets_SpreadsheetFeed extends Zend_Gdata_Feed
      */
     protected $_feedClassName = 'Zend_Gdata_Spreadsheets_SpreadsheetFeed';
  
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_SpreadsheetFeed object.
+     * @param string $uri (optional)
+     * @param DOMElement $element (optional) The DOMElement on which to base this object.
+     */
     public function __construct($uri = null, $element = null)
     {
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {

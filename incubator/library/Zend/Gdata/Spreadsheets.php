@@ -58,8 +58,19 @@ require_once('Zend/Gdata/Spreadsheets/CellEntry.php');
  */
 require_once('Zend/Gdata/Spreadsheets/ListEntry.php');
 
+/**
+ * Zend_Gdata_Spreadsheets_DocumentQuery
+ */
 require_once('Zend/Gdata/Spreadsheets/DocumentQuery.php');
+
+/**
+ * Zend_Gdata_Spreadsheets_ListQuery
+ */
 require_once('Zend/Gdata/Spreadsheets/ListQuery.php');
+
+/**
+ * Zend_Gdata_Spreadsheets_CellQuery
+ */
 require_once('Zend/Gdata/Spreadsheets/CellQuery.php');
 
 /**
@@ -100,9 +111,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function getSpreadsheetFeed($location = null)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location == null)
         {
             $uri = self::SPREADSHEETS_FEED_URI;
@@ -130,9 +138,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function getSpreadsheetEntry($location)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/spreadsheets/'.$visibility.'/'.$projection.'/'.$key;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
         {
             if ($location->getDocumentType() == null)
@@ -156,9 +161,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function getWorksheetFeed($location)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
         {
             if ($location->getDocumentType() == null)
@@ -182,9 +184,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function GetWorksheetEntry($location)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/worksheets/'.$key.'/'.$visibility.'/'.$projection;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery)
         {
             if ($location->getDocumentType() == null)
@@ -208,9 +207,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function getCellFeed($location)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery)
             $uri = $location->getQueryUrl();
         else
@@ -225,9 +221,6 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      */
     public function getCellEntry($location)
     {
-        //$uri = 'http://'.$this->_server.'/feeds/cells/'.$key.'/'.$wkshtId.'/'.$visibility.'/'.$projection.'/'.$cell;
-        //if ($query) $uri .= $query->getQueryString();
-        
         if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery)
             $uri = $location->getQueryUrl();
         else
@@ -316,18 +309,12 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         $feed = $this->getListFeed($query);
         $editLink = $feed->getLink('http://schemas.google.com/g/2005#post');
         
-        /*$response = $this->post($newEntry, $editLink->href);
-        
-        $returnEntry = new Zend_Gdata_Spreadsheets_ListEntry(null, $response->getBody());
-        $returnEntry->setHttpClient($feed->getHttpClient());
-        return $returnEntry;*/
-        
         return $this->insertEntry($editLink->href, $newEntry->saveXML(), 'Zend_Gdata_Spreadsheets_ListEntry');
     }
     
     /**
      * Updates an existing row with provided data.
-     * @param ListEntry $entry The row to update
+     * @param ListEntry $entry The row entry to update
      * @param array $newRowData An array of column header to row data
      */
     public function updateRow($entry, $newRowData)

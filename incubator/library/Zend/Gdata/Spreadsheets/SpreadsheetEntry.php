@@ -37,6 +37,11 @@ class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
 
     protected $_entryClassName = 'Zend_Gdata_Spreadsheets_SpreadsheetEntry';
 
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_SpreadsheetEntry object.
+     * @param string $uri (optional)
+     * @param DOMElement $element (optional) The DOMElement on which to base this object.
+     */
     public function __construct($uri = null, $element = null)
     {
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
