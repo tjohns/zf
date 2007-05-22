@@ -16,7 +16,7 @@ require_once 'ActionTest.php';
 require_once 'Action/HelperBrokerTest.php';
 require_once 'Action/Helper/FlashMessengerTest.php';
 require_once 'Action/Helper/RedirectorTest.php';
-require_once 'Action/Helper/ViewRenderer.php';
+require_once 'Action/Helper/ViewRendererTest.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 require_once 'Plugin/BrokerTest.php';
