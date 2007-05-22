@@ -209,6 +209,31 @@ abstract class Zend_Controller_Action
     }
 
     /**
+     * Render a given view script
+     *
+     * Similar to {@link render()}, this method renders a view script. Unlike render(), 
+     * however, it does not autodetermine the view script via {@link getViewScript()},
+     * but instead renders the script passed to it. Use this if you know the 
+     * exact view script name and path you wish to use, or if using paths that do not
+     * conform to the spec defined with getViewScript().
+     *
+     * By default, the rendered contents are appended to the response. You may 
+     * specify the named body content segment to set by specifying a $name.
+     * 
+     * @param  string $script 
+     * @param  string $name 
+     * @return void
+     */
+    public function renderScript($script, $name = null)
+    {
+        $view = $this->initView();
+        $this->getResponse()->appendBody(
+            $view->render($script),
+            $name
+        );
+    }
+
+    /**
      * Construct view script path
      *
      * Used by render() to determine the path to the view script.

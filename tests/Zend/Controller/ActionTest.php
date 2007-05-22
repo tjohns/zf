@@ -19,6 +19,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
             )
         );
         Zend_Controller_Front::getInstance()->resetInstance();
+        Zend_Controller_Action_HelperBroker::resetHelpers();
         $redirector = $this->_controller->getHelper('redirector');
         $redirector->setExit(false);
     }
@@ -307,6 +308,35 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
         $script = $controller->getViewScript('foo');
         $this->assertContains('view' . DIRECTORY_SEPARATOR . 'foo.phtml', $script);
+    }
+
+    public function testRenderScript()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('script');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->scriptAction();
+        $this->assertContains('Inside custom/renderScript.php', $response->getBody());
+    }
+
+    public function testRenderScriptToNamedResponseSegment()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('script-name');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->scriptNameAction();
+
+        $this->assertContains('Inside custom/renderScript.php', $response->getBody('foo'));
     }
 
     public function testGetHelper()

@@ -26,4 +26,14 @@ class ViewController extends Zend_Controller_Action
     {
         $this->render(null, 'name');
     }
+
+    public function scriptAction()
+    {
+        $this->renderScript('custom/renderScript.php');
+    }
+
+    public function scriptNameAction()
+    {
+        $this->renderScript('custom/renderScript.php', 'foo');
+    }
 }
