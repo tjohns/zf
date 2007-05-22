@@ -16,6 +16,7 @@ require_once 'ActionTest.php';
 require_once 'Action/HelperBrokerTest.php';
 require_once 'Action/Helper/FlashMessengerTest.php';
 require_once 'Action/Helper/RedirectorTest.php';
+require_once 'Action/Helper/ViewRenderer.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 require_once 'Plugin/BrokerTest.php';
@@ -44,6 +45,7 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_Action_HelperBrokerTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ViewRendererTest');
         $suite->addTestSuite('Zend_Controller_Dispatcher_StandardTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
         $suite->addTestSuite('Zend_Controller_Plugin_BrokerTest');

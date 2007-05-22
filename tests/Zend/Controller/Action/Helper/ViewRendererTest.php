@@ -3,12 +3,10 @@
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_ViewRendererTest::main");
 
-    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 6));
-    $incubatorPath = $basePath . DIRECTORY_SEPARATOR . 'incubator';
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 5));
 
     set_include_path(
-        $incubatorPath . DIRECTORY_SEPARATOR . 'tests'
-        . PATH_SEPARATOR . $incubatorPath . DIRECTORY_SEPARATOR . 'library'
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
         . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
         . PATH_SEPARATOR . get_include_path()
     );
