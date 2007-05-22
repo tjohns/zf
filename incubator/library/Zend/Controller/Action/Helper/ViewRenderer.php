@@ -79,13 +79,21 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_frontController;
 
     /**
+     * Whether or not to autorender postDispatch; global setting (not reset at 
+     * next invocation)
+     * @var boolean
+     */
+    protected $_neverRender     = false;
+
+    /**
      * Whether or not to use a controller name as a subdirectory when rendering
      * @var boolean
      */
     protected $_noController    = false;
 
     /**
-     * Whether or not to autorender postDispatch
+     * Whether or not to autorender postDispatch; per controller/action setting (reset 
+     * at next invocation)
      * @var boolean
      */
     protected $_noRender        = false;
@@ -113,6 +121,26 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * @var string
      */
     protected $_viewSuffix      = 'phtml';
+
+    /**
+     * Constructor
+     *
+     * Optionally set view object and options.
+     * 
+     * @param  Zend_View_Interface $view 
+     * @param  array $options 
+     * @return void
+     */
+    public function __construct(Zend_View_Interface $view = null, array $options = array())
+    {
+        if (null !== $view) {
+            $this->setView($view);
+        }
+
+        if (!empty($options)) {
+            $this->_setOptions($options);
+        }
+    }
 
     /**
      * Set the view object
@@ -179,9 +207,41 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
+     * Set options
+     * 
+     * @param  array $options 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    protected function _setOptions(array $options)
+    {
+        foreach ($options as $key => $value)
+        {
+            switch ($key) {
+                case 'neverRender':
+                case 'noController':
+                case 'noRender':
+                    $property = '_' . $key;
+                    $this->{$property} = ($value) ? true : false;
+                    break;
+                case 'responseSegment':
+                case 'scriptAction':
+                case 'viewSuffix':
+                    $property = '_' . $key;
+                    $this->{$property} = (string) $value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Initialize the view object
      *
      * $options may contain the following keys:
+     * - neverRender - flag dis/enabling postDispatch() autorender (affects all subsequent calls)
      * - noController - flag indicating whether or not to look for view scripts in subdirectories named after the controller
      * - noRender - flag indicating whether or not to autorender postDispatch()
      * - responseSegment - which named response segment to render a view script to
@@ -219,24 +279,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         $this->_responseSegment = null;
         $this->_scriptAction    = null;
 
-        foreach ($options as $key => $value)
-        {
-            switch ($key) {
-                case 'noController':
-                case 'noRender':
-                    $property = '_' . $key;
-                    $this->{$property} = ($value) ? true : false;
-                    break;
-                case 'responseSegment':
-                case 'scriptAction':
-                case 'viewSuffix':
-                    $property = '_' . $key;
-                    $this->{$property} = (string) $value;
-                    break;
-                default:
-                    break;
-            }
-        }
+        $this->_setOptions($options);
 
         if ((null !== $this->_actionController) && (null === $this->_actionController->view)) {
             $this->_actionController->view       = $this->view;
@@ -255,10 +298,32 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
+     * Set the neverRender flag (i.e., globally dis/enable autorendering)
+     * 
+     * @param  boolean $flag 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setNeverRender($flag = true)
+    {
+        $this->_neverRender = ($flag) ? true : false;
+        return $this;
+    }
+
+    /**
+     * Retrieve neverRender flag value
+     * 
+     * @return boolean
+     */
+    public function getNeverRender()
+    {
+        return $this->_neverRender;
+    }
+
+    /**
      * Set the noRender flag (i.e., whether or not to autorender)
      * 
      * @param  boolean $flag 
-     * @return Wopnet_Controller_Helper_View
+     * @return Zend_Controller_Action_Helper_ViewRenderer
      */
     public function setNoRender($flag = true)
     {
@@ -280,7 +345,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * Set the view script to use
      * 
      * @param  string $name 
-     * @return Wopnet_Controller_Helper_View
+     * @return Zend_Controller_Action_Helper_ViewRenderer
      */
     public function setScriptAction($name)
     {
@@ -302,7 +367,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * Set the response segment name
      * 
      * @param  string $name 
-     * @return Wopnet_Controller_Helper_View
+     * @return Zend_Controller_Action_Helper_ViewRenderer
      */
     public function setResponseSegment($name)
     {
@@ -329,7 +394,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * Set the noController flag (i.e., whether or not to render into controller subdirectories)
      * 
      * @param  boolean $flag 
-     * @return Wopnet_Controller_Helper_View
+     * @return Zend_Controller_Action_Helper_ViewRenderer
      */
     public function setNoController($flag = true)
     {
@@ -375,7 +440,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * @param  string $action View script to render
      * @param  string $name Response named segment to render to
      * @param  boolean $noController Whether or not to render within a subdirectory named after the controller
-     * @return Wopnet_Controller_Helper_View
+     * @return Zend_Controller_Action_Helper_ViewRenderer
      */
     public function setRender($action = null, $name = null, $noController = false)
     {

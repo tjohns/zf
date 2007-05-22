@@ -108,6 +108,33 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         Zend_Controller_Action_HelperBroker::resetHelpers();
     }
 
+    public function testConstructorSetsViewWhenPassed()
+    {
+        $view   = new Zend_View();
+        $helper = new Zend_Controller_Action_Helper_ViewRenderer($view);
+        $this->assertNotNull(isset($helper->view));
+        $this->assertSame($view, $helper->view);
+    }
+
+    public function testConstructorSetsOptionsWhenPassed()
+    {
+        $helper = new Zend_Controller_Action_Helper_ViewRenderer(null, array(
+            'neverRender'     => true,
+            'noRender'        => true,
+            'noController'    => true,
+            'viewSuffix'      => 'php',
+            'scriptAction'    => 'foo',
+            'responseSegment' => 'baz'
+        ));
+
+        $this->assertTrue($helper->getNeverRender());
+        $this->assertTrue($helper->getNoRender());
+        $this->assertTrue($helper->getNoController());
+        $this->assertEquals('php', $helper->getViewSuffix());
+        $this->assertEquals('foo', $helper->getScriptAction());
+        $this->assertEquals('baz', $helper->getResponseSegment());
+    }
+
     public function testSetView()
     {
         $view = new Zend_View();
@@ -124,6 +151,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
     {
         $this->assertTrue(isset($this->helper->view));
         $this->assertTrue($this->helper->view instanceof Zend_View);
+        $this->assertFalse($this->helper->getNeverRender());
         $this->assertFalse($this->helper->getNoRender());
         $this->assertNull($this->helper->getResponseSegment());
         $this->assertNull($this->helper->getScriptAction());
@@ -214,6 +242,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
 
         $viewDir = dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 2) . DIRECTORY_SEPARATOR . 'views';
         $this->helper->initView($viewDir, 'Baz_Bat', array(
+            'neverRender'     => true,
             'noRender'        => true,
             'noController'    => true,
             'viewSuffix'      => 'php',
@@ -221,6 +250,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
             'responseSegment' => 'baz'
         ));
 
+        $this->assertTrue($this->helper->getNeverRender());
         $this->assertTrue($this->helper->getNoRender());
         $this->assertTrue($this->helper->getNoController());
         $this->assertEquals('php', $this->helper->getViewSuffix());
@@ -248,6 +278,17 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
             }
         }
         $this->assertTrue($found, 'Filter prefix not set according to spec' . var_export($filterPaths, 1));
+    }
+
+    public function testNeverRenderFlag()
+    {
+        $this->assertFalse($this->helper->getNeverRender());
+        $this->helper->setNeverRender();
+        $this->assertTrue($this->helper->getNeverRender());
+        $this->helper->setNeverRender(false);
+        $this->assertFalse($this->helper->getNeverRender());
+        $this->helper->setNeverRender(true);
+        $this->assertTrue($this->helper->getNeverRender());
     }
 
     public function testNoRenderFlag()
