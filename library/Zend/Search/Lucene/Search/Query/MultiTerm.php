@@ -153,10 +153,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     /**
      * Re-write query into primitive queries in the context of specified index
      *
-     * @param Zend_Search_Lucene $index
+     * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
      */
-    public function rewrite(Zend_Search_Lucene $index)
+    public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         if (count($this->_terms) == 0) {
             return new Zend_Search_Lucene_Search_Query_Empty();
@@ -192,10 +192,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     /**
      * Optimize query in the context of specified index
      *
-     * @param Zend_Search_Lucene $index
+     * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
      */
-    public function optimize(Zend_Search_Lucene $index)
+    public function optimize(Zend_Search_Lucene_Interface $index)
     {
         $terms = $this->_terms;
         $signs = $this->_signs;
@@ -292,10 +292,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return Zend_Search_Lucene_Search_Weight
      */
-    public function createWeight($reader)
+    public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
         $this->_weight = new Zend_Search_Lucene_Search_Weight_MultiTerm($this, $reader);
         return $this->_weight;
@@ -306,9 +306,9 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Calculate result vector for Conjunction query
      * (like '+something +another')
      *
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      */
-    private function _calculateConjunctionResult($reader)
+    private function _calculateConjunctionResult(Zend_Search_Lucene_Interface $reader)
     {
         $this->_resVector = null;
 
@@ -339,9 +339,9 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Calculate result vector for non Conjunction query
      * (like '+something -another')
      *
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      */
-    private function _calculateNonConjunctionResult($reader)
+    private function _calculateNonConjunctionResult(Zend_Search_Lucene_Interface $reader)
     {
         $required   = null;
         $optional   = array();
@@ -389,10 +389,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Score calculator for conjunction queries (all terms are required)
      *
      * @param integer $docId
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function _conjunctionScore($docId, $reader)
+    public function _conjunctionScore($docId, Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(count($this->_terms),
@@ -415,7 +415,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Score calculator for non conjunction queries (not all terms are required)
      *
      * @param integer $docId
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
     public function _nonConjunctionScore($docId, $reader)
@@ -457,9 +457,9 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Execute query in context of index reader
      * It also initializes necessary internal structures
      *
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      */
-    public function execute($reader)
+    public function execute(Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_signs === null) {
             $this->_calculateConjunctionResult($reader);
@@ -487,10 +487,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Score specified document
      *
      * @param integer $docId
-     * @param Zend_Search_Lucene $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function score($docId, $reader)
+    public function score($docId, Zend_Search_Lucene_Interface $reader)
     {
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {

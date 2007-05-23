@@ -162,7 +162,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public static function open($directory)
     {
-        return new Zend_Search_Lucene($directory);
+        return new Zend_Search_Lucene_Proxy(new Zend_Search_Lucene($directory, false));
     }
 
     /**
@@ -254,6 +254,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function close()
     {
+        if ($this->_closed) {
+            // index is already closed and resources are cleaned up
+            return;
+        }
+
         $this->commit();
 
         // Free shared lock
@@ -266,6 +271,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         $this->_directory    = null;
         $this->_writer       = null;
         $this->_segmentInfos = null;
+
+        $this->_closed = true;
     }
 
     /**
@@ -273,9 +280,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function __destruct()
     {
-        if (!$this->_closed) {
-            $this->close();
-        }
+        // close() method has to be invoked if index object is not created with open()/create() static methods
+        // it's do nothing if index is already closed
+        $this->close();
     }
 
     /**

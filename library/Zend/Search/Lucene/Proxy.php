@@ -52,6 +52,14 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
     }
 
     /**
+     * Object destructor
+     */
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    /**
      * Close current index and free resources
      *
      * Should be invoked only just before destruction.
@@ -265,7 +273,11 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public function find($query)
     {
-        return $this->_index->find($query);
+        // actual parameter list
+        $parameters = func_get_args();
+
+        // invoke $this->_index->find() method with specified parameters
+        return call_user_func_array(array(&$this->_index, 'find'), $parameters);
     }
 
     /**

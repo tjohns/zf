@@ -187,7 +187,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         $hit = $hits[0];
 
         $this->assertTrue($hit instanceof Zend_Search_Lucene_Search_QueryHit);
-        $this->assertTrue($hit->getIndex() === $index);
+        $this->assertTrue($hit->getIndex() instanceof Zend_Search_Lucene_Interface);
 
         $doc = $hit->getDocument();
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document);
