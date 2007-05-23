@@ -139,9 +139,10 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Prepares and executes an SQL statement with bound data.
      *
-     * @param  string|Zend_Db_Select $sql  The SQL statement with placeholders.
-     * @param  mixed                 $bind An array of data to bind to the placeholders.
-     * @return Zend_Db_Statement (may also be PDOStatement in the case of PDO)
+     * @param  mixed  $sql  The SQL statement with placeholders.
+     *                      May be a string or Zend_Db_Select.
+     * @param  mixed  $bind An array of data to bind to the placeholders.
+     * @return Zend_Db_Statement_Interface
      */
     public function query($sql, $bind = array())
     {

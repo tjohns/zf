@@ -53,28 +53,29 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     protected $_fetchMode = PDO::FETCH_ASSOC;
 
     /**
-     * Constructor.
+     * Constructor for a statement.
      *
      * @param Zend_Db_Adapter_Abstract $adapter
-     * @param string or Zend_Db_Select $sql
-     * @return void
+     * @param mixed $sql Either a string or Zend_Db_Select.
      */
     public function __construct($adapter, $sql)
     {
         $this->_adapter = $adapter;
+        if ($sql instanceof Zend_Db_Select) {
+            $sql = $sql->__toString();
+        }
         $this->_prepSql($sql);
     }
 
     /**
-     * @param mixed string or Zend_Db_Select
+     * Prepare a string SQL statement and create a statement object.
+     *
+     * @param string $sql
      * @return void
      * @throws Zend_Db_Statement_Exception
      */
     protected function _prepSql($sql)
     {
-        if ($sql instanceof Zend_Db_Select) {
-            $sql = $sql->__toString();
-        }
         try {
             $this->_stmt = $this->_adapter->getConnection()->prepare($sql);
         } catch (PDOException $e) {
@@ -84,9 +85,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
+     * Bind a column of the statement result set to a PHP variable.
      *
-     * @param string $column
-     * @param mixed  $param
+     * @param string $column Name the column in the result set, either by
+     *                       position or by name.
+     * @param mixed  $param  Reference to the PHP variable containing the value.
      * @param mixed  $type   OPTIONAL
      * @return bool
      * @throws Zend_Db_Statement_Exception
@@ -102,12 +105,13 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
+     * Binds a parameter to the specified variable name.
      *
-     * @param mixed $parameter
-     * @param mixed $variable
-     * @param mixed $type      OPTIONAL
-     * @param mixed $length    OPTIONAL
-     * @param mixed $options   OPTIONAL
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $variable  Reference to PHP variable containing the value.
+     * @param mixed $type      OPTIONAL Datatype of SQL parameter.
+     * @param mixed $length    OPTIONAL Length of SQL parameter.
+     * @param mixed $options   OPTIONAL Other options.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
@@ -125,10 +129,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
+     * Binds a value to a parameter.
      *
-     * @param mixed $parameter
-     * @param mixed $value
-     * @param mixed $type      OPTIONAL
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $value     Scalar value to bind to the parameter.
+     * @param mixed $type      OPTIONAL Datatype of the parameter.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
@@ -162,7 +167,7 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
      * Returns the number of columns in the result set.
      * Returns null if the statement has no result set metadata.
      *
-     * @return int Field count.
+     * @return int The number of columns.
      * @throws Zend_Db_Statement_Exception
      */
     public function columnCount()
@@ -176,7 +181,8 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Retrieves an error code, if any, from the statement.
+     * Retrieves the error code, if any, associated with the last operation on
+     * the statement handle.
      *
      * @return string error code.
      * @throws Zend_Db_Statement_Exception
@@ -192,7 +198,8 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Retrieves an array of error information, if any, from the statement.
+     * Retrieves an array of error information, if any, associated with the
+     * last operation on the statement handle.
      *
      * @return array
      * @throws Zend_Db_Statement_Exception
@@ -210,7 +217,7 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     /**
      * Executes a prepared statement.
      *
-     * @param array $params OPTIONAL values to supply as input to statement parameters
+     * @param array $params OPTIONAL Values to bind to parameter placeholders.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
@@ -227,10 +234,10 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     /**
      * Fetches a row from the result set.
      *
-     * @param mixed   $style  OPTIONAL
-     * @param mixed   $cursor OPTIONAL
-     * @param int     $offset OPTIONAL
-     * @return mixed
+     * @param int $style  OPTIONAL Fetch mode for this fetch operation.
+     * @param int $cursor OPTIONAL Absolute, relative, or other.
+     * @param int $offset OPTIONAL Number for absolute or relative cursors.
+     * @return mixed Array, object, or scalar depending on fetch mode.
      * @throws Zend_Db_Statement_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
@@ -247,10 +254,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
+     * Returns an array containing all of the result set rows.
      *
-     * @param mixed   $style OPTIONAL
-     * @param int     $col   OPTIONAL
-     * @return array
+     * @param int $style OPTIONAL Fetch mode.
+     * @param int $col   OPTIONAL Column number, if fetch mode is by column.
+     * @return array Collection of rows, each in a format by the fetch mode.
      * @throws Zend_Db_Statement_Exception
      */
     public function fetchAll($style = null, $col = null)
@@ -274,7 +282,9 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * @param int     $col OPTIONAL
+     * Returns a single column from the next row of a result set.
+     *
+     * @param int $col OPTIONAL Position of the column to fetch.
      * @return string
      * @throws Zend_Db_Statement_Exception
      */
@@ -289,9 +299,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * @param string $class  OPTIONAL
-     * @param array  $config OPTIONAL
-     * @return mixed
+     * Fetches the next row and returns it as an object.
+     *
+     * @param string $class  OPTIONAL Name of the class to create.
+     * @param array  $config OPTIONAL Constructor arguments for the class.
+     * @return mixed One object instance of the specified class.
      * @throws Zend_Db_Statement_Exception
      */
     public function fetchObject($class = 'stdClass', array $config = array())
@@ -305,8 +317,10 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * Retrieve a statement attribute.
+     *
+     * @param string $key Attribute name.
+     * @return mixed      Attribute value.
      * @throws Zend_Db_Statement_Exception
      */
     public function getAttribute($key)
@@ -320,6 +334,8 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
+     * Returns metadata for a column in a result set.
+     *
      * @param int $column
      * @return mixed
      * @throws Zend_Db_Statement_Exception
@@ -335,9 +351,8 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Retrieves the next rowset (result set)
-     * for a SQL statement that has multiple result sets.
-     * An example is a stored procedure that returns
+     * Retrieves the next rowset (result set) for a SQL statement that has
+     * multiple result sets.  An example is a stored procedure that returns
      * the results of multiple queries.
      *
      * @return bool
@@ -354,10 +369,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Returns the number of rows that were affected by the execution of the
-     * last INSERT, DELETE, or UPDATE SQL statement.
+     * Returns the number of rows affected by the execution of the
+     * last INSERT, DELETE, or UPDATE statement executed by this
+     * statement object.
      *
-     * @return int     Number of rows affected.
+     * @return int     The number of rows affected.
      * @throws Zend_Db_Statement_Exception
      */
     public function rowCount()
@@ -371,8 +387,10 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * @param string $key
-     * @param mixed  $val
+     * Set a statement attribute.
+     *
+     * @param string $key Attribute name.
+     * @param mixed  $val Attribute value.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
@@ -387,7 +405,9 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     }
 
     /**
-     * @param int     $mode
+     * Set the default fetch mode for this statement.
+     *
+     * @param int   $mode The fetch mode.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */

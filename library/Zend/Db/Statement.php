@@ -89,22 +89,25 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     protected $_sqlParam = array();
 
     /**
-     * Constructor.
+     * Constructor for a statement.
      *
      * @param Zend_Db_Adapter_Abstract $adapter
-     * @param string|Zend_Db_Select $sql
-     * @return void
+     * @param mixed $sql Either a string or Zend_Db_Select.
      */
     public function __construct($adapter, $sql)
     {
         $this->_adapter = $adapter;
+        if ($sql instanceof Zend_Db_Select) {
+            $sql = $sql->__toString();
+        }
         $this->_prepSql($sql);
     }
 
     /**
-     * Splits SQL into text and params, sets up $this->_bindParam for replacements.
+     * Splits SQL into text and params, sets up $this->_bindParam
+     * for replacements.
      *
-     * @param string|Zend_Db_Select $sql
+     * @param string $sql
      * @return void
      *
      * @todo: Parse the string more faithfully so that strings that resemble
@@ -147,21 +150,27 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Binds a PHP variable to an output column in a result set.
+     * Bind a column of the statement result set to a PHP variable.
      *
-     * @param string $column
-     * @param string $param
-     * @param string $type OPTIONAL
-     * @return void
+     * @param string $column Name the column in the result set, either by
+     *                       position or by name.
+     * @param mixed  $param  Reference to the PHP variable containing the value.
+     * @param mixed  $type   OPTIONAL
+     * @return bool
+     * @throws Zend_Db_Statement_Exception
      */
     public function bindColumn($column, &$param, $type = null)
     {
         $this->_bindColumn[$column] =& $param;
+        return true;
     }
 
     /**
-     * @param string or integer $parameter
-     * @param mixed $variable
+     * Check sanity of bind parameters.  Throw exceptions if params are
+     * not valid.  
+     *
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $variable Reference to PHP variable containing the value.
      * @return integer
      * @throws Zend_Db_Statement_Exception
      */
@@ -207,13 +216,13 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Binds a PHP variable to a parameter in the prepared statement.
+     * Binds a parameter to the specified variable name.
      *
-     * @param mixed   $parameter
-     * @param string  $variable
-     * @param string  $type OPTIONAL
-     * @param integer $length OPTIONAL
-     * @param array   $options OPTIONAL
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $variable  Reference to PHP variable containing the value.
+     * @param mixed $type      OPTIONAL Datatype of SQL parameter.
+     * @param mixed $length    OPTIONAL Length of SQL parameter.
+     * @param mixed $options   OPTIONAL Other options.
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
@@ -224,11 +233,26 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Fetches an array containing all of the rows from a result set.
+     * Binds a value to a parameter.
      *
-     * @param integer $style OPTIONAL
-     * @param string $col OPTIONAL
-     * @return array
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $value     Scalar value to bind to the parameter.
+     * @param mixed $type      OPTIONAL Datatype of the parameter.
+     * @return bool
+     * @throws Zend_Db_Statement_Exception
+     */
+    public function bindValue($parameter, $value, $type = null)
+    {
+        return $this->bindParam($parameter, $value);
+    }
+
+    /**
+     * Returns an array containing all of the result set rows.
+     *
+     * @param int $style OPTIONAL Fetch mode.
+     * @param int $col   OPTIONAL Column number, if fetch mode is by column.
+     * @return array Collection of rows, each in a format by the fetch mode.
+     * @throws Zend_Db_Statement_Exception
      */
     public function fetchAll($style = null, $col = null)
     {
@@ -249,11 +273,11 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Returns the data from a single column in the next
-     * single row of the result set.
+     * Returns a single column from the next row of a result set.
      *
-     * @param integer $col OPTIONAL
-     * @return array
+     * @param int $col OPTIONAL Position of the column to fetch.
+     * @return string
+     * @throws Zend_Db_Statement_Exception
      */
     public function fetchColumn($col = 0)
     {
@@ -270,9 +294,10 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     /**
      * Fetches the next row and returns it as an object.
      *
-     * @param string $class OPTIONAL
-     * @param array $config OPTIONAL
-     * @return mixed
+     * @param string $class  OPTIONAL Name of the class to create.
+     * @param array  $config OPTIONAL Constructor arguments for the class.
+     * @return mixed One object instance of the specified class.
+     * @throws Zend_Db_Statement_Exception
      */
     public function fetchObject($class = 'stdClass', array $config = array())
     {
@@ -285,10 +310,11 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Retrieves a Zend_Db_Statement attribute.
+     * Retrieve a statement attribute.
      *
-     * @param string $key
-     * @return mixed
+     * @param string $key Attribute name.
+     * @return mixed      Attribute value.
+     * @throws Zend_Db_Statement_Exception
      */
     public function getAttribute($key)
     {
@@ -298,11 +324,12 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Sets a Zend_Db_Statement attribute.
+     * Set a statement attribute.
      *
-     * @param string $key
-     * @param mixed $val
-     * @return void
+     * @param string $key Attribute name.
+     * @param mixed  $val Attribute value.
+     * @return bool
+     * @throws Zend_Db_Statement_Exception
      */
     public function setAttribute($key, $val)
     {
@@ -310,10 +337,11 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     }
 
     /**
-     * Sets the fetch mode for a Zend_Db_Statement.
+     * Set the default fetch mode for this statement.
      *
-     * @param integer $mode
-     * @return void
+     * @param int   $mode The fetch mode.
+     * @return bool
+     * @throws Zend_Db_Statement_Exception
      */
     public function setFetchMode($mode)
     {
@@ -329,19 +357,6 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 throw new Zend_Db_Statement_Exception('Invalid fetch mode specified');
                 break;
         }
-    }
-
-    /**
-     * Binds a value to a parameter in the prepared statement.
-     *
-     * @param string $parameter
-     * @param string $value
-     * @param string $type OPTIONAL
-     * @return bool
-     */
-    public function bindValue($parameter, $value, $type = null)
-    {
-        return $this->bindParam($parameter, $value);
     }
 
 }
