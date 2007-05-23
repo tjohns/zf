@@ -107,6 +107,35 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($response->isFault());
     }
     
+    /**
+     * Test for ZF-1412
+     * 
+     * @return void
+     */
+    public function testSuccessfulRpcMethodCallWithMixedDateParameters()
+    {
+        $time = time();
+        $expectedMethod = 'foo.bar';
+        $expectedParams = array(
+            'username', 
+            new Zend_XmlRpc_Value_DateTime($time)
+        );
+        $expectedReturn = array('username', $time);
+
+        $this->setServerResponseTo($expectedReturn);
+        
+        $actualReturn = $this->xmlrpcClient->call($expectedMethod, $expectedParams);
+        $this->assertSame($expectedReturn, $actualReturn);
+
+        $request  = $this->xmlrpcClient->getLastRequest();
+        $response = $this->xmlrpcClient->getLastResponse();
+
+        $this->assertSame($expectedMethod, $request->getMethod());
+        $this->assertSame($expectedParams, $request->getParams());
+        $this->assertSame($expectedReturn, $response->getReturnValue());
+        $this->assertFalse($response->isFault());
+    }
+
     // Faults
     
     public function testRpcMethodCallThrowsOnHttpFailure()

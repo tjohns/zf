@@ -85,6 +85,19 @@ class Zend_XmlRpc_RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('string2', $params[1]);
     }
 
+    public function testAddDateParamGeneratesCorrectXml()
+    {
+        $time = time();
+        $this->_request->addParam($time, Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
+        $this->_request->setMethod('foo.bar');
+        $xml = $this->_request->saveXML();
+        $sxl = new SimpleXMLElement($xml);
+        $param = $sxl->params->param->value;
+        $type  = 'dateTime.iso8601';
+        $this->assertTrue(isset($param->{$type}), var_export($param, 1));
+        $this->assertEquals($time, strtotime((string) $param->{$type}));
+    }
+
     /**
      * setParams()/getParams() test
      */
