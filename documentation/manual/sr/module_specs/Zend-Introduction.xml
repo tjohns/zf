@@ -1,9 +1,9 @@
 <sect1 id="zend.introduction">
     <title>Uvod</title>
     <para>
-    Klasa Zend predstavlja osnovnu klasu Zend okruženja.  Ova klasa se razvila na 
+    Klasa Zend predstavlja osnovnu klasu Zend Frameworka. Ova klasa se razvila na 
 	osnovu privrženosti NPS (Ne Ponavljaj Se) principu.	Sastoji se samo od statičkih metoda 
-	koje pružaju funkcionalnost potrebnu mnogim komponentama u Zend okruženju.
+	koje pružaju funkcionalnost potrebnu mnogim komponentama u Zend Frameworku.
     </para>
 </sect1>
 <!--
