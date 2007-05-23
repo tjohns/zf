@@ -37,6 +37,9 @@
             </listitem>
         </itemizedlist>
 
+        <para>
+            L'utilisation de Zend_Db_Select n'est pas obligatoire. Pour de très simple requêtes SELECT , il est d'habitude plus simple de spécifier la requête SQL entière comme une chaîne et l'exécuter en utilisant des méthodes de l'adaptateur comme <code>query()</code> ou <code>fetchAll()</code>. L'utilisation de Zend_Db_Select est utile si vous devez assembler une requête SELECT par procédure, ou basé sur une logique conditionnelle dans votre application.
+        </para>
     </sect2>
 
     <sect2 id="zend.db.select.creating">
