@@ -1269,26 +1269,26 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             // success
         }
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T04:31:30+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T04:31:30+05:00');
         $date->set(1, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T04:31:30+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T04:31:30+05:00');
         $date->set(5, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T04:31:30+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T04:31:30+05:00');
         $date->setTimeZone('UTC');
         $date->set(2, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-11T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T23:31:30+00:00');
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:30+00:00');
         $date->setTimezone('Indian/Maldives');
         $date->set(4, Zend_Date::WEEKDAY_DIGIT, 'en_US');
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-20T04:31:30+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-12T04:31:30+05:00');
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT, 'en_US');
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-21T04:31:30+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T04:31:30+05:00');
         $date->setTimeZone('UTC');
         $date->set(3, Zend_Date::WEEKDAY_DIGIT, 'en_US');
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-19T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-11T23:31:30+00:00');
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT, 'en_US');
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-21T23:31:30+00:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T23:31:30+00:00');
         $date->setTimezone('Indian/Maldives');
 
         $date->set(1234567890);
@@ -2582,7 +2582,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->add(1, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2002-01-06T04:36:50+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2002-01-05T04:36:50+05:00');
 
         $date->set($d2);
         $date->add(10, Zend_Date::DAY_OF_YEAR);
@@ -2957,7 +2957,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->sub(1, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2002-01-02T04:36:50+05:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2002-01-03T04:36:50+05:00');
 
         $date->set($d2);
         $date->sub(-10, Zend_Date::DAY_OF_YEAR);

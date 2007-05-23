@@ -1397,7 +1397,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::WEEKDAY_DIGIT :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
-                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 2 + $date,    1970, true),
+                    return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + $date,    1970, true),
                                                  $this->mktime(0, 0, 0, 1, 1 + $weekday, 1970, true), $hour);
                 }
 
@@ -3662,10 +3662,8 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Sets a new weekday
-     * The weekday can be a number or a string. Specifying a weekday integer lower then 1,
-     * or greater than 7 will result in adding or subtracting the relevant number of weekdays
-     * to the current date of $this.  If a localized weekday name is given, then it will be
-     * parsed as a date in $locale (defaults to the same locale as $this).
+     * The weekday can be a number or a string. If a localized weekday name is given,
+     * then it will be parsed as a date in $locale (defaults to the same locale as $this).
      * Returned is the new date object.
      * Example: setWeekday(3); will set the wednesday of this week as day.
      *
@@ -3682,8 +3680,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Adds weekdays to the existing date object.
-     * The weekday can be a number or a string. Adding days lower then 1 or greater than 7
-     * will result in adding or subtracting the relevant number of weeks.
+     * The weekday can be a number or a string.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3703,8 +3700,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Subtracts weekdays from the existing date object.
-     * The weekday can be a number or a string. Subtracting days lower then 1 or greater than 7
-     * will result in adding or subtracting the relevant number of weeks.
+     * The weekday can be a number or a string.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
