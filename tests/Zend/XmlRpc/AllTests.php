@@ -2,8 +2,8 @@
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_XmlRpc_AllTests::main');
     set_include_path(
-        dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' 
-        . PATH_SEPARATOR . dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'library' 
+        dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'tests' 
+        . PATH_SEPARATOR . dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' 
         . PATH_SEPARATOR . get_include_path());
 }
 
