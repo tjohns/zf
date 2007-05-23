@@ -55,16 +55,6 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
         $this->assertEquals(1, $n, 'Expected row count to be one after executing query');
     }
 
-    public function testStatementBindParamByInteger()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support bound parameters yet.');
-    }
-
-    public function testStatementBindParamByName()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support binding parameter by name.');
-    }
-
     public function getDriver()
     {
         return 'Mysqli';

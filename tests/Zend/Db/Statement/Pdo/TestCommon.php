@@ -31,40 +31,25 @@ abstract class Zend_Db_Statement_Pdo_TestCommon extends Zend_Db_Statement_TestCo
         $select = $this->_db->select()
             ->from('zfproducts');
         $sql = $select->__toString();
-        $stmt = new PDOStatement($this->_db->getConnection(), $sql);
-        $this->assertType('PDOStatement', $stmt);
+        $stmt = new Zend_Db_Statement_Pdo($this->_db, $sql);
+        $this->assertType('Zend_Db_Statement_Pdo', $stmt);
+        $stmt->closeCursor();
     }
 
-    public function testStatementConstructFromPrepare()
+    public function testStatementNextRowset()
     {
         $select = $this->_db->select()
             ->from('zfproducts');
         $stmt = $this->_db->prepare($select->__toString());
-        $this->assertType('PDOStatement', $stmt);
+        try {
+            $stmt->nextRowset();
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->assertEquals('SQLSTATE[IM001]: Driver does not support this function: driver does not support multiple rowsets', $e->getMessage());
+        }
         $stmt->closeCursor();
-    }
-
-    public function testStatementConstructFromQuery()
-    {
-        $select = $this->_db->select()
-            ->from('zfproducts');
-        $stmt = $this->_db->query($select);
-        $this->assertType('PDOStatement', $stmt);
-        $stmt->closeCursor();
-    }
-
-    public function testStatementConstructFromSelect()
-    {
-        $stmt = $this->_db->select()
-            ->from('zfproducts')
-            ->query();
-        $this->assertType('PDOStatement', $stmt);
-        $stmt->closeCursor();
-    }
-
-    public function testStatementBindParamException()
-    {
-        $this->markTestSkipped('PDO does not throw an exception from bindParam() by default.');
     }
 
 }

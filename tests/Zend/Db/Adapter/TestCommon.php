@@ -444,21 +444,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->query('SELECT * FROM ' . $this->_db->quoteIdentifier('zfbugs') . ' WHERE '
             . $this->_db->quoteIdentifier('bug_id') . ' = -1');
 
-        $this->assertTrue(
-            is_object($stmt),
-            'Expected query() to return object; got ' . gettype($stmt)
-            );
+        $this->assertTrue(is_object($stmt),
+            'Expected query() to return object; got ' . gettype($stmt));
 
-        $this->assertTrue(
-            $stmt instanceof Zend_Db_Statement || $stmt instanceof PDOStatement,
-            'Expected query() to return Zend_Db_Statement or PDOStatement; got ' . get_class($stmt)
-            );
+        $this->assertType('Zend_Db_Statement_Interface', $stmt,
+            'Expected query() to return Zend_Db_Statement or PDOStatement; got ' . get_class($stmt));
 
-        $this->assertEquals(
-            0,
-            $count = count($stmt->fetchAll()),
-            "Expected fetchAll() to return zero rows; got $count"
-            );
+        $this->assertEquals(0, $count = count($stmt->fetchAll()),
+            "Expected fetchAll() to return zero rows; got $count");
     }
 
     /**

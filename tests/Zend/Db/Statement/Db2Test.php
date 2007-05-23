@@ -50,26 +50,6 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         $this->markTestIncomplete($this->getDriver() . ' gets the wrong result in this test.');
     }
 
-    public function testStatementBindParamByInteger()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' crashes in this test.');
-    }
-
-    public function testStatementBindParamByName()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support binding parameter by name.');
-    }
-
-    public function testStatementBindColumnByInteger()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
-    }
-
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
-    }
-
     public function getDriver()
     {
         return 'Db2';

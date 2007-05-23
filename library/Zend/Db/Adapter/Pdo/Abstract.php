@@ -29,6 +29,12 @@ require_once 'Zend/Db/Adapter/Abstract.php';
 
 
 /**
+ * @see Zend_Db_Statement_Pdo
+ */
+require_once 'Zend/Db/Statement/Pdo.php';
+
+
+/**
  * Class for connecting to SQL databases and performing common operations using PDO.
  *
  * @category   Zend
@@ -132,6 +138,10 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
             /** @todo Are there other portability attribs to consider? */
         } catch (PDOException $e) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception($e->getMessage(), $e);
         }
 
@@ -157,7 +167,9 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     public function prepare($sql)
     {
         $this->_connect();
-        return $this->_connection->prepare($sql);
+        $stmt = new Zend_Db_Statement_Pdo($this, $sql);
+        $stmt->setFetchMode($this->_fetchMode);
+        return $stmt;
     }
 
     /**
@@ -211,9 +223,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
              * @see Zend_Db_Statement_Exception
              */
             require_once 'Zend/Db/Statement/Exception.php';
-            /**
-             * @todo: chain PDOException
-             */
             throw new Zend_Db_Statement_Exception($e->getMessage());
         }
     }

@@ -35,6 +35,7 @@ class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
         parent::testStatementExecuteWithParams();
     }
 
+    /*
     public function testStatementBindParamByInteger()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -43,7 +44,9 @@ class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
         $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
         parent::testStatementBindParamByInteger();
     }
+     */
 
+    /*
     public function testStatementBindParamByName()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -52,6 +55,7 @@ class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
         $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
         parent::testStatementBindParamByName();
     }
+     */
 
     public function getDriver()
     {

@@ -35,7 +35,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             ->from('zfproducts');
         $sql = $select->__toString();
         $stmt = new Zend_Db_Statement($this->_db, $sql);
-        $this->assertType('Zend_Db_Statement', $stmt);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
 
@@ -44,7 +44,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $select = $this->_db->select()
             ->from('zfproducts');
         $stmt = $this->_db->prepare($select->__toString());
-        $this->assertType('Zend_Db_Statement', $stmt);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
 
@@ -53,7 +53,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $select = $this->_db->select()
             ->from('zfproducts');
         $stmt = $this->_db->query($select);
-        $this->assertType('Zend_Db_Statement', $stmt);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
 
@@ -62,7 +62,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->select()
             ->from('zfproducts')
             ->query();
-        $this->assertType('Zend_Db_Statement', $stmt);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
 
@@ -164,13 +164,10 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             if ($retval === false) {
                 throw new Zend_Db_Statement_Exception('dummy');
             }
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
         }
         $code = $stmt->errorCode();
         // @todo: what to assert here?
@@ -189,13 +186,10 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             if ($retval === false) {
                 throw new Zend_Db_Statement_Exception('dummy');
             }
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
         }
         $code = $stmt->errorCode();
         $info = $stmt->errorInfo();
@@ -325,13 +319,10 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
         try {
             $result = $stmt->fetchAll(-99);
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
         }
     }
 
@@ -443,36 +434,38 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
         try {
             $result = $stmt->fetch(-99);
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
         }
         $stmt->closeCursor();
     }
 
+    /* @todo
     public function testStatementBindParamByInteger()
     {
+        $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
-        $data = array(
-            'product_id'   => 4,
-            'product_name' => 'Solaris'
-        );
+        $productIdValue   = 4;
+        $productNameValue = 'Solaris';
 
         $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
-        $stmt->bindParam(1, $data['product_id']);
-        $stmt->bindParam(2, $data['product_name']);
+        $this->assertTrue($stmt->bindParam(1, $productIdValue));
+        $this->assertTrue($stmt->bindParam(2, $productNameValue));
 
         // no params as args to execute()
-        $retval = $stmt->execute();
-        if ($retval === false) {
-            var_dump($stmt->errorInfo());
+        try {
+            $retval = $stmt->execute();
+            if ($retval === false) {
+                var_dump($stmt->errorInfo());
+            }
+        } catch (Zend_Exception $e) {
+            echo "*** Caught exception: ".$e->getMessage()."\n";
         }
 
         $select = $this->_db->select()
@@ -481,25 +474,27 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $result = $this->_db->fetchAll($select);
         $stmt->closeCursor();
 
-        $this->assertEquals(array($data), $result);
+        $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
+     */
 
+    /* @todo
     public function testStatementBindParamByName()
     {
+        $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
-        $data = array(
-            'product_id'   => 4,
-            'product_name' => 'Solaris'
-        );
+        $productIdValue   = 4;
+        $productNameValue = 'Solaris';
 
         $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
         // test with colon prefix
-        $stmt->bindParam(':id', $data['product_id']);
+        $this->assertTrue($stmt->bindParam(':id', $productIdValue));
         // test with no colon prefix
-        $stmt->bindParam('name', $data['product_name']);
+        $this->assertTrue($stmt->bindParam('name', $productNameValue));
 
         // no params as args to execute()
         $retval = $stmt->execute();
@@ -513,11 +508,15 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $result = $this->_db->fetchAll($select);
         $stmt->closeCursor();
 
-        $this->assertEquals(array($data), $result);
+        $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
+     */
 
+    /* @todo
     public function testStatementBindParamException()
     {
+        $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
@@ -529,57 +528,84 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         // test invalid parameter binding
         try {
             $stmt->bindParam('mxyzptlk!', $id);
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
     }
+     */
 
+    /* @todo
     public function testStatementBindValue()
     {
-        // @todo
+        $this->markTestIncomplete();
     }
+     */
 
+    /* @todo
     public function testStatementBindColumnByInteger()
     {
+        $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $stmt->bindColumn(1, $prodIdValue);
-        $stmt->bindColumn(2, $prodNameValue);
+        $prodIdValue = -99;
+        $prodNameValue = 'AmigaOS';
 
-        $stmt->fetch();
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+
+        $this->assertTrue($stmt->bindColumn(1, $prodIdValue),
+            'Expected bindColumn(product_id) to return true');
+        $this->assertTrue($stmt->bindColumn(2, $prodNameValue),
+            'Expected bindColumn(product_name) to return true');
+
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 1 to return true');
         $this->assertEquals(2, $prodIdValue);
         $this->assertEquals('Linux', $prodNameValue);
 
-        $stmt->fetch();
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 2 to return true');
         $this->assertEquals(3, $prodIdValue);
         $this->assertEquals('OS X', $prodNameValue);
 
         $stmt->closeCursor();
     }
+     */
 
+    /* @todo
     public function testStatementBindColumnByName()
     {
+        $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $stmt->bindColumn('product_id', $prodIdValue);
-        $stmt->bindColumn('product_name', $prodNameValue);
+        $prodIdValue = -99;
+        $prodNameValue = 'AmigaOS';
 
-        $stmt->fetch();
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+
+        $this->assertTrue($stmt->bindColumn('product_id', $prodIdValue),
+            'Expected bindColumn(product_id) to return true');
+        $this->assertTrue($stmt->bindColumn('product_name', $prodNameValue),
+            'Expected bindColumn(product_name) to return true');
+
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 1 to return true');
         $this->assertEquals(2, $prodIdValue);
         $this->assertEquals('Linux', $prodNameValue);
 
-        $stmt->fetch();
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 2 to return true');
         $this->assertEquals(3, $prodIdValue);
         $this->assertEquals('OS X', $prodNameValue);
 
         $stmt->closeCursor();
     }
+     */
 
     public function testStatementNextRowset()
     {
@@ -588,15 +614,11 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->prepare($select->__toString());
         try {
             $stmt->nextRowset();
-            $this->fail('Expected to catch Zend_Db_Statement_Exception or PDOException');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
             $this->assertEquals('nextRowset() is not implemented', $e->getMessage());
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
-            $this->assertEquals('SQLSTATE[IM001]: Driver does not support this function: driver does not support multiple rowsets', $e->getMessage());
         }
         $stmt->closeCursor();
     }

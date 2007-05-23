@@ -34,9 +34,9 @@ class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_Pdo_TestCommon
         try {
             $stmt->nextRowset();
             $this->fail('Expected to catch Zend_Db_Statement_Exception');
-        } catch (PDOException $e) {
-            $this->assertType('PDOException', $e,
-                'Expecting object of type PDOException, got '.get_class($e));
+        } catch (Zend_Db_Statement_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
             $this->assertEquals('SQLSTATE[HYC00]: Optional feature not implemented', $e->getMessage());
         }
         $stmt->closeCursor();

@@ -80,35 +80,6 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         // $this->assertEquals('Linux', $result[0]['product_name']);
     }
 
-    public function testStatementBindParamByInteger()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
-
-        $id   = 4;
-        $name = 'Solaris';
-
-        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
-        try {
-            $stmt->bindParam(1, $id);
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Oracle_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Oracle_Exception, got '.get_class($e));
-            $this->assertEquals('ORA-28553 Invalid bind-variable position', $e->getMessage());
-        }
-    }
-
-    public function testStatementBindColumnByInteger()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
-    }
-
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support result binding yet.');
-    }
-
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
