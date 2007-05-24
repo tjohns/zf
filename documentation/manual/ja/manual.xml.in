@@ -96,6 +96,7 @@
     <chapter id="zend.db">
         <title>Zend_Db</title>
         <xi:include href="module_specs/Zend_Db_Adapter.xml" />
+        <xi:include href="module_specs/Zend_Db_Statement.xml" />
         <xi:include href="module_specs/Zend_Db_Profiler.xml" />
         <xi:include href="module_specs/Zend_Db_Select.xml" />
         <xi:include href="module_specs/Zend_Db_Table.xml" />

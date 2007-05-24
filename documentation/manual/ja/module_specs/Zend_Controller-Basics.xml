@@ -12,8 +12,10 @@
         次の図は処理の流れを表したものです。また、詳細についてはそれ以降で説明しています。
     </para>
 
-    <inlinegraphic width="483" scale="100" align="center" valign="middle"
-        fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    <para>
+        <inlinegraphic width="483" scale="100" align="center" valign="middle"
+            fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    </para>
 
     <para>
         <code>Zend_Controller</code> の処理の流れは、
