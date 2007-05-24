@@ -62,10 +62,10 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
 
     public function __construct($element = null)
     {
-        parent::__construct($element);
-        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
+        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct($element);
     }
 
     public function getDOM($doc = null)
