@@ -477,7 +477,6 @@ $translate->addTranslation('path/to/other.csv', 'fr');
 
     </sect2>
 
-
     <sect2 id="zend.translate.using.options">
 
         <title>Options for adapters</title>
@@ -505,6 +504,48 @@ $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
 $translate->addTranslation('path/to/other.csv', 'fr');
 ... // do something
 $translate->addTranslation('path/to/new.csv', 'fr', $options); // clear language fr, use new translation
+]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.istranslated">
+
+        <title>Checking for translations</title>
+
+        <para>
+            Normally text will be translated without any computations. But sometimes it is necessary to
+            know if a text is translated or not within the source. Therefor the <code>isTranslated()</code>
+            method can be used.
+        </para>
+
+        <para>
+            <code>isTranslated($messageId, $original = false, $locale = null)</code> takes as first parameter
+            the text from which you want to know if it can be translated. And as optional third parameter the locale
+            for which you want to know the translation. The optional second parameter declares if translation
+            is fix to the declared language or a lower set of translations can be used. If you have a text which
+            can be translated by 'en' but not for 'en_US' you will normally get the translation returned, but by
+            setting <code>$original</code> to true, the <code>isTranslated()</code> method will return false in
+            such cases.
+        </para>
+
+        <example id="zend.translate.using.istranslated.example">
+            <title>Checking if a text is translateable</title>
+            <programlisting role="php"><![CDATA[
+$english = array('message1' => 'Nachricht 1',
+                 'message2' => 'Nachricht 2',
+                 'message3' => 'Nachricht 3');
+$translate = new Zend_Translate('array', $english, 'de_AT');
+
+if ($translate->isTranslated('message1')) {
+    print "'message1' can be translated";
+}
+if (!($translate->isTranslated('message1', true, 'de'))) {
+    print "'message1' can not be translated in 'de' as it's only avaiable in 'de_AT'";
+}
+if ($translate->isTranslated('message1', false, 'de')) {
+    print "'message1' can be translated in 'de_AT' falls back to 'de'";
+}
 ]]></programlisting>
         </example>
 

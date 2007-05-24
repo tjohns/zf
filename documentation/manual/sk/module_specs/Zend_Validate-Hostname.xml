@@ -21,7 +21,7 @@
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname();
 if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+    // hostname appears to be valid
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator->getMessages() as $message) {
@@ -57,7 +57,7 @@ if ($validator->isValid($hostname)) {
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
 if ($validator->isValid($hostname)) {
-    // ostname appears to be valid
+    // hostname appears to be valid
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator->getMessages() as $message) {
@@ -85,7 +85,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
     </para>
     
     <para>
-        Some Country Code Top Level Domains (ccTLDs), such as de (Germany), support international 
+        Some Country Code Top Level Domains (ccTLDs), such as 'de' (Germany), support international 
         characters in domain names. These are known as International Domain Names (IDN). These domains 
         can be matched by Zend_Validate_Hostname via extended characters that are used in the validation 
         process. 
