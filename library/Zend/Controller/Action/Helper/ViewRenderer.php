@@ -659,9 +659,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
 
         $replacements = array(
             ':moduleDir'  => $moduleDir,
-            ':module'     => str_replace($this->_delimiters, '_', $module),
-            ':controller' => str_replace($this->_delimiters, '_', $controller),
-            ':action'     => str_replace($this->_delimiters, '_', $action),
+            ':module'     => str_replace($this->_delimiters, '-', $module),
+            ':controller' => str_replace($this->_delimiters, '-', $controller),
+            ':action'     => str_replace($this->_delimiters, '-', $action),
             ':suffix'     => $suffix
         );
         $value = str_replace(array_keys($replacements), array_values($replacements), $spec);
