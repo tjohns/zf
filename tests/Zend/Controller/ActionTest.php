@@ -1,13 +1,42 @@
 <?php
-require_once 'Zend/Controller/Action.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_Controller_ActionTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_ActionTest::main");
 
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Action/Helper/Redirector.php';
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
 class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_ActionTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->_controller = new Zend_Controller_ActionTest_TestController(
@@ -353,6 +382,34 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($redirector, $copy);
         $this->assertTrue($copy instanceof Zend_Controller_Action_Helper_Redirector);
     }
+
+    public function testViewInjectionUsingViewRenderer()
+    {
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('script');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+        $this->assertNotNull($controller->view);
+    }
+
+    public function testRenderUsingViewRenderer()
+    {
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('script');
+        $response = new Zend_Controller_Response_Cli();
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        $controller = new ViewController($request, $response);
+
+        $controller->scriptAction();
+        $this->assertContains('Inside custom/renderScript.php', $response->getBody());
+    }
 }
 
 class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
@@ -424,4 +481,9 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
     {
         $this->_redirect($url, array('code' => $code, 'prependBase' => $prependBase));
     }
+}
+
+// Call Zend_Controller_ActionTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_ActionTest::main") {
+    Zend_Controller_ActionTest::main();
 }

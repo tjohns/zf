@@ -587,6 +587,28 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $body = $this->response->getBody('foo');
         $this->assertContains('Rendered test/foo.php', $body);
     }
+
+    public function testInitDoesNotInitViewWhenNoViewRendererSet()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $this->front->setParam('noViewRenderer', true);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->assertNull($controller->view);
+    }
+
+    public function testPostDispatchDoesNotRenderViewWhenNoViewRendererSet()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $this->front->setParam('noViewRenderer', true);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->postDispatch();
+        $body = $this->response->getBody();
+        $this->assertTrue(empty($body));
+    }
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.

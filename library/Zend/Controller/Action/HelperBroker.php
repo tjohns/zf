@@ -191,8 +191,18 @@ class Zend_Controller_Action_HelperBroker
         }
         
         $helper = self::$_helpers[$name];
-        $helper->setActionController($this->_actionController)
-               ->init();
+
+        $initialize = false;
+        if (null === ($actionController = $helper->getActionController())) {
+            $initialize = true;
+        } elseif ($actionController !== $this->_actionController) {
+            $initialize = true;
+        }
+
+        if ($initialize) {
+            $helper->setActionController($this->_actionController)
+                ->init();
+        }
         
         return $helper;
     }
@@ -203,12 +213,29 @@ class Zend_Controller_Action_HelperBroker
      * @param  string $name 
      * @return boolean
      */
-    public static function hashelper($name)
+    public static function hasHelper($name)
     {
         $name = self::_normalizeHelperName($name);
         return array_key_exists($name, self::$_helpers);
     }
     
+    /**
+     * Remove a particular helper from the broker
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
+    public static function removeHelper($name)
+    {
+        $name = self::_normalizeHelperName($name);
+        if (array_key_exists($name, self::$_helpers)) {
+            unset(self::$_helpers[$name]);
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * _loadHelper()
      *
