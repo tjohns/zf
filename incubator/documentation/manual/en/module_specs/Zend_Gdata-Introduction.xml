@@ -2,11 +2,15 @@
     <title>Introduction to Gdata</title>
     <para>
         Google Data APIs provide programmatic interface to some of Google's
-        online services.
-        Client applications submit queries and data via HTTP, and retrieve
-        results.
+        online services.  The Google data Protocol is based upon the 
+        <ulink url="http://ietfreport.isoc.org/idref/draft-ietf-atompub-protocol/">Atom Publishing Protocol</ulink>
+        and allows client applications to retrieve data matching queries, 
+        post data, update data and delete data using standard HTTP and the 
+        Atom syndication formation.
+
         The Zend_Gdata component is a PHP 5 interface for accessing Google Data
-        from PHP.
+        from PHP.  The Zend_Gdata component also supports accessing other services
+        implementing the Atom Publishing Protocol.  
     </para>
 
     <para>
@@ -22,11 +26,9 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.base">Google Base</link>
-                    provides a search tool for online products,
-                    jobs, events, personal ads, and other types of entries.
-                    People post items and describe them with commonly-named
-                    attributes.
+                    <link linkend="zend.gdata.spreadsheets">Google Spreadsheets</link>
+                    provides an online collaborative spreadsheets tool which can
+                    be used as a simple data store for your applications.
                 </para>
             </listitem>
             <listitem>
@@ -38,14 +40,14 @@
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.calendar">Google Calendar</link>
-                    is an online scheduling and collaboration tool.
+                    <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
+                    allows you to search public source code from many projects.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
-                    allows you to search public source code from many projects.
+                    <link linkend="zend.gdata.notebook">Google Notebook</link>
+                    allows you to view public Notebook content. 
                 </para>
             </listitem>
         </itemizedlist>
@@ -54,8 +56,18 @@
     <note>
         <title>Unsupported services</title>
         <para>
-            Google Data API also supports Google Spreadsheets, but Zend_Gdata
-            does not provide a helper class for Spreadsheets in this release.
+            Google Data API also supports Google Base, Picasa Web Albums, 
+            Google Apps Provisioning, but Zend_Gdata does not provide helper 
+            classes for these products in this release.
+        </para>
+
+        <para>
+            The Google Calendar code is in the process of being finalized for 
+            release, and is currently included in the incubator directory of 
+            the Zend Framework.  As incubator code, stability is not guaranteed.
+            If you wish to use the incubator code, please include the 
+            incubator/library directory in your classpath before, 
+            and in addition to, the core library directory.
         </para>
 
         <para>
@@ -88,11 +100,10 @@
         <title>Dependencies</title>
         <para>
             Zend_Gdata makes use of 
-            <link linkend="zend.feed.introduction">Zend_Feed</link> and
             <link linkend="zend.http.client">Zend_Http_Client</link> to send
             requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a Zend_Feed object in the
-            format of an Atom or RSS feed.
+            Google Data requests is returned as a subclass of the 
+            Zend_Gdata_App_Feed or Zend_Gdata_App_Entry classes.
         </para>
 
         <para>
@@ -107,24 +118,26 @@
         <title>Creating a new Gdata client</title>
 
         <para>
-            Create a new object of class Zend_Gdata or one of the
-            subclasses available that offer helper methods for
+            Create a new object of class Zend_Gdata_App, Zend_Gdata, or one 
+            of the subclasses available that offer helper methods for
             service-specific behavior.
         </para>
 
         <para>
-            The single optional parameter to the Zend_Gdata constructor
+            The single optional parameter to the Zend_Gdata_App constructor
             is an instance of 
             <link linkend="zend.http.client">Zend_Http_Client</link>.
             If you don't pass this parameter, Zend_Gdata creates a default
-            Zend_Http_Client object.
-            Specifying the Zend_Http_Client object allows you to
+            Zend_Http_Client object, which will not have associated
+            credentials to access private feeds.  Specifying the 
+            Zend_Http_Client object also allows you to
             pass configuration options to that client object.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Gdata.php';
-require_once 'Zend/Http/Client.php';
+require_once 'Zend/Loader.php';
+Zend_Loader::loadClass('Zend_Http_Client');
+Zend_Loader::loadClass('Zend_Gdata');
 
 $client = new Zend_Http_Client();
 $client->setConfig( ...options... );
@@ -144,13 +157,30 @@ $gdata = new Zend_Gdata($client);
 
         <para>
             You can specify parameters to customize queries with Zend_Gdata.
-            Some parameters apply only to individual Google Data services.
-            These parameters are documented in later sections for each service.
-            Some parameters apply in a common way to multiple Google Data services.
-            These parameters are described below.
+            Query parameters are specified using subclasses of Zend_Gdata_Query.
+            The Zend_Gdata_Query class includes methods to set all query 
+            parameters used throughout GData services.  Individual services,
+            such as Spreadsheets, also provide query classes to defined 
+            parameters which are custom to the particular service and feeds.
+            Spreadsheets includes a CellQuery class to query the Cell Feed
+            and a ListQuery class to query the List Feed, as different
+            query parameters are applicable to each of those feed types.
+
+            The GData-wide parameters are described below.
         </para>
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    The <code>q</code> parameter specifies a full-text
+                    query.  The value of the parameter is a string.
+                </para>
+                <para>
+                    Set this parameter with the <code>setQuery()</code>
+                    function.
+                </para>
+            </listitem>
+
             <listitem>
                 <para>
                     The <code>alt</code> parameter specifies the feed type.
@@ -222,25 +252,21 @@ $gdata = new Zend_Gdata($client);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata();
-$gdata->setMaxResults(10);
+$query = new Zend_Gdata_Query();
+$query->setMaxResults(10);
 echo $gdata->getMaxResults();   // returns 10
 ?>]]></programlisting>
 
         <para>
             The Zend_Gdata class also implements "magic" getter and
             setter methods, so you can use the name of the parameter
-            as a virtual member of the class.  You can use
-            <code>isset()</code> and <code>unset()</code> on these
-            virtual members.
+            as a virtual member of the class. 
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata();
-$gdata->maxResults = 10;
-echo $gdata->maxResults;        // returns 10
-echo isset($gdata->maxResults); // returns true
-unset($gdata->maxResults);      // clears parameter
+$query = new Zend_Gdata_Query();
+$query->maxResults = 10;
+echo $query->maxResults;        // returns 10
 ?>]]></programlisting>
 
         <para>
@@ -250,8 +276,8 @@ unset($gdata->maxResults);      // clears parameter
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata();
-$gdata->maxResults = 10;
+$query = new Zend_Gdata_Query();
+$query->maxResults = 10;
 // ...get feed...
 
 $gdata->resetParameters();      // clears all parameters
@@ -266,22 +292,19 @@ $gdata->resetParameters();      // clears all parameters
         <para>
             Use the <code>getFeed()</code> function to retrieve
             a feed from a specified URI.
-            This function returns an object of class Zend_Feed.
+            This function returns an instance of class specified
+            as the second argument to getFeed, which defaults to
+            Zend_Gdata_Feed.  
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
-$gdata->setQuery('digital camera');
-$gdata->setMaxResults(10);
-$uri = 'http://www.google.com/base/feeds/snippets'
-    . $gdata->getQueryString();
+$query = new Zend_Gdata_Query();
+$query->setMaxResults(10);
+$uri = 'http://www.blogger.com/feeds/blogID/posts/default' . 
+        $query->getQueryString();
 $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
-
-        <para>
-            See the documentation for <link linkend="zend.feed.introduction">Zend_Feed</link>
-            for more information on how to use this object.
-        </para>
 
         <para>
             See later sections for special functions in each
@@ -302,42 +325,33 @@ $feed = $gdata->getFeed($uri);
         </para>
 
         <para>
-            You are responsible for constructing a string containing
-            the correct XML structure for an entry of the respective
-            Google Data service you are using.  You may use PHP class
-            libraries such as DOM XML or SimpleXML.
+            You can use the data model classes for each service to
+            construct the appropriate entry to post to Google's 
+            services.  The <code>post()</code> function will
+            accept a child of Zend_Gdata_App_Entry as data to
+            post to the service.  The method returns a child
+            of Zend_Gdata_App_Entry which represents the state
+            of the entry as it was returned from the server.
+        </para>
+
+        <para>
+            Alternatively, you could construct the XML structure
+            for an entry as a string and pass the string to the
+            <code>post()</code> function.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata($authenticatedHttpClient);
 
-$xmlString = <<<XML
-<entry xmlns='http://www.w3.org/2005/Atom'
-    xmlns:gd='http://schemas.google.com/g/2005'>
-  <category scheme='http://schemas.google.com/g/2005#kind'
-    term='http://schemas.google.com/g/2005#event'></category>
-  <title type='text'>Tennis with Beth</title>
-  <content type='text'>Meet for a quick lesson.</content>
-  <author>
-    <name>Jo March</name>
-    <email>jo@gmail.com</email>
-  </author>
-  <gd:transparency
-    value='http://schemas.google.com/g/2005#event.opaque'>
-  </gd:transparency>
-  <gd:eventStatus
-    value='http://schemas.google.com/g/2005#event.confirmed'>
-  </gd:eventStatus>
-  <gd:where valueString='Rolling Lawn Courts'></gd:where>
-  <gd:when startTime='2006-04-17T15:00:00.000Z'
-    endTime='2006-04-17T17:00:00.000Z'></gd:when>
-</entry>
-XML;
+$entry = $gdata->newEntry();
+$entry->title = $gdata->newTitle('Playing football at the park');
+$content = $gdata->newContent('We will visit the park and play a few football matches');
+$content->setType('text');
 
-$xml = new SimpleXMLElement($xmlString);
+$entryResult = $gdata->post($entry, 
+        'http://www.blogger.com/feeds/blogID/posts/default');
 
-$myCalendar = 'http://www.google.com/calendar/feeds/default/private/full';
-$gdata->post($xml->asXML(), $myCalendar);
+echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
 ?>]]></programlisting>
 
         <para>
@@ -352,10 +366,15 @@ $gdata->post($xml->asXML(), $myCalendar);
         <title>Deleting entries on Google servers</title>
 
         <para>
-            The Zend_Gdata object has a function <code>delete()</code>
+            Option 1: The Zend_Gdata object has a function <code>delete()</code>
             with which you can delete entries from Google Data
-            services.  Pass the <code>&lt;id&gt;</code> value from
+            services.  Pass the edit URL value from
             a feed entry to the <code>delete()</code> method.
+        </para>
+
+        <para>
+            Option 2: Alternatively, you can call <code>$entry->delete()</code>
+            on an entry retrieved from a Google service.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -364,28 +383,12 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
-    // extract the <id> element
-    $id = $feedEntry->id();
-    $gdata->delete($id);
+    // Option 1 - delete the entry directly
+    $feedEntry->delete();
+    // Option 2 - delete the entry by passing the edit URL to $gdata->delete()
+    $gdata->delete($feedEntry->getEditLink()->href);
 }
 ?>]]></programlisting>
-
-        <para>
-            You can also use the <code>delete()</code> method without
-            a feed object, if you pass a correct URI identifying an
-            entry.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata($authenticatedHttpClient);
-$uri = 'http://www.google.com/calendar/feeds/default/private/entryID';
-$gdata->delete($uri);
-?>]]></programlisting>
-
-        <para>
-            In the above example, replace "<code>entryID</code>" with the
-            ID value for the specific entry you want to delete.
-        </para>
 
         <para>
             To delete entries, you must be using an authenticated
