@@ -76,17 +76,6 @@ define('TESTS_ZEND_GDATA_SPREADSHEETS_SPREADSHEETKEY', 'o01111111111111111111.11
 define('TESTS_ZEND_GDATA_SPREADSHEETS_WORKSHEETID', 'default');
 
 /**
- * Zend_Date tests
- *
- * If the BCMATH_ENABLED property below is false, all arithmetic
- * operations will use ordinary PHP math operators and functions.
- * Otherwise, the bcmath functions will be used for unlimited precision.
- *
- * Edit TestConfiguration.php, not TestConfiguration.php.dist.
- */
-define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', true);
-
-/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
