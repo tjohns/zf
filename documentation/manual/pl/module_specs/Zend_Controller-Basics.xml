@@ -14,8 +14,10 @@
         describes in detail the interactions:
     </para>
 
-    <inlinegraphic width="483" scale="100" align="center" valign="middle"
-        fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    <para>
+        <inlinegraphic width="483" scale="100" align="center" valign="middle"
+            fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    </para>
 
     <para>
         The <code>Zend_Controller</code> workflow is implemented by several
