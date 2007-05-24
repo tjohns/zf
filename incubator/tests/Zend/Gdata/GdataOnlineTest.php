@@ -21,7 +21,7 @@
  */
 
 require_once 'Zend/Http/Client.php';
-require_once 'Zend/Gdata/InvalidArgumentException.php';
+require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
 /**
  * @package Zend_Gdata
@@ -150,7 +150,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $feed = $this->gdata->newFeed();
         try {
             $returnedFeed = $this->gdata->getFeed($feed);
-        } catch (Zend_Gdata_InvalidArgumentException $e) {
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
             // we're expecting to cause an exception here
         }
     }
@@ -160,7 +160,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->newEntry();
         try {
             $returnedEntry = $this->gdata->getEntry($entry);
-        } catch (Zend_Gdata_InvalidArgumentException $e) {
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
             // we're expecting to cause an exception here
         }
     }

@@ -4,9 +4,15 @@ LICENSE.txt
 demos/Zend/Gdata
 incubator/demos/Zend/Gdata
 
-library/Zend/Loader.php
-library/Zend/Version.php
 library/Zend/Exception.php
+library/Zend/Http/Client
+library/Zend/Http/Client.php
+library/Zend/Loader.php
+library/Zend/Uri
+library/Zend/Uri.php
+library/Zend/Validate/Hostname
+library/Zend/Validate/Hostname.php
+library/Zend/Version.php
 
 incubator/documentation/manual/en/html
 incubator/documentation/manual/en/module_specs/Zend_Gdata_AuthSub.xml
