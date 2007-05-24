@@ -228,7 +228,8 @@ $entry->cell = $cell;
             Each service class in the inheritance tree is responsible for
             registering the appropriate 'packages' (directories) which are to
             be searched when calling the magic factory method.
-        <para>
+        </para>
+    </sect2>
 
 
     <sect2 id="zend.gdata.introduction.authentication">
