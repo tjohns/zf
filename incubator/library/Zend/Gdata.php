@@ -106,7 +106,7 @@ class Zend_Gdata extends Zend_Gdata_App
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
-            require_once 'Zend/Gdata/InvalidArgumentException.php';
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');
@@ -127,7 +127,7 @@ class Zend_Gdata extends Zend_Gdata_App
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
-            require_once 'Zend/Gdata/InvalidArgumentException.php';
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');
