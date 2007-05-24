@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Data model class to represent a location 
+ * Data model class to represent a location (gd:where element)
  *
  * @category   Zend
  * @package    Zend_Gdata

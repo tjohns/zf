@@ -35,8 +35,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $eventFeedText = file_get_contents(
                 'Zend/Gdata/Calendar/_files/TestDataEventFeedSample1.xml',
                 true);
-        $this->eventFeed = new Zend_Gdata_Calendar_EventFeed(null, 
-                $eventFeedText);
+        $this->eventFeed = new Zend_Gdata_Calendar_EventFeed($eventFeedText);
     }
 
     public function testEventFeedToAndFromString()
@@ -49,7 +48,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($entryCount > 0);
 
         /* Grab XML from $this->eventFeed and convert back to objects */ 
-        $newEventFeed = new Zend_Gdata_Calendar_EventFeed(null, 
+        $newEventFeed = new Zend_Gdata_Calendar_EventFeed( 
                 $this->eventFeed->saveXML());
         $newEntryCount = 0;
         foreach ($newEventFeed as $entry) {

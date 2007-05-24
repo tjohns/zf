@@ -69,9 +69,8 @@ abstract class Zend_Gdata_App_Base
         'app'       => 'http://purl.org/atom/app#'
     );
 
-    public function __construct($text = null)
+    public function __construct()
     {
-        $this->_text = $text;
     }
 
     public function getText($trim = true)

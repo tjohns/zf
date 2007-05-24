@@ -49,9 +49,9 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
      */
     protected $_feedClassName = 'Zend_Gdata_Calendar_ListFeed';
 
-    public function __construct($uri = null, $element = null)
+    public function __construct($element = null)
     {
-        parent::__construct($uri, $element);
+        parent::__construct($element);
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }

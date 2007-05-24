@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Extension/FeedLink.php';
 
 /**
- * Concrete class for working with Atom entries.
+ * Represents the gd:comments element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -44,6 +44,13 @@ class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
     protected $_rel = null; 
     protected $_feedLink = null; 
 
+    public function __construct($rel = null, $feedLink = null)
+    {
+        parent::__construct();
+        $this->_rel = $rel;
+        $this->_feedLink = $feedLink;
+    }
+    
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);

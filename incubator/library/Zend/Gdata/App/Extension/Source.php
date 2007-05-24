@@ -30,8 +30,6 @@ require_once 'Zend/Gdata/App/Entry.php';
 require_once 'Zend/Gdata/App/FeedSourceParent.php';
 
 /**
- * Atom feed class
- *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)

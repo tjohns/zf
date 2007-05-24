@@ -31,7 +31,7 @@ class Zend_Gdata_Spreadsheets_ListFeedTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->listFeed = new Zend_Gdata_Spreadsheets_ListFeed(null,
+        $this->listFeed = new Zend_Gdata_Spreadsheets_ListFeed(
                 file_get_contents('Zend/Gdata/Spreadsheets/_files/TestDataListFeedSample1.xml'),
                 true);
     }

@@ -24,12 +24,28 @@
  */
 require_once 'Zend/Gdata/App/Extension.php';
 
+/**
+ * Represents the atom:generator element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Gdata_App_Extension_Generator extends Zend_Gdata_App_Extension
 {
 
     protected $_rootElement = 'generator';
     protected $_uri = null; 
     protected $_version = null; 
+
+    public function __construct($text = null, $uri = null, $version = null)
+    {
+        parent::__construct();
+        $this->_text = $text;
+        $this->_uri = $uri;
+        $this->_version = $version;
+    }
 
     public function getDOM($doc = null)
     {
@@ -92,4 +108,5 @@ class Zend_Gdata_App_Extension_Generator extends Zend_Gdata_App_Extension
         $this->_version = $value;
         return $this;
     }
+
 }

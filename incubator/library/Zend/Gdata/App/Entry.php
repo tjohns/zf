@@ -208,7 +208,7 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
             }
             // Update internal properties using $client->responseBody;
             $entryClassName = get_class($this);
-            $returnEntry = new $entryClassName(null, $response->getBody());
+            $returnEntry = new $entryClassName($response->getBody());
             $returnEntry->setHttpClient($client);
             return $returnEntry;
         } else {

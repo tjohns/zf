@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Feed.php';
 
 /**
- * Concrete class for working with Atom entries.
+ * Represents the gd:originalEvent element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -43,6 +43,13 @@ class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
     protected $_rootElement = 'gd:originalEvent';
     protected $_id = null; 
     protected $_href = null; 
+
+    public function __construct($id = null, $href = null)
+    {
+        parent::__construct();
+        $this->_id = $id;
+        $this->_href = $href;
+    }
 
     public function getDOM($doc = null)
     {

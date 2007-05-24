@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Extension/Reminder.php';
 
 /**
- * Concrete class for working with Atom entries.
+ * Represents the gd:when element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -45,11 +45,13 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     protected $_startTime = null;
     protected $_endTime = null;
 
-    public function __construct($startTime = null, $endTime = null)
+    public function __construct($startTime = null, $endTime = null, 
+            $reminder = null)
     {
         parent::__construct();
-        $this->setStartTime($startTime);
-        $this->setEndTime($endTime);
+        $this->_startTime = $startTime;
+        $this->_endTime = $endTime;
+        $this->_reminder = $reminder;
     }
 
     public function getDOM($doc = null)

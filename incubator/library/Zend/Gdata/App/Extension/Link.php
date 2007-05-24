@@ -44,9 +44,9 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     protected $_length = null;
 
     public function __construct($href = null, $rel = null, $type = null,
-            $hrefLang = null, $title = null, $length = null,  $text = null)
+            $hrefLang = null, $title = null, $length = null)
     {
-        parent::__construct($text);
+        parent::__construct();
         $this->_href = $href;
         $this->_rel = $rel;
         $this->_type = $type;

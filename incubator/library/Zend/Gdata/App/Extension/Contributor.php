@@ -24,6 +24,14 @@
  */
 require_once 'Zend/Gdata/App/Extension/Person.php';
 
+/**
+ * Represents the atom:contributor element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Gdata_App_Extension_Contributor extends Zend_Gdata_App_Extension_Person
 {
 

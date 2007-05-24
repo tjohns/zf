@@ -27,15 +27,21 @@ require_once 'Zend/Gdata/App/Extension.php';
 /**
  * Class that represents elements which were not handled by other parsing
  * code in the library.  
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_App_Extension_Element extends Zend_Gdata_App_Extension
 {
 
     public function __construct($rootElement=null, $rootNamespace=null, $rootNamespaceURI=null, $text=null){
-        parent::__construct($text);
+        parent::__construct();
         $this->_rootElement = $rootElement;
         $this->_rootNamespace = $rootNamespace;
         $this->_rootNamespaceURI = $rootNamespaceURI;
+        $this->_text = $text;
     }
 
     public function transferFromDOM($node)

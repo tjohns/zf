@@ -78,13 +78,12 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      */
     protected $_itemsPerPage = null;
 
-    public function __construct($uri = null, $element = null)
+    public function __construct($element = null)
     {
         foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct($uri, $element);
-//var_dump($this->namespaces);
+        parent::__construct($element);
     }
 
     public function getDOM($doc = null)

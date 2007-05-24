@@ -93,9 +93,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
 
     /**
      * Constructs a Feed or Entry
-     * TODO: Determine if we should have the uri param here
      */
-    public function __construct($uri = null, $element = null)
+    public function __construct($element = null)
     {
         if (!($element instanceof DOMElement)) {
             if ($element) {

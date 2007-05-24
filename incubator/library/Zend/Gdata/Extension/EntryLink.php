@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Entry.php';
 
 /**
- * Concrete class for working with Atom entries.
+ * Represents the gd:entryLink element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -45,6 +45,16 @@ class Zend_Gdata_Extension_EntryLink extends Zend_Gdata_Extension
     protected $_readOnly = null; 
     protected $_rel = null; 
     protected $_entry = null; 
+
+    public function __construct($href = null, $readOnly = null, 
+            $rel = null, $entry = null)
+    {
+        parent::__construct();
+        $this->_href = $href;
+        $this->_readOnly = $readOnly;
+        $this->_rel = $rel;
+        $this->_entry = $entry;
+    }
 
     public function getDOM($doc = null)
     {

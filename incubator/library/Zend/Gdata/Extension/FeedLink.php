@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Feed.php';
 
 /**
- * Concrete class for working with Atom entries.
+ * Represents the gd:feedLink element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -46,6 +46,17 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
     protected $_readOnly = null; 
     protected $_rel = null; 
     protected $_feed = null; 
+
+    public function __construct($countHint = null, $href = null, 
+            $readOnly = null, $rel = null, $feed = null)
+    {
+        parent::__construct();
+        $this->_countHint = $countHint;
+        $this->_href = $href;
+        $this->_readOnly = $readOnly;
+        $this->_rel = $rel;
+        $this->_feed = $feed;
+    }
 
     public function getDOM($doc = null)
     {

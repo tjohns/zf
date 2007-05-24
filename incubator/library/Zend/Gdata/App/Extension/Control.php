@@ -24,12 +24,26 @@
  */
 require_once 'Zend/Gdata/App/Extension.php';
 
+/**
+ * Represents the app:control element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
 {
 
     protected $_rootNamespace = 'app';
     protected $_rootElement = 'control';
     protected $_draft = null;
+
+    public function __construct($draft = null)
+    {
+        parent::__construct();
+        $this->_draft = $draft;
+    }
 
     public function getDOM($doc = null)
     {

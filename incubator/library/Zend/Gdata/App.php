@@ -268,7 +268,7 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception("DOMDocument cannot parse XML: $php_errormsg");
         }
-        $feed = new $className(null, $string);
+        $feed = new $className($string);
         $feed->setHttpClient(self::getstaticHttpClient());
         return $feed;
     }
@@ -382,7 +382,7 @@ class Zend_Gdata_App
         }
         $response = $this->post($rawData, $uri);
         
-        $returnEntry = new $className(null, $response->getBody());
+        $returnEntry = new $className($response->getBody());
         $returnEntry->setHttpClient(self::getstaticHttpClient());
         return $returnEntry;
     }
@@ -427,7 +427,7 @@ class Zend_Gdata_App
     public function put($data)
     {
         if (is_string($data)) {
-            $entry = new Zend_Gdata_App_Entry(null, $data);
+            $entry = new Zend_Gdata_App_Entry($data);
             $entry->setHttpClient($this->_httpClient); 
             return $entry->save();
         } elseif ($data instanceof Zend_Gdata_App_Entry) {

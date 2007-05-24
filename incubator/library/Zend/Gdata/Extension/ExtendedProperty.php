@@ -43,8 +43,8 @@ class Zend_Gdata_Extension_ExtendedProperty extends Zend_Gdata_Extension
     public function __construct($name = null, $value = null)
     {
         parent::__construct();
-        $this->setName($name); 
-        $this->setValue($value); 
+        $this->_name = $name;
+        $this->_value = $value;
     }
 
     public function getDOM($doc = null)

@@ -34,16 +34,19 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Extension extends Zend_Gdata_App_Extension
 {
+
     protected $_rootNamespace = 'gd';
 
-    public function __construct($text = null)
+    public function __construct()
     {
+        /* NOTE: namespaces must be registered before calling parent */
         $this->registerNamespace('opensearch', 
                 'http://a9.com/-/spec/opensearchrss/1.0/');
         $this->registerNamespace('rss', 
                 'http://blogs.law.harvard.edu/tech/rss');
         $this->registerNamespace('gd', 
                 'http://schemas.google.com/g/2005');
-        parent::__construct($text);
+        parent::__construct();
     }
+
 }

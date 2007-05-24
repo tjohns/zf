@@ -108,9 +108,7 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
         case $this->lookupNamespace('atom') . ':' . 'entry':
-            $newEntry = new $this->_entryClassName(
-                null,
-                $child);
+            $newEntry = new $this->_entryClassName($child);
             $newEntry->setHttpClient($this->getHttpClient());
             $this->_entry[] = $newEntry;
             break;

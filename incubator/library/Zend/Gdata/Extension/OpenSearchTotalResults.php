@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Data model class to represent a location 
+ * Represents the openSearch:totalResults element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -37,5 +37,11 @@ class Zend_Gdata_Extension_OpenSearchTotalResults extends Zend_Gdata_Extension
 
     protected $_rootElement = 'totalResults';
     protected $_rootNamespace = 'opensearch';
+
+    public function __construct($text = null)
+    {
+        parent::__construct();
+        $this->_text = $text;
+    }
 
 }

@@ -24,10 +24,23 @@
  */
 require_once 'Zend/Gdata/App/Extension.php';
 
+/**
+ * Represents the atom:uri element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Gdata_App_Extension_Uri extends Zend_Gdata_App_Extension
 {
 
     protected $_rootElement = 'uri';
-    protected $_rootUrispace = 'atom';
+
+    public function __construct($text = null)
+    {
+        parent::__construct();
+        $this->_text = $text;
+    }
 
 }

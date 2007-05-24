@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Data model class for the gd:eventStatus element 
+ * Represents the gd:eventStatus element 
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -37,6 +37,12 @@ class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
 
     protected $_rootElement = 'gd:eventStatus';
     protected $_value = null;
+
+    public function __construct($value = null)
+    {
+        parent::__construct();
+        $this->_value = $value;
+    }
 
     public function getDOM($doc = null)
     {

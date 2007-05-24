@@ -39,6 +39,14 @@ require_once 'Zend/Gdata/App/Extension/Email.php';
  */
 require_once 'Zend/Gdata/App/Extension/Uri.php';
 
+/**
+ * Base class for people (currently used by atom:author, atom:contributor)
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
 {
 
@@ -46,6 +54,14 @@ abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
     protected $_name = null;
     protected $_email = null;
     protected $_uri = null;
+
+    public function __construct($name = null, $email = null, $uri = null)
+    {
+        parent::__construct();
+        $this->_name = $name;
+        $this->_email = $email;
+        $this->_uri = $uri;
+    }
 
     public function getDOM($doc = null)
     {

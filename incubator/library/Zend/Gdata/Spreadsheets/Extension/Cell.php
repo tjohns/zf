@@ -60,7 +60,8 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct($text);
+        parent::__construct();
+        $this->_text = $text;
         $this->_row = $row; 
         $this->_col = $col; 
         $this->_inputValue = $inputValue; 

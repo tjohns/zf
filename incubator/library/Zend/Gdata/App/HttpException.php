@@ -57,6 +57,12 @@ class Zend_Gdata_App_HttpException extends Zend_Gdata_App_Exception
         return $this->_httpClientException;
     }
 
+    public function setHttpClientException($value)
+    {
+        $this->_httpClientException = $value;
+        return $this;
+    }
+
     public function setResponse($response)
     {
         $this->_response = $response;

@@ -24,9 +24,23 @@
  */
 require_once 'Zend/Gdata/Extension.php';
 
+/**
+ * Represents the gd:recurrence element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Gdata_Extension_Recurrence extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'recurrence';
+
+    public function __construct($text = null)
+    {
+        parent::__construct();
+        $this->_text = $text;
+    }
 
 }

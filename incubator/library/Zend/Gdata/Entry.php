@@ -37,9 +37,9 @@ class Zend_Gdata_Entry extends Zend_Gdata_App_Entry
 
     protected $_entryClassName = 'Zend_Gdata_Entry';
 
-    public function __construct($uri = null, $element = null)
+    public function __construct($element = null)
     {
-        parent::__construct($uri, $element);
+        parent::__construct($element);
         foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri); 
         }

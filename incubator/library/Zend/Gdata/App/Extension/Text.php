@@ -24,15 +24,27 @@
  */
 require_once 'Zend/Gdata/App/Extension.php';
 
-/*
+/**
  * Abstract class for data models that require only text and type-- such as:
  * title, summary, etc.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Gdata_App_Extension_Text extends Zend_Gdata_App_Extension
 {
 
     protected $_rootElement = null; 
     protected $_type = 'text';
+
+    public function __construct($text = null, $type = 'text')
+    {
+        parent::__construct();
+        $this->_text = $text;
+        $this->_type = $type;
+    }
 
     public function getDOM($doc = null)
     {
