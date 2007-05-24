@@ -9,8 +9,10 @@
         Le diagramme suivant décrit le déroulement des opérations, et ce qui suit décrit en détail les interactions :
     </para>
 
-    <inlinegraphic width="483" scale="100" align="center" valign="middle"
-        fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    <para>
+        <inlinegraphic width="483" scale="100" align="center" valign="middle"
+            fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    </para>
 
     <para>
         Le déroulement des opérations de <code>Zend_Controller</code> est implémenté par plusieurs composants. Même s'il n'est pas nécessaire de comprendre complètement les détails de tous ces composants pour employer le système, avoir une bonne connaissance du fonctionnement du processus est utile.
