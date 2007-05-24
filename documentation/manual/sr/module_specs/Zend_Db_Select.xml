@@ -48,6 +48,16 @@
             </listitem>
         </itemizedlist>
 
+        <para>
+            Using Zend_Db_Select is not mandatory.  For very simple SELECT
+            queries, it is usually simpler to specify the entire SQL query
+            as a string and execute it using Adapter methods like
+            <code>query()</code> or <code>fetchAll()</code>.  Using
+            Zend_Db_Select is helpful if you need to assemble a SELECT
+            query procedurally, or based on conditional logic in your
+            application.
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.select.creating">
