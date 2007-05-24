@@ -53,6 +53,7 @@ class Zend_Gdata_Query
 
     /**
      * Base URL
+     * TODO: Add setters and getters
      *
      * @var string
      */
