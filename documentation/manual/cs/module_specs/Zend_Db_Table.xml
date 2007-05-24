@@ -8,7 +8,7 @@
 
         <para>
             The Zend_Db_Table class is an object-oriented
-            interface to database tables.  It provides method for
+            interface to database tables.  It provides methods for
             many common operations on tables.  The base class is
             extensible, so you can add custom logic.
         </para>
@@ -26,40 +26,9 @@
         <title>Defining a Table Class</title>
 
         <para>
-            For each table in your database you want to access,
+            For each table in your database that you want to access,
             define a class that extends Zend_Db_Table_Abstract.
         </para>
-
-        <para>
-            In this section, we use an example database that tracks
-            bugs in a software development project.
-            The following SQL data definition language pseudocode
-            describes a table in this example database.
-        </para>
-
-        <programlisting><![CDATA[
-CREATE TABLE bugs (
-  bug_id          INT PRIMARY KEY AUTO_INCREMENT,
-  created_on      DATETIME,
-  updated_on      DATETIME
-  bug_description VARCHAR,
-  bug_status      VARCHAR REFERENCES bug_statuses(bug_status)
-);
-
-CREATE TABLE bug_status (
-  bug_status      VARCHAR PRIMARY KEY
-);
-
-CREATE TABLE products (
-  product_id      VARCHAR PRIMARY KEY
-);
-
-CREATE TABLE bugs_products (
-  bug_id          INT REFERENCES bugs(bug_id),
-  product_id      VARCHAR REFERENCES products(product_id),
-  PRIMARY KEY(bug_id, product_id)
-);
-]]></programlisting>
 
         <sect3 id="zend.db.table.defining.table-schema">
 
@@ -80,8 +49,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 }
-
-?>]]></programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -182,8 +150,8 @@ class Bugs extends Zend_Db_Table_Abstract
                 When you create an instance of a Table class, the constructor
                 calls a set of protected methods that initialize metadata
                 for the table.  You can extend any of these methods to define
-                metadata explicitly.  Remember to call the parent's method
-                when you are done.
+                metadata explicitly.  Remember to call the method of the same
+                name in the parent class at the end of your method.
             </para>
 
             <example id="zend.db.table.defining.setup.example">
@@ -608,7 +576,7 @@ $table->update($data, $where);
 
         <para>
             Since the table <code>update()</code> method proxies to the database adapter
-            <link linkend="zend.db.adapter.update"><code>update()</code></link> method, the second argument can be an
+            <link linkend="zend.db.adapter.write.update"><code>update()</code></link> method, the second argument can be an
             array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
             operator.
         </para>
@@ -657,7 +625,7 @@ $table->delete($where);
 
         <para>
             Since the table <code>delete()</code> method proxies to the database adapter
-            <link linkend="zend.db.adapter.delete"><code>delete()</code></link> method, the second argument can be an
+            <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link> method, the second argument can be an
             array of SQL expressions. The expressions are combined as Boolean terms using an <code>AND</code>
             operator.
         </para>
@@ -732,11 +700,21 @@ $rows = $table->find(array(1234, 5678));
         <para>
             To find multiple rows from a table with a compound primary key,
             provide an array for each of the arguments.  All of these arrays
-            must have the same number of elements.
+            must have the same number of elements.  The values in each array
+            are formed into tuples in order; for example, the first element in
+            all the array arguments define the first compound primary key
+            value, then the second elements of all the arrays define the second
+            compound primary key value, and so on.
         </para>
 
         <example id="zend.db.table.find.example-compound">
             <title>Example of finding rows by compound primary key values</title>
+            <para>
+                The call to <code>find()</code> below to match multiple rows
+                can match two rows in the database.  The first row must have
+                primary key value (1234, 'ABC'), and the second row must have
+                primary key value (5678, 'DEF').
+            </para>
             <programlisting role="php"><![CDATA[<?php
 
 class BugsProducts extends Zend_Db_Table_Abstract
