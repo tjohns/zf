@@ -39,13 +39,6 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $params = $this->_util->getParams();
 
         try {
-            $db = new Zend_Db_Adapter_Db2('scalar');
-            $db->getConnection(); // force a connection
-            $this->fail('Expected to catch error');
-        } catch (Exception $e) {
-        }
-
-        try {
             $p = $params;
             unset($p['password']);
             $db = new Zend_Db_Adapter_Db2($p);
