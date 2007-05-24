@@ -155,7 +155,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertNull($this->helper->getScriptAction());
 
         $scriptPaths = $this->helper->view->getScriptPaths();
-        $this->assertEquals($count, count($scriptPaths));
+        $this->assertEquals($count, count($scriptPaths), var_export($scriptPaths, 1));
         $this->assertContains($module, $scriptPaths[0]);
 
         $helperPaths = $this->helper->view->getHelperPaths();
@@ -190,7 +190,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->_checkDefaults();
     }
 
-    public function testInitViewCannotBeCalledTwiceForSameAction()
+    public function testInitViewWillNotRegisterSameViewPathTwice()
     {
         $this->request->setModuleName('foo')
                       ->setControllerName('index');
@@ -198,7 +198,9 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->setActionController($controller);
 
         $this->helper->initView();
-        $this->helper->initView('/foo/bar/baz', 'Foo_Bar_Baz', array('encoding' => 'ISO-8858-1'));
+
+        $moduleDir = dirname($this->front->getControllerDirectory('foo'));
+        $this->helper->initView($moduleDir . '/views', 'Foo', array('encoding' => 'ISO-8858-1'));
         $this->_checkDefaults();
     }
 

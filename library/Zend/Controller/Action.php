@@ -158,6 +158,10 @@ abstract class Zend_Controller_Action
      */
     public function initView()
     {
+        if (!$this->getInvokeArg('noViewRenderer') && $this->_helper->hasHelper('viewRenderer')) {
+            return $this->view;
+        }
+
         require_once 'Zend/View/Interface.php';
         if (isset($this->view) && ($this->view instanceof Zend_View_Interface)) {
             return $this->view;
@@ -199,6 +203,10 @@ abstract class Zend_Controller_Action
      */
     public function render($action = null, $name = null, $noController = false)
     {
+        if (!$this->getInvokeArg('noViewRenderer') && $this->_helper->hasHelper('viewRenderer')) {
+            return $this->_helper->viewRenderer->render($action, $name, $noController);
+        }
+
         $view   = $this->initView();
         $script = $this->getViewScript($action, $noController);
 
@@ -226,6 +234,10 @@ abstract class Zend_Controller_Action
      */
     public function renderScript($script, $name = null)
     {
+        if (!$this->getInvokeArg('noViewRenderer') && $this->_helper->hasHelper('viewRenderer')) {
+            return $this->_helper->viewRenderer->renderScript($script, $name);
+        }
+
         $view = $this->initView();
         $this->getResponse()->appendBody(
             $view->render($script),
@@ -243,8 +255,14 @@ abstract class Zend_Controller_Action
      * @return string
      * @throws Zend_Controller_Exception with bad $action
      */
-    public function getViewScript($action = null, $noController = false)
+    public function getViewScript($action = null, $noController = null)
     {
+        if (!$this->getInvokeArg('noViewRenderer') && $this->_helper->hasHelper('viewRenderer')) {
+            $viewRenderer = $this->_helper->getHelper('viewRenderer');
+            $viewRenderer->setNoController($noController);
+            return $viewRenderer->getViewScript($action);
+        }
+
         $request = $this->getRequest();
         if (null === $action) {
             $action = $request->getActionName();

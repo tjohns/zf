@@ -160,6 +160,21 @@ class Zend_Controller_Action_HelperBroker
             $helper->postDispatch();
         }        
     }
+
+    /**
+     * Normalize helper name for lookups
+     * 
+     * @param  string $name 
+     * @return string
+     */
+    protected static function _normalizeHelperName($name)
+    {
+        if (strpos($name, '_') !== false) {
+            $name = str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+        }
+        
+        return ucfirst($name);
+    }
     
     /**
      * getHelper() - get helper by name
@@ -169,22 +184,30 @@ class Zend_Controller_Action_HelperBroker
      */
     public function getHelper($name)
     {
-        if (strpos($name, '_') !== false) {
-            $name = str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
-        }
-        
-        $name = ucfirst($name);
+        $name = self::_normalizeHelperName($name);
         
         if (!array_key_exists($name, self::$_helpers)) {
-            $this->_loadHelper($name);
+            self::_loadHelper($name);
         }
         
         $helper = self::$_helpers[$name];
-        $helper->setActionController($this->_actionController);
+        $helper->setActionController($this->_actionController)
+               ->init();
         
         return $helper;
     }
     
+    /**
+     * Is a particular helper loaded in the broker?
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
+    public static function hashelper($name)
+    {
+        $name = self::_normalizeHelperName($name);
+        return array_key_exists($name, self::$_helpers);
+    }
     
     /**
      * _loadHelper()
@@ -192,7 +215,7 @@ class Zend_Controller_Action_HelperBroker
      * @param  string $name
      * @return void
      */
-    protected function _loadHelper($name)
+    protected static function _loadHelper($name)
     {
         $file = $name . '.php';
         

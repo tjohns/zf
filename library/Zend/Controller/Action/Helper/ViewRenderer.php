@@ -73,6 +73,12 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     public $view;
 
     /**
+     * Word delimiters
+     * @var array
+     */
+    protected $_delimiters;
+
+    /**
      * Front controller instance
      * @var Zend_Controller_Front
      */
@@ -111,10 +117,22 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_scriptAction    = null;
 
     /**
-     * Flag: has the view been initialized?
-     * @var boolean
+     * View object basePath
+     * @var string
      */
-    protected $_viewInitialized = false;
+    protected $_viewBasePathSpec = ':moduleDir/views';
+
+    /**
+     * View script path specification string
+     * @var string
+     */
+    protected $_viewScriptPathSpec = ':controller/:action.:suffix';
+
+    /**
+     * View script path specification string, minus controller segment
+     * @var string
+     */
+    protected $_viewScriptPathNoControllerSpec = ':action.:suffix';
 
     /**
      * View script suffix
@@ -196,13 +214,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             return '.' . DIRECTORY_SEPARATOR . 'views';
         }
 
-        $front      = $this->getFrontController();
-        $modulePath = $front->getControllerDirectory($this->getRequest()->getModuleName());
-        if (null === $modulePath) {
-            throw new Zend_Controller_Action_Exception('Cannot determine view base path: invalid module "' . $module . '"in request');
-
-        }
-        $path = realpath($modulePath . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views');
+        $path = $this->_translateSpec($this->getViewBasePathSpec());
         return $path;
     }
 
@@ -255,25 +267,33 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function initView($path = null, $prefix = null, array $options = array())
     {
-        if ($this->_viewInitialized) {
-            return;
-        }
-
-        $this->_viewInitialized = true;
-
         if (null === $this->view) {
             $this->setView(new Zend_View());
         }
 
-        if (null === $path) {
+        if (empty($path)) {
             $path = $this->_getBasePath();
+            if (empty($path)) {
+                throw new Zend_Controller_Action_Exception('ViewRenderer initialization failed: retrieved view base path is empty');
+            }
         }
 
         if (null === $prefix) {
             $prefix = $this->_generateDefaultPrefix();
         }
 
-        $this->view->addBasePath($path, $prefix);
+        $currentPaths = $this->view->getScriptPaths();
+        $path         = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+        $pathExists   = false;
+        foreach ($currentPaths as $tmpPath) {
+            if (strstr($tmpPath, $path)) {
+                $pathExists = true;
+                break;
+            }
+        }
+        if (!$pathExists) {
+            $this->view->addBasePath($path, $prefix);
+        }
 
         $this->_noRender        = false;
         $this->_responseSegment = null;
@@ -288,13 +308,135 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
-     * preDispatch - initialize view
+     * init - initialize view
      * 
      * @return void
      */
-    public function preDispatch()
+    public function init()
     {
+        if ($this->getFrontController()->getParam('noViewRenderer')) {
+            return;
+        }
+
         $this->initView();
+    }
+
+    /**
+     * Set view basePath specification
+     *
+     * Specification can contain one or more of the following:
+     * - :moduleDir - current module directory
+     * - :controller - name of current controller in the request
+     * - :action - name of current action in the request
+     * - :module - name of current module in the request
+     * 
+     * @param  string $path 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setViewBasePathSpec($path)
+    {
+        $this->_viewBasePathSpec = (string) $path;
+        return $this;
+    }
+
+    /**
+     * Retrieve the current view basePath specification string
+     * 
+     * @return string
+     */
+    public function getViewBasePathSpec()
+    {
+        return $this->_viewBasePathSpec;
+    }
+
+    /**
+     * Set view script path specification
+     *
+     * Specification can contain one or more of the following:
+     * - :moduleDir - current module directory
+     * - :controller - name of current controller in the request
+     * - :action - name of current action in the request
+     * - :module - name of current module in the request
+     * 
+     * @param  string $path 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setViewScriptPathSpec($path)
+    {
+        $this->_viewScriptPathSpec = (string) $path;
+        return $this;
+    }
+
+    /**
+     * Retrieve the current view script path specification string
+     * 
+     * @return string
+     */
+    public function getViewScriptPathSpec()
+    {
+        return $this->_viewScriptPathSpec;
+    }
+
+    /**
+     * Set view script path specification (no controller variant)
+     *
+     * Specification can contain one or more of the following:
+     * - :moduleDir - current module directory
+     * - :controller - name of current controller in the request
+     * - :action - name of current action in the request
+     * - :module - name of current module in the request
+     *
+     * :controller will likely be ignored in this variant.
+     * 
+     * @param  string $path 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setViewScriptPathNoControllerSpec($path)
+    {
+        $this->_viewScriptPathNoControllerSpec = (string) $path;
+        return $this;
+    }
+
+    /**
+     * Retrieve the current view script path specification string (no controller variant)
+     * 
+     * @return string
+     */
+    public function getViewScriptPathNoControllerSpec()
+    {
+        return $this->_viewScriptPathNoControllerSpec;
+    }
+
+    /**
+     * Get a view script based on an action and/or other variables
+     *
+     * Uses values found in current request if no values passed in $vars.
+     *
+     * If {@link $_noController} is set, uses {@link $_viewScriptPathNoControllerSpec};
+     * otherwise, uses {@link $_viewScriptPathSpec}.
+     * 
+     * @param  string $action 
+     * @param  array $vars 
+     * @return string
+     */
+    public function getViewScript($action = null, array $vars = array())
+    {
+        $request = $this->getRequest();
+        if ((null === $action) && (!isset($vars['action']))) {
+            $action = $this->getScriptAction();
+            if (null === $action) {
+                $action = $request->getActionName();
+            }
+            $vars['action'] = $action;
+        } elseif (null !== $action) {
+            $vars['action'] = $action;
+        }
+
+        $path = ($this->getNoController())
+              ? $this->_translateSpec($this->getViewScriptPathNoControllerSpec(), $vars)
+              : $this->_translateSpec($this->getViewScriptPathSpec(), $vars);
+
+        return $path;
     }
 
     /**
@@ -442,13 +584,150 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * @param  boolean $noController Whether or not to render within a subdirectory named after the controller
      * @return Zend_Controller_Action_Helper_ViewRenderer
      */
-    public function setRender($action = null, $name = null, $noController = false)
+    public function setRender($action = null, $name = null, $noController = null)
     {
-        $this->setScriptAction($action)
-             ->setResponseSegment($name)
-             ->setNoController($noController);
+        if (null !== $action) {
+            $this->setScriptAction($action);
+        }
+
+        if (null !== $name) {
+            $this->setResponseSegment($name);
+        }
+
+        if (null !== $noController) {
+            $this->setNoController($noController);
+        }
 
         return $this;
+    }
+
+    /**
+     * Inject values into a spec string
+     *
+     * Allowed variables are:
+     * - :moduleDir - current module directory
+     * - :module - current module name
+     * - :controller - current controller name
+     * - :action - current action name
+     * - :suffix - view script file suffix
+     * 
+     * @param  string $spec 
+     * @param  array $vars 
+     * @return string
+     */
+    protected function _translateSpec($spec, array $vars = array())
+    {
+        $front      = $this->getFrontController();
+        $request    = $this->getRequest();
+        $module     = $request->getModuleName();
+        $controller = $request->getControllerName();
+        $action     = $request->getActionName();
+        $suffix     = $this->getViewSuffix();
+
+        // Need to get default module name if null returned, so that we get a 
+        // controller directory
+        if (null === $module) {
+            $module = $front->getDispatcher()->getDefaultModule();
+        }
+        $moduleDir  = $front->getControllerDirectory($module);
+        if ((null === $moduleDir) || is_array($moduleDir)) {
+            throw new Zend_Controller_Action_Exception('ViewRenderer cannot locate module directory');
+        }
+        $moduleDir = dirname($moduleDir);
+
+        foreach ($vars as $key => $value) {
+            switch ($key) {
+                case 'module':
+                case 'controller':
+                case 'action':
+                case 'moduleDir':
+                case 'suffix':
+                    $$key = (string) $value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // Module, controller, and action names need normalized delimiters
+        if (null === $this->_delimiters) {
+            $dispatcher        = $front->getDispatcher();
+            $wordDelimiters    = $dispatcher->getWordDelimiter();
+            $pathDelimiters    = $dispatcher->getPathDelimiter();
+            $this->_delimiters = array_unique(array_merge($wordDelimiters, (array) $pathDelimiters));
+        }
+
+        $replacements = array(
+            ':moduleDir'  => $moduleDir,
+            ':module'     => str_replace($this->_delimiters, '_', $module),
+            ':controller' => str_replace($this->_delimiters, '_', $controller),
+            ':action'     => str_replace($this->_delimiters, '_', $action),
+            ':suffix'     => $suffix
+        );
+        $value = str_replace(array_keys($replacements), array_values($replacements), $spec);
+        return $value;
+    }
+
+    /**
+     * Render a view script (optionally to a named response segment)
+     *
+     * Sets the noRender flag to true when called.
+     * 
+     * @param  string $script 
+     * @param  string $name 
+     * @return void
+     */
+    public function renderScript($script, $name = null)
+    {
+        if (null === $name) {
+            $name = $this->getResponseSegment();
+        }
+
+        $this->getResponse()->appendBody(
+            $this->view->render($script),
+            $name
+        );
+
+        $this->setNoRender();
+    }
+
+    /**
+     * Render a view based on path specifications
+     *
+     * Renders a view based on the view script path specifications.
+     *
+     * @param  string $action 
+     * @param  string $name 
+     * @param  boolean $noController 
+     * @return void
+     */
+    public function render($action = null, $name = null, $noController = null)
+    {
+        $this->setRender($action, $name, $noController);
+        $path = $this->getViewScript();
+        $this->renderScript($path, $name);
+    }
+
+    /**
+     * Render a script based on specification variables
+     *
+     * Pass an action, and one or more specification variables (view script suffix) 
+     * to determine the view script path, and render that script.
+     * 
+     * @param  string $action 
+     * @param  array $vars 
+     * @param  string $name 
+     * @return void
+     */
+    public function renderBySpec($action = null, array $vars = array(), $name = null)
+    {
+        if (null !== $name) {
+            $this->setResponseSegment($name);
+        }
+
+        $path = $this->getViewScript($action, $vars);
+
+        $this->renderScript($path);
     }
 
     /**
@@ -464,15 +743,17 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function postDispatch()
     {
+        if ($this->getFrontController()->getParam('noViewRenderer')) {
+            return;
+        }
+
         if (!$this->_noRender 
             && (null !== $this->_actionController)
             && $this->getRequest()->isDispatched()
             && !$this->getResponse()->isRedirect())
         {
-            $this->_actionController->render($this->_scriptAction, $this->_responseSegment, $this->_noController);
+            $this->render();
         }
-
-        $this->_viewInitialized = false;
     }
 
     /**
