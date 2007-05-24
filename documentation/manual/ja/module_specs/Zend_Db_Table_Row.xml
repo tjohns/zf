@@ -159,8 +159,8 @@ foreach ($rowArray as $column => $value) {
             </para>
 
             <para>
-                これは、アプリケーション内の行データのカラムの値は変更しますが、
-                まだその変更はデータベースにコミットされていません。コミットするには
+                カラムのアクセサによる値の設定は、アプリケーション内の行データのカラムの値は変更しますが、
+                それだけではまだデータベースにコミットされていません。コミットするには
                 <code>save()</code> メソッドを使用します。
             </para>
 
@@ -245,7 +245,7 @@ $newRow->save();
 
             <note>
                 <para>
-                    Zend_Db_Table の初期のリリースであ、<code>createRow()</code>
+                    Zend_Db_Table の初期のリリースでは、<code>createRow()</code>
                     メソッドは <code>fetchNew()</code> という名前でした。
                     今後は新しい名前を用いることを推奨しますが、
                     過去との互換性を確保するため古い名前も使用できるようになっています。
@@ -260,7 +260,7 @@ $newRow->save();
             <para>
                 Zend_Db_Table_Row_Abstract の
                 <code>setFromArray()</code> メソッドを使用すると、
-                複数のカラムを一度に設定することができます。
+                ひとつの行の複数のカラムを一度に設定することができます。
                 このメソッドには、カラム名と値を関連付けた連想配列を指定します。
                 このメソッドは、新しい行の値を設定する場合や
                 既存の行を更新する場合のどちらでも有用でしょう。
@@ -443,7 +443,8 @@ $rowClone->save();
         <title>行クラスの拡張</title>
 
         <para>
-            Zend_Db_Table_Row_Abstract を継承した新たな具象クラスを作成し、
+            Zend_Db_Table_Row は、Zend_Db_Table_Row_Abstract
+            を継承したデフォルトの具象クラスです。これ以外の具象クラスを新たに作成し、
             それを用いて行のインスタンスを作成することができます。
             独自の行クラスを指定するには、テーブルクラスの protected
             メンバである <code>$_rowClass</code> を使用するか、
@@ -615,10 +616,10 @@ class Products extends Zend_Db_Table_Abstract
 
 class MyInflectedRow extends Zend_Db_Table_Row_Abstract
 {
-    protected function _transformColumn($key)
+    protected function _transformColumn($columnName)
     {
-        $nativeKey = myCustomInflector($key);
-        return $nativeKey;
+        $nativeColumnName = myCustomInflector($columnName);
+        return $nativeColumnName;
     }
 }
 

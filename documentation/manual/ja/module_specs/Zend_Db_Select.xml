@@ -44,6 +44,16 @@
             </listitem>
         </itemizedlist>
 
+        <para>
+            必ず Zend_Db_Select を使わなければならないというわけではありません。
+            単純な SELECT クエリを実行するのなら、SQL クエリ全体を文字列で指定し、
+            アダプタの <code>query()</code> メソッドや <code>fetchAll()</code>
+            メソッドを使用したほうがずっとシンプルになるでしょう。
+            Zend_Db_Select を使うと便利なのは、
+            何らかの条件にもとづいて、アプリケーション内で
+            SELECT クエリを動的に組み立てていく必要があるような場合です。
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.select.creating">

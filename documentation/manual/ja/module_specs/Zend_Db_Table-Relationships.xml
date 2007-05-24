@@ -26,94 +26,10 @@
         <title>リレーションの定義</title>
 
         <para>
-            この節では、テーブル間にいくつかの種類のリレーションが
-            設定されているデータベースを例として使用します。
-            このデータベースは、ソフトウェア開発プロジェクトでのバグを管理するものです。
-            以下の三つのテーブルから構成されています。
+            抽象クラス Zend_Db_Table_Abstract を継承して、各テーブル用のクラスを作成します。
+            詳細は <xref linkend="zend.db.table.defining" /> を参照ください。
         </para>
         
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <code>Accounts</code>
-                    には、バグ管理データベースのユーザを識別する情報を保存します。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Products</code> 
-                    には、バグを記録する対象となる製品についての情報を保存します。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>Bugs</code> 
-                    にはバグについての情報を保存します。
-                    バグが発生した製品、
-                    バグを報告した人、
-                    そのバグを修正する担当者、
-                    バグ対応が完了したことを確認する担当者
-                    といった情報が含まれます。
-                </para>
-            </listitem>
-        </itemizedlist>
-
-        <para>
-            このサンプルデータベースの構造を表す
-            SQL 擬似コードを次に示します。
-        </para>
-
-        <programlisting role="sql"><![CDATA[
-CREATE TABLE accounts (
-  account_id        PRIMARY KEY,
-  name              VARCHAR
-);
-
-CREATE TABLE products (
-  product_id        PRIMARY KEY,
-  product_name      VARCHAR
-);
-
-CREATE TABLE bugs (
-  bug_id            PRIMARY KEY,
-  product_id        FOREIGN KEY REFERENCES products(product_id),
-  reported_by       FOREIGN KEY REFERENCES accounts(account_id),
-  assigned_to       FOREIGN KEY REFERENCES accounts(account_id),
-  verified_by       FOREIGN KEY REFERENCES accounts(account_id),
-  bug_description   VARCHAR,
-  bug_status        VARCHAR
-);]]>
-        </programlisting>
-
-        <para>
-            <code>products</code> テーブルは、
-            <code>bugs</code> テーブルとの間に一対多のリレーションがあります。
-            また <code>accounts</code> テーブルも、
-            <code>bugs</code> テーブルとの間に一対多のリレーションがあります。
-            したがって、<code>products</code> テーブルと
-            <code>accounts</code> テーブルの間には
-            多対多のリレーションがあることになります。
-        </para>
-
-        <para>
-            また、注目すべき点として、<code>bugs</code>
-            テーブルから <code>accounts</code>
-            テーブルに対して複数の外部キーが設定されています。
-            個々の外部キーは、そのバグに対してそれぞれ別の
-            <code>accounts</code> の行を指しています。
-        </para>
-
-        <para>
-            これらの三つのテーブルについて、
-            <xref linkend="zend.db.table.defining" />
-            で説明しているようにして
-            抽象クラス Zend_Db_Table_Abstract を継承したクラスを定義します。
-            各テーブルのクラス内で、リレーションを配列変数
-            <code>protected $_referenceMap</code>
-            および <code>protected $_dependentTables</code>
-            として宣言します。
-        </para>
-
         <para>
             以下に、これらのテーブルに対応する PHP クラス定義を示します。
         </para>
@@ -123,35 +39,36 @@ CREATE TABLE bugs (
 class Accounts extends Zend_Db_Table_Abstract
 {
     protected $_name            = 'accounts';
-    protected $_primary         = array('account_id');
     protected $_dependentTables = array('Bugs');
 }
 
 class Products extends Zend_Db_Table_Abstract
 {
     protected $_name            = 'products';
-    protected $_primary         = array('product_id');
-    protected $_dependentTables = array('Bugs');
+    protected $_dependentTables = array('BugsProducts');
 }
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name            = 'bugs';
+
+    protected $_dependentTables = array('BugsProducts');
+
     protected $_referenceMap    = array(
         'Reporter' => array(
             'columns'           => 'reported_by',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => 'account_id'
+            'refColumns'        => 'account_name'
         ),
         'Engineer' => array(
             'columns'           => 'assigned_to',
             'refTableClass'     => 'Accounts',
-            'refColumns'        => 'account_id'
+            'refColumns'        => 'account_name'
         ),
         'Verifier' => array(
             'columns'           => array('verified_by'),
             'refTableClass'     => 'Accounts',
-            'refColumns'        => array('account_id')
+            'refColumns'        => array('account_name')
         ),
         'Product' => array(
             'columns'           => array('product_id'),
@@ -161,14 +78,41 @@ class Bugs extends Zend_Db_Table_Abstract
     );
 }
 
-?>]]>
+class BugsProducts extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs_products';
+
+    protected $_referenceMap    = array(
+        'Bug' => array(
+            'columns'           => array('bug_id'),
+            'refTableClass'     => 'Bugs',
+            'refColumns'        => array('bug_id')
+        ),
+        'Product' => array(
+            'columns'           => array('product_id'),
+            'refTableClass'     => 'Products',
+            'refColumns'        => array('product_id')
+        )
+    );
+
+}]]>
         </programlisting>
 
         <para>
-            配列 <code>$_dependentTables</code> を、親テーブルで宣言し、
+            Zend_Db_Table で UPDATE や DELETE の連鎖操作をエミュレートする場合は、
+            配列 <code>$_dependentTables</code> を親テーブルで宣言し、
             従属しているテーブルをそこで指定します。
             SQL でのテーブル名ではなく、クラス名を使用するようにしましょう。
         </para>
+
+        <note>
+            <para>
+                RDBMS サーバが実装している参照整合性制約によって連鎖操作を行う場合は、
+                <code>$_dependentTables</code> を宣言しません。
+                詳細は <xref linkend="zend.db.table.relationships.cascading" />
+                を参照ください。
+            </para>
+        </note>
 
         <para>
             各従属テーブルのクラス内で、配列 <code>$_referenceMap</code>
@@ -186,7 +130,7 @@ class Bugs extends Zend_Db_Table_Abstract
         </para>
 
         <para>
-            上のサンプル PHP コードでは、ルールのキーは
+            上のサンプル PHP コードでは、Bugs テーブルクラスのルールのキーは
             <code>'Reporter'</code>、
             <code>'Engineer'</code>、
             <code>'Verifier'</code> および
@@ -276,8 +220,7 @@ class Bugs extends Zend_Db_Table_Abstract
         </para>
 
         <programlisting role="php"><![CDATA[
-$row->findDependentRowset($table, [$rule])
-]]>
+$row->findDependentRowset($table, [$rule]);]]>
         </programlisting>
 
         <para>
@@ -305,9 +248,7 @@ $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
 
-$bugsReportedByUser = $user1234->findDependentRowset('Bugs');
-
-?>]]>
+$bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
             </programlisting>
         </example>
 
@@ -342,9 +283,7 @@ $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
-
-?>]]>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
             </programlisting>
         </example>
 
@@ -408,9 +347,7 @@ $user1234         = $accountsRowset->current();
 $bugsReportedBy   = $user1234->findBugs();
 
 // 参照ルールを指定します
-$bugsAssignedTo   = $user1234->findBugsByEngineer();
-
-?>]]>
+$bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
             </programlisting>
         </example>
 
@@ -427,8 +364,7 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();
         </para>
 
         <programlisting role="php"><![CDATA[
-$row->findParentRow($table, [$rule])
-]]>
+$row->findParentRow($table, [$rule]);]]>
         </programlisting>
 
         <para>
@@ -457,9 +393,7 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');
-
-?>]]>
+$reporter          = $bug1->findParentRow('Accounts');]]>
             </programlisting>
         </example>
 
@@ -493,9 +427,7 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
-
-?>]]>
+$engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
             </programlisting>
         </example>
 
@@ -553,9 +485,7 @@ $bug1              = $bugsRowset->current();
 $reporter          = $bug1->findParentAccounts();
 
 // 参照ルールを指定します
-$engineer          = $bug1->findParentAccountsByEngineer();
-
-?>]]>
+$engineer          = $bug1->findParentAccountsByEngineer();]]>
             </programlisting>
         </example>
 
@@ -574,8 +504,7 @@ $engineer          = $bug1->findParentAccountsByEngineer();
         </para>
 
         <programlisting role="php"><![CDATA[
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]])
-]]>
+$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]]);]]>
         </programlisting>
 
         <para>
@@ -601,20 +530,18 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]])
         <example id="zend.db.table.relationships.fetching.many-to-many.example">
             <title>多対多の形式の行セットの取得</title>
             <para>
-                この例では、元テーブル <code>Accounts</code>
+                この例では、元テーブル <code>Bugs</code>
                 から取得した行オブジェクトについて、対象テーブル
                 <code>Products</code> の行を探す方法を示します。
-                これは、その人がバグを報告した製品を表すものです。
+                これは、そのバグに関連する製品を表すものです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-$accountsTable    = new Accounts();
-$accountsRowset   = $accountsTable->find(1234);
-$user1234         = $accountsRowset->current();
+$bugsTable        = new Bugs();
+$bugsRowset       = $bugsTable->find(1234);
+$bug1234          = $bugsRowset->current();
 
-$productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
-
-?>]]>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'Bugs');]]>
             </programlisting>
         </example>
 
@@ -655,20 +582,18 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
         <example id="zend.db.table.relationships.fetching.many-to-many.example-by">
             <title>ルールを指定することによる多対多の形式の行セットの取得</title>
             <para>
-                この例では、元テーブル <code>Accounts</code>
+                この例では、元テーブル <code>Bugs</code>
                 から取得した行オブジェクトについて、対象テーブル
                 <code>Products</code> の行を探す方法を示します。
-                これは、その人が修正担当となっているバグが存在する製品を表すものです。
+                これは、そのバグに関連する製品を表すものです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-$accountsTable    = new Accounts();
-$accountsRowset   = $accountsTable->find(1234);
-$user1234         = $accountsRowset->current();
+$bugsTable        = new Bugs();
+$bugsRowset       = $bugsTable->find(1234);
+$bug1234          = $bugsRowset->current();
 
-$productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs', 'Engineer');
-
-?>]]>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'Bugs', 'Bug');]]>
             </programlisting>
         </example>
 
@@ -720,22 +645,19 @@ $productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs', 'Enginee
             <para>
                 この例では、製品からの多対多のリレーションの
                 対象テーブルの行を見つける方法を示します。
-                その製品についてのバグを報告した人、
-                そしてその製品についてのバグの修正担当者を見つけます。
+                そのバグに関連する製品を見つけます。
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-$accountsTable     = new Accounts();
-$accountsRowset    = $accountsTable->find(1234);
-$user1234          = $accountsRowset->current();
+$bugsTable        = new Bugs();
+$bugsRowset       = $bugsTable->find(1234);
+$bug1234          = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$productsReporting = $user1234->findProductsViaBugs();
+$products          = $bug1234->findProductsViaBugs();
 
 // 参照ルールを指定します
-$productsFixing    = $user1234->findProductsViaBugsByEngineer();
-
-?>]]>
+$products          = $bug1234->findProductsViaBugsByBug();]]>
             </programlisting>
         </example>
 
@@ -793,9 +715,7 @@ $product1234    = $productsRowset->current();
 
 $product1234->delete();
 // 自動的に Bugs テーブルにも連鎖し、
-// 従属する行が削除されます
-
-?>]]>
+// 従属する行が削除されます]]>
             </programlisting>
         </example>
 
@@ -857,10 +777,7 @@ class Bugs extends Zend_Db_Table_Abstract
         ),
         ...
     );
-}
-
-?>
-]]>
+}]]>
             </programlisting>
         </example>
 
