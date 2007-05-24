@@ -29,8 +29,8 @@
                 </listitem>
             </itemizedlist>
 
-            Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
-            <ulink url="http://lucene.apache.org/java/docs/"/>.
+            Zend_Search_Lucene was derived from the Apache Lucene project.  Currently supported Lucene version is 2.0.
+            For more information on Lucene, visit <ulink url="http://lucene.apache.org/java/docs/"/> (<ulink url="http://lucene.apache.org/java/2_0_0/"/>).
         </para>
     </sect2>
 

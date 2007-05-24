@@ -11,7 +11,7 @@
 
     <para>
         Full Java Lucene query language syntax documentation can be found
-        <ulink url="http://lucene.apache.org/java/docs/queryparsersyntax.html">here</ulink>.
+        <ulink url="http://lucene.apache.org/java/2_0_0/queryparsersyntax.html">here</ulink>.
     </para>
 
     <sect2 id="zend.search.query-language.terms">
