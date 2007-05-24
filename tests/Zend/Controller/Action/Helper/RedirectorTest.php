@@ -17,6 +17,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action.php';
+require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Action/Helper/Redirector.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Http.php';
@@ -68,7 +69,9 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
      */
     public function setUp()
     {
-        Zend_Controller_Front::getInstance()->resetInstance();
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
 
         $this->redirector = new Zend_Controller_Action_Helper_Redirector();
         $this->request    = new Zend_Controller_Request_Http();

@@ -2,11 +2,21 @@
 require_once 'Zend/Controller/Front.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
 class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 {
+    public $controller;
+
+    public function setUp()
+    {
+        $this->controller = Zend_Controller_Front::getInstance();
+        $this->controller->resetInstance();
+        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+    }
+
     public function testDuplicatePlugin()
     {
         $broker = new Zend_Controller_Plugin_Broker();
@@ -23,15 +33,13 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 
     public function testUsingFrontController()
     {
-        $controller = Zend_Controller_Front::getInstance();
-        $controller->resetInstance();
-        $controller->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');
+        $this->controller->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');
         $request = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
-        $controller->setResponse(new Zend_Controller_Response_Cli());
+        $this->controller->setResponse(new Zend_Controller_Response_Cli());
         $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
-        $controller->registerPlugin($plugin);
-        $controller->returnResponse(true);
-        $response = $controller->dispatch($request);
+        $this->controller->registerPlugin($plugin);
+        $this->controller->returnResponse(true);
+        $response = $this->controller->dispatch($request);
         $this->assertEquals('123456', $response->getBody());
         $this->assertEquals('123456', $plugin->getResponse()->getBody());
     }

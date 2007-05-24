@@ -2,6 +2,7 @@
 require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
@@ -17,6 +18,7 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'admin'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin'
         ));
+        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
         $this->_dispatcher = new Zend_Controller_Dispatcher_Standard();
     }
 

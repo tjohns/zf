@@ -208,6 +208,31 @@ class Zend_Controller_Action_HelperBroker
     }
     
     /**
+     * getExistingHelper() - get helper by name
+     *
+     * Static method to retrieve helper object. Only retrieves helpers already
+     * initialized with the broker (either via addHelper() or on-demand loading
+     * via getHelper()).
+     *
+     * Throws an exception if the referenced helper does not exist in the 
+     * stack; use {@link hasHelper()} to check if the helper is registered
+     * prior to retrieving it.
+     *
+     * @param  string $name
+     * @return Zend_Controller_Action_Helper_Abstract
+     * @throws Zend_Controller_Action_Exception
+     */
+    public static function getExistingHelper($name)
+    {
+        $name = self::_normalizeHelperName($name);
+        
+        if (array_key_exists($name, self::$_helpers)) {
+            return self::$_helpers[$name];
+        }
+
+        throw new Zend_Controller_Action_Exception('Action helper "' . $name . '" has not been registered with the helper broker');
+    }
+     /**
      * Is a particular helper loaded in the broker?
      * 
      * @param  string $name 

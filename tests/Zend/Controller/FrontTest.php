@@ -1,15 +1,45 @@
 <?php
-require_once 'Zend/Controller/Front.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_Controller_FrontTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_FrontTest::main");
 
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'Zend/Controller/Router/Rewrite.php';
+require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
 
 class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 {
     protected $_controller = null;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_FrontTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     public function setUp()
     {
@@ -18,6 +48,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
         $this->_controller->returnResponse(true);
         $this->_controller->throwExceptions(false);
+        Zend_Controller_Action_HelperBroker::resetHelpers();
     }
 
     public function tearDown()
@@ -511,4 +542,15 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Reset action called', $responsePost->getBody());
         $this->assertNotContains('Reset action called', $response->getBody());
     }
+
+    public function testViewRendererHelperRegisteredByDefault()
+    {
+        $this->_controller->resetInstance();
+        $this->assertTrue(Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer'));
+    }
+}
+
+// Call Zend_Controller_FrontTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_FrontTest::main") {
+    Zend_Controller_FrontTest::main();
 }

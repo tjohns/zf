@@ -55,6 +55,24 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Zend_Controller_Action_Helper_Redirector', $response->getBody());
     }
 
+    public function testLoadingAndReturningHelperStatically()
+    {
+        $helper = new Zend_Controller_Action_HelperBroker_TestHelper();
+        Zend_Controller_Action_HelperBroker::addHelper($helper);
+        $received = Zend_Controller_Action_HelperBroker::getExistingHelper('testHelper');
+        $this->assertSame($received, $helper);
+    }
+
+    public function testGetExistingHelperThrowsExceptionWithUnregisteredHelper()
+    {
+        try {
+            $received = Zend_Controller_Action_HelperBroker::getExistingHelper('testHelper');
+            $this->fail('Retrieving unregistered helpers should throw an exception');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
     public function testLoadingHelperOnlyInitializesOnce()
     {
         $this->front->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');

@@ -22,6 +22,12 @@
 /** Zend_Loader */
 require_once 'Zend/Loader.php';
 
+/** Zend_Controller_Action_HelperBroker */
+require_once 'Zend/Controller/Action/HelperBroker.php';
+
+/** Zend_Controller_Action_Helper_ViewRenderer */
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
+
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
@@ -145,6 +151,9 @@ class Zend_Controller_Front
     {
         $this->_plugins = new Zend_Controller_Plugin_Broker();
         $this->_plugins->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
+        if (!Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
+            Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+        }
     }
 
     /**
@@ -195,6 +204,10 @@ class Zend_Controller_Front
                     $this->{$name} = null;
                     break;
             }
+        }
+
+        if (!Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
+            Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
         }
     }
 

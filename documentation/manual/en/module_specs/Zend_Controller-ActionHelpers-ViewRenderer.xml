@@ -32,7 +32,6 @@
                     for the view base path and for view script
                     paths.</para></listitem>
         </itemizedlist>
-
         <note>
             <para>
                 If you perform a <code>_forward()</code>, redirect, or
@@ -41,6 +40,55 @@
                 <code>ViewRenderer</code> that you are determining your own
                 output.
             </para>
+        </note>
+
+        <note>
+            <para>
+                The <code>ViewRenderer</code> is enabled by default. You may
+                disable it via the front controller <code>noViewRenderer</code>
+                param (<code>$front->setParam('noViewRenderer')</code>) or
+                removing the helper from the helper broker stack
+                (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
+            </para>
+
+            <para>
+                If you wish to modify settings of the <code>ViewRenderer</code>
+                prior to dispatching the front controller, you may do so in one
+                of two ways:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Instantiate and register your own
+                        <code>ViewRenderer</code> object and pass it to the
+                        helper broker:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+$viewRenderer->setView($view)
+             ->setViewSuffix('php');
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]></programlisting>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Retrieve the registered <code>ViewRenderer</code> object
+                        from the helper broker after the front controller has
+                        been instantiated:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+$front = Zend_Controller_Front::getInstance();
+
+$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer->setView($view)
+             ->setViewSuffix('php');
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
         </note>
     </sect4>
 
