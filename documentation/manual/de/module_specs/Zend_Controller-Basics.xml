@@ -14,8 +14,10 @@
         Zusammenspiel im Detail:
     </para>
 
-    <inlinegraphic width="483" scale="100" align="center" valign="middle"
-        fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    <para>
+        <inlinegraphic width="483" scale="100" align="center" valign="middle"
+            fileref="../figures/MVC-Flow-Diagram.png" format="PNG" />
+    </para>
 
     <para>
         Der <code>Zend_Controller</code> Ablauf wurde mit Hilfe verschiedener Komponenten
