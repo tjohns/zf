@@ -12,7 +12,7 @@
 
     <para>
         Java Lucene のクエリ言語の文法についての完全な文書は
-        <ulink url="http://lucene.apache.org/java/docs/queryparsersyntax.html">ここ</ulink>
+        <ulink url="http://lucene.apache.org/java/2_0_0/queryparsersyntax.html">ここ</ulink>
         にあります。
     </para>
 

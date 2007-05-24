@@ -29,13 +29,16 @@
                     <para>指定したフィールド (例: タイトル、作者、内容) による検索</para>
                 </listitem>
             </itemizedlist>
-        
+
             Zend_Search_Lucene は Apache Lucene プロジェクトから派生したものです。
+            現在サポートしているのは、Lucene バージョン 2.0 です。
             Lucene についての詳細は
-            <ulink url="http://lucene.apache.org/java/docs/"/> を参照ください。
+            <ulink url="http://lucene.apache.org/java/docs/"/>
+            (<ulink url="http://lucene.apache.org/java/2_0_0/"/>)
+            を参照ください。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.search.index-creation.documents-and-fields">
         <title>Document および Field オブジェクト</title>
             <para>
@@ -43,31 +46,31 @@
                 ドキュメントは名前つきのフィールドから構成され、
                 検索対象のコンテンツがフィールドの中に含まれます。
             </para>
-        
+
             <para>
                 ドキュメントを表すのが Zend_Search_Lucene_Document
                 オブジェクトです。このオブジェクトの中には、フィールドを表す
                 Zend_Search_Lucene_Field オブジェクトが含まれます。
             </para>
-        
+
             <para>
                 あらゆる種類の情報がインデックス化される可能性があることに注意しましょう。
                 アプリケーション固有の情報やメタデータをドキュメントのフィールドに格納し、
                 検索結果のドキュメントとして後で取得することができます。
             </para>
-        
+
             <para>
                 インデクサを制御するのは、あなたが作成するアプリケーションの役割です。
                 ということは、あなたのアプリケーションからアクセス可能な、
                 あらゆる内容のデータがインデックス化される可能性があるということです。
                 例えばファイルシステム、データベース、HTML フォームなどが考えられます。
-            </para>            
-            
+            </para>
+
             <para>
                 <code>Zend_Search_Lucene_Field</code> クラスには、
                 さまざまな性質のフィールドを作成するための静的メソッドが定義されています。
             </para>
-        
+
             <programlisting role="php"><![CDATA[<?php
 $doc = new Zend_Search_Lucene_Document();
 

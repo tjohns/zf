@@ -138,8 +138,10 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             Lucene インデックスセグメントのファイルは、その性質上更新することはできません。
             セグメントを更新するには、セグメント全体を再構成する必要があります
             (Lucene インデックスファイルのフォーマットについての詳細は、
-            <ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>
-            を参照ください)。このことより、新しいドキュメントをインデックスに追加する際には、
+            <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>
+            を参照ください)
+            <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.0 です</para></footnote>。
+            このことより、新しいドキュメントをインデックスに追加する際には、
             新しいセグメントを作成することになります。
         </para>
         <para>
@@ -233,8 +235,14 @@ $index->optimize();
                 デフォルト値は 10 です。
             </para>
             <para>
-                Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/luke-0.6/">http://www.getopt.org/luke/luke-0.6/</ulink>)
                 を使用してインデックスを最適化することもできます。
+                Zend_Search_Lucene コンポーネントとの互換性を保つためには、Luke v0.6
+                を使用する必要があります。それより新しいバージョンの Luke は Lucene v2.1
+                の新しいインデックスファイルフォーマットを使用しています。
+                Luke プロジェクトについての情報は、
+                <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>
+                を参照ください。
             </para>
         </sect3>
     </sect2>
