@@ -156,9 +156,15 @@ class Zend_Gdata_AllTests
              * Tests that do require online access to servers
              * and authentication credentials
              */
-            $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
+            if (defined('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
+            }
             $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
-            $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
+            if (defined('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
+            }
         } else {
             $suite->addTestSuite('Zend_Gdata_SkipOnlineTest');
         }

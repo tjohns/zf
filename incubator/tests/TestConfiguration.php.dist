@@ -63,6 +63,7 @@ define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'password');
  * response even though the entry was not posted to the blog.
  * This problem is being investigated.
  */
+define('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_BLOG_ID', '1111111111111111111');
 
 /*
@@ -70,7 +71,8 @@ define('TESTS_ZEND_GDATA_BLOG_ID', '1111111111111111111');
  * the spreadsheet.  The strings 'a1', 'b1', 'c1', 'd1' should be in the
  * corresponding cell locations.
  */
-define('TESTS_ZEND_GDATA_SPREADSHEETS_SPREADSHEETKEY', 'o01234567890123456789.0123456789012345678');
+define('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED', false);
+define('TESTS_ZEND_GDATA_SPREADSHEETS_SPREADSHEETKEY', 'o01111111111111111111.1111111111111111111');
 define('TESTS_ZEND_GDATA_SPREADSHEETS_WORKSHEETID', 'default');
 
 /**
