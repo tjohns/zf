@@ -407,6 +407,186 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->direct('foo', 'bar', true);
         $this->_checkRenderProperties();
     }
+
+    public function testViewBasePathSpecDefault()
+    {
+        $this->assertEquals(':moduleDir/views', $this->helper->getViewBasePathSpec());
+    }
+
+    public function testSettingViewBasePathSpec()
+    {
+        $this->helper->setViewBasePathSpec(':moduleDir/views/:controller');
+        $this->assertEquals(':moduleDir/views/:controller', $this->helper->getViewBasePathSpec());
+    }
+
+    public function testViewScriptPathSpecDefault()
+    {
+        $this->assertEquals(':controller/:action.:suffix', $this->helper->getViewScriptPathSpec());
+    }
+
+    public function testSettingViewScriptPathSpec()
+    {
+        $this->helper->setViewScriptPathSpec(':moduleDir/views/:controller');
+        $this->assertEquals(':moduleDir/views/:controller', $this->helper->getViewScriptPathSpec());
+    }
+
+    public function testViewScriptPathNoControllerSpecDefault()
+    {
+        $this->assertEquals(':action.:suffix', $this->helper->getViewScriptPathNoControllerSpec());
+    }
+
+    public function testSettingViewScriptPathNoControllerSpec()
+    {
+        $this->helper->setViewScriptPathNoControllerSpec(':module/:action.:suffix');
+        $this->assertEquals(':module/:action.:suffix', $this->helper->getViewScriptPathNoControllerSpec());
+    }
+
+    public function testGetViewScriptWithDefaults()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $expected   = 'index/test.phtml';
+        $this->assertEquals($expected, $this->helper->getViewScript());
+    }
+
+    public function testGetViewScriptWithSpecifiedAction()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $expected   = 'index/baz.phtml';
+        $this->assertEquals($expected, $this->helper->getViewScript('baz'));
+    }
+
+    public function testGetViewScriptWithSpecifiedVars()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $expected   = 'baz/bat.php';
+        $this->assertEquals(
+            $expected, 
+            $this->helper->getViewScript(
+                null, 
+                array('controller' => 'baz', 'action' => 'bat', 'suffix' => 'php')
+            )
+        );
+    }
+
+    public function testGetViewScriptWithNoControllerSet()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $this->helper->setNoController();
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $expected   = 'test.phtml';
+        $this->assertEquals($expected, $this->helper->getViewScript());
+    }
+
+    public function testRenderScript()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->renderScript('index/test.phtml');
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderScriptToNamedResponseSegment()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->renderScript('index/test.phtml', 'foo');
+        $body = $this->response->getBody('foo');
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderScriptToPreviouslyNamedResponseSegment()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setResponseSegment('foo');
+        $this->helper->renderScript('index/test.phtml');
+        $body = $this->response->getBody('foo');
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderWithDefaults()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->render();
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderToSpecifiedAction()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->render('test');
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderWithNoController()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->render(null, null, true);
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered test.phtml in bar module', $body);
+    }
+
+    public function testRenderToNamedSegment()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->render(null, 'foo');
+        $body = $this->response->getBody('foo');
+        $this->assertContains('Rendered index/test.phtml in bar module', $body);
+    }
+
+    public function testRenderBySpec()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->renderBySpec('foo', array('controller' => 'test', 'suffix' => 'php'));
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered test/foo.php', $body);
+    }
+
+    public function testRenderBySpecToNamedResponseSegment()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->renderBySpec('foo', array('controller' => 'test', 'suffix' => 'php'), 'foo');
+        $body = $this->response->getBody('foo');
+        $this->assertContains('Rendered test/foo.php', $body);
+    }
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
