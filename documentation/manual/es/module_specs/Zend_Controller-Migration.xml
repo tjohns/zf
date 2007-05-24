@@ -7,8 +7,51 @@
         migrate your scripts to use the new architecture.
     </para>
 
+    <sect2 id="zend.controller.migration.fromzeroninetwo">
+        <title>Migrating from 0.9.2 to 0.9.3 or newer</title>
+
+        <para>
+            0.9.3 introduces <link
+                linkend="zend.controller.actionhelpers">action helpers</link>.
+            As part of this change, the following methods have been removed as
+            they are now encapsulated in the <link
+                linkend="zend.controller.actionhelpers.redirector">redirector
+                action helper</link>:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setRedirectCode()</code>; use
+                    <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectPrependBase()</code>; use
+                    <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>setRedirectExit()</code>; use 
+                    <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Read the <link linkend="zend.controller.actionhelpers">action
+                helpers documentation</link> for more information on how to
+            retrieve and manipulate helper objects, and the <link
+                linkend="zend.controller.actionhelpers.redirector">redirector
+                helper documentation</link> for more information on setting
+            redirect options (as well as alternate methods for redirecting).
+        </para>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzerosix">
-        <title>Migrating from 0.6.0 to 0.8.0</title>
+        <title>Migrating from 0.6.0 to 0.8.0 or newer</title>
 
         <para>
             Per previous changes, the most basic usage of the MVC components
@@ -185,13 +228,13 @@ echo $response;
 
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request" />
+                now accepts and returns a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request" />
+                now accepts and returns a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>
 
@@ -310,7 +353,7 @@ public function __call($method, $args)
             <listitem><para>
                 <code>Zend_Controller_Plugin_Interface</code> was replaced
                 by <code>Zend_Controller_Plugin_Abstract</code>. All methods now
-                accept and return a <xref linkend="zend.controller.overview.request" />
+                accept and return a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>
         </itemizedlist>
