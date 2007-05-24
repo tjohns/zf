@@ -237,6 +237,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
                     break;
                 case 'responseSegment':
                 case 'scriptAction':
+                case 'viewBasePathSpec':
+                case 'viewScriptPathSpec':
+                case 'viewScriptPathNoControllerSpec':
                 case 'viewSuffix':
                     $property = '_' . $key;
                     $this->{$property} = (string) $value;
@@ -258,6 +261,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * - noRender - flag indicating whether or not to autorender postDispatch()
      * - responseSegment - which named response segment to render a view script to
      * - scriptAction - what action script to render
+     * - viewBasePathSpec - specification to use for determining view base path
+     * - viewScriptPathSpec - specification to use for determining view script paths
+     * - viewScriptPathNoControllerSpec - specification to use for determining view script paths when noController flag is set
      * - viewSuffix - what view script filename suffix to use
      * 
      * @param  string $path 
@@ -271,6 +277,16 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $this->setView(new Zend_View());
         }
 
+        // Reset some flags every time
+        $options['noController'] = (isset($options['noController'])) ? $options['noController'] : false;
+        $options['noRender']     = (isset($options['noRender'])) ? $options['noRender'] : false;
+        $this->_scriptAction     = null;
+        $this->_responseSegment  = null;
+
+        // Set options first; may be used to determine other initializations
+        $this->_setOptions($options);
+
+        // Get base view path
         if (empty($path)) {
             $path = $this->_getBasePath();
             if (empty($path)) {
@@ -282,6 +298,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $prefix = $this->_generateDefaultPrefix();
         }
 
+        // Determine if this path has already been registered
         $currentPaths = $this->view->getScriptPaths();
         $path         = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
         $pathExists   = false;
@@ -295,12 +312,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $this->view->addBasePath($path, $prefix);
         }
 
-        $this->_noRender        = false;
-        $this->_responseSegment = null;
-        $this->_scriptAction    = null;
-
-        $this->_setOptions($options);
-
+        // Register view with action controller (unless already registered)
         if ((null !== $this->_actionController) && (null === $this->_actionController->view)) {
             $this->_actionController->view       = $this->view;
             $this->_actionController->viewSuffix = $this->_viewSuffix;
