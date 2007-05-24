@@ -29,9 +29,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-//require_once 'Zend/Currency/AllTests.php';
-// require_once 'Zend/Session/AllTests.php';
+// require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/Filter/AllTests.php';
+require_once 'Zend/Gdata/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 
 /**
@@ -52,19 +52,19 @@ class Zend_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
-        // place other tests here for incubator suite
-
-// Do not include Zend_Currency as empty testbeds can cause phpunit to crash
-//        $suite->addTest(Zend_Currency_AllTests::suite());
-        $suite->addTest(Zend_Filter_AllTests::suite());
         /*
-         * To run the unit tests for Zend_Session*:
-         * $ cd zftrunk/incubator/tests/Zend/Session
-         * $ php AllTests.php
+         * Do not include Zend_Currency because empty testbeds can cause phpunit to crash.
          */
-        // $suite->addTest(Zend_Session_AllTests::suite());
-        $suite->addTestSuite('Zend_TimeSyncTest');
+        // $suite->addTest(Zend_Currency_AllTests::suite());
 
+        $suite->addTest(Zend_Filter_AllTests::suite());
+
+        $suite->addTest(Zend_Gdata_AllTests::suite());
+
+        /*
+         * TimeSync tests are slow. Enable as needed. :-)
+         */
+        // $suite->addTestSuite('Zend_TimeSyncTest');
 
         return $suite;
     }
