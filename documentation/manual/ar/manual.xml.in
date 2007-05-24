@@ -74,12 +74,16 @@
     </chapter>
     <chapter id="zend.controller">
         <title>Zend_Controller</title>
-        <xi:include href="module_specs/Zend_Controller-Overview.xml" />
-        <xi:include href="module_specs/Zend_Controller-GettingStarted.xml" />
-        <xi:include href="module_specs/Zend_Controller-Subclassing.xml" />
-        <xi:include href="module_specs/Zend_Controller-ProvidedSubclasses.xml" />
+        <xi:include href="module_specs/Zend_Controller-QuickStart.xml" />
+        <xi:include href="module_specs/Zend_Controller-Basics.xml" />
+        <xi:include href="module_specs/Zend_Controller-FrontController.xml" />
+        <xi:include href="module_specs/Zend_Controller-Request.xml" />
+        <xi:include href="module_specs/Zend_Controller-Router.xml" parse="xml" />
+        <xi:include href="module_specs/Zend_Controller-Dispatcher.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
-        <xi:include href="module_specs/Zend_Controller-Plugins.xml" />
+        <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" />
+        <xi:include href="module_specs/Zend_Controller-Response.xml" />
+        <xi:include href="module_specs/Zend_Controller-Plugins.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Controller-Modular.xml" />
         <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
         <xi:include href="module_specs/Zend_Controller-Migration.xml" />
@@ -96,6 +100,7 @@
     <chapter id="zend.db">
         <title>Zend_Db</title>
         <xi:include href="module_specs/Zend_Db_Adapter.xml" />
+        <xi:include href="module_specs/Zend_Db_Statement.xml" />
         <xi:include href="module_specs/Zend_Db_Profiler.xml" />
         <xi:include href="module_specs/Zend_Db_Select.xml" />
         <xi:include href="module_specs/Zend_Db_Table.xml" />

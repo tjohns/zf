@@ -14,9 +14,10 @@
 docroot/
     index.php
 application/
-    controllers/
-        IndexController.php
-        FooController.php
+    default/
+        controllers/
+            IndexController.php
+            FooController.php
     blog/
         controllers/
             IndexController.php
@@ -53,36 +54,92 @@ application/
             The first step to making use of modules is to modify how you specify
             the controller directory list in the front controller. In the basic
             MVC series, you pass either an array or a string to
-            setControllerDirectory(), or a path to addControllerDirectory().
-            When using modules, you need to alter your calls to these methods
-            slightly.
+            <code>setControllerDirectory()</code>, or a path to
+            <code>addControllerDirectory()</code>.  When using modules, you need
+            to alter your calls to these methods slightly.
         </para>
 
         <para>
-            With setControllerDirectory(), you will need to pass an associative
-            array and specify key/value pairs of module name/directory paths.
-            The special key 'default' will be used for global controllers (those
-            not needing a module namespace).  All entries should contain a
-            string key pointing to a single path. As an example:
+            With <code>setControllerDirectory()</code>, you will need to pass an
+            associative array and specify key/value pairs of module
+            name/directory paths.  The special key <code>default</code> will be
+            used for global controllers (those not needing a module namespace).
+            All entries should contain a string key pointing to a single path,
+            and the <code>default</code> key must be present. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));
-]]></programlisting>
+?>]]></programlisting>
 
         <para>
-            addControllerDirectory() will take an optional second argument. When
-            using modules, pass the module name as the second argument; if not
-            specified, the path will be added to the default namespace. As an
-            example:
+            <code>addControllerDirectory()</code> will take an optional second
+            argument. When using modules, pass the module name as the second
+            argument; if not specified, the path will be added to the
+            <code>default</code> namespace. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-]]></programlisting>
+?>]]></programlisting>
+
+        <para>
+            Saving the best for last, the easiest way to specify module
+            directories is to do so en masses, with all modules under a common
+            directory and sharing the same structure. This can be done with
+            <code>addModuleDirectory()</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * Assuming the following directory structure:
+ * application/
+ *     modules/
+ *         default/
+ *             controllers/
+ *         foo/
+ *             controllers/
+ *         bar/
+ *             controllers/
+ */
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+
+        <para>
+            The above example will define the <code>default</code>,
+            <code>foo</code>, and <code>bar</code> modules, each pointing to the
+            <code>controllers</code> subdirectory of their respective module.
+        </para>
+
+        <para>
+            You may customize the controller subdirectory to use within your
+            modules by using <code>setModuleControllerDirectoryName()</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * Change the controllers subdirectory to be 'con'
+ * application/
+ *     modules/
+ *         default/
+ *             con/
+ *         foo/
+ *             con/
+ *         bar/
+ *             con/
+ */
+$front->setModuleControllerDirectoryName('con');
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+        
+        <note><para>
+            You can indicate that no controller subdirectory be used for your
+            modules by passing an empty value to
+            <code>setModuleControllerDirectoryName()</code>.
+        </para></note>
     </sect2>
 
     <sect2 id="zend.controller.modular.router">
@@ -125,12 +182,11 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
             <code>useGlobalDefault</code> parameter in the front controller:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 $front->setParam('useGlobalDefault', true);
-]]></programlisting>
+?>]]></programlisting>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
