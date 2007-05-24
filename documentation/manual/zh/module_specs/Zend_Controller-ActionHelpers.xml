@@ -165,6 +165,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
 
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
     
     <sect2 id="zend.controller.actionhelper.writingyourown">
