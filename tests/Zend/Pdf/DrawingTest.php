@@ -121,7 +121,13 @@ class Zend_Pdf_DrawingTest extends PHPUnit_Framework_TestCase
         $page->drawImage($stampImagePNG, 275, 450, 375, 550);
         $page->restoreGS();
 
-        if (function_exists('gd_info')  && array_key_exists('JPG Support', gd_info())) {
+        if (function_exists('gd_info')) {
+            $info = gd_info();
+            $jpegSupported = $info['JPG Support'];
+        } else {
+            $jpegSupported = false;
+        }
+        if ($jpegSupported) {
             $stampImageJPG = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/_files/stamp.jpg');
 
             $this->assertTrue($stampImageJPG instanceof Zend_Pdf_Resource_Image);
@@ -173,7 +179,13 @@ class Zend_Pdf_DrawingTest extends PHPUnit_Framework_TestCase
         $page->drawImage($stampImagePNG, 275, 450, 375, 550);
         $page->restoreGS();
 
-        if (function_exists('gd_info')  && array_key_exists('JPG Support', gd_info())) {
+        if (function_exists('gd_info')) {
+            $info = gd_info();
+            $jpegSupported = $info['JPG Support'];
+        } else {
+            $jpegSupported = false;
+        }
+        if ($jpegSupported) {
             $stampImageJPG = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/_files/stamp.jpg');
 
             $this->assertTrue($stampImageJPG instanceof Zend_Pdf_Resource_Image);
