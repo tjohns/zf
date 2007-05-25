@@ -63,7 +63,7 @@ class Zend_Pdf_DrawingTest extends PHPUnit_Framework_TestCase
         $page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
 
         // Draw ellipse
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
+        $page2->setFillColor(new Zend_Pdf_Color_Html('Red'));
         $page2->drawEllipse(250, 400, 400, 350);
         $page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
         $page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
