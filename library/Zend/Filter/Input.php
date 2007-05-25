@@ -646,7 +646,7 @@ class Zend_Filter_Input
         /**
          * If any required fields are missing, break the loop.
          */
-        if (count($this->_missingFields[$validatorRule[self::RULE]]) > 0) {
+        if (isset($this->_missingFields[$validatorRule[self::RULE]]) && count($this->_missingFields[$validatorRule[self::RULE]]) > 0) {
             return;
         }
 
