@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,14 +18,32 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestCommon
+ */
 require_once 'Zend/Db/Table/TestCommon.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
 {
+    public function getDriver()
+    {
+        return 'Pdo_Pgsql';
+    }
 
     public function testTableInsert()
     {
@@ -60,9 +79,113 @@ class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
         $this->assertEquals(4, $insertResult);
     }
 
-    public function getDriver()
+    /**
+     * Ensures that the schema is null if not specified
+     *
+     * @return void
+     */
+    public function testTableSchemaNotSetIsNull()
     {
-        return 'Pdo_Pgsql';
+        $tableInfo = $this->_table['bugs']->info();
+
+        $this->assertNull($tableInfo['schema']);
     }
 
+    /**
+     * Ensures that the schema is set by the 'schema' constructor configuration directive
+     *
+     * @return void
+     */
+    public function testTableSchemaSetByConstructorConfigSchema()
+    {
+        $schema = 'public';
+
+        $config = array(
+            'db'        => $this->_db,
+            'schema'    => $schema
+            );
+
+        $table = new Zend_Db_Table_TableBugs($config);
+
+        $tableInfo = $table->info();
+
+        $this->assertEquals($schema, $tableInfo['schema']);
+    }
+
+    /**
+     * Ensures that the schema is set by the 'name' constructor configuration directive
+     *
+     * @return void
+     */
+    public function testTableSchemaSetByConstructorConfigName()
+    {
+        $schema = 'public';
+
+        $tableName = "$schema.zfbugs";
+
+        $config = array(
+            'db'        => $this->_db,
+            'name'      => $tableName
+            );
+
+        $table = new Zend_Db_Table_TableBugs($config);
+
+        $tableInfo = $table->info();
+
+        $this->assertEquals($schema, $tableInfo['schema']);
+    }
+
+    /**
+     * Ensures that a schema given in the 'name' constructor configuration directive overrides any schema specified
+     * by the 'schema' constructor configuration directive.
+     *
+     * @return void
+     */
+    public function testTableSchemaConstructorConfigNameOverridesSchema()
+    {
+        $schema = 'public';
+
+        $tableName = "$schema.zfbugs";
+
+        $config = array(
+            'db'        => $this->_db,
+            'schema'    => 'foo',
+            'name'      => $tableName
+            );
+
+        $table = new Zend_Db_Table_TableBugs($config);
+
+        $tableInfo = $table->info();
+
+        $this->assertEquals($schema, $tableInfo['schema']);
+    }
+
+    /**
+     * Ensures that fetchAll() provides expected behavior when the schema is specified
+     *
+     * @return void
+     */
+    public function testTableFetchAllSchemaSet()
+    {
+        $schema = 'public';
+
+        $config = array(
+            'db'        => $this->_db,
+            'schema'    => $schema,
+            );
+
+        $table = new Zend_Db_Table_TableBugs($config);
+
+        $rowset = $table->fetchAll();
+
+        $this->assertThat(
+            $rowset,
+            $this->isInstanceOf('Zend_Db_Table_Rowset')
+            );
+
+        $this->assertEquals(
+            4,
+            count($rowset)
+            );
+    }
 }

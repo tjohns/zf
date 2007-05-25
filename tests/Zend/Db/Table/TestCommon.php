@@ -87,18 +87,44 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($pk, array_values($info['primary']));
     }
 
-    public function testTableExceptionSetInvalidRowClass()
+    /**
+     * Ensures expected behavior when a table is assigned a Row class of stdClass
+     *
+     * @return void
+     */
+    public function testTableSetRowClassStdclass()
     {
-        $table = $this->_table['products'];
-        $this->assertType('Zend_Db_Table_Abstract', $table);
+        $productRowset = $this->_table['products']->setRowClass('stdClass')->fetchAll();
 
-        // @todo test
-        $table->setRowClass('stdClass');
+        $this->assertEquals(
+            3,
+            $productRowsetCount = count($productRowset),
+            "Expected rowset with 3 elements; got $productRowsetCount"
+            );
 
-        // @todo test
-        $table->setRowsetClass('stdClass');
+        foreach ($productRowset as $productRow) {
+            $this->assertThat(
+                $productRow,
+                $this->isInstanceOf('stdClass'),
+                'Expected row to be instance of stdClass; got ' . get_class($productRow)
+                );
+        }
+    }
 
-        $this->markTestIncomplete();
+    /**
+     * Ensures expected behavior when a table is assigned a Rowset class of stdClass
+     *
+     * @return void
+     */
+    public function testTableSetRowsetClassStdclass()
+    {
+        $productRowset = $this->_table['products']->setRowsetClass('stdClass')->fetchAll();
+
+        $this->assertThat(
+            $productRowset,
+            $this->isInstanceOf('stdClass'),
+            'Expected rowset to be instance of stdClass; got ' . get_class($productRowset)
+            );
     }
 
     public function testTableImplicitName()
@@ -509,7 +535,10 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(array(2, 1), array_values($primary));
     }
 
-    /*
+    /**
+     * @todo
+     *
+     //
     public function testTableInsertNaturalExceptionKeyViolation()
     {
         $table = $this->_table['bugs'];
@@ -531,9 +560,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-     */
+    //*/
 
-    /*
+    /**
+     * @todo
+     *
+     //
     public function testTableInsertNaturalCompoundExceptionKeyViolation()
     {
         $table = $this->_table['bugs_products'];
@@ -550,7 +582,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-     */
+    //*/
 
     public function testTableUpdate()
     {

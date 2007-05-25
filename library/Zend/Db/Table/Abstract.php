@@ -95,11 +95,11 @@ abstract class Zend_Db_Table_Abstract
     protected $_schema = null;
 
     /**
-     * The table name derived from the class name (underscore format).
+     * The table name.
      *
      * @var array
      */
-    protected $_name;
+    protected $_name = null;
 
     /**
      * The table column names derived from Zend_Db_Adapter_Abstract::describeTable().
@@ -217,7 +217,7 @@ abstract class Zend_Db_Table_Abstract
     public function __construct($config = array())
     {
         /**
-         * Allow one a scalar argument to be the Adapter object or Registry key.
+         * Allow a scalar argument to be the Adapter object or Registry key.
          */
         if (!is_array($config)) {
             $config = array(self::ADAPTER => $config);
@@ -225,33 +225,39 @@ abstract class Zend_Db_Table_Abstract
 
         foreach ($config as $key => $value) {
             switch ($key) {
-            case self::ADAPTER:
-                $this->_setAdapter($value);
-                break;
-            case self::NAME:
-                $this->_name = $value;
-                break;
-            case self::PRIMARY:
-                $this->_primary = (array) $value;
-                break;
-            case self::ROW_CLASS:
-                $this->setRowClass($value);
-                break;
-            case self::ROWSET_CLASS:
-                $this->setRowsetClass($value);
-                break;
-            case self::REFERENCE_MAP:
-                $this->setReferences($value);
-                break;
-            case self::DEPENDENT_TABLES:
-                $this->setDependentTables($value);
-                break;
-            case self::METADATA_CACHE:
-                $this->_setMetadataCache($value);
-                break;
-            case self::SEQUENCE:
-                $this->_setSequence($value);
-                break;
+                case self::ADAPTER:
+                    $this->_setAdapter($value);
+                    break;
+                case self::SCHEMA:
+                    $this->_schema = (string) $value;
+                    break;
+                case self::NAME:
+                    $this->_name = (string) $value;
+                    break;
+                case self::PRIMARY:
+                    $this->_primary = (array) $value;
+                    break;
+                case self::ROW_CLASS:
+                    $this->setRowClass($value);
+                    break;
+                case self::ROWSET_CLASS:
+                    $this->setRowsetClass($value);
+                    break;
+                case self::REFERENCE_MAP:
+                    $this->setReferences($value);
+                    break;
+                case self::DEPENDENT_TABLES:
+                    $this->setDependentTables($value);
+                    break;
+                case self::METADATA_CACHE:
+                    $this->_setMetadataCache($value);
+                    break;
+                case self::SEQUENCE:
+                    $this->_setSequence($value);
+                    break;
+                default:
+                    // ignore unrecognized configuration directive
+                    break;
             }
         }
 
@@ -527,7 +533,6 @@ abstract class Zend_Db_Table_Abstract
      * Initialize database adapter.
      *
      * @return void
-     * @throws Zend_Db_Table_Exception
      */
     protected function _setupDatabaseAdapter()
     {
@@ -537,17 +542,22 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Initialize table name.
+     * Initialize table and schema names.
+     *
      * If the table name is not set in the class definition,
      * use the class name itself as the table name.
      *
+     * A schema name provided with the table name (e.g., "schema.table") overrides
+     * any existing value for $this->_schema.
+     *
      * @return void
-     * @throws Zend_Db_Table_Exception
      */
     protected function _setupTableName()
     {
         if (! $this->_name) {
             $this->_name = get_class($this);
+        } else if (strpos($this->_name, '.')) {
+            list($this->_schema, $this->_name) = explode('.', $this->_name);
         }
     }
 
@@ -562,15 +572,6 @@ abstract class Zend_Db_Table_Abstract
      */
     protected function _setupMetadata()
     {
-        if (strpos($this->_name, '.')) {
-            list($schemaName, $tableName) = explode('.', $this->_name);
-            $this->_schema = $schemaName;
-            $this->_name = $tableName;
-        } else {
-            $schemaName = $this->_schema;
-            $tableName = $this->_name;
-        }
-
         // Assume that metadata will be loaded from cache
         $isMetadataFromCache = true;
 
@@ -583,7 +584,7 @@ abstract class Zend_Db_Table_Abstract
         // If $this has a metadata cache
         if (null !== $this->_metadataCache) {
             // Define the cache identifier where the metadata are saved
-            $cacheId = md5("$schemaName.$tableName");
+            $cacheId = md5("$this->_schema.$this->_name");
         }
 
         // If $this has no metadata cache or metadata cache misses
@@ -591,7 +592,7 @@ abstract class Zend_Db_Table_Abstract
             // Metadata are not loaded from cache
             $isMetadataFromCache = false;
             // Fetch metadata from the adapter's describeTable() method
-            $metadata = $this->_db->describeTable($tableName, $schemaName);
+            $metadata = $this->_db->describeTable($this->_name, $this->_schema);
             // If $this has a metadata cache, then cache the metadata
             if (null !== $this->_metadataCache && !$this->_metadataCache->save($metadata, $cacheId)) {
                 /**
@@ -647,8 +648,8 @@ abstract class Zend_Db_Table_Abstract
                 . ")");
         }
 
-        $primary = (array) $this->_primary;
-        $pkIdentity = $primary[(int)$this->_identity];
+        $primary    = (array) $this->_primary;
+        $pkIdentity = $primary[(int) $this->_identity];
 
         /**
          * Special case for PostgreSQL: a SERIAL key implicitly uses a sequence
@@ -1052,7 +1053,7 @@ abstract class Zend_Db_Table_Abstract
         $select = $this->_db->select();
 
         // the FROM clause
-        $select->from($this->_name, $this->_cols);
+        $select->from($this->_name, $this->_cols, $this->_schema);
 
         // the WHERE clause
         $where = (array) $where;

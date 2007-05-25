@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,14 +18,32 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Select_TestCommon
+ */
 require_once 'Zend/Db/Select/TestCommon.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Select_Pdo_PgsqlTest extends Zend_Db_Select_TestCommon
 {
+    public function getDriver()
+    {
+        return 'Pdo_Pgsql';
+    }
 
     public function testSelectGroupByExpr()
     {
@@ -36,9 +55,64 @@ class Zend_Db_Select_Pdo_PgsqlTest extends Zend_Db_Select_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support expressions in GROUP BY');
     }
 
-    public function getDriver()
+    /**
+     * Ensures that from() provides expected behavior using schema specification
+     *
+     * @return void
+     */
+    public function testSelectFromSchemaSpecified()
     {
-        return 'Pdo_Pgsql';
+        $schema = 'public';
+        $table  = 'zfbugs';
+
+        $sql = (string) $this->_db->select()->from($table, '*', $schema);
+
+        $this->assertRegExp("/FROM \"$schema\".\"$table\"/", $sql);
+
+        $rowset = $this->_db->fetchAll($sql);
+
+        $this->assertEquals(4, count($rowset));
     }
 
+    /**
+     * Ensures that from() provides expected behavior using schema in the table name
+     *
+     * @return void
+     */
+    public function testSelectFromSchemaInName()
+    {
+        $schema = 'public';
+        $table  = 'zfbugs';
+
+        $name   = "$schema.$table";
+
+        $sql = (string) $this->_db->select()->from($name);
+
+        $this->assertRegExp("/FROM \"$schema\".\"$table\"/", $sql);
+
+        $rowset = $this->_db->fetchAll($sql);
+
+        $this->assertEquals(4, count($rowset));
+    }
+
+    /**
+     * Ensures that from() overrides schema specification with schema in the table name
+     *
+     * @return void
+     */
+    public function testSelectFromSchemaInNameOverridesSchemaArgument()
+    {
+        $schema = 'public';
+        $table  = 'zfbugs';
+
+        $name   = "$schema.$table";
+
+        $sql = (string) $this->_db->select()->from($name, '*', 'ignored');
+
+        $this->assertRegExp("/FROM \"$schema\".\"$table\"/", $sql);
+
+        $rowset = $this->_db->fetchAll($sql);
+
+        $this->assertEquals(4, count($rowset));
+    }
 }

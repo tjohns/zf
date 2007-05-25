@@ -164,16 +164,23 @@ class Zend_Db_Select
         // from these joined tables
         if ($this->_parts[self::FROM]) {
             $from = array();
-            // array_pop()
             foreach ($this->_parts[self::FROM] as $correlationName => $table) {
                 $tmp = '';
                 if (empty($from)) {
+                    // Add schema if available
+                    if (null !== $table['schema']) {
+                        $tmp .= $this->_adapter->quoteIdentifier($table['schema']) . '.';
+                    }
                     // First table is named alone ignoring join information
                     $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
                         $tmp .= ' ' . strtoupper($table['joinType']) . ' ';
+                    }
+                    // Add schema if available
+                    if (null !== $table['schema']) {
+                        $tmp .= $this->_adapter->quoteIdentifier($table['schema']) . '.';
                     }
                     $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
                     if (! empty($table['joinCondition'])) {
@@ -292,13 +299,15 @@ class Zend_Db_Select
      * no correlation name is generated or prepended to the columns named
      * in the second parameter.
      *
-     * @param mixed $name The table name or an associative array relating table name to correlation name.
-     * @param array|string|Zend_Db_Expr $cols The columns to select from this table.
+     * @param  array|string|Zend_Db_Expr $name The table name or an associative array relating table name to
+     *                                         correlation name.
+     * @param  array|string|Zend_Db_Expr $cols The columns to select from this table.
+     * @param  string $schema The schema name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function from($name, $cols = '*')
+    public function from($name, $cols = '*', $schema = null)
     {
-        return $this->joinInner($name, null, $cols);
+        return $this->joinInner($name, null, $cols, $schema);
     }
 
     /**
@@ -309,16 +318,15 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @access protected
-     * @param null|string $type Type of join; inner, left, and null are
-     * currently supported
-     * @param string $name Table name
-     * @param string $cond Join on this condition
-     * @param array|string $cols The columns to select from the joined table
+     * @param  null|string $type Type of join; inner, left, and null are currently supported
+     * @param  array|string|Zend_Db_Expr $name Table name
+     * @param  string $cond Join on this condition
+     * @param  array|string $cols The columns to select from the joined table
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object
      * @throws Zend_Db_Select_Exception
      */
-    protected function _join($type, $name, $cond, $cols)
+    protected function _join($type, $name, $cond, $cols, $schema = null)
     {
         if (!in_array($type, array(self::INNER_JOIN, self::LEFT_JOIN,
             self::RIGHT_JOIN, self::FULL_JOIN, self::CROSS_JOIN, self::NATURAL_JOIN))) {
@@ -352,20 +360,27 @@ class Zend_Db_Select
             $correlationName = $this->_uniqueCorrelation($tableName);
         }
 
+        // Schema from table name overrides schema argument
+        if (false !== strpos($tableName, '.')) {
+            list($schema, $tableName) = explode('.', $tableName);
+        }
+
         if (!empty($correlationName)) {
             if (array_key_exists($correlationName, $this->_parts[self::FROM])) {
                 throw new Zend_Db_Select_Exception("You cannot define a correlation name '$correlationName' more than once");
             }
 
             $this->_parts[self::FROM][$correlationName] = array(
-                'joinType' => $type,
-                'tableName' => $tableName,
+                'joinType'      => $type,
+                'schema'        => $schema,
+                'tableName'     => $tableName,
                 'joinCondition' => $cond
             );
         }
 
         // add to the columns from this joined table
         $this->_tableCols($correlationName, $cols);
+
         return $this;
     }
 
@@ -396,12 +411,13 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function join($name, $cond, $cols = '*')
+    public function join($name, $cond, $cols = '*', $schema = null)
     {
         return $this->joinInner($name, $cond, $cols);
     }
@@ -416,14 +432,15 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinInner($name, $cond, $cols = '*')
+    public function joinInner($name, $cond, $cols = '*', $schema = null)
     {
-        return $this->_join(self::INNER_JOIN, $name, $cond, $cols);
+        return $this->_join(self::INNER_JOIN, $name, $cond, $cols, $schema);
     }
 
     /**
@@ -436,14 +453,15 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string|array $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinLeft($name, $cond, $cols = '*')
+    public function joinLeft($name, $cond, $cols = '*', $schema = null)
     {
-        return $this->_join(self::LEFT_JOIN, $name, $cond, $cols);
+        return $this->_join(self::LEFT_JOIN, $name, $cond, $cols, $schema);
     }
 
     /**
@@ -457,14 +475,15 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string|array $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinRight($name, $cond, $cols = '*')
+    public function joinRight($name, $cond, $cols = '*', $schema = null)
     {
-        return $this->_join(self::RIGHT_JOIN, $name, $cond, $cols);
+        return $this->_join(self::RIGHT_JOIN, $name, $cond, $cols, $schema);
     }
 
     /**
@@ -478,14 +497,15 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string|array $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinFull($name, $cond, $cols = '*')
+    public function joinFull($name, $cond, $cols = '*', $schema = null)
     {
-        return $this->_join(self::FULL_JOIN, $name, $cond, $cols);
+        return $this->_join(self::FULL_JOIN, $name, $cond, $cols, $schema);
     }
 
     /**
@@ -495,14 +515,14 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string|array $name The table name.
-     * @param string $cond Join on this condition.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinCross($name, $cols = '*')
+    public function joinCross($name, $cols = '*', $schema = null)
     {
-        return $this->_join(self::CROSS_JOIN, $name, null, $cols);
+        return $this->_join(self::CROSS_JOIN, $name, null, $cols, $schema);
     }
 
     /**
@@ -515,13 +535,14 @@ class Zend_Db_Select
      * The $name and $cols parameters follow the same logic
      * as described in the from() method.
      *
-     * @param string|array $name The table name.
-     * @param array|string $cols The columns to select from the joined table.
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function joinNatural($name, $cols = '*')
+    public function joinNatural($name, $cols = '*', $schema = null)
     {
-        return $this->_join(self::NATURAL_JOIN, $name, null, $cols);
+        return $this->_join(self::NATURAL_JOIN, $name, null, $cols, $schema);
     }
 
     /**
