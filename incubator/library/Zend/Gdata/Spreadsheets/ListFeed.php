@@ -54,10 +54,10 @@ class Zend_Gdata_Spreadsheets_ListFeed extends Zend_Gdata_Feed
      */
     public function __construct($element = null)
     {
-        parent::__construct($element);
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct($element);
     } 
 
 }
