@@ -36,7 +36,7 @@ class Zend_Gdata_Extension_OpenSearchTotalResults extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'totalResults';
-    protected $_rootNamespace = 'opensearch';
+    protected $_rootNamespace = 'openSearch';
 
     public function __construct($text = null)
     {

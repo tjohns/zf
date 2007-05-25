@@ -73,7 +73,7 @@ class Zend_Gdata extends Zend_Gdata_App
      * @var array 
      */
     public static $namespaces = array(
-        'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
+        'openSearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
         'rss' => 'http://blogs.law.harvard.edu/tech/rss',
         'gd' => 'http://schemas.google.com/g/2005');
 
@@ -102,7 +102,7 @@ class Zend_Gdata extends Zend_Gdata_App
             $uri = $location->getQueryUrl();
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_InvalidArgumentException(
+            throw new Zend_Gdata_App_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');
         }
@@ -123,7 +123,7 @@ class Zend_Gdata extends Zend_Gdata_App
             $uri = $location->getQueryUrl();
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_InvalidArgumentException(
+            throw new Zend_Gdata_App_InvalidArgumentException(
                     'You must specify the location as either a string URI ' .
                     'or a child of Zend_Gdata_Query');
         }

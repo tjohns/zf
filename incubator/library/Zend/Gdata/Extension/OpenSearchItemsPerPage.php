@@ -36,7 +36,7 @@ class Zend_Gdata_Extension_OpenSearchItemsPerPage extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'itemsPerPage';
-    protected $_rootNamespace = 'opensearch';
+    protected $_rootNamespace = 'openSearch';
 
     public function __construct($text = null)
     {

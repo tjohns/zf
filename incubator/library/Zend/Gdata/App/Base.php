@@ -129,7 +129,12 @@ abstract class Zend_Gdata_App_Base
         if ($this->_rootNamespaceURI != null) { 
             $element = $doc->createElementNS($this->_rootNamespaceURI, $this->_rootElement);
         } elseif ($this->_rootNamespace !== null) {
-            $element = $doc->createElementNS($this->lookupNamespace($this->_rootNamespace), $this->_rootElement);
+            if (strpos($this->_rootElement, ':') === false) {
+                $elementName = $this->_rootNamespace . ':' . $this->_rootElement;
+            } else {
+                $elementName = $this->_rootElement;
+            }
+            $element = $doc->createElementNS($this->lookupNamespace($this->_rootNamespace), $elementName);
         } else {
             $element = $doc->createElement($this->_rootElement);
         }

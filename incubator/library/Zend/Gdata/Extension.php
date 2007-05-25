@@ -40,7 +40,7 @@ class Zend_Gdata_Extension extends Zend_Gdata_App_Extension
     public function __construct()
     {
         /* NOTE: namespaces must be registered before calling parent */
-        $this->registerNamespace('opensearch', 
+        $this->registerNamespace('openSearch', 
                 'http://a9.com/-/spec/opensearchrss/1.0/');
         $this->registerNamespace('rss', 
                 'http://blogs.law.harvard.edu/tech/rss');
