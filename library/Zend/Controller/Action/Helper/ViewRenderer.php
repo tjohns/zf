@@ -24,6 +24,9 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
 /** Zend_View_Interface */
 require_once 'Zend/View/Interface.php';
 
+/** Zend_View */
+require_once 'Zend/View.php';
+
 /**
  * View script integration
  *
