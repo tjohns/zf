@@ -147,8 +147,13 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
              */
             require_once 'Zend/Http/Client.php';
             $this->_httpClient = new Zend_Http_Client();
+            $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+            $this->_httpClient->setConfig(array(
+                'strictredirects' => true,
+                 'useragent' => $useragent
+                )
+            );
         }
-
         return $this->_httpClient;
     }
 

@@ -156,7 +156,12 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException('Argument is not an instance of Zend_Http_Client.');
         }
-        $client->setConfig(array('strictredirects' => true));
+        $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+        $client->setConfig(array(
+            'strictredirects' => true,
+            'useragent' => $useragent
+            )
+        );
         $this->_httpClient = $client;
         Zend_Gdata::setStaticHttpClient($client); 
         return $this;
@@ -185,7 +190,14 @@ class Zend_Gdata_App
     public static function getStaticHttpClient()
     {
         if (!self::$_staticHttpClient instanceof Zend_Http_Client) {
-            self::$_staticHttpClient = new Zend_Http_Client();
+            $client = new Zend_Http_Client();
+            $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+            $client->setConfig(array(
+                'strictredirects' => true,
+                'useragent' => $useragent
+                )
+            );
+            self::$_staticHttpClient = $client;
         }
         return self::$_staticHttpClient;
     }
