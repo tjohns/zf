@@ -20,11 +20,6 @@
  */
 
 /**
- * Zend_Feed
- */
-// require_once 'Zend/Feed.php';
-
-/**
  * Zend_Gdata_App
  */
 require_once 'Zend/Gdata/App.php';
