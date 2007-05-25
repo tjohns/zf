@@ -20,8 +20,19 @@
  * @version    $Id:$
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Filter
+ */
 require_once 'Zend/Filter.php';
+
+/**
+ * @see Zend_Validate
+ */
 require_once 'Zend/Validate.php';
 
 /**
@@ -30,12 +41,12 @@ require_once 'Zend/Validate.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
 class Zend_Filter_Input
 {
 
     const ALLOW_EMPTY       = 'allowEmpty';
     const BREAK_CHAIN       = 'breakChainOnFailure';
+    const MESSAGES          = 'messages';
     const ESCAPE_FILTER     = 'escapeFilter';
     const FIELDS            = 'fields';
     const FILTER_CHAIN      = 'filterChain';
@@ -75,6 +86,13 @@ class Zend_Filter_Input
      * by the validator chain.
      */
     protected $_invalidMessages = array();
+
+    /**
+     * @var array After processing data, this contains mapping of validation
+     * rules that did not pass validation to the array of error identifiers
+     * returned by the validator chain.
+     */
+    protected $_invalidErrors = array();
 
     /**
      * @var array After processing data, this contains mapping of validation
@@ -163,6 +181,15 @@ class Zend_Filter_Input
     {
         $this->_process();
         return $this->_invalidMessages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        $this->_process();
+        return $this->_invalidErrors;
     }
 
     /**
@@ -317,6 +344,7 @@ class Zend_Filter_Input
          */
         $this->_validFields = array();
         $this->_invalidMessages = array();
+        $this->_invalidErrors = array();
         $this->_missingFields = array();
         $this->_unknownFields = array();
 
@@ -525,18 +553,36 @@ class Zend_Filter_Input
             if (!isset($validatorRule[self::ALLOW_EMPTY])) {
                 $validatorRule[self::ALLOW_EMPTY] = $this->_defaults[self::ALLOW_EMPTY];
             }
+            if (!isset($validatorRule[self::MESSAGES])) {
+                $validatorRule[self::MESSAGES] = array();
+            } else if (!is_array($validatorRule[self::MESSAGES])) {
+                $validatorRule[self::MESSAGES] = array($validatorRule[self::MESSAGES]);
+            } else if (!array_intersect_key($validatorList, $validatorRule[self::MESSAGES])) {
+                $validatorRule[self::MESSAGES] = array($validatorRule[self::MESSAGES]);
+            }
 
             /**
              * Load all the validator classes and add them to the chain.
              */
             if (!isset($validatorRule[self::VALIDATOR_CHAIN])) {
                 $validatorRule[self::VALIDATOR_CHAIN] = new Zend_Validate();
+                $i = 0;
                 foreach ($validatorList as $validator) {
 
                     if (is_string($validator) || is_array($validator)) {
                         $validator = $this->_getValidator($validator);
                     }
+                    if (isset($validatorRule[self::MESSAGES][$i])) {
+                        $value = $validatorRule[self::MESSAGES][$i];
+                        if (is_array($value)) {
+                            $validator->setMessages($value);
+                        } else {
+                            $validator->setMessage($value);
+                        }
+                    }
+
                     $validatorRule[self::VALIDATOR_CHAIN]->addValidator($validator, $validatorRule[self::BREAK_CHAIN]);
+                    ++$i;
                 }
             }
 
@@ -610,6 +656,7 @@ class Zend_Filter_Input
         if (count((array) $validatorRule[self::FIELDS]) > 1) {
             if (!$validatorRule[self::VALIDATOR_CHAIN]->isValid($data)) {
                 $this->_invalidMessages[$validatorRule[self::RULE]] = $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
+                $this->_invalidErrors[$validatorRule[self::RULE]] = $validatorRule[self::VALIDATOR_CHAIN]->getErrors();
                 return;
             }
         } else {
@@ -626,6 +673,11 @@ class Zend_Filter_Input
                             array_merge(
                                 (array) $this->_invalidMessages[$validatorRule[self::RULE]],
                                 $validatorRule[self::VALIDATOR_CHAIN]->getMessages()
+                            );
+                        $this->_invalidErrors[$validatorRule[self::RULE]] =
+                            array_merge(
+                                (array) $this->_invalidErrors[$validatorRule[self::RULE]],
+                                $validatorRule[self::VALIDATOR_CHAIN]->getErrors()
                             );
                         unset($this->_validFields[$fieldKey]);
                         $failed = true;
@@ -701,4 +753,3 @@ class Zend_Filter_Input
     }
 
 }
-

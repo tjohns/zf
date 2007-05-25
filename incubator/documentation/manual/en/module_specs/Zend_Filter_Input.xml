@@ -10,7 +10,58 @@
     </para>
 
     <para>
-        To use this class, perform the following steps:
+        Consider the metaphor that this class is a cage for external data.
+        Data enter the application from external sources, such as HTTP request
+        parameters, HTTP headers, a web service, or even read from a database
+        or another file.  Data are first put into the cage, and subsequently
+        the application can access data only by telling the cage what the data
+        should be and how they plan to use it.  The cage inspects the data for
+        validity.  It might apply escaping to the data values for the
+        appropriate context.  The cage releases data only if it can fulfill
+        these responsibilities.  With a simple and convenient interface, it
+        encourages good programming habits and makes developers think about how
+        data are used.
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <emphasis role="strong">Filters</emphasis> transform input
+                values, by removing or changing characters within the value.
+                The goal is to "normalize" input values until they match an
+                expected format.  For example, if a string of numeric digits is
+                needed, and the input value is "abc123", then it might be a
+                reasonable transformation to change the value to the string
+                "123".
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">Validators</emphasis> check input
+                values against criteria and report whether they passed the test
+                or not.  The value is not changed, but the check may fail.  For
+                example, if a string must look like an email address, and the
+                input value is "abc123", then the value is not considered
+                valid.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">Escapers</emphasis> transform a value
+                by removing magic behavior of certain characters.  In some
+                output contexts, special characters have meaning.  For example,
+                the characters '&lt;' and '&gt;' delimit HTML tags, and if a
+                string containing those characters is output in an HTML
+                context, the content between them might affect the output or
+                functionality of the HTML presentation.  Escaping the
+                characters removes the special meaning, so they are output as
+                literal characters.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>
+        To use Zend_Filter_Input, perform the following steps:
     </para>
 
     <orderedlist numeration="arabic">
@@ -37,14 +88,6 @@
     </orderedlist>
 
     <para>
-        The data format is an associative array.  The keys are field names, and
-        the values are data values.  The standard <code>$_GET</code> and
-        <code>$_POST</code> superglobal variables in PHP are examples of this
-        format.  You can use either of these variables as input data for
-        Zend_Filter_Input.
-    </para>
-
-    <para>
         The following sections describe the steps for using this class.
     </para>
 
@@ -60,9 +103,11 @@
         </para>
 
         <para>
-            The following example declares that the field 'month' is
-            filtered by Zend_Filter_Digits, and the field 'account' is
-            filtered by Zend_Filter_StringTrim.
+            The following example filter rule set that declares the field
+            'month' is filtered by Zend_Filter_Digits, and the field 'account'
+            is filtered by Zend_Filter_StringTrim.  Then a validation rule set
+            declares that the field 'account' is valid only if it contains only
+            alphabetical characters.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -71,6 +116,10 @@ $filters = array(
     'month'   => 'Digits',
     'account' => 'StringTrim'
 ); 
+
+$validators = array(
+    'account' => 'Alpha'
+);
 ]]></programlisting>
 
         <para>
@@ -81,82 +130,73 @@ $filters = array(
         </para>
 
         <para>
-            If you need to apply only one filter to the field, each value in
-            the array can be a string scalar, which is mapped to a class name,
-            or an instance of an object that implements Zend_Filter_Interface.
+            You can declare a rule in several formats:
         </para>
 
-        <para>
-            You can also declare a chain of filters in an array.  Each element
-            of this array can be a string,  an instance of an object that
-            implements Zend_Filter_Interface, or an array.  The array contains
-            a string naming the filter class, followed by arguments that will
-            be passed to the filter's constructor.
-        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    A single string scalar, which is mapped to a class name.
+                    <programlisting role="php"><![CDATA[<?php
 
-        <para>
-            The example below declares a chain of two filters for the field
-            'month'. The first filter is Zend_Filter_Digits specified by a
-            string, followed by Zend_Filter_StringTrim specified by an object
-            instance.  The example also shows declaring a filter using an
-            array.
-        </para>
+$validators = array( 
+    'month'   => 'Digits',
+); 
+]]></programlisting>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    An object instance of one of the classes that implement
+                    Zend_Filter_Interface or Zend_Validate_Interface.
+                    <programlisting role="php"><![CDATA[<?php
 
-        <programlisting role="php"><![CDATA[<?php
+$digits = new Zend_Validate_Digits();
 
-$filters = array( 
-    // Declaring a chain of two filters, the first by a string
-    // and the second by an object.
+$validators = array( 
+    'month'   => $digits
+); 
+]]></programlisting>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    An array, to declare a chain of filters or validators.
+                    The elements of this array can be strings mapping to class
+                    names or filter/validator objects, as in the cases
+                    described above.  In addition, you can use a third choice:
+                    an array containing a string mapping to the class name
+                    followed by arguments to pass to its constructor.
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$validators = array( 
     'month'   => array(
-        'Digits',
-        new Zend_Filter_StringTrim()
-    ),
-    // Declaring a filter and its argument as an array.
-    'account' => array(
-        array('StringTrim', " \t'\"")
+        'Digits',                // string
+        new Zend_Validate_Int(), // object instance
+        array('Between', 1, 12)  // string with constructor arguments
     )
 ); 
 ]]></programlisting>
+                </para>
+            </listitem>
+        </itemizedlist>
 
         <note>
             <para>
-                If you use the array format to declar a filter, you must make
-                an array for the rule, even if the rule has only one filter as
-                in the example above.  This avoids ambiguity between the rule
-                array and the filter declaration array.  If you try to declare
-                a single filter as an array but not inside a rule array, the
-                argument will be interpreted as the name of the second filter
-                in a chain.  It's likely that the value does not match any
-                existing filter class name, and an exception will be thrown.
+                If you declare a filter or validator with constructor arguments
+                in an array, then you must make an array for the rule, even if
+                the rule has only one filter or validator.
             </para>
         </note>
 
         <para>
-            Declare validators with a similar array, mapping fields to
-            validators.  You can use strings to name the validator, or
-            an object instance, or an array of strings or objects.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-
-// You can create the filter or validator object prior to the declaration
-// of the $filters or $validators array; this allows you to use a single
-// object instance for more than one rule.
-$strlen = new Zend_Validate_StringLength(3, 8);
-
-$validators = array( 
-    'month'   => new Zend_Validate_Between(1, 12),
-    'account' => array('Alnum', $strlen)
-); 
-]]></programlisting>
-
-        <para>
-            You can use a special rule key <code>'*'</code> in either the
-            filters array or the validators array.  This means that the filters
-            or validators declared in this rule will be applied to all input
-            data fields.  Note that the order of entries in the filters array
-            or validators array is significant; the rules are applied in the
-            same order in which you declare them.
+            You can use a special "wildcard" rule key <code>'*'</code> in
+            either the filters array or the validators array.  This means that
+            the filters or validators declared in this rule will be applied to
+            all input data fields.  Note that the order of entries in the
+            filters array or validators array is significant; the rules are
+            applied in the same order in which you declare them.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -186,16 +226,25 @@ $input = new Zend_Filter_Input($filters, $validators);
 ]]></programlisting>
 
         <para>
-            You can specify input data as the third constructor argument:
+            You can specify input data as the third constructor argument.  The
+            data structure is an associative array.  The keys are field names,
+            and the values are data values.  The standard <code>$_GET</code>
+            and <code>$_POST</code> superglobal variables in PHP are examples
+            of this format.  You can use either of these variables as input
+            data for Zend_Filter_Input.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
+
+$data = $_GET;
 
 $input = new Zend_Filter_Input($filters, $validators, $data); 
 ]]></programlisting>
 
         <para>
-            Alternatively, use the <code>setData()</code> method:
+            Alternatively, use the <code>setData()</code> method, passing
+            an associative array of key/value pairs the same format as
+            described above.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -226,29 +275,31 @@ $input->setData($newData);
 
         <sect3 id="zend.filter.input.results.reports">
 
-            <title>Getting Unknown, Invalid, and Missing Fields</title>
+            <title>Getting Invalid, Missing, or Unknown Fields</title>
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        Fields that are not declared in any rule in the array of
-                        validators, but appear in the input data are reported as 
-                        <emphasis role="strong">unknown</emphasis> fields.
+                        <emphasis role="strong">Invalid</emphasis> fields are
+                        those that don't pass one or more of their validation
+                        checks.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Fields that don't pass their validation are reported as 
-                        <emphasis role="strong">invalid</emphasis> fields.
+                        <emphasis role="strong">Missing</emphasis> fields are
+                        those that are not present in the input data, but were
+                        declared with the metacommand
+                        <code>'presence'=>'required'</code> (see the
+                        <link linkend="zend.filter.input.metacommands.presence">later section</link>
+                        on metacommands).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Fields that are not present in the input data are reported as
-                        <emphasis role="strong">missing</emphasis> fields,
-                        if they are declared with the metacommand
-                        <code>'presence'=>'required'</code>
-                        (see the later section on metacommands).
+                        <emphasis role="strong">Unknown</emphasis> fields are
+                        those that are not declared in any rule in the array of
+                        validators, but appear in the input data.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -384,7 +435,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
     <sect2 id="zend.filter.input.metacommands">
 
-        <title>Using Metacommands to Control Zend_Filter_Input</title>
+        <title>Using Metacommands to Control Filter or Validator Rules</title>
 
         <para>
             In addition to declaring the mapping from fields to filters
@@ -429,8 +480,10 @@ $filters = array(
             </para>
 
             <para>
-                The default value of the 'fields' metacommand is the single
-                string which is the index of the current rule.
+                The default value of the 'fields' metacommand is the index of
+                the current rule.  In the example above, if the 'fields'
+                metacommand is not specified, the rule would apply to the input
+                field named 'month'.
             </para>
 
             <para>
@@ -616,13 +669,13 @@ $input = new Zend_Filter_Input(null, $validators);
 
         </sect3>
 
-        <sect3 id="zend.filter.input.metacommands.errors">
+        <sect3 id="zend.filter.input.metacommands.messages">
 
-            <title>The <code>ERRORS</code> metacommand</title>
+            <title>The <code>MESSAGES</code> metacommand</title>
 
             <para>
                 You can specify error messages for each validator in a rule
-                using the metacommand 'errors'.  The value of this metacommand
+                using the metacommand 'messages'.  The value of this metacommand
                 varies based on whether you have multiple validators in the
                 rule, or if you want to set the message for a specific error
                 condition in a given validator.
@@ -630,7 +683,7 @@ $input = new Zend_Filter_Input(null, $validators);
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::ERRORS</code> instead of the
+                <code>Zend_Filter_Input::MESSAGES</code> instead of the
                 string.
             </para>
 
@@ -644,7 +697,7 @@ $input = new Zend_Filter_Input(null, $validators);
 $validators = array(
     'month' => array(
         'digits',
-        'errors' => 'A month must consist only of digits'
+        'messages' => 'A month must consist only of digits'
     )
 );
 ]]></programlisting>
@@ -652,7 +705,7 @@ $validators = array(
             <para>
                 If you have multiple validators for which you want to set the
                 error message, you should use an array for the value of the
-                'errors' metacommand.
+                'messages' metacommand.
             </para>
 
             <para>
@@ -670,7 +723,7 @@ $validators = array(
     'month' => array(
         'digits',
         new Zend_Validate_Between(1, 12),
-        'errors' => array(
+        'messages' => array(
             // use default message for validator [0]
             // set new message for validator [1]
             1 => 'A month value must be between 1 and 12'
@@ -683,8 +736,9 @@ $validators = array(
                 If one of your validators has multiple error messages, they are
                 identified by a message key.  There are different keys in each
                 validator class, serving as identifiers for error messages that
-                the respective validator class might generate.  You can use
-                these keys in the 'errors' metacommand by passing an
+                the respective validator class might generate.  Each validate
+                class defines constants for its message keys.  You can use
+                these keys in the 'messages' metacommand by passing an
                 associative array instead of a string.
             </para>
 
@@ -693,11 +747,13 @@ $validators = array(
 $validators = array(
     'month' => array(
         'digits', new Zend_Validate_Between(1, 12),
-        'errors' => array(
-            'A month must consist only of digits'
+        'messages' => array(
+            'A month must consist only of digits',
             array(
-                'tooLow'  => 'Month value %value% must be greater than %min%',
-                'tooHigh' => 'Month value %value% must be less than %max%'
+                Zend_Validate_Between::NOT_BETWEEN =>
+                    'Month value %value% must be between %min% and %max%',
+                Zend_Validate_Between::NOT_BETWEEN_STRICT =>
+                    'Month value %value% must be strictly between %min% and %max%'
             )
         )
     )
@@ -706,8 +762,8 @@ $validators = array(
 
             <para>
                 You should refer to documentation for each validator class to
-                know if it has multiple error messages, and what are the keys
-                of these messages.
+                know if it has multiple error messages, the keys of these
+                messages, and the tokens you can use in the message templates.
             </para>
 
         </sect3>
@@ -743,7 +799,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
             <para>
-                The 'fields' and 'errors' metacommands cannot be set using this
+                The 'fields' and 'messages' metacommands cannot be set using this
                 technique.
             </para>
 
