@@ -37,7 +37,7 @@
                 <para>
                     Automatic quoting of metadata identifiers in most cases,
                     to support identifiers containing SQL reserved words
-                    and special characters; 
+                    and special characters;
                 </para>
             </listitem>
             <listitem>
@@ -67,7 +67,7 @@
         <para>
             You can create an instance of a Zend_Db_Select object
             using the <code>select()</code> method of a
-            Zend_Db_Adapter_Abstract object.  
+            Zend_Db_Adapter_Abstract object.
         </para>
 
         <example id="zend.db.select.creating.example-db">
@@ -170,7 +170,7 @@ $select = $db->select()
 
 // Build this query:
 //   SELECT *
-//   FROM "products" 
+//   FROM "products"
 
 $select = $db->select()
     ->from( 'products' );
@@ -205,8 +205,9 @@ $select = $db->select()
             <para>
                 Some RDBMS brands support a leading schema specifier for a
                 table.  You can specify the table name as
-                "<code>schemaName.tableName</code>".
-                Zend_Db_Select quotes each part individually.
+                "<code>schemaName.tableName</code>", where Zend_Db_Select quotes each part individually,
+                or you may specify the schema name separately. A schema name specified in the table name
+                takes precedence over a schema provided separately in the event that both are provided.
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
@@ -219,6 +220,11 @@ $select = $db->select()
 
 $select = $db->select()
     ->from( 'myschema.products' );
+
+// or
+
+$select = $db->select()
+    ->from('products', '*', 'myschema');
 
 ?>]]></programlisting>
             </example>
@@ -240,7 +246,7 @@ $select = $db->select()
                 You can list the columns in a simple array of strings,
                 or as an associative mapping of column alias to column name.
                 If you only have one column to query, and you don't need to
-                specify a column alias, you can list it as a plain string 
+                specify a column alias, you can list it as a plain string
                 instead of an array.
             </para>
 
@@ -304,7 +310,7 @@ $select = $db->select()
                 to prevent a string from being treated as a column name.
                 Zend_Db_Expr is a minimal class that contains a single string.
                 Zend_Db_Select recognizes objects of type Zend_Db_Expr and
-                converts them back to string, but does not apply any 
+                converts them back to string, but does not apply any
                 alterations, such as quoting or correlation names.
             </para>
 
@@ -369,7 +375,7 @@ $select = $db->select()
 
             <para>
                 Your code is more database-independent if you use the
-                <code>quoteIdentifier()</code> method instead of typing 
+                <code>quoteIdentifier()</code> method instead of typing
                 quotes literally in your string, because some RDBMS brands use
                 nonstandard symbols for quoting identifiers.
                 The <code>quoteIdentifier()</code> method is designed to use
@@ -402,7 +408,7 @@ $select = $db->select()
             <para>
                 Many useful queries involve using a <code>JOIN</code>
                 to combine rows from multiple tables.  You can add
-                tables to a Zend_Db_Select query using the 
+                tables to a Zend_Db_Select query using the
                 <code>join()</code> method.  Using this method is
                 similar to the <code>from()</code> method, except
                 you can also specify a join condition in most cases.
@@ -639,7 +645,7 @@ $select = $db->select()
             </note>
 
             <para>
-                The second argument to the <code>where()</code> method is 
+                The second argument to the <code>where()</code> method is
                 optional.  It is a value to substitute into the expression.
                 Zend_Db_Select quotes the value and substitutes it for a
                 question-mark ("<code>?</code>") symbol in the expression.
@@ -967,7 +973,7 @@ $select = $db->select()
 
 // Build this query:
 //   SELECT p."product_id", p."product_name"
-//   FROM "products" AS p 
+//   FROM "products" AS p
 //   LIMIT 10, 20
 
 $select = $db->select()
@@ -1172,10 +1178,10 @@ echo "$sql\n";
             </para>
 
             <para>
-                The single argument to the <code>getPart()</code> method is 
+                The single argument to the <code>getPart()</code> method is
                 a string that identifies which part of the Select query to
                 return.  For example, the string <code>'from'</code>
-                identifies the part of the Select object that stores 
+                identifies the part of the Select object that stores
                 information about the tables in the <code>FROM</code> clause,
                 including joined tables.
             </para>
