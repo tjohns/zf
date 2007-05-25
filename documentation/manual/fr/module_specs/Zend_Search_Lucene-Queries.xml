@@ -1,0 +1,304 @@
+<sect1 id="zend.search.lucene.queries">
+	<title>Types de requêtes</title>
+
+	<sect2 id="zend.search.lucene.queries.term-query">
+		<title>Recherche avec un seul terme</title>
+        <para>
+            Le requêtes par terme permettent de chercher un simple terme.
+        </para>
+
+        <para>
+            Deux méthode de recherche peuvent être utilisés pour rechercher un terme.
+        </para>
+
+        <para>
+            Recherche avec une chaîne de caractères :
+        <programlisting role="php"><![CDATA[
+            $hits = $index->find('mot1');]]>
+        </programlisting>
+        </para>
+
+        <para>ou</para>
+
+        <para>
+        Construction de la requêtre avec l'API :
+        <programlisting role="php"><![CDATA[<?php
+
+    $term  = new Zend_Search_Lucene_Index_Term('mot1');
+    $query = new Zend_Search_Lucene_Search_Query_Term($term);
+    $hits  = $index->find($query);
+
+?>]]></programlisting>
+        </para>
+	</sect2>
+
+	<sect2 id="zend.search.lucene.queries.multiterm-query">
+		<title>Recherche avec plusieurs termes</title>
+        <para>
+            Les recherches multi termes permettent de rechercher suivant un jeu de terme donné.
+        </para>
+
+        <para>
+            Chaque terme peut-être définis comme requis, interdit, ou ni requis, ni interdit (optionnel).
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        requis signifie que le document doit contenir ce terme.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        interdit signifie que le document ne doit pas contenir ce terme.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        neither, in which case matched documents are neither prohibited from
+                        nor required to match the term. However, a document must match at least
+                        1 term to match the query.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Cela signifie que si des termes optionnels sont ajouté à la recherche avec les termes requis, 
+            alors il y aura les même résultats, mais la seconde requête aura des résultats qui corresponderont 
+            aux termes optionnels, qui seront placés en haut des résultats.
+        </para>
+
+        <para>
+            Deux méthodes de recherche peuvent être utilisées pour des recherche multi-termes.
+        </para>
+
+        <para>
+            Recherche par chaine de caractères :
+        <programlisting role="php"><![CDATA[<?php
+
+$hits = $index->find('+mot1 auteur:mot2 -mot3');
+
+?>]]></programlisting>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    '+' est utilisé pour définir un terme comme requis.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' est utilisé pour définir un terme comme interdit.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche. 
+                    Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
+                </para>
+            </listitem>
+        </itemizedlist>
+        </para>
+
+        <para>ou</para>
+
+        <para>
+        Construction de recherche par l'API :
+        <programlisting role="php"><![CDATA[<?php
+
+    $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
+
+    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot1'), true);
+    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot2'), null);
+    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot3'), false);
+
+    $hits  = $index->find($query);
+
+?>]]></programlisting>
+        </para>
+
+        <para>
+            Le tableau <code>$signs</code> contient des informations sur le type du terme :
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        true est utilisé pour un terme définis comme requis.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        false est utilisé pour un terme définis comme interdit.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        null est utilisé pour définir un terme comme ni requis, ni interdit.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+	</sect2>
+
+	<sect2 id="zend.search.lucene.queries.phrase-query">
+		<title>Requêtes de phrases</title>
+        <para>
+            Les requêtes de phrases permettent de rechercher des phrases.
+        </para>
+
+        <para>
+            Les requêtes de phrases sont très flexible et permettent de chercher des phrases exactes, 
+            comme des morceau de phrases. 
+        </para>
+        <para>
+            Les phrases exactes peuvent aussi contenir des espaces ou des termes au même endroits. 
+            (Elles peuvent être générées par Analyser pour différentes utilisation.
+            Ex. un terme peut être duppliqué pour améliorer le
+            poid du terme, ou plusieurs synonymes peuvent-être placé en première position).
+            Conformément à cela, les requêtes de phrase peuvent être construitent exclusivement par l'API maintenant :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$query1 = new Zend_Search_Lucene_Search_Query_Phrase();
+
+// Ajoute 'mot1' en position relative 0
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('mot1'));
+
+// Ajoute 'mot2' en position relative 1
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('mot2'));
+
+// Ajoute 'mot3' en position relative 3
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('mot3'), 3);
+
+...
+
+$query2 = new Zend_Search_Lucene_Search_Query_Phrase(
+                array('mot1', 'mot2', 'mot3'), array(0,1,3));
+
+...
+
+// Requête sans espaces.
+$query3 = new Zend_Search_Lucene_Search_Query_Phrase(
+                array('mot1', 'mot2', 'mot3'));
+
+...
+
+$query4 = new Zend_Search_Lucene_Search_Query_Phrase(
+                array('mot1', 'mot2'), array(0,1), 'annotation');
+
+?>]]></programlisting>
+
+
+        <para>
+            Les requêtes de phrases peuvent être construitent en une étape avec un constructeur de classe, ou alors
+            étape par étape avec la méthode <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>.
+        </para>
+
+        <para>
+            Le constructeur de classe Zend_Search_Lucene_Search_Query_Phrase prend trois paramètres optionnels :
+        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
+        </para>
+
+        <para>
+            <code>$terms</code> est un tablea de chaîne qui contient un jeu de phrases.
+            S'il est ommit ou vaut null, alors une requête vide sera construite.
+        </para>
+
+        <para>
+            <code>$offsets</code> est un tableau d'entiers qui contient l'offset des termes dans une phrase.
+            S'il est ommit ou vaut null, alors les positions des termes seront <code>array(0, 1, 2, 3, ...)</code>.
+        </para>
+
+        <para>
+            <code>$field</code> est une chaîne qui indique les champs de document dans lequel on recherche.
+            S'il est ommit ou vaut null, alors le champ par défaut sera utilisé pour la recherche.
+            Cette version de Zend_Search_Lucene définit le champ 'contents' comme champ par défaut, mais il est
+            prévu de changer ce comportement à &quot;any field&quot; dans les prochaines versions.
+        </para>
+
+        <para>
+            Ainsi:
+        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
+            va rechercher la phrase 'zend framework'.
+
+        <programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
+            va rechercher la phrase 'zend ????? download' et récupérer 'zend platform download', 'zend studio download',
+            'zend core download', 'zend framework download' etc.
+
+        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
+            va rechercher la phrase 'zend framework' dans le champ 'title'.
+        </para>
+
+
+        <para>
+            La méthode <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> prend deux arguments.
+            L'objet requis <code>Zend_Search_Lucene_Index_Term</code> et une position optionnelle :
+        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
+        </para>
+
+        <para>
+            <code>$term</code> décrit le prochain terme dans une phrase. Il doit indiquer le même champ que les précédents termes.
+            Sinon une exception sera lancée.
+        </para>
+
+        <para>
+            <code>$position</code> indique la position du terme.
+        </para>
+
+        <para>
+            Ainsi:
+        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
+            va rechercher  la phrase 'zend framework'.
+
+        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
+            va rechercher la phrase 'zend ????? download' et récupérer 'zend platform download', 'zend studio download',
+            'zend core download', 'zend framework download' etc.
+
+        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
+            va rechercher la phrase 'zend framework' dans le champ 'title'.
+        </para>
+
+
+        <para>
+            Slop factor sets the number of other words permitted between words in query phrase. If zero,
+            then this is an exact phrase search.  For larger values this works like a WITHIN or NEAR operator.
+        </para>
+        <para>
+            The slop is in fact an edit-distance, where the units correspond to moves of terms in the query phrase
+            out of position.  For example, to switch the order of two words requires two moves (the first move places
+            the words atop one another), so to permit re-orderings of phrases, the slop must be at least two.
+        </para>
+        <para>
+            More exact matches are scored higher than sloppier matches, thus search results are sorted by exactness.
+            The slop is zero by default, requiring exact matches.
+        </para>
+        <para>
+            Slop factor can be assigned after query creation:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// requête sans espace
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('mot1', 'mot2'));
+
+// Recherche de 'mot1 mot2', 'mot1 ... mot2'
+$query->setSlop(1);
+$hits1 = $index->find($query);
+
+// Recherche for 'mot1 mot2', 'mot1 ... mot2',
+// 'mot1 ... ... mot2', 'mot2 mot1'
+$query->setSlop(2);
+$hits2 = $index->find($query);
+
+?>]]></programlisting>
+
+	</sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

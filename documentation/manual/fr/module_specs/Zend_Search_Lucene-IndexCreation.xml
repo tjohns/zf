@@ -1,0 +1,142 @@
+<sect1 id="zend.search.lucene.index-creation">
+	<title>Créer des indexes</title>
+
+	<sect2 id="zend.search.lucene.index-creation.creating">
+        <title>Créer un nouvel index</title>
+
+        <para>
+            La création et la mise à jour d'index est disponible dans le module ZSearch et dans Java Lucene.
+            Vous pouvez utilisez les capacités des deux.
+        </para>
+
+        <para>
+            Le listing de code PHP ci-dessous propose un exemple montrant
+            comment indexer un fichier en utilisant l'API d'indexation de Zend_Search_Lucene :
+        </para>
+
+        <programlisting role="php"><![CDATA[
+        <?php
+        // Définir le second paramètre à true pour créer un nouvel index
+        $index = new Zend_Search_Lucene('/donnees/mon-index', true);
+
+        $doc = new Zend_Search_Lucene_Document();
+
+        // Stocke l'URL du document pour l'identifier dans un résultat de recherche.
+        $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+
+        // Contenu du document d'index
+        $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+
+        // Ajout du document à l'index
+        $index->addDocument($doc);
+
+        // Ecriture des changements dans l'index
+        $index->commit();
+        ?>
+        ]]></programlisting>
+
+        <para>
+            Les nouveaux documents ajoutés peuvent être récupérés depuis l'index après une opération de commit.
+        </para>
+        <para>
+            <code>Zend_Search_Lucene::commit()</code> est automatiquement appelé à la fin de l'éxecution du
+            script et avant toute recherche.
+        </para>
+        <para>
+            Chaque appel à <code>commit()</code> génère un nouveau segment d'index.
+            <footnote>
+                <para>
+                Les fichiers de segment d'index Lucene ne peuvent être mis à jour.
+                La mise à jour d'un segment nécessite la réorganisation de tous les segments.
+                Référrez vous au format de fichier d'index pour plus de détails (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+                Augmenter le nombre de segments réduit la qualité de l'index, mais l'optimisation de l'index permet de réparer cela.
+                L'optimisation consiste à regrouper plusieurs segments en un seul. Ce processus ne met à jour aucun segment.
+                Il génère un nouveau gros segment, génère une nouvelle liste de segemnts (fichier 'segment.new'), qui contient
+                le segement nouvellement optimisé au lieu du jeu de vieux segements, et renomme ensuite 'segments.new' en 'segments'.
+                </para>
+                <para>
+                L'optimisation est un processus itératif. Les très petits segments (par exemple ceux qui sont généré par l'ajout
+                d'un seul document) sont regroupés dans un segment plus gros, et ainsi de suite. L'optimisation peut fonctionner
+                sur un flux de segment et n'est pas gourmand en mémoire. Ainsi le processus d'optimisation ne prend pas beaucoup
+                de ressources et ne verouille pas les fichiers d'index pour la recherche, la mise à jour ou le regroupement d'autres
+                segments.
+                </para>
+            </footnote>
+            Il doit être fait aussi rarement que possible.
+            De plus, commiter une grande quantité de documents en une seule fois consomme plus de mémoire.
+        </para>
+        <para>
+            L'optimisation automatique de la gestion des segment est un sujet d'amélioration future pour Zend_Search_Lucene.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.updating">
+        <title>Mettre à jour l'index</title>
+
+        <para>
+            Le même procédure est utilisée pour mettre à jour un index existant.
+            La seule différence est que l'index doit être ouvert sans second paramètre :
+        </para>
+
+        <programlisting role="php"><![CDATA[
+        <?php
+        // Ouverture d'un index existant
+        $index = new Zend_Search_Lucene('/donnees/mon-index');
+
+        $doc = new Zend_Search_Lucene_Document();
+
+        // Stocke l'URL du document pour l'identifier dans un résultat de recherche.
+        $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+
+        // Contenu du document d'index
+        $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+
+        // Ajout du document à l'index
+        $index->addDocument($doc);
+
+        // Ecriture des changements dans l'index
+        $index->commit();
+        ?>
+        ]]></programlisting>
+
+        <para>
+            Chaque appel à <code>commit()</code> (explicite ou implicite) génère un nouveau segment d'index.
+        </para>
+        <para>
+            Zend_Search_Lucene ne gère pas les segments automatiquement.
+            C'est pourquoi vous devriez être attentif à la taille du segment.
+
+            D'un côté, un seul gros segment est plus efficace, mais d'un autre côté, cela nécessite plus de mémoire
+            lors de la création.
+        </para>
+        <para>
+            Lucene Java et Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            peuvent être utilisés pour optimiser l'index avec cette version de Zend_Search_Lucene.
+        </para>
+    </sect2>
+    <sect2 id="zend.search.lucene.index-creation.document-updating">
+        <title>Mise à jour de documents</title>
+        <para>
+            Le format de fichier d'index ne supporte pas la mise à jour de document.
+            Le document doit être effacé et ajouté de nouveau.
+        </para>
+        <para>
+            La méthode <code>Zend_Search_Lucene::delete()</code> opère avec un id de document index interne.
+            Il peut être récupéré par une requête sur la propriété 'id' :
+        </para>
+        <programlisting role="php">
+        <![CDATA[<?php
+            $removePath = ...;
+            $hits = $index->find('path:' . $removePath);
+            foreach ($hits as $hit) {
+                $index->delete($hit->id);
+            }
+            $index->commit();
+        ?>]]>
+        </programlisting>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

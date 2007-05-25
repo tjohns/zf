@@ -1,0 +1,339 @@
+<sect1 id="zend.search.lucene.searching">
+	<title>Einen Index durchsuchen</title>
+
+    <sect2 id="zend.search.lucene.searching.query_building">
+		<title>Abfrage erstellen</title>
+
+        <para>
+            Es gibt zwei Arten, den Index zu durchsuchen. Die erste Methode verwendet den 
+            Query Parser, um eine Abfrage aus einem String zu erstellen. Die zweite ist die
+            Möglichkeit, eigene Abfragen mithilfe der Zend_Search_Lucene Programmierschnittstelle
+            (API) zu erstellen.
+        </para>
+
+        <para>
+            Vor der Verwendung des bereitgestellten Query Parsers, beachte bitte folgendes:
+
+            <orderedlist>
+                <listitem>
+                    <para>
+                        Wenn du deine Abfragestrings programmseitig erstellst und dann durch den Query 
+                        Parser verarbeiten lässt, solltest du ernsthaft darüber nachdenken, deine 
+                        Abfragen direct mit der Programmierschnittstelle (API) für Abfragen zu erstellen.
+                        In anderen Worten, der Query Parser wurde für von Menschen eingegebene Texte 
+                        und nicht für von Programmen erstellte Texte entwickelt.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Nicht in einzelne Tokens aufgeteilte Felder werden am besten direkt zu der 
+                        Abfrage und nicht über den Query Parser hinzugefügt. Wenn die Feldwerte durch 
+                        die Anwendung programmseitig erstellt werden, dann sollte dies für 
+                        Abfrageklauseln dieses Felds ebenfalls geschehen. Ein Analysator, welche der 
+                        Query Parser verwendet, wurde entwickelt, um von Menschen eingegebenen Text in
+                        Begriffe zu konvertieren. Durch Programme erstellte Werte wie Datumsangaben,
+                        Schlüsselwörter, usw. sollten durchweg durch Programme erstellt werden.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        In einem Abfrageformular sollten generelle Textfelder den Query Parser 
+                        verwenden. Alle anderen, wie z.B. Datumsbereiche, Schlüsselwörter, usw. werden
+                        besser direkt durch die Programmierschnittstelle (API) der Abfrage hinzugefügt. Ein
+                        Feld mit einem begrenzten Wertebereich, das durch ein Pulldown-Menü spezifiziert
+                        wird, sollte nicht einem Abfragestring hinzugefügt werden, der anschließend 
+                        wieder geparst wird, sondern eher als eine TermQuery Klausel hinzugefügt werden.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Boolesche Abfragen erlauben es, verschiedene Abfragen zu einer neuen 
+                        zusammenzufügen. Deshalb ist dies der beste Weg, um zusätzliche Kriterien
+                        zu einer Benutzersuche hinzuzufügen, die durch den Abfragestring definiert
+                        wird.
+                    </para>
+                </listitem>
+            </orderedlist>
+
+        </para>
+
+        <para>
+            Beide Arten verwenden die selbe Methode der Programmierschnittstelle (API), um den Index
+            zu durchsuchen:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Search/Lucene.php';
+
+$index = Zend_Search_Lucene::open('/data/my_index');
+
+$index->find($query);
+
+?>]]></programlisting>
+
+        <para>
+            Die <code>Zend_Search_Lucene::find()</code> Methode ermittelt den Eingabetyp automatisch
+            und verwendet den Query Parser, um ein entsprechendes Zend_Search_Lucene_Search_Query 
+            Objekt aus dem String zu erstellen.
+        </para>
+        <para>
+            Es ist wichtig zu beachten, dass der Query Parser den Standard Analyzer verwendet, um 
+            verschiedene Teile des Abfragestrings in Token aufzuteilen. Dadurch werden alle 
+            Umwandlungen, die auf einen indizierten Text ausgeführt werden, auch für den 
+            Abfragestring durchgeführt.
+        </para>
+        <para>
+            Dies können die Umwandlung in Kleinbuchstaben, um die Suche unabhängig von Groß- und 
+            Kleinschreibung zu machen, das Entfernen von Stopwörtern, das Stemming und viele andere
+            Dinge sein.
+        </para>
+        <para>
+            Im Gegensatz dazu transformieren oder filtern die API Methoden die Eingabebegriffe 
+            nicht. Deshalb passen sie besser für computergenerierte und nicht in Token aufgeteilte 
+            Felder.
+        </para>
+        
+        <sect3 id="zend.search.lucene.searching.query_building.parsing">
+            <title>Query parsing</title>
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
+                into query object.
+            </para>
+
+            <para>
+                This object may be used in query construction API methods to combine user entered queries with
+                machine generated queries.
+            </para>
+
+            <para>
+                Actually, in some cases it's only way to search for values within untokenized fields:
+
+                <programlisting role="php"><![CDATA[<?php
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+
+$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathQuery = new Zend_Search_Query_Term($pathTerm);
+
+$query = new Zend_Search_Query_Boolean();
+$query->addSubquery($userQuery, true /* required */);
+$query->addSubquery($pathQuery, true /* required */);
+
+$hits = $index->find($query);]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
+                which can specify query string encoding:
+            <programlisting role="php"><![CDATA[<?php
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+]]></programlisting>
+            </para>
+
+            <para>
+                If encoding is omitted, then current locale is used.
+            </para>
+
+            <para>
+                It's also possible to specify default query string encoding with
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
+...
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]></programlisting>
+            </para>
+
+            <para>
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
+                string encoding (empty string means "current locale").
+            </para>
+        </sect3>
+	</sect2>
+
+	<sect2 id="zend.search.lucene.searching.results">
+		<title>Suchergebnisse</title>
+        <para>
+            Das Suchergebnis ist ein Array mit Zend_Search_Lucene_Search_QueryHit Objekten. Jedes
+            davon hat zwei Eigenschaften: <code>$hit->document</code> ist eine Dokumentnummer 
+            innerhalb des Index und <code>$hit->score</code> ist ein Punktwert für den Treffer im
+            Suchergebnis. Das Ergebnis wird anhand der Punktwerte sortiert (beste Treffer kommen
+            zuerst)
+        </para>
+
+        <para>
+            Das Zend_Search_Lucene_Search_QueryHit Objekt beinhaltet zudem jedes Feld des 
+            Zend_Search_Lucene_Document, das gefunden wurde, als Eigenschaft des Treffers. In 
+            diesem Beispiel, wird ein Treffer zurückgegeben und das entsprechende Dokument hat
+            zwei Felder: Titel und Autor.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once('Zend/Search/Lucene.php');
+
+$index = Zend_Search_Lucene::open('/data/my_index');
+
+$hits = $index->find($query);
+
+foreach ($hits as $hit) {
+    echo $hit->score;
+    echo $hit->title;
+    echo $hit->author;
+}
+?>]]></programlisting>
+
+        <para>
+            Gespeicherte Felder werden immer in UTF-8 Kodierung zurückgegeben.
+        </para>
+
+        <para>
+            Optional kann das originale Zend_Search_Lucene_Document Objekt vom 
+            Zend_Search_Lucene_Search_QueryHit Objekt zurückgegeben werden.
+            
+            Du kannst gespeicherte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
+            Methode des Indexobjektes zurückerhalten und diese dann durch die 
+            <code>getFieldValue()</code> Methode abfragen:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Search/Lucene.php';
+
+$index = Zend_Search_Lucene::open('/data/my_index');
+
+$hits = $index->find($query);
+foreach ($hits as $hit) {
+    // return Zend_Search_Lucene_Document object for this hit
+    echo $document = $hit->getDocument();
+
+    // return a Zend_Search_Lucene_Field object
+    // from the Zend_Search_Lucene_Document
+    echo $document->getField('title');
+
+    // return the string value of the Zend_Search_Lucene_Field object
+    echo $document->getFieldValue('title');
+
+    // same as getFieldValue()
+    echo $document->title;
+}
+?>]]></programlisting>
+        
+        <para>
+            Die Felder, die in einem Zend_Search_Lucene_Document Objekt verfügbar sind, werden beim
+            Indizieren festgelegt. Die Dokumentenfelder werden durch die Indizieranwendung 
+            (z.B. LuceneIndexCreation.jar) im Dokument entweder nur indiziert oder indiziert und 
+            gespeichert. 
+        </para>
+
+        <para>
+            Beachte, dass die Dokumentidentität ('path' in unserem Beispiel) auch im Index 
+            gespeichert wird und von ihm zurückgewonnen werden muß.
+        </para>
+
+	</sect2>
+
+
+	<sect2 id="zend.search.lucene.searching.results-scoring">
+		<title>Ergebnisgewichtung</title>
+        <para>
+            Zend_Search_Lucene verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Die
+            Treffer in den Suchergebnisse werden standardmäßig nach einem Punktwert sortiert. 
+            Treffer mit höherem Punktwert kommen zuerst, und Dokumente mit höherem Punktwert passen 
+            auf die Abfrage besser als solche mit niedrigerem Punktwert.
+            
+        </para>
+
+        <para>
+            Grob gesagt, haben die Suchergebnisse einen höheren Punktwert, welche den gesuchten 
+            Begriff oder die gesuchte Phrase häufiger enthalten.
+            
+        </para>
+
+        <para>
+            Der Punktwert kann über die <code>score</code> Eigenschaft des Treffers ermittelt werden:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$hits = $index->find($query);
+
+foreach ($hits as $hit) {
+    echo $hit->id;
+    echo $hit->score;
+}]]></programlisting>
+
+        <para>
+            Die Zend_Search_Lucene_Search_Similarity Klasse wird verwendet, um den Punktwert zu 
+            berechnen. Beachte den <link linkend="zend.search.lucene.extending.scoring">Erweiterbarkeit. 
+            Algorithmen für Punktwertermittlung</link> Abschnitt für weitere Details.
+        </para>
+
+	</sect2>
+
+    <sect2 id="zend.search.lucene.searching.sorting">
+        <title>Sortierung der Suchergebnisse</title>
+        <para>
+            Die Suchergebnisse werden standardmäßig nach dem Punktwert sortiert. Man kann dies durch
+            Setzen von Parametern für das Sortierfeld (oder -felder), den Sortiertyp und der 
+            Sortierreihenfolge ändern.
+        </para>
+
+        <para>
+            <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]></programlisting>
+        </para>
+
+        <para>
+            <code>$sortField</code> ist ein Name eines gespeicherten Feldes für das Suchergebnis
+        </para>
+
+        <para>
+            <code>$sortType</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_REGULAR</code> (vergleiche Items normal, Standardwert),
+            <code>SORT_NUMERIC</code> (vergleiche Items numerisch),
+            <code>SORT_STRING</code> (vergleiche items als Strings).
+        </para>
+
+        <para>
+            <code>$sortOrder</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_ASC</code> (sortiere in aufsteigender Folge, Standardwert),
+            <code>SORT_DESC</code> (sortiere in absteigender Folge).
+        </para>
+
+        <para>
+            Beispiele:
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]></programlisting>
+        </para>
+
+        <para>
+            Bitte beim Verwenden von nicht standardmäßigen Sortierreihenfolgen. Es erfordert die
+            komplette Übernahme der Dokumente aus dem Index und kann die Suchperformance dramatisch
+            verlangsamen.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.searching.highlighting">
+        <title>Search Results Highlighting</title>
+        <para>
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows to highlight HTML document terms
+            in context of search query:
+            <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+$hits = $index->find($query);
+...
+$highlightedHTML = $query->highlightMatches($sourceHTML);]]></programlisting>
+        </para>
+
+        <para>
+            <code>highlightMatches()</code> method utilizes <code>Zend_Search_Lucene_Document_Html</code> class
+            (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
+            for HTML processing. So it has the same requirements for HTML source.
+        </para>
+    </sect2>
+    
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
