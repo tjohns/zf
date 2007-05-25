@@ -29,6 +29,11 @@ require_once 'Zend/Http/Client.php';
 require_once 'Zend/Http/Client/Exception.php';
 
 /**
+ * Zend_Version
+ */
+require_once 'Zend/Version.php';
+
+/**
  * Class to facilitate Google's "Account Authentication
  * for Installed Applications" also known as "ClientLogin".
  * @see http://code.google.com/apis/accounts/AuthForInstalledApps.html
@@ -87,9 +92,11 @@ class Zend_Gdata_ClientLogin
 
         // Build the HTTP client for authentication
         $client->setUri(self::CLIENTLOGIN_URI);
+        $useragent = $source . ' Zend_Framework_Gdata/' . Zend_Version::VERSION;
         $client->setConfig(array(
                 'maxredirects'    => 0,
-                'strictredirects' => true
+                'strictredirects' => true,
+                'useragent' => $useragent
             )
         );
         $client->setParameterPost('accountType', 'HOSTED_OR_GOOGLE');
@@ -123,7 +130,12 @@ class Zend_Gdata_ClientLogin
         if ($response->getStatus() == 200) {
             $headers['authorization'] = 'GoogleLogin auth=' . $goog_resp['Auth'];
             $client = new Zend_Http_Client();
-            $client->setConfig(array('strictredirects' => true));
+            $useragent = $source . ' Zend_Framework_Gdata/' . Zend_Version::VERSION;
+            $client->setConfig(array(
+                    'strictredirects' => true,
+                    'useragent' => $useragent
+                )
+            );
             $client->setHeaders($headers);
             return $client;
 

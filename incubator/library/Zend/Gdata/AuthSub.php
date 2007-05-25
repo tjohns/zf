@@ -93,6 +93,12 @@ class Zend_Gdata_AuthSub
         }
         $client->setUri(self::AUTHSUB_SESSION_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
+        $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+        $client->setConfig(array(
+                'strictredirects' => true,
+                'useragent' => $useragent
+            )
+        );
         $client->setHeaders($headers);
 
         try {
@@ -137,6 +143,13 @@ class Zend_Gdata_AuthSub
         }
         $client->setUri(self::AUTHSUB_REVOKE_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
+        $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION .
+                ' ' . $source;
+        $client->setConfig(array(
+                'strictredirects' => true,
+                'useragent' => $useragent
+            )
+        );
         $client->setHeaders($headers);
         ob_start();
         try {
@@ -192,7 +205,12 @@ class Zend_Gdata_AuthSub
             require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException('Client is not an instance of Zend_Http_Client.');
         }
-        $client->setConfig(array('strictredirects' => true));
+        $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+        $client->setConfig(array(
+                'strictredirects' => true,
+                'useragent' => $useragent
+            )
+        );
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
         return $client;
