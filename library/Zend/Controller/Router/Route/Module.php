@@ -204,7 +204,9 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
         $url = '';
 
         if ($this->_moduleValid || array_key_exists($this->_moduleKey, $data)) {
-            $module = $params[$this->_moduleKey];
+        	if ($params[$this->_moduleKey] != $this->_defaults[$this->_moduleKey]) {
+            	$module = $params[$this->_moduleKey];
+        	}
         }
         unset($params[$this->_moduleKey]);
 
@@ -227,7 +229,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
             $url = '/' . $controller . $url;
         }
 
-        if (isset($module) && (!empty($url) || $module !== $this->_defaults[$this->_moduleKey])) {
+        if (isset($module) && !empty($url)) {
             $url = '/' . $module . $url;
         }
 
