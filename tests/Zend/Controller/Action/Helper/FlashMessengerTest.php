@@ -23,6 +23,9 @@ class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework
             $this->markTestSkipped('Cannot test FlashMessenger due to unavailable session save path');
         }
 
+        if (headers_sent()) {
+            $this->markTestSkipped('Cannot test FlashMessenger: cannot start session because headers already sent');
+        }
         Zend_Session::start();
     }
        
