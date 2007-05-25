@@ -22,9 +22,9 @@
 
 
 /**
- * @see Zend_Validate_Interface
+ * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/Interface.php';
+require_once 'Zend/Validate/Abstract.php';
 
 
 /**
@@ -39,14 +39,19 @@ require_once 'Zend/Filter/Digits.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Validate_Ccnum implements Zend_Validate_Interface
+class Zend_Validate_Ccnum extends Zend_Validate_Abstract
 {
+
+    const LENGTH   = 'ccnumLength';
+    const CHECKSUM = 'ccnumChecksum';
+
     /**
-     * Array of validation failure messages
-     *
      * @var array
      */
-    protected $_messages = array();
+    protected $_messageTemplates = array(
+        self::LENGTH   => "'%value%' must contain between 13 and 19 digits",
+        self::CHECKSUM => "Luhn algorithm (mod-10 checksum) failed on '%value%'"
+    );
 
     /**
      * Defined by Zend_Validate_Interface
@@ -58,7 +63,7 @@ class Zend_Validate_Ccnum implements Zend_Validate_Interface
      */
     public function isValid($value)
     {
-        $this->_messages = array();
+        $this->_setValue($value);
 
         $filterDigits = new Zend_Filter_Digits();
         $valueFiltered = $filterDigits->filter($value);
@@ -66,7 +71,7 @@ class Zend_Validate_Ccnum implements Zend_Validate_Interface
         $length = strlen($valueFiltered);
 
         if ($length < 13 || $length > 19) {
-            $this->_messages[] = "'$value' must contain between 13 and 19 digits";
+            $this->_error(self::LENGTH);
             return false;
         }
 
@@ -80,22 +85,11 @@ class Zend_Validate_Ccnum implements Zend_Validate_Interface
         }
 
         if ((10 - $sum % 10) % 10 != $valueFiltered[$length - 1]) {
-            $this->_messages[] = "Luhn algorithm (mod-10 checksum) failed on '$valueFiltered'";
+            $this->_error(self::CHECKSUM, $valueFiltered);
             return false;
         }
 
         return true;
     }
 
-    /**
-     * Defined by Zend_Validate_Interface
-     *
-     * Returns array of validation failure messages
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->_messages;
-    }
 }

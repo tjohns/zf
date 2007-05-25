@@ -22,9 +22,9 @@
 
 
 /**
- * @see Zend_Validate_Interface
+ * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/Interface.php';
+require_once 'Zend/Validate/Abstract.php';
 
 
 /**
@@ -33,14 +33,17 @@ require_once 'Zend/Validate/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Validate_Digits implements Zend_Validate_Interface
+class Zend_Validate_Digits extends Zend_Validate_Abstract
 {
+
+    const NOT_DIGITS = 'notDigits';
+
     /**
-     * Array of validation failure messages
-     *
      * @var array
      */
-    protected $_messages = array();
+    protected $_messageTemplates = array(
+        self::NOT_DIGITS => "'%value%' contains not only digit characters"
+    );
 
     /**
      * Defined by Zend_Validate_Interface
@@ -52,26 +55,15 @@ class Zend_Validate_Digits implements Zend_Validate_Interface
      */
     public function isValid($value)
     {
-        $this->_messages = array();
-
         $valueString = (string) $value;
 
+        $this->_setValue($valueString);
+
         if (!ctype_digit($valueString)) {
-            $this->_messages[] = "'$valueString' contains not only digit characters";
+            $this->_error();
             return false;
         }
         return true;
     }
 
-    /**
-     * Defined by Zend_Validate_Interface
-     *
-     * Returns array of validation failure messages
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->_messages;
-    }
 }

@@ -136,6 +136,12 @@ require_once 'Zend/Validate/StringLengthTest.php';
 
 
 /**
+ * @see Zend_Validate_MessageTest
+ */
+require_once 'Zend/Validate/MessageTest.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
@@ -179,6 +185,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_LessThanTest');
         $suite->addTestSuite('Zend_Validate_RegexTest');
         $suite->addTestSuite('Zend_Validate_StringLengthTest');
+        $suite->addTestSuite('Zend_Validate_MessageTest');
 
         return $suite;
     }

@@ -84,6 +84,51 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
         $valueExpected = 'abc';
         $this->assertEquals($valueExpected, $this->_filter->filter($value));
     }
+
+    /**
+     * Ensures that we can call the static method get()
+     * to instantiate a named validator by its class basename
+     * and it returns the result of filter() with the input.
+     */
+    public function testStaticFactory()
+    {
+        $filteredValue = Zend_Filter::get('1a2b3c4d', 'Digits');
+        $this->assertEquals('1234', $filteredValue);
+    }
+
+    /**
+     * Ensures that a validator with constructor arguments can be called
+     * with the static method get().
+     */
+    public function testStaticFactoryWithConstructorArguments()
+    {
+        // Test HtmlEntities with one ctor argument.
+        $filteredValue = Zend_Filter::get('"O\'Reilly"', 'HtmlEntities', array(ENT_COMPAT));
+        $this->assertEquals('&quot;O\'Reilly&quot;', $filteredValue);
+
+        // Test HtmlEntities with a different ctor argument,
+        // and make sure it gives the correct response
+        // so we know it passed the arg to the ctor.
+        $filteredValue = Zend_Filter::get('"O\'Reilly"', 'HtmlEntities', array(ENT_QUOTES));
+        $this->assertEquals('&quot;O&#039;Reilly&quot;', $filteredValue);
+    }
+
+    /**
+     * Ensures that if we specify a validator class basename that doesn't
+     * exist in the namespace, get() throws an exception.
+     */
+    public function testStaticFactoryClassNotFound()
+    {
+        try {
+            $this->assertTrue(Zend_Filter::get('1234', 'UnknownFilter'));
+            $this->fail('Expected to catch Zend_Filter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Filter_Exception', $e,
+                'Expected exception of type Zend_Filter_Exception, got '.get_class($e));
+            $this->assertEquals("Filter class not found from basename 'UnknownFilter'", $e->getMessage());
+        }
+    }
+
 }
 
 

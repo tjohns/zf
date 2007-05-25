@@ -22,9 +22,9 @@
 
 
 /**
- * @see Zend_Validate_Interface
+ * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/Interface.php';
+require_once 'Zend/Validate/Abstract.php';
 
 
 /**
@@ -33,14 +33,19 @@ require_once 'Zend/Validate/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Validate_Date implements Zend_Validate_Interface
+class Zend_Validate_Date extends Zend_Validate_Abstract
 {
+
+    const NOT_YYYY_MM_DD = 'dateNotYYYY-MM-DD';
+    const INVALID        = 'dateInvalid';
+
     /**
-     * Array of validation failure messages
-     *
      * @var array
      */
-    protected $_messages = array();
+    protected $_messageTemplates = array(
+        self::NOT_YYYY_MM_DD => "'%value%' is not of the format YYYY-MM-DD",
+        self::INVALID        => "'%value%' does not appear to be a valid date"
+    );
 
     /**
      * Defined by Zend_Validate_Interface
@@ -52,34 +57,23 @@ class Zend_Validate_Date implements Zend_Validate_Interface
      */
     public function isValid($value)
     {
-        $this->_messages = array();
-
         $valueString = (string) $value;
 
+        $this->_setValue($valueString);
+
         if (!preg_match('/\d{4}-\d{2}-\d{2}/', $valueString)) {
-            $this->_messages[] = "'$valueString' is not of the format YYYY-MM-DD";
+            $this->_error(self::NOT_YYYY_MM_DD);
             return false;
         }
 
         list($year, $month, $day) = sscanf($valueString, '%d-%d-%d');
 
         if (!checkdate($month, $day, $year)) {
-            $this->_messages[] = "'$valueString' does not appear to be a valid date";
+            $this->_error(self::INVALID);
             return false;
         }
 
         return true;
     }
 
-    /**
-     * Defined by Zend_Validate_Interface
-     *
-     * Returns array of validation failure messages
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->_messages;
-    }
 }
