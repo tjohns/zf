@@ -106,6 +106,12 @@ require_once 'Zend/Filter/StripTagsTest.php';
 
 
 /**
+ * @see Zend_Filter_InputTest
+ */
+require_once 'Zend/Filter/InputTest.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
@@ -144,6 +150,7 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_StringToLowerTest');
         $suite->addTestSuite('Zend_Filter_StringTrimTest');
         $suite->addTestSuite('Zend_Filter_StripTagsTest');
+        $suite->addTestSuite('Zend_Filter_InputTest');
 
         return $suite;
     }

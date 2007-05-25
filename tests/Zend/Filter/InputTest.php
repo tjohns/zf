@@ -352,7 +352,8 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             Zend_Filter_Input::NAMESPACE => 'TestNamespace'
         );
         $ip = get_include_path();
-        set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR.'_files'.PATH_SEPARATOR.$ip);
+        $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        set_include_path($dir . PATH_SEPARATOR . $ip);
         $input = new Zend_Filter_Input(null, $validators, $data, $options);
 
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
