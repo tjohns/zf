@@ -71,7 +71,7 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         }
 
         $message = $this->_messageTemplates[$messageKey];
-        $message = str_replace("%value%", $value, $message);
+        $message = str_replace("%value%", (string) $value, $message);
         foreach ($this->_messageVariables as $ident => $property) {
             $message = str_replace("%$ident%", $this->$property, $message);
         }

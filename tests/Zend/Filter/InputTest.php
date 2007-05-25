@@ -22,6 +22,11 @@
  */
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+/**
  * @see Zend_Filter_Input
  */
 require_once 'Zend/Filter/Input.php';
@@ -30,8 +35,6 @@ require_once 'Zend/Filter/Input.php';
  * @see Zend_Loader
  */
 require_once 'Zend/Loader.php';
-
-require_once 'PHPUnit/Framework/TestCase.php';
 
 class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
 {
@@ -351,9 +354,12 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $options = array(
             Zend_Filter_Input::NAMESPACE => 'TestNamespace'
         );
+
         $ip = get_include_path();
         $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
-        set_include_path($dir . PATH_SEPARATOR . $ip);
+        $newIp = $dir . PATH_SEPARATOR . $ip;
+        set_include_path($newIp);
+
         $input = new Zend_Filter_Input(null, $validators, $data, $options);
 
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
@@ -634,7 +640,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
         $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
         $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
-        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
     }
 
     public function testValidatorGetMissing()
@@ -671,7 +677,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($input->hasMissing(), 'Expecting hasMissing() to return false');
         $this->assertFalse($input->hasInvalid(), 'Expecting hasInvalid() to return false');
         $this->assertTrue($input->hasUnknown(), 'Expecting hasUnknown() to return true');
-        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
     }
 
     public function testValidatorGetUnknown()
@@ -687,7 +693,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
         $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
         $this->assertTrue($input->hasUnknown(), 'Expected hasUnknown() to retrun true');
-        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
 
         $unknown = $input->getUnknown();
         $this->assertType('array', $unknown);
@@ -709,8 +715,12 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $options = array(
             Zend_Filter_Input::NAMESPACE => 'TestNamespace'
         );
+
         $ip = get_include_path();
-        set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR.'_files'.PATH_SEPARATOR.$ip);
+        $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        $newIp = $dir . PATH_SEPARATOR . $ip;
+        set_include_path($newIp);
+
         $input = new Zend_Filter_Input(null, $validators, $data);
         $input->addNamespace('TestNamespace');
 
@@ -866,8 +876,12 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $options = array(
             Zend_Filter_Input::NAMESPACE => 'TestNamespace'
         );
+
         $ip = get_include_path();
-        set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR.'_files'.PATH_SEPARATOR.$ip);
+        $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        $newIp = $dir . PATH_SEPARATOR . $ip;
+        set_include_path($newIp);
+
         $input = new Zend_Filter_Input(null, $validators, $data, $options);
 
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');

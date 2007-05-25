@@ -468,15 +468,16 @@ class Zend_Filter_Input
     protected function _filterRule(array $filterRule)
     {
         $field = $filterRule[self::FIELDS];
+        if (!isset($this->_data[$field])) {
+            return;
+        }
         if (is_array($this->_data[$field])) {
             foreach ($this->_data[$field] as $key => $value) {
                 $this->_data[$field][$key] = $filterRule[self::FILTER_CHAIN]->filter($value);
             }
         } else {
-            if (isset($this->_data[$field])) {
-                $this->_data[$field] =
-                    $filterRule[self::FILTER_CHAIN]->filter($this->_data[$field]);
-            }
+            $this->_data[$field] =
+                $filterRule[self::FILTER_CHAIN]->filter($this->_data[$field]);
         }
     }
 
@@ -669,16 +670,26 @@ class Zend_Filter_Input
                         }
                     }
                     if (!$validatorRule[self::VALIDATOR_CHAIN]->isValid($value)) {
-                        $this->_invalidMessages[$validatorRule[self::RULE]] =
-                            array_merge(
-                                (array) $this->_invalidMessages[$validatorRule[self::RULE]],
-                                $validatorRule[self::VALIDATOR_CHAIN]->getMessages()
-                            );
-                        $this->_invalidErrors[$validatorRule[self::RULE]] =
-                            array_merge(
-                                (array) $this->_invalidErrors[$validatorRule[self::RULE]],
-                                $validatorRule[self::VALIDATOR_CHAIN]->getErrors()
-                            );
+                        if (isset($this->_invalidMessages[$validatorRule[self::RULE]])) {
+                            $this->_invalidMessages[$validatorRule[self::RULE]] =
+                                array_merge(
+                                    (array) $this->_invalidMessages[$validatorRule[self::RULE]],
+                                    $validatorRule[self::VALIDATOR_CHAIN]->getMessages()
+                                );
+                        } else {
+                            $this->_invalidMessages[$validatorRule[self::RULE]] =
+                                    $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
+                        }
+                        if (isset($this->_invalidErrors[$validatorRule[self::RULE]])) {
+                            $this->_invalidErrors[$validatorRule[self::RULE]] =
+                                array_merge(
+                                    (array) $this->_invalidErrors[$validatorRule[self::RULE]],
+                                    $validatorRule[self::VALIDATOR_CHAIN]->getErrors()
+                                );
+                        } else {
+                            $this->_invalidErrors[$validatorRule[self::RULE]] =
+                                    $validatorRule[self::VALIDATOR_CHAIN]->getErrors();
+                        }
                         unset($this->_validFields[$fieldKey]);
                         $failed = true;
                         if ($validatorRule[self::BREAK_CHAIN]) {
@@ -696,7 +707,9 @@ class Zend_Filter_Input
          * If we got this far, the inputs for this rule pass validation.
          */
         foreach ((array) $validatorRule[self::FIELDS] as $field) {
-            $this->_validFields[$field] = $this->_data[$field];
+            if (isset($this->_data[$field])) {
+                $this->_validFields[$field] = $this->_data[$field];
+            }
         }
     }
 
