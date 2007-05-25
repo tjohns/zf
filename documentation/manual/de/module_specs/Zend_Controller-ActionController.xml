@@ -53,6 +53,72 @@ class FooController extends Zend_Controller_Action
             variety of helper methods. This chapter serves as an overview of the
             action controller functionality
         </para>
+
+        <note>
+            <title>Default Behaviour</title>
+
+            <para>
+                By default, the <link linkend="zend.controller.front">front
+                    controller</link> enables the <link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                action helper. This helper takes care of injecting the view
+                object into the controller, as well as automatically rendering
+                views. You may disable it within your action controller via one
+                of the following methods:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // Local to this controller only:
+        $this->_invokeArgs['noViewRenderer'] = true;
+
+        // Globally:
+        $this->_helper->removeHelper('viewRenderer');
+
+        // Also globally, but would need to be in conjunction with the local 
+        // version in order to propagate for this controller:
+        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+    }
+}
+]]></programlisting>
+
+            <para>
+                <code>initView()</code>, <code>getViewScript()</code>,
+                <code>render()</code>, and <code>renderScript()</code> each
+                proxy to the <code>ViewRenderer</code> unless the helper is not
+                in the helper broker or the noViewRenderer flag has been set.
+            </para>
+
+            <para>
+                You can also simply disable rendering for an invididual view by
+                setting the <code>ViewRenderer</code>'s <code>noRender</code>
+                flag:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // disable autorendering for this action:
+        $this->_helper->viewRenderer->setNoRender();
+    }
+}
+]]></programlisting>
+
+            <para>
+                The primary reasons to disable the <code>ViewRenderer</code> are
+                if you simply do not need a view object or if you are not
+                rendering via view scripts (for instance, when using an action
+                controller to serve web service protocols such as SOAP, XML-RPC,
+                or REST). In most cases, you will never need to globally disable
+                the <code>ViewRenderer</code>, only selectively within
+                individual controllers or actions.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.action.initialization">

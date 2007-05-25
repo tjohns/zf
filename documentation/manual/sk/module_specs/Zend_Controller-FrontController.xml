@@ -39,6 +39,51 @@
             may also be invoked to further tailor the front controller
             environment and that of its helper classes.
         </para>
+
+        <note>
+            <title>Default Behaviour</title>
+            <para>
+                By default, the front controller loads the <link
+                    linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
+                plugin, as well as the <link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                action helper plugin. These are to simplify error handling and
+                view renderering in your controllers, respectively.
+            </para>
+
+            <para>
+                To disable the error handler, simply perform one of the
+                following actions at any point prior to calling
+                <code>dispatch()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Unregister the plugin:
+$front->unregisterPlugin('Zend_Controller_Plugin_ErrorHandler');
+
+// Or simply disable it:
+$front->setParam('noErrorHandler', true);
+]]></programlisting>
+
+            <para>
+                To disable the view renderer, do one of the following actions
+                point prior to calling <code>dispatch()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Remove the action helper from the broker:
+Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+
+// Or simply disable it:
+$front->setParam('noViewRenderer', true);
+]]></programlisting>
+
+            <para>
+                In each case, setting the front controller parameter is probably
+                the easiest and fastest method, and also allows your controllers
+                to easily override the setting at any point.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.front.methods.primary">

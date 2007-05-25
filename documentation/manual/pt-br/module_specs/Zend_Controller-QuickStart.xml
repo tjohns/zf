@@ -172,26 +172,29 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        $this->render();
     }
 }
 ]]></programlisting>
 
             <para>
-                The call to <code>render()</code> will render a template. By
-                default, <code>Zend_View</code> is used as the View layer in the
-                MVC. <code>render()</code> does some magic, and uses the
+                By default, the <link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                action helper is enabled. What this means is that by simply
+                defining an action method and a corresponding view script, you
+                will immediately get content rendered.  By default,
+                <code>Zend_View</code> is used as the View layer in the MVC. The
+                <code>ViewRenderer</code> does some magic, and uses the
                 controller name (e.g., <code>index</code>) and the current
                 action name (e.g., <code>index</code>) to determine what
                 template to pull. By default, templates end in the
                 <code>.phtml</code> extension, so this means that, in the above
                 example, the template <code>index/index.phtml</code> will be
-                rendered. Additionally, <code>Zend_Controller_Action</code>
+                rendered. Additionally, the <code>ViewRenderer</code>
                 automatically assumes that the directory <code>views</code> at
                 the same level as the controller directory will be the base view
                 directory, and that the actual view scripts will be in the
                 <code>views/scripts/</code> subdirectory. Thus, the template
-                rendered will be found in 
+                rendered will be found in
                 <code>application/views/scripts/index/index.phtml</code>.
             </para>
         </sect3>
@@ -245,7 +248,6 @@ class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
-        $this->render();
     }
 }
 ]]></programlisting>

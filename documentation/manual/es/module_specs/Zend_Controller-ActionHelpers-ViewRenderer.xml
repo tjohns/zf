@@ -27,20 +27,68 @@
 
             <listitem><para>Add the ability to automatically render a view
                     script with no intervention.</para></listitem>
-        </itemizedlist>
 
-        <para>
-            Eventually, we will also add the ability to define the schema used
-            to autodetermine the view script to utilize.
-        </para>
+            <listitem><para>Allow the developer to create her own specifications
+                    for the view base path and for view script
+                    paths.</para></listitem>
+        </itemizedlist>
+        <note>
+            <para>
+                If you perform a <code>_forward()</code>, redirect, or
+                <code>render</code> manually, autorendering will not occur, as
+                by performing any of these actions you are telling the
+                <code>ViewRenderer</code> that you are determining your own
+                output.
+            </para>
+        </note>
 
         <note>
             <para>
-                If you perform a <code>_forward()</code> or redirect,
-                autorendering will not occur, as by performing either of these
-                actions it is assumed you have either explicitly rendered a
-                script or do not want to do so.
+                The <code>ViewRenderer</code> is enabled by default. You may
+                disable it via the front controller <code>noViewRenderer</code>
+                param (<code>$front->setParam('noViewRenderer')</code>) or
+                removing the helper from the helper broker stack
+                (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
             </para>
+
+            <para>
+                If you wish to modify settings of the <code>ViewRenderer</code>
+                prior to dispatching the front controller, you may do so in one
+                of two ways:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Instantiate and register your own
+                        <code>ViewRenderer</code> object and pass it to the
+                        helper broker:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+$viewRenderer->setView($view)
+             ->setViewSuffix('php');
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]></programlisting>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Retrieve the registered <code>ViewRenderer</code> object
+                        from the helper broker after the front controller has
+                        been instantiated:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[<?php
+$front = Zend_Controller_Front::getInstance();
+
+$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer->setView($view)
+             ->setViewSuffix('php');
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
         </note>
     </sect4>
 
@@ -57,13 +105,15 @@ Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper
 ]]></programlisting>
         
         <para>
-            The first time <code>preDispatch()</code> is called, the
-            <code>ViewRenderer</code> will instantiate a view object. Each time
-            <code>preDispatch()</code> is called, it will set the view property
-            of the action controller, and call <code>addScriptPath()</code> with
-            a path relative to the current module; this will be called with a
-            class prefix named after the current module, effectively namespacing
-            all helper and filter classes you define for the module. 
+            The first time an action controller is instantiated, it will trigger
+            the <code>ViewRenderer</code> to instantiate a view object. Each
+            time a controller is instantiated, the <code>ViewRenderer</code>'s
+            <code>init()</code> method is called, which will cause it to set the
+            view property of the action controller, and call
+            <code>addScriptPath()</code> with a path relative to the current
+            module; this will be called with a class prefix named after the
+            current module, effectively namespacing all helper and filter
+            classes you define for the module. 
         </para>
 
         <para>
@@ -202,8 +252,8 @@ $this->_helper->viewRenderer('form', 'html', true);
                 <note><para>
                         <code>setRender()</code> and <code>direct()</code> don't
                         actually render the view script, but instead set hints
-                        that <code>postDispatch()</code> uses to render the
-                        view.
+                        that <code>postDispatch()</code> and
+                        <code>render()</code> will use to render the view.
                 </para></note>
             </listitem>
         </itemizedlist>
@@ -219,6 +269,206 @@ $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]></programlisting>
+
+        <para>
+            There are several additional methods for customizing path
+            specifications used for determining the view base path to add to the
+            view object, and the view script path to use when autodetermining
+            the view script to render. These methods each take one or more of
+            the following placeholders:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>:moduleDir</code> refers to the current module's base
+                    directory (by convention, the parent directory of the
+                    module's controller directory).
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>:module</code> refers to the current module name.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>:controller</code> refers to the current controller name.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>:action</code> refers to the current action name.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>:suffix</code> refers to the view script suffix (which
+                    may be set via <code>setViewSuffix()</code>).
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            The methods for controlling path specifications are:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setViewBasePathSpec($spec)</code> allows you to change
+                    the path specification used to determine the base path to
+                    add to the view object. The default specification is
+                    <code>:moduleDir/views</code>. You may retrieve the current
+                    specification at any time using
+                    <code>getViewBasePathSpec()</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setViewScriptPathSpec($spec)</code> allows you to
+                    change the path specification used to determine the path to
+                    an individual view script (minus the base view script path).
+                    The default specification is
+                    <code>:controller/:action.:suffix</code>. You may retrieve
+                    the current specification at any time using
+                    <code>getViewScriptPathSpec()</code>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setViewScriptPathNoControllerSpec($spec)</code> allows
+                    you to change the path specification used to determine the
+                    path to an individual view script when
+                    <code>noController</code> is in effect (minus the base view
+                    script path).  The default specification is
+                    <code>:action.:suffix</code>. You may retrieve the current
+                    specification at any time using
+                    <code>getViewScriptPathNoControllerSpec()</code>.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            The final items in the <code>ViewRenderer</code> API are the methods
+            for actually determining view script paths and rendering views.
+            These include:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>renderScript($script, $name)</code> allows you to
+                    render a script with a path you specify, optionally to a
+                    named path segment. When using this method, the
+                    <code>ViewRenderer</code> does no autodetermination of the
+                    script name, but instead directly passes the
+                    <code>$script</code> argument directly to the view object's
+                    <code>render()</code> method.
+                </para>
+
+                <note><para>
+                    Once the view has been rendered to the response object, it
+                    sets the <code>noRender</code> to prevent accidentally
+                    rendering the same view script multiple times.
+                </para></note>
+
+                <note>
+                    <para>
+                        By default,
+                        <code>Zend_Controller_Action::renderScript()</code>
+                        proxies to the <code>ViewRenderer</code>'s
+                        <code>renderScript()</code> method.
+                    </para>
+                </note>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getViewScript($action, $vars)</code> creates the path
+                    to a view script based on the action passed and/or any
+                    variables passed in <code>$vars</code>. Keys for this array
+                    may include any of the path specification keys ('moduleDir',
+                    'module', 'controller', 'action', and 'suffix'). Any
+                    variables passed will be used; otherwise, values based on
+                    the current request will be utlized.
+                </para>
+
+                <para>
+                    <code>getViewScript()</code> will use either the
+                    <code>viewScriptPathSpec</code> or
+                    <code>viewScriptPathNoControllerSpec</code> based on the
+                    setting of the <code>noController</code> flag.
+                </para>
+
+                <para>
+                    Word delimiters occurring in module, controller, or action
+                    names will be replaced with dashes ('-'). Thus, if you have
+                    the controller name 'foo.bar' and the action 'baz:bat',
+                    using the default path specification will result in a view
+                    script path of 'foo-bar/baz-bat.phtml'.
+                </para>
+
+                <note>
+                    <para>
+                        By default,
+                        <code>Zend_Controller_Action::getViewScript()</code>
+                        proxies to the <code>ViewRenderer</code>'s
+                        <code>getViewScript()</code> method.
+                    </para>
+                </note>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>render($action, $name, $noController)</code> checks
+                    first to see if either <code>$name</code> or
+                    <code>$noController</code> have been passed, and if so, sets
+                    the appropriate flags (responseSegment and noController,
+                    respectively) in the ViewRenderer. It then passes the
+                    <code>$action</code> argument, if any, on to
+                    <code>getViewScript()</code>. Finally, it passes the
+                    calculated view script path to <code>renderScript()</code>.
+                </para>
+
+                <note>
+                    <para>
+                        Be aware of the side-effects of using render(): the
+                        values you pass for the response segment name and for
+                        the noController flag will persist in the object.
+                        Additionally, noRender will be set after rendering is
+                        completed.
+                    </para>
+                </note>
+
+                <note>
+                    <para>
+                        By default,
+                        <code>Zend_Controller_Action::render()</code> proxies to
+                        the <code>ViewRenderer</code>'s <code>render()</code>
+                        method.
+                    </para>
+                </note>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>renderBySpec($action, $vars, $name)</code> allows you
+                    to pass path specification variables in order to determine
+                    the view script path to create. It passes
+                    <code>$action</code> and <code>$vars</code> to
+                    <code>getScriptPath()</code>, and then passes the resulting
+                    script path and <code>$name</code> on to
+                    <code>renderScript()</code>.
+                </para>
+            </listitem>
+        </itemizedlist>
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.viewrenderer.basicusage">
@@ -389,7 +639,82 @@ class Foo_BarController extends Zend_Controller_Action
         $view->setEscape('htmlspecialchars');
     }
 }
-?>
+?>]]></programlisting>
+        </example>
+    </sect4>
+
+    <sect4 id="zend.controller.actionhelper.viewrenderer.advancedusage">
+        <title>Advanced Usage Examples</title>
+
+        <example>
+            <title>Changing the path specifications</title>
+
+            <para>
+                In some circumstances, you may decide that the default path
+                specifications do not fit your site's needs. For instance, you
+                may want to have a single template tree to which you may then
+                give access to your designers (this is very typical when using
+                <ulink url="http://smarty.php.net/">Smarty</ulink>, for
+                instance). In such a case, you may want to hardcode the view
+                base path specification, and create an alternate specification
+                for the action view script paths themselves.
+            </para>
+
+            <para>
+                For purposes of this example, let's assume that the base path to
+                views should be '/opt/vendor/templates', and that you wish for
+                view scripts to be referenced by
+                ':moduleDir/:controller/:action.:suffix'; if the noController
+                flag has been set, you want to render out of the top level
+                instead of in a subdirectory (':action.:suffix'). Finally, you
+                want to use 'tpl' as the view script filename suffix.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+/**
+ * In your bootstrap:
+ */
+
+// Different view implementation
+$view = new ZF_Smarty();
+
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
+$viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
+             ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
+             ->setViewScriptPathNoControllerSpec(':action.:suffix')
+             ->setViewSuffix('tpl');
+Zend_View_Controller_HelperBroker::addHelper($viewRenderer);
+]]></programlisting>
+        </example>
+
+        <example>
+            <title>Rendering multiple view scripts from a single action</title>
+
+            <para>
+                At times, you may need to render multiple view scripts from a
+                single action. This is very straightforward -- simply make
+                multiple calls to <code>render()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class SearchController extends Zend_Controller_Action
+{
+    public function resultsAction()
+    {
+        // Assume $this->model is the current model
+        $this->view->results = $this->model->find($this->_getParam('query', '');
+
+        // render() by default proxies to the ViewRenderer
+        // Render first the search form and then the results
+        $this->render('form');
+        $this->render('results');
+    }
+
+    public function formAction()
+    {
+        // do nothing; ViewRenderer autorenders the view script
+    }
+}
 ]]></programlisting>
         </example>
     </sect4>
