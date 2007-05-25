@@ -97,9 +97,11 @@ echo $config->database->name; // wyświetla "dbname"]]></programlisting>
                 <row>
                     <entry><code>$section</code></entry>
                     <entry>
-                        The [section] within the ini file that is to be loaded. Setting
-                        this parameter to null will load all sections. Alternatively, an
-                        array of section names may be supplied to load multiple sections.
+                        Nazwa sekcji wewnątrz pliku ini, która ma być załadowana.
+                        Ustawienie wartości tego parametru na null spowoduje 
+                        załadowanie wszystkich sekcji. 
+                        Alternatively, an array of section names may be supplied 
+                        to load multiple sections.
                     </entry>
                 </row>
                 <row>
@@ -109,15 +111,16 @@ echo $config->database->name; // wyświetla "dbname"]]></programlisting>
                             <listitem>
                                 <para>
                                     <emphasis>allowModifications</emphasis>: 
-                                    Set to true to allow subsequent modification 
-                                    of loaded file. Defaults to false
+                                    Ustaw na true aby umożliwić późniejszą 
+                                    modyfikację załadowanego pliku. Domyśłnie 
+                                    false
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
                                     <emphasis>nestSeparator</emphasis>: 
-                                    Set to the character to be used as the nest 
-                                    separator. Defaults to "."
+                                    Ustaw znak jaki ma być użyty do oddzielania
+                                    przestrzeni nazw. Domyślnie "."
                                 </para>
                             </listitem>
                         </itemizedlist>

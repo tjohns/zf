@@ -55,6 +55,73 @@ class FooController extends Zend_Controller_Action
         </para>
     </sect2>
 
+        <note>
+            <title>Default Behaviour</title>
+
+            <para>
+                By default, the <link linkend="zend.controller.front">front
+                    controller</link> enables the <link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                action helper. This helper takes care of injecting the view
+                object into the controller, as well as automatically rendering
+                views. You may disable it within your action controller via one
+                of the following methods:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // Local to this controller only:
+        $this->_invokeArgs['noViewRenderer'] = true;
+
+        // Globally:
+        $this->_helper->removeHelper('viewRenderer');
+
+        // Also globally, but would need to be in conjunction with the local 
+        // version in order to propagate for this controller:
+        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+    }
+}
+]]></programlisting>
+
+            <para>
+                <code>initView()</code>, <code>getViewScript()</code>,
+                <code>render()</code>, and <code>renderScript()</code> each
+                proxy to the <code>ViewRenderer</code> unless the helper is not
+                in the helper broker or the noViewRenderer flag has been set.
+            </para>
+
+            <para>
+                You can also simply disable rendering for an invididual view by
+                setting the <code>ViewRenderer</code>'s <code>noRender</code>
+                flag:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // disable autorendering for this action:
+        $this->_helper->viewRenderer->setNoRender();
+    }
+}
+]]></programlisting>
+
+            <para>
+                The primary reasons to disable the <code>ViewRenderer</code> are
+                if you simply do not need a view object or if you are not
+                rendering via view scripts (for instance, when using an action
+                controller to serve web service protocols such as SOAP, XML-RPC,
+                or REST). In most cases, you will never need to globally disable
+                the <code>ViewRenderer</code>, only selectively within
+                individual controllers or actions.
+            </para>
+        </note>
+    </sect2>
+
 	<sect2 id="zend.controller.action.initialization">
         <title>Inicjalizacja obiektu</title>
 
@@ -167,18 +234,19 @@ $this->getResponse()->appendBody($content);
                 
                 <note>
                     <para>
-                        <code>_getParam()</code> may take an optional second
-                        argument containing a default value to use if the
-                        parameter is not set or is empty. Using it eliminates
-                        the need to call <code>_hasParam()</code> prior to
-                        retrieving a value:
+                        Metoda <code>_getParam()</code> może pobierać opcjonalny
+                        drugi argument zawierający domyślną wartość, ktora 
+                        zostanie użyta, jeśli parametr nie został zdefiniowany 
+                        lub jeśli jest pusty. Użycie drugiego parametru powoduje,
+                        że wywołanie metody <code>_hasParam()</code> przed 
+                        odebraniem parametru nie jest konieczne:
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
-// Use default value of 1 if id is not set
+// Użyj domyślnej wartości 1 jeśli parametr id jest pusty
 $id = $this->_getParam('id', 1);
 
-// Instead of:
+// Zamiast:
 if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
@@ -191,7 +259,7 @@ if ($this->_hasParam('id') {
     </sect2>
     
     <sect2 id="zend.controller.action.viewintegration">
-        <title>View Integration</title>
+        <title>Integracja z widokiem</title>
 
         <para>
             <code>Zend_Controller_Action</code> provides a rudimentary and
@@ -217,8 +285,7 @@ if ($this->_hasParam('id') {
             </para>
 
             <para>
-                The default implementation makes the following assumption of
-                the directory structure:
+                Domyślna implementacja zakłada taką strukturę katalogów:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -234,21 +301,21 @@ applicationOrModule/
 ]]></programlisting>
             
             <para>
-                In other words, view scripts are assumed to be in the
-                <code>views/scripts/</code> subdirectory, and the
-                <code>views</code> subdirectory is assumed to contain sibling 
-                functionality (helpers, filters). When determining the view
-                script name and path, the <code>views/scripts/</code> directory
-                will be used as the base path, with a directories named after the
-                individual controllers providing a hierarchy of view scripts.
+                Innymi słowy, założone jest, że skrypty widoków znajdują się w 
+                podkatalogu <code>views/scripts/</code>, a podkatalog
+                <code>views</code> zawiera poboczne funkcjonalności (klasy 
+                pomocnicze, filtry). Gdy określana jest nazwa skryptu oraz 
+                ścieżka, katalog <code>views/scripts/</code> jest używany jako
+                katalog bazowy. Zawiera on katalogi o nazwach pochodzących od
+                kontrolerów, co zapewnia hierarchię skryptów widoków.
             </para>
         </sect3>
 
         <sect3 id="zend.controller.action.viewintegration.render">
-            <title>Rendering Views</title>
+            <title>Renderowanie widoków</title>
 
             <para>
-                <code>render()</code> has the following signature:
+                Metoda <code>render()</code> ma taką sygnaturę:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -270,9 +337,22 @@ string render(string $action = null, string $name = null, bool $noController = f
                     segment</link> in the response object, pass a value to
                 <code>$name</code>.
             </para>
+            
+            <note><para>
+                    Since controller and action names may contain word delimiter
+                    characters such as '_', '.', and '-', render() normalizes
+                    these to '-' when determining the script name. Internally,
+                    it uses the dispatcher's word and path delimiters to do this
+                    normalization. Thus, a request to
+                    <code>/foo.bar/baz-bat</code> will render the script
+                    <code>foo-bar/baz-bat.phtml</code>. If your action method
+                    contains camelCasing, please remember that this will result
+                    in '-' separated words when determining the view script
+                    file name.
+            </para></note>
 
             <para>
-                Some examples:
+                Kilka przykładów:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -280,20 +360,27 @@ class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
-        // Renders my/foo.phtml
+        // Renderuje my/foo.phtml
         $this->render();
 
-        // Renders my/bar.phtml
+        // Renderuje my/bar.phtml
         $this->render('bar');
 
-        // Renders baz.phtml
+        // Renderuje baz.phtml
         $this->render('baz', null, true);
 
-        // Renders foo/login.phtml to the 'form' segment of the response object
+        // Renderuje my/login.phtml w segmencie 'form' obiektu odpowiedzi
         $this->render('login', 'form');
         
-        // Renders site.phtml to the 'page' segment of the response object
+        // Renderuje site.phtml w segmencie 'page' obiektu odpowiedzi; 
+        // nie używa podkatalogu 'my/'
         $this->render('site', 'page', true);
+    }
+    
+    public function bazBatAction()
+    {
+        // Renderuje my/baz-bat.phtml
+        $this->render();
     }
 }
 ]]></programlisting>
@@ -387,7 +474,7 @@ class MyController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.controller.action.subclassing">
-        <title>Subclassing the Action Controller</title>
+        <title>Rozszerzanie klasy kontrolera akcji</title>
 
         <para>
             By design, <code>Zend_Controller_Action</code> must be subclassed
@@ -404,7 +491,7 @@ class MyController extends Zend_Controller_Action
         </para>
 
         <sect3 id="zend.controller.action.subclassing.call">
-            <title>How to Handle Non-Existent Actions</title>
+            <title>Jak obsługiwać nieistniejące akcje</title>
 
             <para>
                 If a request to a controller is made that includes an undefined
@@ -422,8 +509,8 @@ class MyController extends Zend_Controller_Action
             </para>
 
             <para>
-                For instance, if you wish to display an error message, you might
-                write something like this:
+                Na przykład, jeśli chcesz wyświetlić informacje o błędzie, 
+                możesz zrobić to w taki sposób:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -432,11 +519,11 @@ class MyController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, render the error template
+            // Jeśli metoda akcji nie została znaleziona, renderuje szablon informujący o błędzie
             return $this->render('error');
         }
 
-        // all other methods throw an exception
+        // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called');
     }
 }
@@ -458,11 +545,11 @@ class MyController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, forward to the index action
+            // Jeśli metoda akcji nie została znaleziona, przenieś do akcji index
             return $this->_forward('index');
         }
 
-        // all other methods throw an exception
+        // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called');
     }
 }

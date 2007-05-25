@@ -86,6 +86,61 @@ $front->setControllerDirectory(array(
         <programlisting role="php"><![CDATA[<?php
 $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 ?>]]></programlisting>
+
+        <para>
+            Saving the best for last, the easiest way to specify module
+            directories is to do so en masses, with all modules under a common
+            directory and sharing the same structure. This can be done with
+            <code>addModuleDirectory()</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * Assuming the following directory structure:
+ * application/
+ *     modules/
+ *         default/
+ *             controllers/
+ *         foo/
+ *             controllers/
+ *         bar/
+ *             controllers/
+ */
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+
+        <para>
+            The above example will define the <code>default</code>,
+            <code>foo</code>, and <code>bar</code> modules, each pointing to the
+            <code>controllers</code> subdirectory of their respective module.
+        </para>
+
+        <para>
+            You may customize the controller subdirectory to use within your
+            modules by using <code>setModuleControllerDirectoryName()</code>:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * Change the controllers subdirectory to be 'con'
+ * application/
+ *     modules/
+ *         default/
+ *             con/
+ *         foo/
+ *             con/
+ *         bar/
+ *             con/
+ */
+$front->setModuleControllerDirectoryName('con');
+$front->addModuleDirectory('/path/to/application/modules');
+?>]]></programlisting>
+        
+        <note><para>
+            You can indicate that no controller subdirectory be used for your
+            modules by passing an empty value to
+            <code>setModuleControllerDirectoryName()</code>.
+        </para></note>
     </sect2>
 
     <sect2 id="zend.controller.modular.router">

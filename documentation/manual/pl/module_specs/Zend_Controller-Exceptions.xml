@@ -33,6 +33,33 @@
 
         <itemizedlist>
             <listitem>
+                <para>
+                    By default, the <link
+                        linkend="zend.controller.plugins.standard.errorhandler">error
+                    handler plugin</link> is registered and active. This plugin
+                    was designed to handle:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>Errors due to missing controllers or actions</para></listitem>
+
+                    <listitem><para>Errors occurring within action controllers</para></listitem>
+                </itemizedlist>
+
+                <para>
+                    It operates as a <code>postDispatch()</code> plugin, and
+                    checks to see if a dispatcher, action controller, or
+                    other exception has occurred. If so, it forwards to an error
+                    handler controller.
+                </para>
+
+                <para>
+                    This handler will cover most exceptional situations, and
+                    handle missing controllers and actions gracefully.
+                </para>
+            </listitem>
+
+            <listitem>
                 <para><code>Zend_Controller_Front::throwExceptions()</code></para>
 
                 <para>
