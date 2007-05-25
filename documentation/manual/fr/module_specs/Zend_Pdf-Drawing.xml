@@ -27,8 +27,7 @@ $height = $pdfPage->getHeight();
          Chacun d'entre eux peut-être utilisé à chaque fois qu'un objet <code>Zend_Pdf_Color</code> est requis.
          Les classes <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> et <code>Zend_Pdf_Color_CMYK</code> fournissent cette fonctionnalité :
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 // $grayLevel (float). 0.0 (noir) - 1.0 (blanc)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
@@ -38,8 +37,15 @@ $color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
 // $c, $m, $y, $k (float). 0.0 (intensité mimimum) - 1.0 (intensité maximum)
 $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);
 ?>]]>
-            </programlisting>
+        </programlisting>
+        <para>
+            Les différentes couleurs HTML sont aussi fourni avec la classe <code>Zend_Pdf_Color_Html</code> :
         </para>
+        <programlisting role="php"><![CDATA[<?php
+$color1 = new Zend_Pdf_Color_Html('#3366FF');
+$color2 = new Zend_Pdf_Color_Html('silver');
+$color3 = new Zend_Pdf_Color_Html('forestgreen');?>]]>
+        </programlisting>
     </sect2>
 
 

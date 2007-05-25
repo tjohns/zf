@@ -154,7 +154,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Certaines marques de SGBDR supportent un spécificateur de schéma principal pour une table. Vous pouvez spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>". Zend_Db_Select échappera chaque partie individuellement.
+                Certaines marques de SGBDR supportent un spécificateur de schéma principal pour une table. Vous pouvez spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>", où Zend_Db_Select échappera chaque partie individuellement, ou vous pouvez spécifier le nom du schéma séparément. Un nom de schéma spécifié dans le nom de table sera prioritaire sur un schéma fourni séparément dans les cas où les deux seraient fournis.
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
@@ -166,6 +166,11 @@ $select = $db->select()
 
 $select = $db->select()
     ->from( 'monschema.produits' );
+
+// or
+
+$select = $db->select()
+    ->from('produits', '*', 'monschema');
 ?>]]></programlisting>
             </example>
 

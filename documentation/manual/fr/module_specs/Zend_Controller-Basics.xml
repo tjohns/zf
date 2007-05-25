@@ -2,7 +2,7 @@
     <title>Fondations de Zend_Controller</title>
 
     <para>
-        Le système <code>Zend_Controller</code> est conçu pour être léger, modulaire, et extensible. Il est de conception minimaliste pour permettre la flexibilité et la liberté aux utilisateurs tout en fournissant assez de structure de sorte que les systémes établis autour de <code>Zend_Controller</code> partagent certaines conventions communes et dispositions semblables de code.
+        Le système <code>Zend_Controller</code> est conçu pour être léger, modulaire, et extensible. Il est de conception minimaliste pour permettre la flexibilité et la liberté aux utilisateurs tout en fournissant assez de structure de sorte que les systèmes établis autour de <code>Zend_Controller</code> partagent certaines conventions communes et dispositions semblables de code.
     </para>
 
     <para>
@@ -21,7 +21,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front</code> orchestre le déroulement entier des opérations du système Zend_Controller. C'est une interprétation du modèle contrôleur frontal ("FrontController"). <code>Zend_Controller_Front</code> traite toutes les demandes reçues par le serveur et est finalement responsable de déléguer les demandes aux contrôleurs d'acton ("ActionControllers" [<code>Zend_Controller_Action</code>]).
+                    <code>Zend_Controller_Front</code> orchestre le déroulement entier des opérations du système Zend_Controller. C'est une interprétation du modèle contrôleur frontal ("FrontController"). <code>Zend_Controller_Front</code> traite toutes les demandes reçues par le serveur et est finalement responsable de déléguer les demandes aux contrôleurs d'action ("ActionControllers" [<code>Zend_Controller_Action</code>]).
                 </para>
             </listitem>
 
@@ -31,7 +31,7 @@
                 </para>
 
                 <para>
-                    Par défaut, <code>Zend_Controller_Request_Http</code> est employé, ce qui permet d'accéder à l'environnement entier de requête HTTP.
+                    Par défaut, <code>Zend_Controller_Request_Http</code> est employé, ce qui permet d'accéder à l'environnement complet de requête HTTP.
                 </para>
             </listitem>
 
@@ -41,7 +41,7 @@
                 </para>
 
                 <para>
-                    Le routeur de défaut, <code>Zend_Controller_Router_Rewrite</code>, récupére un URI comme indiqué dans <code>Zend_Controller_Request_Http</code> et le décompose en contrôleur, action, et paramèes basés sur l'information de chemin de l'URL. Comme exemple, l'URL <code>http://localhost/foo/bar/key/value</code> serait décodé pour employer le contrôleur <code>foo</code>, l'action <code>bar</code>, et pour indiquer un paramètre <code>key</code> avec une valeur <code>value</code>.
+                    Le routeur de défaut, <code>Zend_Controller_Router_Rewrite</code>, récupére un URI comme indiqué dans <code>Zend_Controller_Request_Http</code> et le décompose en contrôleur, action, et paramètres basés sur l'information de chemin de l'URL. Par exemple, l'URL <code>http://localhost/foo/bar/key/value</code> serait décodé pour employer le contrôleur <code>foo</code>, l'action <code>bar</code>, et pour indiquer un paramètre <code>key</code> avec une valeur <code>value</code>.
                 </para>
 
                 <para>
@@ -55,7 +55,7 @@
                 </para>
 
                 <para>
-                    Le processus de dispatchage réel se compose de l'instanciation de la classe de contrôleur et de l'appel de la méthode d'action dans cette classe. A la différence du routage, qui se produit seulement une fois, le dispatchage se produit dans une boucle. Si le statut dispatché de l'objet de requête est remis à zéro à un moment quelconque, la boucle sera répétée, en appelant l'action actuellement placée dans l'objet de demande. La première fois que la boucle se termine avec une propriété de statut d'objet de requête dispatché à vrai (booléen true), le le processus s'arrête.
+                    Le processus de dispatchage réel se compose de l'instanciation de la classe de contrôleur et de l'appel de la méthode d'action dans cette classe. A la différence du routage, qui se produit seulement une fois, le dispatchage se produit dans une boucle. Si le statut dispatché de l'objet de requête est remis à zéro à un moment quelconque, la boucle sera répétée, en appelant l'action actuellement placée dans l'objet de demande. La première fois que la boucle se termine avec une propriété de statut d'objet de requête dispatché à vrai (booléen true), le processus s'arrête.
                 </para>
 
                 <para>
@@ -84,6 +84,3 @@
         Le déroulement des opérations de <code>Zend_Controller</code> est relativement simple. Une demande est reçue par <code>Zend_Controller_Front</code>, qui appelle alternativement <code>Zend_Controller_Router_Rewrite</code> pour déterminer le contrôleur (et l'action dans ce contrôleur) à dispatcher. <code>Zend_Controller_Router_Rewrite</code> décompose l'URI afin de régler les noms de contrôleur et d'action dans la requête. <code>Zend_Controller_Front</code> entre alors dans une boucle de dispatchage. Il appelle <code>Zend_Controller_Dispatcher_Standard</code>, en lui passant la requête, pour dispatcher le contrôleur et l'action indiqués dans la requête (ou utiliser les valerus par défauts). Après que le contrôleur ait fini, la commande revient à <code>Zend_Controller_Front</code>. Si le contrôleur a indiqué qu'un autre contrôleur devait être dispatché en remettant à zéro le statut dispatché de la requête, la boucle continue et un autre dispatchage est effectué. Sinon, le processus se termine.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
