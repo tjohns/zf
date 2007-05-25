@@ -124,7 +124,7 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 
             <para>
-                L'appel de <code>render()</code> va effectuer le rendu d'un modèle ("template"). Par défaut, <code>Zend_View</code> est utilisé en tant que couche Vue dans le MVC. <code>render()</code> utilise le nom du contrôleur (par exemple, <code>index</code>) et le nom de l'action courante (par exemple, <code>index</code>) pour déterminer le modèle à afficher. Par défaut, le fichier modèle se termine par l'extension <code>.phtml</code>, cela signifie que dans l'exemple ci-dessus, le modèle <code>index/index.phtml</code> sera rendu. De plus, <code>Zend_Controller_Action</code> suppose automatiquement que le dossier <code>views</code> situé au même niveau que le dossier des contrôleurs est le dossier de base des vues, et que les scripts de vues sont dans le sous-dossier <code>views/scripts/</code>. Ainsi le modèle rendu sera trouvé dans <code>application/views/scripts/index/index.phtml</code>.
+                Par défaut, l'aide d'action <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link> est activé. Ceci signifie qu'en définissant simplement une méthode d'action et un script de vue correspondant, vous obtiendrez automatiquement le rendu du contenu. Par défaut, <code>Zend_View</code> est utilisé en tant que couche Vue dans le MVC. Le <code>ViewRenderer</code> utilise le nom du contrôleur (par exemple, <code>index</code>) et le nom de l'action courante (par exemple, <code>index</code>) pour déterminer le modèle à afficher. Par défaut, le fichier modèle se termine par l'extension <code>.phtml</code>, cela signifie que dans l'exemple ci-dessus, le modèle <code>index/index.phtml</code> sera rendu. De plus, le <code>ViewRenderer</code> suppose automatiquement que le dossier <code>views</code> situé au même niveau que le dossier des contrôleurs est le dossier de base des vues, et que les scripts de vues sont dans le sous-dossier <code>views/scripts/</code>. Ainsi le modèle rendu sera trouvé dans <code>application/views/scripts/index/index.phtml</code>.
             </para>
         </sect3>
 
@@ -165,7 +165,6 @@ class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
-        $this->render();
     }
 }
 ?>]]></programlisting>
