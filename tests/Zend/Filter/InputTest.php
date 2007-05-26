@@ -283,10 +283,46 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertEquals(array('field2', 'field3'), array_keys($messages));
+        $this->assertType('array', $messages['field2']);
+        $this->assertType('array', $messages['field3']);
         $this->assertEquals("'abc123' contains not only digit characters",
             $messages['field2'][0]);
         $this->assertEquals("'150' is not between '1' and '100', inclusively",
             $messages['field3'][0]);
+    }
+
+    public function testValidatorInvalidFieldInMultipleRules()
+    {
+        $data = array(
+            'field2' => 'abc123',
+        );
+        Zend_Loader::loadClass('Zend_Validate_Between');
+        $validators = array(
+            'field2a' => array(
+                'digits',
+                'fields' => 'field2'
+            ),
+            'field2b' => array(
+                new Zend_Validate_Between(1, 100),
+                'fields' => 'field2'
+            )
+        );
+        $input = new Zend_Filter_Input(null, $validators, $data);
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
+
+        $messages = $input->getMessages();
+        $this->assertType('array', $messages);
+        $this->assertEquals(array('field2a', 'field2b'), array_keys($messages));
+        $this->assertType('array', $messages['field2a']);
+        $this->assertType('array', $messages['field2b']);
+        $this->assertEquals("'abc123' contains not only digit characters",
+            $messages['field2a'][0]);
+        $this->assertEquals("'abc123' is not between '1' and '100', inclusively",
+            $messages['field2b'][0]);
     }
 
     public function testValidatorWildcardRule()
@@ -439,6 +475,85 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("'' has not only alphabetic characters", $messages['field1'][0]);
     }
 
+    public function testValidatorAllowEmptyNoValidatorChain()
+    {
+        Zend_Loader::loadClass('Zend_Filter_StringTrim');
+        Zend_Loader::loadClass('Zend_Filter_StripTags');
+        Zend_Loader::loadClass('Zend_Validate_EmailAddress');
+
+        $data = array(   
+            'nick'    => '',
+            'email'   => 'someemail@server.com'
+        );
+
+        $filters = array(
+            '*'       => new Zend_Filter_StringTrim(),
+            'nick'    => new Zend_Filter_StripTags()
+        );
+
+        $validators = array(
+            'email'   => array(
+                new Zend_Validate_EmailAddress(),
+                Zend_Filter_Input::ALLOW_EMPTY => true
+            ),
+            /*
+             * This is the case we're testing - when presense is required,
+             * but there are no validators besides disallowing empty values.
+             */
+            'nick'    => array(
+                Zend_Filter_Input::PRESENCE    => Zend_Filter_Input::PRESENCE_REQUIRED,
+                Zend_Filter_Input::ALLOW_EMPTY => false
+            )
+        );
+
+        $input = new Zend_Filter_Input($filters, $validators, $data);
+
+        if ($input->hasInvalid()) {
+            $message = $input->getMessages();
+        }
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $messages = $input->getMessages();
+        $this->assertType('array', $messages);
+        $this->assertEquals(array('nick'), array_keys($messages));
+        $this->assertEquals(1, count($messages['nick']));
+    }
+
+    public function testValidatorAllowEmptySetNotEmptyMessage()
+    {
+        $data = array(
+            'field1' => '',
+        );
+        $validators = array(
+            'field1Rule' => array(
+                Zend_Filter_Input::ALLOW_EMPTY => false,
+                'fields' => 'field1'
+            )
+        );
+
+        $options = array(
+            Zend_Filter_Input::NOT_EMPTY_MESSAGE => "You cannot give an empty value for field '%field%', according to rule '%rule%'"
+        );
+
+        $input = new Zend_Filter_Input(null, $validators, $data, $options);
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
+
+        $this->assertNull($input->field1);
+        $messages = $input->getMessages();
+        $this->assertType('array', $messages);
+        $this->assertEquals(array('field1Rule'), array_keys($messages));
+        $this->assertType('array', $messages['field1Rule']);
+        $this->assertEquals("You cannot give an empty value for field 'field1', according to rule 'field1Rule'", $messages['field1Rule'][0]);
+    }
+
     public function testValidatorMessagesSingle()
     {
         $data = array('month' => '13abc');
@@ -460,7 +575,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('month'), array_keys($messages));
         $this->assertEquals(1, count($messages['month']));
-        // $this->assertEquals($digitsMesg, $messages['month'][0]);
+        $this->assertEquals($digitsMesg, $messages['month'][0]);
     }
 
     public function testValidatorMessagesMultiple()
@@ -661,7 +776,34 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
 
         $missing = $input->getMissing();
         $this->assertType('array', $missing);
-        $this->assertThat($missing, $this->arrayHasKey('month'));
+        $this->assertEquals(array('month'), array_keys($missing));
+        $this->assertEquals("Field 'month' is required by rule 'month', but the field is missing", $missing['month'][0]);
+    }
+
+    public function testValidatorSetMissingMessage()
+    {
+        $data = array();
+        $validators = array(
+            'monthRule' => array(
+                'digits',
+                Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_REQUIRED,
+                'fields' => 'month'
+            )
+        );
+        $options = array(
+            Zend_Filter_Input::MISSING_MESSAGE => 'I looked for %field% but I did not find it; it is required by rule %rule%'
+        );
+        $input = new Zend_Filter_Input(null, $validators, $data, $options);
+
+        $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
+        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
+
+        $missing = $input->getMissing();
+        $this->assertType('array', $missing);
+        $this->assertEquals(array('monthRule'), array_keys($missing));
+        $this->assertEquals("I looked for month but I did not find it; it is required by rule monthRule", $missing['monthRule'][0]);
     }
 
     public function testValidatorHasUnknown()

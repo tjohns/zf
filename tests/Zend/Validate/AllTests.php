@@ -116,6 +116,11 @@ require_once 'Zend/Validate/IntTest.php';
  */
 require_once 'Zend/Validate/IpTest.php';
 
+/**
+ * @see Zend_Validate_NotEmptyTest
+ */
+require_once 'Zend/Validate/NotEmptyTest.php';
+
 
 /**
  * @see Zend_Validate_LessThanTest
@@ -182,6 +187,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_InArrayTest');
         $suite->addTestSuite('Zend_Validate_IntTest');
         $suite->addTestSuite('Zend_Validate_IpTest');
+        $suite->addTestSuite('Zend_Validate_NotEmptyTest');
         $suite->addTestSuite('Zend_Validate_LessThanTest');
         $suite->addTestSuite('Zend_Validate_RegexTest');
         $suite->addTestSuite('Zend_Validate_StringLengthTest');
