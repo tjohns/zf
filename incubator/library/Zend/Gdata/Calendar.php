@@ -78,6 +78,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     /**
      * Retreive feed object
      *
+     * @param mixed $location The location for the feed, as a URL or Query
      * @return Zend_Gdata_Calendar_EventFeed
      */
     public function getCalendarEventFeed($location = null)
