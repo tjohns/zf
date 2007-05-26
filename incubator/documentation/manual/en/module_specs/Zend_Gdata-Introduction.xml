@@ -606,7 +606,7 @@ foreach ($feed as $feedEntry) {
     // Option 1 - delete the entry directly
     $feedEntry->delete();
     // Option 2 - delete the entry by passing the edit URL to $gdata->delete()
-    $gdata->delete($feedEntry->getEditLink()->href);
+    // $gdata->delete($feedEntry->getEditLink()->href);
 }
 ?>]]></programlisting>
 
