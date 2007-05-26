@@ -39,6 +39,10 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
     protected $_rootElement = 'gCal:accesslevel';
     protected $_value = null;
 
+    /**
+     * Constructs a new Zend_Gdata_Calendar_Extension_AccessLevel object.
+     * @param string $value (optional) The text content of the element.
+     */
     public function __construct($value = null) 
     {
         parent::__construct();
@@ -48,6 +52,16 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
         $this->_value = $value; 
     }
 
+    /**
+     * Retrieves a DOMElement which corresponds to this element and all 
+     * child properties.  This is used to build an entry back into a DOM
+     * and eventually XML text for sending to the server upon updates, or
+     * for application storage/persistence.  
+     *
+     * @param DOMDocument $doc The DOMDocument used to construct DOMElements
+     * @return DOMElement The DOMElement representing this element and all 
+     * child properties.
+     */
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
@@ -55,6 +69,13 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
         return $element;
     }
 
+    /**
+     * Given a DOMNode representing an attribute, tries to map the data into
+     * instance members.  If no mapping is defined, the name and value are 
+     * stored in an array.
+     *
+     * @param DOMNode $attribute The DOMNode attribute needed to be handled
+     */
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
@@ -66,6 +87,35 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
         }
     }
 
+	/**
+	 * Get the value for this element's value attribute.
+	 *
+	 * @param string The desired value for this attribute
+     * @return Zend_GData_Calendar_Extension_AccessLevel The attribute being modified.
+	 */
+	public function getAccessLevel()
+	{
+		return $this->_value;
+	}
+
+
+	/**
+	 * Set the value for this element's value attribute.
+	 *
+	 * @param bool $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_Selected The element being modified.
+	 */
+	public function setSelected($value)
+	{
+		$this->_value = $value;
+		return $this;
+	}
+
+	/**
+     * Retrieves a human redable string describing this attribute's value.
+	 *
+	 * @return string The attribute value.
+     */
     public function __toString() 
     {
         return $this->_value;

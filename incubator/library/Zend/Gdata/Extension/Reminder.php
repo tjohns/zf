@@ -36,46 +36,113 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'gd:reminder';
-    protected $_minutes = null;
+    protected $_absoluteTime = null;
     protected $_method = null;
+    protected $_days = null;
+    protected $_hours = null;
+    protected $_minutes = null;
 
-    public function __construct($minutes = null, $method = null)
+    public function __construct($absoluteTime = null, $method = null, $days = null, 
+            $hours = null, $minutes = null)
     {
         parent::__construct();
-        $this->_minutes = $minutes; 
-        $this->_method = $method; 
+        $this->_absoluteTime = $absoluteTime; 
+        $this->_method = $method;
+        $this->_days = $days;
+        $this->_hours = $hours;
+        $this->_minutes = $minutes;
     }
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_minutes != null) {
-            $element->setAttribute('minutes', $this->_minutes);
+        if ($this->_absoluteTime) {
+            $element->setAttribute('absoluteTime', $this->_minutes);
         }
-        if ($this->_method != null) {
+        if ($this->_method) {
             $element->setAttribute('method', $this->_method);
         }
+        if ($this->_days) {
+            $element->setAttribute('days', $this->_method);
+        }
+        if ($this->_hours) {
+            $element->setAttribute('hours', $this->_method);
+        }
+        if ($this->_minutes) {
+            $element->setAttribute('minutes', $this->_method);
+        }
+        
         return $element;
     }
 
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'minutes':
-            $this->_minutes = $attribute->nodeValue;
+        case 'absoluteTime':
+            $this->_absoluteTime = $attribute->nodeValue;
             break;
         case 'method':
             $this->_method = $attribute->nodeValue;
             break;
+        case 'days':
+            $this->_days = $attribute->nodeValue;
+            break;
+        case 'hours':
+            $this->_hours = $attribute->nodeValue;
+            break;
+        case 'minutes':
+            $this->_minutes = $attribute->nodeValue;
+            break;
+            
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
 
     public function __toString() 
+    {   
+        $s;
+        if ($absoluteTime)
+            $s = "at" . $absoluteTime;
+        else if ($days)
+            $s = "in" . $days . "days";
+        else if ($hours)
+            $s = "in" . $hours . "hours";
+        else if ($minutes)
+            $s = "in" . $minutes . "minutes";
+        return $method . $s;
+    }
+
+    public function getAbsoluteTime()
     {
-        return 'Starts: ' . $this->getMinutes() . ' ' .
-               'Ends: ' .  $this->getMethod();
+        return $this->_absoluteTime;
+    }
+
+    public function setAbsoluteTime($value)
+    {
+        $this->_absoluteTime = $value;
+        return $this;
+    }
+
+    public function getDays()
+    {
+        return $this->_days;
+    }
+
+    public function setDays($value)
+    {
+        $this->_days = $value;
+        return $this;
+    }
+    public function getHours()
+    {
+        return $this->_hours;
+    }
+
+    public function setHours($value)
+    {
+        $this->_hours = $value;
+        return $this;
     }
 
     public function getMinutes()

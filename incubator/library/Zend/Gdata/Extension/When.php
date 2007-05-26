@@ -43,14 +43,16 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     protected $_rootElement = 'when';
     protected $_reminder = array();
     protected $_startTime = null;
+    protected $_valueString = null;
     protected $_endTime = null;
 
     public function __construct($startTime = null, $endTime = null, 
-            $reminder = null)
+            $valueString = null, $reminder = null)
     {
         parent::__construct();
         $this->_startTime = $startTime;
         $this->_endTime = $endTime;
+        $this->_valueString = $valueString;
         $this->_reminder = $reminder;
     }
 
@@ -62,6 +64,9 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         }
         if ($this->_endTime != null) {
             $element->setAttribute('endTime', $this->_endTime);
+        }
+        if ($this->_valueString != null) {
+            $element->setAttribute('valueString', $this->_valueString);
         }
         if ($this->_reminder != null) {
             foreach ($this->_reminder as $reminder) {
@@ -96,6 +101,9 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         case 'endTime':
             $this->_endTime = $attribute->nodeValue;
             break;
+        case 'valueString':
+            $this->_valueString = $attribute->valueString;
+            break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
@@ -103,8 +111,12 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
 
     public function __toString() 
     {
+        if ($valueString)
+            return $valueString;
+        else {
         return 'Starts: ' . $this->getStartTime() . ' ' .
                'Ends: ' .  $this->getEndTime();
+        }
     }
 
     public function getStartTime()
@@ -127,6 +139,33 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     {
         $this->_endTime = $value;
         return $this;
+    }
+
+    public function getValueString()
+    {
+        return $this->_valueString;
+    }
+
+    public function setValueString($value)
+    {
+        $this->_valueString = $value;
+        return $this;
+    }
+
+    public function getReminders()
+    {
+        return $_reminders;
+    }
+
+    public function setReminders($value)
+    {
+        $this->_reminders = $value;
+        return $this;
+    }
+
+    public function addReminder($value)
+    {
+        $this->_reminders[] = $value;
     }
 
 }

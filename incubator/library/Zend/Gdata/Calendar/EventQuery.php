@@ -100,7 +100,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return string visibility
+     * @param bool $value
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
      */
     public function setVisibility($value)
@@ -379,7 +379,7 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
      */
     public function getQueryUrl()
     {
-        if ($uri == null) {
+        if (!isset($uri)) {
             $uri = $this->_defaultFeedUri;
         }
         if ($this->getUser() != null) {

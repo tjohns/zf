@@ -36,35 +36,97 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
 {
 
     protected $_rootElement = 'gd:where';
+    protected $_label = null;
+    protected $_rel = null;
     protected $_valueString = null;
-
-    public function __construct($valueString = null) 
+    protected $_entryLink = null;
+    
+    public function __construct($label = null, $rel = null, $valueString = null, $valueString = null, $entryLink = null) 
     {
         parent::__construct();
-        $this->setValueString($valueString);
+        $this->_label = $label;
+        $this->_rel = $rel;
+        $this->_valueString = $valueString;
+        $this->_entryLink = $entryLink;
     }
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('valueString', $this->_valueString);
+        if ($this->_label)
+            $element->setAttribute('label', $this->_label);
+        if ($this->_rel)
+            $element->setAttribute('rel', $this->_rel);
+        if ($this->_valueString)
+            $element->setAttribute('valueString', $this->_valueString);
+        if ($this->entryLink)
+            $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));            
         return $element;
     }
 
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
+        case 'label':
+            $this->_label = $attribute->nodeValue;
+            break;
+        case 'rel':
+            $this->_rel = $attribute->rel;
+            break;
         case 'valueString':
             $this->_valueString = $attribute->nodeValue;
-            break;
+            break;   
         default:
             parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    /**
+     * Creates individual Entry objects of the appropriate type and
+     * stores them in the $_entry array based upon DOM data.
+     *
+     * @param DOMNode $child The DOMNode to process
+     */
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+        switch ($absoluteNodeName) {
+        case $this->lookupNamespace('gd') . ':' . 'entryLink':
+            $entryLink = new Zend_Gdata_Extension_EntryLink();
+            $entryLink->transferFromDOM($child);
+            $this->_entryLink = $entryLink;
+            break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
         }
     }
 
     public function __toString() 
     {
         return $this->_valueString;
+    }
+
+    public function getLabel()
+    {
+        return $this->_label;
+    }
+
+    public function setLabel($value)
+    {
+        $this->_label = $value;
+        return $this;
+    }
+
+    public function getRel()
+    {
+        return $this->_rel;
+    }
+
+    public function setRel($value)
+    {
+        $this->_rel = $value;
+        return $this;
     }
 
     public function getValueString()
@@ -77,5 +139,17 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
         $this->_valueString = $value;
         return $this;
     }
+
+    public function getEntryLink()
+    {
+        return $this->_entryLink;
+    }
+
+    public function setEntryLink($value)
+    {
+        $this->_entryLink = $value;
+        return $this;
+    }
+
 
 }

@@ -14,14 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-$D = DIRECTORY_SEPARATOR;
-set_include_path(
-    dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}library"
-    . PATH_SEPARATOR .
-    dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}..{$D}library"
-    . PATH_SEPARATOR . get_include_path());
-
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');

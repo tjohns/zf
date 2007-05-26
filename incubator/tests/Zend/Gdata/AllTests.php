@@ -33,28 +33,6 @@ if (is_readable('TestConfiguration.php')) {
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Gdata_AllTests::main');
-
-    /**
-     * Prepend library/ to the include_path.  This allows the tests to run out
-     * of the box and helps prevent finding other copies of the framework that
-     * might be present.
-     */
-/*
-    $zf_incubator_top = dirname(dirname(dirname(dirname(__FILE__))));
-    $zf_top = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-    set_include_path(
-          $zf_incubator_top . DIRECTORY_SEPARATOR . 'library'
-          . PATH_SEPARATOR 
-          . $zf_top . DIRECTORY_SEPARATOR . 'library'
-          . PATH_SEPARATOR 
-          . $zf_incubator_top . DIRECTORY_SEPARATOR . 'tests'
-         . PATH_SEPARATOR . get_include_path());
-*/
-    set_include_path(
-          $zf_incubator_top . DIRECTORY_SEPARATOR . 'library'
-          . PATH_SEPARATOR 
-          . $zf_top . DIRECTORY_SEPARATOR . 'library'
-         . PATH_SEPARATOR . get_include_path());
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';

@@ -247,7 +247,7 @@ function outputCalendar($client)
   $query->setVisibility('private');
   $query->setProjection('full');
   $query->setOrderby('starttime');
-  $query->setFutureevents('true');
+  $query->setFutureevents(true);
   $eventFeed = $gdataCal->getCalendarEventFeed($query);
   // option 2
   // $eventFeed = $gdataCal->getCalendarEventFeed($query->getQueryUrl());

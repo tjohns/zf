@@ -25,14 +25,30 @@
 require_once 'Zend/Gdata/Entry.php';
 
 /**
+ * @see Zend_Gdata_Extension_AccessLevel
+ */
+require_once 'Zend/Gdata/Calendar/Extension/AccessLevel.php';
+
+/**
  * @see Zend_Gdata_Extension_Color
  */
 require_once 'Zend/Gdata/Calendar/Extension/Color.php';
 
 /**
- * @see Zend_Gdata_Extension_AccessLevel
+ * @see Zend_Gdata_Extension_Hidden
  */
-require_once 'Zend/Gdata/Calendar/Extension/AccessLevel.php';
+require_once 'Zend/Gdata/Calendar/Extension/Hidden.php';
+
+/**
+ * @see Zend_Gdata_Extension_Selected
+ */
+require_once 'Zend/Gdata/Calendar/Extension/Selected.php';
+
+/**
+ * @see Zend_Gdata_Extension_WebContent
+ */
+require_once 'Zend/Gdata/Calendar/Extension/WebContent.php';
+
 
 /**
  * Represents a Calendar entry in the Calendar data API meta feed of a user's
@@ -50,19 +66,39 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     protected $_accessLevel = null;
     protected $_hidden = null;
     protected $_selected = null;
+    protected $_webContent = null;
     protected $_timezone = null;
 
     public function __construct($element = null)
     {
-        parent::__construct($element);
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct($element);        
     }
 
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
+        if ($this->_accessLevel != null) {
+            $element->appendChild($this->_accessLevel->getDOM($element->ownerDocument));
+        }
+        if ($this->_color != null) {
+            $element->appendChild($this->_color->getDOM($element->ownerDocument));
+        }
+        if ($this->_hidden != null) {
+            $element->appendChild($this->_hidden->getDOM($element->ownerDocument));
+        }
+        if ($this->_selected != null) {
+            $element->appendChild($this->_selected->getDOM($element->ownerDocument));
+        }
+        if ($this->_webContent != null) {
+            $element->appendChild($this->_webContent->getDOM($element->ownerDocument));
+        }
+        if ($this->_timezone != null) {
+            $element->appendChild($this->_timezone->getDOM($element->ownerDocument));
+        }        
+        
         return $element;
     }
     
@@ -70,20 +106,115 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
+        case $this->lookupNamespace('gCal') . ':' . 'accesslevel';
+            $accessLevel = new Zend_Gdata_Calendar_Extension_AccessLevel();
+            $accessLevel->transferFromDOM($child);
+            $this->_accessLevel = $accessLevel;
+            break;
         case $this->lookupNamespace('gCal') . ':' . 'color';
             $color = new Zend_Gdata_Calendar_Extension_Color();
             $color->transferFromDOM($child);
             $this->_color = $color;
             break;
-        case $this->lookupNamespace('gCal') . ':' . 'accesslevel';
-            $accessLevel = new Zend_Gdata_Calendar_Extension_AccessLevel();
-            $accessLevel->transferFromDOM($child);
-            $this->_accessLevel = $accessLevel;
+        case $this->lookupNamespace('gCal') . ':' . 'hidden';
+            $hidden = new Zend_Gdata_Calendar_Extension_Hidden();
+            $hidden->transferFromDOM($child);
+            $this->_hidden = $hidden;
+            break;
+        case $this->lookupNamespace('gCal') . ':' . 'selected';
+            $selected = new Zend_Gdata_Calendar_Extension_Selected();
+            $selected->transferFromDOM($child);
+            $this->_selected = $selected;
+            break;
+        case $this->lookupNamespace('gCal') . ':' . 'webContent';
+            $webcontent = new Zend_Gdata_Calendar_Extension_WebContent();
+            $webcontent->transferFromDOM($child);
+            $this->_webContent = $webcontent;
+            break;
+        case $this->lookupNamespace('gCal') . ':' . 'timezone';
+            $timezone = new Zend_Gdata_Calendar_Extension_Timezone();
+            $timezone->transferFromDOM($child);
+            $this->_timezone = $timezone;
             break;
         default:
             parent::takeChildFromDOM($child);
             break;
         }
     }
+
+    public function getAccessLevel() 
+    {
+        return $this->_accessLevel;
+    }
+
+    /**
+     * @param Zend_Gdata_Calendar_Extension_AccessLevel $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setAccessLevel($value) 
+    {
+        $this->_accessLevel = $value;
+        return $this;
+    }
+    public function getColor() 
+    {
+        return $this->_color;
+    }
+
+    /**
+     * @param Zend_Gdata_Calendar_Extension_Color $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setColor($value) 
+    {
+        $this->_color = $value;
+        return $this;
+    }
+
+    public function getHidden() 
+    {
+        return $this->_hidden;
+    }
+
+    /**
+     * @param Zend_Gdata_Calendar_Extension_Hidden $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setHidden($value) 
+    {
+        $this->_hidden = $value;
+        return $this;
+    }
+
+    public function getSelected() 
+    {
+        return $this->_extendedProperty;
+    }
+
+    /**
+     * @param Zend_GData_Calendar_Extension_Selected $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setSelected($value) 
+    {
+        $this->_selected = $value;
+        return $this;
+    }
+
+    public function getWebContent() 
+    {
+        return $this->_webContent;
+    }
+
+    /**
+     * @param Zend_GData_Calendar_Extension_WebContent $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setWebContent($value) 
+    {
+        $this->_webContent = $value;
+        return $this;
+    }
+    
 
 }

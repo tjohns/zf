@@ -25,6 +25,11 @@
 require_once 'Zend/Gdata/Feed.php';
 
 /**
+ * @see Zend_Gdata_Extension_Timezone
+ */
+require_once 'Zend/Gdata/Calendar/Extension/Timezone.php';
+
+/**
  * Represents the meta-feed list of calendars
  *
  * @category   Zend
@@ -34,7 +39,8 @@ require_once 'Zend/Gdata/Feed.php';
  */
 class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
 {
-
+    protected $_timezone = null;
+    
     /**
      * The classname for individual feed elements.
      *
@@ -51,10 +57,9 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
 
     public function __construct($element = null)
     {
-        parent::__construct($element);
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct($element);
     }
-
 }

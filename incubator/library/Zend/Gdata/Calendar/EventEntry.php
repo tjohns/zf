@@ -30,19 +30,15 @@ require_once 'Zend/Gdata/Entry.php';
 require_once 'Zend/Gdata/Kind/EventEntry.php';
 
 /**
- * @see Zend_Gdata_Extension_EventStatus
+ * @see Zend_Gdata_Calendar_Extension_SendEventNotifications
  */
-require_once 'Zend/Gdata/Extension/EventStatus.php';
+require_once 'Zend/Gdata/Calendar/Extension/SendEventNotifications.php';
 
 /**
- * @see Zend_Gdata_Extension_ExtendedProperty
+ * @see Zend_Gdata_Calendar_Extension_Timezone
  */
-require_once 'Zend/Gdata/Extension/ExtendedProperty.php';
+require_once 'Zend/Gdata/Calendar/Extension/Timezone.php';
 
-/**
- * @see Zend_Gdata_Extension_OriginalEvent
- */
-require_once 'Zend/Gdata/Extension/OriginalEvent.php';
 
 /**
  * Data model class for a Google Calendar Event Entry 
@@ -57,8 +53,7 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
 
     protected $_entryClassName = 'Zend_Gdata_Calendar_EventEntry';
     protected $_sendEventNotifications = null;
-    protected $_extendedProperty = array();
-    protected $_originalEvent = array();
+    protected $_timezone = null;
 
     public function __construct($element = null)
     {
@@ -71,59 +66,61 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_extendedProperty != null) {
-            foreach ($this->_extendedProperty as $extProp) {
-                $element->appendChild(
-                        $extProp->getDOM($element->ownerDocument));
-            }
+        if ($this->_sendEventNotifications != null) {
+            $element->appendChild($this->_sendEventNotifications->getDOM($element->ownerDocument));
         }
-        if ($this->_originalEvent != null) {
-            $element->appendChild(
-                    $this->_originalEvent->getDOM($element->ownerDocument));
-        }
+        if ($this->_timezone != null) {
+            $element->appendChild($this->_timezone->getDOM($element->ownerDocument));
+        }        
+
         return $element;
     }
     
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+        
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'extendedProperty'; 
-                $extProp = new Zend_Gdata_Extension_ExtendedProperty();
-                $extProp->transferFromDOM($child);
-                $this->_extendedProperty[] = $extProp;
+            case $this->lookupNamespace('gCal') . ':' . 'sendEventNotifications'; 
+                $sendEventNotifications = new Zend_Gdata_Calendar_Extension_SendEventNotifications();
+                $sendEventNotifications ->transferFromDOM($child);
+                $this->_sendEventNotifications = $sendEventNotifications;
                 break;
-            case $this->lookupNamespace('gd') . ':' . 'originalEvent'; 
-                $originalEvent = new Zend_Gdata_Extension_OriginalEvent();
-                $originalEvent ->transferFromDOM($child);
-                $this->_originalEvent = $originalEvent;
+            case $this->lookupNamespace('gCal') . ':' . 'timezone'; 
+                $timezone = new Zend_Gdata_Calendar_Extension_Timezone();
+                $timezone ->transferFromDOM($child);
+                $this->_timezone = $timezone;
+                break;            
+            default:
+                parent::takeChildFromDOM($child);
                 break;
-        default:
-            parent::takeChildFromDOM($child);
-            break;
         }
     }
 
-    public function getExtendedProperty() 
+    public function getEventNotifications() 
     {
-        return $this->_extendedProperty;
+        return $this->_eventNotifications;
     }
 
-    public function setExtendedProperty($value) 
+    public function setEventNotifications($value) 
     {
-        $this->_extendedProperty = $value;
+        $this->_eventNotifications = $value;
         return $this;
     }
 
-    public function getOriginalEvent() 
+    public function getTimezone() 
     {
-        return $this->_originalEvent;
+        return $this->_timezone;
     }
 
-    public function setOriginalEvent($value) 
+    /**
+     * @param Zend_Gdata_Calendar_Extension_Timezone $value
+     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     */    
+    public function setTimezone($value) 
     {
-        $this->_originalEvent = $value;
+        $this->_timezone = $value;
         return $this;
-    }
+    }    
 
 }
