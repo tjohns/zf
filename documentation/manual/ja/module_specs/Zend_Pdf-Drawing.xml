@@ -38,6 +38,15 @@ $color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 // $c, $m, $y, $k (float 型の数値)。0.0 (最小の強度) - 1.0 (最大の強度)
 $color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
         </programlisting>
+
+        <para>
+        HTML 形式の色指定も <code>Zend_Pdf_Color_Html</code> クラスで使用できます。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$color1 = new Zend_Pdf_Color_Html('#3366FF');
+$color2 = new Zend_Pdf_Color_Html('silver');
+$color3 = new Zend_Pdf_Color_Html('forestgreen');]]>
+        </programlisting>
     </sect2>
 
 
