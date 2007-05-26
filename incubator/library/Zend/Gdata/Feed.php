@@ -25,6 +25,11 @@
 require_once 'Zend/Gdata/App/Feed.php';
 
 /**
+ * @see Zend_Gdata_Entry
+ */
+require_once 'Zend/Gdata/Entry.php';
+
+/**
  * @see Zend_Gdata_Extension_OpenSearchTotalResults
  */
 require_once 'Zend/Gdata/Extension/OpenSearchTotalResults.php';
