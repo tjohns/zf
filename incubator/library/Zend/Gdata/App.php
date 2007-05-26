@@ -30,6 +30,11 @@ require_once 'Zend/Gdata/Feed.php';
 require_once 'Zend/Http/Client.php';
 
 /**
+ * Zend_Version
+ */
+require_once 'Zend/Version.php';
+
+/**
  * Provides Atom Publishing Protocol (APP) functionality.  This class and all
  * other components of Zend_Gdata_App are designed to work independently from
  * other Zend_Gdata components in order to interact with generic APP services.

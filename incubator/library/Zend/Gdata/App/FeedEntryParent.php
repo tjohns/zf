@@ -65,6 +65,11 @@ require_once 'Zend/Gdata/App/Extension/Title.php';
 require_once 'Zend/Gdata/App/Extension/Updated.php';
 
 /**
+ * Zend_Version
+ */
+require_once 'Zend/Version.php';
+
+/**
  * Abstract class for common functionality in entries and feeds
  *
  * @category   Zend

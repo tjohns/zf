@@ -29,6 +29,11 @@ require_once 'Zend/Http/Client.php';
 require_once 'Zend/Http/Client/Exception.php';
 
 /**
+ * Zend_Version
+ */
+require_once 'Zend/Version.php';
+
+/**
  * Wrapper around Zend_Http_Client to facilitate Google's "Account Authentication 
  * Proxy for Web-Based Applications". 
  * 
