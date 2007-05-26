@@ -180,6 +180,13 @@
             methods to retrieve data from services as feeds, insert new
             entries into feeds, update entries, and delete entries.
         </para>
+        
+        <para>
+            Note; A full example of working with Zend_Gdata is available in the
+            <code>demos/Zend/Gdata</code> directory.  This example is runnable
+            from the command-line, but the methods contained within are easily
+            portable to a web application.
+        </para>
     </sect2>
 
     <sect2 id="zend.gdata.introdduction.magicfactory">
@@ -472,6 +479,59 @@ $feed = $gdata->getFeed($query);
             appropriate for the respective service.
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.gdata.introduction.usefeedentry">
+        <title>Working with data in feeds and entries</title>
+    
+        <para>
+            After retrieving a feed, you can read the data from the feed
+            or the entries contained in the feed using either the accessors
+            defined in each of the data model classes or the magic 
+            accessors.  Here's an example:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$gdata = new Zend_Gdata($client);
+$query = new Zend_Gdata_Query(
+        'http://www.blogger.com/feeds/blogID/posts/default');
+$query->setMaxResults(10);
+$feed = $gdata->getFeed($query);
+foreach ($feed as $entry) {
+    // using the magic accessor
+    echo 'Title: ' . $entry->title->text;
+    // using the defined accessors
+    echo 'Content: ' . $entry->getContent()->getText();
+}
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.gdata.introduction.updateentry">
+        <title>Updating entries</title>
+    
+        <para>
+            After retrieving an entry, you can update that entry and save
+            changes back to the server.  Here's an example:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$gdata = new Zend_Gdata($client);
+$query = new Zend_Gdata_Query(
+        'http://www.blogger.com/feeds/blogID/posts/default');
+$query->setMaxResults(10);
+$feed = $gdata->getFeed($query);
+foreach ($feed as $entry) {
+    // update the title to append 'NEW'
+    echo 'Old Title: ' . $entry->title->text;
+    $entry->title->text = $entry->title->text . ' NEW';
+
+    // update the entry on the server
+    $newEntry = $entry->save();
+    echo 'New Title: ' . $newEntry->title->text;
+}
+?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
