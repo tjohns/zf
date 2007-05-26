@@ -165,7 +165,7 @@ $select = $db->select()
 
 // できあがるクエリは、このようになります
 //   SELECT *
-//   FROM "products" 
+//   FROM "products"
 
 $select = $db->select()
     ->from( 'products' );
@@ -201,6 +201,9 @@ $select = $db->select()
                 テーブル名として、"<code>schemaName.tableName</code>"
                 のように指定することができます。この場合、
                 Zend_Db_Select は各部分を個別にクォートします。
+                あるいはスキーマ名とテーブル名を別々に指定することもできます。
+                もし両方でスキーマ名を指定した場合は、
+                テーブル名と同時に指定したもののほうが優先されます。
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
@@ -213,6 +216,11 @@ $select = $db->select()
 
 $select = $db->select()
     ->from( 'myschema.products' );
+
+// あるいは
+
+$select = $db->select()
+    ->from('products', '*', 'myschema');
 
 ?>]]></programlisting>
             </example>
@@ -950,7 +958,7 @@ $select = $db->select()
 
 // できあがるクエリは、このようになります
 //   SELECT p."product_id", p."product_name"
-//   FROM "products" AS p 
+//   FROM "products" AS p
 //   LIMIT 10, 20
 
 $select = $db->select()

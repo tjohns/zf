@@ -72,7 +72,10 @@ class bugs extends Zend_Db_Table_Abstract
             <para>
                 テーブルのスキーマについても、protected 変数
                 <code>$_schema</code> で宣言することができます。
-                RDBMS によってはこれを「データベース」や「表領域」
+                あるいは <code>$_name</code> プロパティでテーブル名の前にスキーマ名をつなげて指定することもできます。
+                <code>$_name</code> で指定したスキーマのほうが、
+                <code>$_schema</code> プロパティで指定したスキーマよりも優先されます。
+                RDBMS によってはスキーマのことを「データベース」や「表領域」
                 などということもありますが、同じように使用できます。
                 スキーマを、テーブル名の一部として宣言することもできます。
             </para>
@@ -86,7 +89,7 @@ class bugs extends Zend_Db_Table_Abstract
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_schema = 'bug_db';
-    protected $_name = 'bugs';
+    protected $_name   = 'bugs';
 }
 
 // 二つ目の方法
@@ -96,7 +99,51 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bug_db.bugs';
 }
 
+// スキーマを $_name と $_schema の両方で指定した場合は、
+// $_name で指定したものが優先されます
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name   = 'bug_db.bugs';
+    protected $_schema = 'ignored';
+}
+
 ?>]]></programlisting>
+            </example>
+
+            <para>
+                スキーマ名とテーブル名は、コンストラクタの設定ディレクティブでも指定することができます。
+                これは、<code>$_name</code> や <code>$_schema</code>
+                といったプロパティで設定したデフォルト値を上書きします。
+                <code>name</code> ディレクティブで指定したスキーマ名は、
+                <code>schema</code> オプションで指定したスキーマ名より優先されます。
+            </para>
+
+            <example id="zend.db.table.defining.table-schema.example.constructor">
+
+                <title>インスタンス作成時のテーブル名とスキーマ名の指定</title>
+
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+}
+
+// 最初の方法
+
+$tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
+
+// もうひとつの方法
+
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+
+// スキーマを 'name' と 'schema' の両方で指定した場合は、
+// 'name' で指定したものが優先されます
+
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');
+
+?>]]></programlisting>
+
             </example>
 
             <para>
