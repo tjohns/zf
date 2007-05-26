@@ -487,11 +487,13 @@ class Zend_Gdata_App
                 $reflectionObj = new ReflectionClass($foundClassName);
                 return $reflectionObj->newInstanceArgs($args);
             } else {
+                require_once 'Zend/Gdata/App/Exception.php';
                 throw new Zend_Gdata_App_Exception(
                         "Unable to find '${class}' in registered packages");
             }
         } else {
-           throw new Zend_Gdata_App_Exception("No such method ${method}");
+            require_once 'Zend/Gdata/App/Exception.php';
+            throw new Zend_Gdata_App_Exception("No such method ${method}");
         }
     }
 
