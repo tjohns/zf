@@ -45,14 +45,6 @@
  * be handled and the online code samples for additional information.
  */
 
-// includes the Zend Framework library and loads the necessary classes
-$D = DIRECTORY_SEPARATOR;
-set_include_path(
-    dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}library"
-    . PATH_SEPARATOR .
-    dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}..{$D}library"
-    . PATH_SEPARATOR . get_include_path());
-
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
