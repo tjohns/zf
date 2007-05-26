@@ -49,7 +49,7 @@
                     そのヘルパーオブジェクトが返されます。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('We did something in the last request');
 ]]></programlisting>
@@ -61,7 +61,7 @@ $flashMessenger->addMessage('We did something in the last request');
                     まるでブローカのプロパティであるかのようにヘルパーを操作できます。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 $flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('We did something in the last request');
 ]]></programlisting>
@@ -76,7 +76,7 @@ $flashMessenger->addMessage('We did something in the last request');
                     <code>addMessage()</code> をコールします。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 $this->_helper->FlashMessenger('We did something in the last request');
 ]]></programlisting>
             </listitem>
@@ -108,7 +108,7 @@ $this->_helper->FlashMessenger('We did something in the last request');
             <code>addHelper</code> を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[<?php
 Zend_Controller_Action_HelperBroker::addHelper($helper);
 ]]></programlisting>
 
@@ -128,7 +128,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);
                     パスを決定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 // My/Action/Helpers/ にある、名前が My_Action_Helpers で始まるヘルパーを追加します
 Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
 ]]></programlisting>
@@ -142,7 +142,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
                     これは、指定したディレクトリにある指定したプレフィックスのクラスを追加します。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[<?php
 // Plugins/Helpers/ にある、名前が Helper で始まるヘルパーを追加します
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
 ]]></programlisting>
@@ -153,6 +153,34 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
             これらは静的メソッドなので、コントローラチェイン内の任意の場所で使用することができます。
             これにより、必要に応じて動的にヘルパーを追加できることになります。
         </para>
+
+        <para>
+            ヘルパークラスがヘルパーブローカ内に存在するかどうかを調べるには
+            <code>hasHelper($name)</code> を使用します。<code>$name</code>
+            には、ヘルパーのショートネーム (プレフィックスを除いたもの)
+            を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 'redirector' ヘルパーがブローカに登録されているかどうかを調べます
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    echo 'Redirector helper registered
+}
+]]></programlisting>
+
+        <para>
+            最後に、登録済みのヘルパーをブローカから削除するには
+            <code>removeHelper($name)</code> を使用します。<code>$name</code>
+            には、ヘルパーのショートネーム (プレフィックスを除いたもの)
+            を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 'redirector' ヘルパーがブローカに登録されている場合にはそれを削除します
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    Zend_Controller_Action_HelperBroker::removeHelper('redirector')
+}
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.stockhelpers">
