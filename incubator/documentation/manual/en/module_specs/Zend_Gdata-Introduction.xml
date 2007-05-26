@@ -224,7 +224,7 @@ $entry = $ss->newCellEntry();
 // creates a Zend_Gdata_App_Spreadsheets_Extension_Cell
 $cell = $ss->newCell();
 $cell->setText('My cell value');
-$cell->setRow('A');
+$cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
@@ -421,7 +421,7 @@ $gdata = new Zend_Gdata($client);
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->setMaxResults(10);
-echo $gdata->getMaxResults();   // returns 10
+echo $query->getMaxResults();   // returns 10
 ?>]]></programlisting>
 
         <para>
@@ -447,7 +447,7 @@ $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
 // ...get feed...
 
-$gdata->resetParameters();      // clears all parameters
+$query->resetParameters();      // clears all parameters
 // ...get a different feed...
 ?>]]></programlisting>
 
@@ -566,8 +566,9 @@ $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Playing football at the park');
 $content = $gdata->newContent('We will visit the park and play a few football matches');
 $content->setType('text');
+$entry->content = $content;
 
-$entryResult = $gdata->post($entry, 
+$entryResult = $gdata->insertEntry($entry, 
         'http://www.blogger.com/feeds/blogID/posts/default');
 
 echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
