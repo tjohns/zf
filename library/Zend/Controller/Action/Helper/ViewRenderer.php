@@ -779,7 +779,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * @param  boolean $noController 
      * @return void
      */
-    public function direct($action = null, $name = null, $noController = false)
+    public function direct($action = null, $name = null, $noController = null)
     {
         $this->setRender($action, $name, $noController);
     }
