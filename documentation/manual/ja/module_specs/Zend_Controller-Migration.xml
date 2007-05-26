@@ -8,6 +8,183 @@
         新しい仕組みに対応させてください。
     </para>
 
+    <sect2 id="zend.controller.migration.fromzeroninethree">
+        <title>0.9.3 から 1.0.0RC1 以降への移行</title>
+
+        <para>
+            1.0.0RC1 での最大の変更点は、
+            <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
+            プラグインと
+            <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+            アクションヘルパーが追加され、デフォルトで有効となったことです。
+            それぞれのドキュメントを熟読し、どのように動作するのかや
+            既存のアプリケーションに与える影響について確認しておきましょう。
+        </para>
+
+        <para>
+            <code>ErrorHandler</code> プラグインは
+            <code>postDispatch()</code> で動作するもので、
+            例外をチェックして指定したエラーハンドラコントローラに転送します。
+            そのため、アプリケーション内にエラー処理用コントローラを含める必要があります。
+            このプラグインを無効にするには、フロントコントローラのパラメータ
+            <code>noErrorHandler</code> を設定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$front->setParam('noErrorHandler', true);
+]]></programlisting>
+
+        <para>
+            <code>ViewRenderer</code> アクションヘルパーは、
+            アクションコントローラへのビューの注入を自動的に行います。
+            また、現在のアクションにもとづいたビュースクリプトを自動的にレンダリングします。
+            ビュースクリプトをレンダリングせず、かつ転送やリダイレクトも行わないアクションがあった場合、
+            これは問題になるでしょう。というのも、
+            <code>ViewRenderer</code> はそんなアクションであっても
+            アクション名をもとに自動的にビュースクリプトをレンダリングしようとするからです。
+        </para>
+
+        <para>
+            もし既存のコードにそのようなものがあった場合の対応方法はいくつか考えられます。
+            一番手っ取り早いのは、フロントコントローラの起動時に
+            <code>ViewRenderer</code> を無効にしてからディスパッチを行うことです。
+        </para>
+            
+        <programlisting role="php"><![CDATA[<?php
+// $front は Zend_Controller_Front のインスタンスであるとします
+$front->setParam('noViewRenderer', true);
+]]></programlisting>
+
+        <para>
+            しかし、長い目で見ればこれはあまりよい作戦ではありません。
+            今後も新しいコードを書き続けるならなおさらです。
+        </para>
+
+        <para>
+            ViewRenderer の機能を把握したら、コントローラのコードを見てみましょう。
+            まず、アクションメソッド (名前が 'Action' で終わっているメソッド)
+            を探し、その中でどんな処理をしているかを確認しましょう。
+            もし次に挙げるいずれの内容も行っていない場合は、コードに手を加える必要があります。
+        </para>
+
+        <itemizedlist>
+            <listitem><para><code>$this-&gt;render()</code> のコール</para></listitem>
+            <listitem><para><code>$this-&gt;_forward()</code> のコール</para></listitem>
+            <listitem><para><code>$this-&gt;_redirect()</code> のコール</para></listitem>
+            <listitem><para>Redirector アクションヘルパーのコール</para></listitem>
+        </itemizedlist>
+
+        <para>
+            一番簡単なのは、そのメソッド内で自動レンダリングを無効にすることです。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$this->_helper->viewRenderer->setNoRender();
+]]></programlisting>
+
+        <para>
+            レンダリング、転送あるいはリダイレクトを行っているアクションメソッドがひとつもない場合は、
+            上で示したコードを <code>preDispatch()</code>
+            メソッドあるいは <code>init()</code> メソッド内に書くといいでしょう。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+public function preDispatch()
+{
+    // ビュースクリプトの自動レンダリングを無効にします
+    $this->_helper->viewRenderer->setNoRender()
+    // .. 何かほかのことをします...
+}
+]]></programlisting>
+
+        <para>
+            もしメソッド内で <code>render()</code> をコールしていて、
+            <link linkend="zend.controller.modular">規約どおりのディレクトリ構造</link>
+            を使用しているのなら、自動レンダリングを使用するようにコードを書き換えましょう。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    ひとつのアクションで複数のビュースクリプトをレンダリングしている場合は、
+                    なにも変更する必要はありません。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    何も引数を指定せずに <code>render()</code> をコールしている場合は、
+                    その行を削除します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    引数つきで <code>render()</code> をコールしていて、
+                    その後に何か処理をしたり複数のビュースクリプトを実行したりしていない場合は、
+                    その行を
+                    <code>$this-&gt;_helper-&gt;viewRenderer()</code>
+                    のように変更します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            独自のディレクトリ構造を使用している場合は、
+            ビューの基底パスやスクリプトのパスをメソッドで設定してから
+            <code>ViewRenderer</code> を使用します。これらのメソッドについての詳細は
+            <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer
+            のドキュメント</link> を参照ください。
+        </para>
+
+        <para>
+            ビューオブジェクトをレジストリから取得していたり
+            ビューオブジェクトをカスタマイズしていたり、
+            あるいはデフォルトとは異なるビューを使用している場合は、
+            そのオブジェクトを <code>ViewRenderer</code>
+            に注入するために次のようにします。
+            これはいつでも好きなときに行えます。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    フロントコントローラのインスタンスを最初に作成する前なら
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// $view はすでに定義されているものとします
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    フロントコントローラのインスタンスを取得した後なら
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer->setView($view);
+]]></programlisting>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            ViewRenderer を変更するにはさまざまな方法があります。
+            たとえばレンダリングするビュースクリプトを別のものに変更したり
+            ビュースクリプトパスの置換可能な要素（サフィックスを含む）
+            を置換する内容を指定したり、使用するレスポンスセグメントを選択したりなどのことができます。
+            規約どおりのディレクトリ構造以外を使用する場合は、
+            ViewRenderer でのパスの決定方法を変更することもできます。
+        </para>
+
+        <para>
+            <code>ErrorHandler</code> および <code>ViewRenderer</code>
+            は今やコア機能として組み込まれているので、
+            既存のコードについてもできるだけこれに適合するようにすることをお勧めします。
+        </para>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzeroninetwo">
         <title>0.9.2 から 0.9.3 以降への移行</title>
 

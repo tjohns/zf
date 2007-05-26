@@ -173,22 +173,24 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        $this->render();
     }
 }
 ]]></programlisting>
 
             <para>
-                <code>render()</code> をコールすると、
-                テンプレートをレンダリングします。デフォルトでは、MVC
-                のビュー層として <code>Zend_View</code> を使用します。
-                <code>render()</code> は、コントローラ名
+                デフォルトでは
+                <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                アクションヘルパーが有効になります。つまり、
+                アクションメソッドとそれに対応するビュースクリプトを用意すれば、
+                すぐにその内容をレンダリングできるというわけです。
+                デフォルトでは、MVCのビュー層として <code>Zend_View</code> を使用します。
+                <code>ViewRenderer</code> は、コントローラ名
                 (たとえば <code>index</code>) とアクション名
                 (たとえば <code>index</code>) から処理するテンプレートを決定します。
                 デフォルトでは、テンプレートの拡張子は
                 <code>.phtml</code> となります。つまり、上の例では
                 <code>index/index.phtml</code> をレンダリングします。
-                さらに <code>Zend_Controller_Action</code> は、
+                さらに <code>ViewRenderer</code> は、
                 コントローラと同一階層にある <code>views</code>
                 ディレクトリを自動的にビューの基底ディレクトリとみなし、
                 <code>views/scripts/</code> ビュースクリプトがおかれるものと考えます。
@@ -247,7 +249,6 @@ class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
-        $this->render();
     }
 }
 ]]></programlisting>

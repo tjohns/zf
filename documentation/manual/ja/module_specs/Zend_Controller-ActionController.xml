@@ -56,6 +56,73 @@ class FooController extends Zend_Controller_Action
             さまざまなヘルパーメソッドを使用したりといったことができます。
             この章では、アクションコントローラの機能の概要を説明します。
         </para>
+
+        <note>
+            <title>デフォルトの挙動</title>
+
+            <para>
+                デフォルトでは、<link linkend="zend.controller.front">フロントコントローラ
+                </link> は <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                アクションヘルパーを有効にします。このヘルパーは、
+                ビューオブジェクトをコントローラに注入し、
+                ビューを自動的にレンダリングします。
+                アクションコントローラでこれを無効にするには、
+                以下のいずれかの方法を使用します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // このコントローラでのみ無効にします
+        $this->_invokeArgs['noViewRenderer'] = true;
+
+        // 全体で無効にします
+        $this->_helper->removeHelper('viewRenderer');
+
+        // これも全体で無効にしますが、同時にローカルでも無効にしておく必要があります。
+        // これは、ローカルの設定を全体に伝播させる方法です。
+        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+    }
+}
+]]></programlisting>
+
+            <para>
+                <code>initView()</code>、<code>getViewScript()</code>、
+                <code>render()</code> および <code>renderScript()</code>
+                は、それぞれ <code>ViewRenderer</code> へのプロキシとなります。
+                ただしヘルパーブローカ内にこのヘルパーが登録されていない場合や
+                noViewRenderer フラグが設定されている場合は除きます。
+            </para>
+
+            <para>
+                個々のビューのレンダリングを無効にするには、単純に
+                <code>ViewRenderer</code> の <code>noRender</code>
+                フラグを設定することもできます。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // このアクションでの自動レンダリングを無効にします
+        $this->_helper->viewRenderer->setNoRender();
+    }
+}
+]]></programlisting>
+
+            <para>
+                <code>ViewRenderer</code> を無効にする場面として考えられるのは、
+                ビューオブジェクトを必要としない場合や
+                ビュースクリプト経由でのレンダリングを行わない場合
+                (たとえば、アクションコントローラを使用して SOAP や XML-RPC、
+                REST といったウェブサービスプロトコルを扱う場合)
+                です。<code>ViewRenderer</code> をグローバルで無効にすることはまずないでしょう。
+                無効にするとすれば、個々のコントローラやアクション単位で行うことになります。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.action.initialization">

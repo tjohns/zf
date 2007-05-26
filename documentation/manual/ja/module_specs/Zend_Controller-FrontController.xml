@@ -37,6 +37,49 @@
             フロントコントローラの動作環境やそのヘルパークラスを変更するために、
             さまざまな手法が用意されています。
         </para>
+
+        <note>
+            <title>デフォルトの挙動</title>
+            <para>
+                デフォルトでは、フロントコントローラは
+                <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
+                プラグインと
+                <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                アクションヘルパープラグインを読み込みます。
+                これらにより、コントローラ内でのエラー処理やビューのレンダリングがシンプルに行えるようになります。
+            </para>
+
+            <para>
+                エラーハンドラを無効にするには、
+                <code>dispatch()</code> をコールする前に以下のいずれかの方法を使用します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// プラグインの登録を解除します
+$front->unregisterPlugin('Zend_Controller_Plugin_ErrorHandler');
+
+// あるいは単に無効にします
+$front->setParam('noErrorHandler', true);
+]]></programlisting>
+
+            <para>
+                ビューレンダラを無効にするには、
+                <code>dispatch()</code> をコールする前に以下のいずれかの方法を使用します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// アクションヘルパーをブローカから削除します
+Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+
+// あるいは単に無効にします
+$front->setParam('noViewRenderer', true);
+]]></programlisting>
+
+            <para>
+                どちらの場合についても、フロンとコントローラのパラメータを設定する方法のほうが
+                手っ取り早く高速です。また、この方法なら、設定を変更することも簡単です。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.front.methods.primary">
