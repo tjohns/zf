@@ -48,7 +48,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->newEntry();
         $entry->title = $this->gdata->newTitle('PHP test blog post');
         $entry->content = $this->gdata->newContent('Blog post content...');
-        $insertedEntry = $this->gdata->insertEntry($postUrl, $entry);
+        $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
         $this->assertEquals('PHP test blog post', $insertedEntry->title->text);
         $this->assertEquals('Blog post content...',
                 $insertedEntry->content->text);
@@ -64,7 +64,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->newEntry();
         $entry->title = $this->gdata->newTitle('PHP test blog post');
         $entry->content = $this->gdata->newContent('Blog post content...');
-        $insertedEntry = $this->gdata->insertEntry($postUrl, $entry);
+        $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
         $this->assertTrue( 
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $this->gdata->delete($insertedEntry->getEditLink()->href);
@@ -87,7 +87,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($entry->title->getText(),
             $entry->title->__toString());
 
-        $insertedEntry = $this->gdata->insertEntry($postUrl, $entry);
+        $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
         $retrievedEntryQuery = $this->gdata->newQuery(
                 $insertedEntry->getSelfLink()->href);
         $retrievedEntry = $this->gdata->getEntry($retrievedEntryQuery);
@@ -103,7 +103,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->newEntry();
         $entry->title = $this->gdata->newTitle('PHP test blog post');
         $entry->content = $this->gdata->newContent('Blog post content...');
-        $insertedEntry = $this->gdata->insertEntry($postUrl, $entry);
+        $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
         $this->assertTrue( 
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $insertedEntry->title->text = 'PHP test blog post modified';
@@ -134,13 +134,13 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         /*
         TODO: Fix these tests
         // Test ArrayAccess interface
-        $firstBlogTitle = $retrievedFeed[0]->title;
+        $firstBlogTitle = $retrievedFeed[0]->title->text;
         $entries = $retrievedFeed->entry;
-        $entries[0]->title->text = $firstBlogTitle + "**";
+        $entries[0]->title->text = $firstBlogTitle . "**";
         $retrievedFeed[0] = $entries[0];
         $this->assertEquals($retrievedFeed->entry[0]->title->text,
                 $retrievedFeed[0]->title->text);
-        $this->assertEquals($firstBlogTitle + "**",
+        $this->assertEquals($firstBlogTitle . "**",
                 $retrievedFeed[0]->title->text);
         */
     }
