@@ -381,12 +381,12 @@ class Zend_Gdata_App
 
     /**
      * Inserts an entry to a given URI and returns the response as a fully formed Entry.
-     * @param string $uri POST URI
      * @param mixed  $data The Zend_Gdata_App_Entry or XML to post
+     * @param string $uri POST URI
      * @param string $className The class of entry to be returned.
      * @return Zend_Gdata_App_Entry The entry returned by the service after insertion.
      */
-    public function insertEntry($uri, $data, $className='Zend_Gdata_App_Entry')
+    public function insertEntry($data, $uri, $className='Zend_Gdata_App_Entry')
     {
         if (is_string($data)) {
             $rawData = $data;

@@ -315,7 +315,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         $feed = $this->getListFeed($query);
         $editLink = $feed->getLink('http://schemas.google.com/g/2005#post');
         
-        return $this->insertEntry($editLink->href, $newEntry->saveXML(), 'Zend_Gdata_Spreadsheets_ListEntry');
+        return $this->insertEntry($newEntry->saveXML(), $editLink->href, 'Zend_Gdata_Spreadsheets_ListEntry');
     }
     
     /**
