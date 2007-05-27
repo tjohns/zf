@@ -1,71 +1,77 @@
 <sect1 id="zend.gdata.exception">
-    <title>Gdata の例外の捕捉</title>
+    <title>Catching Gdata Exceptions</title>
 
     <para>
-        <code>Zend_Gdata_Exception</code> は、Zend_Gdata
-        がスローする例外の基底クラスです。Zend_Gdata_Exception
-        を捕捉すれば、Zend_Gdata がスローする例外をすべて処理できます。
+        The <code>Zend_Gdata__App_Exception</code> class is a base class
+        for exceptions thrown by Zend_Gdata.  You can catch any exception
+        thrown by Zend_Gdata by catching Zend_Gdata_App_Exception.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
-} catch(Zend_Gdata_Exception $ex) {
-    // ユーザに例外の内容を報告します
+} catch(Zend_Gdata_App_Exception $ex) {
+    // Report the exception to the user
     die($ex->getMessage());
 }
 ?>]]></programlisting>
 
     <para>
-        Zend_Gdata では、次のようなサブクラスを使用しています。
+        The following exception subclasses are used by Zend_Gdata:
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_AuthException</code>
-                    は、ユーザアカウントの認証情報が無効であることを表します。
+                    <code>Zend_Gdata_App_AuthException</code>
+                    indicates that the user's account credentials were not valid.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_BadMethodCallException</code>
-                    は、そのサービスがサポートしていないメソッドがコールされたことを表します。
-                    たとえば、CodeSearch サービスは <code>post()</code>
-                    をサポートしていません。
+                    <code>Zend_Gdata_App_BadMethodCallException</code>
+                    indicates that a method was called for a service
+                    that does not support the method.  For example,
+                    the CodeSearch service does not support <code>post()</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_HttpException</code>
-                    は、HTTP リクエストに失敗したことを表します。
+                    <code>Zend_Gdata_App_HttpException</code>
+                    indicates that an HTTP request was not successful.  
+                    Provides the ability to get the full Zend_Http_Response
+                    object to determine the exact cause of the failure in 
+                    cases where <code>$e->getMessage()</code> does not provide
+                    enough details.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_InvalidArgumentException</code>
-                    は、アプリケーションで設定した値が、その状況は無効であることを表します。
-                    たとえば、Calendar の visibility に "banana" を指定したり、blog の名前を指定せずに
-                    Blogger のフィードを取得しようとしたりといった場合があてはまります。
+                    <code>Zend_Gdata_App_InvalidArgumentException</code>
+                    is thrown when the application provides a value that
+                    is not valid in a given context.  For example,
+                    specifying a Calendar visibility value of "banana",
+                    or fetching a Blogger feed without specifying
+                    any blog name.
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        これらのサブクラスを使用することで、それぞれの例外に固有の処理をすることができます。
-        これらの例外サブクラスが、それぞれ Zend_Gdata のどのメソッドからスローされるのかについては
-        API ドキュメントを参照ください。
+        You can use these exception subclasses to handle specific exceptions
+        differently.  See the API documentation for information on which 
+        exception subclasses are thrown by which methods in Zend_Gdata.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
-} catch(Zend_Gdata_AuthException $authEx) {
-    // ユーザの認証情報が無効なので、
-    // もう一度認証をさせるなどの処理が適当でしょう
+    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+} catch(Zend_Gdata_App_AuthException $authEx) {
+    // The user's credentials were incorrect.
+    // It would be appropriate to give the user a second try.
     ...
-} catch(Zend_Gdata_HttpException $httpEx) {
-    // Google Data サーバに接続できません
+} catch(Zend_Gdata_App_HttpException $httpEx) {
+    // Google Data servers cannot be contacted.
     die($httpEx->getMessage);
 }
 ?>]]></programlisting>

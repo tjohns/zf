@@ -2,15 +2,15 @@
     <title>Catching Gdata Exceptions</title>
 
     <para>
-        The <code>Zend_Gdata_Exception</code> class is a base class
+        The <code>Zend_Gdata__App_Exception</code> class is a base class
         for exceptions thrown by Zend_Gdata.  You can catch any exception
-        thrown by Zend_Gdata by catching Zend_Gdata_Exception.
+        thrown by Zend_Gdata by catching Zend_Gdata_App_Exception.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
-} catch(Zend_Gdata_Exception $ex) {
+} catch(Zend_Gdata_App_Exception $ex) {
     // Report the exception to the user
     die($ex->getMessage());
 }
@@ -22,13 +22,13 @@ try {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_AuthException</code>
+                    <code>Zend_Gdata_App_AuthException</code>
                     indicates that the user's account credentials were not valid.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_BadMethodCallException</code>
+                    <code>Zend_Gdata_App_BadMethodCallException</code>
                     indicates that a method was called for a service
                     that does not support the method.  For example,
                     the CodeSearch service does not support <code>post()</code>.
@@ -36,13 +36,17 @@ try {
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_HttpException</code>
-                    indicates that an HTTP request was not successful.
+                    <code>Zend_Gdata_App_HttpException</code>
+                    indicates that an HTTP request was not successful.  
+                    Provides the ability to get the full Zend_Http_Response
+                    object to determine the exact cause of the failure in 
+                    cases where <code>$e->getMessage()</code> does not provide
+                    enough details.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Gdata_InvalidArgumentException</code>
+                    <code>Zend_Gdata_App_InvalidArgumentException</code>
                     is thrown when the application provides a value that
                     is not valid in a given context.  For example,
                     specifying a Calendar visibility value of "banana",
@@ -61,12 +65,12 @@ try {
 
     <programlisting role="php"><![CDATA[<?php
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
-} catch(Zend_Gdata_AuthException $authEx) {
+    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+} catch(Zend_Gdata_App_AuthException $authEx) {
     // The user's credentials were incorrect.
     // It would be appropriate to give the user a second try.
     ...
-} catch(Zend_Gdata_HttpException $httpEx) {
+} catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data servers cannot be contacted.
     die($httpEx->getMessage);
 }
