@@ -50,8 +50,6 @@ require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
 require_once 'Zend/Gdata/Calendar/EventEntryTest.php';
  */
-require_once 'Zend/Gdata/SpreadsheetsTest.php';
-require_once 'Zend/Gdata/SpreadsheetsTest.php';
 require_once 'Zend/Gdata/Spreadsheets/ColCountTest.php';
 require_once 'Zend/Gdata/Spreadsheets/RowCountTest.php';
 require_once 'Zend/Gdata/Spreadsheets/CellTest.php';
@@ -110,7 +108,6 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventEntryTest');
          */
-        $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ColCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_RowCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellTest');
