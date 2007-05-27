@@ -330,15 +330,32 @@ if ($input->hasUnknown()) {
             </para>
 
             <para>
+                You can specify the message returned by
+                <code>getMissing()</code> using the 'missingMessage' option,
+                as an argument to the Zend_Filter_Input constructor or using
+                the <code>setOptions()</code> method.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$options = array(
+    'missingMessage' => "Field '%field%' is required"
+);
+
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+
+// alternative method:
+
+$input = new Zend_Filter_Input($filters, $validators, $data);
+$input->setOptions($options);
+]]></programlisting>
+
+            <para>
                 The results of the <code>getUnknown()</code> method is an
                 associative array, mapping field names to field values.  Field
                 names are used as the array keys in this case, instead of rule
                 names, because no rule mentions the fields considered to be
                 unknown fields.
-            </para>
-
-            <para>
-                Filters are applied to the input data before validators.
             </para>
 
         </sect3>
@@ -593,6 +610,31 @@ $validators = array(
             <para>
                 The default value of this metacommand is <code>false</code>.
             </para>
+
+            <para>
+                In the uncommon case that you declare a validation rule with
+                no validators, but the 'allowEmpty' metacommand is
+                <code>false</code> (that is, the field is considered invalid if
+                it is empty), Zend_Filter_Input returns a default error message
+                that you can retrieve with <code>getMessages()</code>.  You can
+                specify this message using the 'notEmptyMessage' option, as an
+                argument to the Zend_Filter_Input constructor or using the
+                <code>setOptions()</code> method.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$options = array(
+    'notEmptyMessage' => "A non-empty value is required for field '%field%'"
+);
+
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+
+// alternative method:
+
+$input = new Zend_Filter_Input($filters, $validators, $data);
+$input->setOptions($options);
+]]></programlisting>
 
         </sect3>
 
