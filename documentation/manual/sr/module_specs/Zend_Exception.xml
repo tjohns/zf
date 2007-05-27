@@ -1,6 +1,6 @@
 <sect1 id="zend.exception.using">
 
-    <title>Using Exceptions</title>
+    <title>Koriscenje izuzetaka</title>
 
     <para>
         All exceptions thrown by Zend Framework classes should throw
