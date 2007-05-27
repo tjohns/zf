@@ -105,33 +105,33 @@ stage-files:
 	@echo "== STAGING FILES =="
 	-mkdir -p $(GDATA_STAGE_DIR)
 	@echo "...copying set of files for Zend Gdata distribution..."
-	@(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --verbose --archive \
+	@(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --quiet --archive \
 	    --delete --exclude=.svn --recursive \
 	    --files-from="$$pwd/include-files-gdata" \
 	    ./ $$pwd/$(GDATA_EXPORT_DIR))
-	@echo "...altering incubator/documentation/manual/en/manual.xml.in..."
-	@mv $(GDATA_EXPORT_DIR)/incubator/documentation/manual/en/manual.xml.in \
-	    $(GDATA_EXPORT_DIR)/incubator/documentation/manual/en/manual.xml.in.orig
+	@echo "...altering documentation/manual/en/manual.xml.in..."
+	@mv $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml.in \
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml.in.orig
 	@awk '{ \
-	    if ($$0 ~ /chapter|title|module_specs|[^h]ref/ && $$0 !~ /[Gg]data|subtitle|Reference Guide/ && gdata == 0) \
+	    if ($$0 ~ /chapter|title|module_specs|[^h]ref/ && $$0 !~ /[Gg]data|subtitle|Reference Guide|<!--|imagedata/ && gdata == 0) \
 		{ print "<!--", $$0, "-->"; } \
 	    else \
 		{ sub(/Zend Framework/, "Zend Gdata", $$0); print; } \
 	    if ($$0 ~ /[Gg]data/) gdata = 1; else gdata = 0; \
 	    }' \
-	    $(GDATA_EXPORT_DIR)/incubator/documentation/manual/en/manual.xml.in.orig > \
-	    $(GDATA_EXPORT_DIR)/incubator/documentation/manual/en/manual.xml.in
-	@echo "...altering incubator/tests/Zend/AllTests.php..."
-	@mv $(GDATA_EXPORT_DIR)/incubator/tests/Zend/AllTests.php \
-	    $(GDATA_EXPORT_DIR)/incubator/tests/Zend/AllTests-orig.php
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml.in.orig > \
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml.in
+	@echo "...altering tests/Zend/AllTests.php..."
+	@mv $(GDATA_EXPORT_DIR)/tests/Zend/AllTests.php \
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests-orig.php
 	@awk '{ \
 	    if ($$0 ~ /require_once .Zend|addTest/ && $$0 !~ /[Gg]data/) \
 		{ } \
 	    else \
 		{ print; } \
 	    }' \
-	    $(GDATA_EXPORT_DIR)/incubator/tests/Zend/AllTests-orig.php > \
-	    $(GDATA_EXPORT_DIR)/incubator/tests/Zend/AllTests.php
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests-orig.php > \
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests.php
 	@echo "...altering README.txt..." 
 	@mv $(GDATA_EXPORT_DIR)/README.txt \
 	    $(GDATA_EXPORT_DIR)/README-orig.txt
@@ -149,14 +149,14 @@ export:
 
 stage-docs: docbook phpdoc
 
-docbook: docbook-incubator
+docbook: docbook-core
 
 docbook-core:
 	-mkdir -p $(GDATA_STAGE_DIR)/documentation/end-user/core
 	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG) ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
-	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e ) ; \
+	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
 	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/end-user/core/$$lang ; \
 	done
 
@@ -165,11 +165,11 @@ docbook-incubator:
 	@for language in $(GDATA_EXPORT_DIR)/incubator/documentation/manual/$(LANG) ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e ) ; \
+	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
 	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/end-user/incubator/$$lang ; \
 	done
 
-phpdoc: phpdoc-incubator 
+phpdoc: phpdoc-core 
 
 phpdoc-core:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
@@ -203,7 +203,7 @@ clean:
 	-rm -f $(GDATA_TARBALL)
 
 clean-docbook:
-	for language in $(GDATA_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
+	for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
 	    ( cd $$language && make cleanall ) \
 	done
 

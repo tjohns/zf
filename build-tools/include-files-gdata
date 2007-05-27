@@ -2,36 +2,41 @@ README.txt
 LICENSE.txt
 
 demos/Zend/Gdata
-incubator/demos/Zend/Gdata
 
 library/Zend/Exception.php
 library/Zend/Http/Client
 library/Zend/Http/Client.php
+library/Zend/Http/Exception.php
+library/Zend/Http/Response.php
 library/Zend/Loader.php
 library/Zend/Uri
 library/Zend/Uri.php
 library/Zend/Validate/Hostname
+library/Zend/Validate/Abstract.php
 library/Zend/Validate/Hostname.php
+library/Zend/Validate/Interface.php
+library/Zend/Validate/Ip.php
 library/Zend/Version.php
 
-incubator/documentation/manual/en/html
-incubator/documentation/manual/en/module_specs/Zend_Gdata_AuthSub.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata_Blogger.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata_Calendar.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata_ClientLogin.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata_Exception.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata_Spreadsheets.xml
-incubator/documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
-incubator/documentation/manual/en/configure.in
-incubator/documentation/manual/en/Makefile.in
-incubator/documentation/manual/en/html.xsl.in
-incubator/documentation/manual/en/manual.xml.in
-incubator/documentation/manual/en/xinclude.mod
+documentation/manual/en/html
+documentation/manual/en/ref
+documentation/manual/en/module_specs/Zend_Gdata_AuthSub.xml
+documentation/manual/en/module_specs/Zend_Gdata_Blogger.xml
+documentation/manual/en/module_specs/Zend_Gdata_ClientLogin.xml
+documentation/manual/en/module_specs/Zend_Gdata_Exception.xml
+documentation/manual/en/module_specs/Zend_Gdata_Spreadsheets.xml
+documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
+documentation/manual/en/configure.in
+documentation/manual/en/Makefile.in
+documentation/manual/en/html.xsl.in
+documentation/manual/en/manual.xml.in
+documentation/manual/en/xinclude.mod
 
-incubator/library/Zend/Gdata.php
-incubator/library/Zend/Gdata
+library/Zend/Gdata.php
+library/Zend/Gdata
 
-incubator/tests/AllTests.php
-incubator/tests/TestConfiguration.php.dist
-incubator/tests/Zend/AllTests.php
-incubator/tests/Zend/Gdata
+tests/AllTests.php
+tests/TestHelper.php
+tests/TestConfiguration.php.dist
+tests/Zend/AllTests.php
+tests/Zend/Gdata
