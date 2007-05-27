@@ -40,6 +40,11 @@
                     <entry>アプリケーション間での翻訳の業界標準。XML フォーマット。可読形式。</entry>
                 </row>
                 <row>
+                    <entry>QT</entry>
+                    <entry>qt 言語ファイル (*.ts)</entry>
+                    <entry>クロスプラットフォームなアプリケーションフレームワーク。XML フォーマット。可読形式。</entry>
+                </row>
+                <row>
                     <entry>XLIFF</entry>
                     <entry>xliff ファイル (*.xliff/*.xml)</entry>
                     <entry>TMX に似ているが、よりシンプル。XML フォーマット。可読形式。</entry>
@@ -138,6 +143,24 @@
 
             <para>
                 中規模から大規模の会社はこのアダプタを使用します。
+                ファイルは可読形式で、システムに依存しない形式になります。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.tmx">
+
+            <title>Zend_Translate_Adapter_Qt</title>
+
+            <para>
+                Qt アダプタは、QtLinguist で作成した TS
+                ファイル形式の翻訳を使用している顧客が使用します。
+                QT は XML 形式のフォーマットです。
+                XML ファイルは人間が読むことも可能ですが、
+                パース速度は gettext ファイルより遅くなります。
+            </para>
+
+            <para>
+                大手企業の中には QT フレームワークを使用したソフトウェアを作成しているところがあります。
                 ファイルは可読形式で、システムに依存しない形式になります。
             </para>
         </sect3>
