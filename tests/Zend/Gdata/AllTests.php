@@ -20,16 +20,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-error_reporting( E_ALL | E_STRICT );
-
 /**
- * Read in user-defined test configuration if available; otherwise, read default test configuration
+ * Test helper
  */
-if (is_readable('TestConfiguration.php')) {
-    require_once 'TestConfiguration.php';
-} else {
-    require_once 'TestConfiguration.php.dist';
-}
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Gdata_AllTests::main');
@@ -51,9 +45,11 @@ require_once 'Zend/Gdata/App/FeedTest.php';
 require_once 'Zend/Gdata/App/GeneratorTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/QueryTest.php';
+/*
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
 require_once 'Zend/Gdata/Calendar/EventEntryTest.php';
+ */
 require_once 'Zend/Gdata/SpreadsheetsTest.php';
 require_once 'Zend/Gdata/SpreadsheetsTest.php';
 require_once 'Zend/Gdata/Spreadsheets/ColCountTest.php';
@@ -107,9 +103,11 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_App_GeneratorTest');
         $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_QueryTest');
+        /*
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventEntryTest');
+         */
         $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ColCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_RowCountTest');

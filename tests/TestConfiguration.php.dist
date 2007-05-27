@@ -1,7 +1,26 @@
 <?php
+
 /**
- * @package UnitTests
+ * Zend Framework
  *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: TestHelper.php 4528 2007-04-17 23:10:47Z darby $
+ */
+
+/**
  * This file defines configuration for running the unit tests for the Zend
  * Framework.  Some tests have dependencies to PHP extensions or databases
  * which may not necessary installed on the target system.  For these cases,
@@ -46,6 +65,7 @@ define('TESTS_ZEND_CONTROLLER_DISPATCHER_OB', false);
 
 /**
  * Zend_Db_Adapter_Pdo_Mysql and Zend_Db_Adapter_Mysqli
+ *
  * There are separate properties to enable tests for the PDO_MYSQL adapter and
  * the native Mysqli adapters, but the other properties are shared between the
  * two MySQL-related Zend_Db adapters.
@@ -60,14 +80,18 @@ define('TESTS_ZEND_DB_ADAPTER_MYSQL_PORT', 3306);
 
 /**
  * Zend_Db_Adapter_Pdo_Sqlite
+ *
+ * Username and password are irrelevant for SQLite.
  */
 define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED',  false);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME', null);
-define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
 
 /**
  * Zend_Db_Adapter_Pdo_Mssql
+ *
+ * Note that you need to patch your ntwdblib.dll, the one that
+ * comes with PHP does not work.  See user comments at
+ * http://us2.php.net/manual/en/ref.mssql.php
  */
 define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_ENABLED',  false);
 define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME', '127.0.0.1');
@@ -86,6 +110,7 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE', 'postgres');
 
 /**
  * Zend_Db_Adapter_Oracle and Zend_Db_Adapter_Pdo_Oci
+ *
  * There are separate properties to enable tests for the PDO_OCI adapter and
  * the native Oracle adapter, but the other properties are shared between the
  * two Oracle-related Zend_Db adapters.
@@ -117,6 +142,8 @@ define('TESTS_ZEND_DB_ADAPTER_DB2_DATABASE', 'sample');
 define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
 
 /**
+ * Zend_Http_Client_Proxy tests
+ *
  * HTTP proxy to be used for testing the Proxy adapter. Set to a string of
  * the form 'host:port'. Set to null to skip HTTP proxy tests.
  */
@@ -134,6 +161,15 @@ define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
  * client host.  Also, the tests may show as failures if the Google servers
  * cannot be reached or if they do not respond for another reason.
  *
+ * Note: the GData tests currently require that the TZID env variable
+ * be set or the timezone otherwise configured.  You'll see errors from the
+ * tests if this is not the case.
+ */
+define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
+
+/*
+ * Zend_Gdata ClientLogin tests
+ *
  * If the CLIENTLOGIN_ENABLED property below is false, the authenticated
  * tests are reported Skipped in the test run.  Set this property to true
  * to enable tests that require ClientLogin authentication.  Enter your
@@ -141,11 +177,39 @@ define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
  *
  * Edit TestConfiguration.php, not TestConfiguration.php.dist.
  * Never commit plaintext passwords to the source code repository.
+ *
+ * The credentials provided here should be only for a TEST account. 
+ * Data for various services in this account may be added to, updated,
+ * or deleted based upon the actions of these test accounts.  
  */
-define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL', 'example@example.com');
-define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');
+define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'password');
+
+/*
+ * Zend_Gdata Blogger tests
+ *
+ * This is the ID of a blank blog.  There is no need to have
+ * any content in this blog.  Also, blogs can only be used
+ * several times for the purpose of these test cases before 
+ * they must be deleted and recreated.  Otherwise, the tests
+ * will start failing, as posts to Blogger will return a 201 Created
+ * response even though the entry was not posted to the blog.
+ * This problem is being investigated.
+ */
+define('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED', false);
+define('TESTS_ZEND_GDATA_BLOG_ID', '1111111111111111111');
+
+/*
+ * Zend_Gdata Spreadsheets tests
+ *
+ * This is the key for a spreadsheet with data only in the first row of 
+ * the spreadsheet.  The strings 'a1', 'b1', 'c1', 'd1' should be in the
+ * corresponding cell locations.
+ */
+define('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED', false);
+define('TESTS_ZEND_GDATA_SPREADSHEETS_SPREADSHEETKEY', 'o01111111111111111111.1111111111111111111');
+define('TESTS_ZEND_GDATA_SPREADSHEETS_WORKSHEETID', 'default');
 
 /**
  * Zend_Date tests
