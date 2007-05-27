@@ -2,67 +2,77 @@
     <title>ViewRenderer</title>
 
     <sect4 id="zend.controller.actionhelper.viewrenderer.introduction">
-        <title>Introduction</title>
+        <title>導入</title>
 
         <para>
-            The <code>ViewRenderer</code> helper is designed to satisfy the
-            following goals:
+            <code>ViewRenderer</code> ヘルパーは、
+            以下のような要件を満たすために作られたものです。
         </para>
 
         <itemizedlist>
-            <listitem><para>Eliminate the need to instantiate view objects
-                    within controllers; view objects will be automatically
-                    registered with the controller.</para></listitem>
+            <listitem><para>
+                    コントローラ内でいちいちビューオブジェクトのインスタンスを
+                    作成しなくても済むようにする。
+                    ビューオブジェクトは自動的にコントローラに登録されます。
+            </para></listitem>
 
-            <listitem><para>Automatically set view script, helper, and filter
-                    paths based on the current module, and automatically
-                    associate the current module name as a class prefix for
-                    helper and filter classes.</para></listitem>
+            <listitem><para>
+                    ビュースクリプトやヘルパー、そしてフィルタのパスを
+                    現在のモジュールに基づいて自動的に設定し、
+                    モジュール名をヘルパーやフィルタのクラス名の先頭に自動的に関連付ける。
+            </para></listitem>
 
-            <listitem><para>Create a globally available view object for all
-                    dispatched controllers and actions.</para></listitem>
+            <listitem><para>
+                    すべてのコントローラとアクションで使用できる
+                    グローバルなビューオブジェクトを作成する。
+            </para></listitem>
 
-            <listitem><para>Allow the developer to set default view rendering
-                    options for all controllers.</para></listitem>
+            <listitem><para>
+                    すべてのコントローラで使用する、
+                    デフォルトのビューレンダリングオプションを設定できるようにする。
+            </para></listitem>
 
-            <listitem><para>Add the ability to automatically render a view
-                    script with no intervention.</para></listitem>
+            <listitem><para>
+                    何も指定しなくても、
+                    自動的にビュースクリプトをレンダリングできる機能を追加する。
+            </para></listitem>
 
-            <listitem><para>Allow the developer to create her own specifications
-                    for the view base path and for view script
-                    paths.</para></listitem>
+            <listitem><para>
+                    ビューの基底パスやビュースクリプトのパスを
+                    独自に指定できるようにする。
+            </para></listitem>
         </itemizedlist>
         <note>
             <para>
-                If you perform a <code>_forward()</code>, redirect, or
-                <code>render</code> manually, autorendering will not occur, as
-                by performing any of these actions you are telling the
-                <code>ViewRenderer</code> that you are determining your own
-                output.
+                <code>_forward()</code> やリダイレクト、あるいは手動でのレンダリングを行う場合は、
+                自動レンダリングは不要です。これらの処理を行う場合は、
+                出力を自前で行うことを <code>ViewRenderer</code>
+                に対して指示します。
             </para>
         </note>
 
         <note>
             <para>
-                The <code>ViewRenderer</code> is enabled by default. You may
-                disable it via the front controller <code>noViewRenderer</code>
-                param (<code>$front->setParam('noViewRenderer')</code>) or
-                removing the helper from the helper broker stack
-                (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
+                <code>ViewRenderer</code> はデフォルトで有効になっています。
+                これを無効にするには、フロントコントローラのパラメータ
+                <code>noViewRenderer</code> を指定する
+                (<code>$front->setParam('noViewRenderer')</code>) か、
+                あるいはヘルパーブローカからヘルパーを削除
+                (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>)
+                します。
             </para>
 
             <para>
-                If you wish to modify settings of the <code>ViewRenderer</code>
-                prior to dispatching the front controller, you may do so in one
-                of two ways:
+                フロントコントローラでのディスパッチ処理の前に
+                <code>ViewRenderer</code> の設定を変更したい場合は、
+                次のいずれかの方法を使用します。
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        Instantiate and register your own
-                        <code>ViewRenderer</code> object and pass it to the
-                        helper broker:
+                        独自の <code>ViewRenderer</code> のインスタンスを作成し、
+                        ヘルパーブローカにそれを渡して登録する。
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
@@ -75,9 +85,9 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
                 <listitem>
                     <para>
-                        Retrieve the registered <code>ViewRenderer</code> object
-                        from the helper broker after the front controller has
-                        been instantiated:
+                        フロントコントローラのインスタンスが作成された後で、
+                        ヘルパーブローカに登録されている <code>ViewRenderer</code>
+                        オブジェクトを取得する。
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
@@ -96,8 +106,8 @@ $viewRenderer->setView($view)
         <title>API</title>
 
         <para>
-            At its most basic usage, you simply instantiate the
-            <code>ViewRenderer</code> and pass it to the action helper broker:
+            もっとも基本的な使用法は、単に <code>ViewRenderer</code>
+            のインスタンスを作成してそれをヘルパーブローカに渡すというものです。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -105,37 +115,37 @@ Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper
 ]]></programlisting>
         
         <para>
-            The first time an action controller is instantiated, it will trigger
-            the <code>ViewRenderer</code> to instantiate a view object. Each
-            time a controller is instantiated, the <code>ViewRenderer</code>'s
-            <code>init()</code> method is called, which will cause it to set the
-            view property of the action controller, and call
-            <code>addScriptPath()</code> with a path relative to the current
-            module; this will be called with a class prefix named after the
-            current module, effectively namespacing all helper and filter
-            classes you define for the module. 
+            アクションコントローラのインスタンスが最初に作成されたときに、
+            <code>ViewRenderer</code> がビューオブジェクトのインスタンスを作成します。
+            コントローラのインスタンスが作成されるたびに、<code>ViewRenderer</code>
+            の <code>init()</code> がコールされます。
+            ここでアクションコントローラのビュープロパティを設定し、
+            現在のモジュールからの相対パスを指定して
+            <code>addScriptPath()</code> をコールします。
+            これは現在のモジュール名に基づいたプレフィックスをクラス名の先頭につけてコールされるので、
+            ヘルパーやフィルタのクラスをモジュール内で効率的に管理することができます。
         </para>
 
         <para>
-            Each time <code>postDispatch()</code> is called, it will call
-            <code>render()</code> for the current action. 
+            <code>postDispatch()</code> がコールされるたびに、現在のアクションの
+            <code>render()</code> を自動的にコールします。
         </para>
 
         <para>
-            As an example, consider the following class:
+            例として、次のようなクラスを考えてみましょう。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// A controller class, foo module:
+// foo モジュールのコントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
-    // Render bar/index.phtml by default; no action required
+    // デフォルトで bar/index.phtml をレンダリングするので、特に何もする必要はありません
     public function indexAction()
     {
     }
 
-    // Render bar/populate.phtml with variable 'foo' set to 'bar'.
-    // Since view object defined at preDispatch(), it's already available.
+    // 変数 'foo' の値を 'bar' に設定して bar/populate.phtml をレンダリングします
+    // ビューオブジェクトは既に preDispatch() で定義されているので、既に使用可能です
     public function populateAction()
     {
         $this->view->foo = 'bar';
@@ -143,125 +153,129 @@ class Foo_BarController extends Zend_Controller_Action
 }
 ?>
 
-// in one of your view scripts:
-<?php $this->foo(); // call Foo_View_Helper_Foo::foo() ?>
+// ビュースクリプトの中では、たとえば次のように書きます
+<?php $this->foo(); // Foo_View_Helper_Foo::foo() をコールします ?>
 ]]></programlisting>
 
         <para>
-            The <code>ViewRenderer</code> also defines a number of accessors to
-            allow setting and retrieving view options:
+            <code>ViewRenderer</code> には、
+            ビューのオプションを取得したり設定したりするためのメソッドも豊富に用意されています。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setView($view)</code> allows you to set the view
-                    object for the <code>ViewRenderer</code>. It gets set as 
-                    the public class property <code>$view</code>.
+                    <code>setView($view)</code>
+                    は <code>ViewRenderer</code> が使用するビューオブジェクトを設定します。
+                    これは、クラスのプロパティ <code>$view</code> の値を設定します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setNeverRender($flag = true)</code> can be used to
-                    disable or enable autorendering globally, i.e., for all
-                    controllers. If set to true, <code>postDispatch()</code>
-                    will not automatically call <code>render()</code> in the
-                    current controller.  <code>getNeverRender()</code> retrieves
-                    the current value.
+                    <code>setNeverRender($flag = true)</code>
+                    を使用すると、自動レンダリング機能を全体的に
+                    （すべてのコントローラに対して）無効にしたり有効にしたりできます。
+                    true を指定すると、そのコントローラの <code>postDispatch()</code>
+                    では <code>render()</code> をコールしなくなります。
+                    <code>getNeverRender()</code> は、現在の設定を取得します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setNoRender($flag = true)</code> can be used to
-                    disable or enable autorendering. If set to true,
-                    <code>postDispatch()</code> will not automatically call
-                    <code>render()</code> in the current controller. This
-                    setting is reset each time <code>preDispatch()</code> is
-                    called (i.e., you need to set this flag for each controller
-                    for which you don't want autorenderering to occur).
-                    <code>getNoRender()</code> retrieves the current value.
+                    <code>setNoRender($flag = true)</code>
+                    を使用すると、自動レンダリングを無効にしたり有効にしたりできます。
+                    true を指定すると、現在のコントローラの <code>postDispatch()</code>
+                    では <code>render()</code> をコールしなくなります。
+                    この設定は、<code>preDispatch()</code> がコールされるたびにいったんリセットされます
+                    (つまり、自動レンダリングを無効にしたいすべてのコントローラで
+                    個々にこれを設定する必要があるということです)。
+                    <code>getNoRender()</code> は、現在の設定を取得します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setNoController($flag = true)</code> can be used to
-                    tell <code>render()</code> not to look for the action script
-                    in a subdirectory named after the controller (which is the
-                    default behaviour). <code>getNoController()</code> retrieves
-                    the current value.
+                    <code>setNoController($flag = true)</code>
+                    を使用すると、<code>render()</code>
+                    がコントローラ名のサブディレクトリにあるアクションスクリプトを
+                    読みにいかなくすることができます (デフォルトでは読みにいきます)。
+                    <code>getNoController()</code> は、現在の設定を取得します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setScriptAction($name)</code> can be used to
-                    specify the action script to render. <code>$name</code>
-                    should be the name of the script minus the file suffix (and
-                    without the controller subdirectory, unless
-                    <code>noController</code> has been turned on). If not
-                    specified, it looks for a view script named after the action
-                    in the request object. <code>getScriptAction()</code>
-                    retrieves the current value.
+                    <code>setScriptAction($name)</code>
+                    を使用すると、レンダリングするアクションスクリプトを指定することができます。
+                    <code>$name</code> は、スクリプト名から拡張子を除いたもの
+                    (そして、<code>noController</code> が指定されていない限り、
+                    コントローラのディレクトリ名も除いたもの) となります。
+                    指定しなかった場合は、リクエストオブジェクト内のアクションに基づいた名前の
+                    ビュースクリプトを探します。
+                    <code>getScriptAction()</code> は、現在の設定を取得します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setResponseSegment($name)</code> can be used to
-                    specify which response object named segment to render into.
-                    If not specified, it renders into the default segment.
-                    <code>getResponseSegment()</code> retrieves the current
-                    value.
+                    <code>setResponseSegment($name)</code>
+                    を使用すると、レンダリング結果を出力する
+                    レスポンスオブジェクトのセグメント名を指定することができます。
+                    指定しなかった場合は、デフォルトのセグメントにレンダリングします。
+                    <code>getResponseSegment()</code> は、現在の設定を取得します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code> may be called
-                    to specify the base view path, class prefix for helper and
-                    filter scripts, and <code>ViewRenderer</code> options. You
-                    may pass any of the following flags:
-                    <code>neverRender</code>, <code>noRender</code>,
-                    <code>noController</code>, <code>scriptAction</code>, and
-                    <code>responseSegment</code>.
+                    <code>initView($path, $prefix, $options</code>
+                    は、ビューの基底パスを指定します。
+                    また、ヘルパースクリプトとフィルタスクリプトの先頭につけるクラスプレフィックスや
+                    <code>ViewRenderer</code> のオプションも設定します。
+                    オプションには、
+                    <code>neverRender</code>、<code>noRender</code>、
+                    <code>noController</code>、<code>scriptAction</code>
+                    および <code>responseSegment</code>
+                    のいずれかのフラグを指定します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>setRender($action = null, $name = null, $noController
-                        = false)</code> allows you to set any of
-                    <code>scriptAction</code>, <code>responseSegment</code>, and
-                    <code>noController</code> in one pass. <code>direct()</code>
-                    is an alias to this method, allowing you to call this method
-                    easily from your controller:
+                        = false)</code>
+                    を使用すると、<code>scriptAction</code> や <code>responseSegment</code>
+                    そして <code>noController</code> のいずれかまたは複数を
+                    一度に指定することができます。<code>direct()</code>
+                    はこのメソッドのエイリアスで、コントローラ内から簡単にコールすることができます。
                 </para>
 
                 <programlisting role="php"><![CDATA[
-// Render 'foo' instead of current action script
+// 現在のアクションスクリプトではなく 'foo' をレンダリングします
 $this->_helper->viewRenderer('foo');
 
-// render form.phtml to the 'html' response segment, without using a
-// controller view script subdirectory:
+// form.phtml の内容をレスポンスセグメント 'html' にレンダリングします。
+// コントローラのビュースクリプト用サブディレクトリは使用しません。
 $this->_helper->viewRenderer('form', 'html', true);
 ]]></programlisting>
 
                 <note><para>
-                        <code>setRender()</code> and <code>direct()</code> don't
-                        actually render the view script, but instead set hints
-                        that <code>postDispatch()</code> and
-                        <code>render()</code> will use to render the view.
+                        <code>setRender()</code> および <code>direct()</code>
+                        は、実際にはビュースクリプトをレンダリングしません。
+                        実際にレンダリングを行うのは <code>postDispatch()</code>
+                        や <code>render()</code> で、それらのメソッドに対するヒントを指示するだけです。
                 </para></note>
             </listitem>
         </itemizedlist>
 
         <para>
-            The constructor allows you to optionally pass the view object and
-            <code>ViewRenderer</code> options; it accepts the same flags as
-            <code>initView()</code>:
+            コンストラクタのオプションとして、
+            ビューオブジェクトを渡したり <code>ViewRenderer</code>
+            のオプションを渡したりすることができます。
+            このオプションで指定できるのは、<code>initView()</code>
+            で説明したフラグと同じものです。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -271,247 +285,244 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]></programlisting>
 
         <para>
-            There are several additional methods for customizing path
-            specifications used for determining the view base path to add to the
-            view object, and the view script path to use when autodetermining
-            the view script to render. These methods each take one or more of
-            the following placeholders:
+            さらに追加のメソッドがあり、
+            ビューオブジェクトで使用するビューの基底パスを変更することができます。
+            また、ビュースクリプトが自動レンダリングを行う際に使用するパスも変更することができます。
+            これらのメソッドでは、以下のプレースホルダのいずれかあるいは複数が使用できます。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>:moduleDir</code> refers to the current module's base
-                    directory (by convention, the parent directory of the
-                    module's controller directory).
+                    <code>:moduleDir</code> は、現在のモジュールの基底ディレクトリを指します
+                    (規約では、これはモジュールのコントローラディレクトリの親ディレクトリとなります)。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>:module</code> refers to the current module name.
+                    <code>:module</code> は、現在のモジュール名を指します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>:controller</code> refers to the current controller name.
+                    <code>:controller</code> は、現在のコントローラ名を指します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>:action</code> refers to the current action name.
+                    <code>:action</code> は、現在のアクション名を指します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>:suffix</code> refers to the view script suffix (which
-                    may be set via <code>setViewSuffix()</code>).
+                    <code>:suffix</code> は、ビュースクリプトのサフィックス
+                    (<code>setViewSuffix()</code> で設定したもの) を指します。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The methods for controlling path specifications are:
+            パス指定を制御するメソッドは次のとおりです。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setViewBasePathSpec($spec)</code> allows you to change
-                    the path specification used to determine the base path to
-                    add to the view object. The default specification is
-                    <code>:moduleDir/views</code>. You may retrieve the current
-                    specification at any time using
-                    <code>getViewBasePathSpec()</code>.
+                    <code>setViewBasePathSpec($spec)</code>
+                    は、ビューオブジェクトを追加する際に使用する基底パスを
+                    決める際に使用するパス指定を変更します。
+                    デフォルトの設定は <code>:moduleDir/views</code> です。
+                    現在の設定を取得するには
+                    <code>getViewBasePathSpec()</code> を使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setViewScriptPathSpec($spec)</code> allows you to
-                    change the path specification used to determine the path to
-                    an individual view script (minus the base view script path).
-                    The default specification is
-                    <code>:controller/:action.:suffix</code>. You may retrieve
-                    the current specification at any time using
-                    <code>getViewScriptPathSpec()</code>.
+                    <code>setViewScriptPathSpec($spec)</code>
+                    は、個々のビュースクリプトのパス
+                    (からビュースクリプトの基底パスを除いた部分)
+                    を決める際に使用するパス指定を変更します。
+                    デフォルトの設定は <code>:controller/:action.:suffix</code> です。
+                    現在の設定を取得するには
+                    <code>getViewScriptPathSpec()</code> を使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setViewScriptPathNoControllerSpec($spec)</code> allows
-                    you to change the path specification used to determine the
-                    path to an individual view script when
-                    <code>noController</code> is in effect (minus the base view
-                    script path).  The default specification is
-                    <code>:action.:suffix</code>. You may retrieve the current
-                    specification at any time using
-                    <code>getViewScriptPathNoControllerSpec()</code>.
+                    <code>setViewScriptPathNoControllerSpec($spec)</code>
+                    は、<code>noController</code> が有効な場合に
+                    個々のビュースクリプトのパス
+                    (からビュースクリプトの基底パスを除いた部分)
+                    を決める際に使用するパス指定を変更します。
+                    デフォルトの設定は <code>:action.:suffix</code> です。
+                    現在の設定を取得するには
+                    <code>getViewScriptPathNoControllerSpec()</code> を使用します。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The final items in the <code>ViewRenderer</code> API are the methods
-            for actually determining view script paths and rendering views.
-            These include:
+            <code>ViewRenderer</code> API の最後に紹介するのは、
+            実際にビュースクリプトのパスを決定するメソッドと
+            ビューのレンダリングを行うメソッドです。以下をご覧ください。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>renderScript($script, $name)</code> allows you to
-                    render a script with a path you specify, optionally to a
-                    named path segment. When using this method, the
-                    <code>ViewRenderer</code> does no autodetermination of the
-                    script name, but instead directly passes the
-                    <code>$script</code> argument directly to the view object's
-                    <code>render()</code> method.
+                    <code>renderScript($script, $name)</code>
+                    は、指定したパスのスクリプトをレンダリングします。
+                    オプションで、パスセグメントの名前を指定することもできます。
+                    このメソッドを使用する際には、<code>ViewRenderer</code>
+                    はスクリプト名を自動的に決定することはありません。
+                    そのかわりに、<code>$script</code> で指定された内容を直接
+                    ビューオブジェクトの <code>render()</code> メソッドに渡します。
                 </para>
 
                 <note><para>
-                    Once the view has been rendered to the response object, it
-                    sets the <code>noRender</code> to prevent accidentally
-                    rendering the same view script multiple times.
+                    レスポンスオブジェクトにビューがレンダリングされると、
+                    自動的に <code>noRender</code> を設定します。
+                    これにより、同じビュースクリプトを間違って複数回レンダリングしてしまうことを防ぎます。
                 </para></note>
 
                 <note>
                     <para>
-                        By default,
+                        デフォルトでは、
                         <code>Zend_Controller_Action::renderScript()</code>
-                        proxies to the <code>ViewRenderer</code>'s
-                        <code>renderScript()</code> method.
+                        は <code>ViewRenderer</code> の
+                        <code>renderScript()</code> メソッドへのプロキシとなります。
                     </para>
                 </note>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getViewScript($action, $vars)</code> creates the path
-                    to a view script based on the action passed and/or any
-                    variables passed in <code>$vars</code>. Keys for this array
-                    may include any of the path specification keys ('moduleDir',
-                    'module', 'controller', 'action', and 'suffix'). Any
-                    variables passed will be used; otherwise, values based on
-                    the current request will be utlized.
+                    <code>getViewScript($action, $vars)</code>
+                    は、渡されたアクションや <code>$vars</code>
+                    で指定した変数の値に基づいてビュースクリプトのパスを作成します。
+                    <code>$vars</code> 配列のキーは、パスを指定するためのキー
+                    ('moduleDir'、'module'、'controller'、'action' および 'suffix')
+                    のいずれかとなります。渡された変数の値をもとにしてパスを作成します。
+                    なにも渡されなかった場合は、現在のリクエストの内容をもとにしてパスを作成します。
                 </para>
 
                 <para>
-                    <code>getViewScript()</code> will use either the
-                    <code>viewScriptPathSpec</code> or
-                    <code>viewScriptPathNoControllerSpec</code> based on the
-                    setting of the <code>noController</code> flag.
+                    <code>getViewScript()</code>
+                    は、<code>noController</code> フラグの内容によって
+                    <code>viewScriptPathSpec</code> あるいは
+                    <code>viewScriptPathNoControllerSpec</code> のいずれかを使用します。
                 </para>
 
                 <para>
-                    Word delimiters occurring in module, controller, or action
-                    names will be replaced with dashes ('-'). Thus, if you have
-                    the controller name 'foo.bar' and the action 'baz:bat',
-                    using the default path specification will result in a view
-                    script path of 'foo-bar/baz-bat.phtml'.
+                    モジュール名やコントローラ名、アクション名にあらわれる
+                    単語の区切りは、ダッシュ ('-') に置き換えられます。
+                    したがって、たとえばコントローラ名が 'foo.bar'
+                    でアクション名が 'baz:bat' だったとすると、
+                    デフォルトのパス指定をもとにしたビュースクリプトのパスは
+                    'foo-bar/baz-bat.phtml' となります。
                 </para>
 
                 <note>
                     <para>
-                        By default,
+                        デフォルトでは、
                         <code>Zend_Controller_Action::getViewScript()</code>
-                        proxies to the <code>ViewRenderer</code>'s
-                        <code>getViewScript()</code> method.
+                        は <code>ViewRenderer</code> の
+                        <code>getViewScript()</code> メソッドへのプロキシとなります。
                     </para>
                 </note>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>render($action, $name, $noController)</code> checks
-                    first to see if either <code>$name</code> or
-                    <code>$noController</code> have been passed, and if so, sets
-                    the appropriate flags (responseSegment and noController,
-                    respectively) in the ViewRenderer. It then passes the
-                    <code>$action</code> argument, if any, on to
-                    <code>getViewScript()</code>. Finally, it passes the
-                    calculated view script path to <code>renderScript()</code>.
+                    <code>render($action, $name, $noController)</code>
+                    は、まず <code>$name</code> あるいは
+                    <code>$noController</code> が指定されているかどうかを調べます。
+                    指定されている場合は、ViewRenderer の対応するフラグ
+                    (それぞれ responseSegment と noController) を設定します。
+                    次に、<code>$action</code> 引数が指定されていれば、
+                    それを <code>getViewScript()</code> に渡します。
+                    最後に、取得したビュースクリプトのパスを
+                    <code>renderScript()</code> に渡します。
                 </para>
 
                 <note>
                     <para>
-                        Be aware of the side-effects of using render(): the
-                        values you pass for the response segment name and for
-                        the noController flag will persist in the object.
-                        Additionally, noRender will be set after rendering is
-                        completed.
+                        render() を使用する際には、その副作用に注意しましょう。
+                        レスポンスセグメント名や noController
+                        フラグに指定した内容は、そのオブジェクト内で残り続けます。
+                        さらに、レンダリングが完了した際に noRender
+                        も設定されます。
                     </para>
                 </note>
 
                 <note>
                     <para>
-                        By default,
-                        <code>Zend_Controller_Action::render()</code> proxies to
-                        the <code>ViewRenderer</code>'s <code>render()</code>
-                        method.
+                        デフォルトでは、
+                        <code>Zend_Controller_Action::render()</code> は
+                        <code>ViewRenderer</code> の <code>render()</code>
+                        メソッドへのプロキシとなります。
                     </para>
                 </note>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>renderBySpec($action, $vars, $name)</code> allows you
-                    to pass path specification variables in order to determine
-                    the view script path to create. It passes
-                    <code>$action</code> and <code>$vars</code> to
-                    <code>getScriptPath()</code>, and then passes the resulting
-                    script path and <code>$name</code> on to
-                    <code>renderScript()</code>.
+                    <code>renderBySpec($action, $vars, $name)</code>
+                    は、パス指定用の変数を渡してビュースクリプトのパスを決定します。
+                    <code>$action</code> および <code>$vars</code> の内容を
+                    <code>getScriptPath()</code> に、そしてその結果得られたスクリプトのパスと
+                    <code>$name</code> を <code>renderScript()</code> に渡します。
                 </para>
             </listitem>
         </itemizedlist>
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.viewrenderer.basicusage">
-        <title>Basic Usage Examples</title>
+        <title>基本的な使用例</title>
 
         <example>
-            <title>Basic Usage</title>
+            <title>基本的な使用法</title>
 
             <para>
-                At its most basic, you simply add the <code>ViewRenderer</code>
-                helper to the helper broker in your bootstrap, and then set
-                variables in your action methods. 
+                最も基本的な使用法は、起動ファイル内で <code>ViewRenderer</code>
+                ヘルパーをヘルパーブローカに渡し、アクションメソッドで変数の値を設定するというものです。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// In your bootstrap:
+// 起動ファイル内で
 Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
 ?>
 
 <?php
-// A controller class, foo module:
+// Foo モジュールのコントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
-    // Render bar/index.phtml by default; no action required
+    // デフォルトで bar/index.phtml をレンダリングするので、特に何もする必要はありません
     public function indexAction()
     {
     }
 
-    // Render bar/populate.phtml with variable 'foo' set to 'bar'.
-    // Since view object defined at preDispatch(), it's already available.
+    // 変数 'foo' の値を 'bar' に設定して bar/populate.phtml をレンダリングします
+    // ビューオブジェクトは既に preDispatch() で定義されているので、既に使用可能です
     public function populateAction()
     {
         $this->view->foo = 'bar';
     }
 
-    // Renders nothing as it forwards to another action; the new action
-    // will perform any rendering
+    // 何もレンダリングせずに別のアクションに転送します
+    // 転送先のアクションで何らかのレンダリングを行います
     public function bazAction()
     {
         $this->_forward('index');
     }
 
-    // Renders nothing as it redirects to another location
+    // 何もレンダリングせず別の場所にリダイレクトします
     public function batAction()
     {
         $this->_redirect('/index');
@@ -522,41 +533,42 @@ class Foo_BarController extends Zend_Controller_Action
         </example>
 
         <example>
-            <title>Disabling autorender</title>
+            <title>自動レンダリングの無効化</title>
 
             <para>
-                For some actions or controllers, you may want to turn off the
-                autorendering -- for instance, if you're wanting to emit a
-                different type of output (XML, JSON, etc), or if you simply want
-                to emit nothing. You have two options: turn off all cases of
-                autorendering (<code>setNeverRender()</code>), or simply turn it
-                off for the current action (<code>setNoRender()</code>).
+                アクションやコントローラによっては、自動レンダリングを無効にしたいこともあるでしょう。
+                たとえば、HTML 以外 (XML や JSON など) を出力したい場合や
+                単に何も出力したくない場合などです。
+                そんな場合には以下のいずれかの方法を使用します。
+                つまり、すべての自動レンダリングを無効にする
+                (<code>setNeverRender()</code>) か、あるいは現在のアクションでだけ
+                自動レンダリングを無効にする (<code>setNoRender()</code>) かです。
             </para>
 
             <note><para>
-                In most cases, it makes no sense to turn off autorendering
-                globally (ala <code>setNeverRender()</code>), as the only thing
-                you then gain from <code>ViewRenderer</code> is the autosetup of
-                the view object.
+                たいていの場合は、自動レンダリングを全体で無効にする
+                (<code>setNeverRender()</code>) のは無意味です。
+                なぜなら、<code>ViewRenderer</code> の唯一の存在意義が、
+                ビューオブジェクトを自動的に設定することだからです。
             </para></note>
 
             <programlisting role="php"><![CDATA[<?php
-// Baz controller class, bar module:
+// Bar モジュールの Baz コントローラクラス
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
     {
-        // Don't auto render this action
+        // このアクションでは自動レンダリングを行いません
         $this->_helper->viewRenderer->setNoRender();
     }
 }
 
-// Bat controller class, bar module:
+// Bar モジュールの Bat コントローラクラス
 class Bar_BatController extends Zend_Controller_Action
 {
     public function preDispatch()
     {
-        // Never auto render this controller's actions
+        // このコントローラのアクションでは決して自動レンダリングを行いません
         $this->_helper->viewRenderer->setNoRender();
     }
 }
@@ -565,45 +577,46 @@ class Bar_BatController extends Zend_Controller_Action
         </example>
 
         <example>
-            <title>Choosing a different view script</title>
+            <title>別のビュースクリプトの選択</title>
 
             <para>
-                Some situations require that you render a different script than
-                one named after the action. For instance, if you have a
-                controller that has both add and edit actions, they may both
-                display the same 'form' view, albeit with different values set.
-                You can easily change the script name used with either
-                <code>setScriptAction()</code>, <code>setRender()</code>, or
-                calling the helper as a method, which will invoke
-                <code>setRender()</code>.
+                アクション名から自動的に決まるスクリプトではなく、
+                それ以外のものをレンダリングしたくなる場合もあるでしょう。
+                たとえば、add アクションと edit アクションのふたつを持つコントローラがあったとしましょう。
+                どちらのアクションも同じ 'form' ビューを表示しますが、
+                そこに設定する値が異なります。
+                そんな場合に、それぞれでスクリプト名を変えるのは簡単です。
+                <code>setScriptAction()</code> や <code>setRender()</code>
+                を使用するか、あるいはヘルパーをメソッドとしてコールします。
+                これは <code>setRender()</code> を起動します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+// Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
     {
-        // Render 'bar/form.phtml' instead of 'bar/add.phtml'
+        // 'bar/add.phtml' ではなく 'bar/form.phtml' をレンダリングします
         $this->_helper->viewRenderer('form');
     }
 
     public function editAction()
     {
-        // Render 'bar/form.phtml' instead of 'bar/edit.phtml'
+        // 'bar/edit.phtml' ではなく 'bar/form.phtml' をレンダリングします
         $this->_helper->viewRenderer->setScriptAction('form');
     }
 
     public function processAction()
     {
-        // do some validation...
+        // 何かのチェックをした後で...
         if (!$valid) {
-            // Render 'bar/form.phtml' instead of 'bar/process.phtml'
+            // 'bar/process.phtml' ではなく 'bar/form.phtml' をレンダリングします
             $this->_helper->viewRenderer->setRender('form');
             return;
         }
 
-        // otherwise continue processing...
+        // その他の処理を続けます...
     }
 
 }
@@ -612,29 +625,29 @@ class Foo_BarController extends Zend_Controller_Action
         </example>
 
         <example>
-            <title>Modifying the registered view</title>
+            <title>登録されているビューの変更</title>
 
             <para>
-                What if you need to modify the view object -- for instance,
-                change the helper paths, or the encoding? You can do so either
-                by modifying the view object set in your controller, or by
-                grabbing the view object out of the <code>ViewRenderer</code>;
-                both are references to the same object.
+                ビューオブジェクトの設定を変更したくなったとしましょう。
+                たとえば、ヘルパーのパスやエンコーディングを変更したくなったらどうしますか?
+                そんな場合は、コントローラに設定されているビューオブジェクトを変更するか、
+                あるいは <code>ViewRenderer</code> の外部からビューオブジェクトを取得します。
+                どちらも同じオブジェクトへの参照を取得することになります。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+// Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
     {
-        // change view encoding
+        // ビューのエンコーディングを変更します
         $this->view->setEncoding('UTF-8');
     }
 
     public function bazAction()
     {
-        // Get view object and set escape callback to 'htmlspecialchars'
+        // ビューオブジェクトを取得し、エスケープ用のコールバックを 'htmlspecialchars' に設定します
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
@@ -644,38 +657,38 @@ class Foo_BarController extends Zend_Controller_Action
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.viewrenderer.advancedusage">
-        <title>Advanced Usage Examples</title>
+        <title>高度な使用例</title>
 
         <example>
-            <title>Changing the path specifications</title>
+            <title>パスの指定方法の変更</title>
 
             <para>
-                In some circumstances, you may decide that the default path
-                specifications do not fit your site's needs. For instance, you
-                may want to have a single template tree to which you may then
-                give access to your designers (this is very typical when using
-                <ulink url="http://smarty.php.net/">Smarty</ulink>, for
-                instance). In such a case, you may want to hardcode the view
-                base path specification, and create an alternate specification
-                for the action view script paths themselves.
+                場合によっては、デフォルトのパス指定があなたのサイトに
+                うまく当てはまらないこともあるでしょう。
+                たとえば、すべてのテンプレートを単一のディレクトリ配下にまとめ、
+                デザイナにはそのディレクトリに対するアクセス権だけを与えたいといった場合です
+                (<ulink url="http://smarty.php.net/">Smarty</ulink>
+                を使用する場合などにありがちです)。
+                そんな場合は、ビューの基底パスをハードコーディングし、
+                それをアクションのビュースクリプトのパスとして使用することになります。
             </para>
 
             <para>
-                For purposes of this example, let's assume that the base path to
-                views should be '/opt/vendor/templates', and that you wish for
-                view scripts to be referenced by
-                ':moduleDir/:controller/:action.:suffix'; if the noController
-                flag has been set, you want to render out of the top level
-                instead of in a subdirectory (':action.:suffix'). Finally, you
-                want to use 'tpl' as the view script filename suffix.
+                この例では、ビューの基底パスを '/opt/vendor/templates'
+                とし、ビュースクリプトのパスは ':moduleDir/:controller/:action.:suffix'
+                となるようにします。noController
+                フラグが設定されている場合は、サブディレクトリ (':action.:suffix')
+                からではなくトップディレクトリからのパスとして探すことになります。
+                最後に、ビュースクリプトのファイルの拡張子として
+                'tpl' を設定します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 /**
- * In your bootstrap:
+ * 起動ファイル
  */
 
-// Different view implementation
+// 別のビュー実装を使用します
 $view = new ZF_Smarty();
 
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
@@ -688,12 +701,12 @@ Zend_View_Controller_HelperBroker::addHelper($viewRenderer);
         </example>
 
         <example>
-            <title>Rendering multiple view scripts from a single action</title>
+            <title>単一のアクションから複数のビュースクリプトをレンダリングする例</title>
 
             <para>
-                At times, you may need to render multiple view scripts from a
-                single action. This is very straightforward -- simply make
-                multiple calls to <code>render()</code>:
+                時には、複数のビュースクリプトをひとつのアクションで処理したいこともあるでしょう。
+                これは、非常に直感的な方法で実現できます。単に
+                <code>render()</code> を必要なだけコールすればいいのです。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -701,18 +714,18 @@ class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {
-        // Assume $this->model is the current model
+        // $this->model に現在のモデルが設定されているものとします
         $this->view->results = $this->model->find($this->_getParam('query', '');
 
-        // render() by default proxies to the ViewRenderer
-        // Render first the search form and then the results
+        // render() は、デフォルトでは ViewRenderer へのプロキシとなります。
+        // まず form を、そして results をレンダリングします
         $this->render('form');
         $this->render('results');
     }
 
     public function formAction()
     {
-        // do nothing; ViewRenderer autorenders the view script
+        // 何もしなくても、ViewRenderer が自動的にビュースクリプトをレンダリングします
     }
 }
 ]]></programlisting>
