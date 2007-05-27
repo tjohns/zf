@@ -99,9 +99,8 @@ echo $config->database->name; // wyświetla "dbname"]]></programlisting>
                     <entry>
                         Nazwa sekcji wewnątrz pliku ini, która ma być załadowana.
                         Ustawienie wartości tego parametru na null spowoduje 
-                        załadowanie wszystkich sekcji. 
-                        Alternatively, an array of section names may be supplied 
-                        to load multiple sections.
+                        załadowanie wszystkich sekcji. Alternatywnie, możesz
+                        przekazać tablicę nazw sekcji aby załadować wiele sekcji.
                     </entry>
                 </row>
                 <row>

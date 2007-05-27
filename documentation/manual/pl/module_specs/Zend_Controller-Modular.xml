@@ -88,15 +88,16 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 ?>]]></programlisting>
 
         <para>
-            Saving the best for last, the easiest way to specify module
-            directories is to do so en masses, with all modules under a common
-            directory and sharing the same structure. This can be done with
+            Zostawiając najlepsze na koniec, najprostszym sposobem określenia
+            katalogu modułów jest określenie ich wszystkich na raz, gdy 
+            wszystkie moduły znajdują się w jednym katalogu i posiadają taką 
+            samą strukturę. Można to zrobić za pomocą metody 
             <code>addModuleDirectory()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 /**
- * Assuming the following directory structure:
+ * Zakładając, że tak wygląda struktura katalogów:
  * application/
  *     modules/
  *         default/
@@ -110,19 +111,19 @@ $front->addModuleDirectory('/path/to/application/modules');
 ?>]]></programlisting>
 
         <para>
-            The above example will define the <code>default</code>,
-            <code>foo</code>, and <code>bar</code> modules, each pointing to the
-            <code>controllers</code> subdirectory of their respective module.
+            Powyższy przykład definiuje moduły <code>default</code>,
+            <code>foo</code>, oraz <code>bar</code>, każdy wskazujący na 
+            podkatalog <code>controllers</code> danego modułu.
         </para>
 
         <para>
-            You may customize the controller subdirectory to use within your
-            modules by using <code>setModuleControllerDirectoryName()</code>:
+            Możesz określić nazwę podkatalogu kontrolerów używaną w modułach
+            za pomocą metody <code>setModuleControllerDirectoryName()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 /**
- * Change the controllers subdirectory to be 'con'
+ * Zmieniamy nazwę podkatalogu kontrolerów na 'con'
  * application/
  *     modules/
  *         default/
@@ -137,8 +138,8 @@ $front->addModuleDirectory('/path/to/application/modules');
 ?>]]></programlisting>
         
         <note><para>
-            You can indicate that no controller subdirectory be used for your
-            modules by passing an empty value to
+            Możesz określić aby podkatalog kontrolerów nie był używany w 
+            modułach, przekazując pustą wartość do metody 
             <code>setModuleControllerDirectoryName()</code>.
         </para></note>
     </sect2>

@@ -9,60 +9,123 @@
         kolejności zdefiniowanej przez programistę.
     </para>
 
-    <para>
-        <emphasis role="strong">Czym jest filtr?</emphasis>
-    </para>
+    <sect2 id="zend.filter.introduction.definition">
 
-    <para>
-        W fizycznym świecie, filtr najczęściej jest używany do usuwania 
-        niechcianych części danych wejściowych, a żądana część danych 
-        wejściowych przechodzi przez filtr jako dane wyjściowe (np. kawa). W
-        takim scenariuszu filtr jest operatorem który tworzy podzbiór danych
-        wejściowych. Ten typ filtrowania jest użyteczny w aplikacjach web 
-        - usuwanie niedozwolonych danych wejściowych, usuwanie niepotrzebnych
-        białych znaków itp.
-    </para>
+        <title>Czym jest filtr?</title>
 
-    <para>
-        Ta podstawowa definicja filtra może być rozszerzona, aby zawierała
-        uogólnione transformacje na danych wejściowych. Pospolitą transformacją
-        stosowaną w aplikacjach web jest zabezpieczanie przed encjami HTML.
-        Na przykład, jeśli pole formularza jest automatycznie wypełniane
-        niefiltrowanymi danymi wejściowymi (np., z przeglądarki internetowej), 
-        ta wartość nie może zawierać encji HTML lub posiadać jedynie 
-        zabezpieczone encje HTML, w celu zapobiegania niechcianemu zachowaniu
-        aplikacji oraz słabym punktom bezpieczeństwa. Aby sprostać tym 
-        wymaganiom, encje HTML, ktore znajdują się w danych wejściowych muszą 
-        być usunięte lub zabezpieczone. Oczywiście to, ktore podejście jest
-        bardziej odpowiednie zależy od sytuacji. Filtr, który usuwa encje HTML
-        działa w kontekście pierwszej definicji filtra - operator który tworzy
-        podzbiór danych wejściowych. Filtr, ktory zabezpiecza encje HTML
-        natomiast przekształca dane wejściowe (np. znak "<code>&amp;</code>" 
-        jest zamieniany na "<code>&amp;amp;</code>"). Wspieranie programistów
-        przy takich przypadkach użycia jest ważne, i "filtrowanie" w kontekście
-        użycia Zend_Filter oznacza przeprowadzanie pewnych transformacji na
-        danych wejściowych.
-    </para>
+        <para>
+            W fizycznym świecie, filtr najczęściej jest używany do usuwania 
+            niechcianych części danych wejściowych, a żądana część danych 
+            wejściowych przechodzi przez filtr jako dane wyjściowe (np. kawa). W
+            takim scenariuszu filtr jest operatorem który tworzy podzbiór danych
+            wejściowych. Ten typ filtrowania jest użyteczny w aplikacjach web 
+            - usuwanie niedozwolonych danych wejściowych, usuwanie niepotrzebnych
+            białych znaków itp.
+        </para>
 
-    <para>
-        Mająć ustaloną w ten sposób definicję filtra, możemy zapewnić podstawę
-        dla interfejsu <code>Zend_Filter_Interface</code>, który wymaga 
-        zaimplementowania przez klasę filtra jednej metody nazwanej 
-        <code>filter()</code>.
-    </para>
+        <para>
+            Ta podstawowa definicja filtra może być rozszerzona, aby zawierała
+            uogólnione transformacje na danych wejściowych. Pospolitą transformacją
+            stosowaną w aplikacjach web jest zabezpieczanie przed encjami HTML.
+            Na przykład, jeśli pole formularza jest automatycznie wypełniane
+            niefiltrowanymi danymi wejściowymi (np., z przeglądarki internetowej), 
+            ta wartość nie może zawierać encji HTML lub posiadać jedynie 
+            zabezpieczone encje HTML, w celu zapobiegania niechcianemu zachowaniu
+            aplikacji oraz słabym punktom bezpieczeństwa. Aby sprostać tym 
+            wymaganiom, encje HTML, ktore znajdują się w danych wejściowych muszą 
+            być usunięte lub zabezpieczone. Oczywiście to, ktore podejście jest
+            bardziej odpowiednie zależy od sytuacji. Filtr, który usuwa encje HTML
+            działa w kontekście pierwszej definicji filtra - operator który tworzy
+            podzbiór danych wejściowych. Filtr, ktory zabezpiecza encje HTML
+            natomiast przekształca dane wejściowe (np. znak "<code>&amp;</code>" 
+            jest zamieniany na "<code>&amp;amp;</code>"). Wspieranie programistów
+            przy takich przypadkach użycia jest ważne, i "filtrowanie" w kontekście
+            użycia Zend_Filter oznacza przeprowadzanie pewnych transformacji na
+            danych wejściowych.
+        </para>
+        
+    </sect2>
 
-    <para>
-        Poniżej jest podstawowy przykład użycia filtra na dwóch danych 
-        wyjściowych, na znaku Et (<code>&amp;</code>) oraz na znaku podwójnego 
-        cudzysłowu (<code>&quot;</code>):
+    <sect2 id="zend.filter.introduction.using">
+    
+        <title>Basic usage of filters</title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <para>
+            Mająć ustaloną w ten sposób definicję filtra, możemy zapewnić podstawę
+            dla interfejsu <code>Zend_Filter_Interface</code>, który wymaga 
+            zaimplementowania przez klasę filtra jednej metody nazwanej 
+            <code>filter()</code>.
+        </para>
+
+       <para>
+            Poniżej jest podstawowy przykład użycia filtra na dwóch danych 
+            wyjściowych, na znaku Et (<code>&amp;</code>) oraz na znaku podwójnego 
+            cudzysłowu (<code>&quot;</code>):
+ 
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/HtmlEntities.php';
-$htmlEntities = new Zend_Filter_HtmlEntities();
-echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;]]></programlisting>
 
-    </para>
+$htmlEntities = new Zend_Filter_HtmlEntities();
+
+echo $htmlEntities->filter('&'); // &amp;
+echo $htmlEntities->filter('"'); // &quot;
+]]></programlisting>
+
+        </para>
+        
+    </sect2>
+    
+    <sect2 id="zend.filter.introduction.static">
+
+        <title>Użycie statycznej metody <code>get()</code></title>
+
+        <para>
+            If it's inconvenient to load a given filter class and create an
+            instance of the filter, you can use the static method
+            <code>Zend_Filter::get()</code> as an alternative invocation style.
+            The first argument of this method is a data input value, that you
+            would pass to the <code>filter()</code> method.  The second
+            argument is a string, which corresponds to the basename of the
+            filter class, relative to the Zend_Filter namespace.  The
+            <code>get()</code> method automatically loads the class, creates an
+            instance, and applies the <code>filter()</code> method to the data
+            input.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Filter.php';
+
+echo Zend_Filter::get('&', 'HtmlEntities');
+]]></programlisting>
+
+        </para>
+
+        <para>
+            Możesz także przekazać tablicę argumentów konstruktora, jeśli są
+            one potrzebne w klasie filtra.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Filter.php';
+
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
+]]></programlisting>
+
+        </para>
+
+        <para>
+            The static usage can be convenient for invoking a filter ad hoc,
+            but if you have the need to run a filter for multiple inputs,
+            it's more efficient to follow the first example above,
+            creating an instance of the filter object and calling its
+            <code>filter()</code> method.
+        </para>
+
+        <para>
+            Also, the Zend_Filter_Input class allows you to instantiate and run
+            multiple filter and validator classes on demand to process
+            sets of input data.  See <xref linked="zend.filter.input" />.
+        </para>
+
+    </sect2>
 
 </sect1>
 <!--

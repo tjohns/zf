@@ -34,28 +34,29 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    By default, the <link
-                        linkend="zend.controller.plugins.standard.errorhandler">error
-                    handler plugin</link> is registered and active. This plugin
-                    was designed to handle:
+                    Domyślnie rejestrowana i aktywna jest <link
+                        linkend="zend.controller.plugins.standard.errorhandler">wtyczka
+                    obsługi błędów</link>. Ta wtyczka została stworzona aby 
+                    obsługiwać:
                 </para>
 
                 <itemizedlist>
-                    <listitem><para>Errors due to missing controllers or actions</para></listitem>
+                    <listitem><para>Błędy spowodowane brakującym kontrolerem lub akcją</para></listitem>
 
-                    <listitem><para>Errors occurring within action controllers</para></listitem>
+                    <listitem><para>Błędy występujące wewnątrz akcji kontrolerów</para></listitem>
                 </itemizedlist>
 
                 <para>
-                    It operates as a <code>postDispatch()</code> plugin, and
-                    checks to see if a dispatcher, action controller, or
-                    other exception has occurred. If so, it forwards to an error
-                    handler controller.
+                    Wtyczka działa w oparciu o metodę <code>postDispatch()</code>, 
+                    i sprawdza czy obiekt uruchamiający, kontroler akcji, lub 
+                    inny obiekt wyrzucił wyjątek. Jeśli tak, przekazuje ona
+                    żądanie do kontrolera obsługi błędu.
                 </para>
 
                 <para>
-                    This handler will cover most exceptional situations, and
-                    handle missing controllers and actions gracefully.
+                    Ta wtyczka obsłuży większość sytuacji, w których został
+                    wyrzucony wyjątek, a także poprawnie obsłuży brakujące 
+                    kontrolery oraz akcje.
                 </para>
             </listitem>
 

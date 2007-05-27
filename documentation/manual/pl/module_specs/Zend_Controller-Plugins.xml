@@ -51,24 +51,24 @@
                     Metoda <code>preDispatch()</code> jest wywoływana zanim 
                     akcja zostanie uruchomiona przez 
                     <link linkend="zend.controller.dispatcher">obiekt 
-                    uruchamiający</link>. 
-                    This callback allows for proxy or filter behavior. 
-                    By altering the request and resetting its
-                    dispatched flag (za pomocą
+                    uruchamiający</link>. Pozwala to na stworzenie 
+                    funkcjonalności proxy lub filtra. Nadpisując żądanie i 
+                    resetując flagę uruchomienia (za pomocą
                     <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
-                    the current action may be skipped and/or replaced.
+                    obecna akcja może być pominięta lub zastąpiona.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>postDispatch()</code> is called after an action is
-                    dispatched by <link linkend="zend.controller.dispatcher">the
-                        dispatcher</link>. This callback allows for proxy or
-                    filter behavior. By altering the request and resetting its
-                    dispatched flag (za pomocą
+                    <code>postDispatch()</code> jest wywoływana po tym jak akcja
+                    zostanie uruchomiona przez 
+                    <link linkend="zend.controller.dispatcher">obiekt 
+                        uruchamiający</link>. Pozwala to na stworzenie 
+                    funkcjonalności proxy lub filtra. Nadpisując żądanie i 
+                    resetując flagę uruchomienia (za pomocą
                     <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
-                    a new action may be specified for dispatching.
+                    można określić nową akcję do uruchomienia.
                 </para>
             </listitem>
 
@@ -168,9 +168,9 @@ $front->dispatch();
 ]]></programlisting>
 
         <para>
-           Assuming that no actions called emit any output, and only one action
-           is called, the functionality of the above plugin would still create
-           the following output:
+           Zakładając, że żadne wywołana akcja nie wyświetliła żadnych danych, i
+           że tylko jedna akcja została wywołana, to funkcjonalność powyższej
+           wtyczki spowoduje wyświetlenie takich danych:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -184,18 +184,18 @@ $front->dispatch();
 
         <note>
             Wtyczki mogą być zarejestrowane w dowolnym momencie podczas
-            uruchomienia kontrolera frontowego.
-            However, if an event has passed for which the plugin has
-            a registered event method, that method will not be triggered.
+            uruchomienia kontrolera frontowego. Jednak jeśli zdarzenie dla 
+            którego we wtyczce była zarejestrowana metoda już minęło, to metoda 
+            ta będzie ominięta.
         </note>
     </sect2>
 
     <sect2 id="zend.controller.plugins.standard">
-        <title>Plugins Included in the Standard Distribution</title>
+        <title>Wtyczki dołączone do standardowej dystrybucji</title>
 
         <para>
-            Zend Framework includes a plugin for error handling in its standard
-            distribution.
+            Zend Framework w standardowej dystrybucji zawiera wtyczkę służącą do 
+            obsługi błędów.
         </para>
 
         <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />

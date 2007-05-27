@@ -111,19 +111,20 @@ echo $view->render('booklist.php');
     </sect2>
 
     <sect2 id="zend.view.introduction.options">
-        <title>Options</title>
+        <title>Opcje</title>
 
         <para>
-            <code>Zend_View</code> has several options that may be set to
-            configure the behaviour of your view scripts.
+            <code>Zend_View</code> posiada kilka opcji, które mogą być użyte do 
+            skonfigurowania zachowania skryptów widoków.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>basePath:</code> indicate a base path from which to set
-                    the script, helper, and filter path. It assumes a directory
-                    structure of:
+                    <code>basePath:</code> określa bazową ścieżkę, wewnątrz
+                    której znajdują się skrypty widoków, klasy pomocników oraz 
+                    klasy filtrów. Zakładane jest, że struktura katalogów 
+                    wygląda tak:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -134,109 +135,115 @@ base/path/
 ]]]></programlisting>
 
                 <para>
-                    This may be set via <code>setBasePath()</code>,
-                    <code>addBasePath()</code>, or the <code>basePath</code>
-                    option to the constructor.
+                    Ta opcja może być ustawiona za pomocą metody 
+                    <code>setBasePath()</code>, metody <code>addBasePath()</code>, 
+                    lub jako opcja <code>basePath</code> przekazana do 
+                    konstruktora.
                 </para>
             </listitem>
 
             <listitem><para>
-                <code>encoding:</code> indicate the character encoding to use
-                with <code>htmlentities()</code>,
-                <code>htmlspecialchars()</code>, and other operations. Defaults
-                to ISO-8859-1 (latin1). May be set via
-                <code>setEncoding()</code> or the <code>encoding</code> option
-                to the constructor.
+                <code>encoding:</code> określa kodowanie znaków, które ma być
+                użyte przez metody <code>htmlentities()</code>, 
+                <code>htmlspecialchars()</code> oraz w innych operacjach. 
+                Domyślnie jest to ISO-8859-1 (latin1). Może być ustawione za 
+                pomocą metody <code>setEncoding()</code> lub jako opcja
+                <code>encoding</code> konstruktora.
             </para></listitem>
 
             <listitem><para>
-                <code>escape:</code> indicate a callback to be used by
-                <code>escape()</code>. May be set via <code>setEscape()</code>
-                or the <code>escape</code> option to the constructor.
+                <code>escape:</code> określa funkcję używaną przez metodę 
+                <code>escape()</code>. Może być ustawiona za pomocą metody
+                <code>setEscape()</code> lub za pomocą opcji <code>escape</code> 
+                konstruktora.
             </para></listitem>
 
             <listitem><para>
-                <code>filter:</code> indicate a filter to use after rendering
-                a view script. May be set via <code>setFilter()</code>,
-                <code>addFilter()</code>, or the <code>filter</code> option to
-                the constructor.
+                <code>filter:</code> określa filtr, który ma być użyty po
+                zrenderowaniu skryptu widoku. Może być ustawiony za pomocą 
+                metody <code>setFilter()</code>, metody <code>addFilter()</code>, 
+                lub za pomocą opcji <code>filter</code> konstruktora.
             </para></listitem>
 
             <listitem><para>
-                <code>strictVars:</code> force <code>Zend_View</code> to emit
-                notices and warnings when uninitialized view variables are
-                accessed. This may be set by calling
-                <code>strictVars(true)</code> or passing the
-                <code>strictVars</code> option to the constructor.
+                <code>strictVars:</code> zmusza <code>Zend_View</code> do
+                wyświetlania not i ostrzeżeń, wtedy gdy zdarzy się próba 
+                uzyskania dostępu do niezainicjowanych zmiennych widoków.
+                Może to być ustawione przez wywołanie metody 
+                <code>strictVars(true)</code> lub przekazanie opcji
+                <code>strictVars</code> do konstruktora.
             </para></listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.view.introduction.accessors">
-        <title>Utility Accessors</title>
+        <title>Narzędziowe metody dostępowe/title>
 
         <para>
-            Typically, you'll only ever need to call on <code>assign()</code>,
-            <code>render()</code>, or one of the methods for setting/adding
-            filter, helper, and script paths. However, if you wish to extend
-            <code>Zend_View</code> yourself, or need access to some of its
-            internals, a number of accessors exist:
+            W większości przypadków będziesz używał tylko metod 
+            <code>assign()</code>, <code>render()</code>, lub jednej z metod
+            do ustawiania/dodawania filtrów, klas pomocników oraz ścieżek 
+            skryptów widoków. Jednak jeśli chcesz samodzielnie rozszerzyć klasę
+            <code>Zend_View</code>, lub potrzebujesz dostępu do jej pewnych
+            wewnętrznych funkcjonalności, to możesz użyć kilku istniejących 
+            metod dostępowych:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getVars()</code> will return all assigned variables.
+                    <code>getVars()</code> zwraca wszystkie przypisane zmienne.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>clearVars()</code> will clear all assigned variables;
-                    useful when you wish to re-use a view object, but want to
-                    control what variables are available..
+                    <code>clearVars()</code> wyczyści wszystkie przypisane 
+                    zmienne; użyteczne gdy chcesz ponownie użyć obiektu widoku,
+                    ale chcesz zachować kontrolę nad tym, które zmienne mają 
+                    być dostępne.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getScriptPath($script)</code> will retrieve the
-                    resolved path to a given view script.
+                    <code>getScriptPath($script)</code> zwraca ścieżkę dla
+                    podanego skryptu widoku.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getScriptPaths()</code> will retrieve all registered
-                    script paths.
+                    <code>getScriptPaths()</code> zwraca wszystkie 
+                    zarejestrowane ścieżki skryptów widoków.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHelperPath($helper)</code> will retrieve the
-                    resolved path to the named helper class.
+                    <code>getHelperPath($helper)</code> zwraca ścieżkę dla
+                    podanej klasy pomocnika.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHelperPaths()</code> will retrieve all registered
-                    helper paths.
+                    <code>getHelperPaths()</code> zwraca wszystkie 
+                    zarejestrowane ścieżki klas pomocników.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getFilterPath($filter)</code> will retrieve the
-                    resolved path to the named filter class.
+                    <code>getFilterPath($filter)</code> zwraca ścieżkę dla 
+                    podanej klasy filtra.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getFilterPaths()</code> will retrieve all registered
-                    filter paths.
+                    <code>getFilterPaths()</code> zwraca wszystkie zarejestrowane
+                    ścieżki klas filtrów.
                 </para>
             </listitem>
         </itemizedlist>

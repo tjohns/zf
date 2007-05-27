@@ -56,16 +56,15 @@ class FooController extends Zend_Controller_Action
     </sect2>
 
         <note>
-            <title>Default Behaviour</title>
+            <title>Domyślne zachowanie</title>
 
             <para>
-                By default, the <link linkend="zend.controller.front">front
-                    controller</link> enables the <link
-                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
-                action helper. This helper takes care of injecting the view
-                object into the controller, as well as automatically rendering
-                views. You may disable it within your action controller via one
-                of the following methods:
+                Domyślnie <link linkend="zend.controller.front">kontroler 
+                frontowy</link> włącza klasę pomocniczą akcji <link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>. 
+                Ta klasa zajmuje się przekazywaniem widoku do kontrolera, a 
+                także automatycznym renderowaniem widoków. Możesz to wyłączyć
+                w swoim kontrolerze akcji używając jednej z poniższych metod:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -73,10 +72,10 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Local to this controller only:
+        // Lokalnie, tylko dla tego kontrolera:
         $this->_invokeArgs['noViewRenderer'] = true;
 
-        // Globally:
+        // Globalnie:
         $this->_helper->removeHelper('viewRenderer');
 
         // Also globally, but would need to be in conjunction with the local 
@@ -94,9 +93,9 @@ class FooController extends Zend_Controller_Action
             </para>
 
             <para>
-                You can also simply disable rendering for an invididual view by
-                setting the <code>ViewRenderer</code>'s <code>noRender</code>
-                flag:
+                Możesz także w prosty sposób wyłączyć renderowanie dla 
+                konkretnego widoku ustawiając flagę <code>noRender</code> w
+                klasie <code>ViewRenderer</code>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -104,7 +103,7 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // disable autorendering for this action:
+        // wyłączamy automatyczne renderowanie dla tej akcji:
         $this->_helper->viewRenderer->setNoRender();
     }
 }
@@ -263,25 +262,29 @@ if ($this->_hasParam('id') {
 
         <para>
             <code>Zend_Controller_Action</code> provides a rudimentary and
-            flexible mechanism for view integration. Two methods accomplish
-            this, <code>initView()</code> and <code>render()</code>; the former
-            method lazy-loads the <code>$view</code> public property, and the
-            latter renders a view based on the current requested action, using
-            the directory hierarchy to determine the script path.
+            flexible mechanism for view integration.
+
+            Odpowiadają za to dwie metody, <code>initView()</code> oraz 
+            <code>render()</code>; 
+            
+            the former method lazy-loads the <code>$view</code> public property, 
+            and the latter renders a view based on the current requested action, 
+            using the directory hierarchy to determine the script path.
         </para>
 
         <sect3 id="zend.controller.action.viewintegration.initview">
-            <title>View Initialization</title>
+            <title>Inicjowanie obiektu widoku</title>
 
             <para>
-                <code>initView()</code> initializes the view object.
-                <code>render()</code> calls <code>initView()</code> in order to
-                retrieve the view object, but it may be initialized at any time;
-                by default it populates the <code>$view</code> property with a
-                <code>Zend_View</code> object, but any class implementing
-                <code>Zend_View_Interface</code> may be used. If
-                <code>$view</code> is already initialized, it simply returns
-                that property.
+                Metoda <code>initView()</code> inicjuje obiekt widoku. Metoda 
+                <code>render()</code> wywołuje <code>initView()</code> w celu 
+                odebrania obiektu widoku, ale może on być zainicjowany w 
+                dowolnym momencie; domyślnie przypisuje ona do właściwości 
+                <code>$view</code> obiekt klasy <code>Zend_View</code>, ale może 
+                być użyta dowolna klasa implementująca interfejs 
+                <code>Zend_View_Interface</code>. Jeśli obiekt 
+                <code>$view</code> jest już zainicjowany, metoda po prostu 
+                zwróci ten obiekt.
             </para>
 
             <para>
@@ -323,32 +326,34 @@ string render(string $action = null, string $name = null, bool $noController = f
 ?>]]></programlisting>
 
             <para>
-                <code>render()</code> renders a view script. If no arguments are
-                passed, it assumes that the script requested is
-                <code>[controller]/[action].phtml</code> (where
-                <code>.phtml</code> is the value of the <code>$viewSuffix</code>
-                property). Passing a value for <code>$action</code> will render
-                that template in the <code>[controller]</code> subdirectory. To
-                override using the <code>[controller]</code> subdirectory, pass
-                a true value for <code>$noController</code>. Finally, templates
-                are rendered into the response object; if you wish to render to
-                a specific <link
-                    linkend="zend.controller.response.namedsegments">named
-                    segment</link> in the response object, pass a value to
-                <code>$name</code>.
+                <code>render()</code> renderuje skrypt widoku. Jeśli nie 
+                przekazano argumentów, zakładane jest, że ścieżka skryptu to 
+                <code>[kontroler]/[akcja].phtml</code> (gdzie 
+                <code>.phtml</code> jest wartością właściwości 
+                <code>$viewSuffix</code>). Przekazanie wartości parametru 
+                <code>$action</code> spowoduje zrenderowanie tego szablonu z 
+                podkatalogu <code>[kontroler]</code>. Aby zrezygnować z użycia 
+                podkatalogu <code>[kontroler]</code>, przekaż logiczną wartość 
+                true dla  <code>$noController</code>. Na koniec szablony są 
+                renderowane i przekazywane do obiektu odpowiedzi; jeśli chcesz 
+                zrenderować do konkretnego <link
+                    linkend="zend.controller.response.namedsegments">nazwanego 
+                    segmentu</link> w obiekcie odpowiedzi, przekaż wartość dla
+                parametru <code>$name</code>.
             </para>
             
             <note><para>
-                    Since controller and action names may contain word delimiter
-                    characters such as '_', '.', and '-', render() normalizes
-                    these to '-' when determining the script name. Internally,
-                    it uses the dispatcher's word and path delimiters to do this
-                    normalization. Thus, a request to
-                    <code>/foo.bar/baz-bat</code> will render the script
-                    <code>foo-bar/baz-bat.phtml</code>. If your action method
-                    contains camelCasing, please remember that this will result
-                    in '-' separated words when determining the view script
-                    file name.
+                    Z tego względu, że nazwy kontrolera i akcji mogą zawierać 
+                    takie rozgraniczające znaki jak '_', '.', oraz '-', metoda
+                    render() zamienia je wszystkie na '-' gdy określa nazwę 
+                    skryptu. Wewnętrznie, do przeprowadzenia tej operacji 
+                    używane są znaki rozgraniczające słowa oraz ścieżki z 
+                    obiektu uruchamiającego. Dlatego żądanie do 
+                    <code>/foo.bar/baz-bat</code> zrenderuje skrypt 
+                    <code>foo-bar/baz-bat.phtml</code>. Jeśli nazwa metody akcji 
+                    jest w postaci camelCasing, zapamiętaj, że spowoduje to 
+                    rozdzieleniem słów za pomocą znaku '-' podczas określania 
+                    nazwy pliku skryptu widoku.
             </para></note>
 
             <para>
@@ -501,11 +506,11 @@ class MyController extends Zend_Controller_Action
             </para>
 
             <para>
-                By default, this method throws a
-                <code>Zend_Controller_Action_Exception</code> indicating the
-                requested action was not found in the controller. You should
-                override this functionality if you wish to perform other
-                operations.
+                Domyślnie, ta metoda wyrzuca wyjątek
+                <code>Zend_Controller_Action_Exception</code> oznaczający, że
+                zażądana akcja nie została znaleziona w kontrolerze. Powinieneś
+                nadpisać tę funkcjonalność jeśli chcesz przeprowadzić inne
+                operacje.
             </para>
 
             <para>
@@ -530,8 +535,7 @@ class MyController extends Zend_Controller_Action
 ?>]]></programlisting>
 
             <para>
-                Another possibility is that you may want to forward on to a
-                default controller page:
+                Inną możliwością jest przeniesienie do domyślnego kontrolera:
             </para>
 
             <programlisting role="php"><![CDATA[<?php

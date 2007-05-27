@@ -9,20 +9,21 @@
     </para>
     
     <para>
-        A helper is simply a class. Let's say we want a helper named 'fooBar'.
-        By default, the class is prefixed with <code>'Zend_View_Helper_'</code>
-        (you can specify a custom prefix when setting a helper path), and the
-        last segment of the class name is the helper name; this segment should
-        be TitleCapped; the full class name is then:
-        <code>Zend_View_Helper_FooBar</code>. This class should contain at the
-        minimum a single method, named after the helper, and camelCased:
-        <code>fooBar()</code>.
+        Klasa pomocnika jets prostą klasą. Powiedzmy, że potrzebujemy klasę 
+        pomocnika o nazwie 'fooBar'. Domyślnie nazwa klasy jest poprzedzona 
+        przedrostkiem <code>'Zend_View_Helper_'</code> (możesz określić własny 
+        przedrostek podczas ustawiania ścieżki do klas pomocników), a ostatni 
+        segment nazwy klasy jest nazwą klasy pomocnika; ten segment powinien 
+        być w postaci TitleCapped; pełna nazwa klasy wygląda więc tak:
+        <code>Zend_View_Helper_FooBar</code>. Ta klasa powinna zawierać 
+        przynajmniej jedną metodę, nazwaną tak jak klasa pomocnika, ale już w 
+        postaci camelCased: <code>fooBar()</code>.
     </para>
 
     <note>
         <para>
-            Helper names are always camelCased, i.e., they never begin with an
-            uppercase character.
+            Nazwy klas pomocników są zawsze w postaci camelCased, czyli nigdy
+            nie zaczynają się wielką literą.
         </para>
     </note>
     
@@ -42,21 +43,23 @@
         <para>
             <code>Zend_View</code> posiada wbudowany zbiór klas pomocników, z 
             których większość odnosi się do generowania formularzy, a każda z 
-            nich autmatycznie filtruje dane wyjściowe. In addition, there
-            are helpers for creating route-based URLs and HTML lists, as well as 
-            declaring variables. The currently shipped helpers include:
+            nich autmatycznie filtruje dane wyjściowe. Dodatkowo dostępne są 
+            klasy pomocników służące do tworzenia adresów URL na podstawie tras,
+            do tworzenia list HTML oraz do deklarowania zmiennych. Obecnie 
+            dostępne klasy pomocników to:
         </para>
         
         <itemizedlist>
 
             <listitem><para>
-                <code>declareVars():</code> Primarily for use when using
-                <code>strictVars()</code>, this helper can be used to declare
-                template variables that may or may not already be set in the
-                view object, as well as to set default values.  Arrays passed as
-                arguments to the method will be used to set default values;
-                otherwise, if the variable does not exist, it is set to an empty
-                string.
+                <code>declareVars():</code> Głównie używana gdy używamy metody 
+                <code>strictVars()</code>, ta klasa pomocnika może być użyta
+                do zadeklarowania zmiennych szablonu, które zostały ustawione
+                lub nie, w obiekcie widoku. Możemy też użyć jej do ustawienia 
+                domyślnych wartości. Tablice przekazane do metody jako argumenty 
+                zostaną użyte do ustawienia domyślnych wartości; w przeciwnym 
+                razie, gdy zmienna nie istnieje, zostanie ustawiona jako pusty 
+                łańcuch znaków.
             </para></listitem>
             
             <listitem><para>
@@ -137,17 +140,18 @@
             </para></listitem>
 
             <listitem><para>
-                <code>url($urlOptions, $name, $reset):</code> Creates a URL
-                string based on a named route. <code>$urlOptions</code> should
-                be an associative array of key/value pairs used by the
-                particular route.
+                <code>url($urlOptions, $name, $reset):</code> Tworzy adres URL
+                na podstawie nazwy trasy. Parametr <code>$urlOptions</code> 
+                powinien być tablicą asocjacyjną zawierającą pary klucz/wartość
+                używane przez daną trasę.
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code> generates
-                unordered and ordered lists based on the <code>$items</code>
-                passed to it. If <code>$items</code> is a multidimensional
-                array, a nested list will be built.
+                <code>htmlList($items, $ordered, $attribs):</code> generuje
+                uporządkowane oraz nieuporządkowane listy na podstawie 
+                przekazanego do niej parametru <code>$items</code>. 
+                Jeśli parametr <code>$items</code> jest wielowymiarową tablicą, 
+                zostanie zbudowana lista zagnieżdżona.
             </para></listitem>
             
         </itemizedlist>
@@ -344,11 +348,12 @@ I have seen 'The Jerk' 3 time(s).]]>
         </programlisting>
 
         <para>
-            Sometimes you will need access to the calling <code>Zend_View</code>
-            object -- for instance, if you need to use the registered encoding,
-            or want to render another view script as part of your helper. To get
-            access to the view object, your helper class should have a
-            <code>setView($view)</code> method, like the following:
+            Czasem możesz potrzebować uzyskać dostęp do obiektu 
+            <code>Zend_View</code> -- na przykład, jeśli potrzebujesz użyć 
+            zarejestrowanego kodowania, lub chcesz zrenderować inny skrypt 
+            widoku jako część klasy pomocnika. Aby uzyskać dostęp do obiektu 
+            widoku, klasa pomocnika powinna posiadać metodę 
+            <code>setView($view)</code>, tak jak poniżej:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -369,10 +374,12 @@ class My_View_Helper_ScriptPath
 ?>]]></programlisting>
 
         <para>
-            If your helper class has a <code>setView()</code> method, it will be
-            called when the helper class is first instantiated, and passed the
-            current view object. It is up to you to persist the object in your
-            class, as well as determine how it should be accessed.
+            Jeśli twoja klasa pomocnika posiada metodę <code>setView()</code>, 
+            będzie ona wywołana wtedy, gdy po raz pierwszy zostanie utworzona
+            instancja klasy pomocnika i przekazany zostanie obecny obiekt 
+            widoku. Jest to po to, aby przechować obiekt widoku w klasie pomocnika, 
+            a także po to, aby określić w jaki sposób powinno się uzyskiwać do 
+            tego obiektu dostęp.
         </para>        
     </sect2>
     
