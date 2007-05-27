@@ -73,7 +73,9 @@ require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
  */
 
 require_once 'Zend/Gdata/GdataOnlineTest.php';
+/*
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
+ */
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
 
 require_once 'Zend/Gdata/SkipTests.php';
@@ -136,7 +138,9 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
             }
+            /*
             $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
+             */
             if (defined('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
