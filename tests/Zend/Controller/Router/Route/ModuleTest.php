@@ -362,6 +362,17 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
 		$this->assertSame('foo/bar', $url);
     }
 
+    public function testAssembleDefaultModuleZF1415_2()
+    {
+        $values = $this->route->match('default/defctrl/defact');
+        $url = $this->route->assemble();
+        $this->assertSame('', $url);
+        
+        $values = $this->route->match('mod/defctrl/defact');
+        $url = $this->route->assemble();
+        $this->assertSame('mod', $url);
+    }
+    
     public function testGetInstance()
     {
         require_once 'Zend/Config.php';
@@ -376,7 +387,6 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $route = Zend_Controller_Router_Route_Module::getInstance($config);
         
         $this->assertType('Zend_Controller_Router_Route_Module', $route);
-
     }
 
 }

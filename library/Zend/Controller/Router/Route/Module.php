@@ -229,7 +229,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
             $url = '/' . $controller . $url;
         }
 
-        if (isset($module) && !empty($url)) {
+        if (isset($module)) {        
             $url = '/' . $module . $url;
         }
 
