@@ -314,6 +314,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
 
         // fetch the next result
         $row = $fetch_function($this->_stmt);
+        // @todo: make use of adapter->foldCase()
         if (! $row && $error = oci_error($this->_stmt)) {
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
             throw new Zend_Db_Statement_Oracle_Exception($error);

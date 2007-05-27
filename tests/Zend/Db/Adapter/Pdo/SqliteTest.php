@@ -82,6 +82,18 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertEquals("id = 'St John''s Wort'", $value);
     }
 
+    /**
+     * Used by:
+     * - testAdapterOptionCaseFoldingNatural()
+     * - testAdapterOptionCaseFoldingUpper()
+     * - testAdapterOptionCaseFoldingLower()
+     */
+    protected function _testAdapterOptionCaseFoldingSetup(Zend_Db_Adapter_Abstract $db)
+    {
+        $db->getConnection();
+        $this->_util->setUp($db);
+    }
+
     public function getDriver()
     {
         return 'Pdo_Sqlite';

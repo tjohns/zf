@@ -79,30 +79,64 @@ abstract class Zend_Db_Adapter_Abstract
     protected $_connection = null;
 
     /**
+     * Specifies the case of column names retrieved in queries
+     * Options
+     * Zend_Db::CASE_NATURAL (default)
+     * Zend_Db::CASE_LOWER
+     * Zend_Db::CASE_UPPER
+     *
+     * @access protected
+     */
+    protected $_caseFolding = Zend_Db::CASE_NATURAL;
+
+    /**
      * Constructor.
      *
      * $config is an array of key/value pairs containing configuration
      * options.  These options are common to most adapters:
      *
-     * dbname   => (string) The name of the database to use (required).
-     * username => (string) Connect to the database as this username (optional).
-     * password => (string) Password associated with the username (optional).
-     * host     => (string) What host to connect to (default 127.0.0.1).
+     * dbname         => (string) The name of the database to user
+     * username       => (string) Connect to the database as this username.
+     * password       => (string) Password associated with the username.
+     * host           => (string) What host to connect to, defaults to localhost
      *
-     * @param  array $config An array of configuration keys.
-     * @return void
+     * Some options are used on a case-by-case basis by adapters:
+     *
+     * port           => (string) The port of the database
+     * persistent     => (boolean) Whether to use a persistent connection or not, defaults to false
+     * protocol       => (string) The network protocol, defaults to TCPIP
+     * caseFolding    => (int)
+     *
+     * @param array $config An array of configuration keys.
      * @throws Zend_Db_Adapter_Exception
      */
     public function __construct(array $config = array())
     {
-        // we need at least a dbname
-        if (! array_key_exists('dbname', $config)) {
-            require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
-        }
+        $this->_checkRequiredOptions($config);
+
+        // defaults
+        $this->_config['options'] = array(
+            Zend_Db::CASE_FOLDING => $this->_caseFolding
+        );
+        $this->_config['driver_options'] = array();
 
         // keep the config
         $this->_config = array_merge($this->_config, $config);
+
+        // obtain the case setting, if there is one
+        if (array_key_exists('options', $config) && array_key_exists(Zend_Db::CASE_FOLDING, $config['options'])) {
+            $case = $config['options'][Zend_Db::CASE_FOLDING];
+            switch ($case) {
+                case Zend_Db::CASE_LOWER:
+                case Zend_Db::CASE_UPPER:
+                case Zend_Db::CASE_NATURAL:
+                    $this->_caseFolding = $case;
+                    break;
+                default:
+                    require_once 'Zend/Db/Adapter/Exception.php';
+                    throw new Zend_Db_Adapter_Exception("Case must be one of the following constants: Zend_Db::CASE_NATURAL, Zend_Db::CASE_LOWER, Zend_Db::CASE_UPPER");
+            }
+        }
 
         // create a profiler object
         $enabled = false;
@@ -112,6 +146,38 @@ abstract class Zend_Db_Adapter_Abstract
         }
 
         $this->_profiler = new Zend_Db_Profiler($enabled);
+    }
+
+    /**
+     * Check for config options that are mandatory.
+     * Throw exceptions if any are missing.
+     *
+     * @param array $config
+     * @throws Zend_Db_Adapter_Exception
+     */
+    protected function _checkRequiredOptions(array $config)
+    {
+        // we need at least a dbname
+        if (! array_key_exists('dbname', $config)) {
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
+        }
+
+        if (! array_key_exists('password', $config)) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'password' for login credentials.");
+        }
+
+        if (! array_key_exists('username', $config)) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'username' for login credentials.");
+        }
     }
 
     /**
@@ -659,6 +725,31 @@ abstract class Zend_Db_Adapter_Abstract
     public function nextSequenceId($sequenceName)
     {
         return null;
+    }
+
+    /**
+     * Helper method to change the case of the strings used
+     * when returning result sets in FETCH_ASSOC and FETCH_BOTH
+     * modes.
+     *
+     * This is not intended to be used by application code,
+     * but the method must be public so the Statement class
+     * can invoke it.
+     *
+     * @param string $key
+     * @returns string
+     */
+    public function foldCase($key)
+    {
+        switch ($this->_caseFolding) {
+            case Zend_Db::CASE_LOWER:
+                return strtolower((string) $key);
+            case Zend_Db::CASE_UPPER:
+                return strtoupper((string) $key);
+            case Zend_Db::CASE_NATURAL:
+            default:
+                return (string) $key;
+        }
     }
 
     /**

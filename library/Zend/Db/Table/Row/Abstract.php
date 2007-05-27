@@ -132,65 +132,65 @@ abstract class Zend_Db_Table_Row_Abstract
      * You can override this method in a custom Row class
      * to implement column name mappings, for example inflection.
      *
-     * @param string $key Column name given.
+     * @param string $columnName Column name given.
      * @return string The column name after transformation applied (none by default).
-     * @throws Zend_Db_Table_Row_Exception if the $key is not a string.
+     * @throws Zend_Db_Table_Row_Exception if the $columnName is not a string.
      */
-    protected function _transformColumn($key)
+    protected function _transformColumn($columnName)
     {
-        if (!is_string($key)) {
+        if (!is_string($columnName)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception('Specified column is not a string');
         }
         // Perform no transformation by default
-        return $key;
+        return $columnName;
     }
 
     /**
      * Retrieve row field value
      *
-     * @param  string $key The user-specified column name.
-     * @return string      The corresponding column value.
-     * @throws Zend_Db_Table_Row_Exception if the $key is not a column in the row.
+     * @param  string $columnName The user-specified column name.
+     * @return string             The corresponding column value.
+     * @throws Zend_Db_Table_Row_Exception if the $columnName is not a column in the row.
      */
-    public function __get($key)
+    public function __get($columnName)
     {
-        $key = $this->_transformColumn($key);
-        if (!array_key_exists($key, $this->_data)) {
+        $columnName = $this->_transformColumn($columnName);
+        if (!array_key_exists($columnName, $this->_data)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
-            throw new Zend_Db_Table_Row_Exception("Specified column \"$key\" is not in the row");
+            throw new Zend_Db_Table_Row_Exception("Specified column \"$columnName\" is not in the row");
         }
-        return $this->_data[$key];
+        return $this->_data[$columnName];
     }
 
     /**
      * Set row field value
      *
-     * @param  string $key   The column key.
-     * @param  mixed  $value The value for the property.
+     * @param  string $columnName The column key.
+     * @param  mixed  $value      The value for the property.
      * @return void
      * @throws Zend_Db_Table_Row_Exception
      */
-    public function __set($key, $value)
+    public function __set($columnName, $value)
     {
-        $key = $this->_transformColumn($key);
-        if (!array_key_exists($key, $this->_data)) {
+        $columnName = $this->_transformColumn($columnName);
+        if (!array_key_exists($columnName, $this->_data)) {
             require_once 'Zend/Db/Table/Row/Exception.php';
-            throw new Zend_Db_Table_Row_Exception("Specified column \"$key\" is not in the row");
+            throw new Zend_Db_Table_Row_Exception("Specified column \"$columnName\" is not in the row");
         }
-        $this->_data[$key] = $value;
+        $this->_data[$columnName] = $value;
     }
 
     /**
      * Test existence of row field
      *
-     * @param  string  $key   The column key.
+     * @param  string  $columnName   The column key.
      * @return boolean
      */
-    public function __isset($key)
+    public function __isset($columnName)
     {
-        $key = $this->_transformColumn($key);
-        return array_key_exists($key, $this->_data);
+        $columnName = $this->_transformColumn($columnName);
+        return array_key_exists($columnName, $this->_data);
     }
 
     /**
@@ -501,8 +501,8 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function setFromArray(array $data)
     {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
+        foreach ($data as $columnName => $value) {
+            $this->$columnName = $value;
         }
 
         return $this;
@@ -547,11 +547,11 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $where = array();
         $db = $this->_getTable()->getAdapter();
-        $keys = $this->_getPrimaryKey($dirty);
+        $primaryKey = $this->_getPrimaryKey($dirty);
 
         // retrieve recently updated row using primary keys
-        foreach ($keys as $key => $val) {
-            $where[] = $db->quoteInto($db->quoteIdentifier($key) . ' = ?', $val);
+        foreach ($primaryKey as $columnName => $val) {
+            $where[] = $db->quoteInto($db->quoteIdentifier($columnName) . ' = ?', $val);
         }
 
         return $where;

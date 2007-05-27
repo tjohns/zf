@@ -19,13 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Db_Adapter_Abstract */
+/**
+ * @see Zend_Db_Adapter_Abstract
+ */
 require_once 'Zend/Db/Adapter/Abstract.php';
 
-/** Zend_Db_Adapter_Oracle_Exception */
-require_once 'Zend/Db/Adapter/Oracle/Exception.php';
-
-/** Zend_Db_Statement_Oracle */
+/**
+ * @see Zend_Db_Statement_Oracle
+ */
 require_once 'Zend/Db/Statement/Oracle.php';
 
 /**
@@ -61,46 +62,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected $_execute_mode = OCI_COMMIT_ON_SUCCESS;
 
     /**
-     * Constructor.
-     *
-     * $config is an array of key/value pairs containing configuration
-     * options.  These options are common to most adapters:
-     *
-     * username => (string) Connect to the database as this username.
-     * password => (string) Password associated with the username.
-     * dbname   => Either the name of the local Oracle instance, or the
-     *             name of the entry in tnsnames.ora to which you want to connect.
-     *
-     * @param array $config An array of configuration keys.
-     * @throws Zend_Db_Adapter_Exception
-     */
-    public function __construct(array $config)
-    {
-        if (! array_key_exists('password', $config) || ! array_key_exists('username', $config)) {
-            throw new Zend_Db_Adapter_Exception('config array must have at least a username and a password');
-        }
-
-        // @todo Let this protect backward-compatibility for one release, then remove
-        if (array_key_exists('database', $config) || ! array_key_exists('dbname', $config)) {
-            $config['dbname'] = $config['database'];
-            unset($config['database']);
-            trigger_error("Deprecated config key 'database', use 'dbname' instead.", E_USER_NOTICE);
-        }
-
-        // keep the config
-        $this->_config = array_merge($this->_config, (array) $config);
-
-        // create a profiler object
-        $enabled = false;
-        if (array_key_exists('profiler', $this->_config)) {
-            $enabled = (bool) $this->_config['profiler'];
-            unset($this->_config['profiler']);
-        }
-
-        $this->_profiler = new Zend_Db_Profiler($enabled);
-    }
-
-    /**
      * Creates a connection resource.
      *
      * @return void
@@ -114,6 +75,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         }
 
         if (!extension_loaded('oci8')) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_DB_Adapter_Oracle_Exception('The OCI8 extension is required for this adapter but not loaded');
         }
 
@@ -130,6 +95,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
 
         // check the connection
         if (!$this->_connection) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_Db_Adapter_Oracle_Exception(oci_error());
         }
     }
@@ -197,7 +166,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName).'.CURRVAL FROM dual');
+        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName).'.CURRVAL FROM dual';
+        $value = $this->fetchOne($sql);
         return $value;
     }
 
@@ -212,7 +182,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName).'.NEXTVAL FROM dual');
+        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName).'.NEXTVAL FROM dual';
+        $value = $this->fetchOne($sql);
         return $value;
     }
 
@@ -232,7 +203,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
      * @return integer
-     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
@@ -377,6 +347,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected function _commit()
     {
         if (!oci_commit($this->_connection)) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
         }
         $this->_setExecuteMode(OCI_COMMIT_ON_SUCCESS);
@@ -391,6 +365,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected function _rollBack()
     {
         if (!oci_rollback($this->_connection)) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_Db_Adapter_Oracle_Exception(oci_error($this->_connection));
         }
         $this->_setExecuteMode(OCI_COMMIT_ON_SUCCESS);
@@ -415,7 +393,11 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 $this->_fetchMode = $mode;
                 break;
             default:
-                throw new Zend_Db_Adapter_Exception('Invalid fetch mode specified');
+                /**
+                 * @see Zend_Db_Adapter_Oracle_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Oracle/Exception.php';
+                throw new Zend_Db_Adapter_Oracle_Exception('Invalid fetch mode specified');
                 break;
         }
     }
@@ -433,11 +415,19 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     {
         $count = intval($count);
         if ($count <= 0) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_Db_Adapter_Oracle_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
+            /**
+             * @see Zend_Db_Adapter_Oracle_Exception
+             */
+            require_once 'Zend/Db/Adapter/Oracle/Exception.php';
             throw new Zend_Db_Adapter_Oracle_Exception("LIMIT argument offset=$offset is not valid");
         }
 
@@ -460,7 +450,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
 
     /**
      * @param integer $mode
-     * @throws Zend_Db_Adapter_Exception
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     private function _setExecuteMode($mode)
     {
@@ -471,7 +461,11 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 $this->_execute_mode = $mode;
                 break;
             default:
-                throw new Zend_Db_Adapter_Exception('wrong execution mode specified');
+                /**
+                 * @see Zend_Db_Adapter_Oracle_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Oracle/Exception.php';
+                throw new Zend_Db_Adapter_Oracle_Exception('wrong execution mode specified');
                 break;
         }
     }

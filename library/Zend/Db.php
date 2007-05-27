@@ -42,6 +42,9 @@ require_once 'Zend/Db/Exception.php';
  */
 class Zend_Db
 {
+
+    const CASE_FOLDING = 'caseFolding';
+
     /**
      * PDO constant values discovered by this script result:
      *

@@ -485,4 +485,90 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
     }
+
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * DB2 and Oracle return identifiers in uppercase naturally,
+     * so those test suites will override this method.
+     */
+    protected function _getCaseNaturalIdentifier()
+    {
+        return 'case_folded_identifier';
+    }
+
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * SQLite needs to do metadata setup,
+     * because it uses the in-memory database,
+     * so that test suite will override this method.
+     */
+    protected function _testAdapterOptionCaseFoldingSetup(Zend_Db_Adapter_Abstract $db)
+    {
+        $db->getConnection();
+    }
+
+    /**
+     * Used by:
+     * - testAdapterOptionCaseFoldingNatural()
+     * - testAdapterOptionCaseFoldingUpper()
+     * - testAdapterOptionCaseFoldingLower()
+     *
+     * @param int $case
+     * @return string
+     */
+    public function _testAdapterOptionCaseFoldingCommon($case)
+    {
+        $params = $this->_util->getParams();
+        
+        $params['options'] = array(
+            Zend_Db::CASE_FOLDING => $case
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $this->_testAdapterOptionCaseFoldingSetup($db);
+        $products = $db->quoteIdentifier('zfproducts');
+        $product_name = $db->quoteIdentifier('product_name');
+        /*
+         * it is important not to delimit the pname identifier
+         * in the following query
+         */
+        $sql = "SELECT $product_name AS case_folded_identifier FROM $products";
+        $stmt = $db->query($sql);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+        $keys = array_keys($result[0]);
+        return $keys[0];
+    }
+
+    /**
+     * Test the connection's CASE_FOLDING option.
+     * Case: Zend_Db::CASE_NATURAL
+     */
+    public function testAdapterOptionCaseFoldingNatural()
+    {
+        $natural = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_NATURAL);
+        $expected = $this->_getCaseNaturalIdentifier();
+        $this->assertEquals($natural, $expected, 'Natural case does not match');
+    }
+
+     /**
+     * Test the connection's CASE_FOLDING option.
+     * Case: Zend_Db::CASE_UPPER
+     */
+    public function testAdapterOptionCaseFoldingUpper()
+    {
+        $upper = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_UPPER);
+        $expected = strtoupper($this->_getCaseNaturalIdentifier());
+        $this->assertEquals($upper, $expected, 'Upper case does not match');
+    }
+
+     /**
+     * Test the connection's CASE_FOLDING option.
+     * Case: Zend_Db::CASE_LOWER
+     */
+    public function testAdapterOptionCaseFoldingLower()
+    {
+        $lower = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_LOWER);
+        $expected = strtolower($this->_getCaseNaturalIdentifier());
+        $this->assertEquals($lower, $expected, 'Lower case does not match');
+    }
+
 }

@@ -113,6 +113,16 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
             'Expecting to get product_id 2');
     }
 
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * DB2 and Oracle return identifiers in uppercase naturally,
+     * so those test suites will override this method.
+     */
+    protected function _getCaseNaturalIdentifier()
+    {
+        return 'CASE_FOLDED_IDENTIFIER';
+    }
+
     public function getDriver()
     {
         return 'Pdo_Oci';

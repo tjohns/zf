@@ -91,6 +91,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             }
             $queryResult->close();
         } else {
+            /**
+             * @see Zend_Db_Adapter_Mysqli_Exception
+             */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception($this->getConnection()->error);
         }
@@ -148,6 +151,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             }
             $queryResult->close();
         } else {
+            /**
+             * @see Zend_Db_Adapter_Mysqli_Exception
+             */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception($this->getConnection()->error);
         }
@@ -194,7 +200,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 }
                 ++$p;
             }
-            $desc[$row['Field']] = array(
+            $desc[$this->foldCase($row['Field'])] = array(
                 'SCHEMA_NAME'      => null,
                 'TABLE_NAME'       => $tableName,
                 'COLUMN_NAME'      => $row['Field'],
@@ -243,6 +249,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             $port
         );
         if ($this->_connection === false || mysqli_connect_errno()) {
+            /**
+             * @see Zend_Db_Adapter_Mysqli_Exception
+             */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception(mysqli_connect_error());
         }
@@ -348,9 +357,11 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 $this->_fetchMode = $mode;
                 break;
             default:
+                /**
+                 * @see Zend_Db_Adapter_Mysqli_Exception
+                 */
                 require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
                 throw new Zend_Db_Adapter_Mysqli_Exception('Invalid fetch mode specified');
-                break;
         }
     }
 
@@ -366,12 +377,18 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     {
         $count = intval($count);
         if ($count <= 0) {
+            /**
+             * @see Zend_Db_Adapter_Mysqli_Exception
+             */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
+            /**
+             * @see Zend_Db_Adapter_Mysqli_Exception
+             */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception("LIMIT argument offset=$offset is not valid");
         }

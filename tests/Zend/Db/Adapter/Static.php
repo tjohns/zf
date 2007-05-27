@@ -85,6 +85,22 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Check for config options that are mandatory.
+     * Throw exceptions if any are missing.
+     *
+     * @param array $config
+     * @throws Zend_Db_Adapter_Exception
+     */
+    protected function _checkRequiredOptions(array $config)
+    {
+        // we need at least a dbname
+        if (! array_key_exists('dbname', $config)) {
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
+        }
+    }
+    
+    /**
      * Prepares and executes a SQL statement with bound data.
      *
      * @param  string|Zend_Db_Select $sql  The SQL statement with placeholders.

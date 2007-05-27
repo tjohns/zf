@@ -242,6 +242,26 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
     }
 
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * DB2 and Oracle return identifiers in uppercase naturally,
+     * so those test suites will override this method.
+     */
+    protected function _getCaseNaturalIdentifier()
+    {
+        return 'CASE_FOLDED_IDENTIFIER';
+    }
+
+    public function testAdapterOptionCaseFoldingUpper()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support case-folding array keys yet.');
+    }
+
+    public function testAdapterOptionCaseFoldingLower()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support case-folding array keys yet.');
+    }
+
     public function getDriver()
     {
         return 'Oracle';

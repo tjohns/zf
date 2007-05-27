@@ -169,7 +169,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             // get the column names that will result
             $this->_keys = array();
             foreach ($this->_meta->fetch_fields() as $col) {
-                $this->_keys[] = $col->name;
+                $this->_keys[] = $this->_adapter->foldCase($col->name);
             }
 
             // set up a binding space for result variables

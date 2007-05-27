@@ -64,7 +64,7 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
      *
      * @param array $config An array of configuration keys.
      */
-    public function __construct($config)
+    public function __construct(array $config = array())
     {
         if (isset($config['sqlite2']) && $config['sqlite2']) {
             $this->_pdoType = 'sqlite2';
@@ -75,6 +75,22 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
         $this->_config['password'] = null;
 
         return parent::__construct($config);
+    }
+
+    /**
+     * Check for config options that are mandatory.
+     * Throw exceptions if any are missing.
+     *
+     * @param array $config
+     * @throws Zend_Db_Adapter_Exception
+     */
+    protected function _checkRequiredOptions(array $config)
+    {
+        // we need at least a dbname
+        if (! array_key_exists('dbname', $config)) {
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
+        }
     }
 
     /**

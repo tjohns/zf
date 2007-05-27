@@ -45,31 +45,6 @@ require_once 'Zend/Db/Statement/Pdo.php';
  */
 abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 {
-    /**
-     * Constructor.
-     *
-     * $config is an array of key/value pairs containing configuration
-     * options:
-     *
-     * dbname         => (string) The name of the database to use (required).
-     * username       => (string) Connect to the database as this username (optional).
-     * password       => (string) Password associated with the username (optional).
-     * host           => (string) What host to connect to (default 127.0.0.1).
-     * driver_options => (array)  A key=>value array of PDO driver-specific connection options (optional).
-     *
-     * @param  array $config An array of configuration keys.
-     * @return void
-     */
-    public function __construct(array $config = array())
-    {
-        parent::__construct($config);
-
-        if (isset($config['driver_options'])) {
-            $this->_config['driver_options'] = $config['driver_options'];
-        } else {
-            $this->_config['driver_options'] = array();
-        }
-    }
 
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
@@ -84,6 +59,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         // don't pass the username, password, and driver_options in the DSN
         unset($dsn['username']);
         unset($dsn['password']);
+        unset($dsn['options']);
         unset($dsn['driver_options']);
 
         // use all remaining parts in the DSN
@@ -109,11 +85,19 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
         // check for PDO extension
         if (!extension_loaded('pdo')) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception('The PDO extension is required for this adapter but not loaded');
         }
 
         // check the PDO driver is available
         if (!in_array($this->_pdoType, PDO::getAvailableDrivers())) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception('The ' . $this->_pdoType . ' driver is not currently installed');
         }
 
@@ -130,8 +114,8 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
             $this->_profiler->queryEnd($q);
 
-            // leave columns as returned by the database driver
-            $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+            // set the PDO connection to perform case-folding on array keys, or not
+            $this->_connection->setAttribute(PDO::ATTR_CASE, $this->_config['options'][Zend_Db::CASE_FOLDING]);
 
             // always use exceptions.
             $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -285,6 +269,10 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
                 $this->_fetchMode = $mode;
                 break;
             default:
+                /**
+                 * @see Zend_Db_Adapter_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Exception.php';
                 throw new Zend_Db_Adapter_Exception('Invalid fetch mode specified');
                 break;
         }

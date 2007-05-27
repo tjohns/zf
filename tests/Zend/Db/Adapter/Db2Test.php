@@ -43,10 +43,10 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             unset($p['password']);
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'password' for login credentials.", $e->getMessage());
         }
 
@@ -55,10 +55,10 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             unset($p['username']);
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'username' for login credentials.", $e->getMessage());
         }
 
@@ -67,10 +67,10 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
             unset($p['dbname']);
             $db = new Zend_Db_Adapter_Db2($p);
             $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Db2_Exception');
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Db2_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Db2_Exception, got '.get_class($e));
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
             $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
         }
 
@@ -86,39 +86,13 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     }
 
     /**
-     * Test the Adapter's limit() method.
-     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * DB2 and Oracle return identifiers in uppercase naturally,
+     * so those test suites will override this method.
      */
-    public function testAdapterLimit()
+    protected function _getCaseNaturalIdentifier()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(1, $result[0]['product_id'],
-            'Expecting to get product_id 1');
-    }
-
-    public function testAdapterLimitOffset()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(2, $result[0]['product_id'],
-            'Expecting to get product_id 2');
+        return 'CASE_FOLDED_IDENTIFIER';
     }
 
     public function getDriver()

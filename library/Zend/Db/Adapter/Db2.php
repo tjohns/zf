@@ -19,13 +19,19 @@
  *
  */
 
-/** Zend_Db_Adapter_Abstract */
+/**
+ * @see Zend_Db
+ */
+require_once 'Zend/Db.php';
+
+/**
+ * @see Zend_Db_Adapter_Abstract
+ */
 require_once 'Zend/Db/Adapter/Abstract.php';
 
-/** Zend_Db_Adapter_Db2_Exception */
-require_once 'Zend/Db/Adapter/Db2/Exception.php';
-
-/** Zend_Db_Statement_Db2 */
+/**
+ * @see Zend_Db_Statement_Db2
+ */
 require_once 'Zend/Db/Statement/Db2.php';
 
 
@@ -82,50 +88,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     protected $_lastInsertTable = null;
 
-     /**
-     * Constructor.
-     *
-     * $config is an array of key/value pairs containing configuration
-     * options.  These options are common to most adapters:
-     *
-     * dbname         => (string) The name of the database to user
-     * username       => (string) Connect to the database as this username.
-     * password       => (string) Password associated with the username.
-     * host           => (string) What host to connect to, defaults to localhost
-     * port           => (string) The port of the database, defaults to 50000
-     * persistent     => (boolean) Whether to use a persistent connection or not, defaults to false
-     * protocol       => (string) The network protocol, defaults to TCPIP
-     * options        => (array)  Other database options such as autocommit, case, and cursor options
-     *
-     * @param array $config An array of configuration keys.
-     */
-    public function __construct(array $config)
-    {
-        if (! array_key_exists('password', $config)) {
-            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'password' for login credentials.");
-        }
-
-        if (! array_key_exists('username', $config)) {
-            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'username' for login credentials.");
-        }
-
-        if (! array_key_exists('dbname', $config)) {
-            throw new Zend_Db_Adapter_Db2_Exception("Configuration array must have a key for 'dbname' that names the database instance.");
-        }
-
-        // keep the config
-        $this->_config = array_merge($this->_config, (array) $config);
-
-        // create a profiler object
-        $enabled = false;
-        if (array_key_exists('profiler', $this->_config)) {
-            $enabled = (bool) $this->_config['profiler'];
-            unset($this->_config['profiler']);
-        }
-
-        $this->_profiler = new Zend_Db_Profiler($enabled);
-    }
-
     /**
      * Creates a connection resource.
      *
@@ -139,6 +101,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
 
         if (!extension_loaded('ibm_db2')) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_DB_Adapter_Db2_Exception('The IBM DB2 extension is required for this adapter but not loaded');
         }
 
@@ -150,14 +116,18 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             $conn_func_name = 'db2_connect';
         }
 
-        if (!isset($this->_config['options'])) {
-            // config options were not set, so set it to an empty array
-            $this->_config['options'] = array();
+        if (!isset($this->_config['driver_options']['autocommit'])) {
+            // set execution mode
+            $this->_config['driver_options']['autocommit'] = &$this->_execute_mode;
         }
 
-        if (!isset($this->_config['options']['autocommit'])) {
-            // set execution mode
-            $this->_config['options']['autocommit'] = &$this->_execute_mode;
+        if (isset($this->_config['options'][Zend_Db::CASE_FOLDING])) {
+            $caseAttrMap = array(
+                Zend_Db::CASE_NATURAL => DB2_CASE_NATURAL,
+                Zend_Db::CASE_UPPER   => DB2_CASE_UPPER,
+                Zend_Db::CASE_LOWER   => DB2_CASE_LOWER
+            );
+            $this->_config['driver_options']['DB2_ATTR_CASE'] = $caseAttrMap[$this->_config['options'][Zend_Db::CASE_FOLDING]];
         }
 
         if ($this->_config['host'] !== 'localhost') {
@@ -173,7 +143,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $dbname,
                 null,
                 null,
-                $this->_config['options']
+                $this->_config['driver_options']
             );
         } else {
             // host is localhost, so use standard connection params
@@ -181,12 +151,16 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $this->_config['dbname'],
                 $this->_config['username'],
                 $this->_config['password'],
-                $this->_config['options']
+                $this->_config['driver_options']
             );
         }
 
         // check the connection
         if (!$this->_connection) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_Db_Adapter_Db2_Exception(db2_conn_errormsg(), db2_conn_error());
         }
     }
@@ -239,6 +213,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 db2_autocommit($this->_connection, $mode);
                 break;
             default:
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
                 throw new Zend_Db_Adapter_Db2_Exception("execution mode not supported");
                 break;
         }
@@ -270,6 +248,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     public function getQuoteIdentifierSymbol()
     {
+        $this->_connect();
         $info = db2_server_info($this->_connection);
         $identQuote = $info->IDENTIFIER_QUOTE_CHAR;
         return $identQuote;
@@ -282,9 +261,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     public function listTables()
     {
-        if (!$this->_connection) {
-            $this->_connect();
-        }
+        $this->_connect();
+
         // take the most general case and assume no z/OS
         // since listTables() takes no parameters
         $stmt = db2_tables($this->_connection);
@@ -349,31 +327,56 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
         $desc = array();
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
+        /**
+         * To avoid case issues, fetch using FETCH_NUM
+         */
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+
+        /**
+         * The ordering of columns is defined by the query so we can map
+         * to variables to improve readability
+         */
+        $tabschema      = 0;
+        $tabname        = 1;
+        $colname        = 2;
+        $colno          = 3;
+        $typename       = 4;
+        $default        = 5;
+        $nulls          = 6;
+        $length         = 7;
+        $scale          = 8;
+        $identityCol    = 9;
+        $tabconstype    = 10;
+        $colseq         = 11;
+
         foreach ($result as $key => $row) {
             list ($primary, $primaryPosition, $identity) = array(false, null, false);
-            if ($row['TABCONSTTYPE'] == 'P') {
+            if ($row[$tabconstype] == 'P') {
                 $primary = true;
-                $primaryPosition = $row['COLSEQ'];
+                $primaryPosition = $row[$colseq];
             }
             /**
              * In IBM DB2, an column can be IDENTITY
              * even if it is not part of the PRIMARY KEY.
              */
-            if ($row['IDENTITY'] == 'Y') {
+            if ($row[$identityCol] == 'Y') {
                 $identity = true;
             }
-            $desc[$row['COLNAME']] = array(
-                'SCHEMA_NAME'      => $row['TABSCHEMA'],
-                'TABLE_NAME'       => $row['TABNAME'],
-                'COLUMN_NAME'      => $row['COLNAME'],
-                'COLUMN_POSITION'  => $row['COLNO']+1,
-                'DATA_TYPE'        => $row['TYPENAME'],
-                'DEFAULT'          => $row['DEFAULT'],
-                'NULLABLE'         => (bool) ($row['NULLS'] == 'Y'),
-                'LENGTH'           => $row['LENGTH'],
-                'SCALE'            => $row['SCALE'],
-                'PRECISION'        => ($row['TYPENAME'] == 'DECIMAL' ? $row['LENGTH'] : 0),
+
+
+            // only colname needs to be case adjusted
+            $desc[$this->foldCase($row[$colname])] = array(
+                'SCHEMA_NAME'      => $row[$tabschema],
+                'TABLE_NAME'       => $row[$tabname],
+                'COLUMN_NAME'      => $row[$colname],
+                'COLUMN_POSITION'  => $row[$colno]+1,
+                'DATA_TYPE'        => $row[$typename],
+                'DEFAULT'          => $row[$default],
+                'NULLABLE'         => (bool) ($row[$nulls] == 'Y'),
+                'LENGTH'           => $row[$length],
+                'SCALE'            => $row[$scale],
+                'PRECISION'        => ($row[$typename] == 'DECIMAL' ? $row[$length] : 0),
                 'UNSIGNED'         => null, // @todo
                 'PRIMARY'          => $primary,
                 'PRIMARY_POSITION' => $primaryPosition,
@@ -391,19 +394,22 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @param string $sequenceName
      * @return integer
-     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
         $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $value = $this->fetchOne($sql);
+        return $value;
+        /*
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         if ($result) {
-            return $result[0]['VAL'];
+            return $result[0][$this->foldCase('VAL')];
         } else {
             return null;
         }
+         */
     }
 
     /**
@@ -413,19 +419,22 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @param string $sequenceName
      * @return integer
-     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
         $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $value = $this->fetchOne($sql);
+        return $value;
+        /*
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         if ($result) {
-            return $result[0]['VAL'];
+            return $result[0][$this->foldCase('VAL')];
         } else {
             return null;
         }
+         */
     }
 
     /**
@@ -444,7 +453,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @param string $tableName OPTIONAL
      * @param string $primaryKey OPTIONAL
      * @return integer
-     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
@@ -460,13 +468,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
 
         $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
-        $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
-        if ($result) {
-            return $result[0]['VAL'];
-        } else {
-            return null;
-        }
+        $value = $this->fetchOne($sql);
+        return $value;
     }
 
     /**
@@ -487,6 +490,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     protected function _commit()
     {
         if (!db2_commit($this->_connection)) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_Db_Adapter_Db2_Exception(
                 db2_conn_errormsg($this->_connection),
                 db2_conn_error($this->_connection));
@@ -503,6 +510,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     protected function _rollBack()
     {
         if (!db2_rollback($this->_connection)) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_Db_Adapter_Db2_Exception(
                 db2_conn_errormsg($this->_connection),
                 db2_conn_error($this->_connection));
@@ -526,6 +537,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $this->_fetchMode = $mode;
                 break;
             default:
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
                 throw new Zend_Db_Adapter_Db2_Exception('Invalid fetch mode specified');
                 break;
         }
@@ -543,23 +558,36 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     {
         $count = intval($count);
         if ($count <= 0) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
             throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument offset=$offset is not valid");
         }
 
+        if ($offset == 0) {
+            $limit_sql = $sql . " FETCH FIRST $count ROWS ONLY";
+            return $limit_sql;
+        }
+
         /**
-         * Oracle does not implement the LIMIT clause as some RDBMS do.
+         * DB2 does not implement the LIMIT clause as some RDBMS do.
          * We have to simulate it with subqueries and ROWNUM.
-         * Unfortunately because we use the column wildcard "*", 
+         * Unfortunately because we use the column wildcard "*",
          * this puts an extra column into the query result set.
          */
         $limit_sql = "SELECT z2.*
             FROM (
-                SELECT ROW_NUMBER() OVER() AS zend_db_rownum, z1.*
+                SELECT ROW_NUMBER() OVER() AS \"ZEND_DB_ROWNUM\", z1.*
                 FROM (
                     " . $sql . "
                 ) z1

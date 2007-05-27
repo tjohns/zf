@@ -38,7 +38,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     /**
      * Statement resource handle.
      */
-    protected $_stmt;
+    protected $_stmt = null;
 
     /**
      * Column names.
@@ -67,8 +67,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         if (!$this->_stmt) {
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
-                db2_stmt_errormsg($this->_stmt),
-                db2_stmt_error($this->_stmt)
+                db2_stmt_errormsg(),
+                db2_stmt_error()
             );
         }
     }
@@ -166,6 +166,10 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             return array(false, 0, '');
         }
 
+        /*
+         * Return three-valued array like PDO.  But DB2 does not distinguish
+         * between SQLCODE and native RDBMS error code, so repeat the SQLCODE.
+         */
         return array(
             db2_stmt_error($this->_stmt),
             db2_stmt_error($this->_stmt),
@@ -314,4 +318,30 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         return $num;
     }
 
+     /**
+     * Returns an array containing all of the result set rows.
+     *
+     * @param int $style OPTIONAL Fetch mode.
+     * @param int $col   OPTIONAL Column number, if fetch mode is by column.
+     * @return array Collection of rows, each in a format by the fetch mode.
+     * @throws Zend_Db_Statement_Exception
+     *
+     * Behaves like parent, but if limit()
+     * is used, the final result removes the extra column
+     * 'zend_db_rownum'
+     */
+    public function fetchAll($style = null, $col = null)
+    {
+        $data = parent::fetchAll($style, $col);
+        $results = array();
+	$remove = $this->_adapter->foldCase('ZEND_DB_ROWNUM');
+
+        foreach ($data as $row) {
+            if (is_array($row) && array_key_exists($remove, $row)) {
+                unset($row[$remove]);
+            }
+            $results[] = $row;
+        }
+        return $results;
+    }
 }
