@@ -130,20 +130,16 @@
         <xi:include href="module_specs/Zend_Filter-WritingFilters.xml" />
         <xi:include href="module_specs/Zend_Filter_Input.xml" />
     </chapter>
-	<chapter id="zend.gdata">
+    <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
-        <xi:include href="module_specs/Zend_Gdata_Base.xml" />
-        <xi:include href="module_specs/Zend_Gdata_Blogger.xml" />
-        <xi:include href="module_specs/Zend_Gdata_Calendar.xml" />
-        <xi:include href="module_specs/Zend_Gdata_CodeSearch.xml" />
         <!--
-        <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Calendar.xml" />
         -->
-        <xi:include href="module_specs/Zend_Gdata_Data.xml" />
-		<xi:include href="module_specs/Zend_Gdata_Exception.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
