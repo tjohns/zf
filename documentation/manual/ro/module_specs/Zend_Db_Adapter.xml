@@ -220,6 +220,13 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <listitem>
                     <para>
                         <emphasis role="strong">driver_options</emphasis>:
+                        this parameter is an associative array of options
+                        that are generic to all Zend_Db_Adapter classes.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">driver_options</emphasis>:
                         this parameter is an associative array of additional
                         options that are specific to a given database
                         extension.  One typical use of this parameter is to 
@@ -227,6 +234,35 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                     </para>
                 </listitem>
             </itemizedlist>
+
+            <example id="zend.db.adapter.connecting.parameters.example">
+                <title>Passing the case-folding option to the factory</title>
+                <para>
+                    You can specify this option by the constant
+                    <code>Zend_Db::CASE_FOLDING</code>.
+                    This corresponds to the <code>ATTR_CASE</code> attribute in
+                    PDO and IBM DB2 database drivers, adjusting the case of
+                    string keys in query result sets.  The option takes values
+                    <code>Zend_Db::CASE_NATURAL</code> (the default),
+                    <code>Zend_Db::CASE_UPPER</code>, and
+                    <code>Zend_Db::CASE_LOWER</code>.
+                </para>
+                <programlisting role="php"><![CDATA[<?php
+
+$options = array(
+    Zend_Db::CASE_FOLDING => Zend_Db::CASE_UPPER
+);
+
+$params = array(
+    'host'           => '127.0.0.1',
+    'username'       => 'webuser',
+    'password'       => 'xxxxxxxx',
+    'dbname'         => 'test',
+    'options'        => $options
+);
+
+$db = Zend_Db::factory('Db2', $params);
+]]></programlisting>
 
             <example id="zend.db.adapter.connecting.parameters.example">
                 <title>Passing PDO driver options to the factory</title>
@@ -1545,6 +1581,13 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                     <para>
                         The Oracle extension does not support positional
                         parameters.  You must use named parameters.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Currently the <code>Zend_Db::CASE_FOLDING</code> option
+                        is not supported by the Oracle adapter. To use this
+                        option with Oracle, you must use the PDO OCI adapter.
                     </para>
                 </listitem>
             </itemizedlist>
