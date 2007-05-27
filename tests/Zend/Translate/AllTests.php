@@ -10,6 +10,7 @@ require_once 'Zend/Translate/ArrayTest.php';
 require_once 'Zend/Translate/GettextTest.php';
 require_once 'Zend/Translate/CsvTest.php';
 require_once 'Zend/Translate/TmxTest.php';
+require_once 'Zend/Translate/QtTest.php';
 require_once 'Zend/Translate/XliffTest.php';
 
 class Zend_Translate_AllTests
@@ -27,6 +28,7 @@ class Zend_Translate_AllTests
         $suite->addTestSuite('Zend_Translate_GettextTest');
         $suite->addTestSuite('Zend_Translate_CsvTest');
         $suite->addTestSuite('Zend_Translate_TmxTest');
+        $suite->addTestSuite('Zend_Translate_QtTest');
         $suite->addTestSuite('Zend_Translate_XliffTest');
 
         return $suite;

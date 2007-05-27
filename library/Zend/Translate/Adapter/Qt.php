@@ -36,7 +36,7 @@ require_once 'Zend/Translate/Adapter.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
+class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
     // Internal variables
     private $_file        = false;
     private $_cleared     = array();
@@ -49,7 +49,7 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
     private $_ttag        = true;
     
     /**
-     * Generates the xliff adapter
+     * Generates the Qt adapter
      * This adapter reads with php's xml_parser
      *
      * @param  string              $data     Translation data
@@ -63,11 +63,11 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
 
 
     /**
-     * Load translation data (XLIFF file reader)
+     * Load translation data (QT file reader)
      *
      * @param  string  $locale    Locale/Language to add data for, identical with locale identifier,
      *                            see Zend_Locale for more information
-     * @param  string  $filename  XLIFF file to add, full path must be given for access
+     * @param  string  $filename  QT file to add, full path must be given for access
      * @param  array   $option    OPTIONAL Options to use
      * @throws Zend_Translation_Exception
      */
@@ -83,6 +83,8 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
         }
 
+        $this->_target = $locale;
+        
         $this->_file = xml_parser_create();
         xml_set_object($this->_file, $this);
         xml_parser_set_option($this->_file, XML_OPTION_CASE_FOLDING, 0);
@@ -100,28 +102,21 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
     private function _startElement($file, $name, $attrib)
     {
         switch(strtolower($name)) {
-            case 'file':
-                $this->_source = $attrib['source-language'];
-                $this->_target = $attrib['target-language'];
-                $this->_translate[$this->_source] = array();
+            case 'ts':
                 $this->_translate[$this->_target] = array();
                 break;
-            case 'trans-unit':
-                $this->_transunit = true;
+            case 'message':
+                $this->_source = null;
+                $this->_stag = false;
+                $this->_ttag = false;
+                $this->_scontent = null;
+                $this->_tcontent = null;
                 break;
             case 'source':
-                if ($this->_transunit === true) {
-                    $this->_scontent = null;
-                    $this->_stag = true;
-                    $this->_ttag = false;
-                }
+                $this->_stag = true;
                 break;
-            case 'target':
-                if ($this->_transunit === true) {
-                    $this->_tcontent = null;
-                    $this->_ttag = true;
-                    $this->_stag = false;
-                }
+            case 'translation':
+                $this->_ttag = true;
                 break;
             default:
                 break;
@@ -131,25 +126,17 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
     private function _endElement($file, $name)
     {
         switch (strtolower($name)) {
-            case 'trans-unit':
-                $this->_transunit = null;
-                $this->_scontent = null;
-                $this->_tcontent = null;
-                break;
             case 'source':
-                if (!empty($this->_scontent) and !empty($this->_tcontent) or 
-                    !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
-                    $this->_translate[$this->_source][$this->_scontent] = $this->_scontent;
-                }
                 $this->_stag = false;
                 break;
-            case 'target':
+            case 'translation':
                 if (!empty($this->_scontent) and !empty($this->_tcontent) or 
-                    !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
+                    !array_key_exists($this->_scontent, $this->_translate[$this->_target])) {
                     $this->_translate[$this->_target][$this->_scontent] = $this->_tcontent;
                 }
                 $this->_ttag = false;
                 break;
+            case 'message':
             default:
                 break;
         }
@@ -157,11 +144,11 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
 
     private function _contentElement($file, $data)
     {
-        if (($this->_transunit !== null) and ($this->_source !== null) and ($this->_stag === true)) {
+        if ($this->_stag === true) {
             $this->_scontent .= $data;
         }
 
-        if (($this->_transunit !== null) and ($this->_target !== null) and ($this->_ttag === true)) {
+        if ($this->_ttag === true) {
             $this->_tcontent .= $data;
         }
     }
@@ -173,6 +160,6 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
      */
     public function toString()
     {
-        return "Xliff";
+        return "Qt";
     }
 }
