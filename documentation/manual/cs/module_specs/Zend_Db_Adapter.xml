@@ -219,7 +219,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">driver_options</emphasis>:
+                        <emphasis role="strong">options</emphasis>:
                         this parameter is an associative array of options
                         that are generic to all Zend_Db_Adapter classes.
                     </para>
@@ -263,6 +263,7 @@ $params = array(
 
 $db = Zend_Db::factory('Db2', $params);
 ]]></programlisting>
+            </example>
 
             <example id="zend.db.adapter.connecting.parameters.example">
                 <title>Passing PDO driver options to the factory</title>
