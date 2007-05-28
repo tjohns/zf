@@ -177,7 +177,7 @@ base/path/
     </sect2>
 
     <sect2 id="zend.view.introduction.accessors">
-        <title>Narzędziowe metody dostępowe/title>
+        <title>Narzędziowe metody dostępowe</title>
 
         <para>
             W większości przypadków będziesz używał tylko metod 
