@@ -166,7 +166,7 @@ class Zend_Translate {
 
 
     /**
-     * Returns all avaiable locales/anguages from this adapter
+     * Returns all avaiable locales/languages from this adapter
      *
      * @return array
      */
@@ -177,7 +177,7 @@ class Zend_Translate {
 
 
     /**
-     * is the wished language avaiable ?
+     * Is the wished language avaiable ?
      *
      * @param  string|Zend_Locale  $locale  Is the locale/language avaiable
      * @return boolean
