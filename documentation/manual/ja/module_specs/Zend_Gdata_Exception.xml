@@ -1,77 +1,74 @@
 <sect1 id="zend.gdata.exception">
-    <title>Catching Gdata Exceptions</title>
+    <title>Gdata の例外処理</title>
 
     <para>
-        The <code>Zend_Gdata__App_Exception</code> class is a base class
-        for exceptions thrown by Zend_Gdata.  You can catch any exception
-        thrown by Zend_Gdata by catching Zend_Gdata_App_Exception.
+        <code>Zend_Gdata__App_Exception</code> は、Zend_Gdata
+        がスローする例外の基底クラスです。Zedn_Gdata
+        がスローする例外は、すべて Zend_Gdata_App_Exception でキャッチできます。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
-    // Report the exception to the user
+    // 例外の内容をユーザに報告します
     die($ex->getMessage());
 }
 ?>]]></programlisting>
 
     <para>
-        The following exception subclasses are used by Zend_Gdata:
+        Zend_Gdata では、以下のような例外サブクラスを使用しています。
 
         <itemizedlist>
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_AuthException</code>
-                    indicates that the user's account credentials were not valid.
+                    は、ユーザのアカウントの情報が無効であることを表します。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_BadMethodCallException</code>
-                    indicates that a method was called for a service
-                    that does not support the method.  For example,
-                    the CodeSearch service does not support <code>post()</code>.
+                    は、そのサービスがサポートしていないメソッドをコールしたことを表します。
+                    たとえば、CodeSearch サービスは <code>post()</code>
+                    をサポートしていません。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_HttpException</code>
-                    indicates that an HTTP request was not successful.  
-                    Provides the ability to get the full Zend_Http_Response
-                    object to determine the exact cause of the failure in 
-                    cases where <code>$e->getMessage()</code> does not provide
-                    enough details.
+                    は、HTTP リクエストが失敗したことを表します。
+                    Zend_Http_Response オブジェクトの中身を調べることで、
+                    実際の原因がわかります。この場合は
+                    <code>$e->getMessage()</code> の情報だけでは不十分です。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_InvalidArgumentException</code>
-                    is thrown when the application provides a value that
-                    is not valid in a given context.  For example,
-                    specifying a Calendar visibility value of "banana",
-                    or fetching a Blogger feed without specifying
-                    any blog name.
+                    は、その状況では無効な値を指定したことを表します。
+                    たとえば、カレンダーの可視性に "banana"
+                    を指定したり、blog の名前を省略して Blogger のフィードを取得したりといった場合です。
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        You can use these exception subclasses to handle specific exceptions
-        differently.  See the API documentation for information on which 
-        exception subclasses are thrown by which methods in Zend_Gdata.
+        これらの例外サブクラスを使用すると、より細やかな例外処理をすることができます。
+        どの Zend_Gdata のメソッドがどんな例外サブクラスをスローするのかについては、
+        API ドキュメントを参照ください。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
-    // The user's credentials were incorrect.
-    // It would be appropriate to give the user a second try.
+    // ユーザの認証に失敗しました
+    // もう一度認証を行うなどの処置が適切でしょう
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
-    // Google Data servers cannot be contacted.
+    // Google Data のサーバに接続できませんでした
     die($httpEx->getMessage);
 }
 ?>]]></programlisting>
