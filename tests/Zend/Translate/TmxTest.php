@@ -65,11 +65,11 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
 
     public function testIsTranslated()
     {
-        $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en.tmx');
+        $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en.tmx', 'en');
 
         $this->assertEquals($adapter->isTranslated('Message 1'), true);
         $this->assertEquals($adapter->isTranslated('Message 6'), false);
-        $this->assertEquals($adapter->isTranslated('Message 1', true), false);
+        $this->assertEquals($adapter->isTranslated('Message 1', true), true);
         $this->assertEquals($adapter->isTranslated('Message 1', true, 'en'), true);
         $this->assertEquals($adapter->isTranslated('Message 1', false, 'es'), false);
     }
