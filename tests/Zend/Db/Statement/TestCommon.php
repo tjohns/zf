@@ -442,8 +442,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
-    /* @todo
-    public function testStatementBindParamByInteger()
+    public function testStatementBindParamByPosition()
     {
         $this->markTestIncomplete();
 
@@ -451,12 +450,12 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
-        $productIdValue   = 4;
-        $productNameValue = 'Solaris';
-
         $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
         $this->assertTrue($stmt->bindParam(1, $productIdValue));
         $this->assertTrue($stmt->bindParam(2, $productNameValue));
+
+        $productIdValue   = 4;
+        $productNameValue = 'Solaris';
 
         // no params as args to execute()
         try {
@@ -476,9 +475,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
         $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
-     */
 
-    /* @todo
     public function testStatementBindParamByName()
     {
         $this->markTestIncomplete();
@@ -510,9 +507,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
         $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
-     */
 
-    /* @todo
     public function testStatementBindParamException()
     {
         $this->markTestIncomplete();
@@ -534,17 +529,23 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
     }
-     */
 
-    /* @todo
-    public function testStatementBindValue()
+    public function testStatementBindValueByPosition()
     {
         $this->markTestIncomplete();
     }
-     */
 
-    /* @todo
-    public function testStatementBindColumnByInteger()
+    public function testStatementBindValueByName()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testStatementBindValueException()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testStatementBindColumnByPosition()
     {
         $this->markTestIncomplete();
 
@@ -573,13 +574,10 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
         $stmt->closeCursor();
     }
-     */
 
-    /* @todo
     public function testStatementBindColumnByName()
     {
         $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
@@ -605,7 +603,11 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
         $stmt->closeCursor();
     }
-     */
+
+    public function testStatementBindColumnException()
+    {
+        $this->markTestIncomplete();
+    }
 
     public function testStatementNextRowset()
     {
