@@ -1,12 +1,29 @@
 <?php
+
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Uri
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Uri
+ * @see Zend_Uri
  */
 require_once 'Zend/Uri.php';
 
@@ -17,14 +34,17 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
+ * @category   Zend
  * @package    Zend_Uri
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Tests for proper URI decomposition
-	 */
+    /**
+     * Tests for proper URI decomposition
+     */
     public function testSimple()
     {
         $this->_testValidUri('http://www.zend.com');
@@ -104,10 +124,26 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->_testValidUri('http://localhost.localdomain');
     }
-    
+
     public function testSquareBrackets()
     {
-    	$this->_testValidUri('https://example.com/foo/?var[]=1&var[]=2&some[thing]=3');
+        $this->_testValidUri('https://example.com/foo/?var[]=1&var[]=2&some[thing]=3');
+    }
+
+    /**
+     * Ensures that successive slashes are considered valid
+     *
+     * @return void
+     */
+    public function testSuccessiveSlashes()
+    {
+        $this->_testValidUri('http://example.com//');
+        $this->_testValidUri('http://example.com///');
+        $this->_testValidUri('http://example.com/foo//');
+        $this->_testValidUri('http://example.com/foo///');
+        $this->_testValidUri('http://example.com/foo//bar');
+        $this->_testValidUri('http://example.com/foo///bar');
+        $this->_testValidUri('http://example.com/foo//bar/baz//fob/');
     }
 
     /**
@@ -117,12 +153,7 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function _testValidUri($uri)
     {
-        try {
-            $obj = Zend_Uri::factory($uri);
-        } catch (Exception $e) {
-            $this->fail("$uri - " . $e->getMessage());
-        }
-        $this->assertTrue($obj->valid(), "$uri - Failed validation");
+        $obj = Zend_Uri::factory($uri);
         $this->assertEquals($uri, $obj->getUri(), 'getUri() returned value that differs from input');
     }
 
@@ -133,11 +164,10 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function _testInvalidUri($uri)
     {
-        $e = null;
         try {
             $obj = Zend_Uri::factory($uri);
-        } catch (Exception $e) {
+            $this->fail('Zend_Uri_Exception was expected but not thrown');
+        } catch (Zend_Uri_Exception $e) {
         }
-        $this->assertTrue($e instanceof Zend_Uri_Exception, 'Zend_Uri_Exception was expected but not thrown');
     }
 }
