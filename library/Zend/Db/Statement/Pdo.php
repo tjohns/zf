@@ -97,7 +97,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     public function bindColumn($column, &$param, $type = null)
     {
         try {
-            return $this->_stmt->bindColumn($column, $param, $type);
+            if (is_null($type)) {
+                return $this->_stmt->bindColumn($column, $param);
+            } else {
+                return $this->_stmt->bindColumn($column, $param, $type);
+            }
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
             throw new Zend_Db_Statement_Exception($e->getMessage());
@@ -139,8 +143,15 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
      */
     public function bindValue($parameter, $value, $type = null)
     {
+        if (is_string($parameter) && $parameter[0] != ':') {
+            $parameter = ":$parameter";
+        }
         try {
-            return $this->_stmt->bindValue($parameter, $value, $type);
+            if (is_null($type)) {
+                return $this->_stmt->bindValue($parameter, $value);
+            } else {
+                return $this->_stmt->bindValue($parameter, $value, $type);
+            }
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
             throw new Zend_Db_Statement_Exception($e->getMessage());
@@ -221,7 +232,7 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
-    public function execute(array $params = array())
+    public function execute(array $params = null)
     {
         try {
             return $this->_stmt->execute($params);

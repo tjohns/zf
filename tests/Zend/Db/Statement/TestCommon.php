@@ -444,28 +444,25 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindParamByPosition()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
 
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
-        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
-        $this->assertTrue($stmt->bindParam(1, $productIdValue));
-        $this->assertTrue($stmt->bindParam(2, $productNameValue));
+        $productIdValue   = 4;
+        $productNameValue = 'AmigaOS';
 
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
+        $this->assertTrue($stmt->bindParam(1, $productIdValue), 'Expected bindParam(1) to return true');
+        $this->assertTrue($stmt->bindParam(2, $productNameValue), 'Expected bindParam(2) to return true');
+
+        // we should be able to set the values after binding them
         $productIdValue   = 4;
         $productNameValue = 'Solaris';
 
         // no params as args to execute()
-        try {
-            $retval = $stmt->execute();
-            if ($retval === false) {
-                var_dump($stmt->errorInfo());
-            }
-        } catch (Zend_Exception $e) {
-            echo "*** Caught exception: ".$e->getMessage()."\n";
-        }
+        $this->assertTrue($stmt->execute(), 'Expected execute() to return true');
 
         $select = $this->_db->select()
             ->from('zfproducts')
@@ -478,26 +475,27 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindParamByName()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
 
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
         $productIdValue   = 4;
-        $productNameValue = 'Solaris';
+        $productNameValue = 'AmigaOS';
 
         $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
         // test with colon prefix
-        $this->assertTrue($stmt->bindParam(':id', $productIdValue));
+        $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
         // test with no colon prefix
-        $this->assertTrue($stmt->bindParam('name', $productNameValue));
+        $this->assertTrue($stmt->bindParam('name', $productNameValue), 'Expected bindParam(\'name\') to return true');
+
+        // we should be able to set the values after binding them
+        $productIdValue   = 4;
+        $productNameValue = 'Solaris';
 
         // no params as args to execute()
-        $retval = $stmt->execute();
-        if ($retval === false) {
-            var_dump($stmt->errorInfo());
-        }
+        $this->assertTrue($stmt->execute(), 'Expected execute() to return true');
 
         $select = $this->_db->select()
             ->from('zfproducts')
@@ -508,46 +506,73 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
 
-    public function testStatementBindParamException()
+    public function testStatementBindValueByPosition()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
 
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
 
-        $id   = 4;
-        $name = 'Solaris';
+        $productIdValue   = 4;
+        $productNameValue = 'AmigaOS';
 
-        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (4, 'Solaris')");
-        // test invalid parameter binding
-        try {
-            $stmt->bindParam('mxyzptlk!', $id);
-            $this->fail('Expected to catch Zend_Db_Statement_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        }
-    }
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (?, ?)");
+        $this->assertTrue($stmt->bindValue(1, $productIdValue), 'Expected bindValue(1) to return true');
+        $this->assertTrue($stmt->bindValue(2, $productNameValue), 'Expected bindValue(2) to return true');
 
-    public function testStatementBindValueByPosition()
-    {
-        $this->markTestIncomplete();
+        // we should be able to change the values without changing what gets inserted
+        $productIdValue   = 5;
+        $productNameValue = 'Solaris';
+
+        // no params as args to execute()
+        $this->assertTrue($stmt->execute(), 'Expected execute() to return true');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id >= 4");
+        $result = $this->_db->fetchAll($select);
+        $stmt->closeCursor();
+
+        $this->assertEquals(array(array('product_id' => '4', 'product_name' => 'AmigaOS')), $result);
     }
 
     public function testStatementBindValueByName()
     {
-        $this->markTestIncomplete();
-    }
+        // $this->markTestIncomplete();
 
-    public function testStatementBindValueException()
-    {
-        $this->markTestIncomplete();
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $productIdValue   = 4;
+        $productNameValue = 'AmigaOS';
+
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+        // test with colon prefix
+        $this->assertTrue($stmt->bindValue(':id', $productIdValue), 'Expected bindValue(\':id\') to return true');
+        // test with no colon prefix
+        $this->assertTrue($stmt->bindValue('name', $productNameValue), 'Expected bindValue(\'name\') to return true');
+
+        // we should be able to change the values without changing what gets inserted
+        $productIdValue   = 5;
+        $productNameValue = 'Solaris';
+
+        // no params as args to execute()
+        $this->assertTrue($stmt->execute(), 'Expected execute() to return true');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id >= 4");
+        $result = $this->_db->fetchAll($select);
+        $stmt->closeCursor();
+
+        $this->assertEquals(array(array('product_id' => '4', 'product_name' => 'AmigaOS')), $result);
     }
 
     public function testStatementBindColumnByPosition()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
 
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
@@ -577,7 +602,8 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindColumnByName()
     {
-        $this->markTestIncomplete();
+        // $this->markTestIncomplete();
+
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
@@ -602,11 +628,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('OS X', $prodNameValue);
 
         $stmt->closeCursor();
-    }
-
-    public function testStatementBindColumnException()
-    {
-        $this->markTestIncomplete();
     }
 
     public function testStatementNextRowset()
