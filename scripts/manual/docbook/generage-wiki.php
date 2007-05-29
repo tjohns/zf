@@ -41,7 +41,7 @@ $token = $soap->login($confluenceUser, $confluencePass);
 $home  = $soap->getPage($token, $space, 'Home');
 
 $jira  = new SoapClient('http://framework.zend.com/issues/rpc/soap/jirasoapservice-v2?wsdl');
-$jiraToken   = $jira->login('andries', 'sju5sdsn');
+$jiraToken   = $jira->login($jiraUser, $jiraPass);
 $_components = $jira->getComponents($jiraToken, 'ZF');
 
 $components = array();
