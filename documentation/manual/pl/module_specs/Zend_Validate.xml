@@ -53,25 +53,26 @@
         </para>
 
         <para>
-            The <code>getErrors()</code> method returns an array of shorter
-            strings that identify the reason(s) for validation failure.  These
-            strings are meant to identify the errors.  These strings are
-            intended to be checked by your application code, not output to
-            users.  The error strings are class-dependent; each validate class
-            defines its own set of error strings to identify the cause of the
-            error.  Each class also provides <code>const</code> definitions to
-            match these error identifiers.
+            Metoda <code>getErrors()</code> zwraca tablicę krótszych wersji
+            komunikatów identyfikujących powód wystąpienia błędu. Te łańcuchy 
+            znaków identyfikują błędy. Mogą być one sprawdzane przez kod
+            aplikacji, nie służą do wyświetlania użytkownikom. Komunikaty o
+            błędach są zależne od klasy; każda klasa walidatora definiuj własny
+            zestaw komunikatów o błędach w celu identyfikowania powodu 
+            wystąpienia błędu. Każda klasa posiada także definicje stałych
+            <code>const</code> odpowiadające identyfikatorom błędów.
         </para>
 
         <note>
             <para>
-                The <code>getMessages()</code> and <code>getErrors()</code>
-                methods return validation failure information only for the most
-                recent <code>isValid()</code> call.  Each call to
-                <code>isValid()</code> clears any messages and errors caused by
-                a previous <code>isValid()</code> call, because it's likely
-                that each call to <code>isValid()</code> is made for a
-                different input value.
+                Metody <code>getMessages()</code> oraz <code>getErrors()</code>
+                zwracają informacje o nieudanej walidacji tylko dla ostatniego
+                wywołania metody <code>isValid()</code>. Każde wywołanie metody 
+                <code>isValid()</code> czyści wszystkie komunikaty i błędy, 
+                które wystąpiły podczas poprzedniego wywołania metody 
+                <code>isValid()</code>, ponieważ najczęściej jest tak, że każde 
+                wywołanie metody <code>isValid()</code> występuje dla innej 
+                wartości danych przychodzących.
             </para>
         </note>
 
@@ -106,27 +107,29 @@ if ($validator->isValid($email)) {
         <title>Własne komunikaty</title>
 
         <para>
-            Validate classes provide a <code>setMessage()</code> method with
-            which you can specify the format of a message returned by
-            <code>getMessages()</code> in case of validation failure.  The
-            first argument of this method is a string containing the error
-            message.  You can include tokens in this string which will be
-            substituted with data relevant to the validator.  The token
-            <code>%value%</code> is supported by all validators; this is
-            substituted with the value you passed to <code>isValid()</code>.
-            Other tokens may be supported on a case-by-case basis in each
-            validate class.  For example, <code>%max%</code> is a token
-            supported by Zend_Validate_LessThan.
+            Klasy walidatorów zapewniają metodę <code>setMessage()</code> za
+            pomocą które możesz określić format komunikatu zwracanego przez
+            metodę <code>getMessages()</code> w przypadku nieudanej walidacji.  
+            Pierwszy argument tej metody jest łańcuchem znaków zawierającym
+            treść komunikatu błędu. W tym łańcuchu znaków możesz użyć 
+            identyfikatorów, które zostaną zastąpione odpowiednimi danymi 
+            pochodzącymi z walidatora. Identyfikator <code>%value%</code> jest 
+            obsługiwany przez wszystkie walidatory; będzie on zastąpiony 
+            wartością, która została przekazana do metody <code>isValid()</code>.
+            Inne identyfikatory mogą być obsługiwane indywidualnie w każdej 
+            klasie walidatora. Na przykład identyfikator <code>%max%</code> jest 
+            obsługiwany przez klasę.
         </para>
 
         <para>
-            The second optional argument is a string that corresponds to the
-            error identifiers returned by the <code>getErrors()</code> method.
-            If you omit the second argument, <code>setMessage()</code> assumes
-            the message you specify should be used for the first message
-            declared in the validate class.  Many validate classes only have
-            one error message, so there is no need to specify distinctly which
-            message you are specifying.
+            Drugi opcjonalny argument jest łańcuchem znaków, który odpowiada
+            identyfikatorowi błędu zwracanemu przez metodę 
+            <code>getErrors()</code>. Jeśli pominiesz drugi argument, metoda 
+            <code>setMessage()</code> założy, że komunikat, który określisz 
+            powinien być użyty dla pierwszego komunikatu zadeklarowanego w 
+            klasie. Wiele klas walidatorów posiada tylko jeden komunikat błędu,
+            więc nie ma potrzeby dokładnego określania komunikatu, który chcemy
+            nadpisać.
         </para>
 
         <para>
@@ -136,21 +139,22 @@ require_once 'Zend/Validate/StringLength.php';
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
-    'The string \'%value%\' is too short; it must be at least %min% characters',
+    'Łańcuch znaków \'%value%\' jest za krotki; musi składać się z przynajmniej %min% znaków',
     Zend_Validate_StringLength::TOO_SHORT);
 
 if (!$validator->isValid('word')) {
     $m = $validator->getMessages();
     echo $m[0];
 
-    // echoes "The string 'word' is too short; it must be at least 8 characters"
+    // echoes "Łańcuch znaków 'word' jest za krotki; musi składać się z przynajmniej 8 znaków"
 }
 ]]></programlisting>
         </para>
 
         <para>
-            You can set multiple messages using the <code>setMessages()</code>
-            method. Its argument is an array containing key/message pairs.
+            Możesz ustawić wiele komunikatów na raz używając metody 
+            <code>setMessages()</code>. Jej argumentem jest tablica zawierająca
+            pary klucz/komunikat.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/StringLength.php';
@@ -166,13 +170,13 @@ $validator->setMessages( array(
         </para>
 
         <para>
-            If your application requires even greater flexibility with which
-            it reports errors, you can access properties by the same name
-            as the message tokens supported by a given validate class.
-            The <code>value</code> property is always available in a
-            validator; it is the value you specified as the argument of
-            <code>isValid()</code>.  Other properties may be supported
-            on a case-by-case basis in each validate class.
+            Jeśli twoja aplikacja wymaga większej elastyczności w związku z 
+            raportowaniem błędów, możesz uzyskać dostęp do właściwości używając
+            tych samych nazw, co identyfikatory komunikatów używane przez daną 
+            klasę walidatora. Właściwość <code>value</code> jest zawsze dostępna 
+            w walidatorze; jest to wartość, która została podana jako argument 
+            metody <code>isValid()</code>. Inne właściwości mogą być obsługiwane 
+            indywidualnie w każdej klasie walidatora.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/StringLength.php';
@@ -180,7 +184,7 @@ require_once 'Zend/Validate/StringLength.php';
 $validator = new Zend_Validate_StringLength(8, 12);
 
 if (!validator->isValid('word')) {
-    echo 'Word failed: '
+    echo 'Słowo niepoprawne: '
         . $validator->value
         . '; długość nie jest pomiędzy '
         . $validator->min
@@ -198,16 +202,15 @@ if (!validator->isValid('word')) {
         <title>Użycie statycznej metody <code>is()</code></title>
 
         <para>
-            If it's inconvenient to load a given validate class and create an
-            instance of the validator, you can use the static method
-            <code>Zend_Validate::is()</code> as an alternative invocation
-            style.  The first argument of this method is a data input value,
-            that you would pass to the <code>isValid()</code> method.  The
-            second argument is a string, which corresponds to the basename of
-            the validate class, relative to the Zend_Validate namespace.  The
-            <code>is()</code> method automatically loads the class, creates an
-            instance, and applies the <code>isValid()</code> method to the data
-            input.
+            Jeśli niewygodne jest ładowanie danej klasy walidatora i tworzenie
+            instancji walidatora, możesz użyć statycznej metody 
+            <code>Zend_Validate::is()</code> jako alternatywnego sposobu 
+            wywołania. Pierwszym argumentem tej metody są dane wejściowe, które 
+            chcesz przekazać do metody <code>isValid()</code>. Drugi argument 
+            jest łańcuchem znaków, który odpowiada, bazowej nazwie klasy 
+            walidatora, relatywnie do przestrzeni nazw Zend_Validate. Metoda 
+            <code>is()</code> automatycznie ładuje klasę, tworzy instancję i 
+            wywołuje metodę <code>isValid()</code> na danych wejściowych.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate.php';
@@ -238,23 +241,24 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            The <code>is()</code> returns a boolean value, the same as the
-            <code>isValid()</code> method.  When using the static
-            <code>is()</code> method, errors and messages are not available.
+            Metoda <code>is()</code> zwraca wartość logiczną, taką samą jak 
+            metoda <code>isValid()</code>. Gdy używana jest metoda statyczna
+            <code>is()</code>, błędy i komunikaty są niedostępne.
         </para>
 
         <para>
-            The static usage can be convenient for invoking a validator ad hoc,
-            but if you have the need to run a validator for multiple inputs,
-            it's more efficient to use the non-static usage, creating an
-            instance of the validator object and calling its
-            <code>isValid()</code> method.
+            Użycie statyczne może być wygodne dla jednorazowego wywołania 
+            walidatora, ale jeśli musisz wywołać walidator dla większej ilości 
+            danych, bardziej efektywne jest wykorzystanie rozwiązania 
+            niestatycznego, czyli utworzenie instancji obiektu walidatora
+            i wywołanie metody <code>isValid()</code>.
         </para>
 
         <para>
-            Also, the Zend_Filter_Input class allows you to instantiate and run
-            multiple filter and validator classes on demand to process
-            sets of input data.  See <xref linked="zend.filter.input" />.
+            Dodatkowo klasa Zend_Filter_Input pozwala na utworzenie instancji
+            i wywołanie większej ilości klas filtrów i walidatorów w celu
+            przetworzenia zestawu danych wejściowych. Zobacz 
+            <xref linked="zend.filter.input" />.
         </para>
 
     </sect2>

@@ -51,7 +51,7 @@ $front->setParam('noErrorHandler', true);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Assuming $front is an instance of Zend_Controller_Front
+// Zakładając, że $front jest instancją klasy Zend_Controller_Front
 $front->setParam('noViewRenderer', true);
 ]]></programlisting>
 
@@ -69,10 +69,10 @@ $front->setParam('noViewRenderer', true);
         </para>
 
         <itemizedlist>
-            <listitem><para>Calls to <code>$this-&gt;render()</code></para></listitem>
-            <listitem><para>Calls to <code>$this-&gt;_forward()</code></para></listitem>
-            <listitem><para>Calls to <code>$this-&gt;_redirect()</code></para></listitem>
-            <listitem><para>Calls to the Redirector action helper</para></listitem>
+            <listitem><para>Wywołania metody <code>$this-&gt;render()</code></para></listitem>
+            <listitem><para>Wywołania metody <code>$this-&gt;_forward()</code></para></listitem>
+            <listitem><para>Wywołania metody <code>$this-&gt;_redirect()</code></para></listitem>
+            <listitem><para>Wywołania pomocniczej klasy akcji Redirector</para></listitem>
         </itemizedlist>
 
         <para>
@@ -109,14 +109,14 @@ public function preDispatch()
         <itemizedlist>
             <listitem>
                 <para>
-                    If you're rendering multiple view scripts in a single
-                    action, you don't need to change a thing.
+                    Jeśli renderujesz wiele skryptów widoków w jednej akcji,
+                    nie musisz nic zmieniać w tej kwestii.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    If you're simply calling <code>render()</code> with no
-                    arguments, you can remove such lines.
+                    Jeśli wywołujesz metodę <code>render()</code> bez argumentów,
+                    możesz po prostu usunąć te wywołania.
                 </para>
             </listitem>
             <listitem>

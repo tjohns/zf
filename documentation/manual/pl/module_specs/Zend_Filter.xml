@@ -80,16 +80,15 @@ echo $htmlEntities->filter('"'); // &quot;
         <title>Użycie statycznej metody <code>get()</code></title>
 
         <para>
-            If it's inconvenient to load a given filter class and create an
-            instance of the filter, you can use the static method
-            <code>Zend_Filter::get()</code> as an alternative invocation style.
-            The first argument of this method is a data input value, that you
-            would pass to the <code>filter()</code> method.  The second
-            argument is a string, which corresponds to the basename of the
-            filter class, relative to the Zend_Filter namespace.  The
-            <code>get()</code> method automatically loads the class, creates an
-            instance, and applies the <code>filter()</code> method to the data
-            input.
+            Jeśli niewygodne jest ładowanie danej klasy filtra i tworzenie
+            instancji filtra, możesz użyć statycznej metody 
+            <code>Zend_Filter::get()</code> jako alternatywnego sposobu 
+            wywołania. Pierwszym argumentem tej metody są dane wejściowe, które 
+            chcesz przekazać do metody <code>filter()</code>. Drugi argument 
+            jest łańcuchem znaków, który odpowiada, bazowej nazwie klasy filtra, 
+            relatywnie do przestrzeni nazw Zend_Filter. Metoda 
+            <code>get()</code> automatycznie ładuje klasę, tworzy instancję i 
+            wywołuje metodę <code>filter()</code> na danych wejściowych.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
@@ -112,17 +111,18 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
         </para>
 
         <para>
-            The static usage can be convenient for invoking a filter ad hoc,
-            but if you have the need to run a filter for multiple inputs,
-            it's more efficient to follow the first example above,
-            creating an instance of the filter object and calling its
-            <code>filter()</code> method.
+            Użycie statyczne może być wygodne dla jednorazowego wywołania 
+            filtra, ale jeśli musisz wywołać filtr dla większej ilości danych,
+            bardziej efektywne jest wykorzystanie rozwiązania pokazanego w 
+            pierwszym przykładzie, czyli utworzenie instancji obiektu filtra
+            i wywołanie metody <code>filter()</code>.
         </para>
 
         <para>
-            Also, the Zend_Filter_Input class allows you to instantiate and run
-            multiple filter and validator classes on demand to process
-            sets of input data.  See <xref linked="zend.filter.input" />.
+            Dodatkowo klasa Zend_Filter_Input pozwala na utworzenie instancji
+            i wywołanie większej ilości klas filtrów i walidatorów w celu
+            przetworzenia zestawu danych wejściowych. Zobacz 
+            <xref linked="zend.filter.input" />.
         </para>
 
     </sect2>
