@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Service_StrikeIron_USAddressVerification */
-require_once 'Zend/Service/StrikeIron/USAddressVerification.php';
+/** Zend_Service_StrikeIron_ZipCodeInfo */
+require_once 'Zend/Service/StrikeIron/ZipCodeInfo.php';
 
 /** Zend_Service_StrikeIron */
 require_once 'Zend/Service/StrikeIron.php';
@@ -35,15 +35,15 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_StrikeIron_USAddressVerificationTest extends PHPUnit_Framework_TestCase 
+class Zend_Service_StrikeIron_ZipCodeInfoTest extends PHPUnit_Framework_TestCase 
 {
     public function setUp()
     {
         $this->soapClient = new stdclass();
-        $this->service = new Zend_Service_StrikeIron_USAddressVerification('user', 
-                                                                           'pass', 
-                                                                           null, 
-                                                                           $this->soapClient);
+        $this->service = new Zend_Service_StrikeIron_ZipCodeInfo('user', 
+                                                                 'pass', 
+                                                                 null, 
+                                                                 $this->soapClient);
     }
     
     public function testInheritsFromBase()
@@ -53,14 +53,15 @@ class Zend_Service_StrikeIron_USAddressVerificationTest extends PHPUnit_Framewor
     
     public function testHasCorrectWsdl()
     {
-        $wsdl = 'http://ws.strikeiron.com/zf1.StrikeIron/USAddressVerification4_0?WSDL';
+        $wsdl = 'http://sdpws.strikeiron.com/zf1.StrikeIron/sdpZIPCodeInfo?WSDL';
         $this->assertEquals($wsdl, $this->service->getWsdl());
     }
-    
+
     public function testInstantiationFromFactory()
     {
         $strikeIron = new Zend_Service_StrikeIron('user', 'pass', null, $this->soapClient);
-        $this->assertType('Zend_Service_StrikeIron_USAddressVerification',
-                          $strikeIron->getService('USAddressVerification'));
+        $this->assertType('Zend_Service_StrikeIron_ZipCodeInfo',
+                          $strikeIron->getService('ZipCodeInfo'));
     }
+
 }

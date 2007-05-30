@@ -41,6 +41,9 @@ require_once 'Zend/Service/StrikeIron/SalesUseTaxBasicTest.php';
 /** Zend_Service_StrikeIron_USAddressVerificationBasicTest */
 require_once 'Zend/Service/StrikeIron/USAddressVerificationTest.php';
 
+/** Zend_Service_StrikeIron_ZipCodeInfoTest.php */
+require_once 'Zend/Service/StrikeIron/ZipCodeInfoTest.php';
+
 /** Zend_Service_StrikeIron_ResultDecoratorTest */
 require_once 'Zend/Service/StrikeIron/ResultDecoratorTest.php';
 
@@ -67,6 +70,7 @@ class Zend_Service_StrikeIron_AllTests
         $suite->addTestSuite('Zend_Service_StrikeIron_BaseTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_SalesUseTaxBasicTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_USAddressVerificationTest');
+        $suite->addTestSuite('Zend_Service_StrikeIron_ZipCodeInfoTest');
         return $suite;
     }
 }

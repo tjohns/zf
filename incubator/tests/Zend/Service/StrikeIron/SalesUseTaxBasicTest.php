@@ -22,6 +22,9 @@
 /** Zend_Service_StrikeIron_SalesUseTaxBasic */
 require_once 'Zend/Service/StrikeIron/SalesUseTaxBasic.php';
 
+/** Zend_Service_StrikeIron */
+require_once 'Zend/Service/StrikeIron.php';
+
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -54,4 +57,10 @@ class Zend_Service_StrikeIron_SalesUseTaxBasicTest extends PHPUnit_Framework_Tes
         $this->assertEquals($wsdl, $this->service->getWsdl());
     }
 
+    public function testInstantiationFromFactory()
+    {
+        $strikeIron = new Zend_Service_StrikeIron('user', 'pass', null, $this->soapClient);
+        $this->assertType('Zend_Service_StrikeIron_SalesUseTaxBasic',
+                          $strikeIron->getService('SalesUseTaxBasic'));
+    }
 }
