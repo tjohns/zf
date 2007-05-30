@@ -147,7 +147,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      * Create index
      *
      * @param mixed $directory
-     * @return Zend_Search_Lucene
+     * @return Zend_Search_Lucene_Interface
      */
     public static function create($directory)
     {
@@ -158,7 +158,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      * Open index
      *
      * @param mixed $directory
-     * @return Zend_Search_Lucene
+     * @return Zend_Search_Lucene_Interface
      */
     public static function open($directory)
     {
