@@ -8,8 +8,8 @@
     一个灵活的IDs和Tags系统(标识符和标记系统)存储缓存纪录.使用此方法,易于删除特定类型的纪录(例如:"删除所有标记为tag的纪录")
     </para>
     <para>
-        模块(<code>Zend_Cache_Core</code>) 的核心是通用,灵活和可配置.对于特定的需要,为了便捷,这里有一些extend<code>Zend_Cache_Core</code>的前端: 
-        <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+        模块(<code>Zend_Cache_Core</code>) 的核心是通用,灵活和可配置.对于特定的需要,为了便捷,这里有一些继承自<code>Zend_Cache_Core</code>的前端: 
+        <code>Output</code>, <code>File</code>, <code>Function</code> 和 <code>Class</code>.
     </para>
     <example>
         <title>调用 <code>Zend_Cache::factory()</code>取得一个前端</title>

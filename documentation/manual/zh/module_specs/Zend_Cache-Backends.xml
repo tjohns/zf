@@ -1,198 +1,256 @@
 <sect1 id="zend.cache.backends">
-    <title>Zend_Cache backends</title>
-    
-    <sect2 id="zend.cache.backends.file">
-        <title>Zend_Cache_Backend_File</title>
-        <para>
-            This backends stores cache records into files (in a choosen directory). 
-        </para>
-        <para>
-            Available options are :
-        </para>          
-        <table>
-            <title>Available options</title>
-            <tgroup cols="4">
-                 <thead>
-                      <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
-                    </row>
-                 </thead>
-                 <tbody>
-                      <row>
-                          <entry><code>cacheDir</code></entry>
-                          <entry><code>string</code></entry>
-                          <entry><code>'/tmp/'</code></entry>
-                          <entry>
-                              Directory where to store cache files    
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>fileLocking</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>true</code></entry>
-                          <entry>
-                            Enable / disable fileLocking : Can avoid cache corruption under 
-                            bad circumstances but it doesn't help on multithread webservers 
-                            or on NFS filesystems...
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>readControl</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>true</code></entry>
-                          <entry>
-                            Enable / disable read control : if enabled, a control key is 
-                            embeded in the cache file and this key is compared with the 
-                            one calculated after the reading.        
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>readControlType</code></entry>
-                          <entry><code>string</code></entry>
-                          <entry><code>'crc32'</code></entry>
-                          <entry>
-                            Type of read control (only if read control is enabled). Available values are :
-                            'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
-                            'strlen' for a length only test (fastest).
-                        </entry>
-                      </row>
-                      <row>
-                          <entry><code>hashedDirectoryLevel</code></entry>
-                          <entry><code>int</code></entry>
-                          <entry><code>0</code></entry>
-                          <entry>
-                            Hashed directory structure level :     0 means "no hashed directory 
-                             structure", 1 means "one level of directory", 2 means "two levels"... 
-                             This option can speed up the cache only when you have many thousands of 
-                             cache files. Only specific benchs can help you to choose the perfect 
-                             value for you. Maybe, 1 or 2 is a good start.
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>hashedDirectoryUmask</code></entry>
-                          <entry><code>int</code></entry>
-                          <entry><code>0700</code></entry>
-                          <entry>
-                              Umask for the hashed directory structure
-                        </entry>
-                      </row>
-                  </tbody>
-              </tgroup>
-          </table>
-    </sect2>
-    <sect2 id="zend.cache.backends.sqlite">
-        <title>Zend_Cache_Backend_Sqlite</title>
-        <para>
-            This backends stores cache records into a SQLite database.
-        </para>
-        <para>
-            Available options are :
-        </para>
-        <table>
-            <title>Available options</title>
-            <tgroup cols="4">
-                 <thead>
-                      <row>
-                           <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
-                    </row>
-                 </thead>
-                 <tbody>
-                      <row>
-                          <entry><code>cacheDBCompletePath (mandatory)</code></entry>
-                          <entry><code>string</code></entry>
-                          <entry><code>null</code></entry>
-                          <entry>
-                              The complete path (filename included) of the SQLite database
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>automaticVacuumFactor</code></entry>
-                          <entry><code>int</code></entry>
-                          <entry><code>10</code></entry>
-                          <entry>
-                              Disable / Tune the automatic vacuum process.
-                              The automatic vacuum process defragment the database file (and make it smaller)
-                              when a clean() or delete() is called :
-                              0 means no automatic vacuum ;
-                              1 means systematic vacuum (when delete() or clean() methods are called) ;
-                              x (integer) > 1 => automatic vacuum randomly 1 times on x clean() or delete().
-                          </entry>
-                      </row>
-                  </tbody>
-              </tgroup>
-          </table>
-    </sect2>
-    <sect2 id="zend.cache.backends.memcached">
-        <title>Zend_Cache_Backend_Memcached</title>
-        <para>
-            This backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
-            is a high-performance, distributed memory object caching system. To use this backend, 
-            you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
-        </para>
-        <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
-        </para>
-        <para>
-            Available options are :
-        </para>
-        <table>
-            <title>Available options</title>
-            <tgroup cols="4">
-                 <thead>
-                      <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
-                    </row>
-                 </thead>
-                 <tbody>
-                      <row>
-                          <entry><code>servers</code></entry>
-                          <entry><code>array</code></entry>
-                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
-                          <entry>
-                              An array of memcached servers ; each memcached server is described by an associative array :
-                              'host' => (string) : the name of the memcached server, 
-                              'port' => (int) : the port of the memcached server, 
-                              'persistent' => (bool) : use or not persistent connections to this memcached server
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>compression</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>flase</code></entry>
-                          <entry>
-                             true if you want to use on-the-fly compression
-                          </entry>
-                      </row>
-                  </tbody>
-              </tgroup>
-          </table>
-    </sect2>
-    <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_APC</title>
-        <para>
-            This backends stores cache records in shared memory through 
-            the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
-            (which is of course need for using this backend).
-        </para>
-        <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
-        </para>
-        <para>
-            There is no option for this backend.
-        </para>
-    </sect2>
-</sect1> 
+	<title>Zend_Cache后端</title>
+
+	<sect2 id="zend.cache.backends.file">
+		<title>Zend_Cache_Backend_File</title>
+		<para>此后端把缓存纪录存储到文件中去(在一个选定的目录中).</para>
+		<para>可用的选项有 :</para>
+		<table>
+			<title>可用选项</title>
+			<tgroup cols="4">
+				<thead>
+					<row>
+						<entry>选项</entry>
+						<entry>数据类型</entry>
+						<entry>默认值</entry>
+						<entry>描述</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<code>cacheDir</code>
+						</entry>
+						<entry>
+							<code>string</code>
+						</entry>
+						<entry>
+							<code>'/tmp/'</code>
+						</entry>
+						<entry>存放缓存文件的目录</entry>
+					</row>
+					<row>
+						<entry>
+							<code>fileLocking</code>
+						</entry>
+						<entry>
+							<code>boolean</code>
+						</entry>
+						<entry>
+							<code>true</code>
+						</entry>
+						<entry>
+							启用/禁用文件锁定 :
+							在比较坏的情况下,能够避免缓存中断,但在多线程Web服务器或者NFS文件系统中没有任何帮助.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>readControl</code>
+						</entry>
+						<entry>
+							<code>boolean</code>
+						</entry>
+						<entry>
+							<code>true</code>
+						</entry>
+						<entry>
+							启用/禁用读控制:
+							如果启用,控制键被嵌入到缓存文件中,并且这个键将与读取后计算出的值进行比较.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>readControlType</code>
+						</entry>
+						<entry>
+							<code>string</code>
+						</entry>
+						<entry>
+							<code>'crc32'</code>
+						</entry>
+						<entry>
+							读控制类型 (仅在读控制启用时). 可用的值有: 'md5' (最好但最慢),
+							'crc32' (安全性稍差,但更快,更好的选择), 'strlen' for a
+							length only test (最快).
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>hashedDirectoryLevel</code>
+						</entry>
+						<entry>
+							<code>int</code>
+						</entry>
+						<entry>
+							<code>0</code>
+						</entry>
+						<entry>
+							Hash目录结构层次: 0 表示"不使用hash的目录结构", 1 表示"一级目录结构"
+							, 2表示"二级目录"...
+							次选项在你有成千上万的缓存文件是能够加速缓存.只有相关的基准测试才能帮助你选择合适的值.也许1或2是一个好的开始.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>hashedDirectoryUmask</code>
+						</entry>
+						<entry>
+							<code>int</code>
+						</entry>
+						<entry>
+							<code>0700</code>
+						</entry>
+						<entry>目录结构的Unix umask</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</sect2>
+	<sect2 id="zend.cache.backends.sqlite">
+		<title>Zend_Cache_Backend_Sqlite</title>
+		<para>此后端把缓存纪录存储到SQLite数据库中.</para>
+		<para>可用的选项有:</para>
+		<table>
+			<title>可用选项</title>
+			<tgroup cols="4">
+				<thead>
+					<row>
+						<entry>选项</entry>
+						<entry>数据类型</entry>
+						<entry>默认值</entry>
+						<entry>描述</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<code>cacheDBCompletePath (强制)</code>
+						</entry>
+						<entry>
+							<code>string</code>
+						</entry>
+						<entry>
+							<code>null</code>
+						</entry>
+						<entry>SQLite数据库的完整和路径(包括文件名)</entry>
+					</row>
+					<row>
+						<entry>
+							<code>automaticVacuumFactor</code>
+						</entry>
+						<entry>
+							<code>int</code>
+						</entry>
+						<entry>
+							<code>10</code>
+						</entry>
+						<entry>
+							禁用 / 调整自动清理过程. 自动清理过程将对数据库文件进行碎片整理(and make
+							it smaller) 当clean() 或则 delete() 被调用时 : 0
+							表示不自动清理; 1 表示自动清理(当调用 delete() 或者 clean()
+							方法时) ; x (整数) > 1 => 当调用 delete() 或者 clean()
+							方法时随机清理1到x次.
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</sect2>
+	<sect2 id="zend.cache.backends.memcached">
+		<title>Zend_Cache_Backend_Memcached</title>
+		<para>
+			本后端把缓存纪录存储到memcached服务器.
+			<ulink url="http://www.danga.com/memcached/">
+				memcached
+			</ulink>
+			是一个高性能的,分布式内存对象缓存系统.要使用此后端,你需要一个memecached守护进程(daemon)和
+			<ulink url="http://pecl.php.net/package/memcache">
+				memcache PECL 扩展
+			</ulink>
+			.
+		</para>
+		<para>
+			注意 : 使用此后端当设置"doNotTestCacheValidity=true"参数时,不支持"tags"
+		</para>
+		<para>可用的选项有:</para>
+		<table>
+			<title>可用选项</title>
+			<tgroup cols="4">
+				<thead>
+					<row>
+						<entry>选项</entry>
+						<entry>数据类型</entry>
+						<entry>默认值</entry>
+						<entry>描述</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<code>servers</code>
+						</entry>
+						<entry>
+							<code>array</code>
+						</entry>
+						<entry>
+							<code>
+								array(array('host' => 'localhost','port'
+								=> 11211, 'persistent' => true))
+							</code>
+						</entry>
+						<entry>
+							一个memcached服务器数组;其中每个memcached服务器描述为一个关联数组:
+							'host' => (string) : memcached服务器的名称, 'port'
+							=> (int) : memcached服务器端口, 'persistent' =>
+							(bool) : 是否使用到memcached服务器的持久连接
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>compression</code>
+						</entry>
+						<entry>
+							<code>boolean</code>
+						</entry>
+						<entry>
+							<code>flase</code>
+						</entry>
+						<entry>如果你想使用数据压缩,设置为true</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</sect2>
+	<sect2 id="zend.cache.backends.apc">
+		<title>Zend_Cache_Backend_APC</title>
+		<para>
+			此后端通过
+			<ulink url="http://pecl.php.net/package/APC">APC</ulink>
+			(Alternative PHP Cache) 扩展把缓存纪录存储于共享内存中 (当然为使用此后端,APC是需要的).
+		</para>
+		<para>
+			注意 : 使用此后端当设置"doNotTestCacheValidity=true"参数时,不支持"tags"
+		</para>
+		<para>此后端没有选项.</para>
+	</sect2>
+	<sect2 id="zend.cache.backends.platform">
+		<title>Zend_Cache_Backend_ZendPlatform</title>
+		<para>
+			本后端使用
+			<ulink url="http://www.zend.com/products/platform">
+				Zend Platform
+			</ulink>
+			产品的内容缓存API. 要使用此后端必须安装Zend Platform.
+		</para>
+		<para>
+			本后端支持标记(tags),但不支持
+			<code>CLEANING_MODE_NOT_MATCHING_TAG</code>
+			清除模式.
+		</para>
+		<para>此后端没有选项.</para>
+	</sect2>
+</sect1>
 <!--
-vim:se ts=4 sw=4 et:
+	vim:se ts=4 sw=4 et:
 -->

@@ -10,13 +10,13 @@
                 在有些前端<code>Function</code>中不需要条件执行,例如,当整个逻辑在前端内部实现的时候.
     </para></note>
     <note><para>
-    '缓存命中'是一个词汇,它表示当一个缓存纪录发现可用,是有效的并且是'fresh'的(换言之,就是还没有过期).'Cache miss' 表示当在缓存中找不到需要的数据时,发生缓存不命中.
+    '缓存命中'是一个术语,它表示当一个缓存纪录发现可用,是有效的并且是'fresh'的(换言之,就是还没有过期).'Cache miss' 表示当在缓存中找不到需要的数据时,发生缓存不命中.
         当一个Cache miss发生是,你必须生成你的数据,并使它被缓存.而对于缓存命中,后端自动透明地从Cache中取回缓存纪录.
     </para></note>
     <sect2 id="zend.cache.factory">
         <title><code>Zend_Cache</code> 工厂方法 </title>
         <para>
-            下面的示例给出了一个构造可用的<code>Zend_Cache</code>前端实例的好方法:
+            下面的示例给出了一个构造<code>Zend_Cache</code>前端实例的好方法:
         </para>
             <programlisting role="php"><![CDATA[<?php
         
@@ -60,7 +60,7 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
 ?>]]></programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
-        <title>Cleaning the cache</title>
+        <title>缓存清理</title>
         <para>
             删除特定id的Cache纪录,使用<code>remove()</code>方法:
         </para>
