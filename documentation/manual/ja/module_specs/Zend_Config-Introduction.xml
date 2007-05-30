@@ -54,6 +54,15 @@ $myApplicationObject->databaseConnect($config->database->type,
         コンストラクタに渡されたデータについて、
         階層化されたプロパティの形式でアクセスできるようになります。
     </para>
+    <para>
+        このようにオブジェクト思考形式でデータの値にアクセスするだけでなく、
+        <code>Zend_Config</code> では <code>get()</code> メソッドも用意しています。
+        これは、指定した要素が存在しない場合にデフォルト値を返すように設定できます。
+        たとえば次のように使用します。
+    </para>
+    <programlisting role="php"><![CDATA[<?php
+    $host = $config->database->get('host', 'localhost');
+    ]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
