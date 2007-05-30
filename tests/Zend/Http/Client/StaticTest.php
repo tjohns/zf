@@ -81,7 +81,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 		try {
 			$this->client->setUri('http://__invalid__.com');
 			$this->fail('Excepted invalid URI string exception was not thrown');
-		} catch (Zend_Http_Client_Exception $e) {
+		} catch (Zend_Uri_Exception $e) {
 			// We're good
 		}
 	}
