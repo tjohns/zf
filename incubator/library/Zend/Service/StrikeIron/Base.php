@@ -121,7 +121,8 @@ class Zend_Service_StrikeIron_Base
 
         // capture subscription info if returned in output headers
         if (isset($outputHeaders['SubscriptionInfo'])) {
-            $this->_subscriptionInfo = new Zend_Service_StrikeIron_ResultDecorator($outputHeaders['SubscriptionInfo']);
+            $info = (object)$outputHeaders['SubscriptionInfo'];
+            $this->_subscriptionInfo = new Zend_Service_StrikeIron_ResultDecorator($info);
         }
 
         // transform/decorate the result and return it                                                 
@@ -138,8 +139,8 @@ class Zend_Service_StrikeIron_Base
     protected function _initSoapClient($soapClient)
     {
         if (empty($soapClient)) {
-            $options    = array('trace' => true, 'exceptions' => true);
-            $soapClient = new SoapClient($this->_wsdl, $options);
+            $soapClient = new SoapClient($this->_wsdl, array('trace' => true, 
+                                                             'exceptions' => true));
         }
         $this->_soapClient = $soapClient;        
     }

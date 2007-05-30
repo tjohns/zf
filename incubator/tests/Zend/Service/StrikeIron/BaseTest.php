@@ -168,12 +168,37 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     {
         try {
             $this->base->throwTheException();
-            $this->foo();
+            $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Service_StrikeIron_Exception', $e);
             $this->assertEquals('Exception: foo', $e->getMessage());
             $this->assertEquals(43, $e->getCode());
         }
+    }
+    
+    public function testGettingSubscriptionInfo()
+    {
+        $this->assertEquals(0, count($this->soapClient->calls));
+        $info = $this->base->getSubscriptionInfo();
+        $this->assertEquals(1, count($this->soapClient->calls));
+        $this->assertEquals(3, $info->remainingHits);
+    }
+
+    public function testGettingSubscriptionInfoWithCaching()
+    {
+        $this->assertEquals(0, count($this->soapClient->calls));
+        $this->base->foo();
+        $this->base->getSubscriptionInfo();
+        $this->assertEquals(1, count($this->soapClient->calls));
+    }
+
+    public function testGettingSubscriptionOverridingCache()
+    {
+        $this->assertEquals(0, count($this->soapClient->calls));
+        $this->base->getSubscriptionInfo();
+        $this->assertEquals(1, count($this->soapClient->calls));
+        $this->base->getSubscriptionInfo(true);
+        $this->assertEquals(2, count($this->soapClient->calls));
     }
 }
 
