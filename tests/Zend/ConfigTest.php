@@ -258,5 +258,15 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertContains('test', $array[' ']);
         $this->assertContains('test', $array['']);
     }
+    
+    public function testZF1417_DefaultValues()
+    {
+        $config = new Zend_Config($this->_all);
+        $value = $config->get('notthere', 'default');
+        $this->assertTrue($value === 'default');
+        $this->assertTrue($config->notThere === null);
+
+    }
+    
 }
 
