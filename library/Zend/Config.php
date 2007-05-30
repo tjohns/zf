@@ -155,23 +155,12 @@ class Zend_Config implements Countable, Iterator
         $array = array();
         foreach ($this->_data as $key => $value) {
             if (is_object($value)) {
-                $array[$key] = $value->asArray();
+                $array[$key] = $value->toArray();
             } else {
                 $array[$key] = $value;
             }
         }
         return $array;
-    }
-
-    /**
-     * Return an associative array of the stored data.
-     *
-     * @deprecated 
-     * @return array
-     */
-    public function asArray()
-    {
-        return $this->toArray();
     }
     
     /**
