@@ -35,16 +35,21 @@
                 <row>
                     <entry>TMX</entry>
                     <entry>Utilise les fichiers tmx (*.tmx/*.xml)</entry>
-                    <entry>Industriellement compatible avec la traduction d'inter-application ; Format XML ; lisible pour l'homme</entry>
+                    <entry>Industriellement compatible avec la traduction d'inter-application ; format XML ; lisible pour l'homme</entry>
+                </row>
+                <row>
+                    <entry>QT</entry>
+                    <entry>Utilise les fichiers qt linguist (*.ts)</entry>
+                    <entry>Framework pour les applications mutualisés ; format XML ; lisible pour l'homme</entry>
                 </row>
                 <row>
                     <entry>XLIFF</entry>
                     <entry>Utilise les fichiers xliff (*.xliff/*.xml)</entry>
-                    <entry>	Un format plus simple que TMX mais lié à lui ; Format XML ; lisible pour l'homme</entry>
+                    <entry>Un format plus simple que TMX mais lié à lui ; format XML ; lisible pour l'homme</entry>
                 </row>
                 <row>
                     <entry>Autres</entry>
-                    <entry>*.sql, *.tbx, *.qt</entry>
+                    <entry>*.sql, *.tbx</entry>
                     <entry>Différents adaptateurs pourront être mis en application dans l'avenir.</entry>
                 </row>
             </tbody>
@@ -108,6 +113,19 @@
 
             <para>
                 La plupart des moyennes à grandes entreprises utilisent cet adaptateur. Les fichiers sont lisibles pour l'homme et sont indépendant du système.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.tmx">
+
+            <title>Zend_Translate_Adapter_Qt</title>
+
+            <para>
+                L'Adaptateur Qt est destiné à tous les clients qui ont des fichiers TS faits par QtLinguist comme source de traduction. QT est un fichier basé sur le format XML. Les fichiers XML sont humainement lisible, mais l'analyse syntaxique n'est pas si rapide qu'avec des fichiers gettext.
+            </para>
+
+            <para>
+                Plusieurs grands acteurs ont construit leur logiciel sur le framework QT. Les fichiers sont lisibles par l'homme et indépendants du système.
             </para>
         </sect3>
 
