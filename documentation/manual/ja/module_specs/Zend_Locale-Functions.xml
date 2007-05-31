@@ -46,7 +46,7 @@ print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に
 
     <sect2 id="zend.locale.equals">
 
-        <title>isEqual() - 同等</title>
+        <title>等式</title>
 
         <para>
             <code>Zend_Locale</code> は、
@@ -63,7 +63,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // ロケールが同一かどうかを調べます
-if ($locale->isEqual($mylocale) { 
+if ($locale->equals($mylocale) { 
     print "これらのロケールは同一です";
 }
 ?>]]></programlisting>

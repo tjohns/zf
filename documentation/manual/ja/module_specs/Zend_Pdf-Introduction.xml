@@ -52,7 +52,7 @@
             画像の描画
             <footnote>
                 <para>
-                JPG、PNG [8bit+Alpha まで] および TIFF 画像をサポートしています。
+                JPG、PNG [チャネルあたり8bit+Alpha まで] および TIFF 画像をサポートしています。
                 </para>
             </footnote>
             </para>
