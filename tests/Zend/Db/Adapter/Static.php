@@ -292,4 +292,15 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
         return $sql . " LIMIT $count OFFSET $offset";
     }
 
+    /**
+     * Check if the adapter supports real SQL parameters.
+     *
+     * @param string $type
+     * @return bool
+     */
+    public function supportsParameters($type)
+    {
+        return true;
+    }
+
 }

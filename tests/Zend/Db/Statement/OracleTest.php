@@ -96,6 +96,26 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $stmt->closeCursor();
     }
 
+    public function testStatementBindParamByPosition()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+    }
+
+    public function testStatementBindValueByPosition()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+    }
+
+    public function testStatementBindColumnByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
+    }
+
+    public function testStatementBindColumnByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
+    }
+
     public function getDriver()
     {
         return 'Oracle';

@@ -392,6 +392,13 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
             case Zend_Db::FETCH_OBJ:   // object
                 $this->_fetchMode = $mode;
                 break;
+            case Zend_Db::FETCH_BOUND: // bound to PHP variable
+                /**
+                 * @see Zend_Db_Adapter_Oracle_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Oracle/Exception.php';
+                throw new Zend_Db_Adapter_Oracle_Exception('FETCH_BOUND is not supported yet');
+                break;
             default:
                 /**
                  * @see Zend_Db_Adapter_Oracle_Exception
@@ -575,5 +582,23 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $result = $stmt->rowCount();
         return $result;
     }
+
+    /**
+     * Check if the adapter supports real SQL parameters.
+     *
+     * @param string $type 'positional' or 'named'
+     * @return bool
+     */
+    public function supportsParameters($type)
+    {
+        switch ($type) {
+            case 'named':
+                return true;
+            case 'positional':
+            default:
+                return false;
+        }
+    }
+
 }
 

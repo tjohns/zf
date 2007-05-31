@@ -401,15 +401,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return $value;
-        /*
-        $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
-        if ($result) {
-            return $result[0][$this->foldCase('VAL')];
-        } else {
-            return null;
-        }
-         */
     }
 
     /**
@@ -426,15 +417,6 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return $value;
-        /*
-        $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
-        if ($result) {
-            return $result[0][$this->foldCase('VAL')];
-        } else {
-            return null;
-        }
-         */
     }
 
     /**
@@ -536,6 +518,13 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             case Zend_Db::FETCH_OBJ:   // object
                 $this->_fetchMode = $mode;
                 break;
+            case Zend_Db::FETCH_BOUND:   // bound to PHP variable
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
+                throw new Zend_Db_Adapter_Db2_Exception('FETCH_BOUND is not supported yet');
+                break;
             default:
                 /**
                  * @see Zend_Db_Adapter_Db2_Exception
@@ -594,6 +583,23 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             ) z2
             WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
         return $limit_sql;
+    }
+
+    /**
+     * Check if the adapter supports real SQL parameters.
+     *
+     * @param string $type 'positional' or 'named'
+     * @return bool
+     */
+    public function supportsParameters($type)
+    {
+        switch ($type) {
+            case 'positional':
+                return true;
+            case 'named':
+            default:
+                return false;
+        }
     }
 
 }

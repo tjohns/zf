@@ -160,7 +160,7 @@ abstract class Zend_Db_Adapter_Abstract
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
             require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance.");
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'dbname' that names the database instance.");
         }
 
         if (! array_key_exists('password', $config)) {
@@ -861,5 +861,13 @@ abstract class Zend_Db_Adapter_Abstract
      * @return string
      */
     abstract public function limit($sql, $count, $offset = 0);
+
+    /**
+     * Check if the adapter supports real SQL parameters.
+     *
+     * @param string $type 'positional' or 'named'
+     * @return bool
+     */
+    abstract public function supportsParameters($type);
 
 }

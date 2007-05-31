@@ -444,8 +444,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindParamByPosition()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
@@ -468,15 +466,12 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             ->from('zfproducts')
             ->where("$product_id = 4");
         $result = $this->_db->fetchAll($select);
-        $stmt->closeCursor();
 
         $this->assertEquals(array(array('product_id' => $productIdValue, 'product_name' => $productNameValue)), $result);
     }
 
     public function testStatementBindParamByName()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
@@ -508,8 +503,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindValueByPosition()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
@@ -539,8 +532,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindValueByName()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
         $product_name = $this->_db->quoteIdentifier('product_name');
@@ -572,8 +563,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindColumnByPosition()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
@@ -602,8 +591,6 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementBindColumnByName()
     {
-        // $this->markTestIncomplete();
-
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 

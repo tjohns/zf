@@ -50,6 +50,72 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         $this->markTestIncomplete($this->getDriver() . ' gets the wrong result in this test.');
     }
 
+    public function testStatementBindParamByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' crashes when binding params');
+    }
+
+    public function testStatementBindParamByName()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $productIdValue   = 4;
+        $productNameValue = 'AmigaOS';
+
+        try {
+            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            // test with colon prefix
+            $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
+            // test with no colon prefix
+            $this->assertTrue($stmt->bindParam('name', $productNameValue), 'Expected bindParam(\'name\') to return true');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->assertEquals("Invalid bind-variable position ':id'", $e->getMessage());
+        }
+    }
+
+    public function testStatementBindValueByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' crashes when binding params');
+    }
+
+    public function testStatementBindValueByName()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $productIdValue   = 4;
+        $productNameValue = 'AmigaOS';
+
+        try {
+            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            // test with colon prefix
+            $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
+            // test with no colon prefix
+            $this->assertTrue($stmt->bindParam('name', $productNameValue), 'Expected bindParam(\'name\') to return true');
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->assertEquals("Invalid bind-variable position ':id'", $e->getMessage());
+        }
+    }
+
+    public function testStatementBindColumnByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
+    }
+
+    public function testStatementBindColumnByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
+    }
+
     public function getDriver()
     {
         return 'Db2';

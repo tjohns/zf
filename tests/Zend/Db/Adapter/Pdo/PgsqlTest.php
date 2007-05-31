@@ -78,7 +78,7 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     public function testAdapterExceptionInvalidLoginCredentials()
     {
         $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
+        $params['username'] = 'xxxxxxxx'; // invalid username
 
         try {
             $db = new Zend_Db_Adapter_Pdo_Pgsql($params);

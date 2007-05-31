@@ -87,6 +87,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
         $position = $this->_normalizeBindParam($parameter, $variable, true, true);
+        // the value is returned 0-indexed, but db2_bind_param() wants it to be 1-indexed
+        $position++;
 
         if ($type === null) {
             $type = DB2_PARAM_IN;
@@ -187,9 +189,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     public function execute(array $params = array())
     {
         if (!$this->_stmt) {
-            $connection = $this->_adapter->getConnection();
-            $sql = $this->_joinSql();
-            $this->_stmt = db2_prepare($connection, $sql);
+            return false;
         }
 
         if (!$this->_stmt) {
@@ -256,9 +256,16 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             case Zend_Db::FETCH_OBJ :
                 $fetch_function = "db2_fetch_object";
                 break;
+            case Zend_Db::FETCH_BOUND: // bound to PHP variable
+                /**
+                 * @see Zend_Db_Adapter_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
+                throw new Zend_Db_Adapter_Mysqli_Exception('FETCH_BOUND is not supported yet');
+                break;
             default:
                 require_once 'Zend/Db/Statement/Db2/Exception.php';
-                throw new Zend_Db_Statement_Db2_Exception('invalid fetch mode specified');
+                throw new Zend_Db_Statement_Db2_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
 
@@ -324,7 +331,6 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      * @param int $style OPTIONAL Fetch mode.
      * @param int $col   OPTIONAL Column number, if fetch mode is by column.
      * @return array Collection of rows, each in a format by the fetch mode.
-     * @throws Zend_Db_Statement_Exception
      *
      * Behaves like parent, but if limit()
      * is used, the final result removes the extra column
@@ -334,7 +340,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     {
         $data = parent::fetchAll($style, $col);
         $results = array();
-	$remove = $this->_adapter->foldCase('ZEND_DB_ROWNUM');
+        $remove = $this->_adapter->foldCase('ZEND_DB_ROWNUM');
 
         foreach ($data as $row) {
             if (is_array($row) && array_key_exists($remove, $row)) {

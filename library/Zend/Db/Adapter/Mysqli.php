@@ -356,6 +356,13 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             case Zend_Db::FETCH_OBJ:
                 $this->_fetchMode = $mode;
                 break;
+            case Zend_Db::FETCH_BOUND: // bound to PHP variable
+                /**
+                 * @see Zend_Db_Adapter_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
+                throw new Zend_Db_Adapter_Mysqli_Exception('FETCH_BOUND is not supported yet');
+                break;
             default:
                 /**
                  * @see Zend_Db_Adapter_Mysqli_Exception
@@ -399,6 +406,23 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         }
 
         return $sql;
+    }
+
+    /**
+     * Check if the adapter supports real SQL parameters.
+     *
+     * @param string $type 'positional' or 'named'
+     * @return bool
+     */
+    public function supportsParameters($type)
+    {
+        switch ($type) {
+            case 'positional':
+                return true;
+            case 'named':
+            default:
+                return false;
+        }
     }
 
 }
