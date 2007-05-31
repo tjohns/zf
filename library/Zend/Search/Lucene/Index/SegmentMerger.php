@@ -45,7 +45,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
     /**
      * Target segment writer
      *
-     * @var Zend_Search_Lucene_Index_SegmentStreamWriter
+     * @var Zend_Search_Lucene_Index_SegmentWriter_StreamWriter
      */
     private $_writer;
 
