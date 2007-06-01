@@ -186,8 +186,8 @@ abstract class Zend_Pdf_Filter_Compression implements Zend_Pdf_Filter
             }
 
             $bitsPerSample  = $bitsPerComponent*$colors;
-            $bytesPerSample = ceil($bitsPerSample/8);
-            $bytesPerRow    = ceil($bitsPerSample*$columns/8);
+            $bytesPerSample = (int)(($bitsPerSample + 7)/8);           // (int)ceil(...) emulation
+            $bytesPerRow    = (int)(($bitsPerSample*$columns + 7)/8);  // (int)ceil(...) emulation
             $rows           = strlen($data)/$bytesPerRow;
             $output         = '';
             $offset         = 0;
