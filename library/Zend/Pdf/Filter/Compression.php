@@ -281,7 +281,7 @@ abstract class Zend_Pdf_Filter_Compression implements Zend_Pdf_Filter
      * @param array $params
      * @return string
      */
-    protected function _applyDecodeParams($data, $params) {
+    protected static function _applyDecodeParams($data, $params) {
         $predictor        = self::_getPredictorValue($params);
         $colors           = self::_getColorsValue($params);
         $bitsPerComponent = self::_getBitsPerComponentValue($params);
