@@ -185,7 +185,7 @@ class Zend_Filter_Input
     public function getMessages()
     {
         $this->_process();
-        return $this->_invalidMessages;
+        return array_merge($this->_invalidMessages, $this->_missingFields);
     }
 
     /**
@@ -195,6 +195,15 @@ class Zend_Filter_Input
     {
         $this->_process();
         return $this->_invalidErrors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvalid()
+    {
+        $this->_process();
+        return $this->_invalidMessages;
     }
 
     /**
