@@ -781,8 +781,18 @@ class Zend_Filter_Input
                 // fallthrough and continue
             }
         }
+
+        if (!class_exists($className, false)) {
+            $msg = "Unable to find the implementation of the '$classBaseName' class";
+        } else {
+            $msg = "Class based on basename '$classBaseName' must implement the '$interface' interface";
+        }
+
+        /**
+         * @see Zend_Filter_Exception
+         */
         require_once 'Zend/Filter/Exception.php';
-        throw new Zend_Filter_Exception("Could not find a class based on name '$classBaseName' implementing $interface");
+        throw new Zend_Filter_Exception($msg);
     }
 
 }

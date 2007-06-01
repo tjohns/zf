@@ -897,7 +897,30 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Filter_Exception', $e,
                 'Expected object of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertEquals("Could not find a class based on name 'MyDigits' implementing Zend_Validate_Interface",
+            $this->assertEquals("Unable to find the implementation of the 'MyDigits' class",
+                $e->getMessage());
+        }
+    }
+
+    public function testNamespaceExceptionInvalidClass()
+    {
+        $data = array(
+            'field1' => 'abc'
+        );
+        // Zend_Validate_Exception exists, but does not implement the needed interface
+        $validators = array(
+            'field1' => 'Exception'
+        );
+
+        $input = new Zend_Filter_Input(null, $validators, $data);
+
+        try {
+            $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+            $this->fail('Expected to catch Zend_Filter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Filter_Exception', $e,
+                'Expected object of type Zend_Filter_Exception, got '.get_class($e));
+            $this->assertEquals("Class based on basename 'Exception' must implement the 'Zend_Validate_Interface' interface",
                 $e->getMessage());
         }
     }
