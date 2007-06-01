@@ -721,4 +721,120 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         }
     }
 
+    /**
+     * Ensures that rows returned by findParentRow() are updatable.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindParentRowIsUpdateable()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        $table = $this->_table['bugs'];
+
+        $childRows = $table->fetchAll("$bug_id = 1");
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $childRows,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($childRows));
+
+        $childRow1 = $childRows->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $childRow1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($childRow1));
+
+        $parentRow = $childRow1->findParentRow('Zend_Db_Table_TableAccounts');
+        $this->assertType('Zend_Db_Table_Row_Abstract', $parentRow,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($parentRow));
+
+        $this->assertEquals('goofy', $parentRow->account_name);
+
+        $parentRow->account_name = 'clarabell';
+        try {
+            $parentRow->save();
+        } catch (Zend_Exception $e) {
+            $this->fail('Failed with unexpected '.get_class($e).': '.$e->getMessage());
+        }
+
+        $accounts = $this->_db->quoteIdentifier('zfaccounts');
+        $accounts_list = $this->_db->fetchCol("SELECT account_name from $accounts ORDER BY account_name");
+        // if the save() did an UPDATE instead of an INSERT, then goofy should
+        // be missing, and clarabell should be present
+        $this->assertEquals(array('clarabell', 'dduck', 'mmouse'), $accounts_list);
+    }
+
+    /**
+     * Ensures that rows returned by findDependentRowset() are updatable.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindDependentRowsetIsUpdateable()
+    {
+        $table = $this->_table['accounts'];
+
+        $parentRows = $table->find('mmouse');
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $parentRows,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($parentRows));
+        $parentRow1 = $parentRows->current();
+
+        $childRows = $parentRow1->findDependentRowset('Zend_Db_Table_TableBugs');
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $childRows,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($childRows));
+
+        $this->assertEquals(1, $childRows->count());
+
+        $childRow1 = $childRows->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $childRow1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($childRow1));
+
+        $childRow1->bug_description = 'Updated description';
+        $bug_id = $childRow1->bug_id;
+        try {
+            $childRow1->save();
+        } catch (Zend_Exception $e) {
+            $this->fail('Failed with unexpected '.get_class($e).': '.$e->getMessage());
+        }
+
+        // find the row we just updated and make sure it has the new value.
+        $bugs_table = $this->_table['bugs'];
+        $bugs_rows = $bugs_table->find($bug_id);
+        $this->assertEquals(1, $bugs_rows->count());
+        $bug1 = $bugs_rows->current();
+        $this->assertEquals($bug_id, $bug1->bug_id);
+        $this->assertEquals('Updated description', $bug1->bug_description);
+    }
+
+    /**
+     * Ensures that rows returned by findManyToManyRowset() are updatable.
+     *
+     * @return void
+     */
+    public function testTableRelationshipFindManyToManyRowsetIsUpdateable()
+    {
+        $table = $this->_table['bugs'];
+
+        $originRows = $table->find(1);
+        $originRow1 = $originRows->current();
+
+        $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_TableProducts', 'Zend_Db_Table_TableBugsProducts');
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $destRows,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($destRows));
+
+        $this->assertEquals(3, $destRows->count());
+
+        $row1 = $destRows->current();
+        $product_id = $row1->product_id;
+        $row1->product_name = 'AmigaOS';
+        try {
+            $row1->save();
+        } catch (Zend_Exception $e) {
+            $this->fail('Failed with unexpected '.get_class($e).': '.$e->getMessage());
+        }
+
+        // find the row we just updated and make sure it has the new value.
+        $products_table = $this->_table['products'];
+        $product_rows = $products_table->find($product_id);
+        $this->assertEquals(1, $product_rows->count());
+        $product_row = $product_rows->current();
+        $this->assertEquals($product_id, $product_row->product_id);
+        $this->assertEquals('AmigaOS', $product_row->product_name);
+    }
+
 }

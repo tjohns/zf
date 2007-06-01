@@ -823,7 +823,7 @@ abstract class Zend_Db_Table_Row_Abstract
             'table'    => $matchTable,
             'data'     => $stmt->fetchAll(Zend_Db::FETCH_ASSOC),
             'rowClass' => $matchTable->getRowClass(),
-            'clean'    => true
+            'stored'   => true
         );
 
         $rowsetClass = $matchTable->getRowsetClass();
