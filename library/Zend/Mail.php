@@ -388,7 +388,7 @@ class Zend_Mail extends Zend_Mime_Message
           return $value;
       } else {
           $quotedValue = Zend_Mime::encodeQuotedPrintable($value);
-          $quotedValue = str_replace('?', '=3F', $quotedValue);
+          $quotedValue = str_replace(array('?', ' '), array('=3F', '=20'), $quotedValue);
           return '=?' . $this->_charset . '?Q?' . $quotedValue . '?=';
       }
     }
