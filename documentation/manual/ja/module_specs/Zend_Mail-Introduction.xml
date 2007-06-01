@@ -44,6 +44,22 @@ $mail->send();
         はすべてのヘッダフィールドの改行文字 (<code>\n</code>) を取り除きます。
         これにより、ヘッダインジェクションを防ぎます。
     </para>
+    <para>
+        Zend_Mail オブジェクトのほとんどのメソッドは、
+        流暢なインターフェイス形式でコールすることもできます。
+        「流暢なインターフェイス」とは、
+        各メソッドの返り値が呼び出し元オブジェクト自身への参照となり、
+        その返り値からすぐに別のメソッドをコールできる形式のことを表します。
+    </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('This is the text of the mail.')
+    ->setFrom('somebody@example.com', 'Some Sender')
+    ->addTo('somebody_else@example.com', 'Some Recipient')
+    ->setSubject('TestSubject')
+    ->send();
+?>]]>   </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
