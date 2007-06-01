@@ -48,7 +48,7 @@ class Zend_VersionTest extends PHPUnit_Framework_TestCase
         for ($i=0; $i <= 1; $i++) {
             for ($j=0; $j < 10; $j++) {
                 for ($k=0; $k < 20; $k++) {
-                    foreach (array('dev', 'alpha', 'beta', 'RC', '', 'pl') as $rel) {
+                    foreach (array('dev', 'alpha', 'beta', 'RC', 'RC1', 'RC2', 'RC3', '', 'pl') as $rel) {
                         $ver = "$i.$j.$k$rel";
                         if ($ver === Zend_Version::VERSION
                             || "$i.$j.$k-$rel" === Zend_Version::VERSION
