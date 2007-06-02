@@ -52,7 +52,7 @@
                 Zeichnen von Grafiken.
             <footnote>
                 <para>
-                JPG, PNG [Bis zu 8bit+Alpha] und TIFF Grafiken werden unterstützt.
+                JPG, PNG [Bis zu 8bit per channel+Alpha] und TIFF Grafiken werden unterstützt.
                 </para>
             </footnote>
             </para>

@@ -40,6 +40,11 @@
                     <entry>Industrie Standard für Applikations übergreifende Übersetzungen; XML Format, menschlich lesbar</entry>
                 </row>
                 <row>
+                    <entry>QT</entry>
+                    <entry>Verwende qt Linguist (*.ts) Dateien</entry>
+                    <entry>Cross platform application framework; XML Format, menschlich lesbar</entry>
+                </row>
+                <row>
                     <entry>XLIFF</entry>
                     <entry>Für XLIFF (*.xliff/*.xml) Dateien</entry>
                     <entry>Ein einfacheres Format als TMX aber vergleichbar; XML Format; menschlich lesbar</entry>
@@ -141,6 +146,24 @@
             <para>
                 Die meisten Mittel- is Großfirmen werden diesen Adapter benutzen.
                 Die Dateien sind menschlich lesbar und systemunabhängig.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.tmx">
+
+            <title>Zend_Translate_Adapter_Qt</title>
+
+            <para>
+                The Qt Adapter is for all customers which have TS files as their
+                translation source which are made by QtLinguist.
+                QT is a XML file based format.
+                XML files are human-readable, but the parsing is not as fast
+                as with gettext files.
+            </para>
+
+            <para>
+                Several big players have build software upon the QT framework.
+                The files are human readable and system-independent.
             </para>
         </sect3>
 

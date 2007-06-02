@@ -43,6 +43,20 @@ $mail->send();
         Aus Sicherheitsgründen filtert <code>Zend_Mail</code> alle Felder des Nachrichtenkopfs, um
         eine "Header Injection" mittels Zeilenvorschubzeichen (<code>\n</code>) zu verhindern.
     </para>
+    <para>
+        You also can use most methods of the Zend_Mail object with a convenient fluent interface. A fluent
+        interface means that each method returns a reference to the object on which it was called, so you can
+        immediately call another method.
+    </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('This is the text of the mail.')
+    ->setFrom('somebody@example.com', 'Some Sender')
+    ->addTo('somebody_else@example.com', 'Some Recipient')
+    ->setSubject('TestSubject')
+    ->send();
+?>]]>   </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

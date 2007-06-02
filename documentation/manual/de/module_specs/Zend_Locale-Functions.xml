@@ -47,7 +47,7 @@ print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toSt
 
     <sect2 id="zend.locale.equals">
 
-        <title>isEqual() - Gleichheit</title>
+        <title>Gleichheit</title>
 
         <para>
             <code>Zend_Locale</code> bietet auch eine erwartete Funktion zum Vergleichen von zwei
@@ -64,7 +64,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Prüfe ob die Gebietsschema gleich sind
-if ($locale->isEqual($mylocale) { 
+if ($locale->equals($mylocale) { 
     print "Die Gebietsschemata sind gleich";
 }
 ?>]]></programlisting>

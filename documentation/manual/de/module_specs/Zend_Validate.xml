@@ -8,61 +8,251 @@
         Art und Weise zugeordnet werden können.
     </para>
 
-    <para>
-        <emphasis role="strong">What is a validator?</emphasis>
-    </para>
+    <sect2 id="zend.validate.introduction.definition">
 
-    <para>
-        Eine Prüfung untersucht seine Eingabe mit Obacht auf einige Anforderungen und produziert ein boolsches
-        Ergebnis - wenn die Eingabe erfolgreich gegen die Anforderungen geprüft werden konnte. Wenn die Eingabe
-        den Anforderungen nicht entspricht, kann die Prüfung zusätzliche Informationen darüber bieten, welche
-        der Anforderungen die Eingabe nicht entspricht.
-    </para>
-
-    <para>
-        Eine WebAnwendung, zum Beispiel, könnte erfordern das ein Benutzername zwischen sechs und zwölf Zeichen
-        lang ist und dürfte nur alphanummerische Zeichen  enthalten. Eine Prüfung kann dafür verwendet werden um
-        sicherzustellen das Benutzernamen diesen Anforderungen entsprechen. Wenn ein gewählter Benutzername einer
-        oder beiden Anforderungen nicht entspricht, wäre es nützlich zu wissen welche der Anforderungen der
-        Benutzername nicht entsprochen hat.
-    </para>
-
-    <para>
-        Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <code>Zend_Validate_Interface</code>
-        welche zwei Methoden definiert, <code>isValid()</code> und <code>getMessages()</code>. Die
-        <code>isValid()</code> Methode führt eine Prüfung über die angegebenen Werte aus, und gibt nur dann
-        <code>true</code> zurück wenn der Wert gegenüber den Kriterien der Prüfung entsprochen hat. Wenn
-        <code>isValid()</code> <code>false</code> zurück gibt, bietet <code>getMessages()</code> ein Array von
-        Nachrichten welche die Gründe für die fehlgeschlagene Prüfung beschreiben.
-    </para>
-
-    <note>
         <para>
-            <code>getMessages()</code> gibt die Fehlermeldungen der Prüfungen zurück, allerdings nur für die
-            zuletzt durchgeführte Prüfung, da <code>isValid()</code> alle Nachrichten entfernt die von einem
-            vorherigen <code>isValid()</code> Aufruf existiert haben.
+            <emphasis role="strong">What is a validator?</emphasis>
         </para>
-    </note>
+    
+        <para>
+            Eine Prüfung untersucht seine Eingabe mit Obacht auf einige Anforderungen und produziert ein boolsches
+            Ergebnis - wenn die Eingabe erfolgreich gegen die Anforderungen geprüft werden konnte. Wenn die Eingabe
+            den Anforderungen nicht entspricht, kann die Prüfung zusätzliche Informationen darüber bieten, welche
+            der Anforderungen die Eingabe nicht entspricht.
+        </para>
+    
+        <para>
+            Eine WebAnwendung, zum Beispiel, könnte erfordern das ein Benutzername zwischen sechs und zwölf Zeichen
+            lang ist und dürfte nur alphanummerische Zeichen  enthalten. Eine Prüfung kann dafür verwendet werden um
+            sicherzustellen das Benutzernamen diesen Anforderungen entsprechen. Wenn ein gewählter Benutzername einer
+            oder beiden Anforderungen nicht entspricht, wäre es nützlich zu wissen welche der Anforderungen der
+            Benutzername nicht entsprochen hat.
+        </para>
 
-    <para>
-        Das folgende Beispiel zeigt die Prüfung einer E-Mail Adresse:
+    </sect2>
 
-        <programlisting role="php"><![CDATA[<?php
+    <sect2 id="zend.validate.introduction.using">
 
+        <title>Basic usage of validators</title>
+
+        <para>
+            Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <code>Zend_Validate_Interface</code>
+            welche zwei Methoden definiert, <code>isValid()</code> und <code>getMessages()</code>. Die
+            <code>isValid()</code> Methode führt eine Prüfung über die angegebenen Werte aus, und gibt nur dann
+            <code>true</code> zurück wenn der Wert gegenüber den Kriterien der Prüfung entsprochen hat. 
+        </para>
+
+        <para>
+            Wenn <code>isValid()</code> <code>false</code> zurück gibt, bietet <code>getMessages()</code> ein Array von
+            Nachrichten welche die Gründe für die fehlgeschlagene Prüfung beschreiben.
+        </para>
+
+        <para>
+            The <code>getErrors()</code> method returns an array of shorter
+            strings that identify the reason(s) for validation failure.  These
+            strings are meant to identify the errors.  These strings are
+            intended to be checked by your application code, not output to
+            users.  The error strings are class-dependent; each validate class
+            defines its own set of error strings to identify the cause of the
+            error.  Each class also provides <code>const</code> definitions to
+            match these error identifiers.
+        </para>
+
+        <note>
+            <para>
+                The <code>getMessages()</code> and <code>getErrors()</code>
+                methods return validation failure information only for the most
+                recent <code>isValid()</code> call.  Each call to
+                <code>isValid()</code> clears any messages and errors caused by
+                a previous <code>isValid()</code> call, because it's likely
+                that each call to <code>isValid()</code> is made for a
+                different input value.
+            </para>
+        </note>
+
+        <para>
+            The following example illustrates validation of an e-mail address:
+
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
+
 $validator = new Zend_Validate_EmailAddress();
+
 if ($validator->isValid($email)) {
-    // EMail scheint gültig zu sein
+    //
+    // email appears to be valid
+    //
 } else {
-    // EMail is ungültig; schreibe die Gründ
+    //
+    // email is invalid; print the reasons
+    //
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
 }
+]]></programlisting>
 
-?>]]></programlisting>
+        </para>
 
-    </para>
+    </sect2>
+
+    <sect2 id="zend.validate.introduction.messages">
+
+        <title>Customizing messages</title>
+
+        <para>
+            Validate classes provide a <code>setMessage()</code> method with
+            which you can specify the format of a message returned by
+            <code>getMessages()</code> in case of validation failure.  The
+            first argument of this method is a string containing the error
+            message.  You can include tokens in this string which will be
+            substituted with data relevant to the validator.  The token
+            <code>%value%</code> is supported by all validators; this is
+            substituted with the value you passed to <code>isValid()</code>.
+            Other tokens may be supported on a case-by-case basis in each
+            validate class.  For example, <code>%max%</code> is a token
+            supported by Zend_Validate_LessThan.
+        </para>
+
+        <para>
+            The second optional argument is a string that corresponds to the
+            error identifiers returned by the <code>getErrors()</code> method.
+            If you omit the second argument, <code>setMessage()</code> assumes
+            the message you specify should be used for the first message
+            declared in the validate class.  Many validate classes only have
+            one error message, so there is no need to specify distinctly which
+            message you are specifying.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/StringLength.php';
+
+$validator = new Zend_Validate_StringLength(8);
+
+$validator->setMessage(
+    'The string \'%value%\' is too short; it must be at least %min% characters',
+    Zend_Validate_StringLength::TOO_SHORT);
+
+if (!$validator->isValid('word')) {
+    $m = $validator->getMessages();
+    echo $m[0];
+
+    // echoes "The string 'word' is too short; it must be at least 8 characters"
+}
+]]></programlisting>
+        </para>
+
+        <para>
+            You can set multiple messages using the <code>setMessages()</code>
+            method.  Its argument is an array containing key/message pairs.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/StringLength.php';
+
+$validator = new Zend_Validate_StringLength(8, 12);
+
+$validator->setMessages( array(
+    Zend_Validate_StringLength::TOO_SHORT => 'The string \'%value%\' is too short',
+    Zend_Validate_StringLength::TOO_LONG  => 'The string \'%value%\' is too long'
+));
+]]></programlisting>
+
+        </para>
+
+        <para>
+            If your application requires even greater flexibility with which
+            it reports errors, you can access properties by the same name
+            as the message tokens supported by a given validate class.
+            The <code>value</code> property is always available in a
+            validator; it is the value you specified as the argument of
+            <code>isValid()</code>.  Other properties may be supported
+            on a case-by-case basis in each validate class.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/StringLength.php';
+
+$validator = new Zend_Validate_StringLength(8, 12);
+
+if (!validator->isValid('word')) {
+    echo 'Word failed: '
+        . $validator->value
+        . '; its length is not between '
+        . $validator->min
+        . ' and '
+        . $validator->max
+        . "\n";
+}
+]]></programlisting>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.validate.introduction.static">
+
+        <title>Using the static <code>is()</code> method</title>
+
+        <para>
+            If it's inconvenient to load a given validate class and create an
+            instance of the validator, you can use the static method
+            <code>Zend_Validate::is()</code> as an alternative invocation
+            style.  The first argument of this method is a data input value,
+            that you would pass to the <code>isValid()</code> method.  The
+            second argument is a string, which corresponds to the basename of
+            the validate class, relative to the Zend_Validate namespace.  The
+            <code>is()</code> method automatically loads the class, creates an
+            instance, and applies the <code>isValid()</code> method to the data
+            input.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate.php';
+
+if (Zend_Validate::is($email, 'EmailAddress')) {
+    //
+    // Yes, email appears to be valid
+    //
+}
+]]></programlisting>
+
+        </para>
+
+        <para>
+            You can also pass an array of constructor arguments, if they
+            are needed for the validator.
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate.php';
+
+if (Zend_Validate::is($value, 'Between', array(1, 12))) {
+    //
+    // Yes, $value is between 1 and 12
+    //
+}
+]]></programlisting>
+
+        </para>
+
+        <para>
+            The <code>is()</code> returns a boolean value, the same as the
+            <code>isValid()</code> method.  When using the static
+            <code>is()</code> method, errors and messages are not available.
+        </para>
+
+        <para>
+            The static usage can be convenient for invoking a validator ad hoc,
+            but if you have the need to run a validator for multiple inputs,
+            it's more efficient to use the non-static usage, creating an
+            instance of the validator object and calling its
+            <code>isValid()</code> method.
+        </para>
+
+        <para>
+            Also, the Zend_Filter_Input class allows you to instantiate and run
+            multiple filter and validator classes on demand to process
+            sets of input data.  See <xref linked="zend.filter.input" />.
+        </para>
+
+    </sect2>
 
 </sect1>
 <!--
