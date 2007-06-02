@@ -2,11 +2,7 @@
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Introduction.</title>
     <para>
-    <code>Zend_Pdf</code> est un module entièrement écrit en PHP5 permettant la manipulation de
-    documents PDF (Portable Document Format). Il peut charger des documents existants, en créer de nouveaux,
-    les modifier et les sauvegarder. Cela peut aider toute les applications PHP à générer dynamiquement des
-    documents PDF en modifiant un modèle existant ou en générant un document à partir de zéro.
-    Le module Zend_Pdf supporte les fonctionnalités suivantes :
+    <code>Zend_Pdf</code> est un module entièrement écrit en PHP5 permettant la manipulation de documents PDF (Portable Document Format). Il peut charger des documents existants, en créer de nouveaux, les modifier et les sauvegarder. Cela peut aider toute les applications PHP à générer dynamiquement des documents PDF en modifiant un modèle existant ou en générant un document à partir de zéro. Le module Zend_Pdf supporte les fonctionnalités suivantes :
     <itemizedlist>
         <listitem>
             <para>
@@ -48,7 +44,7 @@
              Inclure des images.
             <footnote>
                 <para>
-                 Seul les images au format JPG sont supportées pour le moment.
+                    Les images au format JPG, PNG [jusqu'à 8bit par canaux+Alpha] et TIFF sont supportées.
                 </para>
             </footnote>
             </para>
@@ -61,6 +57,3 @@
     </itemizedlist>
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

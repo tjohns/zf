@@ -45,7 +45,7 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
 
     <sect2 id="zend.locale.equals">
 
-        <title>isEqual() - Equality</title>
+        <title>Equality</title>
 
         <para>
             <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
@@ -61,7 +61,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Check if locales are equal
-if ($locale->isEqual($mylocale) { 
+if ($locale->equals($mylocale) { 
     print "Locales are equal";
 }
 ?>]]></programlisting>
