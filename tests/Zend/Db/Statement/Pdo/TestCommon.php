@@ -36,6 +36,15 @@ abstract class Zend_Db_Statement_Pdo_TestCommon extends Zend_Db_Statement_TestCo
         $stmt->closeCursor();
     }
 
+    public function testStatementConstructWithSelectObject()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = new Zend_Db_Statement_Pdo($this->_db, $select);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
+        $stmt->closeCursor();
+    }
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()

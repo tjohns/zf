@@ -133,7 +133,6 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                     require_once 'Zend/Db/Statement/Exception.php';
                     throw new Zend_Db_Statement_Exception("Invalid bind-variable position '$val'");
                 }
-                $this->_sqlParam[] = $val;
             } else if ($val[0] == ':') {
                 if ($this->_adapter->supportsParameters('named') === false) {
                     /**
@@ -142,8 +141,8 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                     require_once 'Zend/Db/Statement/Exception.php';
                     throw new Zend_Db_Statement_Exception("Invalid bind-variable position '$val'");
                 }
-                $this->_sqlParam[] = $val;
             }
+            $this->_sqlParam[] = $val;
         }
 
         // set up for binding
@@ -399,9 +398,13 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
             case Zend_Db::FETCH_OBJ:
                 $this->_fetchMode = $mode;
                 break;
+            case Zend_Db::FETCH_BOUND:
             default:
+                /**
+                 * @see Zend_Db_Statement_Exception
+                 */
                 require_once 'Zend/Db/Statement/Exception.php';
-                throw new Zend_Db_Statement_Exception('Invalid fetch mode specified');
+                throw new Zend_Db_Statement_Exception('invalid fetch mode');
                 break;
         }
     }

@@ -39,6 +39,16 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    public function testStatementConstructWithSelectObject()
+    {
+        $this->fail('This test should be overridden in all subclasses.');
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = new Zend_Db_Statement($this->_db, $select);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
+        $stmt->closeCursor();
+    }
+
     public function testStatementConstructFromPrepare()
     {
         $select = $this->_db->select()
@@ -197,10 +207,37 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         // @todo: what to assert here?
     }
 
+    public function testStatementSetFetchModeAssoc()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // set the adapter fetch mode to something different
+        $this->_db->setFetchMode(Zend_Db::FETCH_BOTH);
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        $stmt->setFetchMode(Zend_Db::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(2, count($result[0]));
+
+        // check for FETCH_ASSOC entries
+        $this->assertEquals(2, $result[0]['product_id']);
+        $this->assertEquals('Linux', $result[0]['product_name']);
+
+        // check FETCH_NUM entries
+        $this->assertFalse(isset($result[0][0]));
+        $this->assertFalse(isset($result[0][1]));
+    }
+
     public function testStatementSetFetchModeNum()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // set the adapter fetch mode to something different
+        $this->_db->setFetchMode(Zend_Db::FETCH_BOTH);
 
         $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
         $stmt->setFetchMode(Zend_Db::FETCH_NUM);
@@ -208,8 +245,75 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
         $this->assertEquals(2, count($result));
         $this->assertEquals(2, count($result[0]));
-        $this->assertEquals(2, $result[0][0]);
+
+        // check for FETCH_ASSOC entries
         $this->assertFalse(isset($result[0]['product_id']));
+        $this->assertFalse(isset($result[0]['product_name']));
+
+        // check FETCH_NUM entries
+        $this->assertEquals(2, $result[0][0]);
+        $this->assertEquals('Linux', $result[0][1]);
+    }
+
+    public function testStatementSetFetchModeBoth()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // set the adapter fetch mode to something different
+        $this->_db->setFetchMode(Zend_Db::FETCH_ASSOC);
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        $stmt->setFetchMode(Zend_Db::FETCH_BOTH);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(4, count($result[0]));
+
+        // check for FETCH_ASSOC entries
+        $this->assertEquals(2, $result[0]['product_id']);
+        $this->assertEquals('Linux', $result[0]['product_name']);
+
+        // check FETCH_NUM entries
+        $this->assertEquals(2, $result[0][0]);
+        $this->assertEquals('Linux', $result[0][1]);
+    }
+
+    public function testStatementSetFetchModeObj()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // set the adapter fetch mode to something different
+        $this->_db->setFetchMode(Zend_Db::FETCH_BOTH);
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        $stmt->setFetchMode(Zend_Db::FETCH_OBJ);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(2, count($result));
+        $this->assertType('stdClass', $result[0]);
+
+        // check for FETCH_OBJ entries
+        $this->assertEquals(2, $result[0]->product_id);
+        $this->assertEquals('Linux', $result[0]->product_name);
+    }
+
+    public function testStatementSetFetchModeInvalidException()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        try {
+            // invalid value
+            $stmt->setFetchMode(-999);
+            $this->fail('Expected to catch Zend_Db_Statement_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->assertContains('invalid fetch mode', $e->getMessage());
+        }
     }
 
     public function testStatementFetchAll()
@@ -631,6 +735,28 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             $this->assertEquals('nextRowset() is not implemented', $e->getMessage());
         }
         $stmt->closeCursor();
+    }
+
+    public function testStatementGetSetAttribute()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = $this->_db->prepare($select->__toString());
+
+        $value = 'value';
+        $stmt->setAttribute('scalarAttribute', $value);
+        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #1");
+
+        $valueArray = array('value1', 'value2');
+        $stmt->setAttribute('arrayAttribute', $valueArray);
+        $this->assertEquals($valueArray, $stmt->getAttribute('arrayAttribute'), "Expected array #1");
+        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #2");
+
+        $valueObject = new stdClass();
+        $stmt->setAttribute('objectAttribute', $valueObject);
+        $this->assertSame($valueObject, $stmt->getAttribute('objectAttribute'), "Expected object");
+        $this->assertEquals($valueArray, $stmt->getAttribute('arrayAttribute'), "Expected array #2");
+        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #2");
     }
 
 }

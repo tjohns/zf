@@ -330,14 +330,14 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     /**
      * Retrieve a statement attribute.
      *
-     * @param string $key Attribute name.
+     * @param integer $key Attribute name.
      * @return mixed      Attribute value.
      * @throws Zend_Db_Statement_Exception
      */
     public function getAttribute($key)
     {
         try {
-            return $this->_stmt->getAttribute();
+            return $this->_stmt->getAttribute($key);
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
             throw new Zend_Db_Statement_Exception($e->getMessage());

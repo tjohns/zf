@@ -35,6 +35,15 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
         $this->assertType('Zend_Db_Statement_Mysqli', $stmt);
     }
 
+    public function testStatementConstructWithSelectObject()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = new Zend_Db_Statement_Mysqli($this->_db, $select);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
+        $stmt->closeCursor();
+    }
+
     public function testStatementRowCount()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');

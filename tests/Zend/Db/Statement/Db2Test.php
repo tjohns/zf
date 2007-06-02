@@ -35,6 +35,15 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         $this->assertType('Zend_Db_Statement_Db2', $stmt);
     }
 
+    public function testStatementConstructWithSelectObject()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = new Zend_Db_Statement_Db2($this->_db, $select);
+        $this->assertType('Zend_Db_Statement_Interface', $stmt);
+        $stmt->closeCursor();
+    }
+
     public function testStatementErrorCodeKeyViolation()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
