@@ -35,6 +35,12 @@ require_once 'Zend/Service/StrikeIron/StrikeIronTest.php';
 /** Zend_Service_StrikeIron_BaseTest */
 require_once 'Zend/Service/StrikeIron/BaseTest.php';
 
+/** Zend_Service_StrikeIron_DecoratorTest */
+require_once 'Zend/Service/StrikeIron/DecoratorTest.php';
+
+/** Zend_Service_StrikeIron_ExceptionTest */
+require_once 'Zend/Service/StrikeIron/ExceptionTest.php';
+
 /** Zend_Service_StrikeIron_SalesUseTaxBasicTest */
 require_once 'Zend/Service/StrikeIron/SalesUseTaxBasicTest.php';
 
@@ -43,9 +49,6 @@ require_once 'Zend/Service/StrikeIron/USAddressVerificationTest.php';
 
 /** Zend_Service_StrikeIron_ZipCodeInfoTest.php */
 require_once 'Zend/Service/StrikeIron/ZipCodeInfoTest.php';
-
-/** Zend_Service_StrikeIron_ResultDecoratorTest */
-require_once 'Zend/Service/StrikeIron/ResultDecoratorTest.php';
 
 /**
  * @category   Zend
@@ -66,7 +69,8 @@ class Zend_Service_StrikeIron_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_StrikeIron');
 
         $suite->addTestSuite('Zend_Service_StrikeIron_StrikeIronTest');
-        $suite->addTestSuite('Zend_Service_StrikeIron_ResultDecoratorTest');
+        $suite->addTestSuite('Zend_Service_StrikeIron_DecoratorTest');
+        $suite->addTestSuite('Zend_Service_StrikeIron_ExceptionTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_BaseTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_SalesUseTaxBasicTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_USAddressVerificationTest');

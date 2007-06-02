@@ -40,10 +40,7 @@ class Zend_Service_StrikeIron_USAddressVerificationTest extends PHPUnit_Framewor
     public function setUp()
     {
         $this->soapClient = new stdclass();
-        $this->service = new Zend_Service_StrikeIron_USAddressVerification('user', 
-                                                                           'pass', 
-                                                                           null, 
-                                                                           $this->soapClient);
+        $this->service = new Zend_Service_StrikeIron_USAddressVerification(array('client' => $this->soapClient));
     }
     
     public function testInheritsFromBase()
@@ -59,8 +56,9 @@ class Zend_Service_StrikeIron_USAddressVerificationTest extends PHPUnit_Framewor
     
     public function testInstantiationFromFactory()
     {
-        $strikeIron = new Zend_Service_StrikeIron('user', 'pass', null, $this->soapClient);
-        $this->assertType('Zend_Service_StrikeIron_USAddressVerification',
-                          $strikeIron->getService('USAddressVerification'));
+        $strikeIron = new Zend_Service_StrikeIron(array('client' => $this->soapClient));
+        $client = $strikeIron->getService(array('class' => 'USAddressVerification'));
+
+        $this->assertType('Zend_Service_StrikeIron_USAddressVerification', $client);
     }
 }

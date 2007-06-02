@@ -22,8 +22,8 @@
 /** Zend_Service_StrikeIron_Exception */
 require_once 'Zend/Service/StrikeIron/Exception.php';
 
-/** Zend_Service_StrikeIron_ResultDecorator */
-require_once 'Zend/Service/StrikeIron/ResultDecorator.php';
+/** Zend_Service_StrikeIron_Decorator */
+require_once 'Zend/Service/StrikeIron/Decorator.php';
  
 /**
  * @category   Zend
@@ -35,61 +35,33 @@ require_once 'Zend/Service/StrikeIron/ResultDecorator.php';
 class Zend_Service_StrikeIron_Base
 {
     /**
-     * URL to WSDL for the remote service
-     * @var string
+     * Configuration options
+     * @param array
      */
-    protected $_wsdl;
-    
-    /**
-     * Username for StrikeIron services
-     * @var string
-     */
-    protected $_username;
-     
-    /**
-     * Password for StrikeIron services
-     * @var string
-     */
-    protected $_password;
-     
-    /** 
-     * Headers to pass to SOAPClient->__soapCall()
-     * @var mixed
-     */
-    protected $_soapHeaders;
-     
-    /**
-     * SOAPClient instance or equivalent
-     * @var SOAPClient|object
-     */
-    protected $_soapClient;
+    protected $_options = array('username' => null,
+                                'password' => null,
+                                'client'   => null,
+                                'options'  => null,
+                                'headers'  => null,
+                                'wsdl'     => null);
 
     /**
-     * Decorated subscription status returned in SOAP headers
-     * @var null|Zend_Service_StrikeIron_ResultDecorator
+     * Output headers returned by the last call to SOAPClient->__soapCall()
+     * @param array
      */
-    protected $_subscriptionInfo;
+    protected $_outputHeaders = array();
 
     /**
      * Class constructor
      *
-     * @param string       $username     Username for StrikeIron services
-     * @param string       $password     Password for StrikeIron services
-     * @param mixed        $soapHeaders  Headers to pass to SOAPClient->__soapCall()
-     * @param mixed        $soapClient   SOAPClient instance or equivalent
-     * @param string|null  $wsdl         URL to WSDL for this service
+     * @param array  $options  Key/value pair options
      */     
-    public function __construct($username, $password, $soapHeaders = null, $soapClient = null, $wsdl = null)
+    public function __construct($options = array())
     {
-        $this->_username = $username;
-        $this->_password = $password;
+        $this->_options  = array_merge($this->_options, $options);
 
-        if (isset($wsdl)) {
-            $this->_wsdl = $wsdl;
-        }
-
-        $this->_initSoapHeaders($soapHeaders);
-        $this->_initSoapClient($soapClient);
+        $this->_initSoapHeaders();
+        $this->_initSoapClient();
     }
 
     /**
@@ -109,20 +81,14 @@ class Zend_Service_StrikeIron_Base
         // make soap call, capturing the result and output headers
         $outputHeaders = null;
         try {
-            $result = $this->_soapClient->__soapCall($method, 
-                                                     $params, 
-                                                     null, 
-                                                     $this->_soapHeaders,
-                                                     $outputHeaders);
+            $result = $this->_options['client']->__soapCall($method, 
+                                                            $params, 
+                                                            $this->_options['options'], 
+                                                            $this->_options['headers'],
+                                                            $this->_outputHeaders);
         } catch (Exception $e) {
             $message = get_class($e) . ': ' . $e->getMessage();
             throw new Zend_Service_StrikeIron_Exception($message, $e->getCode());
-        }
-
-        // capture subscription info if returned in output headers
-        if (isset($outputHeaders['SubscriptionInfo'])) {
-            $info = (object)$outputHeaders['SubscriptionInfo'];
-            $this->_subscriptionInfo = new Zend_Service_StrikeIron_ResultDecorator($info);
         }
 
         // transform/decorate the result and return it                                                 
@@ -133,34 +99,35 @@ class Zend_Service_StrikeIron_Base
     /**
      * Initialize the SOAPClient instance
      *
-     * @param  null|object  SOAPClient or equivalent
      * @return void
      */
-    protected function _initSoapClient($soapClient)
+    protected function _initSoapClient()
     {
-        if (empty($soapClient)) {
-            $soapClient = new SoapClient($this->_wsdl, array('trace' => true, 
-                                                             'exceptions' => true));
+        if (! isset($this->_options['options'])) {
+            $this->_options['options'] = array();
         }
-        $this->_soapClient = $soapClient;        
+        
+        if (! isset($this->_options['client'])) {
+            $this->_options['client'] = new SoapClient($this->_options['wsdl'], 
+                                                       $this->_options['options']);
+        }
     }
 
     /**
      * Initialize the headers to pass to SOAPClient->__soapCall()
      *
-     * @param  mixed  Single SoapHeader or array of SoapHeaders
      * @return void
      */
-    protected function _initSoapHeaders($soapHeaders)
+    protected function _initSoapHeaders()
     {
         // validate headers and check if LicenseInfo was given
         $foundLicenseInfo = false;
-        if (isset($soapHeaders)) {
-            if (! is_array($soapHeaders)) {
-                $soapHeaders = array($soapHeaders);
+        if (isset($this->_options['headers'])) {
+            if (! is_array($this->_options['headers'])) {
+                $this->_options['headers'] = array($this->_options['headers']);
             }
             
-            foreach ($soapHeaders as $header) {
+            foreach ($this->_options['headers'] as $header) {
                 if (! $header instanceof SoapHeader) {
                     throw new Zend_Service_StrikeIron_Exception('Header must be instance of SoapHeader');
                 } else if ($header->name == 'LicenseInfo') {
@@ -169,18 +136,16 @@ class Zend_Service_StrikeIron_Base
                 }
             }
         } else {
-            $soapHeaders = array();
+            $this->_options['headers'] = array();
         }
         
         // add default LicenseInfo header if a custom one was not supplied
         if (! $foundLicenseInfo) {
-            $soapHeaders[] = new SoapHeader('http://ws.strikeiron.com', 
-                                            'LicenseInfo', 
-                                            array('RegisteredUser' => array('UserID'   => $this->_username,
-                                                                            'Password' => $this->_password)));
+            $this->_options['headers'][] = new SoapHeader('http://ws.strikeiron.com', 
+                            'LicenseInfo', 
+                            array('RegisteredUser' => array('UserID'   => $this->_options['username'],
+                                                            'Password' => $this->_options['password'])));
         }
-        
-        $this->_soapHeaders = $soapHeaders;
     }
 
     /**
@@ -220,7 +185,7 @@ class Zend_Service_StrikeIron_Base
             $result = $result->$resultObjectName;
         }
         if (is_object($result)) {
-            $result = new Zend_Service_StrikeIron_ResultDecorator($result);
+            $result = new Zend_Service_StrikeIron_Decorator($result, $resultObjectName);
         }        
         return $result;
     }
@@ -232,7 +197,7 @@ class Zend_Service_StrikeIron_Base
      */
     public function getWsdl()
     {
-        return $this->_wsdl;
+        return $this->_options['wsdl'];
     }
 
     /**
@@ -240,24 +205,45 @@ class Zend_Service_StrikeIron_Base
      */
     public function getSoapClient()
     {
-        return $this->_soapClient;
+        return $this->_options['client'];
     }
     
     /**
-     * Return the StrikeIron subscription information for this service.
+     * Get the StrikeIron output headers returned with the last method response.
+     *
+     * @return array
+     */
+    public function getLastOutputHeaders()
+    {
+        return $this->_outputHeaders;
+    }
+    
+    /**
+     * Get the StrikeIron subscription information for this service.
      * If any service method was recently called, the subscription info
      * should have been returned in the SOAP headers so it is cached
      * and returned from the cache.  Otherwise, the getRemainingHits()
      * method is called as a dummy to get the subscription info headers.
      *
-     * @param  boolean  $now  Force a call to getRemainingHits instead of cache?
-     * @return Zend_Service_StrikeIron_ResultDecorator  Decorated subscription info
+     * @param  boolean  $now          Force a call to getRemainingHits instead of cache?
+     * @param  string   $queryMethod  Method that will cause SubscriptionInfo header to be sent
+     * @return Zend_Service_StrikeIron_Decorator  Decorated subscription info
      */
-    public function getSubscriptionInfo($now = false)
+    public function getSubscriptionInfo($now = false, $queryMethod = 'GetRemainingHits')
     {
-        if ($now || empty($this->_subscriptionInfo)) {
-            $this->getRemainingHits();
+        if ($now || empty($this->_outputHeaders['SubscriptionInfo'])) {
+            $this->$queryMethod();
         }
-        return $this->_subscriptionInfo;
+
+        // capture subscription info if returned in output headers
+        if (isset($this->_outputHeaders['SubscriptionInfo'])) {
+            $info = (object)$this->_outputHeaders['SubscriptionInfo'];
+            $subscriptionInfo = new Zend_Service_StrikeIron_Decorator($info, 'SubscriptionInfo');
+        } else {
+            $msg = 'No SubscriptionInfo header found in last output headers';
+            throw new Zend_Service_StrikeIron_Exception($msg);
+        }
+        
+        return $subscriptionInfo;
     }
 }

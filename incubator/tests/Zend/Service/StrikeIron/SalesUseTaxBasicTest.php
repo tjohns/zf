@@ -40,10 +40,7 @@ class Zend_Service_StrikeIron_SalesUseTaxBasicTest extends PHPUnit_Framework_Tes
     public function setUp()
     {
         $this->soapClient = new stdclass();
-        $this->service = new Zend_Service_StrikeIron_SalesUseTaxBasic('user', 
-                                                                      'pass', 
-                                                                      null, 
-                                                                      $this->soapClient);
+        $this->service = new Zend_Service_StrikeIron_SalesUseTaxBasic(array('client' => $this->soapClient));
     }
     
     public function testInheritsFromBase()
@@ -59,8 +56,9 @@ class Zend_Service_StrikeIron_SalesUseTaxBasicTest extends PHPUnit_Framework_Tes
 
     public function testInstantiationFromFactory()
     {
-        $strikeIron = new Zend_Service_StrikeIron('user', 'pass', null, $this->soapClient);
-        $this->assertType('Zend_Service_StrikeIron_SalesUseTaxBasic',
-                          $strikeIron->getService('SalesUseTaxBasic'));
+        $strikeIron = new Zend_Service_StrikeIron(array('client' => $this->soapClient));
+        $client = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
+        
+        $this->assertType('Zend_Service_StrikeIron_SalesUseTaxBasic', $client);
     }
 }

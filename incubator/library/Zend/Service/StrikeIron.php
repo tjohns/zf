@@ -39,83 +39,46 @@ require_once 'Zend/Service/StrikeIron/Exception.php';
 class Zend_Service_StrikeIron
 {
     /**
-     * Classes that cannot be used with getService()
+     * Options to pass to Zend_Service_StrikeIron_Base constructor
      * @param array
      */
-    protected $_disallowed = array('ResultDecorator', 'Exception');
-
-    /**
-     * Username for StrikeIron services
-     * @param string
-     */
-    protected $_username;
-     
-    /**
-     * Password for StrikeIron services
-     * @param string
-     */
-    protected $_password;
-     
-    /** 
-     * Headers to pass to SOAPClient->__soapCall()
-     * @param mixed
-     */
-    protected $_soapHeaders;
-     
-    /**
-     * SOAPClient instance or equivalent
-     * @param SOAPClient|object
-     */
-    protected $_soapClient;
-
+    protected $_options;
     
     /**
      * Class constructor
      *
-     * @param string  $username     Username for StrikeIron services
-     * @param string  $password     Password for StrikeIron services
-     * @param mixed   $soapHeaders  Headers to pass to SOAPClient->__soapCall()
-     * @param mixed   $soapClient   SOAPClient instance or equivalent
+     * @param array  $options  Options to pass to Zend_Service_StrikeIron_Base constructor
      */
-    public function __construct($username, $password, $soapHeaders = null, $soapClient = null)
+    public function __construct($options = array())
     {
-        $this->_username    = $username;
-        $this->_password    = $password;
-        $this->_soapHeaders = $soapHeaders;
-        $this->_soapClient  = $soapClient;
+        $this->_options = $options;
     }
         
     /**
      * Factory method to return a preconfigured Zend_Service_StrikeIron_*
      * instance.
      *
-     * @param  string       $className  Last part of class name, such as "TaxServiceBasic"
-     * @param  null|string  $wsdl       URL for custom WSDL, or NULL
-     * @return object                   Zend_Service_StrikeIron_* instance
+     * @param  null|string  $options  Service options
+     * @return object                 Zend_Service_StrikeIron_* instance
      */
-    public function getService($className, $wsdl = null)
+    public function getService($options = array())
     {
-        // check class name is actually a strikeiron service
-        if (in_array($className, $this->_disallowed)) {
-            $msg = "'$className' is not a valid StrikeIron service";
-            throw new Zend_Service_StrikeIron_Exception($msg);
+        $class = isset($options['class']) ? $options['class'] : 'Base';
+        unset($options['class']);
+        
+        if (strpos($class, '_') == false) {
+            $class = "Zend_Service_StrikeIron_{$class}";
         }
 
-        // load the service class
-        $fullClass = "Zend_Service_StrikeIron_{$className}";
         try {
-            Zend_Loader::loadClass($fullClass);
+            Zend_Loader::loadClass($class);
         } catch (Exception $e) {
-            $msg = "Service '$className' could not be loaded: " . $e->getMessage();
+            $msg = "Service '$class' could not be loaded: " . $e->getMessage();
             throw new Zend_Service_StrikeIron_Exception($msg, $e->getCode());
         }
 
         // instantiate and return the service
-        $service = new $fullClass($this->_username, 
-                                  $this->_password, 
-                                  $this->_soapHeaders,
-                                  $this->_soapClient,
-                                  $wsdl);
+        $service = new $class(array_merge($this->_options, $options));
         return $service;
     }
     

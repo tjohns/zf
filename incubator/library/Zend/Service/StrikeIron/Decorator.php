@@ -21,8 +21,7 @@
  
 /**
  * Decorates a StrikeIron response object returned by the SOAP extension
- * to provide more a PHP-like interface.  Subclass this to provide behaviors
- * for specific types of results.
+ * to provide more a PHP-like interface.
  *
  * @category   Zend
  * @package    Zend_Service
@@ -30,8 +29,14 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_StrikeIron_ResultDecorator
+class Zend_Service_StrikeIron_Decorator
 {
+    /**
+     * Name of the decorated object
+     * @var null|string
+     */
+    protected $_name = null;
+    
     /**
      * Object to decorate
      * @var object
@@ -41,11 +46,13 @@ class Zend_Service_StrikeIron_ResultDecorator
     /**
      * Class constructor
      *
-     * @param object $object  Object to decorate
+     * @param object       $object  Object to decorate
+     * @param null|string  $name    Name of the object
      */
-    public function __construct($object)
+    public function __construct($object, $name = null)
     {
         $this->_object = $object;
+        $this->_name   = $name;
     }
     
     /**
@@ -70,6 +77,19 @@ class Zend_Service_StrikeIron_ResultDecorator
             $result = $this->_decorate($result);
         }
         return $result;
+    }
+    
+    /**
+     * Proxy method calls to the decorated object.  This will only
+     * be used when the SOAPClient returns a custom PHP object via
+     * its classmap option so no inflection is done.
+     *
+     * @param string  $method  Name of method called
+     * @param array   $args    Arguments for method
+     */
+    public function __call($method, $args)
+    {
+        return call_user_func_array(array($this->_object, $method), $args);
     }
     
     /**
@@ -98,5 +118,25 @@ class Zend_Service_StrikeIron_ResultDecorator
             $result = new self($result);
         }
         return $result;
+    }
+
+    /**
+     * Return the object being decorated
+     * 
+     * @return object
+     */
+    public function getDecoratedObject()
+    {
+        return $this->_object;
+    }
+    
+    /** 
+     * Return the name of the object being decorated
+     *
+     * @return null|string
+     */
+    public function getDecoratedObjectName()
+    {
+        return $this->_name;
     }
 }

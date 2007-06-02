@@ -31,5 +31,14 @@ require_once 'Zend/Service/StrikeIron/Base.php';
  */
 class Zend_Service_StrikeIron_USAddressVerification extends Zend_Service_StrikeIron_Base
 {
-    protected $_wsdl = 'http://ws.strikeiron.com/zf1.StrikeIron/USAddressVerification4_0?WSDL';
+    /**
+     * Configuration options
+     * @param array
+     */
+    protected $_options = array('username' => null,
+                                'password' => null,
+                                'client'   => null,
+                                'options'  => null,
+                                'headers'  => null,
+                                'wsdl'     => 'http://ws.strikeiron.com/zf1.StrikeIron/USAddressVerification4_0?WSDL');
 }

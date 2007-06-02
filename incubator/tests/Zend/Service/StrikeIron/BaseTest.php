@@ -37,7 +37,9 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->soapClient = new Zend_Service_StrikeIron_BaseTest_MockSoapClient;
-        $this->base = new Zend_Service_StrikeIron_Base('user', 'pass', null, $this->soapClient);
+        $this->base = new Zend_Service_StrikeIron_Base(array('client'   => $this->soapClient,
+                                                             'username' => 'user',
+                                                             'password' => 'pass'));
     }
 
     public function testHasNoPredefinedWsdl()
@@ -48,7 +50,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     public function testSettingWsdl()
     {
         $wsdl = 'http://example.com/foo';
-        $base = new Zend_Service_StrikeIron_Base('user', 'pass', null, $this->soapClient, $wsdl);
+        $base = new Zend_Service_StrikeIron_Base(array('client' => $this->soapClient,
+                                                       'wsdl'   => $wsdl));
         $this->assertEquals($wsdl, $base->getWsdl());
     }
     
@@ -57,6 +60,14 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->soapClient, $this->base->getSoapClient());
     }
     
+    public function testSoapClientInitializesDefaultSOAPClient()
+    {
+        // set soapclient options to non-wsdl mode just to get a 
+        // soapclient instance without hitting the network
+        $base = new Zend_Service_StrikeIron_Base(array('options' => array('location' => '', 
+                                                                          'uri'      => '')));
+        $this->assertType('SOAPClient', $base->getSoapClient());
+    }
 
     public function testDefaultSoapHeadersHasTheLicenseInfoHeader()
     {
@@ -77,7 +88,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     {
         $invalidHeaders = 'foo';
         try {
-            $base = new Zend_Service_StrikeIron_Base('user', 'pass', $invalidHeaders, $this->soapClient);
+            $base = new Zend_Service_StrikeIron_Base(array('client'  => $this->soapClient,
+                                                           'headers' => $invalidHeaders));
             $this->fail();
         } catch (Zend_Service_StrikeIron_Exception $e) {
             $this->assertRegExp('/instance of soapheader/i', $e->getMessage());
@@ -88,7 +100,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     {
         $invalidHeaders = array('foo');
         try {
-            $base = new Zend_Service_StrikeIron_Base('user', 'pass', $invalidHeaders, $this->soapClient);
+            $base = new Zend_Service_StrikeIron_Base(array('client'  => $this->soapClient,
+                                                           'headers' => $invalidHeaders));            
             $this->fail();
         } catch (Zend_Service_StrikeIron_Exception $e) {
             $this->assertRegExp('/instance of soapheader/i', $e->getMessage());
@@ -98,7 +111,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
     public function testAddingScalarSoapHeaderNotLicenseInfo()
     {
         $header = new SoapHeader('foo', 'bar');
-        $base = new Zend_Service_StrikeIron_Base('user', 'pass', $header, $this->soapClient);
+        $base = new Zend_Service_StrikeIron_Base(array('client'  => $this->soapClient,
+                                                       'headers' => $header));            
         $base->foo();
         
         $headers = $this->soapClient->calls[0]['headers'];
@@ -113,7 +127,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
                                       'LicenseInfo', 
                                       array('RegisteredUser' => array('UserID'   => 'foo',
                                                                       'Password' => 'bar')));
-        $base = new Zend_Service_StrikeIron_Base('user', 'pass', $soapHeaders, $this->soapClient);
+        $base = new Zend_Service_StrikeIron_Base(array('client'  => $this->soapClient,
+                                                       'headers' => $soapHeaders));                                                                            
         $base->foo();
         
         $headers = $this->soapClient->calls[0]['headers'];
@@ -133,7 +148,8 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
         $headers = array(new SoapHeader('foo', 'bar'),
                          new SoapHeader('baz', 'qux'));
 
-        $base = new Zend_Service_StrikeIron_Base('user', 'pass', $headers, $this->soapClient);
+        $base = new Zend_Service_StrikeIron_Base(array('client'  => $this->soapClient,
+                                                       'headers' => $headers));   
         $base->foo();
 
         $headers = $this->soapClient->calls[0]['headers'];
@@ -155,7 +171,7 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
 
     public function testMethodResultWrappingAnyObject()
     {
-        $this->assertType('Zend_Service_StrikeIron_ResultDecorator', 
+        $this->assertType('Zend_Service_StrikeIron_Decorator', 
                           $this->base->returnTheObject());
     }
     
@@ -176,6 +192,14 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testGettingOutputHeaders()
+    {
+        $this->assertSame(array(), $this->base->getLastOutputHeaders());
+        $info = $this->base->foo();
+        $this->assertEquals(Zend_Service_StrikeIron_BaseTest_MockSoapClient::$outputHeaders,
+                            $this->base->getLastOutputHeaders());
+    }
+
     public function testGettingSubscriptionInfo()
     {
         $this->assertEquals(0, count($this->soapClient->calls));
@@ -200,6 +224,29 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
         $this->base->getSubscriptionInfo(true);
         $this->assertEquals(2, count($this->soapClient->calls));
     }
+
+    public function testGettingSubscriptionInfoWithDefaultQueryMethod()
+    {
+        $this->base->getSubscriptionInfo();
+        $this->assertEquals('GetRemainingHits', $this->soapClient->calls[0]['method']);
+    }
+
+    public function testGettingSubscriptionInfoWithCustomQueryMethod()
+    {
+        $method = 'SendSubscriptionInfoHeaderPlease';
+        $this->base->getSubscriptionInfo(true, $method);
+        $this->assertEquals($method, $this->soapClient->calls[0]['method']);
+    }
+
+    public function testGettingSubscriptionInfoThrowsWhenHeaderNotFound()
+    {
+        try {
+            $this->base->getSubscriptionInfo(true, 'ReturnNoOutputHeaders');
+            $this->fail();
+        } catch (Zend_Service_StrikeIron_Exception $e) {
+            $this->assertRegExp('/no subscriptioninfo header/i', $e->getMessage());
+        }
+    }    
 }
 
 /**
@@ -211,23 +258,35 @@ class Zend_Service_StrikeIron_BaseTest extends PHPUnit_Framework_TestCase
  */
 class Zend_Service_StrikeIron_BaseTest_MockSoapClient
 {
+    public static $outputHeaders = array('SubscriptionInfo' => array('RemainingHits' => 3));
+
     public $calls = array();
     
     public function __soapCall($method, $params, $options, $headers, &$outputHeaders)
     {
-        $outputHeaders = array('SubscriptionInfo' => array('RemainingHits' => 3));
+        $outputHeaders = self::$outputHeaders;
 
         $this->calls[] = array('method'  => $method, 
                                'params'  => $params, 
                                'options' => $options, 
                                'headers' => $headers);
         
-        if ($method == 'ReturnTheObject') {
+        if ($method == 'ReturnTheObject') { 
+            // testMethodResultWrappingAnyObject
             return new stdclass();
-        } else if ($method == 'WrapThis') {
+            
+        } else if ($method == 'WrapThis') { 
+            // testMethodResultWrappingAnObjectAndSelectingDefaultResultProperty
             return (object)array('WrapThisResult' => 'unwraped');
+            
         } else if ($method == 'ThrowTheException') {
+            // testMethodExceptionsAreWrapped
             throw new Exception('foo', 43);
+
+        } else if ($method == 'ReturnNoOutputHeaders') {
+            // testGettingSubscriptionInfoThrowsWhenHeaderNotFound
+            $outputHeaders = array();
+            
         } else {
             return 42;
         }

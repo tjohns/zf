@@ -14,31 +14,29 @@
  *
  * @category   Zend
  * @package    Zend_Service
- * @subpackage StrikeIron
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
- 
-/** Zend_Service_StrikeIron_Base */
-require_once 'Zend/Service/StrikeIron/Base.php';
+
+/** Zend_Service_StrikeIron_Exception */
+require_once 'Zend/Service/StrikeIron/Exception.php';
+
+/** PHPUnit_Framework_TestCase */
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
  * @package    Zend_Service
- * @subpackage StrikeIron
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_StrikeIron_SalesUseTaxBasic extends Zend_Service_StrikeIron_Base
+class Zend_Service_StrikeIron_ExceptionTest extends PHPUnit_Framework_TestCase 
 {
-    /**
-     * Configuration options
-     * @param array
-     */
-    protected $_options = array('username' => null,
-                                'password' => null,
-                                'client'   => null,
-                                'options'  => null,
-                                'headers'  => null,
-                                'wsdl'     => 'http://ws.strikeiron.com/zf1.StrikeIron/taxdatabasic?WSDL');    
+    public function testInheritsFromZendException()
+    {
+        $exception = new Zend_Service_StrikeIron_Exception();
+        $this->assertType('Zend_Exception', $exception);
+    }
 }

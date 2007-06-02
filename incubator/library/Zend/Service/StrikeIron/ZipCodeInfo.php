@@ -31,5 +31,14 @@ require_once 'Zend/Service/StrikeIron/Base.php';
  */
 class Zend_Service_StrikeIron_ZipCodeInfo extends Zend_Service_StrikeIron_Base
 {
-    protected $_wsdl = 'http://sdpws.strikeiron.com/zf1.StrikeIron/sdpZIPCodeInfo?WSDL';
+    /**
+     * Configuration options
+     * @param array
+     */
+    protected $_options = array('username' => null,
+                                'password' => null,
+                                'client'   => null,
+                                'options'  => null,
+                                'headers'  => null,
+                                'wsdl'     => 'http://sdpws.strikeiron.com/zf1.StrikeIron/sdpZIPCodeInfo?WSDL');
 }

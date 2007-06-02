@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Service_StrikeIron_ResultDecorator */
-require_once 'Zend/Service/StrikeIron/ResultDecorator.php';
+/** Zend_Service_StrikeIron_Decorator */
+require_once 'Zend/Service/StrikeIron/Decorator.php';
 
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -32,18 +32,18 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_StrikeIron_ResultDecoratorTest extends PHPUnit_Framework_TestCase 
+class Zend_Service_StrikeIron_DecoratorTest extends PHPUnit_Framework_TestCase 
 {
     public function testNoNoticesWhenDecoratedObjectIsNotAnObject()
     {
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator(3.1415);
+        $decorator = new Zend_Service_StrikeIron_Decorator(3.1415);
         $this->assertSame(null, $decorator->foo);
     }
     
     public function testDecoratorReturnsNullWhenPropertyIsMissing()
     {
         $object = new stdclass();
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator($object);
+        $decorator = new Zend_Service_StrikeIron_Decorator($object);
         $this->assertSame(null, $decorator->foo);
     }
 
@@ -51,7 +51,7 @@ class Zend_Service_StrikeIron_ResultDecoratorTest extends PHPUnit_Framework_Test
     {
         $object = (object)array('Foo' => 'bar',
                                 'Baz' => 'qux');
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator($object);
+        $decorator = new Zend_Service_StrikeIron_Decorator($object);
         $this->assertEquals('qux', $decorator->Baz);
     }
     
@@ -59,7 +59,7 @@ class Zend_Service_StrikeIron_ResultDecoratorTest extends PHPUnit_Framework_Test
     {
         $object = (object)array('Foo' => 'bar',
                                 'Baz' => 'qux');
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator($object);
+        $decorator = new Zend_Service_StrikeIron_Decorator($object);
         $this->assertEquals('qux', $decorator->baz);
     }
     
@@ -67,14 +67,37 @@ class Zend_Service_StrikeIron_ResultDecoratorTest extends PHPUnit_Framework_Test
     {
         $object = (object)array('foo' => 'bar',
                                 'Foo' => 'qux');
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator($object);
+        $decorator = new Zend_Service_StrikeIron_Decorator($object);
         $this->assertEquals('bar', $decorator->foo);
     }
     
     public function testDecoratorReturnsAnotherDecoratorWhenValueIsAnObject()
     {
         $object = (object)array('Foo' => new stdclass);
-        $decorator = new Zend_Service_StrikeIron_ResultDecorator($object);
+        $decorator = new Zend_Service_StrikeIron_Decorator($object);
         $this->assertType(get_class($decorator), $decorator->Foo);
+    }
+
+    public function testDecoratorProxiesMethodCalls()
+    {
+        $decorator = new Zend_Service_StrikeIron_Decorator($this);
+        $this->assertEquals('bar', $decorator->foo());
+    }
+    
+    public function foo()
+    {
+        return 'bar';
+    }
+    
+    public function testGettingTheDecoratedObject()
+    {
+        $decorator = new Zend_Service_StrikeIron_Decorator($this);
+        $this->assertSame($this, $decorator->getDecoratedObject());
+    }
+
+    public function testGettingDecoratedObjectName()
+    {
+        $decorator = new Zend_Service_StrikeIron_Decorator($this, 'foo');
+        $this->assertSame('foo', $decorator->getDecoratedObjectName());
     }
 }
