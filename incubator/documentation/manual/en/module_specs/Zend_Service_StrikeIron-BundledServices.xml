@@ -166,7 +166,7 @@ if ($result->addressErrorNumber != 0) {
 
         <programlisting role="php"><![CDATA[<?php
           
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password'));

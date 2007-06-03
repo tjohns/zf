@@ -127,7 +127,7 @@
 
         <programlisting role="php"><![CDATA[<?php
           
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password'));
@@ -164,7 +164,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
         <programlisting role="php"><![CDATA[<?php
           
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password'));
@@ -220,7 +220,7 @@ echo $rateInfo->GST;
         PHP functions like <ulink linkend="http://www.php.net/print_r">print_r()</ulink>:
 
         <programlisting role="php"><![CDATA[<?php
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password'));
@@ -290,7 +290,7 @@ Zend_Service_StrikeIron_Decorator Object
 
         <programlisting role="php"><![CDATA[<?php
           
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password'));
@@ -349,7 +349,7 @@ try {
         
         <programlisting role="php"><![CDATA[<?php
           
-require 'Zend/Service/StrikeIron.php';
+require_once 'Zend/Service/StrikeIron.php';
 
 // Get a client for the Sales & Use Tax Basic service
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
