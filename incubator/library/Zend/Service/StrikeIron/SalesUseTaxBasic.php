@@ -40,5 +40,5 @@ class Zend_Service_StrikeIron_SalesUseTaxBasic extends Zend_Service_StrikeIron_B
                                 'client'   => null,
                                 'options'  => null,
                                 'headers'  => null,
-                                'wsdl'     => 'http://ws.strikeiron.com/zf1.StrikeIron/taxdatabasic?WSDL');    
+                                'wsdl'     => 'http://ws.strikeiron.com/zf1.StrikeIron/taxdatabasic4?WSDL');    
 }
