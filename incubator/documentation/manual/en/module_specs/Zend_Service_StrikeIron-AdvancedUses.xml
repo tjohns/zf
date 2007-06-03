@@ -94,7 +94,7 @@ require 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
                                                 'password' => 'your-password',
-                                                'options'  => array('trace' => true));
+                                                'options'  => array('trace' => true)));
                                                 
 // Get a client for the Sales & Use Tax Basic service
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic')); 
