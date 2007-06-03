@@ -50,7 +50,7 @@ class Zend_Service_StrikeIron_SalesUseTaxBasicTest extends PHPUnit_Framework_Tes
     
     public function testWsdl()
     {
-        $wsdl = 'http://ws.strikeiron.com/zf1.StrikeIron/taxdatabasic?WSDL';
+        $wsdl = 'http://ws.strikeiron.com/zf1.StrikeIron/taxdatabasic4?WSDL';
         $this->assertEquals($wsdl, $this->service->getWsdl());
     }
 
