@@ -66,7 +66,7 @@ class Zend_Service_StrikeIron
         $class = isset($options['class']) ? $options['class'] : 'Base';
         unset($options['class']);
         
-        if (strpos($class, '_') == false) {
+        if (strpos($class, '_') === false) {
             $class = "Zend_Service_StrikeIron_{$class}";
         }
 
