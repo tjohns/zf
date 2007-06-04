@@ -21,6 +21,7 @@
  * @version    $Id: AllTests.php 4412 2007-04-06 21:17:32Z zendbot $
  */
 
+
 /**
  * Test helper
  */
@@ -36,6 +37,14 @@ require_once 'Zend/Filter/Input.php';
  */
 require_once 'Zend/Loader.php';
 
+
+/**
+ * @category   Zend
+ * @package    Zend
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
 {
 
@@ -481,7 +490,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         Zend_Loader::loadClass('Zend_Filter_StripTags');
         Zend_Loader::loadClass('Zend_Validate_EmailAddress');
 
-        $data = array(   
+        $data = array(
             'nick'    => '',
             'email'   => 'someemail@server.com'
         );
@@ -1230,7 +1239,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $validators = array(
             'field1' => array(Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_OPTIONAL),
             'field2' => array(
-                'digits', 
+                'digits',
                 Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_REQUIRED
             )
         );
@@ -1260,7 +1269,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $validators = array(
             'field1' => array(Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_OPTIONAL),
             'field2' => array(
-                'digits', 
+                'digits',
                 Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_REQUIRED
             )
         );
@@ -1289,7 +1298,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $validators = array(
             'field1' => array(Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_OPTIONAL),
             'field2' => array(
-                'digits', 
+                'digits',
                 Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_REQUIRED
             )
         );
@@ -1323,7 +1332,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
                 Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_OPTIONAL
             ),
             'field2' => array(
-                'digits', 
+                'digits',
                 Zend_Filter_Input::PRESENCE => Zend_Filter_Input::PRESENCE_REQUIRED
             )
         );

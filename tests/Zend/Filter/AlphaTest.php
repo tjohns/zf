@@ -68,13 +68,18 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $valuesExpected = array(
-            'abc123'  => 'abc',
-            'abc 123' => 'abc',
-            'abcxyz'  => 'abcxyz',
-            'AZ@#4.3' => 'AZ'
+            'abc123'        => 'abc',
+            'abc 123'       => 'abc',
+            'abcxyz'        => 'abcxyz',
+            'AZ@#4.3'       => 'AZ',
+            'grzeg?ó?ka'    => 'grzeg?ó?ka',
             );
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $this->_filter->filter($input));
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
         }
     }
 }

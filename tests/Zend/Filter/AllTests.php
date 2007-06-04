@@ -28,6 +28,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+
+/**
  * PHPUnit_Framework_TestSuite
  */
 require_once 'PHPUnit/Framework/TestSuite.php';
