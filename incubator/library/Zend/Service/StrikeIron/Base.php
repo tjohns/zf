@@ -79,7 +79,6 @@ class Zend_Service_StrikeIron_Base
         $params = isset($params[0]) ? array($params[0]) : array();
 
         // make soap call, capturing the result and output headers
-        $outputHeaders = null;
         try {
             $result = $this->_options['client']->__soapCall($method, 
                                                             $params, 
