@@ -754,7 +754,8 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         }
 
         $accounts = $this->_db->quoteIdentifier('zfaccounts');
-        $accounts_list = $this->_db->fetchCol("SELECT account_name from $accounts ORDER BY account_name");
+        $account_name = $this->_db->quoteIdentifier('account_name');
+        $accounts_list = $this->_db->fetchCol("SELECT $account_name from $accounts ORDER BY $account_name");
         // if the save() did an UPDATE instead of an INSERT, then goofy should
         // be missing, and clarabell should be present
         $this->assertEquals(array('clarabell', 'dduck', 'mmouse'), $accounts_list);

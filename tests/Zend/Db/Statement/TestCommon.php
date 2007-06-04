@@ -744,19 +744,19 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->prepare($select->__toString());
 
         $value = 'value';
-        $stmt->setAttribute('scalarAttribute', $value);
-        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #1");
+        $stmt->setAttribute(1234, $value);
+        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
 
         $valueArray = array('value1', 'value2');
-        $stmt->setAttribute('arrayAttribute', $valueArray);
-        $this->assertEquals($valueArray, $stmt->getAttribute('arrayAttribute'), "Expected array #1");
-        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #2");
+        $stmt->setAttribute(1235, $valueArray);
+        $this->assertEquals($valueArray, $stmt->getAttribute(1235), "Expected array #1");
+        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #2");
 
         $valueObject = new stdClass();
-        $stmt->setAttribute('objectAttribute', $valueObject);
-        $this->assertSame($valueObject, $stmt->getAttribute('objectAttribute'), "Expected object");
-        $this->assertEquals($valueArray, $stmt->getAttribute('arrayAttribute'), "Expected array #2");
-        $this->assertEquals($value, $stmt->getAttribute('scalarAttribute'), "Expected 'value' #2");
+        $stmt->setAttribute(1236, $valueObject);
+        $this->assertSame($valueObject, $stmt->getAttribute(1236), "Expected object");
+        $this->assertEquals($valueArray, $stmt->getAttribute(1235), "Expected array #2");
+        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #2");
     }
 
 }

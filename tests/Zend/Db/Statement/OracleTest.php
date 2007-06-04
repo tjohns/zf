@@ -72,6 +72,11 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $this->assertEquals(array(array('product_id'=>4, 'product_name'=>'Solaris')), $result);
     }
 
+    public function testStatementSetFetchModeBoth()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
+    }
+
     public function testStatementFetchAllStyleBoth()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
