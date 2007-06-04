@@ -369,8 +369,8 @@
                     </row>
                     <row>
                         <entry>soap</entry>
-                        <entry>--</entry>
-                        <entry></entry>
+                        <entry>Dependency</entry>
+                        <entry>Zend_Service_StrikeIron</entry>
                     </row>
                     <row>
                         <entry>sockets</entry>
