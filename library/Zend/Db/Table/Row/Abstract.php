@@ -551,7 +551,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         // retrieve recently updated row using primary keys
         foreach ($primaryKey as $columnName => $val) {
-            $where[] = $db->quoteInto($db->quoteIdentifier($columnName) . ' = ?', $val);
+            $where[] = $db->quoteInto($db->quoteIdentifier($columnName, true) . ' = ?', $val);
         }
 
         return $where;
@@ -699,7 +699,7 @@ abstract class Zend_Db_Table_Row_Abstract
         $map = $this->_prepareReference($dependentTable, $this->_getTable(), $ruleKey);
 
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
-            $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::COLUMNS][$i]) . ' = ?';
+            $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::COLUMNS][$i], true) . ' = ?';
             $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]];
         }
         return $dependentTable->fetchAll($where);
@@ -738,7 +738,7 @@ abstract class Zend_Db_Table_Row_Abstract
         $map = $this->_prepareReference($this->_getTable(), $parentTable, $ruleKey);
 
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
-            $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]) . ' = ?';
+            $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i], true) . ' = ?';
             $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::COLUMNS][$i]];
         }
         return $parentTable->fetchRow($where);
@@ -800,8 +800,8 @@ abstract class Zend_Db_Table_Row_Abstract
         $matchMap = $this->_prepareReference($intersectionTable, $matchTable, $matchRefRule);
 
         for ($i = 0; $i < count($matchMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
-            $interCol = $db->quoteIdentifier('i') . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
-            $matchCol = $db->quoteIdentifier('m') . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
+            $interCol = $db->quoteIdentifier('i', true) . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::COLUMNS][$i], true);
+            $matchCol = $db->quoteIdentifier('m', true) . '.' . $db->quoteIdentifier($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i], true);
             $joinCond[] = "$interCol = $matchCol";
         }
         $joinCond = implode(' AND ', $joinCond);
@@ -813,7 +813,7 @@ abstract class Zend_Db_Table_Row_Abstract
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
 
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
-            $interCol = $db->quoteIdentifier('i') . '.' . $db->quoteIdentifier($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
+            $interCol = $db->quoteIdentifier('i', true) . '.' . $db->quoteIdentifier($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i], true);
             $value = $this->_data[$callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]];
             $select->where("$interCol = ?", $value);
         }

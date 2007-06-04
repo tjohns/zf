@@ -92,10 +92,10 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      * @param string $alias An alias for the table.
      * @return string The quoted identifier and alias.
      */
-    public function quoteTableAs($ident, $alias)
+    public function quoteTableAs($ident, $alias, $auto=false)
     {
         // Oracle doesn't allow the 'AS' keyword between the table identifier/expression and alias.
-        return $this->_quoteIdentifierAs($ident, $alias, ' ');
+        return $this->_quoteIdentifierAs($ident, $alias, $auto, ' ');
     }
 
     /**

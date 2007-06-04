@@ -45,6 +45,8 @@ class Zend_Db
 
     const CASE_FOLDING = 'caseFolding';
 
+    const AUTO_QUOTE_IDENTIFIERS = 'autoQuoteIdentifiers';
+
     /**
      * PDO constant values discovered by this script result:
      *

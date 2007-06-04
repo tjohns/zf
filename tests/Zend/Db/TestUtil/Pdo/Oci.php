@@ -79,44 +79,44 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES '
-            . $this->_db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT UPPER(TABLE_NAME) FROM ALL_TABLES '
+            . $this->_db->quoteInto(' WHERE UPPER(TABLE_NAME) = UPPER(?)', $tableName)
         );
-        if (in_array($tableName, $tableList)) {
+        if (in_array(strtoupper($tableName), $tableList)) {
             return null;
         }
-        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
     }
 
     protected function _getSqlDropTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT table_name FROM ALL_TABLES '
-            . $this->_db->quoteInto(' WHERE TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT UPPER(TABLE_NAME) FROM ALL_TABLES '
+            . $this->_db->quoteInto(' WHERE UPPER(TABLE_NAME) = UPPER(?)', $tableName)
         );
-        if (in_array($tableName, $tableList)) {
-            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        if (in_array(strtoupper($tableName), $tableList)) {
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
         }
         return null;
     }
 
     protected function _getSqlCreateSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
-            . $this->_db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT UPPER(SEQUENCE_NAME) FROM ALL_SEQUENCES '
+            . $this->_db->quoteInto(' WHERE UPPER(SEQUENCE_NAME) = UPPER(?)', $sequenceName)
         );
-        if (in_array($sequenceName, $seqList)) {
+        if (in_array(strtoupper($sequenceName), $seqList)) {
             return null;
         }
-        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
+        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true);
     }
 
     protected function _getSqlDropSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT sequence_name FROM ALL_SEQUENCES '
-            . $this->_db->quoteInto(' WHERE SEQUENCE_NAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT UPPER(SEQUENCE_NAME) FROM ALL_SEQUENCES '
+            . $this->_db->quoteInto(' WHERE UPPER(SEQUENCE_NAME) = UPPER(?)', $sequenceName)
         );
-        if (in_array($sequenceName, $seqList)) {
-            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
+        if (in_array(strtoupper($sequenceName), $seqList)) {
+            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true);
         }
         return null;
     }
@@ -125,7 +125,7 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
     {
         $data = parent::_getDataBugs();
         foreach ($data as &$row) {
-            $row['bug_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfbugs_seq').'.NEXTVAL');
+            $row['bug_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfbugs_seq', true).'.NEXTVAL');
             $row['created_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['created_on']));
             $row['updated_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['updated_on']));
         }
@@ -136,7 +136,7 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
     {
         $data = parent::_getDataProducts();
         foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq').'.NEXTVAL');
+            $row['product_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq', true).'.NEXTVAL');
         }
         return $data;
     }

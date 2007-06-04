@@ -136,9 +136,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
          */
 
         if ($schemaName) {
-            $sql = 'DESCRIBE ' . $this->quoteIdentifier("$schemaName.$tableName");
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier("$schemaName.$tableName", true);
         } else {
-            $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName);
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName, true);
         }
 
         /**

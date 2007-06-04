@@ -235,7 +235,11 @@ class Zend_Db_Statement_Pdo implements Zend_Db_Statement_Interface
     public function execute(array $params = null)
     {
         try {
-            return $this->_stmt->execute($params);
+            if ($params === null) {
+                return $this->_stmt->execute();
+            } else {
+                return $this->_stmt->execute($params);
+            }
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
             throw new Zend_Db_Statement_Exception($e->getMessage());

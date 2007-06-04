@@ -163,7 +163,7 @@ class Zend_Db_Select
                 if (empty($from)) {
                     // Add schema if available
                     if (null !== $table['schema']) {
-                        $tmp .= $this->_adapter->quoteIdentifier($table['schema']) . '.';
+                        $tmp .= $this->_adapter->quoteIdentifier($table['schema'], true) . '.';
                     }
                     // First table is named alone ignoring join information
                     $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
@@ -174,7 +174,7 @@ class Zend_Db_Select
                     }
                     // Add schema if available
                     if (null !== $table['schema']) {
-                        $tmp .= $this->_adapter->quoteIdentifier($table['schema']) . '.';
+                        $tmp .= $this->_adapter->quoteIdentifier($table['schema'], true) . '.';
                     }
                     $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
                     if (! empty($table['joinCondition'])) {
@@ -201,7 +201,7 @@ class Zend_Db_Select
                 $sql .= "\nGROUP BY\n\t";
                 $l = array();
                 foreach ($this->_parts[self::GROUP] as $term) {
-                    $l[] = $this->_adapter->quoteIdentifier($term);
+                    $l[] = $this->_adapter->quoteIdentifier($term, true);
                 }
                 $sql .= implode(",\n\t", $l);
             }
@@ -220,9 +220,9 @@ class Zend_Db_Select
             $l = array();
             foreach ($this->_parts[self::ORDER] as $term) {
                 if (is_array($term)) {
-                    $l[] = $this->_adapter->quoteIdentifier($term[0]) . ' ' . $term[1];
+                    $l[] = $this->_adapter->quoteIdentifier($term[0], true) . ' ' . $term[1];
                 } else {
-                    $l[] = $this->_adapter->quoteIdentifier($term);
+                    $l[] = $this->_adapter->quoteIdentifier($term, true);
                 }
             }
             $sql .= implode(",\n\t", $l);

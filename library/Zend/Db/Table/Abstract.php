@@ -819,7 +819,7 @@ abstract class Zend_Db_Table_Abstract
                                 $newRefs[$map[self::COLUMNS][$i]] = $newPrimaryKey[$map[self::REF_COLUMNS][$i]];
                             }
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i], true) . ' = ?',
                                 $oldPrimaryKey[$map[self::REF_COLUMNS][$i]]
                             );
                         }
@@ -861,7 +861,7 @@ abstract class Zend_Db_Table_Abstract
                     case self::CASCADE:
                         for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
                             $where[] = $this->_db->quoteInto(
-                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i]) . ' = ?',
+                                $this->_db->quoteIdentifier($map[self::COLUMNS][$i], true) . ' = ?',
                                 $primaryKey[$map[self::REF_COLUMNS][$i]]
                             );
                         }
@@ -937,7 +937,7 @@ abstract class Zend_Db_Table_Abstract
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyPosition => $keyValue) {
                     $whereAndTerms[] = $this->_db->quoteInto(
-                        $this->_db->quoteIdentifier($keyNames[$keyPosition]) . ' = ?',
+                        $this->_db->quoteIdentifier($keyNames[$keyPosition], true) . ' = ?',
                         $keyValue
                     );
                 }

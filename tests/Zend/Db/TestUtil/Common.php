@@ -62,12 +62,12 @@ abstract class Zend_Db_TestUtil_Common
 
     protected function _getSqlCreateTable($tableName)
     {
-        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
     }
 
     protected function _getSqlDropTable($tableName)
     {
-        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
     }
 
     public function getSqlType($type)
@@ -98,13 +98,13 @@ abstract class Zend_Db_TestUtil_Common
             $pKey = $columns['PRIMARY KEY'];
             unset($columns['PRIMARY KEY']);
             foreach (explode(',', $pKey) as $pKeyCol) {
-                $pKeys[] = $this->_db->quoteIdentifier($pKeyCol);
+                $pKeys[] = $this->_db->quoteIdentifier($pKeyCol, true);
             }
             $pKey = implode(', ', $pKeys);
         }
 
         foreach ($columns as $columnName => $type) {
-            $col[] = $this->_db->quoteIdentifier($columnName) . ' ' . $this->getSqlType($type);
+            $col[] = $this->_db->quoteIdentifier($columnName, true) . ' ' . $this->getSqlType($type);
         }
 
         if ($pKey) {
@@ -123,7 +123,7 @@ abstract class Zend_Db_TestUtil_Common
     public function dropTable($tableName = null)
     {
         if (!$tableName) {
-            foreach (array_keys($this->_tables) as $tab) {
+            foreach ($this->_tableName as $tab) {
                 $this->dropTable($tab);
             }
             return;
@@ -209,7 +209,7 @@ abstract class Zend_Db_TestUtil_Common
         'Products'      => 'zfproducts',
         'Bugs'          => 'zfbugs',
         'BugsProducts'  => 'zfbugs_products',
-        'special'       => 'My Table',
+        'noquote'       => 'zfnoquote'
     );
 
     public function getTableName($tableId)
@@ -354,11 +354,11 @@ abstract class Zend_Db_TestUtil_Common
         $tableName = $this->getTableName($tableId);
         $data = $this->{'_getData'.$tableId}();
         foreach ($data as $row) {
-            $sql = 'INSERT INTO ' .  $this->_db->quoteIdentifier($tableName);
+            $sql = 'INSERT INTO ' .  $this->_db->quoteIdentifier($tableName, true);
             $cols = array();
             $vals = array();
             foreach ($row as $col => $val) {
-                $cols[] = $this->_db->quoteIdentifier($col);
+                $cols[] = $this->_db->quoteIdentifier($col, true);
                 if ($val instanceof Zend_Db_Expr) {
                     $vals[] = $val->__toString();
                 } else {
@@ -376,7 +376,8 @@ abstract class Zend_Db_TestUtil_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->_db = $db;
+        $this->setAdapter($db);
+
         $this->createTable('Accounts');
         $this->populateTable('Accounts');
 
@@ -388,6 +389,11 @@ abstract class Zend_Db_TestUtil_Common
 
         $this->createTable('BugsProducts');
         $this->populateTable('BugsProducts');
+    }
+
+    public function setAdapter(Zend_Db_Adapter_Abstract $db)
+    {
+        $this->_db = $db;
     }
 
     public function tearDown()

@@ -115,12 +115,11 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             $this->_profiler->queryEnd($q);
 
             // set the PDO connection to perform case-folding on array keys, or not
-            $this->_connection->setAttribute(PDO::ATTR_CASE, $this->_config['options'][Zend_Db::CASE_FOLDING]);
+            $this->_connection->setAttribute(PDO::ATTR_CASE, $this->_caseFolding);
 
             // always use exceptions.
             $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            /** @todo Are there other portability attribs to consider? */
         } catch (PDOException $e) {
             /**
              * @see Zend_Db_Adapter_Exception

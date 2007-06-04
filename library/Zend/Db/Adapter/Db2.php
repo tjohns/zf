@@ -398,7 +398,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return $value;
     }
@@ -414,7 +414,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
+        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return $value;
     }

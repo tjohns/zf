@@ -28,7 +28,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->_db = $db;
+        $this->setAdapter($db);
         $this->createSequence('zfproducts_seq');
         parent::setUp($db);
     }
@@ -66,7 +66,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     {
         $data = parent::_getDataProducts();
         foreach ($data as &$row) {
-            $row['product_id'] = new Zend_Db_Expr('NEXTVAL FOR '.$this->_db->quoteIdentifier('zfproducts_seq'));
+            $row['product_id'] = new Zend_Db_Expr('NEXTVAL FOR '.$this->_db->quoteIdentifier('zfproducts_seq', true));
         }
         return $data;
     }
@@ -84,44 +84,44 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
+            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
         );
-        if (in_array($tableName, $tableList)) {
+        if (in_array(strtoupper($tableName), $tableList)) {
             return null;
         }
-        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);;
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
     }
 
     protected function _getSqlDropTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT T.TABLE_NAME FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE T.TABLE_NAME = ?', $tableName)
+        $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
+            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
         );
-        if (in_array($tableName, $tableList)) {
-            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        if (in_array(strtoupper($tableName), $tableList)) {
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
         }
         return null;
     }
 
     protected function _getSqlCreateSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
+            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
-        if (in_array($sequenceName, $seqList)) {
+        if (in_array(strtoupper($sequenceName), $seqList)) {
             return null;
         }
-        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName) . ' AS INT START WITH 1 INCREMENT BY 1 MINVALUE 1';
+        return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' AS INT START WITH 1 INCREMENT BY 1 MINVALUE 1';
     }
 
     protected function _getSqlDropSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT S.SEQNAME FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE S.SEQNAME = ?', $sequenceName)
+        $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
+            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
-        if (in_array($sequenceName, $seqList)) {
-            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName) . ' RESTRICT';
+        if (in_array(strtoupper($sequenceName), $seqList)) {
+            return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
         }
         return null;
     }

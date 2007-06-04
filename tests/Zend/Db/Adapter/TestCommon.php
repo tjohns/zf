@@ -519,7 +519,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function _testAdapterOptionCaseFoldingCommon($case)
     {
         $params = $this->_util->getParams();
-        
+
         $params['options'] = array(
             Zend_Db::CASE_FOLDING => $case
         );
@@ -569,6 +569,95 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $lower = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_LOWER);
         $expected = strtolower($this->_getCaseNaturalIdentifier());
         $this->assertEquals($lower, $expected, 'Lower case does not match');
+    }
+
+    /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     */
+    public function testAdapterAutoQuoteIdentifiersTrue()
+    {
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $select = $this->_db->select();
+        $select->from('zfproducts');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(1, $result[0]['product_id']);
+
+        $select = $this->_db->select();
+        $select->from('ZFPRODUCTS');
+        try {
+            $stmt = $this->_db->query($select);
+            $result = $stmt->fetchAll();
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+        }
+    }
+
+    /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = false
+     */
+    public function testAdapterAutoQuoteIdentifiersFalse()
+    {
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        // create a new util object, with the new db adapter
+        $driver = $this->getDriver();
+        $utilClass = "Zend_Db_TestUtil_{$driver}";
+        $util = new $utilClass();
+        $util->setAdapter($db);
+
+        // create test table using no identifier quoting
+        $util->createTable('noquote', array(
+            'id'    => 'INT NOT NULL PRIMARY KEY',
+            'stuff' => 'CHAR(10)'
+        ));
+
+        $db->getProfiler()->setEnabled(true);
+
+        // insert into the table
+        $numRows = $db->insert('zfnoquote', array(
+            'id'    => 1,
+            'stuff' => 'no quote 1'
+        ));
+        $this->assertEquals(1, $numRows);
+
+        // check if the row was inserted as expected
+        $stmt = $db->query('SELECT id, stuff FROM zfnoquote ORDER BY id');
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1')), $fetched);
+
+        // insert into the table using other case
+        $numRows = $db->insert('ZFNOQUOTE', array(
+            'ID'    => 2,
+            'STUFF' => 'no quote 2'
+        ));
+        $this->assertEquals(1, $numRows);
+
+        // check if the row was inserted as expected
+        $stmt = $db->query('SELECT ID, STUFF FROM ZFNOQUOTE ORDER BY ID');
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1'), 1=>array(0=>2, 1=>'no quote 2')), $fetched);
+
+        // clean up
+        $util->dropTable('zfnoquote');
     }
 
 }

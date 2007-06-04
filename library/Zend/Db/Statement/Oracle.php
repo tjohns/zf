@@ -230,7 +230,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
-    public function execute(array $params = array())
+    public function execute(array $params = null)
     {
         $connection = $this->_adapter->getConnection();
         if (!$this->_stmt) {
@@ -245,7 +245,10 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
             throw new Zend_Db_Statement_Oracle_Exception(oci_error($connection));
         }
 
-        if ($params) {
+        if ($params !== null) {
+            if (!is_array($params)) {
+                $params = array($params);
+            }
             $error = false;
             foreach (array_keys($params) as $name) {
                 if (!@oci_bind_by_name($this->_stmt, $name, $params[$name], -1)) {

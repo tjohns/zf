@@ -75,6 +75,44 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     }
 
     /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     *
+     * MySQL actually allows delimited identifiers to remain
+     * case-insensitive, so this test overrides its parent.
+     */
+    public function testAdapterAutoQuoteIdentifiersTrue()
+    {
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $select = $this->_db->select();
+        $select->from('zfproducts');
+        $stmt = $this->_db->query($select);
+        $result1 = $stmt->fetchAll();
+
+        $this->assertEquals(1, $result1[0]['product_id']);
+
+        $select = $this->_db->select();
+        $select->from('ZFPRODUCTS');
+        try {
+            $stmt = $this->_db->query($select);
+            $result2 = $stmt->fetchAll();
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->fail('Unexpected exception '.get_class($e).' received: '.$e->getMessage());
+        }
+
+        $this->assertEquals($result1, $result2);
+    }
+
+    /**
      * Ensures that driver_options are properly passed along to PDO
      *
      * @see    http://framework.zend.com/issues/browse/ZF-285
@@ -96,4 +134,5 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 
         $this->assertFalse((boolean) $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY));
     }
+
 }

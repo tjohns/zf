@@ -147,12 +147,13 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * @param string|array|Zend_Db_Expr $ident The identifier or expression.
      * @param string $alias An alias for the table.
+     * @param boolean $auto If true, heed the AUTO_QUOTE_IDENTIFIERS config option.
      * @return string The quoted identifier and alias.
      */
-    public function quoteTableAs($ident, $alias)
+    public function quoteTableAs($ident, $alias, $auto=false)
     {
         // Oracle doesn't allow the 'AS' keyword between the table identifier/expression and alias.
-        return $this->_quoteIdentifierAs($ident, $alias, ' ');
+        return $this->_quoteIdentifierAs($ident, $alias, $auto, ' ');
     }
 
     /**
@@ -166,7 +167,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName).'.CURRVAL FROM dual';
+        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName, true).'.CURRVAL FROM dual';
         $value = $this->fetchOne($sql);
         return $value;
     }
@@ -182,7 +183,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName).'.NEXTVAL FROM dual';
+        $sql = 'SELECT '.$this->quoteIdentifier($sequenceName, true).'.NEXTVAL FROM dual';
         $value = $this->fetchOne($sql);
         return $value;
     }
@@ -485,22 +486,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         return $this->_execute_mode;
     }
 
-
-    /**
-     * Quote an identifier.
-     *
-     * Oracle allows 'CREATE "table"', but does not allow 'DROP/INSERT INTO/SELECT FROM "table"'
-     * We don't want to implement a fully featured SQL parser here, so let's just don't quote the identifier.
-     *
-     * @param  string $value The identifier or expression.
-     * @return string        The quoted identifier and alias.
-     */
-    protected function _quoteIdentifier($value)
-    {
-        $q = $this->getQuoteIdentifierSymbol();
-        return ($q . str_replace("$q", "$q$q", $value) . $q);
-    }
-
     /**
      * Inserts a table row with specified data.
      *
@@ -517,7 +502,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $cols = array();
         $vals = array();
         foreach ($bind as $col => $val) {
-            $cols[] = $this->quoteIdentifier($col);
+            $cols[] = $this->quoteIdentifier($col, true);
             if ($val instanceof Zend_Db_Expr) {
                 $vals[] = $val->__toString();
                 unset($bind[$col]);
@@ -531,7 +516,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
 
         // build the statement
         $sql = "INSERT INTO "
-             . $this->quoteIdentifier($table)
+             . $this->quoteIdentifier($table, true)
              . ' (' . implode(', ', $cols) . ') '
              . 'VALUES (' . implode(', ', $vals) . ')';
 
@@ -563,7 +548,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 $bind[':'.$col.$i] = $val;
                 $val = ':'.$col.$i;
             }
-            $set[] = $this->quoteIdentifier($col) . ' = ' . $val;
+            $set[] = $this->quoteIdentifier($col, true) . ' = ' . $val;
             $i++;
         }
 
@@ -573,7 +558,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
 
         // build the statement
         $sql = "UPDATE "
-             . $this->quoteIdentifier($table)
+             . $this->quoteIdentifier($table, true)
              . ' SET ' . implode(', ', $set)
              . (($where) ? " WHERE $where" : '');
 
