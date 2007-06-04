@@ -158,7 +158,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');
             <title>Defining the Table Primary Key</title>
 
             <para>
-                Every table should have a primary key.  You can declare the
+                Every table must have a primary key.  You can declare the
                 column for the primary key using the protected variable
                 <code>$_primary</code>.
                 This is either a string that names the single column for the
@@ -184,6 +184,17 @@ class Bugs extends Zend_Db_Table_Abstract
                 tries to discover the primary key based on the information
                 provided by the <code>describeTable()</code> method.
             </para>
+
+            <note>
+                <para>
+                    Every table must be defined with a primary key constraint.
+                    The table may have a pseudokey (an auto-incrementing
+                    integer column) or a natural key, or a compound key.
+                    A table with no primary key constraint can be used with
+                    other Zend_Db_Adapter methods, but it cannot be used with
+                    Zend_Db_Table.
+                </para>
+            </note>
 
         </sect3>
 

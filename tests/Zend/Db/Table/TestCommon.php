@@ -371,6 +371,25 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
+    public function testTableExceptionNoPrimaryKey()
+    {
+        // create a table that has no primary key
+        $this->_util->createTable('noprimarykey', array('id' => 'INTEGER'));
+        $tableName = $this->_util->getTableName('noprimarykey');
+
+        try {
+            $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+                array('name' => $tableName));
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+            $this->assertEquals('A table must have a primary key, but none was found', $e->getMessage());
+        }
+
+        $this->_util->dropTable($tableName);
+    }
+
     public function testTableAdapterException()
     {
         Zend_Loader::loadClass('Zend_Db_Table_TableBugs');
@@ -511,6 +530,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',
             array(Zend_Db_Table_Abstract::SEQUENCE => 'zfproducts_seq'));
+
         $row = array (
             'product_name' => 'Solaris'
         );

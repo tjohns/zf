@@ -209,7 +209,8 @@ abstract class Zend_Db_TestUtil_Common
         'Products'      => 'zfproducts',
         'Bugs'          => 'zfbugs',
         'BugsProducts'  => 'zfbugs_products',
-        'noquote'       => 'zfnoquote'
+        'noquote'       => 'zfnoquote',
+        'noprimarykey'  => 'zfnoprimarykey'
     );
 
     public function getTableName($tableId)

@@ -624,6 +624,7 @@ abstract class Zend_Db_Table_Abstract
     protected function _setupPrimaryKey()
     {
         if (!$this->_primary) {
+            $this->_primary = array();
             foreach ($this->_metadata as $col) {
                 if ($col['PRIMARY']) {
                     $this->_primary[ $col['PRIMARY_POSITION'] ] = $col['COLUMN_NAME'];
@@ -631,6 +632,12 @@ abstract class Zend_Db_Table_Abstract
                         $this->_identity = $col['PRIMARY_POSITION'];
                     }
                 }
+            }
+            // if no primary key was specified and none was found in the metadata
+            // then throw an exception.
+            if (empty($this->_primary)) {
+                require_once 'Zend/Db/Table/Exception.php';
+                throw new Zend_Db_Table_Exception('A table must have a primary key, but none was found');
             }
         } else if (!is_array($this->_primary)) {
             $this->_primary = array(1 => $this->_primary);
