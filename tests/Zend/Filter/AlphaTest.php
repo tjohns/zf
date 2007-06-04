@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * Zend Framework
@@ -71,8 +71,10 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
             'abc123'        => 'abc',
             'abc 123'       => 'abc',
             'abcxyz'        => 'abcxyz',
-            'AZ@#4.3'       => 'AZ',
-            'grzeg?�?ka'    => 'grzeg?�?ka',
+            'četně'         => 'četně',
+            'لعربية'        => 'لعربية',
+            'grzegżółka'    => 'grzegżółka',
+            'België'        => 'België',
             );
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals(
