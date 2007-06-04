@@ -126,40 +126,34 @@ class Zend_Db_Select
     public function __toString()
     {
         // initial SELECT [DISTINCT] [FOR UPDATE]
-        $sql = "SELECT";
+        $sql = 'SELECT';
         if ($this->_parts[self::DISTINCT]) {
-            $sql .= " DISTINCT";
+            $sql .= ' DISTINCT';
         }
         if ($this->_parts[self::FOR_UPDATE]) {
-            $sql .= " FOR UPDATE";
+            $sql .= ' FOR UPDATE';
         }
         $sql .= "\n\t";
 
         // add columns
-        if ($this->_parts[self::COLUMNS]) {
-            $columns = array();
-            foreach ($this->_parts[self::COLUMNS] as $correlationName => $columnList) {
-                foreach ($columnList as $alias => $column) {
-                    if (!is_string($alias)) {
-                        $alias = null;
-                    }
-                    if ($column instanceof Zend_Db_Expr) {
-                        $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
-                    } else {
-                        if ($column == '*') {
-                            $column = new Zend_Db_Expr('*');
-                            $alias = null;
-                        }
-                        if (empty($correlationName)) {
-                            $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
-                        } else {
-                            $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias);
-                        }
-                    }
+        $columns = array();
+        foreach ($this->_parts[self::COLUMNS] as $columnEntry) {
+            list($correlationName, $column, $alias) = $columnEntry;
+            if ($column instanceof Zend_Db_Expr) {
+                $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
+            } else {
+                if ($column == '*') {
+                    $column = new Zend_Db_Expr('*');
+                    $alias = null;
+                }
+                if (empty($correlationName)) {
+                    $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
+                } else {
+                    $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias);
                 }
             }
-            $sql .= implode(",\n\t", $columns);
         }
+        $sql .= implode(",\n\t", $columns);
 
         // from these joined tables
         if ($this->_parts[self::FROM]) {
@@ -767,8 +761,8 @@ class Zend_Db_Select
     /**
      * Adds to the internal table-to-column mapping array.
      *
-     * @param string $tbl The table/join the columns come from.
-     * @param mixed $cols The list of columns; preferably as
+     * @param  string $tbl The table/join the columns come from.
+     * @param  array|string $cols The list of columns; preferably as
      * an array, but possibly as a string containing one column.
      * @return void
      */
@@ -797,11 +791,7 @@ class Zend_Db_Select
                     $col = $m[2];
                 }
             }
-            if (is_string($alias)) {
-                $this->_parts[self::COLUMNS][$currentCorrelationName][$alias] = $col;
-            } else {
-                $this->_parts[self::COLUMNS][$currentCorrelationName][] = $col;
-            }
+            $this->_parts[self::COLUMNS][] = array($currentCorrelationName, $col, is_string($alias) ? $alias : null);
         }
     }
 

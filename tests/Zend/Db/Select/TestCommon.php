@@ -345,6 +345,36 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Returns a select object that uses table aliases and specifies a mixed ordering of columns,
+     * for testing whether the user-specified ordering is preserved.
+     *
+     * @return Zend_Db_Select
+     */
+    protected function _selectJoinLeftTableAliasesColumnOrderPreserve()
+    {
+        $bugsBugId        = $this->_db->quoteIdentifier('b.bug_id');
+        $bugsProductBugId = $this->_db->quoteIdentifier('bp.bug_id');
+
+        $select = $this->_db->select()
+            ->from(array('b' => 'zfbugs'), array('b.bug_id', 'bp.product_id', 'b.bug_description'))
+            ->joinLeft(array('bp' => 'zfbugs_products'), "$bugsBugId = $bugsProductBugId", array());
+
+        return $select;
+    }
+
+    /**
+     * Ensures that when table aliases are used with a mixed ordering of columns, the user-specified
+     * column ordering is preserved.
+     *
+     * @return void
+     */
+    public function testJoinLeftTableAliasesColumnOrderPreserve()
+    {
+        $select = $this->_selectJoinLeftTableAliasesColumnOrderPreserve();
+        $this->assertRegExp('/^.*b.*bug_id.*,.*bp.*product_id.*,.*b.*bug_description.*$/s', $select->__toString());
+    }
+
+    /**
      * Test adding an outer join to a Zend_Db_Select object.
      */
     protected function _selectJoinRight()
