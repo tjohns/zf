@@ -65,7 +65,6 @@ class Zend_Log
      * Class constructor.  Create a new logger
      *
      * @param Zend_Log_Writer_Abstract|null  $writer  default writer
-     * @param array                          $extras  extra event
      */
     public function __construct($writer = null)
     {
