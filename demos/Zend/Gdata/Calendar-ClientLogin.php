@@ -28,7 +28,6 @@ set_include_path(
     dirname(__FILE__) . "{$D}..{$D}..{$D}..{$D}library"
     . PATH_SEPARATOR . get_include_path());
 
-require_once 'Zend.php';
 require_once 'Zend/Gdata/Calendar.php';
 require_once 'Zend/Gdata/ClientLogin.php';
 
