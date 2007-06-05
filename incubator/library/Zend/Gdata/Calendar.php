@@ -70,9 +70,10 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      */
     public function __construct($client = null)
     {
+        $this->registerPackage('Zend_Gdata_Calendar');
+        $this->registerPackage('Zend_Gdata_Calendar_Extension');
         parent::__construct($client);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
-        $this->registerPackage('Zend_Gdata_Calendar');
     }
 
     /**

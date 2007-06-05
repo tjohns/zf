@@ -41,7 +41,7 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
     protected $_valueString = null;
     protected $_entryLink = null;
     
-    public function __construct($label = null, $rel = null, $valueString = null, $valueString = null, $entryLink = null) 
+    public function __construct($label = null, $rel = null, $valueString = null, $entryLink = null) 
     {
         parent::__construct();
         $this->_label = $label;
@@ -53,14 +53,18 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_label)
+        if ($this->_label != null) {
             $element->setAttribute('label', $this->_label);
-        if ($this->_rel)
+        }
+        if ($this->_rel != null) {
             $element->setAttribute('rel', $this->_rel);
-        if ($this->_valueString)
+        }
+        if ($this->_valueString != null) {
             $element->setAttribute('valueString', $this->_valueString);
-        if ($this->entryLink)
-            $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));            
+        }
+        if ($this->entryLink != null) {
+            $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
+        }    
         return $element;
     }
 
@@ -104,7 +108,12 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
 
     public function __toString() 
     {
-        return $this->_valueString;
+        if ($this->_valueString != null) {
+            return $this->_valueString;
+        }
+        else {
+            return parent::__toString();
+        }
     }
 
     public function getLabel()
@@ -150,6 +159,5 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
         $this->_entryLink = $value;
         return $this;
     }
-
 
 }

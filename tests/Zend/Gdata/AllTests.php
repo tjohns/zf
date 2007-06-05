@@ -45,11 +45,23 @@ require_once 'Zend/Gdata/App/FeedTest.php';
 require_once 'Zend/Gdata/App/GeneratorTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/QueryTest.php';
-/*
+
 require_once 'Zend/Gdata/CalendarTest.php';
+require_once 'Zend/Gdata/CalendarFeedTest.php';
+require_once 'Zend/Gdata/CalendarEventTest.php';
+//require_once 'Zend/Gdata/CalendarFeedCompositeTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
 require_once 'Zend/Gdata/Calendar/EventEntryTest.php';
- */
+require_once 'Zend/Gdata/Calendar/AccessLevelTest.php';
+require_once 'Zend/Gdata/Calendar/ColorTest.php';
+require_once 'Zend/Gdata/Calendar/HiddenTest.php';
+require_once 'Zend/Gdata/Calendar/LinkTest.php';
+require_once 'Zend/Gdata/Calendar/SelectedTest.php';
+require_once 'Zend/Gdata/Calendar/SendEventNotificationsTest.php';
+require_once 'Zend/Gdata/Calendar/TimezoneTest.php';
+require_once 'Zend/Gdata/Calendar/WebContentTest.php';
+require_once 'Zend/Gdata/Calendar/QuickAddTest.php';
+
 require_once 'Zend/Gdata/Spreadsheets/ColCountTest.php';
 require_once 'Zend/Gdata/Spreadsheets/RowCountTest.php';
 require_once 'Zend/Gdata/Spreadsheets/CellTest.php';
@@ -71,9 +83,9 @@ require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
  */
 
 require_once 'Zend/Gdata/GdataOnlineTest.php';
-/*
+
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
- */
+
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
 
 require_once 'Zend/Gdata/SkipTests.php';
@@ -103,11 +115,23 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_App_GeneratorTest');
         $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_QueryTest');
-        /*
+        
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
+        $suite->addTestSuite('Zend_Gdata_CalendarFeedTest');
+        $suite->addTestSuite('Zend_Gdata_CalendarEventTest');
+        //$suite->addTestSuite('Zend_Gdata_CalendarFeedCompositeTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventEntryTest');
-         */
+        $suite->addTestSuite('Zend_Gdata_Calendar_AccessLevelTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_ColorTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_HiddenTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_LinkTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_SelectedTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_SendEventNotificationsTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_TimezoneTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_WebContentTest');
+        $suite->addTestSuite('Zend_Gdata_Calendar_QuickAddTest');
+        
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ColCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_RowCountTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellTest');
@@ -135,9 +159,9 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
             }
-            /*
+            
             $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
-             */
+            
             if (defined('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');

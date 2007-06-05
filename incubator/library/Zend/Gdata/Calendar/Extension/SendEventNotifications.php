@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Extension
 {
     protected $_rootNamespace = 'gCal';    
-    protected $_rootElement = 'gCal:sendEventNotifications';
+    protected $_rootElement = 'sendEventNotifications';
     protected $_value = null;
 
     /**
@@ -48,7 +48,7 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
             $this->registerNamespace($nsPrefix, $nsUri);
         }        
         parent::__construct();
-	$this->_value = $value;
+        $this->_value = $value;
     }
 
     /**
@@ -64,7 +64,9 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_value != null) {
+            $element->setAttribute('value', ($this->_value ? "true" : "false"));
+        }
         return $element;
     }
 
@@ -79,7 +81,15 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
     {
         switch ($attribute->localName) {
         case 'value':
-            $this->_value = $attribute->nodeValue;
+            if ($attribute->nodeValue == "true") {
+                $this->_value = true;
+            }
+            else if ($attribute->nodeValue == "false") {
+                $this->_value = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
+            }
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -107,5 +117,15 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
         $this->_value = $value;
         return $this;
     }
+
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
+     */
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+
 }
 

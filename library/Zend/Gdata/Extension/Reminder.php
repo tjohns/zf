@@ -56,46 +56,44 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_absoluteTime) {
+        if ($this->_absoluteTime != null) {
             $element->setAttribute('absoluteTime', $this->_minutes);
         }
-        if ($this->_method) {
+        if ($this->_method != null) {
             $element->setAttribute('method', $this->_method);
         }
-        if ($this->_days) {
+        if ($this->_days != null) {
             $element->setAttribute('days', $this->_method);
         }
-        if ($this->_hours) {
+        if ($this->_hours != null) {
             $element->setAttribute('hours', $this->_method);
         }
-        if ($this->_minutes) {
+        if ($this->_minutes != null) {
             $element->setAttribute('minutes', $this->_method);
         }
-        
         return $element;
     }
 
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'absoluteTime':
-            $this->_absoluteTime = $attribute->nodeValue;
-            break;
-        case 'method':
-            $this->_method = $attribute->nodeValue;
-            break;
-        case 'days':
-            $this->_days = $attribute->nodeValue;
-            break;
-        case 'hours':
-            $this->_hours = $attribute->nodeValue;
-            break;
-        case 'minutes':
-            $this->_minutes = $attribute->nodeValue;
-            break;
-            
-        default:
-            parent::takeAttributeFromDOM($attribute);
+            case 'absoluteTime':
+                $this->_absoluteTime = $attribute->nodeValue;
+                break;
+            case 'method':
+                $this->_method = $attribute->nodeValue;
+                break;
+            case 'days':
+                $this->_days = $attribute->nodeValue;
+                break;
+            case 'hours':
+                $this->_hours = $attribute->nodeValue;
+                break;
+            case 'minutes':
+                $this->_minutes = $attribute->nodeValue;
+                break;
+            default:
+                parent::takeAttributeFromDOM($attribute);
         }
     }
 

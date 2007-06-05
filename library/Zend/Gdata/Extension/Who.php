@@ -74,7 +74,6 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
         $this->_entryLink = $entryLink;
     }
 
-
     /**
      * Retrieves a DOMElement which corresponds to this element and all 
      * child properties.  This is used to build an entry back into a DOM
@@ -88,18 +87,24 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_email)
+        if ($this->_email != null) {
             $element->setAttribute('email', $this->_email);
-        if ($this->_rel)
+        }
+        if ($this->_rel != null) {
             $element->setAttribute('rel', $this->_rel);
-        if ($this->_valueString)
+        }
+        if ($this->_valueString != null) {
             $element->setAttribute('valueString', $this->_valueString);
-        if ($this->_attendeeStatus)
+        }
+        if ($this->_attendeeStatus != null) {
             $element->appendChild($this->_attendeeStatus->getDOM($element->ownerDocument));
-        if ($this->_attendeeType)
+        }
+        if ($this->_attendeeType != null) {
             $element->appendChild($this->_attendeeType->getDOM($element->ownerDocument));
-        if ($this->_entryLink)
+        }
+        if ($this->_entryLink != null) {
             $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
+        }
         return $element;
     }
 
@@ -144,10 +149,9 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
             break;
         case $this->lookupNamespace('gd') . ':' . 'attendeeType':
             $attendeeType = new Zend_Gdata_Extension_AttendeeType();
-            $attendeeType->transferFromDOM($attendeeType);
+            $attendeeType->transferFromDOM($child);
             $this->_attendeeType = $attendeeType;
             break;
-
         default:
             parent::takeChildFromDOM($child);
             break;
@@ -161,7 +165,12 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
      */
     public function __toString() 
     {
-        return $this->_valueString;
+        if ($this->_valueString != null) {
+            return $this->_valueString;
+        }
+        else {
+            return parent::__toString();
+        }
     }
 
     /**

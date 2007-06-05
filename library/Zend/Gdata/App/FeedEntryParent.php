@@ -298,7 +298,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     }
 
     /**
-     * @return Zend_Gdata_AppExtension_Id
+     * @return Zend_Gdata_App_Extension_Id
      */
     public function getId()
     {

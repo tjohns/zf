@@ -36,7 +36,7 @@ class Zend_Gdata_Calendar_Extension_Timezone extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'gCal:timezone';
+    protected $_rootElement = 'timezone';
     protected $_value = null;
 
     /**
@@ -65,7 +65,9 @@ class Zend_Gdata_Calendar_Extension_Timezone extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_value != null) {
+            $element->setAttribute('value', $this->_value);
+        }
         return $element;
     }
 
@@ -87,36 +89,35 @@ class Zend_Gdata_Calendar_Extension_Timezone extends Zend_Gdata_Extension
         }
     }
 
-	/**
-	 * Get the value for this element's value attribute.
-	 *
-	 * @return string The value associated with this attribute.
-	 */
-	public function getTimezone()
-	{
-		return $this->_value;
-	}
-
-	/**
-	 * Set the value for this element's value attribute.
-	 *
-	 * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_Timezone The element being modified.
-	 */
-	public function setTimezone($value)
-	{
-		$this->_value = $value;
-		return $this;
-	}
-
-	/**
-     * Retrieves a human redable string describing this attribute's value.
-	 *
-	 * @return string The attribute value.
+    /**
+     * Get the value for this element's value attribute.
+     *
+     * @return string The value associated with this attribute.
      */
-    public function __toString() 
+    public function getValue()
     {
         return $this->_value;
+    }
+
+    /**
+     * Set the value for this element's value attribute.
+     *
+     * @param string $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_Timezone The element being modified.
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+        return $this;
+    }
+
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
+     */
+    public function __toString()
+    {
+        return $this->getValue();
     }
 
 }

@@ -337,18 +337,26 @@ abstract class Zend_Gdata_App_Base
      */
     public function __isset($name)
     {
-        if (isset($this->{'_' . $name})) {
-            if (is_array($this->{'_' . $name})) {
-                if (count($this->{'_' . $name}) > 0) {
-                    return true; 
+        $rc = new ReflectionClass(get_class($this));
+        $privName = '_' . $name;
+        if (!($rc->hasProperty($privName))) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Property ' . $name . ' does not exist');
+        } else {
+            if (isset($this->{$privName})) {
+                if (is_array($this->{$privName})) {
+                    if (count($this->{$privName}) > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
-                    return false;
+                    return true;
                 }
             } else {
-                return true;
+                return false;
             }
-        } else {
-            return false;
         }
     }
 

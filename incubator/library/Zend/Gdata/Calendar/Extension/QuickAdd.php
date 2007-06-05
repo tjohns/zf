@@ -25,36 +25,31 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * @see Zend_Gdata_App_InvalidArgumentException
- */
-require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-
-/**
- * Represents the gCal:selected element used by the Calendar data API
+ * Represents the gCal:quickAdd element used by the Calendar data API
  *
  * @category   Zend
  * @package    Zend_Gdata_Calendar
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
+class Zend_Gdata_Calendar_Extension_QuickAdd extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'selected';
+    protected $_rootElement = 'quickadd';
     protected $_value = null;
 
     /**
-     * Constructs a new Zend_Gdata_Calendar_Extension_Selected object.
-     * @param bool $value (optional) The value of the element.
+     * Constructs a new Zend_Gdata_Calendar_Extension_QuickAdd object.
+     * @param string $value (optional) The text content of the element.
      */
     public function __construct($value = null) 
     {
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct();        
-        $this->_value = $value; 
+        parent::__construct();
+        $this->_value = $value;        
     }
 
     /**
@@ -105,7 +100,7 @@ class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
     /**
      * Get the value for this element's value attribute.
      *
-     * @return bool The value associated with this attribute.
+     * @return string The value associated with this attribute.
      */
     public function getValue()
     {
@@ -115,8 +110,8 @@ class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
     /**
      * Set the value for this element's value attribute.
      *
-     * @param bool $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_Selected The element being modified.
+     * @param string $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_QuickAdd The element being modified.
      */
     public function setValue($value)
     {
@@ -128,9 +123,9 @@ class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
      * Magic toString method allows using this directly via echo
      * Works best in PHP >= 4.2.0
      */
-    public function __toString() 
+    public function __toString()
     {
-        return $this->_value;
+        return $this->getValue();
     }
 
 }

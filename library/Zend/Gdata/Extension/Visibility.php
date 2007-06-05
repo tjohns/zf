@@ -45,7 +45,6 @@ class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
     public function __construct($value = null) 
     {
         parent::__construct();
-	
 	$this->_value = $value;
     }
 
@@ -62,7 +61,9 @@ class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_value != null) {
+            $element->setAttribute('value', $this->_value);
+        }
         return $element;
     }
 
@@ -105,5 +106,15 @@ class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
         $this->_value = $value;
         return $this;
     }
+
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
+     */
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+    
 }
 

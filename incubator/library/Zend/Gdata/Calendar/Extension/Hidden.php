@@ -25,6 +25,11 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
+ * @see Zend_Gdata_App_InvalidArgumentException
+ */
+require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+
+/**
  * Represents the gCal:hidden element used by the Calendar data API
  *
  * @category   Zend
@@ -36,7 +41,7 @@ class Zend_Gdata_Calendar_Extension_Hidden extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'gCal:hidden';
+    protected $_rootElement = 'hidden';
     protected $_value = null;
 
     /**
@@ -45,10 +50,10 @@ class Zend_Gdata_Calendar_Extension_Hidden extends Zend_Gdata_Extension
      */
     public function __construct($value = null) 
     {
-        parent::__construct();
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct();
         $this->_value = $value; 
     }
 
@@ -65,7 +70,9 @@ class Zend_Gdata_Calendar_Extension_Hidden extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_value != null) {
+            $element->setAttribute('value', ($this->_value ? "true" : "false"));
+        }
         return $element;
     }
 
@@ -80,39 +87,46 @@ class Zend_Gdata_Calendar_Extension_Hidden extends Zend_Gdata_Extension
     {
         switch ($attribute->localName) {
         case 'value':
-            $this->_value = $attribute->nodeValue;
+            if ($attribute->nodeValue == "true") {
+                $this->_value = true;
+            }
+            else if ($attribute->nodeValue == "false") {
+                $this->_value = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
+            }
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
 
-	/**
-	 * Get the value for this element's value attribute.
-	 *
+    /**
+     * Get the value for this element's value attribute.
+     *
      * @return string The requested attribute.
-	 */
-	public function getHidden()
-	{
-		return $this->_value;
-	}
+     */
+    public function getValue()
+    {
+    	return $this->_value;
+    }
 
-	/**
-	 * Set the value for this element's value attribute.
-	 *
-	 * @param bool $value The desired value for this attribute.
+    /**
+     * Set the value for this element's value attribute.
+     *
+     * @param bool $value The desired value for this attribute.
      * @return Zend_GData_Calendar_Extension_Hidden The element being modified.
-	 */
-	public function setHidden($value)
-	{
-		$this->_value = $value;
-		return $this;
-	}
+     */
+    public function setValue($value)
+    {
+    	$this->_value = $value;
+    	return $this;
+    }
 
-	/**
-     * Retrieves a human redable string describing this attribute's value.
-	 *
-	 * @return string The attribute value.
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
      */
     public function __toString() 
     {

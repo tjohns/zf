@@ -39,6 +39,11 @@ require_once 'Zend/Gdata/Calendar/Extension/SendEventNotifications.php';
  */
 require_once 'Zend/Gdata/Calendar/Extension/Timezone.php';
 
+/**
+ * @see Zend_Gdata_Calendar_Extension_Link
+ */
+require_once 'Zend/Gdata/Calendar/Extension/Link.php';
+
 
 /**
  * Data model class for a Google Calendar Event Entry 
@@ -83,28 +88,33 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
         switch ($absoluteNodeName) {
             case $this->lookupNamespace('gCal') . ':' . 'sendEventNotifications'; 
                 $sendEventNotifications = new Zend_Gdata_Calendar_Extension_SendEventNotifications();
-                $sendEventNotifications ->transferFromDOM($child);
+                $sendEventNotifications->transferFromDOM($child);
                 $this->_sendEventNotifications = $sendEventNotifications;
                 break;
             case $this->lookupNamespace('gCal') . ':' . 'timezone'; 
                 $timezone = new Zend_Gdata_Calendar_Extension_Timezone();
-                $timezone ->transferFromDOM($child);
+                $timezone->transferFromDOM($child);
                 $this->_timezone = $timezone;
-                break;            
+                break;
+            case $this->lookupNamespace('atom') . ':' . 'link';
+                $link = new Zend_Gdata_Calendar_Extension_Link();
+                $link->transferFromDOM($child);
+                $this->_link[] = $link;
+                break;
             default:
                 parent::takeChildFromDOM($child);
                 break;
         }
     }
 
-    public function getEventNotifications() 
+    public function getSendEventNotifications() 
     {
-        return $this->_eventNotifications;
+        return $this->_sendEventNotifications;
     }
 
-    public function setEventNotifications($value) 
+    public function setSendEventNotifications($value) 
     {
-        $this->_eventNotifications = $value;
+        $this->_sendEventNotifications = $value;
         return $this;
     }
 

@@ -32,33 +32,30 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension_Link
+class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
 {
 
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'gCal:webContent';
-	protected $_url = null;
-	protected $_height = null;
-	protected $_width = null;
+    protected $_rootElement = 'webContent';
+    protected $_url = null;
+    protected $_height = null;
+    protected $_width = null;
 
     /**
      * Constructs a new Zend_Gdata_Calendar_Extension_WebContent object.
      * @param string $url (optional) The value for this element's URL attribute.
-	 * @param string $height (optional) The value for this element's height attribute.
+     * @param string $height (optional) The value for this element's height attribute.
      * @param string $width (optional) The value for this element's width attribute.
      */
-    public function __construct($href = null, $rel = null, $type = null,
-            $hrefLang = null, $title = null, $length = null,  $text = null,
-			$_url = null, $_height = null, $_width = null) 
+    public function __construct($url = null, $height = null, $width = null) 
     {
-        parent::__construct($href, $rel, $type, $hrefLang, $title, $length, 
-			$text);
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-		$this->_url = $url;
+        parent::__construct();
+        $this->_url = $url;
         $this->_height = $height;
-		$this->_width = $width;
+        $this->_width = $width;
     }
 
     /**
@@ -74,78 +71,17 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension_
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('url', $this->_url);
-		$element->setAttribute('height', $this->_hieght);
-		$element->setAttribute('width', $this->_width);
+        if ($this->url != null) {
+            $element->setAttribute('url', $this->_url);
+        }
+        if ($this->height != null) {
+            $element->setAttribute('height', $this->_height);
+        }
+        if ($this->width != null) {
+            $element->setAttribute('width', $this->_width);
+        }
         return $element;
     }
-
-	/**
-	 * Get the value for this element's URL attribute.
-	 *
-	 * @return string The desired value for this attribute.
-	 */
-	public function getURL()
-	{
-		return $this->_url;
-	}
-
-	/**
-	 * Set the value for this element's URL attribute.
-	 *
-	 * @param bool $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
-	 */
-	public function setURL($value)
-	{
-		$this->_url = $value;
-		return $this;
-	}
-
-	/**
-	 * Get the value for this element's height attribute.
-	 *
-	 * @return int The desired value for this attribute.
-	 */
-	public function getHeight()
-	{
-		return $this->_height;
-	}
-
-        /**
-         * Set the value for this element's height attribute.
-         *
-         * @param int $value The desired value for this attribute.
-         * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
-         */
-	public function setHeight($value)
-	{
-		$this->_height = $value;
-		return $this;
-	}
-
-	/**
-	 * Get the value for this element's height attribute.
-	 *
-	 * @return int The desired value for this attribute.
-	 */
-	public function getWidth()
-	{
-		return $this->_width;
-	}
-
-	/**
-	 * Set the value for this element's height attribute.
-	 *
-	 * @param int $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
-	 */
-	public function setWidth($value)
-	{
-		$this->_width = $value;
-		return $this;
-	}
-
 
     /**
      * Given a DOMNode representing an attribute, tries to map the data into
@@ -157,17 +93,84 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension_
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'url':
-            $this->_url = $attribute->nodeValue;
-            break;
-		case 'height':
-			$this->_height = $attribute->nodeValue;
-			break;
-		case 'width':
-			$this->_width = $attribute->nodeValue;
-			break;
+                case 'url':
+                        $this->_url = $attribute->nodeValue;
+                        break;            
+                case 'height':
+                        $this->_height = $attribute->nodeValue;
+                        break;
+                case 'width':
+                        $this->_width = $attribute->nodeValue;
+                        break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
     }
+
+    /**
+     * Get the value for this element's URL attribute.
+     *
+     * @return string The desired value for this attribute.
+     */
+    public function getURL()
+    {
+        return $this->_url;
+    }
+
+    /**
+     * Set the value for this element's URL attribute.
+     *
+     * @param bool $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     */
+    public function setURL($value)
+    {
+        $this->_url = $value;
+        return $this;
+    }
+
+    /**
+     * Get the value for this element's height attribute.
+     *
+     * @return int The desired value for this attribute.
+     */
+    public function getHeight()
+    {
+        return $this->_height;
+    }
+
+    /**
+     * Set the value for this element's height attribute.
+     *
+     * @param int $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     */
+    public function setHeight($value)
+    {
+        $this->_height = $value;
+        return $this;
+    }
+
+    /**
+     * Get the value for this element's height attribute.
+     *
+     * @return int The desired value for this attribute.
+     */
+    public function getWidth()
+    {
+        return $this->_width;
+    }
+
+    /**
+     * Set the value for this element's height attribute.
+     *
+     * @param int $value The desired value for this attribute.
+     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     */
+    public function setWidth($value)
+    {
+        $this->_width = $value;
+        return $this;
+    }
+
 }

@@ -47,7 +47,9 @@ class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        $element->setAttribute('value', $this->_value);
+        if ($this->_value != null) {
+            $element->setAttribute('value', $this->_value);
+        }
         return $element;
     }
 
@@ -61,5 +63,36 @@ class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
             parent::takeAttributeFromDOM($attribute);
         }
     }
+
+    /**
+     * Get the value for this element's Value attribute.
+     *
+     * @return string The requested attribute.
+     */
+    public function getValue()
+    {
+        return $this->_value;
+    }
+
+    /**
+     * Set the value for this element's Value attribute.
+     *
+     * @param string $value The desired value for this attribute.
+     * @return Zend_GData_Extension_Visibility The element being modified.
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+        return $this;
+    }
+
+    /**
+     * Magic toString method allows using this directly via echo
+     * Works best in PHP >= 4.2.0
+     */
+    public function __toString()
+    {
+        return $this->getValue();
+    }    
 
 }

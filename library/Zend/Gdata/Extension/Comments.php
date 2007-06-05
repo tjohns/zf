@@ -72,9 +72,9 @@ class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
                 $feedLink->transferFromDOM($child);
                 $this->_feedLink = $feedLink;
                 break;
-        default:
-            parent::takeChildFromDOM($child);
-            break;
+            default:
+                parent::takeChildFromDOM($child);
+                break;
         }
     }
 

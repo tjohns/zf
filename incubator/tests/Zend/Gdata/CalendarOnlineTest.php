@@ -63,6 +63,6 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
             $times = $event->when;
             $location = $event->where;
             $recurrence = $event->recurrence;
-        } 
+        }
     }
 }
