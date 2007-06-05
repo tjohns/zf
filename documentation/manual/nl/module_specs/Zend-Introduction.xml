@@ -1,11 +1,15 @@
 <sect1 id="zend.introduction">
     <title>Inleiding</title>
     <para>
-    De Zend klasse is de fundering (basis) van het Zend Framework. Deze klasse 
-    is tot stand gekomen doordat het framework het DRY (Don't Repeat Yourself) 
-    principe - dat aan de basis van het Zend Framework ligt - hanteert. Deze 
-    klasse bevat enkel statische methodes waarvan de functionaliteit nodig is 
-    in vele componenten van het Zend Framework.
+        Het Zend Framework is een open source framework voor het ontwikkelen
+        van web applicaties en web services met PHP. Bovendien is dit
+        framework van zeer hoge kwaliteit.
+    </para>
+    <para>
+        Ontwikkeld in de spirit van PHP, levert het Zend Framework zeer
+        eenvoudig te gebruiken, maar krachtige functionaliteit. Het biedt
+        oplossingen voor het ontwikkelen van moderne, robuuste en veilige
+        websites.
     </para>
 </sect1>
 <!--
