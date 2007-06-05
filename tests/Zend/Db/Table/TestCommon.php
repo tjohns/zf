@@ -390,6 +390,25 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->_util->dropTable($tableName);
     }
 
+    public function testTableWithNoPrimaryKeyButOptionSpecifiesOne()
+    {
+        // create a table that has no primary key constraint
+        $this->_util->createTable('noprimarykey', array('id' => 'INTEGER'));
+        $tableName = $this->_util->getTableName('noprimarykey');
+
+        try {
+            $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+                array('name' => $tableName, 'primary' => 'id'));
+        } catch (Zend_Exception $e) {
+            $this->fail('Expected to succeed without a Zend_Db_Table_Exception');
+        }
+
+        $info = $table->info();
+        $this->assertEquals(array(1=>'id'), $info['primary']);
+
+        $this->_util->dropTable($tableName);
+    }
+
     public function testTableAdapterException()
     {
         Zend_Loader::loadClass('Zend_Db_Table_TableBugs');

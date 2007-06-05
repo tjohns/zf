@@ -187,12 +187,12 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <note>
                 <para>
-                    Every table must be defined with a primary key constraint.
-                    The table may have a pseudokey (an auto-incrementing
-                    integer column) or a natural key, or a compound key.
-                    A table with no primary key constraint can be used with
-                    other Zend_Db_Adapter methods, but it cannot be used with
-                    Zend_Db_Table.
+                    Every table class must know which column(s) can be used to
+                    address rows uniquely.  If no primary key column(s) are
+                    specified in the table class definition or the table
+                    constructor arguments, or discovered in the table metadata
+                    provided by <code>describeTable()</code>, then the table
+                    cannot be used with Zend_Db_Table.
                 </para>
             </note>
 
