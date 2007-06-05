@@ -150,7 +150,11 @@ foreach ($book->chapter as $chapter) {
         echo "failed - " . $e->getMessage();
     }
 
-    $mainPage = $soap->getPage($token, $space, $mainChapter->getTitle());
+    try {
+        $mainPage = $soap->getPage($token, $space, $mainChapter->getTitle());
+    } catch (Exception $e) {
+        continue;
+    }
 
     $b = 0;
     $count = count($chapter->sect1)-1;
@@ -255,7 +259,12 @@ foreach ($book->appendix as $chapter) {
     } catch (Exception $e) {
         echo "failed - " . $e->getMessage();
     }
-    $mainPage = $soap->getPage($token, $space, $mainChapter->getTitle());
+
+    try {
+        $mainPage = $soap->getPage($token, $space, $mainChapter->getTitle());
+    } catch (Exception $e) {
+        continue;
+    }
 
     $b = 0;
     $count = count($chapter->sect1)-1;
@@ -314,9 +323,13 @@ if (count($book->chapter)) {
     foreach ($diff as $key => $pagename) {
         if ($pagename != 'Home' && $pagename != 'manual-template' && $pagename != 'Appendix') {
             echo 'Removing ' . $pagename . "\n";
+            try {
+                $page = $soap->getPage($token, $space, $pagename);
+                $soap->removePage($token, $page->id);
+            } catch (Exception $e) {
+                continue;
+            }
 
-            $page = $soap->getPage($token, $space, $pagename);
-            $soap->removePage($token, $page->id);
         }
     }
 }
