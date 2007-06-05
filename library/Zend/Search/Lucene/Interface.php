@@ -28,13 +28,6 @@
 interface Zend_Search_Lucene_Interface
 {
     /**
-     * Close current index and free resources
-     *
-     * @internal
-     */
-    public function close();
-
-    /**
      * Returns the Zend_Search_Lucene_Storage_Directory instance for this index.
      *
      * @return Zend_Search_Lucene_Storage_Directory
@@ -317,4 +310,21 @@ interface Zend_Search_Lucene_Interface
      * Undeletes all documents currently marked as deleted in this index.
      */
     public function undeleteAll();
+
+
+    /**
+     * Add reference to the index object
+     *
+     * @internal
+     */
+    public function addReference();
+
+    /**
+     * Remove reference from the index object
+     *
+     * When reference count becomes zero, index is closed and resources are cleaned up
+     *
+     * @internal
+     */
+    public function removeReference();
 }

@@ -179,6 +179,31 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testDefaultSearchField()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $storedDefaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
+
+        Zend_Search_Lucene::setDefaultSearchField('path');
+        $hits = $index->find('contributing');
+
+        $this->assertEquals(count($hits), 5);
+        $expectedResultset = array(array(8, 0.847922, 'IndexSource/contributing.html'),
+                                   array(0, 0.678337, 'IndexSource/contributing.documentation.html'),
+                                   array(1, 0.678337, 'IndexSource/contributing.wishlist.html'),
+                                   array(2, 0.678337, 'IndexSource/contributing.patches.html'),
+                                   array(7, 0.678337, 'IndexSource/contributing.bugs.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+
+        Zend_Search_Lucene::setDefaultSearchField($storedDefaultSearchField);
+    }
+
     public function testQueryHit()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
@@ -191,6 +216,25 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         $doc = $hit->getDocument();
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document);
+
+        $this->assertEquals($doc->path, 'IndexSource/contributing.html');
+    }
+
+    public function testDelayedResourceCleanUp()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $hits = $index->find('submitting AND wishlists');
+        unset($index);
+
+
+        $hit = $hits[0];
+        $this->assertTrue($hit instanceof Zend_Search_Lucene_Search_QueryHit);
+        $this->assertTrue($hit->getIndex() instanceof Zend_Search_Lucene_Interface);
+
+        $doc = $hit->getDocument();
+        $this->assertTrue($doc instanceof Zend_Search_Lucene_Document);
+        $this->assertTrue($hit->getIndex() instanceof Zend_Search_Lucene_Interface);
 
         $this->assertEquals($doc->path, 'IndexSource/contributing.html');
     }

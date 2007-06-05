@@ -144,6 +144,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     private $_closed = false;
 
     /**
+     * Number of references to the index object
+     *
+     * @var integer
+     */
+    private $_refCount = 0;
+
+
+    /**
      * Create index
      *
      * @param mixed $directory
@@ -249,10 +257,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
     /**
      * Close current index and free resources
-     *
-     * @internal
      */
-    public function close()
+    private function _close()
     {
         if ($this->_closed) {
             // index is already closed and resources are cleaned up
@@ -276,13 +282,37 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     }
 
     /**
+     * Add reference to the index object
+     *
+     * @internal
+     */
+    public function addReference()
+    {
+        $this->_refCount++;
+    }
+
+    /**
+     * Remove reference from the index object
+     *
+     * When reference count becomes zero, index is closed and resources are cleaned up
+     *
+     * @internal
+     */
+    public function removeReference()
+    {
+        $this->_refCount--;
+
+        if ($this->_refCount == 0) {
+            $this->_close();
+        }
+    }
+
+    /**
      * Object destructor
      */
     public function __destruct()
     {
-        // close() method has to be invoked if index object is not created with open()/create() static methods
-        // it's do nothing if index is already closed
-        $this->close();
+        $this->_close();
     }
 
     /**
