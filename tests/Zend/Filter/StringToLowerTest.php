@@ -71,9 +71,35 @@ class Zend_Filter_StringToLowerTest extends PHPUnit_Framework_TestCase
             'string' => 'string',
             'aBc1@3' => 'abc1@3',
             'A b C'  => 'a b c'
-            );
+        );
+
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals($output, $this->_filter->filter($input));
         }
+    }
+
+    /**
+     * Ensures that the filter follows expected behavior with
+     * specified encoding
+     *
+     * @return void
+     */
+    public function testWithEncoding()
+    {
+        $valuesExpected = array(
+            'Ü'     => 'ü',
+            'Ñ'     => 'ñ',
+            'ÜÑ123' => 'üñ123'
+        );
+
+        try {
+            $this->_filter->setEncoding('UTF-8');
+            foreach ($valuesExpected as $input => $output) {
+                $this->assertEquals($output, $this->_filter->filter($input));
+            }
+        } catch (Zend_Filter_Exception $e) {
+            $this->assertContains('mbstring is required', $e->getMessage());
+        }
+
     }
 }
