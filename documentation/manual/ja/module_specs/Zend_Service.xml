@@ -11,13 +11,57 @@
     <para>
         <code>Zend_Service</code> を継承したクラスや <code>Zend_Rest_Client</code>
         を使用して REST ベースのウェブサービスにアクセスすることに加え、
-        Zend では有名なウェブサービスもサポートしています。たとえば
-        <link linkend="zend.service.akismet">Akismet</link>、
-        <link linkend="zend.service.amazon">Amazon</link>、
-        <link linkend="zend.service.flickr">Flickr</link> および
-        <link linkend="zend.service.yahoo">Yahoo!</link> などです。
-        将来はさらにいろいろ追加されるでしょう。
+        Zend では有名なウェブサービスも個別にサポートしています。
+        たとえば次のようなものです。
     </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <link linkend="zend.service.akismet">Akismet</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.amazon">Amazon</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.audioscrobbler">Audioscrobbler</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.delicious">Del.icio.us</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.flickr">Flickr</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.simpy">Simpy</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.strikeiron">StrikeIron</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.yahoo">Yahoo!</link>.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>
+        将来的には、さらにいろいろ追加されるでしょう。
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

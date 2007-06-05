@@ -259,6 +259,9 @@
         <xi:include href="module_specs/Zend_Service_Flickr.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
         <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
+        <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml" />
+        <xi:include href="module_specs/Zend_Service_StrikeIron-BundledServices.xml" />
+        <xi:include href="module_specs/Zend_Service_StrikeIron-AdvancedUses.xml" />
     </chapter>
     <chapter id="zend.session">
         <title>Zend_Session</title>
