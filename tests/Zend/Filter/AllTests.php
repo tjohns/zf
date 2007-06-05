@@ -98,6 +98,11 @@ require_once 'Zend/Filter/RealPathTest.php';
  */
 require_once 'Zend/Filter/StringToLowerTest.php';
 
+/**
+ * @see Zend_Filter_StringToUpperTest
+ */
+require_once 'Zend/Filter/StringToUpperTest.php';
+
 
 /**
  * @see Zend_Filter_StringTrimTest
@@ -154,6 +159,7 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_IntTest');
         $suite->addTestSuite('Zend_Filter_RealPathTest');
         $suite->addTestSuite('Zend_Filter_StringToLowerTest');
+        $suite->addTestSuite('Zend_Filter_StringToUpperTest');
         $suite->addTestSuite('Zend_Filter_StringTrimTest');
         $suite->addTestSuite('Zend_Filter_StripTagsTest');
         $suite->addTestSuite('Zend_Filter_InputTest');
