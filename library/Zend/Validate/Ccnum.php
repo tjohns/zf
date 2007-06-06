@@ -28,12 +28,6 @@ require_once 'Zend/Validate/Abstract.php';
 
 
 /**
- * @see Zend_Filter_Digits
- */
-require_once 'Zend/Filter/Digits.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -41,11 +35,26 @@ require_once 'Zend/Filter/Digits.php';
  */
 class Zend_Validate_Ccnum extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value is not of valid length
+     */
     const LENGTH   = 'ccnumLength';
+
+    /**
+     * Validation failure message key for when the value fails the mod-10 checksum
+     */
     const CHECKSUM = 'ccnumChecksum';
 
     /**
+     * Digits filter for input
+     *
+     * @var Zend_Filter_Digits
+     */
+    protected static $_filter = null;
+
+    /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(
@@ -65,8 +74,15 @@ class Zend_Validate_Ccnum extends Zend_Validate_Abstract
     {
         $this->_setValue($value);
 
-        $filterDigits = new Zend_Filter_Digits();
-        $valueFiltered = $filterDigits->filter($value);
+        if (null === self::$_filter) {
+            /**
+             * @see Zend_Filter_Digits
+             */
+            require_once 'Zend/Filter/Digits.php';
+            self::$_filter = new Zend_Filter_Digits();
+        }
+
+        $valueFiltered = self::$_filter->filter($value);
 
         $length = strlen($valueFiltered);
 

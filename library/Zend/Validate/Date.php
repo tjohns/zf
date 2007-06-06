@@ -35,11 +35,19 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Date extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value does not follow the YYYY-MM-DD format
+     */
     const NOT_YYYY_MM_DD = 'dateNotYYYY-MM-DD';
+
+    /**
+     * Validation failure message key for when the value does not appear to be a valid date
+     */
     const INVALID        = 'dateInvalid';
 
     /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(

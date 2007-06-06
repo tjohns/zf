@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Validate_NotEmpty
+ * @see Zend_Validate_Digits
  */
-require_once 'Zend/Validate/NotEmpty.php';
+require_once 'Zend/Validate/Digits.php';
 
 
 /**
@@ -41,23 +41,23 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Validate_NotEmptyTest extends PHPUnit_Framework_TestCase
+class Zend_Validate_DigitsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Validate_NotEmpty object
+     * Zend_Validate_Digits object
      *
-     * @var Zend_Validate_NotEmpty
+     * @var Zend_Validate_Digits
      */
     protected $_validator;
 
     /**
-     * Creates a new Zend_Validate_NotEmpty object for each test method
+     * Creates a new Zend_Validate_Digits object for each test method
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_validator = new Zend_Validate_NotEmpty();
+        $this->_validator = new Zend_Validate_Digits();
     }
 
     /**
@@ -68,17 +68,17 @@ class Zend_Validate_NotEmptyTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $valuesExpected = array(
-            array('word', true),
-            array('', false),
-            array(1, true),
-            array(0, false),
-            array(true, true),
-            array(false, false),
-            array(null, false),
-        );
-        foreach ($valuesExpected as $i => $element) {
-            $this->assertEquals($element[1], $this->_validator->isValid($element[0]),
-                "Failed test #$i");
+            'abc123'  => false,
+            'abc 123' => false,
+            'abcxyz'  => false,
+            'AZ@#4.3' => false,
+            '1.23'    => false,
+            '0x9f'    => false,
+            '123'     => true,
+            '09'      => true
+            );
+        foreach ($valuesExpected as $input => $result) {
+            $this->assertEquals($result, $this->_validator->isValid($input));
         }
     }
 

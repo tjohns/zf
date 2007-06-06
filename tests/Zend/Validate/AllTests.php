@@ -28,6 +28,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+
+/**
  * PHPUnit_Framework_TestSuite
  */
 require_once 'PHPUnit/Framework/TestSuite.php';
@@ -67,6 +73,12 @@ require_once 'Zend/Validate/CcnumTest.php';
  * @see Zend_Validate_DateTest
  */
 require_once 'Zend/Validate/DateTest.php';
+
+
+/**
+ * @see Zend_Validate_DigitsTest
+ */
+require_once 'Zend/Validate/DigitsTest.php';
 
 
 /**
@@ -179,6 +191,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_BetweenTest');
         $suite->addTestSuite('Zend_Validate_CcnumTest');
         $suite->addTestSuite('Zend_Validate_DateTest');
+        $suite->addTestSuite('Zend_Validate_DigitsTest');
         $suite->addTestSuite('Zend_Validate_FloatTest');
         $suite->addTestSuite('Zend_Validate_EmailAddressTest');
         $suite->addTestSuite('Zend_Validate_GreaterThanTest');

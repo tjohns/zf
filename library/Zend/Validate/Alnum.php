@@ -35,10 +35,21 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Alnum extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value contains non-alphabetic or non-digit characters
+     */
     const NOT_ALNUM = 'notAlnum';
 
     /**
+     * Alphanumeric filter used for validation
+     *
+     * @var Zend_Filter_Alnum
+     */
+    protected static $_filter = null;
+
+    /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(
@@ -59,7 +70,15 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!ctype_alnum($valueString)) {
+        if (null === self::$_filter) {
+            /**
+             * @see Zend_Filter_Alnum
+             */
+            require_once 'Zend/Filter/Alnum.php';
+            self::$_filter = new Zend_Filter_Alnum();
+        }
+
+        if ($valueString !== self::$_filter->filter($valueString)) {
             $this->_error();
             return false;
         }

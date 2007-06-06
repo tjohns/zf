@@ -71,10 +71,15 @@ class Zend_Filter_AlnumTest extends PHPUnit_Framework_TestCase
             'abc123'  => 'abc123',
             'abc 123' => 'abc123',
             'abcxyz'  => 'abcxyz',
-            'AZ@#4.3' => 'AZ43'
+            'AZ@#4.3' => 'AZ43',
+            ''        => ''
             );
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $this->_filter->filter($input));
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
         }
     }
 }

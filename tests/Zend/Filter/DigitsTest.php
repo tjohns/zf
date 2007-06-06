@@ -71,10 +71,16 @@ class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
             'abc123'  => '123',
             'abc 123' => '123',
             'abcxyz'  => '',
-            'AZ@#4.3' => '43'
+            'AZ@#4.3' => '43',
+            '1.23'    => '123',
+            '0x9f'    => '09'
             );
         foreach ($valuesExpected as $input => $output) {
-            $this->assertEquals($output, $this->_filter->filter($input));
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
         }
     }
 }

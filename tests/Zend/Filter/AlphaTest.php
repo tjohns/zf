@@ -75,6 +75,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
             'لعربية'        => 'لعربية',
             'grzegżółka'    => 'grzegżółka',
             'België'        => 'België',
+            ''              => ''
             );
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals(

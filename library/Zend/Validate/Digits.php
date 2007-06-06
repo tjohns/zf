@@ -35,10 +35,21 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Digits extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value contains non-digit characters
+     */
     const NOT_DIGITS = 'notDigits';
 
     /**
+     * Digits filter used for validation
+     *
+     * @var Zend_Filter_Digits
+     */
+    protected static $_filter = null;
+
+    /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(
@@ -59,10 +70,19 @@ class Zend_Validate_Digits extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!ctype_digit($valueString)) {
+        if (null === self::$_filter) {
+            /**
+             * @see Zend_Filter_Digits
+             */
+            require_once 'Zend/Filter/Digits.php';
+            self::$_filter = new Zend_Filter_Digits();
+        }
+
+        if ($valueString !== self::$_filter->filter($valueString)) {
             $this->_error();
             return false;
         }
+
         return true;
     }
 

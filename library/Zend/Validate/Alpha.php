@@ -35,10 +35,21 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Alpha extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value contains non-alphabetic characters
+     */
     const NOT_ALPHA = 'notAlpha';
 
     /**
+     * Alphabetic filter used for validation
+     *
+     * @var Zend_Filter_Alpha
+     */
+    protected static $_filter = null;
+
+    /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(
@@ -59,7 +70,15 @@ class Zend_Validate_Alpha extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!ctype_alpha($valueString)) {
+        if (null === self::$_filter) {
+            /**
+             * @see Zend_Filter_Alpha
+             */
+            require_once 'Zend/Filter/Alpha.php';
+            self::$_filter = new Zend_Filter_Alpha();
+        }
+
+        if ($valueString !== self::$_filter->filter($valueString)) {
             $this->_error();
             return false;
         }

@@ -45,6 +45,6 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return preg_replace('/[^\d]/', '', (string) $value);
+        return preg_replace('/[\p{^N}]/', '', (string) $value);
     }
 }

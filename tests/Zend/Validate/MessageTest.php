@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StringLengthTest.php 3278 2007-02-07 21:54:50Z darby $
+ * @version    $Id$
  */
 
 
@@ -85,7 +85,7 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     /**
      * Ensures that if we don't specify the message key, it uses
      * the first one in the list of message templates.
-     * In the case of Zend_Validate_StringLength, TOO_SHORT is 
+     * In the case of Zend_Validate_StringLength, TOO_SHORT is
      * the one we should expect to change.
      *
      * @return void

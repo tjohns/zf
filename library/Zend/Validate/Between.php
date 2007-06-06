@@ -35,11 +35,19 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Between extends Zend_Validate_Abstract
 {
-
+    /**
+     * Validation failure message key for when the value is not between the min and max, inclusively
+     */
     const NOT_BETWEEN        = 'notBetween';
+
+    /**
+     * Validation failure message key for when the value is not strictly between the min and max
+     */
     const NOT_BETWEEN_STRICT = 'notBetweenStrict';
 
     /**
+     * Validation failure message template definitions
+     *
      * @var array
      */
     protected $_messageTemplates = array(
@@ -48,6 +56,8 @@ class Zend_Validate_Between extends Zend_Validate_Abstract
     );
 
     /**
+     * Additional variables available for validation failure messages
+     *
      * @var array
      */
     protected $_messageVariables = array(
@@ -73,7 +83,7 @@ class Zend_Validate_Between extends Zend_Validate_Abstract
      * Whether to do inclusive comparisons, allowing equivalence to min and/or max
      *
      * If false, then strict comparisons are done, and the value may equal neither
-     * the min or max options
+     * the min nor max options
      *
      * @var boolean
      */
