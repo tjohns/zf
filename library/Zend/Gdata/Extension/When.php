@@ -163,9 +163,4 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         return $this;
     }
 
-    public function addReminder($value)
-    {
-        $this->_reminders[] = $value;
-    }
-
 }

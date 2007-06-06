@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:visibility';
+    protected $_rootElement = 'visibility';
     protected $_value = null;
 
     /**
@@ -99,7 +99,7 @@ class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
      * Set the value for this element's Value attribute.
      *
      * @param bool $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Visibility The element being modified.
+     * @return Zend_Gdata_Extension_Visibility The element being modified.
      */
     public function setValue($value)
     {

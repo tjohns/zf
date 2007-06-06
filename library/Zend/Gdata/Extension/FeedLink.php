@@ -40,7 +40,7 @@ require_once 'Zend/Gdata/Feed.php';
 class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:feedLink';
+    protected $_rootElement = 'feedLink';
     protected $_countHint = null; 
     protected $_href = null; 
     protected $_readOnly = null; 

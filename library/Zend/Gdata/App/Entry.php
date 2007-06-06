@@ -166,54 +166,15 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
     }
 
     /**
-     * Uploads changes in this entry to the server using the referenced 
-     * Zend_Http_Client to do a HTTP PUT to the edit link stored in this 
-     * entry's link collection.  Body for the PUT is generated using the
-     * saveXML method (which calls getDOM).
+     * Uploads changes in this entry to the server using Zend_Gdata_App
      *
      * @return Zend_Gdata_App_Entry The updated entry
      * @throws Zend_Gdata_App_Exception
      */
     public function save()
     {
-        if ($this->id) {
-            // If id is set, look for link rel="edit" in the
-            // entry object and PUT.
-            $editLink = $this->getLink('edit');
-            $editUri = $editLink->href;
-            if (!$editUri) {
-                throw new Zend_Gdata_App_Exception('Cannot edit entry; no link rel="edit" is present.');
-            }
-            $client = $this->getHttpClient();
-            if (is_null($client)) {
-                $client = Zend_Gdata_App::getStaticHttpClient();
-            }
-            $client->resetParameters();
-            $client->setUri($editUri);
-            if (Zend_Gdata_App::getHttpMethodOverride()) {
-                $client->setHeaders(array('X-HTTP-Method-Override: PUT',
-                    'Content-Type: application/atom+xml'));
-                $client->setRawData($this->saveXML());
-                $response = $client->request('POST');
-            } else {
-                $client->setHeaders('Content-Type', 'application/atom+xml');
-                $client->setRawData($this->saveXML());
-                $response = $client->request('PUT');
-            }
-            if ($response->getStatus() !== 200) {
-                require_once 'Zend/Gdata/App/HttpException.php';
-                $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-                $exception->setResponse($response);
-                throw $exception;
-            }
-            // Update internal properties using $client->responseBody;
-            $entryClassName = get_class($this);
-            $returnEntry = new $entryClassName($response->getBody());
-            $returnEntry->setHttpClient($client);
-            return $returnEntry;
-        } else {
-            throw new Zend_Gdata_App_Exception('Cannot edit entry; no id is present');
-        }
+        $service = new Zend_Gdata_App($this->getHttpClient());
+        return $service->updateEntry($this);
     }
 
     /**
@@ -221,43 +182,13 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
      * Zend_Http_Client to do a HTTP DELETE to the edit link stored in this 
      * entry's link collection.  
      *
-     * @return boolean The success of the delete operation
+     * @return void 
      * @throws Zend_Gdata_App_Exception
      */
     public function delete()
     {
-        if ($this->id) {
-            // If id is set, look for link rel="edit" in the
-            // entry object and DELETE.
-            $editLink = $this->getLink('edit');
-            $editUri = $editLink->href;
-            if (!$editUri) {
-                throw new Zend_Gdata_App_Exception('Cannot delete entry; no link rel="edit" is present.');
-            }
-            $client = $this->getHttpClient();
-            if (is_null($client)) {
-                $client = Zend_Gdata_App::getStaticHttpClient();
-            }
-            $client->resetParameters();
-            $client->setUri($editUri);
-            $client->setHeaders('Content-Type', null);
-            $client->setRawData('');
-            if (Zend_Gdata_App::getHttpMethodOverride()) {
-                $client->setHeaders('X-HTTP-Method-Override', 'DELETE');
-                $response = $client->request('DELETE');
-            } else {
-                $response = $client->request('DELETE');
-            }
-            if ($response->getStatus() !== 200) {
-                require_once 'Zend/Gdata/App/HttpException.php';
-                $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-                $exception->setResponse($response);
-                throw $exception;
-            }
-            return true;
-        } else {
-            throw new Zend_Gdata_App_Exception('Cannot edit entry; no id is present');
-        }
+        $service = new Zend_Gdata_App($this->getHttpClient());
+        $service->delete($this);
     }
 
     /**

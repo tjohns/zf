@@ -93,7 +93,7 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
     }
 
     /**
-     * @param Zend_GData_Calendar_Extension_Timezone $value
+     * @param Zend_Gdata_Calendar_Extension_Timezone $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      */    
     public function setTimezone($value) 

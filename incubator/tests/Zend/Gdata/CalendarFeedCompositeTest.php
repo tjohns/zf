@@ -30,17 +30,17 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
  */
 class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
 {
-    protected $listFeed = null;
+    protected $eventFeed = null;
 
     /** 
       * Called before each test to setup any fixtures.
       */
     public function setUp()
     {
-        $listFeedText = file_get_contents(
-                'Zend/Gdata/Calendar/_files/ListFeedCompositeSample1.xml',
+        $eventFeedText = file_get_contents(
+                'Zend/Gdata/Calendar/_files/EventFeedCompositeSample1.xml',
                 true);
-        $this->listFeed = new Zend_Gdata_Calendar_ListFeed($listFeedText);
+        $this->eventFeed = new Zend_Gdata_Calendar_EventFeed($eventFeedText);
     }
 
     /**
@@ -86,19 +86,19 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
     public function testEventFeedToAndFromString()
     {
         $entryCount = 0;
-        foreach ($this->listFeed as $entry) {
+        foreach ($this->eventFeed as $entry) {
             $entryCount++;
-            $this->assertTrue($entry instanceof Zend_Gdata_Calendar_ListEntry);
+            $this->assertTrue($entry instanceof Zend_Gdata_Calendar_EventEntry);
         }
         $this->assertTrue($entryCount > 0);
 
-        /* Grab XML from $this->listFeed and convert back to objects */ 
-        $newListFeed = new Zend_Gdata_Calendar_ListFeed( 
-                $this->listFeed->saveXML());
+        /* Grab XML from $this->eventFeed and convert back to objects */ 
+        $newEventFeed = new Zend_Gdata_Calendar_EventFeed( 
+                $this->eventFeed->saveXML());
         $newEntryCount = 0;
-        foreach ($newListFeed as $entry) {
+        foreach ($newEventFeed as $entry) {
             $newEntryCount++;
-            $this->assertTrue($entry instanceof Zend_Gdata_Calendar_ListEntry);
+            $this->assertTrue($entry instanceof Zend_Gdata_Calendar_EventEntry);
         }
         $this->assertEquals($entryCount, $newEntryCount);
     }
@@ -111,11 +111,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
     {
         //TODO feeds implementing ArrayAccess would be helpful here
         $entryCount = 0;
-        foreach ($this->listFeed as $entry) {
+        foreach ($this->eventFeed as $entry) {
             $entryCount++;
         }
-        $this->assertEquals($entryCount, 6);
-        $this->assertEquals($entryCount, $this->listFeed->totalResults->text);
+        $this->assertEquals(6, $entryCount);
+        $this->assertEquals($entryCount, $this->eventFeed->totalResults->text);
     }
 
     /** 
@@ -124,12 +124,12 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testAuthor()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's author is correct
         $feedAuthor = $feed->getAuthor();
         $this->assertEquals($feedAuthor, $feed->author);
-        $this->assertEquals(count($feedAuthor), 1);
+        $this->assertEquals(1, count($feedAuthor));
         $this->assertTrue($feedAuthor[0] instanceof Zend_Gdata_App_Extension_Author);
         $this->verifyProperty2($feedAuthor[0], "name", "text", "GData Ops Demo");
         $this->verifyProperty2($feedAuthor[0], "email", "text", "gdata.ops.demo@gmail.com");
@@ -137,7 +137,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
         // Assert that each entry has valid author data
         foreach ($feed as $entry) {
             $entryAuthor = $entry->getAuthor();
-            $this->assertEquals(count($entryAuthor), 1);
+            $this->assertEquals(1, count($entryAuthor));
             $this->verifyProperty2($entryAuthor[0], "name", "text", "GData Ops Demo");
             $this->verifyProperty2($entryAuthor[0], "email", "text", "gdata.ops.demo@gmail.com");
             $this->verifyProperty($entryAuthor[0], "uri", null);            
@@ -150,7 +150,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testId()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's ID is correct
         $this->assertTrue($feed->getId() instanceof Zend_Gdata_App_Extension_Id);
@@ -174,7 +174,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testPublished()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that all entry's have an Atom Published object
         foreach ($feed as $entry) {
@@ -192,7 +192,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testUpdated()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's updated date is correct
         $this->assertTrue($feed->getUpdated() instanceof Zend_Gdata_App_Extension_Updated);
@@ -215,7 +215,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testTitle()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's title is correct
         $this->assertTrue($feed->getTitle() instanceof Zend_Gdata_App_Extension_Title);
@@ -238,7 +238,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testSubtitle()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
         
         // Assert that the feed's title is correct
         $this->assertTrue($feed->getSubtitle() instanceof Zend_Gdata_App_Extension_Subtitle);
@@ -252,11 +252,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testTimezone()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's title is correct
-        $this->assertTrue($feed->getTimezone() instanceof Zend_Gdata_App_Extension_Subtitle);
-        $this->verifyProperty2($feed, "timezone", "text", 
+        $this->assertTrue($feed->getTimezone() instanceof Zend_Gdata_Calendar_Extension_Timezone);
+        $this->verifyProperty2($feed, "timezone", "value", 
                 "America/Chicago");
     }
 
@@ -267,11 +267,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testEventStatus()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that all entry's have an eventStatus object
         foreach ($feed as $entry) {
-            $this->assertTrue($entry->getEventStatus() instanceof Zend_Gdata_App_Extension_EventStatus);
+            $this->assertTrue($entry->getEventStatus() instanceof Zend_Gdata_Extension_EventStatus);
         }
 
         // Assert one of the entries values
@@ -285,11 +285,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testVisibility()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that all entry's have a visibility object
         foreach ($feed as $entry) {
-            $this->assertTrue($entry->getVisibility() instanceof Zend_Gdata_Calendar_Extension_Visibility);
+            $this->assertTrue($entry->getVisibility() instanceof Zend_Gdata_Extension_Visibility);
         }
 
         // Assert one of the entries values
@@ -303,11 +303,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testTransparency()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that all entry's have a transparency object
         foreach ($feed as $entry) {
-            $this->assertTrue($entry->getTransparency() instanceof Zend_Gdata_Calendar_Extension_Transparency);
+            $this->assertTrue($entry->getTransparency() instanceof Zend_Gdata_Extension_Transparency);
         }
 
         // Assert one of the entries values
@@ -319,13 +319,13 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       * Check for the existence of an <gCal:sendEventNotifications> and verify that it contains
       * the expected value.
       */
-    public function testEventNotifications()
+    public function testSendEventNotifications()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that all entry's have a sendEventNotifications object
         foreach ($feed as $entry) {
-            $this->assertTrue($entry->getEventNotifications() instanceof Zend_Gdata_Calendar_Extension_SendEventNotifications);
+            $this->assertTrue($entry->getSendEventNotifications() instanceof Zend_Gdata_Calendar_Extension_SendEventNotifications);
         }
 
         // Assert one of the entry's values
@@ -339,18 +339,26 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */    
     public function testWhen()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert one of the entry's values
         $entry = $feed[1];
         $when = $entry->getWhen();
         $this->assertEquals($entry->getWhen(), $entry->when);
-        $this->assertTrue($when instanceof Zend_Gdata_Calendar_Extension_When);
-        $this->assertEquals($when.count(), 2);
-        $this->verifyProperty($when[0], "minutes", "10");
-        $this->verifyProperty($when[0], "method", "alert");
-        $this->verifyProperty($when[1], "minutes", "10");
-        $this->verifyProperty($when[1], "method", "email");
+        $this->assertEquals(1, count($when));
+        $this->assertTrue($when[0] instanceof Zend_Gdata_Extension_When);
+        $this->verifyProperty($when[0], "startTime", "2007-05-24");
+        $this->verifyProperty($when[0], "endTime", "2007-05-25");
+        
+        // Verify that the reminders show up
+        $reminders = $when[0]->getReminders();
+        $this->assertEquals(2, count($reminders));
+        $this->assertTrue($reminders[0] instanceof Zend_Gdata_Extension_Reminder);
+        $this->assertTrue($reminders[1] instanceof Zend_Gdata_Extension_Reminder);        
+        $this->verifyProperty($reminders[0], "minutes", "10");
+        $this->verifyProperty($reminders[0], "method", "alert");
+        $this->verifyProperty($reminders[1], "minutes", "10");
+        $this->verifyProperty($reminders[1], "method", "email");
     }
 
     /**
@@ -359,12 +367,14 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */    
     public function testWhere()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert one of the entry's values
         $entry = $feed[1];
-        $this->assertTrue($entry->getWhere() instanceof Zend_Gdata_Calendar_Extension_When);
-        $this->verifyProperty2($entry, "where", "valueString", "Mountain View, California");
+        $where = $entry->getWhere();
+        $this->assertEquals(1, count($where));
+        $this->assertTrue($where[0] instanceof Zend_Gdata_Extension_Where);
+        $this->verifyProperty($where[0], "valueString", "Mountain View, California");
     }
 
     /**
@@ -373,67 +383,65 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */    
     public function testComments()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
-        // Assert that all entry's have a comments object
-        foreach ($feed as $entry) {
-            $this->assertTrue($entry->getComments() instanceof Zend_Gdata_Extension_Comments);
-        }
 
         // Assert one of the entries has the correct values
         // Make sure the comment element looks right
         $entry = $feed[1];
-        $c = $entry->getComments();        
-        $this->assertEqual($c, $entry->comments);
+        $c = $entry->getComments();    
+        $this->assertEquals($c, $entry->comments);
+        $this->assertTrue($c instanceof Zend_Gdata_Extension_Comments);
         
         // Make sure that the feedLink looks right
         $fl = $c->getFeedLink();
         $this->assertTrue($fl instanceof Zend_Gdata_Extension_FeedLink);
         $this->assertEquals($fl, $c->feedLink);
-        $this->verifyProperty($fl, "href", "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko/comments");
+        $this->verifyProperty($fl, "href", "http://www.google.com/calendar/feeds/default/private/full/lq2ai6imsbq209q3aeturho50g/comments");
         
         // Make sure the embedded feed looks right
         $cFeed = $fl->getFeed();
         $this->assertTrue($cFeed instanceof Zend_Gdata_App_Feed);
-        $this->assertEquals($cFeed, $cl->feed);
+        $this->assertEquals($cFeed, $fl->feed);
 
         // Verify the remainder of the comment feed metadata
         $this->assertTrue($cFeed->getUpdated() instanceof Zend_Gdata_App_Extension_Updated);
-        $this->verifyProperty2($cFeed, "updated", "text", "2007-06-01T21:24:11.020Z");
+        $this->verifyProperty2($cFeed, "updated", "text", "2007-05-31T01:15:13.249Z");
 
         $this->assertTrue($cFeed->getTitle() instanceof Zend_Gdata_App_Extension_Title);
-        $this->verifyProperty2($cFeed, "title", "text", "Comments for: Test Event");
+        $this->verifyProperty2($cFeed, "title", "text", "Comments for: all day event may 24");
 
         // Verify that the comments appear to be good
         $commentCount = 0;
-        foreach ($cFeed->getEntries() as $entry)
+        foreach ($cFeed as $entry)
         {
-            $this->assertTrue($entry instanceof Zend_Gdata_App_FeedEntry);
+            $this->assertTrue($entry instanceof Zend_Gdata_Entry);
             $commentCount++;
         }
-        $this->assertEquals($commentCount, 2);
+        $this->assertEquals(2, $commentCount);
 
         // Closely examine one of the comments
         $comment = $cFeed[1];
 
         $this->assertTrue($comment->getId() instanceof Zend_Gdata_App_Extension_Id);
-        $this->verifyProperty2($comment, "id", "text", "dfr2c8pbtb8g6uphrsrlpao7mc");
+        $this->verifyProperty2($comment, "id", "text", "i9q87onko1uphfs7i21elnnb4g");
 
         $this->assertTrue($comment->getPublished() instanceof Zend_Gdata_App_Extension_Published);
-        $this->verifyProperty2($comment, "published", "text", "2007-05-23T20:38:08.000Z");
+        $this->verifyProperty2($comment, "published", "text", "2007-06-01T21:21:47.000Z");
 
         $this->assertTrue($comment->getUpdated() instanceof Zend_Gdata_App_Extension_Updated);
-        $this->verifyProperty2($comment, "updated", "text", "2007-05-23T20:38:08.000Z");
+        $this->verifyProperty2($comment, "updated", "text", "2007-06-01T21:21:47.000Z");
 
-        $this->assertTrue($comment->getAuthor() instanceof Zend_Gdata_App_Extension_Author);
-        $this->assertTrue($comment->getAuthor()->getName() instanceof Zend_Gdata_App_Extension_Name);
-        $this->assertTrue($comment->getAuthor()->getEmail() instanceof Zend_Gdata_App_Extension_Email);
-        $this->verifyProperty2($comment->getAuthor(), "name", "text", "User 2");
-        $this->verifyProperty2($comment->getAuthor(), "email", "text", "user@nowhere.invalid");
+        $this->assertEquals(1, count($comment->author));
+        $this->assertTrue($comment->author[0] instanceof Zend_Gdata_App_Extension_Author);
+        $this->assertTrue($comment->author[0]->getName() instanceof Zend_Gdata_App_Extension_Name);
+        $this->assertTrue($comment->author[0]->getEmail() instanceof Zend_Gdata_App_Extension_Email);
+        $this->verifyProperty2($comment->author[0], "name", "text", "User 2");
+        $this->verifyProperty2($comment->author[0], "email", "text", "user2@nowhere.invalid");
 
         $this->assertTrue($comment->getContent() instanceof Zend_Gdata_App_Extension_Content);
         $this->verifyProperty($comment->getContent(), "type", "html");
-        $this->verifyProperty($comment->getContent(), "text", "This is a user supplied comment.");
+        $this->assertEquals('<p>This is a user supplied comment.</p>', $comment->getContent()->text);
     }
     
     /**
@@ -442,11 +450,11 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */    
     public function testRecurrence()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert one of the entry's values
         $entry = $feed[0];
-        $this->assertTrue($entry->getRecurrence() instanceof Zend_Gdata_Calendar_Extension_Recurrence);
+        $this->assertTrue($entry->getRecurrence() instanceof Zend_Gdata_Extension_Recurrence);
         $this->verifyProperty2($entry, "recurrence", "text", 
                 "DTSTART;VALUE=DATE:20070501 DTEND;VALUE=DATE:20070502 RRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20070904");
     }    
@@ -457,7 +465,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testStartIndex()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's startIndex is correct
         $this->assertTrue($feed->getStartIndex() instanceof Zend_Gdata_Extension_OpenSearchStartIndex);
@@ -470,10 +478,10 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testItemsPerPage()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's itemsPerPage is correct
-        $this->assertTrue($feed->getStartIndex() instanceof Zend_Gdata_Extension_OpenSearchItemsPerPage);
+        $this->assertTrue($feed->getItemsPerPage() instanceof Zend_Gdata_Extension_OpenSearchItemsPerPage);
         $this->verifyProperty2($feed, "itemsPerPage", "text", "25");
     }    
 
@@ -483,7 +491,7 @@ class Zend_Gdata_CalendarFeedCompositeTest extends PHPUnit_Framework_TestCase
       */
     public function testGenerator()
     {
-        $feed = $this->listFeed;
+        $feed = $this->eventFeed;
 
         // Assert that the feed's generator is correct
         $this->assertTrue($feed->getGenerator() instanceof Zend_Gdata_App_Extension_Generator);

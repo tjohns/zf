@@ -107,14 +107,14 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( 
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $insertedEntry->title->text = 'PHP test blog post modified';
-        $updatedEntry = $this->gdata->put($insertedEntry);
+        $updatedEntry = $this->gdata->updateEntry($insertedEntry);
         $this->assertEquals('PHP test blog post modified',
                 $updatedEntry->title->text);
         $updatedEntry->title->text = 'PHP test blog post modified twice';
         // entry->saveXML() and entry->getXML() should be the same
         $this->assertEquals($updatedEntry->saveXML(), 
                 $updatedEntry->getXML());
-        $newlyUpdatedEntry = $this->gdata->put($updatedEntry->saveXML());
+        $newlyUpdatedEntry = $this->gdata->updateEntry($updatedEntry);
         $this->assertEquals('PHP test blog post modified twice',
                 $updatedEntry->title->text);
         $updatedEntry->delete();

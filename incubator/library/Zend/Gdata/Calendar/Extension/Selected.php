@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -33,7 +33,7 @@ require_once 'Zend/Gdata/App/InvalidArgumentException.php';
  * Represents the gCal:selected element used by the Calendar data API
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -116,7 +116,7 @@ class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
      * Set the value for this element's value attribute.
      *
      * @param bool $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_Selected The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_Selected The element being modified.
      */
     public function setValue($value)
     {

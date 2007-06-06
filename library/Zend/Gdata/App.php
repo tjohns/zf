@@ -312,7 +312,7 @@ class Zend_Gdata_App
     }
 
     /**
-     * POST data to Google with authorization headers set
+     * POST data with authorization headers set
      *
      * @param mixed $data The Zend_Gdata_App_Entry or XML to post
      * @param string $uri POST URI
@@ -321,7 +321,7 @@ class Zend_Gdata_App
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_App_InvalidArgumentException
      */
-    public function post($data, $uri= null)
+    public function post($data, $uri = null)
     {
         require_once 'Zend/Http/Client/Exception.php';
         if (is_string($data)) {
@@ -380,6 +380,151 @@ class Zend_Gdata_App
     }
 
     /**
+     * PUT data with authorization headers set
+     *
+     * @param mixed $data The Zend_Gdata_App_Entry or XML to post
+     * @param string $uri PUT URI
+     * @return Zend_Http_Response
+     * @throws Zend_Gdata_App_Exception
+     * @throws Zend_Gdata_App_HttpException
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function put($data, $uri = null)
+    {
+        require_once 'Zend/Http/Client/Exception.php';
+        if (is_string($data)) {
+            $rawData = $data;
+        } elseif ($data instanceof Zend_Gdata_App_Entry) {
+            $rawData = $data->saveXML();
+        } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
+        }
+        if ($uri == null) {
+            if ($data instanceof Zend_Gdata_App_Entry) {
+                $editLink = $data->getEditLink();
+                if ($editLink != null) {
+                    $uri = $editLink->getHref();
+                }
+            }
+        }
+        if ($uri == null) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to put.');
+        }
+        $this->_httpClient->setUri($uri);
+        $this->_httpClient->setConfig(array('maxredirects' => 0));
+        $this->_httpClient->setRawData($rawData,'application/atom+xml');
+        try {
+            if (Zend_Gdata_App::getHttpMethodOverride()) {
+                $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: PUT',
+                    'Content-Type: application/atom+xml'));
+                $response = $this->_httpClient->request('POST');
+            } else {
+                $this->_httpClient->setHeaders('Content-Type', 'application/atom+xml');
+                $response = $this->_httpClient->request('PUT');
+            }
+        } catch (Zend_Http_Client_Exception $e) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+        }
+        /**
+         * set "S" cookie to avoid future redirects.
+         */
+        if($cookie = $response->getHeader('Set-cookie')) {
+            list($cookieName, $cookieValue) = explode('=', $cookie, 2);
+            $this->_httpClient->setCookie($cookieName, $cookieValue);
+        }
+        if ($response->isRedirect()) {
+            /**
+             * Re-POST with redirected URI.
+             * This happens frequently.
+             */
+            $this->_httpClient->setUri($response->getHeader('Location'));
+            $this->_httpClient->setRawData($rawData,'application/atom+xml');
+            try {
+                $response = $this->_httpClient->request('POST');
+            } catch (Zend_Http_Client_Exception $e) {
+                throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+            }
+        }
+
+        if (!$response->isSuccessful()) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+            $exception->setResponse($response);
+            throw $exception;
+        }
+        return $response;
+    }
+
+    /**
+     * Delete data with authorization headers set
+     *
+     * @param mixed $data The Zend_Gdata_App_Entry or URL to delete 
+     * @return void 
+     * @throws Zend_Gdata_App_Exception
+     * @throws Zend_Gdata_App_HttpException
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function delete($data)
+    {
+        require_once 'Zend/Http/Client/Exception.php';
+        if (is_string($data)) {
+            $uri = $data;
+        } elseif ($data instanceof Zend_Gdata_App_Entry) {
+            $editLink = $data->getEditLink();
+            if ($editLink != null) {
+                $uri = $editLink->getHref();
+            }
+        } else {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
+        }
+        if ($uri == null) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI which needs deleted.');
+        }
+        $this->_httpClient->setUri($uri);
+        $this->_httpClient->setConfig(array('maxredirects' => 0));
+        try {
+            if (Zend_Gdata_App::getHttpMethodOverride()) {
+                $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: DELETE'));
+                $this->_httpClient->setRawData('');
+                $response = $this->_httpClient->request('POST');
+            } else {
+                $response = $this->_httpClient->request('DELETE');
+            }
+        } catch (Zend_Http_Client_Exception $e) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+        }
+        if ($response->isRedirect()) {
+            /**
+             * Re-POST with redirected URI.
+             * This happens frequently.
+             */
+            $this->_httpClient->setUri($response->getHeader('Location'));
+            $this->_httpClient->setRawData($rawData,'application/atom+xml');
+            try {
+                $response = $this->_httpClient->request('POST');
+            } catch (Zend_Http_Client_Exception $e) {
+                throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+            }
+        }
+
+        if (!$response->isSuccessful()) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+            $exception->setResponse($response);
+            throw $exception;
+        }
+    }
+
+
+    /**
      * Inserts an entry to a given URI and returns the response as a fully formed Entry.
      * @param mixed  $data The Zend_Gdata_App_Entry or XML to post
      * @param string $uri POST URI
@@ -405,32 +550,7 @@ class Zend_Gdata_App
     }
 
     /**
-     * Delete an entry
-     *
-     * TODO Determine if App should call Entry to Delete or the opposite.  
-     * Suspecect opposite would mkae more sense
-     * 
-     * @param string $data The Zend_Gdata_App_Entry or URL to delete
-     * @throws Zend_Gdata_App_Exception
-     */
-    public function delete($data)
-    {
-        if (is_string($data)) {
-            $uri = $data;
-            $entry = $this->getEntry($uri);
-        } elseif ($data instanceof Zend_Gdata_App_Entry) {
-            $entry = $data; 
-        } else {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException(
-                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
-        } 
-        $entry->delete();
-        return true;
-    }
-
-    /**
-     * Put an entry
+     * Update an entry 
      *
      * TODO Determine if App should call Entry to Update or the opposite.  
      * Suspecect opposite would mkae more sense.  Also, this possibly should
@@ -441,19 +561,17 @@ class Zend_Gdata_App
      * @return Zend_Gdata_App_Entry The entry returned from the server
      * @throws Zend_Gdata_App_Exception
      */
-    public function put($data)
+    public function updateEntry($data, $uri =null, $className = null)
     {
-        if (is_string($data)) {
-            $entry = new Zend_Gdata_App_Entry($data);
-            $entry->setHttpClient($this->_httpClient); 
-            return $entry->save();
-        } elseif ($data instanceof Zend_Gdata_App_Entry) {
-            return $data->save();
-        } else {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException(
-                    'You must specify the data to post as either a XML string or a child of Zend_Gdata_App_Entry');
-        } 
+        if ($className == null && $data instanceof Zend_Gdata_App_Entry) {
+            $className = get_class($data); 
+        } elseif ($className == null) {
+            $className = 'Zend_Gdata_App_Entry';
+        }
+        $response = $this->put($data, $uri);
+        $returnEntry = new $className($response->getBody());
+        $returnEntry->setHttpClient(self::getstaticHttpClient());
+        return $returnEntry;
     }
 
     /**

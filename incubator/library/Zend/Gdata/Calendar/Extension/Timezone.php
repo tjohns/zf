@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Gdata/Extension.php';
  * Represents the gCal:timezone element used by the Calendar data API
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -103,7 +103,7 @@ class Zend_Gdata_Calendar_Extension_Timezone extends Zend_Gdata_Extension
      * Set the value for this element's value attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_Timezone The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_Timezone The element being modified.
      */
     public function setValue($value)
     {

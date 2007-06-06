@@ -40,7 +40,7 @@ require_once 'Zend/Gdata/Feed.php';
 class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:originalEvent';
+    protected $_rootElement = 'originalEvent';
     protected $_id = null; 
     protected $_href = null; 
 

@@ -40,7 +40,7 @@ require_once 'Zend/Gdata/Entry.php';
 class Zend_Gdata_Extension_EntryLink extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:entryLink';
+    protected $_rootElement = 'entryLink';
     protected $_href = null; 
     protected $_readOnly = null; 
     protected $_rel = null; 

@@ -104,7 +104,7 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
      * Set the value for this element's value attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_Color The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_Color The element being modified.
      */
     public function setValue($value)
     {

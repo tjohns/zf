@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Gdata/Extension.php';
  * Represents the gCal:webContent element used by the Calendar data API
  *
  * @category   Zend
- * @package    Zend_Gdata_Calendar
+ * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -121,7 +121,7 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
      * Set the value for this element's URL attribute.
      *
      * @param bool $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_WebContent The element being modified.
      */
     public function setURL($value)
     {
@@ -143,7 +143,7 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
      * Set the value for this element's height attribute.
      *
      * @param int $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_WebContent The element being modified.
      */
     public function setHeight($value)
     {
@@ -165,7 +165,7 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
      * Set the value for this element's height attribute.
      *
      * @param int $value The desired value for this attribute.
-     * @return Zend_GData_Calendar_Extension_WebContent The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_WebContent The element being modified.
      */
     public function setWidth($value)
     {

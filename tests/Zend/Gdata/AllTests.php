@@ -49,7 +49,7 @@ require_once 'Zend/Gdata/QueryTest.php';
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/CalendarFeedTest.php';
 require_once 'Zend/Gdata/CalendarEventTest.php';
-//require_once 'Zend/Gdata/CalendarFeedCompositeTest.php';
+require_once 'Zend/Gdata/CalendarFeedCompositeTest.php';
 require_once 'Zend/Gdata/Calendar/EventQueryTest.php';
 require_once 'Zend/Gdata/Calendar/EventEntryTest.php';
 require_once 'Zend/Gdata/Calendar/AccessLevelTest.php';
@@ -119,7 +119,7 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_CalendarFeedTest');
         $suite->addTestSuite('Zend_Gdata_CalendarEventTest');
-        //$suite->addTestSuite('Zend_Gdata_CalendarFeedCompositeTest');
+        $suite->addTestSuite('Zend_Gdata_CalendarFeedCompositeTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventQueryTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_EventEntryTest');
         $suite->addTestSuite('Zend_Gdata_Calendar_AccessLevelTest');

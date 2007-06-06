@@ -45,7 +45,7 @@ require_once 'Zend/Gdata/Extension/AttendeeType.php';
 class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:who';
+    protected $_rootElement = 'who';
     protected $_email = null;
     protected $_rel = null;
     protected $_valueString = null;
@@ -187,7 +187,7 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
      * Set the value for this element's ValueString attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setValueString($value)
     {
@@ -209,7 +209,7 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
      * Set the value for this element's Email attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setEmail($value)
     {
@@ -231,7 +231,7 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
      * Set the value for this element's Rel attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setRel($value)
     {
@@ -252,8 +252,8 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
     /**
      * Set the child's AttendeeStatus element.
      *
-     * @param Zend_GData_Extension_AttendeeStatus $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @param Zend_Gdata_Extension_AttendeeStatus $value The desired value for this attribute.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setAttendeeStatus($value)
     {
@@ -274,8 +274,8 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
     /**
      * Set the child's AttendeeType element.
      *
-     * @param Zend_GData_Extension_AttendeeType $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @param Zend_Gdata_Extension_AttendeeType $value The desired value for this attribute.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setAttendeeType($value)
     {

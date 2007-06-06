@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:where';
+    protected $_rootElement = 'where';
     protected $_label = null;
     protected $_rel = null;
     protected $_valueString = null;

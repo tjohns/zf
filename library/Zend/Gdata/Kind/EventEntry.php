@@ -109,7 +109,6 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     protected $_transparency = null;
     protected $_visibility = null;
     protected $_recurrenceException = array();
-    protected $_reminder = array();
     protected $_extendedProperty = array();
     protected $_originalEvent = null;
     protected $_entryLink = null;
@@ -135,11 +134,6 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
         if ($this->_recurrenceException != null) {
             foreach ($this->_recurrenceException as $recurrenceException) {
                 $element->appendChild($recurrenceException->getDOM($element->ownerDocument));
-            }
-        }
-        if ($this->_reminder != null) {
-            foreach ($this->_reminder as $reminder) {
-                $element->appendChild($reminder->getDOM($element->ownerDocument));
             }
         }
         if ($this->_extendedProperty != null) {
@@ -222,11 +216,6 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
             $recurrenceException = new Zend_Gdata_Extension_RecurrenceException();
             $recurrenceException ->transferFromDOM($child);
             $this->_recurrenceException[] = $recurrenceException;
-            break;
-        case $this->lookupNamespace('gd') . ':' . 'reminder'; 
-            $reminder = new Zend_Gdata_Extension_Reminder();
-            $reminder ->transferFromDOM($child);
-            $this->_reminder[] = $reminder;
             break;
         case $this->lookupNamespace('gd') . ':' . 'originalEvent'; 
             $originalEvent = new Zend_Gdata_Extension_OriginalEvent();
@@ -389,21 +378,6 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
         return $this;
     }
 
-    public function getReminder()
-    {
-        return $this->_reminder;
-    } 
-    
-    /**
-     * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
-     */
-    public function setReminder($value)
-    {
-        $this->_reminder = $value;
-        return $this;
-    }
-    
     public function getExtendedProperty() 
     {
         return $this->_extendedProperty;
@@ -447,8 +421,8 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     /**
      * Set the child's EntryLink element.
      *
-     * @param Zend_GData_Extension_EntryLink $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Who The element being modified.
+     * @param Zend_Gdata_Extension_EntryLink $value The desired value for this attribute.
+     * @return Zend_Gdata_Extension_Who The element being modified.
      */
     public function setEntryLink($value)
     {

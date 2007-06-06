@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'gd:eventStatus';
+    protected $_rootElement = 'eventStatus';
     protected $_value = null;
 
     public function __construct($value = null)
@@ -78,7 +78,7 @@ class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
      * Set the value for this element's Value attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_GData_Extension_Visibility The element being modified.
+     * @return Zend_Gdata_Extension_Visibility The element being modified.
      */
     public function setValue($value)
     {

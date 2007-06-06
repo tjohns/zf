@@ -62,7 +62,7 @@
 						<published>2007-05-23T20:38:08.000Z</published>
 						<updated>2007-05-23T20:38:08.000Z</updated>
 						<category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/g/2005#message"/>
-						<content type="html"><p>This is my comments!</p></content>
+						<content type="html">&lt;p&gt;This is my comments!&lt;/p&gt;</content>
 						<author>
 							<name>User 1</name>
 							<email>user1@nowhere.invalid</email>
@@ -73,7 +73,7 @@
 						<published>2007-06-01T21:21:47.000Z</published>
 						<updated>2007-06-01T21:21:47.000Z</updated>
 						<category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/g/2005#message"/>
-						<content type="html"><p>This is a user supplied comment.</p></content>
+						<content type="html">&lt;p&gt;This is a user supplied comment.&lt;/p&gt;</content>
 						<author>
 							<name>User 2</name>
 							<email>user2@nowhere.invalid</email>

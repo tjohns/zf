@@ -243,7 +243,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Calendar_Extension_Selected $value
+     * @param Zend_Gdata_Calendar_Extension_Selected $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      */    
     public function setSelected($value) 
@@ -258,7 +258,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Calendar_Extension_Timezone $value
+     * @param Zend_Gdata_Calendar_Extension_Timezone $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      */    
     public function setTimezone($value) 
@@ -273,7 +273,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Calendar_Extension_QuickAdd $value
+     * @param Zend_Gdata_Calendar_Extension_QuickAdd $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      */    
     public function setQuickAdd($value) 
@@ -289,7 +289,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Extension_Where $value
+     * @param Zend_Gdata_Extension_Where $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      */
     public function setWhere($value) 
@@ -304,7 +304,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Extension_EventStatus $value
+     * @param Zend_Gdata_Extension_EventStatus $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      *
     public function setEventStatus($value)
@@ -319,7 +319,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Extension_Visibility $value
+     * @param Zend_Gdata_Extension_Visibility $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      *
     public function setVisibility($value)
@@ -334,7 +334,7 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * @param Zend_GData_Extension_Transparency $value
+     * @param Zend_Gdata_Extension_Transparency $value
      * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
      *
     public function setTransparency($value)
