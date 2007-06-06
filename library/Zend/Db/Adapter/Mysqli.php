@@ -82,6 +82,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     public function listTables()
     {
+        $result = array();
         // Use mysqli extension API, because SHOW doesn't work
         // well as a prepared statement on MySQL 4.1.
         $sql = 'SHOW TABLES';
