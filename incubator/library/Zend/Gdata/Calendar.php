@@ -95,7 +95,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     }
 
     /**
-     * Retreive entryobject
+     * Retreive entry object
      *
      * @return Zend_Gdata_Calendar_EventEntry
      */
@@ -121,12 +121,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      */
     public function getCalendarListFeed()
     {
-        $uri = self::CALENDAR_FEED_URI;
-        if (isset($this->_params['_user'])) {
-            $uri .= '/' . $this->_params['_user'];
-        } else {
-            $uri .= '/default';
-        }
+        $uri = self::CALENDAR_FEED_URI . '/default';
         return parent::getFeed($uri,'Zend_Gdata_Calendar_ListFeed');
     }
 
