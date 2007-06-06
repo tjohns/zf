@@ -445,7 +445,7 @@ try {
     $event->where = array($service->newWhere("Mountain View, California"));
     $event->content = $service->newContent(" This is my awesome event. RSVP required.");
 
-    // Set the date using ISO 8601 format.
+    // Set the date using RFC 3339 format.
     $startDate = "2008-01-20";
     $startTime = "14:00";
     $endDate = "2008-01-20";
@@ -493,7 +493,7 @@ try {
 				. Likewise, zero-duration events can be specified by omitting the
 				<code>endTime</code>
 				. In all cases, date/time values should be provided in
-				<ulink url="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</ulink>
+				<ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink>
 				format.
 			</para>
 			<programlisting role="php"><![CDATA[<?php
