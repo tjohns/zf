@@ -312,7 +312,28 @@ class Zend_Gdata_App
     }
 
     /**
-     * POST data with authorization headers set
+     * GET a uri using client object
+     *
+     * @param  string $uri
+     * @throws Zend_Gdata_App_HttpException
+     * @return Zend_Http_Response
+     */
+    public function get($uri)
+    {
+        $client->setUri($uri);
+        $response = $client->request('GET');
+        if ($response->getStatus() !== 200) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
+            $exception->setResponse($response);
+            throw $exception;
+        }
+        return $response;
+    }
+
+
+    /**
+     * POST data with client object
      *
      * @param mixed $data The Zend_Gdata_App_Entry or XML to post
      * @param string $uri POST URI
@@ -380,7 +401,7 @@ class Zend_Gdata_App
     }
 
     /**
-     * PUT data with authorization headers set
+     * PUT data with client object
      *
      * @param mixed $data The Zend_Gdata_App_Entry or XML to post
      * @param string $uri PUT URI
@@ -460,7 +481,7 @@ class Zend_Gdata_App
     }
 
     /**
-     * Delete data with authorization headers set
+     * DELETE entry with client object
      *
      * @param mixed $data The Zend_Gdata_App_Entry or URL to delete 
      * @return void 
@@ -522,7 +543,6 @@ class Zend_Gdata_App
             throw $exception;
         }
     }
-
 
     /**
      * Inserts an entry to a given URI and returns the response as a fully formed Entry.
