@@ -41,59 +41,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
-    public function testAdapterExceptionInvalidLoginCredentials()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support login credentials');
-    }
-
-    public function testAdapterQuote()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
-
-        // quote an array
-        $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
-
-        // test numeric
-        $value = $this->_db->quote('1');
-        $this->assertEquals("'1'", $value);
-
-        $value = $this->_db->quote(1);
-        $this->assertEquals("1", $value);
-
-        $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("1, '2', 3", $value);
-    }
-
-    public function testAdapterQuoteInto()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
-    }
-
-    /**
-     * Used by:
-     * - testAdapterOptionCaseFoldingNatural()
-     * - testAdapterOptionCaseFoldingUpper()
-     * - testAdapterOptionCaseFoldingLower()
-     */
-    protected function _testAdapterOptionCaseFoldingSetup(Zend_Db_Adapter_Abstract $db)
-    {
-        $db->getConnection();
-        $this->_util->setUp($db);
-    }
-
     /**
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
@@ -131,6 +78,102 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
 
         $this->assertEquals($result1, $result2);
     }
+
+
+    public function testAdapterConstructInvalidParamDbnameException()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not throw exception on missing dbname');
+    }
+
+    public function testAdapterConstructInvalidParamUsernameException()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support login credentials');
+    }
+
+    public function testAdapterConstructInvalidParamPasswordException()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support login credentials');
+    }
+
+    /**
+     * Used by:
+     * - testAdapterOptionCaseFoldingNatural()
+     * - testAdapterOptionCaseFoldingUpper()
+     * - testAdapterOptionCaseFoldingLower()
+     */
+    protected function _testAdapterOptionCaseFoldingSetup(Zend_Db_Adapter_Abstract $db)
+    {
+        $db->getConnection();
+        $this->_util->setUp($db);
+    }
+
+    /**
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+    }
+
+    /**
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $value = $this->_db->quote('St John"s Wort');
+        $this->assertEquals("'St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John''s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
+        $this->assertEquals("id='St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
+        $this->assertEquals("id = 'St John''s Wort'", $value);
+    }
+
+    public function testAdapterTransactionAutoCommit()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support transactions or concurrency');
+    }
+
+    public function testAdapterTransactionCommit()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support transactions or concurrency');
+    }
+
+    public function testAdapterTransactionRollback()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support transactions or concurrency');
+    }
+
 
     public function getDriver()
     {

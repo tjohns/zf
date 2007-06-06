@@ -34,48 +34,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 {
 
-    public function testAdapterExceptionInvalidLoginCredentials()
-    {
-        $params = $this->_util->getParams();
-
-        try {
-            $p = $params;
-            unset($p['password']);
-            $db = new Zend_Db_Adapter_Db2($p);
-            $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
-            $this->assertEquals("Configuration array must have a key for 'password' for login credentials.", $e->getMessage());
-        }
-
-        try {
-            $p = $params;
-            unset($p['username']);
-            $db = new Zend_Db_Adapter_Db2($p);
-            $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
-            $this->assertEquals("Configuration array must have a key for 'username' for login credentials.", $e->getMessage());
-        }
-
-        try {
-            $p = $params;
-            unset($p['dbname']);
-            $db = new Zend_Db_Adapter_Db2($p);
-            $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Exception, got '.get_class($e));
-            $this->assertEquals("Configuration array must have a key for 'dbname' that names the database instance.", $e->getMessage());
-        }
-
-    }
-
     public function testAdapterDescribeTablePrimaryAuto()
     {
         $desc = $this->_db->describeTable('zfbugs');
@@ -90,7 +48,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
      * DB2 and Oracle return identifiers in uppercase naturally,
      * so those test suites will override this method.
      */
-    protected function _getCaseNaturalIdentifier()
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
     {
         return 'CASE_FOLDED_IDENTIFIER';
     }

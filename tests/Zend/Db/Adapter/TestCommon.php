@@ -27,6 +27,11 @@
  */
 require_once 'Zend/Db/TestSetup.php';
 
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
@@ -40,8 +45,134 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 {
+    /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     */
+    public function testAdapterAutoQuoteIdentifiersTrue()
+    {
+        $params = $this->_util->getParams();
 
-    public abstract function testAdapterExceptionInvalidLoginCredentials();
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $select = $this->_db->select();
+        $select->from('zfproducts');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(1, $result[0]['product_id']);
+
+        $select = $this->_db->select();
+        $select->from('ZFPRODUCTS');
+        try {
+            $stmt = $this->_db->query($select);
+            $result = $stmt->fetchAll();
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+        }
+    }
+
+    /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = false
+     */
+    public function testAdapterAutoQuoteIdentifiersFalse()
+    {
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        // create a new util object, with the new db adapter
+        $driver = $this->getDriver();
+        $utilClass = "Zend_Db_TestUtil_{$driver}";
+        $util = new $utilClass();
+        $util->setAdapter($db);
+
+        // create test table using no identifier quoting
+        $util->createTable('noquote', array(
+            'id'    => 'INT NOT NULL PRIMARY KEY',
+            'stuff' => 'CHAR(10)'
+        ));
+        $tableName = $this->_util->getTableName('noquote');
+
+        $db->getProfiler()->setEnabled(true);
+
+        // insert into the table
+        $numRows = $db->insert($tableName, array(
+            'id'    => 1,
+            'stuff' => 'no quote 1'
+        ));
+        $this->assertEquals(1, $numRows);
+
+        // check if the row was inserted as expected
+        $stmt = $db->query("SELECT id, stuff FROM $tableName ORDER BY id");
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1')), $fetched);
+
+        // insert into the table using other case
+        $numRows = $db->insert(strtoupper($tableName), array(
+            'ID'    => 2,
+            'STUFF' => 'no quote 2'
+        ));
+        $this->assertEquals(1, $numRows);
+
+        // check if the row was inserted as expected
+        $stmt = $db->query('SELECT ID, STUFF FROM '.strtoupper($tableName).' ORDER BY ID');
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1'), 1=>array(0=>2, 1=>'no quote 2')), $fetched);
+
+        // clean up
+        $util->dropTable($tableName);
+    }
+
+
+    protected function _testAdapterConstructInvalidParam($param, $adapterClass = null)
+    {
+        $exceptionClass = 'Zend_Db_Adapter_Exception';
+        if ($adapterClass === null) {
+            $adapterClass = 'Zend_Db_Adapter_' . $this->getDriver();
+        }
+
+        $params = $this->_util->getParams();
+        unset($params[$param]);
+
+        Zend_Loader::loadClass($adapterClass);
+        Zend_Loader::loadClass($exceptionClass);
+
+        try {
+            $db = new $adapterClass($params);
+            $db->getConnection(); // force a connection
+            $this->fail("Expected to catch $exceptionClass");
+        } catch (Zend_Exception $e) {
+            $this->assertType($exceptionClass, $e, "Expected to catch $exceptionClass, got ".get_class($e));
+            $this->assertContains("Configuration array must have a key for '$param'", $e->getMessage());
+        }
+    }
+
+    public function testAdapterConstructInvalidParamDbnameException()
+    {
+        $this->_testAdapterConstructInvalidParam('dbname');
+    }
+
+    public function testAdapterConstructInvalidParamUsernameException()
+    {
+        $this->_testAdapterConstructInvalidParam('username');
+    }
+
+    public function testAdapterConstructInvalidParamPasswordException()
+    {
+        $this->_testAdapterConstructInvalidParam('password');
+    }
 
     /**
      * Test Adapter's delete() method.
@@ -69,6 +200,71 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         $rowsAffected = $this->_db->delete('zfproducts', "$product_id = 327");
         $this->assertEquals(0, $rowsAffected, 'Expected rows affected to return 0');
+    }
+
+    public function testAdapterDeleteWhereArray()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(1, 2, 3), $ids);
+
+        $rowsAffected = $this->_db->delete(
+            'zfproducts',
+            array("$product_id = 1", "$product_name = 'Windows'")
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(2, 3), $ids);
+    }
+
+    public function testAdapterDeleteWhereDbExpr()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $expr = new Zend_Db_Expr("$product_id = 1");
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(1, 2, 3), $ids);
+
+        $rowsAffected = $this->_db->delete(
+            'zfproducts',
+            $expr
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(2, 3), $ids);
+    }
+
+    public function testAdapterDeleteEmptyWhere()
+    {
+        $rowsAffected = $this->_db->delete(
+            'zfproducts'
+            // intentionally no where clause
+        );
+        $this->assertEquals(3, $rowsAffected);
+    }
+
+    public function testAdapterDescribeTableAttributeColumn()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
+
+        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
+        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
+        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
+        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
+        $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
+        $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
+        $this->assertEquals(0,                   $desc['product_name']['SCALE']);
+        $this->assertEquals(0,                   $desc['product_name']['PRECISION']);
+        $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
+        $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
+        $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
     }
 
     /**
@@ -109,21 +305,20 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals($keys, array_keys($desc['product_name']));
     }
 
-    public function testAdapterDescribeTableAttributeColumn()
+    /**
+     * Test that an auto-increment key reports itself.
+     * This is not supported in all RDBMS brands, so we test
+     * it separately from the full describe tests above.
+     */
+    public function testAdapterDescribeTablePrimaryAuto()
     {
         $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
-        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
-        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
-        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
-        $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
-        $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE']);
-        $this->assertEquals(0,                   $desc['product_name']['PRECISION']);
-        $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
-        $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
-        $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
+        $auto = $desc['product_id']['IDENTITY'];
+        if ($auto === null) {
+            $this->markTestIncomplete($this->getDriver() . ' needs to learn how to discover auto-increment keys');
+        }
+        $this->assertTrue($desc['product_id']['IDENTITY']);
     }
 
     public function testAdapterDescribeTablePrimaryKeyColumn()
@@ -139,22 +334,6 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(0,                   $desc['product_id']['PRECISION']);
         $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
         $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
-    }
-
-    /**
-     * Test that an auto-increment key reports itself.
-     * This is not supported in all RDBMS brands, so we test
-     * it separately from the full describe tests above.
-     */
-    public function testAdapterDescribeTablePrimaryAuto()
-    {
-        $desc = $this->_db->describeTable('zfproducts');
-
-        $auto = $desc['product_id']['IDENTITY'];
-        if ($auto === null) {
-            $this->markTestIncomplete($this->getDriver() . ' needs to learn how to discover auto-increment keys');
-        }
-        $this->assertTrue($desc['product_id']['IDENTITY']);
     }
 
     /**
@@ -275,6 +454,32 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
     }
 
+    public function testAdapterInsertDbExpr()
+    {
+        $expr = new Zend_Db_Expr('CURDATE()');
+        $row = array (
+            'bug_id'          => 5,
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => $expr,
+            'updated_on'      => $expr,
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
+        );
+        $rowsAffected = $this->_db->insert('zfbugs', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $lastInsertId = $this->_db->lastInsertId();
+        $this->assertEquals('5', (string) $lastInsertId,
+            'Expected new id to be 5');
+
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $created_on = $this->_db->quoteIdentifier('created_on');
+        $value = $this->_db->fetchOne("SELECT $created_on FROM $bugs WHERE $bug_id = 5");
+        $this->assertRegexp('/^20\\d\\d-\\d\\d-\\d\\d/', $value);
+    }
+
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.
@@ -313,109 +518,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'Expecting to get product_id 2');
     }
 
-    /**
-     * Test the Adapter's listTables() method.
-     * Fetch the list of tables and verify that the test table exists in
-     * the list.
-     */
-    public function testAdapterListTables()
-    {
-        $tables = $this->_db->listTables();
-        $this->assertContains('zfproducts', $tables);
-    }
-
-    public function testAdapterQuoteIdentifier()
-    {
-        $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals('"table_name"', $value);
-        $value = $this->_db->quoteIdentifier('table_"_name');
-        $this->assertEquals('"table_""_name"', $value);
-    }
-
-    public function testAdapterQuote()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\\\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John\'s Wort'", $value);
-
-        // quote an array
-        $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
-
-        // test numeric
-        $value = $this->_db->quote('1');
-        $this->assertEquals("'1'", $value);
-
-        $value = $this->_db->quote(1);
-        $this->assertEquals("1", $value);
-
-        $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("1, '2', 3", $value);
-    }
-
-    public function testAdapterQuoteInto()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\\\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John\\'s Wort'", $value);
-    }
-
-    /**
-     * @todo testAdapterTransactionCommit()
-     */
-
-    /**
-     * @todo testAdapterTransactionRollback()
-     */
-
-    /**
-     * Test the Adapter's update() method.
-     * Update a single row and verify that the change was made.
-     * Attempt to update a row that does not exist, and verify
-     * that no change was made.
-     */
-    public function testAdapterUpdate()
-    {
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        // Test that we can change the values in
-        // an existing row.
-        $result = $this->_db->update(
-            'zfproducts',
-            array('product_name' => 'Vista'),
-            "$product_id = 1"
-        );
-        $this->assertEquals(1, $result);
-
-        // Query the row to see if we have the new values.
-        $select = $this->_db->select();
-        $select->from('zfproducts');
-        $select->where("$product_id = 1");
-        $stmt = $this->_db->query($select);
-        $result = $stmt->fetchAll();
-
-        $this->assertEquals(1, $result[0]['product_id']);
-        $this->assertEquals('Vista', $result[0]['product_name']);
-
-        // Test that update affects no rows if the WHERE
-        // clause matches none.
-        $result = $this->_db->update(
-            'zfproducts',
-            array('product_name' => 'Vista'),
-            "$product_id = 327"
-        );
-        $this->assertEquals(0, $result);
-    }
-
-    public function testAdapterExceptionInvalidLimitArgument()
+    public function testAdapterLimitInvalidArgumentException()
     {
         try {
             $sql = $this->_db->limit('SELECT * FROM zfproducts', 0);
@@ -434,56 +537,16 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         }
     }
 
-    /**
-     * Ensures that query() provides expected behavior when returning no results
-     *
-     * @return void
-     */
-    public function testAdapterQueryResultsNone()
-    {
-        $stmt = $this->_db->query('SELECT * FROM ' . $this->_db->quoteIdentifier('zfbugs') . ' WHERE '
-            . $this->_db->quoteIdentifier('bug_id') . ' = -1');
-
-        $this->assertTrue(is_object($stmt),
-            'Expected query() to return object; got ' . gettype($stmt));
-
-        $this->assertType('Zend_Db_Statement_Interface', $stmt,
-            'Expected query() to return Zend_Db_Statement or PDOStatement; got ' . get_class($stmt));
-
-        $this->assertEquals(0, $count = count($stmt->fetchAll()),
-            "Expected fetchAll() to return zero rows; got $count");
-    }
 
     /**
-     * Ensures that query() throws an exception when given a bogus query
-     *
-     * @return void
+     * Test the Adapter's listTables() method.
+     * Fetch the list of tables and verify that the test table exists in
+     * the list.
      */
-    public function testAdapterQueryBogus()
+    public function testAdapterListTables()
     {
-        try {
-            $this->_db->query('Bogus query');
-            $this->fail('Expected exception not thrown');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        }
-    }
-
-    /**
-     * Ensures that query() throws an exception when given a bogus table
-     *
-     * @return void
-     */
-    public function testAdapterQueryTableBogus()
-    {
-        try {
-            $this->_db->query('SELECT * FROM BogusTable');
-            $this->fail('Expected exception not thrown');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-        }
+        $tables = $this->_db->listTables();
+        $this->assertContains('zfproducts', $tables);
     }
 
     /**
@@ -491,7 +554,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * DB2 and Oracle return identifiers in uppercase naturally,
      * so those test suites will override this method.
      */
-    protected function _getCaseNaturalIdentifier()
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
     {
         return 'case_folded_identifier';
     }
@@ -545,58 +608,57 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     public function testAdapterOptionCaseFoldingNatural()
     {
         $natural = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_NATURAL);
-        $expected = $this->_getCaseNaturalIdentifier();
+        $expected = $this->_testAdapterOptionCaseFoldingNaturalIdentifier();
         $this->assertEquals($natural, $expected, 'Natural case does not match');
     }
 
-     /**
+    /**
      * Test the connection's CASE_FOLDING option.
      * Case: Zend_Db::CASE_UPPER
      */
     public function testAdapterOptionCaseFoldingUpper()
     {
         $upper = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_UPPER);
-        $expected = strtoupper($this->_getCaseNaturalIdentifier());
+        $expected = strtoupper($this->_testAdapterOptionCaseFoldingNaturalIdentifier());
         $this->assertEquals($upper, $expected, 'Upper case does not match');
     }
 
-     /**
+    /**
      * Test the connection's CASE_FOLDING option.
      * Case: Zend_Db::CASE_LOWER
      */
     public function testAdapterOptionCaseFoldingLower()
     {
         $lower = $this->_testAdapterOptionCaseFoldingCommon(Zend_Db::CASE_LOWER);
-        $expected = strtolower($this->_getCaseNaturalIdentifier());
+        $expected = strtolower($this->_testAdapterOptionCaseFoldingNaturalIdentifier());
         $this->assertEquals($lower, $expected, 'Lower case does not match');
     }
 
     /**
-     * Test AUTO_QUOTE_IDENTIFIERS option
-     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     * Test the connection's CASE_FOLDING option.
+     * Case: invalid value throws exception
      */
-    public function testAdapterAutoQuoteIdentifiersTrue()
+    public function testAdapterOptionCaseFoldingInvalidException()
     {
-        $params = $this->_util->getParams();
-
-        $params['options'] = array(
-            Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
-        );
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
-
-        $select = $this->_db->select();
-        $select->from('zfproducts');
-        $stmt = $this->_db->query($select);
-        $result = $stmt->fetchAll();
-
-        $this->assertEquals(1, $result[0]['product_id']);
-
-        $select = $this->_db->select();
-        $select->from('ZFPRODUCTS');
         try {
-            $stmt = $this->_db->query($select);
-            $result = $stmt->fetchAll();
+            $lower = $this->_testAdapterOptionCaseFoldingCommon(-999);
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+            $this->assertEquals("Case must be one of the following constants: Zend_Db::CASE_NATURAL, Zend_Db::CASE_LOWER, Zend_Db::CASE_UPPER", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that query() throws an exception when given a bogus query
+     *
+     * @return void
+     */
+    public function testAdapterQueryBogus()
+    {
+        try {
+            $this->_db->query('Bogus query');
             $this->fail('Expected exception not thrown');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
@@ -605,59 +667,559 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
-     * Test AUTO_QUOTE_IDENTIFIERS option
-     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = false
+     * Ensures that query() throws an exception when given a bogus table
+     *
+     * @return void
      */
-    public function testAdapterAutoQuoteIdentifiersFalse()
+    public function testAdapterQueryBogusTable()
     {
-        $params = $this->_util->getParams();
+        try {
+            $this->_db->query('SELECT * FROM BogusTable');
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+        }
+    }
 
-        $params['options'] = array(
-            Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
+    /**
+     * Ensures that query() provides expected behavior when returning no results
+     *
+     * @return void
+     */
+    public function testAdapterQueryResultsNone()
+    {
+        $stmt = $this->_db->query('SELECT * FROM ' . $this->_db->quoteIdentifier('zfbugs') . ' WHERE '
+            . $this->_db->quoteIdentifier('bug_id') . ' = -1');
+
+        $this->assertTrue(is_object($stmt),
+            'Expected query() to return object; got ' . gettype($stmt));
+
+        $this->assertType('Zend_Db_Statement_Interface', $stmt,
+            'Expected query() to return Zend_Db_Statement or PDOStatement; got ' . get_class($stmt));
+
+        $this->assertEquals(0, $count = count($stmt->fetchAll()),
+            "Expected fetchAll() to return zero rows; got $count");
+    }
+
+    /**
+     * Test that quote() accepts a string and returns
+     * a quoted string.
+     */
+    public function testAdapterQuote()
+    {
+        $string = 'String without quotes';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'String without quotes'", $value);
+    }
+
+    /**
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it\\'s', 'all', 'right!'", $value);
+    }
+
+    /**
+     * test that quote() accepts a Zend_Db_Expr
+     * and returns the string representation,
+     * with no quoting applied.
+     */
+    public function testAdapterQuoteDbExpr()
+    {
+        $string = 'String with "`\' quotes';
+        $expr = new Zend_Db_Expr($string);
+        $value = $this->_db->quote($expr);
+        $this->assertEquals($string, $value);
+    }
+
+    /**
+     * test that quote() accepts a string containing
+     * digits and returns a quoted string.
+     */
+    public function testAdapterQuoteDigitString()
+    {
+        $string = '123';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'123'", $value);
+    }
+
+    /**
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $string = 'St John"s Wort';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John\\\"s Wort'", $value);
+    }
+
+    /**
+     * test that quote() accepts an integer and
+     * returns an unquoted integer.
+     */
+    public function testAdapterQuoteInteger()
+    {
+        $int = 123;
+        $value = $this->_db->quote($int);
+        $this->assertEquals(123, $value);
+    }
+
+    /**
+     * test that quote() accepts an array and returns
+     * an imploded string of quoted elements, or non-quoted
+     * elements if they are integers.
+     */
+    public function testAdapterQuoteIntegerArray()
+    {
+        $array = array(1,'2',3);
+        $value = $this->_db->quote($array);
+        $this->assertEquals("1, '2', 3", $value);
+    }
+
+    /**
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John\'s Wort'", $value);
+    }
+
+    /**
+     * test that quoteColumnAs() accepts a string
+     * and an alias, and returns each as delimited
+     * identifiers, with 'AS' in between.
+     */
+    public function testAdapterQuoteColumnAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteColumnAs($string, $alias);
+        $this->assertEquals('"foo" AS "bar"', $value);
+    }
+
+    /**
+     * test that quoteColumnAs() accepts a string
+     * and an alias, but ignores the alias if it is
+     * the same as the base identifier in the string.
+     */
+    public function testAdapterQuoteColumnAsSameString()
+    {
+        $string = 'foo.bar';
+        $alias = 'bar';
+        $value = $this->_db->quoteColumnAs($string, $alias);
+        $this->assertEquals('"foo"."bar"', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts a string
+     * and returns a delimited identifier.
+     */
+    public function testAdapterQuoteIdentifier()
+    {
+        $string = 'table_name';
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('"table_name"', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts an array
+     * and returns a qualified delimited identifier.
+     */
+    public function testAdapterQuoteIdentifierArray()
+    {
+        $array = array('foo', 'bar');
+        $value = $this->_db->quoteIdentifier($array);
+        $this->assertEquals('"foo"."bar"', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts an array
+     * containing a Zend_Db_Expr, and returns strings
+     * as delimited identifiers, and Exprs as unquoted.
+     */
+    public function testAdapterQuoteIdentifierArrayDbExpr()
+    {
+        $expr = new Zend_Db_Expr('*');
+        $array = array('foo', $expr);
+        $value = $this->_db->quoteIdentifier($array);
+        $this->assertEquals('"foo".*', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts a Zend_Db_Expr
+     * and returns the string representation,
+     * with no quoting applied.
+     */
+    public function testAdapterQuoteIdentifierDbExpr()
+    {
+        $string = 'String with "`\' quotes';
+        $expr = new Zend_Db_Expr($string);
+        $value = $this->_db->quoteIdentifier($expr);
+        $this->assertEquals($string, $value);
+    }
+
+    /**
+     * test that quoteIdentifer() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIdentifierDoubleQuote()
+    {
+        $string = 'table_"_name';
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('"table_""_name"', $value);
+    }
+
+    /**
+     * test that quoteIdentifer() accepts an integer
+     * and returns a delimited identifier as with a string.
+     */
+    public function testAdapterQuoteIdentifierInteger()
+    {
+        $int = 123;
+        $value = $this->_db->quoteIdentifier($int);
+        $this->assertEquals('"123"', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts a string
+     * containing a dot (".") character, splits the
+     * string, quotes each segment individually as
+     * delimited identifers, and returns the imploded
+     * string.
+     */
+    public function testAdapterQuoteIdentifierQualified()
+    {
+        $string = 'table.column';
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('"table"."column"', $value);
+    }
+
+    /**
+     * test that quoteIdentifer() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIdentifierSingleQuote()
+    {
+        $string = "table_'_name";
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('"table_\'_name"', $value);
+    }
+
+    /**
+     * test that quoteTableAs() accepts a string and an alias,
+     * and returns each as delimited identifiers.
+     * Most RDBMS want an 'AS' in between.
+     */
+    public function testAdapterQuoteTableAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteTableAs($string, $alias);
+        $this->assertEquals('"foo" AS "bar"', $value);
+    }
+
+    /**
+     * test that quoteInto() accepts a Zend_Db_Expr
+     * and returns the string representation,
+     * with no quoting applied.
+     */
+    public function testAdapterQuoteIntoDbExpr()
+    {
+        $string = 'id=?';
+        $expr = new Zend_Db_Expr('CURDATE()');
+        $value = $this->_db->quoteInto($string, $expr);
+        $this->assertEquals("id=CURDATE()", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $string = 'id=?';
+        $param = 'St John"s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id='St John\\\"s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $string = 'id = ?';
+        $param = 'St John\'s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id = 'St John\\'s Wort'", $value);
+    }
+
+    public function testAdapterSetFetchMode()
+    {
+        $modes = array(
+            Zend_Db::FETCH_ASSOC,
+            Zend_Db::FETCH_BOTH,
+            Zend_Db::FETCH_NUM,
+            Zend_Db::FETCH_OBJ
         );
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
+        foreach ($modes as $mode) {
+            $this->_db->setFetchMode($mode);
+            $this->assertEquals($mode, $this->_db->getFetchMode());
+        }
+    }
 
-        // create a new util object, with the new db adapter
-        $driver = $this->getDriver();
-        $utilClass = "Zend_Db_TestUtil_{$driver}";
-        $util = new $utilClass();
-        $util->setAdapter($db);
+    public function testAdapterSetFetchModeInvalidException()
+    {
+        try {
+            $this->_db->setFetchMode(-999);
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Statement_Exception', $e,
+                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
+            $this->assertEquals('Invalid fetch mode specified', $e->getMessage());
+        }
+    }
 
-        // create test table using no identifier quoting
-        $util->createTable('noquote', array(
-            'id'    => 'INT NOT NULL PRIMARY KEY',
-            'stuff' => 'CHAR(10)'
-        ));
+    public function testAdapterTransactionAutoCommit()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
 
-        $db->getProfiler()->setEnabled(true);
+        // create a second connection to the same database
+        $db2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $db2->getConnection();
 
-        // insert into the table
-        $numRows = $db->insert('zfnoquote', array(
-            'id'    => 1,
-            'stuff' => 'no quote 1'
-        ));
-        $this->assertEquals(1, $numRows);
+        // notice the number of rows in connection 2
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
 
-        // check if the row was inserted as expected
-        $stmt = $db->query('SELECT id, stuff FROM zfnoquote ORDER BY id');
-        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1')), $fetched);
+        // delete a row in connection 1
+        $rowsAffected = $this->_db->delete(
+            'zfbugs',
+            "$bug_id = 1"
+        );
+        $this->assertEquals(1, $rowsAffected);
 
-        // insert into the table using other case
-        $numRows = $db->insert('ZFNOQUOTE', array(
-            'ID'    => 2,
-            'STUFF' => 'no quote 2'
-        ));
-        $this->assertEquals(1, $numRows);
+        // we should see the results in connection 2 immediately
+        // after the DELETE executes, because it's autocommit
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(3, $count);
+    }
 
-        // check if the row was inserted as expected
-        $stmt = $db->query('SELECT ID, STUFF FROM ZFNOQUOTE ORDER BY ID');
-        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1'), 1=>array(0=>2, 1=>'no quote 2')), $fetched);
+    public function testAdapterTransactionCommit()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
 
-        // clean up
-        $util->dropTable('zfnoquote');
+        // create a second connection to the same database
+        $db2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $db2->getConnection();
+
+        // notice the number of rows in connection 2
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
+        // start an explicit transaction in connection 1
+        $this->_db->beginTransaction();
+
+        // delete a row in connection 1
+        $rowsAffected = $this->_db->delete(
+            'zfbugs',
+            "$bug_id = 1"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should still see all rows in connection 2
+        // because the DELETE has not been committed yet
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
+        // commit the DELETE
+        $this->_db->commit();
+
+        // now we should see one fewer rows in connection 2
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(3, $count);
+
+        // delete another row in connection 1
+        $rowsAffected = $this->_db->delete(
+            'zfbugs',
+            "$bug_id = 2"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should see results immediately, because
+        // the db connection returns to auto-commit mode
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(2, $count);
+    }
+
+    public function testAdapterTransactionRollback()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        // create a second connection to the same database
+        $db2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $db2->getConnection();
+
+        // notice the number of rows in connection 2
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
+        // start an explicit transaction in connection 1
+        $this->_db->beginTransaction();
+
+        // delete a row in connection 1
+        $rowsAffected = $this->_db->delete(
+            'zfbugs',
+            "$bug_id = 1"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should still see all rows in connection 2
+        // because the DELETE has not been committed yet
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
+        // rollback the DELETE
+        $this->_db->rollback();
+
+        // now we should see the same number of rows
+        // because the DELETE was rolled back
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
+        // delete another row in connection 1
+        $rowsAffected = $this->_db->delete(
+            'zfbugs',
+            "$bug_id = 2"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should see results immediately, because
+        // the db connection returns to auto-commit mode
+        $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(3, $count);
+    }
+
+    /**
+     * Test the Adapter's update() method.
+     * Update a single row and verify that the change was made.
+     * Attempt to update a row that does not exist, and verify
+     * that no change was made.
+     */
+    public function testAdapterUpdate()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // Test that we can change the values in
+        // an existing row.
+        $rowsAffected = $this->_db->update(
+            'zfproducts',
+            array('product_name' => 'Vista'),
+            "$product_id = 1"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // Query the row to see if we have the new values.
+        $select = $this->_db->select();
+        $select->from('zfproducts');
+        $select->where("$product_id = 1");
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+
+        $this->assertEquals(1, $result[0]['product_id']);
+        $this->assertEquals('Vista', $result[0]['product_name']);
+
+        // Test that update affects no rows if the WHERE
+        // clause matches none.
+        $rowsAffected = $this->_db->update(
+            'zfproducts',
+            array('product_name' => 'Vista'),
+            "$product_id = 327"
+        );
+        $this->assertEquals(0, $rowsAffected);
+    }
+
+    public function testAdapterUpdateSetDbExpr()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
+        $expr = new Zend_Db_Expr("UPPER('setExpr')");
+        $rowsAffected = $this->_db->update(
+            'zfbugs',
+            array('bug_status' => $expr),
+            "$bug_id = 1"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $value = $this->_db->fetchOne("SELECT $bug_status FROM $bugs WHERE $bug_id = 1");
+        $this->assertEquals('SETEXPR', $value);
+    }
+
+    public function testAdapterUpdateWhereArray()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
+        $rowsAffected = $this->_db->update(
+            'zfbugs',
+            array('bug_status' => 'ARRAY'),
+            array("$bug_id = 1", "$bug_status = 'NEW'")
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $value = $this->_db->fetchOne("SELECT $bug_status FROM $bugs WHERE $bug_id = 1");
+        $this->assertEquals('ARRAY', $value);
+    }
+
+    public function testAdapterUpdateWhereDbExpr()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
+        $whereExpr = new Zend_Db_Expr("$bug_id = 1");
+
+        $rowsAffected = $this->_db->update(
+            'zfbugs',
+            array('bug_status' => 'DBEXPR'),
+            $whereExpr
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $value = $this->_db->fetchOne("SELECT $bug_status FROM $bugs WHERE $bug_id = 1");
+        $this->assertEquals('DBEXPR', $value);
+    }
+
+    public function testAdapterUpdateEmptyWhere()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
+        $rowsAffected = $this->_db->update(
+            'zfbugs',
+            array('bug_status' => 'EMPTY')
+            // intentionally no where clause
+        );
+        $this->assertEquals(4, $rowsAffected);
+
+        $value = $this->_db->fetchCol("SELECT $bug_status FROM $bugs");
+        $this->assertEquals(array_fill(0, 4, 'EMPTY'), $value);
     }
 
 }

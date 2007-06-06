@@ -34,19 +34,9 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
 {
 
-    public function testAdapterExceptionInvalidLoginCredentials()
+    public function testAdapterDescribeTablePrimaryAuto()
     {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Oracle($params);
-            $db->getConnection(); // force connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Oracle_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Oracle_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Oracle_Exception, got '.get_class($e));
-        }
+        $this->markTestSkipped('Oracle does not support auto-increment');
     }
 
     public function testAdapterDescribeTablePrimaryKeyColumn()
@@ -66,84 +56,7 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $this->assertFalse(                      $desc['product_id']['IDENTITY']);
     }
 
-    public function testAdapterDescribeTablePrimaryAuto()
-    {
-        $this->markTestSkipped('Oracle does not support auto-increment');
-    }
-
     /**
-     * Test the Adapter's limit() method.
-     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
-     */
-    public function testAdapterLimit()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(1, $result[0]['product_id'],
-            'Expecting to get product_id 1');
-    }
-
-    public function testAdapterLimitOffset()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(2, $result[0]['product_id'],
-            'Expecting to get product_id 2');
-    }
-
-    public function testAdapterQuote()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals('\'St John"s Wort\'', $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
-
-        // quote an array
-        $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
-
-        // test numeric
-        $value = $this->_db->quote('1');
-        $this->assertEquals("'1'", $value);
-
-        $value = $this->_db->quote(1);
-        $this->assertEquals("1", $value);
-
-        $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("1, '2', 3", $value);
-    }
-
-    public function testAdapterQuoteInto()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
-    }
-
-   /**
      * Test the Adapter's fetchAll() method.
      */
     public function testAdapterFetchAll()
@@ -243,11 +156,112 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * Test the Adapter's limit() method.
+     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
+     */
+    public function testAdapterLimit()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1);
+
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(3, count($result[0]),
+            'Expecting column count to be 3');
+        $this->assertEquals(1, $result[0]['product_id'],
+            'Expecting to get product_id 1');
+    }
+
+    public function testAdapterLimitOffset()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+
+        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
+
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result),
+            'Expecting row count to be 1');
+        $this->assertEquals(3, count($result[0]),
+            'Expecting column count to be 3');
+        $this->assertEquals(2, $result[0]['product_id'],
+            'Expecting to get product_id 2');
+    }
+
+    /**
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+    }
+
+    /**
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $value = $this->_db->quote('St John"s Wort');
+        $this->assertEquals("'St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John''s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
+        $this->assertEquals("id='St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
+        $this->assertEquals("id = 'St John''s Wort'", $value);
+    }
+
+    /**
+     * test that quoteTableAs() accepts a string and an alias,
+     * and returns each as delimited identifiers.
+     * Oracle does not want the 'AS' in between.
+     */
+    public function testAdapterQuoteTableAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteTableAs($string, $alias);
+        $this->assertEquals('"foo" "bar"', $value);
+    }
+
+    /**
      * Used by _testAdapterOptionCaseFoldingNatural()
      * DB2 and Oracle return identifiers in uppercase naturally,
      * so those test suites will override this method.
      */
-    protected function _getCaseNaturalIdentifier()
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
     {
         return 'CASE_FOLDED_IDENTIFIER';
     }

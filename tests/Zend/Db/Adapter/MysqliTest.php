@@ -46,29 +46,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 {
 
-    public function testAdapterQuoteIdentifier()
-    {
-        $value = $this->_db->quoteIdentifier('table_name');
-        $this->assertEquals('`table_name`', $value);
-        $value = $this->_db->quoteIdentifier('table_`_name');
-        $this->assertEquals('`table_``_name`', $value);
-    }
-
-    public function testAdapterExceptionInvalidLoginCredentials()
-    {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Mysqli($params);
-            $db->getConnection(); // force a connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Mysqli_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Mysqli_Exception', $e,
-                'Expected to catch Zend_Db_Adapter_Mysqli_Exception, got '.get_class($e));
-        }
-    }
-
     /**
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
@@ -105,6 +82,126 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         }
 
         $this->assertEquals($result1, $result2);
+    }
+
+    /**
+     * test that quoteColumnAs() accepts a string
+     * and an alias, and returns each as delimited
+     * identifiers, with 'AS' in between.
+     */
+    public function testAdapterQuoteColumnAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteColumnAs($string, $alias);
+        $this->assertEquals('`foo` AS `bar`', $value);
+    }
+
+    /**
+     * test that quoteColumnAs() accepts a string
+     * and an alias, but ignores the alias if it is
+     * the same as the base identifier in the string.
+     */
+    public function testAdapterQuoteColumnAsSameString()
+    {
+        $string = 'foo.bar';
+        $alias = 'bar';
+        $value = $this->_db->quoteColumnAs($string, $alias);
+        $this->assertEquals('`foo`.`bar`', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts a string
+     * and returns a delimited identifier.
+     */
+    public function testAdapterQuoteIdentifier()
+    {
+        $value = $this->_db->quoteIdentifier('table_name');
+        $this->assertEquals('`table_name`', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts an array
+     * and returns a qualified delimited identifier.
+     */
+    public function testAdapterQuoteIdentifierArray()
+    {
+        $array = array('foo', 'bar');
+        $value = $this->_db->quoteIdentifier($array);
+        $this->assertEquals('`foo`.`bar`', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts an array
+     * containing a Zend_Db_Expr, and returns strings
+     * as delimited identifiers, and Exprs as unquoted.
+     */
+    public function testAdapterQuoteIdentifierArrayDbExpr()
+    {
+        $expr = new Zend_Db_Expr('*');
+        $array = array('foo', $expr);
+        $value = $this->_db->quoteIdentifier($array);
+        $this->assertEquals('`foo`.*', $value);
+    }
+
+    /**
+     * test that quoteIdentifer() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIdentifierDoubleQuote()
+    {
+        $string = 'table_"_name';
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('`table_"_name`', $value);
+    }
+
+    /**
+     * test that quoteIdentifer() accepts an integer
+     * and returns a delimited identifier as with a string.
+     */
+    public function testAdapterQuoteIdentifierInteger()
+    {
+        $int = 123;
+        $value = $this->_db->quoteIdentifier($int);
+        $this->assertEquals('`123`', $value);
+    }
+
+    /**
+     * test that quoteIdentifier() accepts a string
+     * containing a dot (".") character, splits the
+     * string, quotes each segment individually as
+     * delimited identifers, and returns the imploded
+     * string.
+     */
+    public function testAdapterQuoteIdentifierQualified()
+    {
+        $string = 'table.column';
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('`table`.`column`', $value);
+    }
+
+    /**
+     * test that quoteIdentifer() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIdentifierSingleQuote()
+    {
+        $string = "table_'_name";
+        $value = $this->_db->quoteIdentifier($string);
+        $this->assertEquals('`table_\'_name`', $value);
+    }
+
+    /**
+     * test that quoteTableAs() accepts a string and an alias,
+     * and returns each as delimited identifiers.
+     * Most RDBMS want an 'AS' in between.
+     */
+    public function testAdapterQuoteTableAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteTableAs($string, $alias);
+        $this->assertEquals('`foo` AS `bar`', $value);
     }
 
     public function getDriver()

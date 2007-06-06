@@ -26,6 +26,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
+    public function testAdapterDescribeTablePrimaryAuto()
+    {
+        $this->markTestSkipped('Oracle does not support auto-increment');
+    }
+
     public function testAdapterDescribeTablePrimaryKeyColumn()
     {
         $desc = $this->_db->describeTable('zfproducts');
@@ -43,11 +48,6 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertFalse(                      $desc['product_id']['IDENTITY']);
     }
 
-    public function testAdapterDescribeTablePrimaryAuto()
-    {
-        $this->markTestSkipped('Oracle does not support auto-increment');
-    }
-
     public function testAdapterInsert()
     {
         $row = array (
@@ -60,21 +60,6 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
         $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
-    }
-
-    public function testAdapterExceptionInvalidLoginCredentials()
-    {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Pdo_Oci($params);
-            $db->getConnection(); // force connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
-        }
     }
 
     /**
@@ -118,9 +103,22 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
      * DB2 and Oracle return identifiers in uppercase naturally,
      * so those test suites will override this method.
      */
-    protected function _getCaseNaturalIdentifier()
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
     {
         return 'CASE_FOLDED_IDENTIFIER';
+    }
+
+    /**
+     * test that quoteTableAs() accepts a string and an alias,
+     * and returns each as delimited identifiers.
+     * Oracle does not want the 'AS' in between.
+     */
+    public function testAdapterQuoteTableAs()
+    {
+        $string = "foo";
+        $alias = "bar";
+        $value = $this->_db->quoteTableAs($string, $alias);
+        $this->assertEquals('"foo" "bar"', $value);
     }
 
     public function getDriver()

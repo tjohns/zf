@@ -43,21 +43,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
-    public function testAdapterExceptionInvalidLoginCredentials()
-    {
-        $params = $this->_util->getParams();
-        $params['password'] = 'xxxxxxxx'; // invalid password
-
-        try {
-            $db = new Zend_Db_Adapter_Pdo_Mssql($params);
-            $db->getConnection(); // force connection
-            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Adapter_Exception', $e,
-                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
-        }
-    }
-
     public function testAdapterDescribeTableAttributeColumn()
     {
         $desc = $this->_db->describeTable('zfproducts');
@@ -94,42 +79,6 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     public function testAdapterInsertSequence()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support sequences.');
-    }
-
-    public function testAdapterQuote()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quote('St John"s Wort');
-        $this->assertEquals("'St John\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quote("St John's Wort");
-        $this->assertEquals("'St John''s Wort'", $value);
-
-        // quote an array
-        $value = $this->_db->quote(array("it's", 'all', 'right!'));
-        $this->assertEquals("'it''s', 'all', 'right!'", $value);
-
-        // test numeric
-        $value = $this->_db->quote('1');
-        $this->assertEquals("'1'", $value);
-
-        $value = $this->_db->quote(1);
-        $this->assertEquals("1", $value);
-
-        $value = $this->_db->quote(array(1,'2',3));
-        $this->assertEquals("1, '2', 3", $value);
-    }
-
-    public function testAdapterQuoteInto()
-    {
-        // test double quotes are fine
-        $value = $this->_db->quoteInto('id=?', 'St John"s Wort');
-        $this->assertEquals("id='St John\"s Wort'", $value);
-
-        // test that single quotes are escaped with another single quote
-        $value = $this->_db->quoteInto('id = ?', 'St John\'s Wort');
-        $this->assertEquals("id = 'St John''s Wort'", $value);
     }
 
     public function getDriver()
