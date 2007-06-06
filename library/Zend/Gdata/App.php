@@ -434,7 +434,6 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to put.');
         }
-        print_r($uri);
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
         $this->_httpClient->setRawData($rawData,'application/atom+xml');
