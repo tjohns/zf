@@ -161,15 +161,6 @@ define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
  * client host.  Also, the tests may show as failures if the Google servers
  * cannot be reached or if they do not respond for another reason.
  *
- * Note: the GData tests currently require that the TZID env variable
- * be set or the timezone otherwise configured.  You'll see errors from the
- * tests if this is not the case.
- */
-define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
-
-/*
- * Zend_Gdata ClientLogin tests
- *
  * If the CLIENTLOGIN_ENABLED property below is false, the authenticated
  * tests are reported Skipped in the test run.  Set this property to true
  * to enable tests that require ClientLogin authentication.  Enter your
@@ -178,20 +169,25 @@ define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
  * Edit TestConfiguration.php, not TestConfiguration.php.dist.
  * Never commit plaintext passwords to the source code repository.
  *
- * The credentials provided here should be only for a TEST account. 
- * Data for various services in this account may be added to, updated,
- * or deleted based upon the actions of these test accounts.  
+ * Note: the GData tests currently require that the TZID env variable
+ * be set or the timezone otherwise configured.  You'll see errors from the
+ * tests if this is not the case.
  */
+define('TESTS_ZEND_GDATA_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED', false);
+
+/*
+ * The credentials provided here should be only for a TEST account.
+ * Data for various services in this account may be added to, updated,
+ * or deleted based upon the actions of these test accounts.
+ */
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL', 'example@example.com');
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'password');
 
 /*
- * Zend_Gdata Blogger tests
- *
  * This is the ID of a blank blog.  There is no need to have
  * any content in this blog.  Also, blogs can only be used
- * several times for the purpose of these test cases before 
+ * several times for the purpose of these test cases before
  * they must be deleted and recreated.  Otherwise, the tests
  * will start failing, as posts to Blogger will return a 201 Created
  * response even though the entry was not posted to the blog.
@@ -201,9 +197,7 @@ define('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_BLOG_ID', '1111111111111111111');
 
 /*
- * Zend_Gdata Spreadsheets tests
- *
- * This is the key for a spreadsheet with data only in the first row of 
+ * This is the key for a spreadsheet with data only in the first row of
  * the spreadsheet.  The strings 'a1', 'b1', 'c1', 'd1' should be in the
  * corresponding cell locations.
  */

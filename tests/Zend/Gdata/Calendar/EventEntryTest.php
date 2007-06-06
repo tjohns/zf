@@ -32,7 +32,7 @@ class Zend_Gdata_Calendar_EventEntryTest extends PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->entryText = file_get_contents(
-                '../incubator/tests/Zend/Gdata/Calendar/_files/EventEntrySample1.xml',
+                'Zend/Gdata/Calendar/_files/EventEntrySample1.xml',
                 true);
         $this->entry = new Zend_Gdata_Calendar_EventEntry();
     }
