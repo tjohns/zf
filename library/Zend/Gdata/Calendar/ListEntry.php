@@ -77,15 +77,8 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
     protected $_hidden = null;
     protected $_selected = null;
     protected $_timezone = null;
-    protected $_quickadd = null;
     protected $_where = array();
     
-    // Properties required to support composite view
-    /*protected $_eventStatus = null;
-    protected $_visibility = null;
-    protected $_transparency = null;
-    protected $_sendEventNotifications = null;*/
-
     public function __construct($element = null)
     {
         foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
@@ -112,23 +105,11 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
         if ($this->_timezone != null) {
             $element->appendChild($this->_timezone->getDOM($element->ownerDocument));
         }
-        if ($this->quickadd != null) {
-            $element->appendChild($this->_quickadd->getDOM($element->ownerDocument));
-        }
         if ($this->_where != null) {
             foreach ($this->_where as $where) {
                 $element->appendChild($where->getDOM($element->ownerDocument));
             }
         }
-        /*if ($this->_eventStatus != null) {
-            $element->appendChild($this->_eventStatus->getDOM($element->ownerDocument));
-        }
-        if ($this->_visibility != null) {
-            $element->appendChild($this->_visibility->getDOM($element->ownerDocument));
-        }
-        if ($this->_transparency != null) {
-            $element->appendChild($this->_transparency->getDOM($element->ownerDocument));
-        }*/
         return $element;
     }
     
@@ -161,32 +142,11 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
             $timezone->transferFromDOM($child);
             $this->_timezone = $timezone;
             break;
-        case $this->lookupNamespace('gCal') . ':' . 'quickadd';
-            $quickadd = new Zend_Gdata_Calendar_Extension_QuickAdd();
-            $quickadd->transferFromDOM($child);
-            $this->_quickadd = $quickadd;
-            break;
         case $this->lookupNamespace('gd') . ':' . 'where';
             $where = new Zend_Gdata_Extension_Where();
             $where->transferFromDOM($child);
             $this->_where[] = $where;
             break;
-        /*case $this->lookupNamespace('gd') . ':' . 'eventStatus';
-            $eventStatus = new Zend_Gdata_Extension_EventStatus();
-            $eventStatus->transferFromDOM($child);
-            $this->_eventStatus = $eventStatus;
-            break;
-        case $this->lookupNamespace('gd') . ':' . 'visibilityy';
-            $visibility = new Zend_Gdata_Extension_Visibility();
-            $visibility->transferFromDOM($child);
-            $this->_visibility = $visibility;
-            break;                        
-        case $this->lookupNamespace('gd') . ':' . 'transparency';
-            $transparency = new Zend_Gdata_Extension_Transparency();
-            $transparency->transferFromDOM($child);
-            $this->_transparency = $transparency;
-            break;
-*/
         default:
             parent::takeChildFromDOM($child);
             break;
@@ -267,22 +227,6 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
         return $this;
     }
     
-    public function getQuickAdd() 
-    {
-        return $this->_quickadd;
-    }
-
-    /**
-     * @param Zend_Gdata_Calendar_Extension_QuickAdd $value
-     * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
-     */    
-    public function setQuickAdd($value) 
-    {
-        $this->_quickadd = $value;
-        return $this;
-    }
-    
-
     public function getWhere() 
     {
         return $this->_where;
@@ -298,48 +242,4 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
         return $this;
     }
 
-    /*public function getEventStatus()
-    {
-        return $this->_eventStatus;
-    }
-
-    /**
-     * @param Zend_Gdata_Extension_EventStatus $value
-     * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
-     *
-    public function setEventStatus($value)
-    {
-        $this->_eventStatus = $value;
-        return $this;
-    }
-
-    public function getVisibility()
-    {
-        return $this->_visibility;
-    }
-
-    /**
-     * @param Zend_Gdata_Extension_Visibility $value
-     * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
-     *
-    public function setVisibility($value)
-    {
-        $this->_visibility = $value;
-        return $this;
-    }
-
-    public function getTransparency()
-    {
-        return $this->_transparency;
-    }
-
-    /**
-     * @param Zend_Gdata_Extension_Transparency $value
-     * @return Zend_Gdata_Extension_ListEntry Provides a fluent interface
-     *
-    public function setTransparency($value)
-    {
-        $this->_transparency = $value;
-        return $this;
-    }*/
 }

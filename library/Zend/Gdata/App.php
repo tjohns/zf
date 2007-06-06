@@ -247,6 +247,7 @@ class Zend_Gdata_App
     public static function import($uri, $client = null, $className='Zend_Gdata_App_Feed')
     {
         $client->setUri($uri);
+        $client->setConfig(array('maxredirects' => 5));
         $response = $client->request('GET');
         if ($response->getStatus() !== 200) {
             require_once 'Zend/Gdata/App/HttpException.php';
@@ -320,6 +321,7 @@ class Zend_Gdata_App
      */
     public function get($uri)
     {
+        $client->setConfig(array('maxredirects' => 5));
         $client->setUri($uri);
         $response = $client->request('GET');
         if ($response->getStatus() !== 200) {

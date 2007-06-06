@@ -422,6 +422,7 @@ function getEvent($client, $eventId)
     $eventEntry = $gdataCal->getCalendarEventEntry($query);
     return $eventEntry;
   } catch (Zend_Gdata_App_Exception $e) {
+    var_dump($e);
     return null;
   }
 }
@@ -443,7 +444,7 @@ function updateEvent ($client, $eventId, $newTitle)
     echo "Old title: " . $eventOld->title->text . "<br />\n";
     $eventOld->title = $gdataCal->newTitle($newTitle);
     try {
-    $eventOld->save();
+        $eventOld->save();
     } catch (Zend_Gdata_App_Exception $e) {
         var_dump($e);
         return null;
