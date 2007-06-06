@@ -1,9 +1,0 @@
-
-- This package is _HIGHLY EXPERIMENAL_ and will change heavily.
-
-- All classes need to be renamed to PEAR-like conventions
-
-- Coding standards breaks need to be reviewed
-
-- Integration with Zend/View/Helper is needed
-
