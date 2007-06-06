@@ -68,7 +68,7 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
             $element->setAttribute('href', $this->_href);
         }
         if ($this->_readOnly != null) {
-            $element->setAttribute('readOnly', $this->_readOnly);
+            $element->setAttribute('readOnly', ($this->_readOnly ? "true" : "false"));
         }
         if ($this->_rel != null) {
             $element->setAttribute('rel', $this->_rel);
@@ -104,7 +104,15 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
             $this->_href = $attribute->nodeValue;
             break;
         case 'readOnly':
-            $this->_readOnly = $attribute->nodeValue;
+            if ($attribute->nodeValue == "true") {
+                $this->_readOnly = true;
+            }
+            else if ($attribute->nodeValue == "false") {
+                $this->_readOnly = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
+            }
             break;
         case 'rel':
             $this->_rel = $attribute->nodeValue;

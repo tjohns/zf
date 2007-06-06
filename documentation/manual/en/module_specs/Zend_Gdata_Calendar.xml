@@ -189,7 +189,7 @@ $service = new Zend_Gdata_Calendar();
 		<programlisting role="php"><![CDATA[<?php
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-$calendarService= new Zend_Gdata_Calendar($client);
+$service = new Zend_Gdata_Calendar($client);
 
 try {
     $listFeed= $service->getCalendarListFeed();
@@ -260,7 +260,7 @@ echo "</ul>";
 				", where magicCookieValue is the random string obtained when viewing the private XML address in the Google Calendar UI. Events are requested chronologically by start time and only events occurring in the future are returned.
 			</para>
 			<programlisting role="php"><![CDATA[<?php
-$query = $calendarService->newEventQuery();
+$query = $service->newEventQuery();
 $query->setUser('default');
 // Set to $query->setVisibility('private-magicCookieValue') if using MagicCookie auth
 $query->setVisibility('private');
@@ -278,7 +278,7 @@ try {
 // Iterate through the list of events, outputting them as an HTML list
 echo "<ul>";
 foreach ($eventFeed as $event) {
-    echo "<li>" . $event->title . " (Event ID: " . $calendar->id . ")</li>";
+    echo "<li>" . $event->title . " (Event ID: " . $event->id . ")</li>";
 }
 echo "</ul>";
 ?>]]></programlisting>
@@ -338,14 +338,14 @@ $query->setQuery("dogfood");
 				should be called instead.
 			</para>
 			<programlisting role="php"><![CDATA[<?php
-$query = $calendarService->newEventQuery();
+$query = $service->newEventQuery();
 $query->setUser('default');
 $query->setVisibility('private');
 $query->setProjection('full);
 $query->setEvent($eventId);
 
 try {
-    $event = $calendarService->getCalendarEventEntry($query);
+    $event = $service->getCalendarEventEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
 }
@@ -359,7 +359,7 @@ try {
 $eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
 
 try {
-    $event = $calendarService->getCalendarEventEntry($eventURL);
+    $event = $service->getCalendarEventEntry($eventURL);
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
 }
@@ -621,7 +621,7 @@ $newEvent = $service->insertEvent($event);
 $event = $eventFeed[0];
 
 // Change the title to a new value
-$event->title = $calendarService->newTitle("Woof!");
+$event->title = $service->newTitle("Woof!");
 
 // Upload the changes to the server
 try {

@@ -69,7 +69,7 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
     {
         $element = parent::getDOM($doc);
         if ($this->_specialized != null) {
-            $element->setAttribute('specialized', $this->_specialized);
+            $element->setAttribute('specialized', ($this->_specialized ? "true" : "false"));
         }
         if ($this->_entryLink != null) {
             $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
@@ -91,7 +91,15 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
     {
         switch ($attribute->localName) {
         case 'specialized':
-            $this->_specialized = $attribute->nodeValue;
+            if ($attribute->nodeValue == "true") {
+                $this->_specialized = true;
+            }
+            else if ($attribute->nodeValue == "false") {
+                $this->_specialzied = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
+            }
             break;
         default:
             parent::takeAttributeFromDOM($attribute);

@@ -471,4 +471,18 @@ class Zend_Gdata_CalendarEventTest extends PHPUnit_Framework_TestCase
         $this->verifyProperty2($feed, "generator", "text", "Google Calendar");
     }
 
+    /**
+      * Check for the existence of an <gd:quickadd> and verify that it contains
+      * the expected value.
+      */
+    public function testQuickAdd()
+    {
+        $feed = $this->eventFeed;
+
+        // Assert that one of the event's QuickAdd entries is correct
+        $quickAdd = $feed->entry[1]->getQuickAdd();
+        $this->assertTrue($quickAdd instanceof Zend_Gdata_Calendar_Extension_QuickAdd);
+        $this->verifyProperty($quickAdd, "value", true);
+    }
+
 }
