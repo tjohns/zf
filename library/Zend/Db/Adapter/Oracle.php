@@ -405,7 +405,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
                 require_once 'Zend/Db/Adapter/Oracle/Exception.php';
-                throw new Zend_Db_Adapter_Oracle_Exception('Invalid fetch mode specified');
+                throw new Zend_Db_Adapter_Oracle_Exception("Invalid fetch mode '$mode' specified");
                 break;
         }
     }
@@ -473,7 +473,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                  * @see Zend_Db_Adapter_Oracle_Exception
                  */
                 require_once 'Zend/Db/Adapter/Oracle/Exception.php';
-                throw new Zend_Db_Adapter_Oracle_Exception('wrong execution mode specified');
+                throw new Zend_Db_Adapter_Oracle_Exception("Invalid execution mode '$mode' specified");
                 break;
         }
     }

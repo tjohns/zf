@@ -530,7 +530,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                  * @see Zend_Db_Adapter_Db2_Exception
                  */
                 require_once 'Zend/Db/Adapter/Db2/Exception.php';
-                throw new Zend_Db_Adapter_Db2_Exception('Invalid fetch mode specified');
+                throw new Zend_Db_Adapter_Db2_Exception("Invalid fetch mode '$mode' specified");
                 break;
         }
     }

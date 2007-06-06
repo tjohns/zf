@@ -369,7 +369,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                  * @see Zend_Db_Adapter_Mysqli_Exception
                  */
                 require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
-                throw new Zend_Db_Adapter_Mysqli_Exception('Invalid fetch mode specified');
+                throw new Zend_Db_Adapter_Mysqli_Exception("Invalid fetch mode '$mode' specified");
         }
     }
 
