@@ -243,11 +243,18 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     public function testAdapterDeleteEmptyWhere()
     {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+
+        $count = $this->_db->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count);
+
         $rowsAffected = $this->_db->delete(
-            'zfproducts'
+            'zfbugs'
             // intentionally no where clause
         );
-        $this->assertEquals(3, $rowsAffected);
+
+        $count = $this->_db->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(0, $count);
     }
 
     public function testAdapterDescribeTableAttributeColumn()
@@ -456,13 +463,17 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     public function testAdapterInsertDbExpr()
     {
-        $expr = new Zend_Db_Expr('CURDATE()');
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        $expr = new Zend_Db_Expr('2+3');
+
         $row = array (
-            'bug_id'          => 5,
+            'bug_id'          => $expr,
             'bug_description' => 'New bug',
             'bug_status'      => 'NEW',
-            'created_on'      => $expr,
-            'updated_on'      => $expr,
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
             'reported_by'     => 'micky',
             'assigned_to'     => 'goofy',
             'verified_by'     => 'dduck'
@@ -473,11 +484,8 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('5', (string) $lastInsertId,
             'Expected new id to be 5');
 
-        $bugs = $this->_db->quoteIdentifier('zfbugs');
-        $bug_id = $this->_db->quoteIdentifier('bug_id');
-        $created_on = $this->_db->quoteIdentifier('created_on');
-        $value = $this->_db->fetchOne("SELECT $created_on FROM $bugs WHERE $bug_id = 5");
-        $this->assertRegexp('/^20\\d\\d-\\d\\d-\\d\\d/', $value);
+        $value = $this->_db->fetchOne("SELECT $bug_id FROM $bugs WHERE $bug_id = 5");
+        $this->assertEquals(5, $value);
     }
 
     /**
@@ -984,9 +992,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             $this->_db->setFetchMode(-999);
             $this->fail('Expected exception not thrown');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-            $this->assertEquals('Invalid fetch mode specified', $e->getMessage());
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+            $this->assertEquals("Invalid fetch mode '-999' specified", $e->getMessage());
         }
     }
 
@@ -1027,7 +1035,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         // notice the number of rows in connection 2
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(4, $count);
+        $this->assertEquals(4, $count, 'Expecting to see 4 rows in bugs table (step 1)');
 
         // start an explicit transaction in connection 1
         $this->_db->beginTransaction();
@@ -1042,14 +1050,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // we should still see all rows in connection 2
         // because the DELETE has not been committed yet
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(4, $count);
+        $this->assertEquals(4, $count, 'Expecting to still see 4 rows in bugs table (step 2); perhaps Adapter is still in autocommit mode?');
 
         // commit the DELETE
         $this->_db->commit();
 
         // now we should see one fewer rows in connection 2
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(3, $count);
+        $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 3)');
 
         // delete another row in connection 1
         $rowsAffected = $this->_db->delete(
@@ -1075,7 +1083,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         // notice the number of rows in connection 2
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(4, $count);
+        $this->assertEquals(4, $count, 'Expecting to see 4 rows in bugs table (step 1)');
 
         // start an explicit transaction in connection 1
         $this->_db->beginTransaction();
@@ -1090,7 +1098,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // we should still see all rows in connection 2
         // because the DELETE has not been committed yet
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(4, $count);
+        $this->assertEquals(4, $count, 'Expecting to still see 4 rows in bugs table (step 2); perhaps Adapter is still in autocommit mode?');
 
         // rollback the DELETE
         $this->_db->rollback();
@@ -1098,7 +1106,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // now we should see the same number of rows
         // because the DELETE was rolled back
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(4, $count);
+        $this->assertEquals(4, $count, 'Expecting to still see 4 rows in bugs table after DELETE is rolled back (step 3)');
 
         // delete another row in connection 1
         $rowsAffected = $this->_db->delete(
@@ -1110,7 +1118,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // we should see results immediately, because
         // the db connection returns to auto-commit mode
         $count = $db2->fetchOne("SELECT COUNT(*) FROM $bugs");
-        $this->assertEquals(3, $count);
+        $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 4)');
     }
 
     /**
