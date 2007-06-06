@@ -200,7 +200,6 @@ function outputCalendarMagicCookie($user, $magicCookie)
     $sl = $event->getLink('self')->href;
   }
   echo "</ul>\n";
-  var_dump( $entry = $gdataCal->getCalendarEventEntry($sl) );
 }
 
 /** 
@@ -292,10 +291,9 @@ function outputCalendarByDateRange($client, $startDate='2007-05-01',
     echo "\t\t<ul>\n";
     foreach ($event->when as $when) {
       echo "\t\t\t<li>Starts: " . $when->startTime . "</li>\n";
-      echo "\t\t</ul>\n";
-      echo "\t</li>\n";
     }
     echo "\t\t</ul>\n";
+    echo "\t</li>\n";
   }
   echo "</ul>\n";
 }
@@ -327,7 +325,6 @@ function outputCalendarByFullTextQuery($client, $fullTextQuery='tennis')
       echo "\t\t</ul>\n";
       echo "\t</li>\n";
     }
-    echo "\t\t</ul>\n";
   }
   echo "</ul>\n";
 }
@@ -445,8 +442,12 @@ function updateEvent ($client, $eventId, $newTitle)
   if ($eventOld = getEvent($client, $eventId)) {
     echo "Old title: " . $eventOld->title->text . "<br />\n";
     $eventOld->title = $gdataCal->newTitle($newTitle);
+    try {
     $eventOld->save();
-
+    } catch (Zend_Gdata_App_Exception $e) {
+        var_dump($e);
+        return null;
+    }
     $eventNew = getEvent($client, $eventId);
     echo "New title: " . $eventNew->title->text . "<br />\n";
     return $eventNew;

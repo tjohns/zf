@@ -434,6 +434,7 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to put.');
         }
+        print_r($uri);
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
         $this->_httpClient->setRawData($rawData,'application/atom+xml');
@@ -459,13 +460,20 @@ class Zend_Gdata_App
         }
         if ($response->isRedirect()) {
             /**
-             * Re-POST with redirected URI.
+             * Re-PUT with redirected URI.
              * This happens frequently.
              */
             $this->_httpClient->setUri($response->getHeader('Location'));
             $this->_httpClient->setRawData($rawData,'application/atom+xml');
             try {
-                $response = $this->_httpClient->request('POST');
+                if (Zend_Gdata_App::getHttpMethodOverride()) {
+                    $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: PUT',
+                            'Content-Type: application/atom+xml'));
+                    $response = $this->_httpClient->request('POST');
+                } else {
+                    $this->_httpClient->setHeaders('Content-Type', 'application/atom+xml');
+                    $response = $this->_httpClient->request('PUT');
+                }
             } catch (Zend_Http_Client_Exception $e) {
                 throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
             }
@@ -530,7 +538,13 @@ class Zend_Gdata_App
             $this->_httpClient->setUri($response->getHeader('Location'));
             $this->_httpClient->setRawData($rawData,'application/atom+xml');
             try {
-                $response = $this->_httpClient->request('POST');
+                if (Zend_Gdata_App::getHttpMethodOverride()) {
+                    $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: DELETE'));
+                    $this->_httpClient->setRawData('');
+                    $response = $this->_httpClient->request('POST');
+                } else {
+                    $response = $this->_httpClient->request('DELETE');
+                }
             } catch (Zend_Http_Client_Exception $e) {
                 throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
             }

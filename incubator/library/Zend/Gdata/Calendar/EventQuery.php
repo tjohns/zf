@@ -304,37 +304,14 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return string singleevents 
+     * @param string $value Also accepts bools.
+     * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
      */
     public function getSingleEvents()
     {
         if (array_key_exists('singleevents', $this->_params)) {
-            return $this->_params['singleevents'];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @return string singleevents
-     */
-    public function setSingleEvents($value)
-    {
-        if (is_bool($value)) {
-            $this->_params['singleevents'] = $value?'true':'false';
-        } else {
-            $this->_params['singleevents'] = $value;
-        }
-        return $this;
-    }
-
-    /**
-     * @return string futureevents
-     */
-    public function getFutureEvents()
-    {
-        if (array_key_exists('futureevents', $this->_params)) {
-            switch ($this->_params['futureevents']) {
+            $value = $this->_params['singleevents'];
+            switch ($value) {            
                 case 'true':
                     return true;    
                     break;
@@ -353,20 +330,70 @@ class Zend_Gdata_Calendar_EventQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @param string $value
+     * @param string $value Also accepts bools. If using a string, must be either "true" or "false".
      * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
-     * TODO should we be this strict with values?
      */
-    public function setFutureEvents($value)
-    {
-        if ($value != null) {
+    public function setSingleEvents($value)
+    {   
+        if (!is_null($value)) {
             if (is_bool($value)) {
-                $this->_params['futureevents'] = $value?'true':'false';
+                $this->_params['singleevents'] = ($value?'true':'false');
+            } elseif ($value == 'true' | $value == 'false') {
+                $this->_params['singleevents'] = $value;
             } else {
                 require_once 'Zend/Gdata/App/Exception.php';
                 throw new Zend_Gdata_App_Exception(
-                        'Invalid query param value for futureevents: ' .  
-                        $value);
+                        'Invalid query param value for futureevents: ' .
+                        $value . ' It must be a boolean.');
+            }
+        } else {
+            unset($this->_params['singleevents']);
+        }
+        return $this;
+    }
+
+    /**
+     * @return string futureevents
+     */
+    public function getFutureEvents()
+    {
+        if (array_key_exists('futureevents', $this->_params)) {
+            $value = $this->_params['futureevents'];
+            switch ($value) {
+                case 'true':
+                    return true;    
+                    break;
+                case 'false': 
+                    return false;
+                    break;
+                default:
+                    require_once 'Zend/Gdata/App/Exception.php';
+                    throw new Zend_Gdata_App_Exception(
+                            'Invalid query param value for futureevents: ' .
+                            $value . ' It must be a boolean.');
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param string $value Also accepts bools. If using a string, must be either "true" or "false" or 
+     *                      an exception will be thrown on retrieval.
+     * @return Zend_Gdata_Calendar_EventQuery Provides a fluent interface
+     */
+    public function setFutureEvents($value)
+    {
+        if (!is_null($value)) {
+            if (is_bool($value)) {
+                $this->_params['futureevents'] = ($value?'true':'false');
+            } elseif ($value == 'true' | $value == 'false') {
+                $this->_params['futureevents'] = $value;
+            } else {
+                require_once 'Zend/Gdata/App/Exception.php';
+                throw new Zend_Gdata_App_Exception(
+                        'Invalid query param value for futureevents: ' .
+                        $value . ' It must be a boolean.');
             }
         } else {
             unset($this->_params['futureevents']);

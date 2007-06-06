@@ -32,7 +32,8 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
     
     const GOOGLE_DEVELOPER_CALENDAR = 'developer-calendar@google.com';
     const ZEND_CONFERENCE_EVENT = 'bn2h4o4mc3a03ci4t48j3m56pg';
-
+    const ZEND_CONFERENCE_EVENT_COMMENT = 'i9q87onko1uphfs7i21elnnb4g';
+    const SAMPLE_RFC3339 = "2007-06-05T18:38:00";
     public function setUp()
     {
         $this->query = new Zend_Gdata_Calendar_EventQuery();
@@ -140,4 +141,98 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->query->comments));
     }
 
+    public function testSortOrder()
+    {
+        $this->query->resetParameters();
+        $sortOrder = 'ascending';
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setSortOrder($sortOrder);
+        $this->assertTrue($this->query->sortOrder != null);
+        $this->assertEquals($sortOrder, $this->query->getSortOrder());
+        $this->query->sortOrder = null;
+        $this->assertFalse($this->query->sortOrder != null);
+    }
+
+    public function testRecurrenceExpansionStart()
+    {
+        $this->query->resetParameters();
+        $res = self::SAMPLE_RFC3339;
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setRecurrenceExpansionStart($res);
+        $this->assertTrue($this->query->recurrenceExpansionStart != null);
+        $this->assertEquals($res, $this->query->getRecurrenceExpansionStart());
+        $this->query->recurrenceExpansionStart = null;
+        $this->assertFalse($this->query->recurrenceExpansionStart != null);
+    }
+
+    public function testRecurrenceExpansionEnd()
+    {
+        $this->query->resetParameters();
+        $ree = self::SAMPLE_RFC3339;
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setRecurrenceExpansionEnd($ree);
+        $this->assertTrue($this->query->recurrenceExpansionEnd != null);
+        $this->assertEquals($ree, $this->query->getRecurrenceExpansionEnd());
+        $this->query->recurrenceExpansionEnd = null;
+        $this->assertFalse($this->query->recurrenceExpansionEnd != null);
+    }
+
+    public function testSingleEvents()
+    {
+        $this->query->resetParameters();
+        // Test string handling
+        $singleEvents = 'true';
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setSingleEvents($singleEvents);
+        $this->assertTrue($this->query->singleEvents === true);
+        // Test bool handling
+        $singleEvents = false;
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setSingleEvents($singleEvents);
+        $this->assertTrue($this->query->singleEvents === false);
+        // Test unsetting
+        $this->assertEquals($singleEvents, $this->query->getSingleEvents());
+        $this->query->setSingleEvents(null);
+        $this->assertFalse($this->query->singleEvents != null);
+    }
+
+    public function testFutureEvents()
+    {
+        $this->query->resetParameters();
+        // Test string handling
+        $singleEvents = 'true';
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setFutureEvents($singleEvents);
+        $this->assertTrue($this->query->futureEvents === true);
+        // Test bool handling
+        $singleEvents = false;
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->query->setFutureEvents($singleEvents);
+        $this->assertTrue($this->query->futureEvents === false);
+        // Test unsetting
+        $this->query->futureEvents = null;
+        $this->assertFalse($this->query->futureEvents != null);
+
+    }
+
+    public function testCustomQueryURIGeneration()
+    {
+        $this->query->resetParameters();
+        $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);        
+        $this->query->setVisibility("private");
+        $this->query->setProjection("composite");
+        $this->query->setEvent(self::ZEND_CONFERENCE_EVENT);
+        $this->query->setComments(self::ZEND_CONFERENCE_EVENT_COMMENT);
+        $this->assertEquals("http://www.google.com/calendar/feeds/developer-calendar@google.com/private/composite/" . 
+                self::ZEND_CONFERENCE_EVENT . "/comments/" . self::ZEND_CONFERENCE_EVENT_COMMENT,
+                $this->query->getQueryUrl());
+    }
+
+    public function testDefaultQueryURIGeneration()
+    {
+        $this->query->resetParameters();
+        $this->assertEquals("http://www.google.com/calendar/feeds/default/public/full",
+                $this->query->getQueryUrl());
+
+    }
 }
