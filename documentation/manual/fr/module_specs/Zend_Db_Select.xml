@@ -189,6 +189,10 @@ $select = $db->select()
             </para>
 
             <para>
+                Si vous passez un tableau comme argument pour les colonnes, aucune colonne pour la table correspondante ne sera inclus dans le jeu de résultat. Voir un <link linkend="zend.db.select.building.join.example-no-columns">exemple de code</link> sous la section concernant la méthode <code>join()</code>.
+            </para>
+            
+            <para>
                 Vous pouvez indiquer le nom de colonne en tant que "<code>aliasDeTable.nomDeColonne</code>". Zend_Db_Select échappera chaque partie individuellement. Si vous n'indiquez pas un nom d'alias pour une colonne, elle emploie le nom de corrélation de la table nommée dans la méthode courante <code>from()</code>.
             </para>
 

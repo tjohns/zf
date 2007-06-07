@@ -1,9 +1,9 @@
-<chapter id="requirements">
+<appendix id="requirements">
 
-    <title>Configuration sytème requise</title>
+    <title>Configuration système requise</title>
 
     <para>
-        Cette section décrit les éléments requis pour le Zend Framework
+        Cette section décrit les éléments requis par le Zend Framework.
     </para>
 
     <sect1 id="requirements.extensions">
@@ -26,7 +26,7 @@
             Bien que le Zend Framework fonctionne correctement avec la version PHP
             mentionnée ci-dessus, nous vous recommandons fortement d'utiliser
             la version PHP 5.2.2 ou plus. Il y a des améliorations importantes
-            concernant la sécurité et la performance d'exécution disponibles
+            concernant la sécurité et la performance d'éxécution disponibles
             dans les versions plus récentes de PHP.
         </para>
 
@@ -38,7 +38,7 @@
 
         <para>
             Ci-dessous, la table recense toutes les extensions typiquement trouvées
-            dans PHP et comment ils sont utilisés dans le Zend Framework. Cela peut aider
+            dans PHP et comment elles sont utilisées dans le Zend Framework. Cela peut aider
             à vous guider pour savoir quelles extensions sont exigées pour votre application.
             Cependant toutes les extensions utilisées par le Zend Framework ne sont pas
             exigées pour chaque application.
@@ -465,4 +465,4 @@
     </sect1>
 
 
-</chapter>
+</appendix>
