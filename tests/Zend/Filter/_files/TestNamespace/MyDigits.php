@@ -26,6 +26,7 @@
  */
 require_once 'Zend/Validate/Digits.php';
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @category   Zend
