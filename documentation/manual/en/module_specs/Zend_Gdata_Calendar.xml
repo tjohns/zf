@@ -3,7 +3,7 @@
 	<para>
 		You can use the
 		<code>Zend_Gdata_Calendar</code>
-		class to view, create, update,         and delete events in the online Google Calendar service.
+		class to view, create, update, and delete events in the online Google Calendar service.
 	</para>
 	<para>
 		See
