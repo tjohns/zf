@@ -341,7 +341,7 @@ $query->setQuery("dogfood");
 $query = $service->newEventQuery();
 $query->setUser('default');
 $query->setVisibility('private');
-$query->setProjection('full);
+$query->setProjection('full');
 $query->setEvent($eventId);
 
 try {
@@ -455,7 +455,7 @@ try {
     $when = $service->newWhen();
     $when->startTime = "{$startDate}T{$starTIme}:00.000{$tzOffset}:00";
     $when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
-    $event->when = $when;
+    $event->when[] = $when;
 
     // Upload the event to the calendar server
     // A copy of the event as it is recorded on the server is returned
