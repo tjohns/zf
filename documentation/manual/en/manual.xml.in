@@ -27,12 +27,10 @@
             </mediaobject>
         -->
     </bookinfo>
-    <!-- <xi:include href="ref/preface.xml" /> -->
-    <!-- <xi:include href="ref/install.xml" /> -->
-    <!-- <xi:include href="ref/conf.xml" />    -->
-    <chapter id="zend">
-        <title>Zend Framework</title>
-        <xi:include href="module_specs/Zend-Introduction.xml" />
+    <chapter id="introduction">
+        <title>Introduction to Zend Framework</title>
+        <xi:include href="ref/overview.xml" />
+        <xi:include href="ref/installation.xml" />
     </chapter>
     <chapter id="zend.acl">
         <title>Zend_Acl</title>
@@ -304,9 +302,8 @@
         <xi:include href="module_specs/Zend_XmlRpc_Client.xml" />
         <xi:include href="module_specs/Zend_XmlRpc_Server.xml" />
     </chapter>
-    <!-- <xi:include href="ref/faq.xml" /> -->
-    <xi:include href="ref/coding_standard.xml" />
     <xi:include href="ref/requirements.xml" />
+    <xi:include href="ref/coding_standard.xml" />
     <xi:include href="ref/copyrights.xml" />
     <index id="the.index" />
 </book>

@@ -1,4 +1,4 @@
-<chapter id="requirements">
+<appendix id="requirements">
 
     <title>System Requirements</title>
 
@@ -463,8 +463,7 @@
 
     </sect1>
 
-
-</chapter>
+</appendix>
 <!--
 vim:se ts=4 sw=4 et:
 -->
