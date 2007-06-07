@@ -73,7 +73,8 @@ class Zend_Validate_AlphaTest extends PHPUnit_Framework_TestCase
             'abcxyz'  => true,
             'AZ@#4.3' => false,
             'aBc123'  => false,
-            'aBcDeF'  => true
+            'aBcDeF'  => true,
+            ''        => false
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input));

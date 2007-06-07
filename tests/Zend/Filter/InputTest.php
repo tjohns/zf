@@ -481,7 +481,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertEquals(array('field1'), array_keys($messages));
-        $this->assertEquals("'' has not only alphabetic characters", $messages['field1'][0]);
+        $this->assertEquals("'' is an empty string", $messages['field1'][0]);
     }
 
     public function testValidatorAllowEmptyNoValidatorChain()

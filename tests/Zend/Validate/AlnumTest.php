@@ -72,7 +72,8 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
             'abc 123' => false,
             'abcxyz'  => true,
             'AZ@#4.3' => false,
-            'aBc123'  => true
+            'aBc123'  => true,
+            ''        => false
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input));

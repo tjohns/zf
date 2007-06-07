@@ -41,6 +41,11 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
     const NOT_ALNUM = 'notAlnum';
 
     /**
+     * Validation failure message key for when the value is an empty string
+     */
+    const STRING_EMPTY = 'stringEmpty';
+
+    /**
      * Alphanumeric filter used for validation
      *
      * @var Zend_Filter_Alnum
@@ -53,7 +58,8 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::NOT_ALNUM => "'%value%' has not only alphabetic and digit characters"
+        self::NOT_ALNUM    => "'%value%' has not only alphabetic and digit characters",
+        self::STRING_EMPTY => "'%value%' is an empty string"
     );
 
     /**
@@ -70,6 +76,11 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
+        if ('' === $valueString) {
+            $this->_error(self::STRING_EMPTY);
+            return false;
+        }
+
         if (null === self::$_filter) {
             /**
              * @see Zend_Filter_Alnum
@@ -79,7 +90,7 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
         }
 
         if ($valueString !== self::$_filter->filter($valueString)) {
-            $this->_error();
+            $this->_error(self::NOT_ALNUM);
             return false;
         }
 

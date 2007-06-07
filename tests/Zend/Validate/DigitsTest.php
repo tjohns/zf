@@ -75,7 +75,8 @@ class Zend_Validate_DigitsTest extends PHPUnit_Framework_TestCase
             '1.23'    => false,
             '0x9f'    => false,
             '123'     => true,
-            '09'      => true
+            '09'      => true,
+            ''        => false
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input));
