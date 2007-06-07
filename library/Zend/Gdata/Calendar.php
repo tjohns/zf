@@ -149,8 +149,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         if ($uri == null) {
             $uri = $this->_defaultPostUri;
         }
-        $response = $this->post($event, $uri);
-        return new Zend_Gdata_Calendar_EventEntry($response->getBody());
+        $newEvent = $this->insertEntry($event, $uri, 'Zend_Gdata_Calendar_EventEntry');
+        return $newEvent;
     }
 
 }

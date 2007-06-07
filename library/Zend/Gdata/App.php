@@ -517,6 +517,7 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI which needs deleted.');
         }
+        $this->_httpClient->resetParameters();
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
         try {
@@ -537,9 +538,10 @@ class Zend_Gdata_App
              * This happens frequently.
              */
             $this->_httpClient->setUri($response->getHeader('Location'));
-            $this->_httpClient->setRawData($rawData,'application/atom+xml');
+            $this->_httpClient->setRawData(null);
             try {
                 if (Zend_Gdata_App::getHttpMethodOverride()) {
+                    $this->_httpClient->resetParameters();
                     $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: DELETE'));
                     $this->_httpClient->setRawData('');
                     $response = $this->_httpClient->request('POST');
