@@ -102,7 +102,7 @@ class Zend_Validate_LessThan extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        $this->_messages = array();
+        $this->_setValue($value);
         if ($this->_max <= $value) {
             $this->_error();
             return false;
